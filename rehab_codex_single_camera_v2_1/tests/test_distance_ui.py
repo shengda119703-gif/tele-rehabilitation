@@ -50,7 +50,8 @@ def test_all_existing_actions_keep_exact_step_text_in_large_guidance(coach, eid)
     c, app = coach
     plan = default_plan(eid)
     info = exercise_instructions(eid)
-    for phase, key, step in [('REST', 'start', 0), ('RAISING', 'move', 1), ('LOWERING', 'return', 2)]:
+    for phase, key, step in [('WAIT_READY', 'start', 0), ('REST', 'move', 1),
+                             ('RAISING', 'move', 1), ('LOWERING', 'return', 2)]:
         render(c, state(eid, phase), plan)
         assert c.presentation.currentWidget() is c.guide
         assert c.guide.instruction.text() == info[key] and c.guide.step_index == step

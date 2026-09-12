@@ -31,7 +31,10 @@ def test_main_and_distance_present_one_adjustment_and_clear_it_on_recovery(coach
         guidance = data['guidance']
         assert w.exercise_guide.instruction.text() == guidance['instruction']
         assert w.feedback.text() == guidance['status']
-        assert not w.exercise_guide.status.isVisible()
+        if guidance['level'] == 'action':
+            assert w.exercise_guide.status.isVisible() and '下一步' in w.exercise_guide.status.text()
+        else:
+            assert not w.exercise_guide.status.isVisible()
         if guidance['level'] == 'adjust':
             assert c.presentation.currentWidget() is c.hold
             assert c.hold.text() == guidance['instruction']

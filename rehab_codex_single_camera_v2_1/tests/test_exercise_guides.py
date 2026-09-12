@@ -70,8 +70,8 @@ def test_guide_loads_only_matching_side_image_and_handles_corruption(qt_app, tmp
 def test_guide_phase_is_only_visual_and_freezes_on_missing_evidence(qt_app, tmp_path):
     guide = ExerciseGuide(root=tmp_path)
     guide.set_exercise('shoulder_abduction', 'left')
-    guide.follow_observation('ONLINE', 'RAISING', valid=True)
-    assert guide.step_index == 1 and '当前动作' in guide.status.text()
+    guide.follow_observation('ONLINE', 'REST', valid=True)
+    assert guide.step_index == 1 and '下一步' in guide.status.text()
     guide.follow_observation('ONLINE', 'LOWERING', valid=False)
     assert guide.step_index == 1 and '不足' in guide.status.text()
     guide.follow_observation('ONLINE', 'LOWERING', valid=True, training_stage='PAUSED')

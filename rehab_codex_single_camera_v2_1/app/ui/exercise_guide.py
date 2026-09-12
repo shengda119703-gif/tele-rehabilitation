@@ -166,7 +166,8 @@ class ExerciseGuide(QFrame):
             self.status.setText('按提示：'+prompt+seconds)
             self.status.show()
             return
-        if index is not None and guidance['measurement_valid'] and guidance['level'] == 'action':
+        action_cue = index is not None and guidance['measurement_valid'] and guidance['level'] == 'action'
+        if action_cue:
             if index != self.step_index or not getattr(self, '_guidance_image_active', False):
                 self.select_step(index)
             self._guidance_image_active = True
@@ -180,8 +181,12 @@ class ExerciseGuide(QFrame):
                 button.setChecked(False)
         self.instruction.setText(guidance['instruction'])
         self.instruction.setToolTip(guidance.get('detail', guidance['instruction']))
-        self.status.clear()
-        self.status.hide()
+        if action_cue:
+            self.status.setText('下一步 · ' + (guidance.get('cue_label') or self.steps[index]['title']))
+            self.status.show()
+        else:
+            self.status.clear()
+            self.status.hide()
 
     def follow_observation(self, state, phase, *, valid=False, training_stage=None):
         self.status.show()
@@ -199,11 +204,11 @@ class ExerciseGuide(QFrame):
         if not valid:
             self.status.setText('画面证据不足 · 自动提示已暂停')
             return
-        index = {'REST': 0, 'WAIT_READY': 0, 'SEATED_READY': 0, 'RAISING': 1,
-                 'RISING': 1, 'PEAK_OR_HOLD': 1, 'STANDING_REACHED': 1, 'LOWERING': 2}.get(phase)
+        index = {'WAIT_READY': 0, 'REST': 1, 'SEATED_READY': 1, 'RAISING': 1,
+                 'RISING': 1, 'PEAK_OR_HOLD': 1, 'STANDING_REACHED': 2, 'LOWERING': 2}.get(phase)
         if index is None:
             self.status.setText('等待明确动作阶段；图解仅供阅读。')
             return
         if index != self.step_index:
             self.select_step(index)
-        self.status.setText('当前动作 · ' + self.steps[index]['title'])
+        self.status.setText('下一步 · ' + self.steps[index]['title'])

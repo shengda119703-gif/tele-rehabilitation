@@ -10,6 +10,26 @@ CONTINUATION_OFFER = '一直看不清也可以继续：在“步骤”里选“�
 GUIDED_STATUS = '引导计时 · 本次不自动测角度'
 
 
+def _next_action_cue(info, observed_phase, *, returning=False):
+    """Translate an observed phase into the action the participant should do next.
+
+    The observed phase describes evidence already obtained.  The cue deliberately
+    advances only after that evidence crosses a state-machine boundary, so REST
+    means the start position is confirmed and the next request is the outbound
+    movement, rather than another description of the start position.
+    """
+    if observed_phase == 'WAIT_READY':
+        return {'key': 'start', 'phase': 'ready', 'label': '保持准备姿势',
+                'instruction': info['start']}
+    if returning or observed_phase in ('STANDING_REACHED', 'LOWERING'):
+        return {'key': 'return', 'phase': 'return', 'label': '缓慢回到起点',
+                'instruction': info['return']}
+    if observed_phase in ('REST', 'SEATED_READY', 'RAISING', 'RISING', 'PEAK_OR_HOLD'):
+        return {'key': 'move', 'phase': 'outbound', 'label': '开始完成动作',
+                'instruction': info['move']}
+    return None
+
+
 class GuidancePolicy:
     adjustment_after_s = 1.5
     recovery_status_s = 1.
@@ -31,6 +51,7 @@ class GuidancePolicy:
         self.period_escalated = False
         self.missing_total_s = 0.
         self.last_now = None
+        self.action_cue = None
 
     def _reset_context(self):
         self.invalid_since = self.recovered_at = self.adjustment = self.critical = None
@@ -39,6 +60,7 @@ class GuidancePolicy:
         self.period_escalated = False
         self.missing_total_s = 0.
         self.last_now = None
+        self.action_cue = None
 
     def _clear_gap(self):
         self.invalid_since = self.adjustment = None
@@ -54,6 +76,7 @@ class GuidancePolicy:
         state = data['state']
         summary = data.get('summary') or {}
         stage = (summary.get('training') or {}).get('stage')
+        phase = summary.get('phase')
         valid = bool(data.get('current_measurement_valid'))
         guided = data.get('continuation_mode') == 'guided'
         if self.last_now is not None and not valid and now >= self.last_now:
@@ -61,13 +84,18 @@ class GuidancePolicy:
         self.last_now = now
         offer = (not guided and state in ('PREVIEW', 'ONLINE')
                  and self.missing_total_s >= self.offer_after_s)
-        result = dict(level='action', instruction=info['move'], status='', phase=None,
+        pending = self.action_cue or {}
+        result = dict(level='action', instruction=pending.get('instruction', info['start']), status='',
+                      phase=pending.get('phase'), cue_key=pending.get('key'),
+                      cue_label=pending.get('label', ''), observed_phase=None,
                       measurement_valid=valid, recovery=None,
                       measurement_quality='observed' if valid else 'unavailable',
                       offer='guided' if offer else None,
                       offer_text=CONTINUATION_OFFER if offer else '')
 
         def display(level, instruction, status='', recovery=None, **extra):
+            if level in ('critical', 'adjust', 'paused'):
+                extra = dict(extra, phase=None, cue_key=None, cue_label='')
             return dict(result, level=level, instruction=instruction, status=status, recovery=recovery, **extra)
 
         if state == 'SAVE_FAILED':
@@ -120,7 +148,8 @@ class GuidancePolicy:
             threshold = self.adjustment_after_s if self.escalations == 0 else self.repeat_adjustment_after_s
             if not self.period_escalated and now-self.invalid_since+1e-8 < threshold:
                 quiet = '正在重新识别，当前不计次' if state == 'ONLINE' else '正在识别，请保持当前姿势'
-                return display('status', info['move'], quiet)
+                instruction = (self.action_cue or {}).get('instruction') or '请保持当前姿势，等待重新识别。'
+                return display('status', instruction, quiet, phase=None, cue_key=None, cue_label='')
             if not self.period_escalated:
                 self.period_escalated = True
                 self.escalations += 1
@@ -145,8 +174,8 @@ class GuidancePolicy:
             result['status'] = '辅助指标：本项无法评价'
             result['measurement_quality'] = 'observed'
         if state == 'PREVIEW':
-            return dict(result, instruction=data.get('preparation_instruction') or '保持舒适起点，完成本次准备。')
-        phase = summary.get('phase')
+            return dict(result, instruction=data.get('preparation_instruction') or '保持舒适起点，完成本次准备。',
+                        phase=None, cue_key=None, cue_label='', observed_phase=phase)
         if plan.get('submode') == 'training' and stage not in ('ACTIVE', 'RECOVERY'):
             return display('paused', '请暂停动作，等待训练状态确认。')
         if summary.get('current_issues') and summary.get('message'):
@@ -157,11 +186,15 @@ class GuidancePolicy:
         held, goal = timing.get('hold_elapsed_s'), timing.get('hold_min_s')
         if (plan.get('submode') == 'training' and isinstance(held, (float, int)) and isinstance(goal, (float, int))
                 and held+1e-8 < goal and phase in ('RAISING', 'PEAK_OR_HOLD', 'RISING', 'STANDING_REACHED')):
-            return dict(result, instruction=f'本段连续保持 {held:.1f} / {goal:g} 秒。')
-        returning = stage == 'RECOVERY' or phase in ('LOWERING', 'STANDING_REACHED') or (
-            plan.get('submode') == 'training' and (phase == 'PEAK_OR_HOLD' or summary.get('message', '').startswith('已观察到目标范围；')))
-        if returning:
-            phase = 'LOWERING'
-        key = {'REST': 'start', 'WAIT_READY': 'start', 'SEATED_READY': 'start', 'RAISING': 'move',
-               'RISING': 'move', 'PEAK_OR_HOLD': 'move', 'LOWERING': 'return'}.get(phase)
-        return dict(result, instruction=info[key] if key else info['move'], phase=phase if key else None)
+            return dict(result, instruction=f'本段连续保持 {held:.1f} / {goal:g} 秒。',
+                        phase='outbound', cue_key='hold', cue_label='继续保持', observed_phase=phase)
+        message = summary.get('message', '')
+        returning = (stage == 'RECOVERY' or phase in ('LOWERING', 'STANDING_REACHED') or
+                     message.startswith(('已观察到目标范围；', '已观察到本次连续保持目标')))
+        cue = _next_action_cue(info, phase, returning=returning)
+        if cue:
+            self.action_cue = cue
+            return dict(result, instruction=cue['instruction'], phase=cue['phase'], cue_key=cue['key'],
+                        cue_label=cue['label'], observed_phase=phase)
+        return dict(result, instruction=info['move'], phase=None, cue_key=None, cue_label='',
+                    observed_phase=phase)
