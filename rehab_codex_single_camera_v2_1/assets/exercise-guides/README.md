@@ -37,3 +37,7 @@ assets/exercise-guides/
 - 先使用匿名示范素材；患者照片不得未经明确同意提交到仓库。
 
 图片仅是指导材料，不参与测量、身份识别、计数或训练目标计算。
+
+完整图片清单见 `../../../docs/assets/EXERCISE_IMAGE_MANIFEST.csv`。清单一行对应一张图片，
+可将已生成图片的绝对路径填写到“待导入图片路径”列；接入时再按“项目目标路径”复制并核对。
+需要重新生成清单时，在应用目录运行 `scripts/export_exercise_image_manifest.py`。
