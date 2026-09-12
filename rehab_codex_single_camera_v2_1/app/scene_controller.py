@@ -409,7 +409,7 @@ class SceneController:
                 plan.pop('assessment_batch_id', None)
                 plan.pop('assessment_entry_key', None)
                 if not plan.get('training_plan_confirmed'):
-                    raise ValueError('请先人工设置并确认本次训练计划')
+                    raise ValueError('请先使用自动安排，或设置并确认本次训练计划')
                 profile = build_body_profile(self.storage.list_sessions(), plan['participant_id'],
                                              self.source['kind'], self.source['usage_context'])
                 reference = build_training_reference(profile, plan['exercise_id'], plan['side'])
@@ -424,6 +424,12 @@ class SceneController:
                     from .training_plans import validate_saved_binding
                     supplied = plan['saved_plan_reference']
                     saved = self.storage.get_training_plan(supplied.get('id'))
+                    if (saved or {}).get('record_origin') == 'assessment_rules':
+                        from .automatic_plans import validate_automatic_use
+                        if guided:
+                            raise ValueError('自动计划需使用自动观察；引导计时请另选普通练习，不用于核实本计划')
+                        validate_automatic_use(saved, supplied.get('entry_key'), profile,
+                                               self.storage.list_sessions(), self.storage.get_participant(plan['participant_id']), plan)
                     bound = validate_saved_binding(saved, supplied, plan,
                         dict(participant_id=plan['participant_id'], source_kind=self.source['kind'],
                              usage_context=self.source['usage_context']))

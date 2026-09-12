@@ -183,6 +183,8 @@ class TrainingEngine(RehabEngine):
 
     def summary(self):
         result = super().summary()
+        from .automatic_plans import observed_quality
+        result['observed_quality'] = observed_quality(self.repetitions)
         completed_sets = sum(s['status'] == 'COMPLETE' for s in self.sets)
         sets = copy.deepcopy(self.sets)
         for group in sets:
@@ -210,6 +212,7 @@ class TrainingEngine(RehabEngine):
         result['training'] = {'schema_version': 1, 'stage': self.stage, 'ended_stage': self.ended_stage,
                               'exercise_label': self.spec['label'], 'side': self.plan['side'],
                               'guidance': result['message'],
+                              'observed_quality': copy.deepcopy(result['observed_quality']),
                               'set_number': self.set_number, 'set_reps': sets[-1]['completed'],
                               'target_reps': self.plan['target_reps'], 'target_sets': self.plan['target_sets'],
                               'rest_remaining_s': remaining, 'rest_s': self.rest_total_s,

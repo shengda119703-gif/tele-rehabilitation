@@ -38,6 +38,7 @@ from .assessment_batches import AssessmentBatchDialog
 from .camera_test import CameraTestDialog
 from .distance_coach import DistanceCoach
 from .plan_library import PlanLibraryDialog
+from .automatic_plans import AutomaticPlanDialog
 from .longitudinal import LongitudinalDialog
 
 STATUS = {'UNSELECTED': '相机未打开', 'CONNECTING': '正在连接', 'PREVIEW': '预览中',
@@ -87,6 +88,8 @@ class MainWindow(QMainWindow):
         self.plan_library_dialog = None
         self.longitudinal_dialog = None
         self._plan_to_activate = None
+        self.automatic_dialog = None
+        self._automatic_to_activate = None
         self._training_execution = {}
         self._journey_framed = False
         self._journey_error = ''
@@ -294,6 +297,35 @@ class MainWindow(QMainWindow):
         # A preceding preview stop remains ahead of this read in the runtime queue.
         self._send('training_plans', scope=scope)
 
+    def _open_automatic_plan(self):
+        if self.state in ('ONLINE', 'SAVE_FAILED') or self.busy or self._camera_testing:
+            self.notice.setText('请先结束并保存当前任务，再安排下一项训练。')
+            return
+        self._invalidate()
+        dialog = AutomaticPlanDialog(self._body_scope_key(), self)
+        self.automatic_dialog = dialog
+        dialog.requested.connect(self._automatic_command)
+        dialog.feedback_requested.connect(self._automatic_feedback)
+        dialog.finished.connect(lambda: setattr(self, 'automatic_dialog', None))
+        dialog.show()
+        self._send('automatic_proposal', scope=dialog.scope)
+
+    def _automatic_feedback(self, session_id):
+        if self.busy or not self.automatic_dialog or self.automatic_dialog.scope != self._body_scope_key():
+            return
+        self.automatic_dialog.accept()
+        self._send('training_review', id=session_id)
+
+    def _automatic_command(self, name, kwargs):
+        dialog = self.automatic_dialog
+        if not dialog:
+            return
+        if self.busy or dialog.scope != self._body_scope_key():
+            dialog.set_busy(False)
+            dialog.error.setText('当前任务或用户已变化，请关闭后重新打开自动安排。')
+            return
+        self._send(name, scope=dialog.scope, **kwargs)
+
     def _library_command(self, name, **kwargs):
         dialog = self.plan_library_dialog
         if self.busy or not dialog or dialog.scope != self._body_scope_key():
@@ -318,7 +350,9 @@ class MainWindow(QMainWindow):
         self._sync_scene()
         self.setup_tabs.setCurrentIndex(2)
         reference = plan['saved_plan_reference']
-        self.notice.setText(f"已载入计划第 {reference['revision']} 版的所选项目。请核对并确认本次计划，再预览和确认机位。")
+        self.notice.setText('次数和组数已自动安排。按步骤摆好机位，准备好后开始；不必填写计划。'
+                            if reference.get('record_origin') == 'assessment_rules' else
+                            f"已载入计划第 {reference['revision']} 版的所选项目。请核对并确认本次计划，再预览和确认机位。")
 
     def _source_card(self, parent):
         frame = card()
@@ -1704,6 +1738,10 @@ class MainWindow(QMainWindow):
         reported = summary.get('self_reported_reps') or 0
         if reported:
             lines.append(f'自己记录的完成次数：{reported} 次（本人报告，不是自动测量）。')
+        quality = summary.get('observed_quality')
+        if quality and not guided:
+            lines.append(f"已观察目标达成 {quality['observed_goals_met']} 次；需调整 {quality['needs_adjustment']} 次；"
+                         f"未能核实 {quality['unassessable']} 次。仅限已设置目标，不是整体动作合格率。")
         return '\n'.join(lines)
 
     def _record_joint_baseline(self, position):
@@ -1730,6 +1768,9 @@ class MainWindow(QMainWindow):
             self._start_preparation(*request[:2])
 
     def _plan(self):
+        if (self.setup['plan'].get('saved_plan_reference') or {}).get('record_origin') == 'assessment_rules':
+            self.notice.setText('当前参数由评估自动安排。需要调整时请返回训练中心重新安排；专业人员也可另建人工计划。')
+            return
         dialog = PlanDialog(self._read_setup()['plan'], self)
         if dialog.exec() == QDialog.DialogCode.Accepted:
             self._invalidate()
@@ -1943,6 +1984,13 @@ class MainWindow(QMainWindow):
                 self.batch_dialog.set_busy(self.busy > 0)
             if self.plan_library_dialog:
                 self.plan_library_dialog.set_busy(self.busy > 0)
+            if self.automatic_dialog:
+                self.automatic_dialog.set_busy(self.busy > 0)
+            if not self.busy and self._automatic_to_activate:
+                prepared, self._automatic_to_activate = self._automatic_to_activate, None
+                if self.automatic_dialog and self.automatic_dialog.scope == self._body_scope_key():
+                    self.automatic_dialog.accept()
+                    self._activate_saved_plan(prepared)
             if not self.busy and self._plan_to_activate:
                 prepared, self._plan_to_activate = self._plan_to_activate, None
                 if self.plan_library_dialog:
@@ -1975,6 +2023,8 @@ class MainWindow(QMainWindow):
             self._send('enumerate', backend=self.backend.currentData())
         elif kind in ('error', 'fatal'):
             self.notice.setText(m['text'])
+            if m.get('command') in ('automatic_proposal', 'accept_automatic_plan', 'automatic_progress', 'prepare_automatic_item') and self.automatic_dialog:
+                self.automatic_dialog.error.setText(m['text'])
             if m.get('command') == 'prepare_sample':
                 self.preparation_active = False
                 self.preparation_cancel.hide()
@@ -2154,6 +2204,13 @@ class MainWindow(QMainWindow):
                     self.setup_tabs.setCurrentIndex(2)
                     self._send('report', id=m['id'])
                     self._refresh_body_profile()
+        elif kind in ('automatic_proposal', 'automatic_progress', 'automatic_item_prepared'):
+            if (self.automatic_dialog and m['scope'] == self._body_scope_key() == self.automatic_dialog.scope):
+                if kind == 'automatic_item_prepared':
+                    self._automatic_to_activate = copy.deepcopy(m)
+                else:
+                    self.automatic_dialog.receive(m)
+                    self.automatic_dialog.set_busy(self.busy > 0)
         elif kind == 'training_plans':
             if (self.plan_library_dialog and m['scope'] == self._body_scope_key()
                     and m['scope'] == self.plan_library_dialog.scope):

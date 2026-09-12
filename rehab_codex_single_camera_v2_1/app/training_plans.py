@@ -90,7 +90,12 @@ def validate_training_plan(value):
             raise ValueError('训练项目侧别无效或重复，请逐项核对')
         seen.add(row['key'])
         items.append(row)
-    return dict(scope, id=pid, name=name.strip(), items=items, schema_version=1, record_origin='manual')
+    result = dict(scope, id=pid, name=name.strip(), items=items, schema_version=1, record_origin='manual')
+    if value.get('record_origin') == 'assessment_rules':
+        from .automatic_plans import validate_metadata
+        result.update(record_origin='assessment_rules', automatic=copy.deepcopy(value.get('automatic')))
+        result['automatic'] = validate_metadata(result)
+    return result
 
 
 def new_training_plan(scope, name, items):
@@ -113,9 +118,12 @@ def _selected_item(record, entry_key, scope):
 
 
 def _reference(record, entry):
-    return dict(scope_key(record), schema_version=1, id=record['id'], revision=record['revision'],
+    result = dict(scope_key(record), schema_version=1, id=record['id'], revision=record['revision'],
                 name=record['name'], entry_key=entry['key'], item=copy.deepcopy(entry),
-                record_origin='manual', session_overrides={})
+                record_origin=record.get('record_origin', 'manual'), session_overrides={})
+    if result['record_origin'] == 'assessment_rules':
+        result['automatic'] = copy.deepcopy(record['automatic'])
+    return result
 
 
 def prepare_training_plan(record, entry_key, profile):

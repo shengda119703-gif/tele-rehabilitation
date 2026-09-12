@@ -575,6 +575,17 @@ def _saved_plan_html(session):
               ' · 版本 '+fmt(reference.get('revision'), 0)+' · 项目 '+fmt(reference.get('entry_key'))+
               '</p><p class="muted">保留开始时的计划版本；之后修改或归档计划不会改写本次报告。</p>')
     changes = reference.get('session_overrides') or {}
+    automatic = reference.get('automatic')
+    if reference.get('record_origin') == 'assessment_rules' and isinstance(automatic, dict):
+        result += '<h3>根据评估自动安排</h3><p>规则版本：'+fmt(automatic.get('rule_version'))+'</p>'
+        result += '<p>一般基础活动建议；动作选择参考官方公开指导，剂量与投影角适配是软件工程规则，不是疾病或术后处方。</p>'
+        entry = next((i for i in automatic.get('entries', []) if i.get('key') == reference.get('entry_key')), {})
+        source = entry.get('source') or {}
+        result += '<p>'+fmt(entry.get('rationale'))+'</p><p>依据评估：'+fmt(entry.get('assessment_id'))+'</p>'
+        result += '<p>证据类型：'+fmt('官方动作条目匹配' if entry.get('evidence_kind') == 'matched' else
+                                      '本人评估适配；公开指南仅作为从少量开始的一般原则')+'</p>'
+        result += '<p>来源：'+fmt(source.get('title'))+' · '+fmt(source.get('section'))+'<br>'+fmt(source.get('url'))+'</p>'
+        result += '<p>适用性确认时间：'+fmt(automatic.get('confirmed_utc'))+'；本人报告，不由摄像头推断。</p>'
     labels = {'target_reps': '每组次数', 'target_sets': '组数', 'rest_between_sets_s': '组间休息秒数',
               'target_angle_deg': '角度目标', 'allowed_elbow_flexion_deg': '可见屈肘上限',
               'allowed_trunk_tilt_deg': '躯干侧倾上限', 'lowering_tempo_min_s': '下降最短秒数',
@@ -594,6 +605,11 @@ def _training_execution_html(session):
     summary = session.get('summary') or {}
     training = summary.get('training') or {}
     html = '<h2>训练执行</h2>'
+    quality = summary.get('observed_quality')
+    if isinstance(quality, dict):
+        html += ('<p>已观察目标达成 '+fmt(quality.get('observed_goals_met'), 0)+' 次；需调整 '+
+                 fmt(quality.get('needs_adjustment'), 0)+' 次；未能核实 '+fmt(quality.get('unassessable'), 0)+
+                 ' 次。仅限已设置目标和可见指标，不是整体动作合格率；没有设置目标不算动作差。</p>')
     if not training:
         html += '<p>此记录未保存组间执行过程。</p>'
     else:

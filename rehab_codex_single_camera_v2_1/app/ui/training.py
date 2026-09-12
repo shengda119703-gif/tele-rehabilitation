@@ -47,6 +47,8 @@ class TrainingControls(QFrame):
         box.addWidget(self.progress)
         self.note = plain_label('', 'muted')
         box.addWidget(self.note)
+        self.quality = plain_label('', 'muted')
+        box.addWidget(self.quality)
         self.confirm = QCheckBox('已确认本人、测试侧与机位未变')
         self.confirm.toggled.connect(lambda: self.set_execution(self.execution, self.online, self.available))
         box.addWidget(self.confirm)
@@ -71,6 +73,11 @@ class TrainingControls(QFrame):
         self.progress.setValue(training.get('set_reps', 0))
         self.progress.setFormat('%v / %m 次')
         self.progress.setVisible(bool(training))
+        quality = training.get('observed_quality') or {}
+        self.quality.setVisible(bool(quality))
+        self.quality.setText(f"已观察目标达成 {quality.get('observed_goals_met', 0)} 次 · "
+                             f"需调整 {quality.get('needs_adjustment', 0)} 次 · "
+                             f"未能核实 {quality.get('unassessable', 0)} 次（仅限已设置目标）")
         resume = stage == 'PAUSED'
         self.pause.setProperty('resume', resume)
         self.pause.setText('继续训练' if resume else '暂停训练')
@@ -153,6 +160,19 @@ class TrainingFeedbackDialog(QDialog):
         row.addWidget(self.skip)
         row.addWidget(self.save)
         layout.addLayout(row)
+        self.comfortable = QPushButton('我没有疼痛，也不疲劳 · 记录感受')
+        self.comfortable.clicked.connect(self._comfortable)
+        layout.addWidget(self.comfortable)
+
+    def _comfortable(self):
+        if self.pending:
+            return
+        for score in self.scores.values():
+            score.setValue(0)
+        # Do not infer task completion from comfort.
+        if (self.snapshot.get('summary') or {}).get('plan_completed') is True:
+            self.reason.setCurrentIndex(self.reason.findData('completed'))
+        self.submit()
 
     def submit(self):
         if self.pending:
@@ -169,7 +189,7 @@ class TrainingFeedbackDialog(QDialog):
 
     def set_busy(self, busy):
         self.pending = bool(busy)
-        for widget in (*self.scores.values(), self.reason, self.notes, self.save, self.skip):
+        for widget in (*self.scores.values(), self.reason, self.notes, self.save, self.skip, self.comfortable):
             widget.setEnabled(not busy)
         self.save.setText('正在保存…' if busy else '保存感受')
 

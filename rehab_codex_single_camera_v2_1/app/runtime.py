@@ -550,6 +550,45 @@ class Runtime:
                 self._message('longitudinal_exported', directory=output, request_id=kw.get('request_id'))
         elif name == 'participants':
             self._message('participants', participants=store.list_participants())
+        elif name in ('automatic_proposal', 'accept_automatic_plan', 'automatic_progress', 'prepare_automatic_item'):
+            from .assessment_batches import scope_key
+            from .automatic_plans import (ORIGIN, generate_proposal, create_automatic_plan,
+                                           validate_automatic_use, validate_metadata, program_progress)
+            from .training_plans import prepare_training_plan
+            scope = scope_key(kw['scope'])
+            if c.session is not None or c.pending is not None or c.state in ('ONLINE', 'SAVE_FAILED', 'PREVIEW', 'CONNECTING'):
+                raise ValueError('请先结束并保存当前任务，再安排下一项训练')
+            sessions = store.list_sessions()
+            profile = build_body_profile(sessions, **scope)
+            participant = store.get_participant(scope['participant_id'])
+            if name in ('automatic_proposal', 'accept_automatic_plan'):
+                proposal = generate_proposal(profile, sessions, participant)
+                if name == 'automatic_proposal':
+                    records = [p for p in store.list_training_plans(scope) if p.get('record_origin') == ORIGIN]
+                    record = records[0] if records else None
+                    if record:
+                        validate_metadata(record)
+                    self._message('automatic_proposal', scope=scope, proposal=proposal, record=record,
+                                  progress=program_progress(record, sessions) if record else None)
+                    return
+                if kw.get('fingerprint') != proposal['fingerprint']:
+                    raise ValueError('评估或适用条件已变化，请刷新后查看新的自动安排')
+                record = store.save_training_plan(create_automatic_plan(proposal, kw.get('screening')), expected_revision=0)
+            else:
+                record = store.get_training_plan(kw['id'])
+                if (not record or record.get('record_origin') != ORIGIN or scope_key(record) != scope
+                        or record['status'] != 'ACTIVE' or record['revision'] != kw.get('revision')):
+                    raise ValueError('自动计划已变化，请重新打开训练中心')
+                validate_metadata(record)
+            progress = program_progress(record, sessions)
+            if name == 'prepare_automatic_item':
+                entry_key = kw['entry_key']
+                validate_automatic_use(record, entry_key, profile, sessions, participant)
+                plan = prepare_training_plan(record, entry_key, profile)
+                plan['training_plan_confirmed'] = True
+                self._message('automatic_item_prepared', scope=scope, plan=plan)
+            else:
+                self._message('automatic_progress', scope=scope, record=record, progress=progress)
         elif name in ('training_plans', 'save_training_plan', 'archive_training_plan', 'prepare_training_plan'):
             from .assessment_batches import scope_key
             from .training_plans import prepare_training_plan, training_plan_view
@@ -559,6 +598,9 @@ class Runtime:
                 raise ValueError('请先结束并保存当前任务，再修改或使用训练计划')
             selected_id = None
             if name == 'save_training_plan':
+                previous = store.get_training_plan(kw['plan'].get('id'))
+                if kw['plan'].get('record_origin') == 'assessment_rules' or (previous or {}).get('record_origin') == 'assessment_rules':
+                    raise ValueError('自动计划请在自动安排中重新生成；人工修改请另建计划')
                 if scope_key(kw['plan']) != scope:
                     raise ValueError('计划不属于当前用户与来源')
                 record = store.save_training_plan(kw['plan'], expected_revision=kw['expected_revision'])
@@ -574,6 +616,8 @@ class Runtime:
                         or record['revision'] != kw['expected_revision']):
                     raise ValueError('保存的计划已更新，请刷新后重新选择')
                 plan = prepare_training_plan(record, kw['entry_key'], profile)
+                if record.get('record_origin') == 'assessment_rules':
+                    raise ValueError('请从训练中心的自动安排入口按顺序继续')
                 self._message('training_plan_prepared', scope=scope, plan=plan)
             else:
                 plans = [training_plan_view(p, profile) for p in store.list_training_plans(scope, include_archived=True)]

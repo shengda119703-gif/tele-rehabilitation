@@ -31,6 +31,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Setup-Rehab.ps1 -IncludeLa
 | `app/journey.py`、`app/ui/journey.py` | 康复与配套场景的步骤序列、完成小结和下一步入口 |
 | `app/storage.py`、`participants.py`、`assessment_batches.py`、`reports.py` | 本地数据库、个人档案、评估清单和导出 |
 | `app/training_plans.py`、`app/ui/plan_library.py` | 个人多项目计划、持久化白名单、版本 / 范围门禁和原生编辑器 |
+| `app/automatic_plans.py`、`app/ui/automatic_plans.py` | 评估驱动的基础活动安排、来源 / 适用性快照、顺序执行与自动计划页面 |
 | `app/ui/` | 原生界面、身体导航、相机测试、大字指导 |
 
 ## 自动测试
@@ -63,6 +64,7 @@ Set-Location .\rehab_codex_single_camera_v2_1
 .\.venv\Scripts\python.exe scripts\qa_movement_timing.py --output qa-output\timing-review
 .\.venv\Scripts\python.exe scripts\qa_longitudinal.py --output qa-output\history-review
 .\.venv\Scripts\python.exe scripts\qa_dual_camera.py --output qa-output\dual-camera-review
+.\.venv\Scripts\python.exe scripts\qa_automatic_plans.py
 .\.venv\Scripts\python.exe scripts\qa_quiet_guidance.py --output qa-output\quiet-guidance-review
 .\.venv\Scripts\python.exe scripts\qa_smooth_flow.py --output qa-output\smooth-flow-review
 .\.venv\Scripts\python.exe scripts\audit_readiness.py --output .runtime\readiness-review

@@ -213,6 +213,9 @@ class PlanLibraryDialog(QDialog):
         record = self.current_record()
         if self.pending or self.editing or not record or record['status'] != 'ACTIVE':
             return
+        if record.get('record_origin') == 'assessment_rules':
+            self.error.setText('自动计划请从训练中心重新安排；人工修改请另建计划。')
+            return
         self.draft = copy.deepcopy(record)
         self.editing = True
         self.error.clear()
@@ -314,7 +317,8 @@ class PlanLibraryDialog(QDialog):
         self.selector.setEnabled(free and not self.editing)
         self.refresh.setEnabled(free and not self.editing)
         self.new.setEnabled(free and not self.editing)
-        self.edit.setEnabled(free and not self.editing and bool(record) and record['status'] == 'ACTIVE')
+        automatic = bool(record) and record.get('record_origin') == 'assessment_rules'
+        self.edit.setEnabled(free and not self.editing and bool(record) and record['status'] == 'ACTIVE' and not automatic)
         self.archive.setEnabled(free and not self.editing and bool(record))
         self.archive.setText('恢复计划' if record and record['status'] == 'ARCHIVED' else '归档计划')
         self.name.setReadOnly(not self.editing or self.pending)
@@ -333,11 +337,13 @@ class PlanLibraryDialog(QDialog):
         self.cancel_edit.setEnabled(free)
         self.use.setVisible(not self.editing)
         self.use.setEnabled(free and bool(entry) and bool(entry.get('available')) and bool(record)
-                            and record['status'] == 'ACTIVE')
+                            and record['status'] == 'ACTIVE' and not automatic)
         self.close_button.setEnabled(free and not self.editing)
         self.detail.setText('按已确认的安排逐项填写；目标不由评估结果自动生成。' if self.editing else
                             (entry.get('availability_reason', '使用时重新检查评估') if entry else
                              '新建计划并逐项填写；使用时会检查当前有效评估。'))
+        if automatic:
+            self.detail.setText('这是根据评估生成的自动安排。请从训练中心“自动安排 / 继续训练”按顺序执行；此处可以查看和归档。')
 
     def set_busy(self, busy):
         self.pending = bool(busy)

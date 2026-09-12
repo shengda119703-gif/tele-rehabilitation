@@ -8,6 +8,7 @@ class JourneyPanel(QFrame):
     repeat_requested = Signal()
     another_requested = Signal()
     detail_requested = Signal()
+    automatic_requested = Signal()
     countdown_cancelled = Signal()
 
     def __init__(self, parent=None):
@@ -65,6 +66,10 @@ class JourneyPanel(QFrame):
         self.next_actions = QFrame()
         self.next_actions.setLayout(nexts)
         box.addWidget(self.next_actions)
+        self.automatic = QPushButton('自动安排 / 继续下一项训练')
+        self.automatic.setObjectName('primary')
+        self.automatic.clicked.connect(self.automatic_requested)
+        box.addWidget(self.automatic)
         box.addWidget(self.settings)
         box.addStretch()
 
@@ -102,6 +107,8 @@ class JourneyPanel(QFrame):
         self.summary.setText(summary)
         self.summary.setVisible(bool(summary))
         self.next_actions.setVisible(finished)
+        self.automatic.setVisible(finished and guided_available and not guided)
+        self.automatic.setEnabled(enabled)
         for button in (self.repeat, self.another, self.detail):
             button.setEnabled(enabled)
         self.settings.setVisible(not finished)
