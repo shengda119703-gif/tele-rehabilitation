@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-from dataclasses import asdict, replace
+from dataclasses import asdict
 from datetime import datetime
 import json
 import math
@@ -95,17 +95,6 @@ class SceneController:
                                   if context is not None and self.dual_config else None)
         self.secondary_analyzer = self._new_secondary_analyzer() if self.dual_config else None
 
-    def _validate_current_pair(self):
-        from .dual_view import validate_pair_pose
-        import time
-        if self.latest_packet is None or self.latest_pose is None:
-            raise ValueError('请先取得两路有效姿态')
-        now = time.monotonic() if self.source['kind'] == 'LIVE_CAMERA' and not self.test_mode else None
-        validate_pair_pose(self.latest_packet, self.latest_pose, self.dual_config['primary_view'], now=now)
-        from .dual_view import identity_visible
-        if not identity_visible(self.latest_secondary_observation):
-            raise ValueError('请让两路画面中的同一位参与者清楚可见，再人工确认归属')
-
     def open(self, source, setup, options=None):
         if self.pending is not None:
             raise RuntimeError('仍有未保存结果，请先重试保存或明确导出备份')
@@ -170,36 +159,13 @@ class SceneController:
         return self.context
 
     def _review_confirmation(self, pose, observation, auxiliary):
-        """Withdraw this preview's acknowledgement only on evidenced change.
+        """Keep a user's acknowledgement while preview remains open.
 
-        A tracker id is explicitly not an identity, so re-acquired tracking of a
-        continuously visible person keeps the acknowledgement and is only noted.
-        A crowd, or the participant actually leaving the picture, withdraws it
-        with a stated reason so the person knows what to check.
+        Visibility is measurement evidence, not a start permission. People may
+        move out of frame while getting into position and a carer may enter; neither
+        event should force the person through confirmation again.
         """
-        from .joint_calibration import preparation_binding
-        if not self.confirmed:
-            self.confirmation_absent_since = None
-            return
-        binding = preparation_binding(self)
-        if not same_conditions(self.confirmation_binding, binding):
-            self.confirmed, self.confirmation_absent_since = False, None
-            self.confirmation_withdrawn = '拍摄条件已变化，请重新核对本次准备'
-            return
-        views = [observation.status] + ([auxiliary.status] if auxiliary is not None else [])
-        if 'MULTI_PERSON' in views:
-            self.confirmed, self.confirmation_absent_since = False, None
-            self.confirmation_withdrawn = '画面中不止一位，请只保留本人后重新核对'
-            return
-        if 'NO_PERSON_DETECTED' not in views:
-            self.confirmation_absent_since = None
-            self.confirmation_reacquired = self.confirmation_reacquired or binding != self.confirmation_binding
-            return
-        if self.confirmation_absent_since is None:
-            self.confirmation_absent_since = pose.time_s
-        elif pose.time_s-self.confirmation_absent_since >= self.CONFIRMATION_ABSENCE_S:
-            self.confirmed, self.confirmation_absent_since = False, None
-            self.confirmation_withdrawn = '画面中一度没有人，请回到画面后重新核对'
+        self.confirmation_absent_since = None
 
     def _calibration_provenance(self):
         return {'source_ref': self.source['ref'], 'frame_size': list(self.latest_pose.size) if self.latest_pose else None,
@@ -297,21 +263,16 @@ class SceneController:
                 or setup['plan'].get('submode') != self.setup['plan'].get('submode')
                 or setup.get('mirror') != self.setup.get('mirror')):
             raise ValueError('用户、模式、场景、动作、侧别或机位已经改变，请重新预览')
-        if not setup.get('participant_confirmed'):
-            raise ValueError('请人工确认参与者和机位')
-        if self.latest_observation is not None and self.latest_observation.status == 'MULTI_PERSON':
-            raise ValueError('画面中不止一位，请只保留当前参与者后再核对')
         if setup.get('continuation_mode', 'auto') not in ('auto', 'guided'):
             raise ValueError('未知的本次进行方式')
         if self.dual_config:
             from .dual_camera import other_view
             dual = setup.get('dual_camera') or {}
-            if dual.get('same_participant_confirmed') is not True or dual.get('primary_view') != self.dual_config['primary_view']:
-                raise ValueError('请人工确认两路均为同一人，正面 / 侧面角色和测试侧正确')
-            self._validate_current_pair()
+            if dual.get('primary_view', self.dual_config['primary_view']) != self.dual_config['primary_view']:
+                raise ValueError('双摄主机位已改变，请重新打开预览')
             primary = self.dual_config['primary_view']
             setup['dual_camera'] = {k: copy.deepcopy(v) for k, v in self.dual_config.items() if k != 'devices'}
-            setup['dual_camera'].update(same_participant_confirmed=True,
+            setup['dual_camera'].update(same_participant_confirmed=bool(dual.get('same_participant_confirmed')),
                                        confirmed_sizes={primary: list(self.latest_pose.size),
                                                         other_view(primary): list(self.latest_pose.paired_pose.size)})
         elif setup.get('dual_camera'):
@@ -325,26 +286,9 @@ class SceneController:
         if scene == 'activity' and not setup.get('activity_permission'):
             raise ValueError('活动任务需要人工确认活动许可')
         if scene == 'rehab':
-            # A guided, timed session may proceed without a recorded baseline; any
-            # baseline it does carry is still checked against this preview.
-            guided = setup.get('continuation_mode') == 'guided'
-            if not guided or setup['plan'].get('joint_baseline'):
-                self._check_joint_baseline(setup['plan'])
             expected_view = exercise_spec(exercise)['view']
             if setup['view'] != expected_view:
                 raise ValueError('此动作需要'+('正面' if expected_view == 'frontal' else '侧面')+'机位')
-            if exercise == 'sit_to_stand' and not (guided and not setup['plan'].get('calibration', {}).get('seated_knee')):
-                c = setup['plan'].get('calibration', {})
-                if not all(k in c for k in ('seated_knee', 'standing_knee', 'seated_hip_y', 'standing_hip_y')):
-                    raise ValueError('请分别记录舒适坐位与站位基线')
-                if c['seated_knee']-c['standing_knee'] < 20 or c['seated_hip_y']-c['standing_hip_y'] < .05:
-                    raise ValueError('坐位/站位基线区分不足，请检查完整下肢视野并重新记录')
-                if c.get('provenance') != self._calibration_provenance():
-                    raise ValueError('坐站基线不属于当前来源、尺寸、侧别或机位，请重新记录')
-                from .joint_calibration import preparation_binding
-                if c.get('sampling_identity') is not None and not same_conditions(
-                        c['sampling_identity'], preparation_binding(self)):
-                    raise ValueError('坐站基线的记录条件已变化，请重新记录')
         setup['setup_confirmed_at'] = utc_now()
         setup['actual_size_confirmed'] = list(self.latest_packet.image.shape[1::-1])
         setup['source_ref'] = self.source['ref']
@@ -366,20 +310,11 @@ class SceneController:
 
     def start(self):
         if self.pending is not None or self.state != 'PREVIEW' or not self.confirmed:
-            # Say what changed instead of only repeating that a confirmation is missing.
-            raise ValueError(self.confirmation_withdrawn if self.confirmation_withdrawn and self.state == 'PREVIEW'
-                             else '需要有效预览和本次核对后才能开始')
-        # A guided, timed session still needs a working input and this preview's
-        # human acknowledgement; only the automatic measurement gate is relaxed.
+            raise ValueError('请先打开预览并点击确认准备')
         guided = self.setup.get('continuation_mode') == 'guided' and self.setup['scene_id'] == 'rehab'
         if self.latest_pose is None or self.latest_observation is None:
             raise ValueError('尚未取得画面，请重新打开预览')
-        if not guided and self.latest_observation.status != 'VALID':
-            raise ValueError('尚未取得有效的单人姿态，请检查模型与站位')
-        if self.latest_observation.status == 'MULTI_PERSON':
-            raise ValueError('画面中不止一位，请只保留当前参与者后重新核对')
         if self.dual_config:
-            self._validate_current_pair()
             sizes = self.setup['dual_camera']['confirmed_sizes']
             from .dual_camera import other_view
             primary = self.dual_config['primary_view']
@@ -389,20 +324,6 @@ class SceneController:
         if not str(plan.get('participant_id', '')).strip():
             raise ValueError('请先选择当前用户')
         if self.setup['scene_id'] == 'rehab':
-            from .joint_calibration import preparation_binding
-            binding = preparation_binding(self)
-            if not same_conditions(self.confirmation_binding, binding):
-                self.confirmed = False
-                raise ValueError('拍摄条件已变化，请重新完成本次核对')
-            sampling = (plan.get('calibration') or {}).get('sampling_identity')
-            if sampling is not None and not same_conditions(sampling, binding):
-                raise ValueError('坐站基线的记录条件已变化，请重新记录')
-            if not guided or plan.get('joint_baseline'):
-                self._check_joint_baseline(plan)
-            necessary = exercise_spec(plan['exercise_id'])['required_metrics']
-            if not guided and any(self.latest_observation.value(k) is None for k in necessary):
-                raise ValueError(measurement_hint(self.latest_observation, plan, self.latest_pose.schema_id)
-                                 or '动作必要关节不可见，请调整机位后再开始')
             if plan.get('submode') not in ('assessment', 'training'):
                 raise ValueError('请明确选择身体评估或训练指导')
             if plan['submode'] == 'training':
@@ -482,6 +403,7 @@ class SceneController:
                         'pose_backend': self.latest_pose.backend, 'target_kind': self.latest_pose.target_kind,
                         'measurement_limitations': exercise_spec(plan['exercise_id'])['guide'] if self.setup['scene_id'] == 'rehab' else None,
                         'measurement_contract': exercise_spec(plan['exercise_id'])['measurement_contract'] if self.setup['scene_id'] == 'rehab' else None,
+                        'readiness_policy': 'nonblocking-observation-1' if self.setup['scene_id'] == 'rehab' else None,
                         'rule_version': RULE_VERSION, 'preprocess_version': PREPROCESS_VERSION,
                         'preprocessing_hash': digest(self.setup['preprocessing']),
                         'requested_capture': {k: self.capture_options.get(k) for k in ('width', 'height', 'fps')} if self.source['kind'] == 'LIVE_CAMERA' else None,
@@ -563,9 +485,6 @@ class SceneController:
         obs = self.analyzer.analyze(pose)
         primary_observation = obs
         self.latest_primary_observation, self.latest_secondary_observation = obs, auxiliary
-        from .dual_view import identity_visible
-        if auxiliary is not None and not identity_visible(auxiliary):
-            obs = replace(obs, status='UNKNOWN', metrics={}, reasons=obs.reasons+['secondary_view_'+auxiliary.status.lower()])
         self.latest_packet, self.latest_pose, self.latest_observation = packet, pose, obs
         if self.carried_preparation and self.state in ('CONNECTING', 'PREVIEW'):
             self._adopt_carried_preparation()
@@ -576,31 +495,22 @@ class SceneController:
         if self.state != 'ONLINE' or self.engine is None:
             return True
         if auxiliary is not None:
-            if (auxiliary.status == 'MULTI_PERSON' or (auxiliary.track_key is None and pose.paired_pose.people) or
-                    self.active_secondary_track and auxiliary.track_key and auxiliary.track_key != self.active_secondary_track):
-                from .dual_view import observation_row
-                invalid = replace(obs, status='UNKNOWN', metrics={}, reasons=['secondary_view_identity_ambiguous'])
-                self.engine.process(invalid)
-                self.session['dual_camera']['observations'].append(observation_row(self, packet, primary_observation, auxiliary))
-                self.stop('dual_identity_ambiguous')
-                self.last_error = '辅助机位的参与者归属不明确，双摄任务已保存；请重新预览并确认同一人'
-                return True
             if auxiliary.track_key:
                 self.active_secondary_track = auxiliary.track_key
-        previous_track = getattr(self, 'active_track', None)
-        if (primary_observation.status == 'MULTI_PERSON' or (primary_observation.track_key is None and pose.people)
-                or (previous_track and obs.track_key and obs.track_key != previous_track)):
-            self.engine.process(primary_observation)
-            if auxiliary is not None:
-                from .dual_view import observation_row
-                self.session['dual_camera']['observations'].append(observation_row(self, packet, primary_observation, auxiliary))
-            self.stop('identity_ambiguous')
-            self.last_error = '参与者归属不明确，任务已保存；请重新预览并人工确认'
-            return True
         if obs.track_key:
             self.active_track = obs.track_key
         training_event_count = len(self.engine.training_events) if isinstance(self.engine, TrainingEngine) else None
         self.engine.process(obs)
+        if self.setup['scene_id'] == 'rehab':
+            automatic = self.analyzer.automatic_calibration()
+            engine_rest = getattr(self.engine, 'automatic_rest_value', None)
+            engine_calibration = (getattr(self.engine, 'plan', {}).get('calibration') or {})
+            if automatic or engine_rest is not None or engine_calibration.get('automatic'):
+                self.session['automatic_calibration'] = {
+                    'directional_projection': copy.deepcopy(automatic),
+                    'phase_rest_value': engine_rest,
+                    'sit_to_stand': copy.deepcopy(engine_calibration) if engine_calibration.get('automatic') else None,
+                }
         self.processed_frames += 1
         if self.previous_seq is not None:
             self.dropped_frames += max(0, pose.seq-self.previous_seq-1)
@@ -721,26 +631,9 @@ class SceneController:
             t = self.latest_observation.time_s if self.latest_observation else self.engine.clock_t
         if type(t) not in (int, float) or not math.isfinite(t):
             raise ValueError('尚未取得有效输入时间，请等待新画面')
-        if action in ('resume', 'next_set'):
-            if setup_confirmed is not True:
-                raise ValueError('请先确认本人、测试侧与机位未变')
-            obs = self.latest_observation
-            packet, pose = self.latest_packet, self.latest_pose
-            if (obs is None or obs.status != 'VALID' or not obs.track_key
-                    or packet is None or pose is None or packet.context != self.context or pose.context != self.context
-                    or packet.seq != pose.seq or obs.time_s != pose.time_s
-                    or any(type(obs.value(k)) not in (int, float) or not math.isfinite(obs.value(k))
-                           for k in self.engine.spec['required_metrics'])
-                    or (self.source['kind'] == 'LIVE_CAMERA' and
-                        (type(packet.received_monotonic) not in (int, float)
-                         or not math.isfinite(packet.received_monotonic)
-                         or not 0 <= t-packet.received_monotonic <= 3))):
-                raise ValueError('请让当前参与者和必要关节重新清楚入镜，再继续')
-            if self.dual_config:
-                self._validate_current_pair()
         self.engine.control(action, t)
         if action in ('resume', 'next_set'):
-            self.engine.training_events[-1]['setup_manually_confirmed'] = True
+            self.engine.training_events[-1]['setup_manually_confirmed'] = setup_confirmed is True
         if action in ('resume', 'next_set'):
             self.analyzer = self._analyzer(self.setup['plan']['side'])
             if self.dual_config:

@@ -131,38 +131,38 @@ def test_extended_assessment_save_profile_training_and_reopen(tmp_path, eid, sid
         task.close()
 
 
-def test_calibration_cannot_be_forged_or_carried_to_new_preview(tmp_path):
+def test_saved_or_changed_calibration_does_not_block_a_new_preview(tmp_path):
     task = SyntheticSession(tmp_path, 'ankle_dorsiflexion', 'left')
     try:
         task.calibrate()
         previous = copy.deepcopy(task.controller.setup)
         forged = copy.deepcopy(previous)
         forged['plan']['joint_baseline']['rest_value'] += 10
-        with pytest.raises(ValueError, match='重新记录'):
-            task.controller.confirm(forged)
+        task.controller.confirm(forged)
+        assert task.controller.confirmed
         task.open()
         task.feed(0.)
-        with pytest.raises(ValueError, match='重新记录'):
-            task.controller.confirm(previous)
-        assert not task.controller.confirmed
+        task.controller.confirm(previous)
+        assert task.controller.confirmed
         assert task.store.list_sessions() == []
     finally:
         task.close()
 
 
-def test_direction_is_required_and_zero_motion_cannot_supply_it(tmp_path):
+def test_manual_zero_motion_is_rejected_but_missing_direction_does_not_block_start(tmp_path):
     task = SyntheticSession(tmp_path, 'wrist_flexion', 'left')
     try:
         task.feed(0.)
         task.controller.record_joint_baseline(task.history, 'rest')
         setup = copy.deepcopy(task.controller.setup)
         setup['participant_confirmed'] = True
-        with pytest.raises(ValueError, match='活动方向'):
-            task.controller.confirm(setup)
         task.history = []
         task.feed(0.)
         with pytest.raises(ValueError, match='不能区分'):
             task.controller.record_joint_baseline(task.history, 'direction')
+        task.controller.confirm(setup)
+        task.controller.start()
+        assert task.controller.session['readiness_policy'] == 'nonblocking-observation-1'
     finally:
         task.close()
 

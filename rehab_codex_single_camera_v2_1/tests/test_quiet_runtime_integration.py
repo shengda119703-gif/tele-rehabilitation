@@ -39,7 +39,7 @@ def test_actual_countdown_loop_keeps_preview_until_final_manual_confirm_and_save
     saved = reader.get_session(sid)
     reader.close()
     assert saved['config_snapshot']['plan']['joint_baseline'] == baseline
-    assert saved['dual_camera']['validity_policy'] == 'primary-with-auxiliary-identity-1'
+    assert saved['dual_camera']['validity_policy'] == 'primary-focus-with-auxiliary-1'
 
 
 def test_actual_countdown_cancel_remains_responsive_without_starting_a_session(runtime):

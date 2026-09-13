@@ -39,7 +39,7 @@ def test_fluctuations_context_and_critical_priority():
     assert policy.render(fresh, plan, now=8)['level'] == 'status'
     multi = frame(False)
     multi['observation_status'] = 'MULTI_PERSON'
-    assert policy.render(multi, plan, now=8.1)['level'] == 'critical'
+    assert policy.render(multi, plan, now=8.1)['level'] == 'status'
     failed = frame(False)
     failed['state'] = 'SAVE_FAILED'
     failed['summary'] = {'training': {'stage': 'RESTING'}}

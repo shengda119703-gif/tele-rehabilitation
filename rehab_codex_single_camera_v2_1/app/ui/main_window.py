@@ -90,6 +90,7 @@ class MainWindow(QMainWindow):
         self._plan_to_activate = None
         self.automatic_dialog = None
         self._automatic_to_activate = None
+        self._demo_scope_to_activate = None
         self._training_execution = {}
         self._journey_framed = False
         self._journey_error = ''
@@ -310,6 +311,30 @@ class MainWindow(QMainWindow):
         dialog.show()
         self._send('automatic_proposal', scope=dialog.scope)
 
+    def _create_demo_training_plan(self):
+        if self.state in ('ONLINE', 'SAVE_FAILED', 'PREVIEW', 'CONNECTING') or self.busy or self._camera_testing:
+            self.notice.setText('请先结束当前采集，再生成演示计划。')
+            return
+        self.notice.setText('正在用合成评估数据生成临时训练计划…')
+        self._send('create_demo_training_plan')
+
+    def _activate_demo_training_plan(self, result):
+        scope, participant = result['scope'], result['participant']
+        self.participant_records[participant['participant_id']] = participant
+        source_index = self.source_kind.findData(scope['source_kind'])
+        usage_index = self.usage.findData(scope['usage_context'])
+        if source_index < 0 or usage_index < 0:
+            self.notice.setText('演示计划已生成，但当前界面无法切换到演示数据范围。')
+            return
+        self.source_kind.setCurrentIndex(source_index)
+        self.usage.setCurrentIndex(usage_index)
+        self._refresh_participant_controls()
+        self.participant.setText(participant['participant_id'])
+        self._apply_participant()
+        self._show_training_hub()
+        self.notice.flash('已生成临时演示计划：4 项评估自动形成 4 项基础训练。')
+        self._open_automatic_plan()
+
     def _automatic_feedback(self, session_id):
         if self.busy or not self.automatic_dialog or self.automatic_dialog.scope != self._body_scope_key():
             return
@@ -358,7 +383,8 @@ class MainWindow(QMainWindow):
         frame = card()
         grid = QGridLayout(frame)
         grid.setContentsMargins(14, 10, 14, 10)
-        self.source_kind = combo({'LIVE_CAMERA': '实时摄像头', 'REPLAY_FILE': '本地录像回放'})
+        self.source_kind = combo({'LIVE_CAMERA': '实时摄像头', 'REPLAY_FILE': '本地录像回放',
+                                  'SYNTHETIC': '自动计划演示（合成）'})
         self.source_kind.currentIndexChanged.connect(self._source_changed)
         self.backend = combo({700: 'DSHOW', 1400: 'MSMF'})
         self.backend.currentIndexChanged.connect(self._backend_changed)
@@ -617,7 +643,7 @@ class MainWindow(QMainWindow):
         self.guided_note.setWordWrap(True)
         self.guided_note.setObjectName('muted')
         box.addWidget(self.guided_note)
-        self.manual = QCheckBox('已确认单人、机位与舒适动作')
+        self.manual = QCheckBox('已看过画面与安全提示')
         self.manual.setObjectName('manualConfirmation')
         self.manual.toggled.connect(self._confirmation_changed)
         box.addWidget(self.manual)
@@ -1047,13 +1073,14 @@ class MainWindow(QMainWindow):
         self.canvas.update()
         for w in (self.device, self.refresh, self.backend):
             w.setVisible(live)
-        self.replay_row.setVisible(not live)
+        self.replay_row.setVisible(self.source_kind.currentData() == 'REPLAY_FILE')
         self.usage.setCurrentIndex(0 if live else 2)
         self.setup['rois'] = {}
         self.setup['plan']['calibration'] = {}
         self.canvas.rois = {}
         self._sync_scene()
         self._refresh_body_scope()
+        self._buttons()
 
     def _usage_changed(self):
         if self.constructing:
@@ -1127,8 +1154,8 @@ class MainWindow(QMainWindow):
         self.dual_role_hint.setText('本动作使用'+VIEWS.get(self.view.currentData(), '指定')+'机位')
         self.video_pair.configure(enabled, self.view.currentData())
         if enabled:
-            self.manual.setText('已确认两路均为同一人、正侧面及本人侧别正确')
-            self.manual.setToolTip('核对两路画面中的同一位参与者、正面与侧面相机角色、测试侧及所需关节点。')
+            self.manual.setText('已看过两路画面与安全提示')
+            self.manual.setToolTip('确认按提示安排机位即可；陪同者入镜不会阻止任务。')
         self.poses.setText('保存本次两路骨架调试数据' if enabled else '保存本次骨架调试数据')
 
     def _dual_changed(self):
@@ -1254,8 +1281,7 @@ class MainWindow(QMainWindow):
         self.rehab_controls.setVisible(self.scene == 'rehab')
         self.plan_button.setVisible(training)
         self.plan_text.setVisible(training)
-        self.baselines.setVisible(self.scene == 'rehab' and self.exercise.currentData() == 'sit_to_stand'
-                                  and not self._guided)
+        self.baselines.setVisible(False)
         self.guided_toggle.setVisible(self.scene == 'rehab')
         self.guided_note.setVisible(self.scene == 'rehab' and self._guided)
         self.guided_toggle.blockSignals(True)
@@ -1263,7 +1289,7 @@ class MainWindow(QMainWindow):
         self.guided_toggle.blockSignals(False)
         self.region_controls.setVisible(self.scene != 'rehab')
         self.activity_controls.setVisible(self.scene == 'activity')
-        self.manual.setText('已确认单人、机位与舒适动作' if self.scene == 'rehab' else '已确认单人、机位与全部区域')
+        self.manual.setText('已看过画面与安全提示' if self.scene == 'rehab' else '已确认单人、机位与全部区域')
         self.bed_controls.setVisible(self.scene == 'bedroom_demo')
         for key, button in self.scene_buttons.items():
             button.setChecked(key == self.scene and not (key == 'rehab' and training))
@@ -1301,8 +1327,8 @@ class MainWindow(QMainWindow):
         target_layout = self.optional_baseline.box if optional else self.setup_panel.widget().layout()
         if target_layout.indexOf(self.joint_baselines) < 0:
             target_layout.insertWidget(0 if optional else target_layout.indexOf(self.optional_baseline), self.joint_baselines)
-        self.optional_baseline.setVisible(optional)
-        self.joint_baselines.setVisible(joint_task)
+        self.optional_baseline.setVisible(False)
+        self.joint_baselines.setVisible(False)
         self.joint_direction_button.setVisible(spec['directional_calibration'])
         self.joint_rest_button.setText('已侧抬臂，倒计时记录起点' if plan['exercise_id'] == 'shoulder_adduction' else '倒计时记录舒适起点')
         self.joint_direction_button.setText('已按动作方向试做，倒计时记录')
@@ -1315,9 +1341,7 @@ class MainWindow(QMainWindow):
             value = baseline.get('rest_value')
             self.joint_baseline_text.setText(f'侧抬臂起点：{value:.0f}° · 内收时角度减小' if isinstance(value, (int, float)) else
                                              '先舒适侧抬臂，再记录；不是垂臂起点')
-        if spec['experimental']:
-            self.manual.setText('已确认侧别、方向及关节可见')
-        self.manual.setToolTip('请核对本人左右侧、动作要求的拍摄平面，以及需要的关节是否清楚可见。')
+        self.manual.setToolTip('点击确认即可继续；当前关节是否可见不会阻止开始。')
         goal = '角度目标：未设置' if plan['target_angle_deg'] is None else f"角度目标：{plan['target_angle_deg']:g}°"
         if training:
             confirmation = '计划已确认' if plan.get('training_plan_confirmed') else '计划待确认'
@@ -1655,7 +1679,7 @@ class MainWindow(QMainWindow):
         if self.state == 'PREVIEW':
             self.runtime.command('unconfirm')
         self.notice.flash('已切换到引导计时练习：按提示活动，完成一次可自己点“记一次”。' if self._guided
-                          else '已回到自动测量：需要记录起点并核对后开始。')
+                          else '已回到自动测量：确认后即可开始，起点在运行中自动建立。')
         self._sync_scene()
 
     def _toggle_guided_pause(self):
@@ -1681,11 +1705,10 @@ class MainWindow(QMainWindow):
         info = exercise_instructions(self.exercise.currentData())
         explanation = ''
         if rehab and self.exercise.currentData() in ('neck_flexion', 'neck_extension') and step.key in ('camera', 'framing'):
-            explanation = ('为什么要拍到髋？肩—髋连线是躯干参考，用来区分低头与身体前倾，并非测髋关节。'
-                           '穿着衣服即可，取景到同侧髋部，不必露出皮肤或拍到脚；另一侧肩不用入镜。'
-                           '双摄仍使用侧面这一路完成该测量。')
+            explanation = ('本动作不要求髋部入镜。同侧眼、耳清楚可见并保持摄像头固定即可；'
+                           '肩部用于帮助核对坐姿，不清楚时也不会阻止测量。双摄仍使用侧面画面完成观察。')
             if step.key == 'framing':
-                explanation = '肩—髋连线用于躯干参考，不是测髋。穿衣即可，取景到同侧髋部，不必拍到脚或另一侧肩。'
+                explanation = '同侧眼、耳清楚入镜即可；不要求髋部、脚或另一侧肩入镜。请保持坐稳和摄像头固定。'
         self.journey.explanation.setText(explanation)
         self.journey.explanation.setVisible(bool(explanation))
         guidance = (self._last_coach_view or {}).get('guidance') if rehab else None
@@ -1706,6 +1729,11 @@ class MainWindow(QMainWindow):
                             message=self._journey_error, offer=offer, guided=self._guided,
                             guided_available=rehab, summary=self._completion_summary(step))
         self.journey.set_countdown(self._start_countdown)
+        if self.source_kind.currentData() == 'SYNTHETIC':
+            self.next_step_hint.setText('演示数据仅用于查看自动计划；切回实时摄像头可进行真人训练')
+            self.preview_button.setText('演示计划仅供查看')
+            self.preview_button.setEnabled(False)
+            return
         self.next_step_hint.setText(f'{step.number} / {step.total}  {step.title}')
         if self.state in ('UNSELECTED', 'OFFLINE', 'ERROR', 'PRIVACY_PAUSED'):
             button = self.preview_button
@@ -1809,6 +1837,7 @@ class MainWindow(QMainWindow):
         if not hasattr(self, 'preview_button'):
             return
         available = self.busy == 0 and not self._camera_testing
+        capture_source = self.source_kind.currentData() in ('LIVE_CAMERA', 'REPLAY_FILE')
         self.distance_button.setVisible(self.scene == 'rehab')
         self.distance_button.setEnabled(available and self.state != 'SAVE_FAILED')
         self.auto_distance.setVisible(self.scene == 'rehab')
@@ -1823,7 +1852,7 @@ class MainWindow(QMainWindow):
             self.camera_test_button.style().unpolish(self.camera_test_button)
             self.camera_test_button.style().polish(self.camera_test_button)
         self.training_panel.set_execution(self._training_execution, self.state == 'ONLINE', available)
-        self.preview_button.setEnabled(available and self.state not in ('ONLINE', 'SAVE_FAILED'))
+        self.preview_button.setEnabled(available and capture_source and self.state not in ('ONLINE', 'SAVE_FAILED'))
         preparing = getattr(self, 'preparation_active', False)
         self.confirm_button.setEnabled(available and self.state == 'PREVIEW' and not preparing)
         self.confirm_button.setText('已核对，确认准备')
@@ -1873,6 +1902,8 @@ class MainWindow(QMainWindow):
             hint = '请先确认训练计划'
         if self.state == 'UNSELECTED' and self.source_kind.currentData() == 'LIVE_CAMERA' and not self.device.currentData():
             hint = '请在顶部选择摄像头'
+        elif self.state == 'UNSELECTED' and not capture_source:
+            hint = '演示数据仅用于查看自动计划；切回实时摄像头可进行真人训练'
         self.next_step_hint.setText(hint)
         self.metrics_panel.setVisible(self.state in ('ONLINE', 'SAVE_FAILED'))
         self.feedback.setVisible(self.state not in ('UNSELECTED', 'CONNECTING'))
@@ -1882,7 +1913,7 @@ class MainWindow(QMainWindow):
             self.guided_toggle.setEnabled(available and self.state != 'ONLINE')
             self.preparation_cancel.setVisible(preparing and self.state == 'PREVIEW')
             self.preparation_review.setVisible(self.scene == 'rehab' and self.state == 'PREVIEW' and not confirmed and not preparing)
-            self.preparation_review.setText('本轮核对：'+self.manual.text().removeprefix('已确认')+'；所需关节点可见、已回到起点且无不适。')
+            self.preparation_review.setText('可直接确认并开始。不需要等待关节全部可见；画面清楚时自动记录，不清楚的片段会自动跳过。')
             self.manual.setVisible(self.scene != 'rehab')
             editable = available and self.state not in ('ONLINE', 'SAVE_FAILED')
             for w in (self.participant, self.participant_select, self.participant_button, self.participant_new,
@@ -1991,6 +2022,9 @@ class MainWindow(QMainWindow):
                 if self.automatic_dialog and self.automatic_dialog.scope == self._body_scope_key():
                     self.automatic_dialog.accept()
                     self._activate_saved_plan(prepared)
+            if not self.busy and self._demo_scope_to_activate:
+                result, self._demo_scope_to_activate = self._demo_scope_to_activate, None
+                self._activate_demo_training_plan(result)
             if not self.busy and self._plan_to_activate:
                 prepared, self._plan_to_activate = self._plan_to_activate, None
                 if self.plan_library_dialog:
@@ -2091,6 +2125,8 @@ class MainWindow(QMainWindow):
         elif kind == 'participants':
             self.participant_records = {p['participant_id']: p for p in m['participants']}
             self._refresh_participant_controls()
+        elif kind == 'demo_training_plan_created':
+            self._demo_scope_to_activate = copy.deepcopy(m)
         elif kind == 'assessment_batch':
             if self.batch_dialog and m['scope'] == self.batch_dialog.scope == self._body_scope_key():
                 self.batch_dialog.set_batch(m['batch'])
@@ -2423,7 +2459,7 @@ class MainWindow(QMainWindow):
         elif self.state not in ('ONLINE',):
             for c in (self.count_card, self.angle_card, self.valid_card):
                 c.show_value(None)
-            self.feedback.setText('预览中。检查关节是否清楚入镜，再确认准备。' if self.state == 'PREVIEW' else self._idle_copy()[2])
+            self.feedback.setText('预览中。可直接确认并开始；清楚入镜后会自动记录。' if self.state == 'PREVIEW' else self._idle_copy()[2])
         if data.get('error') and not data.get('guidance'):
             self.notice.setText(data['error'])
         if self.state in ('OFFLINE', 'ERROR', 'SAVE_FAILED', 'PRIVACY_PAUSED'):
@@ -2454,11 +2490,11 @@ class MainWindow(QMainWindow):
         if (self.state in ('PREVIEW', 'ONLINE') and observed in ('NO_PERSON_DETECTED', 'MULTI_PERSON', 'UNKNOWN')
                 and training_stage not in ('PAUSED', 'RESTING', 'COMPLETE')):
             self.feedback.setText({'NO_PERSON_DETECTED': '未检测到人，请调整拍摄位置。',
-                                   'MULTI_PERSON': '检测到多人，请只保留一位参与者。',
+                                   'MULTI_PERSON': '已自动选择画面中的主要参与者。',
                                    'UNKNOWN': '暂时无法测量，请检查遮挡和拍摄位置。'}[observed])
             if pose and pose.target_kind == 'hand':
                 self.feedback.setText({'NO_PERSON_DETECTED': '未检测到测试手 · 请让单只测试手清楚入镜。',
-                                       'MULTI_PERSON': '检测到多只手 · 无法确认归属，请仅保留测试手。',
+                                       'MULTI_PERSON': '已自动选择画面中最主要的测试手。',
                                        'UNKNOWN': '手部证据不足 · 请检查遮挡、距离和关节轮廓。'}[observed])
             elif pose and pose.backend == 'mediapipe_wrist' and observed == 'UNKNOWN':
                 self.feedback.setText('腕部暂不能测量 · 请让所选侧肘、腕和整只手入镜，另一只手移出画面，并稳定保持。')

@@ -36,6 +36,15 @@ def test_hub_does_not_invent_a_plan(qt_app):
     assert received == ['assessment', 'records']
 
 
+def test_hub_offers_explicit_isolated_demo_generation(qt_app):
+    hub = TrainingHub()
+    received = []
+    hub.demo_requested.connect(lambda: received.append('demo'))
+    hub.demo.click()
+    assert received == ['demo']
+    assert '合成评估' in hub.demo.toolTip()
+
+
 def test_hub_shows_only_current_preparation_and_never_confirms_plan(qt_app):
     hub = TrainingHub()
     current = plan()

@@ -47,7 +47,7 @@ def exercise_instructions(exercise_id: str) -> dict:
     spec = exercise_spec(exercise_id)
     joint = spec['joint']
     camera = {
-        'shoulder': '髋、肩、肘完整入镜；前屈和后伸从身体侧面拍摄。',
+        'shoulder': '测试侧肩、肘完整入镜；前屈和后伸从身体侧面拍摄。',
         'elbow': '从测试侧拍摄，肩、肘、腕完整入镜。',
         'hip': '正面动作让双髋和测试侧膝入镜；侧面动作让肩、髋、膝入镜。',
         'knee': '从测试侧拍摄，髋、膝、踝完整入镜。',
@@ -55,7 +55,7 @@ def exercise_instructions(exercise_id: str) -> dict:
         'ankle': '从测试侧拍摄，小腿、踝、足跟和足尖完整入镜。',
         'finger': '单只手近景；从所测手指侧面拍摄，让各关节展开在画面内。',
         'neck': ('正对镜头，双眼与双肩清楚入镜。' if spec['view'] == 'frontal' else
-                 '测试侧朝向镜头，同侧眼、耳、肩、髋清楚入镜；不要求另一侧肩膀可见。'),
+                 '测试侧朝向镜头，同侧眼、耳和肩清楚入镜；不要求髋部或另一侧肩膀入镜。'),
         'trunk': ('正对镜头，双肩、双髋完整入镜。' if spec['view'] == 'frontal' else
                   '测试侧朝向镜头，同侧肩、髋完整入镜。'),
     }[joint]
@@ -71,14 +71,14 @@ def exercise_instructions(exercise_id: str) -> dict:
         'trunk': '稳定坐位，按已确认安排使用支撑或陪同；保持机位固定。',
     }[joint]
     boundary = {
-        'shoulder': '记录上臂相对躯干的二维变化，不分离肩胛与盂肱关节。',
+        'shoulder': '记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。',
         'elbow': '记录肩—肘—腕的二维屈曲角；不测前臂旋转或超伸。',
         'hip': '记录腿部相对身体参考线的二维变化；骨盆或躯干转动会影响结果。',
         'knee': '记录髋—膝—踝的二维屈曲角；不测超伸、肌力或支撑受力。',
         'wrist': '实验性二维观察。手部点没有逐点置信度；遮挡和离面运动可能无法自动发现。',
         'ankle': '实验性小腿—足部二维观察，不测后足内外翻或足弓。',
         'finger': '实验性二维观察。手部点没有逐点置信度；遮挡和离面运动可能无法自动发现。',
-        'neck': '实验性头部相对身体参考线的二维变化，不是颈椎节段活动度，也不测旋转。疼痛、头晕或不适立即停止。',
+        'neck': '实验性头部相对固定画面的二维变化，不是颈椎节段活动度，也不测旋转。摄像头需保持固定；疼痛、头晕或不适立即停止。',
         'trunk': '实验性躯干整体二维变化，不能分离脊柱、骨盆和髋部贡献，不是胸腰椎节段活动度。',
     }[joint]
     search_terms = f"{spec['label']} {JOINT_LABELS[joint]} {exercise_id}"
@@ -91,34 +91,32 @@ def exercise_instructions(exercise_id: str) -> dict:
         move = f'缓慢弯曲{name}{location}，保持该关节两侧指段可见。'
         back = '缓慢伸回起始姿势，不要求所有手指同时握拳。'
         if direction == 'extension':
-            start = f'{name}保持舒适屈曲姿势，记录起点。'
+            start = f'{name}保持舒适屈曲姿势，系统会自动建立本轮起点。'
             move = f'缓慢伸展{name}{location}，不强行掰直。'
-            back = '缓慢屈回刚才记录的起点，其他手指不要遮挡。'
+            back = '缓慢屈回本轮起点，其他手指尽量不遮挡。'
         search_terms += ' '+articulation.upper()
         if articulation == 'mcp' and finger != 'thumb':
             boundary += ' 掌指角使用腕—掌指连线作为近端参考，不是骨性关节角。'
     else:
         start, move, back = _MOVEMENTS[exercise_id]
     if joint == 'shoulder':
-        camera = ('正对镜头' if spec['view'] == 'frontal' else '测试侧朝向镜头')+'，髋、肩、肘完整入镜。'
+        camera = ('正对镜头' if spec['view'] == 'frontal' else '测试侧朝向镜头')+'，测试侧肩、肘完整入镜。'
         if exercise_id == 'shoulder_adduction':
-            camera += ' 先侧抬臂记录起点，再向身体收回；不是横向抱胸。'
+            camera += ' 开始时先舒适侧抬臂，再向身体收回；不是横向抱胸。'
     elif joint == 'hip':
         camera = '正对镜头，双髋与测试侧膝入镜。' if spec['view'] == 'frontal' else '测试侧朝向镜头，肩、髋、膝入镜。'
     elif joint == 'wrist':
         camera += ' 从手的侧缘拍摄。' if spec['view'] == 'sagittal' else ' 手掌或手背正对镜头。'
     if exercise_id in ('neck_flexion', 'neck_extension'):
-        boundary += ' 肩—髋连线用于躯干参考，区分低头与身体前倾；髋点不是本次被测关节。穿衣即可，仍需轮廓清楚，不需露出皮肤。'
+        boundary += ' 本动作不要求髋部入镜；请保持坐稳和摄像头固定，避免用整个身体前后倾代替头部动作。穿衣即可，不需露出皮肤。'
     return {
         'label': spec['label'], 'joint': joint, 'position': position,
         'camera': camera, 'start': start, 'move': move, 'return': back,
-        'count': ('到达已记录的站位计 1 次；回坐后可再计数。' if exercise_id == 'sit_to_stand'
+        'count': ('到达站位计 1 次；回坐后可再计数。' if exercise_id == 'sit_to_stand'
                   else '完成出程并返回起点计 1 次；次数与幅度目标分别记录。'),
         'boundary': boundary, 'measurement_label': spec['metric_label'],
         'search_terms': search_terms, 'clinical_rom': False,
         'view_label': '正面拍摄' if spec['view'] == 'frontal' else '侧面拍摄',
         'experimental': spec['experimental'],
-        'calibration': ('记录坐位和站位' if exercise_id == 'sit_to_stand' else
-                        '记录起点和方向' if spec['directional_calibration'] else
-                        '记录舒适起点' if spec['baseline_required'] else '可记录舒适起点'),
+        'calibration': '运行中自动建立本轮起点',
     }

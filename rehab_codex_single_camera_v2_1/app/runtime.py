@@ -124,8 +124,8 @@ class Runtime:
         c = self.controller
         testing = getattr(self, 'camera_test', False)
         hint = None
-        if not testing and pose and c.latest_observation and c.state in ('PREVIEW', 'ONLINE') and c.setup['scene_id'] == 'rehab':
-            hint = measurement_hint(c.latest_observation, c.setup['plan'], pose.schema_id, preview=c.state == 'PREVIEW')
+        if not testing and pose and c.latest_observation and c.state == 'ONLINE' and c.setup['scene_id'] == 'rehab':
+            hint = measurement_hint(c.latest_observation, c.setup['plan'], pose.schema_id, preview=False)
         dual_view = None
         if c.dual_config:
             from .dual_camera import other_view
@@ -137,7 +137,7 @@ class Runtime:
                              auxiliary_version=AUXILIARY_VERSION,
                              auxiliary_status=auxiliary.status if auxiliary else None,
                              auxiliary_metrics={k: asdict(v) for k, v in auxiliary.metrics.items()} if auxiliary else {})
-            if not testing and pose:
+            if not testing and pose and c.state == 'ONLINE':
                 hint = auxiliary_hint(c) or hint
         view = {'state': c.state, 'context': c.context, 'summary': {} if testing else c.summary(),
                                'confirmed': False if testing else c.confirmed, 'packet': packet, 'pose': None if testing else pose,
@@ -162,30 +162,20 @@ class Runtime:
             view['current_measurement_valid'] = bool(fresh and obs and obs.status == 'VALID' and
                 all(isinstance(obs.value(k), (float, int)) and math.isfinite(obs.value(k)) for k in keys))
             view['adjustment'] = adjustment_action(obs, plan, pose.schema_id if pose else '')
-            view['identity_ambiguous'] = bool(obs and (obs.status == 'MULTI_PERSON' or (obs.track_key is None and pose.people)))
+            view['identity_ambiguous'] = bool(obs and obs.track_key is None and pose.people)
+            view['additional_candidates'] = max(0, len(pose.people)-1) if pose else 0
             auxiliary = c.latest_secondary_observation if pose and c.dual_config else None
             if auxiliary is not None:
                 from .dual_view import identity_visible
                 view['auxiliary_missing'] = identity_visible(auxiliary) and any(not m.valid for m in auxiliary.metrics.values())
-                view['identity_ambiguous'] |= auxiliary.status == 'MULTI_PERSON' or (auxiliary.track_key is None and bool(pose.paired_pose.people))
-                if not identity_visible(auxiliary):
-                    view['adjustment'] = '请让同一位参与者进入辅助画面。'
+                view['identity_ambiguous'] |= auxiliary.track_key is None and bool(pose.paired_pose.people)
+                view['additional_candidates'] += max(0, len(pose.paired_pose.people)-1)
+                if not identity_visible(auxiliary) and c.state == 'ONLINE':
+                    view['adjustment'] = '辅助画面暂时不清楚；主机位仍继续记录。'
             if c.state == 'PREVIEW':
-                baseline = plan.get('joint_baseline') or {}
-                calibration = plan.get('calibration') or {}
-                instruction = '核对本次参与者与机位，然后确认准备。'
+                instruction = '可直接确认准备；不需要等待关节全部可见。'
                 if c.confirmed:
                     instruction = '准备已确认，可以开始'+('训练。' if plan['submode'] == 'training' else '评估。')
-                elif plan['exercise_id'] == 'sit_to_stand':
-                    if 'seated_knee' not in calibration:
-                        instruction = '请在舒适坐位保持，倒计时记录坐位。'
-                    elif 'standing_knee' not in calibration:
-                        instruction = '请在舒适站位保持，倒计时记录站位。'
-                elif not baseline and spec['baseline_required']:
-                    instruction = ('请先舒适侧抬臂，再倒计时记录起点。' if plan['exercise_id'] == 'shoulder_adduction'
-                                   else '保持舒适起点，倒计时记录。')
-                elif baseline and spec['directional_calibration'] and not baseline.get('direction_sign'):
-                    instruction = '按所选动作方向小幅试做，再倒计时记录。'
                 if getattr(self, 'preparation', None):
                     instruction = '请保持当前舒适姿势，等待采样完成。'
                 view['preparation_instruction'] = instruction
@@ -230,8 +220,8 @@ class Runtime:
         if sample == 'joint_baseline' and position == 'direction' and not c.live_joint_baseline:
             raise ValueError('请先记录本次舒适起点，再记录活动方向')
         binding = self._preparation_binding()
-        if (not binding or not binding['track_key'] or c.latest_observation.status == 'MULTI_PERSON'
-                or (c.dual_config and (not binding['auxiliary']['track_key'] or c.latest_secondary_observation.status == 'MULTI_PERSON'))):
+        if (not binding or not binding['track_key'] or
+                (c.dual_config and not binding['auxiliary']['track_key'])):
             raise ValueError('请先让当前参与者清楚入镜，再开始倒计时')
         self._cancel_preparation()
         c.confirmed = False
@@ -257,18 +247,14 @@ class Runtime:
             # running. The stable window still requires one continuous run under
             # the current track, so observations are never mixed across it.
             preparation['binding'] = binding
-        crowded = (c.latest_observation.status == 'MULTI_PERSON' or
-                   (c.dual_config and c.latest_secondary_observation.status == 'MULTI_PERSON'))
         missing = (c.latest_observation.status == 'NO_PERSON_DETECTED' or
                    (c.dual_config and c.latest_secondary_observation.status == 'NO_PERSON_DETECTED'))
         # A single dropped frame is not a changed posture. Only a problem that
         # persists ends the sampling, so ordinary tracking flicker is absorbed.
-        if crowded or missing:
+        if missing:
             since = preparation.setdefault('trouble_since', now)
-            limit = self.crowd_tolerance_s if crowded else self.dropout_tolerance_s
-            if now-since >= limit:
-                self._cancel_preparation('画面中不止一位，请只保留当前参与者后重试。' if crowded else
-                                         '一直没看到测试部位，请调整取景后重试，或改用引导计时练习。')
+            if now-since >= self.dropout_tolerance_s:
+                self._cancel_preparation('一直没看到测试部位，请调整取景后重试，或改用引导计时练习。')
                 return
         else:
             preparation.pop('trouble_since', None)
@@ -548,6 +534,13 @@ class Runtime:
                     raise ValueError('历史记录已变化，请重新选择基准刷新后再导出')
                 output = export_longitudinal_history(history, kw['directory'], kw.get('metric', 'range_deg'))
                 self._message('longitudinal_exported', directory=output, request_id=kw.get('request_id'))
+        elif name == 'create_demo_training_plan':
+            if c.session is not None or c.pending is not None or c.state in (
+                    'ONLINE', 'SAVE_FAILED', 'PREVIEW', 'CONNECTING'):
+                raise ValueError('请先结束并保存当前任务，再生成演示计划')
+            from .demo_training_plan import install_demo_plan
+            result = install_demo_plan(store)
+            self._message('demo_training_plan_created', **result)
         elif name == 'participants':
             self._message('participants', participants=store.list_participants())
         elif name in ('automatic_proposal', 'accept_automatic_plan', 'automatic_progress', 'prepare_automatic_item'):

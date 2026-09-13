@@ -12,6 +12,7 @@ class TrainingHub(QWidget):
     resume_requested = Signal()
     library_requested = Signal()
     automatic_requested = Signal()
+    demo_requested = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -24,10 +25,16 @@ class TrainingHub(QWidget):
         panel = QVBoxLayout(current)
         panel.setContentsMargins(24, 22, 24, 22)
         panel.setSpacing(14)
+        top_actions = QHBoxLayout()
         self.automatic = QPushButton('根据评估自动安排 / 继续训练')
         self.automatic.setObjectName('primary')
         self.automatic.clicked.connect(self.automatic_requested.emit)
-        panel.addWidget(self.automatic)
+        top_actions.addWidget(self.automatic, 2)
+        self.demo = QPushButton('一键生成演示计划')
+        self.demo.setToolTip('使用独立合成评估数据运行自动安排规则，不写入真实患者档案。')
+        self.demo.clicked.connect(self.demo_requested.emit)
+        top_actions.addWidget(self.demo, 1)
+        panel.addLayout(top_actions)
         self.plan_title = QLabel()
         self.plan_title.setObjectName('sectionTitle')
         self.plan_title.setWordWrap(True)
@@ -80,7 +87,7 @@ class TrainingHub(QWidget):
         self.records.style().polish(self.records)
         if not self.has_reference:
             self.plan_title.setText('还没有选择训练动作')
-            self.description.setText('点击上方自动安排，系统会读取评估并生成练习顺序，无需填写次数与组数。也可选择专业人员的人工安排。')
+            self.description.setText('系统可读取评估并生成练习顺序。现场演示可一键载入独立的合成评估与临时计划。')
             self.plan_details.clear()
             return
         spec = exercise_spec(plan['exercise_id'])

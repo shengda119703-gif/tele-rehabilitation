@@ -8,7 +8,7 @@ from .dual_camera import DUAL_VERSION, VIEWS, other_view, validate_pair
 from .exercises import exercise_spec
 
 AUXILIARY_VERSION = 'auxiliary-projection-1'
-VALIDITY_POLICY = 'primary-with-auxiliary-identity-1'
+VALIDITY_POLICY = 'primary-focus-with-auxiliary-1'
 
 
 def identity_visible(observation):
@@ -62,10 +62,13 @@ def session_snapshot(controller):
                                                  received_fps=packet.received_fps, inference_ms=pose.inference_ms))
     return dict(version=DUAL_VERSION, primary_view=primary, secondary_view=secondary,
                 pairing_version=config['pairing_version'], max_receive_delta_s=config['max_receive_delta_s'],
-                auxiliary_version=AUXILIARY_VERSION, validity_policy=VALIDITY_POLICY, same_participant_manually_confirmed=True,
+                auxiliary_version=AUXILIARY_VERSION, validity_policy=VALIDITY_POLICY,
+                same_participant_manually_confirmed=bool(
+                    (c.setup.get('dual_camera') or {}).get('same_participant_confirmed')),
                 auxiliary_metrics={k: copy.deepcopy(v) for k, v in AUXILIARY_METRICS.items() if v['view'] == secondary},
                 streams=streams, observations=[], summary={},
-                limitations='两路独立二维观察；人工确认同一人；仅接收时间配对，未验证曝光同步，未作空间标定或三维重建。')
+                limitations='两路独立二维观察；每路自动保持主要参与者焦点，陪同者入镜不会阻止任务；'
+                            '仅接收时间配对，未验证曝光同步，未作空间标定或三维重建。')
 
 
 def observation_row(controller, packet, primary_observation, auxiliary_observation, *, included=None):
@@ -73,17 +76,19 @@ def observation_row(controller, packet, primary_observation, auxiliary_observati
     required = spec['required_metrics']
     primary_keys = set(required) | {spec['metric'], spec.get('raw_metric', spec['metric'])}
     main_valid = primary_observation.status == 'VALID' and all(primary_observation.value(k) is not None for k in required)
-    identity = (identity_visible(primary_observation) and identity_visible(auxiliary_observation)
-                and getattr(controller, 'active_track', None) in (None, primary_observation.track_key)
-                and controller.active_secondary_track in (None, auxiliary_observation.track_key))
-    main_usable = main_valid and identity
+    primary_focus = (identity_visible(primary_observation)
+                     and getattr(controller, 'active_track', None) in (None, primary_observation.track_key))
+    auxiliary_focus = (identity_visible(auxiliary_observation)
+                       and controller.active_secondary_track in (None, auxiliary_observation.track_key))
+    main_usable = main_valid and primary_focus
     return dict(primary_seq=packet.seq, secondary_seq=packet.paired_frame.seq,
                 primary_time_s=packet.time_s, secondary_time_s=packet.paired_frame.time_s,
                 receive_delta_s=packet.pairing['receive_delta_s'],
                 phase=controller.engine.phase if controller.engine else None,
                 included_in_training=included,
                 primary_status=primary_observation.status, auxiliary_status=auxiliary_observation.status,
-                identity_confirmed=identity, main_measurement_usable=main_usable,
+                identity_confirmed=primary_focus, auxiliary_focus_available=auxiliary_focus,
+                main_measurement_usable=main_usable,
                 primary_used=main_usable and included is not False,
                 jointly_valid=main_usable and auxiliary_observation.status == 'VALID',
                 primary_metrics={k: asdict(primary_observation.metrics.get(k, Metric.missing('not_observed'))) for k in sorted(primary_keys)},
@@ -120,10 +125,10 @@ def auxiliary_hint(controller):
         return '等待'+VIEWS[view]+'辅助机位的有效姿态。'
     if identity_visible(obs) and obs.status != 'VALID':
         return VIEWS[view]+'辅助指标：本项无法评价。'
-    message = {'NO_PERSON_DETECTED': '未检测到人，请让同一位参与者入镜',
-               'MULTI_PERSON': '检测到多人，请停止并重新确认参与者',
+    message = {'NO_PERSON_DETECTED': '未检测到人，请让参与者入镜',
+               'MULTI_PERSON': '正在自动选择主要参与者',
                'UNKNOWN': '姿态暂不清楚，请检查所需肩髋点和遮挡'}.get(obs.status)
-    return VIEWS[view]+'辅助机位：'+message+'；本次未计有效动作。' if message else None
+    return VIEWS[view]+'辅助机位：'+message+'；不影响主机位已取得的数据。' if message else None
 
 
 def capture_conditions(session):

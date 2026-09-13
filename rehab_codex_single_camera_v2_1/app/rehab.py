@@ -50,15 +50,13 @@ class RehabEngine:
             raise ValueError('人工角度目标必须是 0–180 度之间的有限数值或 null')
         self.primary_metric = self.spec['metric']
         baseline = self.plan.get('joint_baseline') or {}
-        if self.spec['baseline_required'] and not baseline:
-            raise ValueError('本动作需要先记录舒适起点')
         if baseline:
             value = baseline.get('rest_value')
             if not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value):
                 raise ValueError('舒适起点不是有效测量')
-            if self.spec['directional_calibration'] and baseline.get('direction_sign') not in (-1, 1):
-                raise ValueError('本动作需要先记录活动方向')
             validate_start_value(self.plan, value)
+        self.automatic_rest_value = None
+        self.automatic_sitstand = False
         self.direction = 1 if self.spec['target_direction'] == 'increase' else -1
         self.timing_plan = timing_for_plan(self.plan)
         self.timing_history = deque()
@@ -299,7 +297,7 @@ class RehabEngine:
                         self.current['unavailable'][key] = (metric.reason if metric and metric.reason else
                                                              'identity_ambiguous' if o.track_key is None else 'occlusion')
             self.previous_valid = False
-            self.message = '当前画面无法可靠测量，请检查单人站位和必要关节'
+            self.message = '当前片段暂未计入；画面清楚后会自动继续'
             return
         if self.previous_valid and not gap and not identity_change:
             self.valid_s += dt
@@ -323,6 +321,12 @@ class RehabEngine:
         baseline = self.plan.get('joint_baseline') or {}
         if baseline:
             rest = 0. if self.spec['directional_calibration'] else baseline['rest_value']
+            at_rest = abs(angle-rest) <= 5.
+            outbound = self.direction*(angle-rest) >= self.plan['raising_delta_deg']
+        elif self.spec['baseline_required']:
+            if self.automatic_rest_value is None:
+                self.automatic_rest_value = angle
+            rest = self.automatic_rest_value
             at_rest = abs(angle-rest) <= 5.
             outbound = self.direction*(angle-rest) >= self.plan['raising_delta_deg']
         if self.phase in ('WAIT_READY', 'REST') and at_rest:
@@ -365,8 +369,13 @@ class RehabEngine:
         t, knee, hip = o.time_s, o.value('knee_flexion_deg'), o.value('hip_y')
         c = self.plan['calibration']
         if not all(k in c for k in ('seated_knee', 'standing_knee', 'seated_hip_y', 'standing_hip_y')):
-            self.message = '请先确认舒适坐位和站位基线'
-            return
+            # Start is deliberately non-blocking. The first clearly measured pose
+            # is treated as the prompted seated start, and conservative relative
+            # thresholds establish the standing region for this run.
+            c.update(seated_knee=knee, standing_knee=max(0., knee-65.),
+                     seated_hip_y=hip, standing_hip_y=max(0., hip-.18),
+                     automatic=True, method='first-valid-seated-pose-relative-thresholds-1')
+            self.automatic_sitstand = True
         seated = knee >= c['seated_knee']-12 and hip >= c['seated_hip_y']-.04
         standing = knee <= c['standing_knee']+10 and hip <= c['standing_hip_y']+.04
         rising = knee < c['seated_knee']-10 and hip < c['seated_hip_y']-.025

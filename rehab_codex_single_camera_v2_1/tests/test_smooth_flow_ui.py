@@ -78,12 +78,12 @@ def test_countdown_reaches_start_only_after_the_last_tick(desktop):
     assert w._start_countdown == 0 and runtime.calls[-1][0] == 'start'
 
 
-def test_guided_switch_removes_baseline_steps_and_marks_the_setup(desktop):
+def test_guided_switch_marks_setup_without_reintroducing_baseline_steps(desktop):
     w, runtime, app = desktop
     w._choose_catalog_exercise('neck_flexion')
     w.state, w._journey_framed = 'PREVIEW', True
     w._buttons()
-    assert w._journey_step().key == 'rest'
+    assert w._journey_step().key == 'confirm'
     assert w.journey.guided.isVisible()
     w.journey.guided.setChecked(True)
     assert w._guided and w.guided_toggle.isChecked()
@@ -94,7 +94,7 @@ def test_guided_switch_removes_baseline_steps_and_marks_the_setup(desktop):
     w.guided_toggle.setChecked(False)
     assert not w._guided and not w.journey.guided.isChecked()
     assert w._read_setup()['continuation_mode'] == 'auto'
-    assert w._journey_step().key == 'rest'
+    assert w._journey_step().key == 'confirm'
 
 
 def test_a_failed_sampling_offers_the_guided_path_instead_of_a_dead_end(desktop):

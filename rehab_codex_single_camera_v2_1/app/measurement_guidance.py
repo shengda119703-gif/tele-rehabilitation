@@ -38,9 +38,9 @@ def measurement_hint(observation, plan, schema_id, *, preview=False):
     if observation.status == 'NO_PERSON_DETECTED':
         return '未检测到参与者，请让测试部位入镜。'
     if observation.status == 'MULTI_PERSON':
-        return '检测到多人，请只保留当前参与者。'
+        return None
     if observation.track_key is None:
-        return '暂不能确认参与者，请保持单人入镜。'
+        return '正在选择主要参与者，请面向镜头并保持测试部位清楚。'
     key = spec.get('raw_metric', spec['metric']) if preview else spec['metric']
     metric = observation.metrics.get(key)
     if metric is not None and metric.valid:
@@ -58,7 +58,7 @@ def measurement_hint(observation, plan, schema_id, *, preview=False):
         return '起点和方向已记录；回到舒适起点，勾选人工确认后点击“确认准备”。'
     reason = metric.reason if metric is not None else ''
     if reason == 'direction_calibration_required':
-        return '请先在预览中记录舒适起点和活动方向。'
+        return '正在用本轮第一段清楚动作自动建立起点和方向。'
     names = SCHEMAS.get(schema_id, ())
     missing = []
     for item in (reason or '').split(','):
@@ -70,10 +70,10 @@ def measurement_hint(observation, plan, schema_id, *, preview=False):
     if missing:
         hint = '未看清：'+'、'.join(dict.fromkeys(missing))+'；'
         if spec['view'] == 'sagittal':
-            return hint+'让测试侧朝向镜头，同侧眼、耳、肩、髋入镜。'
+            return hint+'让测试侧朝向镜头，同侧眼、耳和肩入镜；不要求髋部入镜。'
         return hint+('正对镜头，让双眼、双肩入镜。' if spec['joint'] == 'neck' else
-                     '正对镜头，让测试侧髋、肩、肘入镜。')
+                     '正对镜头，让测试侧肩、肘入镜。')
     if spec['joint'] == 'neck':
-        return ('参考线过短或不清楚；检查侧面耳—眼及同侧肩—髋连线，保持机位固定。'
+        return ('参考线过短或不清楚；检查侧面耳—眼连线，保持身体和机位固定。'
                 if spec['view'] == 'sagittal' else '参考线过短或不清楚；请正对镜头，让双眼和双肩清楚入镜。')
-    return '上臂或躯干参考线不清楚；请让测试侧髋、肩、肘分开可见。'
+    return '上臂参考线不清楚；请让测试侧肩、肘分开可见，并保持摄像头固定。'

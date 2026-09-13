@@ -46,7 +46,7 @@ class RuntimeTimeoutTests(unittest.TestCase):
 
 @unittest.skipUnless((ROOT/'assets/models/yolo11n-pose.pt').is_file() and importlib.util.find_spec('ultralytics'), 'Official local model not prepared')
 class RuntimeIntegrationTests(unittest.TestCase):
-    def test_actual_blank_replay_has_no_person_no_task_and_no_false_save(self):
+    def test_actual_blank_replay_can_start_but_never_invents_measurement(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory)/'synthetic-blank.avi'
             writer = cv2.VideoWriter(str(path), cv2.VideoWriter_fourcc(*'MJPG'), 10, (320, 240))
@@ -80,13 +80,14 @@ class RuntimeIntegrationTests(unittest.TestCase):
                 runtime.command('confirm', setup=setup)
                 wait_for(lambda: runtime.controller.confirmed)
                 runtime.command('start')
-                wait_for(lambda: any(m.get('kind') == 'error' and m.get('command') == 'start' for m in messages))
-                self.assertIsNone(runtime.controller.session)
-                runtime.command('preview_segment')
-                wait_for(lambda: runtime.camera.worker is None)
-                self.assertEqual(runtime.store.list_sessions(), [])
-                self.assertFalse(any(m.get('kind') == 'saved' for m in messages))
-                self.assertFalse(any(m.get('kind') == 'notice' and '已保存本次任务' in m.get('text', '') for m in messages))
+                wait_for(lambda: any(m.get('kind') == 'saved' for m in messages))
+                sessions = runtime.store.list_sessions()
+                self.assertEqual(len(sessions), 1)
+                saved = sessions[0]
+                self.assertEqual(saved['summary']['completed'], 0)
+                self.assertEqual(saved['summary']['valid_s'], 0)
+                self.assertIsNone(saved['summary']['motion_range'])
+                self.assertEqual(saved['readiness_policy'], 'nonblocking-observation-1')
             finally:
                 runtime.command('shutdown')
                 runtime.thread.join(10)

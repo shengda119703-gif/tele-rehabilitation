@@ -187,7 +187,7 @@ class ControllerTests(unittest.TestCase):
         finally:
             self.store.save_session = original
 
-    def test_training_resume_rejects_missing_participant_and_assessment_has_no_controls(self):
+    def test_training_resume_allows_temporary_missing_participant_and_assessment_has_no_controls(self):
         self.c.start()
         with self.assertRaises(ValueError):
             self.c.training_control('pause')
@@ -200,36 +200,20 @@ class ControllerTests(unittest.TestCase):
         self.frame(1., 0)
         self.c.training_control('pause')
         self.c.latest_observation = None
-        with self.assertRaisesRegex(ValueError, '清楚入镜'):
-            self.c.training_control('resume', setup_confirmed=True)
+        self.c.training_control('resume', setup_confirmed=True)
+        self.assertEqual(self.c.engine.stage, 'ACTIVE')
 
-    def test_training_resume_requires_matching_pose_and_finite_metrics(self):
+    def test_training_resume_does_not_gate_on_current_pose_or_metrics(self):
         self._training_preview(self._assessment_reference())
         self.c.start()
         self.frame(1., 0)
         self.c.training_control('pause')
         self.frame(2., 0)
-        pose, obs = self.c.latest_pose, self.c.latest_observation
         self.c.latest_pose = None
-        with self.assertRaisesRegex(ValueError, '清楚入镜'):
-            self.c.training_control('resume', setup_confirmed=True)
-        self.c.latest_pose = pose
-        self.c.latest_packet.seq += 1
-        with self.assertRaisesRegex(ValueError, '清楚入镜'):
-            self.c.training_control('resume', setup_confirmed=True)
-        self.c.latest_packet.seq = pose.seq
-        key = self.c.engine.spec['required_metrics'][0]
-        original = obs.metrics[key]
-        for value in (float('nan'), float('inf'), True):
-            obs.metrics[key] = Metric(value, True)
-            with self.assertRaisesRegex(ValueError, '清楚入镜'):
-                self.c.training_control('resume', setup_confirmed=True)
-        obs.metrics[key] = original
-        self.assertEqual(self.c.engine.stage, 'PAUSED')
         self.c.training_control('resume', setup_confirmed=True)
         self.assertEqual(self.c.engine.stage, 'ACTIVE')
 
-    def test_training_live_resume_rejects_stale_future_or_nonfinite_receipt(self):
+    def test_training_live_resume_does_not_gate_on_receipt_timestamp(self):
         self._training_preview(self._assessment_reference())
         self.c.start()
         self.frame(1., 0)
@@ -238,11 +222,7 @@ class ControllerTests(unittest.TestCase):
         # Controller-only clock fixture; no live camera is opened or evidence relabelled.
         self.c.source = dict(self.source, kind='LIVE_CAMERA')
         try:
-            for received in (5., 11., float('nan')):
-                self.c.latest_packet.received_monotonic = received
-                with self.assertRaisesRegex(ValueError, '清楚入镜'):
-                    self.c.training_control('resume', now=10., setup_confirmed=True)
-            self.c.latest_packet.received_monotonic = 9.
+            self.c.latest_packet.received_monotonic = float('nan')
             self.c.training_control('resume', now=10., setup_confirmed=True)
             self.assertFalse(self.frame(9.9, 90))
             self.assertTrue(self.frame(10.1, 0))
@@ -282,15 +262,12 @@ class ControllerTests(unittest.TestCase):
                 self.c.confirm(setup)
                 metric = exercise_spec(exercise)['metric']
                 observation = self.c.latest_observation
-                saved_metric = observation.metrics[metric]
                 observation.metrics[metric] = Metric.missing('synthetic-missing')
-                with self.assertRaisesRegex(ValueError, '必要关节'):
-                    self.c.start()
-                observation.metrics[metric] = saved_metric
                 self.c.start()
                 self.assertEqual(self.c.session['exercise_id'], exercise)
                 self.assertEqual(self.c.engine.primary_metric, metric)
                 self.assertEqual(self.c.session['config_snapshot']['view'], exercise_spec(exercise)['view'])
+                self.assertEqual(self.c.session['readiness_policy'], 'nonblocking-observation-1')
                 self.c.stop('user_stop')
 
     def test_preview_packets_rejected_after_start(self):

@@ -146,13 +146,11 @@ def test_short_pages_keep_actions_text_guides_and_details_accessible(desktop):
     assert '掌侧' in w.exercise_guide.steps[1]['text']
     w.setup_tabs.setCurrentIndex(1)
     app.processEvents()
-    assert w.joint_baselines.isVisible() and not w.optional_baseline.isVisible()
+    assert w.joint_baselines.isHidden() and w.optional_baseline.isHidden()
     w._choose_catalog_exercise('shoulder_abduction')
     w.setup_tabs.setCurrentIndex(1)
     app.processEvents()
-    assert w.optional_baseline.isVisible() and not w.joint_baselines.isVisible()
-    QTest.mouseClick(w.optional_baseline.toggle, Qt.MouseButton.LeftButton)
-    assert w.joint_baselines.isVisible()
+    assert w.optional_baseline.isHidden() and w.joint_baselines.isHidden()
     QTest.mouseClick(w.measurement_details.toggle, Qt.MouseButton.LeftButton)
     assert not w.action_guide.isHidden() and w.action_guide.text()
 

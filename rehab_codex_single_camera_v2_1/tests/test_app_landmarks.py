@@ -74,6 +74,23 @@ def test_schema_order_and_edges_are_explicit(schema):
         PoseAnalyzer().analyze(pose)
 
 
+def test_additional_person_keeps_the_existing_spatial_focus():
+    analyzer = PoseAnalyzer(exercise_id='shoulder_abduction')
+    pose = frame('coco17-v1')
+    first = analyzer.analyze(pose)
+    original_bbox = list(pose.people[0].bbox)
+    carer = copy.deepcopy(pose.people[0])
+    carer.track_key = 'carer'
+    carer.bbox = [0., 0., 1270., 710.]
+    carer.xy = [[x+250., y] for x, y in carer.xy]
+    pose.people.append(carer)
+    pose.time_s = .1
+    selected = analyzer.analyze(pose)
+    assert selected.status == 'VALID' and selected.track_key == first.track_key
+    assert selected.bbox_raw_px == original_bbox
+    assert 'additional_candidates_ignored' in selected.reasons
+
+
 @pytest.mark.parametrize('side', ['left', 'right'])
 def test_pose33_maps_semantics_not_coco_indices(side):
     coco = settled(frame('coco17-v1'), side=side)
@@ -283,13 +300,10 @@ NEW_IDS = [e for e in EXERCISE_IDS if exercise_spec(e)['baseline_required']]
 
 
 @pytest.mark.parametrize('eid', NEW_IDS)
-def test_each_new_action_requires_baseline_and_counts_only_complete_return(eid):
+def test_each_new_action_auto_establishes_baseline_and_counts_only_complete_return(eid):
     plan = default_plan(eid)
-    with pytest.raises(ValueError, match='起点'):
-        RehabEngine(plan)
     spec = exercise_spec(eid)
     rest = 0. if spec['directional_calibration'] else 40.
-    plan['joint_baseline'] = {'rest_value': rest, 'direction_sign': 1}
     engine = RehabEngine(plan)
     direction = 1 if spec['target_direction'] == 'increase' else -1
     def feed(value, count=15):
@@ -297,6 +311,7 @@ def test_each_new_action_requires_baseline_and_counts_only_complete_return(eid):
             t = 0. if engine.last_t is None else engine.last_t+.1
             engine.process(Observation(t, 'one', 'VALID', {spec['metric']: Metric.of(value)}))
     feed(rest)
+    assert engine.automatic_rest_value == pytest.approx(rest)
     feed(rest+direction*30)
     assert engine.completed == 0
     feed(rest)

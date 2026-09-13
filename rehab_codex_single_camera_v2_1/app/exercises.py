@@ -11,10 +11,10 @@ import copy
 _SPECS = {
     'shoulder_abduction': {
         'label': '肩外展', 'joint': 'shoulder', 'view': 'frontal',
-        'metric': 'raise_deg', 'metric_label': '肩外展二维投影抬举角',
+        'metric': 'raise_deg', 'metric_label': '肩部相对画面竖直线二维投影抬举角',
         'required_metrics': ('raise_deg',), 'rep_value_key': 'peak_angle_deg',
         'target_direction': 'increase',
-        'guide': '正面机位，测试侧髋、肩、肘入镜；在舒适范围向侧方抬臂，再回到垂臂姿势。',
+        'guide': '正面机位，测试侧肩、肘入镜；保持摄像头和身体稳定，在舒适范围向侧方抬臂，再回到垂臂姿势。',
         'ready_hint': '请自然垂臂，保持舒适准备姿势约 1 秒',
         'outbound_hint': '在舒适范围缓慢向侧方抬臂',
         'return_hint': '缓慢放下手臂，回到起始垂臂姿势',
@@ -24,17 +24,17 @@ _SPECS = {
         'metric': 'knee_flexion_deg', 'metric_label': '坐站膝屈曲二维投影角',
         'required_metrics': ('knee_flexion_deg', 'hip_y'),
         'rep_value_key': 'min_angle_deg', 'target_direction': 'decrease',
-        'guide': '侧面机位，测试侧髋、膝、踝入镜；先确认舒适坐位和站位基线，达到站位记一次，回坐后才可再计。',
+        'guide': '侧面机位，尽量让测试侧髋、膝、踝入镜；开始时先舒适坐稳，系统会在清楚画面中自动建立本轮起点。达到站位记一次，回坐后才可再计。',
         'ready_hint': '请在已确认的座椅上保持舒适坐位约 1 秒',
         'outbound_hint': '按已确认计划缓慢起立',
         'return_hint': '缓慢回坐到已确认的座椅，回坐后才可开始下一次',
     },
     'shoulder_flexion': {
         'label': '肩前屈', 'joint': 'shoulder', 'view': 'sagittal',
-        'metric': 'raise_deg', 'metric_label': '肩前屈二维投影抬举角',
+        'metric': 'raise_deg', 'metric_label': '肩部相对画面竖直线二维投影抬举角',
         'required_metrics': ('raise_deg',), 'rep_value_key': 'peak_angle_deg',
         'target_direction': 'increase',
-        'guide': '侧面机位，测试侧髋、肩、肘入镜；在舒适范围向前抬臂，再回到垂臂姿势。',
+        'guide': '侧面机位，测试侧肩、肘入镜；保持摄像头和身体稳定，在舒适范围向前抬臂，再回到垂臂姿势。',
         'ready_hint': '请侧对镜头，自然垂臂并保持舒适准备姿势约 1 秒',
         'outbound_hint': '在舒适范围缓慢向前抬臂',
         'return_hint': '缓慢放下手臂，回到起始垂臂姿势',
@@ -80,36 +80,36 @@ def _add(exercise_id, label, joint, view, metric, metric_label, guide,
         'target_direction': direction, 'backend': backend, 'baseline_required': True,
         'directional_calibration': directional, 'experimental': experimental,
         'guide': guide,
-        'ready_hint': '请回到已记录的舒适起始姿势，保持约 1 秒；不要强行伸直或追求最大幅度',
-        'outbound_hint': '按已确认方向，在舒适范围缓慢完成'+label,
-        'return_hint': '缓慢回到已记录的舒适起始姿势',
+        'ready_hint': '请保持舒适起始姿势约 1 秒；清楚入镜后自动建立本轮起点',
+        'outbound_hint': '按所选动作方向，在舒适范围缓慢完成'+label,
+        'return_hint': '缓慢回到本轮舒适起始姿势',
     }
 
 
 _add('shoulder_adduction', '肩内收回位', 'shoulder', 'frontal', 'raise_deg',
-     '肩内收二维投影抬举角（内收时减小）',
-     '正面，髋、肩、肘清楚可见；从舒适侧抬臂姿势向身体收回，再返回起始位置。仅测抬臂平面内内收，不测横向内收。', direction='decrease')
+     '肩部相对画面竖直线二维投影抬举角（内收时减小）',
+     '正面，测试侧肩、肘清楚可见；从舒适侧抬臂姿势向身体收回，再返回起始位置。仅测抬臂平面内内收，不测横向内收。', direction='decrease')
 _SPECS['shoulder_adduction'].update(
-    ready_hint='请先回到已记录的侧抬臂起点，保持约 1 秒；不是垂臂起点',
+    ready_hint='请先舒适侧抬手臂并保持约 1 秒；系统会自动以此作为本轮起点',
     outbound_hint='从侧抬臂起点向身体缓慢收回手臂，角度减小',
     return_hint='向侧方抬回已记录的侧抬臂起点，回位后计 1 次',
     measurement_contract='shoulder-adduction-start-2')
 _add('elbow_extension', '肘伸展', 'elbow', 'sagittal', 'elbow_flexion_deg',
-     '肘屈曲二维投影角（伸展时减小）', '侧面，肩、肘、腕入镜；先记录舒适屈肘姿势，缓慢伸肘后回位。', direction='decrease')
+     '肘屈曲二维投影角（伸展时减小）', '侧面，肩、肘、腕入镜；开始时保持舒适屈肘姿势，缓慢伸肘后回位。', direction='decrease')
 _add('knee_flexion', '膝屈曲', 'knee', 'sagittal', 'knee_flexion_deg',
-     '膝屈曲二维投影角', '侧面，髋、膝、踝入镜；使用已确认的稳定坐位或支撑姿势，先记录舒适起点，缓慢屈膝后回位。')
+     '膝屈曲二维投影角', '侧面，髋、膝、踝入镜；使用稳定坐位或支撑姿势，开始时保持舒适起点，缓慢屈膝后回位。')
 
 # Signed angles are direction-calibrated against a comfortable starting pose.
 # A small, manually identified excursion establishes screen direction, NOT ROM
 # or a clinical target. This avoids confusing flexion with extension after mirroring.
 for eid, label, joint, view, raw, guide in (
-    ('shoulder_extension', '肩后伸', 'shoulder', 'sagittal', 'shoulder_sagittal_raw_deg', '侧面，髋、肩、肘入镜；保持躯干舒适稳定，向身体后方小幅移臂。'),
+    ('shoulder_extension', '肩后伸', 'shoulder', 'sagittal', 'shoulder_sagittal_raw_deg', '侧面，测试侧肩、肘入镜；保持摄像头和身体稳定，向身体后方小幅移臂。'),
     ('hip_flexion', '髋屈曲', 'hip', 'sagittal', 'hip_sagittal_raw_deg', '侧面，肩、髋、膝入镜；使用已确认的稳定支撑，向身体前方小幅移腿。'),
     ('hip_extension', '髋后伸', 'hip', 'sagittal', 'hip_sagittal_raw_deg', '侧面，肩、髋、膝入镜；使用已确认的稳定支撑，向身体后方小幅移腿。'),
     ('hip_adduction', '髋内收', 'hip', 'frontal', 'hip_abduction_deg', '正面，双髋与测试侧膝入镜；从舒适外展位置向身体中线收腿，避免另一条腿遮挡。'),
 ):
     _add(eid, label, joint, view, eid+'_excursion_deg', label+'相对舒适起点二维投影变化',
-         guide+'先记录舒适起点，再按本动作方向小幅移动并记录方向；这不是最大幅度测试。', directional=True)
+         guide+'开始时保持舒适起点，再按所选动作方向小幅移动；系统会在清楚画面中自动建立本轮起点和方向。', directional=True)
     _SPECS[eid]['raw_metric'] = raw
     if eid in ('hip_flexion', 'hip_extension'):
         _SPECS[eid]['guide'] += '角度参考肩—髋躯干线与大腿线；骨盆/躯干转动会影响结果，不能分离为纯髋关节ROM。'
@@ -121,7 +121,7 @@ for eid, label, view, plane in (
     ('wrist_ulnar_deviation', '腕尺偏', 'frontal', '手背或手掌正对镜头，向小指侧偏腕'),
 ):
     _add(eid, label, 'wrist', view, eid+'_excursion_deg', label+'相对舒适起点二维投影变化',
-         plane+'；让测试侧肘、腕、整只手清楚入镜，另一只手移出画面。先记录舒适起点，再小幅移动记录方向。手指姿势尽量不变；遮挡时停止。',
+         plane+'；让测试侧肘、腕、整只手尽量清楚入镜。开始时保持舒适起点，再小幅完成所选动作；系统自动建立本轮方向。',
          backend='mediapipe_wrist', directional=True, experimental=True)
     _SPECS[eid]['raw_metric'] = 'wrist_raw_deg'
 
@@ -130,7 +130,7 @@ for eid, label, movement in (
     ('ankle_plantarflexion', '踝跖屈', '向远离小腿方向下压脚尖'),
 ):
     _add(eid, label, 'ankle', 'sagittal', eid+'_excursion_deg', label+'相对舒适起点二维投影变化',
-         '侧面稳定坐位，小腿、踝、足跟、足尖完整可见；'+movement+'，不以踮脚站立代替。先记录舒适起点，再小幅移动记录方向。仅测小腿—足部投影变化。',
+         '侧面稳定坐位，小腿、踝、足跟、足尖尽量可见；'+movement+'，不以踮脚站立代替。开始时保持舒适起点，再小幅完成所选动作。仅测小腿—足部投影变化。',
          backend='mediapipe_pose', directional=True, experimental=True)
     _SPECS[eid]['raw_metric'] = 'ankle_raw_deg'
 
@@ -145,12 +145,12 @@ for finger, label, joints in (
         part = {'mcp': '掌指关节', 'pip': '近端指间关节', 'dip': '远端指间关节', 'ip': '指间关节'}[joint]
         eid = f'{finger}_{joint}_flexion'
         _add(eid, label+part+'屈伸', 'finger', 'sagittal', eid+'_deg', label+part+'二维投影屈曲角',
-             '单只测试手近景，所测手指从侧面展开在成像平面内，其余手指不要遮挡。记录舒适起点后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。'+
+             '单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。'+
              ('掌指角的近端参考使用腕—掌指连线，不是骨性关节测量。' if joint == 'mcp' and finger != 'thumb' else ''),
              backend='mediapipe_hands', experimental=True)
         _add(f'{finger}_{joint}_extension', label+part+'伸展', 'finger', 'sagittal', eid+'_deg',
              label+part+'二维投影屈曲角（伸展时减小）',
-             '单只测试手侧面近景；记录舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指不要遮挡。'
+             '单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。'
              '手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。',
              backend='mediapipe_hands', direction='decrease', experimental=True)
 
@@ -159,9 +159,9 @@ for eid, label, joint, view, raw, guide in (
     ('neck_lateral_flexion', '头颈侧屈观察', 'neck', 'frontal', 'head_roll_raw_deg',
      '坐稳并正对镜头，双眼与双肩清楚可见；向所选左/右侧小幅侧屈头部，不转头、不耸肩。记录双眼线相对双肩线的变化，不是颈椎各节段角。'),
     ('neck_flexion', '头颈前屈观察', 'neck', 'sagittal', 'head_pitch_raw_deg',
-     '坐稳并从测试侧拍摄，同侧眼、耳、肩、髋清楚可见；按已确认安排小幅低头。记录耳—眼线相对躯干线的变化，不是颈椎关节角。'),
+     '坐稳并从测试侧拍摄，同侧眼、耳和肩清楚可见；按已确认安排小幅低头。记录耳—眼线相对固定画面的变化，不是颈椎关节角。'),
     ('neck_extension', '头颈后伸观察', 'neck', 'sagittal', 'head_pitch_raw_deg',
-     '坐稳并从测试侧拍摄，同侧眼、耳、肩、髋清楚可见；仅在已获准的舒适范围小幅抬头，不追求后仰极限。记录耳—眼线相对躯干线的变化。'),
+     '坐稳并从测试侧拍摄，同侧眼、耳和肩清楚可见；仅在已获准的舒适范围小幅抬头，不追求后仰极限。记录耳—眼线相对固定画面的变化。'),
     ('trunk_lateral_flexion', '躯干侧屈观察', 'trunk', 'frontal', 'trunk_frontal_raw_deg',
      '稳定坐位正对镜头，双肩、双髋完整入镜；按已确认安排向所选左/右侧小幅侧屈。记录肩髋中线相对骨盆参考线的变化，不分离脊柱各节段。'),
     ('trunk_flexion', '躯干前屈观察', 'trunk', 'sagittal', 'trunk_sagittal_raw_deg',
@@ -170,9 +170,16 @@ for eid, label, joint, view, raw, guide in (
      '稳定坐位从测试侧拍摄，同侧肩、髋完整入镜；仅在已确认安排内小幅后移躯干，再回到起点，不追求后仰极限。不能分离胸腰椎、骨盆和髋部贡献。'),
 ):
     _add(eid, label, joint, view, eid+'_excursion_deg', label+'相对舒适起点二维投影变化',
-         guide+'先记录舒适起点，再小幅试动作记录方向；疼痛、头晕或不适立即停止。',
+         guide+'开始时保持舒适起点，再按提示小幅试做；系统在清楚画面中自动建立本轮起点和方向。疼痛、头晕或不适立即停止。',
          directional=True, experimental=True)
-    _SPECS[eid].update(raw_metric=raw, measurement_contract='whole-segment-projection-1')
+    _SPECS[eid].update(raw_metric=raw,
+                       measurement_contract=('head-pitch-screen-reference-2'
+                                             if eid in ('neck_flexion', 'neck_extension')
+                                             else 'whole-segment-projection-1'))
+
+for _shoulder_id in ('shoulder_abduction', 'shoulder_flexion', 'shoulder_extension'):
+    _SPECS[_shoulder_id]['measurement_contract'] = 'shoulder-screen-vertical-1'
+_SPECS['shoulder_adduction']['measurement_contract'] = 'shoulder-adduction-screen-reference-3'
 
 EXERCISE_IDS = tuple(_SPECS)
 

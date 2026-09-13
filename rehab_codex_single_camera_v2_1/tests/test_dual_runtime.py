@@ -88,7 +88,7 @@ def test_preferences_persist_roles_without_current_indices_or_patient_mutations(
     assert r.store.get_camera_pair_preference() == preferred
 
 
-def test_auxiliary_hint_names_the_failed_view_instead_of_claiming_main_joints_are_missing(tmp_path):
+def test_preview_suppresses_auxiliary_warning_and_keeps_main_measurement_ready(tmp_path):
     f = DualFixture(tmp_path)
     r = Runtime.__new__(Runtime)
     r.controller = f.c
@@ -98,7 +98,7 @@ def test_auxiliary_hint_names_the_failed_view_instead_of_claiming_main_joints_ar
         f.emit(.3, auxiliary_missing=True)
         r._view(f.c.latest_packet, f.c.latest_pose)
         view = r.views.get_nowait()
-        assert '侧面辅助指标' in view['measurement_hint']
+        assert view['measurement_hint'] is None
         assert view['observation_status'] == 'VALID'
         assert view['current_measurement_valid']
         assert view['guidance']['status'] == '辅助指标：本项无法评价'
@@ -114,7 +114,7 @@ def test_required_primary_missing_is_not_masked_by_an_unrelated_valid_metric(tmp
     try:
         f.start()
         packet, pose = f.emit(1., return_input=True)
-        pose.people[0].conf[11] = .01
+        pose.people[0].conf[5] = .01
         f.c.consume(packet, pose)
         r._view(packet, pose)
         data = r.views.get_nowait()

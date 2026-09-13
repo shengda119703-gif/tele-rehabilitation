@@ -75,7 +75,7 @@ def test_standing_hold_guidance_survives_set_completion_and_pause_ends_it():
     assert '连续观察' in seq.engine.summary()['message']
     assert '/ 3 秒' in seq.engine.summary()['message']
     seq.frames(knee=5, hip=.4, valid=False, n=1)
-    assert '无法可靠测量' in seq.engine.summary()['message']
+    assert '未计入' in seq.engine.summary()['message']
     seq.frames(knee=5, hip=.4, n=2)
     seq.command('pause')
     assert seq.engine.summary()['movement_timing_live'] is None

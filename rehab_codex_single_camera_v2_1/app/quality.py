@@ -23,8 +23,15 @@ class PoseAnalyzer:
         self.side, self.conf_min, self.tau, self.max_gap = side, conf_min, tau, max_gap
         self.previous = {}
         self.previous_track = None
+        self.focus_context = None
+        self.focus_model_track = None
+        self.focus_center = None
+        self.focus_key = None
+        self.focus_number = 0
         self.exercise_id = exercise_id
         self.joint_baseline = joint_baseline or {}
+        self.automatic_rest_value = None
+        self.automatic_direction_sign = None
         if auxiliary_view not in (None, 'frontal', 'sagittal'):
             raise ValueError('辅助视角不明确')
         self.auxiliary_view = auxiliary_view
@@ -36,23 +43,55 @@ class PoseAnalyzer:
         t = frame.time_s
         if t is None or not math.isfinite(t):
             raise ValueError('视频时间不可用，不能计时')
-        status = 'NO_PERSON_DETECTED' if not frame.people else 'MULTI_PERSON'
-        if len(frame.people) != 1:
+        if not frame.people:
             self.previous.clear()
-            return Observation(t, None, status, {}, size=frame.size, reasons=[status.lower()])
-        p = frame.people[0]
-        names = SCHEMAS[frame.schema_id]
-        if len(p.xy) != len(names) or len(p.conf) != len(names):
-            raise ValueError('关键点数量不符合骨架契约')
-        if p.track_key is None:
-            return Observation(t, None, 'UNKNOWN', {}, size=frame.size, reasons=['identity_ambiguous'])
-        track_context = (frame.context, frame.schema_id, p.track_key)
-        if track_context != self.previous_track:
-            self.previous.clear()
-            self.previous_track = track_context
+            return Observation(t, None, 'NO_PERSON_DETECTED', {}, size=frame.size,
+                               reasons=['no_person_detected'])
         w, h = frame.size
         if w <= 0 or h <= 0:
             raise ValueError('画面尺寸不可用')
+        context = frame.context
+        focus_context = ((context.generation, context.scene_id, context.source_ref,
+                          context.source_kind, context.usage_context, context.run_id), frame.schema_id)
+        if focus_context != self.focus_context:
+            self.focus_context = focus_context
+            self.focus_model_track = self.focus_center = self.focus_key = None
+            self.automatic_rest_value = self.automatic_direction_sign = None
+        def center(person):
+            x1, y1, x2, y2 = person.bbox
+            return ((x1+x2)/2, (y1+y2)/2)
+        def area(person):
+            x1, y1, x2, y2 = person.bbox
+            return max(0., x2-x1)*max(0., y2-y1)
+        matching = next((person for person in frame.people
+                         if self.focus_model_track is not None and person.track_key == self.focus_model_track), None)
+        if matching is not None:
+            p = matching
+        elif self.focus_center is not None:
+            # A tracker id may be reacquired. Continue with the spatially nearest
+            # candidate rather than blocking the whole task because a carer is visible.
+            p = min(frame.people, key=lambda person: math.dist(center(person), self.focus_center))
+        else:
+            image_center = (w/2, h/2)
+            p = max(frame.people, key=lambda person: (area(person), -math.dist(center(person), image_center)))
+        selected_center = center(p)
+        changed_focus = (self.focus_center is not None and matching is None and
+                         math.dist(selected_center, self.focus_center) > .25*math.hypot(w, h))
+        if self.focus_key is None or changed_focus:
+            self.focus_number += 1
+            self.focus_key = f'focus:{self.focus_number}'
+            self.previous.clear()
+            self.automatic_rest_value = self.automatic_direction_sign = None
+        self.focus_model_track = p.track_key
+        self.focus_center = selected_center
+        selected_track = self.focus_key
+        names = SCHEMAS[frame.schema_id]
+        if len(p.xy) != len(names) or len(p.conf) != len(names):
+            raise ValueError('关键点数量不符合骨架契约')
+        track_context = (frame.context, frame.schema_id, selected_track)
+        if track_context != self.previous_track:
+            self.previous.clear()
+            self.previous_track = track_context
         points, reasons = {}, {}
         for i, (point, confidence) in enumerate(zip(p.xy, p.conf)):
             hand_point = frame.schema_id == 'mediapipe-hand21-v1' or (frame.schema_id == 'mediapipe-wrist54-v1' and i >= 33)
@@ -119,8 +158,13 @@ class PoseAnalyzer:
                 sum(thigh[i]*outward[i] for i in (0, 1)),
                 sum(thigh[i]*down[i] for i in (0, 1))))
 
+        def arm_raise(shoulder, elbow):
+            # Fixed image vertical removes the hip from shoulder tasks. A fixed
+            # camera and stable torso remain setup requirements, not hidden points.
+            return angle_deg((shoulder[0], shoulder[1]+100.), shoulder, elbow)
+
         metrics = {
-            'raise_deg': measured([hi, sh, el], angle_deg),
+            'raise_deg': measured([sh, el], arm_raise),
             'elbow_flexion_deg': measured([sh, el, wr], flexion),
             'knee_flexion_deg': measured([hi, kn, an], flexion),
             'hip_abduction_deg': measured([hi, 'right_hip' if self.side == 'left' else 'left_hip', kn], hip_abduction),
@@ -129,8 +173,8 @@ class PoseAnalyzer:
             'left_knee': measured(['left_hip', 'left_knee', 'left_ankle'], flexion),
             'right_knee': measured(['right_hip', 'right_knee', 'right_ankle'], flexion),
             'ankle_delta': measured(['left_ankle', 'right_ankle'], lambda a, b: (a[0]-b[0])/w),
-            'shoulder_sagittal_raw_deg': measured([hi, sh, el], lambda a,b,c: signed_angle(
-                (a[0]-b[0], a[1]-b[1]), (c[0]-b[0], c[1]-b[1]))),
+            'shoulder_sagittal_raw_deg': measured([sh, el], lambda a,b: signed_angle(
+                (0., 1.), (b[0]-a[0], b[1]-a[1]))),
             'hip_sagittal_raw_deg': measured([sh, hi, kn], lambda a,b,c: signed_angle(
                 (b[0]-a[0], b[1]-a[1]), (c[0]-b[0], c[1]-b[1]))),
         }
@@ -168,7 +212,7 @@ class PoseAnalyzer:
                 from .axial_geometry import head_roll, head_pitch, trunk_frontal, trunk_sagittal
                 raw_contracts = {
                     'head_roll_raw_deg': (['left_shoulder', 'right_shoulder', 'left_eye', 'right_eye'], head_roll),
-                    'head_pitch_raw_deg': ([hi, sh, self.side+'_ear', self.side+'_eye'], head_pitch),
+                    'head_pitch_raw_deg': ([self.side+'_ear', self.side+'_eye'], head_pitch),
                     'trunk_frontal_raw_deg': (['left_hip', 'right_hip', 'left_shoulder', 'right_shoulder'], trunk_frontal),
                     'trunk_sagittal_raw_deg': ([hi, sh], trunk_sagittal),
                 }
@@ -177,10 +221,23 @@ class PoseAnalyzer:
             if spec['directional_calibration']:
                 raw = metrics.get(spec['raw_metric'], Metric.missing('missing_raw_metric'))
                 baseline = self.joint_baseline
-                if raw.valid and baseline.get('direction_sign') in (-1, 1) and isinstance(baseline.get('rest_value'), (int, float)):
-                    metrics[spec['metric']] = Metric.of(baseline['direction_sign']*angle_delta(raw.value, baseline['rest_value']))
+                if raw.valid:
+                    rest = baseline.get('rest_value')
+                    if not isinstance(rest, (int, float)) or isinstance(rest, bool) or not math.isfinite(rest):
+                        if self.automatic_rest_value is None:
+                            self.automatic_rest_value = raw.value
+                        rest = self.automatic_rest_value
+                    delta = angle_delta(raw.value, rest)
+                    direction = baseline.get('direction_sign')
+                    if direction not in (-1, 1):
+                        if self.automatic_direction_sign is None and abs(delta) >= 5.:
+                            self.automatic_direction_sign = 1 if delta > 0 else -1
+                        direction = self.automatic_direction_sign
+                    # The opening pose is a valid zero excursion. The first clear
+                    # movement establishes screen direction without blocking start.
+                    metrics[spec['metric']] = Metric.of(0. if direction is None else direction*delta)
                 else:
-                    metrics[spec['metric']] = Metric.missing('direction_calibration_required' if raw.valid else raw.reason)
+                    metrics[spec['metric']] = Metric.missing(raw.reason)
         raw_center = None
         local = None
         body_indices = [names.index(n) for n in ('left_shoulder', 'right_shoulder', 'left_hip', 'right_hip') if n in names]
@@ -219,5 +276,15 @@ class PoseAnalyzer:
                 'aux_trunk_sagittal_deg': measured([hi, sh], sagittal_deviation),
             })
         valid = any(m.valid for m in metrics.values())
-        return Observation(t, p.track_key, 'VALID' if valid else 'UNKNOWN', metrics,
-                           raw_center, p.bbox, local, frame.size, sorted(set(reasons.values())))
+        observation_reasons = sorted(set(reasons.values()))
+        if len(frame.people) > 1:
+            observation_reasons.append('additional_candidates_ignored')
+        return Observation(t, selected_track, 'VALID' if valid else 'UNKNOWN', metrics,
+                           raw_center, p.bbox, local, frame.size, observation_reasons)
+
+    def automatic_calibration(self):
+        if self.automatic_rest_value is None:
+            return None
+        return {'rest_value': self.automatic_rest_value,
+                'direction_sign': self.automatic_direction_sign,
+                'method': 'first-valid-pose-and-first-clear-excursion-1'}

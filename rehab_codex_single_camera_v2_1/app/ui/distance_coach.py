@@ -265,7 +265,7 @@ class DistanceCoach(QDialog):
             self.show_hold('请暂停动作\n等待训练状态确认')
         elif not valid:
             self.show_hold('暂时看不清\n请暂停动作')
-            self.set_feedback(data.get('measurement_hint') or {'NO_PERSON_DETECTED': '请让测试部位清楚入镜。', 'MULTI_PERSON': '请仅保留一位参与者或一只测试手。'}
+            self.set_feedback(data.get('measurement_hint') or {'NO_PERSON_DETECTED': '请让测试部位清楚入镜。', 'MULTI_PERSON': '正在自动选择主要参与者。'}
                                   .get(data.get('observation_status'), '请检查遮挡和拍摄位置。'))
         elif self.training_mode and summary.get('current_issues') and summary.get('message'):
             self.show_hold(summary['message'])

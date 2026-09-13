@@ -19,6 +19,7 @@ class AutomaticPlanDialog(QDialog):
     def __init__(self, scope, parent=None):
         super().__init__(parent)
         self.scope = copy.deepcopy(scope)
+        self.demo_only = scope['source_kind'] == 'SYNTHETIC'
         self.proposal = self.record = self.progress = None
         self.pending = False
         self.setWindowTitle('根据评估自动安排训练')
@@ -30,6 +31,8 @@ class AutomaticPlanDialog(QDialog):
         self.title.setWordWrap(True)
         box.addWidget(self.title)
         scope_label = QLabel(SOURCES[scope['source_kind']]+' / '+CONTEXTS[scope['usage_context']])
+        if self.demo_only:
+            scope_label.setText(scope_label.text()+' · 临时演示数据，不用于真人训练')
         box.addWidget(scope_label)
         self.browser = QTextBrowser()
         self.browser.setOpenExternalLinks(True)
@@ -151,7 +154,9 @@ class AutomaticPlanDialog(QDialog):
         self.error.setText(progress['blocked'])
         self.feedback_button.setVisible(bool(progress['blocked']) and '记录疼痛' in progress['blocked'])
         self.primary.setText('准备下一项' if progress['next_key'] else '本次安排已完成')
-        self.primary.setEnabled(bool(progress['next_key']) and not progress['blocked'])
+        if self.demo_only:
+            self.primary.setText('演示计划仅供查看')
+        self.primary.setEnabled(bool(progress['next_key']) and not progress['blocked'] and not self.demo_only)
 
     def _primary(self):
         if self.mode == 'proposal':
@@ -173,7 +178,7 @@ class AutomaticPlanDialog(QDialog):
         for control in (self.primary, self.refresh, self.new, self.close_button, self.checks, self.feedback_button):
             control.setEnabled(not pending)
         if not pending and self.record and getattr(self, 'mode', '') == 'progress':
-            self.primary.setEnabled(bool(self.progress['next_key']) and not self.progress['blocked'])
+            self.primary.setEnabled(bool(self.progress['next_key']) and not self.progress['blocked'] and not self.demo_only)
         elif not pending and self.proposal:
             self.primary.setEnabled(bool(self.proposal['candidates']) and not self.proposal['blockers'])
 

@@ -17,10 +17,10 @@ from app.assessment import build_body_profile, build_training_reference
 
 @pytest.mark.parametrize('eid', ['neck_flexion', 'neck_extension'])
 @pytest.mark.parametrize('side', ['left', 'right'])
-def test_side_neck_requires_only_near_eye_ear_shoulder_hip(eid, side):
+def test_side_neck_requires_only_near_eye_and_ear(eid, side):
     pose = axial_pose(eid, 25., side)
     names = SCHEMAS[pose.schema_id]
-    required = {side+'_'+part for part in ('eye', 'ear', 'shoulder', 'hip')}
+    required = {side+'_'+part for part in ('eye', 'ear')}
     for index, name in enumerate(names):
         if name not in required:
             pose.people[0].conf[index] = .01
@@ -31,7 +31,7 @@ def test_side_neck_requires_only_near_eye_ear_shoulder_hip(eid, side):
 
 @pytest.mark.parametrize('eid', ['neck_flexion', 'neck_extension'])
 @pytest.mark.parametrize('side', ['left', 'right'])
-@pytest.mark.parametrize('part', ['eye', 'ear', 'shoulder', 'hip'])
+@pytest.mark.parametrize('part', ['eye', 'ear'])
 def test_neck_names_the_actual_missing_near_point(eid, side, part):
     from app.measurement_guidance import measurement_hint
     pose = axial_pose(eid, side=side)
@@ -40,18 +40,18 @@ def test_neck_names_the_actual_missing_near_point(eid, side, part):
     plan['side'] = side
     observation = PoseAnalyzer(side=side, exercise_id=eid).analyze(pose)
     hint = measurement_hint(observation, plan, pose.schema_id, preview=True)
-    name = ('左' if side == 'left' else '右')+{'eye': '眼', 'ear': '耳', 'shoulder': '肩', 'hip': '髋'}[part]
+    name = ('左' if side == 'left' else '右')+{'eye': '眼', 'ear': '耳'}[part]
     assert name in hint and '未看清' in hint
     assert '双肩' not in hint
 
 
-def test_visible_unrelated_points_do_not_hide_neck_missing_hip():
-    from app.measurement_guidance import measurement_hint
+@pytest.mark.parametrize('part', ['shoulder', 'hip'])
+def test_neck_measurement_does_not_require_shoulder_or_hip(part):
     pose = axial_pose('neck_flexion')
-    pose.people[0].xy[11] = [500., 740.]
+    names = SCHEMAS[pose.schema_id]
+    pose.people[0].conf[names.index('left_'+part)] = .01
     observation = PoseAnalyzer(exercise_id='neck_flexion').analyze(pose)
-    assert observation.status == 'VALID'  # Other independent metrics still work.
-    assert '左髋' in measurement_hint(observation, default_plan('neck_flexion'), pose.schema_id, preview=True)
+    assert observation.value('head_pitch_raw_deg') is not None
 
 
 @pytest.mark.parametrize('side', ['left', 'right'])
@@ -110,7 +110,7 @@ class NearSideSession(FunctionalSession):
         super().__init__(directory, eid, side)
         original = self.controller.consume
         def consume(packet, pose):
-            required = {side+'_'+part for part in ('eye', 'ear', 'shoulder', 'hip')}
+            required = {side+'_'+part for part in ('eye', 'ear')}
             for index, name in enumerate(SCHEMAS[pose.schema_id]):
                 if name not in required:
                     pose.people[0].conf[index] = .01
@@ -152,7 +152,7 @@ class ShoulderSession(SyntheticSession):
             r = math.radians(self.angle)
             person.xy[names.index(side+'_elbow')] = [x+(-1 if side == 'left' else 1)*150*math.sin(r), y+150*math.cos(r)]
             for index, name in enumerate(names):
-                if name not in {side+'_'+p for p in ('shoulder', 'elbow', 'hip')}:
+                if name not in {side+'_'+p for p in ('shoulder', 'elbow')}:
                     person.conf[index] = .01
             return original(packet, pose)
         self.controller.consume = consume
@@ -203,7 +203,7 @@ def test_invalid_low_start_is_refused_before_saving_calibration(tmp_path):
         task.close()
 
 
-def test_runtime_propagates_missing_hip_hint_without_starting_analysis(tmp_path):
+def test_runtime_allows_neck_preparation_without_hip(tmp_path):
     import queue
     from app.runtime import Runtime
     task = NearSideSession(tmp_path, 'neck_flexion', 'left')
@@ -213,14 +213,13 @@ def test_runtime_propagates_missing_hip_hint_without_starting_analysis(tmp_path)
         c.latest_pose.people[0].conf[11] = .01
         c.latest_pose.time_s += .1
         c.latest_observation = c.analyzer.analyze(c.latest_pose)
-        with pytest.raises(ValueError, match='左髋'):
-            c.record_joint_baseline(task.history, 'rest')
+        c.record_joint_baseline(task.history, 'rest')
         runtime = Runtime.__new__(Runtime)
         runtime.controller, runtime.views = c, queue.Queue(maxsize=1)
         runtime.camera_test = False
         runtime._view(c.latest_packet, c.latest_pose)
         view = runtime.views.get_nowait()
-        assert '左髋' in view['measurement_hint'] and view['summary'] == {}
+        assert '髋' not in (view['measurement_hint'] or '') and view['summary'] == {}
         assert task.store.list_sessions() == []
         runtime.camera_test = True
         runtime._view(c.latest_packet, c.latest_pose)

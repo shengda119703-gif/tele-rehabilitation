@@ -388,14 +388,17 @@ def render_result_summary(s, *, document=True):
             '<table><tr><th>康复指标与测试数据</th><th>这些数字怎么理解</th></tr>'+''.join(rows)+'</table>')
     body += _continuation_html(s)
     if eid in ('neck_flexion', 'neck_extension'):
-        body += ('<h2>头颈测量说明</h2><p>本项是头部相对躯干的二维投影变化：同侧眼—耳线作为头部参考，'
-                 '肩—髋线作为躯干参考。髋点用于区别头部运动与身体前倾，不是在评估髋关节；'
-                 '不能分离颈椎各节段，也不是三维颈椎 ROM。</p>')
+        body += ('<h2>头颈测量说明</h2><p>本项记录同侧眼—耳线相对固定画面水平参考的二维投影变化，'
+                 '不要求髋部入镜。摄像头移动或整段身体前后倾会影响结果；不能分离颈椎各节段，'
+                 '也不是三维颈椎 ROM。</p>')
     if s.get('dual_camera'):
         body += '<p>双摄由本动作的主机位给出上述数据，辅助机位独立观察；不是两路角度平均，也不是三维重建。</p>'
         if s['dual_camera'].get('validity_policy') == 'primary-with-auxiliary-identity-1':
             body += ('<p>辅助指标缺测只表示那一项无法评价，不等于本次动作失败。两路均能确认人员归属、'
                      '主机位测量有效时，主结果仍可记录；身份不明或画面中断时不会继续计入。</p>')
+        elif s['dual_camera'].get('validity_policy') == 'primary-focus-with-auxiliary-1':
+            body += ('<p>两路画面各自自动保持一个主要参与者焦点，陪同者入镜不阻止任务。'
+                     '辅助画面缺测不否定主机位已取得的有效数据；这是空间跟踪，不是人脸或生物身份识别。</p>')
         else:
             body += '<p>本记录沿用保存时的双摄有效性规则，未按新版规则重新计算。</p>'
     body += '<h2>下一步</h2><p>'
@@ -453,6 +456,9 @@ def render_report(s):
                        '°；记录时间 '+fmt(baseline.get('recorded_at'))+'。'+
                        ('本动作报告相对该起点、按人工确认方向的角度变化；不是临床绝对ROM。' if spec.get('directional_calibration') else
                         '起点仅用于动作分期，不是正常值或训练目标。')+'</p>')
+        if s.get('automatic_calibration'):
+            detail += ('<h2>自动起点</h2><p>本次未以关节可见作为开始条件。系统在运行中用第一段清楚画面建立本次起点，'
+                       '不清楚的片段未计入角度或次数。该起点只用于本次工程分期，不是临床零位。</p>')
     elif scene == 'activity':
         labels = {'SEATED': '可见坐位', 'STANDING': '可见站位', 'WALKING': '可见步行', 'VISIBLE_MOVING': '可见移动'}
         detail = '<h2>有效可见时长</h2><table><tr><th>状态</th><th>有效秒数</th></tr>'
@@ -504,10 +510,12 @@ def _dual_camera_html(session):
         number = finite_number(value)
         return fmt(number*1000 if number is not None else None)
 
+    focus_policy = dual.get('validity_policy') == 'primary-focus-with-auxiliary-1'
     result = ('<h2>双摄观察</h2><p>动作测量使用'+fmt(VIEWS.get(dual.get('primary_view')))+'机位；'
               +fmt(VIEWS.get(dual.get('secondary_view')))+'机位提供独立辅助投影。'
-              '人工确认两路为同一人，不用跨画面的坐标补点或自动匹配身份。</p>'
-              '<p class="muted">按单调接收时间配对，每帧最多使用一次；未验证曝光同步，未作空间标定或三维重建。'
+              +('每路自动保持主要参与者焦点，不用跨画面的坐标补点或生物身份识别。</p>' if focus_policy else
+                '人工确认两路为同一人，不用跨画面的坐标补点或自动匹配身份。</p>')
+              +'<p class="muted">按单调接收时间配对，每帧最多使用一次；未验证曝光同步，未作空间标定或三维重建。'
               '接收差筛选上限 '+milliseconds(dual.get('max_receive_delta_s'))+' 毫秒；'
               '本次配对观察 '+fmt(summary.get('paired_observations'), 0)+' 帧，其中两路指标可测 '
               +fmt(summary.get('both_views_valid'), 0)+' 帧。接收差中位数 '
@@ -528,6 +536,11 @@ def _dual_camera_html(session):
                    +' 帧，其中辅助整体缺测 '+fmt(summary.get('main_only_observations'), 0)
                    +' 帧。单项辅助缺测表示本项无法评价，不表示动作不合格。身份不明和断流仍停用；'
                    '此规则与旧版要求两路均有效的记录不同。</p>')
+    elif focus_policy:
+        result += ('<p>有效性规则：启动不以人数、关节可见或辅助机位指标为前置条件。'
+                   '主机位实际纳入 '+fmt(summary.get('primary_used_observations'), 0)
+                   +'帧，其中辅助指标整体缺测 '+fmt(summary.get('main_only_observations'), 0)
+                   +'帧。不清楚的片段跳过，恢复清楚后自动继续。</p>')
     else:
         result += '<p>历史有效性规则：沿用保存时的双摄门槛；未按新版逐项规则重新计算。</p>'
     if failure:

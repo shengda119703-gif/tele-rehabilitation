@@ -83,27 +83,32 @@ def test_reacquired_tracking_keeps_sampling_without_asking_again(sampling):
     r.preview_history.append(f.c.latest_observation)
     clock[0] = 4.4
     r._tick_preparation()
-    # The sampling continues, and the re-acquired frame cannot join the old window.
-    assert r.preparation is not None and not f.c.live_joint_baseline
-    hold(f, r, 4.5)
-    clock[0] = 5.6
-    r._tick_preparation()
+    # Spatial focus stays stable when only the detector's id changes, so the
+    # participant is not asked to repeat a completed hold.
     assert r.preparation is None and f.c.live_joint_baseline['rest_value'] == pytest.approx(0.)
     assert f.c.live_joint_baseline['provenance']['track_key'] == f.c.latest_observation.track_key
 
 
-@pytest.mark.parametrize('status,text', [('MULTI_PERSON', '不止一位'), ('NO_PERSON_DETECTED', '取景')])
-def test_short_dropouts_are_absorbed_but_a_persistent_problem_stops_sampling(sampling, status, text):
+def test_additional_people_do_not_cancel_preparation_sampling(sampling):
     f, r, clock = sampling
     r._begin_preparation('joint_baseline', 'rest')
-    f.c.latest_observation = replace(f.c.latest_observation, status=status)
+    f.c.latest_observation = replace(f.c.latest_observation, status='MULTI_PERSON')
+    clock[0] = 2.
+    r._tick_preparation()
+    assert r.preparation is not None
+
+
+def test_short_dropout_is_absorbed_but_persistent_absence_stops_sampling(sampling):
+    f, r, clock = sampling
+    r._begin_preparation('joint_baseline', 'rest')
+    f.c.latest_observation = replace(f.c.latest_observation, status='NO_PERSON_DETECTED')
     clock[0] = .3
     r._tick_preparation()
     assert r.preparation is not None
     clock[0] = 2.
     r._tick_preparation()
     assert r.preparation is None
-    assert text in list(r.messages.queue)[-1]['text']
+    assert '取景' in list(r.messages.queue)[-1]['text']
 
 
 def test_missing_geometry_can_recover_but_failed_window_never_samples_old_data(sampling):

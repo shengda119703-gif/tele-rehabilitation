@@ -260,16 +260,12 @@ def test_knee_extension_needs_no_hip_height_or_sitstand_calibration():
     assert engine.repetitions[0]['min_knee_flexion_projection_deg'] == 20.
 
 
-def test_sitstand_still_requires_hip_height_and_personal_baseline():
+def test_sitstand_still_requires_hip_height_but_auto_establishes_run_baseline():
     engine = engine_for('sit_to_stand')
     feed(engine, 90, extra={'hip_y': .65})
-    assert '基线' in engine.summary()['message']
-    assert engine.phase == 'WAIT_READY'
-    engine = engine_for('sit_to_stand', calibration={
-        'seated_knee': 90., 'standing_knee': 5., 'seated_hip_y': .65, 'standing_hip_y': .4})
-    feed(engine, 90., extra={'hip_y': .65})
     feed(engine, 45., extra={'hip_y': .52})
     feed(engine, 5., extra={'hip_y': .4})
+    assert engine.automatic_sitstand and engine.plan['calibration']['automatic']
     assert engine.completed == 1
     rep = engine.repetitions[0]
     assert rep['motion_range'] == {'min_deg': 5., 'max_deg': 90., 'range_deg': 85.}
@@ -306,7 +302,7 @@ def test_training_return_guidance_and_quality_priority_after_plan_complete():
     feed(engine, 90.)
     assert '已完成计划' in engine.summary()['message']
     feed(engine, None, n=1)
-    assert '无法可靠测量' in engine.summary()['message']
+    assert '未计入' in engine.summary()['message']
 
 
 def test_assessment_quality_evidence_does_not_become_live_coaching():

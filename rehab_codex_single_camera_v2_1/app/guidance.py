@@ -102,12 +102,8 @@ class GuidancePolicy:
             return display('critical', '结果尚未保存，请重试保存。', recovery='save', offer=None, offer_text='')
         if data.get('error') and not data.get('operation_error'):
             self.critical = str(data['error'])
-        identity = data.get('identity_ambiguous') or data.get('observation_status') == 'MULTI_PERSON'
-        if identity:
-            return display('critical', '请只保留当前参与者，再重新确认。', recovery='confirm', offer=None, offer_text='')
         if state in ('OFFLINE', 'ERROR') or self.critical:
-            text = ('请只保留当前参与者，再重新预览确认。' if '归属' in (self.critical or '') else
-                    '画面已中断，请重新预览。')
+            text = '画面已中断，请重新预览。'
             return dict(display('critical', text, recovery='preview', offer=None, offer_text=''),
                         detail=self.critical or text)
         if data.get('error'):

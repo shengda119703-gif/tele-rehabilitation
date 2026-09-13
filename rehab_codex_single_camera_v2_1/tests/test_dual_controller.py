@@ -98,22 +98,27 @@ def dual(tmp_path):
     f.close()
 
 
-def test_dual_preview_requires_explicit_same_participant_confirmation_in_both_views(dual):
+def test_dual_preview_does_not_require_manual_identity_or_visible_joints(dual):
     bad = copy.deepcopy(dual.setup)
     bad['dual_camera']['same_participant_confirmed'] = False
-    with pytest.raises(ValueError, match='两路'):
-        dual.c.confirm(bad)
-    assert not dual.c.confirmed
-    setup = dual.c.confirm(dual.setup)
+    setup = dual.c.confirm(bad)
+    assert dual.c.confirmed
     assert setup['dual_camera']['confirmed_sizes'] == {'frontal': [1280, 720], 'sagittal': [1280, 720]}
+    assert not setup['dual_camera']['same_participant_confirmed']
 
 
-@pytest.mark.parametrize('option', [dict(auxiliary_people=0), dict(auxiliary_people=2)])
-def test_unusable_auxiliary_prevents_confirmation_and_start(dual, option):
-    dual.emit(.2, **option)
-    with pytest.raises(ValueError):
-        dual.c.confirm(dual.setup)
-    assert not dual.c.confirmed
+def test_absent_auxiliary_does_not_prevent_confirmation_and_start(dual):
+    dual.emit(.2, auxiliary_people=0)
+    dual.c.confirm(dual.setup)
+    dual.c.start()
+    assert dual.c.state == 'ONLINE'
+
+
+def test_additional_auxiliary_person_does_not_prevent_confirmation(dual):
+    dual.emit(.2, auxiliary_people=2)
+    dual.c.confirm(dual.setup)
+    dual.c.start()
+    assert dual.c.state == 'ONLINE'
 
 
 def test_independent_projections_count_once_and_persist_both_sources_without_images_or_unauthorized_poses(dual):
@@ -170,17 +175,17 @@ def test_auxiliary_geometry_is_optional_for_confirmation_but_manual_identity_is_
 
 
 @pytest.mark.parametrize('view', ['primary', 'auxiliary'])
-def test_reacquired_tracking_keeps_the_acknowledgement_and_only_notes_it(dual, view):
+def test_reacquired_tracking_keeps_the_acknowledgement_without_user_interruption(dual, view):
     dual.c.confirm(dual.setup)
     packet, pose = dual.emit(.2, return_input=True)
     (pose if view == 'primary' else pose.paired_pose).people[0].track_key = 'another-person'
     dual.c.consume(packet, pose)
-    assert dual.c.confirmed and dual.c.confirmation_reacquired and not dual.c.confirmation_withdrawn
+    assert dual.c.confirmed and not dual.c.confirmation_withdrawn
     dual.c.start()
 
 
 @pytest.mark.parametrize('view', ['primary', 'auxiliary'])
-def test_acknowledgement_expires_when_the_participant_leaves_the_picture(dual, view):
+def test_acknowledgement_survives_when_the_participant_temporarily_leaves(dual, view):
     dual.c.confirm(dual.setup)
     for t in (.2, 1., 2.4):
         packet, pose = dual.emit(t, return_input=True)
@@ -189,13 +194,12 @@ def test_acknowledgement_expires_when_the_participant_leaves_the_picture(dual, v
         else:
             pose.paired_pose.people = []
         dual.c.consume(packet, pose)
-    assert not dual.c.confirmed and '没有人' in dual.c.confirmation_withdrawn
-    with pytest.raises(ValueError, match='核对'):
-        dual.c.start()
+    assert dual.c.confirmed and not dual.c.confirmation_withdrawn
+    dual.c.start()
 
 
 @pytest.mark.parametrize('view', ['primary', 'auxiliary'])
-def test_acknowledgement_expires_immediately_when_another_person_is_visible(dual, view):
+def test_acknowledgement_stays_valid_when_a_carer_is_visible(dual, view):
     dual.c.confirm(dual.setup)
     packet, pose = dual.emit(.2, return_input=True)
     if view == 'primary':
@@ -203,7 +207,7 @@ def test_acknowledgement_expires_immediately_when_another_person_is_visible(dual
     else:
         pose.paired_pose.people = pose.paired_pose.people*2
     dual.c.consume(packet, pose)
-    assert not dual.c.confirmed and '不止一位' in dual.c.confirmation_withdrawn
+    assert dual.c.confirmed and not dual.c.confirmation_withdrawn
 
 
 def test_auxiliary_geometry_fluctuation_does_not_repeat_the_final_confirmation(dual):
@@ -213,7 +217,7 @@ def test_auxiliary_geometry_fluctuation_does_not_repeat_the_final_confirmation(d
     dual.c.start()
 
 
-def test_absent_auxiliary_person_still_excludes_primary_and_breaks_cycle(dual):
+def test_absent_auxiliary_person_does_not_exclude_primary_or_break_cycle(dual):
     dual.start()
     for i in range(20):
         dual.emit(1+i*.1, 0.)
@@ -221,33 +225,32 @@ def test_absent_auxiliary_person_still_excludes_primary_and_breaks_cycle(dual):
         dual.emit(3+i*.1, 90., auxiliary_people=0)
     for i in range(20):
         dual.emit(5+i*.1, 0.)
-    assert dual.c.engine.completed == 0
+    assert dual.c.engine.completed == 1
     row = dual.c.session['dual_camera']['observations'][20]
-    assert not row['primary_used'] and not row['identity_confirmed']
-    assert dual.c.session['metrics'][20]['metrics'] == {}
+    assert row['primary_used'] and row['identity_confirmed']
+    assert not row['auxiliary_focus_available']
+    assert dual.c.session['metrics'][20]['metrics']['raise_deg']['valid']
 
 
 @pytest.mark.parametrize('view', ['primary', 'auxiliary'])
-def test_visible_person_without_track_stops_immediately(dual, view):
-    ctx = dual.start()
+def test_visible_person_without_detector_track_uses_spatial_focus(dual, view):
+    dual.start()
     packet, pose = dual.emit(1., return_input=True)
     (pose if view == 'primary' else pose.paired_pose).people[0].track_key = None
     dual.c.consume(packet, pose)
-    assert dual.c.session is None
-    row = dual.store.get_session(ctx.run_id)['dual_camera']['observations'][-1]
-    assert not row['primary_used'] and not row['identity_confirmed']
+    assert dual.c.session is not None and dual.c.state == 'ONLINE'
+    row = dual.c.session['dual_camera']['observations'][-1]
+    assert row['primary_used'] and row['identity_confirmed']
 
 
-def test_auxiliary_missingness_cannot_hide_primary_multi_person_stop(dual):
-    ctx = dual.start()
+def test_additional_primary_person_does_not_stop_when_auxiliary_geometry_is_missing(dual):
+    dual.start()
     pair, pose = dual.emit(1., auxiliary_missing=True, return_input=True)
     pose.people.append(copy.deepcopy(pose.people[0]))
     dual.c.consume(pair, pose)
-    assert dual.c.session is None and dual.c.context is None
-    saved = dual.store.get_session(ctx.run_id)
-    assert saved['stop_reason'] == 'identity_ambiguous'
-    row = saved['dual_camera']['observations'][-1]
-    assert row['primary_status'] == 'MULTI_PERSON' and not row['jointly_valid']
+    assert dual.c.session is not None and dual.c.context is not None
+    row = dual.c.session['dual_camera']['observations'][-1]
+    assert row['primary_status'] == 'VALID' and not row['jointly_valid']
 
 
 def test_nested_capture_statistics_track_latest_primary_and_secondary_observation(dual):
@@ -265,12 +268,12 @@ def test_nested_capture_statistics_track_latest_primary_and_secondary_observatio
 
 
 @pytest.mark.parametrize('change', [dict(auxiliary_people=2), dict(auxiliary_track='other')])
-def test_ambiguous_or_changed_auxiliary_identity_ends_the_whole_task(dual, change):
-    ctx = dual.start()
+def test_additional_person_or_tracker_change_does_not_end_the_task(dual, change):
+    dual.start()
     dual.emit(1., 0.)
     dual.emit(1.2, 0., **change)
-    assert dual.c.context is None and dual.c.session is None
-    assert dual.store.get_session(ctx.run_id)['stop_reason'] == 'dual_identity_ambiguous'
+    assert dual.c.context is not None and dual.c.session is not None
+    assert dual.c.state == 'ONLINE'
 
 
 def test_secondary_resolution_change_stops_before_measuring_and_requires_new_setup(dual):

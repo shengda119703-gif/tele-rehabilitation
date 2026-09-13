@@ -12,41 +12,18 @@ def preview_neck(w):
     w._buttons()
 
 
-def test_guided_next_samples_then_one_explicit_confirmation_without_start(desktop):
+def test_journey_skips_joint_sampling_and_confirms_without_starting(desktop):
     w, runtime, app = desktop
     preview_neck(w)
     assert w.setup_tabs.currentIndex() == 2
-    assert '肩—髋' in w.journey.explanation.text()
-    assert '另一侧肩' in w.journey.explanation.text()
+    assert '不要求髋部' in w.journey.explanation.text()
     w.confirm_button.click()
-    assert w._journey_step().key == 'rest'
+    assert w._journey_step().key == 'confirm'
     assert not runtime.calls and not w.manual.isChecked()
-    w.confirm_button.click()
-    assert runtime.calls[-1] == ('prepare_sample', {'sample': 'joint_baseline', 'position': 'rest', 'expected_context': None})
-    w._handle_message(dict(kind='command_done', command='prepare_sample'))
-    assert not w.confirm_button.isEnabled()
-    assert w.preparation_cancel.isVisible() and w.privacy_button.isEnabled()
-    count = len(runtime.calls)
-    w._journey_next()
-    assert len(runtime.calls) == count
-    w.setup['plan']['joint_baseline'] = dict(rest_value=0.)
-    assert w._journey_step().key == 'rest'  # Do not advance until sampling completes.
-    w._handle_message(dict(kind='preparation', active=False, text='已记录起点'))
-    w._buttons()
-    assert w.confirm_button.text() == '记录活动方向'
-    w.confirm_button.click()
-    assert runtime.calls[-1] == ('prepare_sample', {'sample': 'joint_baseline', 'position': 'direction', 'expected_context': None})
-    w._handle_message(dict(kind='command_done', command='prepare_sample'))
-    w.setup['plan']['joint_baseline']['direction_sign'] = 1
-    w._handle_message(dict(kind='preparation', active=False, text='已记录方向'))
-    w._buttons()
-    assert w.confirm_button.text() == '已核对，确认准备'
-    assert w.preparation_review.isVisible()
-    assert runtime.calls[-1][0] != 'confirm'
-    assert not w.manual.isChecked()
     w.confirm_button.click()
     assert runtime.calls[-1][0] == 'confirm'
     assert runtime.calls[-1][1]['setup']['participant_confirmed'] is True
+    assert not runtime.calls[-1][1]['setup']['plan'].get('joint_baseline')
     assert not any(name == 'start' for name, args in runtime.calls)
 
 
@@ -54,10 +31,10 @@ def test_error_stays_at_current_step_then_invalidation_resets_guidance(desktop):
     w, runtime, app = desktop
     preview_neck(w)
     w.confirm_button.click()
-    w._handle_message(dict(kind='error', command='joint_baseline', text='左髋未看清，请调整取景'))
+    w._handle_message(dict(kind='error', command='confirm', text='预览设置已改变，请重试'))
     w._buttons()
-    assert w._journey_step().key == 'rest'
-    assert '左髋' in w.journey.message.text()
+    assert w._journey_step().key == 'confirm'
+    assert '请重试' in w.journey.message.text()
     w._invalidate()
     assert w._journey_step().key == 'camera'
     assert not w._journey_error
@@ -107,30 +84,16 @@ def test_companion_is_explicit_and_not_bypassed(desktop):
     assert runtime.calls[-1][1]['setup']['companion_confirmed'] is True
 
 
-@pytest.mark.parametrize('position', ['seated', 'standing'])
-def test_sit_stand_journey_uses_cancellable_sampling_and_resets_on_change(desktop, position):
+def test_sit_stand_journey_has_no_mandatory_sampling_steps(desktop):
     w, runtime, app = desktop
     w._choose_catalog_exercise('sit_to_stand')
     w.state = 'PREVIEW'
     w._journey_framed = True
-    if position == 'standing':
-        w.setup['plan']['calibration'] = {'seated_knee': 90., 'seated_hip_y': .5}
     w._buttons()
-    assert w._journey_step().key == position
+    assert w._journey_step().key == 'confirm'
     w.confirm_button.click()
-    assert runtime.calls[-1] == ('prepare_sample', {'sample': 'baseline', 'position': position, 'expected_context': None})
-    w._handle_message(dict(kind='command_done', command='prepare_sample'))
-    w._handle_message(dict(kind='preparation', active=True, text='3 秒后记录，请保持姿势'))
-    assert w.preparation_status.isVisible() and w.preparation_cancel.isVisible()
-    assert not w.confirm_button.isEnabled() and not w.manual.isChecked()
-    w.preparation_cancel.click()
-    assert runtime.calls[-1][0] == 'cancel_preparation'
-    w._handle_message(dict(kind='command_done', command='cancel_preparation'))
-    w._handle_message(dict(kind='preparation', active=False, text='已取消，可重新记录'))
-    assert w._journey_step().key == position and w.confirm_button.isEnabled()
-    w._invalidate()
-    assert not w.preparation_active and not w.preparation_status.text()
-    assert w._last_sample_request is None and w.preparation_retry.isHidden()
+    assert runtime.calls[-1][0] == 'confirm'
+    assert not any(name == 'prepare_sample' for name, _ in runtime.calls)
 
 
 def test_training_preflight_has_an_action_but_no_enabled_start(desktop):

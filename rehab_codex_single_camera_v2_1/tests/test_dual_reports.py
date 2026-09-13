@@ -30,7 +30,7 @@ def test_report_and_csv_keep_two_sources_measured_delta_and_auxiliary_metric_val
     assert float(rows[0]['receive_delta_s']) == pytest.approx(.02)
     assert float(rows[0]['aux_trunk_sagittal_deg']) > 40 and rows[0]['aux_trunk_sagittal_deg_valid'] == 'True'
     assert rows[0]['primary_source_ref'] != rows[0]['secondary_source_ref']
-    assert rows[0]['validity_policy'] == 'primary-with-auxiliary-identity-1'
+    assert rows[0]['validity_policy'] == 'primary-focus-with-auxiliary-1'
     assert rows[0]['primary_used'] == 'True' and rows[0]['identity_confirmed'] == 'True'
     metadata = json.loads((out/'session.json').read_text(encoding='utf-8'))
     assert metadata['capture_mode'] == 'dual'

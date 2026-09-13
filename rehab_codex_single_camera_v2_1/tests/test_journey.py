@@ -12,20 +12,13 @@ def test_each_action_has_a_complete_specific_journey(eid):
     assert keys[-4:] == ['confirm', 'start', 'active', 'result']
     assert len(keys) == len(set(keys))
     assert all(all(isinstance(x, str) and x for x in step) for step in steps)
-    spec = exercise_spec(eid)
-    assert ('direction' in keys) == spec['directional_calibration']
-    if eid != 'sit_to_stand':
-        assert ('rest' in keys) == spec['baseline_required']
+    assert not {'rest', 'direction', 'seated', 'standing'} & set(keys)
 
 
-def test_neck_sequence_requires_recorded_baseline_direction_and_explicit_confirmation():
+def test_neck_sequence_uses_nonblocking_confirmation_without_calibration_steps():
     p = default_plan('neck_flexion')
     assert current_step(p, 'UNSELECTED').key == 'camera'
     assert current_step(p, 'PREVIEW').key == 'framing'
-    assert current_step(p, 'PREVIEW', framed=True).key == 'rest'
-    p['joint_baseline'] = {'rest_value': 0.}
-    assert current_step(p, 'PREVIEW', framed=True).key == 'direction'
-    p['joint_baseline']['direction_sign'] = -1
     assert current_step(p, 'PREVIEW', framed=True).key == 'confirm'
     assert current_step(p, 'PREVIEW', framed=True, confirmed=True).key == 'start'
     assert current_step(p, 'ONLINE').key == 'active'
@@ -33,16 +26,10 @@ def test_neck_sequence_requires_recorded_baseline_direction_and_explicit_confirm
     assert current_step(p, 'UNSELECTED', saved=True).key == 'result'
 
 
-def test_sit_stand_and_shoulder_have_different_preparation():
+def test_sit_stand_and_shoulder_share_the_streamlined_preparation():
     p = default_plan('sit_to_stand')
-    assert current_step(p, 'PREVIEW', framed=True).key == 'seated'
-    p['calibration'] = {'seated_knee': 90., 'seated_hip_y': .7}
-    assert current_step(p, 'PREVIEW', framed=True).key == 'standing'
-    p['calibration'].update(standing_knee=5., standing_hip_y=.5)
     assert current_step(p, 'PREVIEW', framed=True).key == 'confirm'
     p = default_plan('shoulder_adduction')
-    assert '侧抬臂' in current_step(p, 'PREVIEW', framed=True).action
-    p['joint_baseline'] = {'rest_value': 55.}
     assert current_step(p, 'PREVIEW', framed=True).key == 'confirm'
 
 

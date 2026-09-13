@@ -22,8 +22,11 @@ def head_roll(left_shoulder, right_shoulder, left_eye, right_eye):
     return relative_angle(vector(left_shoulder, right_shoulder), vector(left_eye, right_eye), 40., 12.)
 
 
-def head_pitch(hip, shoulder, ear, eye):
-    return relative_angle(vector(hip, shoulder), vector(ear, eye), 50., 12.)
+def head_pitch(ear, eye):
+    # Fixed image horizontal avoids requiring the hip for a head/neck task.
+    # A baseline removes fixed camera roll; camera movement during the task still
+    # invalidates interpretation and is described as a product limitation.
+    return relative_angle((1., 0.), vector(ear, eye), 1., 12.)
 
 
 def trunk_frontal(left_hip, right_hip, left_shoulder, right_shoulder):

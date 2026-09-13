@@ -130,16 +130,13 @@ def test_guided_records_are_history_not_assessment_evidence(guided):
     assert item['status'] == 'NOT_ASSESSED' and item['session_id'] is None
 
 
-def test_guided_still_refuses_an_ambiguous_identity_before_and_after_the_acknowledgement(guided):
+def test_guided_selects_a_primary_participant_when_a_carer_is_visible(guided):
     guided.frame(0., people=2)
-    with pytest.raises(ValueError, match='不止一位'):
-        guided.c.confirm(guided.setup)
-    guided.frame(.2)
     guided.c.confirm(guided.setup)
     guided.frame(.4, people=2)
-    assert not guided.c.confirmed and '不止一位' in guided.c.confirmation_withdrawn
-    with pytest.raises(ValueError, match='不止一位'):
-        guided.c.start()
+    assert guided.c.confirmed and not guided.c.confirmation_withdrawn
+    guided.c.start()
+    assert guided.c.state == 'ONLINE'
 
 
 def test_self_report_is_refused_outside_a_running_rehab_session(guided):

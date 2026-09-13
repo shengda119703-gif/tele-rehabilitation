@@ -22,7 +22,7 @@ def test_plain_language_numbers_and_limits_are_in_dialog_and_export():
     before = copy.deepcopy(s)
     for html in (render_result_summary(s), render_report(s)):
         for text in ('25.0°', '2 次', '75.0 %', '2.0 秒（1 次记录的中位数）', '未设置目标 1 次',
-                     '肩—髋线', '不是识别准确率', '不是临床关节活动度', '不等于动作完全正常'):
+                     '不要求髋部入镜', '不是识别准确率', '不是临床关节活动度', '不等于动作完全正常'):
             assert text in html
         assert '99.0 秒' not in html
     assert s == before
@@ -62,3 +62,14 @@ def test_patient_dual_explanation_matches_saved_policy_and_keeps_detailed_eviden
     del s['dual_camera']['validity_policy']
     assert '沿用保存时的双摄有效性规则' in render_result_summary(s)
     assert '辅助指标缺测只表示' not in render_result_summary(s)
+
+
+def test_new_dual_focus_policy_explains_nonblocking_people_and_auxiliary_view():
+    s = snapshot()
+    s['dual_camera'] = {'primary_view': 'sagittal', 'secondary_view': 'frontal',
+                        'validity_policy': 'primary-focus-with-auxiliary-1',
+                        'summary': {'primary_used_observations': 12, 'main_only_observations': 3}}
+    assert '陪同者入镜不阻止任务' in render_result_summary(s)
+    detail = render_report(s)
+    assert '启动不以人数、关节可见' in detail
+    assert '主机位实际纳入' in detail and '辅助指标整体缺测' in detail

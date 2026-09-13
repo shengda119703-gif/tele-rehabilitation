@@ -84,6 +84,35 @@ def test_advanced_settings_are_collapsed_but_operable(desktop):
     assert runtime.calls == []
 
 
+def test_synthetic_demo_source_cannot_open_a_fake_camera_session(desktop):
+    w, runtime, app = desktop
+    w.source_kind.setCurrentIndex(w.source_kind.findData('SYNTHETIC'))
+    app.processEvents()
+    assert w.usage.currentData() == 'TEST'
+    assert w.replay_row.isHidden()
+    assert not w.preview_button.isEnabled()
+    assert '仅用于查看自动计划' in w.next_step_hint.text()
+
+
+def test_training_hub_demo_switches_to_isolated_scope_and_opens_generated_plan(desktop):
+    from app.demo_training_plan import DEMO_SCOPE, demo_participant
+    w, runtime, app = desktop
+    w._show_training_hub()
+    w.training_hub.demo.click()
+    assert runtime.calls[-1] == ('create_demo_training_plan', {})
+    profile = dict(demo_participant(), revision=1)
+    w._handle_message({'kind': 'demo_training_plan_created', 'scope': DEMO_SCOPE,
+                       'participant': profile, 'proposal': {}, 'plan': {}})
+    w._handle_message({'kind': 'command_done', 'command': 'create_demo_training_plan'})
+    app.processEvents()
+    assert w._body_scope_key() == DEMO_SCOPE
+    assert w.participant_records[DEMO_SCOPE['participant_id']]['display_name'].startswith('演示患者')
+    assert w.automatic_dialog is not None and w.automatic_dialog.demo_only
+    assert runtime.calls[-1] == ('automatic_proposal', {'scope': DEMO_SCOPE})
+    w.automatic_dialog.set_busy(False)
+    w.automatic_dialog.reject()
+
+
 @pytest.mark.parametrize('state,tone', [('PREVIEW', 'preview'), ('ONLINE', 'active'),
                                       ('OFFLINE', 'error'), ('SAVE_FAILED', 'error')])
 def test_status_and_save_failure_controls_are_visible(desktop, state, tone):

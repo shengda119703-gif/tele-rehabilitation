@@ -56,7 +56,7 @@ def test_final_button_is_one_manual_confirmation_and_sampling_does_not_start(des
     w.setup['plan']['joint_baseline'] = {'rest_value': 55.}
     w._buttons()
     assert w.manual.isHidden() and w.preparation_review.isVisible()
-    assert '核对' in w.confirm_button.text()
+    assert '确认准备' in w.confirm_button.text()
     w.confirm_button.click()
     assert runtime.calls[-1][0] == 'confirm'
     assert runtime.calls[-1][1]['setup']['participant_confirmed']

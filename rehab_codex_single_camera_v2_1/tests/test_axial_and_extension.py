@@ -92,7 +92,7 @@ def test_mirror_requires_new_calibration_not_reversing_anatomical_labels(eid):
     assert angle_delta(values[1], values[0]) == pytest.approx(-25)
 
 
-@pytest.mark.parametrize('eid', ['neck_lateral_flexion', 'neck_flexion', 'trunk_lateral_flexion'])
+@pytest.mark.parametrize('eid', ['neck_lateral_flexion', 'trunk_lateral_flexion'])
 def test_rigid_rotation_does_not_become_relative_head_or_pelvis_motion(eid):
     spec = exercise_spec(eid)
     original = axial_pose(eid, 20.)
@@ -104,8 +104,19 @@ def test_rigid_rotation_does_not_become_relative_head_or_pelvis_motion(eid):
     assert after == pytest.approx(before)
 
 
+def test_head_pitch_uses_the_fixed_screen_reference_without_requiring_the_hip():
+    spec = exercise_spec('neck_flexion')
+    original = axial_pose('neck_flexion', 20.)
+    before = settled(original, exercise_id='neck_flexion').value(spec['raw_metric'])
+    r = math.radians(15)
+    original.people[0].xy = [[x*math.cos(r)-y*math.sin(r)+200,
+                              x*math.sin(r)+y*math.cos(r)] for x, y in original.people[0].xy]
+    after = settled(original, exercise_id='neck_flexion').value(spec['raw_metric'])
+    assert angle_delta(after, before) == pytest.approx(15.)
+
+
 @pytest.mark.parametrize('eid,necessary', [('neck_lateral_flexion', 'left_eye'), ('neck_flexion', 'left_ear'),
-                                         ('neck_extension', 'left_shoulder'), ('trunk_lateral_flexion', 'right_hip'),
+                                         ('neck_extension', 'left_eye'), ('trunk_lateral_flexion', 'right_hip'),
                                          ('trunk_flexion', 'left_shoulder'), ('trunk_extension', 'left_hip')])
 def test_missing_necessary_points_are_not_zero_or_replaced_by_other_side(eid, necessary):
     pose = axial_pose(eid, 25.)
