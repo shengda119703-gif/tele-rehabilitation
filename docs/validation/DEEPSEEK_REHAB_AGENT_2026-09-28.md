@@ -1,4 +1,10 @@
-# 0.21.0 DeepSeek 康复 Agent 验证
+# 0.21.x DeepSeek 康复 Agent 验证
+
+## 0.21.1 增量
+
+- 增加格式失败自动重试和两次失败后的自然语言安全兜底，截图中的内部错误不再直接显示为聊天回答。
+- 增加上一轮最小化本机摘要的多轮上下文，并验证超长 / 非文本摘要不会发送。
+- 增量后的 Agent 专项为 66 passed；完整回归结果见下方本机结果。
 
 ## 自动验证范围
 
@@ -12,10 +18,10 @@
 
 ## 本机结果
 
-- Agent 专项：62 passed。
-- Core 回归：1059 passed，4 subtests passed。
+- Agent 专项：66 passed。
+- Core 回归：1063 passed，4 subtests passed。
 - UI 回归：419 passed。
-- 主测试合计 1478 项；专项已包含在 core / UI 中，不重复相加。
+- 主测试合计 1482 项；专项已包含在 core / UI 中，不重复相加。
 - `scripts/qa_deepseek_agent.py` 已渲染未配置、两段式结果和 DeepSeek 配置界面；所有对话为明确的模拟数据，没有调用真实模型。
 - `compileall` 通过。
 

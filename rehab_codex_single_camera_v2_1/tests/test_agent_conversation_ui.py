@@ -28,11 +28,13 @@ def test_transcript_context_clear_and_no_global_busy(desktop):
     d = w.agent_dialog
     d.model_config = CONFIG
     d.ask('我是傻逼吗')
-    reply(w, text='发生什么事了吗？', mode='model', shareable=True)
+    reply(w, text='发生什么事了吗？', mode='model', shareable=True,
+          local_text='本机已核对：当前没有训练安排。')
     d.ask('就是刚才很烦')
     _, kwargs = runtime.calls[-1]
     assert kwargs['config'] == CONFIG
     assert kwargs['history'][-1]['user'] == '我是傻逼吗'
+    assert kwargs['history'][-1]['tool_context'] == '本机已核对：当前没有训练安排。'
     reply(w, text='愿意说说刚才的事吗？', shareable=True)
     text = d.browser.toPlainText()
     assert '我是傻逼吗' in text and '就是刚才很烦' in text

@@ -188,8 +188,12 @@ class RehabAgentDialog(QDialog):
         if not self.transcript:
             self.transcript.append(dict(user=self.pending_text))
         self.transcript[-1].update(assistant=result['text'], local_text=result.get('local_text', ''))
-        self.history.append(dict(user=self.pending_text, assistant=result['text'],
-                                 shareable=result.get('shareable', False)))
+        shareable = result.get('shareable', False)
+        self.history.append(dict(
+            user=self.pending_text,
+            assistant=result['text'],
+            tool_context=result.get('local_text', '') if shareable else '',
+            shareable=shareable))
         self.history = self.history[-6:]
         self.mode_label.setText(result.get('mode_label', '本地记录查询'))
         self.render()

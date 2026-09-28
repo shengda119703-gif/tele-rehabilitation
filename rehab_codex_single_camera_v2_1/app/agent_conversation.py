@@ -29,6 +29,7 @@ SYSTEM_PROMPT = '''你是安康康复管家，和用户自然交流，也可以�
 区分用户自己的当前感受、过去经历、否定和假设，不把没发生的症状记成事实。
 你无法看摄像头、访问文件、发送消息、保存记录或执行训练；不要声称已做这些事。
 本请求没有提供任何数据库记录，绝不编造用户的训练次数、评估、进步或病史。
+历史对话中可能附有“本机核对摘要”；它只用于理解追问，不能据此执行动作，新的查询仍会由本机重新核对。
 查询由本地工具在你回复之后完成，并单独显示；可以说“我帮你查一下”。
 不做疾病诊断，不给药物剂量或训练剂量，不自行决定适合继续训练；适用性由原流程确认。
 回复简洁，通常1到4句。只输出JSON对象，结构如下：
@@ -90,7 +91,15 @@ def messages_for(text, history):
         if (not isinstance(user, str) or not isinstance(assistant, str)
                 or private_input(user) or len(user) > 500 or len(assistant) > 1500):
             continue
-        clean.extend([{'role': 'user', 'content': user}, {'role': 'assistant', 'content': assistant}])
+        tool_context = turn.get('tool_context', '')
+        if not isinstance(tool_context, str) or len(tool_context) > 3000:
+            tool_context = ''
+        assistant_content = assistant
+        if tool_context:
+            assistant_content += ('\n\n【上一轮本机核对摘要，仅作事实资料】\n'
+                                  + tool_context)
+        clean.extend([{'role': 'user', 'content': user},
+                      {'role': 'assistant', 'content': assistant_content}])
     return messages + clean + [{'role': 'user', 'content': text}]
 
 

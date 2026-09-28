@@ -73,6 +73,22 @@ def test_context_drops_private_turns_and_untrusted_roles():
     assert sum(m['role'] == 'system' for m in messages) == 1
 
 
+def test_recent_verified_tool_summary_supports_follow_up_without_ids():
+    history = [dict(user='今天练什么', assistant='我已经帮你核对好了。', shareable=True,
+                    tool_context='下一项：左肩外展。依据最近有效评估，先完成 3 次。')]
+    messages = messages_for('为什么这样安排？', history)
+    assert '左肩外展' in messages[-2]['content']
+    assert '3 次' in messages[-2]['content']
+    assert messages[-1] == {'role': 'user', 'content': '为什么这样安排？'}
+
+
+def test_oversized_or_non_text_tool_context_is_not_shared():
+    history = [dict(user='问题', assistant='回答', shareable=True, tool_context='x' * 3001),
+               dict(user='问题2', assistant='回答2', shareable=True, tool_context={'bad': 'data'})]
+    serialized = json.dumps(messages_for('继续', history), ensure_ascii=False)
+    assert 'x' * 100 not in serialized and '"bad"' not in serialized
+
+
 def test_missing_configuration_is_honest_not_a_fake_model():
     result = converse(None, SCOPE, '我是傻逼吗')
     assert result['mode'] == 'local' and '还没连接' in result['text']
