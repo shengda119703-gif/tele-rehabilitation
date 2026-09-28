@@ -335,6 +335,15 @@ class Runtime:
 
     def _execute(self, name, kw):
         c, store = self.controller, self.store
+        if name == 'rehab_agent':
+            from .rehab_agent import answer
+            if (c.session is not None or c.pending is not None
+                    or c.state in ('ONLINE', 'SAVE_FAILED', 'PREVIEW', 'CONNECTING')
+                    or getattr(self, 'camera_test', False)):
+                raise ValueError('请先结束采集并保存，再向康复管家询问安排')
+            self._message('rehab_agent', request_id=kw['request_id'],
+                          result=answer(store, kw['scope'], kw['text']))
+            return
         if name == 'family_demo':
             demo = getattr(self, 'family_demo', None)
             action = kw.get('action')

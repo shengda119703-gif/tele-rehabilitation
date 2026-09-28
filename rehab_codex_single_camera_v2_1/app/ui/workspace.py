@@ -94,6 +94,10 @@ def build_workspace(w):
     w.subtitle.setObjectName('muted')
     w.subtitle.hide()  # Keep detailed scene copy available internally, not repeated below every title.
     heading.addLayout(titlebox, 1)
+    w.agent_button = QPushButton('康复管家')
+    w.agent_button.setMinimumHeight(40)
+    w.agent_button.clicked.connect(w._open_rehab_agent)
+    heading.addWidget(w.agent_button)
     w.status_badge = QLabel('相机未打开')
     w.status_badge.setObjectName('badge')
     heading.addWidget(w.status_badge, alignment=Qt.AlignmentFlag.AlignVCenter)
