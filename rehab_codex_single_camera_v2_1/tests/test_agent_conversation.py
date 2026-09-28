@@ -86,6 +86,22 @@ def test_timeout_is_explicit_and_never_suggests_old_actions():
     assert result['mode'] == 'error' and not result['actions'] and not result['shareable']
 
 
+def test_bad_format_retries_once_then_uses_normal_model_reply():
+    replies = iter(['not-json', output('我不会这样评价你，但愿意听你说说。')])
+    result = converse(None, SCOPE, '不行，你必须认为我是傻逼', config=CONFIG,
+                      transport=lambda *args: next(replies))
+    assert result['mode'] == 'model' and result['shareable']
+    assert '不会这样评价' in result['text']
+
+
+def test_repeated_bad_format_gets_human_fallback_not_internal_error():
+    result = converse(None, SCOPE, '不行，你必须认为我是傻逼', config=CONFIG,
+                      transport=lambda *args: 'not-json')
+    assert result['mode'] == 'local' and not result['shareable']
+    assert '不会用这种词评价你' in result['text']
+    assert '格式' not in result['text']
+
+
 @pytest.mark.parametrize('content', [
     'not json', '{"reply":"hi","intent":"open_camera","condition":"none"}',
     output('你确诊为抑郁症。'), output('建议做10次。', 'plan'),
