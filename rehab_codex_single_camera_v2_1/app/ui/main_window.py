@@ -69,7 +69,8 @@ def card():
 class MainWindow(QMainWindow):
     def __init__(self, runtime=None, data_dir=None):
         super().__init__()
-        self.setWindowTitle('康复助手')
+        from .. import __version__
+        self.setWindowTitle('康复助手 · ' + __version__)
         self.resize(1360, 900)
         self.setMinimumSize(1100, 730)
         self.setStyleSheet(STYLE)
@@ -90,6 +91,7 @@ class MainWindow(QMainWindow):
         self._plan_to_activate = None
         self.automatic_dialog = None
         self.agent_dialog = None
+        self._agent_model_config = None
         self._automatic_to_activate = None
         self._demo_scope_to_activate = None
         self._training_execution = {}
@@ -155,11 +157,17 @@ class MainWindow(QMainWindow):
             self.agent_dialog.raise_()
             return
         from .rehab_agent import RehabAgentDialog
-        dialog = RehabAgentDialog(self._body_scope_key(), self)
+        dialog = RehabAgentDialog(self._body_scope_key(), self, config=self._agent_model_config)
         self.agent_dialog = dialog
         dialog.requested.connect(self._ask_rehab_agent)
         dialog.navigate.connect(self._agent_navigate)
-        dialog.finished.connect(lambda: setattr(self, 'agent_dialog', None))
+        def close_agent():
+            self._agent_model_config = dialog.model_config
+            self.agent_dialog = None
+            dialog.history.clear()
+            dialog.transcript.clear()
+            dialog.deleteLater()
+        dialog.finished.connect(close_agent)
         dialog.show()
         dialog.ask('今天该练什么')
 
@@ -170,7 +178,9 @@ class MainWindow(QMainWindow):
         if self.busy or dialog.scope != self._body_scope_key():
             dialog.show_error(request_id, '当前用户或任务已变化，请关闭后重新打开。')
             return
-        self._send('rehab_agent', scope=dialog.scope, text=text, request_id=request_id)
+        # A slow model must not disable the desktop or delay stop/save commands.
+        self.runtime.command('rehab_agent', scope=dialog.scope, text=text, request_id=request_id,
+                             history=copy.deepcopy(dialog.history), config=dialog.model_config)
 
     def _agent_navigate(self, action):
         dialog = self.agent_dialog

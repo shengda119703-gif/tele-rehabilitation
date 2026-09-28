@@ -74,7 +74,14 @@ class Runtime:
     def _dispatch_optional(self, name, kw):
         # Freeze only structured evidence on the owning thread; never pass live
         # controllers, frames, cameras or inference objects to optional workers.
-        if name == 'silver':
+        if name == 'rehab_agent':
+            c = self.controller
+            if (c.session is not None or c.pending is not None
+                    or c.state in ('ONLINE', 'SAVE_FAILED', 'PREVIEW', 'CONNECTING')
+                    or getattr(self, 'camera_test', False)):
+                raise ValueError('请先结束采集并保存，再向康复管家询问安排')
+            kw = dict(copy.deepcopy(kw), _agent_idle_checked=True)
+        elif name == 'silver':
             c = self.controller
             summary = copy.deepcopy(c.summary())
             frozen = SimpleNamespace(session=copy.deepcopy(c.session), setup=copy.deepcopy(c.setup),
@@ -336,13 +343,13 @@ class Runtime:
     def _execute(self, name, kw):
         c, store = self.controller, self.store
         if name == 'rehab_agent':
-            from .rehab_agent import answer
-            if (c.session is not None or c.pending is not None
+            from .agent_conversation import converse
+            if not kw.get('_agent_idle_checked') and (c.session is not None or c.pending is not None
                     or c.state in ('ONLINE', 'SAVE_FAILED', 'PREVIEW', 'CONNECTING')
                     or getattr(self, 'camera_test', False)):
                 raise ValueError('请先结束采集并保存，再向康复管家询问安排')
             self._message('rehab_agent', request_id=kw['request_id'],
-                          result=answer(store, kw['scope'], kw['text']))
+                          result=converse(store, kw['scope'], kw['text'], kw.get('history'), kw.get('config')))
             return
         if name == 'family_demo':
             demo = getattr(self, 'family_demo', None)
@@ -797,14 +804,14 @@ class Runtime:
                 if name is not None:
                     dispatched = False
                     try:
-                        if name in ('silver', 'family_demo'):
+                        if name in ('silver', 'family_demo', 'rehab_agent'):
                             self._dispatch_optional(name, kw)
                             dispatched = True
                         else:
                             self._execute(name, kw)
                     except Exception as exc:
                         self._message('error', text=str(exc), command=name, request_id=kw.get('request_id'))
-                        if name not in ('silver', 'family_demo'):
+                        if name not in ('silver', 'family_demo', 'rehab_agent'):
                             self._view(error=str(exc), operation_error=True)
                     finally:
                         if not dispatched:
