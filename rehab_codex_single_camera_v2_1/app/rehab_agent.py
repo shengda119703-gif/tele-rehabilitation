@@ -13,6 +13,7 @@ from .assessment_batches import scope_key
 from .automatic_plans import (ORIGIN, generate_proposal, program_progress,
                               validate_metadata, validate_automatic_use)
 from .domain import utc_now
+from .longitudinal import build_longitudinal_history
 
 VERSION = 'rehab-agent-local-1'
 ACTIONS = {
@@ -21,6 +22,45 @@ ACTIONS = {
     'body': '查看身体档案',
     'history': '查看历史记录',
 }
+
+
+def _recorded_changes(sessions):
+    """Summarise comparable observations without calling them clinical progress."""
+    assessments = [s for s in sessions if s.get('scene_id') == 'rehab'
+                   and session_value(s, 'submode') == 'assessment']
+    groups = {}
+    for session in assessments:
+        key = (session_value(session, 'exercise_id'), session_value(session, 'side'))
+        groups.setdefault(key, []).append(session)
+    lines, evidence, incompatible = [], [], 0
+    for group in groups.values():
+        if len(group) < 2:
+            continue
+        anchor = max(group, key=lambda s: (str(s.get('end_utc') or ''), str(s.get('id') or '')))
+        try:
+            history = build_longitudinal_history(assessments, anchor['id'])
+        except (ValueError, KeyError, TypeError):
+            incompatible += 1
+            continue
+        comparable = [row for row in history['rows']
+                      if row['comparison']['status'] == 'MATCH' and row['data_state'] == 'OBSERVED']
+        if len(comparable) < 2:
+            incompatible += 1
+            continue
+        before, current = comparable[-2:]
+        old_range, new_range = before['values']['range_deg'], current['values']['range_deg']
+        old_reps, new_reps = before['values']['completed'], current['values']['completed']
+        side = '左侧' if history['scope']['side'] == 'left' else '右侧'
+        change = new_range - old_range
+        sign = '+' if change > 0 else ''
+        lines.append(f"{side}{history['exercise_label']}：观察幅度 {old_range:.0f}° → {new_range:.0f}°"
+                     f"（{sign}{change:.0f}°），完整动作 {old_reps} → {new_reps} 次。")
+        evidence.extend([
+            dict(session_id=before['session_id'], label=history['exercise_label'], status='COMPARISON_BASELINE'),
+            dict(session_id=current['session_id'], label=history['exercise_label'], status='COMPARISON_CURRENT')])
+        if len(lines) == 4:
+            break
+    return lines, evidence, incompatible
 
 
 def understand(text):
@@ -76,9 +116,19 @@ def answer(store, scope, text, *, now=None):
     if intent == 'history':
         assessments = sum(s.get('scene_id') == 'rehab' and session_value(s, 'submode') == 'assessment' for s in sessions)
         trainings = sum(s.get('scene_id') == 'rehab' and session_value(s, 'submode') == 'training' for s in sessions)
-        return reply(prefix + f'当前用户和来源下，保存了 {assessments} 条评估、{trainings} 条训练记录。'
-                     '这些是保存记录数，不代表全部有效或全部完成。'
-                     '是否有变化需要在历史页面核对相同测量条件。', 'history')
+        changes, evidence, incompatible = _recorded_changes(sessions)
+        result['tools'].append('rehab.build_longitudinal_history')
+        result['evidence'] = evidence
+        lead = (prefix + f'当前用户和来源下，保存了 {assessments} 条评估、{trainings} 条训练记录。'
+                '这些是保存记录数，不代表全部有效或全部完成。')
+        if changes:
+            detail = '\n相同记录条件下最近两次可比较观察：\n' + '\n'.join(changes)
+            if incompatible:
+                detail += f'\n另有 {incompatible} 组记录因条件变化或数据不足未直接比较。'
+            detail += ('\n这些是摄像头二维记录的数值变化，不能单独等同于康复改善；'
+                       '请结合实际感受和专业人员判断。')
+            return reply(lead + detail, 'history')
+        return reply(lead + '\n目前没有两次条件一致且有效的同动作评估，暂时不能据此判断变化。', 'history')
 
     profile = build_body_profile(sessions, **scope)
     participant = store.get_participant(scope['participant_id'])

@@ -6,6 +6,12 @@
 - 增加上一轮最小化本机摘要的多轮上下文，并验证超长 / 非文本摘要不会发送。
 - 增量后的 Agent 专项为 66 passed；完整回归结果见下方本机结果。
 
+## 0.22.0 增量
+
+- 增加“进步 / 变化”证据化查询，复用 `recorded-conditions-4`，只比较最近两次条件完整、一致且有效的同动作评估。
+- 验证相同条件会显示观察幅度与完整动作次数的前后值；模型 / 机位等条件变化时不比较。
+- Core 回归 1065 passed、4 subtests passed；UI 回归 419 passed，共 1484 项主测试。
+
 ## 自动验证范围
 
 - 配置只接受 DeepSeek 官方根地址，以及当前支持的 `deepseek-flash` / `deepseek-v4-pro`。
@@ -18,10 +24,10 @@
 
 ## 本机结果
 
-- Agent 专项：66 passed。
-- Core 回归：1063 passed，4 subtests passed。
+- Agent 专项：66 passed（0.22 新增纵向测试计入 Core）。
+- Core 回归：1065 passed，4 subtests passed。
 - UI 回归：419 passed。
-- 主测试合计 1482 项；专项已包含在 core / UI 中，不重复相加。
+- 主测试合计 1484 项；专项已包含在 core / UI 中，不重复相加。
 - `scripts/qa_deepseek_agent.py` 已渲染未配置、两段式结果和 DeepSeek 配置界面；所有对话为明确的模拟数据，没有调用真实模型。
 - `compileall` 通过。
 
