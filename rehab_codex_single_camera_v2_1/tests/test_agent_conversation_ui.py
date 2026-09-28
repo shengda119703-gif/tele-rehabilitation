@@ -10,6 +10,8 @@ def test_settings_key_masked_and_consent_not_inherited(desktop):
     w, runtime, app = desktop
     d = ModelSettingsDialog(CONFIG, w)
     assert d.key.echoMode() == QLineEdit.EchoMode.Password
+    assert d.endpoint.isReadOnly() and d.endpoint.text() == 'https://api.deepseek.com'
+    assert d.model.text() == 'deepseek-flash'
     assert not d.consent.isChecked()
     d.save()
     assert '确认' in d.error.text()

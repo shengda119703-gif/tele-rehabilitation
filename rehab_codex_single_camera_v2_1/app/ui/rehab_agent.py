@@ -14,16 +14,18 @@ class ModelSettingsDialog(QDialog):
     def __init__(self, config=None, parent=None):
         super().__init__(parent)
         self.config = None
-        self.setWindowTitle('连接原安康使用的 MiniMax')
+        self.setWindowTitle('连接 DeepSeek')
         self.resize(580, 390)
         box = QVBoxLayout(self)
-        note = QLabel('填写原安康使用的配置。密钥仅保留在本次软件运行的内存中，不写入文件。\n'
-                      '模型会收到你主动发送的文字和最近 6 轮可分享对话；本地康复数据库内容不会发送。')
+        note = QLabel('密钥仅保留在本次软件运行的内存中，不写入文件。\n'
+                      'DeepSeek 会收到你主动发送的文字、最近 6 轮可分享对话；查询康复记录时，'
+                      '还会收到本机生成的最小结果摘要。姓名、原始数据库记录和摄像头画面不会发送。')
         note.setWordWrap(True)
         box.addWidget(note)
         form = QFormLayout()
-        self.endpoint = QLineEdit(config.base_url if config else 'https://api.minimax.cn/v1')
-        self.model = QLineEdit(config.model if config else 'MiniMax-M3')
+        self.endpoint = QLineEdit(config.base_url if config else 'https://api.deepseek.com')
+        self.endpoint.setReadOnly(True)
+        self.model = QLineEdit(config.model if config else 'deepseek-flash')
         self.key = QLineEdit(config.api_key if config else '')
         self.key.setEchoMode(QLineEdit.EchoMode.Password)
         self.key.setPlaceholderText('在这里粘贴 API Key，不要发在聊天中')
@@ -31,7 +33,7 @@ class ModelSettingsDialog(QDialog):
         form.addRow('模型名称', self.model)
         form.addRow('API Key', self.key)
         box.addLayout(form)
-        self.consent = QCheckBox('我同意向上述服务发送主动输入的文字和最近对话（可能产生 API 费用）')
+        self.consent = QCheckBox('我同意向 DeepSeek 发送上述文字与最小结果摘要（可能产生 API 费用）')
         box.addWidget(self.consent)
         self.error = QLabel()
         self.error.setWordWrap(True)
@@ -77,14 +79,14 @@ class RehabAgentDialog(QDialog):
         title.setStyleSheet('font-size:24px;font-weight:600;')
         title.setWordWrap(True)
         box.addWidget(title)
-        note = QLabel('对话只在当前窗口保留。连接模型后会发送文字和最近对话；康复记录留在本机。')
+        note = QLabel('对话只在当前窗口保留。DeepSeek 负责理解和表达；评估、计划与安全结论由本机规则核对。')
         note.setWordWrap(True)
         box.addWidget(note)
         status_row = QHBoxLayout()
-        self.mode_label = QLabel('MiniMax 已配置 · 尚未验证连接' if config else '未连接 MiniMax · 当前仅支持本地有限回答')
+        self.mode_label = QLabel('DeepSeek 已配置 · 尚未验证连接' if config else '未连接 DeepSeek · 当前仅支持本地有限回答')
         self.mode_label.setWordWrap(True)
         status_row.addWidget(self.mode_label, 1)
-        self.settings_button = QPushButton('连接 MiniMax')
+        self.settings_button = QPushButton('连接 DeepSeek')
         self.settings_button.clicked.connect(self.configure)
         status_row.addWidget(self.settings_button)
         self.clear_button = QPushButton('清空对话')
@@ -95,7 +97,7 @@ class RehabAgentDialog(QDialog):
         status_row.addWidget(self.disconnect_button)
         box.addLayout(status_row)
         self.browser = QTextBrowser()
-        self.browser.setPlainText('连接 MiniMax 后可以自由聊天和连续追问。已有康复记录始终由本地规则核对。')
+        self.browser.setPlainText('连接 DeepSeek 后可以自由聊天和连续追问。已有康复记录始终由本机规则核对。')
         box.addWidget(self.browser, 1)
         self.quick = []
         row = QHBoxLayout()
@@ -139,13 +141,13 @@ class RehabAgentDialog(QDialog):
         if dialog.exec() == QDialog.DialogCode.Accepted:
             self.model_config = dialog.config
             self.clear_conversation()
-            self.mode_label.setText('MiniMax 已配置 · 发送一句话验证连接')
+            self.mode_label.setText('DeepSeek 已配置 · 发送一句话验证连接')
         dialog.deleteLater()
 
     def disconnect(self):
         self.model_config = None
         self.clear_conversation()
-        self.mode_label.setText('已断开 MiniMax · 当前仅支持本地有限回答')
+        self.mode_label.setText('已断开 DeepSeek · 当前仅支持本地有限回答')
 
     def clear_conversation(self):
         self.history.clear()
