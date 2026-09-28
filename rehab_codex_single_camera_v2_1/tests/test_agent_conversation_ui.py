@@ -57,3 +57,17 @@ def test_private_turn_cannot_leak_to_next_request_and_disconnect_clears(desktop)
     assert d.model_config is None and not d.history
     d.reject()
     assert w._agent_model_config is None
+
+
+def test_privacy_receipt_is_separate_from_assistant_bubble(desktop):
+    w, runtime, app = desktop
+    w.agent_button.click()
+    reply(w)
+    d = w.agent_dialog
+    d.ask('不要告诉孩子，我难过')
+    result = dict(scope=d.scope, text='我听到了。', local_text='', actions=[], shareable=False,
+                  mode_label='隐私保护 · 本轮未联网', privacy_notice='未发送给 DeepSeek，也未分享家属。')
+    d.receive(d.request_id, result)
+    assert '隐私与执行状态' in d.browser.toPlainText()
+    assert '未分享家属' in d.browser.toPlainText()
+    assert d.history[-1]['shareable'] is False

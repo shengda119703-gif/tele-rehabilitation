@@ -5,6 +5,7 @@ import pytest
 
 from app.agent_conversation import (ModelConfig, ModelError, converse, messages_for,
                                     parse_reply, parse_tool_reply, complete, private_input)
+from app.agent_privacy import parse_privacy_intent
 from app.storage import Storage
 from test_automatic_plans import SCOPE, NOW, measured
 
@@ -60,6 +61,31 @@ def test_private_input_never_calls_model_or_becomes_shareable(text):
         pytest.fail('private text was sent')
     result = converse(None, SCOPE, text, config=CONFIG, transport=forbidden)
     assert private_input(text) and result['mode'] == 'local' and not result['shareable']
+    assert result['privacy_intent'] in ('private', 'no_record')
+    assert '未发送给 DeepSeek' in result['privacy_notice']
+
+
+@pytest.mark.parametrize('text, expected', [
+    ('不要记录这句话', 'no_record'),
+    ('别告诉孩子，我难过', 'private'),
+    ('不想让女儿知道', 'private'),
+    ('告诉女儿我今天有点累', 'share_family'),
+    ('让儿子知道这件事', 'share_family'),
+    ('让儿子回来一趟', 'none'),
+])
+def test_ankang_privacy_intents_are_distinct(text, expected):
+    assert parse_privacy_intent(text) == expected
+
+
+def test_share_family_is_not_an_implied_delivery():
+    def forbidden(*args):
+        pytest.fail('share request was sent to model')
+    result = converse(None, SCOPE, '告诉女儿我今天有点累', config=CONFIG, transport=forbidden)
+    assert result['privacy_intent'] == 'share_family'
+    assert not result['shareable'] and result['mode'] == 'local'
+    assert result['actions'] == [dict(id='silver', label='查看家庭共享设置')]
+    assert '未发送' in result['mode_label']
+    assert '未向家属发送' in result['privacy_notice']
 
 
 def test_context_drops_private_turns_and_untrusted_roles():

@@ -164,6 +164,8 @@ class RehabAgentDialog(QDialog):
                 parts.append('<p><b>康复管家</b><br>' + html.escape(turn['assistant']).replace('\n', '<br>') + '</p>')
             if turn.get('local_text'):
                 parts.append('<p><b>本机记录与规则核对</b><br>' + html.escape(turn['local_text']).replace('\n', '<br>') + '</p>')
+            if turn.get('privacy_notice'):
+                parts.append('<p><b>隐私与执行状态</b><br>' + html.escape(turn['privacy_notice']).replace('\n', '<br>') + '</p>')
         self.browser.setHtml(''.join(parts))
         self.browser.verticalScrollBar().setValue(self.browser.verticalScrollBar().maximum())
 
@@ -187,7 +189,8 @@ class RehabAgentDialog(QDialog):
         self.set_busy(False)
         if not self.transcript:
             self.transcript.append(dict(user=self.pending_text))
-        self.transcript[-1].update(assistant=result['text'], local_text=result.get('local_text', ''))
+        self.transcript[-1].update(assistant=result['text'], local_text=result.get('local_text', ''),
+                                   privacy_notice=result.get('privacy_notice', ''))
         shareable = result.get('shareable', False)
         self.history.append(dict(
             user=self.pending_text,

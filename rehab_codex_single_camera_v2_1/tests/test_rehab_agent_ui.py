@@ -70,3 +70,13 @@ def test_plan_action_opens_existing_screen_without_prefilled_screening(desktop):
     assert r.calls[-1][0] == 'automatic_proposal'
     assert w.automatic_dialog and not w.automatic_dialog.general.isChecked()
     w.automatic_dialog.reject()
+
+
+def test_family_share_action_opens_existing_silver_screen_without_sending(desktop):
+    w, r, app = desktop
+    w.agent_button.click()
+    reply(w, actions=[dict(id='silver', label='查看家庭共享设置')])
+    w._agent_navigate('silver')
+    assert w.agent_dialog is None and w.silver_dialog.isVisible()
+    assert not any(n in ('request', 'consent', 'send_family') for n, _ in r.calls)
+    w.silver_dialog.close()

@@ -13,6 +13,7 @@ import time
 from urllib.parse import urlsplit
 
 from .assessment_batches import scope_key
+from .agent_privacy import parse_privacy_intent
 from .domain import utc_now
 from .rehab_agent import answer, understand
 
@@ -75,10 +76,8 @@ class ModelConfig:
 
 
 def private_input(text):
-    """Port of Ankang privacy.ts: no-record/private statements stay local."""
-    return bool(re.search(r'(不要|别).{0,4}(记录|记下来|保存|上传|发送)|'
-                          r'(不要|别|不想|不希望|不愿意).{0,4}(告诉|让|通知).{0,4}(孩子|女儿|儿子|家人|他|她)|'
-                          r'(不想|不希望|不愿意).{0,3}(孩子|女儿|儿子|家人).{0,3}(知道|看见)', text))
+    """Compatibility wrapper: protected turns never enter provider history."""
+    return parse_privacy_intent(text) in ('no_record', 'private', 'share_family')
 
 
 def messages_for(text, history):
@@ -215,13 +214,23 @@ def safe_chat_fallback(text):
 def converse(store, scope, text, history=None, config=None, *, transport=None, now=None):
     scope = scope_key(scope)
     local_intent = understand(text)  # validates input length/type
-    private = private_input(text)
+    privacy_intent = parse_privacy_intent(text)
     history = history if isinstance(history, list) else []
     base = dict(scope=scope, version=VERSION, at=utc_now(), actions=[], evidence=[], tools=[],
-                local_text='', shareable=False, mode='local', intent='chat')
-    if private:
-        base['text'] = '这句话会留在本机，不发送给模型，也不加入后续发送的对话。你可以继续使用本地评估和训练页面。'
+                local_text='', shareable=False, mode='local', intent='chat',
+                privacy_intent=privacy_intent, privacy_notice='')
+    if privacy_intent in ('no_record', 'private'):
+        base['text'] = '我听到了。如果你愿意，可以继续说；这轮我不会让模型处理，也不会把它当成康复评估事实。'
+        base['privacy_notice'] = ('本轮未发送给 DeepSeek、未写入健康记录、未分享家属；'
+                                  '文字只在当前对话窗口临时显示，关闭窗口后清除。')
         base['mode_label'] = '隐私保护 · 本轮未联网'
+        return base
+    if privacy_intent == 'share_family':
+        base['text'] = ('我还没有把这件事发给家人。你可以先查看家庭共享设置，'
+                        '确认要分享的内容与对象；当前远程家属通知尚未接通。')
+        base['actions'] = [dict(id='silver', label='查看家庭共享设置')]
+        base['privacy_notice'] = '本轮未发送给 DeepSeek，也未向家属发送；没有创建共享记录。'
+        base['mode_label'] = '共享请求待确认 · 未发送'
         return base
     if config is None:
         result = answer(store, scope, text, now=now)

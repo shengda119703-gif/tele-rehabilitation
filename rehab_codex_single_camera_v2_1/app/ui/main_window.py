@@ -191,7 +191,7 @@ class MainWindow(QMainWindow):
             dialog.show_error(dialog.request_id, '当前用户或任务已变化，请关闭后重新打开。')
             return
         routes = {'assessment': self._show_catalog, 'automatic': self._open_automatic_plan,
-                  'body': self._show_body, 'history': self._history}
+                  'body': self._show_body, 'history': self._history, 'silver': self._show_silver}
         if action in routes:
             dialog.accept()
             routes[action]()
