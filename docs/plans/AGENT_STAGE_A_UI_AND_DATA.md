@@ -1,4 +1,4 @@
-# A 阶段：结构化自述与定向更正（0.23.0）
+# A 阶段：结构化自述与定向更正（0.23.1）
 
 更新：2026-09-29。持续开发分支：`codex/rehab-agent-stage1`。本阶段提供可人工验收的最小完整闭环；不表示安康 Agent 全部完成。验收前不继续 B 阶段。
 
@@ -8,6 +8,12 @@
 
 不需要配置 DeepSeek 即可完成以上路径。一般聊天和康复查询继续复用原来的 DeepSeek / 本机规则通道。当前结构化自述在本机解析，不发送给模型，也不进入可联网的对话历史。未修改康复动作、评估、计划或摄像头算法。
 
+## 0.23.1 显示修补
+
+普通无写入回合改为针对性主回答 + 简短人物/时间/症状标签；未保存回执和完整隐私说明默认折叠到“查看详细信息”。实际 saved/retracted/discarded/cancelled 回执、待确认原话及明确隐私请求仍突出显示。记录 ID/revision 保留在后台及详情中。五类语义与字段保持分开，只有 presentation 改变。
+
+输入框 Return/Enter 每次只发送一次，事件不会继续触发 Dialog 默认按钮；静态和动态按钮均关闭默认属性，请求/写入中 Enter 不重入。详见 [0.23.1 验收记录](../validation/AGENT_STAGE_A_UI_2026-09-29.md)。
+
 ## 页面与接口（供共同做 UI）
 
 保留现有 PySide6 `RehabAgentDialog`，没有新建 React 页面或另一套事项库。五类内容可以分别设计样式，但不能合并含义：
@@ -15,9 +21,9 @@
 | 区域 | 后台字段 | 当前显示与操作规则 |
 | --- | --- | --- |
 | 主回答 | `main_text`（兼容旧字段 `text`）、`source_label`、`mode_label` | “康复管家”回答；顶部显示本机理解 / 模型模式。不要把它当执行回执 |
-| 依据 | `understanding[]`、`evidence_summary`；原查询沿用 `local_text`、`evidence[]` | 自述显示人物、时间、发生/否定/假设/不确定；原评估显示“本机记录与规则核对”。自述解析不是摄像头测量 |
-| 自报 / 记录回执 | `receipt.status/text/record_id/revision/source_message_id`、`record_summary` | 分开显示未保存、已保存、已撤回、未入库草稿已撤销、已取消或只读查看；保存成功才有数据库版本与记录号 |
-| 隐私与执行状态 | `privacy_status.network/family`、`privacy_notice`、`delivery_status` | 自述为 `not_sent/not_shared`；远程始终 `NOT_CONNECTED`。普通模型回合保守标为 `may_have_been_sent`，不假称未联网 |
+| 依据 | `understanding[]`、`evidence_summary`；原查询沿用 `local_text`、`evidence[]` | 自述默认用短标签显示人物、时间及肯否，完整解析可展开；原评估显示“本机记录与规则核对”。自述解析不是摄像头测量 |
+| 自报 / 记录回执 | `receipt.status/text/record_id/revision/source_message_id`、`record_summary` | 实际写操作醒目显示；未保存/只读状态默认放详情；保存成功才有数据库版本与记录号 |
+| 隐私与执行状态 | `privacy_status.network/family`、`privacy_notice`、`delivery_status` | 明确隐私请求醒目显示；普通自述在详情保留 `not_sent/not_shared`；远程始终 `NOT_CONNECTED`。普通模型回合保守标为 `may_have_been_sent`，不假称未联网 |
 | 待确认操作 | `proposed_actions[]` | 每项有 `id/label/summary/operation/requires_confirmation`。显示原话、症状与时间；按钮逐条确认，每页最多显示 4 项，可切换页面选择后面的记录，无需执行其他记录。原页面只读跳转仍使用 `actions[]` |
 
 `receipt.status`：`not_saved`、`saved`、`retracted`、`discarded`、`cancelled`、`read`。错误通过原有 `error` 通道显示“本轮未完成”，不制造成功回执；失败后可以重新查看实际记录再操作。

@@ -15,7 +15,9 @@ def test_ui_confirmation_receipt_reset_and_scope_guard(desktop, tmp_path):
     result = s.turn('我今天头晕')
     d.receive(d.request_id, result)
     body = d.browser.toPlainText()
-    assert all(label in body for label in ('康复管家', '理解依据', '自报 / 记录回执', '隐私与执行状态', '待确认操作'))
+    assert all(label in body for label in ('康复管家', '本人 · 今天 · 头晕', '待确认操作'))
+    assert '未写入自报记录' not in body and '隐私与执行状态' not in body
+    assert d.transcript[-1]['result']['receipt']['status'] == 'not_saved'
     assert not care.records(d.scope, 'agent_self_report')
     token = result['proposed_actions'][0]['id']
     button = d.action_row.itemAt(0).widget()

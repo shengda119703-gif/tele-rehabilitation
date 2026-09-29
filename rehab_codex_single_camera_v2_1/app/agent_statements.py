@@ -85,6 +85,72 @@ def describe(claim):
         f" · {claim['event_date']}" if claim['event_date'] else '')
 
 
+def time_label(claim):
+    """Presentation only: never resolves an unknown time or changes admission."""
+    scope = claim['time_scope']
+    if scope == 'unknown':
+        return '时间待确认'
+    words = {'current': ('现在', '此刻', '目前', '今天'),
+             'past': ('前天', '昨晚', '昨天', '刚才', '上周', '去年', '以前', '过去'),
+             'future': ('明天', '以后', '将来', '下周')}[scope]
+    return next((word for word in words if word in claim['time_text']),
+                {'current': '今天/现在', 'past': '之前', 'future': '将来'}[scope])
+
+
+def brief_claim(claim):
+    parts = [{'self': '本人', 'family': '家人', 'unknown': '人物待确认'}[claim['subject']],
+             time_label(claim), claim['symptom']]
+    if claim['status'] != 'occurred':
+        parts.append(LABELS[claim['status']])
+    return ' · '.join(parts)
+
+
+def statement_reply(claims):
+    """Respond to known dimensions and ask only for the next missing dimension.
+
+    This function cannot change claims or authorize persistence.
+    """
+    replies, accepted = [], []
+    for claim in claims:
+        subject, status, symptom = claim['subject'], claim['status'], claim['symptom']
+        when = '' if claim['time_scope'] == 'unknown' else time_label(claim)
+        who = (re.search(FAMILY, claim['text']).group() if subject == 'family'
+               and re.search(FAMILY, claim['text']) else '家人')
+        if subject == 'unknown':
+            line = f'你提到的{symptom}，是你本人还是家人的情况？'
+        elif status == 'hypothetical':
+            line = f'你说的{symptom}是一个假设，不会记录成已经发生。'
+            if subject == 'family':
+                line += '这也不会记到你的本人自报记录里。'
+        elif status == 'negated':
+            line = f'明白，你说的是{who if subject == "family" else ""}{when}没有{symptom}。'
+            line += ('这是家人的情况，不会记到你的本人自报记录里。' if subject == 'family'
+                     else '这不会记录成你的不适。')
+        elif status == 'uncertain':
+            line = f'关于{who if subject == "family" else "你"}{when}提到的{symptom}，我还不能确定这件事是否实际发生。'
+            line += ('这是家人的情况，不会记到你的本人自报记录里。' if subject == 'family'
+                     else '你能确认是否确实发生了吗？')
+        elif subject == 'family':
+            line = f'明白，你说的是{who}{when}{symptom}。这是家人的情况，不会记到你的本人自报记录里。'
+        elif claim['time_scope'] == 'unknown':
+            line = f'你是说现在正在{symptom}，还是之前发生过{symptom}？'
+        elif claim['time_scope'] == 'future':
+            line = f'你说的是将来的{symptom}，不会记录成已经发生。'
+        elif claim['admissible']:
+            accepted.append(f'{when}{symptom}')
+            continue
+        else:
+            line = '这条自述还需要你核对，暂不保存。'
+        if line not in replies:
+            replies.append(line)
+    if accepted:
+        replies.insert(0, '你说自己' + '，'.join(dict.fromkeys(accepted)) + '。请核对下面的原话，逐条点击“确认保存”后才会记录。')
+    if any(c['subject'] == 'self' and c['time_scope'] == 'current'
+           and c['status'] in ('occurred', 'uncertain') for c in claims):
+        replies.append('如果你现在确有不适，请先暂停训练。')
+    return '\n'.join(replies)
+
+
 class StatementSession:
     """Owned by one dialog and scope, on the existing optional-service queue.
 
@@ -165,14 +231,7 @@ class StatementSession:
         for claim in claims:
             if claim['admissible']:
                 self.propose('save', claim)
-        text_reply = ('我把你的话分成了下面的自述，请核对人物、时间和是否发生。'
-                      '只有点击对应的“确认保存”才会入库；也可以取消或重新说明。')
-        if not self.pending:
-            text_reply = ('这句话没有形成可保存的本人明确自报。家人的情况、否定、假设和不确定表达不会记成本人不适。'
-                          '如需记录，请分别说明“谁、什么时候、实际发生了什么”。')
-        if any(c['subject'] == 'self' and c['time_scope'] == 'current' and c['status'] in ('occurred', 'uncertain') for c in claims):
-            text_reply += '如果你现在确有不适，请先暂停训练。'
-        return self.result(text_reply, claims=claims)
+        return self.result(statement_reply(claims), claims=claims)
 
     def act(self, token):
         if token == 'cancel':
