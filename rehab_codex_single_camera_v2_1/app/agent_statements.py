@@ -1,87 +1,36 @@
-"""Conservative local claim acceptance and consent-bound self-report operations.
+"""Consent-bound self-report operations using validated open model extraction.
 
 Adapted from Ankang understanding/elderTurn/correction, not its clinical rules.
-No clinical store, camera, model or task executor is available to this module.
+No clinical store, camera or task executor is available to this module.
 """
 from __future__ import annotations
 
 import copy
 import re
-from datetime import datetime, timedelta
 from uuid import uuid4
 
 from .agent_privacy import parse_privacy_intent
 from .silver_store import scope_key
 from .domain import utc_now
+from .agent_conversation import ModelError
+from .agent_extraction import FAMILY, ExtractionError, extract_statements, revalidate_claim
 
 KIND = 'agent_self_report'
-SYMPTOMS = r'头晕|胸闷|不舒服|疲劳|乏力|无力|麻木|恶心|气短|摔倒|跌倒|(?:头|肩|腰|腿|膝|手|脚|背|胸|肚子)(?:疼|痛)|疼痛|很累|有点累'
-FAMILY = r'妈妈|母亲|我妈|爸爸|父亲|我爸|家人|家里人|老伴|爱人|丈夫|妻子|老公|老婆|儿子|女儿|爷爷|奶奶|外公|外婆|哥哥|姐姐|弟弟|妹妹|他|她'
+LOCAL_QUERIES = {'今天该练什么', '今天练什么', '我的评估结果', '查看历史记录',
+                 '今天不想训练', '查看训练计划', '查看身体档案', '继续'}
 CORRECTION = r'说错|讲错|更正|纠正|撤回.*(?:自报|自述|说的)|撤销.*(?:自报|自述|说的)'
 LABELS = {'self': '本人', 'family': '家人/他人', 'unknown': '未知',
           'current': '今天/现在', 'past': '过去', 'future': '将来',
           'occurred': '发生', 'negated': '否定', 'hypothetical': '假设', 'uncertain': '不确定'}
 
 
-def parse_statements(text, message_id, now=None):
-    """Bounded symptom vocabulary; no guessed subject/date or cross-turn carryover.
-
-    Unknown constructions are not admissible. Multiple predicates in one clause
-    with mixed polarity deliberately require separate restatement.
-    """
-    now = now or datetime.now().astimezone()
-    rows = []
-    subject, time_scope, event_date = 'unknown', 'unknown', None
-    for clause in filter(None, re.split(r'[，,。；;！!\n]|(?:但是|不过|而且|然后)', text)):
-        clause = clause.strip()
-        matches = list(re.finditer(SYMPTOMS, clause))
-        if not matches:
-            continue
-        family = bool(re.search(FAMILY, clause))
-        # Remove possessive kinship before counting an explicit "我".
-        self_text = re.sub(r'我(?:的)?(?:妈妈|母亲|妈|爸爸|父亲|爸|家人|老伴|爱人|丈夫|妻子|老公|老婆|儿子|女儿)', '', clause)
-        explicit_self = bool(re.search(r'我|本人', self_text))
-        if family or explicit_self:
-            subject = 'unknown' if family and explicit_self else 'family' if family else 'self'
-            # A new subject cannot inherit another person's event time.
-            time_scope, event_date = 'unknown', None
-        if re.search(r'昨天|昨晚|前天|以前|过去|上周|去年|曾经|刚才', clause):
-            time_scope = 'past'
-            days = 2 if '前天' in clause else 1 if re.search(r'昨天|昨晚', clause) else 0 if '刚才' in clause else None
-            event_date = (now.date()-timedelta(days=days)).isoformat() if days is not None else None
-        elif re.search(r'明天|以后|将来|下周', clause):
-            time_scope, event_date = 'future', None
-        elif re.search(r'今天|现在|此刻|目前', clause):
-            time_scope, event_date = 'current', now.date().isoformat()
-        uncertain = re.search(r'可能|也许|好像|似乎|不确定|不清楚|不知道|是不是|是否|吗|[？?]|听说|说我|不是没|并非不|不能说没', clause)
-        hypothetical = re.search(r'如果|假如|假设|万一|要是', clause)
-        negated = re.search(r'没|没有|未|不再|不会|不曾|并非|不是|不怎么|不太|不(?=头晕|胸闷|疼|痛|累|疲劳|乏力|恶心|气短|摔倒|跌倒)', clause)
-        status = 'hypothetical' if hypothetical else 'uncertain' if uncertain else 'negated' if negated else 'occurred'
-        if status == 'occurred':
-            # Positive acceptance is a small grammar, not a keyword match.
-            # Quotation, questions about symptoms, recovery, and unfamiliar
-            # syntax stay uncertain even if a known symptom occurs in them.
-            remainder = re.sub(SYMPTOMS, '', clause)
-            remainder = re.sub(FAMILY, '', remainder)
-            remainder = re.sub(r'我自己|本人|我|今天|现在|此刻|目前|昨天|昨晚|前天|以前|过去|上周|去年|曾经|刚才|明天|以后|将来|下周', '', remainder)
-            remainder = re.sub(r'请|帮|记录|记下|保存|一下|有一点|有点|一点|有些|感觉|觉得|一直|突然|确实|真的|还是|仍然|开始|出现|有|很|也|都|和|跟|与|又|了|啊|呀|呢|的|[\s、]', '', remainder)
-            if remainder:
-                status = 'uncertain'
-        # Contradictory / mixed-time clauses must never produce current facts.
-        if (re.search(r'昨天|以前|过去|刚才', clause) and re.search(r'今天|现在', clause)):
-            time_scope, event_date = 'unknown', None
-            status = 'uncertain'
-        for match in matches:
-            rows.append(dict(id=uuid4().hex, source_message_id=message_id, text=clause,
-                             symptom=match.group(), subject=subject, time_scope=time_scope,
-                             event_date=event_date, status=status, certainty='explicit' if status == 'occurred' else 'not_accepted',
-                             received_utc=now.isoformat(), time_text=clause,
-                             admissible=(subject == 'self' and time_scope in ('current', 'past') and status == 'occurred')))
-    return rows
+def concept_text(claim):
+    """Read compatibility only; legacy records are never re-parsed or rewritten."""
+    return claim.get('concept', claim.get('symptom', claim.get('text', '自述')))
 
 
 def describe(claim):
-    return f"{claim['symptom']} · {LABELS[claim['subject']]} · {LABELS[claim['time_scope']]} · {LABELS[claim['status']]}" + (
+    return f"{concept_text(claim)} · {LABELS[claim['subject']]} · {LABELS[claim['time_scope']]} · {LABELS[claim['status']]}" + (
         f" · {claim['event_date']}" if claim['event_date'] else '')
 
 
@@ -99,7 +48,7 @@ def time_label(claim):
 
 def brief_claim(claim):
     parts = [{'self': '本人', 'family': '家人', 'unknown': '人物待确认'}[claim['subject']],
-             time_label(claim), claim['symptom']]
+             time_label(claim), concept_text(claim)]
     if claim['status'] != 'occurred':
         parts.append(LABELS[claim['status']])
     return ' · '.join(parts)
@@ -112,32 +61,32 @@ def statement_reply(claims):
     """
     replies, accepted = [], []
     for claim in claims:
-        subject, status, symptom = claim['subject'], claim['status'], claim['symptom']
+        subject, status, concept = claim['subject'], claim['status'], concept_text(claim)
         when = '' if claim['time_scope'] == 'unknown' else time_label(claim)
         who = (re.search(FAMILY, claim['text']).group() if subject == 'family'
                and re.search(FAMILY, claim['text']) else '家人')
         if subject == 'unknown':
-            line = f'你提到的{symptom}，是你本人还是家人的情况？'
+            line = f'你提到的{concept}，是你本人还是家人的情况？'
         elif status == 'hypothetical':
-            line = f'你说的{symptom}是一个假设，不会记录成已经发生。'
+            line = f'你说的{concept}是一个假设，不会记录成已经发生。'
             if subject == 'family':
                 line += '这也不会记到你的本人自报记录里。'
         elif status == 'negated':
-            line = f'明白，你说的是{who if subject == "family" else ""}{when}没有{symptom}。'
+            line = f'明白，你说的是“{claim["text"]}”。'
             line += ('这是家人的情况，不会记到你的本人自报记录里。' if subject == 'family'
                      else '这不会记录成你的不适。')
         elif status == 'uncertain':
-            line = f'关于{who if subject == "family" else "你"}{when}提到的{symptom}，我还不能确定这件事是否实际发生。'
+            line = f'关于{who if subject == "family" else "你"}{when}提到的{concept}，我还不能确定这件事是否实际发生。'
             line += ('这是家人的情况，不会记到你的本人自报记录里。' if subject == 'family'
                      else '你能确认是否确实发生了吗？')
         elif subject == 'family':
-            line = f'明白，你说的是{who}{when}{symptom}。这是家人的情况，不会记到你的本人自报记录里。'
+            line = f'明白，你说的是{who}{when}{concept}。这是家人的情况，不会记到你的本人自报记录里。'
         elif claim['time_scope'] == 'unknown':
-            line = f'你是说现在正在{symptom}，还是之前发生过{symptom}？'
+            line = f'你是说现在正在{concept}，还是之前发生过{concept}？'
         elif claim['time_scope'] == 'future':
-            line = f'你说的是将来的{symptom}，不会记录成已经发生。'
+            line = f'你说的是将来的{concept}，不会记录成已经发生。'
         elif claim['admissible']:
-            accepted.append(f'{when}{symptom}')
+            accepted.append(f'{when}{concept}')
             continue
         else:
             line = '这条自述还需要你核对，暂不保存。'
@@ -162,11 +111,12 @@ class StatementSession:
         self.care_factory = care_factory
         self.pending = {}
         self.last_claims = []
+        self.network = 'not_sent'
 
     def result(self, text, *, claims=(), receipt=None, record_summary=''):
-        return dict(scope=copy.deepcopy(self.scope), version='agent-statements-1', at=utc_now(),
-                    text=text, main_text=text, source_label='本机理解 / 本人自报',
-                    mode='local', mode_label='本机结构化自述 · 未联网', shareable=False,
+        return dict(scope=copy.deepcopy(self.scope), version='agent-statements-2', at=utc_now(),
+                    text=text, main_text=text, source_label='用户原话 · 本机核对',
+                    mode='local', mode_label=('DeepSeek 抽取 · 本机核对' if self.network != 'not_sent' else '本机自报操作 · 未联网'), shareable=False,
                     actions=[], evidence=[], tools=[], local_text='', understanding=copy.deepcopy(list(claims)),
                     evidence_summary='\n'.join(describe(c) for c in claims),
                     receipt=receipt or dict(status='not_saved', text='未写入自报记录。'),
@@ -174,23 +124,25 @@ class StatementSession:
                     proposed_actions=[dict(id=k, label=v['label'], summary=v['summary'],
                                            operation=v['operation'], requires_confirmation=True)
                                       for k, v in self.pending.items()],
-                    privacy_notice='本轮未发送给 DeepSeek；自报仅在明确确认后保存到本机，未分享家属。',
-                    privacy_status=dict(network='not_sent', family='not_shared'),
+                    privacy_notice=('本轮未发送给 DeepSeek；' if self.network == 'not_sent' else '本轮文字已按授权提交 DeepSeek 抽取（服务失败时可能已发送）；')
+                                   + '自报仅在明确确认后保存到本机，未分享家属。',
+                    privacy_status=dict(network=self.network, family='not_shared'),
                     delivery_status='NOT_CONNECTED')
 
     def propose(self, operation, claim, *, record=None, correction_message=None, correction_text=''):
         token = uuid4().hex
         summary = describe(claim) + '\n原话：' + claim['text']
-        label = (('确认保存' if operation == 'save' else '确认撤回') + '：' + claim['symptom']
+        label = (('确认保存' if operation == 'save' else '确认撤回') + '：' + concept_text(claim)
                  + '（' + LABELS[claim['time_scope']] + ' · ' + (claim['event_date'] or '日期未明确') + '）')
         self.pending[token] = dict(operation=operation, claim=copy.deepcopy(claim),
                                    record=copy.deepcopy(record), correction_message=correction_message,
                                    correction_text=correction_text,
                                    label=label, summary=summary)
 
-    def turn(self, text, *, now=None):
+    def turn(self, text, *, now=None, config=None, transport=None):
         if not isinstance(text, str) or not text.strip() or len(text) > 500:
             raise ValueError('请输入 1–500 字的问题')
+        self.network = 'not_sent'
         previous = self.last_claims
         self.last_claims = []
         self.pending.clear()
@@ -211,20 +163,38 @@ class StatementSession:
                                '它们不是摄像头评估；可按原话选择要撤回的一条。',
                                record_summary='\n\n'.join(lines) or '尚无已保存自报。',
                                receipt=dict(status='read', text='只读查看；没有修改记录。'))
-        claims = parse_statements(text, message_id, now)
         if re.search(CORRECTION, text):
             # Explicit family/ambiguous correction cannot retract self facts.
             if re.search(FAMILY, text):
-                return self.result('这次更正涉及家人或主体不明确，请查看自报记录，按原话选择对应的一条。', claims=claims)
-            tags = {c['symptom'] for c in claims}
-            targets = [c for c in previous if c['admissible'] and (not tags or c['symptom'] in tags)]
+                return self.result('这次更正涉及家人或主体不明确，请查看自报记录，按原话选择对应的一条。', claims=[])
+            # Exact quoted concept matching only; the model cannot select a record.
+            tags = {concept_text(c) for c in previous if concept_text(c) in text}
+            targets = [c for c in previous if c['admissible'] and (not tags or concept_text(c) in tags)]
             for claim in targets:
                 record = self.care_factory().get(self.scope, KIND, claim['id'])
                 if record is None or record['status'] == 'ACTIVE':
                     self.propose('retract', claim, record=record, correction_message=message_id, correction_text=text)
             return self.result('请核对下面的原话，选择要撤回的具体自报；其他自报和原始评估不变。'
                                if self.pending else '刚才那条消息没有可更正的本人自报，未更改任何记录。'
-                               '若要更正较早记录，请点“查看自报记录”选择具体一条。', claims=claims)
+                               '若要更正较早记录，请点“查看自报记录”选择具体一条。', claims=[])
+        # Exact read-only commands work without a model; this is not a health-word router.
+        if text.strip() in LOCAL_QUERIES:
+            return None
+        try:
+            if config is not None:
+                config.validate()
+                self.network = 'may_have_been_sent'
+            claims = extract_statements(text, message_id, config, now=now, transport=transport)
+        except ExtractionError as exc:
+            result = self.result(str(exc))
+            result['extraction_status'] = 'needs_clarification'
+            result['mode_label'] = '结构化抽取未通过本机核对 · 未保存'
+            return result
+        except (ModelError, ValueError, OSError):
+            result = self.result('结构化自报理解暂不可用，未生成保存操作。请连接 DeepSeek 或稍后重试；普通本地康复查询仍可用。')
+            result['extraction_status'] = 'unavailable'
+            result['mode_label'] = '结构化自报理解暂不可用 · 本地查询仍可用'
+            return result
         self.last_claims = copy.deepcopy(claims)
         if not claims:
             return None
@@ -234,6 +204,7 @@ class StatementSession:
         return self.result(statement_reply(claims), claims=claims)
 
     def act(self, token):
+        self.network = 'not_sent'
         if token == 'cancel':
             self.pending.clear()
             self.last_claims = []
@@ -244,8 +215,7 @@ class StatementSession:
         claim = operation['claim']
         if operation['operation'] == 'save':
             # Revalidate local admission, rather than trust UI payloads or LLM text.
-            if not (claim['admissible'] and claim['subject'] == 'self' and claim['status'] == 'occurred'
-                    and claim['time_scope'] in ('current', 'past')):
+            if not revalidate_claim(claim):
                 raise ValueError('此陈述不能保存为本人自报')
             item = dict(id=claim['id'], claim=copy.deepcopy(claim), source_message_id=claim['source_message_id'],
                         status='ACTIVE', evidence_method='SELF_REPORTED', origin='AGENT_USER_STATEMENT',

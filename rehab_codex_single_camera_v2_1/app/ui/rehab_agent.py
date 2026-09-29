@@ -39,7 +39,8 @@ class ModelSettingsDialog(QDialog):
         box = QVBoxLayout(self)
         note = QLabel('密钥仅保留在本次软件运行的内存中，不写入文件。\n'
                       'DeepSeek 会收到你主动发送的文字、最近 6 轮可分享对话；查询康复记录时，'
-                      '还会收到本机生成的最小结果摘要。姓名、原始数据库记录和摄像头画面不会发送。')
+                      '还会收到本机生成的最小结果摘要。自报抽取只发送本轮原话，不附带已保存自报。'
+                      '请勿在原话中输入不想发送的姓名等信息；原始数据库记录和摄像头画面不会发送。')
         note.setWordWrap(True)
         box.addWidget(note)
         form = QFormLayout()
@@ -108,7 +109,7 @@ class RehabAgentDialog(QDialog):
         note.setWordWrap(True)
         box.addWidget(note)
         status_row = QHBoxLayout()
-        self.mode_label = QLabel('DeepSeek 已配置 · 尚未验证连接' if config else '未连接 DeepSeek · 当前仅支持本地有限回答')
+        self.mode_label = QLabel('DeepSeek 已配置 · 尚未验证连接' if config else '未连接 DeepSeek · 自报理解不可用，本地查询可用')
         self.mode_label.setWordWrap(True)
         status_row.addWidget(self.mode_label, 1)
         self.settings_button = dialog_button('连接 DeepSeek')
@@ -183,7 +184,7 @@ class RehabAgentDialog(QDialog):
     def disconnect(self):
         self.model_config = None
         self.clear_conversation()
-        self.mode_label.setText('已断开 DeepSeek · 当前仅支持本地有限回答')
+        self.mode_label.setText('已断开 DeepSeek · 自报理解不可用，本地查询可用')
 
     def clear_conversation(self):
         if self.write_busy:

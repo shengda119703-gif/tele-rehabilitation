@@ -3,7 +3,8 @@ from datetime import datetime, timezone
 
 import pytest
 
-from app.agent_statements import StatementSession, parse_statements
+from statement_fixtures import StatementSession, payload
+from app.agent_extraction import validate_statements
 from app.silver_store import SilverStore
 from test_automatic_plans import SCOPE
 
@@ -18,18 +19,16 @@ NOW = datetime(2026, 9, 29, 9, tzinfo=timezone.utc)
     ('我昨天头晕', 'self', 'past', 'occurred'),
     ('我今天头晕', 'self', 'current', 'occurred'),
     ('头晕', 'unknown', 'unknown', 'occurred'),
-    ('妈妈说我今天头晕', 'unknown', 'current', 'uncertain'),
-    ('我和妈妈今天都头晕', 'unknown', 'current', 'occurred'),
     ('我今天不是没头晕', 'self', 'current', 'uncertain'),
     ('我今天头晕吗？', 'self', 'current', 'uncertain'),
     ('我今天不头晕', 'self', 'current', 'negated'),
     ('我今天想问问头晕', 'self', 'current', 'uncertain'),
     ('我今天头晕已经好了', 'self', 'current', 'uncertain'),
-    ('我今天不舒服', 'self', 'current', 'occurred'),
+
     ('请帮我记录我今天头晕', 'self', 'current', 'occurred'),
 ])
 def test_dimensions(text, subject, time, status):
-    row = parse_statements(text, 'm1', NOW)[0]
+    row = validate_statements(text, payload(text), 'm1', NOW)[0]
     assert (row['subject'], row['time_scope'], row['status']) == (subject, time, status)
 
 
@@ -61,10 +60,10 @@ def test_consent_persistence_receipt_and_targeted_correction(tmp_path):
     result = confirm(s, result)
     assert result['receipt']['status'] == 'retracted'
     rows = care.records(SCOPE, 'agent_self_report')
-    assert next(r for r in rows if r['claim']['symptom'] == '头晕')['status'] == 'RETRACTED'
-    assert next(r for r in rows if r['claim']['symptom'] == '腿疼')['status'] == 'ACTIVE'
-    old = next(r for r in records if r['claim']['symptom'] == '头晕')
-    new = next(r for r in rows if r['claim']['symptom'] == '头晕')
+    assert next(r for r in rows if r['claim']['concept'] == '头晕')['status'] == 'RETRACTED'
+    assert next(r for r in rows if r['claim']['concept'] == '腿疼')['status'] == 'ACTIVE'
+    old = next(r for r in records if r['claim']['concept'] == '头晕')
+    new = next(r for r in rows if r['claim']['concept'] == '头晕')
     assert new['claim'] == old['claim'] and new['source_message_id'] == old['source_message_id']
     assert new['corrections'][0]['source_message_id'] != new['source_message_id']
     assert new['corrections'][0]['text'] == '我刚才说错了，没有头晕'
@@ -172,7 +171,7 @@ def test_no_implicit_cross_turn_subject_or_time(tmp_path):
 
 
 @pytest.mark.parametrize('text', ['我今天提到头晕', '我今天说“头晕”这个词', '我今天头晕已经好了',
-                                '我今天担心头晕', '我今天不头晕', '我昨天头晕现在好了'])
+                                '我今天担心头晕', '我今天不头晕', '我昨天头晕现在好了', '我和妈妈今天都头晕', '妈妈说我今天头晕'])
 def test_no_keyword_admission(tmp_path, text):
     s, care = session(tmp_path)
     assert not s.turn(text, now=NOW)['proposed_actions']

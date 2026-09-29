@@ -1,3 +1,4 @@
+from statement_fixtures import CONFIG, transport
 from app.runtime import Runtime
 from app.storage import Storage
 from app.silver_store import SilverStore
@@ -6,9 +7,7 @@ from test_training_runtime import response
 
 
 def test_real_queue_save_reopen_retract_no_clinical_mutation(tmp_path, monkeypatch):
-    def forbidden(*args, **kwargs):
-        raise AssertionError('self reports must stay local')
-    monkeypatch.setattr('app.agent_conversation.complete', forbidden)
+    monkeypatch.setattr('app.agent_extraction.complete', transport)
     store = Storage(tmp_path/'home_rehab.sqlite3')
     store.save_session(measured())
     original = store.list_sessions()
@@ -17,7 +16,7 @@ def test_real_queue_save_reopen_retract_no_clinical_mutation(tmp_path, monkeypat
     try:
         assert runtime.ready.wait(5)
         def turn(text='', **kw):
-            payload = dict(scope=SCOPE, text=text, request_id='test', conversation_id='window1')
+            payload = dict(scope=SCOPE, text=text, request_id='test', conversation_id='window1', config=CONFIG)
             payload.update(kw)
             messages = response(runtime, 'rehab_agent', **payload)
             assert not [m for m in messages if m['kind'] == 'error'], messages
@@ -54,3 +53,30 @@ def test_real_queue_save_reopen_retract_no_clinical_mutation(tmp_path, monkeypat
         assert not store.list_training_plans(SCOPE)
     finally:
         store.close()
+
+
+def test_unavailable_extraction_keeps_local_queries_and_never_creates_support_db(tmp_path, monkeypatch):
+    from app.agent_conversation import ModelError
+    def down(*args, **kwargs):
+        raise ModelError('network unavailable')
+    monkeypatch.setattr('app.agent_extraction.complete', down)
+    runtime = Runtime(tmp_path)
+    try:
+        assert runtime.ready.wait(5)
+        for config in (None, CONFIG):
+            messages = response(runtime, 'rehab_agent', scope=SCOPE, text='请查看我的评估结果',
+                                config=config, request_id='offline', conversation_id='offline')
+            result = next(m['result'] for m in messages if m['kind'] == 'rehab_agent')
+            assert '暂不可用' in result['main_text'] and result['local_text']
+            assert result['actions'] and not result['proposed_actions']
+            assert result['privacy_status']['network'] == ('not_sent' if config is None else 'may_have_been_sent')
+        messages = response(runtime, 'rehab_agent', scope=SCOPE, text='我今天发烧',
+                            config=CONFIG, request_id='failed-health', conversation_id='offline')
+        result = next(m['result'] for m in messages if m['kind'] == 'rehab_agent')
+        assert '暂不可用' in result['main_text'] and not result['local_text']
+        assert not result['proposed_actions']
+        assert runtime.camera.worker is None
+        assert not (tmp_path/'silver_support.sqlite3').exists()
+    finally:
+        response(runtime, 'shutdown')
+        runtime.thread.join(5)

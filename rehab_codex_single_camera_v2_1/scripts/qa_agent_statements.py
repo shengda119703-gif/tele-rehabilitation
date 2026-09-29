@@ -1,4 +1,4 @@
-"""Native A-stage keyboard/presentation QA; isolated SYNTHETIC/TEST only."""
+"""Native A2 keyboard/presentation QA with simulated provider; isolated SYNTHETIC/TEST only."""
 import argparse
 import os
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
@@ -12,7 +12,8 @@ from PySide6.QtCore import Qt, QTimer
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QFont, QFontDatabase
-from app.agent_statements import StatementSession
+sys.path.insert(0, str(ROOT/'tests'))
+from statement_fixtures import StatementSession  # explicit simulated provider, never live DeepSeek
 from app.agent_conversation import converse
 from app.silver_store import SilverStore
 from app.ui.rehab_agent import RehabAgentDialog
@@ -90,5 +91,22 @@ with tempfile.TemporaryDirectory() as directory:
     assert '隐私与执行状态' in d.browser.toPlainText() and not d.proposals
     assert d.allowed_actions == {'silver'}
     capture('10-family-not-sent.png')
+    for index, text in enumerate(('我今天发烧', '我今天咳嗽', '我今天睡不好', '我今天胃口不好',
+                                  '我今天心情差', '我今天头有点沉', '我昨天摔了一跤'), 11):
+        d.clear_conversation()
+        enter(text)
+        assert len(d.proposals) == 1 and text in d.browser.toPlainText()
+        capture(f'{index:02}-open-expression.png')
+    for index, text in enumerate(('我今天没胃口', '昨天摔了一跤', '妈妈今天发烧', '如果明天发烧', '我今天没有咳嗽'), 18):
+        d.clear_conversation()
+        enter(text)
+        assert not d.proposals
+        capture(f'{index:02}-needs-confirmation.png')
+    d.clear_conversation()
+    from app.agent_statements import StatementSession as ProductionSession
+    session[0] = ProductionSession(scope, lambda: care)
+    enter('我今天头有点沉')
+    assert '暂不可用' in d.browser.toPlainText() and not d.proposals
+    capture('23-unconfigured.png')
     d.reject()
-print('PASS: 10 native screenshots; three consecutive Return rounds; real local confirm/save/retract; no network/camera.')
+print('PASS: 23 native screenshots; three consecutive Return rounds; real local confirm/save/retract; simulated DeepSeek extraction; no network/camera.')

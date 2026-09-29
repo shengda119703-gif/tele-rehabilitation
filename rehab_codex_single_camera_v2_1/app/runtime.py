@@ -374,9 +374,18 @@ class Runtime:
             if operation == 'act':
                 result = session.act(kw.get('action_id'))
             elif operation == 'turn':
-                result = session.turn(kw['text'])
+                result = session.turn(kw['text'], config=kw.get('config'))
                 if result is None:
                     result = converse(store, scope, kw['text'], kw.get('history'), kw.get('config'))
+                    if session.network != 'not_sent':
+                        result['privacy_status'] = dict(network=session.network, family='not_shared')
+                elif result.get('extraction_status') == 'unavailable':
+                    # Read-only rehabilitation queries remain usable during extraction failure.
+                    local = converse(store, scope, kw['text'], config=None)
+                    if local.get('intent') not in ('help', 'check_condition'):
+                        for key in ('actions', 'evidence', 'tools'):
+                            result[key] = local.get(key, [])
+                        result['local_text'] = local.get('text', '')
             else:
                 raise ValueError('未知对话操作')
             result.setdefault('main_text', result['text'])

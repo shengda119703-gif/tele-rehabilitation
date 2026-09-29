@@ -1,4 +1,4 @@
-# A 阶段：结构化自述与定向更正（0.23.1）
+# A 阶段：结构化自述与定向更正（A2 / 0.24.0）
 
 更新：2026-09-29。持续开发分支：`codex/rehab-agent-stage1`。本阶段提供可人工验收的最小完整闭环；不表示安康 Agent 全部完成。验收前不继续 B 阶段。
 
@@ -6,11 +6,13 @@
 
 打开原有“康复管家”弹窗 → 输入自述 → 查看原话解析 → 点击具体“确认保存” → 获得本机回执 → “查看自报记录”重开 → 选择具体记录确认撤回。
 
-不需要配置 DeepSeek 即可完成以上路径。一般聊天和康复查询继续复用原来的 DeepSeek / 本机规则通道。当前结构化自述在本机解析，不发送给模型，也不进入可联网的对话历史。未修改康复动作、评估、计划或摄像头算法。
+A2 的新自报需要先连接并同意使用 DeepSeek：仅本轮原话发送到受限抽取器，再由本机 validator 核对，明确确认后保存。已保存自报的查看/撤回不需要联网。一般聊天和康复查询继续复用原通道；结构化自报不进入后续可联网对话历史。未修改康复动作、评估、计划或摄像头算法。
+
+未配置、模型服务失败或格式异常时明确说明结构化理解不可用，不回退症状词表。普通本地康复查询仍可用；校验失败会追问，不提供保存按钮。详见 [A2 验收](../validation/AGENT_STAGE_A2_2026-09-29.md)。
 
 ## 0.23.1 显示修补
 
-普通无写入回合改为针对性主回答 + 简短人物/时间/症状标签；未保存回执和完整隐私说明默认折叠到“查看详细信息”。实际 saved/retracted/discarded/cancelled 回执、待确认原话及明确隐私请求仍突出显示。记录 ID/revision 保留在后台及详情中。五类语义与字段保持分开，只有 presentation 改变。
+普通无写入回合改为针对性主回答 + 简短人物/时间/自述标签；未保存回执和完整隐私说明默认折叠到“查看详细信息”。实际 saved/retracted/discarded/cancelled 回执、待确认原话及明确隐私请求仍突出显示。记录 ID/revision 保留在后台及详情中。五类语义与字段保持分开，只有 presentation 改变。
 
 输入框 Return/Enter 每次只发送一次，事件不会继续触发 Dialog 默认按钮；静态和动态按钮均关闭默认属性，请求/写入中 Enter 不重入。详见 [0.23.1 验收记录](../validation/AGENT_STAGE_A_UI_2026-09-29.md)。
 
@@ -23,8 +25,8 @@
 | 主回答 | `main_text`（兼容旧字段 `text`）、`source_label`、`mode_label` | “康复管家”回答；顶部显示本机理解 / 模型模式。不要把它当执行回执 |
 | 依据 | `understanding[]`、`evidence_summary`；原查询沿用 `local_text`、`evidence[]` | 自述默认用短标签显示人物、时间及肯否，完整解析可展开；原评估显示“本机记录与规则核对”。自述解析不是摄像头测量 |
 | 自报 / 记录回执 | `receipt.status/text/record_id/revision/source_message_id`、`record_summary` | 实际写操作醒目显示；未保存/只读状态默认放详情；保存成功才有数据库版本与记录号 |
-| 隐私与执行状态 | `privacy_status.network/family`、`privacy_notice`、`delivery_status` | 明确隐私请求醒目显示；普通自述在详情保留 `not_sent/not_shared`；远程始终 `NOT_CONNECTED`。普通模型回合保守标为 `may_have_been_sent`，不假称未联网 |
-| 待确认操作 | `proposed_actions[]` | 每项有 `id/label/summary/operation/requires_confirmation`。显示原话、症状与时间；按钮逐条确认，每页最多显示 4 项，可切换页面选择后面的记录，无需执行其他记录。原页面只读跳转仍使用 `actions[]` |
+| 隐私与执行状态 | `privacy_status.network/family`、`privacy_notice`、`delivery_status` | 明确隐私请求醒目显示；联网抽取在详情标 `may_have_been_sent/not_shared`；本机查看/保存/撤回标 `not_sent/not_shared`；远程始终 `NOT_CONNECTED`。普通模型回合保守标为 `may_have_been_sent`，不假称未联网 |
+| 待确认操作 | `proposed_actions[]` | 每项有 `id/label/summary/operation/requires_confirmation`。显示原话、通用 concept 与时间；按钮逐条确认，每页最多显示 4 项，可切换页面选择后面的记录，无需执行其他记录。原页面只读跳转仍使用 `actions[]` |
 
 `receipt.status`：`not_saved`、`saved`、`retracted`、`discarded`、`cancelled`、`read`。错误通过原有 `error` 通道显示“本轮未完成”，不制造成功回执；失败后可以重新查看实际记录再操作。
 
@@ -48,7 +50,7 @@ rehab_agent(operation='reset', conversation_id)
 
 - `scope`：participant_id / source_kind / usage_context；来源情境保留，不能把 SYNTHETIC/TEST 当真人资料。
 - `evidence_method=SELF_REPORTED`、`origin=AGENT_USER_STATEMENT`、`shared=false`。
-- `claim`：原话分句、症状、人物、时间范围、原始时间表达、可明确的事件日期、发生状态、确定性、接收时间。
+- `claim`：`subject/time_scope/statement_type/concept/polarity/certainty/raw_text/evidence_span` 八个经本机校验的提取字段；另有本机生成的 ID、来源消息/完整原话、原始时间表达、可明确的事件日期、发生状态、接收时间、`extraction_version=grounded-statements-2`。新记录不含必需的 `symptom` 字段；旧记录只读兼容，撤回不改写旧 claim。
 - `source_message_id`：对应本轮消息；一轮多条事实共享来源消息 ID，但各有独立记录 ID。
 - `consent`：明确按钮、确认时间、action ID；即使文字里说“请记录”，仍须核对具体按钮。
 - `status=ACTIVE/RETRACTED`、`revision`、`corrections[]`：撤回保留原 claim，追加更正消息 ID、已确认的更正原话/操作来源和时间；沿用 SilverStore 审计及乐观版本校验。
@@ -57,13 +59,23 @@ rehab_agent(operation='reset', conversation_id)
 
 ## 接纳与更正边界
 
-当前是保守的有限语法，覆盖头晕、胸闷、不舒服、疲劳、乏力、麻木、恶心、气短、摔倒/跌倒及常见部位疼痛等明确自述。它不是通用医学事实抽取器；血压/睡眠/步数等数值和任意口语没有被完整移植。复杂表达不确定时不提供保存按钮，需重新说明。
+生产自报路径已删除 `SYMPTOMS` 与 `parse_statements`，不按疾病或症状名单决定能否抽取。DeepSeek 只输出闭合 JSON schema，`statement_type` 为 symptom/event/feeling/other，未知表达可为 other。`concept` 必须是连续原话，保留程度词；`raw_text=evidence_span` 必须是包含人物、时间、肯否/条件的完整原文分句。模型不能生成来源、ID、日期、admissible、操作或回执。
+
+本机检查字段集合/枚举/长度、完整分句、原文匹配、重复项、人物与时间、否定/假设/不确定、被省略的限定内容及 model 越权字段。不能把主体/时间藏进 concept，也不能只截出症状而丢掉“没有/如果/可能”。整个批次有一项校验失败就不生成保存操作；保存时再次从原话重新核对。
+
+这是开放词汇抽取加保守语法校验，并非已证明支持任意口语或通用医学理解。人物/时间无法核对、复杂跨分句、省略、转述与条件歧义会追问。尤其 concept 内含“没/不/无”的肯定含义目前不做医学词汇例外（仅识别通用“…不好”质量表达，并仍检查其余否定）：如“我今天没胃口”需换说法，“我今天胃口不好”可待确认保存。过去日期仅解析已有明确时间锚点，不补猜。
 
 只有明确本人、明确今天/现在或过去、肯定发生的陈述才可提出保存；家人、否定、假设、将来及未知人物/时间不入本人事实。过去事件保留 `past`，不能当成本人当前不适。未知历史日期保持 null，不补造具体日期；“昨天/前天”等按该回合本机日期解析。当前不适不构成诊断或训练许可。
 
-“我刚才说错了”只找紧邻上一条文字消息的可接纳自述；有症状名称时只选相应事实，不跳过否定/家人/闲聊去撤回更早记录。多条候选必须逐条核对。较早自报通过“查看自报记录”按原话选中，当前展示最近 30 条（含撤回）。更正路径是撤回旧自报 → 用户重新陈述 → 再确认保存，不能直接把新值覆盖到旧记录，更不能改写摄像头评估。
+“我刚才说错了”只找紧邻上一条文字消息的可接纳自述；更正文字包含上一条 concept 的原文时只选对应事实；否则逐条列出上一条可更正候选供选择，不跳过否定/家人/闲聊去撤回更早记录。多条候选必须逐条核对。较早自报通过“查看自报记录”按原话选中，当前展示最近 30 条（含撤回）。更正路径是撤回旧自报 → 用户重新陈述 → 再确认保存，不能直接把新值覆盖到旧记录，更不能改写摄像头评估。
 
 对话最多临时显示最近 20 条；模型历史仍最多 6 轮且过滤自报与隐私回合。清空/关闭销毁临时对话、上句定位及待确认操作，已确认保存的本机自报保留。关闭后没有“刚才”记忆；可从查看记录开始。
+
+## A2 模型接口与失败状态
+
+`extract_statements(text, message_id, config, now=None, transport=None)` 仅发送 system 规则和本轮 user 原话，不附历史、数据库或旧自报。复用官方 HTTPS 地址白名单、用户同意、有限超时/响应长度及脱敏错误的现有通道。
+
+`extraction_status=unavailable` 表示未配置/调用失败；`needs_clarification` 表示本机核对失败；均无新候选、无写入，并清除前一轮待确认令牌。空 statements 转回原对话通道，也不生成自报。既有七个页面字段保持完整。网络调用失败保守标 may_have_been_sent，不能说未发送；确认保存/撤回不再次发送模型。
 
 ## 未实现
 

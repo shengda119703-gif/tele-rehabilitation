@@ -41,9 +41,9 @@
 
 ## 分阶段实施及可人工验收结果
 
-### A. Agent 核心与对话记录（最小闭环已实现，待人工验收）
+### A. Agent 核心与对话记录（A2 开放词汇抽取，待人工验收）
 
-1. 把安康 `understanding.ts`、`elderTurn.ts` 的**数据结构与状态流**适配为 Python；复用现有 `agent_conversation.py` 的 DeepSeek 通道。
+1. 把安康 `understanding.ts`、`elderTurn.ts` 的**数据结构与状态流**适配为 Python；A2 使用受限 DeepSeek 开放词汇抽取 + 本机 validator，删除正式自报症状词表。未配置或失败明确不可用，不伪装回退。
 2. 区分“仅聊天历史”“本人自报事实”“摄像头评估事实”，并记录来源、时间、用户范围与确定性。只有本人明确陈述、语义确定且同意保存的事实才入自报记录；否定、假设、家人情况不入本人记录。
 3. 支持“我刚才说错了”的定向更正；回合结果分成主回复、记录回执、隐私回执。
 4. 人工验收：连续说“昨天妈妈头晕”“我今天没头晕”“我刚才说错了”，界面不生成错误的本人当前不适；清空/关闭后对话记忆规则可预期。
@@ -89,6 +89,6 @@
 
 - 安康原项目（只读参考）：`route1-health-agent/src/engine/understanding.ts`、`elderTurn.ts`、`privacy.ts`、`correction.ts`、`personTwin.ts`、`tasks.ts`、`notify.ts`、`src/agent-tools/intentRouter.ts`；UI 参照 `ElderAssistantPage.tsx`、`ChatView.tsx`、`FamilyDashboard.tsx`。
 - 康复目的地：`app/agent_conversation.py`、`rehab_agent.py`、`silver_service.py`、`silver_store.py`、`ui/rehab_agent.py`、`ui/silver.py`、`ui/main_window.py`。
-- 当前停在 **A 人工验收**：新代码为 `app/agent_statements.py`，复用 Runtime 可选队列与 SilverStore；见 A 阶段合同及验收单。收到用户验收反馈后先处理 A 的问题，再讨论 B；不要先接真实家属推送、假位置地图或另起一套 React 界面。
+- 当前停在 **A2 人工验收**：抽取/验证在 `app/agent_extraction.py`，确认和审计在 `app/agent_statements.py`，复用 Runtime 可选队列与 SilverStore；见 A 阶段合同及验收单。收到用户验收反馈后先处理 A 的问题，再讨论 B；不要先接真实家属推送、假位置地图或另起一套 React 界面。
 
 本方案是代码对照后的迁移顺序，不表示 B～D 已实现，也不表示现有安康模型/规则已完成临床验证。

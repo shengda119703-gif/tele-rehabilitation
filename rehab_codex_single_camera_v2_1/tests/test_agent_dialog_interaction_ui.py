@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QApplication, QPushButton
 
 from app.ui.rehab_agent import RehabAgentDialog, ModelSettingsDialog
 from app.ui.agent_presentation import present_result
-from app.agent_statements import StatementSession
+from statement_fixtures import StatementSession
 from app.agent_conversation import converse
 from app.silver_store import SilverStore
 from test_product_navigation import desktop
@@ -122,7 +122,7 @@ def test_all_static_dynamic_and_settings_buttons_never_default(desktop, tmp_path
 
 @pytest.mark.parametrize('text,reply_fragment,secondary,count', [
     ('昨天妈妈头晕', '妈妈昨天头晕', '家人 · 昨天 · 头晕', 0),
-    ('我今天没头晕', '今天没有头晕', '本人 · 今天 · 头晕 · 否定', 0),
+    ('我今天没头晕', '我今天没头晕', '本人 · 今天 · 头晕 · 否定', 0),
     ('我头晕', '现在正在头晕，还是之前发生过头晕', '本人 · 时间待确认 · 头晕', 0),
     ('我今天头晕', '你说自己今天头晕', '本人 · 今天 · 头晕', 1),
     ('我今天头晕，我今天腿疼', '今天腿疼', '本人 · 今天 · 腿疼', 2),
@@ -153,7 +153,7 @@ def test_targeted_reply_compact_display_keeps_full_contract(desktop, tmp_path, t
     assert ('待确认操作' in body) == bool(count)
     assert d.transcript[-1]['result'] == original
     d.browser.anchorClicked.emit(QUrl('details:' + d.transcript[-1]['id']))
-    assert '未写入自报记录' in d.browser.toPlainText() and '本轮未发送给 DeepSeek' in d.browser.toPlainText()
+    assert '未写入自报记录' in d.browser.toPlainText() and '本轮文字已按授权提交 DeepSeek' in d.browser.toPlainText()
     assert result == original
     d.reject()
 

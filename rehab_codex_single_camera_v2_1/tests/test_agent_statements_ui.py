@@ -1,4 +1,4 @@
-from app.agent_statements import StatementSession
+from statement_fixtures import StatementSession
 from app.silver_store import SilverStore
 from test_product_navigation import desktop
 from test_rehab_agent_ui import reply
