@@ -61,10 +61,15 @@ class ModelSettingsDialog(QDialog):
 class RehabAgentDialog(QDialog):
     requested = Signal(str, str)
     navigate = Signal(str)
+    operation_requested = Signal(str, str)
+    reset_requested = Signal(str)
 
     def __init__(self, scope, parent=None, config=None):
         super().__init__(parent)
         self.scope = copy.deepcopy(scope)
+        self.conversation_id = uuid4().hex
+        self.proposals = {}
+        self.write_busy = False
         self.request_id = None
         self.allowed_actions = set()
         self.model_config = config
@@ -79,7 +84,7 @@ class RehabAgentDialog(QDialog):
         title.setStyleSheet('font-size:24px;font-weight:600;')
         title.setWordWrap(True)
         box.addWidget(title)
-        note = QLabel('对话只在当前窗口保留。DeepSeek 负责理解和表达；评估、计划与安全结论由本机规则核对。')
+        note = QLabel('对话临时保留；明确确认保存的自报可重开查看，与摄像头评估分开。清空对话不删除已保存自报。')
         note.setWordWrap(True)
         box.addWidget(note)
         status_row = QHBoxLayout()
@@ -101,7 +106,7 @@ class RehabAgentDialog(QDialog):
         box.addWidget(self.browser, 1)
         self.quick = []
         row = QHBoxLayout()
-        for text in ('今天该练什么', '我的评估结果', '查看历史记录'):
+        for text in ('今天该练什么', '我的评估结果', '查看历史记录', '查看自报记录'):
             button = QPushButton(text)
             button.clicked.connect(lambda checked=False, q=text: self.ask(q))
             self.quick.append(button)
@@ -118,7 +123,7 @@ class RehabAgentDialog(QDialog):
         self.send.clicked.connect(lambda: self.ask(self.input.text()))
         row.addWidget(self.send)
         box.addLayout(row)
-        self.action_row = QHBoxLayout()
+        self.action_row = QVBoxLayout()
         box.addLayout(self.action_row)
         close = QPushButton('返回原页面')
         close.clicked.connect(self.reject)
@@ -126,12 +131,16 @@ class RehabAgentDialog(QDialog):
 
     def clear_actions(self):
         self.allowed_actions.clear()
+        self.proposals.clear()
         while self.action_row.count():
             widget = self.action_row.takeAt(0).widget()
             widget.setEnabled(False)
+            widget.hide()
             widget.deleteLater()
 
     def set_busy(self, busy):
+        if not busy:
+            self.write_busy = False
         for widget in [self.send, self.input, self.settings_button, self.clear_button,
                        self.disconnect_button, *self.quick]:
             widget.setEnabled(not busy)
@@ -150,11 +159,15 @@ class RehabAgentDialog(QDialog):
         self.mode_label.setText('已断开 DeepSeek · 当前仅支持本地有限回答')
 
     def clear_conversation(self):
+        if self.write_busy:
+            return
+        self.reset_requested.emit(self.conversation_id)
+        self.conversation_id = uuid4().hex
         self.history.clear()
         self.transcript.clear()
         self.request_id = None
         self.clear_actions()
-        self.browser.setPlainText('已清空对话。你想聊什么？')
+        self.browser.setPlainText('已清空临时对话和待确认操作。已保存的自报仍可通过“查看自报记录”查看。')
 
     def render(self):
         parts = []
@@ -164,6 +177,10 @@ class RehabAgentDialog(QDialog):
                 parts.append('<p><b>康复管家</b><br>' + html.escape(turn['assistant']).replace('\n', '<br>') + '</p>')
             if turn.get('local_text'):
                 parts.append('<p><b>本机记录与规则核对</b><br>' + html.escape(turn['local_text']).replace('\n', '<br>') + '</p>')
+            for key, label in (('evidence_summary', '理解依据（原话解析）'),
+                               ('receipt_text', '自报 / 记录回执'), ('record_summary', '本机自报记录')):
+                if turn.get(key):
+                    parts.append('<p><b>' + label + '</b><br>' + html.escape(turn[key]).replace('\n', '<br>') + '</p>')
             if turn.get('privacy_notice'):
                 parts.append('<p><b>隐私与执行状态</b><br>' + html.escape(turn['privacy_notice']).replace('\n', '<br>') + '</p>')
         self.browser.setHtml(''.join(parts))
@@ -190,7 +207,10 @@ class RehabAgentDialog(QDialog):
         if not self.transcript:
             self.transcript.append(dict(user=self.pending_text))
         self.transcript[-1].update(assistant=result['text'], local_text=result.get('local_text', ''),
-                                   privacy_notice=result.get('privacy_notice', ''))
+                                   privacy_notice=result.get('privacy_notice', ''),
+                                   evidence_summary=(result.get('evidence_summary', '') if result.get('evidence_summary') != result.get('local_text') else ''),
+                                   receipt_text=result.get('receipt', {}).get('text', ''),
+                                   record_summary=result.get('record_summary', ''))
         shareable = result.get('shareable', False)
         self.history.append(dict(
             user=self.pending_text,
@@ -205,6 +225,58 @@ class RehabAgentDialog(QDialog):
             button = QPushButton(action['label'])
             button.clicked.connect(lambda checked=False, a=action['id']: self.navigate.emit(a))
             self.action_row.addWidget(button)
+
+        proposals = result.get('proposed_actions', [])
+        if proposals:
+            self._show_proposals(proposals, result.get('receipt', {}).get('text', ''))
+
+    def _show_proposals(self, proposals, receipt_text, offset=0):
+        self.clear_actions()
+        page = proposals[offset:offset+4]
+        for proposal in page:
+            self.proposals[proposal['id']] = proposal
+            button = QPushButton(proposal['label'])
+            button.setToolTip(proposal['summary'])
+            button.setAccessibleDescription(proposal['summary'])
+            button.clicked.connect(lambda checked=False, a=proposal['id']: self.confirm_operation(a))
+            self.action_row.addWidget(button)
+        details = '\n\n'.join(p['summary'] for p in page)
+        self.transcript[-1]['receipt_text'] = receipt_text + '\n\n待确认操作（逐条核对）\n' + details
+        if len(proposals) > 4:
+            label = f'切换待确认项（当前 {offset+1}–{offset+len(page)} / {len(proposals)}）'
+            more = QPushButton(label)
+            next_offset = offset+4 if offset+4 < len(proposals) else 0
+            more.clicked.connect(lambda: self._show_proposals(proposals, receipt_text, next_offset))
+            self.action_row.addWidget(more)
+        cancel = QPushButton('取消待确认操作')
+        cancel.clicked.connect(lambda: self.confirm_operation('cancel'))
+        self.action_row.addWidget(cancel)
+        self.render()
+
+    def confirm_operation(self, action_id):
+        if not self.send.isEnabled() or (action_id != 'cancel' and action_id not in self.proposals):
+            return
+        label = '取消待确认操作' if action_id == 'cancel' else self.proposals[action_id]['label']
+        self.request_id = uuid4().hex
+        self.pending_text = label
+        self.transcript.append(dict(user=label, assistant='正在处理确认…'))
+        self.transcript = self.transcript[-20:]
+        self.clear_actions()
+        self.set_busy(True)
+        self.render()
+        self.write_busy = True
+        self.operation_requested.emit(action_id, self.request_id)
+
+    def reject(self):
+        if self.write_busy:
+            return  # Wait for a write receipt instead of hiding an in-flight write.
+        super().reject()
+
+    def closeEvent(self, event):
+        if self.write_busy:
+            event.ignore()
+        else:
+            super().closeEvent(event)
 
     def show_error(self, request_id, text):
         if request_id != self.request_id:

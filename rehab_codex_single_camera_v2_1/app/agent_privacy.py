@@ -9,7 +9,7 @@ import re
 def parse_privacy_intent(text):
     if not isinstance(text, str):
         raise ValueError('请输入文字')
-    no_record = re.search(r'(?:不要|别).{0,4}(?:记录|记下来|保存|上传|发送)', text)
+    no_record = re.search(r'(?:不要|别|不用|不想).{0,4}(?:记录|记下来|保存|上传|发送)|不记录|不保存', text)
     refuses_family = (
         re.search(r'(?:不要|别|不想|不希望|不愿意|不愿|不需要).{0,4}'
                   r'(?:告诉|让|通知).{0,3}(?:孩子|女儿|儿子|家人|家里人|他|她|他们|她们)', text)

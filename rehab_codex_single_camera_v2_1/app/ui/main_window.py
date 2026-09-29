@@ -161,7 +161,10 @@ class MainWindow(QMainWindow):
         self.agent_dialog = dialog
         dialog.requested.connect(self._ask_rehab_agent)
         dialog.navigate.connect(self._agent_navigate)
+        dialog.operation_requested.connect(self._agent_operation)
+        dialog.reset_requested.connect(lambda cid: self.runtime.command('rehab_agent', operation='reset', conversation_id=cid))
         def close_agent():
+            self.runtime.command('rehab_agent', operation='reset', conversation_id=dialog.conversation_id)
             self._agent_model_config = dialog.model_config
             self.agent_dialog = None
             dialog.history.clear()
@@ -180,7 +183,19 @@ class MainWindow(QMainWindow):
             return
         # A slow model must not disable the desktop or delay stop/save commands.
         self.runtime.command('rehab_agent', scope=dialog.scope, text=text, request_id=request_id,
-                             history=copy.deepcopy(dialog.history), config=dialog.model_config)
+                             history=copy.deepcopy(dialog.history), config=dialog.model_config,
+                             conversation_id=dialog.conversation_id)
+
+    def _agent_operation(self, action_id, request_id):
+        dialog = self.agent_dialog
+        if not dialog:
+            return
+        if (self.busy or self._camera_testing or dialog.scope != self._body_scope_key()
+                or self.state in ('ONLINE', 'PREVIEW', 'CONNECTING', 'SAVE_FAILED')):
+            dialog.show_error(request_id, '当前用户或任务已变化，请重新打开后核对记录。')
+            return
+        self.runtime.command('rehab_agent', scope=copy.deepcopy(dialog.scope), operation='act',
+                             action_id=action_id, conversation_id=dialog.conversation_id, request_id=request_id)
 
     def _agent_navigate(self, action):
         dialog = self.agent_dialog

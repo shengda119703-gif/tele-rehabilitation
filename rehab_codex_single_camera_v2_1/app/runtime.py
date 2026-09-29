@@ -74,7 +74,7 @@ class Runtime:
     def _dispatch_optional(self, name, kw):
         # Freeze only structured evidence on the owning thread; never pass live
         # controllers, frames, cameras or inference objects to optional workers.
-        if name == 'rehab_agent':
+        if name == 'rehab_agent' and kw.get('operation') != 'reset':
             c = self.controller
             if (c.session is not None or c.pending is not None
                     or c.state in ('ONLINE', 'SAVE_FAILED', 'PREVIEW', 'CONNECTING')
@@ -344,12 +344,56 @@ class Runtime:
         c, store = self.controller, self.store
         if name == 'rehab_agent':
             from .agent_conversation import converse
+            from .agent_statements import StatementSession
+            from .silver_store import SilverStore, scope_key
+            if not hasattr(self, '_agent_sessions'):
+                self._agent_sessions = {}
+            conversation_id = kw.get('conversation_id', 'legacy')
+            if not isinstance(conversation_id, str) or not 1 <= len(conversation_id) <= 120:
+                raise ValueError('对话编号无效')
+            if kw.get('operation') == 'reset':
+                self._agent_sessions.pop(conversation_id, None)
+                return
+            def care():
+                if not getattr(self, 'silver_store', None):
+                    self.silver_store = SilverStore(self.data_dir/'silver_support.sqlite3')
+                return self.silver_store
+            scope = scope_key(kw['scope'])
+            if conversation_id not in self._agent_sessions:
+                if len(self._agent_sessions) >= 8:
+                    self._agent_sessions.pop(next(iter(self._agent_sessions)))
+                self._agent_sessions[conversation_id] = StatementSession(scope, care)
+            session = self._agent_sessions[conversation_id]
+            if session.scope != scope:
+                raise ValueError('当前用户或来源已变化，请重新打开对话')
             if not kw.get('_agent_idle_checked') and (c.session is not None or c.pending is not None
                     or c.state in ('ONLINE', 'SAVE_FAILED', 'PREVIEW', 'CONNECTING')
                     or getattr(self, 'camera_test', False)):
                 raise ValueError('请先结束采集并保存，再向康复管家询问安排')
-            self._message('rehab_agent', request_id=kw['request_id'],
-                          result=converse(store, kw['scope'], kw['text'], kw.get('history'), kw.get('config')))
+            operation = kw.get('operation', 'turn')
+            if operation == 'act':
+                result = session.act(kw.get('action_id'))
+            elif operation == 'turn':
+                result = session.turn(kw['text'])
+                if result is None:
+                    result = converse(store, scope, kw['text'], kw.get('history'), kw.get('config'))
+            else:
+                raise ValueError('未知对话操作')
+            result.setdefault('main_text', result['text'])
+            result.setdefault('source_label', result.get('mode_label', '本机规则'))
+            result.setdefault('evidence_summary', result.get('local_text', ''))
+            result.setdefault('understanding', [])
+            result.setdefault('proposed_actions', [])
+            result.setdefault('receipt', dict(status='not_saved', text='本轮没有新增或更改自报记录。'))
+            result.setdefault('delivery_status', 'NOT_CONNECTED')
+            protected = result.get('privacy_intent') in ('no_record', 'private', 'share_family')
+            result.setdefault('privacy_status', dict(network='not_sent' if protected or not kw.get('config')
+                                                     else 'may_have_been_sent', family='not_shared'))
+            if not result.get('privacy_notice'):
+                network = ('本轮未发送给 DeepSeek。' if result['privacy_status']['network'] == 'not_sent'
+                           else '本轮按模型配置处理；可能已向 DeepSeek 发送文字和最小核对摘要。')
+                result['privacy_notice'] = network + '未向家属发送；远程通知未接入。'
+            self._message('rehab_agent', request_id=kw['request_id'], result=result)
             return
         if name == 'family_demo':
             demo = getattr(self, 'family_demo', None)
