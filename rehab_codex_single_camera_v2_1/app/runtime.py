@@ -352,7 +352,9 @@ class Runtime:
             if not isinstance(conversation_id, str) or not 1 <= len(conversation_id) <= 120:
                 raise ValueError('对话编号无效')
             if kw.get('operation') == 'reset':
-                self._agent_sessions.pop(conversation_id, None)
+                old = self._agent_sessions.pop(conversation_id, None)
+                if old:
+                    old.clear()
                 return
             def care():
                 if not getattr(self, 'silver_store', None):
@@ -361,10 +363,12 @@ class Runtime:
             scope = scope_key(kw['scope'])
             if conversation_id not in self._agent_sessions:
                 if len(self._agent_sessions) >= 8:
-                    self._agent_sessions.pop(next(iter(self._agent_sessions)))
-                self._agent_sessions[conversation_id] = StatementSession(scope, care)
+                    self._agent_sessions.pop(next(iter(self._agent_sessions))).clear()
+                self._agent_sessions[conversation_id] = StatementSession(scope, care, conversation_id)
             session = self._agent_sessions[conversation_id]
             if session.scope != scope:
+                session.clear()
+                self._agent_sessions.pop(conversation_id, None)
                 raise ValueError('当前用户或来源已变化，请重新打开对话')
             if not kw.get('_agent_idle_checked') and (c.session is not None or c.pending is not None
                     or c.state in ('ONLINE', 'SAVE_FAILED', 'PREVIEW', 'CONNECTING')
@@ -373,6 +377,8 @@ class Runtime:
             operation = kw.get('operation', 'turn')
             if operation == 'act':
                 result = session.act(kw.get('action_id'))
+            elif operation == 'list':
+                result = session.list_records()
             elif operation == 'turn':
                 result = session.turn(kw['text'], config=kw.get('config'))
                 if result is None:

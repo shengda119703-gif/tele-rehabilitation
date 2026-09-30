@@ -15,7 +15,7 @@ def test_ui_confirmation_receipt_reset_and_scope_guard(desktop, tmp_path):
     result = s.turn('我今天头晕')
     d.receive(d.request_id, result)
     body = d.browser.toPlainText()
-    assert all(label in body for label in ('康复管家', '本人 · 今天 · 头晕', '待确认操作'))
+    assert all(label in body for label in ('康复管家', '本人 · 当前 · 头晕', '待确认操作'))
     assert '未写入自报记录' not in body and '隐私与执行状态' not in body
     assert d.transcript[-1]['result']['receipt']['status'] == 'not_saved'
     assert not care.records(d.scope, 'agent_self_report')
@@ -89,4 +89,20 @@ def test_paging_can_select_fifth_without_changing_first_four(desktop, tmp_path):
     rows = care.records(d.scope, 'agent_self_report')
     assert sum(r['status'] == 'ACTIVE' for r in rows) == 4
     assert sum(r['status'] == 'RETRACTED' for r in rows) == 1
+    d.reject()
+
+
+def test_scope_change_clears_short_term_state_and_stale_result(desktop):
+    w, runtime, app = desktop
+    w.agent_button.click()
+    reply(w)
+    d = w.agent_dialog
+    cid = d.conversation_id
+    old_request = d.request_id
+    w.participant.setText('A3-other-user')
+    w._apply_participant()
+    assert d.conversation_id != cid and d.request_id is None
+    assert any(name == 'rehab_agent' and payload.get('operation') == 'reset'
+               and payload['conversation_id'] == cid for name, payload in runtime.calls)
+    assert not d.history and not d.proposals
     d.reject()

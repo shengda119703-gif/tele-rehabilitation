@@ -1,5 +1,13 @@
 # 版本变更记录
 
+## A3 语义理解架构替换 · 0.25.0 · 2026-09-30
+
+- DeepSeek Semantic Interpreter 取代 A2 本机人物/时间/否定/条件及更正正则；新 Grounding Validator 只检查 schema、原文引用、真实上下文与关系，不重新理解中文。
+- 增加有界 Conversation State：6 条用户消息、12 个解释事件、焦点和关系；清空/关闭/切换 scope 失效，不向模型装载完整数据库。
+- correction 逐条确认撤回；state_change 保存后续状态及 updates 关系，绝不撤回旧事件。旧 A1/A2 记录兼容读取/撤回，无数据库迁移。
+- 复用原 token、确认、scope/revision、SilverStore、来源隔离、审计与回执；UI 使用通用命题和关联原话，保留 Enter 防关闭。
+- 相关回归 212 项通过；原生 Qt QA 及真实服务未验收说明见 [A3 验收](../validation/AGENT_STAGE_A3_2026-09-30.md)。未进入 B，未合并 main。
+
 ## A2 开放词汇自报理解 · 0.24.0 · 2026-09-29
 
 - 删除正式自报的症状白名单与旧正则解析，接入 8 字段 DeepSeek 抽取和独立本机证据/维度校验；不允许模型生成诊断、原文外限定或执行字段。

@@ -1,4 +1,6 @@
 from statement_fixtures import CONFIG, transport
+from statement_fixtures import interpretation
+import json
 from app.runtime import Runtime
 from app.storage import Storage
 from app.silver_store import SilverStore
@@ -17,6 +19,8 @@ def test_real_queue_save_reopen_retract_no_clinical_mutation(tmp_path, monkeypat
         assert runtime.ready.wait(5)
         def turn(text='', **kw):
             payload = dict(scope=SCOPE, text=text, request_id='test', conversation_id='window1', config=CONFIG)
+            if text == '查看自报记录':
+                payload['operation'] = 'list'
             payload.update(kw)
             messages = response(runtime, 'rehab_agent', **payload)
             assert not [m for m in messages if m['kind'] == 'error'], messages
@@ -76,6 +80,38 @@ def test_unavailable_extraction_keeps_local_queries_and_never_creates_support_db
         assert '暂不可用' in result['main_text'] and not result['local_text']
         assert not result['proposed_actions']
         assert runtime.camera.worker is None
+        assert not (tmp_path/'silver_support.sqlite3').exists()
+    finally:
+        response(runtime, 'shutdown')
+        runtime.thread.join(5)
+
+
+def test_reset_and_scope_change_destroy_runtime_refs_and_tokens(tmp_path, monkeypatch):
+    packets = []
+    target = [None]
+    def provider(config, messages):
+        packet = json.loads(messages[-1]['content'])
+        packets.append(packet)
+        text = packet['current']['raw_text']
+        value = interpretation(text, act='correction', target=target[0]) if target[0] else interpretation(text)
+        return json.dumps(value)
+    monkeypatch.setattr('app.agent_extraction.complete', provider)
+    runtime = Runtime(tmp_path)
+    try:
+        assert runtime.ready.wait(5)
+        def call(**changes):
+            payload = dict(scope=SCOPE, text='测试文字', config=CONFIG, request_id='test', conversation_id='window')
+            payload.update(changes)
+            return response(runtime, 'rehab_agent', **payload)
+        first = next(m['result'] for m in call() if m['kind'] == 'rehab_agent')
+        token = first['proposed_actions'][0]['id']
+        target[0] = first['understanding'][0]['id']
+        response(runtime, 'rehab_agent', operation='reset', conversation_id='window')
+        failed = next(m['result'] for m in call() if m['kind'] == 'rehab_agent')
+        assert failed['extraction_status'] == 'needs_clarification'
+        assert not packets[-1]['context']['events']
+        assert any(m['kind'] == 'error' for m in call(operation='act', action_id=token))
+        assert any(m['kind'] == 'error' for m in call(scope=dict(SCOPE, participant_id='other')))
         assert not (tmp_path/'silver_support.sqlite3').exists()
     finally:
         response(runtime, 'shutdown')

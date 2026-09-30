@@ -39,7 +39,8 @@ class ModelSettingsDialog(QDialog):
         box = QVBoxLayout(self)
         note = QLabel('密钥仅保留在本次软件运行的内存中，不写入文件。\n'
                       'DeepSeek 会收到你主动发送的文字、最近 6 轮可分享对话；查询康复记录时，'
-                      '还会收到本机生成的最小结果摘要。自报抽取只发送本轮原话，不附带已保存自报。'
+                      '还会收到本机生成的最小结果摘要。自报理解会使用本轮原话、最近最多6轮文字及12个本窗口解释摘要。'
+                      '查看旧自报不会自动把数据库历史加入模型上下文。'
                       '请勿在原话中输入不想发送的姓名等信息；原始数据库记录和摄像头画面不会发送。')
         note.setWordWrap(True)
         box.addWidget(note)
@@ -186,8 +187,8 @@ class RehabAgentDialog(QDialog):
         self.clear_conversation()
         self.mode_label.setText('已断开 DeepSeek · 自报理解不可用，本地查询可用')
 
-    def clear_conversation(self):
-        if self.write_busy:
+    def clear_conversation(self, force=False):
+        if self.write_busy and not force:
             return
         self.reset_requested.emit(self.conversation_id)
         self.conversation_id = uuid4().hex
@@ -271,7 +272,11 @@ class RehabAgentDialog(QDialog):
         self.render()
         self.input.clear()
         self.set_busy(True)
-        self.requested.emit(text, self.request_id)
+        if text.strip() == '查看自报记录':
+            # A named UI command, not a natural-language interpretation rule.
+            self.operation_requested.emit('list', self.request_id)
+        else:
+            self.requested.emit(text, self.request_id)
 
     def receive(self, request_id, result):
         if request_id != self.request_id or result['scope'] != self.scope:

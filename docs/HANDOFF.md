@@ -1,5 +1,15 @@
 # 当前交接与未完成目标
 
+## 2026-09-30 · 0.25.0 A3 语义解释 / 引用核验 / 对话状态分层
+
+从本地与远端一致、工作区干净的 `ac1642c`（0.24.0）继续。重写 `agent_extraction.py`、`agent_statements.py`，新增 `agent_grounding.py`、`agent_state.py`。删除 A2 的 FAMILY/TIMES/HYPOTHETICAL/UNCERTAIN/MENTION/NEGATION、`_dimensions()`、`validate_statements()` 及 CORRECTION 语义正则。DeepSeek 负责 dialogue_act、人物、时间、命题、确定性与上下文关系；本机仅核验闭合 schema、逐字引用、有效 ID/作用域和执行权限，不再从中文重新计算语义。
+
+最多 6 条近期用户消息、12 个已核验解释事件及当前焦点可按授权发送模型；不装载完整数据库或完整病史。关闭/清空/切换用户、来源、情境使临时引用和确认令牌失效。correction 仅能提议撤回明确引用的本人自报；state_change 新增 updates 关系，保留旧记录。旧 A1/A2 记录仍可本机查看/撤回，不迁移或重写原 claim。
+
+复用 conversation_id、scope、opaque action token、显式确认、revision、SilverStore、SELF_REPORTED 分离、审计与回执；增加待确认内容摘要封存与引用版本核对。原 PySide6 弹窗和 Enter 修复保留，显示通用命题、原话及关联原话。已有联网前隐私否决规则与康复只读业务规则保留，但不承担自报语义解析。
+
+相关回归 **212 项通过**；Qt 离屏 16 场景的最终结果见 [A3 验收](validation/AGENT_STAGE_A3_2026-09-30.md)，页面和完整接口见 [A3 数据合同](plans/AGENT_STAGE_A_UI_AND_DATA.md)。模型响应测试均为显式合成数据，证明分层与执行不变量，不证明真实模型语义准确度。真实服务脚本已提供；当前环境未配置 `DEEPSEEK_API_KEY`，真实 DeepSeek 和用户人工验收均未完成。停在 A3，不进入 B，不合并 main。下方 A1/A2 的本机语义解析及仅发送单轮文字描述为历史状态，已被 A3 取代。
+
 ## 2026-09-29 · 0.24.0 A2 开放词汇自报抽取
 
 从本地/远端一致、工作区干净的 `2645659`（0.23.1）继续。正式自报已删除 `SYMPTOMS` 和旧 `parse_statements`；DeepSeek 仅抽取 8 个受限字段，本机从原文重新核对人物/时间/肯否/假设/确定性、完整引用、限定内容与 schema。未知表达可用 other；失败追问或明确不可用，不回退医疗词表。新记录使用 concept/raw_text/evidence_span；旧 symptom 记录兼容读取与撤回，不迁移或改写原 claim。

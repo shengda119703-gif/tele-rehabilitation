@@ -194,7 +194,7 @@ class MainWindow(QMainWindow):
                 or self.state in ('ONLINE', 'PREVIEW', 'CONNECTING', 'SAVE_FAILED')):
             dialog.show_error(request_id, '当前用户或任务已变化，请重新打开后核对记录。')
             return
-        self.runtime.command('rehab_agent', scope=copy.deepcopy(dialog.scope), operation='act',
+        self.runtime.command('rehab_agent', scope=copy.deepcopy(dialog.scope), operation='list' if action_id == 'list' else 'act',
                              action_id=action_id, conversation_id=dialog.conversation_id, request_id=request_id)
 
     def _agent_navigate(self, action):
@@ -962,6 +962,7 @@ class MainWindow(QMainWindow):
             return
         self._invalidate()
         self.participant_id = name
+        self._refresh_body_scope()
         self.participant.setText(name)
         self._refresh_participant_controls()
         self.setup['plan'] = default_plan(self.exercise.currentData())
@@ -1158,6 +1159,9 @@ class MainWindow(QMainWindow):
         self._refresh_body_scope()
 
     def _refresh_body_scope(self):
+        if self.agent_dialog and self.agent_dialog.scope != self._body_scope_key():
+            self.agent_dialog.clear_conversation(force=True)
+            self.agent_dialog.show_error(self.agent_dialog.request_id, '当前用户或来源已变化，请重新打开对话。')
         if self.body_profile and any(self.body_profile.get(k) != v for k, v in self._body_scope_key().items()):
             self.body_profile = None
             self.body_action.clear()

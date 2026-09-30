@@ -121,11 +121,11 @@ def test_all_static_dynamic_and_settings_buttons_never_default(desktop, tmp_path
 
 
 @pytest.mark.parametrize('text,reply_fragment,secondary,count', [
-    ('昨天妈妈头晕', '妈妈昨天头晕', '家人 · 昨天 · 头晕', 0),
-    ('我今天没头晕', '我今天没头晕', '本人 · 今天 · 头晕 · 否定', 0),
-    ('我头晕', '现在正在头晕，还是之前发生过头晕', '本人 · 时间待确认 · 头晕', 0),
-    ('我今天头晕', '你说自己今天头晕', '本人 · 今天 · 头晕', 1),
-    ('我今天头晕，我今天腿疼', '今天腿疼', '本人 · 今天 · 腿疼', 2),
+    ('昨天妈妈头晕', '这是他人的情况', '家人 · 过去 · 头晕', 0),
+    ('我今天没头晕', '否定', '本人 · 当前 · 头晕 · 否定', 0),
+    ('我头晕', '这是现在发生的，还是之前发生的', '本人 · 时间待确认 · 头晕', 0),
+    ('我今天头晕', '核对下面的原话和解释', '本人 · 当前 · 头晕', 1),
+    ('我今天头晕，我今天腿疼', '逐条', '本人 · 当前 · 腿疼', 2),
     ('如果我现在头晕', '是一个假设', '假设', 0),
     ('我现在可能头晕', '还不能确定这件事是否实际发生', '不确定', 0),
     ('头晕', '是你本人还是家人的情况', '人物待确认', 0),
@@ -153,7 +153,7 @@ def test_targeted_reply_compact_display_keeps_full_contract(desktop, tmp_path, t
     assert ('待确认操作' in body) == bool(count)
     assert d.transcript[-1]['result'] == original
     d.browser.anchorClicked.emit(QUrl('details:' + d.transcript[-1]['id']))
-    assert '未写入自报记录' in d.browser.toPlainText() and '本轮文字已按授权提交 DeepSeek' in d.browser.toPlainText()
+    assert '未写入自报记录' in d.browser.toPlainText() and '有限近期对话' in d.browser.toPlainText()
     assert result == original
     d.reject()
 
