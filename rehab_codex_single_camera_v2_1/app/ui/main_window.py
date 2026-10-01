@@ -69,8 +69,7 @@ def card():
 class MainWindow(QMainWindow):
     def __init__(self, runtime=None, data_dir=None):
         super().__init__()
-        from .. import __version__
-        self.setWindowTitle('康复助手 · ' + __version__)
+        self.setWindowTitle('康复助手')
         self.resize(1360, 900)
         self.setMinimumSize(1100, 730)
         self.setStyleSheet(STYLE)
@@ -90,8 +89,6 @@ class MainWindow(QMainWindow):
         self.longitudinal_dialog = None
         self._plan_to_activate = None
         self.automatic_dialog = None
-        self.agent_dialog = None
-        self._agent_model_config = None
         self._automatic_to_activate = None
         self._demo_scope_to_activate = None
         self._training_execution = {}
@@ -147,69 +144,6 @@ class MainWindow(QMainWindow):
 
     def _build(self):
         build_workspace(self)
-
-    def _open_rehab_agent(self):
-        if (self.busy or self._camera_testing or self.state in
-                ('ONLINE', 'PREVIEW', 'CONNECTING', 'SAVE_FAILED')):
-            self.notice.setText('请先结束采集并保存，再打开康复管家。训练中请使用原有暂停和停止按钮。')
-            return
-        if self.agent_dialog:
-            self.agent_dialog.raise_()
-            return
-        from .rehab_agent import RehabAgentDialog
-        dialog = RehabAgentDialog(self._body_scope_key(), self, config=self._agent_model_config)
-        self.agent_dialog = dialog
-        dialog.requested.connect(self._ask_rehab_agent)
-        dialog.navigate.connect(self._agent_navigate)
-        dialog.operation_requested.connect(self._agent_operation)
-        dialog.reset_requested.connect(lambda cid: self.runtime.command('rehab_agent', operation='reset', conversation_id=cid))
-        def close_agent():
-            self.runtime.command('rehab_agent', operation='reset', conversation_id=dialog.conversation_id)
-            self._agent_model_config = dialog.model_config
-            self.agent_dialog = None
-            dialog.history.clear()
-            dialog.transcript.clear()
-            dialog.deleteLater()
-        dialog.finished.connect(close_agent)
-        dialog.show()
-        dialog.ask('今天该练什么')
-
-    def _ask_rehab_agent(self, text, request_id):
-        dialog = self.agent_dialog
-        if not dialog:
-            return
-        if self.busy or dialog.scope != self._body_scope_key():
-            dialog.show_error(request_id, '当前用户或任务已变化，请关闭后重新打开。')
-            return
-        # A slow model must not disable the desktop or delay stop/save commands.
-        self.runtime.command('rehab_agent', scope=dialog.scope, text=text, request_id=request_id,
-                             history=copy.deepcopy(dialog.history), config=dialog.model_config,
-                             conversation_id=dialog.conversation_id)
-
-    def _agent_operation(self, action_id, request_id):
-        dialog = self.agent_dialog
-        if not dialog:
-            return
-        if (self.busy or self._camera_testing or dialog.scope != self._body_scope_key()
-                or self.state in ('ONLINE', 'PREVIEW', 'CONNECTING', 'SAVE_FAILED')):
-            dialog.show_error(request_id, '当前用户或任务已变化，请重新打开后核对记录。')
-            return
-        self.runtime.command('rehab_agent', scope=copy.deepcopy(dialog.scope), operation='list' if action_id == 'list' else 'act',
-                             action_id=action_id, conversation_id=dialog.conversation_id, request_id=request_id)
-
-    def _agent_navigate(self, action):
-        dialog = self.agent_dialog
-        if not dialog or action not in dialog.allowed_actions:
-            return
-        if (self.busy or self._camera_testing or dialog.scope != self._body_scope_key()
-                or self.state in ('ONLINE', 'PREVIEW', 'CONNECTING', 'SAVE_FAILED')):
-            dialog.show_error(dialog.request_id, '当前用户或任务已变化，请关闭后重新打开。')
-            return
-        routes = {'assessment': self._show_catalog, 'automatic': self._open_automatic_plan,
-                  'body': self._show_body, 'history': self._history, 'silver': self._show_silver}
-        if action in routes:
-            dialog.accept()
-            routes[action]()
 
     def _show_silver(self, *, refresh=True):
         if self.silver_dialog is None:
@@ -962,7 +896,6 @@ class MainWindow(QMainWindow):
             return
         self._invalidate()
         self.participant_id = name
-        self._refresh_body_scope()
         self.participant.setText(name)
         self._refresh_participant_controls()
         self.setup['plan'] = default_plan(self.exercise.currentData())
@@ -1159,9 +1092,6 @@ class MainWindow(QMainWindow):
         self._refresh_body_scope()
 
     def _refresh_body_scope(self):
-        if self.agent_dialog and self.agent_dialog.scope != self._body_scope_key():
-            self.agent_dialog.clear_conversation(force=True)
-            self.agent_dialog.show_error(self.agent_dialog.request_id, '当前用户或来源已变化，请重新打开对话。')
         if self.body_profile and any(self.body_profile.get(k) != v for k, v in self._body_scope_key().items()):
             self.body_profile = None
             self.body_action.clear()
@@ -2052,17 +1982,6 @@ class MainWindow(QMainWindow):
 
     def _handle_message(self, m):
         kind = m['kind']
-        if kind == 'rehab_agent':
-            if self.agent_dialog:
-                if m['result']['scope'] == self._body_scope_key():
-                    self.agent_dialog.receive(m['request_id'], m['result'])
-                else:
-                    self.agent_dialog.show_error(m['request_id'], '当前用户或来源已变化，请重新打开。')
-            return
-        if kind == 'error' and m.get('command') == 'rehab_agent':
-            if self.agent_dialog:
-                self.agent_dialog.show_error(m.get('request_id'), m['text'])
-            return
         if kind == 'family_demo':
             if self.family_demo_dialog:
                 self.family_demo_dialog.render(m['data'])
