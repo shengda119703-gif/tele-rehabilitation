@@ -1,3 +1,7 @@
+import { scopeKey } from './archive/ArchiveService';
+import { createBrowserArchiveService, clearAllBrowserAttachments } from './store/BrowserAttachmentPort';
+import { readHealthHistory } from './archive/healthHistory';
+import { readPersonTwinProduct } from './personTwin/readPersonTwinProduct';
 import { buildFamilyProjection, effectiveFamilySharing as resolveFamilySharing } from './family/projection';
 import { MedicationService } from './medication/MedicationService';
 import { browserProfilePersistence } from './store/profileStore';
@@ -25,15 +29,17 @@ import {
 import { runtimeConfig, runtimeConfigurationErrors } from './config/runtime';
 import { deriveHealthState } from './runtime/derive';
 import { collectFamilyNotifications, collectGatedFindings, collectTodayMinorFindings } from './engine/escalate';
-import { isRecordFromToday, ledgerRecordToNotification } from './engine/notify';
+
 import { PersistentHealthRecordStore } from './store/PersistentHealthRecordStore';
 import { createIdbKeyValueStore } from './store/IdbKeyValueStore';
 import { clearAllLocalData } from './store/clearLocalData';
 
 // 健康数据在本浏览器内持久化（IndexedDB）；IDB 不可用（隐私模式等）时退化为会话内存。
-const healthRecordStore = new PersistentHealthRecordStore(
-  typeof indexedDB !== 'undefined' ? createIdbKeyValueStore() : null,
-);
+const createHealthStore = (scope: StoredProfile) =>
+  new PersistentHealthRecordStore(
+    typeof indexedDB !== 'undefined' ? createIdbKeyValueStore() : null,
+    `ankang-route1-health-snapshot-v2:${scopeKey(scope)}`,
+  );
 import { useNotificationDispatch } from './hooks/useNotificationDispatch';
 import { pushPermission, requestPushPermission } from './adapters/BrowserNotificationChannel';
 import { loadWebhookConfig, sendWebhookPush } from './adapters/WebhookPushChannel';
@@ -173,6 +179,7 @@ export default function App() {
   // 否则首帧的 save 会把 IndexedDB 里的历史快照覆盖成种子数据。
   const [initial, setInitial] = useState<ReturnType<typeof buildSeedSnapshot> | null>(null);
   const [storedProfile, setStoredProfile] = useState<StoredProfile | null>(null);
+  const [healthRecordStore, setHealthRecordStore] = useState<PersistentHealthRecordStore | null>(null);
   const [onboarding, setOnboarding] = useState(false);
   const [pendingRole, setPendingRole] = useState<UserRole>('elder');
   const [profileReady, setProfileReady] = useState(false);
@@ -188,13 +195,15 @@ export default function App() {
         return;
       }
       // HealthKit 模式不读取可能由 Demo 模式遗留的本地健康快照。
-      const restored = runtimeConfig.deviceMode === 'healthkit' ? false : await healthRecordStore.hydrate();
+      const store = stored ? createHealthStore(stored) : null;
+      const restored = runtimeConfig.deviceMode === 'healthkit' ? false : await store?.hydrate();
+      if (!cancelled) setHealthRecordStore(store);
       if (cancelled) return;
       setStoredProfile(stored);
       setProfileReady(true);
       // 有历史数据一律优先采用（那是用户自己的记录）；无历史时才按数据模式装载：
       // demo = 合成种子，personal = 从空白开始（评审 P0-4/P1-2：身份与数据模式是显式选择）。
-      if (restored) setInitial(healthRecordStore.load());
+      if (restored && store) setInitial(store.load());
       else if (stored?.dataMode === 'demo') setInitial(buildSeedSnapshot());
       else setInitial(emptySnapshot());
     })();
@@ -243,7 +252,7 @@ export default function App() {
               window.alert('档案保存失败，请检查本机存储后重试。');
               return;
             }
-            healthRecordStore.clear();
+            setHealthRecordStore(createHealthStore(next));
             setInitial(emptySnapshot());
             setStoredProfile(next);
             writeTabRole(pendingRole);
@@ -259,6 +268,7 @@ export default function App() {
             window.alert('档案保存失败，请检查本机存储后重试。');
             return;
           }
+          setHealthRecordStore(createHealthStore(next));
           setStoredProfile(next);
           writeTabRole(selectedRole);
           if (initial.events.length === 0 && initial.chat.length === 0) setInitial(buildSeedSnapshot());
@@ -270,14 +280,25 @@ export default function App() {
       />
     );
   }
-  return <AppRoot initial={initial} storedProfile={storedProfile} onProfileChange={setStoredProfile} />;
+  if (!healthRecordStore) return null;
+  return (
+    <AppRoot
+      key={scopeKey(storedProfile)}
+      healthRecordStore={healthRecordStore}
+      initial={initial}
+      storedProfile={storedProfile}
+      onProfileChange={setStoredProfile}
+    />
+  );
 }
 
 function AppRoot({
+  healthRecordStore,
   initial,
   storedProfile,
   onProfileChange,
 }: {
+  healthRecordStore: PersistentHealthRecordStore;
   initial: ReturnType<typeof buildSeedSnapshot>;
   storedProfile: StoredProfile;
   onProfileChange: (next: StoredProfile) => void;
@@ -380,11 +401,7 @@ function AppRoot({
     () => deriveHealthState(activeProfile, events, today),
     [activeProfile, events, today],
   );
-  const { records, observations, measurements } = healthData;
-  const familyNotifs = useMemo(
-    () => collectFamilyNotifications(findings, effectiveFamilySharing, sharedFindingIds, today),
-    [findings, effectiveFamilySharing, sharedFindingIds, today],
-  );
+  const { measurements } = healthData;
   // 第三种未知（评审 P0-2）：今日存在但被隐私门控挡住的 alert/urgent 数量。
   // 家属首页状态必须知道它，否则会把被挡住的紧急信号表述成"今天总体正常"。
   const gatedAlertCount = useMemo(
@@ -437,10 +454,13 @@ function AppRoot({
     acknowledge: acknowledgeDispatch,
     mergeRecord,
     mergeAcknowledge,
+    service: notificationService,
+    persistence: notificationPersistence,
   } = useNotificationDispatch({
     findings,
-    familySharing,
-    familyLink,
+    ownerId: storedProfile.ownerId,
+    dataMode: storedProfile.dataMode,
+    familyService,
     // 评审 P0-1 修复：派发只发生在"权威实例"上（老人端 / 同 tab 切角色）。
     // 从网络学到授权的家属消费端（remoteConsent 非空）不派发——否则同浏览器
     // 双 tab（持久化恢复出 granted+active）会双重弹通知、双重发微信推送。
@@ -454,14 +474,13 @@ function AppRoot({
    * 唯一的通知来源；同浏览器时按 findingId 去重。未确认的历史记录也保留
    * 在列表里——"你没处理的通知"不能因为过了一天就消失。
    */
-  const familyNotifications = useMemo(() => {
-    const known = new Set(familyNotifs.map((notification) => notification.finding.id));
-    const fromLedger = dispatchRecords
-      .filter((record) => !known.has(record.findingId))
-      .filter((record) => record.lifecycle === 'new' || isRecordFromToday(record, today))
-      .map(ledgerRecordToNotification);
-    return [...familyNotifs, ...fromLedger];
-  }, [familyNotifs, dispatchRecords, today]);
+  useEffect(() => {
+    if (!notificationPersistence.ok) showToast(`通知台账保存失败：${notificationPersistence.error}`);
+  }, [notificationPersistence, showToast]);
+  const familyNotifications = useMemo(
+    () => notificationService.viewNotifications(findings, today),
+    [notificationService, findings, today, dispatchRecords, effectiveFamilySharing, sharedFindingIds, familyLink],
+  );
 
   // 另一端广播来的"今日信号摘要"（P0-1 配套，只有数量没有内容）：
   // 跨设备时家属端自己的事件流是空的，必须用老人端广播来的数量才能如实显示
@@ -485,16 +504,27 @@ function AppRoot({
         // 可能消音紧急告警，一律忽略。同浏览器 BroadcastChannel 与 IndexedDB
         // 同一信任域，不受此限。
         if (envelope.via === 'peer' && !familyLinkActiveRef.current) return;
-        const payload = envelope.payload as { findingId: string };
-        mergeAcknowledge(payload.findingId);
+        const payload = envelope.payload as {
+          findingId: string;
+          ownerId: string;
+          dataMode: string;
+          relationshipId: string;
+        };
+        if (
+          payload.ownerId === storedProfile.ownerId &&
+          payload.dataMode === storedProfile.dataMode &&
+          payload.relationshipId === familyService.readState().familyLink?.id
+        )
+          mergeAcknowledge(payload.findingId);
       } else if (envelope.type === 'dispatch.append') {
         if (envelope.via === 'peer' && !familyLinkActiveRef.current) return;
-        const record = envelope.payload as import('./engine/notify').FamilyNotificationRecord;
+        const record = envelope.payload as import('./notification/NotificationService').NotificationRecord;
         mergeRecord(record);
       } else if (envelope.type === 'events.append') {
         // P0-1 配套：同浏览器 tab 间的健康事件补齐（只走 BroadcastChannel，不会来自别的设备）。
         // 与 IndexedDB 同一信任域：刷新后本来就能看到这些事件，这里只是让同浏览器实时一致。
-        const payload = envelope.payload as { events?: unknown[] };
+        const payload = envelope.payload as { events?: unknown[]; ownerId: string; dataMode: string };
+        if (payload.ownerId !== storedProfile.ownerId || payload.dataMode !== storedProfile.dataMode) return;
         const incoming = Array.isArray(payload?.events) ? (payload.events as HealthEvent[]) : [];
         if (incoming.length > 0) setEvents((current) => mergeHealthEvents(current, incoming));
       } else if (envelope.type === 'signals.summary') {
@@ -623,19 +653,28 @@ function AppRoot({
   const handleAcknowledge = useCallback(
     (findingId: string) => {
       acknowledgeDispatch(findingId);
-      sync.broadcast('dispatch.acknowledge', { findingId }, { peer: familyLinkActiveRef.current });
+      sync.broadcast(
+        'dispatch.acknowledge',
+        {
+          findingId,
+          ownerId: storedProfile.ownerId,
+          dataMode: storedProfile.dataMode,
+          relationshipId: familyService.readState().familyLink?.id,
+        },
+        { peer: familyLinkActiveRef.current },
+      );
     },
-    [acknowledgeDispatch, sync],
+    [acknowledgeDispatch, sync, storedProfile.ownerId, storedProfile.dataMode, familyService],
   );
 
   // 把本地新派发的台账广播给其它 tab：另一 tab 的 findings 签名未变，
   // 不会重跑派发引擎，所以不会重复触发系统通知，只接收并合并台账。
   // P1：台账含告警正文，PeerJS 通道只在绑定完成后启用，未绑定对端拿不到内容。
-  const lastBroadcastRecordIdsRef = useRef<Set<string>>(new Set());
+  const lastBroadcastRecordIdsRef = useRef<Map<string, string>>(new Map());
   useEffect(() => {
-    const currentIds = new Set(dispatchRecords.map((record) => record.findingId));
+    const currentIds = new Map(dispatchRecords.map((record) => [record.findingId, JSON.stringify(record)]));
     for (const record of dispatchRecords) {
-      if (!lastBroadcastRecordIdsRef.current.has(record.findingId)) {
+      if (lastBroadcastRecordIdsRef.current.get(record.findingId) !== JSON.stringify(record)) {
         sync.broadcast('dispatch.append', record, { peer: familyLinkActiveRef.current });
       }
     }
@@ -725,7 +764,12 @@ function AppRoot({
     onMedicationMissed: () => ensureMedicationCheck(activeProfile.medications),
     onShareFindingIds: shareFindingIds,
     onShareFamilyEventIds: shareFamilyEventIds,
-    onBroadcastEvents: (incoming) => broadcastLocal('events.append', { events: incoming }),
+    onBroadcastEvents: (incoming) =>
+      broadcastLocal('events.append', {
+        ownerId: storedProfile.ownerId,
+        dataMode: storedProfile.dataMode,
+        events: incoming,
+      }),
   });
 
   function handleElderSend(text: string) {
@@ -926,12 +970,7 @@ function AppRoot({
     if (!window.confirm('确定清空这台浏览器里的全部记录吗？\n聊天、健康记录、通知台账和设置都会删除，并回到初始选择。'))
       return;
     try {
-      await new Promise<void>((resolve, reject) => {
-        const request = indexedDB.deleteDatabase('ankang-health-attachments');
-        request.onsuccess = () => resolve();
-        request.onerror = () => reject(request.error);
-        request.onblocked = () => reject(new Error('请先关闭其他打开档案的标签页'));
-      });
+      await clearAllBrowserAttachments();
     } catch {
       showToast('附件未能清空，请关闭其他标签页后重试。未清除其他记录。');
       return;
@@ -1053,6 +1092,54 @@ function AppRoot({
         },
       }
     : familyState;
+  const projectionRef = useRef(projectionState);
+  projectionRef.current = projectionState;
+  const archives = useMemo(
+    () => ({
+      self: createBrowserArchiveService({ ownerId: storedProfile.ownerId, dataMode: storedProfile.dataMode }, () =>
+        familyService.readState(),
+      ),
+      family: createBrowserArchiveService(
+        { ownerId: storedProfile.ownerId, dataMode: storedProfile.dataMode },
+        () => projectionRef.current,
+        'family',
+      ),
+    }),
+    [storedProfile.ownerId, storedProfile.dataMode, familyService],
+  );
+  const twinProduct = readPersonTwinProduct({
+    ...storedProfile,
+    profile: activeProfile,
+    events,
+    tasks,
+    familyEvents,
+    family: familyState,
+    today,
+    asOf: new Date().toISOString(),
+  });
+  const familyTwinProduct = readPersonTwinProduct(
+    {
+      ...storedProfile,
+      profile: activeProfile,
+      events,
+      tasks,
+      familyEvents,
+      family: projectionState,
+      today,
+      asOf: twinProduct.asOf,
+    },
+    'family',
+  );
+  const history = readHealthHistory(
+    storedProfile,
+    activeProfile,
+    events,
+    familyEvents,
+    findings,
+    tasks,
+    familyState,
+    today,
+  );
   const familyProjection = buildFamilyProjection(projectionState, {
     ownerId: storedProfile.ownerId,
     findings,
@@ -1135,7 +1222,7 @@ function AppRoot({
           )}
           {elderScreen === 'health' && (
             <HealthArchivePage
-              owner={activeProfile.name}
+              service={archives.self}
               demoMode={demoMode}
               onRecognize={(file) => {
                 if (!demoMode && !import.meta.env.VITE_HEALTH_VISION_ENDPOINT?.trim()) {
@@ -1163,7 +1250,12 @@ function AppRoot({
                 pendingPhotoError={pendingPhotoError}
               >
                 <Suspense fallback={VIEW_FALLBACK}>
-                  <ProfileView records={records} observations={observations} findings={findings} today={today} />
+                  <ProfileView
+                    records={history.records}
+                    observations={history.observations}
+                    findings={history.findings}
+                    today={today}
+                  />
                 </Suspense>
               </ElderHealthPage>
               <DeviceDebugPanel
@@ -1171,7 +1263,7 @@ function AppRoot({
                 state={deviceSync}
                 eventCount={events.length}
                 findings={findings}
-                personTwin={agentContext.personTwin}
+                personTwin={twinProduct.personTwin!}
                 onSync={() => void syncDevice('manual')}
               />
             </HealthArchivePage>
@@ -1231,7 +1323,7 @@ function AppRoot({
                 state={deviceSync}
                 eventCount={events.length}
                 findings={findings}
-                personTwin={agentContext.personTwin}
+                personTwin={twinProduct.personTwin!}
                 onSync={() => void syncDevice('manual')}
               />
             </ElderSettingsPage>
@@ -1306,7 +1398,7 @@ function AppRoot({
             }
             archivePage={
               <HealthArchivePage
-                owner={activeProfile.name}
+                service={archives.family}
                 demoMode={demoMode}
                 onRecognize={(file) => {
                   if (!demoMode && !import.meta.env.VITE_HEALTH_VISION_ENDPOINT?.trim()) {
@@ -1317,8 +1409,8 @@ function AppRoot({
                 }}
               >
                 <ElderHealthPage
-                  profile={activeProfile}
-                  findings={findings}
+                  profile={{ name: activeProfile.name }}
+                  findings={familyTwinProduct.findings}
                   dataMode={storedProfile.dataMode}
                   onPhotoImport={(file, kind) => {
                     if (!demoMode && !import.meta.env.VITE_HEALTH_VISION_ENDPOINT?.trim()) {

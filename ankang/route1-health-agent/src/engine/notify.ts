@@ -9,7 +9,7 @@ import { collectFamilyNotifications, type FamilyNotification } from './escalate'
 import { formatLocalDate } from './clock';
 
 export type DeliveryChannel = 'in_app' | 'browser_push' | 'webhook_push';
-export type DeliveryStatus = 'sent' | 'failed' | 'unavailable';
+export type DeliveryStatus = 'pending' | 'accepted' | 'sent' | 'delivered' | 'failed' | 'unavailable';
 
 export interface DeliveryAttempt {
   channel: DeliveryChannel;
@@ -108,12 +108,10 @@ export async function dispatchFamilyNotifications(
   /** 老人一次性共享且尚未消费的 findingId：同样属于 collectFamilyNotifications 的门控结果。 */
   oneTimeSharedFindingIds: string[] = [],
 ): Promise<DispatchResult> {
-  const eligible = familyBound ? collectFamilyNotifications(findings, familySharing, oneTimeSharedFindingIds) : [];
-  const knownIds = new Set(existing.map((record) => record.findingId));
-  const fresh = eligible.filter((notification) => !knownIds.has(notification.finding.id));
+  const plans = planFamilyNotifications(findings, familySharing, familyBound, existing, now, oneTimeSharedFindingIds);
 
   const records = [...existing];
-  for (const notification of fresh) {
+  for (const { notification, record } of plans) {
     if (notification.finding.severity !== 'alert' && notification.finding.severity !== 'urgent') continue;
     const attempts: DeliveryAttempt[] = [
       { channel: 'in_app', status: 'sent', detail: '已进入家属端通知中心', at: now },
@@ -129,20 +127,46 @@ export async function dispatchFamilyNotifications(
         at: now,
       });
     }
-    records.push({
-      findingId: notification.finding.id,
-      severity: notification.finding.severity,
-      title: notification.finding.title,
-      message: notification.message,
-      actionPath: notification.actionPath,
-      reason: notification.reason,
-      createdAt: now,
-      deliveries: attempts,
-      lifecycle: 'new',
-    });
+    records.push({ ...record, deliveries: attempts });
   }
 
   return { records: sortNotificationRecords(records), dispatchedCount: records.length - existing.length };
+}
+
+/** Shared planning: no channel invocation and no invented in-app receipt. */
+export function planFamilyNotifications(
+  findings: Finding[],
+  familySharing: FamilySharing,
+  familyBound: boolean,
+  existing: FamilyNotificationRecord[],
+  now: string,
+  oneTimeSharedFindingIds: string[] = [],
+) {
+  const eligible = familyBound ? collectFamilyNotifications(findings, familySharing, oneTimeSharedFindingIds) : [];
+  const knownIds = new Set(existing.map((record) => record.findingId));
+  const fresh = eligible.filter((notification) => {
+    const id = notification.finding.id;
+    if (knownIds.has(id)) return false;
+    knownIds.add(id);
+    return true;
+  });
+
+  return fresh
+    .filter((n) => n.finding.severity === 'alert' || n.finding.severity === 'urgent')
+    .map((notification) => ({
+      notification,
+      record: {
+        findingId: notification.finding.id,
+        severity: notification.finding.severity as 'alert' | 'urgent',
+        title: notification.finding.title,
+        message: notification.message,
+        actionPath: notification.actionPath,
+        reason: notification.reason,
+        createdAt: now,
+        deliveries: [],
+        lifecycle: 'new',
+      } satisfies FamilyNotificationRecord,
+    }));
 }
 
 /** 家属确认通知。只允许 new → acknowledged，重复确认保留最早确认时间。 */
@@ -174,7 +198,10 @@ export function describeDeliveries(record: FamilyNotificationRecord): string {
   for (const channel of ['in_app', 'browser_push', 'webhook_push'] as const) {
     const attempt = record.deliveries.find((item) => item.channel === channel);
     if (!attempt) continue;
-    if (attempt.status === 'sent') parts.push(`${CHANNEL_LABELS[channel]}已送达`);
+    if (attempt.status === 'delivered') parts.push(`${CHANNEL_LABELS[channel]}已送达`);
+    else if (attempt.status === 'accepted') parts.push(`${CHANNEL_LABELS[channel]}已受理，送达未确认`);
+    else if (attempt.status === 'sent') parts.push(`${CHANNEL_LABELS[channel]}已发送，送达未确认`);
+    else if (attempt.status === 'pending') parts.push(`${CHANNEL_LABELS[channel]}待发送`);
     else parts.push(`${CHANNEL_LABELS[channel]}未送达（${attempt.detail}）`);
   }
   return parts.join('；') || '暂无投递记录';

@@ -1,3 +1,4 @@
+import { familyReportWindow, summarizeMetric } from '../archive/healthHistory';
 import { useState, type ReactNode } from 'react';
 import type { CareTask, DayRecord, ElderProfile, FamilyHealthEvent, FamilyLink } from '../types';
 import type { FamilyNotification } from '../engine/escalate';
@@ -258,18 +259,13 @@ export default function FamilyDashboard(props: FamilyDashboardProps) {
   }
 
   if (props.view === 'report') {
-    const end = new Date(props.today + 'T12:00:00');
-    end.setDate(end.getDate() - weekOffset * 7);
-    const start = new Date(end);
-    start.setDate(start.getDate() - 6);
-    const dateKey = (d: Date) =>
-      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    const startDate = dateKey(start),
-      endDate = dateKey(end);
-    const inWeek = (date: string) => date.slice(0, 10) >= startDate && date.slice(0, 10) <= endDate;
-    const weekRecords = props.records.filter((r) => inWeek(r.date));
-    const weekFindings = familyFindings.filter((f) => inWeek(f.date));
-    const weekEvents = props.familyEvents.filter((e) => inWeek(e.timestamp));
+    const { startDate, endDate, weekRecords, weekFindings, weekEvents } = familyReportWindow(
+      props.records,
+      familyFindings,
+      props.familyEvents,
+      props.today,
+      weekOffset,
+    );
     if (!canViewSharedDetail) {
       return (
         <div className="family-detail">
@@ -312,21 +308,18 @@ export default function FamilyDashboard(props: FamilyDashboardProps) {
           <p>按七天汇总已共享的身体数据与异常记录，最新一期截至今天。共有 {weekRecords.length} 天身体数据记录。</p>
           <div className="archive-grid">
             {(Object.keys(METRICS) as MetricKey[]).map((key) => {
-              const values = weekRecords
-                .map((r) => r.metrics[key])
-                .filter((v): v is number => typeof v === 'number' && Number.isFinite(v));
-              if (!values.length) return null;
+              const summary = summarizeMetric(weekRecords, key);
+              if (!summary) return null;
               const meta = METRICS[key];
               return (
                 <div className="card" key={key}>
                   <strong>{meta.label}</strong>
                   <h2>
-                    {(values.reduce((a, b) => a + b, 0) / values.length).toFixed(meta.decimals)}{' '}
-                    <small>{meta.unit}</small>
+                    {summary.mean.toFixed(meta.decimals)} <small>{meta.unit}</small>
                   </h2>
-                  <p>日汇总均值 · {values.length} 天有记录</p>
+                  <p>日汇总均值 · {summary.count} 天有记录</p>
                   <small>
-                    范围 {Math.min(...values)}–{Math.max(...values)} {meta.unit}
+                    范围 {summary.min}–{summary.max} {meta.unit}
                   </small>
                 </div>
               );

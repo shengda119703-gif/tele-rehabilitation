@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { DayRecord, ElderProfile, Finding, MetricKey, Observation } from '../types';
 import { METRICS } from '../types';
-import { computeBaseline, recentMean, diffDays } from '../engine/baseline';
+import { metricTrend, recentObservations } from '../archive/healthHistory';
 import { severityBadge } from '../engine/escalate';
 import Sparkline from './Sparkline';
 import ProfileForm from './ProfileForm';
@@ -130,15 +130,7 @@ export default function ProfileView({
         <div className="metric-grid">
           {DISPLAY_METRICS.map((key) => {
             const meta = METRICS[key];
-            const values = records.map((record) => record.metrics[key] ?? null);
-            const baseline = computeBaseline(records, key, { endDate: today, excludeDays: 3 });
-            const recent = recentMean(records, key, today, 3);
-            let deltaText: string | null = null;
-            if (baseline && recent !== null && Math.abs(baseline.mean) > 1e-9) {
-              const delta = (recent - baseline.mean) / Math.abs(baseline.mean);
-              if (Math.abs(delta) >= 0.05)
-                deltaText = `最近3天比平时${delta > 0 ? '高' : '低'} ${Math.abs(Math.round(delta * 100))}%`;
-            }
+            const { values, baseline, deltaText } = metricTrend(records, key, today);
             return (
               <div key={key} className="metric-card">
                 <div className="metric-title">
@@ -179,11 +171,7 @@ export default function ProfileView({
         </ul>
         <p className="muted">
           最近 7 天记录数：
-          {
-            observations.filter(
-              (observation) => diffDays(observation.date, today) >= 0 && diffDays(observation.date, today) < 7,
-            ).length
-          }
+          {recentObservations(observations, today).length}
         </p>
       </div>
 

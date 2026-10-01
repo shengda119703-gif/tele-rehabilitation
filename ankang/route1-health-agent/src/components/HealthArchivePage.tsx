@@ -1,32 +1,29 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { demoArchives } from '../data/demoArchives';
-
-const categories = ['体检报告', '就诊记录', '检验检查', '影像资料', '病历资料', '其他资料'];
-type Archive = { id: string; name: string; category: string; date: string; file: File; scope?: string };
-function database(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    const r = indexedDB.open('ankang-health-attachments', 1);
-    r.onupgradeneeded = () => r.result.createObjectStore('files', { keyPath: 'id' });
-    r.onsuccess = () => resolve(r.result);
-    r.onerror = () => reject(r.error);
-  });
-}
+import {
+  archiveCategories as categories,
+  scopeKey,
+  type ArchiveService,
+  type AttachmentMetadata,
+} from '../archive/ArchiveService';
+import { attachmentFile } from '../store/BrowserAttachmentPort';
+type Archive = AttachmentMetadata & { file: File };
 export default function HealthArchivePage({
   children,
   onRecognize,
   demoMode = false,
-  owner = '',
+  service,
 }: {
   children: ReactNode;
   onRecognize?: (file: File) => void;
   demoMode?: boolean;
-  owner?: string;
+  service: ArchiveService;
 }) {
   const [healthOpen, setHealthOpen] = useState(false);
-  const scope = `${demoMode ? 'demo' : 'personal'}:${owner}`;
+  const scope = scopeKey(service.scope);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [visibility, setVisibility] = useState<'private' | 'family_ok'>('family_ok');
   const [revision, setRevision] = useState(0);
-  const [items, setItems] = useState<Archive[]>(() => (demoMode ? demoArchives() : []));
+  const [items, setItems] = useState<AttachmentMetadata[]>([]);
   const [category, setCategory] = useState('全部');
   const [upload, setUpload] = useState(false);
   const [file, setFile] = useState<File | null>(null);
@@ -38,26 +35,18 @@ export default function HealthArchivePage({
   const [preview, setPreview] = useState('');
   useEffect(() => {
     let active = true;
-    void database()
-      .then((db) => {
-        const r = db.transaction('files').objectStore('files').getAll();
-        r.onsuccess = () => {
-          if (active) {
-            const saved = (r.result as Archive[]).filter((a) => a.scope === scope || (!a.scope && !demoMode));
-            setItems([...(demoMode ? demoArchives().filter((a) => !saved.some((s) => s.id === a.id)) : []), ...saved]);
-          }
-          db.close();
-        };
-        r.onerror = () => {
-          if (active) setError('无法读取本机附件。');
-          db.close();
-        };
+    void service
+      .list()
+      .then((items) => {
+        if (active) setItems(items);
       })
-      .catch(() => setError('本机附件存储不可用。'));
+      .catch(() => {
+        if (active) setError('本机附件读取失败或无权访问。');
+      });
     return () => {
       active = false;
     };
-  }, [demoMode, scope, revision]);
+  }, [service, revision]);
   useEffect(() => {
     if (typeof BroadcastChannel === 'undefined') return;
     const channel = new BroadcastChannel('ankang-archive-updates');
@@ -77,25 +66,18 @@ export default function HealthArchivePage({
     setBusy(true);
     setError('');
     try {
-      const entry: Archive = {
-        id: editingId ?? crypto.randomUUID(),
-        name: name.trim(),
+      await service.save({
+        id: editingId ?? undefined,
+        name,
         category: kind,
-        date: new Date().toISOString(),
-        file,
-        scope,
-      };
-      const db = await database();
-      await new Promise<void>((resolve, reject) => {
-        const tx = db.transaction('files', 'readwrite');
-        tx.objectStore('files').put(entry);
-        tx.oncomplete = () => resolve();
-        tx.onerror = () => reject(tx.error);
-        tx.onabort = () => reject(tx.error);
+        fileName: file.name,
+        mediaType: file.type,
+        bytes: new Uint8Array(await file.arrayBuffer()),
+        visibility,
       });
-      db.close();
-      setItems((i) => [...i.filter((a) => a.id !== entry.id), entry]);
+      setItems(await service.list());
       setEditingId(null);
+      setVisibility('family_ok');
       if (typeof BroadcastChannel !== 'undefined') {
         const channel = new BroadcastChannel('ankang-archive-updates');
         channel.postMessage(scope);
@@ -132,6 +114,7 @@ export default function HealthArchivePage({
             className="btn-secondary"
             onClick={() => {
               setEditingId(selected.id);
+              setVisibility(selected.visibility);
               setName(selected.name);
               setKind(selected.category);
               setFile(selected.file);
@@ -214,6 +197,7 @@ export default function HealthArchivePage({
             onClick={() => {
               setUpload(false);
               setEditingId(null);
+              setVisibility('family_ok');
               setFile(null);
               setName('');
             }}
@@ -247,7 +231,16 @@ export default function HealthArchivePage({
             .filter((a) => category === '全部' || a.category === category)
             .reverse()
             .map((a) => (
-              <button className="card medicine-row" key={a.id} onClick={() => setSelected(a)}>
+              <button
+                className="card medicine-row"
+                key={a.id}
+                onClick={() => {
+                  void service
+                    .read(a.id)
+                    .then((entry) => setSelected({ ...a, file: attachmentFile(entry) }))
+                    .catch(() => setError('附件读取失败或无权访问。'));
+                }}
+              >
                 <strong>{a.name}</strong>
                 <span>{a.category} ›</span>
               </button>

@@ -53,7 +53,10 @@ export class PersistentHealthRecordStore implements HealthRecordStore {
   /** 在途/已完成的水合 promise：并发调用共享同一结果（React StrictMode 双触发防覆盖）。 */
   private hydratePromise: Promise<boolean> | null = null;
 
-  constructor(private readonly kv: AsyncKeyValueStore | null) {}
+  constructor(
+    private readonly kv: AsyncKeyValueStore | null,
+    private readonly storageKey = STORAGE_KEY,
+  ) {}
 
   load(): HealthRecordSnapshot {
     return cloneSnapshot(this.cache);
@@ -67,7 +70,7 @@ export class PersistentHealthRecordStore implements HealthRecordStore {
       savedAt: new Date().toISOString(),
       snapshot: cloneSnapshot(snapshot),
     };
-    void this.kv.set(STORAGE_KEY, envelope).catch((error) => {
+    void this.kv.set(this.storageKey, envelope).catch((error) => {
       console.warn('[health-store] 本地持久化写入失败，当前会话仍可继续使用：', error);
     });
   }
@@ -75,7 +78,7 @@ export class PersistentHealthRecordStore implements HealthRecordStore {
   clear(): void {
     this.cache = EMPTY;
     if (!this.kv) return;
-    void this.kv.delete(STORAGE_KEY).catch(() => {});
+    void this.kv.delete(this.storageKey).catch(() => {});
   }
 
   /**
@@ -98,7 +101,7 @@ export class PersistentHealthRecordStore implements HealthRecordStore {
   private async runHydrate(): Promise<boolean> {
     if (!this.kv) return false;
     try {
-      const raw = await this.kv.get(STORAGE_KEY);
+      const raw = await this.kv.get(this.storageKey);
       if (typeof raw !== 'object' || raw === null) return false;
       const envelope = raw as Partial<StoredEnvelope>;
       if (envelope.version !== SNAPSHOT_VERSION) return false;

@@ -139,7 +139,7 @@ void test('家属确认形成闭环，重复确认保留最早时间', async () 
   assert.equal(countUnacknowledged(again), 0);
 });
 
-void test('送达描述同时覆盖已送达与未送达两种渠道状态', async () => {
+void test('送达描述不把已发送误称为已送达', async () => {
   const record = (deliveries: FamilyNotificationRecord['deliveries']): FamilyNotificationRecord => ({
     findingId: 'safety.fall-2026-09-06',
     severity: 'urgent',
@@ -158,7 +158,7 @@ void test('送达描述同时覆盖已送达与未送达两种渠道状态', asy
         { channel: 'browser_push', status: 'sent', detail: '已推送到系统通知中心', at: NOW },
       ]),
     ),
-    '通知中心已送达；系统通知已送达',
+    '通知中心已发送，送达未确认；系统通知已发送，送达未确认',
   );
   assert.equal(
     describeDeliveries(
@@ -172,6 +172,6 @@ void test('送达描述同时覆盖已送达与未送达两种渠道状态', asy
         },
       ]),
     ),
-    '通知中心已送达；系统通知未送达（尚未开启系统通知权限，请在家属端点击开启）',
+    '通知中心已发送，送达未确认；系统通知未送达（尚未开启系统通知权限，请在家属端点击开启）',
   );
 });

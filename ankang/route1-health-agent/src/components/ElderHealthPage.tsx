@@ -6,7 +6,7 @@ import type { ElderProfile, Finding } from '../types';
 import { METRICS } from '../types';
 
 interface ElderHealthPageProps {
-  profile: ElderProfile;
+  profile: Pick<ElderProfile, 'name'>;
   findings: Finding[];
   dataMode: DataMode;
   onPhotoImport: (file: Blob, kind: DemoImageKind) => void | Promise<void>;
