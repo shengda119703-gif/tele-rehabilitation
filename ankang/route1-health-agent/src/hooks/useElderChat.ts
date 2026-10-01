@@ -9,12 +9,9 @@ import { selectImageParser, demoPhotoRefusal } from '../adapters/parserSelector'
 import type { ParsedHealthData } from '../adapters/ImageHealthParser';
 import type { DemoImageKind } from '../adapters/DemoImageHealthParser';
 import { createHttpLlmAdapter, generateAgentReply, msg, QUICK_INPUTS, ruleBasedAdapter } from '../engine/agent';
-import { understandElderInput, type StructuredElderInput } from '../engine/understanding';
-import { canUseLlmUnderstanding, understandElderInputWithLlm } from '../engine/llmUnderstanding';
+import { prepareTurn, applyTurnPlan, settlePendingReply } from '../runtime/turn';
 import { parsePrivacyIntent } from '../engine/privacy';
-import { planElderTurn } from '../engine/elderTurn';
-import { removeCorrectedChatHealthEvents, removeCorrectedFamilyEvents } from '../engine/correction';
-import { recordSharingAudit } from '../engine/sharingAudit';
+import { appendSharingAudit, type SharingAuditEntry } from '../engine/sharingAudit';
 import { createTurnQueue, type TurnQueue } from '../engine/turnQueue';
 import { appConfig } from '../config/appConfig';
 import type { DataMode } from '../store/profileStore';
@@ -78,6 +75,7 @@ export function useElderChat({
   onShareFamilyEventIds,
   onBroadcastEvents,
 }: UseElderChatOptions) {
+  const auditRef = useRef<SharingAuditEntry[]>([]);
   const turnQueueRef = useRef<TurnQueue | null>(null);
   if (!turnQueueRef.current) turnQueueRef.current = createTurnQueue();
 
@@ -108,95 +106,46 @@ export function useElderChat({
     });
   }
 
-  /**
-   * 理解层入口：配置了理解层 LLM 且输入不含私密意图时，用真实语言理解仲裁
-   * 症状识别（标签）与肯否语义两个轴；其余情况（未配置 / private / no_record）
-   * 走纯规则，原话一个字都不出本地。
-   */
-  async function buildUnderstanding(
-    text: string,
-    priorChat: ChatMessage[],
-    intent: ReturnType<typeof parsePrivacyIntent>,
-  ): Promise<StructuredElderInput> {
-    const config = appConfig.understandingLlm;
-    if (canUseLlmUnderstanding(intent, config !== null)) {
-      return understandElderInputWithLlm(text, today, priorChat, config as NonNullable<typeof config>);
-    }
-    return understandElderInput(text, today, priorChat);
-  }
-
-  /**
-   * P0-3 的配对机制：把就绪的回复写进占位气泡的位置（找不到占位则追加兜底）。
-   * 用 setState 更新器内部完成查找与替换，保证原子性。
-   */
-  function settlePendingReply(current: ChatMessage[], pendingId: string, reply: ChatMessage): ChatMessage[] {
-    const index = current.findIndex((item) => item.id === pendingId);
-    if (index < 0) return [...current, reply];
-    const next = [...current];
-    next[index] = { ...reply, id: pendingId };
-    return next;
-  }
-
-  /**
-   * 一回合 = 纯规划（engine/elderTurn.planElderTurn）+ 执行（本函数）。
-   * 规划层决定回复分块、待入库事件、家属同步与提示文案；这里只做状态更新
-   * 与副作用，且执行顺序与旧实现保持一致。
-   */
   async function runElderTurn(
     text: string,
     elderMessage: ChatMessage,
     priorChat: ChatMessage[],
     pendingReplyId: string,
   ) {
-    const intent = parsePrivacyIntent(text);
-    const understanding = await buildUnderstanding(text, priorChat, intent);
     const now = elderMessage.time;
     const persisted = elderMessage.persisted ?? true;
     const receivedAt = localIsoTimestamp();
 
-    const plan = await planElderTurn({
-      text,
-      understanding,
-      priorChat,
-      findings,
-      events,
-      familySharing,
-      agentContext,
-      llmAdapter,
-      today,
-      now,
-      receivedAt,
-      sourceMessageId: elderMessage.id,
-      idSeed: Date.now(),
+    const { plan } = await prepareTurn(
+      {
+        text,
+        sharingAudit: auditRef.current,
+        priorChat,
+        findings,
+        events,
+        familySharing,
+        agentContext,
+        llmAdapter,
+        today,
+        now,
+        receivedAt,
+        sourceMessageId: elderMessage.id,
+        idSeed: Date.now(),
+      },
+      appConfig.understandingLlm,
+    );
+
+    applyTurnPlan(plan, {
+      updateFamily: setFamilyEvents,
+      recordAudit: (entries) => {
+        auditRef.current = appendSharingAudit(auditRef.current, entries);
+      },
+      shareFamily: onShareFamilyEventIds,
+      updateEvents: setEvents,
+      broadcast: (incoming) => onBroadcastEvents?.(incoming),
+      shareFindings: onShareFindingIds,
+      medicationMissed: () => onMedicationMissed(receivedAt),
     });
-
-    const { correction } = plan;
-    if (correction) {
-      setFamilyEvents((current) => removeCorrectedFamilyEvents(current, correction.messageId));
-    }
-    if (plan.familyEventsToAppend.length > 0) {
-      setFamilyEvents((current) => [...current, ...plan.familyEventsToAppend]);
-    }
-    if (plan.sharingAuditEntries.length > 0) {
-      recordSharingAudit(plan.sharingAuditEntries);
-    }
-    if (plan.shareFamilyEventIds.length > 0) {
-      onShareFamilyEventIds(plan.shareFamilyEventIds);
-    }
-    if (plan.eventsToAppend.length > 0) {
-      setEvents((current) =>
-        appendHealthEvents(
-          correction ? removeCorrectedChatHealthEvents(current, correction.messageId, correction.tags) : current,
-          plan.eventsToAppend,
-        ),
-      );
-      // P0-1 配套：同浏览器其它 tab（如已打开的家属端）实时补齐事件，
-      // 否则家属端自己的检测/门控状态永远停留在打开那一刻的快照。
-      onBroadcastEvents?.(plan.eventsToAppend);
-      if (plan.shareFindingIds.length > 0) onShareFindingIds(plan.shareFindingIds);
-    }
-    if (plan.medicationMissed) onMedicationMissed(receivedAt);
-
     const reply = msg('agent', plan.replyText, now, persisted, {
       safetyAction: plan.safetyAction,
       blocks: plan.replyBlocks,

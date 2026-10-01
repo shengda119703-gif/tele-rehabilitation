@@ -1,5 +1,45 @@
 # 安康 Agent core 边界盘点
 
+## Runtime 抽取更新（2026-10-01，基于 ef5a767d）
+
+本节描述当前实现；下面原盘点保留为**抽取前的历史审计**，其中“尚无独立运行单元”“本轮源码未改”等只适用于上一次提交。原 25 文件领域闭包继续保留，新增 `src/runtime/` 六个文件，把原运行编排抽成无 React 的 TypeScript API。没有优化理解模型、改变检测规则或裁剪上游。
+
+```mermaid
+flowchart TD
+  Host[同进程 TypeScript 宿主] --> Session[AgentRuntime：session / queue / revision / generation]
+  Session --> Turn[prepareTurn / applyTurnPlan]
+  React[原 useElderChat] --> Turn
+  Turn --> Domain[原 understanding / elderTurn / correction / events]
+  Session --> Derive[deriveHealthState]
+  App[原 App] --> Derive
+  Derive --> Detection[原 detection / context / Person Twin]
+  Session --> Tasks[careTasks：原对账与用药任务规则]
+  Hook[原 useCareTasks] --> Tasks
+  Session --> Persistence[异步本地 persistence port]
+  Session --> Delivery[可选 delivery port / 独立回执]
+```
+
+| 新文件（相对 route1-health-agent） | 边界 |
+| --- | --- |
+| `src/runtime/index.ts` | 公共导出 |
+| `src/runtime/session.ts` | `openSession / processTurn / readSnapshot / resetSession / closeSession / updateTaskStatus`；每 session 独立队列与状态；完整回合事务 |
+| `src/runtime/turn.ts` | 原 hook 理解选择、规划调用、按原顺序执行更正/事件/审计/共享/用药回调；占位回复替换 |
+| `src/runtime/derive.ts` | 原 App 的物化、检测、Context/Twin 重算 |
+| `src/runtime/careTasks.ts` | 原任务对账、同日用药去重和任务状态更新 |
+| `src/runtime/ports.ts` | 平台无关存储/送达契约；in-memory 实现如实返回 memory-only |
+
+从 `runtime/index.ts` 出发，包括 type-only import 的传递闭包是 **33 个 TypeScript 模块，无外部 npm import**：原 C0 25 文件 + 上述 6 文件 + `engine/turnQueue.ts` + `store/HealthRecordStore.ts`。新增 AST 依赖门禁同时检查 import/export 和动态 import/require，禁止 React/TSX、hooks/components、adapter/config、PeerJS、Home Twin 等进入闭包。原领域代码中仍有 fetch 契约和受保护的 legacy browser helper；这不等于把浏览器 UI 状态搬入 Runtime，Runtime 不调用 legacy 全局审计读写。
+
+`elderTurn.ts` 的唯一行为边界改动是允许显式传入 `sharingAudit`；Runtime 与 React hook 都传会话内审计。未传入的旧调用保留原 fallback，兼容既有测试。`understanding.ts`、`llmUnderstanding.ts`、`agent.ts`、检测、Context/Twin、事件与任务领域实现保持原样。
+
+原 React App **尚未整体改成 AgentRuntime 的宿主**：它复用相同 turn/derive/careTasks 实现，保留 UI 占位消息、照片输入、浏览器存储、授权/通知和设备事件接线。其旧 setter/队列生命周期不等于新 Runtime 的 revision/generation 保证。纯 Runtime 已可独立完成回合，不需要 React caller 手工拼管道；全面 UI 状态迁移仍属后续工作。
+
+旧 `useCareTasks` module-global tasks 已移除；React tasks/audit 改为 hook 实例所有，Runtime tasks/audit 则是每个 session 所有，均不落健康持久化。原 `sharingAudit.ts` 的 legacy 全局 API 暂留供旧调用兼容；不得用于多用户宿主。
+
+验收证据、API、状态时序、行为保留项及明确限制见 [Runtime 验收报告](../validation/ANKANG_RUNTIME_2026-10-01.md)。此前所有 core/可选/可删除候选分类仍是依赖盘点；本轮没有执行任何裁剪。
+
+## 以下为抽取前历史盘点
+
 审计日期：2026-10-01。对象：`ankang/route1-health-agent`，上游 `JerryFreeman333/fdu-hackthon@cbdc8f33a1cf3993b1f49a7b3046ceda1932c39b`；导入提交 `e4e8a9510d519c93c8cae698cad06f18840d563e`。本轮只分析边界，没有删除、修改或重新实现上游代码，没有接 PySide6 bridge。
 
 ## 结论与最小闭包的口径

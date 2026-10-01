@@ -36,6 +36,7 @@ import {
   inferSharingRecipient,
   loadSharingAudit,
   type SharingAuditCandidate,
+  type SharingAuditEntry,
 } from './sharingAudit';
 import { acceptedSelfClaims, hasDeathReport, type StructuredElderInput } from './understanding';
 import { removeCorrectedChatHealthEvents } from './correction';
@@ -43,6 +44,8 @@ import { removeCorrectedChatHealthEvents } from './correction';
 type FamilySubject = Exclude<ElderSubject, 'self' | 'unknown'>;
 
 export interface ElderTurnRequest {
+  /** Explicit session audit; legacy callers retain their single-browser default. */
+  sharingAudit?: SharingAuditEntry[];
   text: string;
   understanding: StructuredElderInput;
   /** 回合开始前的聊天记录（"我刚才说过什么"召回用）。 */
@@ -196,7 +199,10 @@ export async function planElderTurn(request: ElderTurnRequest): Promise<ElderTur
         : /家属|孩子/.test(text)
           ? 'family'
           : undefined;
-    agentText = buildHistoricalSharingAnswer(loadSharingAudit(), recipient ?? inferSharingRecipient(text));
+    agentText = buildHistoricalSharingAnswer(
+      request.sharingAudit ?? loadSharingAudit(),
+      recipient ?? inferSharingRecipient(text),
+    );
   } else if (understanding.recallRequested) {
     agentText = recallSummary(priorChat);
   } else if (understanding.clarificationQuestion) {

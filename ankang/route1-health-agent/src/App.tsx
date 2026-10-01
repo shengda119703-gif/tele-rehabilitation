@@ -9,13 +9,7 @@ import { demoStoredProfile, loadStoredProfile, saveStoredProfile, type StoredPro
 import FirstRunGate from './components/FirstRunGate';
 import OnboardingFlow from './components/OnboardingFlow';
 import { demoHomeSafetyActions } from './data/demoHomeSafetyActions';
-import {
-  legacySnapshotToEvents,
-  materializeHealthData,
-  measurementToEvent,
-  mergeHealthEvents,
-  type HealthEvent,
-} from './pipeline/events';
+import { legacySnapshotToEvents, measurementToEvent, mergeHealthEvents, type HealthEvent } from './pipeline/events';
 import { measurementsToDayRecords } from './data/normalize';
 import { demoDeviceAdapter } from './adapters/DemoDeviceAdapter';
 import { HealthKitDeviceAdapter } from './adapters/HealthKitDeviceAdapter';
@@ -26,8 +20,7 @@ import {
   shouldRefreshHealthKit,
 } from './healthkit/autoSync';
 import { runtimeConfig, runtimeConfigurationErrors } from './config/runtime';
-import { runDetection } from './engine/detect';
-import { buildAgentContext } from './engine/context';
+import { deriveHealthState } from './runtime/derive';
 import { collectFamilyNotifications, collectGatedFindings, collectTodayMinorFindings } from './engine/escalate';
 import { isRecordFromToday, ledgerRecordToNotification } from './engine/notify';
 import { visibleFamilyEvents } from './engine/familyLedger';
@@ -361,7 +354,10 @@ function AppRoot({
     () => ({ ...storedProfile.profile, familySharing }),
     [storedProfile, familySharing],
   );
-  const healthData = useMemo(() => materializeHealthData(events), [events]);
+  const { healthData, findings, agentContext } = useMemo(
+    () => deriveHealthState(activeProfile, events, today),
+    [activeProfile, events, today],
+  );
   const { records, observations, measurements } = healthData;
   const familyRecords = useMemo(
     () => measurementsToDayRecords(measurements.filter((measurement) => measurement.visibility !== 'private')),
@@ -370,11 +366,6 @@ function AppRoot({
   const visibleFamilyFacts = useMemo(
     () => visibleFamilyEvents(familyEvents, effectiveFamilySharing, sharedFamilyEventIds),
     [familyEvents, effectiveFamilySharing, sharedFamilyEventIds],
-  );
-  const findings = useMemo(() => runDetection(events, today), [events, today]);
-  const agentContext = useMemo(
-    () => buildAgentContext(activeProfile, events, today, findings),
-    [activeProfile, events, today, findings],
   );
   const familyNotifs = useMemo(
     () => collectFamilyNotifications(findings, effectiveFamilySharing, sharedFindingIds, today),
