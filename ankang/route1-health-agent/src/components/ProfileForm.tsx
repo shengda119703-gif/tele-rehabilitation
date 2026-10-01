@@ -1,3 +1,4 @@
+import { withLegacyMedications } from '../medication/medications';
 import { useState } from 'react';
 import type { ElderProfile } from '../types';
 import HoldToTalk from './HoldToTalk';
@@ -68,14 +69,9 @@ export default function ProfileForm({ initial, submitLabel, onSubmit, onCancel, 
       return;
     }
     onSubmit({
-      ...initial,
+      ...withLegacyMedications(initial, finalMedications),
       name: trimmedName,
       age: Number.isFinite(age) && age > 0 && age < 150 ? Math.round(age) : 0,
-      medications: finalMedications,
-      medicationRecords: initial.medicationRecords?.map((record) => ({
-        ...record,
-        status: finalMedications.includes(record.name) ? 'active' : 'stopped',
-      })),
       sex,
       conditions: conditions
         .split(/[、，,；;\n]/)

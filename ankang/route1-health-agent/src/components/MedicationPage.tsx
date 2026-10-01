@@ -1,22 +1,9 @@
 import { useState } from 'react';
 import type { ElderProfile, MedicationRecord } from '../types';
 
-export function profileMedicines(profile: ElderProfile): MedicationRecord[] {
-  const saved = profile.medicationRecords ?? [];
-  return [
-    ...saved,
-    ...profile.medications
-      .filter((name) => !saved.some((m) => m.name === name))
-      .map((name, i) => ({
-        id: `legacy-${i}-${name}`,
-        name,
-        dose: '',
-        purpose: '',
-        times: '',
-        status: 'active' as const,
-      })),
-  ];
-}
+import { listMedications, createMedicationDraft } from '../medication/medications';
+import type { MedicationSaveResult } from '../medication/MedicationService';
+
 export default function MedicationPage({
   profile,
   onSave,
@@ -24,31 +11,48 @@ export default function MedicationPage({
   title = '我的药物',
 }: {
   profile: ElderProfile;
-  onSave: (p: ElderProfile) => void;
+  onSave: (record: MedicationRecord) => Promise<MedicationSaveResult>;
   onFind: (name: string) => void;
   title?: string;
 }) {
   const [filter, setFilter] = useState('active');
   const [selected, setSelected] = useState<string | null>(null);
   const [draft, setDraft] = useState<MedicationRecord | null>(null);
-  const meds = profileMedicines(profile);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+  const meds = listMedications(profile);
   const current = meds.find((m) => m.id === selected);
-  function save() {
-    if (!draft?.name.trim()) return;
-    const next = [...meds.filter((m) => m.id !== draft.id), { ...draft, name: draft.name.trim() }];
-    onSave({
-      ...profile,
-      medicationRecords: next,
-      medications: next.filter((m) => m.status === 'active').map((m) => m.name),
-    });
-    setSelected(draft.id);
-    setDraft(null);
+  async function save() {
+    if (!draft || saving) return;
+    setSaving(true);
+    setError('');
+    try {
+      const result = await onSave(draft);
+      if (!result.ok) {
+        setError(`保存失败：${result.error}`);
+        return;
+      }
+      setSelected(draft.id);
+      setDraft(null);
+    } catch (error) {
+      setError(`保存失败：${String(error)}`);
+    } finally {
+      setSaving(false);
+    }
   }
   if (draft)
     return (
       <section className="flow-page">
         <header className="flow-heading">
-          <button onClick={() => setDraft(null)}>取消</button>
+          <button
+            disabled={saving}
+            onClick={() => {
+              setDraft(null);
+              setError('');
+            }}
+          >
+            取消
+          </button>
           <h1>{meds.some((m) => m.id === draft.id) ? '编辑药物' : '添加药物'}</h1>
         </header>
         <form
@@ -86,7 +90,10 @@ export default function MedicationPage({
               <option value="stopped">曾经使用</option>
             </select>
           </label>
-          <button className="btn-primary">保存药物</button>
+          {error && <p role="alert">{error}</p>}
+          <button className="btn-primary" disabled={saving}>
+            保存药物
+          </button>
         </form>
       </section>
     );
@@ -155,12 +162,7 @@ export default function MedicationPage({
       {!meds.some((m) => filter === 'all' || m.status === filter) && (
         <p className="card">这里还没有药物记录，可以按医嘱添加。</p>
       )}
-      <button
-        className="btn-primary flow-wide"
-        onClick={() =>
-          setDraft({ id: crypto.randomUUID(), name: '', dose: '', purpose: '', times: '', status: 'active' })
-        }
-      >
+      <button className="btn-primary flow-wide" onClick={() => setDraft(createMedicationDraft())}>
         ＋ 添加药物
       </button>
     </section>

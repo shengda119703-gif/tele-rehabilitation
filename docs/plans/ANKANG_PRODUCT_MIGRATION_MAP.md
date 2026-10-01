@@ -1,8 +1,14 @@
-# 安康产品功能迁移地图（阶段 4）
+# 安康产品功能迁移地图（阶段 4；阶段 5A 状态更新）
 
 盘点日期：2026-10-01。分支 `codex/rehab-agent-stage1`；开始时本地和远端均为 `04b726cc865f7fd2387bc092d37d20a4562ca208`，远端 main 为 `2ebc388d4160d647456487007670d89f02f80914`。
 
-**本轮只有本文档变更。** 不修改生产代码，不抽离模块，不改变 Runtime/bridge，不裁剪 React、Route 2、iOS 或 demo，不接评估/训练/反馈，不 merge main。本表是未来迁移建议，不是已实现的 PySide6 产品。
+**阶段 4 当时只有本文档变更。** 不修改生产代码，不抽离模块，不改变 Runtime/bridge，不裁剪 React、Route 2、iOS 或 demo，不接评估/训练/反馈，不 merge main。本表是未来迁移建议，不是已实现的 PySide6 产品。
+
+## 阶段 5A 更新（2026-10-01）
+
+基线 `d405135c46c1c8da9c113df5f537fd8381ba3eac`。A08 的药物增改、停用/恢复、双字段兼容已迁到无 React 的 `src/medication/`，`src/profile/ProfilePersistence.ts` 定义 ownerId / personal-demo / 存储回执边界。MedicationPage 和 ProfileForm 调用同一领域规则；browser adapter 继续使用原本地 profile key。A09 的每日任务、漏服语义原样保留，本阶段未增加提醒或产品整合。
+
+下文未明确更新的功能证据与建议仍是阶段 4 的历史盘点；不代表已经抽离。阶段 5A 实测及边界见 [阶段 5A 验收](../validation/ANKANG_STAGE5A_MEDICATION.md)。未增加 Python 药物接口、PySide6 页面或家庭/同步服务。
 
 ## 结论与证据口径
 
@@ -61,8 +67,8 @@ HealthArchivePage.save → 组件内 IndexedDB files.put
 | A05 医疗文件附件 | 六类资料、上传、编辑、图片预览、原文件下载 | HealthArchivePage | database/save、scope 过滤、文件事务均在 TSX 中 | 独立 IndexedDB `ankang-health-attachments/files`；File；demo/personal + owner 名称 scope | A 明确 | 健康档案 / 附件与历史 | 高 | 真正本地功能；不是云端档案；同名 owner 不能作为未来可靠用户 ID；E04 |
 | A06 健康指标与变化检测 | 指标卡、趋势图、异常等级、行动建议 | ElderHealthPage / ProfileView / Sparkline | pipeline/events、normalize、baseline、detect、detection/** | events → measurements/records/findings（派生） | A 明确 | 健康档案指标区 / 状态摘要 | 中 | 原安全规则需保留；不等于康复动作评估算法；E02/E05 |
 | A07 Person Twin | 部分状态通过提示/调试面板可见，驱动追问 | DeviceDebugPanel；助手上下文 | personTwin、context、questions；runtime/derive | 活动/行动/睡眠/夜间变化、症状、functionalProfile；完整/公开两套 | A 明确 | 后台状态能力，可给摘要卡供数 | 低至中 | 数据不足为 unknown；非 3D 人体模型；E05 |
-| A08 药物档案 | 添加/编辑、剂量、用途、时间、在用/曾用、查药位置入口 | MedicationPage；家属授权后使用同组件 | profileMedicines/save 在 TSX；medicationCare 是另一旧视图模型；App.handleProfileSave | medicationRecords + 兼容 medications 字符串；profileStore | A 明确 | 药物页 | 中 | times 是文本，不是定时任务；停用不是删除；查药位置可单独暂缓；E06 |
-| A09 今日服药/漏服药 | 今日药物任务、完成/未确认、聊天漏服回执 | ElderHome 任务；旧家属用药摘要分支 | runtime/careTasks；tasks；elderTurn.medicationMissed；medicationCare | session CareTask；每天去重；药物档案 | A 明确 | 药物页今日确认 / 待办 | 中 | 已完成同日任务不复活；无按每粒药/每次剂量的闹钟或后台提醒；E06/E07 |
+| A08 药物档案 | 添加/编辑、剂量、用途、时间、在用/曾用、查药位置入口 | MedicationPage；家属授权后使用同组件 | medication/medications + MedicationService；profile/ProfilePersistence；medicationCare 旧视图模型保留 | medicationRecords + 兼容 medications 字符串；profileStore | A 明确 | 药物页 | 中 | 5A 已抽离业务并由 React 复用；ownerId 稳定、保存有回执；尚未接 Python/PySide6。times 仍是文本；查药位置暂缓；E06 |
+| A09 今日服药/漏服药 | 今日药物任务、完成/未确认、聊天漏服回执 | ElderHome 任务；旧家属用药摘要分支 | runtime/careTasks；tasks；elderTurn.medicationMissed；medicationCare | session CareTask；每天去重；药物档案 | A 明确 | 药物页今日确认 / 待办 | 中 | 5A 保留原实现并通过相关回归，未抽新任务服务、未加提醒。已完成同日任务不复活；E06/E07 |
 | A10 Care Tasks | 安全确认、联系家属、观察任务、状态操作 | ElderHome / FamilyDashboard | runtime/careTasks + engine/tasks；App.handleTaskStatus | hook 实例或 Runtime session；finding 来源 ID | A 明确 | 待办区 | 低至中 | 非康复训练计划；未做持久化任务历史；家属可见任务需过披露门禁；E07 |
 | A11 家属/老人/医生联系与 SOS | 联系电话、120、求助入口、可选微信求助 | SafetyActions / App SOS / FamilyDashboard | App.contactElder/contactDoctor/handleNotifyFamilyUrgent | ElderProfile 电话字段；webhook 配置与结果 | A 明确 | 家庭页 / 求助入口 | 中 | tel: 交给设备处理，桌面不能承诺已拨通；独立 elderPhone 不混用 familyPhone；E08 |
 | A12 家属绑定 | 邀请码、等待/成功/失败、重新生成、解绑 | ElderSettingsPage、FamilyDashboard | useFamilyBinding、familyLinkHandshake；App transport 接线 | FamilyLink、issuedInviteCode、remoteConsent；localStorage | A 明确 | 家庭页 / 绑定关系 | 高 | demo 级邀请码握手，非账号/实名体系；绑定不等于长期共享；E09 |
@@ -117,7 +123,7 @@ HealthArchivePage.save → 组件内 IndexedDB files.put
 
 | 模块 | 当前性质 | 真正混入/保留的业务责任 | 阶段 5 以后要抽什么 |
 | --- | --- | --- | --- |
-| [MedicationPage](../../ankang/route1-health-agent/src/components/MedicationPage.tsx) | UI + 业务混合 | profileMedicines 合并旧字符串与结构化药物；save 更新 medicationRecords 和 active medications；增改/停用 | 保留 ID 的列表归一化、药物更新命令与结果；UI 只编辑草稿；查物回调独立可选 |
+| [MedicationPage](../../ankang/route1-health-agent/src/components/MedicationPage.tsx) | 5A 已改为表单/显示/调用服务 | medications.ts 统一归一化与双字段更新；MedicationService 通过 port 保存并返回结果 | 仍保留选中/筛选/草稿/错误 UI 与原查物回调；不接 Python/PySide6 |
 | [FamilyDashboard](../../ankang/route1-health-agent/src/components/FamilyDashboard.tsx) | UI + 业务混合 | 不同 view 的授权/绑定门禁、家属 finding/task 投影、周日期/均值/范围、台账索引、webhook 设置/测试动作 | 按用途生成家属视图模型与命令；统计、权限、渠道设置移出 TSX；不要直接返回完整本人 snapshot |
 | [HealthArchivePage](../../ankang/route1-health-agent/src/components/HealthArchivePage.tsx) | UI + 存储/业务混合 | 附件 schema、DB 建表/查询/事务、scope、合成/实存合并、编辑、跨 tab 更新 | 文件元数据/二进制存储 port、可靠 owner ID、上传/编辑/读取结果；URL/File/input 留在平台 adapter |
 | [useFamilyBinding](../../ankang/route1-health-agent/src/hooks/useFamilyBinding.ts) | hook + 核心业务混合 | 生成/消费邀请码、pending→active、grant/revoke、一次性 ID、remote consent 采纳、持久化和解绑 | 会话内家庭关系/授权状态机、命令、存储/transport/clock ports；toast 留 UI |
@@ -186,7 +192,7 @@ flowchart TD
 
 可较独立复用：现有 Runtime、pipeline/detection/context/personTwin；`medicationCare` 的保守解析与授权视图；`notify` 的台账/确认；familyDisclosure/familyLedger；report 的领域计算。它们仍需合适输入/存储/授权，不能仅因无 React import 就视为完整服务。
 
-可独立抽取但尚未抽：MedicationPage 的药物更新逻辑；HealthArchivePage 的附件服务；FamilyDashboard 的周统计/家庭投影。跨设备 transport、真实图片识别、HealthKit 都应作为可选 adapter，不能成为药物档案或基本聊天的启动依赖。
+5A 已抽取 MedicationPage / ProfileForm 的药物更新逻辑。可独立抽取但尚未抽：HealthArchivePage 的附件服务；FamilyDashboard 的周统计/家庭投影。跨设备 transport、真实图片识别、HealthKit 都应作为可选 adapter，不能成为药物档案或基本聊天的启动依赖。
 
 暂缓整体：Home Twin/Route2/高斯泼溅、iOS HealthKit 真机链和额外专用硬件。保留其源码、demo 与现有测试作为参照，本表不授权删除。
 

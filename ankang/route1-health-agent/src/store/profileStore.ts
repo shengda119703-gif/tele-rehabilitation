@@ -1,16 +1,12 @@
 import type { ElderProfile, UserRole } from '../types';
 import { profile as demoProfile } from '../data/demo';
 
-/** 数据模式：demo = 预置演示档案与合成数据；personal = 用户本人建档，从空白开始（评审 P1-2）。 */
-export type DataMode = 'demo' | 'personal';
+import type { StoredProfile, ProfileSaveResult, ProfilePersistence } from '../profile/ProfilePersistence';
+import { normalizeMedicationProfile } from '../medication/medications';
+export type { StoredProfile, DataMode } from '../profile/ProfilePersistence';
+type LegacyStoredProfile = Omit<StoredProfile, 'ownerId'> & { ownerId?: string };
 
-export interface StoredProfile {
-  version: 1;
-  profile: ElderProfile;
-  dataMode: DataMode;
-  /** 首次由用户明确选择；缺失表示旧档案，必须重新询问。 */
-  preferredRole?: UserRole;
-}
+class ProfileStorageError extends Error {}
 
 const KEY = 'ankang-route1-profile-v1';
 
@@ -21,7 +17,7 @@ function isValidProfile(value: unknown): value is ElderProfile {
 }
 
 /** 结构校验：旧版本/坏数据一律视为没有档案（与 PersistentHealthRecordStore 的容错一致）。 */
-export function isValidStoredProfile(value: unknown): value is StoredProfile {
+export function isValidStoredProfile(value: unknown): value is LegacyStoredProfile {
   if (typeof value !== 'object' || value === null) return false;
   const candidate = value as Partial<StoredProfile>;
   return candidate.version === 1 && isValidProfile(candidate.profile);
@@ -33,17 +29,18 @@ export function loadStoredProfile(): StoredProfile | null {
   try {
     const raw = window.localStorage.getItem(KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as StoredProfile;
+    const parsed = JSON.parse(raw) as LegacyStoredProfile;
     if (!isValidStoredProfile(parsed)) return null;
-    return {
+    const stored: StoredProfile = {
       version: 1,
+      ownerId: parsed.ownerId?.trim() || crypto.randomUUID(),
       profile:
         parsed.dataMode !== 'personal' && !parsed.profile.medicationRecords
           ? {
               ...parsed.profile,
               sex: parsed.profile.sex ?? 'female',
               medicationRecords: demoProfile.medicationRecords?.filter(
-                (record) => record.status === 'stopped' || parsed.profile.medications.includes(record.name),
+                (record) => record.status === 'stopped' || (parsed.profile.medications ?? []).includes(record.name),
               ),
             }
           : parsed.profile,
@@ -51,17 +48,25 @@ export function loadStoredProfile(): StoredProfile | null {
       preferredRole:
         parsed.preferredRole === 'elder' || parsed.preferredRole === 'family' ? parsed.preferredRole : undefined,
     };
-  } catch {
+    stored.profile = normalizeMedicationProfile(stored.profile);
+    if (!parsed.ownerId || JSON.stringify(stored.profile) !== JSON.stringify(parsed.profile)) {
+      const result = saveStoredProfile(stored);
+      if (!result.ok) throw new ProfileStorageError(result.error);
+    }
+    return stored;
+  } catch (error) {
+    if (error instanceof ProfileStorageError) throw error;
     return null;
   }
 }
 
-export function saveStoredProfile(stored: StoredProfile): void {
-  if (typeof window === 'undefined') return;
+export function saveStoredProfile(stored: StoredProfile): ProfileSaveResult {
+  if (typeof window === 'undefined') return { ok: false, error: 'Browser storage unavailable' };
   try {
     window.localStorage.setItem(KEY, JSON.stringify(stored));
-  } catch {
-    // 隐私模式/配额满：档案留在内存，本次会话可用。
+    return { ok: true, storage: 'persistent' };
+  } catch (error) {
+    return { ok: false, error: error instanceof Error ? error.message : String(error) };
   }
 }
 
@@ -76,7 +81,13 @@ export function clearStoredProfile(): void {
 
 /** 演示档案（王秀兰奶奶）作为可选的首启入口，不再是唯一身份。 */
 export function demoStoredProfile(preferredRole?: UserRole): StoredProfile {
-  return { version: 1, profile: { ...demoProfile }, dataMode: 'demo', preferredRole };
+  return {
+    version: 1,
+    ownerId: crypto.randomUUID(),
+    profile: normalizeMedicationProfile({ ...demoProfile }),
+    dataMode: 'demo',
+    preferredRole,
+  };
 }
 
 /** 建档起点：除了 familySharing 默认 ask，其余字段留白/中性默认。 */
@@ -96,3 +107,18 @@ export function emptyProfile(): ElderProfile {
     familySharing: 'ask',
   };
 }
+
+/** Compatibility adapter: one active local profile, not an account database. */
+export const browserProfilePersistence: ProfilePersistence = {
+  async loadProfile(ownerId) {
+    const stored = loadStoredProfile();
+    return stored?.ownerId === ownerId ? stored : null;
+  },
+  async saveProfile(ownerId, stored) {
+    const current = loadStoredProfile();
+    if (!current || current.ownerId !== ownerId || stored.ownerId !== ownerId || current.dataMode !== stored.dataMode) {
+      return { ok: false, error: 'Profile owner or mode mismatch' };
+    }
+    return saveStoredProfile(stored);
+  },
+};

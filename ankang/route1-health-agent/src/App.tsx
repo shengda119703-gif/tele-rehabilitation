@@ -1,3 +1,6 @@
+import { MedicationService } from './medication/MedicationService';
+import { browserProfilePersistence } from './store/profileStore';
+import { normalizeMedicationProfile, withMedicationRecords } from './medication/medications';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ChatMessage, ElderProfile, FamilyHealthEvent, FamilyLink, FamilySharing, UserRole } from './types';
 import type { HomeSafetyAction } from './adapters/HomeSafetyActionAdapter';
@@ -174,10 +177,17 @@ export default function App() {
   const [onboarding, setOnboarding] = useState(false);
   const [pendingRole, setPendingRole] = useState<UserRole>('elder');
   const [profileReady, setProfileReady] = useState(false);
+  const [profileLoadError, setProfileLoadError] = useState('');
   useEffect(() => {
     let cancelled = false;
     void (async () => {
-      const stored = loadStoredProfile();
+      let stored: StoredProfile | null;
+      try {
+        stored = loadStoredProfile();
+      } catch (error) {
+        if (!cancelled) setProfileLoadError(`档案升级保存失败：${String(error)}`);
+        return;
+      }
       // HealthKit 模式不读取可能由 Demo 模式遗留的本地健康快照。
       const restored = runtimeConfig.deviceMode === 'healthkit' ? false : await healthRecordStore.hydrate();
       if (cancelled) return;
@@ -194,6 +204,13 @@ export default function App() {
     };
   }, []);
 
+  if (profileLoadError)
+    return (
+      <div className="app">
+        <p role="alert">{profileLoadError}。原档案未覆盖，请恢复本机存储后重试。</p>
+        <button onClick={() => window.location.reload()}>重新打开</button>
+      </div>
+    );
   if (!profileReady || !initial) {
     return (
       <div className="app">
@@ -216,10 +233,19 @@ export default function App() {
             // 快照，并把本次会话的初始快照同步归零，防止内存态继续回流。
             // 双 tab 注意：另一个 demo tab 之后的写回仍会重新落盘（已知边界，
             // 见交接文档 §4.4），这里的清空扼住的是"建档即继承"的主泄漏路径。
+            const next: StoredProfile = {
+              version: 1,
+              ownerId: crypto.randomUUID(),
+              profile: normalizeMedicationProfile(profile),
+              dataMode: 'personal',
+              preferredRole: pendingRole,
+            };
+            if (!saveStoredProfile(next).ok) {
+              window.alert('档案保存失败，请检查本机存储后重试。');
+              return;
+            }
             healthRecordStore.clear();
             setInitial(emptySnapshot());
-            const next: StoredProfile = { version: 1, profile, dataMode: 'personal', preferredRole: pendingRole };
-            saveStoredProfile(next);
             setStoredProfile(next);
             writeTabRole(pendingRole);
           }}
@@ -230,7 +256,10 @@ export default function App() {
       <FirstRunGate
         onDemo={(selectedRole) => {
           const next = demoStoredProfile(selectedRole);
-          saveStoredProfile(next);
+          if (!saveStoredProfile(next).ok) {
+            window.alert('档案保存失败，请检查本机存储后重试。');
+            return;
+          }
           setStoredProfile(next);
           writeTabRole(selectedRole);
           if (initial.events.length === 0 && initial.chat.length === 0) setInitial(buildSeedSnapshot());
@@ -574,13 +603,13 @@ function AppRoot({
           return;
         const next = {
           ...storedProfile,
-          profile: {
-            ...storedProfile.profile,
-            medicationRecords: medicines,
-            medications: medicines.filter((m) => m.status === 'active').map((m) => m.name),
-          },
+          profile: withMedicationRecords(storedProfile.profile, medicines),
         };
-        saveStoredProfile(next);
+        const saved = saveStoredProfile(next);
+        if (!saved.ok) {
+          showToast(`保存失败：${saved.error}`);
+          return;
+        }
         onProfileChange(next);
         showToast('已收到家人的用药档案更新。');
       }
@@ -935,7 +964,22 @@ function AppRoot({
   // 编辑档案（评审 P0-4）：保存到本机档案存储并即时生效。
   function handleProfileSave(nextProfile: ElderProfile) {
     const next: StoredProfile = { ...storedProfile, profile: nextProfile };
-    saveStoredProfile(next);
+    const result = saveStoredProfile(next);
+    if (!result.ok) {
+      showToast(`保存失败：${result.error}`);
+      return;
+    }
+    applySavedProfile(next);
+  }
+
+  async function handleMedicationSave(record: import('./types').MedicationRecord) {
+    const result = await new MedicationService(browserProfilePersistence).save(storedProfile.ownerId, record);
+    if (result.ok) applySavedProfile(result.stored);
+    return result;
+  }
+
+  function applySavedProfile(next: StoredProfile) {
+    const nextProfile = next.profile;
     onProfileChange(next);
     if (
       nextProfile.medicationRecords !== storedProfile.profile.medicationRecords &&
@@ -1084,7 +1128,7 @@ function AppRoot({
           {elderScreen === 'medications' && (
             <MedicationPage
               profile={activeProfile}
-              onSave={handleProfileSave}
+              onSave={handleMedicationSave}
               onFind={(name) => void openHomeTwinLookup(name)}
             />
           )}
@@ -1255,7 +1299,7 @@ function AppRoot({
               <MedicationPage
                 title="父母的药物档案"
                 profile={activeProfile}
-                onSave={handleProfileSave}
+                onSave={handleMedicationSave}
                 onFind={(name) => void openHomeTwinLookup(name)}
               />
             }
