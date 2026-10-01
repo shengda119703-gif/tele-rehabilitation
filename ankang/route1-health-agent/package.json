@@ -9,6 +9,7 @@
     "typecheck": "tsc -b",
     "test": "tsc -p tsconfig.test.json && node -e \"const fs=require('node:fs');fs.mkdirSync('.test-build/tests/corpus',{recursive:true});fs.writeFileSync('.test-build/package.json',JSON.stringify({type:'commonjs'}));fs.copyFileSync('tests/corpus/utterances.json','.test-build/tests/corpus/utterances.json')\" && node --test .test-build/tests/*.test.js",
     "build": "npm run typecheck && vite build",
+    "build:bridge": "node scripts/build-agent-bridge.cjs",
     "format": "npx --yes prettier@3.5.3 --write .",
     "format:check": "npx --yes prettier@3.5.3 --check .",
     "security:check": "node scripts/security-check.mjs",
