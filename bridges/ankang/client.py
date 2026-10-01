@@ -5,6 +5,7 @@ import os
 import queue
 import threading
 import subprocess
+import time
 from datetime import datetime
 from pathlib import Path
 
@@ -44,26 +45,42 @@ class AgentBridge:
         if self._process.poll() is None:
             self._process.kill()
 
-    def _request(self, operation: str, **fields) -> dict:
+    def _request(self, operation: str, tool_handler=None, **fields) -> dict:
         self._process.stdin.write(json.dumps({"operation": operation, **fields}, ensure_ascii=False) + "\n")
         self._process.stdin.flush()
-        try:
-            line = self._lines.get(timeout=self.timeout)
-        except queue.Empty:
-            self.terminate()
-            raise TimeoutError("Ankang bridge response timed out; session ended") from None
-        if not line:
-            raise RuntimeError("Node bridge exited without a response; see stderr")
-        response = json.loads(line)
-        if not response["ok"]:
-            raise RuntimeError(response["error"])
-        return response["result"]
+        deadline = time.monotonic() + self.timeout
+        while True:
+            try:
+                line = self._lines.get(timeout=max(0, deadline - time.monotonic()))
+            except queue.Empty:
+                self.terminate()
+                raise TimeoutError("Ankang bridge response timed out; session ended") from None
+            if not line:
+                raise RuntimeError("Node bridge exited without a response; see stderr")
+            response = json.loads(line)
+            if 'toolCall' in response:
+                call = response['toolCall']
+                receipt = dict(operation='tool_result', id=call['id'])
+                try:
+                    if not tool_handler or call['sessionId'] != fields.get('sessionId'):
+                        raise ValueError('No read tool capability for this session')
+                    receipt['result'] = tool_handler(call['name'], call['arguments'])
+                except Exception as error:
+                    receipt['error'] = str(error)
+                self._process.stdin.write(json.dumps(receipt, ensure_ascii=False) + '\n')
+                self._process.stdin.flush()
+                continue
+            if not response["ok"]:
+                raise RuntimeError(response["error"])
+            return response["result"]
 
-    def open_session(self, session_id: str, profile: dict) -> dict:
-        return self._request("open", sessionId=session_id, profile=profile, now=datetime.now().astimezone().isoformat())
+    def open_session(self, session_id: str, profile: dict, *, rehab_tools=False) -> dict:
+        return self._request("open", sessionId=session_id, profile=profile, rehabTools=rehab_tools,
+                             now=datetime.now().astimezone().isoformat())
 
-    def process_turn(self, session_id: str, text: str) -> dict:
-        return self._request("process", sessionId=session_id, text=text, now=datetime.now().astimezone().isoformat())
+    def process_turn(self, session_id: str, text: str, *, tool_handler=None) -> dict:
+        return self._request("process", tool_handler=tool_handler, sessionId=session_id, text=text,
+                             now=datetime.now().astimezone().isoformat())
 
     def close_session(self, session_id: str) -> dict:
         return self._request("close", sessionId=session_id)

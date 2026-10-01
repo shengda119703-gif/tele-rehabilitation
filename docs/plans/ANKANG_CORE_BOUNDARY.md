@@ -1,5 +1,11 @@
 # 安康 Agent core 边界盘点
 
+## 康复只读工具接入（2026-10-01，基于 a3ed36b）
+
+Runtime 新增可选 `RehabToolPort`（`src/runtime/rehabTools.ts`），在原 turn queue 内完成模型选择、宿主只读调用和回复。仅有训练计划、最近评估、训练历史/反馈三个工具；事实继续归原 Python 康复系统所有，不写为新的安康 HealthEvent。原理解/检测/Person Twin 领域算法未改。
+
+PySide6 使用已有 bridge 的同一 stdin/stdout 回调，由 Python 固定 participant/source/context 并通过原 Storage 的 SQLite `mode=ro` 读取。模型不能选择 owner 或调用写命令。新增后 Runtime 传递闭包实测 35 个纯 TypeScript 模块，仍没有 React/Home Twin/平台 adapter 依赖。详见[接口与架构](ANKANG_REHAB_READ_TOOLS.md)及[实测与模型配置限制](../validation/ANKANG_REHAB_READ_TOOLS.md)。
+
 ## Runtime 抽取更新（2026-10-01，基于 ef5a767d）
 
 本节描述当前实现；下面原盘点保留为**抽取前的历史审计**，其中“尚无独立运行单元”“本轮源码未改”等只适用于上一次提交。原 25 文件领域闭包继续保留，新增 `src/runtime/` 六个文件，把原运行编排抽成无 React 的 TypeScript API。没有优化理解模型、改变检测规则或裁剪上游。

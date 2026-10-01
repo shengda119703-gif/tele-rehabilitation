@@ -149,7 +149,10 @@ class MainWindow(QMainWindow):
     def _show_assistant(self):
         if self.assistant_dialog is None:
             from .ankang_assistant import AssistantDialog
-            self.assistant_dialog = AssistantDialog(self)
+            from ..rehab_read_tools import RehabReadTools
+            database = self.runtime.data_dir / 'home_rehab.sqlite3'
+            self.assistant_dialog = AssistantDialog(self, scope_provider=self._body_scope_key,
+                read_tools_factory=lambda scope: RehabReadTools(database, scope))
         self.assistant_dialog.set_participant(self.participant_id)
         self.assistant_dialog.show()
         self.assistant_dialog.raise_()

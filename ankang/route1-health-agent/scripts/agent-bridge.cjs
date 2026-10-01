@@ -3,20 +3,40 @@ const readline = require('node:readline');
 console.log = console.error;
 const { AgentRuntime } = require('../.bridge-build/runtime/index.js');
 const runtime = new AgentRuntime();
+const { createRehabModel } = require('./rehab-model.cjs');
+const pending = new Map();
+let sequence = 0;
+const send = (value) => process.stdout.write(JSON.stringify(value) + '\n');
+function readFromPython(sessionId, call) {
+  return new Promise((resolve, reject) => {
+    const id = ++sequence;
+    const timer = setTimeout(() => {
+      pending.delete(id);
+      reject(new Error('Rehab host read timed out'));
+    }, 15000);
+    pending.set(id, { resolve, reject, timer });
+    send({ toolCall: { id, sessionId, ...call } });
+  });
+}
 
 async function main() {
   const input = readline.createInterface({ input: process.stdin, crlfDelay: Infinity });
-  for await (const line of input) {
+  let queue = Promise.resolve();
+  async function handle(request) {
     try {
-      const request = JSON.parse(line);
       let result;
       switch (request.operation) {
         case 'open':
+          const rehabTools = request.rehabTools
+            ? createRehabModel((call) => readFromPython(request.sessionId, call))
+            : undefined;
           result = await runtime.openSession({
             sessionId: request.sessionId,
             profile: request.profile,
             now: new Date(request.now),
+            rehabTools,
           });
+          result.rehabToolsAvailable = Boolean(rehabTools);
           break;
         case 'process':
           result = await runtime.processTurn(request.sessionId, { text: request.text, now: new Date(request.now) });
@@ -28,11 +48,36 @@ async function main() {
         default:
           throw new Error('Expected operation: open, process or close');
       }
-      process.stdout.write(JSON.stringify({ ok: true, result }) + '\n');
+      send({ ok: true, result });
     } catch (error) {
-      process.stdout.write(JSON.stringify({ ok: false, error: String(error) }) + '\n');
+      send({ ok: false, error: String(error) });
     }
   }
+  // Tool replies must be consumed while a serialized Runtime turn is awaiting its host read.
+  input.on('line', (line) => {
+    let request;
+    try {
+      request = JSON.parse(line);
+    } catch {
+      send({ ok: false, error: 'Invalid JSON' });
+      return;
+    }
+    if (request.operation === 'tool_result') {
+      const wait = pending.get(request.id);
+      if (!wait) return;
+      pending.delete(request.id);
+      clearTimeout(wait.timer);
+      if (request.error) wait.reject(new Error(request.error));
+      else wait.resolve(request.result);
+    } else queue = queue.then(() => handle(request));
+  });
+  input.on('close', () => {
+    for (const wait of pending.values()) {
+      clearTimeout(wait.timer);
+      wait.reject(new Error('Python host disconnected'));
+    }
+    pending.clear();
+  });
 }
 
 main().catch((error) => {

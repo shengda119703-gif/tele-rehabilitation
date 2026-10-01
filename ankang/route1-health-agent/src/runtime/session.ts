@@ -8,6 +8,7 @@ import { appendSharingAudit, type SharingAuditEntry } from '../engine/sharingAud
 import { createTurnQueue } from '../engine/turnQueue';
 import { buildInitialTasks } from '../engine/tasks';
 import { prepareTurn, applyTurnPlan } from './turn';
+import { prepareRehabReply, type RehabToolPort } from './rehabTools';
 import { deriveHealthState } from './derive';
 import { changeTaskStatus, ensureMedicationTask, reconcileCareTasks } from './careTasks';
 import type { DeliveryPort, DeliveryReceipt, PersistencePort, PersistenceReceipt, StoredSession } from './ports';
@@ -34,6 +35,7 @@ export interface OpenSessionOptions {
   delivery?: DeliveryPort;
   replyAdapter?: LlmAdapter;
   understandingLlm?: UnderstandingLlmConfig | null;
+  rehabTools?: RehabToolPort;
 }
 export interface TurnInput {
   text: string;
@@ -145,7 +147,7 @@ class Session {
         persisted,
       };
       this.idSeed = Math.max(this.idSeed + 1, captured.now.getTime());
-      const { understanding, plan } = await prepareTurn(
+      let { understanding, plan } = await prepareTurn(
         {
           text: captured.text,
           priorChat: draft.chat,
@@ -164,6 +166,25 @@ class Session {
         this.options.understandingLlm,
       );
       this.check(generation);
+      const privacyIntent = parsePrivacyIntent(captured.text);
+      let rehab: Awaited<ReturnType<typeof prepareRehabReply>> = null;
+      // Keep original safety/correction/sharing paths. Private turns never reach the model or host tool.
+      if (
+        this.options.rehabTools &&
+        privacyIntent === 'none' &&
+        !plan.safetyAction &&
+        !plan.correction &&
+        !plan.medicationMissed &&
+        !plan.eventsToAppend.length &&
+        !plan.familyEventsToAppend.length &&
+        !plan.sharingAuditEntries.length &&
+        !plan.shareFindingIds.length &&
+        !plan.shareFamilyEventIds.length
+      ) {
+        rehab = await prepareRehabReply(this.options.rehabTools, captured.text, () => this.check(generation));
+        this.check(generation);
+        if (rehab) plan = rehab.plan;
+      }
       let broadcastEvents: typeof draft.events = [];
       let shareFindingIds: string[] = [];
       let shareFamilyEventIds: string[] = [];
@@ -254,6 +275,7 @@ class Session {
         persistence: draft.persistence,
         delivery: draft.delivery,
         revision: draft.revision,
+        ...(rehab ? { rehab: { call: rehab.call, data: rehab.data } } : {}),
       });
     });
   }
