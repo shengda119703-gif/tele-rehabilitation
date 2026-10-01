@@ -1,8 +1,9 @@
+import { buildFamilyProjection, effectiveFamilySharing as resolveFamilySharing } from './family/projection';
 import { MedicationService } from './medication/MedicationService';
 import { browserProfilePersistence } from './store/profileStore';
 import { normalizeMedicationProfile, withMedicationRecords } from './medication/medications';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { ChatMessage, ElderProfile, FamilyHealthEvent, FamilyLink, FamilySharing, UserRole } from './types';
+import type { ChatMessage, ElderProfile, FamilyHealthEvent, FamilyLink, UserRole } from './types';
 import type { HomeSafetyAction } from './adapters/HomeSafetyActionAdapter';
 import { METRICS } from './types';
 import { records as seedRecords, seedChat, seedObservations, seedPhotoObservations } from './data/demo';
@@ -13,7 +14,6 @@ import FirstRunGate from './components/FirstRunGate';
 import OnboardingFlow from './components/OnboardingFlow';
 import { demoHomeSafetyActions } from './data/demoHomeSafetyActions';
 import { legacySnapshotToEvents, measurementToEvent, mergeHealthEvents, type HealthEvent } from './pipeline/events';
-import { measurementsToDayRecords } from './data/normalize';
 import { demoDeviceAdapter } from './adapters/DemoDeviceAdapter';
 import { HealthKitDeviceAdapter } from './adapters/HealthKitDeviceAdapter';
 import {
@@ -26,7 +26,6 @@ import { runtimeConfig, runtimeConfigurationErrors } from './config/runtime';
 import { deriveHealthState } from './runtime/derive';
 import { collectFamilyNotifications, collectGatedFindings, collectTodayMinorFindings } from './engine/escalate';
 import { isRecordFromToday, ledgerRecordToNotification } from './engine/notify';
-import { visibleFamilyEvents } from './engine/familyLedger';
 import { PersistentHealthRecordStore } from './store/PersistentHealthRecordStore';
 import { createIdbKeyValueStore } from './store/IdbKeyValueStore';
 import { clearAllLocalData } from './store/clearLocalData';
@@ -329,7 +328,6 @@ function AppRoot({
     const clock = startClockService(setToday);
     return () => clock.stop();
   }, []);
-  const promptedFamilyFindingIdsRef = useRef(new Set<string>());
   const healthKitSyncInFlightRef = useRef(false);
   const healthKitPollInFlightRef = useRef(false);
   const lastAppliedHealthKitRevisionRef = useRef<string>();
@@ -344,9 +342,7 @@ function AppRoot({
     consentUpdatedAt,
     familyLink,
     sharedFindingIds,
-    sharedFamilyEventIds,
     remoteConsent,
-    promptFamilyShare,
     requestFamilyShare,
     keepFamilyPrivate,
     revokeFamilyShare,
@@ -357,7 +353,8 @@ function AppRoot({
     shareFamilyEventIds,
     applyRemoteConsent,
     unbindFamily,
-  } = useFamilyBinding({ showToast, today });
+    service: familyService,
+  } = useFamilyBinding({ ownerId: storedProfile.ownerId, dataMode: storedProfile.dataMode, showToast, today });
 
   // P1（评审安全项）：绑定握手是否已完成。PeerJS 对端在握手完成前是陌生人，
   // 老人端的信号摘要/告警台账不发往 PeerJS；陌生人对端发来的确认/台账一律忽略。
@@ -373,11 +370,7 @@ function AppRoot({
    * 本实例就是权威本身（老人端，或同 tab 切换角色）时，用自己的 familySharing。
    * 之前家属端用自己的 familySharing（恒为 denied）算通知列表 → 永远为空。
    */
-  const effectiveFamilySharing: FamilySharing = remoteConsent
-    ? remoteConsent.sharing === 'granted'
-      ? 'granted'
-      : 'denied'
-    : familySharing;
+  const effectiveFamilySharing = resolveFamilySharing(familyService.readState());
 
   const activeProfile: ElderProfile = useMemo(
     () => ({ ...storedProfile.profile, familySharing }),
@@ -388,14 +381,6 @@ function AppRoot({
     [activeProfile, events, today],
   );
   const { records, observations, measurements } = healthData;
-  const familyRecords = useMemo(
-    () => measurementsToDayRecords(measurements.filter((measurement) => measurement.visibility !== 'private')),
-    [measurements],
-  );
-  const visibleFamilyFacts = useMemo(
-    () => visibleFamilyEvents(familyEvents, effectiveFamilySharing, sharedFamilyEventIds),
-    [familyEvents, effectiveFamilySharing, sharedFamilyEventIds],
-  );
   const familyNotifs = useMemo(
     () => collectFamilyNotifications(findings, effectiveFamilySharing, sharedFindingIds, today),
     [findings, effectiveFamilySharing, sharedFindingIds, today],
@@ -540,10 +525,11 @@ function AppRoot({
         // 授权只属于老人端——本实例是老人端时绝不接受远端授权。
         if (envelope.via === 'peer' && !familyLinkActiveRef.current) return;
         if (role !== 'family') return;
-        const payload = envelope.payload as { sharing?: unknown; updatedAt?: unknown };
+        const payload = envelope.payload as { sharing?: unknown; updatedAt?: unknown; relationshipId?: unknown };
         if ((payload?.sharing !== 'granted' && payload?.sharing !== 'denied') || typeof payload?.updatedAt !== 'string')
           return;
-        applyRemoteConsent({ sharing: payload.sharing, updatedAt: payload.updatedAt });
+        if (typeof payload.relationshipId !== 'string') return;
+        applyRemoteConsent({ sharing: payload.sharing, updatedAt: payload.updatedAt }, payload.relationshipId);
       } else if (envelope.type === 'family.link') {
         // P0-2：绑定握手。只有老人端应答（家属端保持沉默，避免多 tab 时错误的
         // rejected 抢在正确的 accepted 之前到达）；accepted/rejected 的消费方是
@@ -692,18 +678,19 @@ function AppRoot({
   // sentAt 参与去重签名：跨设备对端断线重连（sync.status.mode 变化）后能强制
   // 重发一次最新授权，避免重连的家属端拿着过期授权。
   useEffect(() => {
-    if (demoMode) return;
-    if (!familyLinkActive) return;
+    if (demoMode || role !== 'elder') return;
+    if (!familyLinkActive || !familyLink) return;
     sync.broadcast(
       'family.consent',
       {
         sharing: familySharing === 'granted' ? 'granted' : 'denied',
         updatedAt: consentUpdatedAt,
+        relationshipId: familyLink.id,
         sentAt: new Date().toISOString(),
       },
       { peer: true },
     );
-  }, [demoMode, familyLinkActive, familySharing, consentUpdatedAt, sync, sync.status.mode]);
+  }, [demoMode, role, familyLink, familyLinkActive, familySharing, consentUpdatedAt, sync, sync.status.mode]);
 
   // 家属端可见的信号量取"本 tab 计算"与"老人端广播"的较大值：
   // 同浏览器双 tab 靠 events.append 已能对齐；跨设备时本 tab 没有事件流，
@@ -723,6 +710,7 @@ function AppRoot({
     pendingPhotoError,
     quickInputs,
   } = useElderChat({
+    familyService,
     today,
     dataMode: storedProfile.dataMode,
     familySharing,
@@ -866,17 +854,8 @@ function AppRoot({
   }, [events, familyEvents, chat]);
 
   useEffect(() => {
-    if (familySharing !== 'denied') return;
-    const newFamilyRelevantFindings = findings.filter(
-      (finding) =>
-        finding.familyEligible === true &&
-        (finding.severity === 'alert' || finding.severity === 'urgent') &&
-        !promptedFamilyFindingIdsRef.current.has(finding.id),
-    );
-    if (newFamilyRelevantFindings.length === 0) return;
-    for (const finding of newFamilyRelevantFindings) promptedFamilyFindingIdsRef.current.add(finding.id);
-    promptFamilyShare();
-  }, [familySharing, findings, promptFamilyShare]);
+    familyService.promptForFindings(findings);
+  }, [familyService, findings]);
 
   function selectRole(nextRole: UserRole) {
     if (nextRole === 'elder') setElderScreen('home');
@@ -1059,6 +1038,28 @@ function AppRoot({
     showToast(`正在拨打社区医生：${phone}`);
     window.location.href = `tel:${phone}`;
   }
+
+  const familyState = familyService.readState();
+  // Synthetic demo uses the same projection rules, with its explicit demo relationship.
+  const projectionState = demoMode
+    ? {
+        ...familyState,
+        familySharing: demoSharing ? ('granted' as const) : ('denied' as const),
+        remoteConsent: null,
+        familyLink: {
+          ...demoFamilyLink,
+          ownerId: storedProfile.ownerId,
+          recipient: { id: 'demo-recipient', type: 'son' as const, displayName: demoFamilyLink.displayName },
+        },
+      }
+    : familyState;
+  const familyProjection = buildFamilyProjection(projectionState, {
+    ownerId: storedProfile.ownerId,
+    findings,
+    tasks,
+    familyEvents,
+    measurements,
+  });
 
   const configurationErrors = runtimeConfigurationErrors();
   if (configurationErrors.length > 0) {
@@ -1336,11 +1337,15 @@ function AppRoot({
                 </ElderHealthPage>
               </HealthArchivePage>
             }
-            profile={
-              demoMode
-                ? { ...activeProfile, familySharing: demoSharing ? 'granted' : 'denied' }
-                : { ...activeProfile, familySharing: effectiveFamilySharing }
-            }
+            projection={familyProjection}
+            profile={{
+              name: activeProfile.name,
+              familySharing: familyProjection.canViewSharedDetail ? 'granted' : 'denied',
+              medications: familyProjection.canViewSharedDetail ? activeProfile.medications : [],
+              communityDoctorPhone: familyProjection.canViewSharedDetail
+                ? activeProfile.communityDoctorPhone
+                : undefined,
+            }}
             familyLink={demoMode ? demoFamilyLink : familyLink}
             notifications={
               demoMode
@@ -1351,13 +1356,12 @@ function AppRoot({
             }
             dispatchRecords={dispatchRecords}
             onAcknowledgeDispatch={handleAcknowledge}
-            findings={findings}
-            familyEvents={demoMode ? (demoSharing ? familyEvents : []) : visibleFamilyFacts}
-            tasks={tasks}
+            familyEvents={familyProjection.familyEvents}
+            tasks={familyProjection.tasks}
             homeSafetyActions={homeSafetyActions}
             homeTwinUrl={HOME_TWIN_URL}
             homeTwinConnection={homeTwin.connection}
-            records={familyRecords}
+            records={familyProjection.records}
             today={today}
             onTaskStatus={handleTaskStatus}
             onHomeSafetyActionStatus={handleHomeSafetyActionStatus}

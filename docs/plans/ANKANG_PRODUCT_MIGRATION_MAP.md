@@ -1,4 +1,4 @@
-# 安康产品功能迁移地图（阶段 4；阶段 5A 状态更新）
+# 安康产品功能迁移地图（阶段 4；阶段 5A/5B 状态更新）
 
 盘点日期：2026-10-01。分支 `codex/rehab-agent-stage1`；开始时本地和远端均为 `04b726cc865f7fd2387bc092d37d20a4562ca208`，远端 main 为 `2ebc388d4160d647456487007670d89f02f80914`。
 
@@ -9,6 +9,12 @@
 基线 `d405135c46c1c8da9c113df5f537fd8381ba3eac`。A08 的药物增改、停用/恢复、双字段兼容已迁到无 React 的 `src/medication/`，`src/profile/ProfilePersistence.ts` 定义 ownerId / personal-demo / 存储回执边界。MedicationPage 和 ProfileForm 调用同一领域规则；browser adapter 继续使用原本地 profile key。A09 的每日任务、漏服语义原样保留，本阶段未增加提醒或产品整合。
 
 下文未明确更新的功能证据与建议仍是阶段 4 的历史盘点；不代表已经抽离。阶段 5A 实测及边界见 [阶段 5A 验收](../validation/ANKANG_STAGE5A_MEDICATION.md)。未增加 Python 药物接口、PySide6 页面或家庭/同步服务。
+
+## 阶段 5B 更新（2026-10-01）
+
+基线 `6731287de40b74c36e75cde8106921f2b111cb93`。`src/family/` 已抽出 owner 专属关系/绑定/授权/一次性许可/共享计划记录/家属投影；React hook、App 和 Dashboard 复用，浏览器存储在 `src/store/familyStore.ts`。纯审计规则移到 `engine/sharingAuditRules.ts`，旧导出保留兼容。
+
+A12–A14 的核心边界已抽，A17 的权限投影已抽；A11 本轮仅提供关系与接收者标识，电话/SOS/通知功能未迁。周报聚合、通知台账/派发、附件、全应用健康存储的多用户迁移均不在本轮。旧无 owner 的 family v1 权限不会自动归给当前用户，须重新绑定。详见 [阶段 5B 验收](../validation/ANKANG_STAGE5B_FAMILY_SHARING.md)。后面的原阶段 4 盘点与后续建议按历史阅读，以此更新及表内状态为准。
 
 ## 结论与证据口径
 
@@ -70,13 +76,13 @@ HealthArchivePage.save → 组件内 IndexedDB files.put
 | A08 药物档案 | 添加/编辑、剂量、用途、时间、在用/曾用、查药位置入口 | MedicationPage；家属授权后使用同组件 | medication/medications + MedicationService；profile/ProfilePersistence；medicationCare 旧视图模型保留 | medicationRecords + 兼容 medications 字符串；profileStore | A 明确 | 药物页 | 中 | 5A 已抽离业务并由 React 复用；ownerId 稳定、保存有回执；尚未接 Python/PySide6。times 仍是文本；查药位置暂缓；E06 |
 | A09 今日服药/漏服药 | 今日药物任务、完成/未确认、聊天漏服回执 | ElderHome 任务；旧家属用药摘要分支 | runtime/careTasks；tasks；elderTurn.medicationMissed；medicationCare | session CareTask；每天去重；药物档案 | A 明确 | 药物页今日确认 / 待办 | 中 | 5A 保留原实现并通过相关回归，未抽新任务服务、未加提醒。已完成同日任务不复活；E06/E07 |
 | A10 Care Tasks | 安全确认、联系家属、观察任务、状态操作 | ElderHome / FamilyDashboard | runtime/careTasks + engine/tasks；App.handleTaskStatus | hook 实例或 Runtime session；finding 来源 ID | A 明确 | 待办区 | 低至中 | 非康复训练计划；未做持久化任务历史；家属可见任务需过披露门禁；E07 |
-| A11 家属/老人/医生联系与 SOS | 联系电话、120、求助入口、可选微信求助 | SafetyActions / App SOS / FamilyDashboard | App.contactElder/contactDoctor/handleNotifyFamilyUrgent | ElderProfile 电话字段；webhook 配置与结果 | A 明确 | 家庭页 / 求助入口 | 中 | tel: 交给设备处理，桌面不能承诺已拨通；独立 elderPhone 不混用 familyPhone；E08 |
-| A12 家属绑定 | 邀请码、等待/成功/失败、重新生成、解绑 | ElderSettingsPage、FamilyDashboard | useFamilyBinding、familyLinkHandshake；App transport 接线 | FamilyLink、issuedInviteCode、remoteConsent；localStorage | A 明确 | 家庭页 / 绑定关系 | 高 | demo 级邀请码握手，非账号/实名体系；绑定不等于长期共享；E09 |
-| A13 家庭共享与家人事实 | 长期授权、一次性共享、家人近况、共享历史答复 | 隐私卡、设置、聊天、家属页 | privacy、familyLedger、familyDisclosure、sharingAudit；useFamilyBinding | consent、share ID 集合、familyEvents、session audit | A 明确 | 家庭页 / 共享范围与记录 | 高 | 本人/家人事实分开；共享计划/已送达/已知悉不同；E09/E10 |
-| A14 隐私控制 | 不记录、仅本人、暂停/撤销共享、被挡住状态 | 聊天、设置、家属隐私视图 | privacy、context 外部投影、familyDisclosure、escalate；UI gating | visibility、familyEligible、familySharing、persisted 标记 | A 明确 | 助手 + 家庭/设置 | 高 | private/no_record 不调外部 LLM；现有浏览器同源信任域不是多账号隔离；E10 |
+| A11 家属/老人/医生联系与 SOS | 联系电话、120、求助入口、可选微信求助 | SafetyActions / App SOS / FamilyDashboard | App.contactElder/contactDoctor/handleNotifyFamilyUrgent | ElderProfile 电话字段；webhook 配置与结果 | A 明确 | 家庭页 / 求助入口 | 中 | 5B 仅新增稳定关系/recipient 边界；电话、SOS、微信/通知保持原状，未抽离。tel: 不等于拨通；E08 |
+| A12 家属绑定 | 邀请码、等待/成功/失败、重新生成、解绑 | ElderSettingsPage、FamilyDashboard | family/FamilyService、familyLinkHandshake；hook 为 React adapter；App 原 transport 接线 | ownerId + OwnedFamilyLink、remoteConsent、share IDs；FamilyPersistence；邀请仅 session | A 明确 | 家庭页 / 绑定关系 | 高 | 5B 已抽到 FamilyService + FamilyPersistence；owner/模式隔离，短命邀请不落盘，active 可恢复；旧无 owner 状态须重绑。非实名账号；E09 |
+| A13 家庭共享与家人事实 | 长期授权、一次性共享、家人近况、共享历史答复 | 隐私卡、设置、聊天、家属页 | family/FamilyService + projection；复用 privacy/familyLedger/familyDisclosure/sharingAuditRules | consent、share ID 集合、familyEvents、session audit | A 明确 | 家庭页 / 共享范围与记录 | 高 | 5B 已抽长期授权、限定 ID 的一次性许可、分账投影及 session 共享计划记录；permission/planned 不等于 sent/acknowledged；E09/E10 |
+| A14 隐私控制 | 不记录、仅本人、暂停/撤销共享、被挡住状态 | 聊天、设置、家属隐私视图 | privacy、context 外部投影、familyDisclosure、escalate；UI gating | visibility、familyEligible、familySharing、persisted 标记 | A 明确 | 助手 + 家庭/设置 | 高 | 5B 家属出口统一验证 owner/active/授权/private/no_record；远端授权限定当前关系。原 Agent 隐私语义未改；非全应用多账号隔离；E10 |
 | A15 更正/撤销事实 | “说错了”等修正前次来源事实 | 助手自然语言 | correction、understanding、elderTurn、runtime.applyTurnPlan | sourceMessageId；本人/家庭事件数组 | A 明确 | 助手 / 来源记录 | 低 | 不是任意历史 CRUD/撤销栈；仅更正无新事件的原本人 gate 限制仍在；E11 |
 | A16 通知核心与台账 | 分级、送达状态、未确认数、确认按钮、浏览器/微信渠道 | useNotificationDispatch、FamilyDashboard、SOS | escalate、notify、notifyPersistence；BrowserNotificationChannel/WebhookPushChannel | dispatch records：deliveries 与 new/acknowledged；localStorage | A 明确 | 消息中心 / 家庭通知 | 高 | 核心可迁，具体渠道另适配；Runtime delivery port 尚未接原派发引擎；E12 |
-| A17 家属 Dashboard 业务摘要 | 需介入/被隐私挡住/未有数据、详情、任务、消息 | FamilyDashboard 各 view | dashboardStatus/familyDisclosure/familyLedger；TSX 中聚合与权限分支 | public findings、通知台账、远端摘要、授权状态 | A 明确 | 家庭页摘要，不照搬 Dashboard | 中至高 | 详情最小披露、报告可见指标、档案附件有不同范围，不能共用一条“全公开”开关；E13 |
+| A17 家属 Dashboard 业务摘要 | 需介入/被隐私挡住/未有数据、详情、任务、消息 | FamilyDashboard 各 view | dashboardStatus/familyDisclosure/familyLedger；TSX 中聚合与权限分支 | public findings、通知台账、远端摘要、授权状态 | A 明确 | 家庭页摘要，不照搬 Dashboard | 中至高 | 5B 已抽最小披露投影，React 消费过滤后数据；周报聚合、状态呈现及旧通知/附件编排仍待后续，未称全部抽完；E13 |
 | A18 本地档案生命周期 | personal/demo 分开、刷新恢复、清空重来 | 首启、App hydrate、设置清空 | profileStore、PersistentHealthRecordStore/IdbKV、clearLocalData；App 删除附件库后 reload | 多个库/键，不是单一数据库 | A 明确 | 现有用户/档案管理 + 数据设置 | 高 | 迁的是生命周期与隔离语义，不复制 localStorage 键作为身份系统；E03/E04 |
 | B01 报告/历史趋势 | 指标趋势、家属按周浏览均值/范围/异常 | ProfileView/Sparkline；FamilyDashboard report | 当前周统计在 TSX；engine/report.buildWeeklyReport 是另一路已测函数 | records/observations/findings/tasks；weekOffset | B 很可能有用 | 健康档案 / 历史报告 | 中 | ReportView 当前未被 App 挂载；不可混称同一报告实现；E14 |
 | B02 图片健康信息识别 | 选照片 → 识别预览 → 确认/取消 → 入库 | useElderChat、ElderHealthPage、档案 onRecognize | parserSelector、ImageHealthParser、Real/HttpVisionProvider、imageNormalizer | pendingPhoto 在 hook；确认后 measurements/labs → HealthEvent | B 很可能有用 | 档案导入 / 助手附件 | 中 | 有真实 HTTP 接口实现，服务另配；无服务走 demo，personal 明确拒绝 demo 数值；E15 |

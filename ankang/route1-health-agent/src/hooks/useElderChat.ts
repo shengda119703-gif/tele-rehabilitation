@@ -11,7 +11,7 @@ import type { DemoImageKind } from '../adapters/DemoImageHealthParser';
 import { createHttpLlmAdapter, generateAgentReply, msg, QUICK_INPUTS, ruleBasedAdapter } from '../engine/agent';
 import { prepareTurn, applyTurnPlan, settlePendingReply } from '../runtime/turn';
 import { parsePrivacyIntent } from '../engine/privacy';
-import { appendSharingAudit, type SharingAuditEntry } from '../engine/sharingAudit';
+import type { FamilyService } from '../family/FamilyService';
 import { createTurnQueue, type TurnQueue } from '../engine/turnQueue';
 import { appConfig } from '../config/appConfig';
 import type { DataMode } from '../store/profileStore';
@@ -26,6 +26,7 @@ const llmAdapter = appConfig.agentLlmEndpoint
   : ruleBasedAdapter;
 
 interface UseElderChatOptions {
+  familyService: FamilyService;
   /** 注入的"今天"（评审 P1-4）：来自 App 的时钟服务，跨午夜后新回合归到新的一天。 */
   today: string;
   /** 数据模式（P0 门控）：personal 模式下没有真实视觉服务时拒绝演示识别入库。 */
@@ -59,6 +60,7 @@ function localIsoTimestamp(): string {
 }
 
 export function useElderChat({
+  familyService,
   today,
   dataMode,
   familySharing,
@@ -75,7 +77,6 @@ export function useElderChat({
   onShareFamilyEventIds,
   onBroadcastEvents,
 }: UseElderChatOptions) {
-  const auditRef = useRef<SharingAuditEntry[]>([]);
   const turnQueueRef = useRef<TurnQueue | null>(null);
   if (!turnQueueRef.current) turnQueueRef.current = createTurnQueue();
 
@@ -119,7 +120,8 @@ export function useElderChat({
     const { plan } = await prepareTurn(
       {
         text,
-        sharingAudit: auditRef.current,
+        // Planning records are not proof of delivery; do not feed them to legacy delivered-history wording.
+        sharingAudit: [],
         priorChat,
         findings,
         events,
@@ -138,7 +140,7 @@ export function useElderChat({
     applyTurnPlan(plan, {
       updateFamily: setFamilyEvents,
       recordAudit: (entries) => {
-        auditRef.current = appendSharingAudit(auditRef.current, entries);
+        familyService.appendSharingRecords(entries, parsePrivacyIntent(text));
       },
       shareFamily: onShareFamilyEventIds,
       updateEvents: setEvents,

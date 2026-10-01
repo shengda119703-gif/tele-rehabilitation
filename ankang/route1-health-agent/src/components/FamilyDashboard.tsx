@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import type { CareTask, DayRecord, ElderProfile, FamilyHealthEvent, FamilyLink, Finding } from '../types';
+import type { CareTask, DayRecord, ElderProfile, FamilyHealthEvent, FamilyLink } from '../types';
 import type { FamilyNotification } from '../engine/escalate';
 import type { FamilyNotificationRecord } from '../engine/notify';
 import { describeDeliveries } from '../engine/notify';
@@ -7,7 +7,7 @@ import type { HomeSafetyAction } from '../adapters/HomeSafetyActionAdapter';
 import { METRICS, SYMPTOM_LABELS, type MetricKey } from '../types';
 import { familyStatusLabel, familySubjectLabel } from '../engine/familyLedger';
 import { severityBadge } from '../engine/escalate';
-import { familyVisibleFindings, familyVisibleTasksForSharing } from '../engine/familyDisclosure';
+import type { FamilyProjection } from '../family/projection';
 import { buildMedicationCareView } from '../engine/medicationCare';
 import { familyStatus, currentFamilyNotifications } from '../engine/dashboardStatus';
 import {
@@ -35,7 +35,8 @@ interface FamilyDashboardProps {
   demoMode?: boolean;
   medicationPage?: ReactNode;
   archivePage?: ReactNode;
-  profile: ElderProfile;
+  profile: Pick<ElderProfile, 'name' | 'familySharing' | 'medications' | 'communityDoctorPhone'>;
+  projection: FamilyProjection;
   familyLink: FamilyLink | null;
   notifications: FamilyNotification[];
   dispatchRecords: FamilyNotificationRecord[];
@@ -52,7 +53,6 @@ interface FamilyDashboardProps {
   gatedAlertCount: number;
   /** 今日 info/watch 级发现数量（评审 P1）：不触发家属通知，但同样禁止绿色"总体正常" */
   todayMinorFindingCount: number;
-  findings: Finding[];
   familyEvents: FamilyHealthEvent[];
   tasks: CareTask[];
   homeSafetyActions: HomeSafetyAction[];
@@ -161,13 +161,10 @@ export default function FamilyDashboard(props: FamilyDashboardProps) {
   const [webhookCustomUrl, setWebhookCustomUrl] = useState(initialWebhook?.customUrl ?? '');
   const [webhookStatus, setWebhookStatus] = useState<string | null>(null);
   const webhookConfigured = Boolean(loadWebhookConfig());
-  const canViewSharedDetail = props.profile.familySharing === 'granted';
-  const familyFindings = canViewSharedDetail ? familyVisibleFindings(props.findings) : [];
+  const canViewSharedDetail = props.projection.canViewSharedDetail;
+  const familyFindings = props.projection.findings;
   const recentFamilyEvents = props.familyEvents.slice(-5).reverse();
-  const activeTasks = familyVisibleTasksForSharing(props.tasks, props.findings, props.profile.familySharing).slice(
-    0,
-    3,
-  );
+  const activeTasks = props.projection.tasks.slice(0, 3);
   const openHomeActions = canViewSharedDetail
     ? props.homeSafetyActions.filter((action) => action.status !== 'resolved').slice(0, 3)
     : [];
