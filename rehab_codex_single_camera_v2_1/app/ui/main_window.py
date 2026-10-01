@@ -79,6 +79,7 @@ class MainWindow(QMainWindow):
         self.participant_id = self.setup['plan']['participant_id']
         self.participant_records = {self.participant_id: legacy_participant(self.participant_id)}
         self.participant_dialog = None
+        self.assistant_dialog = None
         self._participant_to_activate = None
         self.body_profile = None
         self._summarize_after_save = None
@@ -144,6 +145,15 @@ class MainWindow(QMainWindow):
 
     def _build(self):
         build_workspace(self)
+
+    def _show_assistant(self):
+        if self.assistant_dialog is None:
+            from .ankang_assistant import AssistantDialog
+            self.assistant_dialog = AssistantDialog(self)
+        self.assistant_dialog.set_participant(self.participant_id)
+        self.assistant_dialog.show()
+        self.assistant_dialog.raise_()
+        self.assistant_dialog.input.setFocus()
 
     def _show_silver(self, *, refresh=True):
         if self.silver_dialog is None:
@@ -896,6 +906,8 @@ class MainWindow(QMainWindow):
             return
         self._invalidate()
         self.participant_id = name
+        if self.assistant_dialog:
+            self.assistant_dialog.set_participant(name)
         self.participant.setText(name)
         self._refresh_participant_controls()
         self.setup['plan'] = default_plan(self.exercise.currentData())
@@ -2673,6 +2685,8 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         if self._allow_close:
+            if self.assistant_dialog:
+                self.assistant_dialog.shutdown()
             self._close_distance_coach()
             if self.camera_test_dialog:
                 self.camera_test_dialog.finish_close()
