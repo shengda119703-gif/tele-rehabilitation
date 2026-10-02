@@ -5,11 +5,22 @@
     "moduleResolution": "Node",
     "strict": true,
     "skipLibCheck": true,
-    "lib": ["ES2022", "DOM"],
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
     "types": [],
     "rootDir": "src",
     "outDir": ".bridge-build",
     "noEmitOnError": true
   },
-  "files": ["src/runtime/index.ts", "src/product/ProductService.ts", "src/adapters/HttpVisionProvider.ts"]
+  "files": [
+    "src/runtime/index.ts",
+    "src/product/ProductService.ts",
+    "src/adapters/HttpVisionProvider.ts",
+    "src/adapters/BrowserVoiceAdapter.ts",
+    "src/sync/BrowserSyncAdapter.ts",
+    "src/adapters/FamilyNotificationDelivery.ts",
+    "src/adapters/DemoDeviceAdapter.ts"
+  ]
 }

@@ -1,6 +1,6 @@
 import type { DeliverFn, DeliveryOutcome } from '../engine/notify';
 import { sendBrowserPush } from './BrowserNotificationChannel';
-import { loadWebhookConfig, sendWebhookPush } from './WebhookPushChannel';
+import { loadWebhookConfig, sendWebhookPush, type WebhookPushConfig } from './WebhookPushChannel';
 /** Existing adapters report sent on constructor/HTTP acceptance; neither is a recipient delivery receipt. */
 function accepted(outcome: DeliveryOutcome): DeliveryOutcome {
   return outcome.status === 'sent'
@@ -19,3 +19,8 @@ export const browserFamilyDelivery: DeliverFn = async (notification) => {
     );
   return outcomes;
 };
+
+/** Host-owned configuration; reuse transport, with no second notification policy. */
+export function webhookFamilyDelivery(config: WebhookPushConfig): DeliverFn {
+  return async notification => [accepted(await sendWebhookPush(config, {title:notification.finding.title, body:notification.message}))];
+}

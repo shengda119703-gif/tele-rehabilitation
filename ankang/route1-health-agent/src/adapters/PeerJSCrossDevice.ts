@@ -13,7 +13,9 @@
  */
 import type Peer from 'peerjs';
 import type { DataConnection } from 'peerjs';
-import { appConfig } from '../config/appConfig';
+import { DEFAULT_ICE_SERVERS, type SignalingOptions } from './signalingConfig';
+export interface PeerConfig { signalingRaw?: string | null; signaling: SignalingOptions | null; iceServers: RTCIceServer[] }
+const defaultConfig: PeerConfig = {signaling:null, iceServers:DEFAULT_ICE_SERVERS};
 
 /** 只声明本适配器实际用到的 PeerJS 选项，避免与版本类型耦合。 */
 interface PeerClientOptions {
@@ -44,8 +46,8 @@ function loadPeerConstructor(): Promise<PeerConstructor> {
  * - VITE_PEER_ICE_SERVERS → 完全自定义 ICE（如加 TURN）；
  * - 默认 Google + 腾讯公共 STUN 并列，任一可达即可。
  */
-function peerOptions(): PeerClientOptions | null {
-  const { signalingRaw, signaling, iceServers } = appConfig.peer;
+function peerOptions(config: PeerConfig): PeerClientOptions | null {
+  const { signalingRaw, signaling, iceServers } = config;
   if (signalingRaw && !signaling) {
     console.warn('[peerjs] VITE_PEER_SIGNALING_URL 无法解析，回退官方公共信令');
   }
@@ -110,9 +112,9 @@ function emitTo(handlers: Array<(s: PeerStatus) => void>, status: PeerStatus) {
  * 老人端：以 inviteCode 作为 peer ID 起一个 peer，等待家属端连进来。
  * 信令失败 / 超时会上报 status.mode='failed'，由 UI 决定是否回退到 BroadcastChannel。
  */
-export async function hostAsPeer(inviteCode: string, openTimeoutMs = DEFAULT_OPEN_TIMEOUT_MS): Promise<HostHandle> {
+export async function hostAsPeer(inviteCode: string, openTimeoutMs = DEFAULT_OPEN_TIMEOUT_MS, config = defaultConfig): Promise<HostHandle> {
   const PeerCtor = await loadPeerConstructor();
-  const options = peerOptions();
+  const options = peerOptions(config);
   const peerId = peerIdForInviteCode(inviteCode);
   return new Promise((resolve, reject) => {
     let peer: Peer | null = null;
@@ -219,9 +221,10 @@ export async function hostAsPeer(inviteCode: string, openTimeoutMs = DEFAULT_OPE
 export async function connectToPeer(
   inviteCode: string,
   connectTimeoutMs = DEFAULT_CONNECT_TIMEOUT_MS,
+  config = defaultConfig,
 ): Promise<GuestHandle> {
   const PeerCtor = await loadPeerConstructor();
-  const options = peerOptions();
+  const options = peerOptions(config);
   return new Promise((resolve, reject) => {
     let peer: Peer | null = null;
     const messageHandlers: Array<(message: PeerMessage) => void> = [];

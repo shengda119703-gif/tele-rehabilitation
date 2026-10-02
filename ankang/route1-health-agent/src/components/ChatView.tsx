@@ -1,3 +1,5 @@
+import { mainSpeechText } from '../product/ExtensionPorts';
+import { speakText } from '../adapters/BrowserVoiceAdapter';
 import { useEffect, useRef, useState } from 'react';
 import type { ChatMessage, ElderProfile } from '../types';
 import { understandingLlmConfigured } from '../config/appConfig';
@@ -13,33 +15,6 @@ interface ChatViewProps {
   profile: ElderProfile;
   /** 决定开场说明：demo 提示设备数据是模拟的；personal 说明数据只在本机。 */
   deviceNote?: DataMode;
-}
-
-type SpeechRecognitionResultEvent = Event & {
-  results: {
-    length: number;
-    [index: number]: { [index: number]: { transcript: string } };
-  };
-};
-type SpeechRecognitionErrorEvent = Event & { error?: string };
-type SpeechRecognitionLike = {
-  onstart?: (() => void) | null;
-  lang: string;
-  interimResults: boolean;
-  continuous: boolean;
-  onresult: ((event: SpeechRecognitionResultEvent) => void) | null;
-  onend: (() => void) | null;
-  onerror: ((event: SpeechRecognitionErrorEvent) => void) | null;
-  start: () => void;
-  stop: () => void;
-};
-type SpeechRecognitionConstructor = new () => SpeechRecognitionLike;
-
-declare global {
-  interface Window {
-    SpeechRecognition?: SpeechRecognitionConstructor;
-    webkitSpeechRecognition?: SpeechRecognitionConstructor;
-  }
 }
 
 export default function ChatView({ id, chat, onSend, quickInputs, profile, deviceNote = 'demo' }: ChatViewProps) {
@@ -70,18 +45,11 @@ export default function ChatView({ id, chat, onSend, quickInputs, profile, devic
   }
 
   function speak(textToRead: string) {
-    if (!('speechSynthesis' in window)) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(textToRead.replace(/\n/g, '。'));
-    utterance.lang = 'zh-CN';
-    utterance.rate = 0.9;
-    window.speechSynthesis.speak(utterance);
+    speakText(textToRead);
   }
 
   // TTS 只读主气泡（评审 P1-5）：记录回执与隐私行是小字辅助信息，不必念给老人听。
-  function mainSpeechText(m: ChatMessage): string {
-    return m.blocks?.find((block) => block.kind === 'main')?.text ?? m.text;
-  }
+
 
   return (
     <div id={id} className="chat-view">

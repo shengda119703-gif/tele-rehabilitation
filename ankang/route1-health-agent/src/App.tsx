@@ -1,3 +1,4 @@
+import { appConfig } from './config/appConfig';
 import { scopeKey } from './archive/ArchiveService';
 import { createBrowserArchiveService, clearAllBrowserAttachments } from './store/BrowserAttachmentPort';
 import { readHealthHistory } from './archive/healthHistory';
@@ -439,7 +440,7 @@ function AppRoot({
       subscribe: (handler: (envelope: { type: string; payload: unknown }) => void) =>
         sync.subscribe(handler as Parameters<typeof sync.subscribe>[0]),
       dialPeer: async (code: string) => {
-        const handle = await connectToPeer(code);
+        const handle = await connectToPeer(code, undefined, appConfig.peer);
         return {
           send: (message: unknown) => handle.broadcast(message),
           onMessage: (onData: (message: unknown) => void) => handle.onMessage(onData),

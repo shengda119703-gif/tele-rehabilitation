@@ -1,3 +1,4 @@
+import { appConfig } from '../config/appConfig';
 /**
  * 跨设备 + 同浏览器协同的统一通道。
  *
@@ -133,8 +134,8 @@ export function useCrossDeviceSync({ role, peerId, endpoint }: UseCrossDeviceSyn
         // 每次重试都在状态里如实显示，重试耗尽才进入 failed。
         const handle =
           endpoint === 'host'
-            ? await hostAsPeer(peerId)
-            : await runWithRetry((_attempt) => connectToPeer(peerId), {
+            ? await hostAsPeer(peerId, undefined, appConfig.peer)
+            : await runWithRetry((_attempt) => connectToPeer(peerId, undefined, appConfig.peer), {
                 attempts: GUEST_CONNECT_ATTEMPTS,
                 delayMs: GUEST_CONNECT_RETRY_DELAY_MS,
                 onRetry: (failedAttempt, error) => {

@@ -23,48 +23,8 @@ import type { UserRole } from '../types';
  *   不破坏现有 useState 主路径。
  */
 
-export type CrossTabMessage =
-  | { type: 'medication.update'; payload: unknown }
-  | { type: 'dispatch.acknowledge'; findingId: string }
-  | { type: 'dispatch.append'; record: unknown }
-  | { type: 'family.link'; link: unknown; sharing: UserRole | null }
-  | { type: 'chat.append'; message: unknown }
-  | { type: 'chat.share'; sharedFindingIds: string[]; sharedFamilyEventIds: string[] }
-  /**
-   * P0-1 配套：健康事件在**同浏览器**各 tab 间保持一致（与 IndexedDB 持久化同一信任域，
-   * 只走 BroadcastChannel，不进 PeerJS——私密事件不能落到另一台设备的存储里）。
-   * payload: { events: HealthEvent[] }
-   */
-  | { type: 'events.append'; events: unknown[] }
-  /**
-   * P0-1 配套：隐私安全的"今日信号量"摘要（只有数量，没有内容），同浏览器与
-   * 跨设备（PeerJS）都发——让另一台设备上的家属端也能如实显示
-   * "有 N 条信号被隐私挡住"，而不是"今天还没有任何健康信号"。
-   * payload: { today: string; signalCount: number; gatedAlertCount: number }
-   */
-  | { type: 'signals.summary'; today: string; signalCount: number; gatedAlertCount: number }
-  /**
-   * 评审 P0-1 修复：老人端的共享授权是全系统唯一的权威状态。授权变化必须广播到
-   * 同浏览器其它 tab 与跨设备（PeerJS）家属端，否则家属端自己的 familySharing
-   * 恒为 'denied'，collectFamilyNotifications 永远算出空数组——家属端永远收不到通知。
-   * 载荷只有授权位与时间戳，没有任何健康内容，走 PeerJS 也安全。
-   * payload: { sharing: 'denied' | 'granted'; updatedAt: string }
-   */
-  | { type: 'family.consent'; sharing: 'denied' | 'granted'; updatedAt: string };
-
-export interface CrossTabMessageEnvelope {
-  tabId: string;
-  fromRole: UserRole | null;
-  type: CrossTabMessage['type'];
-  payload: unknown;
-  at: string;
-  /**
-   * P1（评审安全项）：消息来自哪条通道。BroadcastChannel 与本浏览器 IndexedDB
-   * 同一信任域；PeerJS 对端在绑定握手完成前是"陌生人"。接收端据此执行门控：
-   * 陌生人发来的确认/台账消息一律忽略。
-   */
-  via?: 'local' | 'peer';
-}
+export type { CrossTabMessage, CrossTabMessageEnvelope } from '../sync/protocol';
+import type { CrossTabMessage, CrossTabMessageEnvelope } from '../sync/protocol';
 
 type Handler = (envelope: CrossTabMessageEnvelope) => void;
 

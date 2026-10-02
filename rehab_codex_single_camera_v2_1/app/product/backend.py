@@ -20,6 +20,10 @@ class ProductBackend:
     def submit(self, operation, owner='', payload=None, scope=None, token=None):
         self.jobs.put((operation, owner, payload or {}, dict(scope or {}), token))
 
+    def submit_capture(self, owner, batch, *, visibility='private', scope=None, token=None):
+        from .capture import archive_payload
+        self.submit('media.import', owner, archive_payload(batch, visibility=visibility), scope, token)
+
     def _run(self):
         try:
             root = str(Path(__file__).resolve().parents[3])

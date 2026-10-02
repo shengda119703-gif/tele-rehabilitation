@@ -1,10 +1,15 @@
+import { normalizeSyncEvents } from '../sync/protocol';
+import { mainSpeechText, type ProductExtensions, type SyncPort } from './ExtensionPorts';
+import { MeasurementInputAdapter } from '../adapters/MeasurementInputAdapter';
+import { normalizeMeasurement } from '../adapters/HealthKitDeviceAdapter';
+import { healthKitRevisionKey } from '../healthkit/autoSync';
 /** Desktop product boundary. All domain decisions stay in the existing Ankang services. */
 import { AgentRuntime, type SessionSnapshot } from '../runtime/session';
 import type { PersistencePort, StoredSession } from '../runtime/ports';
 import { scopeKey, type OwnerScope } from '../profile/OwnerScope';
 import type { StoredProfile } from '../profile/ProfilePersistence';
 import { MedicationService } from '../medication/MedicationService';
-import { normalizeMedicationProfile } from '../medication/medications';
+import { normalizeMedicationProfile, withMedicationRecords } from '../medication/medications';
 import { FamilyService } from '../family/FamilyService';
 import { durableFamilyState, type FamilyState } from '../family/FamilyPersistence';
 import { ArchiveService, type AttachmentPort } from '../archive/ArchiveService';
@@ -33,8 +38,9 @@ export const productCapabilities = {
     'local-family-binding', 'sharing', 'family-facts', 'privacy', 'consent', 'correction',
     'archive', 'attachments', 'notification-ledger', 'family-summary', 'reports', 'trends',
     'timeline', 'local-lifecycle', 'image-input', 'image-confirmation'],
-  optional: ['image-recognition-proxy'],
-  retainedDisabled: ['voice', 'cross-device-sync', 'healthkit', 'home-twin', '3dgs', 'special-hardware'],
+  optional: ['image-recognition-proxy', 'voice', 'cross-device-sync', 'healthkit', 'external-notification', 'device-input'],
+  retainedDisabled: ['home-twin', 'route2-spatial-modeling', '3dgs'],
+  specialHardware: 'existing generic device and HealthKit bridges; no independent proprietary driver in upstream',
   video: 'archive-attachment; rehabilitation-camera-and-replay; no Ankang video-health-parser',
 };
 
@@ -46,7 +52,96 @@ export class ProductService {
   private notifications = new Map<string, NotificationService>();
   private pendingImages = new Map<string, ParsedHealthData>();
   constructor(private port: ProductLocalPort, private rehab?: (owner: string) => RehabToolPort | undefined,
-    private vision?: HealthVisionProvider) {}
+    private vision?: HealthVisionProvider, private extensions: ProductExtensions = {}) {}
+  private syncs = new Map<string, {port:SyncPort; inbox:unknown[]; unsubscribe:() => void}>();
+  private sync(owner:string) {
+    if (!this.syncs.has(owner)) {
+      const port = this.extensions.sync?.(owner);
+      if (!port) throw new Error('Sync transport unavailable');
+      const inbox:unknown[] = [];
+      const unsubscribe = port.subscribe(e => {if (inbox.length < 200) inbox.push(e);});
+      this.syncs.set(owner,{port,inbox,unsubscribe});
+    }
+    return this.syncs.get(owner)!;
+  }
+  private async ingest(owner:string, samples:unknown[], source:'device'|'healthkit'|'demo', now:Date) {
+    if (!Array.isArray(samples) || samples.length > 10000) throw new Error('Invalid device batch');
+    if (source === 'demo' && this.scope(owner).dataMode !== 'demo') throw new Error('Demo input requires demo profile');
+    const measurements = samples.map((m,i) => normalizeMeasurement(m,i,source));
+    await this.append(owner, measurements.map(measurementToEvent), now);
+  }
+  private async receiveSync(owner:string, raw:unknown, now:Date) {
+    const {port} = this.sync(owner), scope = this.scope(owner), family = this.family(owner), state = family.readState();
+    const e = raw as {type:string;payload:any;fromRole?:string;tabId?:string;at?:string};
+    if (!e || typeof e.type !== 'string' || !e.payload || typeof e.payload !== 'object') return {applied:false,reason:'invalid-envelope'};
+    let p = e.payload;
+    if (e.type === 'family.link' && port.role === 'elder' && p.kind === 'request' && typeof p.code === 'string' && typeof p.requestId === 'string') {
+      const link = family.confirmLinkRequest(p.code);
+      if (!family.lastSave.ok) throw new Error('Family binding save failed');
+      port.broadcast('family.link', link ? {kind:'accepted', requestId:p.requestId, link, consent:{sharing:state.familySharing === 'granted'?'granted':'denied',updatedAt:state.consentUpdatedAt}} : {kind:'rejected',requestId:p.requestId,reason:'code_mismatch'});
+      return {applied:Boolean(link)};
+    }
+    if (port.via === 'peer' && state.familyLink?.status !== 'active') return {applied:false,reason:'unbound-peer'};
+    if (['events.append','chat.append'].includes(e.type) && port.via === 'peer') return {applied:false,reason:'local-only-data'};
+    if (e.type === 'family.consent') {
+      const consentClock = p.sentAt ?? p.updatedAt;
+      if (port.role !== 'family' || e.fromRole !== 'elder' || p.relationshipId !== state.familyLink?.id || !['granted','denied'].includes(p.sharing) || typeof p.updatedAt !== 'string' || !Number.isFinite(Date.parse(consentClock))) return {applied:false,reason:'invalid-consent'};
+      const old = this.port.read<{relationshipId:string;at:string}>(this.key(owner,'sync-consent'));
+      if (old && old.relationshipId === p.relationshipId && Date.parse(consentClock) <= Date.parse(old.at)) return {applied:false,reason:'stale-consent'};
+      family.applyRemoteConsent(p,p.relationshipId);
+      if (!family.lastSave.ok) throw new Error('Consent save failed');
+      this.port.write(this.key(owner,'sync-consent'),{relationshipId:p.relationshipId,at:consentClock});
+      await this.close(owner); return {applied:true};
+    }
+    if (e.type === 'medication.update' && p.ownerId === undefined) {
+      if (p.mode !== scope.dataMode || p.familyId !== state.familyLink?.inviteCode || p.name !== this.profile(owner).profile.name || state.familyLink?.status !== 'active') return {applied:false,reason:'owner-mismatch'};
+      p = {...p,ownerId:owner,dataMode:scope.dataMode};
+    }
+    if (e.type === 'signals.summary' && e.fromRole === 'elder' && (p.ownerId === undefined || (p.ownerId === owner && p.dataMode === scope.dataMode)) && typeof p.today === 'string' && [p.signalCount,p.gatedAlertCount].every(v => Number.isSafeInteger(v) && v >= 0)) {
+      this.port.write(this.key(owner,'sync-summary'),p);return {applied:true};
+    }
+
+    if (p.ownerId !== owner || p.dataMode !== scope.dataMode) return {applied:false,reason:'owner-mismatch'};
+    if (e.type === 'dispatch.acknowledge' || e.type === 'dispatch.append') {
+      if (p.relationshipId !== state.familyLink?.id) return {applied:false,reason:'relationship-mismatch'};
+      if (typeof p.findingId !== 'string') return {applied:false,reason:'invalid-record'};
+      if (e.type === 'dispatch.append') {
+        if (!Array.isArray(p.deliveries) || !['new','acknowledged'].includes(p.lifecycle) || typeof p.createdAt !== 'string' || typeof p.title !== 'string' || typeof p.message !== 'string' || typeof p.reason !== 'string' || !['alert','urgent'].includes(p.severity) || !['persistent','one_time'].includes(p.shareMode) || !['pending','accepted','sent','delivered','failed','unavailable'].includes(p.phase) || p.deliveries.some((d:any) => !d || !['in_app','browser_push','webhook_push'].includes(d.channel) || !['pending','accepted','sent','delivered','failed','unavailable'].includes(d.status) || typeof d.detail !== 'string' || typeof d.at !== 'string')) return {applied:false,reason:'invalid-record'};
+        this.notification(owner).mergeRecord(p);
+      } else this.notification(owner).acknowledge(p.findingId,now.toISOString());
+      if (!this.notification(owner).lastSave.ok) throw new Error('Notification sync save failed');
+      return {applied:true};
+    }
+    if (e.type === 'medication.update') {
+      if (state.familySharing !== 'granted' || state.familyLink?.status !== 'active' || !Array.isArray(p.medicationRecords)) return {applied:false,reason:'medication-permission'};
+      if (p.medicationRecords.length > 200 || p.medicationRecords.some((r:any) => !r || !['id','name','dose','purpose','times'].every(k => typeof r[k] === 'string') || !r.id || !r.name.trim() || !['active','stopped'].includes(r.status))) return {applied:false,reason:'invalid-medication'};
+      const profile = this.profile(owner);
+      this.port.write('profile:'+owner,{...profile,profile:withMedicationRecords(profile.profile,p.medicationRecords)});
+      await this.close(owner);return {applied:true};
+    }
+    if (e.type === 'chat.append') {
+      const m = p.message;
+      if (!m || typeof m.id !== 'string' || !['elder','agent'].includes(m.role) || typeof m.text !== 'string' || typeof m.time !== 'string' || m.persisted === false || m.pending || ['private','no_record'].includes(parsePrivacyIntent(m.text))) return {applied:false,reason:'invalid-or-private-chat'};
+      if (m.blocks !== undefined && (!Array.isArray(m.blocks) || m.blocks.some((b:any) => !b || !['main','receipt','privacy'].includes(b.kind) || typeof b.text !== 'string'))) return {applied:false,reason:'invalid-chat-blocks'};
+      const snapshot = await this.session(owner,now);
+      if (!snapshot.chat.some(v => v.id === m.id)) {
+        await this.persistence(owner).save('',{revision:snapshot.revision+1,health:{events:snapshot.events,familyEvents:snapshot.familyEvents,chat:[...snapshot.chat.filter(v => v.persisted !== false),m]}});
+        await this.close(owner);
+      }
+      return {applied:true};
+    }
+    if (e.type === 'events.append' && Array.isArray(p.events)) {
+      let valid:HealthEvent[];
+      try {valid=normalizeSyncEvents(p.events,scope.dataMode);} catch {return {applied:false,reason:'invalid-events'};}
+      await this.append(owner,valid,now); return {applied:true};
+    }
+    if (e.type === 'chat.share' && e.fromRole === 'elder' && Array.isArray(p.sharedFindingIds) && Array.isArray(p.sharedFamilyEventIds) && [...p.sharedFindingIds,...p.sharedFamilyEventIds].every(v => typeof v === 'string')) {
+      family.shareFindingIds(p.sharedFindingIds);family.shareFamilyEventIds(p.sharedFamilyEventIds);
+      if (!family.lastSave.ok) throw new Error('Sharing sync save failed');
+      return {applied:true};
+    }
+    return {applied:false,reason:'unsupported-or-private-message'};
+  }
   private profile(owner: string): ProductProfile {
     const value = this.port.read<ProductProfile>('profile:' + owner);
     if (!value || value.ownerId !== owner) throw new Error('请先建立当前用户健康档案');
@@ -176,6 +271,56 @@ export class ProductService {
       return this.snapshot(owner, now);
     }
     this.profile(owner);
+    if (operation === 'extensions.status') return {voice:this.extensions.voice?.status() ?? {available:false,phase:'unavailable'},
+      devices:Object.keys(this.extensions.devices ?? {}), healthkit:Boolean(this.extensions.healthkit),
+      notification:Boolean(this.extensions.delivery), syncSummary:this.port.read(this.key(owner,'sync-summary')), sync:this.syncs.get(owner)?.port.status() ?? {mode:'local-only', detail:'未连接外部通道',peerId:null}, externalAcceptance:'unverified'};
+    if (operation === 'voice.input') {
+      if (!this.extensions.voice) throw new Error('ASR adapter unavailable');
+      const text = await this.extensions.voice.recognize(input);
+      return this.request('chat',owner,{text},now);
+    }
+    if (operation === 'voice.output') {
+      if (!this.extensions.voice) throw new Error('TTS adapter unavailable');
+      const state = await this.session(owner,now), message = state.chat.find(m => m.id === input.id && m.role === 'agent');
+      if (!message) throw new Error('Assistant message not found');
+      await this.extensions.voice.speak(mainSpeechText(message),{language:'zh-CN',rate:0.9});return {accepted:true,delivered:false};
+    }
+    if (operation === 'voice.cancel') {this.extensions.voice?.cancel();return {cancelled:true};}
+    if (operation === 'device.import') {
+      if (input.ownerId !== owner) throw new Error('Device owner mismatch');
+      if (!['device','demo'].includes(input.source)) throw new Error('Invalid device source');
+      const adapter = new MeasurementInputAdapter(input.source,owner,input.measurements);
+      await this.ingest(owner,await adapter.getMeasurements(owner,'0000-01-01','9999-12-31'),input.source,now);
+      return this.snapshot(owner,now);
+    }
+    if (operation === 'device.pull' || operation === 'healthkit.import') {
+      const adapter = operation === 'healthkit.import' ? this.extensions.healthkit : this.extensions.devices?.[input.adapter];
+      if (!adapter) throw new Error('External device adapter unavailable');
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(input.from) || !/^\d{4}-\d{2}-\d{2}$/.test(input.to) || input.from > input.to) throw new Error('Invalid date range');
+      if (!['device','healthkit','demo'].includes(adapter.source)) throw new Error('Invalid device source');
+      await this.ingest(owner,await adapter.getMeasurements(owner,input.from,input.to),adapter.source as 'device'|'healthkit'|'demo',now);
+      if (operation === 'healthkit.import') this.port.write(this.key(owner,'healthkit-revision'),healthKitRevisionKey(this.extensions.healthkit?.lastDiagnostics) ?? null);
+      return this.snapshot(owner,now);
+    }
+    if (operation === 'healthkit.diagnostics') {
+      if (!this.extensions.healthkit) throw new Error('HealthKit external bridge unavailable; permission is requested by iOS companion');
+      return {diagnostics:await this.extensions.healthkit.getDiagnostics(owner), lastAppliedKey:this.port.read(this.key(owner,'healthkit-revision')), permissionPlatform:'iOS companion'};
+    }
+    if (operation === 'sync.status' || operation === 'sync.start') return this.sync(owner).port.status();
+    if (operation === 'sync.poll') {
+      const sync = this.sync(owner), outcomes = [];
+      while(sync.inbox.length) outcomes.push(await this.receiveSync(owner,sync.inbox.shift(),now));
+      return {status:sync.port.status(),outcomes};
+    }
+    if (operation === 'sync.publish') {
+      const sync = this.sync(owner), family = this.family(owner).readState();
+      if (family.familyLink?.status !== 'active') throw new Error('Sync requires verified family relationship');
+      if (sync.port.role !== 'elder') throw new Error('Only owner can publish consent and records');
+      sync.port.broadcast('family.consent',{sharing:family.familySharing === 'granted'?'granted':'denied',updatedAt:now.toISOString(),relationshipId:family.familyLink.id});
+      for (const record of this.notification(owner).read('family')) sync.port.broadcast('dispatch.append',record);
+      return {accepted:true,delivered:false};
+    }
+    if (operation === 'sync.close') {const sync=this.syncs.get(owner);sync?.unsubscribe();sync?.port.close();this.syncs.delete(owner);return {closed:true};}
     if (operation === 'snapshot') return this.snapshot(owner, now);
     if (operation === 'family.summary') return this.snapshot(owner, now, 'family');
     if (operation === 'chat') {
@@ -216,7 +361,7 @@ export class ProductService {
       const family = this.family(owner);
       if (operation === 'family.invite') return {code: family.generateInvite(this.day(now)), family: family.readState()};
       if (operation === 'family.bind') {
-        const result = await family.bindFamily(String(input.code ?? ''));
+        const result = await family.bindFamily(String(input.code ?? ''), this.extensions.sync ? this.sync(owner).port : undefined);
         if (!result.ok) throw new Error('邀请码不匹配；本机绑定需要先生成邀请码');
       } else if (operation === 'family.grant') {const result = family.grant(); if (!result.ok) throw new Error(result.error);}
       else if (operation === 'family.revoke') {const result = family.revoke(); if (!result.ok) throw new Error(result.error);}
@@ -228,6 +373,11 @@ export class ProductService {
         timestamp:now.toISOString(), relationshipId:family.readState().familyLink?.id ?? null,
         sharing:family.readState().familySharing, delivery:'not-sent'}].slice(-200));
       await this.close(owner);
+    } else if (operation === 'media.import') {
+      if (typeof input.batchId !== 'string' || !Number.isFinite(Date.parse(input.capturedAt)) || !Array.isArray(input.files) || input.files.length > 100) throw new Error('Invalid capture batch');
+      if (input.files.some((f:any) => !f || typeof f.mediaType !== 'string' || !/^(image|video)\//.test(f.mediaType) || !Array.isArray(f.bytes) || f.bytes.length > 20*1024*1024 || f.bytes.some((b:any) => !Number.isInteger(b) || b < 0 || b > 255))) throw new Error('Invalid capture media');
+      const archive = new ArchiveService(this.scope(owner), this.port.attachments, () => this.family(owner).readState());
+      for (const file of input.files) await archive.save({...file,bytes:new Uint8Array(file.bytes)},input.capturedAt);
     } else if (operation === 'archive.save') {
       const archive = new ArchiveService(this.scope(owner), this.port.attachments, () => this.family(owner).readState());
       await archive.save({...input, bytes: new Uint8Array(input.bytes)} as Parameters<ArchiveService['save']>[0], now.toISOString());
@@ -249,8 +399,8 @@ export class ProductService {
       this.pendingImages.delete(owner);
     } else if (operation === 'notification.plan') {
       const state = await this.session(owner, now);
-      await this.notification(owner).dispatch(state.findings, async () => [{channel:'browser_push', status:'unavailable',
-        detail:'本机台账已建立，外部家属通知渠道未启用'}], now.toISOString());
+      await this.notification(owner).dispatch(state.findings, this.extensions.delivery ?? (async () => [{channel:'browser_push', status:'unavailable',
+        detail:'本机台账已建立，外部家属通知渠道未启用'}]), now.toISOString());
       if (!this.notification(owner).lastSave.ok) throw new Error('通知台账保存失败');
     } else if (operation === 'notification.ack') {
       if (!this.notification(owner).read('family').some(n => n.findingId === input.id))
@@ -267,8 +417,10 @@ export class ProductService {
     } else if (operation === 'lifecycle.clear') {
       if (input.confirmOwner !== owner) throw new Error('请明确确认当前用户编号');
       await this.close(owner);
+      const sync=this.syncs.get(owner);sync?.unsubscribe();sync?.port.close();this.syncs.delete(owner);
+      this.extensions.voice?.cancel();
       await this.port.attachments.clear(this.scope(owner));
-      for (const kind of ['health','tasks','audit','notifications','family']) this.port.remove(this.key(owner, kind));
+      for (const kind of ['health','tasks','audit','notifications','family','healthkit-revision','sync-consent','sync-summary']) this.port.remove(this.key(owner, kind));
       this.families.get(owner)?.close(); this.families.delete(owner);
       this.notifications.get(owner)?.close(); this.notifications.delete(owner);
       this.pendingImages.delete(owner);

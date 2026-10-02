@@ -1,5 +1,5 @@
 import type { DeviceAdapter } from './DeviceAdapter';
-import { METRICS, type HealthMeasurement, type MetricKey } from '../types';
+import { METRICS, type HealthMeasurement, type MetricKey, type DataSource } from '../types';
 
 const METRIC_KEYS = new Set<MetricKey>(Object.keys(METRICS) as MetricKey[]);
 
@@ -60,15 +60,16 @@ function diagnosticsFrom(value: unknown): HealthKitBridgeDiagnostics | undefined
   };
 }
 
-function normalizeMeasurement(value: unknown, index: number): HealthMeasurement {
+export function normalizeMeasurement(value: unknown, index: number, source: DataSource = 'healthkit'): HealthMeasurement {
+  if (!['demo','device','photo','manual','import','chat','healthkit'].includes(source)) throw new HealthKitAdapterError('Invalid source', 'invalid-response');
   if (!record(value)) throw new HealthKitAdapterError(`第 ${index + 1} 条数据不是对象`, 'invalid-response');
   const metric = value.metric;
   if (typeof metric !== 'string' || !METRIC_KEYS.has(metric as MetricKey)) {
     throw new HealthKitAdapterError(`第 ${index + 1} 条数据包含未知指标`, 'invalid-response');
   }
   const key = metric as MetricKey;
-  if (value.source !== 'healthkit') {
-    throw new HealthKitAdapterError(`第 ${index + 1} 条数据 source 不是 healthkit`, 'invalid-response');
+  if (value.source !== source) {
+    throw new HealthKitAdapterError(`第 ${index + 1} 条数据 source 不是 ${source}`, 'invalid-response');
   }
   if (
     typeof value.id !== 'string' ||
@@ -87,6 +88,7 @@ function normalizeMeasurement(value: unknown, index: number): HealthMeasurement 
       'invalid-response',
     );
   }
+  if (value.confidence !== undefined && (typeof value.confidence !== 'number' || !Number.isFinite(value.confidence) || value.confidence < 0 || value.confidence > 1)) throw new HealthKitAdapterError('Invalid confidence', 'invalid-response');
   const metadata = record(value.metadata)
     ? Object.fromEntries(
         Object.entries(value.metadata).filter((entry): entry is [string, string | number | boolean] =>
@@ -100,7 +102,7 @@ function normalizeMeasurement(value: unknown, index: number): HealthMeasurement 
     metric: key,
     value: value.value,
     unit: METRICS[key].unit,
-    source: 'healthkit',
+    source,
     confidence: typeof value.confidence === 'number' ? value.confidence : 1,
     visibility: value.visibility === 'family_ok' ? 'family_ok' : 'private',
     metadata,
@@ -132,7 +134,7 @@ export class HealthKitDeviceAdapter implements DeviceAdapter {
     if (!Array.isArray(list)) throw new HealthKitAdapterError('响应缺少 measurements 数组', 'invalid-response');
     if (record(payload)) this.lastDiagnostics = diagnosticsFrom(payload.diagnostics);
     const measurements = list
-      .map(normalizeMeasurement)
+      .map((value, index) => normalizeMeasurement(value, index))
       .filter((item) => item.timestamp.slice(0, 10) >= from && item.timestamp.slice(0, 10) <= to);
     if (measurements.length === 0) {
       throw new HealthKitAdapterError(

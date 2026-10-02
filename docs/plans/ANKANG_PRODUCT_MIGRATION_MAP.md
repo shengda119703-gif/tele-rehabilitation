@@ -4,6 +4,10 @@
 
 **阶段 4 当时只有本文档变更。** 不修改生产代码，不抽离模块，不改变 Runtime/bridge，不裁剪 React、Route 2、iOS 或 demo，不接评估/训练/反馈，不 merge main。本表是未来迁移建议，不是已实现的 PySide6 产品。
 
+## 扩展能力正式迁入更新（2026-10-02）
+
+在 Productization Day 基线 e0fc5a4 上，Voice、Cross-device Sync、HealthKit、外部 Notification channels、generic device input 与通用 capture 边界接入正式 ProductService。后面的 B/C 暂缓分类属于历史；现在只有 Home Twin / Route2 空间建模 / 3DGS 及其空间依赖功能继续延后。真实平台接线与验收不等同迁移完成；见 [最终能力表及实际验证](../validation/ANKANG_EXTENSIONS_2026-10-02.md)。
+
 ## 阶段 5A 更新（2026-10-01）
 
 基线 `d405135c46c1c8da9c113df5f537fd8381ba3eac`。A08 的药物增改、停用/恢复、双字段兼容已迁到无 React 的 `src/medication/`，`src/profile/ProfilePersistence.ts` 定义 ownerId / personal-demo / 存储回执边界。MedicationPage 和 ProfileForm 调用同一领域规则；browser adapter 继续使用原本地 profile key。A09 的每日任务、漏服语义原样保留，本阶段未增加提醒或产品整合。

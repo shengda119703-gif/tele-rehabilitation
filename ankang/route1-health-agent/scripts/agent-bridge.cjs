@@ -7,10 +7,15 @@ const { createRehabModel } = require('./rehab-model.cjs');
 const { ProductService } = require('../.bridge-build/product/ProductService.js');
 const { ProductLocalStore } = require('./product-local-store.cjs');
 const { HttpVisionProvider } = require('../.bridge-build/adapters/HttpVisionProvider.js');
+const { HealthKitDeviceAdapter } = require('../.bridge-build/adapters/HealthKitDeviceAdapter.js');
+const { webhookFamilyDelivery } = require('../.bridge-build/adapters/FamilyNotificationDelivery.js');
 const productRoot = process.argv[2];
 const product = productRoot ? new ProductService(new ProductLocalStore(productRoot),
   owner => process.env.ANKANG_PRODUCT_DISABLE_MODEL === '1' ? undefined : createRehabModel(call => readFromPython(owner, call)),
-  process.env.ANKANG_IMAGE_PROXY_URL ? new HttpVisionProvider({endpoint: process.env.ANKANG_IMAGE_PROXY_URL}) : undefined) : null;
+  process.env.ANKANG_IMAGE_PROXY_URL ? new HttpVisionProvider({endpoint: process.env.ANKANG_IMAGE_PROXY_URL}) : undefined, {
+    healthkit: process.env.ANKANG_HEALTHKIT_ENDPOINT ? new HealthKitDeviceAdapter(process.env.ANKANG_HEALTHKIT_ENDPOINT, process.env.HEALTHKIT_BRIDGE_TOKEN || '') : undefined,
+    delivery: process.env.ANKANG_WEBHOOK_TOKEN ? webhookFamilyDelivery({provider:process.env.ANKANG_WEBHOOK_PROVIDER || 'custom',token:process.env.ANKANG_WEBHOOK_TOKEN,customUrl:process.env.ANKANG_WEBHOOK_URL}) : undefined,
+  }) : null;
 const pending = new Map();
 let sequence = 0;
 const send = (value) => process.stdout.write(JSON.stringify(value) + '\n');

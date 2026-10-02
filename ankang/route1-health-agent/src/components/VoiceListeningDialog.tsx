@@ -1,3 +1,4 @@
+import { startListening } from '../adapters/BrowserVoiceAdapter';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import './VoiceListeningDialog.css';
@@ -37,100 +38,10 @@ export default function VoiceListeningDialog({
     };
   }, []);
   useEffect(() => {
-    let disposed = false,
-      failed = false,
-      sent = false,
-      words = '';
-    let watchdog: ReturnType<typeof setTimeout>;
-    setPhase('starting');
-    setTranscript('');
-    setError('');
-    const Ctor = window.SpeechRecognition ?? window.webkitSpeechRecognition;
-    const rec = Ctor ? new Ctor() : null;
-    function fail(message: string) {
-      if (disposed) return;
-      failed = true;
-      clearTimeout(watchdog);
-      setError(message);
-      setPhase('error');
-    }
-    cancel.current = () => {
-      disposed = true;
-      clearTimeout(watchdog);
-      try {
-        rec?.stop();
-      } catch {}
-      callback.current.onClose();
-    };
-    stop.current = () => {
-      if (!rec || failed) return;
-      setPhase('finishing');
-      rec.stop();
-    };
-    if (!rec) {
-      fail('当前浏览器不支持语音识别。请返回输入文字，或使用手机键盘的听写功能。');
-      return () => {
-        disposed = true;
-      };
-    }
-    rec.lang = 'zh-CN';
-    rec.interimResults = true;
-    rec.continuous = false;
-    rec.onstart = () => {
-      if (!disposed && !failed) {
-        clearTimeout(watchdog);
-        setPhase('listening');
-      }
-    };
-    rec.onresult = (event) => {
-      if (disposed || failed) return;
-      words = Array.from({ length: event.results.length }, (_, i) => event.results[i]?.[0]?.transcript ?? '')
-        .join('')
-        .trim();
-      setTranscript(words);
-    };
-    rec.onerror = (event) =>
-      fail(
-        event.error === 'not-allowed' || event.error === 'service-not-allowed'
-          ? '麦克风或语音服务未获授权，请在浏览器设置中允许后重试。'
-          : event.error === 'no-speech'
-            ? '没有听清您的声音，请靠近麦克风再试一次。'
-            : '语音识别暂不可用，请检查网络和麦克风，或返回输入文字。',
-      );
-    rec.onend = () => {
-      clearTimeout(watchdog);
-      if (disposed || failed || sent) return;
-      if (!words) {
-        fail('没有听到可识别的内容，请重试。');
-        return;
-      }
-      sent = true;
-      callback.current.onClose();
-      callback.current.onText(words);
-    };
-    watchdog = setTimeout(() => {
-      fail('语音服务启动超时，请检查麦克风权限或返回输入文字。');
-      try {
-        rec.stop();
-      } catch {}
-    }, 15000);
-    try {
-      window.speechSynthesis?.cancel();
-      rec.start();
-    } catch {
-      fail('无法启动语音服务，请重试或返回输入文字。');
-    }
-    return () => {
-      disposed = true;
-      clearTimeout(watchdog);
-      rec.onend = null;
-      rec.onresult = null;
-      rec.onerror = null;
-      rec.onstart = null;
-      try {
-        rec.stop();
-      } catch {}
-    };
+    const handle = startListening({phase:setPhase, transcript:setTranscript, error:setError,
+      close:() => callback.current.onClose(), text:words => callback.current.onText(words)});
+    stop.current = handle.stop; cancel.current = handle.cancel;
+    return handle.dispose;
   }, [attempt]);
   return createPortal(
     <div
