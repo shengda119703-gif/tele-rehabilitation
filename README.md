@@ -1,10 +1,14 @@
 # 居家康复助手
 
-Windows 本地桌面 Demo，用普通摄像头或本地录像进行动作观察、评估记录和训练提示。当前 **0.18.0 自动康复闭环版** 会读取本人有效评估，自动汇总身体测试情况并生成每轮最多 4 项的基础活动安排，无需逐项填写动作、次数和组数；训练中继续计次、检查已设置目标与可见动作问题，结束后记录感受并推进下一项。现有 53 项动作和左右侧均已接入；明确疾病、术后方案和真人临床有效性仍不作承诺。
+**当前 main：正式 PySide6 居家康复助手产品基线（2026-10-02 Final Integration）。** 首页、AI 康复管家、康复、健康、用药、家庭、历史与报告及通知/设置，使用原康复 Runtime/SQLite 和 Ankang TypeScript ProductService，通过本机 Python/Node bridge 集成。React/demo 保留作迁移参考；Home Twin/Route2 空间建模/3DGS 不进入正式主流程。Voice/sync/HealthKit/设备等外部接口已迁入，真实平台接线与验收仍按各模块限制执行。
+
+合并前[完整审计](docs/validation/FINAL_INTEGRATION_AUDIT_2026-10-02.md)、[逐文件对照表](docs/validation/FINAL_INTEGRATION_FILE_AUDIT_2026-10-02.csv)、[main 启动与集成验收](docs/validation/MAIN_INTEGRATION_ACCEPTANCE_2026-10-02.md)。后续 UI 在 `codex/product-ui-v1`，不直接在 main 进行大量视觉修改。
+
+以下为保留的康复子系统说明。Windows 本地桌面程序，用普通摄像头或本地录像进行动作观察、评估记录和训练提示。当前 **0.18.0 自动康复闭环版** 会读取本人有效评估，自动汇总身体测试情况并生成每轮最多 4 项的基础活动安排，无需逐项填写动作、次数和组数；训练中继续计次、检查已设置目标与可见动作问题，结束后记录感受并推进下一项。现有 53 项动作和左右侧均已接入；明确疾病、术后方案和真人临床有效性仍不作承诺。
 
 **本机启动：双击 [启动康复助手.cmd](启动康复助手.cmd)。** 第一次从 GitHub 获取源码的电脑，需要先准备运行环境，见下方安装命令。启动不会自动开启摄像头。
 
-![身体部位导航首页，未开启相机](docs/images/home.png)
+![原康复子系统身体部位导航参考，非当前正式产品首页](docs/images/home.png)
 
 ## 从哪里开始
 

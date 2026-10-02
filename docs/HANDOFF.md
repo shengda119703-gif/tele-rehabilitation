@@ -1,5 +1,7 @@
 # 当前交接与未完成目标
 
+**2026-10-02 Final Integration：main 已通过正式 PySide6 产品验收。** 原康复核心、Ankang Runtime/业务/扩展端口、Python/Node bridge、DeepSeek adapter、rehab read tools 和当前产品骨架已用 no-ff merge 整体集成，stage1保留全部历史。当前仓库为 shengda119703-gif/tele-rehabilitation。见[合并前审计](validation/FINAL_INTEGRATION_AUDIT_2026-10-02.md)和[main验收](validation/MAIN_INTEGRATION_ACCEPTANCE_2026-10-02.md)。后续只在最新main派生的 codex/product-ui-v1 盘点UI，等待用户视觉要求，不扩后台功能。下方“main未合并”等属于此前阶段历史，不代表当前状态。
+
 分支增补（2026-10-02 扩展能力迁移）：Voice / Cross-device Sync / HealthKit / 外部通知渠道 / 通用设备输入及通用图片视频 capture 已进入 ProductService / ports / adapters，原实现复用、React 与 demo 保留。默认桌面 HealthKit/webhook 可由宿主环境配置；浏览器 ASR/WebRTC 尚需对应宿主接线，外部平台一律接口已迁 / 实机未验收。Home Twin / Route2 空间推理 / 3DGS 继续延后。完整能力表、调用与本轮测试/布局测试限制见 [扩展迁移验收](validation/ANKANG_EXTENSIONS_2026-10-02.md)。不 merge main、不改 UI、不改 Agent 语义。
 
 分支增补（2026-10-02 Productization Day）：正式入口已切换为 PySide6 `ProductWindow`，七项导航整合康复、Ankang 健康业务和家庭照护；领域实现原位复用，通过同一 bridge 的 ProductService 与本机持久化端口调用。模块归属、角色、流程及页面后端见 [产品方案](plans/PRODUCTIZATION_DAY.md)，本轮证据与限制见 [验收](validation/PRODUCTIZATION_DAY_2026-10-02.md)。旧 React 与旧康复窗口源码保留；旧 Python Agent 不恢复；main 未合并。当前本机标准 .venv 尚未建立，验证复用已有隔离 Python 依赖，不将依赖路径写死到产品。以下历史状态不代表本轮分支现状。
