@@ -1,5 +1,7 @@
 # 当前交接与未完成目标
 
+**2026-10-02 UI 能力覆盖审阅：** 按用户提供的 PC 前端产品逻辑文档，在 `codex/product-ui-v1` 补接全局管家、数据参考摘要、附件 / Voice、健康设备 / HealthKit、同步状态及操作、用药历史 / 漏服与记录筛选，恢复原银发健康守护入口。没有视觉重设计、没有新设备驱动 / Agent 语义或训练算法，main 保持已验收基线。完整模块归属、文档超出现有后台的差距及测试见 [UI 覆盖审阅](plans/PRODUCT_UI_COVERAGE_REVIEW_2026-10-02.md)。本分支已进入必要 UI 接线阶段；下方“只盘点 / 等待用户”等属于此前阶段状态。
+
 **2026-10-02 Final Integration：main 已通过正式 PySide6 产品验收。** 原康复核心、Ankang Runtime/业务/扩展端口、Python/Node bridge、DeepSeek adapter、rehab read tools 和当前产品骨架已用 no-ff merge 整体集成，stage1保留全部历史。当前仓库为 shengda119703-gif/tele-rehabilitation。见[合并前审计](validation/FINAL_INTEGRATION_AUDIT_2026-10-02.md)和[main验收](validation/MAIN_INTEGRATION_ACCEPTANCE_2026-10-02.md)。后续只在最新main派生的 codex/product-ui-v1 盘点UI，等待用户视觉要求，不扩后台功能。下方“main未合并”等属于此前阶段历史，不代表当前状态。
 
 分支增补（2026-10-02 扩展能力迁移）：Voice / Cross-device Sync / HealthKit / 外部通知渠道 / 通用设备输入及通用图片视频 capture 已进入 ProductService / ports / adapters，原实现复用、React 与 demo 保留。默认桌面 HealthKit/webhook 可由宿主环境配置；浏览器 ASR/WebRTC 尚需对应宿主接线，外部平台一律接口已迁 / 实机未验收。Home Twin / Route2 空间推理 / 3DGS 继续延后。完整能力表、调用与本轮测试/布局测试限制见 [扩展迁移验收](validation/ANKANG_EXTENSIONS_2026-10-02.md)。不 merge main、不改 UI、不改 Agent 语义。

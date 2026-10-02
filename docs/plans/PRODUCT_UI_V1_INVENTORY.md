@@ -1,5 +1,7 @@
 # Product UI v1：Pre-UI 盘点（2026-10-02）
 
+本文为首次 Pre-UI 基线盘点。随后用户授权审阅产品逻辑并补齐 UI 接口；最新页面与完整能力归属见 [UI 覆盖审阅](PRODUCT_UI_COVERAGE_REVIEW_2026-10-02.md)。下文“仅文档 / 未改代码”描述的是首次盘点时的状态。
+
 UI分支：codex/product-ui-v1，从已推送并通过验收的main `fb113ff36b694e379548ded2b48137fca34581ae` 创建。该分支当前只新增本文档；未改UI代码、assets、theme、后台功能或Agent语义。等待用户下一轮视觉设计要求。
 
 ## 页面结构

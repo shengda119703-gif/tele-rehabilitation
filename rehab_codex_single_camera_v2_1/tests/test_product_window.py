@@ -50,7 +50,7 @@ def desktop(tmp_path,monkeypatch):
     w = ProductWindow(runtime=runtime,backend=ProductBackend(tmp_path))
     w.legacy.busy = 0
     w.show()
-    wait(app,lambda:bool(w.snapshot))
+    wait(app,lambda:bool(w.snapshot) and w.pending==0)
     yield w,app
     w.legacy._allow_close = True
     w.close()
@@ -176,3 +176,90 @@ def test_metric_medication_chat_persistence_and_family_summary(desktop):
             w.navigate(key)
             wait(app,lambda:w.pending==0)
             w.grab().save(str(Path(os.environ['ANKANG_PRODUCT_QA_IMAGE']).with_name('productization-'+key+'.png')))
+
+
+def test_device_file_ui_validates_owner_then_uses_real_health_pipeline(desktop, tmp_path, monkeypatch):
+    import json
+    from PySide6.QtWidgets import QFileDialog, QMessageBox
+    w, app = desktop
+    filename = tmp_path/'measurements.json'
+    payload = dict(ownerId='another-user', source='device', measurements=[dict(
+        id='device-bp-test', metric='systolic', value=118, unit='mmHg',
+        timestamp='2026-10-02T08:00:00Z', source='device', visibility='private')])
+    filename.write_text(json.dumps(payload), encoding='utf-8')
+    monkeypatch.setattr(QFileDialog, 'getOpenFileName', lambda *args: (str(filename), 'JSON'))
+    monkeypatch.setattr(QMessageBox, 'question', lambda *args: QMessageBox.Yes)
+    w.interface_buttons['deviceImport'].click()
+    assert '文件用户须与当前用户一致' in w.notice.text()
+    assert w.metrics.rowCount()==0
+    payload['ownerId']=w.owner
+    filename.write_text(json.dumps(payload), encoding='utf-8')
+    w.interface_buttons['deviceImport'].click()
+    wait(app, lambda:w.pending==0)
+    assert w.metrics.rowCount()==1
+    assert w.metrics.item(0,3).text()=='device'
+    assert w.health_timeline.rowCount()==1
+    with AgentBridge(data_dir=w.legacy.runtime.data_dir/'product') as bridge:
+        stored=bridge.product('snapshot',w.owner)
+        assert stored['state']['events'][0]['measurement']['value']==118
+
+
+def test_optional_ports_show_real_unavailability_and_clear_on_owner_change(desktop):
+    w, app=desktop
+    assert not w.interface_buttons['voiceInput'].isEnabled()
+    assert not w.interface_buttons['healthkitImport'].isEnabled()
+    assert not w.interface_buttons['syncPublish'].isEnabled()
+    assert '未配置外部渠道' in w.notification_status.text()
+    # Rendering injected port status is UI coverage, not physical device acceptance.
+    w._render_extensions(dict(voice=dict(available=True,phase='idle'),devices=['fixture-device'],
+        healthkit=True,notification=True,sync=dict(mode='cross-device',detail='fixture-peer')))
+    assert w.interface_buttons['voiceInput'].isEnabled()
+    assert w.interface_buttons['devicePull'].isEnabled()
+    assert '渠道已配置' in w.notification_status.text()
+    w._render_extensions(dict(syncAvailable=True,sync=dict(mode='local-only',detail='未连接')))
+    assert w.interface_buttons['syncStart'].isEnabled()
+    assert '仅本机' in w.sync_status.text()
+    w._clear_views()
+    assert w.device_adapter.count()==0
+    assert not w.interface_buttons['voiceInput'].isEnabled()
+    assert not w.interface_buttons['syncPublish'].isEnabled()
+
+
+def test_global_assistant_keeps_active_rehab_and_uses_same_private_session(desktop):
+    w, app=desktop
+    w.navigate('rehab')
+    wait(app, lambda:w.pending==0)
+    w.legacy.state='ONLINE'
+    w.interface_buttons['globalAssistant'].click()
+    assert w.active_page=='rehab'
+    assert w.assistant_dock.isVisible()
+    assert '当前页面：康复' in w.assistant_context.text()
+    w.private_turn.setChecked(True)
+    w.dock_input.setPlainText('TEST 私密侧栏对话')
+    w.interface_buttons['dockSend'].click()
+    wait(app, lambda:w.pending==0)
+    assert w.active_page=='rehab'
+    assert 'TEST 私密侧栏对话' in w.dock_chat.toPlainText()
+    with AgentBridge(data_dir=w.legacy.runtime.data_dir/'product') as bridge:
+        stored=bridge.product('snapshot',w.owner)
+        assert not any('TEST 私密侧栏对话' in m['text'] for m in stored['state']['chat'])
+    w.legacy.state='UNSELECTED'
+
+
+def test_medication_history_filter_and_restored_silver_entrance(desktop, monkeypatch):
+    w, app=desktop
+    w._send_chat('今天漏服了药')
+    wait(app, lambda:w.pending==0)
+    assert w.medication_history.rowCount()>0
+    w.history_filter.setCurrentText('用药')
+    assert w.timeline.rowCount()==w.medication_history.rowCount()
+    assert any('漏服' in w.timeline.item(r,2).text() for r in range(w.timeline.rowCount()))
+    w.history_filter.setCurrentText('评估')
+    assert w.timeline.rowCount()==0
+    calls=[]
+    monkeypatch.setattr(w.legacy,'_show_silver',lambda:calls.append(w.legacy.participant_id))
+    w.interface_buttons['silverFamily'].click()
+    wait(app, lambda:w.pending==0)
+    assert calls==[w.owner] and w.active_page=='rehab'
+    w.interface_buttons['settingsDevices'].click()
+    assert w.active_page=='health' and w.health_tabs.tabText(w.health_tabs.currentIndex())=='设备'

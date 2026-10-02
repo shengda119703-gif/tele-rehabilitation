@@ -273,7 +273,7 @@ export class ProductService {
     this.profile(owner);
     if (operation === 'extensions.status') return {voice:this.extensions.voice?.status() ?? {available:false,phase:'unavailable'},
       devices:Object.keys(this.extensions.devices ?? {}), healthkit:Boolean(this.extensions.healthkit),
-      notification:Boolean(this.extensions.delivery), syncSummary:this.port.read(this.key(owner,'sync-summary')), sync:this.syncs.get(owner)?.port.status() ?? {mode:'local-only', detail:'未连接外部通道',peerId:null}, externalAcceptance:'unverified'};
+      notification:Boolean(this.extensions.delivery), syncAvailable:Boolean(this.extensions.sync), syncSummary:this.port.read(this.key(owner,'sync-summary')), sync:this.syncs.get(owner)?.port.status() ?? {mode:'local-only', detail:'未连接外部通道',peerId:null}, externalAcceptance:'unverified'};
     if (operation === 'voice.input') {
       if (!this.extensions.voice) throw new Error('ASR adapter unavailable');
       const text = await this.extensions.voice.recognize(input);

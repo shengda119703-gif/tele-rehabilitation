@@ -21,10 +21,11 @@ from .main_window import MainWindow
 from .product_theme import PRODUCT_STYLE
 from .product_theme import rehab_product_style
 from .product_dialogs import ProductProfileDialog, MedicationDialog
+from .product_interfaces import ProductInterfaces
 
 NAVIGATION = [('home','首页','home'),('assistant','AI 康复管家','assistant'),('rehab','康复','tasks'),
               ('health','健康','health'),('medication','用药','medication'),('family','家庭','profile'),
-              ('history','历史与报告','report')]
+              ('history','记录','report')]
 METRIC_LABELS = {'steps':('活动步数','步'),'walkSpeed':('步行速度','m/s'),'sleepHours':('睡眠时长','小时'),
     'nightWakes':('夜间醒来','次'),'restingHr':('静息心率','bpm'),'weight':('体重','kg'),
     'spo2':('血氧','%'),'systolic':('收缩压','mmHg'),'diastolic':('舒张压','mmHg'),'bloodGlucose':('血糖','mmol/L')}
@@ -81,7 +82,7 @@ def rows(widget, values):
             widget.setItem(r,c,QTableWidgetItem(str(value if value is not None else '未记录')))
 
 
-class ProductWindow(QMainWindow):
+class ProductWindow(ProductInterfaces, QMainWindow):
     def __init__(self, data_dir=None, runtime=None, backend=None):
         super().__init__()
         self.setObjectName('productWindow')
@@ -107,6 +108,9 @@ class ProductWindow(QMainWindow):
         self.pending = 0
         self.pending_export = None
         self.pending_image = None
+        self.interface_buttons = {}
+        self.extension_status = {}
+        self.timeline_entries = []
         self.closing = False
         self._build()
         self.setStyleSheet(PRODUCT_STYLE)
@@ -185,6 +189,8 @@ class ProductWindow(QMainWindow):
         self._history_page()
         self._notifications_page()
         self._settings_page()
+        self._build_global_assistant(main)
+        self._render_extensions({})
         self.navigate('home')
 
     def _page(self,key):
@@ -208,7 +214,7 @@ class ProductWindow(QMainWindow):
         self.today_note = label('健康变化、康复安排和用药核对，都从这里开始。')
         layout.addWidget(self.today_note)
         action = QHBoxLayout()
-        action.addWidget(button('进入今日康复',lambda:self.navigate('rehab'),True))
+        action.addWidget(button('继续今日康复',lambda:self._rehab_action('training'),True))
         action.addWidget(button('记录今天的感受',lambda:self.navigate('assistant')))
         action.addWidget(button('建立 / 编辑资料',self._profile))
         action.addStretch()
@@ -250,6 +256,7 @@ class ProductWindow(QMainWindow):
         item,layout = card('AI 康复管家')
         self.agent_status = label('正在读取助手状态…','productMuted')
         layout.addWidget(self.agent_status)
+        self._voice_controls(layout)
         self.chat = QTextBrowser()
         self.chat.setOpenExternalLinks(False)
         self.chat.setMinimumHeight(380)
@@ -282,6 +289,7 @@ class ProductWindow(QMainWindow):
             row.addWidget(button(title,lambda checked=False,t=target:self._rehab_action(t)))
         row.addStretch()
         row.addWidget(button('个人康复信息',lambda:self.legacy._edit_participant()))
+        self._interface_button(row,'silverRehab','银发健康守护',self._open_silver)
         box.addLayout(row)
         box.addWidget(self.legacy,1)
         self.pages.addWidget(page)
@@ -290,10 +298,11 @@ class ProductWindow(QMainWindow):
     def _health_page(self):
         box = self._page('health')
         tabs = QTabWidget()
+        self.health_tabs = tabs
         box.addWidget(tabs)
         status = QWidget()
         layout = QVBoxLayout(status)
-        twin,area = card('Person Twin · 当前健康状态')
+        twin,area = card('我的健康 · 当前状态')
         self.twin_text = label('等待真实资料；状态不等于临床诊断。')
         area.addWidget(self.twin_text)
         self.concerns = QListWidget()
@@ -318,6 +327,12 @@ class ProductWindow(QMainWindow):
         area.addLayout(row)
         layout.addWidget(metric)
         tabs.addTab(status,'状态与指标')
+        record_page = QWidget()
+        records = QVBoxLayout(record_page)
+        self.health_timeline = table(['时间','事件 / 来源','内容'])
+        records.addWidget(self.health_timeline)
+        records.addWidget(button('记录身体感受 / 更正记录',lambda:self.navigate('assistant')))
+        tabs.addTab(record_page,'健康记录')
         archive = QWidget()
         layout = QVBoxLayout(archive)
         self.attachments = table(['资料名称','分类','类型','保存时间','可见性'])
@@ -335,6 +350,7 @@ class ProductWindow(QMainWindow):
         self.image_confirm.setEnabled(False)
         layout.addWidget(self.image_confirm)
         tabs.addTab(archive,'健康档案与附件')
+        self._devices_tab(tabs)
         box.addStretch()
 
     def _medication_page(self):
@@ -358,6 +374,11 @@ class ProductWindow(QMainWindow):
         row.addWidget(button('记录漏服',lambda:self._send_chat('今天漏服了药')))
         layout.addLayout(row)
         box.addWidget(today)
+        history,layout = card('用药历史与漏服记录')
+        self.medication_history = table(['时间','事件 / 来源','内容'])
+        layout.addWidget(self.medication_history)
+        layout.addWidget(label('当前按每日用药核对任务记录，不提供每粒药或每个服药时点的确认。漏服沿用管家记录。','productMuted'))
+        box.addWidget(history)
         box.addStretch()
 
     def _family_page(self):
@@ -368,6 +389,8 @@ class ProductWindow(QMainWindow):
         self.contact_state = label('尚未填写家庭联系人。')
         layout.addWidget(self.contact_state)
         layout.addWidget(button('编辑联系人',self._profile))
+        self._interface_button(layout,'familySOS','紧急联系人 / 求助信息',self._contacts)
+        self._interface_button(layout,'silverFamily','活动照护 / 家庭回应 / 整改',self._open_silver)
         row = QHBoxLayout()
         row.addWidget(button('生成本机邀请码',lambda:self._request('family.invite')))
         self.invite_input = QLineEdit()
@@ -375,7 +398,7 @@ class ProductWindow(QMainWindow):
         row.addWidget(self.invite_input)
         row.addWidget(button('确认绑定',lambda:self._request('family.bind',{'code':self.invite_input.text()})))
         layout.addLayout(row)
-        self.invite_hint = label('本轮绑定仅在本机建立关系，不启用跨设备同步。','productMuted')
+        self.invite_hint = label('绑定与共享授权分别确认；跨设备连接状态见设置。','productMuted')
         layout.addWidget(self.invite_hint)
         row = QHBoxLayout()
         row.addWidget(button('授权家庭共享',lambda:self._consent(True)))
@@ -398,6 +421,10 @@ class ProductWindow(QMainWindow):
         timeline = QWidget()
         layout = QVBoxLayout(timeline)
         self.timeline = table(['时间','事件 / 来源','内容'])
+        self.history_filter = QComboBox()
+        self.history_filter.addItems(['全部','康复','健康','用药','评估'])
+        self.history_filter.currentTextChanged.connect(self._filter_timeline)
+        layout.addWidget(self.history_filter)
         layout.addWidget(self.timeline)
         layout.addWidget(button('查看原康复历史与评估趋势',lambda:self._rehab_action('history')))
         tabs.addTab(timeline,'统一历史')
@@ -415,7 +442,8 @@ class ProductWindow(QMainWindow):
     def _notifications_page(self):
         box = self._page('notifications')
         item,layout = card('通知与确认')
-        layout.addWidget(label('台账区分计划、渠道结果和本人确认。当前未启用外部家属通知渠道。','productMuted'))
+        self.notification_status = label('正在读取外部通知渠道状态。','productMuted')
+        layout.addWidget(self.notification_status)
         self.notifications = table(['时间','事项','渠道状态','确认状态'])
         layout.addWidget(self.notifications)
         row = QHBoxLayout()
@@ -448,6 +476,9 @@ class ProductWindow(QMainWindow):
         caps,layout = card('当前可用能力')
         self.capabilities_text = label('正在连接产品服务。')
         layout.addWidget(self.capabilities_text)
+        self._sync_controls(layout)
+        self._interface_button(layout,'settingsDevices','设备与 Apple Health',self._open_devices)
+        self._interface_button(layout,'settingsRefresh','刷新接口状态',lambda:self._request('extensions.status'))
         box.addWidget(caps)
         box.addStretch()
 
@@ -458,6 +489,8 @@ class ProductWindow(QMainWindow):
         self.active_page = key
         self.pages.setCurrentWidget(self.page_widgets[key])
         self.title.setText(dict((k,t) for k,t,_ in NAVIGATION).get(key,{'settings':'设置','notifications':'通知'}.get(key,key)))
+        if hasattr(self,'assistant_context'):
+            self.assistant_context.setText('当前页面：'+self.title.text()+'。使用同一用户及已保存数据；页面内容尚不自动传给模型。')
         for name,nav in self.nav_buttons.items():
             nav.setChecked(name == key)
         if self.owner and not self.pending:
@@ -492,6 +525,8 @@ class ProductWindow(QMainWindow):
                 self._message(error)
                 continue
             self.storage_label.setText('已连接本机数据')
+            if self._interface_result(operation,result):
+                continue
             if operation == 'profile.list':
                 self.profiles = result
                 self._refresh_users()
@@ -527,6 +562,8 @@ class ProductWindow(QMainWindow):
                 rows(self.image_candidates,values)
                 self.image_confirm.setEnabled(bool(values))
                 self.image_status.setText('识别结果尚未保存。请对照原图核对后确认；不确定时不要记录。')
+                if self.navigate('health'):
+                    self.health_tabs.setCurrentIndex(2)
                 continue
             if operation == 'archive.read':
                 self._write_file(self.pending_export,bytes(result['bytes']))
@@ -542,8 +579,9 @@ class ProductWindow(QMainWindow):
                     self.family_summary.clear()
                 self.snapshot = snapshot
                 self._render()
-                if operation == 'chat':
+                if operation in ('chat','voice.input'):
                     self.chat_input.clear()
+                    self.dock_input.clear()
                 if operation in ('image.confirm','lifecycle.clear'):
                     self.pending_image = None
                     self.image_confirm.setEnabled(False)
@@ -594,10 +632,14 @@ class ProductWindow(QMainWindow):
     def _clear_views(self):
         # No old-owner data remains visible while the new owner is loading or a read fails.
         for grid in (self.plan_table,self.metrics,self.attachments,self.medications,self.timeline,
-                     self.trends,self.notifications,self.image_candidates):
+                     self.trends,self.notifications,self.image_candidates,self.health_timeline,self.medication_history):
             rows(grid,[])
-        for view in (self.chat,self.family_summary,self.report,self.audit_view):
+        for view in (self.chat,self.family_summary,self.report,self.audit_view,self.dock_chat):
             view.clear()
+        self.dock_input.clear()
+        self.timeline_entries = []
+        self.assistant_reference.setText('正在读取当前用户资料…')
+        self._render_extensions({})
         self.tasks.clear()
         self.concerns.clear()
         for field in (self.greeting,self.today_note,self.home_status,self.twin_text,self.medication_today,
@@ -606,7 +648,7 @@ class ProductWindow(QMainWindow):
         for field in self.tile_values.values():
             field.setText('正在读取…')
         self.invite_input.clear()
-        self.invite_hint.setText('本轮绑定仅在本机建立关系，不启用跨设备同步。')
+        self.invite_hint.setText('绑定与共享授权分别确认；跨设备连接状态见设置。')
 
     def _align_rehab(self,stored):
         owner = stored['ownerId']
@@ -636,15 +678,27 @@ class ProductWindow(QMainWindow):
         {'assessment':self.legacy._show_catalog,'training':self.legacy._show_training_hub,
          'body':self.legacy._show_body,'history':self.legacy._history}[target]()
 
-    def _send_chat(self,text=None):
+    def _send_chat(self,text=None,*,inline=False):
         if self.pending:
             self._message('上一条操作正在完成，请稍候。')
             return
         text = text if isinstance(text,str) else self.chat_input.toPlainText().strip()
         if text:
-            if not self.navigate('assistant'):
+            if not inline and not self.navigate('assistant'):
                 return
             self._request('chat',{'text':('不要记录：'+text) if self.private_turn.isChecked() else text})
+
+    def _open_silver(self):
+        if self.navigate('rehab'):
+            self.legacy._show_silver()
+
+    def _open_devices(self):
+        if self.navigate('health'):
+            self.health_tabs.setCurrentIndex(3)
+
+    def _filter_timeline(self):
+        selected = self.history_filter.currentText()
+        rows(self.timeline,[entry[:3] for entry in self.timeline_entries if selected=='全部' or entry[3]==selected or selected=='康复' and entry[3]=='评估'])
 
     def _task_status(self,status):
         item = self.tasks.currentItem()
@@ -831,6 +885,7 @@ class ProductWindow(QMainWindow):
             color = '#285e52' if message['role']=='agent' else '#657c6d'
             transcript.append(f"<p style='color:{color}'><b>{title}</b> <small>{escape(message['time'])}</small></p><p>{escape(message['text']).replace(chr(10),'<br>')}</p>")
         self.chat.setHtml(''.join(transcript) or '<p>可以说说今天的身体感受，或查询已保存的康复记录。</p>')
+        self.dock_chat.setHtml(self.chat.toHtml())
         self.chat.verticalScrollBar().setValue(self.chat.verticalScrollBar().maximum())
         twin = s['twin']['personTwin']
         self.twin_text.setText(' · '.join(title+'：'+STATUS_LABELS.get(twin[key],twin[key]) for key,title in [('activity','活动'),('mobility','行动'),('sleep','睡眠'),('nightActivity','夜间活动')])+'\n数据更新时间：'+str(s['twin'].get('dataUpdatedAt') or '尚无记录')+'\n这是已有资料的状态摘要，不是诊断。')
@@ -842,7 +897,8 @@ class ProductWindow(QMainWindow):
             latest[m['metric']] = m
         rows(self.metrics,[(METRIC_LABELS[k][0],str(m['value'])+' '+m['unit'],m['timestamp'],m['source']) for k,m in latest.items()])
         rows(self.attachments,[(a['name'],a['category'],a['mediaType'],a['date'],'仅本人' if a['visibility']=='private' else '可共享') for a in s['attachments']])
-        self.image_status.setText('既有识别代理已配置，上传前需要本人许可。' if s['capabilities']['imageRecognitionAvailable'] else '图片 / 视频附件可保存。图片识别代理尚未配置，不会生成假识别结果。')
+        if not self.pending_image:
+            self.image_status.setText('既有识别代理已配置，上传前需要本人许可。' if s['capabilities']['imageRecognitionAvailable'] else '图片 / 视频附件可保存。图片识别代理尚未配置，不会生成假识别结果。')
         rows(self.medications,[(m['name'],m.get('dose') or '未填写',m.get('purpose') or '未填写',m.get('times') or '未填写',STATUS_LABELS[m['status']]) for m in medications])
         self.medication_today.setText('；'.join(STATUS_LABELS[t['status']]+' · '+t['title'].removeprefix('💊 ').strip() for t in med_tasks) or '尚无今日用药核对任务。')
         family = s['family']
@@ -850,11 +906,20 @@ class ProductWindow(QMainWindow):
         self.family_state.setText(('已绑定本机家属' if link and link['status']=='active' else '尚未绑定家属')+' · '+STATUS_LABELS[family['familySharing']])
         self.contact_state.setText('家庭联系人：'+(profile.get('familyContact') or '未填写')+' · '+(profile.get('familyPhone') or '未填写电话'))
         self._render_family_summary({'canViewSharedDetail':s['projection']['canViewSharedDetail'],'projection':s['projection']})
-        timeline = [(e['timestamp'],e['type']+' · '+e['source'],self._event_summary(e)) for e in state['events']]
-        timeline += [(t['dueDate'],'用药核对' if t['kind']=='medication_check' else '照护任务',t['title']+' · '+STATUS_LABELS[t['status']]) for t in s.get('taskHistory',[])]
-        timeline += [(r.get('end_utc',''), '康复训练',r.get('exercise_label','')+' · '+str(r.get('completed','未记录'))) for r in rehab.get('rehab.get_training_history',{}).get('records',[])]
-        timeline += [(r.get('end_utc',''), '康复评估',r.get('exercise_label','')+' · '+str(r.get('status','未记录'))) for r in rehab.get('rehab.get_recent_assessments',{}).get('records',[])]
-        rows(self.timeline,sorted(timeline,key=lambda r:r[0] or '',reverse=True))
+        timeline = [(e['timestamp'],e['type']+' · '+e['source'],self._event_summary(e),
+            '用药' if e['type']=='observation' and 'medicationMissed' in e['observation'].get('tags',[]) else '健康') for e in state['events']]
+        rows(self.health_timeline,[entry[:3] for entry in sorted(timeline,key=lambda r:r[0],reverse=True)])
+        timeline += [(t['dueDate'],'用药核对' if t['kind']=='medication_check' else '照护任务',t['title']+' · '+STATUS_LABELS[t['status']],
+            '用药' if t['kind']=='medication_check' else '健康') for t in s.get('taskHistory',[])]
+        training_records = rehab.get('rehab.get_training_history',{}).get('records',[])
+        assessments = rehab.get('rehab.get_recent_assessments',{}).get('records',[])
+        timeline += [(r.get('end_utc',''),'康复训练',r.get('exercise_label','')+' · '+str(r.get('summary',{}).get('completed','未记录'))+
+            ' · 训练反馈：'+json.dumps(r.get('training_feedback',{}),ensure_ascii=False),'康复') for r in training_records]
+        timeline += [(r.get('end_utc',''),'康复评估',r.get('exercise_label','')+' · '+str(r.get('status','未记录')),'评估') for r in assessments]
+        self.timeline_entries = sorted(timeline,key=lambda r:r[0] or '',reverse=True)
+        self._filter_timeline()
+        rows(self.medication_history,[entry[:3] for entry in self.timeline_entries if entry[3]=='用药'])
+        self.assistant_reference.setText(f"当前数据参考范围：{len(state['events'])} 条健康记录，{len(plans)} 项已保存计划，{len(assessments)} 项最近评估，{len(training_records)} 条最近训练，{len(medications)} 项药物档案，{len(state['tasks'])} 项今日任务。\n康复记录按当前用户 / 来源 / 情境读取；实际调用以管家回复为准。")
         report = s['history']['report']
         content = '<h2>'+escape(report['rangeText'])+'</h2>'
         for section in report['sections']:
@@ -865,7 +930,8 @@ class ProductWindow(QMainWindow):
         audits = s.get('audits',[])
         self.audit_view.setHtml('<h3>共享审计</h3>'+('<p>'+escape(json.dumps(audits,ensure_ascii=False))+'</p>' if audits else '<p>当前没有已记录的共享计划；许可不等于发送或送达。</p>'))
         self.profile_summary.setText(profile['name']+' · '+(str(profile['age'])+' 岁' if profile['age'] else '年龄未填')+'\n当前状态：'+(stored.get('currentState') or '未填写')+'\n康复目标：'+(stored.get('rehabGoal') or '未填写'))
-        self.capabilities_text.setText('康复、健康自报、用药、家庭授权、附件、Person Twin、历史与报告已接本机业务。\n图片识别：'+('代理已配置' if s['capabilities']['imageRecognitionAvailable'] else '待配置代理')+'\n外部家属通知、跨设备、语音与特殊硬件暂未启用。')
+        self.capabilities_text.setText('康复、健康自报、用药、家庭授权、附件、健康状态、记录与报告已接本机业务。\n图片识别：'+('代理已配置' if s['capabilities']['imageRecognitionAvailable'] else '待配置代理')+'\n语音、设备、同步及外部通知状态见下方与健康设备页。')
+        self._request('extensions.status')
 
     def _event_summary(self,event):
         if event['type']=='observation':
