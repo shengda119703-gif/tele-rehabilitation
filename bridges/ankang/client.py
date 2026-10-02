@@ -14,13 +14,13 @@ ROUTE_ROOT = Path(__file__).resolve().parents[2] / "ankang" / "route1-health-age
 
 
 class AgentBridge:
-    def __init__(self, node: str | None = None, timeout: float = 60):
+    def __init__(self, node: str | None = None, timeout: float = 60, data_dir=None):
         node = node or os.environ.get("ANKANG_NODE", "node")
         self.timeout = timeout
         if not (ROUTE_ROOT / ".bridge-build" / "runtime" / "index.js").is_file():
             raise RuntimeError("Build the bridge first: npm run build:bridge (in route1-health-agent)")
         self._process = subprocess.Popen(
-            [node, str(ROUTE_ROOT / "scripts" / "agent-bridge.cjs")],
+            [node, str(ROUTE_ROOT / "scripts" / "agent-bridge.cjs"), *([str(Path(data_dir).resolve())] if data_dir else [])],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             text=True,
@@ -84,6 +84,11 @@ class AgentBridge:
 
     def close_session(self, session_id: str) -> dict:
         return self._request("close", sessionId=session_id)
+
+    def product(self, operation, owner_id='', payload=None, *, tool_handler=None):
+        return self._request('product', tool_handler=tool_handler, sessionId=owner_id,
+                             productOperation=operation, payload=payload or {},
+                             now=datetime.now().astimezone().isoformat())
 
     def __enter__(self):
         return self

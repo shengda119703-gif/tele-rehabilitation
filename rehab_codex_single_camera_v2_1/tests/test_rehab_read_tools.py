@@ -72,7 +72,7 @@ def test_expired_plan_is_not_recommended_as_available(rehab_db):
     assert not plan['next_available'] and '过期' in plan['availability_reason']
 
 
-def test_offscreen_real_bridge_three_questions_and_scope_isolation(rehab_db, monkeypatch, capsys):
+def test_offscreen_real_bridge_three_questions_and_scope_isolation(rehab_db, monkeypatch, capsys, tmp_path):
     from PySide6.QtWidgets import QApplication
     from app.ui.ankang_assistant import AssistantDialog
     from test_ankang_assistant import wait_until
@@ -85,6 +85,7 @@ def test_offscreen_real_bridge_three_questions_and_scope_isolation(rehab_db, mon
 
         def do_POST(self):
             payload = json.loads(self.rfile.read(int(self.headers['Content-Length'])))
+            assert payload['model'] == 'deepseek-flash'
             data = json.loads(payload['messages'][-1]['content'])
             requests.append(data)
             if 'result' not in data:
@@ -110,9 +111,16 @@ def test_offscreen_real_bridge_three_questions_and_scope_isolation(rehab_db, mon
     server = ThreadingHTTPServer(('127.0.0.1', 0), ModelFixture)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
-    monkeypatch.setenv('ANKANG_REHAB_LLM_URL', f'http://127.0.0.1:{server.server_port}/chat/completions')
-    monkeypatch.setenv('ANKANG_REHAB_LLM_MODEL', 'scripted-test-model')
-    monkeypatch.delenv('ANKANG_REHAB_LLM_API_KEY', raising=False)
+    # The production URL/model stay fixed. Only this child-process fetch transport is intercepted.
+    hook = tmp_path/'model-fixture.cjs'
+    hook.write_text('const realFetch = globalThis.fetch;\n'
+        'globalThis.fetch = (url, init) => {\n'
+        'if (String(url) !== "https://api.deepseek.com/chat/completions") throw new Error("Unexpected model URL");\n'
+        f'return realFetch("http://127.0.0.1:{server.server_port}/chat/completions", init);\n'
+        '};\n', encoding='utf-8')
+    monkeypatch.setenv('NODE_OPTIONS', '--require '+json.dumps(str(hook)))
+    monkeypatch.setenv('APPDATA', str(tmp_path/'private-config'))
+    monkeypatch.setenv('ANKANG_REHAB_LLM_API_KEY', 'TEST-protocol-fixture')
     app = QApplication.instance() or QApplication([])
     scope = dict(DEMO_SCOPE)
     dialog = AssistantDialog(scope_provider=lambda: dict(scope),

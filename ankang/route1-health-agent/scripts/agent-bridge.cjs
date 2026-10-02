@@ -4,6 +4,13 @@ console.log = console.error;
 const { AgentRuntime } = require('../.bridge-build/runtime/index.js');
 const runtime = new AgentRuntime();
 const { createRehabModel } = require('./rehab-model.cjs');
+const { ProductService } = require('../.bridge-build/product/ProductService.js');
+const { ProductLocalStore } = require('./product-local-store.cjs');
+const { HttpVisionProvider } = require('../.bridge-build/adapters/HttpVisionProvider.js');
+const productRoot = process.argv[2];
+const product = productRoot ? new ProductService(new ProductLocalStore(productRoot),
+  owner => process.env.ANKANG_PRODUCT_DISABLE_MODEL === '1' ? undefined : createRehabModel(call => readFromPython(owner, call)),
+  process.env.ANKANG_IMAGE_PROXY_URL ? new HttpVisionProvider({endpoint: process.env.ANKANG_IMAGE_PROXY_URL}) : undefined) : null;
 const pending = new Map();
 let sequence = 0;
 const send = (value) => process.stdout.write(JSON.stringify(value) + '\n');
@@ -26,6 +33,10 @@ async function main() {
     try {
       let result;
       switch (request.operation) {
+        case 'product':
+          if (!product) throw new Error('Product data directory is required');
+          result = await product.request(request.productOperation, request.sessionId, request.payload || {}, new Date(request.now));
+          break;
         case 'open':
           const rehabTools = request.rehabTools
             ? createRehabModel((call) => readFromPython(request.sessionId, call))

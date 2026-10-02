@@ -11,5 +11,5 @@
     "outDir": ".bridge-build",
     "noEmitOnError": true
   },
-  "files": ["src/runtime/index.ts"]
+  "files": ["src/runtime/index.ts", "src/product/ProductService.ts", "src/adapters/HttpVisionProvider.ts"]
 }
