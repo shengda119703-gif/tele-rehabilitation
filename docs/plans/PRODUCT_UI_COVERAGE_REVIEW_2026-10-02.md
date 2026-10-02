@@ -1,5 +1,7 @@
 # PC 前端产品逻辑与正式产品接口覆盖审阅
 
+后续完成状态：本文件保留前轮审阅的历史基线与当时差距。新的 [Product UI Functional Completion 验收](../validation/PRODUCT_UI_FUNCTIONAL_COMPLETION_2026-10-02.md) 已补全页面/二级页、详情、反馈、确认和原康复路由，并解决下方第8项 UI 历史截断：Agent 的3/6/5条工具限制不变，正式 UI 读取全量当前用户/来源/情境历史；引导计时记录仍不作为自动评估依据。外部接线、逐剂服药、临时/逐字段权限、日周排期等真实 backend 差距继续明确标记，不伪装完成。
+
 审阅依据：用户提供的 `home_rehab_pc_frontend_product_logic.md`，以及 `shengda119703-gif/tele-rehabilitation` 实际源码。文档是审阅参考；示意数字、医学描述、未来功能及视觉实施顺序不自动成为已实现功能或执行授权。本轮按用户要求检查模块覆盖并补接既有接口，不进行视觉重设计、不扩 Agent 语义、不新增训练算法或数据库结构。
 
 基线：main `fb113ff36b694e379548ded2b48137fca34581ae`、UI 分支 `1904654a3a00157daf395c0905fe0045c46b2e5f`。本轮开始时本地与 GitHub 三个已交付分支一致，工作区 clean。在 `codex/product-ui-v1` 开发，不改 main、不合并 stage1。GitHub 网页缓存仍展示旧康复 README，因此以 `git ls-remote` 确认的远端 SHA 与对应本地源码为准。

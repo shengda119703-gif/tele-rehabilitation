@@ -1,5 +1,4 @@
 """UI entrances to existing ProductService ports; no device or domain implementation here."""
-import json
 from datetime import date, timedelta
 
 from PySide6.QtCore import Qt
@@ -98,7 +97,7 @@ class ProductInterfaces:
         self.device_status.setWordWrap(True)
         area.addWidget(self.device_status)
         row = QHBoxLayout()
-        self._interface_button(row, 'deviceRefresh', '刷新设备与服务状态', lambda: self._request('extensions.status'))
+        self._interface_button(row, 'deviceRefresh', '刷新设备与服务状态', self._refresh_extensions)
         self._interface_button(row, 'deviceImport', '导入设备数据文件', self._import_device_file)
         self._interface_button(row, 'cameraSettings', '康复摄像头 / 回放设置', lambda: self._rehab_action('assessment'))
         area.addLayout(row)
@@ -139,19 +138,8 @@ class ProductInterfaces:
         filename, _ = QFileDialog.getOpenFileName(self, '选择设备导出数据（含 ownerId、source、measurements）', '', 'JSON (*.json)')
         if not filename:
             return
-        from pathlib import Path
-        data = self._read_input_file(Path(filename), 2*1024*1024)
-        if data is None:
-            return
-        try:
-            payload = json.loads(data)
-            if not isinstance(payload, dict) or payload.get('ownerId') != self.owner or payload.get('source') not in ('device','demo') or not isinstance(payload.get('measurements'), list):
-                raise ValueError('文件用户须与当前用户一致，并包含 source 和 measurements。')
-        except (ValueError, UnicodeError) as error:
-            self._message('设备文件未导入：'+str(error))
-            return
-        if QMessageBox.question(self, '导入设备记录', f'向当前用户导入 {len(payload["measurements"])} 条设备记录？软件将验证指标、单位、来源和时间。') == QMessageBox.Yes:
-            self._request('device.import', payload)
+        if QMessageBox.question(self, '导入设备记录', '向当前用户导入所选设备文件？系统会核对文件用户、每条指标、单位、来源和时间；不匹配时不会保存。') == QMessageBox.Yes:
+            self._request('device.import', {'_local_file':filename})
 
     def _sync_controls(self, layout):
         self.sync_status = QLabel('跨设备接口已保留，正在核对连接状态。')
@@ -161,7 +149,7 @@ class ProductInterfaces:
         for key, text, operation in [('syncStart','连接同步','sync.start'),
             ('syncStatus','刷新同步状态','sync.status'),('syncPoll','接收并验证同步数据','sync.poll'),
             ('syncPublish','同步已授权通知与许可','sync.publish'),('syncClose','断开同步','sync.close')]:
-            self._interface_button(row, key, text, lambda checked=False, op=operation: self._request(op))
+            self._interface_button(row, key, text, lambda checked=False, op=operation: self._sync_request(op))
         layout.addLayout(row)
         self.external_notification_status = QLabel('正在核对外部通知渠道。')
         self.external_notification_status.setWordWrap(True)
@@ -170,13 +158,18 @@ class ProductInterfaces:
         self._interface_button(layout, 'familySettings', '家庭共享与授权', lambda: self.navigate('family'))
         layout.addWidget(QLabel('外部服务由宿主配置；未启用时显示不可用。接口已迁，外部设备 / 平台尚未验收。'))
 
+    def _sync_request(self,operation):
+        if operation=='sync.publish' and QMessageBox.question(self,'发布共享数据','仅发布当前已授权的通知与许可。确认向已配置的对端发送？')!=QMessageBox.Yes:return
+        self._request(operation)
+
     def _render_extensions(self, result):
         self.extension_status = result
         voice = result.get('voice', {})
         available = bool(voice.get('available'))
-        self.voice_status.setText('语音：'+('已配置 · '+voice.get('phase','') if available else '当前桌面宿主未接入 ASR / TTS'))
+        self.voice_status.setText('语音：'+('服务已配置' if available else '当前平台未接入语音服务，暂不能识别或朗读'))
         for key in ('voiceInput','voiceOutput','voiceCancel'):
             self.interface_buttons[key].setEnabled(available)
+            self.interface_buttons[key].setToolTip('使用已配置语音服务' if available else '当前平台未接入语音服务。')
         devices = result.get('devices', [])
         self.device_adapter.clear()
         for name in devices:
@@ -184,6 +177,7 @@ class ProductInterfaces:
         self.interface_buttons['devicePull'].setEnabled(bool(devices))
         for key in ('healthkitImport','healthkitDiagnostics'):
             self.interface_buttons[key].setEnabled(bool(result.get('healthkit')))
+            self.interface_buttons[key].setToolTip('需要 iPhone 授权及配置健康数据来源。' if not result.get('healthkit') else '使用已配置的 Apple Health 数据来源。')
         self.device_status.setText('康复摄像头：请在康复输入设置中核对；此页不自动开启。\n外部设备：'+('、'.join(devices) or '未配置')+
             '\nApple Health：'+('已配置外部数据源，实机未验收' if result.get('healthkit') else '未连接 iPhone 健康数据源')+
             '\n导入文件用户编号：'+(self.owner or '请先选择用户'))
@@ -198,6 +192,9 @@ class ProductInterfaces:
     def _interface_result(self, operation, result):
         if operation == 'extensions.status':
             self._render_extensions(result)
+            if getattr(self, '_manual_extension_refresh', False):
+                self._manual_extension_refresh = False
+                self._message('已刷新设备、语音、通知和同步状态。')
             return True
         if operation.startswith('sync.'):
             if operation == 'sync.poll':
@@ -211,8 +208,13 @@ class ProductInterfaces:
         if operation == 'healthkit.diagnostics':
             d = result.get('diagnostics', {})
             self.device_status.setText(self.device_status.text()+f'\nApple Health：授权状态 {d.get("authorizationStatus", "unknown")}；数据新鲜度 {d.get("freshness", "unknown")}；样本 {d.get("sampleCount", "未知")}。权限仍由 iPhone 端管理。')
+            self._message('已读取 Apple Health 授权与导入状态，权限仍由 iPhone 管理。')
             return True
         if operation in ('voice.output','voice.cancel'):
             self._message('语音操作已提交；不代表播放验收通过。')
             return True
         return False
+
+    def _refresh_extensions(self):
+        self._manual_extension_refresh = True
+        self._request('extensions.status')

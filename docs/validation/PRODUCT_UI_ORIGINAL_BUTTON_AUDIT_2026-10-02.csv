@@ -1,0 +1,166 @@
+﻿所在原页面,用户按钮,状态 A/B/C/D,实际动作,用户反馈/条件,实际 clicked 接线数量
+今日训练,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,打开摄像头并测试,A,Runtime.camera_test → CameraManager（用户点击才开启）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,本轮评估清单,A,AssessmentBatchDialog → assessment_batch/create_assessment_batch,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,评估结果,A,_show_body → Runtime.body_profile,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,头颈,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,+,A,Catalog.add_requested → AssessmentBatchDialog 的评估清单,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,肩部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,肘部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,腕部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,手指,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,躯干,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,髋部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,膝部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,踝部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+今日训练,全部动作,B,catalog.select_joint(None),原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,打开摄像头并测试,A,Runtime.camera_test → CameraManager（用户点击才开启）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,本轮评估清单,A,AssessmentBatchDialog → assessment_batch/create_assessment_batch,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,评估结果,A,_show_body → Runtime.body_profile,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,头颈,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,+,A,Catalog.add_requested → AssessmentBatchDialog 的评估清单,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,肩部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,肘部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,腕部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,手指,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,躯干,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,髋部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,膝部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,踝部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复评估,全部动作,B,catalog.select_joint(None),原窗口结果/错误/人工确认；未选记录有明确提示,1
+训练计划,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+训练计划,打开摄像头并测试,A,Runtime.camera_test → CameraManager（用户点击才开启）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+训练计划,根据评估自动安排 / 继续训练,A,AutomaticPlanDialog → automatic_proposal / automatic_progress,原窗口结果/错误/人工确认；未选记录有明确提示,1
+训练计划,选择评估记录,A,_show_body → Runtime.body_profile,原窗口结果/错误/人工确认；未选记录有明确提示,1
+训练计划,先做身体评估,A,_show_catalog,原窗口结果/错误/人工确认；未选记录有明确提示,1
+训练计划,我的训练计划,A,PlanLibraryDialog → Runtime.training_plans,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复进度,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复进度,打开摄像头并测试,A,Runtime.camera_test → CameraManager（用户点击才开启）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复进度,打开报告,A,Runtime.report,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复进度,纵向记录,A,LongitudinalDialog → Runtime.longitudinal_history,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复进度,导出所选报告,A,Runtime.export（HTML/JSON/CSV）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复进度,比较两份报告,A,compare_conditions（原只读比较）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复进度,删除所选报告,D,确认 → Runtime.delete（事件继续保留）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+康复进度,返回任务,B,_select_scene,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,打开摄像头并测试,A,Runtime.camera_test → CameraManager（用户点击才开启）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,本轮评估清单,A,AssessmentBatchDialog → assessment_batch/create_assessment_batch,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,评估结果,A,_show_body → Runtime.body_profile,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,头颈,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,+,A,Catalog.add_requested → AssessmentBatchDialog 的评估清单,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,肩部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,肘部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,腕部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,手指,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,躯干,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,髋部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,膝部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,踝部,B,catalog.select_joint（人体部位筛选）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+assessment,全部动作,B,catalog.select_joint(None),原窗口结果/错误/人工确认；未选记录有明确提示,1
+training,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+training,打开摄像头并测试,A,Runtime.camera_test → CameraManager（用户点击才开启）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+training,根据评估自动安排 / 继续训练,A,AutomaticPlanDialog → automatic_proposal / automatic_progress,原窗口结果/错误/人工确认；未选记录有明确提示,1
+training,选择评估记录,A,_show_body → Runtime.body_profile,原窗口结果/错误/人工确认；未选记录有明确提示,1
+training,先做身体评估,A,_show_catalog,原窗口结果/错误/人工确认；未选记录有明确提示,1
+training,我的训练计划,A,PlanLibraryDialog → Runtime.training_plans,原窗口结果/错误/人工确认；未选记录有明确提示,1
+body,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+body,打开摄像头并测试,A,Runtime.camera_test → CameraManager（用户点击才开启）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+body,编辑个人信息,A,ParticipantDialog → Runtime.save_participant,原窗口结果/错误/人工确认；未选记录有明确提示,1
+body,继续评估,A,_show_catalog,原窗口结果/错误/人工确认；未选记录有明确提示,1
+body,本轮评估清单,A,AssessmentBatchDialog → assessment_batch/create_assessment_batch,原窗口结果/错误/人工确认；未选记录有明确提示,1
+body,查看报告,A,Runtime.report（当前选中评估）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+body,完整明细,B,body_detail_dialog.show,原窗口结果/错误/人工确认；未选记录有明确提示,1
+body,导出评估,A,Runtime.export_body_profile,原窗口结果/错误/人工确认；未选记录有明确提示,1
+body,进入训练,C,_train_from_body（有效评估与原计划准备）,当前来源、计划、选中记录或任务状态未满足；不绕过原门禁,1
+history,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+history,打开摄像头并测试,A,Runtime.camera_test → CameraManager（用户点击才开启）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+history,打开报告,A,Runtime.report,原窗口结果/错误/人工确认；未选记录有明确提示,1
+history,纵向记录,A,LongitudinalDialog → Runtime.longitudinal_history,原窗口结果/错误/人工确认；未选记录有明确提示,1
+history,导出所选报告,A,Runtime.export（HTML/JSON/CSV）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+history,比较两份报告,A,compare_conditions（原只读比较）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+history,删除所选报告,D,确认 → Runtime.delete（事件继续保留）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+history,返回任务,B,_select_scene,原窗口结果/错误/人工确认；未选记录有明确提示,1
+workspace-assessment,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+workspace-assessment,打开摄像头并测试,A,Runtime.camera_test → CameraManager（用户点击才开启）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+workspace-assessment,更换动作,B,_show_catalog,原窗口结果/错误/人工确认；未选记录有明确提示,1
+workspace-assessment,调整测试侧 / 机位与设置,B,原 setup_tabs 与输入设置,原窗口结果/错误/人工确认；未选记录有明确提示,1
+workspace-assessment,大字指导,B,DistanceCoach → 同一原训练控制,原窗口结果/错误/人工确认；未选记录有明确提示,1
+workspace-assessment,打开预览,A,Runtime.open → CameraManager,原窗口结果/错误/人工确认；未选记录有明确提示,1
+workspace-training,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+workspace-training,打开摄像头并测试,A,Runtime.camera_test → CameraManager（用户点击才开启）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+workspace-training,暂停训练,C,Runtime.training_control pause/resume（不关闭相机）,暂停计次，摄像头仍开启。需要关闭相机时，请点击“停止采集”。,1
+workspace-training,调整测试侧 / 机位与设置,B,原 setup_tabs 与输入设置,原窗口结果/错误/人工确认；未选记录有明确提示,1
+workspace-training,大字指导,B,DistanceCoach → 同一原训练控制,原窗口结果/错误/人工确认；未选记录有明确提示,1
+workspace-training,选择评估记录,A,_show_body → Runtime.body_profile,原窗口结果/错误/人工确认；未选记录有明确提示,1
+plan-library,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+plan-library,新建计划,A,PlanLibraryDialog 新建草稿 → save_training_plan,原窗口结果/错误/人工确认；未选记录有明确提示,1
+plan-library,编辑计划,C,PlanLibraryDialog 编辑 → save_training_plan,当前来源、计划、选中记录或任务状态未满足；不绕过原门禁,1
+plan-library,归档计划,C,Runtime.archive_training_plan（可恢复，不删历史）,当前来源、计划、选中记录或任务状态未满足；不绕过原门禁,1
+plan-library,使用所选项目,C,Runtime.prepare_training_plan → 原机位/计划确认,当前来源、计划、选中记录或任务状态未满足；不绕过原门禁,1
+plan-library,关闭,B,dialog.reject,原窗口结果/错误/人工确认；未选记录有明确提示,1
+automatic-plan,重新读取评估,A,Runtime.automatic_proposal,原窗口结果/错误/人工确认；未选记录有明确提示,1
+automatic-plan,暂不训练,B,AutomaticPlanDialog.reject,原窗口结果/错误/人工确认；未选记录有明确提示,1
+automatic-plan,使用这个安排,C,Runtime.accept_automatic_plan / prepare_automatic_item（适用性须本人确认）,当前来源、计划、选中记录或任务状态未满足；不绕过原门禁,1
+silver,开始训练,A,银发窗口 navigate(training) / Runtime.start（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,今天的任务,B,SilverDialog.tabs.setCurrentIndex(0),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,我需要帮助,A,Runtime.silver request(help)（本机求助，不等于远程救援）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,暂停摄像头,A,Runtime.privacy（释放采集）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,站立任务,A,Runtime.task(stand),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,步行任务,A,Runtime.task(walk),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,稍后提醒,A,Runtime.task(snooze),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,本轮不适合,A,Runtime.task(skip),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,停止任务,A,Runtime.task(stop),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,仅自报完成,A,Runtime.task(self_report)（不作为测量）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,准备活动观察,B,_silver_navigate(activity) → 原输入/圈区/确认,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,床边演示,B,_silver_navigate(bedroom_demo)（受控场景）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,安全演示,B,_silver_navigate(safety_demo)（受控场景）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver,返回康复界面,B,SilverDialog.close,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/今天的任务,开始训练,A,银发窗口 navigate(training) / Runtime.start（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/今天的任务,今天的任务,B,SilverDialog.tabs.setCurrentIndex(0),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/今天的任务,我需要帮助,A,Runtime.silver request(help)（本机求助，不等于远程救援）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/今天的任务,暂停摄像头,A,Runtime.privacy（释放采集）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/今天的任务,站立任务,C,Runtime.task(stand),当前来源、计划、选中记录或任务状态未满足；不绕过原门禁,1
+silver/今天的任务,步行任务,C,Runtime.task(walk),当前来源、计划、选中记录或任务状态未满足；不绕过原门禁,1
+silver/今天的任务,稍后提醒,C,Runtime.task(snooze),当前来源、计划、选中记录或任务状态未满足；不绕过原门禁,1
+silver/今天的任务,本轮不适合,C,Runtime.task(skip),当前来源、计划、选中记录或任务状态未满足；不绕过原门禁,1
+silver/今天的任务,停止任务,C,Runtime.task(stop),当前来源、计划、选中记录或任务状态未满足；不绕过原门禁,1
+silver/今天的任务,仅自报完成,C,Runtime.task(self_report)（不作为测量）,当前来源、计划、选中记录或任务状态未满足；不绕过原门禁,1
+silver/今天的任务,准备活动观察,B,_silver_navigate(activity) → 原输入/圈区/确认,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/今天的任务,床边演示,B,_silver_navigate(bedroom_demo)（受控场景）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/今天的任务,安全演示,B,_silver_navigate(safety_demo)（受控场景）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/今天的任务,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/今天的任务,返回康复界面,B,SilverDialog.close,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/功能变化,开始训练,A,银发窗口 navigate(training) / Runtime.start（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/功能变化,今天的任务,B,SilverDialog.tabs.setCurrentIndex(0),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/功能变化,我需要帮助,A,Runtime.silver request(help)（本机求助，不等于远程救援）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/功能变化,暂停摄像头,A,Runtime.privacy（释放采集）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/功能变化,已逐条核对：记录所选报告的实际条件,A,Runtime.silver conditions,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/功能变化,建立新参考期,A,Runtime.silver reference（原固定参考逻辑）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/功能变化,比较所选单次,A,Runtime.silver compare,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/功能变化,记录本人情况,A,Runtime.silver feedback（选共享时另确认）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/功能变化,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/功能变化,返回康复界面,B,SilverDialog.close,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/家庭回应与安全,开始训练,A,银发窗口 navigate(training) / Runtime.start（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/家庭回应与安全,今天的任务,B,SilverDialog.tabs.setCurrentIndex(0),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/家庭回应与安全,我需要帮助,A,Runtime.silver request(help)（本机求助，不等于远程救援）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/家庭回应与安全,暂停摄像头,A,Runtime.privacy（释放采集）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/家庭回应与安全,我已查看,A,Runtime.silver event/respond ack,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/家庭回应与安全,我来联系 / 处理,A,Runtime.silver event/respond claim,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/家庭回应与安全,记录处理结果,A,Runtime.silver event/respond resolve/submit（人工填写实际情况）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/家庭回应与安全,本人确认整改完成,A,Runtime.silver respond confirm（本人填写实际情况）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/家庭回应与安全,希望家人联系,A,Runtime.silver request(contact),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/家庭回应与安全,建立居家整改任务,A,Runtime.silver request(checklist),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/家庭回应与安全,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/家庭回应与安全,返回康复界面,B,SilverDialog.close,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/共享与提示设置,开始训练,A,银发窗口 navigate(training) / Runtime.start（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/共享与提示设置,今天的任务,B,SilverDialog.tabs.setCurrentIndex(0),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/共享与提示设置,我需要帮助,A,Runtime.silver request(help)（本机求助，不等于远程救援）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/共享与提示设置,暂停摄像头,A,Runtime.privacy（释放采集）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/共享与提示设置,确认共享范围,D,确认 → Runtime.silver consent,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/共享与提示设置,撤销全部共享,D,确认 → Runtime.silver consent(grants=[]),原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/共享与提示设置,手机家属联动（仅隔离测试资料）,B,FamilyDemoDialog → Runtime.family_demo（独立 TEST，不是正式手机服务）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/共享与提示设置,测试语音提示,A,原 SilverDialog.speak → Qt QTextToSpeech（无引擎时显示不可用）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/共享与提示设置,刷新,A,Runtime.enumerate / history / body_profile / training_plans / silver.refresh（按所在页面）,原窗口结果/错误/人工确认；未选记录有明确提示,1
+silver/共享与提示设置,返回康复界面,B,SilverDialog.close,原窗口结果/错误/人工确认；未选记录有明确提示,1

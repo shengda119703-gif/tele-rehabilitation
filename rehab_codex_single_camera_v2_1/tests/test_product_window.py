@@ -190,6 +190,7 @@ def test_device_file_ui_validates_owner_then_uses_real_health_pipeline(desktop, 
     monkeypatch.setattr(QFileDialog, 'getOpenFileName', lambda *args: (str(filename), 'JSON'))
     monkeypatch.setattr(QMessageBox, 'question', lambda *args: QMessageBox.Yes)
     w.interface_buttons['deviceImport'].click()
+    wait(app, lambda:w.pending==0)
     assert '文件用户须与当前用户一致' in w.notice.text()
     assert w.metrics.rowCount()==0
     payload['ownerId']=w.owner
@@ -197,7 +198,7 @@ def test_device_file_ui_validates_owner_then_uses_real_health_pipeline(desktop, 
     w.interface_buttons['deviceImport'].click()
     wait(app, lambda:w.pending==0)
     assert w.metrics.rowCount()==1
-    assert w.metrics.item(0,3).text()=='device'
+    assert w.metrics.item(0,3).text()=='设备记录'
     assert w.health_timeline.rowCount()==1
     with AgentBridge(data_dir=w.legacy.runtime.data_dir/'product') as bridge:
         stored=bridge.product('snapshot',w.owner)

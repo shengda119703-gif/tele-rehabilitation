@@ -67,7 +67,7 @@ class ProductProfileDialog(QDialog):
         later = QPushButton('取消')
         later.clicked.connect(self.reject)
         row.addWidget(later)
-        self.save = QPushButton('保存并进入首页')
+        self.save = QPushButton('保存资料')
         self.save.setObjectName('productPrimary')
         self.save.clicked.connect(self._save)
         row.addWidget(self.save)
@@ -124,6 +124,9 @@ class MedicationDialog(QDialog):
         save.setObjectName('productPrimary')
         save.clicked.connect(self._save)
         box.addWidget(save)
+        cancel = QPushButton('取消')
+        cancel.clicked.connect(self.reject)
+        box.addWidget(cancel)
 
     def _save(self):
         if not self.fields['name'].text().strip():

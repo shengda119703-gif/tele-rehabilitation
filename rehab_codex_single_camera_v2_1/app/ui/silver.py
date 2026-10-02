@@ -192,6 +192,7 @@ class SilverDialog(QDialog):
 
     def send(self, operation='refresh', **kw):
         if self.pending:
+            self.error.setText('正在读取或保存，请等待当前操作完成。')
             return
         self.pending = True
         self.operation.emit(dict(operation=operation, family=self.role.currentIndex() == 1, **kw))
@@ -261,6 +262,7 @@ class SilverDialog(QDialog):
     def respond(self, action):
         row = self.requests.currentRow()
         if not 0 <= row < len(self.items):
+            self.error.setText('请先选择要回应的请求或事件。')
             return
         kind, item = self.items[row]
         note = ''

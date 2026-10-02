@@ -1,7 +1,7 @@
 """Bound, read-only Agent tools over existing rehabilitation business readers."""
 from pathlib import Path
 
-from .assessment import build_body_profile, session_value, COMPARISON_NOTE
+from .assessment import build_body_profile, session_value, session_conditions, COMPARISON_NOTE
 from .assessment_batches import scope_key
 from .automatic_plans import program_progress, validate_automatic_use
 from .exercises import exercise_spec, EXERCISE_IDS
@@ -23,6 +23,13 @@ class RehabReadTools:
         self.scope = scope_key(scope)
 
     def __call__(self, name, arguments):
+        return self._read(name, arguments)
+
+    def desktop_snapshot(self):
+        """Full scoped UI readers; keep Agent argument contracts and result limits unchanged."""
+        return {name: self._read(name, {}, desktop=True) for name in TOOLS}
+
+    def _read(self, name, arguments, *, desktop=False):
         if name not in TOOLS or not isinstance(arguments, dict) or set(arguments) - {'exercise_id', 'joint'}:
             raise ValueError('Unknown read-only rehab tool or arguments')
         exercise = arguments.get('exercise_id')
@@ -42,7 +49,7 @@ class RehabReadTools:
                 profile = build_body_profile(sessions, **self.scope)
                 plans = store.list_training_plans(self.scope)
                 # Saved ACTIVE plans, latest first. Do not generate or accept a proposal.
-                for plan in plans[:3]:
+                for plan in plans if desktop else plans[:3]:
                     view = training_plan_view(plan, profile)
                     progress = program_progress(plan, sessions)
                     ready, reason = False, progress['blocked']
@@ -67,8 +74,26 @@ class RehabReadTools:
                 items = [i for i in profile['items'] if i.get('session_id')
                          and (not exercise or i['exercise_id'] == exercise)
                          and (not joint or i['joint'] == joint)]
+                if desktop:
+                    # Reuse the same assessment interpretation for each saved assessment,
+                    # including invalid records; never compare incompatible conditions here.
+                    items = []
+                    for s in sessions:
+                        if session_value(s,'submode')!='assessment' or not s.get('end_utc') or s.get('status') not in ('FINISHED','INTERRUPTED','COMPLETED'):
+                            continue
+                        values=[i for i in build_body_profile([s], **self.scope)['items'] if i.get('session_id')]
+                        if not values:
+                            eid=session_value(s,'exercise_id')
+                            if eid not in EXERCISE_IDS:continue
+                            # Keep non-measurement attempts in history without granting assessment evidence.
+                            values=[dict(session_id=s['id'],exercise_id=eid,exercise_label=exercise_spec(eid)['label'],
+                                side=session_value(s,'side'),start_utc=s.get('start_utc'),end_utc=s['end_utc'],
+                                status='NOT_ASSESSED',reason='没有自动评估依据，请查看原报告',
+                                measurement_note='引导活动记录不作为自动评估依据' if s.get('measurement_mode')=='guided_timed' else '请核对原测量条件',
+                                conditions=session_conditions(s))]
+                        items.extend(values)
                 items.sort(key=lambda i: i.get('end_utc') or '', reverse=True)
-                for item in items[:6]:
+                for item in items if desktop else items[:6]:
                     row = pick(item, ('exercise_id', 'exercise_label', 'side', 'status', 'reason',
                                       'session_id', 'start_utc', 'end_utc', 'motion_range',
                                       'primary_metric', 'valid_ratio', 'completed', 'measurement_note'))
@@ -86,7 +111,7 @@ class RehabReadTools:
                         and s.get('end_utc') and (not exercise or session_value(s, 'exercise_id') == exercise)
                         and (not joint or exercise_spec(session_value(s, 'exercise_id'))['joint'] == joint)]
                 rows.sort(key=lambda s: s.get('end_utc') or '', reverse=True)
-                for session in rows[:5]:
+                for session in rows if desktop else rows[:5]:
                     eid = session_value(session, 'exercise_id')
                     result['records'].append(dict(
                         **pick(session, ('id', 'start_utc', 'end_utc', 'status', 'measurement_mode', 'stop_reason')),

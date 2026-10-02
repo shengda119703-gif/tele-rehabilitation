@@ -1,5 +1,7 @@
 # 当前交接与未完成目标
 
+**2026-10-02 Product UI Functional Completion：** `codex/product-ui-v1` 完成今日控制台、康复四页签、健康四页签、用药四页签、照护圈详情与共享、全量当前范围记录及按所选记录打开原康复趋势/报告、顶栏通知与设置六页签。复用原 Runtime/ProductService，不改主题或 Agent 语义。文件读写进后台队列，重复提交、用户切换与失败状态补齐；116 个产品按钮及165个原功能页面/按钮组合有审计记录。48 项针对性测试通过，最后补充的银发反馈/确认另复验通过。七路径的软件闭环已验证；摄像头训练、语音、iPhone、远程同步和实体设备不宣称实机通过。见[本轮完整验收与按钮表](validation/PRODUCT_UI_FUNCTIONAL_COMPLETION_2026-10-02.md)。main/stage1 未改变；交付后停止，等待统一视觉要求。
+
 **2026-10-02 UI 能力覆盖审阅：** 按用户提供的 PC 前端产品逻辑文档，在 `codex/product-ui-v1` 补接全局管家、数据参考摘要、附件 / Voice、健康设备 / HealthKit、同步状态及操作、用药历史 / 漏服与记录筛选，恢复原银发健康守护入口。没有视觉重设计、没有新设备驱动 / Agent 语义或训练算法，main 保持已验收基线。完整模块归属、文档超出现有后台的差距及测试见 [UI 覆盖审阅](plans/PRODUCT_UI_COVERAGE_REVIEW_2026-10-02.md)。本分支已进入必要 UI 接线阶段；下方“只盘点 / 等待用户”等属于此前阶段状态。
 
 **2026-10-02 Final Integration：main 已通过正式 PySide6 产品验收。** 原康复核心、Ankang Runtime/业务/扩展端口、Python/Node bridge、DeepSeek adapter、rehab read tools 和当前产品骨架已用 no-ff merge 整体集成，stage1保留全部历史。当前仓库为 shengda119703-gif/tele-rehabilitation。见[合并前审计](validation/FINAL_INTEGRATION_AUDIT_2026-10-02.md)和[main验收](validation/MAIN_INTEGRATION_ACCEPTANCE_2026-10-02.md)。后续只在最新main派生的 codex/product-ui-v1 盘点UI，等待用户视觉要求，不扩后台功能。下方“main未合并”等属于此前阶段历史，不代表当前状态。
