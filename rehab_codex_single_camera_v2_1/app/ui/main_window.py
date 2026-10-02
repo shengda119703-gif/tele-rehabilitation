@@ -9,6 +9,7 @@ import time
 from uuid import uuid4
 
 from PySide6.QtCore import Qt, QTimer
+from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import (QMainWindow, QWidget, QFrame, QVBoxLayout, QHBoxLayout,
     QGridLayout, QFormLayout, QLabel, QPushButton, QComboBox, QLineEdit, QCheckBox,
     QDoubleSpinBox, QScrollArea, QTableWidget, QTableWidgetItem,
@@ -67,6 +68,19 @@ def card():
 
 
 class MainWindow(QMainWindow):
+    def _open_deepseek_developer(self):
+        from .deepseek_developer import DeepSeekDeveloperDialog
+        dialog = DeepSeekDeveloperDialog(self)
+        accepted = dialog.exec() == QDialog.Accepted
+        dialog.key_input.clear()
+        dialog.deleteLater()
+        if accepted and self.assistant_dialog is not None:
+            # Existing sessions snapshot model availability; reopen via the same bridge.
+            self.assistant_dialog.shutdown()
+            self.assistant_dialog.close()
+            self.assistant_dialog.deleteLater()
+            self.assistant_dialog = None
+
     def __init__(self, runtime=None, data_dir=None):
         super().__init__()
         self.setWindowTitle('康复助手')
@@ -79,6 +93,7 @@ class MainWindow(QMainWindow):
         self.participant_id = self.setup['plan']['participant_id']
         self.participant_records = {self.participant_id: legacy_participant(self.participant_id)}
         self.participant_dialog = None
+        self.assistant_dialog = None
         self._participant_to_activate = None
         self.body_profile = None
         self._summarize_after_save = None
@@ -131,6 +146,8 @@ class MainWindow(QMainWindow):
         self._last_coach_view = None
         self._live_mirror, self._replay_mirror = True, False
         self._build()
+        self._developer_shortcut = QShortcut(QKeySequence('Ctrl+Shift+D'), self)
+        self._developer_shortcut.activated.connect(self._open_deepseek_developer)
         self.catalog.checklist_requested.connect(self._open_assessment_batch)
         self.constructing = False
         self._sync_scene()
@@ -144,6 +161,18 @@ class MainWindow(QMainWindow):
 
     def _build(self):
         build_workspace(self)
+
+    def _show_assistant(self):
+        if self.assistant_dialog is None:
+            from .ankang_assistant import AssistantDialog
+            from ..rehab_read_tools import RehabReadTools
+            database = self.runtime.data_dir / 'home_rehab.sqlite3'
+            self.assistant_dialog = AssistantDialog(self, scope_provider=self._body_scope_key,
+                read_tools_factory=lambda scope: RehabReadTools(database, scope))
+        self.assistant_dialog.set_participant(self.participant_id)
+        self.assistant_dialog.show()
+        self.assistant_dialog.raise_()
+        self.assistant_dialog.input.setFocus()
 
     def _show_silver(self, *, refresh=True):
         if self.silver_dialog is None:
@@ -896,6 +925,8 @@ class MainWindow(QMainWindow):
             return
         self._invalidate()
         self.participant_id = name
+        if self.assistant_dialog:
+            self.assistant_dialog.set_participant(name)
         self.participant.setText(name)
         self._refresh_participant_controls()
         self.setup['plan'] = default_plan(self.exercise.currentData())
@@ -2673,6 +2704,8 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         if self._allow_close:
+            if self.assistant_dialog:
+                self.assistant_dialog.shutdown()
             self._close_distance_coach()
             if self.camera_test_dialog:
                 self.camera_test_dialog.finish_close()

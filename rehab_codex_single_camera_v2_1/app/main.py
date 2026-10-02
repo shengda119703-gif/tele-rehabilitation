@@ -15,7 +15,7 @@ def main():
     from PySide6.QtCore import QTimer, QLockFile
     from PySide6.QtGui import QFont, QFontDatabase
     from PySide6.QtWidgets import QApplication, QMessageBox
-    from .ui.main_window import MainWindow
+    from .ui.product_window import ProductWindow
     from .settings import ROOT
     app = QApplication(sys.argv[:1])
     app.setStyle('Fusion')
@@ -33,7 +33,7 @@ def main():
     if not instance_lock.tryLock(0):
         QMessageBox.information(None, '应用正在运行', '此数据目录的康复助手已经运行。请使用已打开的窗口。')
         return 1
-    window = MainWindow(data_dir=data_dir)
+    window = ProductWindow(data_dir=data_dir)
     window.show()
     if args.screenshot:
         def capture():

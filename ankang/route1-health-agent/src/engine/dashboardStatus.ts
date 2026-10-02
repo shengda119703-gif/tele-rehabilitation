@@ -1,0 +1,155 @@
+import type { FamilyNotification } from './escalate';
+import type { FamilyNotificationRecord } from './notify';
+
+/**
+ * 家属端首页一句话状态。
+ *
+ * 这一函数是"未知的诚实化"的最后一道闸：绝不能在没有真实数据时把页面
+ * 显示成"今天总体正常"。三条独立路径必须把"未知"明确标出：
+ * 1. notifications 为空但派发台账里仍有未被确认的系统通知失败
+ *    → 系统尝试提醒但没送到位，不是"今天没事"
+ * 2. notifications 为空、派发没失败、但今日信号量为零
+ *    → detection 没看到东西 ≠ 老人没事，可能是今天还没说话/没戴设备/
+ *    聊天解析漏掉了，必须提示家属主动确认，而不是绿色"ok"
+ * 3. notifications 为空但存在被隐私门控挡住的 alert/urgent（gatedAlertCount > 0）
+ *    → 不是没信号，是老人尚未授权、内容对家属不可见。系统知道有事，
+ *    绝不能表述成正面"正常"（评审现场：老人报胸痛后家属看到"今天总体正常"）。
+ *    被挡住包含两种来源（见 escalate.collectGatedFindings）：有 familyMessage 但
+ *    未授权（授权门控），以及内容本身 private 而没有 familyMessage 的紧急发现
+ *    （如未授权共享时的摔倒报告）——后者同样必须让家属知道"有事但被挡住"。
+ *
+ * 评审 P0-1 修复注：跨设备时家属端没有事件流，本地检测结果恒为空。
+ * 调用方（App.tsx）必须先把派发台账还原成通知（ledgerRecordToNotification，
+ * 按 findingId 与本地结果合并）再传入 notifications——台账内容本身经过
+ * 老人端授权门控，从 notifications 走 urgent/alert 分级是安全且必需的。
+ * 本函数因此不需要感知台账内容，只保留对"投递完整性"的 unknown 判定。
+ */
+export type FamilyStatusTone = 'danger' | 'warn' | 'unknown' | 'ok';
+
+export interface FamilyStatus {
+  title: string;
+  detail: string;
+  tone: FamilyStatusTone;
+  /** 决策理由，仅供测试与排障使用 */
+  reasons: string[];
+}
+
+function hasUndeliveredPush(record: FamilyNotificationRecord): boolean {
+  return record.deliveries.some(
+    (delivery) =>
+      delivery.channel === 'browser_push' && (delivery.status === 'failed' || delivery.status === 'unavailable'),
+  );
+}
+
+/**
+ * 家属端"当前状态"可见的通知子集。
+ *
+ * 派发台账是历史记录：授权期间送达的通知在撤销授权后仍保留在消息页
+ * （"已经告诉对方的内容，我不会假装它已经被撤回"），但它们不再是现在
+ * 进行时——撤销授权后，首页 headline、优先卡与隐私设置页必须回到
+ * "被隐私设置挡住"的真实状态，绝不能把授权期间送达的历史渲染成当前急症
+ * （familyStatus 的 urgent 分支会压过 gated 分支，历史记录一漏进来，
+ * 撤销就形同虚设）。本地检测来源的通知无需此处过滤：
+ * collectFamilyNotifications 本身就按当前授权门控（denied 时为空）。
+ */
+export function currentFamilyNotifications(
+  notifications: FamilyNotification[],
+  familySharing: 'granted' | 'denied' | 'ask',
+): FamilyNotification[] {
+  return familySharing === 'granted' ? notifications : [];
+}
+
+export function familyStatus(
+  notifications: FamilyNotification[],
+  dispatchRecords: FamilyNotificationRecord[],
+  todaySignalCount: number,
+  gatedAlertCount = 0,
+  todayMinorFindingCount = 0,
+): FamilyStatus {
+  const urgent = notifications.filter((notification) => notification.finding.severity === 'urgent');
+  if (urgent.length > 0) {
+    return {
+      title: '今天需要立即介入',
+      detail: '出现需要马上确认安全情况的信号。请先联系老人并按提示的安全路径处理。',
+      tone: 'danger',
+      reasons: [`urgent_notifications=${urgent.length}`],
+    };
+  }
+
+  const alert = notifications.filter((notification) => notification.finding.severity === 'alert');
+  if (alert.length > 0) {
+    return {
+      title: '今天有一件事值得关注',
+      detail: '系统把多项近期变化放在一起看后，建议今天主动联系老人确认状态。',
+      tone: 'warn',
+      reasons: [`alert_notifications=${alert.length}`],
+    };
+  }
+
+  // 第三种未知：notifications 为空不是因为没有信号，而是因为老人尚未授权、
+  // 内容被隐私门控挡住。此时系统知道有事、家属看不见内容——
+  // 必须把"被挡住"本身如实说出，绝不能用绿色"正常"覆盖它。
+  if (gatedAlertCount > 0) {
+    return {
+      title: gatedAlertCount === 1 ? '有 1 件事被隐私设置挡住了' : `有 ${gatedAlertCount} 件事被隐私设置挡住了`,
+      detail: `今日已收到 ${todaySignalCount} 条健康信号，其中 ${gatedAlertCount} 条被系统标记为需要关注，但按老人的隐私设置暂未向您开放。系统无法替您判断老人是否安好：建议直接联系老人确认；老人在老人端同意共享后，您就能看到这些内容。`,
+      tone: 'unknown',
+      reasons: [`gated_alerts=${gatedAlertCount}`, `signals_today=${todaySignalCount}`],
+    };
+  }
+
+  // 第四种未知（评审 P1："今天总体正常"对 info 级信号过强）：info/watch 级发现
+  // 按通知策略不进入家属通知，但它们是真实记录——老人报过头晕的日子，绿色
+  // "今天总体正常"就是把"没到介入阈值"说成"没事"。ok 只能属于今天确实没有
+  // 健康发现的日子；到这里还没被前面分支接住的今日发现必然都是轻微级别
+  // （urgent/alert 已在可见通知与 gated 分支中处理）。
+  if (todayMinorFindingCount > 0) {
+    return {
+      title:
+        todayMinorFindingCount === 1
+          ? '今天有 1 条轻微变化被记录'
+          : `今天有 ${todayMinorFindingCount} 条轻微变化被记录`,
+      detail: `系统记录到老人今日的轻微变化或日常波动（不构成需要介入的告警，共 ${todayMinorFindingCount} 条）。想了解具体内容请直接联系老人；出现需要关注的情况时系统会再提醒您。`,
+      tone: 'unknown',
+      reasons: [`today_minor_findings=${todayMinorFindingCount}`, `signals_today=${todaySignalCount}`],
+    };
+  }
+
+  // 没有可见通知不代表系统安好。派发台账里仍可能躺着一批未确认的系统通知失败，
+  // 这些是"系统尝试提醒但没送到位"的信号，必须在首页标出来，不能装作没事。
+  const undelivered = dispatchRecords.filter((record) => record.lifecycle === 'new' && hasUndeliveredPush(record));
+  if (undelivered.length > 0) {
+    const failed = undelivered.filter((record) =>
+      record.deliveries.some((delivery) => delivery.channel === 'browser_push' && delivery.status === 'failed'),
+    ).length;
+    const unavailable = undelivered.length - failed;
+    const detailParts: string[] = [];
+    if (failed > 0) detailParts.push(`${failed} 条系统通知发送失败`);
+    if (unavailable > 0) detailParts.push(`${unavailable} 条系统通知未开启`);
+    return {
+      title: '今天没有新通知，但系统通知未全部送达',
+      detail: `有${detailParts.join('、')}。请在"现在最需要知道的"里逐条确认，或开启浏览器系统通知权限。`,
+      tone: 'unknown',
+      reasons: [`undelivered_pushes=${undelivered.length}`],
+    };
+  }
+
+  // 沉默不等于"今天没事"：detection 没看到任何今日信号时（老人没说话、设备没上传、
+  // 聊天解析漏掉等），不能给绿色 ok；必须显式标 unknown，让家属主动确认。
+  if (todaySignalCount === 0) {
+    return {
+      title: '今天还没有任何健康信号',
+      detail:
+        '系统今天还没收到来自老人的主诉、聊天或设备上传，暂无数据可以判断。"没有问题"不能由系统替您说出来——建议主动联系老人确认状态，或等待他/她今天开口说一句。',
+      tone: 'unknown',
+      reasons: ['no_signals_today'],
+    };
+  }
+
+  return {
+    title: '今天总体正常',
+    detail: `今日已收到 ${todaySignalCount} 条健康信号，系统判定暂无需要您介入的变化。继续观察，有变化会再提醒您。`,
+    tone: 'ok',
+    reasons: ['no_notifications', 'no_undelivered_records', `signals_today=${todaySignalCount}`],
+  };
+}

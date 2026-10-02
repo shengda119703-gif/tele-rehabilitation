@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "outDir": ".test-build",
+    "rootDir": ".",
+    "noEmitOnError": true
+  },
+  "include": ["tests/**/*.ts", "src/**/*.ts"],
+  "exclude": [
+    "src/hooks/useElderChat.ts",
+    "src/hooks/useCrossDeviceSync.ts",
+    "src/adapters/PeerJSCrossDevice.ts",
+    "src/config/appConfig.ts",
+    "src/config/runtime.ts"
+  ],
+  "types": ["node"]
+}

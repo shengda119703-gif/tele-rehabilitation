@@ -1,5 +1,13 @@
 # 当前交接与未完成目标
 
+分支增补（2026-10-02 扩展能力迁移）：Voice / Cross-device Sync / HealthKit / 外部通知渠道 / 通用设备输入及通用图片视频 capture 已进入 ProductService / ports / adapters，原实现复用、React 与 demo 保留。默认桌面 HealthKit/webhook 可由宿主环境配置；浏览器 ASR/WebRTC 尚需对应宿主接线，外部平台一律接口已迁 / 实机未验收。Home Twin / Route2 空间推理 / 3DGS 继续延后。完整能力表、调用与本轮测试/布局测试限制见 [扩展迁移验收](validation/ANKANG_EXTENSIONS_2026-10-02.md)。不 merge main、不改 UI、不改 Agent 语义。
+
+分支增补（2026-10-02 Productization Day）：正式入口已切换为 PySide6 `ProductWindow`，七项导航整合康复、Ankang 健康业务和家庭照护；领域实现原位复用，通过同一 bridge 的 ProductService 与本机持久化端口调用。模块归属、角色、流程及页面后端见 [产品方案](plans/PRODUCTIZATION_DAY.md)，本轮证据与限制见 [验收](validation/PRODUCTIZATION_DAY_2026-10-02.md)。旧 React 与旧康复窗口源码保留；旧 Python Agent 不恢复；main 未合并。当前本机标准 .venv 尚未建立，验证复用已有隔离 Python 依赖，不将依赖路径写死到产品。以下历史状态不代表本轮分支现状。
+
+分支增补（2026-10-02）：`codex/rehab-agent-stage1` 增加隐藏的本机 DeepSeek 开发者 Key 入口（主窗口 `Ctrl+Shift+D`），凭据保存到工作区外的 APPDATA 私有配置，复用原 `rehab-model.cjs` 与 bridge，固定 DeepSeek URL / `deepseek-flash`，兼容原环境变量 Key。两项针对性测试及一次使用本地保存 Key 的真实最小请求通过，见[本轮验收](validation/DEEPSEEK_DEVELOPER_KEY_2026-10-02.md)。未改 Agent 业务或 rehab tools、未执行康复写操作、未 merge main。
+
+分支增补（2026-10-01）：`codex/rehab-agent-stage1` 的安康助手增加三个康复只读工具，见[架构](plans/ANKANG_REHAB_READ_TOOLS.md)与[验收](validation/ANKANG_REHAB_READ_TOOLS.md)。真实 bridge/Runtime/合成库链路已验证；本机尚无真实 LLM 配置，默认仍是原规则聊天并提示工具未启用。本轮没有康复写操作，也未 merge main。以下保留原 main 产品交接历史。
+
 更新：2026-09-14。当前应用 **0.18.3 自动计划演示版**，功能基线提交为 `c68de70`。训练中心提供“一键生成演示计划”：在独立的“演示患者 · 自动计划”范围内创建 4 项 SYNTHETIC / TEST 合成评估，并实际调用 `general-activity-rules-1` 生成左肩外展、左肩前屈、左肘屈伸和右膝伸展的临时训练安排。界面展示评估幅度、选择理由、5 次 × 1 组、休息、安全提示及个人投影角目标；演示数据不能打开假摄像头或进入真人训练，也不混入真实患者档案。本机数据库已装入一套可直接展示的临时计划。说明见[0.18.3 自动计划演示](history/DEMO_AUTOMATIC_PLAN_V0_18_3.md)，实际证据见[本机验收](validation/DEMO_AUTOMATIC_PLAN_V0_18_3_2026-09-13.md)。当前电脑最近一次完整回归通过 **1644 项主测试和 4 项子测试**。
 
 ## 当前交付状态
