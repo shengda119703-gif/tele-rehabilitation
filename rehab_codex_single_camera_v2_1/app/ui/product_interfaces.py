@@ -28,6 +28,7 @@ class ProductInterfaces:
         self.assistant_dock.setAllowedAreas(Qt.RightDockWidgetArea)
         self.assistant_dock.setFeatures(QDockWidget.DockWidgetClosable)
         content = QWidget()
+        content.setProperty('visualScope','core')
         content.setMinimumWidth(340)
         area = QVBoxLayout(content)
         self.assistant_context = QLabel()
@@ -65,7 +66,8 @@ class ProductInterfaces:
         note = QLabel('上传资料会保存到健康档案，不自动作为模型上下文。图片识别须许可，候选结果在健康档案中核对后确认。')
         note.setWordWrap(True)
         layout.addWidget(note)
-        row = QHBoxLayout()
+        # A narrow contextual column keeps the conversation and composer in view.
+        row = QVBoxLayout()
         self._interface_button(row, 'assistantAttachment', '上传资料 / 图片 / 视频', self._add_attachment)
         self._interface_button(row, 'assistantImage', '识别健康图片', self._parse_image)
         self._interface_button(row, 'voiceInput', '语音输入', self._voice_input)

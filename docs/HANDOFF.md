@@ -1,5 +1,7 @@
 # 当前交接与未完成目标
 
+**2026-10-02 三个核心页面视觉基准：** `codex/product-ui-v1` 已安装/审阅 MIT `pyside6-fluent-ui` skill；仅引入设计 token/来源与许可证，无 UI runtime dependency 增量。统一主题/卡片/字体/状态，完成首页、AI 康复管家、康复概览的视觉层级；原训练工作区和其他四页保留兼容布局。116 个已发布按钮及已有侧栏发送契约保留，44 项针对性回归通过；Windows 原生 Qt/DPR 1.5、1024 窄窗及 1080p/多级 Qt 缩放截图已审阅。main/stage1 不变，到三个基准页为止，等待视觉方向审阅。见[设计系统](plans/PRODUCT_UI_FLUENT_BASELINE_2026-10-02.md)与[验收/真实截图](validation/PRODUCT_UI_VISUAL_BASELINE_2026-10-02.md)。
+
 **2026-10-02 Repository Cleanup / Legacy Audit：** `codex/product-ui-v1` 已从正式入口追踪依赖，撤出无正式用途的 React/浏览器 demo、独立 Home Twin/Route2/3DGS 及旧独立 Assistant 验收窗口。Route2 通用 capture 契约原样进入 `app/product/capture_contracts.py`，16 份空间文档集中归档。保留原康复 MainWindow/Runtime、ProductService、业务核心与可选外部 adapters；52 项 Python/Qt、12 项产品扩展、34 项 Runtime/协议测试通过，实际窗口逐页打开通过。main/stage1 不变，不做视觉重设计。见[本轮分类、依赖图及验收](validation/REPOSITORY_CLEANUP_2026-10-02.md)。下方旧阶段“React/demo 全量保留”等为历史状态。
 
 **2026-10-02 Product UI Functional Completion：** `codex/product-ui-v1` 完成今日控制台、康复四页签、健康四页签、用药四页签、照护圈详情与共享、全量当前范围记录及按所选记录打开原康复趋势/报告、顶栏通知与设置六页签。复用原 Runtime/ProductService，不改主题或 Agent 语义。文件读写进后台队列，重复提交、用户切换与失败状态补齐；116 个产品按钮及165个原功能页面/按钮组合有审计记录。48 项针对性测试通过，最后补充的银发反馈/确认另复验通过。七路径的软件闭环已验证；摄像头训练、语音、iPhone、远程同步和实体设备不宣称实机通过。见[本轮完整验收与按钮表](validation/PRODUCT_UI_FUNCTIONAL_COMPLETION_2026-10-02.md)。main/stage1 未改变；交付后停止，等待统一视觉要求。

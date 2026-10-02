@@ -1,9 +1,48 @@
 """Existing product widgets shared by page adapters; styling is unchanged."""
 import html
+from .product_theme import SPACING
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QLabel, QPushButton, QFrame, QVBoxLayout, QTableWidget,
     QHeaderView, QAbstractItemView, QTableWidgetItem)
 
 escape = lambda text: html.escape(str(text))
+
+
+def visual(widget, *, typography=None, appearance=None, status=None):
+    """Presentation properties only: never replaces a widget, signal or action identity."""
+    for key,value in (('fluentType',typography),('fluentAppearance',appearance),('fluentStatus',status)):
+        if value is not None:widget.setProperty(key,value)
+    widget.style().unpolish(widget);widget.style().polish(widget);widget.update()
+    return widget
+
+
+def core_card(title='',hero=False,*,kind='information'):
+    item,box=card('',hero)
+    item.setProperty('fluentCard','hero' if hero else 'true')
+    item.setProperty('fluentCardKind',kind)
+    box.setContentsMargins(*([SPACING['xl']]*4));box.setSpacing(SPACING['md'])
+    box.setAlignment(Qt.AlignTop)
+    if title:box.addWidget(visual(label(title),typography='card'))
+    return item,box
+
+
+def empty_state(title,description):
+    item,box=core_card(title,kind='empty')
+    box.addWidget(visual(label(description),typography='secondary'))
+    return item
+
+
+def conversation_html(messages,colors):
+    """Native rich text, escaped data, explicit speaker labels even without color."""
+    if not messages:
+        return f'<p style="color:{colors["secondary"]}">可以说说今天的身体感受，或查询已保存的康复记录。</p>'
+    result=[]
+    for message in messages[-60:]:
+        user=message['role']=='elder'
+        name='我' if user else '安康 · 康复管家'
+        content=escape(message['text']).replace('\n','<br>')
+        result.append(f'<table width="100%" cellspacing="0" cellpadding="12"><tr><td bgcolor="{colors["soft"] if user else colors["surface"]}"><p style="color:{colors["secondary"]}"><b>{name}</b> · {escape(message["time"])}</p><p style="color:{colors["text"]}">{content}</p></td></tr></table><br>')
+    return ''.join(result)
 
 
 def label(text='', style=None):

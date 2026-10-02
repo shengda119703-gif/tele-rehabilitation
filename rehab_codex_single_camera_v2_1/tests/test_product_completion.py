@@ -209,8 +209,8 @@ def test_loading_duplicate_error_empty_disabled_and_button_audit(desktop,tmp_pat
         assert w.navigate(page);settle(w,app)
         assert '正在' not in w.page_states[page].text()
     w.navigate('rehab');settle(w,app);w.resize(1180,780);app.processEvents()
-    previous=w.legacy.height();w.interface_buttons['rehabOverview'].click();app.processEvents()
-    assert w.rehab_overview_collapsed and w.legacy.height()>previous
+    previous=w.rehab_workspace.viewport().height();w.interface_buttons['rehabOverview'].click();app.processEvents()
+    assert w.rehab_overview_collapsed and w.rehab_workspace.viewport().height()>previous
     w.interface_buttons['rehabOverview'].click();app.processEvents()
     assert not w.rehab_overview_collapsed
     audit=w.button_audit()

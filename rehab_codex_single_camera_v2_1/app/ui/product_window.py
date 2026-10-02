@@ -18,12 +18,12 @@ from ..settings import ROOT
 from ..participants import legacy_participant
 from ..product.backend import ProductBackend
 from .product_rehab import ProductRehabWindow
-from .product_theme import PRODUCT_STYLE
+from .product_theme import ProductTheme, SPACING, METRICS
 from .product_theme import rehab_product_style
 from .product_dialogs import ProductProfileDialog, MedicationDialog
 from .product_interfaces import ProductInterfaces
 from .product_completion import ProductCompletion
-from .product_widgets import label, button, card, table, rows
+from .product_widgets import label, button, card, table, rows, core_card, visual, conversation_html
 
 NAVIGATION = [('home','首页','home'),('assistant','AI 康复管家','assistant'),('rehab','康复','tasks'),
               ('health','健康','health'),('medication','用药','medication'),('family','家庭','profile'),
@@ -53,7 +53,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.setObjectName('productWindow')
         self.setWindowTitle('安康 · 居家康复助手')
         self.resize(1440,940)
-        self.setMinimumSize(1180,780)
+        self.setMinimumSize(1024,720)
         self.legacy = ProductRehabWindow(runtime=runtime,data_dir=data_dir)
         self.legacy.setStyleSheet(rehab_product_style(self.legacy.styleSheet()))
         self.legacy.setWindowFlags(Qt.Widget)
@@ -81,7 +81,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.refresh_needed = False
         self._build()
         self._completion_setup()
-        self.setStyleSheet(PRODUCT_STYLE)
+        self.product_theme=ProductTheme(self)
         self.developer = QShortcut(QKeySequence('Ctrl+Shift+D'),self)
         self.developer.activated.connect(self._developer)
         self.poller = QTimer(self)
@@ -166,6 +166,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         scroll.setWidgetResizable(True)
         scroll.setFrameShape(QFrame.NoFrame)
         content = QWidget()
+        if key in ('home','assistant'):content.setProperty('visualScope','core')
         box = QVBoxLayout(content)
         box.setContentsMargins(0,0,8,0)
         box.setSpacing(16)
@@ -177,32 +178,47 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
 
     def _assistant_page(self):
         box = self._page('assistant')
-        item,layout = card('AI 康复管家')
-        self.agent_status = label('正在读取助手状态…','productMuted')
+        columns=QHBoxLayout();columns.setSpacing(SPACING['lg'])
+        item,layout = core_card('一起安排康复与日常健康')
+        self.agent_status = visual(label('正在读取助手状态…','productMuted'),typography='secondary')
         layout.addWidget(self.agent_status)
-        self._voice_controls(layout)
         self.chat = QTextBrowser()
         self.chat.setOpenExternalLinks(False)
-        self.chat.setMinimumHeight(380)
-        layout.addWidget(self.chat)
-        quick = QHBoxLayout()
+        self.chat.setMinimumHeight(METRICS['chat_minimum'])
+        self.chat.setAccessibleName('与康复管家的对话历史')
+        layout.addWidget(self.chat,1)
+        quick = QHBoxLayout();quick.setSpacing(SPACING['sm'])
         for title in ['我的训练计划','最近的评估结果','今天漏服了药']:
-            quick.addWidget(button(title,lambda checked=False,t=title:self._send_chat(t)))
-        quick.addStretch()
+            quick.addWidget(visual(button(title,lambda checked=False,t=title:self._send_chat(t)),appearance='ghost'))
         layout.addLayout(quick)
         self.chat_input = QPlainTextEdit()
         self.chat_input.setPlaceholderText('说说今天的状态，或查询已经保存的康复记录。')
-        self.chat_input.setMaximumHeight(100)
+        self.chat_input.setMinimumHeight(METRICS['input_minimum'])
+        self.chat_input.setMaximumHeight(METRICS['input_maximum'])
+        self.chat_input.setAccessibleName('给康复管家发送消息')
         layout.addWidget(self.chat_input)
         row = QHBoxLayout()
         self.private_turn = QCheckBox('本轮不记录')
         row.addWidget(self.private_turn)
         row.addStretch()
         self.chat_send = button('发送',lambda:self._send_chat(),True)
+        visual(self.chat_send,appearance='primary')
         row.addWidget(self.chat_send)
         layout.addLayout(row)
-        box.addWidget(item)
-        box.addStretch()
+        columns.addWidget(item,1)
+        side=QScrollArea();side.setWidgetResizable(True);side.setFrameShape(QFrame.NoFrame)
+        side.setFixedWidth(METRICS['reference_width'])
+        reference,self.assistant_tools=core_card('当前参考与工具')
+        self._voice_controls(self.assistant_tools)
+        side.setWidget(reference);columns.addWidget(side)
+        box.addLayout(columns,1)
+
+    def _render_conversation(self):
+        theme=getattr(self,'product_theme',None)
+        if not theme:return
+        content=conversation_html(self.snapshot.get('state',{}).get('chat',[]),theme.colors)
+        self.chat.setHtml(content);self.dock_chat.setHtml(content)
+        self.chat.verticalScrollBar().setValue(self.chat.verticalScrollBar().maximum())
 
 
     def _health_page(self):
@@ -357,9 +373,10 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
             self.refresh_needed = True
         return True
 
-    def _message(self,text):
+    def _message(self,text,*,severity='info'):
         self.notice.setText(text)
         self.notice.setVisible(bool(text))
+        visual(self.notice,status=severity)
         if hasattr(self,'page_states') and text:
             self.page_states[self.active_page].setText(text)
             self.page_feedback[self.active_page]=text
@@ -397,13 +414,13 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
             if error:
                 if operation == 'extensions.status':self._manual_extension_refresh=False
                 self.storage_label.setText('本机操作未完成')
-                self._message(error)
+                self._message(error,severity='danger')
                 self.pending_export = None
                 continue
             self.storage_label.setText('已连接本机数据')
             if isinstance(result,dict) and result.get('fileExport'):
                 self.pending_export = None
-                self._message('已导出到所选本机文件。')
+                self._message('已导出到所选本机文件。',severity='success')
                 continue
             if self._interface_result(operation,result):
                 continue
@@ -474,7 +491,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
                     self.image_confirm.setEnabled(False)
                     rows(self.image_candidates,[])
                 if operation not in ('snapshot','extensions.status'):
-                    self._message('管家已回复。' if operation in ('chat','voice.input') else '操作已完成，已刷新本机资料。')
+                    self._message('管家已回复。' if operation in ('chat','voice.input') else '操作已完成，已刷新本机资料。',severity='success')
                 if operation in ('archive.save','media.import') and self.navigate('health',refresh=False):
                     self.health_tabs.setCurrentIndex(2)
         if not self.owner and self.profiles and not self.pending and not self.legacy.busy and not self.closing:
@@ -771,14 +788,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         concerns = s['twin']['personTwin'].get('activeConcerns',[])
         self.home_status.setText('；'.join(concerns) if concerns else '已有 '+str(len(state['events']))+' 条健康记录；暂未形成需关注的摘要。数据不足时不能判断整体健康状态。')
         self.agent_status.setText('健康管理与康复记录查询可用。' if s.get('modelAvailable') else '基础健康对话与记录可用；康复记录查询尚未配置。')
-        transcript = []
-        for message in state['chat'][-60:]:
-            title = '我' if message['role']=='elder' else '安康'
-            color = '#285e52' if message['role']=='agent' else '#657c6d'
-            transcript.append(f"<p style='color:{color}'><b>{title}</b> <small>{escape(message['time'])}</small></p><p>{escape(message['text']).replace(chr(10),'<br>')}</p>")
-        self.chat.setHtml(''.join(transcript) or '<p>可以说说今天的身体感受，或查询已保存的康复记录。</p>')
-        self.dock_chat.setHtml(self.chat.toHtml())
-        self.chat.verticalScrollBar().setValue(self.chat.verticalScrollBar().maximum())
+        self._render_conversation()
         twin = s['twin']['personTwin']
         self.twin_text.setText(' · '.join(title+'：'+STATUS_LABELS.get(twin[key],twin[key]) for key,title in [('activity','活动'),('mobility','行动'),('sleep','睡眠'),('nightActivity','夜间活动')])+'\n数据更新时间：'+str(s['twin'].get('dataUpdatedAt') or '尚无记录')+'\n这是已有资料的状态摘要，不是诊断。')
         self.concerns.clear()
