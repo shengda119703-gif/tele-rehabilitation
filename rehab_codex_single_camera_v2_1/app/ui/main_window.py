@@ -9,6 +9,7 @@ import time
 from uuid import uuid4
 
 from PySide6.QtCore import Qt, QTimer
+from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import (QMainWindow, QWidget, QFrame, QVBoxLayout, QHBoxLayout,
     QGridLayout, QFormLayout, QLabel, QPushButton, QComboBox, QLineEdit, QCheckBox,
     QDoubleSpinBox, QScrollArea, QTableWidget, QTableWidgetItem,
@@ -67,6 +68,19 @@ def card():
 
 
 class MainWindow(QMainWindow):
+    def _open_deepseek_developer(self):
+        from .deepseek_developer import DeepSeekDeveloperDialog
+        dialog = DeepSeekDeveloperDialog(self)
+        accepted = dialog.exec() == QDialog.Accepted
+        dialog.key_input.clear()
+        dialog.deleteLater()
+        if accepted and self.assistant_dialog is not None:
+            # Existing sessions snapshot model availability; reopen via the same bridge.
+            self.assistant_dialog.shutdown()
+            self.assistant_dialog.close()
+            self.assistant_dialog.deleteLater()
+            self.assistant_dialog = None
+
     def __init__(self, runtime=None, data_dir=None):
         super().__init__()
         self.setWindowTitle('康复助手')
@@ -132,6 +146,8 @@ class MainWindow(QMainWindow):
         self._last_coach_view = None
         self._live_mirror, self._replay_mirror = True, False
         self._build()
+        self._developer_shortcut = QShortcut(QKeySequence('Ctrl+Shift+D'), self)
+        self._developer_shortcut.activated.connect(self._open_deepseek_developer)
         self.catalog.checklist_requested.connect(self._open_assessment_batch)
         self.constructing = False
         self._sync_scene()

@@ -1,20 +1,28 @@
-// Optional Chat Completions-compatible model adapter; keys stay in the host environment.
+// Optional Chat Completions-compatible model adapter; keys stay in private host config.
 // Runtime owns orchestration; this adapter only supplies model selection/wording and host reads.
 const names = ['rehab.get_training_plan', 'rehab.get_recent_assessments', 'rehab.get_training_history'];
+const fs = require('node:fs');
+const path = require('node:path');
+const os = require('node:os');
+
+function localKey() {
+  const file = path.resolve(process.env.APPDATA || path.join(os.homedir(), '.config'), 'tele-rehabilitation', 'deepseek.json');
+  const checkout = path.resolve(__dirname, '../../..');
+  const relative = path.relative(checkout, file);
+  if (!relative.startsWith('..' + path.sep) && !path.isAbsolute(relative)) return '';
+  try {
+    const value = JSON.parse(fs.readFileSync(file, 'utf8')).api_key;
+    return typeof value === 'string' ? value.trim() : '';
+  } catch { return ''; }
+}
 
 function createRehabModel(read) {
-  const url = process.env.ANKANG_REHAB_LLM_URL;
-  const model = process.env.ANKANG_REHAB_LLM_MODEL;
-  if (!url || !model) return undefined;
+  const key = localKey() || process.env.ANKANG_REHAB_LLM_API_KEY;
+  if (!key) return undefined;
+  const url = 'https://api.deepseek.com/chat/completions';
+  const model = 'deepseek-flash';
   const endpoint = new URL(url);
-  if (
-    endpoint.protocol !== 'https:' &&
-    !(endpoint.protocol === 'http:' && ['127.0.0.1', 'localhost', '[::1]'].includes(endpoint.hostname))
-  ) {
-    throw new Error('Rehab model endpoint must use HTTPS (HTTP allowed only on loopback)');
-  }
   async function complete(system, content, json = false) {
-    const key = process.env.ANKANG_REHAB_LLM_API_KEY;
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', ...(key ? { Authorization: `Bearer ${key}` } : {}) },
@@ -28,7 +36,7 @@ function createRehabModel(read) {
         ...(json ? { response_format: { type: 'json_object' } } : {}),
       }),
       signal: AbortSignal.timeout(20000),
-    });
+    }).catch(() => { throw new Error('康复模型连接失败或超时'); });
     if (!response.ok) throw new Error(`康复模型请求失败 (HTTP ${response.status})`);
     const text = (await response.json()).choices?.[0]?.message?.content;
     if (typeof text !== 'string' || !text.trim()) throw new Error('康复模型未返回有效文本');
