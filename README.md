@@ -1,6 +1,8 @@
 # 居家康复助手
 
-**当前 main：正式 PySide6 居家康复助手产品基线（2026-10-02 Final Integration）。** 首页、AI 康复管家、康复、健康、用药、家庭、历史与报告及通知/设置，使用原康复 Runtime/SQLite 和 Ankang TypeScript ProductService，通过本机 Python/Node bridge 集成。React/demo 保留作迁移参考；Home Twin/Route2 空间建模/3DGS 不进入正式主流程。Voice/sync/HealthKit/设备等外部接口已迁入，真实平台接线与验收仍按各模块限制执行。
+**当前 main：正式 PySide6 居家康复助手产品基线（2026-10-02 Final Integration）。** 首页、AI 康复管家、康复、健康、用药、家庭、历史与报告及通知/设置，使用原康复 Runtime/SQLite 和 Ankang TypeScript ProductService，通过本机 Python/Node bridge 集成。Voice/sync/HealthKit/设备等外部接口已迁入，真实平台接线与验收仍按各模块限制执行。
+
+**当前 `codex/product-ui-v1`：** 完成功能接线后开展[运行依赖与旧代码清理](docs/validation/REPOSITORY_CLEANUP_2026-10-02.md)。已移除无正式依赖的 Ankang React UI、浏览器 demo/设计演示、独立 Home Twin/Route2/3DGS 和旧独立 Assistant 验收窗口；保留业务/core、外部 adapters、原康复 UI/Runtime 与历史说明。完整迁移快照仍在 Git/stage1，空间文档集中到 `docs/archive/ankang-route2`。main 尚未包含本轮 UI 分支清理。
 
 合并前[完整审计](docs/validation/FINAL_INTEGRATION_AUDIT_2026-10-02.md)、[逐文件对照表](docs/validation/FINAL_INTEGRATION_FILE_AUDIT_2026-10-02.csv)、[main 启动与集成验收](docs/validation/MAIN_INTEGRATION_ACCEPTANCE_2026-10-02.md)。后续 UI 在 `codex/product-ui-v1`，不直接在 main 进行大量视觉修改。
 

@@ -1,0 +1,28 @@
+﻿path_or_pattern,classification,action,reason
+ankang/route1-health-agent/.bridge-build/,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+ankang/route1-health-agent/.test-build/,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+ankang/route1-health-agent/node_modules/,REFERENCE,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+ankang/route1-health-agent/p0-blackbox/,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+ankang/route1-health-agent/tests/browser-smoke.png,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+ankang/route1-health-agent/tests/cross-device-smoke.png,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+ankang/route1-health-agent/tests/crosstab-elder.png,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+ankang/route1-health-agent/tests/crosstab-family.png,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+ankang/route1-health-agent/tests/family-medication.png,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+ankang/route1-health-agent/tests/notif-push-smoke.png,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+ankang/route1-health-agent/tests/webhook-blackbox.png,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+ankang/route2-home-3d/,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+backups/,REFERENCE,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+bridges/ankang/__pycache__/,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+rehab_codex_single_camera_v2_1/__pycache__/,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+rehab_codex_single_camera_v2_1/app/__pycache__/,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+rehab_codex_single_camera_v2_1/app/product/__pycache__/,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+rehab_codex_single_camera_v2_1/app/ui/__pycache__/,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+rehab_codex_single_camera_v2_1/qa-output/,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+rehab_codex_single_camera_v2_1/scripts/__pycache__/,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+rehab_codex_single_camera_v2_1/tests/__pycache__/,DEAD/GENERATED,KEEP_LOCAL_IGNORED,Local verification/runtime dependency/archive; excluded from formal tracked source; no user-data deletion
+**/.venv*/,PRODUCTION,PROTECTED_LOCAL_ONLY,"Environment, configuration, model or user data; excluded from Git; no deletion, whether present or not"
+**/.env* (except templates),PRODUCTION,PROTECTED_LOCAL_ONLY,"Environment, configuration, model or user data; excluded from Git; no deletion, whether present or not"
+**/deepseek.json,PRODUCTION,PROTECTED_LOCAL_ONLY,"Environment, configuration, model or user data; excluded from Git; no deletion, whether present or not"
+**/data/,PRODUCTION,PROTECTED_LOCAL_ONLY,"Environment, configuration, model or user data; excluded from Git; no deletion, whether present or not"
+**/*.sqlite3*,PRODUCTION,PROTECTED_LOCAL_ONLY,"Environment, configuration, model or user data; excluded from Git; no deletion, whether present or not"
+**/assets/models/*.pt|*.task,PRODUCTION,PROTECTED_LOCAL_ONLY,"Environment, configuration, model or user data; excluded from Git; no deletion, whether present or not"

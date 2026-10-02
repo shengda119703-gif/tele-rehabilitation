@@ -72,10 +72,11 @@ def test_expired_plan_is_not_recommended_as_available(rehab_db):
     assert not plan['next_available'] and '过期' in plan['availability_reason']
 
 
-def test_offscreen_real_bridge_three_questions_and_scope_isolation(rehab_db, monkeypatch, capsys, tmp_path):
-    from PySide6.QtWidgets import QApplication
-    from app.ui.ankang_assistant import AssistantDialog
-    from test_ankang_assistant import wait_until
+def test_real_bridge_three_questions_and_scope_isolation(rehab_db, monkeypatch, capsys, tmp_path):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from bridges.ankang.client import AgentBridge
     questions = ['我今天练什么？', '我最近肩膀怎么样？', '我上次训练完成得怎么样？']
     requests = []
 
@@ -121,51 +122,38 @@ def test_offscreen_real_bridge_three_questions_and_scope_isolation(rehab_db, mon
     monkeypatch.setenv('NODE_OPTIONS', '--require '+json.dumps(str(hook)))
     monkeypatch.setenv('APPDATA', str(tmp_path/'private-config'))
     monkeypatch.setenv('ANKANG_REHAB_LLM_API_KEY', 'TEST-protocol-fixture')
-    app = QApplication.instance() or QApplication([])
     scope = dict(DEMO_SCOPE)
-    dialog = AssistantDialog(scope_provider=lambda: dict(scope),
-        read_tools_factory=lambda current: RehabReadTools(rehab_db, current))
-    dialog.set_participant(scope['participant_id'])
-    dialog.show()
+    profile = dict(name='用户', age=0, conditions=[], medications=[], familyContact='', familyPhone='',
+                   mobility='unknown', usesCane=False, nightVision='unknown', cognition='unknown', familySharing='denied')
+    bridge = AgentBridge()
     before = hashlib.sha256(rehab_db.read_bytes()).hexdigest()
     try:
+        assert bridge.open_session('test-original', profile, rehab_tools=True)['rehabToolsAvailable']
         for index, question in enumerate(questions):
-            dialog.input.setText(question)
-            dialog.send.click()
-            wait_until(app, lambda: not dialog.busy)
-            result = dialog.last_result
-            assert result, dialog.status.text()
+            result = bridge.process_turn('test-original', question, tool_handler=RehabReadTools(rehab_db, scope))
             assert result['rehab']['data']['status'] == 'found'
             assert result['rehab']['call']['name'] == TOOLS[index]
             assert result['revision'] == index + 1
             assert result['snapshot']['events'] == []
             with capsys.disabled():
-                print('\nPython UI ->', question, '\nAgent ->', result['reply']['text'])
-        # Source changes invalidate visible conversation and the tool's bound capability.
+                print('\nPython bridge ->', question, '\nAgent ->', result['reply']['text'])
+        # Different scopes bind separate sessions/read capabilities; formal ProductWindow UI is tested separately.
         scope['source_kind'] = 'LIVE_CAMERA'
-        dialog.input.setText(questions[0])
-        dialog.send.click()
-        wait_until(app, lambda: not dialog.busy)
-        assert dialog.last_result['revision'] == 1
-        assert '没有找到' in dialog.last_result['reply']['text']
+        bridge.open_session('test-source', profile, rehab_tools=True)
+        result = bridge.process_turn('test-source', questions[0], tool_handler=RehabReadTools(rehab_db, scope))
+        assert result['revision'] == 1
+        assert '没有找到' in result['reply']['text']
         scope.update(DEMO_SCOPE, participant_id='synthetic-other')
-        dialog.set_participant(scope['participant_id'])
-        assert not dialog.chat.toPlainText()
-        dialog.input.setText(questions[0])
-        dialog.send.click()
-        wait_until(app, lambda: not dialog.busy)
-        assert dialog.last_result['revision'] == 1
-        assert '没有找到' in dialog.chat.toPlainText()
-        dialog.input.setText('你好')
-        dialog.send.click()
-        wait_until(app, lambda: not dialog.busy)
-        assert dialog.last_result['revision'] == 2 and 'rehab' not in dialog.last_result
+        bridge.open_session('test-other', profile, rehab_tools=True)
+        result = bridge.process_turn('test-other', questions[0], tool_handler=RehabReadTools(rehab_db, scope))
+        assert result['revision'] == 1
+        assert '没有找到' in result['reply']['text']
+        result = bridge.process_turn('test-other', '你好', tool_handler=RehabReadTools(rehab_db, scope))
+        assert result['revision'] == 2 and 'rehab' not in result
         assert hashlib.sha256(rehab_db.read_bytes()).hexdigest() == before
     finally:
-        dialog.shutdown()
-        dialog.worker.thread.join(5)
-        dialog.close()
+        bridge.close()
         server.shutdown()
         server.server_close()
         thread.join(2)
-    assert not dialog.worker.thread.is_alive()
+    assert bridge._process.poll() is not None

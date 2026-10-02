@@ -1,21 +1,6 @@
 """Reuse Ankang's hardware-neutral capture contracts without starting Route2 spatial inference."""
-import importlib.util
-import sys
 from pathlib import Path
-
-_source = Path(__file__).resolve().parents[3] / 'ankang' / 'route2-home-3d' / 'backend' / 'capture.py'
-_name = 'ankang_product_capture_contract'
-if _name not in sys.modules:
-    _spec = importlib.util.spec_from_file_location(_name, _source)
-    _module = importlib.util.module_from_spec(_spec)
-    sys.modules[_name] = _module
-    _spec.loader.exec_module(_module)
-else:
-    _module = sys.modules[_name]
-CaptureFile = _module.CaptureFile
-CaptureBatch = _module.CaptureBatch
-CaptureSource = _module.CaptureSource
-BrowserUploadCaptureSource = _module.BrowserUploadCaptureSource
+from .capture_contracts import CaptureFile, CaptureBatch, CaptureSource, BrowserUploadCaptureSource
 
 
 def archive_payload(batch, *, visibility='private'):

@@ -329,13 +329,13 @@ type TurnOutput = {
 
 | 测试文件（相对 route1-health-agent） | 实际源码依赖/保留说明 |
 | --- | --- |
-| [`tests/agent-tool-routing.test.ts`](../../ankang/route1-health-agent/tests/agent-tool-routing.test.ts) | `agent-tools/intentRouter.ts`、`agent-tools/registry.ts` |
+| [`tests/agent-tool-routing.test.ts`](https://github.com/shengda119703-gif/tele-rehabilitation/blob/4b2d108a3003d84c89ac42da25580017d5b1de17/ankang/route1-health-agent/tests/agent-tool-routing.test.ts) | `agent-tools/intentRouter.ts`、`agent-tools/registry.ts` |
 | [`tests/dashboard-status.test.ts`](../../ankang/route1-health-agent/tests/dashboard-status.test.ts) | `engine/escalate.ts`、`engine/dashboardStatus.ts` |
 | [`tests/elder-chat-turn-order.test.ts`](../../ankang/route1-health-agent/tests/elder-chat-turn-order.test.ts) | `engine/elderTurnGuard.ts`；补充保留作旧门禁对照，guard 当前未接生产 |
 | [`tests/family-link-handshake.test.ts`](../../ankang/route1-health-agent/tests/family-link-handshake.test.ts) | `engine/familyLinkHandshake.ts`、`hooks/useFamilyBinding.ts` |
 | [`tests/family-session-isolation.test.ts`](../../ankang/route1-health-agent/tests/family-session-isolation.test.ts) | `engine/familyDisclosure.ts` |
-| [`tests/home-safety-family-gate.test.ts`](../../ankang/route1-health-agent/tests/home-safety-family-gate.test.ts) | 读取 App.tsx/FamilyDashboard.tsx 源码验证家庭空间权限门禁；Home Twin 可选链 |
-| [`tests/home-safety-session-isolation.test.ts`](../../ankang/route1-health-agent/tests/home-safety-session-isolation.test.ts) | `data/demoHomeSafetyActions.ts` |
+| [`tests/home-safety-family-gate.test.ts`](https://github.com/shengda119703-gif/tele-rehabilitation/blob/4b2d108a3003d84c89ac42da25580017d5b1de17/ankang/route1-health-agent/tests/home-safety-family-gate.test.ts) | 读取 App.tsx/FamilyDashboard.tsx 源码验证家庭空间权限门禁；Home Twin 可选链 |
+| [`tests/home-safety-session-isolation.test.ts`](https://github.com/shengda119703-gif/tele-rehabilitation/blob/4b2d108a3003d84c89ac42da25580017d5b1de17/ankang/route1-health-agent/tests/home-safety-session-isolation.test.ts) | `data/demoHomeSafetyActions.ts` |
 | [`tests/image-health-parser.test.ts`](../../ankang/route1-health-agent/tests/image-health-parser.test.ts) | `adapters/RealImageHealthParser.ts`、`adapters/MockVisionProvider.ts`、`adapters/DemoImageHealthParser.ts`、`adapters/ImageHealthParser.ts`、`adapters/parserSelector.ts`、`adapters/HttpVisionProvider.ts`、`adapters/imageNormalizer.ts` |
 | [`tests/llm-proxy.test.ts`](../../ankang/route1-health-agent/tests/llm-proxy.test.ts) | 补充保留：启动 scripts/local-llm-proxy.mjs 验证代理安全；非静态 src import |
 | [`tests/local-date.test.ts`](../../ankang/route1-health-agent/tests/local-date.test.ts) | `data/demo.ts`；补充保留：demo re-export 的真实 clock 日期契约 |

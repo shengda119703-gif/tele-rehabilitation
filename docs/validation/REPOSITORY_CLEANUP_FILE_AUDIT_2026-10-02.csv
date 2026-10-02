@@ -1,0 +1,758 @@
+﻿path,classification,action,formal_dependency,reason
+.gitattributes,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+.gitignore,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+AGENTS.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+README.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+Setup-Rehab.ps1,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+Start-Rehab.ps1,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+ankang/.github/workflows/route1-ci.yml,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/.github/workflows/route1-diagnose-context.yml,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/.github/workflows/route1-format-pr32-main.yml,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/.github/workflows/route1-pages-deploy.yml,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/.github/workflows/route2-ci.yml,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/.github/workflows/route2-surface-ci.yml,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/.gitignore,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/README.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/UPSTREAM.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/docs/BRANCH_INTEGRATION_AUDIT.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/docs/route1-p0-2-family-binding-plan.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/docs/想法.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/.env.example,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/.env.hardware.example,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/.gitignore,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/.prettierignore,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/.prettierrc.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/HARDWARE_TEST_RUNBOOK.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/PHASE1_HARDENING.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/README.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/design-demos/capture-implementation.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/design-demos/design-spec.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/design-demos/direction-a-reference.html,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/design-demos/direction-a-reference.png,DEAD/GENERATED,DELETE,false,Historical demo screenshot output
+ankang/route1-health-agent/design-demos/direction-b-accessible.html,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/design-demos/direction-b-accessible.png,DEAD/GENERATED,DELETE,false,Historical demo screenshot output
+ankang/route1-health-agent/design-demos/direction-c-story.html,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/design-demos/direction-c-story.png,DEAD/GENERATED,DELETE,false,Historical demo screenshot output
+ankang/route1-health-agent/design-demos/implemented-b-assistant.png,DEAD/GENERATED,DELETE,false,Historical demo screenshot output
+ankang/route1-health-agent/design-demos/implemented-b-elder-home.png,DEAD/GENERATED,DELETE,false,Historical demo screenshot output
+ankang/route1-health-agent/design-demos/implemented-b-elder.png,DEAD/GENERATED,DELETE,false,Historical demo screenshot output
+ankang/route1-health-agent/design-demos/implemented-b-family-home.png,DEAD/GENERATED,DELETE,false,Historical demo screenshot output
+ankang/route1-health-agent/design-demos/implemented-b-family-tasks.png,DEAD/GENERATED,DELETE,false,Historical demo screenshot output
+ankang/route1-health-agent/design-demos/implemented-b-family.png,DEAD/GENERATED,DELETE,false,Historical demo screenshot output
+ankang/route1-health-agent/design-demos/verify-designs.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/direction-approved.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/docs/FOUR_TAB_UI_HANDOFF.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/docs/health-image-parser.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/index.html,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/native-ios/Sources/AnkangHealthBridgeApp.swift,PRODUCTION,KEEP,false,Build dependency or retained external HealthKit companion
+ankang/route1-health-agent/native-ios/Sources/ContentView.swift,PRODUCTION,KEEP,false,Build dependency or retained external HealthKit companion
+ankang/route1-health-agent/native-ios/Sources/HealthKitBridgeUploader.swift,PRODUCTION,KEEP,false,Build dependency or retained external HealthKit companion
+ankang/route1-health-agent/native-ios/Sources/HealthKitService.swift,PRODUCTION,KEEP,false,Build dependency or retained external HealthKit companion
+ankang/route1-health-agent/native-ios/Sources/Models.swift,PRODUCTION,KEEP,false,Build dependency or retained external HealthKit companion
+ankang/route1-health-agent/native-ios/Support/AnkangHealthBridge.entitlements,PRODUCTION,KEEP,false,Build dependency or retained external HealthKit companion
+ankang/route1-health-agent/native-ios/Support/Info.plist,PRODUCTION,KEEP,false,Build dependency or retained external HealthKit companion
+ankang/route1-health-agent/native-ios/project.yml,PRODUCTION,KEEP,false,Build dependency or retained external HealthKit companion
+ankang/route1-health-agent/p0-blackbox/package-lock.json,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/p0-blackbox/package.json,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/p0-blackbox/run-blackbox.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/package-lock.json,PRODUCTION,KEEP,false,Build dependency or retained external HealthKit companion
+ankang/route1-health-agent/package.json,PRODUCTION,KEEP,false,Build dependency or retained external HealthKit companion
+ankang/route1-health-agent/scripts/agent-bridge.cjs,PRODUCTION,KEEP,false,"Bridge, local storage/model, build or optional external server"
+ankang/route1-health-agent/scripts/build-agent-bridge.cjs,PRODUCTION,KEEP,false,"Bridge, local storage/model, build or optional external server"
+ankang/route1-health-agent/scripts/healthkit-bridge.mjs,PRODUCTION,KEEP,false,"Bridge, local storage/model, build or optional external server"
+ankang/route1-health-agent/scripts/local-llm-proxy.mjs,PRODUCTION,KEEP,false,"Bridge, local storage/model, build or optional external server"
+ankang/route1-health-agent/scripts/product-local-store.cjs,PRODUCTION,KEEP,false,"Bridge, local storage/model, build or optional external server"
+ankang/route1-health-agent/scripts/rehab-model.cjs,PRODUCTION,KEEP,false,"Bridge, local storage/model, build or optional external server"
+ankang/route1-health-agent/scripts/security-check.mjs,PRODUCTION,KEEP,false,"Bridge, local storage/model, build or optional external server"
+ankang/route1-health-agent/scripts/test-healthkit-adapter.mjs,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/scripts/test-healthkit-bridge.mjs,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/scripts/test-healthkit.mjs,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/scripts/verify-llm-understanding.mjs,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/App.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/adapters/BrowserNotificationChannel.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/BrowserVoiceAdapter.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/DemoDeviceAdapter.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/DemoImageHealthParser.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/adapters/DeviceAdapter.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/FamilyNotificationDelivery.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/HealthKitDeviceAdapter.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/HomeSafetyActionAdapter.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/adapters/HomeTwinClient.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/adapters/HttpVisionProvider.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/ImageHealthParser.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/MeasurementInputAdapter.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/MockVisionProvider.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/adapters/PeerJSCrossDevice.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/RealImageHealthParser.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/WebhookPushChannel.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/imageNormalizer.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/adapters/parserSelector.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/adapters/signalingConfig.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/agent-tools/HomeTwinTool.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/agent-tools/intentRouter.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/agent-tools/registry.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/agent-tools/types.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/archive/ArchiveService.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/archive/healthHistory.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/components/ChatView.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/DeviceDebugPanel.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/ElderAssistantPage.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/ElderHealthPage.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/ElderHome.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/ElderHomeSpacePage.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/ElderSettingsPage.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/FamilyDashboard.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/FirstRunGate.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/FontSizeControl.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/HealthArchivePage.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/HoldToTalk.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/MedicationPage.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/MobileTabBar.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/OnboardingFlow.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/ProfileForm.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/ProfileView.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/ReportView.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/RoleGate.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/RuntimeModeBanner.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/SafetyActions.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/Sparkline.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/VoiceListeningDialog.css,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/components/VoiceListeningDialog.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/config/appConfig.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/config/runtime.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/data/demo.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/data/demoArchives.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/data/demoHomeSafetyActions.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/data/normalize.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/agent.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/baseline.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/clock.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/context.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/correction.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/dashboardStatus.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/detect.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/detection/fusion.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/detection/helpers.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/detection/rules/contextual.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/detection/rules/metricBaseline.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/detection/safety.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/detection/signals.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/detection/types.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/elderTurn.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/elderTurnGuard.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/engine/escalate.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/extract.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/familyDisclosure.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/familyLedger.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/familyLinkHandshake.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/llmUnderstanding.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/medicationCare.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/notify.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/notifyPersistence.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/engine/personTwin.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/privacy.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/questions.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/report.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/retry.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/engine/sharingAudit.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/sharingAuditRules.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/tasks.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/turnQueue.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/understanding.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/engine/userFacing.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/family/FamilyPersistence.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/family/FamilyService.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/family/projection.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/healthkit/autoSync.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/hooks/useCareTasks.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/hooks/useCrossDeviceSync.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/hooks/useCrossTabSync.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/hooks/useElderChat.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/hooks/useFamilyBinding.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/hooks/useFontScale.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/hooks/useHomeTwinIntegration.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/hooks/useNotificationDispatch.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/main.tsx,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/medication/MedicationService.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/medication/medications.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/notification/NotificationService.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/personTwin/readPersonTwinProduct.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/pipeline/events.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/product/ExtensionPorts.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/product/ProductService.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/profile/OwnerScope.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/profile/ProfilePersistence.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/runtime/careTasks.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/runtime/derive.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/runtime/index.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/runtime/ports.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/runtime/rehabTools.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/runtime/session.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/runtime/turn.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/store/BrowserAttachmentPort.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/store/BrowserNotificationPort.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/store/HealthRecordStore.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/store/IdbKeyValueStore.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/store/LocalHealthRecordStore.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/store/PersistentHealthRecordStore.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/store/clearLocalData.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/store/familyStore.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/store/profileStore.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/src/styles-accessibility.css,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/styles.css,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/src/sync/BrowserSyncAdapter.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/sync/protocol.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/types.ts,PRODUCTION,KEEP,true,Runtime source or retained external capability
+ankang/route1-health-agent/src/vite-env.d.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/absolute-date-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/agent-external-context.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/agent-tool-routing.test.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/blood-pressure-adversarial-blackbox.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/browser-smoke.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/care-tasks-session-only.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/clock.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/context-memory-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/coordinated-family-attribution-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/coordinated-measurement-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/corpus/utterances.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/correction-time-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/cross-device-status-blackbox.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/dashboard-status.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/demo-filled-browser.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/detection.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/elder-chat-turn-order.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/elder-next-layer-blackbox.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/elder-overload-blackbox.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/elder-privacy-adversarial.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/elder-sharing-audit-blackbox.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/elder-sos-blackbox.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/elder-turn-plan.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/family-binding-blackbox.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/family-disclosure.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/family-ledger-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/family-link-handshake.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/family-management-browser.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/family-notification-crosstab.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/family-service-browser.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/family-service.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/family-session-isolation.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/final-audit-smoke.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/fixtures/legacyReactOrchestration.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/four-tab-flow.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/greeting-and-copy.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/health-store-session-only.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/healthkit-device-adapter.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/helpers/demo-seed.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/helpers/preview-server.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/home-capture-browser.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/home-safety-family-gate.test.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/home-safety-session-isolation.test.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/image-health-parser.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/llm-endpoint-guard.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/llm-proxy.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/llm-understanding.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/local-date.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/medication-care.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/medication-service-browser.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/medication-service.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/mixed-intent-privacy.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/multi-fact-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/negation-combinatorial.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/negation-hypothesis-blackbox.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/notification-push-blackbox.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/notify-persistence.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/notify.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/numeric-extraction.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/onboarding-blackbox.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/persistent-health-store.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/personal-mode-gates.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/phase1-hardening.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/pipeline-properties.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/privacy-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/privacy-time-window-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/private-urgent-gate.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/product-desktop.test.cjs,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/product-extensions.test.cjs,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/profile-store.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/rehab-runtime-tools.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/retry.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/route1-audit2.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/route1-audit4role.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/route1-corpus.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/route1-e2e.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/route1-phase2.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/route1-safety-reply.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/runtime-dependencies.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/runtime.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/self-correction-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/share-recipient-routing.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/sharing-audit-session-only.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/signaling-config.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/stage5cde-browser.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/stage5cde-services.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/tag-fallback-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/task-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/temporal-attribution-chain-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/temporal-attribution-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/time-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/turn-queue.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/user-diagnostic.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/user-input-regression.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/user-ux-blackbox.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tests/voice-dialog-browser.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/webhook-blackbox.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route1-health-agent/tests/webhook-push.test.ts,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/tsconfig.bridge.json,PRODUCTION,KEEP,false,Build dependency or retained external HealthKit companion
+ankang/route1-health-agent/tsconfig.json,PRODUCTION,KEEP,false,Build dependency or retained external HealthKit companion
+ankang/route1-health-agent/tsconfig.test.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+ankang/route1-health-agent/vite.config.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/.gitignore,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/README.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/README.md
+ankang/route2-home-3d/ROUTE2_CODE_AUDIT.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/ROUTE2_CODE_AUDIT.md
+ankang/route2-home-3d/backend/HOME_CAPTURE.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/backend/HOME_CAPTURE.md
+ankang/route2-home-3d/backend/README.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/backend/README.md
+ankang/route2-home-3d/backend/__init__.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/backend/app.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/backend/capture.py,PRODUCTION,MOVE,true,Copy existing hardware-neutral contract verbatim to app/product/capture_contracts.py before removing Route2
+ankang/route2-home-3d/backend/home_capture.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/backend/processor.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/backend/requirements.txt,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/backend/start-home-capture.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/backend/test_home_capture.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/backend/test_rescan_backend.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/backend/verify_real_rescan_api.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/docs/P0_ROLE_IMPLEMENTATION_STATUS.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/docs/P0_ROLE_IMPLEMENTATION_STATUS.md
+ankang/route2-home-3d/docs/PRODUCT_JOURNEY_V1.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/docs/PRODUCT_JOURNEY_V1.md
+ankang/route2-home-3d/docs/PRODUCT_ROLE_MODEL_V1.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/docs/PRODUCT_ROLE_MODEL_V1.md
+ankang/route2-home-3d/docs/capture-guide.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/docs/capture-guide.md
+ankang/route2-home-3d/docs/family-action-demo-runbook.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/docs/family-action-demo-runbook.md
+ankang/route2-home-3d/docs/hometwin-qa.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/docs/hometwin-qa.md
+ankang/route2-home-3d/docs/person-home-action-loop.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/docs/person-home-action-loop.md
+ankang/route2-home-3d/docs/real-rescan-input.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/docs/real-rescan-input.md
+ankang/route2-home-3d/docs/route2-p0-role-validation.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/docs/route2-p0-role-validation.md
+ankang/route2-home-3d/p0-blackbox/run-blackbox.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/00_check_env.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/01_setup.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/02_prepare_data.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/03_run_colmap.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/04_train_3dgs.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/05_export_web.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/06_detect_semantics.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/07_plan_walkable_route.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/08_build_surface_route.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/09_project_person_home_risk.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/10_build_family_action_plan.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/11_rescan_and_close.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/12_rescan_home.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/scripts/run_all.ps1,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/README.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/pipeline/semantic/README.md
+ankang/route2-home-3d/pipeline/semantic/detect_and_localize.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/mobility-profile.example.json,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/person-twin.example.json,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/person_home_action_plan.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/person_home_risk.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/personalized_surface_route.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/requirements.txt,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/rescan_action_merge.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/scale.example.json,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/surface_costmap.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/test_person_home_action_plan.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/test_person_home_risk.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/test_person_home_risk_contract.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/test_personalized_surface_route.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/test_rescan_action_merge.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/test_rescan_continuity.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/test_surface_costmap.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/test_surface_hazard_evidence.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/test_walkability.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/topology.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/pipeline/semantic/walkability.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/index.html,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/package-lock.json,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/package.json,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/public/data/family-action-plan.json,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/public/data/family-action-rescan.json,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/public/data/hazards.json,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/public/data/semantic-targets.json,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/public/models/README.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/web/public/models/README.md
+ankang/route2-home-3d/web/src/captureHome.css,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/captureHome.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/gaussian-splats-3d.d.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/REAL_RESCAN_INTEGRATION.md,REFERENCE,ARCHIVE_DOCUMENT,false,Historical spatial architecture/validation document retained at docs/archive/ankang-route2/web/src/hometwin/REAL_RESCAN_INTEGRATION.md
+ankang/route2-home-3d/web/src/hometwin/actionPlan.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/fromHazardData.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/importSemantic.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/itemFinder.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/model.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/rescanBridge.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/rescanClient.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/rescanInput.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/rescanManifest.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/rescanResult.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/rescanWorkflow.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/routePlanner.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/hometwin/semantic.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/main.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/rescan-ui.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/scene/app.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/scene/demoRoom.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/scene/markers.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/scene/paths.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/style.css,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/types.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/ui/journey.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/ui/panel.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/ui/roleMode.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/src/vite-env.d.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/tests/action-plan.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/tests/data-contract.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/tests/item-finder.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/tests/journey.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/tests/rescan-provenance.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/tests/role-mode.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/tests/role-mode.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/tests/route-planner.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/tests/semantic-contract.test.mjs,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/tsconfig.json,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+ankang/route2-home-3d/web/vite.config.ts,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+bridges/ankang/client.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+bridges/ankang/smoke.py,PRODUCTION,KEEP,false,Runtime source or retained external capability
+docs/DEVELOPMENT.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/HANDOFF.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/README.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/USER_GUIDE.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/archive/original-v2.1/MANIFEST.sha256.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/archive/original-v2.1/MIGRATION_V1_TO_V2.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/archive/original-v2.1/README.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/archive/original-v2.1/SOFTWARE_SPEC.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/archive/original-v2.1/TEST_RESULTS.txt,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/archive/original-v2.1/VALIDATION.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/assets/EXERCISE_IMAGE_MANIFEST.csv,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/dependencies/DEPENDENCY_MANIFEST.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/dependencies/LANDMARK_DEPENDENCY_MANIFEST.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/dependencies/THIRD_PARTY_NOTICES.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/development/REGRESSION_CASES.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/ASSESSMENT_TRAINING_V0_2.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/AUTOMATIC_REHAB_V0_18.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/BODY_NAVIGATION_V0_8.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/CHANGELOG.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/CLARITY_UI_V0_7.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/DEMO_AUTOMATIC_PLAN_V0_18_3.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/DISTANCE_GUIDANCE_V0_9.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/DUAL_CAMERA_V0_13.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/FUNCTIONAL_EXPANSION_V0_5.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/JOINT_EXPANSION_V0_3.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/LONGITUDINAL_HISTORY_V0_12.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/MOVEMENT_TIMING_V0_11.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/NECK_SHOULDER_FIX_V0_9_1.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/NEXT_ACTION_GUIDANCE_V0_18_1.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/NONBLOCKING_START_V0_18_2.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/QUIET_GUIDANCE_V0_14.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/SILVER_HEALTH_V0_16.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/SMOOTH_FLOW_V0_17.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/SPORT_UI_V0_6.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/history/TRAINING_PLAN_LIBRARY_V0_10.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/images/dual-camera.png,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/images/history.png,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/images/home.png,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/images/plans.png,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/images/timing.png,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/ANKANG_CORE_BOUNDARY.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/ANKANG_PRODUCT_MIGRATION_MAP.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/ANKANG_REHAB_READ_TOOLS.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/DUAL_CAMERA_2026-09-10.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/FUTURE_EXTENSIONS.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/JOINT_EXPANSION_PLAN.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/PRODUCTIZATION_DAY.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/PRODUCT_COMPLETION_PLAN.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/PRODUCT_CONTINUATION_2026-09-10.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/PRODUCT_UI_COVERAGE_REVIEW_2026-10-02.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/PRODUCT_UI_V1_INVENTORY.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/QUIET_GUIDANCE_2026-09-11.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/plans/RESOURCES_AND_UPGRADES.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/specifications/PRODUCT_INTENT.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/specifications/SOFTWARE_SPEC.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/specifications/START_WITH_CODEX.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/ACCEPTANCE_READINESS_2026-09-10.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/ANKANG_BRIDGE_SMOKE.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/ANKANG_CLEANUP_2026-10-01.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/ANKANG_EXTENSIONS_2026-10-02.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/ANKANG_PYSIDE6_ASSISTANT.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/ANKANG_REHAB_LLM_ACCEPTANCE.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/ANKANG_REHAB_READ_TOOLS.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/ANKANG_RUNTIME_2026-10-01.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/ANKANG_STAGE5A_MEDICATION.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/ANKANG_STAGE5B_FAMILY_SHARING.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/ANKANG_STAGE5CDE_CORE_SERVICES.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/AUTOMATIC_REHAB_V0_18_2026-09-12.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/DEEPSEEK_DEVELOPER_KEY_2026-10-02.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/DEMO_AUTOMATIC_PLAN_V0_18_3_2026-09-13.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/FINAL_INTEGRATION_AUDIT_2026-10-02.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/FINAL_INTEGRATION_FILE_AUDIT_2026-10-02.csv,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/HISTORY_WINDOWS.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/INTEGRATION_2026-09-10.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/INTEGRATION_2026-09-12.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/JOURNEY_RESULTS_2026-09-11.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/MAIN_INTEGRATION_ACCEPTANCE_2026-10-02.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/MERGE_V0_15_2026-09-12.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/NEXT_ACTION_GUIDANCE_V0_18_1_2026-09-13.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/NONBLOCKING_START_V0_18_2_2026-09-13.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/PRODUCTIZATION_DAY_2026-10-02.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/PRODUCT_UI_BUTTON_AUDIT_2026-10-02.csv,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/PRODUCT_UI_FUNCTIONAL_COMPLETION_2026-10-02.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/PRODUCT_UI_ORIGINAL_BUTTON_AUDIT_2026-10-02.csv,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/SILVER_HEALTH_V0_16_2026-09-12.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/SMOOTH_FLOW_V0_17_2026-09-12.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/archive/2026-09-06-pytest.txt,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/archive/2026-09-06-unittest.txt,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-10-action-content.csv,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-10-action-content.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-10-dual-camera-enumeration.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-10-dual-camera-ui.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-10-dual-camera-v013.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-10-final.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-10-history-v012.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-10-import.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-10-initial.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-10-plan-v010.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-10-timing-v011.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-10-unicode-before.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-12-final.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/2026-09-12-import.json,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+docs/validation/results/sample-manifest-template.csv,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/AGENTS.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/README.md,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/app/__init__.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/activity.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/assessment.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/assessment_batches.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/audio.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/automatic_plans.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/axial_geometry.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/bedroom.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/camera_manager.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/camera_selection.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/change_cards.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/deepseek_config.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/demo_training_plan.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/domain.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/dual_camera.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/dual_view.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/exercise_guides.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/exercise_instructions.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/exercises.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/family_demo.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/geometry.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/guidance.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/guided.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/joint_calibration.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/journey.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/landmark_backend.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/landmark_process.py,PRODUCTION,KEEP,false,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/landmark_schemas.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/longitudinal.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/main.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/measurement_guidance.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/movement_timing.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/participants.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/product/__init__.py,PRODUCTION,KEEP,false,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/product/backend.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/product/capture.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/quality.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/readiness.py,REFERENCE,KEEP,false,"Release readiness/regression support, not formal runtime"
+rehab_codex_single_camera_v2_1/app/regression.py,REFERENCE,KEEP,false,"Release readiness/regression support, not formal runtime"
+rehab_codex_single_camera_v2_1/app/rehab.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/rehab_read_tools.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/reports.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/runtime.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/safety.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/scene_controller.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/settings.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/silver_service.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/silver_store.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/source_worker.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/storage.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/training.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/training_plans.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/__init__.py,PRODUCTION,KEEP,false,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/ankang_assistant.py,REFERENCE,DELETE,true,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+rehab_codex_single_camera_v2_1/app/ui/assessment_batches.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/automatic_plans.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/body_map.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/body_overview.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/camera_test.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/catalog.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/deepseek_developer.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/dialogs.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/distance_coach.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/exercise_guide.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/family_demo.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/journey.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/longitudinal.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/main_window.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/participants.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/plan_library.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/product_completion.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/product_dialogs.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/product_interfaces.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/product_rehab.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/product_theme.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/product_widgets.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/product_window.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/silver.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/theme.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/training.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/training_hub.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/video_pair.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/widgets.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/ui/workspace.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/app/vision.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/assets/audio/alert.wav,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/audio/cue.wav,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/exercise-guides/README.md,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/models/landmarks-manifest.json,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/models/manifest.json,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/navigation/README.md,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/navigation/body-front-v1.png,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/ui/ankang/assistant.svg,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/ui/ankang/health.svg,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/ui/ankang/home.svg,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/ui/ankang/medication.svg,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/ui/ankang/messages.svg,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/ui/ankang/profile.svg,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/ui/ankang/report.svg,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/ui/ankang/space.svg,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/ui/ankang/tasks.svg,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/ui/check.svg,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/assets/ui/chevron.svg,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/camera_reference.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/configs/app.example.yaml,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/configs/exercises.example.yaml,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/configs/exercises.yaml,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/configs/scenes.example.yaml,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/configs/scenes.yaml,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/configs/setup_profile.example.json,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/geometry_reference.py,PRODUCTION,KEEP,true,Runtime source or retained external capability
+rehab_codex_single_camera_v2_1/requirements-app.txt,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/requirements.in,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/requirements.landmarks.lock.txt,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/requirements.landmarks.txt,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/requirements.lock.txt,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/run_app.py,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest
+rehab_codex_single_camera_v2_1/scripts/audit_readiness.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/camera_tools.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/check_docs.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/check_dual_camera.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/check_project.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/export_exercise_image_manifest.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/list_cameras.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/prepare_model.ps1,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_automatic_plans.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_body_camera_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_desktop.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_distance_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_dual_camera.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_family_browser.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_family_page.cjs,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_journey.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_longitudinal.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_movement_timing.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_neck_shoulder.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_participants.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_plan_library.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_product.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_quiet_guidance.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_silver.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_smooth_flow.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_sport_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/qa_training.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/setup.ps1,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/setup_landmarks.ps1,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/smoke_ankang_assistant.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+rehab_codex_single_camera_v2_1/scripts/smoke_pose.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/scripts/verify_wheels.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_ankang_assistant.py,REFERENCE,DELETE,false,Historical UI/demo/deferred spatial implementation and associated browser harness; recoverable from Git/stage1
+rehab_codex_single_camera_v2_1/tests/test_app_assessment.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_camera.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_contracts.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_controller.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_joint_exercises.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_joint_expansion_flow.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_landmarks.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_regression_audio.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_rehab.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_runtime_integration.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_scenes.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_source_integration.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_storage.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_app_vision_integration.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_assessment_batch_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_assessment_batches.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_automatic_plans.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_automatic_runtime.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_automatic_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_axial_and_extension.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_body_camera_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_camera_reference.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_camera_selection.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_camera_test_integration.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_camera_test_runtime.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_clarity_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_config_contract.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_deepseek_developer.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_demo_training_plan.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_distance_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_dual_camera.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_dual_controller.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_dual_diagnostics.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_dual_reports.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_dual_runtime.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_dual_runtime_integration.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_dual_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_dual_vision.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_dual_vision_integration.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_exercise_guides.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_family_demo.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_geometry.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_guidance_policy.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_guided_continuation.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_guided_runtime_integration.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_journey.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_journey_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_longitudinal.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_longitudinal_runtime.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_longitudinal_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_model_paths_integration.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_movement_timing.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_neck_shoulder_repair.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_neck_shoulder_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_participant_runtime.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_participant_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_participants.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_plan_library_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_preparation_sampling.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_product_body_overview.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_product_catalog.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_product_completion.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_product_navigation.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_product_window.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_quiet_guidance_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_quiet_runtime_integration.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_readiness.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_rehab_read_tools.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_result_summary.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_saved_plan_runtime.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_saved_training_plans.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_silver_support.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_silver_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_smooth_flow_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_sport_ui_flow.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_timing_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_training_execution.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_training_feedback.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_training_hub.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_training_runtime.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_training_timing.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+rehab_codex_single_camera_v2_1/tests/test_training_ui.py,REFERENCE,KEEP,false,"Architecture/history, tests, development or migration reference; not an application entry"
+启动康复助手.cmd,PRODUCTION,KEEP,false,Launch/configuration/assets/runtime dependency manifest

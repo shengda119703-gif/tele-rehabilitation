@@ -1,51 +1,9 @@
-# fdu-hackthon
+# Ankang 正式产品内核
 
-复旦 hackathon 项目仓库。当前主攻 **路线一：老年健康 Agent**，另有两条备选路线的想法记录在案。
+当前目录保留正式 PySide6 居家康复助手使用的 TypeScript Agent Runtime、ProductService、业务服务、ports/adapters、Python/Node 桥接及外部 HealthKit companion。正式入口为仓库根的 `启动康复助手.cmd`，不启动 React/Vite。
 
-## 三条路线（详见 [docs/想法.md](docs/想法.md)）
+`route1-health-agent/src/runtime` 是 Agent 内核；`src/product` 聚合用药、照护圈、共享、健康档案、通知、历史/趋势与扩展能力。`scripts/agent-bridge.cjs` 与 `bridges/ankang/client.py` 连接正式桌面产品。浏览器 Voice/PeerJS 等 adapter 是保留的外部宿主接口，Windows 未配置时不会伪装可用。
 
-1. **老年健康 Agent（当前主攻）** —— 整合聊天主诉、手表数据、拍照录入（血压计/体重秤/体检报告），建立"个人基线"，发现老人"和平时不一样"的变化（如心衰相关的活动耐量下降），分级通知家属。**最稳。**
-2. **居家安全 3D 建模** —— 手机拍摄家庭做 Gaussian Splatting 重建，AI 分析危险点、动线、找东西，对认知障碍老人有用。**视觉冲击力最大。**
-3. **融合路线（Person Twin + Home Twin）** —— Agent 看"人"，3D 看"家"，回答"这个家对现在这个老人是否安全"。**想法最完整，开发量最大。**
+2026-10-02 在 `codex/product-ui-v1` 清理不参与正式运行的 React UI/hooks、浏览器 demo/验收、旧设计演示和独立 Home Twin/Route2/3DGS。Route2 的硬件中立 capture 契约已原样迁到 `app/product/capture_contracts.py`；空间架构文档在 [历史归档](../docs/archive/ankang-route2/README.md)。
 
-## 当前进展：路线一原型（可运行）
-
-- 老人端聊天 Agent（主诉识别 + 共情回应）
-- 长期健康档案（21 天趋势 + 个人基线 + 拍照录入：默认写入明确标注的 Demo 示例数据，可配置真实视觉服务，结果经确认后入库）
-- 变化检测引擎（单指标偏离 + 多信号融合，内置"活动耐量下降"演示场景）
-- 每周健康周报（自动生成给老人和给子女两个版本）
-- 分级家属通知（平时不打扰，alert/urgent 才推送，附证据链与处理路径）
-
-```bash
-cd route1-health-agent
-npm install
-npm run dev
-```
-
-详细说明见 [route1-health-agent/README.md](route1-health-agent/README.md)。
-
-## 当前进展：路线二原型（高斯泼溅建模，可运行）
-
-`route2-home-3d/` —— 居家安全 3D 建模：手机拍摄家庭 → Gaussian Splatting 重建 → AI 分析危险点、活动动线、找东西。
-
-- **Web 演示端（现在就能跑）**：Three.js 加载高斯模型，内置合成演示场景兜底——危险点标注（点击查看风险等级/整改建议）、动线分析（夜间起夜/日间/逃生三条路线 + 危险段红色高亮 + 自动夜间模式）、找东西（相机飞行定位物品并语音指引）
-- **训练管线（一键脚本）**：视频抽帧 → COLMAP 相机标定（自动下载）→ 官方 gaussian-splatting 训练（已适配 8GB 显存）→ 导出 Web，全程 PowerShell 脚本自动化
-- 手机拍摄指南见 [route2-home-3d/docs/capture-guide.md](route2-home-3d/docs/capture-guide.md)
-
-```bash
-cd route2-home-3d/web
-npm install
-npm run dev
-```
-
-详细说明见 [route2-home-3d/README.md](route2-home-3d/README.md)。
-
-## 共同原则
-
-不做"万能养老平台"；不说 AI 能诊断疾病；重点是**发现变化**和**帮助行动**；老人使用要简单（拍照、说话、自动同步）；不过度监控，只有需要时才通知家属。
-
-## 协作约定
-
-- 主分支 `main`，功能开发请开分支 + PR；
-- 提交信息用中文或英文均可，说清"改了什么、为什么"；
-- 演示数据统一放 `src/data/`，不要把真实个人健康信息提交进仓库。
+参见[清理与依赖审计](../docs/validation/REPOSITORY_CLEANUP_2026-10-02.md)和[原始来源](UPSTREAM.md)。完整原实现可从 `codex/rehab-agent-stage1`（`4b2d108a3003d84c89ac42da25580017d5b1de17`）恢复；本轮不改 main/stage1，不增加业务能力。

@@ -61,7 +61,6 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.legacy.setParent(self)
         self.legacy.findChild(QFrame,'sidebar').hide()
         self.legacy.findChild(QFrame,'personBar').hide()
-        self.legacy._developer_shortcut.setEnabled(False)
         self.legacy.training_hub.demo.hide()  # Keep the synthetic helper outside the formal user flow.
         self.backend = backend or ProductBackend(self.legacy.runtime.data_dir)
         self.owner = ''

@@ -268,7 +268,7 @@ void test('L2 超时本身不返回失败（等 L3 定论）', async () => {
 // P1（评审安全项）：邀请码熵。旧 4 位数字码（10^4）在公共信令上可被脚本
 // 枚举拨号；新码 32 字符表 10 位（50bit），枚举不再可行。
 // ---------------------------------------------------------------------------
-import { createInviteCode } from '../src/hooks/useFamilyBinding';
+import { createInviteCode } from '../src/family/FamilyService';
 
 const INVITE_CODE_PATTERN = /^AN-\d{4}-[A-Z2-9]{10}$/;
 

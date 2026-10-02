@@ -54,8 +54,6 @@ def build_workspace(w):
     w.training_nav = nav_button('训练中心', w._show_training_hub)
     w.body_nav = nav_button('身体档案', w._show_body)
     w.history_nav = nav_button('历史记录', w._history)
-    w.assistant_nav = nav_button('助手', w._show_assistant)
-    w.assistant_nav.setCheckable(False)
     w.silver_nav = nav_button('银发健康守护', lambda: w._show_silver())
     nav.addSpacing(22)
     tools = Disclosure('其他工具')

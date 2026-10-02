@@ -3,7 +3,7 @@
 - Upstream repository: https://github.com/JerryFreeman333/fdu-hackthon
 - Imported upstream commit SHA: `cbdc8f33a1cf3993b1f49a7b3046ceda1932c39b`
 - Import date: **2026-10-01**（Asia/Hong_Kong）
-- 状态：**第一阶段为原样快照，尚未裁剪/集成**。
+- 历史状态：**第一阶段为原样快照**；当前 UI 分支已完成产品集成，并在 2026-10-02 裁剪非生产 UI/空间代码。以下导入计数和原始验证描述均为历史记录，不表示当前工作副本仍包含全部快照文件。
 - 目标分支：`codex/rehab-agent-stage1`；导入前 HEAD：`dae638d26dcbd887fef70734a1480f45825ab5fa`。
 
 ## 导入范围与完整性
@@ -18,9 +18,9 @@
 
 ## 验证
 
-使用原 `package-lock.json`；Node 22.14.0（上游 CI 使用 Node 22，engines 要求 >=22）、npm 10.9.2（原 `packageManager`）。实际结果见 [原样快照验收](../docs/validation/ANKANG_UPSTREAM_IMPORT_2026-10-01.md)。依赖、浏览器、日志、测试截图及构建产物仅用于本地验证，不提交。
+使用原 `package-lock.json`；Node 22.14.0（上游 CI 使用 Node 22，engines 要求 >=22）、npm 10.9.2（原 `packageManager`）。实际结果见 [后续 Runtime 验收](../docs/validation/ANKANG_RUNTIME_2026-10-01.md)。依赖、浏览器、日志、测试截图及构建产物仅用于本地验证，不提交。
 
-## 后续原则（本轮不执行）
+## 原导入时的后续原则（历史）
 
 暂停 A1/A2/A3 Python Agent 重实现，不进入 B。以本快照中的原 TypeScript Agent 作为后续正式基线；本次尚未切换现有康复应用的生产入口。
 

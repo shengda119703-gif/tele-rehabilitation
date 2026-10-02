@@ -1,5 +1,5 @@
 import type { CareTask } from '../src/types';
-import { shouldCreateMedicationCheck } from '../src/hooks/useCareTasks';
+import { shouldCreateMedicationCheck } from '../src/runtime/careTasks';
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
