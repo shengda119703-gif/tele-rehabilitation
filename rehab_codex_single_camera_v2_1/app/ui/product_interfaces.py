@@ -59,24 +59,23 @@ class ProductInterfaces:
         self.assistant_dock.raise_()
         self.dock_input.setFocus()
 
-    def _voice_controls(self, layout):
+    def _voice_controls(self, materials, voice, reference):
         self.assistant_reference = QLabel('等待当前用户数据。')
         self.assistant_reference.setWordWrap(True)
-        layout.addWidget(self.assistant_reference)
+        reference.addWidget(self.assistant_reference)
         note = QLabel('上传资料会保存到健康档案，不自动作为模型上下文。图片识别须许可，候选结果在健康档案中核对后确认。')
         note.setWordWrap(True)
-        layout.addWidget(note)
-        # A narrow contextual column keeps the conversation and composer in view.
+        materials.addWidget(note)
         row = QVBoxLayout()
         self._interface_button(row, 'assistantAttachment', '上传资料 / 图片 / 视频', self._add_attachment)
         self._interface_button(row, 'assistantImage', '识别健康图片', self._parse_image)
-        self._interface_button(row, 'voiceInput', '语音输入', self._voice_input)
-        self._interface_button(row, 'voiceOutput', '朗读最近回复', self._voice_output)
-        self._interface_button(row, 'voiceCancel', '停止语音', lambda: self._request('voice.cancel'))
-        layout.addLayout(row)
+        materials.addLayout(row)
+        self._interface_button(voice, 'voiceInput', '语音输入', self._voice_input)
+        self._interface_button(voice, 'voiceOutput', '朗读最近回复', self._voice_output)
+        self._interface_button(voice, 'voiceCancel', '停止语音', lambda: self._request('voice.cancel'))
         self.voice_status = QLabel('语音接口已保留，正在核对桌面端支持情况。')
         self.voice_status.setWordWrap(True)
-        layout.addWidget(self.voice_status)
+        voice.insertWidget(1,self.voice_status)
 
     def _voice_input(self):
         if self.private_turn.isChecked():
@@ -172,6 +171,8 @@ class ProductInterfaces:
         for key in ('voiceInput','voiceOutput','voiceCancel'):
             self.interface_buttons[key].setEnabled(available)
             self.interface_buttons[key].setToolTip('使用已配置语音服务' if available else '当前平台未接入语音服务。')
+        from .product_assistant import refresh_summary
+        refresh_summary(self)
         devices = result.get('devices', [])
         self.device_adapter.clear()
         for name in devices:

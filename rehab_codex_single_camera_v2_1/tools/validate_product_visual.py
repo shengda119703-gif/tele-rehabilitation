@@ -31,10 +31,11 @@ def main():
     parser.add_argument('--width',type=int,default=1440)
     parser.add_argument('--height',type=int,default=940)
     parser.add_argument('--theme',choices=('light','dark'),default='light')
+    parser.add_argument('--phase',choices=('fluent-v1','assistant-modules'),default='fluent-v1')
     args=parser.parse_args()
     factor=os.environ.get('QT_SCALE_FACTOR','auto')
     platform=os.environ['QT_QPA_PLATFORM']
-    out=ROOT/'qa-output'/'fluent-v1'/f'{platform}-{args.theme}-{args.width}x{args.height}-scale{factor}'
+    out=ROOT/'qa-output'/args.phase/f'{platform}-{args.theme}-{args.width}x{args.height}-scale{factor}'
     out.mkdir(parents=True,exist_ok=True)
     app=QApplication([])
     for name in ('msyh.ttc','msyhbd.ttc','segoeui.ttf'):
@@ -71,15 +72,26 @@ def main():
                                   horizontalOverflow=w.page_widgets[key].horizontalScrollBar().maximum() if key!='rehab' else w.rehab_workspace.horizontalScrollBar().maximum())
                 if key=='assistant':
                     viewport=w.page_widgets[key].viewport()
-                    point=w.chat_send.mapTo(viewport,w.chat_send.rect().bottomRight())
-                    results[key]['composerVisible']=viewport.rect().contains(point)
-                    assert results[key]['composerVisible'],(point,viewport.size())
+                    results[key]['modules']={}
+                    for section in ('conversation','voice','materials','reference'):
+                        w.assistant_module_buttons[section].click();app.processEvents()
+                        capture('assistant-'+section)
+                        observation=dict(horizontalOverflow=w.page_widgets[key].horizontalScrollBar().maximum(),
+                            verticalOverflow=w.page_widgets[key].verticalScrollBar().maximum())
+                        assert observation['horizontalOverflow']==0,(section,observation)
+                        if section=='conversation':
+                            point=w.chat_send.mapTo(viewport,w.chat_send.rect().bottomRight())
+                            observation['composerVisible']=viewport.rect().contains(point)
+                            assert observation['composerVisible'],(point,viewport.size())
+                        results[key]['modules'][section]=observation
+                        w._assistant_back();app.processEvents()
                 if key=='rehab':
                     for index in range(w.rehab_tabs.count()):
                         w.rehab_tabs.setCurrentIndex(index);settle();capture('rehab-'+str(index))
                     w.rehab_tabs.setCurrentIndex(0);w.interface_buttons['rehabOverview'].click();settle();capture('rehab-workspace')
             w._open_global_assistant();capture('global-assistant');w.assistant_dock.close()
             w.navigate('assistant');settle()
+            w.assistant_module_buttons['conversation'].click();app.processEvents()
             # Actual ProductService validation failure; no simulated network response.
             w._request('health.record',dict(metric='missing',value=1));settle();capture('error')
             (out/'observations.json').write_text(json.dumps(results,ensure_ascii=False,indent=2),encoding='utf-8')

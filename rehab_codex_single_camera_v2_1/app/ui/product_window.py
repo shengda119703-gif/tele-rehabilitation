@@ -18,12 +18,13 @@ from ..settings import ROOT
 from ..participants import legacy_participant
 from ..product.backend import ProductBackend
 from .product_rehab import ProductRehabWindow
-from .product_theme import ProductTheme, SPACING, METRICS
+from .product_theme import ProductTheme
 from .product_theme import rehab_product_style
 from .product_dialogs import ProductProfileDialog, MedicationDialog
 from .product_interfaces import ProductInterfaces
 from .product_completion import ProductCompletion
-from .product_widgets import label, button, card, table, rows, core_card, visual, conversation_html
+from .product_assistant import build_assistant, show_section, back, refresh_summary
+from .product_widgets import label, button, card, table, rows, visual, conversation_html
 
 NAVIGATION = [('home','首页','home'),('assistant','AI 康复管家','assistant'),('rehab','康复','tasks'),
               ('health','健康','health'),('medication','用药','medication'),('family','家庭','profile'),
@@ -177,41 +178,13 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
 
 
     def _assistant_page(self):
-        box = self._page('assistant')
-        columns=QHBoxLayout();columns.setSpacing(SPACING['lg'])
-        item,layout = core_card('一起安排康复与日常健康')
-        self.agent_status = visual(label('正在读取助手状态…','productMuted'),typography='secondary')
-        layout.addWidget(self.agent_status)
-        self.chat = QTextBrowser()
-        self.chat.setOpenExternalLinks(False)
-        self.chat.setMinimumHeight(METRICS['chat_minimum'])
-        self.chat.setAccessibleName('与康复管家的对话历史')
-        layout.addWidget(self.chat,1)
-        quick = QHBoxLayout();quick.setSpacing(SPACING['sm'])
-        for title in ['我的训练计划','最近的评估结果','今天漏服了药']:
-            quick.addWidget(visual(button(title,lambda checked=False,t=title:self._send_chat(t)),appearance='ghost'))
-        layout.addLayout(quick)
-        self.chat_input = QPlainTextEdit()
-        self.chat_input.setPlaceholderText('说说今天的状态，或查询已经保存的康复记录。')
-        self.chat_input.setMinimumHeight(METRICS['input_minimum'])
-        self.chat_input.setMaximumHeight(METRICS['input_maximum'])
-        self.chat_input.setAccessibleName('给康复管家发送消息')
-        layout.addWidget(self.chat_input)
-        row = QHBoxLayout()
-        self.private_turn = QCheckBox('本轮不记录')
-        row.addWidget(self.private_turn)
-        row.addStretch()
-        self.chat_send = button('发送',lambda:self._send_chat(),True)
-        visual(self.chat_send,appearance='primary')
-        row.addWidget(self.chat_send)
-        layout.addLayout(row)
-        columns.addWidget(item,1)
-        side=QScrollArea();side.setWidgetResizable(True);side.setFrameShape(QFrame.NoFrame)
-        side.setFixedWidth(METRICS['reference_width'])
-        reference,self.assistant_tools=core_card('当前参考与工具')
-        self._voice_controls(self.assistant_tools)
-        side.setWidget(reference);columns.addWidget(side)
-        box.addLayout(columns,1)
+        build_assistant(self)
+
+    def _show_assistant_section(self,key):
+        show_section(self,key)
+
+    def _assistant_back(self):
+        back(self)
 
     def _render_conversation(self):
         theme=getattr(self,'product_theme',None)
@@ -361,6 +334,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
             self._message('请先结束并保存当前康复任务，再离开监护页面。')
             return False
         self.active_page = key
+        if key=='assistant':self._show_assistant_section('overview')
         self.pages.setCurrentWidget(self.page_widgets[key])
         self.title.setText(dict((k,t) for k,t,_ in NAVIGATION).get(key,{'settings':'设置','notifications':'通知'}.get(key,key)))
         if hasattr(self,'assistant_context'):
@@ -571,6 +545,9 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.invite_input.clear()
         self.invite_hint.setText('绑定与共享授权分别确认；跨设备连接状态见设置。')
         self._completion_clear()
+        self._show_assistant_section('overview')
+        self.assistant_portal_status.setText('正在读取当前用户资料…')
+        self.assistant_module_buttons['reference'].setDescription('等待当前用户的康复记录。')
 
     def _align_rehab(self,stored):
         owner = stored['ownerId']
@@ -617,6 +594,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         if text:
             if not inline and not self.navigate('assistant',refresh=False):
                 return
+            if not inline:self._show_assistant_section('conversation')
             self._request('chat',{'text':('不要记录：'+text) if self.private_turn.isChecked() else text})
         else:
             self._message('请先输入想对管家说的话。')
@@ -834,6 +812,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.profile_summary.setText(profile['name']+' · '+(str(profile['age'])+' 岁' if profile['age'] else '年龄未填')+'\n当前状态：'+(stored.get('currentState') or '未填写')+'\n康复目标：'+(stored.get('rehabGoal') or '未填写'))
         self.capabilities_text.setText('康复、健康自报、用药、家庭授权、附件、健康状态、记录与报告已接本机业务。\n图片识别：'+('代理已配置' if s['capabilities']['imageRecognitionAvailable'] else '待配置代理')+'\n语音、设备、同步及外部通知状态见下方与健康设备页。')
         self._completion_render()
+        refresh_summary(self)
         self._request('extensions.status')
 
     def _event_summary(self,event):

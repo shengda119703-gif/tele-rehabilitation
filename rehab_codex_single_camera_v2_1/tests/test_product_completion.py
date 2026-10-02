@@ -210,6 +210,8 @@ def test_loading_duplicate_error_empty_disabled_and_button_audit(desktop,tmp_pat
         assert '正在' not in w.page_states[page].text()
     w.navigate('rehab');settle(w,app);w.resize(1180,780);app.processEvents()
     previous=w.rehab_workspace.viewport().height();w.interface_buttons['rehabOverview'].click();app.processEvents()
+    # Nested Qt layouts can apply the resize on a later event-loop turn.
+    wait(app,lambda:w.rehab_overview_collapsed and w.rehab_workspace.viewport().height()>previous)
     assert w.rehab_overview_collapsed and w.rehab_workspace.viewport().height()>previous
     w.interface_buttons['rehabOverview'].click();app.processEvents()
     assert not w.rehab_overview_collapsed

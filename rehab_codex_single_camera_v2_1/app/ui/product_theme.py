@@ -11,7 +11,7 @@ RADIUS = dict(control=6, card=12, hero=16)
 TYPE = dict(display=(28,700), section=(20,600), card=(16,600),
             body=(14,400), secondary=(14,400), caption=(12,400))
 METRICS = dict(overview=300, overview_collapsed=60, chat_minimum=170,
-               input_minimum=64, input_maximum=88, reference_width=280)
+               input_minimum=64, input_maximum=88, reference_width=280, module_minimum=126)
 
 
 def design_tokens(mode='light', palette=None):
@@ -62,6 +62,7 @@ def core_style(c):
 {s} QPushButton#productPrimary:disabled {{ background:{c['disabled_bg']}; color:{c['disabled_text']}; border-color:{c['border']}; }}
 {s} QPushButton {{ background:{c['surface']}; color:{c['text']}; border:2px solid {c['border']}; border-radius:{RADIUS['control']}px; padding:8px 12px; min-height:20px; }}
 {s} QPushButton:hover {{ background:{c['surface_background_hover']}; }}
+{s} QPushButton[fluentAppearance="module"] {{ text-align:left; padding:{SPACING['lg']}px {SPACING['xl']}px; min-height:{METRICS['module_minimum']-2*SPACING['lg']-4}px; border-radius:{RADIUS['card']}px; }}
 {s} QPushButton:pressed {{ background:{c['surface_background_pressed']}; }}
 {s} QPushButton[fluentAppearance="primary"] {{ background:{c['brand']}; color:{c['on_brand']}; border-color:{c['brand']}; font-weight:600; }}
 {s} QPushButton[fluentAppearance="primary"]:hover {{ background:{c['brand_hover']}; }}

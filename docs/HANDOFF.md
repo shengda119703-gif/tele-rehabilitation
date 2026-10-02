@@ -1,5 +1,7 @@
 # 当前交接与未完成目标
 
+**2026-10-02 AI 管家模块化：** `codex/product-ui-v1` 根据用户反馈，把管家首屏拆为四张可点击模块卡：对话、语音交流、资料与图片、康复记录。对话输入区增加可见麦克风导航，资料/参考工具按需进入；原 116 个已发布按钮及侧栏发送保留，新增 13 个纯导航按钮。25 项针对性回归通过，Windows 原生 Qt/DPR 1.5 的 1440 与 1024 截图已审阅。语音仍是原端口/真实禁用状态，未新增录音宿主或假识别；用户切换、草稿保留、返回及全局侧栏验证通过。只推进 AI 页，首页/康复等进一步调整留待下一步；main/stage1 不变。见[验收与截图](validation/PRODUCT_ASSISTANT_MODULES_2026-10-02.md)。
+
 **2026-10-02 三个核心页面视觉基准：** `codex/product-ui-v1` 已安装/审阅 MIT `pyside6-fluent-ui` skill；仅引入设计 token/来源与许可证，无 UI runtime dependency 增量。统一主题/卡片/字体/状态，完成首页、AI 康复管家、康复概览的视觉层级；原训练工作区和其他四页保留兼容布局。116 个已发布按钮及已有侧栏发送契约保留，44 项针对性回归通过；Windows 原生 Qt/DPR 1.5、1024 窄窗及 1080p/多级 Qt 缩放截图已审阅。main/stage1 不变，到三个基准页为止，等待视觉方向审阅。见[设计系统](plans/PRODUCT_UI_FLUENT_BASELINE_2026-10-02.md)与[验收/真实截图](validation/PRODUCT_UI_VISUAL_BASELINE_2026-10-02.md)。
 
 **2026-10-02 Repository Cleanup / Legacy Audit：** `codex/product-ui-v1` 已从正式入口追踪依赖，撤出无正式用途的 React/浏览器 demo、独立 Home Twin/Route2/3DGS 及旧独立 Assistant 验收窗口。Route2 通用 capture 契约原样进入 `app/product/capture_contracts.py`，16 份空间文档集中归档。保留原康复 MainWindow/Runtime、ProductService、业务核心与可选外部 adapters；52 项 Python/Qt、12 项产品扩展、34 项 Runtime/协议测试通过，实际窗口逐页打开通过。main/stage1 不变，不做视觉重设计。见[本轮分类、依赖图及验收](validation/REPOSITORY_CLEANUP_2026-10-02.md)。下方旧阶段“React/demo 全量保留”等为历史状态。

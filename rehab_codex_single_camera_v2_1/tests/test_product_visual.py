@@ -7,6 +7,7 @@ from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QPushButton
 from test_product_window import desktop,wait
 from app.ui.product_theme import design_tokens
+from app.ui.product_assistant import ASSISTANT_NAV_ACTIONS
 
 
 def test_published_116_button_contract_and_native_connections(desktop):
@@ -17,14 +18,17 @@ def test_published_116_button_contract_and_native_connections(desktop):
     # The previous CSV captured visible pages; the already-existing closed dock is extra.
     expected['dockSend']=('发送','chat')
     actual={b.property('actionId'):(b.text(),b.property('actionTarget')) for b in w.product_action_buttons()}
-    assert actual==expected
-    assert len(actual)==len(w.product_action_buttons())==117
+    assert {key:actual[key] for key in expected}==expected
+    assert set(actual)-set(expected)==ASSISTANT_NAV_ACTIONS
+    assert len(actual)==len(w.product_action_buttons())==117+len(ASSISTANT_NAV_ACTIONS)
+    assert all(b.property('actionKind')=='B' for b in w.product_action_buttons() if b.property('actionId') in ASSISTANT_NAV_ACTIONS)
     assert all(b.receivers(SIGNAL('clicked(bool)'))>0 for b in w.product_action_buttons())
 
 
 def test_minimum_window_composer_keyboard_focus_and_disabled_controls(desktop):
     w,app=desktop
     w.resize(1024,720);w.navigate('assistant');wait(app,lambda:not w.pending)
+    w.interface_buttons['assistantModuleConversation'].click()
     app.processEvents()
     assert w.next_training.font().pixelSize()==20
     assert w.greeting.font().pixelSize()==28
