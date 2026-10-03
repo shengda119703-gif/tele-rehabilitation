@@ -38,6 +38,7 @@ def wait(app,predicate):
 @pytest.fixture
 def desktop(tmp_path,monkeypatch):
     monkeypatch.setenv('ANKANG_PRODUCT_DISABLE_MODEL','1')
+    monkeypatch.setenv('ANKANG_VOICE_DISABLED','1')
     with AgentBridge(data_dir=tmp_path/'product') as bridge:
         bridge.product('profile.save','person-test',dict(profile=blank_health('合成产品用户'),rehabGoal='TEST 生活目标'))
     app = QApplication.instance() or QApplication([])

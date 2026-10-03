@@ -1,5 +1,6 @@
 param(
     [switch]$IncludeLandmarks,
+    [switch]$IncludeVoice,
     [string]$IndexUrl = 'https://pypi.org/simple'
 )
 $ErrorActionPreference = 'Stop'
@@ -7,6 +8,9 @@ $taskAppRoot = Join-Path $PSScriptRoot 'rehab_codex_single_camera_v2_1'
 & (Join-Path $taskAppRoot 'scripts\setup.ps1') -IndexUrl $IndexUrl -PrepareModel
 if ($IncludeLandmarks) {
     & (Join-Path $taskAppRoot 'scripts\setup_landmarks.ps1') -IndexUrl $IndexUrl
+}
+if ($IncludeVoice) {
+    & (Join-Path $taskAppRoot 'scripts/setup_voice.ps1') -IndexUrl $IndexUrl
 }
 $taskAgentRoot = Join-Path $PSScriptRoot 'ankang\route1-health-agent'
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) { throw 'Node.js 22+ is required for the Ankang product services.' }

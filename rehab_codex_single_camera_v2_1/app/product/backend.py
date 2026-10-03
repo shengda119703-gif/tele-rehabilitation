@@ -15,10 +15,13 @@ class ProductBackend:
         self.stop_event = threading.Event()
         self.bridge = None
         self.factory = bridge_factory
+        from .native_voice import NativeVoiceHost
+        self.voice = NativeVoiceHost()
         self.thread = threading.Thread(target=self._run, daemon=True, name='ankang-product')
         self.thread.start()
 
     def submit(self, operation, owner='', payload=None, scope=None, token=None):
+        if operation=='voice.input':self.voice.prepare()
         self.jobs.put((operation, owner, payload or {}, dict(scope or {}), token))
 
     def submit_capture(self, owner, batch, *, visibility='private', scope=None, token=None):
@@ -59,7 +62,7 @@ class ProductBackend:
                         else:
                             payload['bytes'] = list(data)
                     if self.bridge is None:
-                        self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product')
+                        self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150)
                     tools = RehabReadTools(self.data_dir/'home_rehab.sqlite3', scope) if scope else None
                     result = self.bridge.product(operation, owner, payload, tool_handler=tools)
                     snapshot = result.get('snapshot', result) if isinstance(result, dict) else None
@@ -82,6 +85,7 @@ class ProductBackend:
                 self.bridge.close()
 
     def close(self):
+        self.voice.close()
         self.stop_event.set()
         self.jobs.put(None)
         if self.bridge:

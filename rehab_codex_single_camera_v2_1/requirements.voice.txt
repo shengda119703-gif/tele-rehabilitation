@@ -1,0 +1,5 @@
+# Optional native microphone/Chinese ASR host. No Qt runtime or GPU changes.
+sounddevice==0.5.6
+faster-whisper==1.2.1
+# PyAV 19 removed metadata_errors used by faster-whisper 1.2.1.
+av==16.0.1

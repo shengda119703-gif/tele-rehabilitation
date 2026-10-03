@@ -72,7 +72,8 @@ class ProductInterfaces:
         materials.addLayout(row)
         self._interface_button(voice, 'voiceInput', '语音输入', self._voice_input)
         self._interface_button(voice, 'voiceOutput', '朗读最近回复', self._voice_output)
-        self._interface_button(voice, 'voiceCancel', '停止语音', lambda: self._request('voice.cancel'))
+        self._interface_button(voice, 'voiceCancel', '停止语音', self._voice_cancel)
+        self._action(voice,'voiceFinish','说完了，开始识别',self._voice_finish,kind='A',target='本机录音结束 / 原 voice.input')
         self.voice_status = QLabel('语音接口已保留，正在核对桌面端支持情况。')
         self.voice_status.setWordWrap(True)
         voice.insertWidget(1,self.voice_status)
@@ -81,8 +82,25 @@ class ProductInterfaces:
         if self.private_turn.isChecked():
             self._message('当前语音接口不支持本轮不记录。请使用文字输入，隐私选项保持有效。')
             return
-        if QMessageBox.question(self, '语音输入', '使用已配置的语音服务识别并发送为一轮管家对话，按现有规则处理和记录。是否继续？') == QMessageBox.Yes:
+        if QMessageBox.question(self, '语音输入', '开始使用麦克风；说完后点击“说完了，开始识别”。识别文字会作为一轮管家对话处理和记录。录音不保存，最长 30 秒；“停止语音”取消本轮。是否继续？') == QMessageBox.Yes:
             self._request('voice.input', {})
+
+    def _voice_finish(self):
+        self.backend.voice.stop()
+        self._message('已请求结束录音，正在等待本机识别。')
+
+    def _voice_cancel(self):
+        # A queued cancellation cannot interrupt the serialized in-flight host call.
+        cancelled=self.backend.voice.cancel()
+        self._message('已请求取消语音；取消完成前请稍候，本轮不会发送。' if cancelled else '语音采集已经结束；已提交的对话不能通过停止语音撤回。')
+
+    def _voice_live(self):
+        voice=self.backend.voice.live_status()
+        phase=voice['phase']
+        if self.last_operation=='voice.input' and self.pending:
+            self.voice_status.setText({'opening':'正在准备麦克风…',
+                'recording':'正在录音（最长 30 秒）。说完后点击“说完了，开始识别”；停止语音会取消本轮。',
+                'transcribing':'正在本机识别中文语音，仍可停止取消。'}.get(phase,'正在等待语音处理结果…'))
 
     def _voice_output(self):
         message = next((m for m in reversed(self.snapshot.get('state', {}).get('chat', [])) if m['role']=='agent'), None)
@@ -167,7 +185,8 @@ class ProductInterfaces:
         self.extension_status = result
         voice = result.get('voice', {})
         available = bool(voice.get('available'))
-        self.voice_status.setText('语音：'+('服务已配置' if available else '当前平台未接入语音服务，暂不能识别或朗读'))
+        self.voice_status.setText('语音：'+(voice.get('detail') or ('服务已配置' if available else '当前平台未接入语音服务，暂不能识别或朗读'))+
+            ('\n麦克风：'+voice['microphone'] if voice.get('microphone') else ''))
         for key in ('voiceInput','voiceOutput','voiceCancel'):
             self.interface_buttons[key].setEnabled(available)
             self.interface_buttons[key].setToolTip('使用已配置语音服务' if available else '当前平台未接入语音服务。')

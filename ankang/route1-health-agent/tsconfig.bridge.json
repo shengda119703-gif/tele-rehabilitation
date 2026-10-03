@@ -19,6 +19,7 @@
     "src/product/ProductService.ts",
     "src/adapters/HttpVisionProvider.ts",
     "src/adapters/BrowserVoiceAdapter.ts",
+    "src/adapters/HostVoicePort.ts",
     "src/sync/BrowserSyncAdapter.ts",
     "src/adapters/FamilyNotificationDelivery.ts",
     "src/adapters/DemoDeviceAdapter.ts"

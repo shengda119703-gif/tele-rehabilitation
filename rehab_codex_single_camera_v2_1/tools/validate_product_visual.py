@@ -12,6 +12,7 @@ import tempfile
 
 os.environ.setdefault('QT_QPA_PLATFORM','offscreen')
 os.environ['ANKANG_PRODUCT_DISABLE_MODEL']='1'
+os.environ.setdefault('ANKANG_VOICE_DISABLED','1')
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT),str(ROOT.parent)]
 from PySide6.QtCore import QEventLoop,QTimer

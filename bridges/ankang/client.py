@@ -14,9 +14,13 @@ ROUTE_ROOT = Path(__file__).resolve().parents[2] / "ankang" / "route1-health-age
 
 
 class AgentBridge:
-    def __init__(self, node: str | None = None, timeout: float = 60, data_dir=None):
+    def __init__(self, node: str | None = None, timeout: float = 60, data_dir=None, voice_host=None):
         node = node or os.environ.get("ANKANG_NODE", "node")
         self.timeout = timeout
+        self.voice_host = voice_host
+        child_env = dict(os.environ)
+        if voice_host is not None: child_env['ANKANG_NATIVE_VOICE'] = '1'
+        else: child_env.pop('ANKANG_NATIVE_VOICE', None)
         if not (ROUTE_ROOT / ".bridge-build" / "runtime" / "index.js").is_file():
             raise RuntimeError("Build the bridge first: npm run build:bridge (in route1-health-agent)")
         self._process = subprocess.Popen(
@@ -27,6 +31,7 @@ class AgentBridge:
             encoding="utf-8",
             bufsize=1,
             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+            env=child_env,
         )
 
         self._lines = queue.Queue()
@@ -62,9 +67,12 @@ class AgentBridge:
                 call = response['toolCall']
                 receipt = dict(operation='tool_result', id=call['id'])
                 try:
-                    if not tool_handler or call['sessionId'] != fields.get('sessionId'):
+                    if call['sessionId'] != fields.get('sessionId'):
                         raise ValueError('No read tool capability for this session')
-                    receipt['result'] = tool_handler(call['name'], call['arguments'])
+                    if call['name'].startswith('voice.') and self.voice_host is not None:
+                        receipt['result'] = self.voice_host.handle(call['name'],call['arguments'])
+                    elif tool_handler: receipt['result'] = tool_handler(call['name'], call['arguments'])
+                    else: raise ValueError('No read tool capability for this session')
                 except Exception as error:
                     receipt['error'] = str(error)
                 self._process.stdin.write(json.dumps(receipt, ensure_ascii=False) + '\n')
@@ -88,6 +96,7 @@ class AgentBridge:
     def product(self, operation, owner_id='', payload=None, *, tool_handler=None):
         return self._request('product', tool_handler=tool_handler, sessionId=owner_id,
                              productOperation=operation, payload=payload or {},
+                             **({'voiceStatus':self.voice_host.status()} if self.voice_host is not None else {}),
                              now=datetime.now().astimezone().isoformat())
 
     def __enter__(self):

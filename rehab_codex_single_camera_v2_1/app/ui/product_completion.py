@@ -569,12 +569,21 @@ class ProductCompletion:
     def _completion_controls(self):
         if not hasattr(self,'page_states'):return
         busy=bool(self.pending)
+        voice=self.extension_status.get('voice',{})
+        phase=self.backend.voice.live_status()['phase']
+        voice_busy=busy and self.last_operation=='voice.input'
+        self.private_turn.setEnabled(not voice_busy);self.dock_private.setEnabled(not voice_busy)
         for item in self.product_action_buttons():
             kind=item.property('actionKind');reason=item.property('unavailableReason')
             enabled=not reason and (kind=='B' or bool(self.owner) and not busy)
             if item.property('actionTarget')=='profile.save':enabled=not busy
             key=item.property('actionId')
             if key in ('voiceInput','voiceOutput','voiceCancel'):enabled=enabled and bool(self.extension_status.get('voice',{}).get('available'))
+            if key=='voiceOutput':
+                enabled=enabled and bool(voice.get('outputAvailable',voice.get('available')))
+                item.setToolTip('朗读已保存的管家回复' if enabled else '当前语音宿主尚未接入朗读功能。')
+            if key=='voiceCancel':enabled=bool(self.owner) and phase in ('opening','recording','transcribing')
+            if key=='voiceFinish':enabled=bool(self.owner) and phase=='recording'
             if item.property('actionTarget')=='image.parse':
                 enabled=enabled and bool(self.snapshot.get('capabilities',{}).get('imageRecognitionAvailable'))
                 item.setToolTip('将图片发送至已配置服务，上传前须确认。' if enabled else '图片识别服务尚未配置；附件存档仍可用。')

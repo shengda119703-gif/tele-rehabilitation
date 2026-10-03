@@ -9,12 +9,17 @@ const { ProductLocalStore } = require('./product-local-store.cjs');
 const { HttpVisionProvider } = require('../.bridge-build/adapters/HttpVisionProvider.js');
 const { HealthKitDeviceAdapter } = require('../.bridge-build/adapters/HealthKitDeviceAdapter.js');
 const { webhookFamilyDelivery } = require('../.bridge-build/adapters/FamilyNotificationDelivery.js');
+const { HostVoicePort } = require('../.bridge-build/adapters/HostVoicePort.js');
+let currentOwner = '';
+const nativeVoice = process.env.ANKANG_NATIVE_VOICE === '1'
+  ? new HostVoicePort((name, args) => readFromPython(currentOwner,{name,arguments:args})) : undefined;
 const productRoot = process.argv[2];
 const product = productRoot ? new ProductService(new ProductLocalStore(productRoot),
   owner => process.env.ANKANG_PRODUCT_DISABLE_MODEL === '1' ? undefined : createRehabModel(call => readFromPython(owner, call)),
   process.env.ANKANG_IMAGE_PROXY_URL ? new HttpVisionProvider({endpoint: process.env.ANKANG_IMAGE_PROXY_URL}) : undefined, {
     healthkit: process.env.ANKANG_HEALTHKIT_ENDPOINT ? new HealthKitDeviceAdapter(process.env.ANKANG_HEALTHKIT_ENDPOINT, process.env.HEALTHKIT_BRIDGE_TOKEN || '') : undefined,
     delivery: process.env.ANKANG_WEBHOOK_TOKEN ? webhookFamilyDelivery({provider:process.env.ANKANG_WEBHOOK_PROVIDER || 'custom',token:process.env.ANKANG_WEBHOOK_TOKEN,customUrl:process.env.ANKANG_WEBHOOK_URL}) : undefined,
+    voice: nativeVoice,
   }) : null;
 const pending = new Map();
 let sequence = 0;
@@ -25,7 +30,7 @@ function readFromPython(sessionId, call) {
     const timer = setTimeout(() => {
       pending.delete(id);
       reject(new Error('Rehab host read timed out'));
-    }, 15000);
+    }, call.name.startsWith('voice.') ? 135000 : 15000);
     pending.set(id, { resolve, reject, timer });
     send({ toolCall: { id, sessionId, ...call } });
   });
@@ -40,6 +45,8 @@ async function main() {
       switch (request.operation) {
         case 'product':
           if (!product) throw new Error('Product data directory is required');
+          currentOwner = request.sessionId;
+          if (nativeVoice && request.voiceStatus) nativeVoice.update(request.voiceStatus);
           result = await product.request(request.productOperation, request.sessionId, request.payload || {}, new Date(request.now));
           break;
         case 'open':

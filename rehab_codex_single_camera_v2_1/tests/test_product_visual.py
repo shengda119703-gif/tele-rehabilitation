@@ -19,8 +19,8 @@ def test_published_116_button_contract_and_native_connections(desktop):
     expected['dockSend']=('发送','chat')
     actual={b.property('actionId'):(b.text(),b.property('actionTarget')) for b in w.product_action_buttons()}
     assert {key:actual[key] for key in expected}==expected
-    assert set(actual)-set(expected)==ASSISTANT_NAV_ACTIONS
-    assert len(actual)==len(w.product_action_buttons())==117+len(ASSISTANT_NAV_ACTIONS)
+    assert set(actual)-set(expected)==ASSISTANT_NAV_ACTIONS|{'voiceFinish'}
+    assert len(actual)==len(w.product_action_buttons())==118+len(ASSISTANT_NAV_ACTIONS)
     assert all(b.property('actionKind')=='B' for b in w.product_action_buttons() if b.property('actionId') in ASSISTANT_NAV_ACTIONS)
     assert all(b.receivers(SIGNAL('clicked(bool)'))>0 for b in w.product_action_buttons())
 

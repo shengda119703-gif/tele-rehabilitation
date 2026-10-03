@@ -377,6 +377,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         return True
 
     def _poll(self):
+        self._voice_live()
         while not self.backend.results.empty():
             operation,owner,token,result,error = self.backend.results.get_nowait()
             self.pending = max(0,self.pending-1)
@@ -388,7 +389,8 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
             if error:
                 if operation == 'extensions.status':self._manual_extension_refresh=False
                 self.storage_label.setText('本机操作未完成')
-                self._message(error,severity='danger')
+                self._message(error,severity='info' if '语音已取消' in error else 'danger')
+                if operation=='voice.input':self._request('extensions.status')
                 self.pending_export = None
                 continue
             self.storage_label.setText('已连接本机数据')
@@ -460,6 +462,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
                 if operation in ('chat','voice.input'):
                     self.chat_input.clear()
                     self.dock_input.clear()
+                    if operation=='voice.input' and self.active_page=='assistant':self._show_assistant_section('conversation')
                 if operation in ('image.confirm','lifecycle.clear'):
                     self.pending_image = None
                     self.image_confirm.setEnabled(False)
@@ -837,6 +840,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.family_summary.setHtml(content)
 
     def closeEvent(self,event):
+        self.backend.voice.cancel()
         if self.legacy._allow_close:
             self.backend.close()
             self.poller.stop()

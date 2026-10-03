@@ -4,7 +4,7 @@ import type { DeliverFn } from '../engine/notify';
 import type { FamilyLinkTransport } from '../family/FamilyService';
 import type { ChatMessage } from '../types';
 export interface VoicePort {
-  status(): {available:boolean; phase:string; detail?:string};
+  status(): {available:boolean; phase:string; detail?:string; outputAvailable?:boolean; microphone?:string};
   recognize(input: unknown): Promise<string>;
   speak(text:string, config:{language:'zh-CN'; rate:0.9}): Promise<void>;
   cancel(): void;
