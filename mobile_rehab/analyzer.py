@@ -27,6 +27,9 @@ def write_json(path, value):
 def analyze(job_path):
     job_path = Path(job_path)
     job = json.loads(job_path.read_text(encoding='utf-8'))
+    if job.get('mode') == 'posture':
+        from .posture_analyzer import analyze as analyze_posture
+        return analyze_posture(job_path)
     if job.get('mode') == 'fitness':
         from .fitness_analyzer import analyze as analyze_fitness
         return analyze_fitness(job_path)

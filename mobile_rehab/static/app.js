@@ -6,7 +6,7 @@ let pollTimer, toastTimer;
 const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = (v, unit='') => Number.isFinite(v) ? `${Math.round(v*10)/10}${unit}` : '未测得';
 const selected = () => state.catalog.find(x => x.id === state.selected);
-const label = (id) => state.catalog.find(x => x.id === id)?.label || state.fitnessCatalog?.find(x => x.id === id)?.label || id;
+const label = (id) => state.catalog.find(x => x.id === id)?.label || state.fitnessCatalog?.find(x => x.id === id)?.label || state.postureCatalog?.find(x=>x.id===id)?.label || id;
 const sideLabel = (s) => s === 'left' ? '左侧' : '右侧';
 const dateLabel = (v) => new Date(v).toLocaleString('zh-CN', {month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
 const statusLabel = (s) => ({uploading:'上传中',queued:'等待分析',analyzing:'分析中',done:'已完成',failed:'需重试'}[s] || s);
@@ -26,12 +26,13 @@ function pairPage(){
 function clearFile(){if(state.url)URL.revokeObjectURL(state.url);state.file=null;state.url=null;state.barCalibration=null;}
 function navigate(tab){
   if(state.upload){toast('正在上传，请先完成或取消上传');return;}
+  if(typeof stopLive==='function')stopLive();
   clearTimeout(pollTimer);state.tab=tab;state.job=null;state.training=null;clearFile();
   if(tab==='assess'&&!selected()){state.selected='shoulder_abduction';state.joint='shoulder';}
   document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
   render();window.scrollTo({top:0,behavior:'instant'});
 }
-function render(){if(state.tab==='assess')assessment();else if(state.tab==='history')history();else if(state.tab==='plan')plan();else if(state.tab==='fitness')fitnessPage();else devices();}
+function render(){if(state.tab==='assess')assessment();else if(state.tab==='history')history();else if(state.tab==='plan')plan();else if(state.tab==='fitness')fitnessPage();else if(state.tab==='posture')posturePage();else if(state.tab==='body')bodyPage();else if(state.tab==='care')carePage();else devices();}
 function assessment(){
   const ex=selected(), i=ex.instructions;
   const joints=[...new Map(state.catalog.map(x=>[x.joint,x.joint_label]))];
@@ -59,6 +60,7 @@ function assessment(){
     $('#back-plan').onclick=()=>navigate('plan');
   }
   fileArea();
+  if(!state.training)mountAssessmentExtras();
 }
 function chooseFile(file){if(!file)return;if(file.size>256*1024*1024){toast('视频超过 256 MB，请缩短视频或降低分辨率');return;}clearFile();state.file=file;state.url=URL.createObjectURL(file);fileArea();}
 function fileArea(){
@@ -77,10 +79,10 @@ function upload(){
   if(state.tab==='fitness'){try{calibration=readBarCalibration();}catch(e){toast(e.message);return;}}
   const xhr=new XMLHttpRequest();state.upload=xhr;
   // Freeze all selectors while the upload metadata is bound to this video.
-  document.querySelectorAll('#app button, #app input').forEach(b=>b.disabled=true);
+  document.querySelectorAll('#app button, #app input, #app select').forEach(b=>b.disabled=true);
   $('#cancel-upload').hidden=false;$('#cancel-upload').disabled=false;$('#cancel-upload').onclick=()=>xhr.abort();
   $('#upload-progress').hidden=false;$('#upload-status').textContent='正在上传，请保持页面开启…';
-  const binding=state.tab==='fitness'?'&mode=fitness':state.training?`&mode=training&plan_id=${state.training.id}&entry_key=${encodeURIComponent(state.training.entry.key)}`:'';
+  const binding=state.tab==='posture'?'&mode=posture':state.tab==='fitness'?'&mode=fitness':state.training?`&mode=training&plan_id=${state.training.id}&entry_key=${encodeURIComponent(state.training.entry.key)}`:'';
   xhr.open('POST',`/api/jobs?exercise=${encodeURIComponent(state.selected)}&side=${state.side}&consent=yes${binding}`);
   xhr.setRequestHeader('Content-Type',state.file.type||'application/octet-stream');xhr.setRequestHeader('X-Rehab-Client','mobile-v1');xhr.timeout=180000;
   if(calibration)xhr.setRequestHeader('X-Fitness-Calibration',JSON.stringify(calibration));
@@ -108,13 +110,14 @@ async function showJob(id){
   try{const j=await api('/jobs/'+id);if(state.job!==id)return;renderJob(j);if(['queued','analyzing','uploading'].includes(j.state))pollTimer=setTimeout(()=>showJob(id),2000);}catch(e){toast(e.message);if(state.job===id){app.innerHTML='<div class="card empty"><h2>暂时没有连上电脑</h2><p>检查 Wi-Fi 与电脑服务，已上传的任务不会因关闭网页而停止。</p><button class="primary" id="retry">重新连接</button></div>';$('#retry').onclick=()=>showJob(id);}}
 }
 function renderJob(j){
+  if(j.mode==='posture'&&j.state==='done'){renderPostureReport(j);return;}
   if(j.mode==='fitness'&&j.state==='done'){renderFitnessReport(j);return;}
   app.innerHTML=`<button class="back" id="back-history">‹ 返回我的记录</button><div class="page-head"><span class="tag">${sideLabel(j.side)} · 视频评估</span><h1>${esc(label(j.exercise))}</h1><p>${dateLabel(j.created_at)}</p></div><div id="job-content"></div>`;
   $('#back-history').onclick=()=>navigate('history');const area=$('#job-content');
   if(j.mode==='fitness')$('.page-head .tag').textContent=sideLabel(j.side)+' · 健身录像分析';
   if(j.state!=='done'){
     area.innerHTML=`<div class="card center"><div class="status-orb">${j.state==='failed'?'!':'◎'}</div><h2>${statusLabel(j.state)}</h2><p class="status-text" role="status">${esc(j.message)}</p>${j.state!=='failed'?`<progress class="progress" aria-label="分析进行中"></progress><p class="caption">${j.progress?`已处理到视频 ${number(j.progress.analyzed_seconds,' 秒')} · ${j.progress.processed_frames} 帧`:'等待电脑启动分析模型…'}</p><p class="tip">上传完成后可离开本页，稍后从“我的记录”回来查看。</p>`:'<button class="primary" id="retake">重新选择录像</button>'}</div>`;
-    if($('#retake'))$('#retake').onclick=()=>navigate(j.mode==='fitness'?'fitness':'assess');
+    if($('#retake'))$('#retake').onclick=()=>navigate(j.mode==='posture'?'posture':j.mode==='fitness'?'fitness':'assess');
   }else{
     const s=j.result.summary,r=s.motion_range, ratio=s.valid_ratio;
     const measured=!!r;const meaningful=measured && s.completed>0;
@@ -138,8 +141,9 @@ function renderJob(j){
 function devices(){
   app.innerHTML=`<div class="page-head"><h1>设备连接</h1><p>手机负责拍摄与查看，电脑负责分析。</p></div><div class="layout"><div><div class="card"><div class="device-icon">▣</div><div class="section-head"><h2>手机摄像头</h2><span class="device-state">可使用</span></div><p class="caption">用手机相机拍摄，上传后查看结果。</p><button class="primary file-actions" id="device-assess">去拍摄评估</button></div><div class="card"><div class="section-head"><h2>电脑分析服务</h2><span class="device-state">已连接</span></div><p class="caption">${esc(location.host)}</p><p class="tip">保持电脑服务开启。手机锁屏可能中断正在进行的上传；上传成功后电脑会独立继续分析。</p></div></div><div class="card"><span class="tag">网络摄像头</span><h2>网络摄像头</h2><p class="status-text">暂未连接</p><p class="caption">网络摄像头通常先与手机、电脑连接同一路由器，由电脑接收视频流，再给手机展示画面。</p><div class="camera-note">暂支持上传摄像头导出的录像。</div><p class="tip">实时预览和远程录制暂未开放。</p></div></div>`;
   $('#device-assess').onclick=()=>navigate('assess');
+  mountDeviceExtras();
 }
-async function init(){try{const data=await api('/catalog');state.catalog=data.exercises;state.fitnessCatalog=data.fitness||[];$('.bottom-nav').hidden=false;$('#connection').textContent='电脑已连接';render();}catch(e){pairPage();}}
+async function init(){if(location.hash.startsWith('#care=')){state.shareCode=decodeURIComponent(location.hash.slice(6));window.history.replaceState(null,'',location.pathname);carePage();return;}let data;try{data=await api('/catalog');}catch(e){pairPage();return;}state.catalog=data.exercises;state.fitnessCatalog=data.fitness||[];state.postureCatalog=data.posture||[];$('.bottom-nav').hidden=false;$('#connection').textContent='电脑已连接';try{render();}catch(e){console.error('页面未能加载',e);toast('页面未能加载，请刷新重试');}}
 function plan(){
   app.innerHTML='<div class="page-head"><span class="tag">训练中心</span><h1>训练计划</h1><p>根据评估结果安排训练。</p></div><div id="plan-content"><p class="loading">正在汇总评估…</p></div>';
   api('/plan').then(data=>{
@@ -151,7 +155,7 @@ function plan(){
       if($('#train-next'))$('#train-next').onclick=()=>{const entry=record.items.find(i=>i.key===progress.next_key);state.training={id:record.id,entry};state.selected=entry.exercise_id;state.side=entry.side;state.joint=selected().joint;state.tab='assess';clearFile();assessment();window.scrollTo(0,0);};
       if($('#training-records'))$('#training-records').onclick=()=>navigate('history');
     }
-    if(!record || progress.blocked){
+    if(!record || progress.blocked || !progress.next_key){
       area.insertAdjacentHTML('beforeend',items.length?`<div class="card"><div class="section-head"><h2>根据评估生成的建议</h2><small>${items.length} 项</small></div>${items.map(i=>`<div class="plan-item"><strong>${esc(i.label)}</strong><br><span class="dose">${i.settings.target_reps} 次 × ${i.settings.target_sets} 组 · 组间休息 ${i.settings.rest_between_sets_s} 秒</span><p>${esc(i.rationale)}</p><p class="caption">${esc(i.instruction)}</p><details><summary>为什么安排这个动作？</summary>参考：${esc(i.source.title)} / ${esc(i.source.section)}。次数及幅度是本项目按本人评估适配，不是指南直接开出的个人处方。</details></div>`).join('')}<form id="plan-form"><label class="consent"><input id="activity-ok" type="checkbox" required><span>我目前无疼痛、头晕等不适，无疾病、术后或医嘱活动限制，并已获准进行这类基础活动；不确定时先咨询专业人员。</span></label><label class="consent"><input id="support-ok" type="checkbox"><span>站立项目已准备稳固支撑，并具备安全完成的条件（不选则排除站立项目）。</span></label><button class="primary">确认适用，生成本次训练计划</button></form><p class="tip">一般基础活动安排，不是疾病治疗处方。手机端采用录制后分析，不是实时监护。</p></div>`:!record?'<div class="card empty"><div class="status-orb">▤</div><h3>先完成一次有效评估</h3><p>完成评估后，这里会生成适合本次表现的训练建议。</p><button class="primary" id="plan-assess">开始身体评估</button></div>':'');
     }
     if(proposal.excluded.length)area.insertAdjacentHTML('beforeend',`<div class="card"><h3>需要再观察的项目</h3>${proposal.excluded.map(x=>`<p class="tip">${esc(x.label)}：${esc(x.reason)}</p>`).join('')}</div>`);
@@ -161,4 +165,4 @@ function plan(){
 }
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>navigate(b.dataset.tab));
 window.addEventListener('beforeunload',e=>{if(state.upload){e.preventDefault();e.returnValue='';}});
-init();
+window.addEventListener('DOMContentLoaded',init);

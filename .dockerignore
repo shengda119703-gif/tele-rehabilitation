@@ -1,0 +1,15 @@
+.git
+backups
+**/.venv
+**/.venv-landmarks
+**/.runtime
+**/data
+**/__pycache__
+**/.pytest_cache
+**/assets/exercise-guides
+**/assets/models/*.pt
+**/assets/models/*.task
+**/*.sqlite3*
+**/*.log
+**/*.env
+**/node_modules

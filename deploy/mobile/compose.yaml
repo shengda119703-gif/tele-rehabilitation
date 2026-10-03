@@ -1,0 +1,38 @@
+services:
+  app:
+    build:
+      context: ../..
+      dockerfile: deploy/mobile/Dockerfile
+    restart: unless-stopped
+    init: true
+    volumes:
+      - mobile_data:/opt/rehab/.runtime/mobile
+      - model_runtime:/opt/rehab/rehab_codex_single_camera_v2_1/.runtime
+      - ../../rehab_codex_single_camera_v2_1/assets/models:/opt/rehab/rehab_codex_single_camera_v2_1/assets/models:ro
+    expose:
+      - "8765"
+    environment:
+      REHAB_TRUST_PROXY: "1"
+      REHAB_ALLOWED_HOSTS: ${REHAB_DOMAIN:?Set REHAB_DOMAIN},localhost,127.0.0.1,app
+    mem_limit: 6g
+    cpus: 4
+  web:
+    image: caddy:2.10.2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      REHAB_DOMAIN: ${REHAB_DOMAIN:?Set REHAB_DOMAIN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      app:
+        condition: service_healthy
+volumes:
+  mobile_data:
+  model_runtime:
+  caddy_data:
+  caddy_config:

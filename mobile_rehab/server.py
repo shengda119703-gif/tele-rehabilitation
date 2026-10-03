@@ -27,6 +27,7 @@ from fastapi.staticfiles import StaticFiles
 from .core import ROOT, EXERCISE_IDS, catalog
 from .fitness import EXERCISES as FITNESS_EXERCISES, catalog as fitness_catalog
 from .barbell import validate_calibration, demo_report, SUPPORTED as BARBELL_EXERCISES
+from .posture import TASKS as POSTURE_TASKS, catalog as posture_catalog
 from app.storage import Storage
 from app.assessment import build_body_profile
 from app.automatic_plans import generate_proposal, create_automatic_plan, program_progress, validate_automatic_use
@@ -138,6 +139,9 @@ class Jobs:
         proc.wait(timeout=10)
 
     def run(self, item):
+        if item.get('camera_id'):
+            self.update(item['id'], message='摄像头正在录制，请按提示完成动作')
+            self.cameras.record(self, item)
         folder = self.folder(item)
         with (folder / 'analysis.log').open('wb') as log:
             with self.lock:
@@ -195,6 +199,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
             yield
         finally:
             watcher.cancel()
+            await asyncio.to_thread(app.state.live.close)
             await asyncio.to_thread(jobs.close)
 
     app = FastAPI(title='康复随行 · 手机演示', docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
@@ -242,19 +247,29 @@ def create_app(data_dir=None, pair_key=None, runner=None):
             raise HTTPException(401, '请先输入电脑上显示的连接码')
         return uid
 
+    from .care import install_care
+    install_care(app, data_dir, jobs, owner, sign, small_json)
+    from .live import install_live
+    install_live(app, owner, small_json)
+    from .network import install_network
+    install_network(app, data_dir, jobs, owner, small_json)
+
     @app.middleware('http')
     async def protect(request, call_next):
+        allowed_hosts = os.environ.get('REHAB_ALLOWED_HOSTS', '').split(',')
+        if allowed_hosts != [''] and request.url.hostname not in allowed_hosts:
+            return JSONResponse({'detail':'访问地址不正确'}, status_code=400)
         if request.method not in ('GET', 'HEAD') and request.headers.get('x-rehab-client') != 'mobile-v1':
             return JSONResponse({'detail': '请从本机康复网页操作'}, status_code=403)
         response = await call_next(request)
         response.headers.update({'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer',
                                  'Cache-Control': 'no-store', 'X-Frame-Options': 'DENY',
-                                 'Content-Security-Policy': "default-src 'self'; img-src 'self' data:; media-src 'self' blob:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'"})
+                                 'Content-Security-Policy': "default-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'"})
         return response
 
     @app.get('/api/health')
     def health():
-        return dict(ok=True, service='mobile-rehab', version='1')
+        return dict(ok=True, service='mobile-rehab', version='2', capabilities=['posture','live-guidance','profile-link','care-sharing','rtsp-recording'])
 
     @app.post('/api/pair')
     async def pair(request: Request):
@@ -289,7 +304,8 @@ def create_app(data_dir=None, pair_key=None, runner=None):
         owner(request)
         return dict(exercises=catalog(), max_bytes=MAX_BYTES, max_seconds=120,
                     fitness=fitness_catalog(),
-                    network_camera=dict(connected=False, message='等待确认摄像头型号及 RTSP / ONVIF 协议；目前可上传它导出的录像。'))
+                    posture=posture_catalog(),
+                    network_camera=dict(connected=False, supported=True, message='在设备页测试已配置的 RTSP 摄像头。'))
 
     @app.get('/api/plan')
     def current_plan(request: Request):
@@ -354,10 +370,10 @@ def create_app(data_dir=None, pair_key=None, runner=None):
     async def upload(request: Request, exercise: str, side: str, consent: str = '',
                      mode: str = 'assessment', plan_id: str = '', entry_key: str = ''):
         uid = owner(request)
-        allowed = FITNESS_EXERCISES if mode == 'fitness' else EXERCISE_IDS
+        allowed = FITNESS_EXERCISES if mode == 'fitness' else POSTURE_TASKS if mode == 'posture' else EXERCISE_IDS
         if exercise not in allowed or side not in ('left', 'right') or consent != 'yes':
             raise HTTPException(400, '请选择动作、测试侧，并同意本次录像传到你的电脑分析。')
-        if mode not in ('assessment', 'training', 'fitness'):
+        if mode not in ('assessment', 'training', 'fitness', 'posture'):
             raise HTTPException(400, '未知的任务模式')
         calibration = None
         raw_calibration = request.headers.get('x-fitness-calibration')
@@ -441,8 +457,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--host', default='127.0.0.1')
     parser.add_argument('--port', type=int, default=8765)
+    parser.add_argument('--ssl-certfile', help='Trusted TLS certificate PEM for direct LAN HTTPS')
+    parser.add_argument('--ssl-keyfile', help='TLS private key PEM; keep outside Git')
     parser.add_argument('--stop', action='store_true', help='Stop this workspace mobile service')
     args = parser.parse_args()
+    if bool(args.ssl_certfile) != bool(args.ssl_keyfile):
+        parser.error('HTTPS 需同时提供证书和私钥')
     data_dir = ROOT / '.runtime/mobile'
     if args.stop:
         if data_dir.exists():
@@ -469,10 +489,13 @@ def main():
     ips = sorted(set(socket.gethostbyname_ex(socket.gethostname())[2]))
     for ip in ips:
         if not ip.startswith('127.'):
-            print(f'手机和电脑连接同一 Wi-Fi，然后打开：http://{ip}:{args.port}', flush=True)
+            scheme = 'https' if args.ssl_certfile else 'http'
+            print(f'手机和电脑连接同一 Wi-Fi，然后打开：{scheme}://{ip}:{args.port}', flush=True)
     print(f'连接码：{app.state.pair_key}\n保持此窗口开启；按 Ctrl+C 停止。\n', flush=True)
     import uvicorn
     server = uvicorn.Server(uvicorn.Config(app, host=args.host, port=args.port, access_log=False,
+                                         forwarded_allow_ips='*' if os.environ.get('REHAB_TRUST_PROXY') == '1' else '127.0.0.1',
+                                         ssl_certfile=args.ssl_certfile, ssl_keyfile=args.ssl_keyfile,
                                          timeout_graceful_shutdown=5))
     app.state.shutdown = lambda: setattr(server, 'should_exit', True)
     try:

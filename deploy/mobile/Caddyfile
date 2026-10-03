@@ -1,0 +1,14 @@
+{$REHAB_DOMAIN} {
+    request_body {
+        max_size 257MB
+    }
+    reverse_proxy app:8765 {
+        transport http {
+            read_timeout 190s
+        }
+    }
+    header {
+        Strict-Transport-Security "max-age=31536000"
+        Permissions-Policy "camera=(self), microphone=()"
+    }
+}

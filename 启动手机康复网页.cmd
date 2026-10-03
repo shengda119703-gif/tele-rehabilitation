@@ -6,7 +6,7 @@ if not exist "rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe" (
   pause
   exit /b 1
 )
-"rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe" -c "import fastapi, uvicorn" >nul 2>nul
+"rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe" -c "import fastapi, uvicorn, imageio_ffmpeg" >nul 2>nul
 if errorlevel 1 (
   echo 首次安装手机网页依赖...
   "rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe" -m pip install -r mobile_rehab\requirements.txt
