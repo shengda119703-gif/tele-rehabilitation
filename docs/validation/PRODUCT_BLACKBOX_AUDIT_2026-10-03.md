@@ -100,3 +100,5 @@ runner 的媒体追加场景需可选 `av`；本轮环境有该库，没有新�
 ## 分支与范围
 
 本轮起点 `cceaa018498679974aada7b46ea83ad615562783`，只提交到 `codex/product-ui-v1`。未 merge main，未改 main/stage1，未增加视觉改造、新功能或第三方 UI runtime。最终提交 SHA/远端一致性与 clean 状态以交付时 Git 核对为准。
+
+交付远端核对补充：生产修复与测试工具提交为 `6e79cc8323e27d257f45962a1c7c64813662708c`。随后只补充本段文档。fetch 后发现远端 `origin/main` 已为 `704fdec45fbc59999ee7012cb3a56876435a08fc`（LAN mobile rehabilitation assessment and training web demo），本地 main 仍为 `fb113ff36b694e379548ded2b48137fca34581ae`；本轮未合入该远端增量、未测试该网页演示、未改动 main 分支。stage1 本地/远端均为 `4b2d108a3003d84c89ac42da25580017d5b1de17`。本报告只验收 UI 分支代码，不扩大成远端 main 新模块的验收。
