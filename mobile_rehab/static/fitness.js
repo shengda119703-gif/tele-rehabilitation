@@ -10,6 +10,7 @@ function fitnessPage(){
   $('#fit-camera').onclick=()=>$('#fit-camera-input').click();$('#fit-gallery').onclick=()=>$('#fit-gallery-input').click();
   for(const id of ['fit-camera-input','fit-gallery-input'])$('#'+id).onchange=e=>chooseFile(e.target.files[0]);
   fileArea();
+  const demo=document.createElement('button');demo.className='secondary';demo.textContent='体验速度与功率示例（模拟数据）';demo.onclick=showBarDemo;$('.fitness-hero').after(demo);
 }
 
 function fitnessChart(series){
@@ -24,16 +25,20 @@ function renderFitnessReport(j){
   const r=j.result,s=r.summary,ex=r.spec,reps=r.repetitions;
   app.innerHTML=`<button class="back" id="fit-back">‹ 返回我的记录</button><div class="page-head"><span class="tag">健身分析 · ${sideLabel(j.side)} · 侧面录像</span><h1>${esc(ex.label)} · 本组回顾</h1><p>${dateLabel(j.created_at)} · ${esc(r.rule_version)}</p></div><div class="layout"><section><div class="card"><h2>${s.completed?'看看这一组的表现':'已分析，暂未观察到完整往返'}</h2><div class="stat-grid"><div class="stat"><strong>${s.completed}<small> 次</small></strong><small>观察到的完整往返</small></div><div class="stat"><strong>${Number.isFinite(s.valid_ratio)?Math.round(s.valid_ratio*100)+'%':'—'}</strong><small>可用观察时长占比</small></div><div class="stat"><strong>${number(s.mean_cycle_s,'s')}</strong><small>平均每次往返时间</small></div><div class="stat"><strong>${s.partial}<small> 段</small></strong><small>未形成完整往返的片段</small></div></div><p class="fit-summary">${s.completed?`本段观察到 ${s.completed} 次完整往返。点击下方每次动作的起点、峰值和回位，可以对照原始录像。`:'请确认所选动作与录像一致，观察侧关节完整入镜，并录下起点、动作和回位。没有计数不等于你的动作做错了。'}</p><p class="tip">可用观察占比不是动作质量分数。计次阈值是本版工程规则，不是合格动作标准。</p>${Number.isFinite(s.tempo_cv)?`<p class="tip">往返时间变异系数：${Math.round(s.tempo_cv*100)}%（至少 3 次时提供；数值越小仅代表本组用时越接近，不等于动作更正确）。</p>`:''}</div><div class="card"><h3>${esc(s.primary_metric_label)} · 时间曲线</h3>${fitnessChart(r.series)}<p class="caption">单位为度，横轴为录像时间。平滑后的投影角用于切分动作；缺测处不连线。</p></div><div class="card"><h3>本段可观察指标</h3>${Object.values(s.metrics).map(m=>`<div class="metric-row"><span>${esc(m.label)}<small>有效帧覆盖 ${Math.round(m.coverage*100)}% · ${m.samples} 个样本</small></span><strong>${number(m.min)}–${number(m.max)}${m.unit==='deg'?'°':''}</strong></div>`).join('')||'<p class="tip">没有可用测量，不填入猜测值。</p>'}<p class="tip">${esc(ex.note)} 指标范围来自有效帧，不是推荐或正常范围。</p></div></section><section><div class="card"><h3>关键时刻，回到录像看</h3>${j.video_available?`<div class="fit-video"><video id="fit-video" controls playsinline preload="metadata" src="/api/jobs/${j.id}/video"></video><canvas id="fit-overlay" aria-hidden="true"></canvas></div><p class="fit-key-note" id="fit-key-note">点击关键时刻可暂停回看；彩色线仅标出当时可见的观察侧关节。</p><button class="danger" id="fit-delete">删除原始录像，保留分析结果</button>`:'<p class="warning">原始录像已删除，角度、时间和分析结果仍保留。</p>'}<div class="fit-reps-scroll">${reps.map((rep,i)=>`<article class="fit-rep"><h3>第 ${rep.number} 次<span>本次往返 ${number(rep.total_s,'s')}</span></h3><p class="tip">${esc(ex.phases[0])}至峰值 ${number(rep.outbound_s,'s')} · 峰值后${esc(ex.phases[1])} ${number(rep.return_s,'s')}<br>起点至峰值角变化 ${number(rep.range_deg,'°')} · 平均角变化率 ${number(rep.outbound_mean_angular_rate,'°/s')}</p><div class="keyframes">${[['start','起点'],['turn','峰值'],['end','回位']].map(([key,text])=>`<button data-rep="${i}" data-key="${key}" ${j.video_available?'':'disabled'}>${text} ${number(rep[key].t,'s')}</button>`).join('')}</div>${rep.notes.map(t=>`<p class="warning">${esc(t)}</p>`).join('')}</article>`).join('')||'<p class="tip">观察到完整往返后，这里会出现逐次回看入口。</p>'}</div></div><div class="card"><h3>如何理解这份分析</h3><p class="tip">阶段时间按起点、角度峰值、回位时刻划分，停顿可能包含其中；平均角变化率不是杠铃线速度。</p><details><summary>测量条件与限制</summary>${r.limitations.map(t=>esc(t)).join('<br>')}<br>固定侧面由用户选择，系统未验证机位。<br>切分角：${ex.start_angle}° → ${ex.turn_angle}° → ${ex.start_angle}°。仅为本版计次规则，无需为了计数追求这些角度。</details><button id="fit-again" class="secondary">分析另一组动作</button></div></section></div>`;
   $('#fit-back').onclick=()=>navigate('history');$('#fit-again').onclick=()=>navigate('fitness');
+  if(r.barbell){$('.page-head').insertAdjacentHTML('afterend',barReport(r.barbell));bindBarReport(r.barbell);}
+  if(r.barbell&&j.video_available)$('#fit-key-note').textContent='可点击峰速或动作关键时刻回看；黄色为器械标记与最近轨迹，绿色为当时可见的人体关键点。';
   if(!j.video_available)return;
   const video=$('#fit-video'), canvas=$('#fit-overlay');let active=null;
   const overlay=()=>{
     const rect=video.getBoundingClientRect();canvas.width=Math.round(rect.width);canvas.height=Math.round(rect.height);
     const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);
-    if(!active||Math.abs(video.currentTime-active.t)>.2||!video.videoWidth)return;
+    if(!video.videoWidth)return;
     const [cw,ch]=r.conditions.size;
     if(Math.abs(video.videoWidth/video.videoHeight-cw/ch)>.04)return;
     const scale=Math.min(canvas.width/video.videoWidth,canvas.height/video.videoHeight);
     const w=video.videoWidth*scale,h=video.videoHeight*scale,dx=(canvas.width-w)/2,dy=(canvas.height-h)/2;
+    if(r.barbell&&video.paused)drawBarOverlay(ctx,r.barbell,video.currentTime,w,h,dx,dy);
+    if(!active||Math.abs(video.currentTime-active.t)>.2)return;
     const p=active.points;ctx.strokeStyle='#94edb0';ctx.fillStyle='#94edb0';ctx.lineWidth=3;
     for(const [a,b] of [['shoulder','elbow'],['elbow','wrist'],['shoulder','hip'],['hip','knee'],['knee','ankle']])if(p[a]&&p[b]){ctx.beginPath();ctx.moveTo(dx+p[a][0]*w,dy+p[a][1]*h);ctx.lineTo(dx+p[b][0]*w,dy+p[b][1]*h);ctx.stroke();}
     for(const xy of Object.values(p)){ctx.beginPath();ctx.arc(dx+xy[0]*w,dy+xy[1]*h,4,0,Math.PI*2);ctx.fill();}

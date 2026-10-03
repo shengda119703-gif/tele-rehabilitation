@@ -54,6 +54,24 @@ def test_auth_catalog_and_static(client):
         assert other.post('/api/pair', json={'code': 'test-key'}).status_code == 403
 
 
+def test_barbell_demo_and_calibrated_upload(client):
+    from mobile_rehab.tests.test_barbell import calibration
+    result=client.get('/api/fitness/demo')
+    assert result.status_code==200 and result.json()['synthetic'] is True
+    assert client.get('/api/jobs').json()==[]
+    headers={'X-Fitness-Calibration':json.dumps(calibration())}
+    response=client.post('/api/jobs?exercise=fitness_deadlift&side=left&mode=fitness&consent=yes',content=b'x'*40,headers=headers)
+    assert response.status_code==200
+    job=client.get('/api/jobs/'+response.json()['id']).json()
+    assert job['barbell_calibration']['mass_kg']==40
+    for exercise,mode in [('shoulder_abduction','assessment'),('fitness_pushup','fitness')]:
+        assert client.post(f'/api/jobs?exercise={exercise}&side=left&mode={mode}&consent=yes',content=b'x'*40,headers=headers).status_code==400
+    headers['X-Fitness-Calibration']='{"mass_kg":NaN}'
+    assert client.post('/api/jobs?exercise=fitness_deadlift&side=left&mode=fitness&consent=yes',content=b'x'*40,headers=headers).status_code==400
+    with TestClient(client.app) as other:
+        assert other.get('/api/fitness/demo').status_code==401
+
+
 def test_pairing_invalid_and_large(client):
     assert client.post('/api/pair', json={'code': 'bad'}).status_code == 401
     assert client.post('/api/pair', content='x'*600).status_code == 413

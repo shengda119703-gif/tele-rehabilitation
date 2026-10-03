@@ -23,7 +23,7 @@ function pairPage(){
   app.innerHTML=`<section class="pair"><span class="tag">你的手机 × 你的电脑</span><h1>让康复评估，<br>离你更近一点。</h1><p>手机和电脑连接同一 Wi-Fi，输入电脑启动窗口中的连接码。</p><form id="pair-form"><label class="caption" for="pair-code">电脑连接码</label><input id="pair-code" name="code" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="输入连接码" required maxlength="32"><button class="primary">连接我的电脑 →</button></form><p class="tip">视频仅发送到这台电脑，不上传公共云。当前为家庭局域网演示版，请勿在公共网络使用。</p></section>`;
   $('#pair-form').onsubmit=async e=>{e.preventDefault();const b=e.currentTarget.querySelector('button');b.disabled=true;try{await api('/pair',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('#pair-code').value.trim()})});await init();}catch(e){toast(e.message);b.disabled=false;}};
 }
-function clearFile(){if(state.url)URL.revokeObjectURL(state.url);state.file=null;state.url=null;}
+function clearFile(){if(state.url)URL.revokeObjectURL(state.url);state.file=null;state.url=null;state.barCalibration=null;}
 function navigate(tab){
   if(state.upload){toast('正在上传，请先完成或取消上传');return;}
   clearTimeout(pollTimer);state.tab=tab;state.job=null;state.training=null;clearFile();
@@ -69,9 +69,12 @@ function fileArea(){
   if(state.training)$('#upload-btn').textContent='上传并分析本次训练 →';
   if(state.tab==='fitness')$('#upload-btn').textContent='上传并分析健身动作 →';
   const video=$('#file-area video');video.onloadedmetadata=()=>{if(Number.isFinite(video.duration)&&video.duration>120){toast('这段视频超过 2 分钟，请截取一项动作后再上传');$('#upload-btn').disabled=true;}};
+  if(state.tab==='fitness')mountBarCalibration();
 }
 function upload(){
   if(!$('#consent').checked){toast('请先勾选本次录像分析授权');return;}
+  let calibration=null;
+  if(state.tab==='fitness'){try{calibration=readBarCalibration();}catch(e){toast(e.message);return;}}
   const xhr=new XMLHttpRequest();state.upload=xhr;
   // Freeze all selectors while the upload metadata is bound to this video.
   document.querySelectorAll('#app button, #app input').forEach(b=>b.disabled=true);
@@ -80,6 +83,7 @@ function upload(){
   const binding=state.tab==='fitness'?'&mode=fitness':state.training?`&mode=training&plan_id=${state.training.id}&entry_key=${encodeURIComponent(state.training.entry.key)}`:'';
   xhr.open('POST',`/api/jobs?exercise=${encodeURIComponent(state.selected)}&side=${state.side}&consent=yes${binding}`);
   xhr.setRequestHeader('Content-Type',state.file.type||'application/octet-stream');xhr.setRequestHeader('X-Rehab-Client','mobile-v1');xhr.timeout=180000;
+  if(calibration)xhr.setRequestHeader('X-Fitness-Calibration',JSON.stringify(calibration));
   xhr.upload.onprogress=e=>{if(e.lengthComputable){$('#upload-progress').value=e.loaded/e.total*100;$('#upload-status').textContent=e.loaded===e.total?'上传完成，等待电脑接收确认…':`正在上传 ${Math.round(e.loaded/e.total*100)}%`;}};
   const reset=(message)=>{state.upload=null;render();toast(message);};
   xhr.onerror=()=>reset('连接中断，请确认手机和电脑仍在同一 Wi-Fi');xhr.ontimeout=()=>reset('上传超时，请尝试更短的视频');xhr.onabort=()=>reset('已取消上传');

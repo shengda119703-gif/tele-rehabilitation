@@ -26,6 +26,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from .core import ROOT, EXERCISE_IDS, catalog
 from .fitness import EXERCISES as FITNESS_EXERCISES, catalog as fitness_catalog
+from .barbell import validate_calibration, demo_report, SUPPORTED as BARBELL_EXERCISES
 from app.storage import Storage
 from app.assessment import build_body_profile
 from app.automatic_plans import generate_proposal, create_automatic_plan, program_progress, validate_automatic_use
@@ -333,6 +334,11 @@ def create_app(data_dir=None, pair_key=None, runner=None):
                 return session['training_feedback']
         return await asyncio.to_thread(record_feedback)
 
+    @app.get('/api/fitness/demo')
+    def fitness_demo(request: Request):
+        owner(request)
+        return demo_report()
+
     @app.get('/api/jobs')
     def list_jobs(request: Request, brief: bool = False):
         uid = owner(request)
@@ -353,6 +359,15 @@ def create_app(data_dir=None, pair_key=None, runner=None):
             raise HTTPException(400, '请选择动作、测试侧，并同意本次录像传到你的电脑分析。')
         if mode not in ('assessment', 'training', 'fitness'):
             raise HTTPException(400, '未知的任务模式')
+        calibration = None
+        raw_calibration = request.headers.get('x-fitness-calibration')
+        if raw_calibration:
+            if mode != 'fitness' or exercise not in BARBELL_EXERCISES or len(raw_calibration) > 2048:
+                raise HTTPException(400, '当前动作或模式不支持器械物理量分析')
+            try:
+                calibration = validate_calibration(json.loads(raw_calibration))
+            except (ValueError, TypeError, KeyError):
+                raise HTTPException(400, '器械标定无效，请重新点选长度、跟踪点并检查重量。')
         if mode == 'training':
             def validate():
                 with store_for(uid) as store:
@@ -373,7 +388,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
             raise HTTPException(415, '请选择手机录像文件（MP4 / MOV / WebM）')
         item = jobs.reserve(uid, exercise, side)
         jobs.update(item['id'], mode=mode, plan_id=plan_id if mode == 'training' else '',
-                    entry_key=entry_key if mode == 'training' else '')
+                    entry_key=entry_key if mode == 'training' else '', barbell_calibration=calibration)
         folder = jobs.folder(item)
         part = folder / 'upload.part'
         size = 0
