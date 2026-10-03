@@ -6,7 +6,7 @@ export class HostVoicePort implements VoicePort {
   constructor(private readonly call:(name:string,args:Record<string,unknown>)=>Promise<unknown>) {}
   update(status:ReturnType<VoicePort['status']>) { this.state={...status}; }
   status() { return {...this.state}; }
-  async recognize(input:unknown) {
+  async recognize(_input:unknown) {
     if (!this.state.available) throw new Error(this.state.detail || '语音输入尚未配置');
     const result=await this.call('voice.recognize',{}) as {text?:unknown};
     if (typeof result.text !== 'string' || !result.text.trim()) throw new Error('未识别到清晰语音，请重试');

@@ -10,6 +10,7 @@ class ProductRehabWindow(MainWindow):
         if sharing and QMessageBox.question(self,'银发照护共享','确认修改共享范围或共享本条本人情况？这不会建立真实远程连接。')!=QMessageBox.Yes:
             if self.silver_dialog:
                 self.silver_dialog.pending=False
+                self.silver_dialog._restore_busy_controls()
                 self.silver_dialog.error.setText('已取消，未保存或共享此操作。')
             return
         super()._silver_command(operation)

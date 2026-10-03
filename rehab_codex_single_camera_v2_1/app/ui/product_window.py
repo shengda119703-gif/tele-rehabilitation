@@ -276,7 +276,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.invite_input = QLineEdit()
         self.invite_input.setPlaceholderText('输入本机生成的邀请码')
         row.addWidget(self.invite_input)
-        row.addWidget(button('确认绑定',lambda:self._request('family.bind',{'code':self.invite_input.text()})))
+        row.addWidget(button('确认绑定',self._bind_family))
         layout.addLayout(row)
         self.invite_hint = label('绑定与共享授权分别确认；跨设备连接状态见设置。','productMuted')
         layout.addWidget(self.invite_hint)
@@ -480,7 +480,9 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
                     rows(self.image_candidates,[])
                 if operation not in ('snapshot','extensions.status'):
                     self._message('管家已回复。' if operation in ('chat','voice.input') else '操作已完成，已刷新本机资料。',severity='success')
-                if operation in ('archive.save','media.import') and self.navigate('health',refresh=False):
+                # Uploading from the assistant must keep its visible Back control
+                # and the unsent conversation available. Archive entry is explicit.
+                if operation in ('archive.save','media.import') and self.active_page != 'assistant' and self.navigate('health',refresh=False):
                     self.health_tabs.setCurrentIndex(2)
         if not self.owner and self.profiles and not self.pending and not self.legacy.busy and not self.closing:
             self._select_owner(self.profiles[0]['ownerId'])
@@ -670,6 +672,10 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         if QMessageBox.question(self,'修改家庭共享','绑定家属将可查看允许共享的摘要，私密记录不开放。确认允许共享？' if grant else '确认撤销家庭共享？家属摘要将不再开放。') != QMessageBox.Yes:
             return
         self._request('family.grant' if grant else 'family.revoke')
+
+    def _bind_family(self):
+        if QMessageBox.question(self,'确认家庭绑定','使用所填本机邀请码建立家庭绑定？绑定后仍须单独授权，才允许查看共享摘要。') == QMessageBox.Yes:
+            self._request('family.bind',{'code':self.invite_input.text()})
 
     def _contacts(self):
         self._request('emergency.contacts')

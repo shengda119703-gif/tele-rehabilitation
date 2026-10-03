@@ -412,7 +412,12 @@ export class ProductService {
       return {emergency:'120', familyName:p.familyContact, familyPhone:p.familyPhone,
         communityDoctorPhone:p.communityDoctorPhone ?? '', automaticCall:false};
     } else if (operation === 'lifecycle.export') {
-      return {version: 1, exportedAt: now.toISOString(), snapshot: await this.snapshot(owner, now),
+      const snapshot = await this.snapshot(owner, now);
+      if (!snapshot.state) throw new Error('Owner snapshot unavailable');
+      // A backup becomes a durable file; transient no-record turns stay in the live UI only.
+      const durableSnapshot = {...snapshot, state:{...snapshot.state,
+        chat:snapshot.state.chat.filter(m => m.persisted !== false && !m.pending)}};
+      return {version: 1, exportedAt: now.toISOString(), snapshot: durableSnapshot,
         attachments: (await this.port.attachments.list(this.scope(owner))).map(a => ({...a, bytes:Array.from(a.bytes)}))};
     } else if (operation === 'lifecycle.clear') {
       if (input.confirmOwner !== owner) throw new Error('请明确确认当前用户编号');

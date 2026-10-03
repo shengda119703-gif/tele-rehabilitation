@@ -117,3 +117,61 @@ def test_activity_permission_and_personal_targets_are_explicit_and_demo_is_label
     setup = w._read_setup()
     assert setup['demo_thresholds'] and setup['stand_target_s'] == 5
     assert not w.activity_durations['stand_target_s'].isEnabled()
+
+
+
+def test_periodic_refresh_keeps_error_feedback_until_explicit_action(desktop, tmp_path):
+    w, runtime, app = desktop
+    care, clinical = SilverStore(tmp_path/'support.sqlite3'), Storage(tmp_path/'clinical.sqlite3')
+    try:
+        w._show_silver()
+        _, kw = runtime.calls[-1]
+        result = execute(care, clinical, None, **kw)
+        d = w.silver_dialog
+        d.render(result)
+        d.show_error('TEST 语音不可用')
+        d.refresh()
+        d.refresh()
+        assert 'TEST 语音不可用' in d.error.text()
+        d.render(result)
+        assert 'TEST 语音不可用' in d.error.text()
+        d.render(dict(result, operation='request'))
+        assert not d.error.text()
+    finally:
+        clinical.close()
+
+
+
+def test_empty_snapshot_disables_family_response_controls(desktop, tmp_path):
+    w, runtime, app = desktop
+    care, clinical = SilverStore(tmp_path/'support.sqlite3'), Storage(tmp_path/'clinical.sqlite3')
+    try:
+        w._show_silver()
+        d = w.silver_dialog
+        assert not any(b.isEnabled() for b in (d.ack, d.claim, d.resolve, d.confirm))
+        _, kw = runtime.calls[-1]
+        d.render(execute(care, clinical, None, **kw))
+        assert not d.requests.count()
+        assert not any(b.isEnabled() for b in (d.ack, d.claim, d.resolve, d.confirm))
+    finally:
+        clinical.close()
+
+
+
+def test_pending_refresh_disables_mutations_but_keeps_help_available(desktop, tmp_path):
+    w, runtime, app = desktop
+    care, clinical = SilverStore(tmp_path/'support.sqlite3'), Storage(tmp_path/'clinical.sqlite3')
+    try:
+        w._show_silver()
+        d = w.silver_dialog
+        assert d.pending and not d.check_button.isEnabled() and not d.save_policy.isEnabled()
+        assert d.help_button.isEnabled()
+        _, kw = runtime.calls[-1]
+        d.render(execute(care, clinical, None, **kw))
+        assert d.check_button.isEnabled() and d.save_policy.isEnabled()
+        d.refresh()
+        assert not d.check_button.isEnabled()
+        d.show_error('TEST 刷新失败')
+        assert d.check_button.isEnabled() and d.save_policy.isEnabled()
+    finally:
+        clinical.close()

@@ -94,6 +94,7 @@ void test('describeDeliveries：台账包含微信推送渠道标签', () => {
     lifecycle: 'new',
   };
   const text = describeDeliveries(record);
-  assert.match(text, /系统通知已送达/);
-  assert.match(text, /微信推送已送达/);
+  assert.match(text, /系统通知已发送，送达未确认/);
+  assert.match(text, /微信推送已发送，送达未确认/);
+  assert.doesNotMatch(text, /已送达/);
 });

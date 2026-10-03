@@ -1,0 +1,317 @@
+{
+  "date": "2026-10-03",
+  "baseline": "cceaa018498679974aada7b46ea83ad615562783",
+  "method": "Qt offscreen public mouse/keyboard widgets; real Runtime, ProductService, SQLite and Python/Node bridge. Model and voice disabled in this runner; native Windows microphone tested separately.",
+  "sources": [
+    "blackbox-complete",
+    "blackbox-forms-final",
+    "blackbox-targeted",
+    "blackbox-extras",
+    "blackbox-edge-retest",
+    "blackbox-original-last",
+    "blackbox-silver-batch-last",
+    "blackbox-media-final",
+    "blackbox-notifications-final",
+    "blackbox-silver-stable",
+    "blackbox-remaining-guarded",
+    "blackbox-remaining-all-final"
+  ],
+  "passed_scenarios": [
+    {
+      "name": "01 首次建档：空值校验、三个资料页、保存、空首页",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 29.55,
+      "run": "blackbox-remaining-all-final"
+    },
+    {
+      "name": "导航/首页",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 3.56,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "导航/AI 康复管家",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 3.58,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "导航/康复",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 3.38,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "导航/健康",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 3.08,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "导航/用药",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 3.67,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "导航/家庭",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 3.45,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "导航/记录",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 3.26,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "导航/通知",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 3.08,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "导航/设置",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 3.48,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "AI 四模块、发送、三推荐问题、草稿、返回、康复链接",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 31.41,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "全局管家发送且不丢失健康页",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 8.69,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "AI 添加真实本机附件后可直接返回未发送草稿",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 14.19,
+      "run": "blackbox-forms-final"
+    },
+    {
+      "name": "照护圈联系人、SOS、详情、共享记录、邀请、绑定/授权/撤销/解绑确认",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 41.22,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "记录五分类、详情/趋势/报告、各分类真实文件导出",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 35.92,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "通知筛选、台账取消/确认、详情、确认、业务跳转",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 10.02,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "康复四页签全部主入口、原评估/计划/历史、身体档案、返回",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 105.95,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "设备状态/刷新/查看、导入取消、坏 JSON 拒绝、摄像头设置导航",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 15.91,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "设置六页签、真实备份、清除取消、开发者取消、所有业务链接",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 66.92,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "首页十个入口逐项实际点击（无数据按真实提示处理）",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 59.95,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "创建第二用户、对话/草稿/未保存数值隔离、切回第一用户",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 21.28,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "原康复/九部位、全部53动作、图解设置步骤、搜索空态",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 116.92,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "原康复/空历史打开导出比较删除与返回保护",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 13.19,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "清除本人数据确认后真实清除、保留药物与本人档案",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 24.91,
+      "run": "blackbox-complete"
+    },
+    {
+      "name": "健康十种指标逐项选择、保存、反馈与返回",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 55.98,
+      "run": "blackbox-targeted"
+    },
+    {
+      "name": "用药新增/编辑/查看、停用取消与确认、恢复、今日核对、漏服与历史",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 48.39,
+      "run": "blackbox-forms-final"
+    },
+    {
+      "name": "档案六分类真实导入、详情、原字节导出、资料表单取消",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 32.08,
+      "run": "blackbox-forms-final"
+    },
+    {
+      "name": "文件接口/设备四指标导入、错误用户、错误单位、重复去重",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 27.95,
+      "run": "blackbox-edge-retest"
+    },
+    {
+      "name": "输入与身体档案/输入来源接口情境选择、双摄、十部位与明细",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 24.28,
+      "run": "blackbox-edge-retest"
+    },
+    {
+      "name": "原康复/人工计划新增、两侧项目、编辑排序、保存、归档恢复",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 12.86,
+      "run": "blackbox-original-last"
+    },
+    {
+      "name": "原康复/106评估选项、空值拒绝、清单保存跳过恢复结束确认",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 11.58,
+      "run": "blackbox-silver-batch-last"
+    },
+    {
+      "name": "额外/成员详情操作、私密对话备份、真实PNG与MP4导入导出",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 38.34,
+      "run": "blackbox-media-final"
+    },
+    {
+      "name": "有通知/真实记录检测、授权台账、已查看确认、三筛选与业务跳转",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 39.52,
+      "run": "blackbox-notifications-final"
+    },
+    {
+      "name": "银发/四页签、选择项、共享确认、求助与人工整改真实闭环、撤销",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 37.08,
+      "run": "blackbox-remaining-guarded"
+    },
+    {
+      "name": "补测/银发五场景入口与手机演示未确认拒绝",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 54.86,
+      "run": "blackbox-remaining-all-final"
+    },
+    {
+      "name": "补测/原始摄像头打开、真实结果、镜像与关闭",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 13.76,
+      "run": "blackbox-remaining-all-final"
+    },
+    {
+      "name": "补测/自动计划空态、原身体档案保护与全部人体图标导航",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 18.86,
+      "run": "blackbox-remaining-all-final"
+    },
+    {
+      "name": "补测/合成演示按钮不进入正式用户路径",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 11.31,
+      "run": "blackbox-remaining-all-final"
+    },
+    {
+      "name": "补测/手机TEST演示本机开启、注入请求、无配对保护与关闭",
+      "status": "PASS",
+      "detail": "Assertions passed through visible UI",
+      "seconds": 17.48,
+      "run": "blackbox-remaining-all-final"
+    }
+  ],
+  "published_buttons": {
+    "total": 136,
+    "qt_activated": 117,
+    "native_voice_partially_verified": 3,
+    "disabled_remaining": 16
+  },
+  "selected_option_activations": 225,
+  "limits": [
+    "Scenario PASS includes correctly rejected empty/invalid inputs; not all end-to-end clinical flows pass.",
+    "Full Python suite: 1671 passed,14 skipped,1 missing-local-YOLO failure before added feedback tests; latest targeted regression reported separately.",
+    "Actual external model, cloud sync, iOS, devices, webhook delivery and human motion/ASR are not accepted."
+  ],
+  "final_targeted_python": "34 passed in 71.91s after all production changes (native_voice, product_module_paths, product_completion, product_window, silver_ui); earlier 8 silver tests overlap and are not added.",
+  "node_ci": "411 tests + 13 product tests passed, build and security check passed.",
+  "warning": "This is an aggregate of a broad run and corrected targeted reruns, not a single all-green run. Earlier failed attempts remain in ignored qa-output for diagnosis.",
+  "raw_camera": {
+    "device": "Surface Camera Front",
+    "rendered_receipt": "Surface Camera Front\n已收到画面，请确认能看清自己\n只测试画面，不记录评估、不保存视频\n1280 × 720 · 帧率统计中",
+    "accepted": "single raw preview, mirror and close; no pose accuracy/dual camera acceptance",
+    "tooling_note": "Earlier raw-camera attempts invalid: runner Windows child re-entered test CLI; __main__ guard fixed before accepted run.",
+    "run": "blackbox-remaining-all-final"
+  },
+  "selected_option_note": "Counts logged dropdown activations, including repeated selections; not all product combinations. 106 checklist options toggled separately."
+}

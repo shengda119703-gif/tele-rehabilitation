@@ -99,3 +99,22 @@ test('image candidates require consent and confirmation; corrupt data fails clos
   fs.writeFileSync(path.join(recordDir,file),'{broken');
   assert.throws(() => port.profiles());
 });
+
+
+test('backup excludes no-record turns without changing the live conversation', async t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ankang-private-backup-'));
+  t.after(() => fs.rmSync(root, {recursive:true, force:true}));
+  const service = new ProductService(new ProductLocalStore(root));
+  const now = new Date('2026-10-03T12:00:00+08:00');
+  const call = (op, input={}) => service.request(op, 'TEST-backup-owner', input, now);
+  await call('profile.save', {profile:profile('TEST 私密备份')});
+  await call('chat', {text:'TEST_DURABLE 今天感觉不错'});
+  await call('chat', {text:'不要记录：TEST_PRIVATE 今天感觉很累'});
+  const live = await call('snapshot');
+  assert.ok(live.state.chat.some(m => m.text.includes('TEST_PRIVATE') && m.persisted === false));
+  const exported = await call('lifecycle.export');
+  assert.ok(exported.snapshot.state.chat.some(m => m.text.includes('TEST_DURABLE')));
+  assert.equal(exported.snapshot.state.chat.some(m => m.persisted === false), false);
+  assert.equal(JSON.stringify(exported).includes('TEST_PRIVATE'), false);
+  assert.ok((await call('snapshot')).state.chat.some(m => m.text.includes('TEST_PRIVATE')));
+});

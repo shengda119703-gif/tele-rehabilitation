@@ -1,0 +1,137 @@
+﻿id,按钮,声明行为,本轮黑箱结果,证据,条件或限制,置信度
+product-0,首页,首页,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-1,AI 康复管家,AI 康复管家,已实际激活；详见场景验收边界,blackbox-notifications-final,,高（此操作结果）
+product-2,康复,康复,已实际激活；详见场景验收边界,blackbox-silver-batch-last,,高（此操作结果）
+product-3,健康,健康,已实际激活；详见场景验收边界,blackbox-media-final,,高（此操作结果）
+product-4,用药,用药,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+product-5,家庭,家庭,已实际激活；详见场景验收边界,blackbox-notifications-final,,高（此操作结果）
+product-6,记录,记录,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-7,我需要帮助,emergency.contacts,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-8,新建用户,profile.save,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-9,通知,通知,已实际激活；详见场景验收边界,blackbox-notifications-final,,高（此操作结果）
+product-10,设置,设置,已实际激活；详见场景验收边界,blackbox-media-final,,高（此操作结果）
+settingsDeveloper,打开开发者配置,工作区外模型凭据配置,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+settingsNotification,通知与渠道状态,通知,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+syncStart,连接同步,sync.start,实际观察为禁用；条件或外部配置未满足,状态枚举,跨设备接口已支持；当前未配置远程设备与可信身份。,高（此操作结果）
+syncStatus,刷新同步状态,sync.status,实际观察为禁用；条件或外部配置未满足,状态枚举,跨设备接口已支持；当前未配置远程设备与可信身份。,高（此操作结果）
+syncPoll,接收并验证同步数据,sync.poll,实际观察为禁用；条件或外部配置未满足,状态枚举,跨设备接口已支持；当前未配置远程设备与可信身份。,高（此操作结果）
+syncPublish,同步已授权通知与许可,sync.publish,实际观察为禁用；条件或外部配置未满足,状态枚举,跨设备接口已支持；当前未配置远程设备与可信身份。,高（此操作结果）
+syncClose,断开同步,sync.close,实际观察为禁用；条件或外部配置未满足,状态枚举,跨设备接口已支持；当前未配置远程设备与可信身份。,高（此操作结果）
+notificationSettings,通知设置与发送台账,notificationSettings,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+familySettings,家庭共享与授权,familySettings,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+settingsDevices,查看设备与健康数据,settingsDevices,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+settingsRefresh,刷新连接状态,extensions.status,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+settingsSharing,我的照护圈 / 允许查看,家庭,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+settingsBackup,导出本人本地备份,lifecycle.export,已实际激活；详见场景验收边界,blackbox-media-final,,高（此操作结果）
+settingsClear,清除本人健康聊天与附件,lifecycle.clear,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+settingsProfile,编辑个人资料与康复目标,profile.save,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+settingsHome,返回首页,首页,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-27,核对可共享通知并建立台账,notification.plan,已实际激活；详见场景验收边界,blackbox-notifications-final,,高（此操作结果）
+product-28,确认所选通知,notification.ack,已实际激活；详见场景验收边界,blackbox-notifications-final,,高（此操作结果）
+notificationDetail,打开通知 / 查看详情,通知详情,已实际激活；详见场景验收边界,blackbox-notifications-final,,高（此操作结果）
+notificationBusiness,进入对应业务页面,用药/健康/家庭,已实际激活；详见场景验收边界,blackbox-notifications-final,,高（此操作结果）
+product-31,导出健康报告,ui.file.write,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-32,查看原康复历史与评估趋势,查看原康复历史与评估趋势,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+historyDetail,查看详情,统一记录详情/原康复报告,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+historyTrends,趋势,健康趋势/原康复纵向记录,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+historyReport,报告,健康报告/原康复报告,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+historyExport,导出当前筛选记录,本机导出只读视图,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-37,编辑联系人,profile.save,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+familySOS,紧急联系人 / 求助信息,emergency.contacts,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+silverFamily,活动照护 / 家庭回应 / 整改,silverFamily,已实际激活；详见场景验收边界,blackbox-media-final,,高（此操作结果）
+product-40,生成本机邀请码,family.invite,已实际激活；详见场景验收边界,blackbox-notifications-final,,高（此操作结果）
+product-41,确认绑定,family.bind,已实际激活；详见场景验收边界,blackbox-notifications-final,,高（此操作结果）
+product-42,授权家庭共享,family.grant,已实际激活；详见场景验收边界,blackbox-notifications-final,,高（此操作结果）
+product-43,撤销共享,family.revoke,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-44,解绑,family.unbind,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-45,刷新家属摘要,family.summary,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+familyDetail,查看成员 / 允许查看,家庭成员详情/FamilyService,已实际激活；详见场景验收边界,blackbox-media-final,,高（此操作结果）
+familySharingRecords,查看共享记录,通知/共享记录,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+familyTemporary,临时 / 逐字段授权,当前仅支持整体长期共享及原管家共享意图，暂不提供逐成员逐字段授权表单。,实际观察为禁用；条件或外部配置未满足,状态枚举,当前仅支持整体长期共享及原管家共享意图，暂不提供逐成员逐字段授权表单。,高（此操作结果）
+homeContinue,继续训练,继续训练,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+homePlans,查看训练计划,康复/训练计划,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+homeAsk,问康复管家,问康复管家,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+homeMedication,查看用药,查看用药,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+homeTasks,查看今日任务,查看今日任务,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+homeHealth,查看健康状态,查看健康状态,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+taskComplete,确认完成,task.status,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+taskDismiss,暂不处理,task.status,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+homeAI,查看管家摘要与对话,AI 康复管家,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+homeProfile,建立 / 编辑资料,profile.save,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+rehabWorkspaceBack,返回康复概览,康复概览，保留原工作区状态,已实际激活；详见场景验收边界,blackbox-silver-batch-last,返回概览，保留已保存数据和工作区设置。,高（此操作结果）
+rehabHome,返回首页,首页,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+rehabPerson,个人康复信息,原参与者档案,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+silverRehab,银发健康守护,silverRehab,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+rehabOverview,收起概览,收起/展开康复概览，保留训练工作区,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+rehabAssess,开始新评估,原康复评估,已实际激活；详见场景验收边界,blackbox-silver-batch-last,,高（此操作结果）
+rehabAssessmentDetail,查看详情,原 report,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+rehabBody,身体档案与测量条件,原 Body Profile,已实际激活；详见场景验收边界,blackbox-edge-retest,,高（此操作结果）
+rehabLibrary,我的训练计划,原计划库,已实际激活；详见场景验收边界,blackbox-original-last,,高（此操作结果）
+rehabAutomatic,根据评估自动安排,原自动计划/接受/准备,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+rehabPlanDetail,查看计划详情,保存的计划读模型,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+rehabTrainingDetail,训练详情 / 反馈,原 report/反馈,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+rehabProgress,评估变化 / 完整历史,原可比历史,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+rehabReports,报告,原 report,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+rehabContinue,继续训练,原训练准备与确认,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+rehabAction,查看动作,原动作目录,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+rehabStart,开始训练,原 Runtime.start,实际观察为禁用；条件或外部配置未满足,状态枚举,,高（此操作结果）
+deviceRefresh,刷新设备与服务状态,extensions.status,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+deviceImport,导入设备数据文件,device.import,已实际激活；详见场景验收边界,blackbox-edge-retest,,高（此操作结果）
+cameraSettings,康复摄像头 / 回放设置,cameraSettings,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+devicePull,读取已配置设备,device.pull,实际观察为禁用；条件或外部配置未满足,状态枚举,,高（此操作结果）
+healthkitImport,导入 Apple Health 数据,healthkit.import,实际观察为禁用；条件或外部配置未满足,状态枚举,需要 iPhone 授权及配置健康数据来源。,高（此操作结果）
+healthkitDiagnostics,Apple Health 权限 / 导入状态,healthkit.diagnostics,实际观察为禁用；条件或外部配置未满足,状态枚举,需要 iPhone 授权及配置健康数据来源。,高（此操作结果）
+deviceData,查看设备数据,健康记录,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+deviceConnect,连接 / 导入,实际设备导入与配置说明,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-69,添加资料 / 图片 / 视频,archive.save,已实际激活；详见场景验收边界,blackbox-media-final,,高（此操作结果）
+product-70,导出所选附件,archive.read,已实际激活；详见场景验收边界,blackbox-media-final,,高（此操作结果）
+product-71,识别健康图片,image.parse,实际观察为禁用；条件或外部配置未满足,状态枚举,图片识别服务尚未配置；附件存档仍可用。,高（此操作结果）
+product-72,确认识别结果并记录,image.confirm,实际观察为禁用；条件或外部配置未满足,状态枚举,,高（此操作结果）
+archiveProfile,基础健康资料,profile.save,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+archiveDetail,查看资料详情,archive metadata,已实际激活；详见场景验收边界,blackbox-media-final,,高（此操作结果）
+product-75,记录身体感受 / 更正记录,记录身体感受 / 更正记录,已实际激活；详见场景验收边界,blackbox-targeted,,高（此操作结果）
+healthDetail,查看记录详情,HealthEvent 用户可读详情,已实际激活；详见场景验收边界,blackbox-targeted,,高（此操作结果）
+healthMetricsBack,返回当前健康状态,当前健康状态,已实际激活；详见场景验收边界,blackbox-targeted,,高（此操作结果）
+product-77,记录数值,health.record,已实际激活；详见场景验收边界,blackbox-targeted,,高（此操作结果）
+healthMetricsEntry,查看 / 记录健康指标,健康指标详情,已实际激活；详见场景验收边界,blackbox-targeted,,高（此操作结果）
+medMissedDetail,查看详情,漏服记录详情,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+medMissedAdd,记录漏服,chat,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+medHistoryDetail,查看详情,用药记录详情,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+medAdd,新增,medication.save,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+medEdit,编辑,medication.save,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+medView,查看,药物档案详情,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+medStatus,停用 / 恢复,medication.status,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+medTodayActionsBack,返回今日用药,今日用药概览,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+medConfirm,本人确认今日用药已核对,task.status,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+medDose,标记某一剂已服用,当前只支持每日核对，不支持逐药逐剂确认。,实际观察为禁用；条件或外部配置未满足,状态枚举,当前只支持每日核对，不支持逐药逐剂确认。,高（此操作结果）
+medMiss,记录漏服,chat,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+medTodayDetail,查看用药详情,药物档案,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+medTodayActions,核对 / 记录今日用药,今日用药操作,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+medBack,返回首页,首页,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+assistantBackVoice,返回,AI 康复管家/上一模块,已实际激活；详见场景验收边界,blackbox-complete,返回上一模块，对话和输入草稿保留,高（此操作结果）
+voiceInput,语音输入,voice.input,原生点击，采集/取消/无语音错误验证；真人识别未验收,blackbox-native,当前平台未接入语音服务（隔离验收环境）,高（此操作结果）
+voiceOutput,朗读最近回复,voice.output,实际观察为禁用；条件或外部配置未满足,状态枚举,当前语音宿主尚未接入朗读功能。,高（此操作结果）
+voiceCancel,停止语音,voice.cancel,原生点击，采集/取消/无语音错误验证；真人识别未验收,blackbox-native,当前没有正在进行的录音或识别。,高（此操作结果）
+voiceFinish,说完了，开始识别,本机录音结束 / 原 voice.input,原生点击，采集/取消/无语音错误验证；真人识别未验收,blackbox-native,仅在录音期间可以结束录音。,高（此操作结果）
+assistantVoiceText,文字输入,AI 康复管家/conversation,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+assistantBackMaterials,返回,AI 康复管家/上一模块,已实际激活；详见场景验收边界,blackbox-forms-final,返回上一模块，对话和输入草稿保留,高（此操作结果）
+assistantAttachment,上传资料 / 图片 / 视频,archive.save,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+assistantImage,识别健康图片,image.parse,实际观察为禁用；条件或外部配置未满足,状态枚举,图片识别服务尚未配置；附件存档仍可用。,高（此操作结果）
+assistantArchiveEntry,查看健康档案,健康/健康档案,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+assistantBackReference,返回,AI 康复管家/上一模块,已实际激活；详见场景验收边界,blackbox-complete,返回上一模块，对话和输入草稿保留,高（此操作结果）
+assistantRehab,去康复页面,康复/今日训练,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+assistantNew,清空 / 新会话,当前没有只重置对话的接口；可使用本轮不记录，或在设置管理本人数据。,实际观察为禁用；条件或外部配置未满足,状态枚举,当前没有只重置对话的接口；可使用本轮不记录，或在设置管理本人数据。,高（此操作结果）
+assistantModuleConversation,开始对话,AI 康复管家/conversation,已实际激活；详见场景验收边界,blackbox-notifications-final,,高（此操作结果）
+assistantModuleVoice,语音交流,AI 康复管家/voice,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+assistantModuleMaterials,资料与图片,AI 康复管家/materials,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+assistantModuleRecords,我的康复记录,AI 康复管家/reference,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+assistantBackConversation,返回,AI 康复管家/上一模块,已实际激活；详见场景验收边界,blackbox-complete,返回上一模块，对话和输入草稿保留,高（此操作结果）
+assistantReferenceEntry,查看参考资料,AI 康复管家/reference,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-199,我的训练计划,chat,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-200,最近的评估结果,chat,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+product-201,今天漏服了药,chat,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+assistantMaterialsEntry,添加资料,AI 康复管家/materials,已实际激活；详见场景验收边界,blackbox-forms-final,,高（此操作结果）
+assistantVoiceEntry,语音输入,AI 康复管家/voice,已实际激活；详见场景验收边界,blackbox-complete,查看语音输入状态；未接入时可返回文字输入,高（此操作结果）
+product-202,发送,chat,已实际激活；详见场景验收边界,blackbox-notifications-final,,高（此操作结果）
+globalAssistant,问康复管家,globalAssistant,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）
+dockSend,发送,chat,已实际激活；详见场景验收边界,blackbox-complete,,高（此操作结果）

@@ -165,6 +165,7 @@ class SilverDialog(QDialog):
         self.timer.timeout.connect(self.refresh)
         self.timer.start()
         self._last_spoken = None
+        self._selection()
 
     @staticmethod
     def label(value):
@@ -192,9 +193,14 @@ class SilverDialog(QDialog):
 
     def send(self, operation='refresh', **kw):
         if self.pending:
-            self.error.setText('正在读取或保存，请等待当前操作完成。')
+            if operation != 'refresh':
+                self.error.setText('正在读取或保存，请等待当前操作完成。')
             return
         self.pending = True
+        self._busy_controls = {b:b.isEnabled() for b in (self.contact, self.check_button,
+            self.save_policy, self.revoke, self.attest, self.create_reference, self.compare,
+            self.feedback_button, self.ack, self.claim, self.resolve, self.confirm)}
+        for control in self._busy_controls:control.setEnabled(False)
         self.operation.emit(dict(operation=operation, family=self.role.currentIndex() == 1, **kw))
 
     def refresh(self):
@@ -277,8 +283,14 @@ class SilverDialog(QDialog):
                 action = 'submit'
             self.send('respond', id=item['id'], action=action, note=note, revision=item['revision'])
 
+    def _restore_busy_controls(self):
+        for control, enabled in getattr(self, '_busy_controls', {}).items():
+            control.setEnabled(enabled)
+        self._busy_controls = {}
+
     def show_error(self, message):
         self.pending = False
+        self._restore_busy_controls()
         self.error.setText(message+'（未显示成功，请核对后重试）')
         if self.role.currentIndex() == 1:
             self.data = {}
@@ -290,13 +302,16 @@ class SilverDialog(QDialog):
 
     def render(self, data):
         self.pending = False
+        self._restore_busy_controls()
         if bool(data['family']) != (self.role.currentIndex() == 1):
             self.refresh()
             return
         self.data = data
         if data.get('operation') == 'request' and data.get('request_id') == self._help_request_id:
             self._help_request_id = None
-        self.error.clear()
+        # Background refresh must not erase a user's failure receipt.
+        if data.get('operation', 'refresh') != 'refresh':
+            self.error.clear()
         family = data['family']
         self.scope_label.setText(' / '.join(data['scope'].values())+' · 本机双角色；手机未连接')
         daily = data.get('daily')
@@ -345,6 +360,7 @@ class SilverDialog(QDialog):
                 if kind == 'request' and item['id'] == data.get('request_id'):
                     self.requests.setCurrentRow(row)
                     break
+        self._selection()
         for f in data.get('feedback', []):
             self.activity_tasks.addItem('历史本人自报（'+f['updated_utc']+'）：'+f['feeling']+(' · 已同意分享' if f['shared'] else ' · 仅本人'))
         for card in data.get('change_cards', []):

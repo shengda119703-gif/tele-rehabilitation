@@ -103,4 +103,5 @@ def test_ui_cancel_is_available_while_backend_busy_and_prevents_domain_write(des
     assert not w.snapshot['state']['chat'] and '取消' in w.notice.text()
     assert w.notice.property('fluentStatus')=='info'
     w.interface_buttons['voiceInput'].click();wait(app,lambda:host.live_status()['phase']=='recording')
-    w._completion_controls();w.interface_buttons['voiceFinish'].click();wait(app,lambda:not w.pe
+    w._completion_controls();w.interface_buttons['voiceFinish'].click();wait(app,lambda:not w.pending)
+    assert host.text in w.chat.toPlainText() and w.assistant_sections.currentWidget() is w.assistant_views['conversation']
