@@ -8,6 +8,7 @@ from PySide6.QtWidgets import QPushButton
 from test_product_window import desktop,wait
 from app.ui.product_theme import design_tokens
 from app.ui.product_assistant import ASSISTANT_NAV_ACTIONS
+from app.ui.product_completion import MODULE_NAV_ACTIONS
 
 
 def test_published_116_button_contract_and_native_connections(desktop):
@@ -19,8 +20,8 @@ def test_published_116_button_contract_and_native_connections(desktop):
     expected['dockSend']=('发送','chat')
     actual={b.property('actionId'):(b.text(),b.property('actionTarget')) for b in w.product_action_buttons()}
     assert {key:actual[key] for key in expected}==expected
-    assert set(actual)-set(expected)==ASSISTANT_NAV_ACTIONS|{'voiceFinish'}
-    assert len(actual)==len(w.product_action_buttons())==118+len(ASSISTANT_NAV_ACTIONS)
+    assert set(actual)-set(expected)==ASSISTANT_NAV_ACTIONS|MODULE_NAV_ACTIONS|{'voiceFinish'}
+    assert len(actual)==len(w.product_action_buttons())==118+len(ASSISTANT_NAV_ACTIONS)+len(MODULE_NAV_ACTIONS)
     assert all(b.property('actionKind')=='B' for b in w.product_action_buttons() if b.property('actionId') in ASSISTANT_NAV_ACTIONS)
     assert all(b.receivers(SIGNAL('clicked(bool)'))>0 for b in w.product_action_buttons())
 
@@ -62,6 +63,9 @@ def test_theme_changes_do_not_change_actions_or_data_and_render_escaped_messages
         assert '<script>TEST</script>' in w.chat.toPlainText()
         assert '我' in w.chat.toPlainText() and '第二行' in w.dock_chat.toPlainText()
         assert original=={b.property('actionId'):(b.property('actionTarget'),b.isEnabled()) for b in w.product_action_buttons()}
+        # The legacy application's palette cannot make ordinary product data white on white.
+        assert w.health_metric_summary.palette().color(QPalette.WindowText).name()==design_tokens('light')['text']
+        assert w.today_medications.palette().color(QPalette.Text).name()==design_tokens('light')['text']
     w._message('TEST 服务失败',severity='danger')
     assert w.notice.isVisible() and w.notice.property('fluentStatus')=='danger'
     w._visual_progress(dict(total=4,completed=2))

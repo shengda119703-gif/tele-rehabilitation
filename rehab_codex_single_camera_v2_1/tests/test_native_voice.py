@@ -45,7 +45,7 @@ def test_capture_stop_closes_input_and_transcription_receives_only_memory(monkey
         def __exit__(self,*args):seen.append('closed')
         def read(self,size):
             time.sleep(.005);return np.full((size,1),.05,dtype=np.float32),False
-    import sounddevice
+    sounddevice=pytest.importorskip('sounddevice',reason='Optional microphone dependency')
     monkeypatch.setattr(sounddevice,'InputStream',lambda **kw:Stream())
     monkeypatch.setattr(host,'transcribe',lambda audio:seen.append(audio.size) or 'TEST 明确文字')
     timer=threading.Timer(.06,host.stop);timer.start()
@@ -61,10 +61,28 @@ def test_early_cancel_and_silence_never_run_asr_or_send(monkeypatch):
     class Stream:
         def __enter__(self):return self
         def __exit__(self,*args):pass
-    import sounddevice
+    sounddevice=pytest.importorskip('sounddevice',reason='Optional microphone dependency')
     monkeypatch.setattr(sounddevice,'InputStream',lambda **kw:Stream())
     monkeypatch.setattr(host,'transcribe',lambda _:pytest.fail('Silence reached ASR'))
     with pytest.raises(RuntimeError,match='清晰语音'):host.handle('voice.recognize',{})
+
+
+def test_cancel_at_recognition_boundary_never_returns_committed_text(monkeypatch):
+    sounddevice=pytest.importorskip('sounddevice',reason='Optional microphone dependency')
+    host=NativeVoiceHost();host.state['available']=True;host.prepare()
+    class Stream:
+        def __enter__(self):return self
+        def __exit__(self,*args):pass
+        def read(self,size):
+            host.stop();return np.full((4096,1),.05,dtype=np.float32),False
+    monkeypatch.setattr(sounddevice,'InputStream',lambda **kw:Stream())
+    def cancel_before_commit(audio):
+        assert host.cancel();return 'TEST 不能发送'
+    monkeypatch.setattr(host,'transcribe',cancel_before_commit)
+    with pytest.raises(RuntimeError,match='取消'):host.handle('voice.recognize',{})
+    host.prepare();monkeypatch.setattr(host,'transcribe',lambda _: 'TEST 已提交文字')
+    assert host.handle('voice.recognize',{})=={'text':'TEST 已提交文字'}
+    assert not host.cancel()  # No promise to withdraw a result after its atomic commit.
 
 
 def test_ui_cancel_is_available_while_backend_busy_and_prevents_domain_write(desktop,monkeypatch):
@@ -79,10 +97,10 @@ def test_ui_cancel_is_available_while_backend_busy_and_prevents_domain_write(des
     assert w.pending and w.interface_buttons['voiceCancel'].isEnabled()
     assert w.interface_buttons['voiceFinish'].isEnabled() and not w.interface_buttons['voiceInput'].isEnabled()
     assert not w.interface_buttons['voiceOutput'].isEnabled()
+    assert not w.private_turn.isEnabled() and not w.dock_private.isEnabled() and not w.user_select.isEnabled()
     assert not w._request('voice.input')
     w.interface_buttons['voiceCancel'].click();wait(app,lambda:not w.pending)
     assert not w.snapshot['state']['chat'] and '取消' in w.notice.text()
     assert w.notice.property('fluentStatus')=='info'
-    host.blocked=False
-    w.interface_buttons['voiceInput'].click();wait(app,lambda:not w.pending)
-    assert host.text in w.chat.toPlainText() and w.assistant_sections.currentWidget() is w.assistant_views['conversation']
+    w.interface_buttons['voiceInput'].click();wait(app,lambda:host.live_status()['phase']=='recording')
+    w._completion_controls();w.interface_buttons['voiceFinish'].click();wait(app,lambda:not w.pe

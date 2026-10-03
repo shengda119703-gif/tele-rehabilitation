@@ -3,7 +3,7 @@ from datetime import datetime
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QTabWidget, QComboBox,
     QDialog, QDialogButtonBox, QTextBrowser, QMessageBox, QFileDialog, QPushButton, QListWidget,
-    QProgressBar, QScrollArea, QFrame)
+    QProgressBar, QScrollArea, QFrame, QStackedWidget)
 from .product_widgets import label, button, card, table, rows, core_card, visual
 from .product_theme import SPACING, METRICS
 
@@ -15,6 +15,8 @@ STABLE_ACTION_IDS = dict(zip(
      '生成本机邀请码','确认绑定','授权家庭共享','撤销共享','解绑','刷新家属摘要',
      '查看原康复历史与评估趋势','导出健康报告','核对可共享通知并建立台账','确认所选通知'),
     (0,1,2,3,4,5,6,7,8,9,10,199,200,201,202,77,75,69,70,71,72,37,40,41,42,43,44,45,32,31,27,28)))
+
+MODULE_NAV_ACTIONS={'rehabWorkspaceBack','healthMetricsEntry','healthMetricsBack','medTodayActions','medTodayActionsBack'}
 
 
 class ProductCompletion:
@@ -82,6 +84,7 @@ class ProductCompletion:
 
     def _rehab_page(self):
         page=QWidget();box=QVBoxLayout(page);box.setContentsMargins(0,0,0,0)
+        self.rehab_sections=QStackedWidget();box.addWidget(self.rehab_sections,1)
         overview=QWidget();overview.setProperty('visualScope','core')
         overview_box=QVBoxLayout(overview);overview_box.setContentsMargins(0,0,0,0);overview_box.setSpacing(SPACING['sm'])
         top=QHBoxLayout()
@@ -93,7 +96,7 @@ class ProductCompletion:
             widget=top.itemAt(index).widget()
             if widget:visual(widget,appearance='ghost')
         overview_box.addLayout(top)
-        self.rehab_tabs=QTabWidget();self.rehab_tabs.setMaximumHeight(METRICS['overview'])
+        self.rehab_tabs=QTabWidget()
         self.rehab_summary={};self.rehab_tables={}
         definitions=[('今日训练',['动作','当前计划完成状态','目标']),('康复评估',['时间','动作 / 侧别','有效性']),
                      ('训练计划',['计划','累计完成情况','创建时间']),('康复进度',['时间','训练','完成 / 反馈'])]
@@ -127,12 +130,15 @@ class ProductCompletion:
                 widget=row.itemAt(index).widget()
                 if widget:visual(widget,appearance='primary' if widget.objectName() in ('rehabContinue','rehabAssess','rehabAutomatic') else 'secondary')
             row.addStretch();area.addLayout(row);self.rehab_tabs.addTab(sub,title)
-        overview_box.addWidget(self.rehab_tabs);box.addWidget(overview)
+        overview_box.addWidget(self.rehab_tabs,1);self.rehab_sections.addWidget(overview)
         # Original cameras, dual-camera, report and training UI keep their native layout.
         # A scroll boundary lets 1024px windows use it without shrinking its controls.
         self.rehab_workspace=QScrollArea();self.rehab_workspace.setWidgetResizable(True)
         self.rehab_workspace.setFrameShape(QFrame.NoFrame)
-        self.rehab_workspace.setWidget(self.legacy);box.addWidget(self.rehab_workspace,1)
+        self.rehab_workspace.setWidget(self.legacy)
+        workspace=QWidget();workspace_box=QVBoxLayout(workspace);workspace_box.setContentsMargins(0,0,0,0)
+        self._action(workspace_box,'rehabWorkspaceBack','返回康复概览',lambda:self._show_rehab_scope(False),target='康复概览，保留原工作区状态')
+        workspace_box.addWidget(self.rehab_workspace,1);self.rehab_sections.addWidget(workspace)
         self.rehab_tabs.currentChanged.connect(self._rehab_tab_changed)
         self.pages.addWidget(page);self.page_widgets['rehab']=page
 
@@ -141,13 +147,21 @@ class ProductCompletion:
         def tab(title):
             p=QWidget();area=QVBoxLayout(p);self.medication_tabs.addTab(p,title);return area
         area=tab('今日用药');self.medication_today=label('暂无用药安排');area.addWidget(self.medication_today)
-        self.today_medications=table(['药物','已有剂量','已有时间 / 频次','状态']);area.addWidget(self.today_medications)
-        self._action(area,'medTodayDetail','查看用药详情',lambda:self._medication_detail(self.today_medications),target='药物档案')
-        self._action(area,'medConfirm','本人确认今日用药已核对',self._confirm_medication,kind='A',target='task.status')
-        self._action(area,'medDose','标记某一剂已服用',reason='当前只支持每日核对，不支持逐药逐剂确认。')
-        area.addWidget(label('当前只支持每日核对，不支持逐药逐剂确认。'))
-        self._action(area,'medMiss','记录漏服',lambda:self._send_chat('今天漏服了药'),kind='A',target='chat')
-        self._action(area,'medBack','返回首页',lambda:self.navigate('home'),target='首页')
+        self.med_today_sections=QStackedWidget();area.addWidget(self.med_today_sections)
+        overview=QWidget();today_box=QVBoxLayout(overview)
+        self.today_medications=table(['药物','已有剂量','已有时间 / 频次','状态']);today_box.addWidget(self.today_medications)
+        self._action(today_box,'medTodayDetail','查看用药详情',lambda:self._medication_detail(self.today_medications),target='药物档案')
+        self._action(today_box,'medTodayActions','核对 / 记录今日用药',lambda:self.med_today_sections.setCurrentIndex(1),target='今日用药操作')
+        self._action(today_box,'medBack','返回首页',lambda:self.navigate('home'),target='首页')
+        self.med_today_sections.addWidget(overview)
+        detail=QWidget();detail_box=QVBoxLayout(detail)
+        self._action(detail_box,'medTodayActionsBack','返回今日用药',lambda:self.med_today_sections.setCurrentIndex(0),target='今日用药概览')
+        detail_box.addWidget(label('请先按已有医嘱核对今日安排，再记录本人确认或漏服。'))
+        self._action(detail_box,'medConfirm','本人确认今日用药已核对',self._confirm_medication,kind='A',target='task.status')
+        self._action(detail_box,'medDose','标记某一剂已服用',reason='当前只支持每日核对，不支持逐药逐剂确认。')
+        detail_box.addWidget(label('当前只支持每日核对，不支持逐药逐剂确认。'))
+        self._action(detail_box,'medMiss','记录漏服',lambda:self._send_chat('今天漏服了药'),kind='A',target='chat')
+        detail_box.addStretch();self.med_today_sections.addWidget(detail)
         area=tab('我的药物');self.medications=table(['药物','已有剂量','用途','时间 / 频次','状态']);area.addWidget(self.medications)
         self.medication_empty=label('暂无药物档案，请按已有医嘱添加。');area.addWidget(self.medication_empty)
         row=QHBoxLayout()
@@ -333,6 +347,7 @@ class ProductCompletion:
     def _start_existing_training(self):
         if not self.legacy.start_button.isEnabled():
             self._message('请先通过原训练准备流程打开输入并确认条件。');return
+        self._show_rehab_scope(True)
         self.legacy.start_button.click();self._message('已请求开始训练，请查看实时训练状态。')
 
     def _show_training_action(self):
@@ -359,20 +374,27 @@ class ProductCompletion:
             [('进入原计划库',self._plan_library)])
 
     def _rehab_tab_changed(self,index):
-        target=('training','assessment','plans','history')[index]
-        if not self._rehab_action(target):
+        # Summary tabs are navigation only; actual work starts via existing actions.
+        if self._rehab_locked():
             self.rehab_tabs.blockSignals(True);self.rehab_tabs.setCurrentIndex(self.last_rehab_tab);self.rehab_tabs.blockSignals(False)
         else: self.last_rehab_tab=index
 
+    def _rehab_locked(self):
+        return self.legacy.busy or self.legacy._camera_testing or self.legacy.state in ('CONNECTING','PREVIEW','ONLINE','SAVE_FAILED')
+
+    def _show_rehab_scope(self,workspace):
+        if not workspace and self._rehab_locked():
+            self._message('请先结束并保存当前任务，关闭摄像头测试，再返回概览。')
+            return False
+        self.rehab_overview_collapsed=workspace
+        self.rehab_sections.setCurrentIndex(1 if workspace else 0)
+        self.interface_buttons['rehabOverview'].setText('展开概览' if workspace else '收起概览')
+        return True
+
     def _toggle_rehab_overview(self):
         collapsed=not getattr(self,'rehab_overview_collapsed',False)
-        self.rehab_overview_collapsed=collapsed
-        for i in range(self.rehab_tabs.count()):
-            for widget in self.rehab_tabs.widget(i).findChildren(QWidget):
-                if widget.parentWidget() is self.rehab_tabs.widget(i):widget.setVisible(not collapsed)
-        self.rehab_tabs.setMaximumHeight(60 if collapsed else 300)
-        self.interface_buttons['rehabOverview'].setText('展开概览' if collapsed else '收起概览')
-        self._message('已收起概览，可继续使用下方康复功能。' if collapsed else '已展开康复概览。')
+        if self._show_rehab_scope(collapsed):
+            self._message('已进入原康复工作区，可使用评估、训练及摄像头设置。' if collapsed else '已返回康复概览。')
 
     def _rehab_data(self,key):
         return self.snapshot.get('rehabilitation_ui',self.snapshot.get('rehabilitation',{})).get(key,{}).get('records',[])
@@ -527,6 +549,7 @@ class ProductCompletion:
         rows(self.missed_medications,[(e['timestamp'],'漏服记录',self._event_summary(e)) for e in missed]);self.med_missed_empty.setVisible(not missed)
         self.health_entries=sorted(state['events'],key=lambda e:e['timestamp'],reverse=True);self._filter_health()
         self.health_rehab_summary.setText(f'康复相关资料：{len(assessments)} 项评估，{len(training)} 次训练；查看康复可核对条件与反馈。')
+        self.health_metric_summary.setText('近期指标：\n'+'\n'.join(' · '.join(self.metrics.item(r,c).text() for c in (0,1,2)) for r in range(min(3,self.metrics.rowCount()))) if self.metrics.rowCount() else '暂无健康指标，可进入指标页面记录数值。')
         self.archive_empty.setVisible(not s['attachments'])
         link=s['family'].get('familyLink');allowed=s['projection']['canViewSharedDetail']
         rows(self.family_members,[(profile.get('familyContact') or '已绑定家属','家庭照护联系人','已绑定' if link and link['status']=='active' else '未绑定','已允许共享摘要' if allowed else '尚未开放')] if profile.get('familyContact') or link else [])
@@ -545,6 +568,10 @@ class ProductCompletion:
         self.health_entries=[];self.filtered_entries=[];self.visible_notifications=[]
         self.page_feedback.clear();self.rehab_save_marker=None
         self.chat_input.clear()
+        self.health_metric_summary.setText('正在读取当前用户指标…')
+        self.metric_value.setValue(0);self.metric_shared.setChecked(False)
+        self.health_status_sections.setCurrentIndex(0);self.med_today_sections.setCurrentIndex(0)
+        self._show_rehab_scope(False)
         self.rehab_trend_anchor=None
         self._manual_extension_refresh=False
         # Open original reports and editors are owned by the previous participant too.
@@ -579,11 +606,16 @@ class ProductCompletion:
             if item.property('actionTarget')=='profile.save':enabled=not busy
             key=item.property('actionId')
             if key in ('voiceInput','voiceOutput','voiceCancel'):enabled=enabled and bool(self.extension_status.get('voice',{}).get('available'))
+            if key=='voiceInput':item.setToolTip('在本机识别中文，开始前需确认。' if enabled else voice.get('detail','语音输入尚未配置。'))
             if key=='voiceOutput':
                 enabled=enabled and bool(voice.get('outputAvailable',voice.get('available')))
                 item.setToolTip('朗读已保存的管家回复' if enabled else '当前语音宿主尚未接入朗读功能。')
-            if key=='voiceCancel':enabled=bool(self.owner) and phase in ('opening','recording','transcribing')
-            if key=='voiceFinish':enabled=bool(self.owner) and phase=='recording'
+            if key=='voiceCancel':
+                enabled=bool(self.owner) and phase in ('opening','recording','transcribing')
+                item.setToolTip('取消当前录音或识别，本轮不发送。' if enabled else '当前没有正在进行的录音或识别。')
+            if key=='voiceFinish':
+                enabled=bool(self.owner) and phase=='recording'
+                item.setToolTip('结束录音，识别并交给管家处理。' if enabled else '仅在录音期间可以结束录音。')
             if item.property('actionTarget')=='image.parse':
                 enabled=enabled and bool(self.snapshot.get('capabilities',{}).get('imageRecognitionAvailable'))
                 item.setToolTip('将图片发送至已配置服务，上传前须确认。' if enabled else '图片识别服务尚未配置；附件存档仍可用。')
@@ -592,6 +624,9 @@ class ProductCompletion:
             if str(key).startswith('sync'):enabled=enabled and bool(self.extension_status.get('syncAvailable'))
             if str(key).startswith('sync'):item.setToolTip('使用已配置的跨设备连接' if enabled else '跨设备接口已支持；当前未配置远程设备与可信身份。')
             if key=='rehabStart':enabled=enabled and self.legacy.start_button.isEnabled() and self.legacy.submode.currentData()=='training'
+            if key=='rehabWorkspaceBack':
+                enabled=enabled and not self._rehab_locked()
+                item.setToolTip('先结束并保存当前任务、关闭摄像头测试后返回。' if not enabled else '返回概览，保留已保存数据和工作区设置。')
             if item is self.image_confirm:enabled=enabled and bool(self.pending_image and self.image_candidates.rowCount())
             item.setEnabled(enabled)
         self.user_select.setEnabled(not busy and not self.legacy.busy and not self.legacy._camera_testing and self.legacy.state not in ('CONNECTING','PREVIEW','ONLINE','SAVE_FAILED'))

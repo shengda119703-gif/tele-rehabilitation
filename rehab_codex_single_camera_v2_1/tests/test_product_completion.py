@@ -2,6 +2,7 @@
 import os
 os.environ.setdefault('QT_QPA_PLATFORM','offscreen')
 import json
+from datetime import datetime
 from pathlib import Path
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QDialogButtonBox, QFileDialog, QMessageBox, QInputDialog, QPushButton
@@ -162,10 +163,11 @@ def test_path_6_full_scoped_training_history_detail_trends_report_export(desktop
     w.legacy.usage.setCurrentIndex(w.legacy.usage.findData('TEST'))
     scope=w.legacy._body_scope_key()
     store=Storage(tmp_path/'home_rehab.sqlite3')
+    today=datetime.now().astimezone().date().isoformat()
     for i in range(8):
         store.save_session(dict(scope,id=f'TEST-training-{i}',scene_id='rehab',submode='training',
             exercise_id='shoulder_abduction',side='left',status='FINISHED',
-            start_utc=f'2026-10-02T08:0{i}:00+08:00',end_utc=f'2026-10-02T08:0{i}:10+08:00',
+            start_utc=f'{today}T08:0{i}:00+08:00',end_utc=f'{today}T08:0{i}:10+08:00',
             summary={'completed':1,'plan_completed':True},config_snapshot={},repetitions=[]))
     store.close()
     tools=RehabReadTools(tmp_path/'home_rehab.sqlite3',scope)
@@ -209,12 +211,11 @@ def test_loading_duplicate_error_empty_disabled_and_button_audit(desktop,tmp_pat
         assert w.navigate(page);settle(w,app)
         assert '正在' not in w.page_states[page].text()
     w.navigate('rehab');settle(w,app);w.resize(1180,780);app.processEvents()
-    previous=w.rehab_workspace.viewport().height();w.interface_buttons['rehabOverview'].click();app.processEvents()
-    # Nested Qt layouts can apply the resize on a later event-loop turn.
-    wait(app,lambda:w.rehab_overview_collapsed and w.rehab_workspace.viewport().height()>previous)
-    assert w.rehab_overview_collapsed and w.rehab_workspace.viewport().height()>previous
+    assert not w.rehab_workspace.isVisible() and w.rehab_tabs.isVisible()
     w.interface_buttons['rehabOverview'].click();app.processEvents()
-    assert not w.rehab_overview_collapsed
+    assert w.rehab_overview_collapsed and w.rehab_workspace.isVisible() and not w.rehab_tabs.isVisible()
+    w.interface_buttons['rehabWorkspaceBack'].click();app.processEvents()
+    assert not w.rehab_overview_collapsed and not w.rehab_workspace.isVisible() and w.rehab_tabs.isVisible()
     audit=w.button_audit()
     assert all(a['category'] in ('A','B','C','D') and a['action'] and a['feedback'] for a in audit)
     for page in w.page_widgets:

@@ -85,8 +85,12 @@ class NativeVoiceHost:
                 raise RuntimeError('未听到清晰语音，请检查麦克风后重试')
             with self.lock:self.state['phase']='transcribing'
             result=self.transcribe(samples)
-            self._check_cancelled()
             if not result.strip():raise RuntimeError('未识别到清晰语音，请重试')
+            # Cancellation and committing the host result share one lock. Once the
+            # text is committed, UI must not promise it can withdraw the chat turn.
+            with self.lock:
+                self._check_cancelled()
+                self.state['phase']='submitting'
             return {'text':result}
         except sd.PortAudioError as error:
             raise RuntimeError('无法打开麦克风，请检查系统麦克风权限、默认输入设备或是否被占用') from error

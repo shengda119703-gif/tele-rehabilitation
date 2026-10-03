@@ -123,6 +123,16 @@ class ProductTheme:
         from PySide6.QtWidgets import QWidget
         for widget in self.window.findChildren(QWidget):
             if widget.property('visualScope')=='core':widget.setPalette(p)
+        # Existing non-core pages keep their light stylesheet. Native Qt can
+        # retain a system dark palette on their child labels/item views; set
+        # their existing light text roles explicitly so data stays readable.
+        light=design_tokens('light');compat=QPalette(p)
+        for role in (QPalette.Text,QPalette.WindowText):
+            compat.setColor(role,QColor(light['text']))
+            compat.setColor(QPalette.Disabled,role,QColor(light['disabled_text']))
+        for key,page in self.window.page_widgets.items():
+            if key not in ('home','assistant','rehab'):
+                for widget in page.findChildren(QWidget):widget.setPalette(compat)
         if self.window.snapshot:self.window._render_conversation()
 
 

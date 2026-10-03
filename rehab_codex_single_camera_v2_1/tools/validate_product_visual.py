@@ -32,7 +32,7 @@ def main():
     parser.add_argument('--width',type=int,default=1440)
     parser.add_argument('--height',type=int,default=940)
     parser.add_argument('--theme',choices=('light','dark'),default='light')
-    parser.add_argument('--phase',choices=('fluent-v1','assistant-modules'),default='fluent-v1')
+    parser.add_argument('--phase',choices=('fluent-v1','assistant-modules','module-paths'),default='fluent-v1')
     args=parser.parse_args()
     factor=os.environ.get('QT_SCALE_FACTOR','auto')
     platform=os.environ['QT_QPA_PLATFORM']
@@ -66,11 +66,11 @@ def main():
             w._send_chat('TEST 今天感觉有点疲劳');settle()
             w.product_theme.apply(args.theme)
             results={}
-            for key in ('home','assistant','rehab'):
+            for key in (('home','assistant','rehab','health','medication') if args.phase=='module-paths' else ('home','assistant','rehab')):
                 w.navigate(key);settle();capture(key)
                 assert (w.width(),w.height())==(args.width,args.height),(key,w.size())
                 results[key]=dict(platform=app.platformName(),size=[w.width(),w.height()],dpr=w.devicePixelRatioF(),
-                                  horizontalOverflow=w.page_widgets[key].horizontalScrollBar().maximum() if key!='rehab' else w.rehab_workspace.horizontalScrollBar().maximum())
+                                  horizontalOverflow=w.page_widgets[key].horizontalScrollBar().maximum() if key!='rehab' else 0)
                 if key=='assistant':
                     viewport=w.page_widgets[key].viewport()
                     results[key]['modules']={}
@@ -90,6 +90,22 @@ def main():
                     for index in range(w.rehab_tabs.count()):
                         w.rehab_tabs.setCurrentIndex(index);settle();capture('rehab-'+str(index))
                     w.rehab_tabs.setCurrentIndex(0);w.interface_buttons['rehabOverview'].click();settle();capture('rehab-workspace')
+                    results[key]['workspace']=dict(horizontalOverflow=w.rehab_workspace.horizontalScrollBar().maximum(),verticalOverflow=w.rehab_workspace.verticalScrollBar().maximum(),backVisible=w.interface_buttons['rehabWorkspaceBack'].isVisible())
+                    if args.phase=='module-paths':
+                        w.interface_buttons['rehabWorkspaceBack'].click();app.processEvents()
+                        assert w.rehab_tabs.isVisible() and not w.legacy.isVisible()
+                if key=='health':
+                    assert not w.metrics.isVisible()
+                    w.interface_buttons['healthMetricsEntry'].click();app.processEvents();capture('health-metrics')
+                    assert w.metrics.isVisible()
+                    w.interface_buttons['healthMetricsBack'].click();app.processEvents()
+                    assert w.twin_text.isVisible() and not w.metrics.isVisible()
+                if key=='medication':
+                    assert not w.interface_buttons['medConfirm'].isVisible()
+                    w.interface_buttons['medTodayActions'].click();app.processEvents();capture('medication-actions')
+                    assert w.interface_buttons['medConfirm'].isVisible()
+                    w.interface_buttons['medTodayActionsBack'].click();app.processEvents()
+                    assert w.today_medications.isVisible()
             w._open_global_assistant();capture('global-assistant');w.assistant_dock.close()
             w.navigate('assistant');settle()
             w.assistant_module_buttons['conversation'].click();app.processEvents()

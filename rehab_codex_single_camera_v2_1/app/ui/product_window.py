@@ -201,13 +201,21 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         box.addWidget(tabs)
         status = QWidget()
         layout = QVBoxLayout(status)
+        self.health_status_sections=QStackedWidget();layout.addWidget(self.health_status_sections)
+        summary=QWidget();summary_box=QVBoxLayout(summary)
         twin,area = card('我的健康 · 当前状态')
         self.twin_text = label('等待真实资料；状态不等于临床诊断。')
         area.addWidget(self.twin_text)
         self.concerns = QListWidget()
         self.concerns.setMinimumHeight(140)
         area.addWidget(self.concerns)
-        layout.addWidget(twin)
+        summary_box.addWidget(twin)
+        self.health_metric_summary=label('暂无健康指标，可进入指标页面记录数值。')
+        summary_box.addWidget(self.health_metric_summary)
+        self._action(summary_box,'healthMetricsEntry','查看 / 记录健康指标',lambda:self.health_status_sections.setCurrentIndex(1),target='健康指标详情')
+        summary_box.addStretch();self.health_status_sections.addWidget(summary)
+        detail=QWidget();detail_box=QVBoxLayout(detail)
+        self._action(detail_box,'healthMetricsBack','返回当前健康状态',lambda:self.health_status_sections.setCurrentIndex(0),target='当前健康状态')
         metric,area = card('健康指标')
         self.metrics = table(['指标','最近记录','时间','来源'])
         area.addWidget(self.metrics)
@@ -224,7 +232,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         row.addWidget(self.metric_shared)
         row.addWidget(button('记录数值',self._record_metric,True))
         area.addLayout(row)
-        layout.addWidget(metric)
+        detail_box.addWidget(metric);self.health_status_sections.addWidget(detail)
         tabs.addTab(status,'状态与指标')
         record_page = QWidget()
         records = QVBoxLayout(record_page)
@@ -335,6 +343,9 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
             return False
         self.active_page = key
         if key=='assistant':self._show_assistant_section('overview')
+        if key=='rehab' and not self._rehab_locked():self._show_rehab_scope(False)
+        if key=='health':self.health_status_sections.setCurrentIndex(0)
+        if key=='medication':self.med_today_sections.setCurrentIndex(0)
         self.pages.setCurrentWidget(self.page_widgets[key])
         self.title.setText(dict((k,t) for k,t,_ in NAVIGATION).get(key,{'settings':'设置','notifications':'通知'}.get(key,key)))
         if hasattr(self,'assistant_context'):
@@ -586,7 +597,8 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.last_rehab_tab=self.rehab_tabs.currentIndex()
         {'assessment':self.legacy._show_catalog,'training':self.legacy._show_training_hub,
          'body':self.legacy._show_body,'history':self.legacy._history,'plans':self.legacy._show_training_hub}[target]()
-        self._message('已打开康复功能，请按下方实际评估 / 训练流程继续。')
+        self._show_rehab_scope(True)
+        self._message('已打开康复工作区，请按实际评估 / 训练流程继续；完成后可返回康复概览。')
         return True
 
     def _send_chat(self,text=None,*,inline=False):
@@ -604,6 +616,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
 
     def _open_silver(self):
         if self.navigate('rehab'):
+            self._show_rehab_scope(True)
             self.legacy._show_silver()
 
     def _open_devices(self):
