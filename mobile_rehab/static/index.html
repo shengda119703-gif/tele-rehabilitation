@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#126b5d">
+  <meta name="description" content="手机拍摄，电脑分析。康复评估与个人活动建议。">
+  <title>康复随行 · 手机评估</title>
+  <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/" aria-label="康复随行首页"><img src="/static/icon.svg" alt="" width="36" height="36"><span>康复随行<small>MOVE WELL, LIVE WELL</small></span></a><span class="connection" id="connection">等待连接</span></header>
+  <main id="app"><p class="loading">正在连接你的电脑…</p></main>
+  <nav class="bottom-nav" aria-label="主导航" hidden>
+    <button data-tab="assess" class="active"><span aria-hidden="true">◎</span>身体评估</button>
+    <button data-tab="plan"><span aria-hidden="true">▤</span>训练中心</button>
+    <button data-tab="history"><span aria-hidden="true">◷</span>我的记录</button>
+    <button data-tab="device"><span aria-hidden="true">▣</span>设备连接</button>
+  </nav>
+  <div id="toast" role="alert" hidden></div>
+</body>
+</html>

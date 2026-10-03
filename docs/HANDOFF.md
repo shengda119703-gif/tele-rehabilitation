@@ -1,5 +1,11 @@
 # 当前交接与未完成目标
 
+## 2026-10-03 最新增补：手机康复网页（本机局域网 Demo）
+
+按用户最新授权新增根目录 `mobile_rehab/` 和 `启动手机康复网页.cmd` / `停止手机康复网页.cmd`。适配手机的身体评估、训练中心、记录、设备页已接入：53 项动作、系统相机录像 / 文件上传、后台原算法分析、二维观察报告、原规则生成个人训练计划、训练录像分析与感受记录。只扩展康复入口，不改现有 PySide6 / Ankang / Agent 业务。使用说明见 [手机康复网页](MOBILE_REHAB.md)，证据见 [2026-10-03 验收](validation/MOBILE_REHAB_2026-10-03.md)。
+
+本轮测试：手机端 16 项通过；原控制器 / 自动计划 / 运行时 / 计划库 201 项主测试及 4 项子测试通过；原正式产品界面 81 项回归通过；真实本机 YOLO 无人测试录像与浏览器上传报告链路通过。此为录制后分析，不是实时指导验收。用户的网络摄像头尚未购买，实时流 / 双机位仍待硬件确定；红米 K60 Ultra 实机与真人精度待验。数据与连接码仅在被忽略的 `.runtime/mobile/`，各浏览器身份隔离，不与原患者库自动合并。下方“尚无网页服务”“只做 UI”等是旧阶段说明，不覆盖本轮明确新增功能。用户未提交的动作图片、图片导入脚本和记录保持原样，不纳入本次提交。
+
 **2026-10-02 Final Integration：main 已通过正式 PySide6 产品验收。** 原康复核心、Ankang Runtime/业务/扩展端口、Python/Node bridge、DeepSeek adapter、rehab read tools 和当前产品骨架已用 no-ff merge 整体集成，stage1保留全部历史。当前仓库为 shengda119703-gif/tele-rehabilitation。见[合并前审计](validation/FINAL_INTEGRATION_AUDIT_2026-10-02.md)和[main验收](validation/MAIN_INTEGRATION_ACCEPTANCE_2026-10-02.md)。后续只在最新main派生的 codex/product-ui-v1 盘点UI，等待用户视觉要求，不扩后台功能。下方“main未合并”等属于此前阶段历史，不代表当前状态。
 
 分支增补（2026-10-02 扩展能力迁移）：Voice / Cross-device Sync / HealthKit / 外部通知渠道 / 通用设备输入及通用图片视频 capture 已进入 ProductService / ports / adapters，原实现复用、React 与 demo 保留。默认桌面 HealthKit/webhook 可由宿主环境配置；浏览器 ASR/WebRTC 尚需对应宿主接线，外部平台一律接口已迁 / 实机未验收。Home Twin / Route2 空间推理 / 3DGS 继续延后。完整能力表、调用与本轮测试/布局测试限制见 [扩展迁移验收](validation/ANKANG_EXTENSIONS_2026-10-02.md)。不 merge main、不改 UI、不改 Agent 语义。
