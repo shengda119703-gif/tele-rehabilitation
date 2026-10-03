@@ -25,6 +25,7 @@ from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from .core import ROOT, EXERCISE_IDS, catalog
+from .fitness import EXERCISES as FITNESS_EXERCISES, catalog as fitness_catalog
 from app.storage import Storage
 from app.assessment import build_body_profile
 from app.automatic_plans import generate_proposal, create_automatic_plan, program_progress, validate_automatic_use
@@ -95,9 +96,11 @@ class Jobs:
                 raise HTTPException(404, '找不到这项记录')
             return item.copy()
 
-    def public(self, item):
+    def public(self, item, *, brief=False):
         result = {k: v for k, v in item.items() if k != 'owner'}
         for name in ('progress', 'result'):
+            if brief and name == 'result':
+                continue
             path = self.folder(item) / (name + '.json')
             if path.exists() and (name != 'result' or item['state'] == 'done'):
                 result[name] = json.loads(path.read_text(encoding='utf-8'))
@@ -284,6 +287,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
     def get_catalog(request: Request):
         owner(request)
         return dict(exercises=catalog(), max_bytes=MAX_BYTES, max_seconds=120,
+                    fitness=fitness_catalog(),
                     network_camera=dict(connected=False, message='等待确认摄像头型号及 RTSP / ONVIF 协议；目前可上传它导出的录像。'))
 
     @app.get('/api/plan')
@@ -330,11 +334,11 @@ def create_app(data_dir=None, pair_key=None, runner=None):
         return await asyncio.to_thread(record_feedback)
 
     @app.get('/api/jobs')
-    def list_jobs(request: Request):
+    def list_jobs(request: Request, brief: bool = False):
         uid = owner(request)
         with jobs.lock:
             items = [j.copy() for j in jobs.items.values() if j['owner'] == uid]
-        return [jobs.public(j) for j in sorted(items, key=lambda j: j['created_at'], reverse=True)]
+        return [jobs.public(j, brief=brief) for j in sorted(items, key=lambda j: j['created_at'], reverse=True)]
 
     @app.get('/api/jobs/{jid}')
     def get_job(jid: str, request: Request):
@@ -344,9 +348,10 @@ def create_app(data_dir=None, pair_key=None, runner=None):
     async def upload(request: Request, exercise: str, side: str, consent: str = '',
                      mode: str = 'assessment', plan_id: str = '', entry_key: str = ''):
         uid = owner(request)
-        if exercise not in EXERCISE_IDS or side not in ('left', 'right') or consent != 'yes':
+        allowed = FITNESS_EXERCISES if mode == 'fitness' else EXERCISE_IDS
+        if exercise not in allowed or side not in ('left', 'right') or consent != 'yes':
             raise HTTPException(400, '请选择动作、测试侧，并同意本次录像传到你的电脑分析。')
-        if mode not in ('assessment', 'training'):
+        if mode not in ('assessment', 'training', 'fitness'):
             raise HTTPException(400, '未知的任务模式')
         if mode == 'training':
             def validate():

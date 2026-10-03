@@ -176,6 +176,52 @@ def test_large_json_and_tampered_cookie(client):
     assert client.get('/api/catalog').status_code == 401
 
 
+def test_fitness_api_is_separate_and_does_not_create_rehab_evidence(client):
+    from mobile_rehab.fitness import EXERCISES
+    assert {x['id'] for x in client.get('/api/catalog').json()['fitness']} == set(EXERCISES)
+    jobs = client.app.state.jobs
+    jobs.runner = lambda item: save(jobs.folder(item) / 'result.json', {'kind': 'fitness', 'summary': {'completed': 0}})
+    assert client.post('/api/jobs?exercise=fitness_squat&side=left&consent=yes', content=b'x'*50).status_code == 400
+    assert client.post('/api/jobs?exercise=shoulder_abduction&side=left&consent=yes&mode=fitness', content=b'x'*50).status_code == 400
+    response = client.post('/api/jobs?exercise=fitness_squat&side=left&consent=yes&mode=fitness', content=b'x'*50)
+    assert response.status_code == 200
+    jid = response.json()['id']
+    for _ in range(100):
+        report = client.get('/api/jobs/'+jid).json()
+        if report['state'] == 'done':
+            break
+        time.sleep(.01)
+    assert report['mode'] == 'fitness' and report['result']['kind'] == 'fitness'
+    brief = client.get('/api/jobs?brief=true').json()
+    assert brief[0]['mode'] == 'fitness' and 'result' not in brief[0]
+    assert client.get('/api/plan').json()['proposal']['candidates'] == []
+    assert client.post('/api/jobs/'+jid+'/feedback', json={'pain': 0, 'fatigue': 0}).status_code == 409
+
+
+def test_fitness_mode_real_model_empty_video(tmp_path):
+    import cv2
+    import numpy as np
+    import subprocess
+    import sys
+    from mobile_rehab.core import ROOT
+    folder = tmp_path / 'fitness-empty'
+    folder.mkdir()
+    writer = cv2.VideoWriter(str(folder / 'video.mp4'), cv2.VideoWriter_fourcc(*'mp4v'), 10., (320, 240))
+    assert writer.isOpened()
+    for _ in range(12):
+        writer.write(np.zeros((240, 320, 3), dtype=np.uint8))
+    writer.release()
+    save(folder / 'job.json', dict(id='empty', owner='test-only', mode='fitness', exercise='fitness_deadlift', side='left'))
+    process = subprocess.run([sys.executable, '-m', 'mobile_rehab.analyzer', str(folder / 'job.json')], cwd=ROOT, capture_output=True, timeout=100)
+    assert process.returncode == 0, process.stderr.decode(errors='replace')
+    result = json.loads((folder / 'result.json').read_text(encoding='utf-8'))
+    assert result['kind'] == 'fitness'
+    assert result['summary']['completed'] == 0
+    assert result['summary']['metrics'] == {}
+    assert result['conditions']['model_manifest_id']
+    assert not list(tmp_path.rglob('assessments.sqlite3'))
+
+
 def test_real_capture_model_and_empty_report(tmp_path):
     """Real local YOLO + SourceWorker; black test clip must yield NO movement."""
     import cv2
