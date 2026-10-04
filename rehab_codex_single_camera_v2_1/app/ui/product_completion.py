@@ -1,11 +1,12 @@
 """Product navigation and read-only presentation over existing services and rehab actions."""
-from datetime import datetime
+from datetime import datetime, timedelta
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QTabWidget, QComboBox,
     QDialog, QDialogButtonBox, QTextBrowser, QMessageBox, QFileDialog, QPushButton, QListWidget,
     QProgressBar, QScrollArea, QFrame, QStackedWidget)
 from .product_widgets import label, button, card, table, rows, core_card, visual
 from .product_theme import SPACING, METRICS
+from ..domain import SOURCES, CONTEXTS
 
 # Published audit identities remain stable when widgets change parents.
 STABLE_ACTION_IDS = dict(zip(
@@ -17,6 +18,7 @@ STABLE_ACTION_IDS = dict(zip(
     (0,1,2,3,4,5,6,7,8,9,10,199,200,201,202,77,75,69,70,71,72,37,40,41,42,43,44,45,32,31,27,28)))
 
 MODULE_NAV_ACTIONS={'rehabWorkspaceBack','healthMetricsEntry','healthMetricsBack','medTodayActions','medTodayActionsBack'}
+RECOVERY_NAV_ACTIONS={'recoveryAssessment','recoveryHistory','recoveryPlans','recoveryAsk','contextReturn'}
 
 
 class ProductCompletion:
@@ -98,21 +100,21 @@ class ProductCompletion:
         overview_box.addLayout(top)
         self.rehab_tabs=QTabWidget()
         self.rehab_summary={};self.rehab_tables={}
-        definitions=[('今日训练',['动作','当前计划完成状态','目标']),('康复评估',['时间','动作 / 侧别','有效性']),
+        definitions=[('今日恢复',['动作','恢复流程（计划累计）','目标']),('康复评估',['时间','动作 / 侧别','有效性']),
                      ('训练计划',['计划','累计完成情况','创建时间']),('康复进度',['时间','训练','完成 / 反馈'])]
         for title,headers in definitions:
             sub=QWidget();area=QVBoxLayout(sub)
             area.setSpacing(SPACING['sm']);area.setContentsMargins(*([SPACING['lg']]*4))
             self.rehab_summary[title]=visual(label('正在读取…'),typography='body');area.addWidget(self.rehab_summary[title])
-            if title=='今日训练':
+            if title=='今日恢复':
                 self.rehab_progress=QProgressBar();self.rehab_progress.setTextVisible(False)
                 self.rehab_progress.setAccessibleName('当前计划累计进度');area.addWidget(self.rehab_progress)
             self.rehab_tables[title]=table(headers);self.rehab_tables[title].setMinimumHeight(90)
             area.addWidget(self.rehab_tables[title])
             row=QHBoxLayout()
-            if title=='今日训练':
+            if title=='今日恢复':
                 self._action(row,'rehabContinue','继续训练',self._continue_training,target='原训练准备与确认')
-                self._action(row,'rehabAction','查看动作',self._show_training_action,target='原动作目录')
+                self._action(row,'rehabAction','查看下一项 / 动作目录',self._show_training_action,target='原动作目录')
                 self._action(row,'rehabStart','开始训练',self._start_existing_training,kind='A',target='原 Runtime.start')
             elif title=='康复评估':
                 self._action(row,'rehabAssess','开始新评估',lambda:self._rehab_action('assessment'),target='原康复评估')
@@ -129,7 +131,21 @@ class ProductCompletion:
             for index in range(row.count()):
                 widget=row.itemAt(index).widget()
                 if widget:visual(widget,appearance='primary' if widget.objectName() in ('rehabContinue','rehabAssess','rehabAutomatic') else 'secondary')
-            row.addStretch();area.addLayout(row);self.rehab_tabs.addTab(sub,title)
+            row.addStretch();area.addLayout(row)
+            if title=='今日恢复':
+                self.recovery_fields={}
+                for key,heading in [('flow','今日恢复流程'),('result','最近训练结果'),('assessment','最近评估'),('trend','恢复趋势')]:
+                    area.addWidget(visual(label(heading),typography='section'))
+                    field=visual(label('正在读取…'),typography='body')
+                    field.setObjectName('recovery-'+key);self.recovery_fields[key]=field;area.addWidget(field)
+                shortcuts=QHBoxLayout()
+                self._action(shortcuts,'recoveryAssessment','新评估 / 查看详情',lambda:self.rehab_tabs.setCurrentIndex(1),target='康复评估')
+                self._action(shortcuts,'recoveryHistory','历史训练 / 反馈',lambda:self.rehab_tabs.setCurrentIndex(3),target='康复进度')
+                self._action(shortcuts,'recoveryPlans','安排训练计划',lambda:self.rehab_tabs.setCurrentIndex(2),target='训练计划')
+                self._action(shortcuts,'recoveryAsk','问问康复管家',self._open_global_assistant,target='同一用户管家侧栏')
+                area.addLayout(shortcuts)
+            scroll=QScrollArea();scroll.setWidgetResizable(True);scroll.setFrameShape(QFrame.NoFrame);scroll.setWidget(sub)
+            self.rehab_tabs.addTab(scroll,title)
         overview_box.addWidget(self.rehab_tabs,1);self.rehab_sections.addWidget(overview)
         # Original cameras, dual-camera, report and training UI keep their native layout.
         # A scroll boundary lets 1024px windows use it without shrinking its controls.
@@ -137,7 +153,7 @@ class ProductCompletion:
         self.rehab_workspace.setFrameShape(QFrame.NoFrame)
         self.rehab_workspace.setWidget(self.legacy)
         workspace=QWidget();workspace_box=QVBoxLayout(workspace);workspace_box.setContentsMargins(0,0,0,0)
-        self._action(workspace_box,'rehabWorkspaceBack','返回康复概览',lambda:self._show_rehab_scope(False),target='康复概览，保留原工作区状态')
+        self._action(workspace_box,'rehabWorkspaceBack','返回今日恢复',self._return_recovery,target='今日恢复，刷新已保存数据')
         workspace_box.addWidget(self.rehab_workspace,1);self.rehab_sections.addWidget(workspace)
         self.rehab_tabs.currentChanged.connect(self._rehab_tab_changed)
         self.pages.addWidget(page);self.page_widgets['rehab']=page
@@ -391,6 +407,13 @@ class ProductCompletion:
         self.interface_buttons['rehabOverview'].setText('展开概览' if workspace else '收起概览')
         return True
 
+    def _return_recovery(self):
+        if self._show_rehab_scope(False):
+            self.rehab_tabs.setCurrentIndex(0)
+            if not self.pending:self._request('snapshot')
+            else:self.refresh_needed=True
+            self._message('已返回今日恢复，正在读取已保存的训练和反馈。')
+
     def _toggle_rehab_overview(self):
         collapsed=not getattr(self,'rehab_overview_collapsed',False)
         if self._show_rehab_scope(collapsed):
@@ -406,7 +429,9 @@ class ProductCompletion:
         self._open_original_report(records[r].get('session_id') or records[r].get('id'))
 
     def _open_original_report(self,sid):
+        source=self.active_page
         if not sid or not self._rehab_action('history'): return
+        self._remember_return(source)
         self.legacy._send('report',id=sid);self._message('正在打开原康复报告，包含测量条件、反馈及已有导出入口。')
 
     def _history_detail(self):
@@ -435,6 +460,7 @@ class ProductCompletion:
             record=self.filtered_entries[r][4]
             if self._rehab_action('history'):
                 self.rehab_trend_anchor=record.get('session_id') or record.get('id')
+                self._remember_return('history')
         else:self.history_tabs.setCurrentIndex(1)
 
     def _health_detail(self):
@@ -456,7 +482,7 @@ class ProductCompletion:
     def _filter_timeline(self):
         selected=self.history_filter.currentText()
         self.filtered_entries=[e for e in self.timeline_entries if selected=='全部' or e[3]==selected or selected=='康复' and e[3]=='评估']
-        rows(self.timeline,[e[:3] for e in self.filtered_entries])
+        rows(self.timeline,[e[:3] for e in self.filtered_entries],keys=[e[3]+':'+str(e[4].get('session_id') or e[4].get('id')) for e in self.filtered_entries])
         if hasattr(self,'history_empty'): self.history_empty.setVisible(not self.filtered_entries)
 
     def _filter_health(self):
@@ -466,7 +492,7 @@ class ProductCompletion:
             if selected=='全部' or selected==category:
                 values.append((e['timestamp'],category+' · '+self._source_label(e['source']),self._event_summary(e)))
                 self.visible_health_events.append(e)
-        rows(self.health_timeline,values);self.health_empty.setVisible(not values)
+        rows(self.health_timeline,values,keys=[e['id'] for e in self.visible_health_events]);self.health_empty.setVisible(not values)
 
     def _render_notifications(self):
         if not hasattr(self,'notification_filter'): return
@@ -479,7 +505,7 @@ class ProductCompletion:
             values.append((n.get('createdAt',''),n.get('title','照护通知'),'用药' if med else '健康 / 家庭照护',
                 {'unavailable':'渠道未启用','pending':'待派发','accepted':'渠道已接受','sent':'已发送','delivered':'已送达','failed':'发送失败'}.get(n['phase'],'状态待核对'),
                 '已确认' if n['lifecycle']=='acknowledged' else '未确认'))
-        rows(self.notifications,values);self.notification_empty.setVisible(not values)
+        rows(self.notifications,values,keys=[n['findingId'] for n in self.visible_notifications]);self.notification_empty.setVisible(not values)
 
     def _selected_notification(self):
         r=self.notifications.currentRow();entries=getattr(self,'visible_notifications',[])
@@ -499,7 +525,9 @@ class ProductCompletion:
 
     def _notification_business(self):
         n=self._selected_notification()
-        if n: self.navigate('medication' if '药' in n.get('title','') else 'health')
+        if n and self.navigate('medication' if '药' in n.get('title','') else 'health'):
+            if getattr(self,'last_detail',None):self.last_detail.close()
+            self._remember_return('notifications')
 
     @staticmethod
     def _source_label(value):
@@ -534,15 +562,22 @@ class ProductCompletion:
         self._visual_progress(progress)
         self.next_training.setText(('下一项：'+next_item['exercise_label']+' · '+self._plan_settings(next_item['settings'])+
             '\n当前计划累计完成 '+str(progress['completed'])+'/'+str(progress['total'])+'；当前未提供按日排期。') if next_item else '当前计划全部完成，可查看反馈与报告。' if p else '今天暂无康复计划')
-        rows(self.rehab_tables['今日训练'],[(i['exercise_label'],'已完成' if next((v['done'] for v in progress.get('items',[]) if v['key']==i['key']),False) else '下一项' if i['key']==progress.get('next_key') else '未完成',self._plan_settings(i['settings'])) for i in p['items']] if p else [])
-        self.rehab_summary['今日训练'].setText(self.next_training.text()+f'\n今天实际完成 {completed} 次；当前计划完成状态为累计记录。')
-        rows(self.rehab_tables['训练计划'],[(p['name'],f"{p['progress']['completed']}/{p['progress']['total']}",p.get('created_utc','未记录')) for p in plans])
+        if p and not p.get('next_available') and p.get('availability_reason'):
+            self.next_training.setText(self.next_training.text()+'\n暂不能继续：'+p['availability_reason'])
+        def item_state(item):
+            value=next((v for v in progress.get('items',[]) if v['key']==item['key']),{})
+            return '已完成' if value.get('done') else '当前下一项' if item['key']==progress.get('next_key') else '已记录，未完成' if value.get('session_id') else '未开始'
+        rows(self.rehab_tables['今日恢复'],[(i['exercise_label'],item_state(i),self._plan_settings(i['settings'])) for i in p['items']] if p else [],keys=[i['key'] for i in p['items']] if p else [])
+        scope=self.legacy._body_scope_key()
+        self.rehab_summary['今日恢复'].setText('今天的恢复\n数据范围：'+SOURCES.get(scope['source_kind'],scope['source_kind'])+' / '+CONTEXTS.get(scope['usage_context'],scope['usage_context'])+'\n'+self.next_training.text()+f'\n今日完成 {completed} 次训练；计划项目状态按累计记录显示。')
+        self._render_recovery(training,assessments,p,today)
+        rows(self.rehab_tables['训练计划'],[(p['name'],f"{p['progress']['completed']}/{p['progress']['total']}",p.get('created_utc','未记录')) for p in plans],keys=[p['id'] for p in plans])
         self.rehab_summary['训练计划'].setText('当前保存的计划，无按周排期接口；动作目标及接受 / 准备由原计划窗口核对。' if plans else '暂无训练计划，可先评估再安排。')
-        rows(self.rehab_tables['康复评估'],[(r.get('end_utc',''),r['exercise_label']+' · '+{'left':'左侧','right':'右侧'}.get(r.get('side'),'不分侧'),{'ASSESSED':'已评估','UNAVAILABLE':'数据不足','INCOMPARABLE':'条件不可比'}.get(r.get('status'),'需查看报告')) for r in assessments])
+        rows(self.rehab_tables['康复评估'],[(r.get('end_utc',''),r['exercise_label']+' · '+{'left':'左侧','right':'右侧'}.get(r.get('side'),'不分侧'),{'ASSESSED':'已评估','UNAVAILABLE':'数据不足','INCOMPARABLE':'条件不可比'}.get(r.get('status'),'需查看报告')) for r in assessments],keys=[r['session_id'] for r in assessments])
         self.rehab_summary['康复评估'].setText('查看原报告可核对测量条件，或打开身体档案查看汇总。' if assessments else '暂无评估记录，请先完成新评估。')
-        rows(self.rehab_tables['康复进度'],[(r.get('end_utc',''),r['exercise_label'],f"完成 {r.get('summary',{}).get('completed','未记录')} 次；"+self._feedback_text(r.get('training_feedback',{}))) for r in training])
+        rows(self.rehab_tables['康复进度'],[(r.get('end_utc',''),r['exercise_label'],f"完成 {r.get('summary',{}).get('completed','未记录')} 次；"+self._feedback_text(r.get('training_feedback',{}))) for r in training],keys=[r['id'] for r in training])
         self.rehab_summary['康复进度'].setText(f'已保存 {len(training)} 次训练。数据变化不等于临床改善，条件比较见原康复历史。' if training else '暂无训练记录，完成训练并反馈后会显示。')
-        rows(self.today_medications,[(m['name'],m.get('dose') or '未填写',m.get('times') or '未填写','在用') for m in active])
+        rows(self.today_medications,[(m['name'],m.get('dose') or '未填写',m.get('times') or '未填写','在用') for m in active],keys=[m['id'] for m in active])
         if not active:self.medication_today.setText('暂无用药安排')
         self.medication_empty.setVisible(not med);self.med_history_empty.setVisible(self.medication_history.rowCount()==0)
         missed=[e for e in state['events'] if e['type']=='observation' and 'medicationMissed' in e['observation'].get('tags',[])]
@@ -561,12 +596,53 @@ class ProductCompletion:
     def _feedback_text(feedback):
         return '；'.join(f'{title}：{feedback[key]}' for key,title in [('pain','疼痛评分'),('fatigue','疲劳评分'),('notes','本人说明')] if feedback.get(key) is not None) or '反馈尚未填写'
 
+    def _render_recovery(self,training,assessments,plan,today):
+        def day(record):
+            try:return datetime.fromisoformat(record.get('end_utc','').replace('Z','+00:00')).astimezone().date()
+            except (TypeError,ValueError):return None
+        dated=[r for r in training if day(r) is not None]
+        week=[r for r in dated if today-timedelta(days=today.weekday())<=day(r)<=today]
+        finished=lambda r:r.get('status') in ('FINISHED','COMPLETED') and r.get('summary',{}).get('plan_completed') is True
+        latest=training[0] if training else None
+        feedback=(latest or {}).get('training_feedback') or {}
+        self.recovery_fields['flow'].setText(
+            ('查看计划 → 准备下一项 → 训练 → 训练后反馈 → 返回今日恢复' if plan else '还没有训练计划：先做评估，或在训练计划页建立安排。')+
+            ('\n最近训练反馈：已保存。' if feedback.get('revision') else '\n最近训练反馈：尚未填写，可从历史训练打开。' if latest else '\n训练后会在这里显示保存结果和反馈。'))
+        self.recovery_fields['result'].setText(
+            latest['exercise_label']+' · '+str(latest.get('end_utc') or '时间未记录')+'\n'+
+            f"已记录 {latest.get('summary',{}).get('completed','未记录')} 次；"+
+            ('已完成计划目标' if finished(latest) else '计划目标未完成或未能核实')+'\n'+self._feedback_text(feedback)
+            if latest else '暂无训练结果。完成训练并保存后显示，不以准备或打开摄像头计为完成。')
+        recent=assessments[0] if assessments else None
+        if recent:
+            matching=[r for r in assessments[1:] if (r.get('exercise_id'),r.get('side'))==(recent.get('exercise_id'),recent.get('side'))]
+            def reading(r):
+                value=(r.get('motion_range') or {}).get('range_deg')
+                return f'{value:g}°' if isinstance(value,(int,float)) and r.get('status')=='ASSESSED' else '未取得有效幅度'
+            previous=matching[0] if matching else None
+            text=recent['exercise_label']+' · '+str(recent.get('end_utc') or '时间未记录')+'\n最近幅度：'+reading(recent)
+            if previous:text+='；上次幅度：'+reading(previous)+'（'+str(previous.get('end_utc') or '时间未记录')+'）'
+            else:text+='；暂无同动作同侧的上一次记录。'
+            text+='\n测量条件与可比性请在评估详情 / 原历史中核对；数值变化不代表临床改善。'
+        else:text='暂无评估记录。可进入康复评估开始新评估，或查看身体档案。'
+        self.recovery_fields['assessment'].setText(text)
+        completion=sum(finished(r) for r in week)
+        trend=f'本周已保存 {len(week)} 次训练，涉及 {len({day(r) for r in week})} 天；完成目标 {completion} 次。'
+        trend+=f'\n本周已保存训练的目标完成率：{completion/len(week):.0%}。' if week else '\n本周暂无训练数据，尚无完成率。'
+        for key,title in [('pain','疼痛评分'),('fatigue','疲劳评分')]:
+            rated=[r for r in training if (r.get('training_feedback') or {}).get(key) is not None]
+            if len(rated)>1:trend+=f"\n{title}（本人反馈）：{rated[1]['training_feedback'][key]} → {rated[0]['training_feedback'][key]}。"
+            elif rated:trend+=f"\n{title}：{rated[0]['training_feedback'][key]}；暂无上一次反馈。"
+            else:trend+=f'\n暂无{title}反馈数据。'
+        self.recovery_fields['trend'].setText(trend+'\n评估变化见最近评估，完整训练记录见康复进度。')
+
     def _completion_clear(self):
         if not hasattr(self,'page_states'):return
         self._visual_progress({})
         for widget in [self.today_medications,self.missed_medications,self.family_members,*self.rehab_tables.values()]:rows(widget,[])
         self.health_entries=[];self.filtered_entries=[];self.visible_notifications=[]
         self.page_feedback.clear();self.rehab_save_marker=None
+        self.return_context=None;self.context_return.hide()
         self.chat_input.clear()
         self.health_metric_summary.setText('正在读取当前用户指标…')
         self.metric_value.setValue(0);self.metric_shared.setChecked(False)
@@ -582,6 +658,7 @@ class ProductCompletion:
         self.legacy.body_detail_dialog.hide()
         self.next_training.setText('正在读取当前用户计划…');self.health_rehab_summary.setText('正在读取当前用户资料…')
         for field in self.rehab_summary.values():field.setText('正在读取…')
+        for field in self.recovery_fields.values():field.setText('正在读取当前用户资料…')
         for field in self.page_states.values():field.setText('正在读取当前用户资料…')
         if getattr(self,'last_detail',None):self.last_detail.close()
 
@@ -596,6 +673,11 @@ class ProductCompletion:
     def _completion_controls(self):
         if not hasattr(self,'page_states'):return
         busy=bool(self.pending)
+        focus=self.active_page=='rehab' and self.legacy.scene=='rehab' and self.legacy.submode.currentData()=='training' and self.legacy.state in ('ONLINE','SAVE_FAILED')
+        self.product_sidebar.setVisible(not focus);self.product_top.setVisible(not focus)
+        self.interface_buttons['globalAssistant'].setVisible(not focus)
+        self.assistant_shortcut.setEnabled(not focus)
+        if focus:self.assistant_dock.hide()
         voice=self.extension_status.get('voice',{})
         phase=self.backend.voice.live_status()['phase']
         voice_busy=busy and self.last_operation=='voice.input'
@@ -623,10 +705,15 @@ class ProductCompletion:
             if key=='devicePull':enabled=enabled and bool(self.extension_status.get('devices'))
             if str(key).startswith('sync'):enabled=enabled and bool(self.extension_status.get('syncAvailable'))
             if str(key).startswith('sync'):item.setToolTip('使用已配置的跨设备连接' if enabled else '跨设备接口已支持；当前未配置远程设备与可信身份。')
-            if key=='rehabStart':enabled=enabled and self.legacy.start_button.isEnabled() and self.legacy.submode.currentData()=='training'
+            if key=='rehabStart':
+                enabled=enabled and self.legacy.start_button.isEnabled() and self.legacy.submode.currentData()=='training'
+                item.setToolTip('开始已经确认的训练。' if enabled else '先点击“继续训练”，选择计划、打开输入并确认准备后，才能开始。')
             if key=='rehabWorkspaceBack':
                 enabled=enabled and not self._rehab_locked()
                 item.setToolTip('先结束并保存当前任务、关闭摄像头测试后返回。' if not enabled else '返回概览，保留已保存数据和工作区设置。')
+            if key=='contextReturn':
+                enabled=enabled and not self._rehab_locked()
+                item.setToolTip('先结束并保存当前任务后返回。' if not enabled else '返回来源页面，保留筛选和所选记录。')
             if item is self.image_confirm:enabled=enabled and bool(self.pending_image and self.image_candidates.rowCount())
             item.setEnabled(enabled)
         self.user_select.setEnabled(not busy and not self.legacy.busy and not self.legacy._camera_testing and self.legacy.state not in ('CONNECTING','PREVIEW','ONLINE','SAVE_FAILED'))

@@ -102,6 +102,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         root.setSpacing(0)
         sidebar = QFrame()
         sidebar.setObjectName('productSidebar')
+        self.product_sidebar=sidebar
         sidebar.setFixedWidth(216)
         nav = QVBoxLayout(sidebar)
         nav.setContentsMargins(18,30,18,22)
@@ -136,7 +137,14 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         top.addWidget(button('新建用户',lambda:self._profile(new=True)))
         top.addWidget(button('通知',lambda:self.navigate('notifications')))
         top.addWidget(button('设置',lambda:self.navigate('settings')))
-        main.addLayout(top)
+        top.setContentsMargins(0,0,0,0)
+        self.product_top=QWidget();self.product_top.setLayout(top);main.addWidget(self.product_top)
+        self.context_return=button('返回',self._return_context)
+        self.context_return.setProperty('actionId','contextReturn')
+        self.context_return.setProperty('actionKind','B')
+        self.context_return.setProperty('actionTarget','返回来源页面')
+        self.context_return.hide();main.addWidget(self.context_return)
+        self.return_context=None
         meta = QHBoxLayout()
         self.date_label = label(datetime.now().strftime('%Y年%m月%d日'),'productMuted')
         meta.addWidget(self.date_label,1)
@@ -341,7 +349,11 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         if key != 'rehab' and (self.legacy.state in ('CONNECTING','PREVIEW','ONLINE','SAVE_FAILED') or self.legacy._camera_testing or self.active_page=='rehab' and self.legacy.busy):
             self._message('请先结束并保存当前康复任务，再离开监护页面。')
             return False
+        if key!=self.active_page:
+            self.notice.clear();self.notice.hide()
         self.active_page = key
+        if self.return_context and key!=self.return_context[1]:
+            self.return_context=None;self.context_return.hide()
         if key=='assistant':self._show_assistant_section('overview')
         if key=='rehab' and not self._rehab_locked():self._show_rehab_scope(False)
         if key=='health':self.health_status_sections.setCurrentIndex(0)
@@ -357,6 +369,15 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         elif self.owner and self.pending and refresh:
             self.refresh_needed = True
         return True
+
+    def _remember_return(self,source):
+        if source in ('history','notifications') and source!=self.active_page:
+            self.return_context=(source,self.active_page)
+            self.context_return.setText('返回'+('记录' if source=='history' else '通知'))
+            self.context_return.show()
+
+    def _return_context(self):
+        if self.return_context:self.navigate(self.return_context[0])
 
     def _message(self,text,*,severity='info'):
         self.notice.setText(text)
@@ -798,10 +819,10 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         for m in sorted(measurements,key=lambda m:m['timestamp']):
             latest[m['metric']] = m
         rows(self.metrics,[(METRIC_LABELS[k][0],str(m['value'])+' '+m['unit'],m['timestamp'],self._source_label(m['source'])) for k,m in latest.items()])
-        rows(self.attachments,[(a['name'],a['category'],a['mediaType'],a['date'],'仅本人' if a['visibility']=='private' else '可共享') for a in s['attachments']])
+        rows(self.attachments,[(a['name'],a['category'],a['mediaType'],a['date'],'仅本人' if a['visibility']=='private' else '可共享') for a in s['attachments']],keys=[a['id'] for a in s['attachments']])
         if not self.pending_image:
             self.image_status.setText('既有识别代理已配置，上传前需要本人许可。' if s['capabilities']['imageRecognitionAvailable'] else '图片 / 视频附件可保存。图片识别代理尚未配置，不会生成假识别结果。')
-        rows(self.medications,[(m['name'],m.get('dose') or '未填写',m.get('purpose') or '未填写',m.get('times') or '未填写',STATUS_LABELS[m['status']]) for m in medications])
+        rows(self.medications,[(m['name'],m.get('dose') or '未填写',m.get('purpose') or '未填写',m.get('times') or '未填写',STATUS_LABELS[m['status']]) for m in medications],keys=[m['id'] for m in medications])
         self.medication_today.setText('；'.join(STATUS_LABELS[t['status']]+' · '+t['title'].removeprefix('💊 ').strip() for t in med_tasks) or '尚无今日用药核对任务。')
         family = s['family']
         link = family.get('familyLink')
@@ -810,7 +831,6 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self._render_family_summary({'canViewSharedDetail':s['projection']['canViewSharedDetail'],'projection':s['projection']})
         timeline = [(e['timestamp'],{'observation':'身体感受','measurement':'健康指标','labResult':'检验结果'}.get(e['type'],'健康记录')+' · '+self._source_label(e['source']),self._event_summary(e),
             '用药' if e['type']=='observation' and 'medicationMissed' in e['observation'].get('tags',[]) else '健康',e) for e in state['events']]
-        rows(self.health_timeline,[entry[:3] for entry in sorted(timeline,key=lambda r:r[0],reverse=True)])
         timeline += [(t['dueDate'],'用药核对' if t['kind']=='medication_check' else '照护任务',t['title']+' · '+STATUS_LABELS[t['status']],
             '用药' if t['kind']=='medication_check' else '健康',t) for t in s.get('taskHistory',[])]
         training_records = rehab.get('rehab.get_training_history',{}).get('records',[])
@@ -828,7 +848,6 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
             content += '<h3>'+escape(section['title'])+'</h3><p>'+'<br>'.join(escape(line) for line in section['lines'])+'</p>'
         self.report.setHtml(content)
         rows(self.trends,[(METRIC_LABELS[k][0],v['recent'] if v['recent'] is not None else '数据不足',v['deltaText'] or '暂无足够个人基线') for k,v in s['trends'].items()])
-        rows(self.notifications,[(n.get('createdAt',''),n.get('title','已记录通知'), {'unavailable':'渠道未启用','pending':'待派发','accepted':'渠道已接受','sent':'已发送','delivered':'已送达','failed':'失败'}.get(n['phase'],n['phase']), '已确认' if n['lifecycle']=='acknowledged' else '未确认') for n in s['notifications']])
         audits = s.get('audits',[])
         self.audit_view.setPlainText('共享记录\n'+'\n'.join(self._sharing_record(a) for a in audits) if audits else '当前没有已记录的共享操作；允许查看不等于已经发送或送达。')
         self.profile_summary.setText(profile['name']+' · '+(str(profile['age'])+' 岁' if profile['age'] else '年龄未填')+'\n当前状态：'+(stored.get('currentState') or '未填写')+'\n康复目标：'+(stored.get('rehabGoal') or '未填写'))

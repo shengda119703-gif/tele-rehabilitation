@@ -1,5 +1,7 @@
 # 当前交接与未完成目标
 
+**2026-10-04 今日恢复与成品功能收口：** `codex/product-ui-v1` 保留上一轮修复，完成今日恢复真实数据 / 空态、训练专注与反馈保存返回、记录 / 通知来源返回和稳定 ID 选择恢复；修复原生黑箱复现的 Windows 同步目录 EPERM 保存失败，仅增加文件适配器有界重试。最终同一版本连续两轮 Windows 可见 Qt 核心路径各 41 PASS / 0 FAIL，第二轮无新 P0 / P1 / P2；当前覆盖范围内无未解决的已知核心功能问题。Python 1680 passed / 14 skipped / 1 缺 YOLO 权重失败 / 4 子测试通过；Node 411 + 15 及 build / typecheck / bridge / security 全通过。原始相机两轮实际收到画面，但不宣称真人训练、ASR 或外部平台通过。详细分类、根因、复验与边界见[成品功能验收报告](validation/PRODUCT_RECOVERY_ACCEPTANCE_2026-10-04.md)、[逐场景两轮证据](validation/PRODUCT_RECOVERY_BLACKBOX_2026-10-04.csv)。只提交 / 推送 UI 分支，不 merge main；本地 main 仍 `fb113ff`，远端 main 外部增量 `0dc3e12` 未合入 / 未验收。以下旧阶段宽泛说法以本轮报告的范围为准。
+
 **2026-10-03 交付远端状态：** UI 黑箱修复代码提交 `6e79cc8`；推送后 fetch 发现 origin/main 新增 LAN mobile rehabilitation assessment and training web demo，SHA `704fdec`。本地 main 仍为 `fb113ff`，本轮未合入/未验收该网页增量；stage1 保持 `4b2d108`。后续不要据 UI 分支黑箱报告宣称远端 main 网页演示已验收。
 
 **2026-10-03 Product 黑箱复核：** 本轮公开 Qt 控件驱动正式 Runtime/ProductService/SQLite/bridge，另实际测试 Windows 麦克风。修复管家附件返回、家庭绑定确认、私密对话被写入备份、银发错误回执/空态/忙碌及取消状态。136 个产品按钮有激活或禁用证据，但不等于136项端到端成功；原康复165行逐项保留未验收缺口。完整Python实际1671通过/14跳过/1缺YOLO权重失败，不能称全绿；Node411+13及针对性回归通过。真人训练/语音识别、远程模型及外部平台/设备仍有验收缺口。当前结论覆盖下方旧阶段“七路径全部完成”等宽泛说法。见[黑箱审计](validation/PRODUCT_BLACKBOX_AUDIT_2026-10-03.md)和[逐按钮证据](validation/PRODUCT_BLACKBOX_BUTTONS_2026-10-03.csv)。只在UI分支提交，不改main/stage1、不美化。

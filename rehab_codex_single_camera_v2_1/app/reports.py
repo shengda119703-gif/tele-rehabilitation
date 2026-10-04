@@ -401,8 +401,11 @@ def render_result_summary(s, *, document=True):
                      '辅助画面缺测不否定主机位已取得的有效数据；这是空间跟踪，不是人脸或生物身份识别。</p>')
         else:
             body += '<p>本记录沿用保存时的双摄有效性规则，未按新版规则重新计算。</p>'
+    body += _training_execution_html(s)
     body += '<h2>下一步</h2><p>'
-    if evidence['guided']:
+    if session_value(s,'submode')=='training':
+        body += '本次训练记录已保存。请记录训练感受，再返回今日恢复查看安排；需要休息时可稍后继续。'
+    elif evidence['guided']:
         body += ('本次活动已保存。想要可比较的测量记录时，可在光线和取景较好时重做一次自动测量评估；'
                  '引导计时记录只保存在历史中。')
     else:

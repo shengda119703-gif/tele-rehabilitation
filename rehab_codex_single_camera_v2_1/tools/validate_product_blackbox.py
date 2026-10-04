@@ -1,7 +1,9 @@
 """UI-only exploratory acceptance with the real ProductWindow and both runtimes.
 
-No bridge fixtures, mocked services, dialog return-value patches, private callbacks,
-or hidden-widget clicks. QTest supplies mouse/keyboard input to visible Qt widgets.
+No mocked services, dialog return-value patches, private callbacks, or hidden-widget
+clicks. QTest supplies mouse/keyboard input to visible Qt widgets. Optional saved
+rehab inputs are produced by the real controller from explicit SYNTHETIC/TEST poses;
+they validate saved-data paths, never a camera or human measurement.
 Outputs distinguish interaction coverage from end-to-end acceptance.
 Run in a dedicated process: python tools/validate_product_blackbox.py --output DIR
 """
@@ -21,18 +23,43 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--only', default='')
+    parser.add_argument('--platform',choices=('offscreen','windows'),default='offscreen')
+    parser.add_argument('--width',type=int,default=1440)
+    parser.add_argument('--height',type=int,default=940)
+    parser.add_argument('--with-saved-rehab',action='store_true')
     args = parser.parse_args()
     OUT = args.output.resolve()
     if (OUT/'data').exists():parser.error('Use a fresh output directory; existing application data is never overwritten.')
     OUT.mkdir(parents=True, exist_ok=True)
-    os.environ['QT_QPA_PLATFORM'] = 'offscreen'
+    os.environ['QT_QPA_PLATFORM'] = args.platform
     os.environ['ANKANG_PRODUCT_DISABLE_MODEL'] = '1'
     os.environ['ANKANG_VOICE_DISABLED'] = '1'
     # Developer settings are deliberately outside the checkout and never use a real key.
     private = tempfile.TemporaryDirectory(prefix='rehab-blackbox-config-')
     os.environ['APPDATA'] = private.name
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from PySide6.QtCore import Qt, QTimer, QPoint
+    if args.with_saved_rehab:
+        sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tests'))
+        from test_app_controller import ControllerTests
+        from app.storage import Storage
+        fixture=ControllerTests();fixture.setUp()
+        try:
+            reference=fixture._assessment_reference()
+            fixture.setup['plan'].update(target_reps=1,target_sets=1)
+            fixture._training_preview(reference);fixture.c.start()
+            saved_training_id=fixture.c.context.run_id
+            clock=0
+            for angle in (0,90,0):
+                for _ in range(30):fixture.frame(clock,angle);clock+=.1
+            fixture.c.stop('user_stop')
+            assert fixture.store.get_session(saved_training_id)['summary']['completed']==1
+            store=Storage(OUT/'data'/'home_rehab.sqlite3')
+            for session in fixture.store.list_sessions():
+                assert session['source_kind']=='SYNTHETIC' and session['usage_context']=='TEST'
+                store.save_session(session)
+            store.close()
+        finally:fixture.tearDown()
+    from PySide6.QtCore import Qt, QTimer, QPoint, QObject, QEvent
     from PySide6.QtGui import QFont
     from PySide6.QtTest import QTest, QSignalSpy
     from shiboken6 import isValid
@@ -41,7 +68,13 @@ if __name__ == '__main__':
         QInputDialog, QMessageBox, QDialog, QTableWidget, QFormLayout, QSpinBox,
         QDoubleSpinBox, QCheckBox, QListWidget, QWidget)
     from app.ui.product_window import ProductWindow
+    try:
+        from PySide6.QtTextToSpeech import QTextToSpeech
+        tts_engines = QTextToSpeech.availableEngines()
+    except ImportError:
+        tts_engines = []
 
+    QApplication.setAttribute(Qt.AA_DontUseNativeDialogs)
     app = QApplication([])
     app.setStyle('Fusion')
     app.setFont(QFont('Microsoft YaHei UI', 10))
@@ -99,7 +132,10 @@ if __name__ == '__main__':
     def click(widget):
         reveal(widget)
         deadline=time.monotonic()+15
-        while handling and isValid(widget) and not widget.isEnabled() and time.monotonic()<deadline:pump(80)
+        while isValid(widget) and not widget.isEnabled() and time.monotonic()<deadline:
+            rendered_busy=any(x.isVisible() and x.text() in ('正在读取 / 保存…','正在读取或保存，请稍候。') for x in window.findChildren(QLabel))
+            if not handling and not rendered_busy:break
+            pump(80)
         assert widget.isEnabled(), f'disabled: {widget.objectName()}'
         modal=app.activeModalWidget()
         check(not modal or widget.window() is modal,'click is blocked by a visible modal dialog')
@@ -205,6 +241,8 @@ if __name__ == '__main__':
         except Exception as exc:
             status, detail = 'FAIL', f'{type(exc).__name__}: {exc}'
             (OUT/('failed-'+str(len(cases))+'.txt')).write_text(texts(app.activeModalWidget() or window),encoding='utf-8')
+            window.grab().save(str(OUT/('failed-'+str(len(cases))+'.png')))
+            detail += '; main_visible=' + str(window.isVisible()) + '; visible_windows=' + repr([w.windowTitle() for w in app.topLevelWidgets() if w.isVisible()])
         cases.append(dict(name=name, status=status, detail=detail,
                           seconds=round(time.monotonic()-start, 2)))
         policy.clear()
@@ -240,8 +278,9 @@ if __name__ == '__main__':
                                  clicks=button_hits[key], observations=seen[-3:]))
         (OUT/'results.json').write_text(json.dumps(dict(cases=cases, counts=dict(Counter(x['status'] for x in cases)),
             button_coverage=coverage, coverage_counts=dict(Counter(x['state'] for x in coverage)),
-            options=options, selected_options=selected_options, clicked_controls=clicked_controls, visible_controls=visible_controls, dialogs=dialogs, environment=dict(platform='Qt offscreen QTest',
+            options=options, selected_options=selected_options, clicked_controls=clicked_controls, visible_controls=visible_controls, dialogs=dialogs, environment=dict(platform='Qt '+args.platform+' QTest',
             model='disabled; real deterministic Runtime/bridge',voice='disabled; native tests separate',
+            local_tts_engines=tts_engines,
             data=str(OUT/'data'))),ensure_ascii=False,indent=2),encoding='utf-8')
 
 
@@ -263,6 +302,9 @@ if __name__ == '__main__':
                 edit(dlg.findChild(QPlainTextEdit) or dlg.findChild(QLineEdit),choice['text'])
                 click(next(b for b in dlg.findChildren(QAbstractButton) if b.isVisible() and b.text().replace('&','') in ('OK','确定')))
             elif kind == 'profile':
+                if choice.get('owner'):
+                    combo=next(c for c in dlg.findChildren(QComboBox) if c.findData(choice['owner'])>=0)
+                    select(combo,combo.findData(choice['owner']))
                 # Empty submission must leave the form open with a visible validation error.
                 if choice.get('empty'):
                     click(button('保存资料',dlg))
@@ -323,7 +365,15 @@ if __name__ == '__main__':
     timer=QTimer();timer.timeout.connect(modal_tick);timer.start(70)
     policy.append(dict(kind='profile',empty=True,fields={'称呼':'TEST 黑箱甲','年龄':65,'行动情况':0,
         '康复 / 生活目标':'TEST 日常活动','家庭联系人':'TEST 家属','家属电话':'00000000000'}))
-    window=ProductWindow(data_dir=OUT/'data');window.show()
+    window=ProductWindow(data_dir=OUT/'data');window.resize(args.width,args.height);window.show()
+    class WindowDiagnostics(QObject):
+        def eventFilter(self, watched, event):
+            if event.type() == QEvent.Close:
+                import traceback
+                with (OUT/'window-close.txt').open('a',encoding='utf-8') as stream:
+                    stream.write(''.join(traceback.format_stack())+'\n'+texts(watched)+'\n')
+            return False
+    diagnostics=WindowDiagnostics(window);window.installEventFilter(diagnostics)
 
 
     def startup():
@@ -492,7 +542,7 @@ if __name__ == '__main__':
 
     def rehab():
         nav('康复')
-        for title,keys in [('今日训练',['rehabContinue','rehabAction']),('康复评估',['rehabAssess','rehabAssessmentDetail','rehabBody']),
+        for title,keys in [('今日恢复',['rehabContinue','rehabAction']),('康复评估',['rehabAssess','rehabAssessmentDetail','rehabBody']),
           ('训练计划',['rehabLibrary','rehabAutomatic','rehabPlanDetail']),('康复进度',['rehabTrainingDetail','rehabProgress','rehabReports'])]:
             for key in keys:
                 nav('康复');tab(title);action(key)
@@ -508,6 +558,22 @@ if __name__ == '__main__':
 
 
     record('康复四页签全部主入口、原评估/计划/历史、身体档案、返回',rehab)
+
+    def recovery_workbench():
+        nav('康复');tab('今日恢复')
+        check('今日完成 0 次训练' in texts(window),'empty recovery claims completion')
+        for value in ('暂无训练结果','暂无评估记录','本周暂无训练数据','暂无疼痛评分反馈数据'):
+            check(value in texts(window),'missing recovery empty state: '+value)
+        window.grab().save(str(OUT/'today-recovery.png'))
+        for key,title in [('recoveryAssessment','康复评估'),('recoveryPlans','训练计划'),('recoveryHistory','康复进度')]:
+            tab('今日恢复');action(key);tab(title)
+        tab('今日恢复');action('recoveryAsk')
+        check(window.findChild(QLabel,'productTitle').text()=='康复','recovery assistant changed page')
+        dock=window.findChild(__import__('PySide6.QtWidgets',fromlist=['QDockWidget']).QDockWidget)
+        click(dock.findChild(QAbstractButton,'qt_dockwidget_closebutton'));pump()
+        check('今天的恢复' in texts(window),'closing assistant lost recovery page')
+
+    record('今日恢复/真实空态、四个下一步入口、管家侧栏与返回',recovery_workbench)
 
 
     def devices():
@@ -560,6 +626,8 @@ if __name__ == '__main__':
         nav('AI 康复管家');action('assistantModuleConversation')
         check('TEST 今天的训练计划是什么' not in texts(window),'chat crossed owners')
         check(next(x for x in window.findChildren(QPlainTextEdit) if x.isVisible()).toPlainText()=='','draft crossed owners')
+        nav('康复');tab('今日恢复')
+        check('今日完成 0 次训练' in texts(window) and 'TEST 修改剂量' not in texts_tables(window),'recovery data crossed owners')
         user=next(x for x in window.findChildren(QComboBox) if x.accessibleName()=='当前产品用户')
         select(user,next(i for i in range(user.count()) if user.itemText(i)=='TEST 黑箱甲'));ready()
         nav('健康');tab('当前状态');action('healthMetricsEntry')
@@ -702,7 +770,10 @@ if __name__ == '__main__':
         until(lambda:any(x.isVisible() and x.text().startswith('观察快照') and x.text()!=old_stamp for x in dlg.findChildren(QLabel)))
         pump(300)
         check(not policy,'sharing lacks confirmation')
-        click(button('测试语音提示',dlg));pump(3400);check('语音不可用' in texts(dlg),'unavailable local TTS lacked persistent error')
+        click(button('测试语音提示',dlg));pump(3400)
+        if not tts_engines:check('语音不可用' in texts(dlg),'unavailable local TTS lacked persistent error')
+        # Windows may supply a real local engine. Clicking without a crash is
+        # software coverage, not proof that a person heard the audio.
         stab('家庭回应与安全')
         c=next(x for x in dlg.findChildren(QComboBox) if x.isVisible() and x.count()>2)
         for i in range(c.count()):select(c,i)
@@ -833,7 +904,9 @@ if __name__ == '__main__':
         select_first_table();action('notificationDetail');select_first_table();action('product-28')
         check('已确认' in texts_tables(window),'notification acknowledgment not displayed')
         select_first_table();action('notificationBusiness');check(window.findChild(QLabel,'productTitle').text() in ('健康','用药'),'notification business link failed')
-        nav('通知');combo=next(x for x in window.findChildren(QComboBox) if x.isVisible() and x.count()==3)
+        action('contextReturn');check(window.findChild(QLabel,'productTitle').text()=='通知','notification return lost source page')
+        check(t.currentRow()>=0,'notification selection lost on return / refresh')
+        combo=next(x for x in window.findChildren(QComboBox) if x.isVisible() and x.count()==3)
         for i in range(3):select(combo,i);inventory()
         check('送达' not in texts_tables(window) or '未' in texts_tables(window),'unconfigured push falsely claimed delivery')
 
@@ -841,7 +914,7 @@ if __name__ == '__main__':
 
 
     def original_remaining():
-        nav('康复');tab('今日训练');action('rehabContinue')
+        nav('康复');tab('今日恢复');action('rehabContinue')
         def automatic_empty(dlg):
             until(lambda:button('重新读取评估',dlg).isEnabled())
             check('还没有已保存的评估' in texts(dlg),'automatic plan fabricates assessment')
@@ -911,7 +984,7 @@ if __name__ == '__main__':
 
 
     def demo_plan():
-        nav('康复');tab('今日训练');action('rehabContinue')
+        nav('康复');tab('今日恢复');action('rehabContinue')
         check(not any(b.isVisible() and b.text()=='一键生成演示计划' for b in window.findChildren(QAbstractButton)),
               'synthetic helper leaked into formal product flow')
         action('rehabWorkspaceBack');nav('首页');check('TEST 黑箱甲' in texts(window),'product owner changed')
@@ -939,6 +1012,58 @@ if __name__ == '__main__':
         policy.append(dict(kind='flow',run=outer));action('silverFamily');action('rehabWorkspaceBack')
 
     record('补测/手机TEST演示本机开启、注入请求、无配对保护与关闭',phone_local)
+
+    def saved_rehab_path():
+        policy.append(dict(kind='profile',owner='participant-local',fields={'称呼':'TEST 已保存康复'}))
+        action('product-8');nav('康复');tab('康复评估');action('rehabAssess')
+        options_toggle=button('输入设置',window);click(options_toggle)
+        combo=next(c for c in window.findChildren(QComboBox) if c.isVisible() and c.findData('SYNTHETIC')>=0)
+        select(combo,combo.findData('SYNTHETIC'));ready()
+        action('rehabWorkspaceBack');tab('今日恢复')
+        check('今日完成 1 次训练' in texts(window),'saved controller result not counted / owner scope wrong')
+        check('已记录 1 次' in texts(window) and '最近幅度' in texts(window),'saved assessment or training summary missing')
+        window.grab().save(str(OUT/'saved-recovery.png'))
+        tab('康复进度');select_first_table()
+        # The original report exposes its existing feedback action; use its visible caption.
+        def report_flow(report):
+            entry=next(b for b in report.findChildren(QAbstractButton) if b.isVisible() and '感受' in b.text())
+            def feedback_flow(d):
+                scores=[s for s in d.findChildren(QSpinBox) if s.isVisible()]
+                for score in scores:edit(score,0)
+                edit(next(s for s in d.findChildren(QPlainTextEdit) if s.isVisible()),'TEST 原生黑箱感受')
+                click(button('保存感受',d));until(lambda:not isValid(d) or not d.isVisible())
+            policy.append(dict(kind='flow',run=feedback_flow));click(entry)
+            until(lambda:'TEST 原生黑箱感受' in texts(report) and not app.activeModalWidget())
+            until(lambda:button('返回今日恢复',report).isEnabled());click(button('返回今日恢复',report))
+        policy.append(dict(kind='flow',run=report_flow));action('rehabTrainingDetail')
+        tab('今日恢复');ready()
+        check('TEST 原生黑箱感受' in texts(window),'feedback save / return failed to refresh recovery')
+        window.grab().save(str(OUT/'saved-feedback-recovery.png'))
+        nav('首页');check('今天已完成 1 次训练' in texts(window),'home not refreshed after feedback')
+        nav('记录');tab('统一历史')
+        combo=next(c for c in window.findChildren(QComboBox) if c.isVisible() and c.count()==5)
+        select(combo,next(i for i in range(combo.count()) if combo.itemText(i)=='康复'));select_first_table()
+        table=next(t for t in window.findChildren(QTableWidget) if t.isVisible() and t.rowCount())
+        selected=table.item(table.currentRow(),0).text()
+        action('historyDetail');action('historyReport')
+        action('contextReturn');check(combo.currentText()=='康复','record return lost filter')
+        check(table.currentRow()>=0 and table.item(table.currentRow(),0).text()==selected,'record return lost selected entry')
+        nav('康复');tab('训练计划')
+        def accept_plan(d):
+            until(lambda:button('使用这个安排',d).isEnabled())
+            general=next(c for c in d.findChildren(QCheckBox) if c.isVisible() and '没有疼痛' in c.text())
+            click(general);click(button('使用这个安排',d))
+            until(lambda:'本次训练 · 已完成' in texts(d))
+            check(not button('演示计划仅供查看',d).isEnabled(),'synthetic automatic plan enters human training')
+            click(button('暂不训练',d))
+        policy.append(dict(kind='flow',run=accept_plan));action('rehabAutomatic')
+        action('rehabWorkspaceBack');tab('今日恢复');check('当前下一项' in texts_tables(window),'accepted automatic plan not refreshed')
+        window.grab().save(str(OUT/'accepted-recovery.png'))
+        user=next(c for c in window.findChildren(QComboBox) if c.accessibleName()=='当前产品用户')
+        select(user,next(i for i in range(user.count()) if user.itemText(i)=='TEST 黑箱甲'));ready()
+        nav('康复');tab('今日恢复');check('TEST 原生黑箱感受' not in texts(window),'rehab feedback crossed owners')
+
+    if args.with_saved_rehab:record('康复已有数据/真实控制器合成结果、反馈保存、恢复与首页刷新、记录返回、用户隔离',saved_rehab_path)
 
     inventory();write()
     print(json.dumps(dict(counts=dict(Counter(x['status'] for x in cases)),output=str(OUT)),ensure_ascii=False),flush=True)

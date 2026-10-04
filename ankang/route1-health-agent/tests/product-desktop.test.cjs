@@ -7,6 +7,44 @@ const {ProductService} = require('../.bridge-build/product/ProductService.js');
 const {ProductLocalStore} = require('../scripts/product-local-store.cjs');
 const profile = name => ({name, age:65, conditions:[], medications:[], familyContact:'家属',familyPhone:'',
   mobility:'unknown', usesCane:false, nightVision:'unknown', cognition:'unknown', familySharing:'denied'});
+test('temporary file sharing errors recover without losing the backup', t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ankang-file-sharing-'));
+  t.after(() => fs.rmSync(root, {recursive:true, force:true}));
+  const store = new ProductLocalStore(root), key = 'notifications:personal:TEST';
+  store.write(key, {revision:1});
+  const copy = fs.copyFileSync, rename = fs.renameSync;
+  let copyCalls = 0, renameCalls = 0;
+  t.mock.method(fs, 'copyFileSync', (...args) => {
+    if (copyCalls++ === 0) throw Object.assign(new Error('TEST sharing violation'), {code:'EBUSY'});
+    return copy(...args);
+  });
+  t.mock.method(fs, 'renameSync', (...args) => {
+    if (renameCalls++ === 0) throw Object.assign(new Error('TEST sharing violation'), {code:'EPERM'});
+    return rename(...args);
+  });
+  store.write(key, {revision:2});
+  assert.deepEqual(store.read(key), {revision:2});
+  assert.deepEqual(JSON.parse(fs.readFileSync(store.file(key)+'.bak','utf8')).value, {revision:1});
+  assert.equal(fs.readdirSync(path.dirname(store.file(key))).some(f => f.endsWith('.tmp')), false);
+});
+
+test('permanent replacement failure stays an error and preserves the old record', t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ankang-file-failure-'));
+  t.after(() => fs.rmSync(root, {recursive:true, force:true}));
+  const store = new ProductLocalStore(root), key = 'notifications:personal:TEST';
+  store.write(key, {revision:1});
+  let attempts = 0;
+  t.mock.method(fs, 'renameSync', () => {
+    attempts++;
+    throw Object.assign(new Error('TEST denied replacement'), {code:'EPERM'});
+  });
+  assert.throws(() => store.write(key, {revision:2}), {code:'EPERM'});
+  assert.ok(attempts > 1 && attempts <= 6);
+  assert.deepEqual(store.read(key), {revision:1});
+  assert.deepEqual(JSON.parse(fs.readFileSync(store.file(key)+'.bak','utf8')).value, {revision:1});
+  assert.equal(fs.readdirSync(path.dirname(store.file(key))).some(f => f.endsWith('.tmp')), false);
+});
+
 test('durable owner isolation, medication, tasks, health, reports and privacy', async t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ankang-product-'));
   t.after(() => fs.rmSync(root, {recursive:true, force:true}));

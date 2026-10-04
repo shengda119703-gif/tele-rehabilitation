@@ -85,8 +85,22 @@ def table(headers):
     return item
 
 
-def rows(widget, values):
+def rows(widget, values, *, keys=None):
+    def identity(item):
+        key=item.data(Qt.UserRole)
+        return ('key',key) if key is not None else ('label',item.text())
+    selected=widget.currentRow()
+    anchor=identity(widget.item(selected,0)) if selected>=0 and widget.item(selected,0) else None
+    scroll=widget.verticalScrollBar().value()
+    previous=widget.blockSignals(True)
+    widget.clearSelection()
+    widget.setCurrentCell(-1,-1)
     widget.setRowCount(len(values))
     for r,row in enumerate(values):
         for c,value in enumerate(row):
             widget.setItem(r,c,QTableWidgetItem(str(value if value is not None else '未记录')))
+        if keys is not None and widget.item(r,0):widget.item(r,0).setData(Qt.UserRole,keys[r])
+    matches=[r for r in range(widget.rowCount()) if widget.item(r,0) and identity(widget.item(r,0))==anchor]
+    if len(matches)==1:widget.selectRow(matches[0])
+    widget.verticalScrollBar().setValue(scroll)
+    widget.blockSignals(previous)

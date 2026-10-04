@@ -32,11 +32,12 @@ def main():
     parser.add_argument('--width',type=int,default=1440)
     parser.add_argument('--height',type=int,default=940)
     parser.add_argument('--theme',choices=('light','dark'),default='light')
+    parser.add_argument('--output-root',type=Path)
     parser.add_argument('--phase',choices=('fluent-v1','assistant-modules','module-paths'),default='fluent-v1')
     args=parser.parse_args()
     factor=os.environ.get('QT_SCALE_FACTOR','auto')
     platform=os.environ['QT_QPA_PLATFORM']
-    out=ROOT/'qa-output'/args.phase/f'{platform}-{args.theme}-{args.width}x{args.height}-scale{factor}'
+    out=(args.output_root or ROOT/'qa-output'/args.phase)/f'{platform}-{args.theme}-{args.width}x{args.height}-scale{factor}'
     out.mkdir(parents=True,exist_ok=True)
     app=QApplication([])
     for name in ('msyh.ttc','msyhbd.ttc','segoeui.ttf'):

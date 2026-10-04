@@ -2,6 +2,19 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+// Windows sync/antivirus readers may briefly prevent replacement of a file.
+// Retry only sharing/permission errors, never a full disk or invalid data.
+function withFileRetry(operation) {
+  const delays = [25, 50, 100, 200, 400];
+  const waiter = new Int32Array(new SharedArrayBuffer(4));
+  for (let attempt = 0; ; attempt++) {
+    try { return operation(); }
+    catch (error) {
+      if (!['EPERM', 'EACCES', 'EBUSY'].includes(error.code) || attempt >= delays.length) throw error;
+      Atomics.wait(waiter, 0, 0, delays[attempt]);
+    }
+  }
+}
 class ProductLocalStore {
   constructor(root) {
     this.root = path.resolve(root);
@@ -38,8 +51,8 @@ class ProductLocalStore {
     const temporary = file + '.' + crypto.randomUUID() + '.tmp';
     try {
       fs.writeFileSync(temporary, JSON.stringify({version:1, key, value}), {mode:0o600, flag:'wx'});
-      if (fs.existsSync(file)) fs.copyFileSync(file, file + '.bak');
-      fs.renameSync(temporary, file);
+      if (fs.existsSync(file)) withFileRetry(() => fs.copyFileSync(file, file + '.bak'));
+      withFileRetry(() => fs.renameSync(temporary, file));
     } finally { if (fs.existsSync(temporary)) fs.unlinkSync(temporary); }
   }
   profiles() {

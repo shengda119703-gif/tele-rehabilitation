@@ -8,7 +8,7 @@ from PySide6.QtWidgets import QPushButton
 from test_product_window import desktop,wait
 from app.ui.product_theme import design_tokens
 from app.ui.product_assistant import ASSISTANT_NAV_ACTIONS
-from app.ui.product_completion import MODULE_NAV_ACTIONS
+from app.ui.product_completion import MODULE_NAV_ACTIONS, RECOVERY_NAV_ACTIONS
 
 
 def test_published_116_button_contract_and_native_connections(desktop):
@@ -18,10 +18,11 @@ def test_published_116_button_contract_and_native_connections(desktop):
         expected={r['ID']:(r['用户按钮'],r['实际动作']) for r in csv.DictReader(stream)}
     # The previous CSV captured visible pages; the already-existing closed dock is extra.
     expected['dockSend']=('发送','chat')
+    expected['rehabAction']=('查看下一项 / 动作目录','原动作目录')
     actual={b.property('actionId'):(b.text(),b.property('actionTarget')) for b in w.product_action_buttons()}
     assert {key:actual[key] for key in expected}==expected
-    assert set(actual)-set(expected)==ASSISTANT_NAV_ACTIONS|MODULE_NAV_ACTIONS|{'voiceFinish'}
-    assert len(actual)==len(w.product_action_buttons())==118+len(ASSISTANT_NAV_ACTIONS)+len(MODULE_NAV_ACTIONS)
+    assert set(actual)-set(expected)==ASSISTANT_NAV_ACTIONS|MODULE_NAV_ACTIONS|RECOVERY_NAV_ACTIONS|{'voiceFinish'}
+    assert len(actual)==len(w.product_action_buttons())==118+len(ASSISTANT_NAV_ACTIONS)+len(MODULE_NAV_ACTIONS)+len(RECOVERY_NAV_ACTIONS)
     assert all(b.property('actionKind')=='B' for b in w.product_action_buttons() if b.property('actionId') in ASSISTANT_NAV_ACTIONS)
     assert all(b.receivers(SIGNAL('clicked(bool)'))>0 for b in w.product_action_buttons())
 

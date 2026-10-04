@@ -13,7 +13,7 @@ def test_rehab_summary_tabs_open_workspace_only_on_action_and_block_active_back(
     w,app=desktop;original=w.legacy
     w.navigate('rehab');settle(w,app)
     assert w.rehab_tabs.isVisible() and not original.isVisible()
-    assert [w.rehab_tabs.tabText(i) for i in range(4)]==['今日训练','康复评估','训练计划','康复进度']
+    assert [w.rehab_tabs.tabText(i) for i in range(4)]==['今日恢复','康复评估','训练计划','康复进度']
     for i in range(4):
         w.rehab_tabs.setCurrentIndex(i);app.processEvents()
         assert not original.isVisible() and w.rehab_tabs.isVisible()

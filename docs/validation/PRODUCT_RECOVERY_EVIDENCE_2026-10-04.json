@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-04",
+  "branch": "codex/product-ui-v1",
+  "starting_head": "fbc38546108a5ad89515ede52726400d10696cc8",
+  "rounds": [
+    {
+      "name": "recovery-delivery-round1",
+      "counts": {
+        "PASS": 41
+      },
+      "scenario_seconds": 1160.03,
+      "button_coverage": {
+        "CLICKED": 117,
+        "DISABLED_OBSERVED": 19
+      },
+      "platform": "Qt windows QTest",
+      "external_model": "disabled",
+      "assistant_voice": "disabled; not native ASR acceptance",
+      "local_tts_engines": [],
+      "raw_camera": "Surface Camera Front\n已收到画面，请确认能看清自己\n只测试画面，不记录评估、不保存视频\n1280 × 720 · 42.6 帧/秒",
+      "window_close": "only normal runner cleanup observed",
+      "saved_rehab": "real SceneController saves explicit SYNTHETIC / TEST poses; subsequent visible UI feedback and plan acceptance"
+    },
+    {
+      "name": "recovery-delivery-round2",
+      "counts": {
+        "PASS": 41
+      },
+      "scenario_seconds": 1172.77,
+      "button_coverage": {
+        "CLICKED": 117,
+        "DISABLED_OBSERVED": 19
+      },
+      "platform": "Qt windows QTest",
+      "external_model": "disabled",
+      "assistant_voice": "disabled; not native ASR acceptance",
+      "local_tts_engines": [],
+      "raw_camera": "Surface Camera Front\n已收到画面，请确认能看清自己\n只测试画面，不记录评估、不保存视频\n1280 × 720 · 32.3 帧/秒",
+      "window_close": "only normal runner cleanup observed",
+      "saved_rehab": "real SceneController saves explicit SYNTHETIC / TEST poses; subsequent visible UI feedback and plan acceptance"
+    }
+  ],
+  "python": {
+    "passed": 1680,
+    "skipped": 14,
+    "failed": 1,
+    "subtests_passed": 4,
+    "seconds": 201.14,
+    "failure": "local YOLO11n-pose weights missing"
+  },
+  "node": {
+    "core_tests": 411,
+    "product_tests": 15,
+    "failed": 0,
+    "ci_exit": 0,
+    "build": "PASS",
+    "typecheck": "PASS",
+    "bridge_build": "PASS",
+    "security_check": "PASS"
+  },
+  "bounds": "Software core acceptance only; no human training, clinical effect, real ASR, external model, device/platform or remote-delivery certification. Button activation/disabled observation is not equivalent to end-to-end success."
+}

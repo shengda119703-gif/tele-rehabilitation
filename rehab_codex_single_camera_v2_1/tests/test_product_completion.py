@@ -61,7 +61,13 @@ def test_path_1_original_training_engine_real_feedback_and_home(tmp_path,monkeyp
         dialog=w.legacy.feedback_dialog
         dialog.scores['pain'].setValue(0);dialog.notes.setPlainText('TEST 控制器完成后反馈')
         dialog.save.click();wait(app,lambda:w.legacy.feedback_dialog is None and not w.legacy.busy)
-        report.close();w.interface_buttons['rehabHome'].click();settle(w,app)
+        assert 'TEST 控制器完成后反馈' in report.overview.toPlainText()
+        assert '返回今日恢复' in report.overview.toPlainText()
+        assert '可继续评估其他动作' not in report.overview.toPlainText()
+        next(b for b in report.findChildren(QPushButton) if b.text()=='返回今日恢复').click();settle(w,app)
+        assert w.rehab_tabs.currentIndex()==0 and w.rehab_sections.currentIndex()==0
+        assert 'TEST 控制器完成后反馈' in w.recovery_fields['result'].text()
+        w.interface_buttons['rehabHome'].click();settle(w,app)
         assert w.active_page=='home'
         saved=runtime.store.get_session(sid)
         assert saved['training_feedback']['pain']==0
@@ -149,10 +155,15 @@ def test_paths_5_7_member_permissions_notification_detail_business(desktop,monke
     w.notifications.selectRow(0);w._ack_notification();settle(w,app)
     w.notification_filter.setCurrentText('已确认')
     assert w.notifications.rowCount()>0
-    w.notifications.selectRow(0);w.interface_buttons['notificationBusiness'].click();settle(w,app)
+    w.notifications.selectRow(0)
+    selected=w.visible_notifications[0]['findingId']
+    w.interface_buttons['notificationBusiness'].click();settle(w,app)
     assert w.active_page in ('health','medication')
-    w.navigate('notifications');settle(w,app)
+    w.context_return.click();settle(w,app)
     assert w.active_page=='notifications'
+    assert w.notification_filter.currentText()=='已确认'
+    assert w.notifications.currentRow()>=0
+    assert w.visible_notifications[w.notifications.currentRow()]['findingId']==selected
 
 
 def test_path_6_full_scoped_training_history_detail_trends_report_export(desktop,tmp_path,monkeypatch):
