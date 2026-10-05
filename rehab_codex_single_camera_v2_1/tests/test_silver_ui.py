@@ -175,3 +175,24 @@ def test_pending_refresh_disables_mutations_but_keeps_help_available(desktop, tm
         assert d.check_button.isEnabled() and d.save_policy.isEnabled()
     finally:
         clinical.close()
+
+
+def test_voice_failure_survives_delayed_sharing_receipt(desktop, tmp_path, monkeypatch):
+    import sys
+    w, runtime, app = desktop
+    care, clinical = SilverStore(tmp_path/'support.sqlite3'), Storage(tmp_path/'clinical.sqlite3')
+    try:
+        w._show_silver()
+        _, kw = runtime.calls[-1]
+        result = execute(care, clinical, None, **kw)
+        d = w.silver_dialog
+        d.render(result)
+        monkeypatch.setitem(sys.modules, 'PySide6.QtTextToSpeech', None)
+        d.voice_test.click()
+        assert '语音不可用' in d.voice_status.text()
+        d.render(dict(result, operation='consent'))
+        d.render(dict(result, operation='refresh'))
+        assert d.voice_status.isVisible()
+        assert '语音不可用' in d.voice_status.text()
+    finally:
+        clinical.close()

@@ -1,0 +1,42 @@
+﻿name,status,detail,seconds
+01 首次建档：空值校验、三个资料页、保存、空首页,PASS,Assertions passed through visible UI,18.19
+导航/首页,PASS,Assertions passed through visible UI,3.64
+导航/AI 康复管家,PASS,Assertions passed through visible UI,3.72
+导航/康复,PASS,Assertions passed through visible UI,3.95
+导航/健康,PASS,Assertions passed through visible UI,3.83
+导航/用药,PASS,Assertions passed through visible UI,3.56
+导航/家庭,PASS,Assertions passed through visible UI,3.2
+导航/记录,PASS,Assertions passed through visible UI,3.58
+导航/通知,PASS,Assertions passed through visible UI,3.56
+导航/设置,PASS,Assertions passed through visible UI,3.67
+AI 四模块、发送、三推荐问题、草稿、返回、康复链接,PASS,Assertions passed through visible UI,32.58
+全局管家发送且不丢失健康页,PASS,Assertions passed through visible UI,8.03
+健康十种指标逐项选择、保存、反馈与返回,PASS,Assertions passed through visible UI,55.22
+用药新增/编辑/查看、停用取消与确认、恢复、今日核对、漏服与历史,PASS,Assertions passed through visible UI,50.56
+AI 添加真实本机附件后可直接返回未发送草稿,PASS,Assertions passed through visible UI,14.45
+档案六分类真实导入、详情、原字节导出、资料表单取消,PASS,Assertions passed through visible UI,36.22
+照护圈联系人、SOS、详情、共享记录、邀请、绑定/授权/撤销/解绑确认,PASS,Assertions passed through visible UI,44.06
+记录五分类、详情/趋势/报告、各分类真实文件导出,PASS,Assertions passed through visible UI,38.33
+通知筛选、台账取消/确认、详情、确认、业务跳转,PASS,Assertions passed through visible UI,11.24
+康复四页签全部主入口、原评估/计划/历史、身体档案、返回,PASS,Assertions passed through visible UI,136.34
+今日恢复/真实空态、四个下一步入口、管家侧栏与返回,PASS,Assertions passed through visible UI,9.33
+设备状态/刷新/查看、导入取消、坏 JSON 拒绝、摄像头设置导航,PASS,Assertions passed through visible UI,20.11
+设置六页签、真实备份、清除取消、开发者取消、所有业务链接,PASS,Assertions passed through visible UI,70.86
+首页十个入口逐项实际点击（无数据按真实提示处理）,PASS,Assertions passed through visible UI,60.91
+创建第二用户、对话/草稿/未保存数值隔离、切回第一用户,PASS,Assertions passed through visible UI,25.59
+原康复/九部位、全部53动作、图解设置步骤、搜索空态,PASS,Assertions passed through visible UI,122.75
+原康复/人工计划新增、两侧项目、编辑排序、保存、归档恢复,PASS,Assertions passed through visible UI,18.28
+原康复/106评估选项、空值拒绝、清单保存跳过恢复结束确认,PASS,Assertions passed through visible UI,19.78
+原康复/空历史打开导出比较删除与返回保护,PASS,Assertions passed through visible UI,13.8
+银发/四页签、选择项、共享确认、求助与人工整改真实闭环、撤销,FAIL,RuntimeError: SilverDialog: unavailable local TTS lacked persistent error; main_visible=True; visible_windows=['安康 · 居家康复助手'],17.7
+清除本人数据确认后真实清除、保留药物与本人档案,PASS,Assertions passed through visible UI,24.58
+文件接口/设备四指标导入、错误用户、错误单位、重复去重,PASS,Assertions passed through visible UI,25.3
+输入与身体档案/输入来源接口情境选择、双摄、十部位与明细,PASS,Assertions passed through visible UI,31.66
+额外/成员详情操作、私密对话备份、真实PNG与MP4导入导出,PASS,Assertions passed through visible UI,46.64
+有通知/真实记录检测、授权台账、已查看确认、三筛选与业务跳转,PASS,Assertions passed through visible UI,45.86
+补测/自动计划空态、原身体档案保护与全部人体图标导航,PASS,Assertions passed through visible UI,23.83
+补测/银发五场景入口与手机演示未确认拒绝,PASS,Assertions passed through visible UI,74.89
+补测/原始摄像头打开、真实结果、镜像与关闭,PASS,Assertions passed through visible UI,20.55
+补测/合成演示按钮不进入正式用户路径,PASS,Assertions passed through visible UI,14.56
+补测/手机TEST演示本机开启、注入请求、无配对保护与关闭,PASS,Assertions passed through visible UI,29.48
+康复已有数据/真实控制器合成结果、反馈保存、恢复与首页刷新、记录返回、用户隔离,PASS,Assertions passed through visible UI,64.12

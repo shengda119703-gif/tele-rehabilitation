@@ -9,8 +9,8 @@ from PySide6.QtCore import Qt
 
 # Product aliases are the only visual values consumed by migrated pages.
 SPACING = dict(xs=4, sm=8, md=12, lg=16, xl=24, xxl=32)
-RADIUS = dict(control=6, card=8, hero=10)
-TYPE = dict(display=(28,700), section=(20,600), card=(16,600),
+RADIUS = dict(control=4, card=0, hero=0)
+TYPE = dict(display=(26,600), section=(20,600), card=(16,600),
             body=(14,400), secondary=(14,400), caption=(12,400))
 METRICS = dict(overview=300, overview_collapsed=60, chat_minimum=110,
                input_minimum=52, input_maximum=72, reference_width=280, module_minimum=126)
@@ -24,7 +24,7 @@ def design_tokens(mode='light', palette=None):
     theme = official['webDarkTheme' if mode=='dark' else 'webLightTheme']
     c = {key:theme[value['token']] for key,value in aliases.items()}
     dark = mode=='dark'
-    c.update(window='#171717' if dark else '#f7f7f7', surface=c['canvas_background'],
+    c.update(window='#171717' if dark else '#ffffff', surface=c['canvas_background'],
         text=c['text_primary'], secondary=c['text_secondary'],
         brand='#eeeeee' if dark else '#252525', on_brand='#171717' if dark else '#ffffff',
         brand_hover='#ffffff' if dark else '#3d3d3d', brand_pressed='#d6d6d6' if dark else '#111111',
@@ -54,18 +54,20 @@ def core_style(c):
     q=f'''
 {s} {{ background:{c['window']}; color:{c['text']}; }}
 {s} QLabel {{ background:transparent; color:{c['text']}; font-size:{TYPE['body'][0]}px; }}
-{s} QFrame#productCard[fluentCard="true"] {{ background:{c['surface']}; border:1px solid {c['border']}; border-radius:{RADIUS['card']}px; }}
-{s} QFrame#productHero[fluentCard="hero"] {{ background:{c['soft']}; border:1px solid {c['border']}; border-radius:{RADIUS['hero']}px; }}
+{s} QFrame#productCard[fluentCard="true"] {{ background:transparent; border:0; border-top:1px solid {c['border']}; border-radius:0px; }}
+{s} QFrame#productHero[fluentCard="hero"] {{ background:{c['surface']}; border:0; border-left:3px solid {c['brand']}; border-radius:0px; }}
 {s} QLabel#productTitle {{ font-size:{TYPE['display'][0]}px; color:{c['text']}; }}
 {s} QLabel#productMuted {{ color:{c['secondary']}; }}
-{s} QPushButton#productPrimary {{ background:{c['brand']}; color:{c['on_brand']}; border:2px solid {c['brand']}; }}
+{s} QPushButton#productPrimary {{ background:{c['brand']}; color:{c['on_brand']}; border:1px solid {c['brand']}; }}
 {s} QPushButton#productPrimary:hover {{ background:{c['brand_hover']}; }}
 {s} QPushButton#productPrimary:pressed {{ background:{c['brand_pressed']}; }}
 {s} QPushButton#productPrimary:focus {{ border-color:{c['text']}; }}
 {s} QPushButton#productPrimary:disabled {{ background:{c['disabled_bg']}; color:{c['disabled_text']}; border-color:{c['border']}; }}
-{s} QPushButton {{ background:{c['surface']}; color:{c['text']}; border:2px solid {c['border']}; border-radius:{RADIUS['control']}px; padding:8px 12px; min-height:20px; }}
+{s} QPushButton {{ background:{c['surface']}; color:{c['text']}; border:1px solid {c['border']}; border-radius:{RADIUS['control']}px; padding:8px 12px; min-height:20px; }}
 {s} QPushButton:hover {{ background:{c['surface_background_hover']}; }}
-{s} QPushButton[fluentAppearance="module"] {{ text-align:left; padding:{SPACING['lg']}px {SPACING['xl']}px; min-height:{METRICS['module_minimum']-2*SPACING['lg']-4}px; border-radius:{RADIUS['card']}px; }}
+{s} QPushButton[fluentAppearance="module"] {{ background:transparent; text-align:left; padding:12px 4px; border:0; border-bottom:1px solid {c['border']}; border-radius:0; font-size:16px; }}
+{s} QPushButton[moduleLead="true"] {{ font-size:21px; font-weight:600; }}
+{s} QListWidget[readingSurface="true"], {s} QTextBrowser[readingSurface="true"] {{ border:0; padding:10px 0; background:transparent; }}
 {s} QPushButton:pressed {{ background:{c['surface_background_pressed']}; }}
 {s} QPushButton[fluentAppearance="primary"] {{ background:{c['brand']}; color:{c['on_brand']}; border-color:{c['brand']}; font-weight:600; }}
 {s} QPushButton[fluentAppearance="primary"]:hover {{ background:{c['brand_hover']}; }}
@@ -76,7 +78,7 @@ def core_style(c):
 {s} QPushButton[fluentAppearance="danger"] {{ color:{c['danger']}; background:{c['danger_bg']}; }}
 {s} QPushButton:focus, {s} QPushButton[fluentAppearance]:focus {{ border-color:{c['text']}; }}
 {s} QPushButton:disabled, {s} QPushButton[fluentAppearance]:disabled {{ background:{c['disabled_bg']}; color:{c['disabled_text']}; border-color:{c['border']}; }}
-{s} QLineEdit, {s} QPlainTextEdit, {s} QTextBrowser, {s} QComboBox {{ background:{c['surface']}; color:{c['text']}; border:2px solid {c['border']}; border-radius:{RADIUS['control']}px; padding:8px; selection-background-color:{c['brand']}; selection-color:{c['on_brand']}; }}
+{s} QLineEdit, {s} QPlainTextEdit, {s} QTextBrowser, {s} QComboBox {{ background:{c['surface']}; color:{c['text']}; border:1px solid {c['border']}; border-radius:{RADIUS['control']}px; padding:8px; selection-background-color:{c['brand']}; selection-color:{c['on_brand']}; }}
 {s} QLineEdit:focus, {s} QPlainTextEdit:focus, {s} QTextBrowser:focus, {s} QComboBox:focus {{ border-color:{c['brand']}; }}
 {s} QLineEdit:disabled, {s} QPlainTextEdit:disabled, {s} QComboBox:disabled {{ background:{c['disabled_bg']}; color:{c['disabled_text']}; }}
 {s} QLineEdit[validation="error"] {{ border-color:{c['danger']}; }}
@@ -88,7 +90,7 @@ def core_style(c):
 {s} QTableWidget::item, {s} QListWidget::item {{ padding:8px; }}
 {s} QTableWidget::item:selected, {s} QListWidget::item:selected {{ background:{c['selected_bg']}; color:{c['selected_text']}; }}
 {s} QTableWidget:focus, {s} QListWidget:focus {{ border-color:{c['brand']}; }}
-{s} QTabWidget::pane {{ background:{c['surface']}; border:1px solid {c['border']}; border-radius:{RADIUS['control']}px; }}
+{s} QTabWidget::pane {{ background:{c['surface']}; border:0; }}
 {s} QTabBar::tab {{ background:transparent; color:{c['secondary']}; border-bottom:3px solid transparent; padding:10px 16px; }}
 {s} QTabBar::tab:hover {{ background:{c['soft']}; }}
 {s} QTabBar::tab:selected {{ background:{c['surface']}; color:{c['brand']}; border-bottom-color:{c['brand']}; font-weight:600; }}
@@ -128,13 +130,20 @@ class ProductTheme:
         for button in self.window.findChildren(QAbstractButton):
             name=button.property('iconName')
             if name:button.setIcon(themed_icon(name,self.colors['text']))
-        from PySide6.QtWidgets import QWidget
+        from PySide6.QtWidgets import QWidget, QTextEdit
+        from PySide6.QtGui import QFont
+        family='Microsoft YaHei UI'
+        font=QFont(family,10)
+        font.setHintingPreference(QFont.PreferNoHinting)
+        self.window.setFont(font)
         for widget in self.window.findChildren(QWidget):
             if widget.property('visualScope')=='core':widget.setPalette(p)
         for page in self.window.page_widgets.values():
             for widget in page.findChildren(QWidget):
                 if widget is not self.window.legacy and not self.window.legacy.isAncestorOf(widget):
                     widget.setPalette(p)
+                    widget.setFont(font)
+                    if isinstance(widget,QTextEdit):widget.document().setDefaultFont(font)
                     from PySide6.QtWidgets import QAbstractItemView
                     if isinstance(widget,QAbstractItemView):
                         view_palette=QPalette(p);view_palette.setColor(QPalette.Highlight,QColor(self.colors['selected_bg']))
@@ -173,23 +182,24 @@ def themed_icon(name,color):
 
 def shell_style(c):
     """One semantic stylesheet for product pages; legacy workspace retains its local owner."""
+    check=(Path(__file__).resolve().parents[2]/'assets/ui'/('check-dark.svg' if QColor(c['on_brand']).lightness()<128 else 'check.svg')).as_posix()
     return f'''
-QWidget {{ font-family:'Microsoft YaHei UI'; }}
+QWidget {{ font-size:14px; font-family:'Microsoft YaHei UI'; }}
 QMainWindow#productWindow, QWidget#productRoot {{ background:{c['window']}; color:{c['text']}; font-family:'Microsoft YaHei UI'; font-size:14px; }}
-QFrame#productSidebar {{ background:{c['surface']}; border-right:1px solid {c['border']}; }}
+QFrame#productSidebar {{ background:{c['window']}; border-right:1px solid {c['border']}; }}
 QLabel#productBrand {{ font-size:25px; font-weight:700; color:{c['text']}; }}
 QLabel#productBrandSub, QLabel#productMuted {{ color:{c['secondary']}; }}
 QLabel#productBrandSub {{ font-size:12px; }}
-QPushButton#productNav {{ text-align:left; padding:12px 16px; border:2px solid transparent; border-radius:6px; background:transparent; color:{c['secondary']}; font-size:15px; }}
+QPushButton#productNav {{ text-align:left; padding:10px 14px; border:1px solid transparent; border-radius:0px; background:transparent; color:{c['secondary']}; font-size:15px; }}
 QPushButton#productNav:hover {{ background:{c['soft']}; color:{c['text']}; }}
-QPushButton#productNav:checked {{ background:{c['soft']}; color:{c['text']}; font-weight:700; border-left-color:{c['brand']}; }}
+QPushButton#productNav:checked {{ background:{c['soft']}; color:{c['text']}; font-weight:700; border-left-color:transparent; }}
 QPushButton#productNav:focus {{ border-color:{c['brand']}; }}
 QPushButton#productNav:pressed {{ background:{c['surface_background_pressed']}; }}
-QFrame#productCard {{ background:{c['surface']}; border:1px solid {c['border']}; border-radius:{RADIUS['card']}px; }}
+QFrame#productCard {{ background:transparent; border:0; border-top:1px solid {c['border']}; border-radius:0px; }}
 QFrame#productHero {{ background:{c['surface']}; border:1px solid {c['border']}; border-radius:{RADIUS['hero']}px; }}
-QLabel#productTitle {{ color:{c['text']}; font-size:28px; font-weight:700; }}
+QLabel#productTitle {{ color:{c['text']}; font-size:20px; font-weight:600; }}
 QLabel#productSection {{ color:{c['text']}; font-size:18px; font-weight:600; }}
-QPushButton, QToolButton {{ background:{c['surface']}; color:{c['text']}; border:2px solid {c['border']}; border-radius:6px; padding:8px 12px; min-height:20px; }}
+QPushButton, QToolButton {{ background:{c['surface']}; color:{c['text']}; border:1px solid {c['border']}; border-radius:6px; padding:8px 12px; min-height:20px; }}
 QPushButton:hover, QToolButton:hover {{ background:{c['surface_background_hover']}; }}
 QPushButton:pressed, QToolButton:pressed {{ background:{c['surface_background_pressed']}; }}
 QPushButton:focus, QToolButton:focus {{ border-color:{c['brand']}; }}
@@ -200,13 +210,17 @@ QPushButton#productPrimary:pressed {{ background:{c['brand_pressed']}; }}
 QPushButton#productPrimary:focus {{ border-color:{c['secondary']}; }}
 QPushButton#productPrimary:disabled {{ background:{c['disabled_bg']}; color:{c['disabled_text']}; border-color:{c['border']}; }}
 QPushButton#productDanger {{ color:{c['danger']}; background:{c['danger_bg']}; }}
-QLineEdit, QPlainTextEdit, QTextBrowser, QComboBox, QSpinBox, QDoubleSpinBox {{ background:{c['surface']}; color:{c['text']}; border:2px solid {c['border']}; border-radius:6px; padding:8px; selection-background-color:{c['brand']}; selection-color:{c['on_brand']}; }}
+QLineEdit, QPlainTextEdit, QTextBrowser, QComboBox, QSpinBox, QDoubleSpinBox {{ background:{c['surface']}; color:{c['text']}; border:1px solid {c['border']}; border-radius:6px; padding:8px; selection-background-color:{c['brand']}; selection-color:{c['on_brand']}; }}
 QLineEdit:focus, QPlainTextEdit:focus, QTextBrowser:focus, QComboBox:focus, QSpinBox:focus, QDoubleSpinBox:focus {{ border-color:{c['brand']}; }}
 QLineEdit:disabled, QComboBox:disabled, QSpinBox:disabled, QDoubleSpinBox:disabled {{ color:{c['disabled_text']}; background:{c['disabled_bg']}; }}
 QComboBox QAbstractItemView {{ color:{c['text']}; background:{c['surface']}; selection-background-color:{c['brand']}; selection-color:{c['on_brand']}; }}
 QCheckBox {{ color:{c['text']}; spacing:8px; background:transparent; }}
 QCheckBox:disabled {{ color:{c['disabled_text']}; }}
 QCheckBox:focus {{ outline:1px solid {c['brand']}; }}
+QCheckBox::indicator {{ width:18px; height:18px; border:1px solid {c['secondary']}; border-radius:3px; background:{c['surface']}; }}
+QCheckBox::indicator:checked {{ background:{c['brand']}; border-color:{c['brand']}; image:url("{check}"); }}
+QCheckBox::indicator:disabled {{ border-color:{c['border']}; background:{c['disabled_bg']}; }}
+QCheckBox::indicator:checked:disabled {{ background:{c['brand']}; border-color:{c['brand']}; }}
 QTableWidget, QListWidget {{ color:{c['text']}; background:{c['surface']}; alternate-background-color:{c['surface']}; border:1px solid {c['border']}; border-radius:6px; selection-background-color:{c['soft']}; selection-color:{c['text']}; gridline-color:{c['border']}; }}
 QTableWidget::item:selected, QListWidget::item:selected {{ background:{c['selected_bg']}; color:{c['selected_text']}; }}
 QTableWidget:focus, QListWidget:focus {{ border-color:{c['brand']}; }}
@@ -223,5 +237,8 @@ QScrollBar:vertical {{ width:10px; background:transparent; }}
 QScrollBar:horizontal {{ height:10px; background:transparent; }}
 QScrollBar::handle {{ background:{c['border']}; border-radius:4px; min-height:32px; min-width:32px; }}
 QScrollBar::add-line, QScrollBar::sub-line {{ width:0; height:0; }}
+QFrame#productSelectionRail {{ background:{c['brand']}; border:0; }}
+QTextBrowser[readingSurface="true"] {{ border:0; padding:12px 0; background:transparent; }}
+QPushButton[fluentAppearance="module"] {{ border:0; border-bottom:1px solid {c['border']}; border-radius:0; text-align:left; padding:14px 0; }}
 QToolTip {{ color:{c['text']}; background:{c['surface']}; border:1px solid {c['border']}; padding:8px; }}
 '''

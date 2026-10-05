@@ -5,12 +5,13 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QShortcut, QKeySequence
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QComboBox, QDateEdit, QFileDialog, QMessageBox, QDockWidget, QTextBrowser,
-    QPlainTextEdit, QCheckBox)
+    QPlainTextEdit, QCheckBox, QSizePolicy)
 
 
 class ProductInterfaces:
     def _interface_button(self, layout, key, text, callback):
         item = QPushButton(text)
+        item.setSizePolicy(QSizePolicy.Maximum,QSizePolicy.Fixed)
         item.setObjectName(key)
         item.clicked.connect(callback)
         layout.addWidget(item)

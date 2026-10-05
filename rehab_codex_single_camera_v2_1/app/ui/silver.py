@@ -50,6 +50,9 @@ class SilverDialog(QDialog):
         self.error = self.label('')
         self.error.setStyleSheet('color:#9b3a24;font-weight:600;')
         layout.addWidget(self.error)
+        self.voice_status = self.label('')
+        self.voice_status.setStyleSheet('color:#9b3a24;font-weight:600;')
+        layout.addWidget(self.voice_status)
         self.tabs = QTabWidget()
         layout.addWidget(self.tabs, 1)
         today = self.page('今天的任务')
@@ -397,8 +400,10 @@ class SilverDialog(QDialog):
                 self.speech = QTextToSpeech(self)
             self.speech.stop()
             self.speech.say(message)
+            self.voice_status.clear()
         except Exception:
-            self.error.setText('语音不可用，请以文字提示为准；未下载或调用在线语音。')
+            # A delayed sharing receipt must not erase a newer local voice failure.
+            self.voice_status.setText('语音不可用，请以文字提示为准；未下载或调用在线语音。')
 
     def closeEvent(self, event):
         if self.speech:

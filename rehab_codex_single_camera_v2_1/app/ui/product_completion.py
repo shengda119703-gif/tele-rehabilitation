@@ -4,7 +4,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QTabWidget, QComboBox,
     QDialog, QDialogButtonBox, QTextBrowser, QMessageBox, QFileDialog, QPushButton, QListWidget,
     QProgressBar, QScrollArea, QFrame, QStackedWidget)
-from .product_widgets import label, button, card, table, rows, core_card, visual, ResponsiveGrid, WrappingLabel, display_time
+from .product_widgets import label, button, card, table, rows, core_card, visual, ResponsiveGrid, WrappingLabel, display_time, ContentTabs
 from .product_theme import SPACING, METRICS
 from ..domain import SOURCES, CONTEXTS
 
@@ -40,49 +40,49 @@ class ProductCompletion:
         box=self._page('home')
         self.greeting=visual(label('请建立或选择自己的资料。','productTitle'),typography='display')
         self.today_note=visual(label(),typography='secondary')
-        box.addWidget(self.greeting);box.addWidget(self.today_note)
-        item,area=core_card('下一步 · 今日康复',True)
-        self.next_training=visual(label('今天暂无康复计划'),typography='section')
-        area.addWidget(self.next_training)
+        box.addWidget(self.greeting);box.addWidget(self.today_note);box.addSpacing(16)
+        columns=ResponsiveGrid(columns=2,threshold=960)
+        primary=QWidget();left=QVBoxLayout(primary);left.setContentsMargins(0,0,24,0);left.setSpacing(24)
+        item,area=core_card('接下来 · 康复训练',True)
+        self.next_training=visual(label('今天暂无康复计划'),typography='section');area.addWidget(self.next_training)
         self.home_progress=QProgressBar();self.home_progress.setTextVisible(False)
-        self.home_progress.setAccessibleName('当前计划累计进度')
-        area.addWidget(self.home_progress)
+        self.home_progress.setAccessibleName('当前计划累计进度');area.addWidget(self.home_progress)
         actions=QHBoxLayout()
         for key,text,call in [('homeContinue','继续训练',self._continue_training),
             ('homePlans','查看训练计划',lambda:self._rehab_action('plans')),
             ('homeAsk','问康复管家',self._open_global_assistant)]:
             visual(self._action(actions,key,text,call,target='康复/训练计划' if key=='homePlans' else text),appearance='primary' if key=='homeContinue' else 'ghost')
-        actions.addStretch()
-        area.addLayout(actions);box.addWidget(item)
-        tiles=ResponsiveGrid(columns=4,threshold=1000);self.tile_values={}
-        for key,title in [('plan','今日康复'),('medication','今日用药'),('tasks','今日任务'),('health','当前健康')]:
-            item,area=core_card(title);self.tile_values[key]=visual(label('正在读取…'),typography='body')
-            area.addWidget(self.tile_values[key]);area.addStretch()
-            entry={'medication':('homeMedication','查看用药',lambda:self.navigate('medication')),
-                'tasks':('homeTasks','查看今日任务',self._show_today_tasks),
-                'health':('homeHealth','查看健康状态',lambda:self._health_tab(0))}.get(key)
-            if entry:
-                k,text,call=entry;visual(self._action(area,k,text,call,target=text),appearance='ghost')
-            tiles.add(item)
-        box.addWidget(tiles)
-        lower=ResponsiveGrid(columns=2,threshold=900)
-        item,area=core_card('今日任务')
-        self.tasks=QListWidget();self.tasks.setMinimumHeight(100);self.tasks.setMaximumHeight(180)
+        actions.addStretch();area.addLayout(actions);left.addWidget(item)
+        item,area=core_card('需要你确认')
+        self.tasks=QListWidget();self.tasks.setMinimumHeight(100);self.tasks.setMaximumHeight(136)
         self.tasks_empty=visual(label('今天没有待完成任务'),typography='secondary')
         area.addWidget(self.tasks_empty);area.addWidget(self.tasks)
         row=QHBoxLayout()
         self._action(row,'taskComplete','确认完成',lambda:self._task_status('completed'),kind='A',target='task.status')
-        self._action(row,'taskDismiss','暂不处理',lambda:self._task_status('dismissed'),kind='A',target='task.status')
-        area.addLayout(row);lower.add(item)
-        item,area=core_card('健康与管家摘要')
-        self.home_status=visual(label('尚无记录，无法判断当前健康状态。'),typography='body')
-        area.addWidget(self.home_status)
-        visual(self._action(area,'homeAI','查看管家摘要与对话',lambda:self.navigate('assistant'),target='AI 康复管家'),appearance='ghost')
-        visual(self._action(area,'homeProfile','建立 / 编辑资料',self._profile,kind='A',target='profile.save'),appearance='ghost')
-        lower.add(item);box.addWidget(lower)
+        visual(self._action(row,'taskDismiss','暂不处理',lambda:self._task_status('dismissed'),kind='A',target='task.status'),appearance='ghost')
+        row.addStretch();area.addLayout(row);left.addWidget(item)
         item,area=core_card('已保存的训练计划')
         self.plan_table=table(['当前保存的计划','是否可继续']);self.plan_table.setProperty('compactSummary',True)
-        area.addWidget(self.plan_table);box.addWidget(item);box.addStretch()
+        area.addWidget(self.plan_table);left.addWidget(item);left.addStretch();columns.add(primary)
+        secondary=QWidget();right=QVBoxLayout(secondary);right.setContentsMargins(0,0,0,0);right.setSpacing(12)
+        right.addWidget(visual(label('今日概况'),typography='section'));self.tile_values={}
+        for key,title in [('plan','康复'),('medication','用药'),('tasks','任务'),('health','健康')]:
+            item,area=core_card();area.setContentsMargins(0,6,0,6);area.setSpacing(4);heading=QHBoxLayout();heading.addWidget(visual(label(title),typography='card'))
+            entry={'medication':('homeMedication','查看用药',lambda:self.navigate('medication')),
+                'tasks':('homeTasks','查看今日任务',self._show_today_tasks),
+                'health':('homeHealth','查看健康状态',lambda:self._health_tab(0))}.get(key)
+            heading.addStretch()
+            if entry:
+                k,text,call=entry;visual(self._action(heading,k,text,call,target=text),appearance='ghost')
+            area.addLayout(heading);self.tile_values[key]=visual(label('正在读取…'),typography='secondary')
+            area.addWidget(self.tile_values[key]);right.addWidget(item)
+        item,area=core_card('近期身体状况')
+        self.home_status=visual(label('尚无记录，无法判断当前健康状态。'),typography='body');area.addWidget(self.home_status)
+        row=QHBoxLayout()
+        visual(self._action(row,'homeAI','查看管家摘要与对话',lambda:self.navigate('assistant'),target='AI 康复管家'),appearance='ghost')
+        visual(self._action(row,'homeProfile','建立 / 编辑资料',self._profile,kind='A',target='profile.save'),appearance='ghost')
+        row.addStretch();area.addLayout(row);right.addWidget(item);right.addStretch();columns.add(secondary)
+        box.addWidget(columns);box.addStretch()
 
     def _rehab_page(self):
         page=QWidget();box=QVBoxLayout(page);box.setContentsMargins(0,0,0,0)
@@ -136,9 +136,9 @@ class ProductCompletion:
             if title=='今日恢复':
                 # Put the primary action before the plan table in the reading order.
                 area.removeWidget(self.rehab_tables[title]);area.addWidget(self.rehab_tables[title])
-                self.recovery_fields={};details=ResponsiveGrid(columns=2,threshold=900)
+                self.recovery_fields={};details=ResponsiveGrid(columns=1,threshold=0)
                 for key,heading in [('flow','今日恢复流程'),('result','最近训练结果'),('assessment','最近评估'),('trend','恢复趋势')]:
-                    section,section_box=core_card(heading)
+                    section,section_box=core_card(heading);section_box.setContentsMargins(0,12,0,8)
                     field=WrappingLabel('正在读取…');field.setWordWrap(True);visual(field,typography='body')
                     field.setObjectName('recovery-'+key);self.recovery_fields[key]=field;section_box.addWidget(field);details.add(section)
                 area.addWidget(details)
@@ -165,14 +165,15 @@ class ProductCompletion:
     def _medication_page(self):
         box=self._page('medication');self.medication_tabs=QTabWidget();box.addWidget(self.medication_tabs)
         def tab(title):
-            p=QWidget();area=QVBoxLayout(p);self.medication_tabs.addTab(p,title);return area
+            p=QWidget();area=QVBoxLayout(p);area.setAlignment(Qt.AlignTop);self.medication_tabs.addTab(p,title);return area
         area=tab('今日用药');self.medication_today=label('暂无用药安排');area.addWidget(self.medication_today)
         self.med_today_sections=QStackedWidget();area.addWidget(self.med_today_sections)
         overview=QWidget();today_box=QVBoxLayout(overview)
         self.today_medications=table(['药物','已有剂量','已有时间 / 频次','状态']);today_box.addWidget(self.today_medications)
-        self._action(today_box,'medTodayDetail','查看用药详情',lambda:self._medication_detail(self.today_medications),target='药物档案')
-        self._action(today_box,'medTodayActions','核对 / 记录今日用药',lambda:self.med_today_sections.setCurrentIndex(1),target='今日用药操作')
-        self._action(today_box,'medBack','返回首页',lambda:self.navigate('home'),target='首页')
+        today_actions=QHBoxLayout();today_box.addLayout(today_actions)
+        self._action(today_actions,'medTodayDetail','查看用药详情',lambda:self._medication_detail(self.today_medications),target='药物档案')
+        visual(self._action(today_actions,'medTodayActions','核对 / 记录今日用药',lambda:self.med_today_sections.setCurrentIndex(1),target='今日用药操作'),appearance='primary');today_actions.addStretch()
+        self._action(today_actions,'medBack','返回首页',lambda:self.navigate('home'),target='首页')
         self.med_today_sections.addWidget(overview)
         detail=QWidget();detail_box=QVBoxLayout(detail)
         self._action(detail_box,'medTodayActionsBack','返回今日用药',lambda:self.med_today_sections.setCurrentIndex(0),target='今日用药概览')
@@ -188,7 +189,7 @@ class ProductCompletion:
         for key,text,call in [('medAdd','新增',lambda:self._medication_edit()),('medEdit','编辑',lambda:self._medication_edit(edit=True)),
             ('medView','查看',lambda:self._medication_detail(self.medications)),('medStatus','停用 / 恢复',self._medication_status)]:
             self._action(row,key,text,call,kind='D' if key=='medStatus' else 'A' if key in ('medAdd','medEdit') else 'B',target='medication.status' if key=='medStatus' else 'medication.save' if key in ('medAdd','medEdit') else '药物档案详情')
-        area.addLayout(row)
+        row.addStretch();area.addLayout(row)
         area=tab('用药历史');self.medication_history=table(['时间','事项','内容']);area.addWidget(self.medication_history)
         self.med_history_empty=label('暂无用药核对记录。');area.addWidget(self.med_history_empty)
         self._action(area,'medHistoryDetail','查看详情',lambda:self._table_detail(self.medication_history,'用药记录'),target='用药记录详情')
@@ -199,11 +200,16 @@ class ProductCompletion:
         box.addStretch()
 
     def _settings_page(self):
-        box=self._page('settings');self.settings_tabs=QTabWidget();box.addWidget(self.settings_tabs)
+        box=self._page('settings');self.settings_tabs=ContentTabs();box.addWidget(self.settings_tabs)
         def tab(title):
             p=QWidget();area=QVBoxLayout(p);area.setAlignment(Qt.AlignTop);self.settings_tabs.addTab(p,title);return area
         area=tab('个人资料');self.profile_summary=label('请建立个人资料。');self.profile_summary.setMaximumHeight(120);area.addWidget(self.profile_summary)
         self._action(area,'settingsProfile','编辑个人资料与康复目标',self._profile,kind='A',target='profile.save')
+        from PySide6.QtCore import QSettings
+        from PySide6.QtWidgets import QCheckBox
+        preference=QSettings('Ankang','ProductUI')
+        self.reduce_motion=QCheckBox('减少界面动画');self.reduce_motion.setChecked(preference.value('reducedMotion',False,type=bool))
+        self.reduce_motion.toggled.connect(lambda value:preference.setValue('reducedMotion',value));area.addWidget(self.reduce_motion)
         area=tab('数据与隐私');self.data_location=label('本机资料独立保存；清除前可导出备份。');area.addWidget(self.data_location)
         self._action(area,'settingsBackup','导出本人本地备份',self._backup,kind='A',target='lifecycle.export')
         self._action(area,'settingsClear','清除本人健康聊天与附件',self._clear,kind='D',target='lifecycle.clear')
@@ -232,7 +238,7 @@ class ProductCompletion:
             self.health_tabs.setTabText(i,title)
         area=self.health_tabs.widget(0).layout()
         self.health_rehab_summary=label();area.insertWidget(0,self.health_rehab_summary)
-        area=self.health_tabs.widget(1).layout();self.health_filter=QComboBox()
+        area=self.health_tabs.widget(1).layout();self.health_filter=QComboBox();self.health_filter.setMaximumWidth(260)
         self.health_filter.addItems(['全部','身体感受','健康指标','检验结果','用药'])
         area.insertWidget(0,self.health_filter);self.health_filter.currentTextChanged.connect(self._filter_health)
         self.health_empty=label('暂无健康记录。');area.addWidget(self.health_empty)
@@ -250,10 +256,12 @@ class ProductCompletion:
         self.assistant_tools.addWidget(visual(label('当前没有只重置对话的接口；清除全部健康数据须在设置另行确认。'),typography='caption'))
         self.history_tabs=self.timeline.parentWidget()
         while not isinstance(self.history_tabs,QTabWidget):self.history_tabs=self.history_tabs.parentWidget()
-        self._action(self.history_tabs.widget(0).layout(),'historyDetail','查看详情',self._history_detail,target='统一记录详情/原康复报告')
-        self._action(self.history_tabs.widget(0).layout(),'historyTrends','趋势',self._history_trends,target='健康趋势/原康复纵向记录')
-        self._action(self.history_tabs.widget(0).layout(),'historyReport','报告',self._history_report,target='健康报告/原康复报告')
-        self._action(self.history_tabs.widget(0).layout(),'historyExport','导出当前筛选记录',self._export_timeline,kind='A',target='本机导出只读视图')
+        history_actions=QHBoxLayout();self.history_tabs.widget(0).layout().addLayout(history_actions)
+        self._action(history_actions,'historyDetail','查看详情',self._history_detail,target='统一记录详情/原康复报告')
+        self._action(history_actions,'historyTrends','趋势',self._history_trends,target='健康趋势/原康复纵向记录')
+        self._action(history_actions,'historyReport','报告',self._history_report,target='健康报告/原康复报告')
+        self._action(history_actions,'historyExport','导出当前筛选记录',self._export_timeline,kind='A',target='本机导出只读视图')
+        history_actions.addStretch()
         self.history_empty=label('暂无记录。');self.history_tabs.widget(0).layout().addWidget(self.history_empty)
         area=self.family_management_layout
         self.family_members=table(['成员 / 联系人','关系','绑定状态','允许查看']);self.family_members.setProperty('compactSummary',True)
@@ -270,11 +278,13 @@ class ProductCompletion:
         self.notifications.setColumnCount(5)
         self.notifications.setHorizontalHeaderLabels(['时间','事项','类型','渠道结果','确认状态'])
         area=self.notifications.parentWidget().layout()
-        self.notification_filter=QComboBox();self.notification_filter.addItems(['全部','未确认','已确认'])
+        self.notification_filter=QComboBox();self.notification_filter.setMaximumWidth(260);self.notification_filter.addItems(['全部','未确认','已确认'])
         area.insertWidget(0,self.notification_filter);self.notification_filter.currentTextChanged.connect(self._render_notifications)
         self.notification_empty=label('暂无通知。');area.addWidget(self.notification_empty)
-        self._action(area,'notificationDetail','打开通知 / 查看详情',self._notification_detail,target='通知详情')
-        self._action(area,'notificationBusiness','进入对应业务页面',self._notification_business,target='用药/健康/家庭')
+        notification_actions=QHBoxLayout();area.addLayout(notification_actions)
+        self._action(notification_actions,'notificationDetail','打开通知 / 查看详情',self._notification_detail,target='通知详情')
+        self._action(notification_actions,'notificationBusiness','进入对应业务页面',self._notification_business,target='用药/健康/家庭')
+        notification_actions.addStretch()
         self.notifications.cellDoubleClicked.connect(lambda *_:self._notification_detail())
         for widget in (self.medications,self.today_medications,self.family_members,self.attachments,self.timeline,self.health_timeline,self.notifications):
             widget.itemSelectionChanged.connect(self._completion_controls)

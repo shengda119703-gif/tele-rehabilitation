@@ -1,10 +1,12 @@
-"""Existing product widgets shared by page adapters; styling is unchanged."""
+"""Native product controls and responsive reading layouts; domain actions stay with page adapters."""
 import html
 from datetime import datetime
 from .product_theme import SPACING
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QSize, QEvent
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QLabel, QPushButton, QFrame, QVBoxLayout, QTableWidget,
-    QHeaderView, QAbstractItemView, QTableWidgetItem, QWidget, QGridLayout)
+    QHeaderView, QAbstractItemView, QTableWidgetItem, QWidget, QGridLayout, QSizePolicy,
+    QHBoxLayout, QStylePainter, QStyleOptionButton, QStyle, QTabWidget)
 
 escape = lambda text: html.escape(str(text))
 
@@ -12,8 +14,52 @@ escape = lambda text: html.escape(str(text))
 def display_time(value):
     """Local reading label only; stored timestamps and export data remain untouched."""
     if not value:return '时间未记录'
+    if len(str(value))==10:return str(value)
     try:return datetime.fromisoformat(str(value).replace('Z','+00:00')).astimezone().strftime('%Y-%m-%d %H:%M')
     except ValueError:return str(value)
+
+
+class ContentTabs(QTabWidget):
+    """Size a short settings pane to the active content, not its tallest sibling."""
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.currentChanged.connect(self._fit_current)
+
+    def _fit_current(self, index):
+        for i in range(self.count()):
+            policy=QSizePolicy.Preferred if i==index else QSizePolicy.Ignored
+            self.widget(i).setSizePolicy(policy,policy)
+        self.updateGeometry()
+        self._fit_height()
+
+    def _fit_height(self):
+        if self.currentWidget() is None:return
+        layout=self.currentWidget().layout()
+        height=layout.heightForWidth(max(1,self.width()-4)) if layout and layout.hasHeightForWidth() else -1
+        if height<0:height=self.currentWidget().sizeHint().height()
+        height+=self.tabBar().sizeHint().height()+12
+        if self.maximumHeight()!=height:self.setMaximumHeight(height)
+
+    def resizeEvent(self,event):
+        super().resizeEvent(event);self._fit_height()
+
+    def event(self,event):
+        result=super().event(event)
+        if event.type()==QEvent.LayoutRequest:self._fit_height()
+        return result
+
+    def tabInserted(self,index):
+        super().tabInserted(index);self._fit_current(self.currentIndex())
+
+    def sizeHint(self):
+        if self.currentWidget() is None:return super().sizeHint()
+        size=self.currentWidget().sizeHint()
+        return QSize(max(size.width(),self.tabBar().sizeHint().width()),size.height()+self.tabBar().sizeHint().height()+12)
+
+    def minimumSizeHint(self):
+        if self.currentWidget() is None:return super().minimumSizeHint()
+        size=self.currentWidget().minimumSizeHint()
+        return QSize(size.width(),size.height()+self.tabBar().sizeHint().height()+12)
 
 
 class WrappingLabel(QLabel):
@@ -28,6 +74,38 @@ class WrappingLabel(QLabel):
         if self.wordWrap() and self.width()>0:
             height=self.heightForWidth(self.width())
             if height>0 and self.minimumHeight()!=height:self.setMinimumHeight(height)
+
+
+class EntryButton(QPushButton):
+    """A native button with separately wrapping title and supporting text."""
+    def __init__(self, title, description):
+        super().__init__(title)
+        self.setAccessibleName(title);self.setAccessibleDescription(description)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+        layout=QHBoxLayout(self);layout.setContentsMargins(16,16,16,16);layout.setSpacing(16)
+        self.symbol=QLabel();self.symbol.setFixedSize(24,24);layout.addWidget(self.symbol,0,Qt.AlignTop)
+        text=QVBoxLayout();text.setSpacing(6)
+        self.heading=visual(label(title),typography='card')
+        self.detail=visual(label(description),typography='secondary')
+        text.addWidget(self.heading);text.addWidget(self.detail);layout.addLayout(text,1)
+        for child in self.findChildren(QLabel):child.setAttribute(Qt.WA_TransparentForMouseEvents)
+
+    def setDescription(self, text):
+        self.detail.setText(text);self.setAccessibleDescription(text)
+
+    def description(self):return self.detail.text()
+
+    def setIcon(self, icon):
+        super().setIcon(icon);self.symbol.setPixmap(icon.pixmap(QSize(24,24)))
+
+    def sizeHint(self):return self.layout().sizeHint()
+
+    def minimumSizeHint(self):return self.layout().minimumSize()
+
+    def paintEvent(self, event):
+        option=QStyleOptionButton();self.initStyleOption(option)
+        option.text='';option.icon=QIcon()
+        painter=QStylePainter(self);painter.drawControl(QStyle.CE_PushButton,option)
 
 
 class ResponsiveGrid(QWidget):
@@ -64,7 +142,8 @@ def core_card(title='',hero=False,*,kind='information'):
     item,box=card('',hero)
     item.setProperty('fluentCard','hero' if hero else 'true')
     item.setProperty('fluentCardKind',kind)
-    box.setContentsMargins(*([SPACING['xl']]*4));box.setSpacing(SPACING['md'])
+    box.setContentsMargins(0,18,0,12);box.setSpacing(SPACING['md'])
+    if hero:box.setContentsMargins(22,12,12,12)
     box.setAlignment(Qt.AlignTop)
     if title:box.addWidget(visual(label(title),typography='card'))
     return item,box
@@ -107,6 +186,7 @@ def label(text='', style=None):
 
 def button(text, callback, primary=False):
     item = QPushButton(text)
+    item.setSizePolicy(QSizePolicy.Maximum,QSizePolicy.Fixed)
     if primary:
         item.setObjectName('productPrimary')
     item.clicked.connect(callback)
@@ -117,7 +197,7 @@ def card(title, hero=False):
     item = QFrame()
     item.setObjectName('productHero' if hero else 'productCard')
     box = QVBoxLayout(item)
-    box.setContentsMargins(22,20,22,20)
+    box.setContentsMargins(0,18,0,12)
     box.setSpacing(12)
     if title:
         box.addWidget(label(title,'productSection'))
@@ -133,6 +213,7 @@ def table(headers):
     item.setSelectionBehavior(QAbstractItemView.SelectRows)
     item.setSelectionMode(QAbstractItemView.SingleSelection)
     item.setAlternatingRowColors(True)
+    item.setShowGrid(False)
     item.setMinimumHeight(165)
     item.setProperty('productTable',True)
     return item
@@ -151,14 +232,18 @@ def rows(widget, values, *, keys=None):
     widget.setRowCount(len(values))
     for r,row in enumerate(values):
         for c,value in enumerate(row):
-            widget.setItem(r,c,QTableWidgetItem(str(value if value is not None else '未记录')))
+            header=widget.horizontalHeaderItem(c)
+            text=display_time(value) if header and header.text() in ('时间','保存时间','创建时间') and value else str(value if value is not None else '未记录')
+            widget.setItem(r,c,QTableWidgetItem(text))
         if keys is not None and widget.item(r,0):widget.item(r,0).setData(Qt.UserRole,keys[r])
     matches=[r for r in range(widget.rowCount()) if widget.item(r,0) and identity(widget.item(r,0))==anchor]
     if len(matches)==1:widget.selectRow(matches[0])
     widget.verticalScrollBar().setValue(scroll)
     widget.blockSignals(previous)
     if widget.property('productTable') and not widget.property('compactSummary'):
-        widget.setMinimumHeight(165 if values else 70);widget.setMaximumHeight(16777215 if values else 70)
+        widget.resizeRowsToContents()
+        height=widget.horizontalHeader().height()+sum(max(36,widget.rowHeight(r)) for r in range(min(len(values),8)))+6 if values else 70
+        widget.setMinimumHeight(min(height,380));widget.setMaximumHeight(min(height,380))
     if widget.property('compactSummary'):
         widget.setVisible(bool(values))
         widget.resizeRowsToContents()

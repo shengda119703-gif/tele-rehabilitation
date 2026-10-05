@@ -33,7 +33,7 @@ def test_minimum_window_composer_keyboard_focus_and_disabled_controls(desktop):
     w.interface_buttons['assistantModuleConversation'].click()
     app.processEvents()
     assert w.next_training.font().pixelSize()==20
-    assert w.greeting.font().pixelSize()==28
+    assert w.greeting.font().pixelSize()==26
     viewport=w.page_widgets['assistant'].viewport()
     assert viewport.rect().contains(w.chat_send.mapTo(viewport,w.chat_send.rect().bottomRight()))
     assert w.page_widgets['assistant'].horizontalScrollBar().maximum()==0

@@ -1,0 +1,116 @@
+{
+  "home": {
+    "platform": "windows",
+    "size": [
+      1024,
+      720
+    ],
+    "dpr": 1.5,
+    "horizontalOverflow": 0,
+    "font": "Microsoft YaHei UI"
+  },
+  "assistant": {
+    "platform": "windows",
+    "size": [
+      1024,
+      720
+    ],
+    "dpr": 1.5,
+    "horizontalOverflow": 0,
+    "font": "Microsoft YaHei UI",
+    "modules": {
+      "conversation": {
+        "horizontalOverflow": 0,
+        "verticalOverflow": 0,
+        "composerVisible": true
+      },
+      "voice": {
+        "horizontalOverflow": 0,
+        "verticalOverflow": 0
+      },
+      "materials": {
+        "horizontalOverflow": 0,
+        "verticalOverflow": 0
+      },
+      "reference": {
+        "horizontalOverflow": 0,
+        "verticalOverflow": 0
+      }
+    }
+  },
+  "rehab": {
+    "platform": "windows",
+    "size": [
+      1024,
+      720
+    ],
+    "dpr": 1.5,
+    "horizontalOverflow": 0,
+    "font": "Microsoft YaHei UI",
+    "workspace": {
+      "horizontalOverflow": 0,
+      "verticalOverflow": 359,
+      "backVisible": true
+    }
+  },
+  "health": {
+    "platform": "windows",
+    "size": [
+      1024,
+      720
+    ],
+    "dpr": 1.5,
+    "horizontalOverflow": 0,
+    "font": "Microsoft YaHei UI"
+  },
+  "medication": {
+    "platform": "windows",
+    "size": [
+      1024,
+      720
+    ],
+    "dpr": 1.5,
+    "horizontalOverflow": 0,
+    "font": "Microsoft YaHei UI"
+  },
+  "family": {
+    "platform": "windows",
+    "size": [
+      1024,
+      720
+    ],
+    "dpr": 1.5,
+    "horizontalOverflow": 0,
+    "font": "Microsoft YaHei UI"
+  },
+  "history": {
+    "platform": "windows",
+    "size": [
+      1024,
+      720
+    ],
+    "dpr": 1.5,
+    "horizontalOverflow": 0,
+    "font": "Microsoft YaHei UI"
+  },
+  "notifications": {
+    "platform": "windows",
+    "size": [
+      1024,
+      720
+    ],
+    "dpr": 1.5,
+    "horizontalOverflow": 0,
+    "font": "Microsoft YaHei UI"
+  },
+  "settings": {
+    "platform": "windows",
+    "size": [
+      1024,
+      720
+    ],
+    "dpr": 1.5,
+    "horizontalOverflow": 0,
+    "font": "Microsoft YaHei UI"
+  }
+}

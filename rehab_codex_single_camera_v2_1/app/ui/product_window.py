@@ -24,7 +24,7 @@ from .product_dialogs import ProductProfileDialog, MedicationDialog
 from .product_interfaces import ProductInterfaces
 from .product_completion import ProductCompletion
 from .product_assistant import build_assistant, show_section, back, refresh_summary, refresh_record_review
-from .product_widgets import label, button, card, table, rows, visual, conversation_html, display_time
+from .product_widgets import label, button, card, table, rows, visual, conversation_html, display_time, ResponsiveGrid
 
 NAVIGATION = [('home','首页','home'),('assistant','AI 康复管家','assistant'),('rehab','康复','tasks'),
               ('health','健康','health'),('medication','用药','medication'),('family','家庭','profile'),
@@ -105,20 +105,24 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         sidebar = QFrame()
         sidebar.setObjectName('productSidebar')
         self.product_sidebar=sidebar
-        sidebar.setFixedWidth(216)
+        sidebar.setFixedWidth(184)
         nav = QVBoxLayout(sidebar)
-        nav.setContentsMargins(18,30,18,22)
+        nav.setContentsMargins(18,26,14,20);nav.setSpacing(6)
         nav.addWidget(label('安康','productBrand'))
         nav.addWidget(label('居家康复助手','productBrandSub'))
-        nav.addSpacing(28)
+        nav.addSpacing(30)
         for key,title,icon in NAVIGATION:
             item = button(title,lambda checked=False,k=key:self.navigate(k))
             item.setIcon(QIcon(str(ROOT/'assets/ui/ankang'/f'{icon}.svg')))
             item.setIconSize(QSize(22,22));item.setProperty('iconName',icon)
             item.setCheckable(True)
             item.setObjectName('productNav')
+            from PySide6.QtWidgets import QSizePolicy
+            item.setSizePolicy(QSizePolicy.Expanding,QSizePolicy.Fixed)
             self.nav_buttons[key] = item
             nav.addWidget(item)
+        from .product_motion import SelectionRail
+        self.selection_rail=SelectionRail(sidebar)
         nav.addStretch()
         sos = button('我需要帮助',self._contacts)
         sos.setObjectName('productDanger')
@@ -126,8 +130,8 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         nav.addWidget(label('本机资料 · 自主共享','productBrandSub'))
         root.addWidget(sidebar)
         main = QVBoxLayout()
-        main.setContentsMargins(24,22,24,18)
-        main.setSpacing(16)
+        main.setContentsMargins(32,22,32,16)
+        main.setSpacing(12)
         top = QHBoxLayout()
         self.title = label('首页','productTitle')
         top.addWidget(self.title,1)
@@ -219,8 +223,8 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         twin,area = card('我的健康 · 当前状态')
         self.twin_text = label('等待真实资料；状态不等于临床诊断。')
         area.addWidget(self.twin_text)
-        self.concerns = QListWidget()
-        self.concerns.setMinimumHeight(60);self.concerns.setMaximumHeight(110)
+        self.concerns = QListWidget();self.concerns.setProperty('readingSurface',True)
+        self.concerns.setMinimumHeight(48);self.concerns.setMaximumHeight(80);self.concerns.setFrameShape(QFrame.NoFrame)
         area.addWidget(self.concerns)
         summary_box.addWidget(twin)
         self.health_metric_summary=label('暂无健康指标，可进入指标页面记录数值。')
@@ -244,7 +248,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.metric_shared = QCheckBox('可用于已授权的家属摘要')
         row.addWidget(self.metric_shared)
         row.addWidget(button('记录数值',self._record_metric,True))
-        area.addLayout(row)
+        row.addStretch();area.addLayout(row)
         detail_box.addWidget(metric);self.health_status_sections.addWidget(detail)
         tabs.addTab(status,'状态与指标')
         record_page = QWidget()
@@ -261,7 +265,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         row.addWidget(button('添加资料 / 图片 / 视频',self._add_attachment,True))
         row.addWidget(button('导出所选附件',self._export_attachment))
         row.addWidget(button('识别健康图片',self._parse_image))
-        layout.addLayout(row)
+        row.addStretch();layout.addLayout(row)
         self.image_status = label('图片识别先产生候选结果，经本人确认才写入健康记录。','productMuted')
         layout.addWidget(self.image_status)
         self.image_candidates = table(['识别项目','候选值','单位'])
@@ -276,25 +280,29 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
 
     def _family_page(self):
         box = self._page('family')
+        box.addWidget(visual(label('一起照护，先看近况。'),typography='display'))
+        columns=ResponsiveGrid(columns=2,threshold=980);box.addWidget(columns)
         summary,layout = card('家属可见 · 需要关注什么')
         layout.addWidget(label('先看获准共享的近况与待处理事项，再管理联系人和共享范围。','productMuted'))
-        self.family_summary = QTextBrowser();self.family_summary.setMinimumHeight(100);self.family_summary.setMaximumHeight(280)
+        self.family_summary = QTextBrowser();self.family_summary.setProperty('readingSurface',True);self.family_summary.setMinimumHeight(100);self.family_summary.setMaximumHeight(280)
         layout.addWidget(self.family_summary)
         layout.addWidget(button('刷新家属摘要',lambda:self._request('family.summary')))
-        box.addWidget(summary)
+        layout.addStretch();columns.add(summary)
         management=QWidget();self.family_management_layout=QVBoxLayout(management)
         self.family_management_layout.setContentsMargins(0,0,0,0)
-        box.addWidget(management)
+        columns.add(management)
         item,layout = card('我的照护圈')
         self.family_state = label('绑定与授权分开确认。')
         layout.addWidget(self.family_state)
         self.contact_state = label('尚未填写家庭联系人。')
         layout.addWidget(self.contact_state)
-        layout.addWidget(button('编辑联系人',self._profile))
-        self._interface_button(layout,'familySOS','紧急联系人 / 求助信息',self._contacts)
+        contact_actions=QHBoxLayout();layout.addLayout(contact_actions)
+        contact_actions.addWidget(button('编辑联系人',self._profile))
+        self._interface_button(contact_actions,'familySOS','紧急联系人 / 求助信息',self._contacts)
+        contact_actions.addStretch()
         self._interface_button(layout,'silverFamily','活动照护 / 家庭回应 / 整改',self._open_silver)
         row = QHBoxLayout()
-        row.addWidget(button('生成本机邀请码',lambda:self._request('family.invite')))
+        layout.addWidget(button('生成本机邀请码',lambda:self._request('family.invite')))
         self.invite_input = QLineEdit()
         self.invite_input.setPlaceholderText('输入本机生成的邀请码')
         row.addWidget(self.invite_input)
@@ -305,7 +313,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         row = QHBoxLayout()
         row.addWidget(button('授权家庭共享',lambda:self._consent(True)))
         row.addWidget(button('撤销共享',lambda:self._consent(False)))
-        row.addWidget(button('解绑',self._unbind_family))
+        row.addWidget(button('解绑',self._unbind_family));row.addStretch()
         layout.addLayout(row)
         self.family_management_layout.addWidget(item)
         box.addStretch()
@@ -317,7 +325,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         timeline = QWidget()
         layout = QVBoxLayout(timeline)
         self.timeline = table(['时间','事件 / 来源','内容'])
-        self.history_filter = QComboBox()
+        self.history_filter = QComboBox();self.history_filter.setMaximumWidth(260)
         self.history_filter.addItems(['全部','康复','健康','用药','评估'])
         self.history_filter.currentTextChanged.connect(self._filter_timeline)
         layout.addWidget(self.history_filter)
@@ -372,6 +380,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.title.setText(dict((k,t) for k,t,_ in NAVIGATION).get(key,{'settings':'设置','notifications':'通知'}.get(key,key)))
         if hasattr(self,'assistant_context'):
             self.assistant_context.setText('当前页面：'+self.title.text()+'。使用同一用户及已保存数据；页面内容尚不自动传给模型。')
+        self.selection_rail.select(self.nav_buttons.get(key))
         for name,nav in self.nav_buttons.items():
             nav.setChecked(name == key)
         if self.owner and not self.pending and refresh:
@@ -809,7 +818,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         stored = s['profile']
         profile = stored['profile']
         self.profiles = [stored if p['ownerId']==self.owner else p for p in self.profiles]
-        self.greeting.setText(profile['name']+'，一起安排好今天')
+        self.greeting.setText(profile['name']+'，今天也慢慢来。')
         self.today_note.setText('当前目标：'+(stored.get('rehabGoal') or '尚未填写，可在设置中补充'))
         rehab = s.get('rehabilitation_ui',s.get('rehabilitation',{}))
         plans = rehab.get('rehab.get_training_plan',{}).get('records',[])

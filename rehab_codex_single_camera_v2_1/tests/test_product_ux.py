@@ -63,3 +63,37 @@ def test_recovery_saved_feedback_has_room_for_every_wrapped_line(desktop):
         w.resize(width,720);QTest.qWait(150);app.processEvents()
         assert field.height()>=field.heightForWidth(field.width()),(field.size(),field.heightForWidth(field.width()))
         assert w.rehab_tabs.widget(0).horizontalScrollBar().maximum()==0
+def test_navigation_marker_settles_after_rapid_keyboard_navigation(desktop, monkeypatch):
+    from PySide6.QtCore import Qt, QAbstractAnimation
+    from PySide6.QtTest import QTest
+    w,app=desktop
+    wait(app,lambda:not w.pending)
+    for page in ('health','home','family'):
+        w.nav_buttons[page].setFocus(Qt.TabFocusReason)
+        QTest.keyClick(w.nav_buttons[page],Qt.Key_Space)
+        wait(app,lambda:not w.pending)
+    QTest.qWait(200)
+    assert w.active_page=='family'
+    target=w.nav_buttons['family']
+    assert w.selection_rail.mark.geometry().center().y()==target.geometry().center().y()
+    assert w.selection_rail.animation.state()==QAbstractAnimation.Stopped
+    monkeypatch.setenv('ANKANG_REDUCED_MOTION','1')
+    w.navigate('home',refresh=False)
+    assert w.selection_rail.animation.state()==QAbstractAnimation.Stopped
+    assert w.selection_rail.mark.geometry().center().y()==w.nav_buttons['home'].geometry().center().y()
+
+
+def test_assistant_entry_keyboard_and_current_settings_height(desktop):
+    from PySide6.QtCore import Qt
+    from PySide6.QtTest import QTest
+    w,app=desktop
+    w.resize(1024,720);w.navigate('assistant');wait(app,lambda:not w.pending)
+    entry=w.assistant_module_buttons['conversation'];entry.setFocus(Qt.TabFocusReason)
+    QTest.keyClick(entry,Qt.Key_Space);app.processEvents()
+    assert w.assistant_sections.currentWidget() is w.assistant_views['conversation']
+    assert w.chat_input.hasFocus()
+    assert w.page_widgets['assistant'].horizontalScrollBar().maximum()==0
+    w.navigate('settings');wait(app,lambda:not w.pending)
+    w.settings_tabs.setCurrentIndex(3);app.processEvents();large=w.settings_tabs.height()
+    w.settings_tabs.setCurrentIndex(0);app.processEvents()
+    assert w.settings_tabs.height()<large

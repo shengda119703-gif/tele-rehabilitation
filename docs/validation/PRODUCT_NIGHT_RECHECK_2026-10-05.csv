@@ -1,0 +1,5 @@
+﻿name,status,detail,seconds
+01 首次建档：空值校验、三个资料页、保存、空首页,PASS,Assertions passed through visible UI,17.5
+设置六页签、真实备份、清除取消、开发者取消、所有业务链接,PASS,Assertions passed through visible UI,67.88
+银发/四页签、选择项、共享确认、求助与人工整改真实闭环、撤销,PASS,Assertions passed through visible UI,40.14
+康复已有数据/真实控制器合成结果、反馈保存、恢复与首页刷新、记录返回、用户隔离,PASS,Assertions passed through visible UI,64.12
