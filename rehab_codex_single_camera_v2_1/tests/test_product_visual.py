@@ -64,9 +64,15 @@ def test_theme_changes_do_not_change_actions_or_data_and_render_escaped_messages
         assert '<script>TEST</script>' in w.chat.toPlainText()
         assert '我' in w.chat.toPlainText() and '第二行' in w.dock_chat.toPlainText()
         assert original=={b.property('actionId'):(b.property('actionTarget'),b.isEnabled()) for b in w.product_action_buttons()}
-        # The legacy application's palette cannot make ordinary product data white on white.
-        assert w.health_metric_summary.palette().color(QPalette.WindowText).name()==design_tokens('light')['text']
-        assert w.today_medications.palette().color(QPalette.Text).name()==design_tokens('light')['text']
+        # All product pages now follow the active semantic palette, including contrast mode.
+        assert w.health_metric_summary.palette().color(QPalette.WindowText).name()==design_tokens(mode,palette)['text']
+        assert w.today_medications.palette().color(QPalette.Text).name()==design_tokens(mode,palette)['text']
+        # Native delegates must retain readable alternating and selected rows.
+        for view in (w.today_medications,w.rehab_tables['今日恢复'],w.metrics,w.trends):
+            actual=view.palette()
+            for foreground,background in ((QPalette.Text,QPalette.AlternateBase),(QPalette.HighlightedText,QPalette.Highlight)):
+                a,b=sorted((luminance(actual.color(foreground).name()),luminance(actual.color(background).name())))
+                assert (b+.05)/(a+.05)>=4.5,(mode,view.objectName(),foreground,background)
     w._message('TEST 服务失败',severity='danger')
     assert w.notice.isVisible() and w.notice.property('fluentStatus')=='danger'
     w._visual_progress(dict(total=4,completed=2))

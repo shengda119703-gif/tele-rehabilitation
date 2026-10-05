@@ -1,11 +1,55 @@
 """Existing product widgets shared by page adapters; styling is unchanged."""
 import html
+from datetime import datetime
 from .product_theme import SPACING
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QLabel, QPushButton, QFrame, QVBoxLayout, QTableWidget,
-    QHeaderView, QAbstractItemView, QTableWidgetItem)
+    QHeaderView, QAbstractItemView, QTableWidgetItem, QWidget, QGridLayout)
 
 escape = lambda text: html.escape(str(text))
+
+
+def display_time(value):
+    """Local reading label only; stored timestamps and export data remain untouched."""
+    if not value:return '时间未记录'
+    try:return datetime.fromisoformat(str(value).replace('Z','+00:00')).astimezone().strftime('%Y-%m-%d %H:%M')
+    except ValueError:return str(value)
+
+
+class WrappingLabel(QLabel):
+    """Reserve the actual wrapped text height inside nested responsive layouts."""
+    def setText(self,text):
+        super().setText(text);self._fit_text()
+
+    def resizeEvent(self,event):
+        super().resizeEvent(event);self._fit_text()
+
+    def _fit_text(self):
+        if self.wordWrap() and self.width()>0:
+            height=self.heightForWidth(self.width())
+            if height>0 and self.minimumHeight()!=height:self.setMinimumHeight(height)
+
+
+class ResponsiveGrid(QWidget):
+    """Reflow existing native controls without recreating them or changing tab order."""
+    def __init__(self, columns=2, threshold=880, parent=None):
+        super().__init__(parent)
+        self.columns=columns;self.threshold=threshold;self.items=[];self.current_columns=0
+        self.grid=QGridLayout(self);self.grid.setContentsMargins(0,0,0,0);self.grid.setSpacing(SPACING['lg'])
+
+    def add(self, widget):
+        self.items.append(widget);self._reflow()
+
+    def resizeEvent(self,event):
+        super().resizeEvent(event);self._reflow()
+
+    def _reflow(self):
+        columns=self.columns if self.width()>=self.threshold else max(1,self.columns//2)
+        if columns==self.current_columns and self.grid.count()==len(self.items):return
+        while self.grid.count():self.grid.takeAt(0)
+        for column in range(self.columns):self.grid.setColumnStretch(column,1 if column<columns else 0)
+        for index,widget in enumerate(self.items):self.grid.addWidget(widget,index//columns,index%columns)
+        self.current_columns=columns
 
 
 def visual(widget, *, typography=None, appearance=None, status=None):
@@ -40,7 +84,15 @@ def conversation_html(messages,colors):
     for message in messages[-60:]:
         user=message['role']=='elder'
         name='我' if user else '安康 · 康复管家'
-        content=escape(message['text']).replace('\n','<br>')
+        blocks=message.get('blocks') or []
+        if not user and blocks:
+            parts=[]
+            for block in blocks:
+                title={'main':'','receipt':'记录回执 · ','privacy':'可见范围 · '}.get(block.get('kind'),'')
+                color=colors['text'] if block.get('kind')=='main' else colors['secondary']
+                parts.append('<p style="color:'+color+'">'+escape(title+block.get('text','')).replace('\n','<br>')+'</p>')
+            content=''.join(parts)
+        else:content=escape(message['text']).replace('\n','<br>')
         result.append(f'<table width="100%" cellspacing="0" cellpadding="12"><tr><td bgcolor="{colors["soft"] if user else colors["surface"]}"><p style="color:{colors["secondary"]}"><b>{name}</b> · {escape(message["time"])}</p><p style="color:{colors["text"]}">{content}</p></td></tr></table><br>')
     return ''.join(result)
 
@@ -82,6 +134,7 @@ def table(headers):
     item.setSelectionMode(QAbstractItemView.SingleSelection)
     item.setAlternatingRowColors(True)
     item.setMinimumHeight(165)
+    item.setProperty('productTable',True)
     return item
 
 
@@ -104,3 +157,10 @@ def rows(widget, values, *, keys=None):
     if len(matches)==1:widget.selectRow(matches[0])
     widget.verticalScrollBar().setValue(scroll)
     widget.blockSignals(previous)
+    if widget.property('productTable') and not widget.property('compactSummary'):
+        widget.setMinimumHeight(165 if values else 70);widget.setMaximumHeight(16777215 if values else 70)
+    if widget.property('compactSummary'):
+        widget.setVisible(bool(values))
+        widget.resizeRowsToContents()
+        height=widget.horizontalHeader().height()+sum(widget.rowHeight(r) for r in range(min(len(values),4)))+4
+        widget.setMinimumHeight(height);widget.setMaximumHeight(height)

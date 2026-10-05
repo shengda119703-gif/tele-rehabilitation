@@ -1,0 +1,466 @@
+{
+  "ux-wrap-round1-light/windows-light-1440x940-scale1": {
+    "home": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "assistant": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI",
+      "modules": {
+        "conversation": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 0,
+          "composerVisible": true
+        },
+        "voice": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 0
+        },
+        "materials": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 0
+        },
+        "reference": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 0
+        }
+      }
+    },
+    "rehab": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI",
+      "workspace": {
+        "horizontalOverflow": 0,
+        "verticalOverflow": 161,
+        "backVisible": true
+      }
+    },
+    "health": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "medication": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "family": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "history": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "notifications": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "settings": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    }
+  },
+  "ux-wrap-round1-dark/windows-dark-1024x720-scale1": {
+    "home": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "assistant": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI",
+      "modules": {
+        "conversation": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 4,
+          "composerVisible": true
+        },
+        "voice": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 4
+        },
+        "materials": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 4
+        },
+        "reference": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 4
+        }
+      }
+    },
+    "rehab": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI",
+      "workspace": {
+        "horizontalOverflow": 0,
+        "verticalOverflow": 381,
+        "backVisible": true
+      }
+    },
+    "health": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "medication": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "family": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "history": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "notifications": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "settings": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    }
+  },
+  "ux-wrap-round2-light/windows-light-1024x720-scale1": {
+    "home": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "assistant": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI",
+      "modules": {
+        "conversation": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 4,
+          "composerVisible": true
+        },
+        "voice": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 4
+        },
+        "materials": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 4
+        },
+        "reference": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 4
+        }
+      }
+    },
+    "rehab": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI",
+      "workspace": {
+        "horizontalOverflow": 0,
+        "verticalOverflow": 381,
+        "backVisible": true
+      }
+    },
+    "health": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "medication": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "family": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "history": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "notifications": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "settings": {
+      "platform": "windows",
+      "size": [
+        1024,
+        720
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    }
+  },
+  "ux-wrap-round2-contrast/windows-high-contrast-1440x940-scale1": {
+    "home": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "assistant": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI",
+      "modules": {
+        "conversation": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 0,
+          "composerVisible": true
+        },
+        "voice": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 0
+        },
+        "materials": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 0
+        },
+        "reference": {
+          "horizontalOverflow": 0,
+          "verticalOverflow": 0
+        }
+      }
+    },
+    "rehab": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI",
+      "workspace": {
+        "horizontalOverflow": 0,
+        "verticalOverflow": 161,
+        "backVisible": true
+      }
+    },
+    "health": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "medication": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "family": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "history": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "notifications": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    },
+    "settings": {
+      "platform": "windows",
+      "size": [
+        1440,
+        940
+      ],
+      "dpr": 1.5,
+      "horizontalOverflow": 0,
+      "font": "Microsoft YaHei UI"
+    }
+  }
+}

@@ -1,11 +1,12 @@
 """Progressive disclosure for the existing assistant; no domain or voice implementation."""
-from PySide6.QtCore import QSize
+from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
-    QStackedWidget, QCommandLinkButton, QTextBrowser, QPlainTextEdit, QCheckBox)
+    QStackedWidget, QCommandLinkButton, QTextBrowser, QPlainTextEdit, QCheckBox, QToolButton, QDialog, QDialogButtonBox)
 from ..settings import ROOT
 from .product_theme import SPACING, METRICS
 from .product_widgets import label, button, core_card, visual
+from .product_record_review import record_review
 
 
 # Explicit identities keep the old published controls independent of widget order.
@@ -54,7 +55,7 @@ def build_assistant(window):
         item.setProperty('actionTarget','AI 康复管家/'+key)
         item.setProperty('fluentAppearance','module')
         item.setMinimumHeight(METRICS['module_minimum'])
-        item.setIcon(QIcon(str(ROOT/'assets/ui/ankang'/f'{icon}.svg')));item.setIconSize(QSize(24,24))
+        item.setIcon(QIcon(str(ROOT/'assets/ui/ankang'/f'{icon}.svg')));item.setIconSize(QSize(24,24));item.setProperty('iconName',icon)
         item.clicked.connect(lambda checked=False,k=key:w._show_assistant_section(k))
         w.interface_buttons[action]=item;w.assistant_module_buttons[key]=item
         grid.addWidget(item,index//2,index%2)
@@ -63,9 +64,21 @@ def build_assistant(window):
     conversation,top=page('conversation','与康复管家对话')
     visual(w._action(top,'assistantReferenceEntry','查看参考资料',
         lambda:w._show_assistant_section('reference'),target='AI 康复管家/reference'),appearance='ghost')
-    item,area=core_card()
+    item,area=core_card();area.setContentsMargins(16,16,16,16);area.setSpacing(8)
     w.agent_status=visual(label('正在读取助手状态…','productMuted'),typography='secondary')
     area.addWidget(w.agent_status)
+    w.record_receipt=visual(label('表达 → 理解 → 需要时澄清 → 记录 → 后续追踪'),typography='caption')
+    area.addWidget(w.record_receipt)
+    w.record_disclosure=QToolButton();w.record_disclosure.setText('查看最近一次理解与记录结果')
+    w.record_disclosure.setToolButtonStyle(Qt.ToolButtonTextOnly)
+    w.record_disclosure.setAccessibleName('展开最近一次理解与记录结果')
+    w.record_disclosure.hide();top.addWidget(w.record_disclosure)
+    w.record_dialog=QDialog(w);w.record_dialog.setWindowTitle('理解与记录结果');w.record_dialog.resize(620,480)
+    review_layout=QVBoxLayout(w.record_dialog)
+    w.record_review=QTextBrowser();w.record_review.setAccessibleName('结构化理解与实际保存回执')
+    review_layout.addWidget(w.record_review)
+    close=QDialogButtonBox(QDialogButtonBox.Close);close.button(QDialogButtonBox.Close).setText('关闭');close.rejected.connect(w.record_dialog.close);review_layout.addWidget(close)
+    w.record_disclosure.clicked.connect(w.record_dialog.show)
     w.chat=QTextBrowser();w.chat.setOpenExternalLinks(False)
     w.chat.setAccessibleName('与康复管家的对话历史');w.chat.setMinimumHeight(METRICS['chat_minimum'])
     area.addWidget(w.chat,1)
@@ -82,10 +95,10 @@ def build_assistant(window):
     visual(w._action(row,'assistantMaterialsEntry','添加资料',lambda:w._show_assistant_section('materials'),
         target='AI 康复管家/materials'),appearance='ghost')
     mic=w._action(row,'assistantVoiceEntry','语音输入',lambda:w._show_assistant_section('voice'),target='AI 康复管家/voice')
-    mic.setIcon(QIcon(str(ROOT/'assets/ui/ankang/microphone.svg')));mic.setIconSize(QSize(20,20))
+    mic.setIcon(QIcon(str(ROOT/'assets/ui/ankang/microphone.svg')));mic.setIconSize(QSize(20,20));mic.setProperty('iconName','microphone')
     mic.setToolTip('查看语音输入状态；未接入时可返回文字输入')
     w.private_turn=QCheckBox('本轮不记录');row.addWidget(w.private_turn);row.addStretch()
-    w.chat_send=visual(button('发送',lambda:w._send_chat(),True),appearance='primary');row.addWidget(w.chat_send)
+    w.chat_send=visual(button('发送',lambda:w._send_chat(),True),appearance='primary');w.chat_send.setToolTip('发送消息（Ctrl+Enter）；Enter 换行');row.addWidget(w.chat_send)
     area.addLayout(row);conversation.addWidget(item,1)
 
     materials,_=page('materials','资料与图片')
@@ -142,3 +155,10 @@ def refresh_summary(window):
         w.assistant_module_buttons['reference'].setDescription(f'当前范围：{plans} 项计划、{training} 条训练记录。')
     available=bool(w.extension_status.get('voice',{}).get('available'))
     w.assistant_module_buttons['voice'].setDescription('语音服务已配置，进入后确认操作。' if available else '语音服务尚未接入，点击查看状态。')
+
+
+def refresh_record_review(window,turn):
+    title,content=record_review(turn)
+    window.record_receipt.setText(title)
+    window.record_review.setHtml(content)
+    window.record_disclosure.show()

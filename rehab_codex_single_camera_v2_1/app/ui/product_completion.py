@@ -4,7 +4,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QTabWidget, QComboBox,
     QDialog, QDialogButtonBox, QTextBrowser, QMessageBox, QFileDialog, QPushButton, QListWidget,
     QProgressBar, QScrollArea, QFrame, QStackedWidget)
-from .product_widgets import label, button, card, table, rows, core_card, visual
+from .product_widgets import label, button, card, table, rows, core_card, visual, ResponsiveGrid, WrappingLabel, display_time
 from .product_theme import SPACING, METRICS
 from ..domain import SOURCES, CONTEXTS
 
@@ -54,7 +54,7 @@ class ProductCompletion:
             visual(self._action(actions,key,text,call,target='康复/训练计划' if key=='homePlans' else text),appearance='primary' if key=='homeContinue' else 'ghost')
         actions.addStretch()
         area.addLayout(actions);box.addWidget(item)
-        tiles=QHBoxLayout();self.tile_values={}
+        tiles=ResponsiveGrid(columns=4,threshold=1000);self.tile_values={}
         for key,title in [('plan','今日康复'),('medication','今日用药'),('tasks','今日任务'),('health','当前健康')]:
             item,area=core_card(title);self.tile_values[key]=visual(label('正在读取…'),typography='body')
             area.addWidget(self.tile_values[key]);area.addStretch()
@@ -63,9 +63,9 @@ class ProductCompletion:
                 'health':('homeHealth','查看健康状态',lambda:self._health_tab(0))}.get(key)
             if entry:
                 k,text,call=entry;visual(self._action(area,k,text,call,target=text),appearance='ghost')
-            tiles.addWidget(item,1)
-        box.addLayout(tiles)
-        lower=QHBoxLayout()
+            tiles.add(item)
+        box.addWidget(tiles)
+        lower=ResponsiveGrid(columns=2,threshold=900)
         item,area=core_card('今日任务')
         self.tasks=QListWidget();self.tasks.setMinimumHeight(100);self.tasks.setMaximumHeight(180)
         self.tasks_empty=visual(label('今天没有待完成任务'),typography='secondary')
@@ -73,15 +73,15 @@ class ProductCompletion:
         row=QHBoxLayout()
         self._action(row,'taskComplete','确认完成',lambda:self._task_status('completed'),kind='A',target='task.status')
         self._action(row,'taskDismiss','暂不处理',lambda:self._task_status('dismissed'),kind='A',target='task.status')
-        area.addLayout(row);lower.addWidget(item,3)
+        area.addLayout(row);lower.add(item)
         item,area=core_card('健康与管家摘要')
         self.home_status=visual(label('尚无记录，无法判断当前健康状态。'),typography='body')
         area.addWidget(self.home_status)
         visual(self._action(area,'homeAI','查看管家摘要与对话',lambda:self.navigate('assistant'),target='AI 康复管家'),appearance='ghost')
         visual(self._action(area,'homeProfile','建立 / 编辑资料',self._profile,kind='A',target='profile.save'),appearance='ghost')
-        lower.addWidget(item,2);box.addLayout(lower)
+        lower.add(item);box.addWidget(lower)
         item,area=core_card('已保存的训练计划')
-        self.plan_table=table(['当前保存的计划','是否可继续']);self.plan_table.setMinimumHeight(90);self.plan_table.setMaximumHeight(140)
+        self.plan_table=table(['当前保存的计划','是否可继续']);self.plan_table.setProperty('compactSummary',True)
         area.addWidget(self.plan_table);box.addWidget(item);box.addStretch()
 
     def _rehab_page(self):
@@ -110,6 +110,7 @@ class ProductCompletion:
                 self.rehab_progress=QProgressBar();self.rehab_progress.setTextVisible(False)
                 self.rehab_progress.setAccessibleName('当前计划累计进度');area.addWidget(self.rehab_progress)
             self.rehab_tables[title]=table(headers);self.rehab_tables[title].setMinimumHeight(90)
+            if title=='今日恢复':self.rehab_tables[title].setProperty('compactSummary',True)
             area.addWidget(self.rehab_tables[title])
             row=QHBoxLayout()
             if title=='今日恢复':
@@ -133,11 +134,14 @@ class ProductCompletion:
                 if widget:visual(widget,appearance='primary' if widget.objectName() in ('rehabContinue','rehabAssess','rehabAutomatic') else 'secondary')
             row.addStretch();area.addLayout(row)
             if title=='今日恢复':
-                self.recovery_fields={}
+                # Put the primary action before the plan table in the reading order.
+                area.removeWidget(self.rehab_tables[title]);area.addWidget(self.rehab_tables[title])
+                self.recovery_fields={};details=ResponsiveGrid(columns=2,threshold=900)
                 for key,heading in [('flow','今日恢复流程'),('result','最近训练结果'),('assessment','最近评估'),('trend','恢复趋势')]:
-                    area.addWidget(visual(label(heading),typography='section'))
-                    field=visual(label('正在读取…'),typography='body')
-                    field.setObjectName('recovery-'+key);self.recovery_fields[key]=field;area.addWidget(field)
+                    section,section_box=core_card(heading)
+                    field=WrappingLabel('正在读取…');field.setWordWrap(True);visual(field,typography='body')
+                    field.setObjectName('recovery-'+key);self.recovery_fields[key]=field;section_box.addWidget(field);details.add(section)
+                area.addWidget(details)
                 shortcuts=QHBoxLayout()
                 self._action(shortcuts,'recoveryAssessment','新评估 / 查看详情',lambda:self.rehab_tabs.setCurrentIndex(1),target='康复评估')
                 self._action(shortcuts,'recoveryHistory','历史训练 / 反馈',lambda:self.rehab_tabs.setCurrentIndex(3),target='康复进度')
@@ -197,8 +201,8 @@ class ProductCompletion:
     def _settings_page(self):
         box=self._page('settings');self.settings_tabs=QTabWidget();box.addWidget(self.settings_tabs)
         def tab(title):
-            p=QWidget();area=QVBoxLayout(p);self.settings_tabs.addTab(p,title);return area
-        area=tab('个人资料');self.profile_summary=label('请建立个人资料。');area.addWidget(self.profile_summary)
+            p=QWidget();area=QVBoxLayout(p);area.setAlignment(Qt.AlignTop);self.settings_tabs.addTab(p,title);return area
+        area=tab('个人资料');self.profile_summary=label('请建立个人资料。');self.profile_summary.setMaximumHeight(120);area.addWidget(self.profile_summary)
         self._action(area,'settingsProfile','编辑个人资料与康复目标',self._profile,kind='A',target='profile.save')
         area=tab('数据与隐私');self.data_location=label('本机资料独立保存；清除前可导出备份。');area.addWidget(self.data_location)
         self._action(area,'settingsBackup','导出本人本地备份',self._backup,kind='A',target='lifecycle.export')
@@ -251,8 +255,8 @@ class ProductCompletion:
         self._action(self.history_tabs.widget(0).layout(),'historyReport','报告',self._history_report,target='健康报告/原康复报告')
         self._action(self.history_tabs.widget(0).layout(),'historyExport','导出当前筛选记录',self._export_timeline,kind='A',target='本机导出只读视图')
         self.history_empty=label('暂无记录。');self.history_tabs.widget(0).layout().addWidget(self.history_empty)
-        area=self.page_widgets['family'].widget().layout()
-        self.family_members=table(['成员 / 联系人','关系','绑定状态','允许查看'])
+        area=self.family_management_layout
+        self.family_members=table(['成员 / 联系人','关系','绑定状态','允许查看']);self.family_members.setProperty('compactSummary',True)
         self.family_empty=label('暂无家庭联系人。请先添加联系人，绑定与共享需分别确认。')
         area.insertWidget(0,self.family_empty);area.insertWidget(0,self.family_members)
         self._action(area,'familyDetail','查看成员 / 允许查看',self._family_detail,target='家庭成员详情/FamilyService')
@@ -561,7 +565,7 @@ class ProductCompletion:
         p=plans[0] if plans else None;progress=p['progress'] if p else {};next_item=next((i for i in p['items'] if i['key']==progress.get('next_key')),None) if p else None
         self._visual_progress(progress)
         self.next_training.setText(('下一项：'+next_item['exercise_label']+' · '+self._plan_settings(next_item['settings'])+
-            '\n当前计划累计完成 '+str(progress['completed'])+'/'+str(progress['total'])+'；当前未提供按日排期。') if next_item else '当前计划全部完成，可查看反馈与报告。' if p else '今天暂无康复计划')
+            '\n计划累计完成 '+str(progress['completed'])+'/'+str(progress['total'])+' 项（非按日排期）。') if next_item else '当前计划全部完成，可查看反馈与报告。' if p else '今天暂无康复计划')
         if p and not p.get('next_available') and p.get('availability_reason'):
             self.next_training.setText(self.next_training.text()+'\n暂不能继续：'+p['availability_reason'])
         def item_state(item):
@@ -609,7 +613,7 @@ class ProductCompletion:
             ('查看计划 → 准备下一项 → 训练 → 训练后反馈 → 返回今日恢复' if plan else '还没有训练计划：先做评估，或在训练计划页建立安排。')+
             ('\n最近训练反馈：已保存。' if feedback.get('revision') else '\n最近训练反馈：尚未填写，可从历史训练打开。' if latest else '\n训练后会在这里显示保存结果和反馈。'))
         self.recovery_fields['result'].setText(
-            latest['exercise_label']+' · '+str(latest.get('end_utc') or '时间未记录')+'\n'+
+            latest['exercise_label']+' · '+display_time(latest.get('end_utc'))+'\n'+
             f"已记录 {latest.get('summary',{}).get('completed','未记录')} 次；"+
             ('已完成计划目标' if finished(latest) else '计划目标未完成或未能核实')+'\n'+self._feedback_text(feedback)
             if latest else '暂无训练结果。完成训练并保存后显示，不以准备或打开摄像头计为完成。')
@@ -620,8 +624,8 @@ class ProductCompletion:
                 value=(r.get('motion_range') or {}).get('range_deg')
                 return f'{value:g}°' if isinstance(value,(int,float)) and r.get('status')=='ASSESSED' else '未取得有效幅度'
             previous=matching[0] if matching else None
-            text=recent['exercise_label']+' · '+str(recent.get('end_utc') or '时间未记录')+'\n最近幅度：'+reading(recent)
-            if previous:text+='；上次幅度：'+reading(previous)+'（'+str(previous.get('end_utc') or '时间未记录')+'）'
+            text=recent['exercise_label']+' · '+display_time(recent.get('end_utc'))+'\n最近幅度：'+reading(recent)
+            if previous:text+='；上次幅度：'+reading(previous)+'（'+display_time(previous.get('end_utc'))+'）'
             else:text+='；暂无同动作同侧的上一次记录。'
             text+='\n测量条件与可比性请在评估详情 / 原历史中核对；数值变化不代表临床改善。'
         else:text='暂无评估记录。可进入康复评估开始新评估，或查看身体档案。'
@@ -724,9 +728,9 @@ class ProductCompletion:
         else:
             self.page_states[self.active_page].setText('资料已更新。' if self.snapshot else '请先建立个人资料。')
         # Keep one receipt in the header instead of repeating it inside core pages.
-        if self.active_page in ('home','assistant','rehab'):
+        if self.active_page in self.page_states:
             field=self.page_states[self.active_page]
-            field.setVisible(not self.notice.isVisible() or field.text()!=self.notice.text())
+            field.setVisible(not self.notice.isVisible() and (busy or not self.snapshot or self.active_page in self.page_feedback))
         self.rehab_tabs.setEnabled(not self.legacy.busy and self.legacy.state not in ('CONNECTING','PREVIEW','ONLINE','SAVE_FAILED'))
         status=self.extension_status
         camera='已连接，输入已打开' if self.legacy.state in ('PREVIEW','ONLINE') else '未连接 / 尚未开启'

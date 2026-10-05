@@ -75,7 +75,7 @@ if __name__ == '__main__':
         tts_engines = []
 
     QApplication.setAttribute(Qt.AA_DontUseNativeDialogs)
-    app = QApplication([])
+    app = QApplication([]);app.setStyle('Fusion')
     app.setStyle('Fusion')
     app.setFont(QFont('Microsoft YaHei UI', 10))
     cases, observations, dialogs, button_hits, options = [], {}, [], Counter(), {}
@@ -1038,6 +1038,10 @@ if __name__ == '__main__':
         policy.append(dict(kind='flow',run=report_flow));action('rehabTrainingDetail')
         tab('今日恢复');ready()
         check('TEST 原生黑箱感受' in texts(window),'feedback save / return failed to refresh recovery')
+        pump(200)
+        for field in window.findChildren(QLabel):
+            if field.isVisible() and field.objectName().startswith('recovery-'):
+                check(field.height()>=field.heightForWidth(field.width()),'wrapped recovery text is clipped: '+field.objectName())
         window.grab().save(str(OUT/'saved-feedback-recovery.png'))
         nav('首页');check('今天已完成 1 次训练' in texts(window),'home not refreshed after feedback')
         nav('记录');tab('统一历史')

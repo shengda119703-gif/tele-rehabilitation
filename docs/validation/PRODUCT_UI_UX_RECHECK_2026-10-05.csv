@@ -1,0 +1,5 @@
+﻿run,name,status,detail,seconds
+ux-wrap-native,01 首次建档：空值校验、三个资料页、保存、空首页,PASS,Assertions passed through visible UI,16.08
+ux-wrap-native,康复已有数据/真实控制器合成结果、反馈保存、恢复与首页刷新、记录返回、用户隔离,PASS,Assertions passed through visible UI,59.78
+ux-wrap-narrow-native,01 首次建档：空值校验、三个资料页、保存、空首页,PASS,Assertions passed through visible UI,17.08
+ux-wrap-narrow-native,康复已有数据/真实控制器合成结果、反馈保存、恢复与首页刷新、记录返回、用户隔离,PASS,Assertions passed through visible UI,57.38

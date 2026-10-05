@@ -1,5 +1,7 @@
 # 当前交接与未完成目标
 
+**2026-10-05 自主 UI/UX 优化：** 首页与今日恢复强化下一步操作，Agent 使用真实 turn 的理解 / 记录回执并保留新草稿与阅读位置，家庭先展示授权摘要，趋势仅列真实近期指标；产品页面统一黑白灰语义主题、图标、focus 与空状态。没有修改 Agent Runtime / 医疗判断 / schema 或删除业务能力。两轮全页面浅色 / 深色 / 窄窗 / 合成高对比巡检无新增明显高收益 P0/P1；本轮可见 Qt 路径 41 PASS / 0 FAIL，末次截图发现训练反馈裁切后再修复并通过宽窄窗专项 2+2 PASS 与恢复 / 视觉 / UX 15 passed，重新完成两轮巡检；Node 411+15 和 build 通过，Python 1683 passed / 14 skipped / 1 缺权重 failed / 1 启动超时 error / 4 subtests（语音独立复跑 5 passed，超时未复现），不称全绿；完整业务与测试结果、兼容工作区和外部能力边界见[本轮 UI/UX 报告](validation/PRODUCT_UI_UX_2026-10-05.md)。React Bits 研究后未直接引入组件，保留 Qt 原生实现；不将本机家庭投影称为跨设备家属端。只提交推送 `codex/product-ui-v1`，不改 main。
+
 **2026-10-04 今日恢复与成品功能收口：** `codex/product-ui-v1` 保留上一轮修复，完成今日恢复真实数据 / 空态、训练专注与反馈保存返回、记录 / 通知来源返回和稳定 ID 选择恢复；修复原生黑箱复现的 Windows 同步目录 EPERM 保存失败，仅增加文件适配器有界重试。最终同一版本连续两轮 Windows 可见 Qt 核心路径各 41 PASS / 0 FAIL，第二轮无新 P0 / P1 / P2；当前覆盖范围内无未解决的已知核心功能问题。Python 1680 passed / 14 skipped / 1 缺 YOLO 权重失败 / 4 子测试通过；Node 411 + 15 及 build / typecheck / bridge / security 全通过。原始相机两轮实际收到画面，但不宣称真人训练、ASR 或外部平台通过。详细分类、根因、复验与边界见[成品功能验收报告](validation/PRODUCT_RECOVERY_ACCEPTANCE_2026-10-04.md)、[逐场景两轮证据](validation/PRODUCT_RECOVERY_BLACKBOX_2026-10-04.csv)。只提交 / 推送 UI 分支，不 merge main；本地 main 仍 `fb113ff`，远端 main 外部增量 `0dc3e12` 未合入 / 未验收。以下旧阶段宽泛说法以本轮报告的范围为准。
 
 **2026-10-03 交付远端状态：** UI 黑箱修复代码提交 `6e79cc8`；推送后 fetch 发现 origin/main 新增 LAN mobile rehabilitation assessment and training web demo，SHA `704fdec`。本地 main 仍为 `fb113ff`，本轮未合入/未验收该网页增量；stage1 保持 `4b2d108`。后续不要据 UI 分支黑箱报告宣称远端 main 网页演示已验收。
