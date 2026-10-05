@@ -12,10 +12,16 @@ const dateLabel = (v) => new Date(v).toLocaleString('zh-CN', {month:'numeric',da
 const statusLabel = (s) => ({uploading:'上传中',queued:'等待分析',analyzing:'分析中',done:'已完成',failed:'需重试'}[s] || s);
 function toast(text) { $('#toast').textContent=text; $('#toast').hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(()=>$('#toast').hidden=true,6000); }
 async function api(path, opts={}) {
-  const res=await fetch('/api'+path,{...opts,headers:{'X-Rehab-Client':'mobile-v1',...opts.headers}});
-  let body; try {body=await res.json();} catch {throw Error('电脑服务没有正常响应，请稍后重试');}
-  if(!res.ok) {if(res.status===401 && path!=='/pair') {pairPage();} throw Error(typeof body.detail==='string'?body.detail:'请求未完成，请稍后重试');}
-  return body;
+  const {timeoutMs=60000,...requestOpts}=opts, controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),timeoutMs);
+  const cancel=()=>controller.abort();if(opts.signal?.aborted)cancel();else opts.signal?.addEventListener('abort',cancel,{once:true});
+  try{
+    const res=await fetch('/api'+path,{...requestOpts,signal:controller.signal,headers:{'X-Rehab-Client':'mobile-v1',...opts.headers}});
+    let body; try {body=await res.json();} catch(e){if(e.name==='AbortError')throw e;throw Error('电脑服务没有正常响应，请稍后重试');}
+    if(!res.ok) {if(res.status===401 && path!=='/pair') {pairPage();} throw Error(typeof body.detail==='string'?body.detail:'请求未完成，请稍后重试');}
+    return body;
+  }catch(e){if(e.name==='AbortError')throw Error('连接超时，请检查电脑服务后重试');if(e instanceof TypeError)throw Error('无法连接电脑，请检查 Wi-Fi 和网页服务');throw e;}
+  finally{clearTimeout(timer);opts.signal?.removeEventListener('abort',cancel);}
 }
 function pairPage(){
   state.job=null;

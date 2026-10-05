@@ -1,3 +1,6 @@
 # Optional local phone recording recognition; same versions as partner voice branch.
 faster-whisper==1.2.1
 av==16.0.1
+ctranslate2==4.8.2
+onnxruntime==1.30.0
+tokenizers==0.23.2

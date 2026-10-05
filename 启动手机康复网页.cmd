@@ -19,7 +19,12 @@ if errorlevel 1 (
 if exist "ankang\route1-health-agent\node_modules\typescript\bin\tsc" (
   pushd "ankang\route1-health-agent"
   call npm.cmd run build:bridge
-  if errorlevel 1 echo 健康模块编译失败，手机康复仍可使用。请检查错误后运行准备手机健康服务。
+  if errorlevel 1 (
+    echo 健康模块编译失败，请运行准备手机健康服务后重试。
+    popd
+    pause
+    exit /b 1
+  )
   popd
 ) else (
   echo 如需健康档案与管家，请先运行准备手机健康服务.cmd。

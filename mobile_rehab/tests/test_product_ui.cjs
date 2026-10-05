@@ -19,7 +19,7 @@ function harness(){
       e[a[1]]=a[2];if(a[1].startsWith('data-'))e.dataset[a[1].slice(5).replace(/-([a-z])/g,(_,x)=>x.toUpperCase())]=a[2];
     }return e;
   }
-  const root={get innerHTML(){return html;},set innerHTML(v){html=v;rendered=parse(v);},insertAdjacentHTML(_,v){this.innerHTML=html+v;}};
+  const root={get innerHTML(){return html;},set innerHTML(v){html=v;rendered=parse(v);},insertAdjacentHTML(_,v){this.innerHTML=html+v;},append(e){html+=e.innerHTML;rendered.push(...parse(e.innerHTML));}};
   const nav=['plan','assess','fitness','history','more'].map(x=>node(`data-tab="${x}"`));
   function query(s){
     if(s==='#app')return root;
@@ -29,7 +29,7 @@ function harness(){
   const all=s=>s==='[data-tab]'?nav:s.startsWith('[data-')?rendered.filter(e=>Object.hasOwn(e.dataset,s.slice(6,-1).replace(/-([a-z])/g,(_,x)=>x.toUpperCase()))):[];
   const c={document:{querySelector:query,querySelectorAll:all,createElement:()=>node(),addEventListener(){}},
     window:{addEventListener(){},scrollTo(){}},location:{hash:'',host:'localhost'},URL:{revokeObjectURL(){}},
-    setTimeout,clearTimeout,console,confirm:()=>true};
+    setTimeout,clearTimeout,console,AbortController,TypeError,confirm:()=>true};
   vm.createContext(c);
   for(const file of ['app.js','fitness.js','barbell.js','extensions.js','health.js'])vm.runInContext(fs.readFileSync(path.join(staticDir,file),'utf8'),c);
   const instructions={view_label:'正面拍摄',camera:'保持肩肘入镜',start:'双臂自然下垂',move:'缓慢抬起手臂',return:'放下手臂',boundary:'测试说明',count:'回位计一次'};
@@ -139,4 +139,27 @@ test('single point or empty trend does not invent baseline, static scripts have 
   const h=harness();assert.match(h.run('metricTrendMarkup([])'),/暂无记录/);h.c.point=[{metric:'weight',value:60,unit:'kg',timestamp:'2026-10-05T01:00:00Z'}];
   assert.doesNotMatch(h.run('metricTrendMarkup(point)'),/<svg/);
   const script=fs.readFileSync(path.join(staticDir,'health.js'),'utf8');assert.doesNotMatch(script,/localStorage\.(setItem|getItem)|speechSynthesis|navigator.mediaDevices/);
+});
+
+test('private draft setting survives rerender but is cleared by identity reset',async()=>{
+  const h=harness();h.c.healthFixture=healthFixture();h.run("api=async()=>healthFixture;state.tab='assistant';healthDraft='TEST private';healthPrivate=true;healthPage()");await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(h.get('#chat-private').checked,true);h.run('healthPage()');await new Promise(resolve=>setImmediate(resolve));assert.equal(h.get('#chat-private').checked,true);
+  h.run('resetHealth()');assert.equal(h.run('healthPrivate'),false);assert.equal(h.run('healthDraft'),'');
+});
+test('API timeout releases fetch and returns actionable text',async()=>{
+  const h=harness();h.c.fetch=(_,opts)=>new Promise((resolve,reject)=>opts.signal.addEventListener('abort',()=>reject(Object.assign(new Error('abort'),{name:'AbortError'}))));
+  await assert.rejects(h.run("api('/product',{timeoutMs:5})"),/连接超时/);
+});
+test('API keeps device header and maps network failure',async()=>{
+  const h=harness();h.c.fetch=async(_,opts)=>{assert.equal(opts.headers['X-Rehab-Client'],'mobile-v1');return {ok:true,json:async()=>({TEST:true})};};
+  assert.equal((await h.run("api('/product')")).TEST,true);
+  h.c.fetch=async()=>{throw new TypeError('Network down');};await assert.rejects(h.run("api('/product')"),/无法连接电脑/);
+});
+test('restore entry exists only for an empty health profile and states recovery scope',async()=>{
+  const h=harness();h.c.healthFixture={needs_profile:true};h.run("api=async()=>healthFixture;state.tab='more';healthPage()");await new Promise(resolve=>setImmediate(resolve));
+  assert.match(h.html,/id="restore-form"/);assert.match(h.html,/不包含评估训练录像/);assert.match(h.html,/不恢复家庭授权/);
+});
+test('archive offers reversible trash and local OCR without automatic medical interpretation',async()=>{
+  const h=harness();h.c.healthFixture=healthFixture();h.run("api=async(path)=>path==='/product-trash'?[]:path==='/product-ocr'?{available:false}:healthFixture;state.tab='archive';healthPage()");await new Promise(resolve=>setImmediate(resolve));
+  assert.match(h.html,/回收站/);assert.match(h.html,/移入回收站后可恢复/);assert.match(h.html,/不自动填写指标/);
 });

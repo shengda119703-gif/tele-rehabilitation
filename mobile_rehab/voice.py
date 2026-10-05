@@ -40,12 +40,14 @@ class PhoneVoice:
                         creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
                     if result.returncode:
                         raise HTTPException(400,'录音无法识别，请选择 30 秒内的清晰短录音')
-                    text=json.loads(result.stdout)['text'].strip()
+                    text=json.loads(result.stdout.decode('utf-8'))['text'].strip()
                     if not text:
                         raise HTTPException(400,'没有听清，请重新录音或输入文字')
                     return dict(text=text[:1900],automatic_send=False)
                 except subprocess.TimeoutExpired:
                     raise HTTPException(504,'录音识别超时，请换更短的录音') from None
+                except (UnicodeError, ValueError, KeyError, TypeError):
+                    raise HTTPException(502,'语音结果未能读取，请重新录音') from None
         finally:
             self.lock.release()
 

@@ -13,8 +13,12 @@ WORKDIR /opt/rehab
 RUN apt-get update && apt-get install -y --no-install-recommends libgl1 libglib2.0-0 libstdc++6 libgcc-s1 && rm -rf /var/lib/apt/lists/*
 COPY mobile_rehab/requirements.txt /tmp/mobile-requirements.txt
 COPY deploy/mobile/requirements.txt /tmp/inference-requirements.txt
+COPY mobile_rehab/requirements.voice.txt /tmp/voice-requirements.txt
+COPY mobile_rehab/requirements.ocr.txt /tmp/ocr-requirements.txt
+ARG ENABLE_LOCAL_TEXT=1
 RUN pip install torch==2.9.1 torchvision==0.24.1 --index-url https://download.pytorch.org/whl/cpu \
     && pip install -r /tmp/mobile-requirements.txt -r /tmp/inference-requirements.txt
+RUN if [ "$ENABLE_LOCAL_TEXT" = "1" ]; then pip install -r /tmp/voice-requirements.txt -r /tmp/ocr-requirements.txt; fi
 COPY mobile_rehab /opt/rehab/mobile_rehab
 COPY bridges /opt/rehab/bridges
 COPY --from=health-build /usr/local/bin/node /usr/local/bin/node

@@ -258,6 +258,8 @@ def create_app(data_dir=None, pair_key=None, runner=None):
     install_product(app, data_dir, owner, small_json)
     from .voice import install_voice
     install_voice(app, data_dir, owner)
+    from .ocr import install_ocr
+    install_ocr(app, data_dir, owner)
 
     @app.middleware('http')
     async def protect(request, call_next):
@@ -274,7 +276,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
 
     @app.get('/api/health')
     def health():
-        return dict(ok=True, service='mobile-rehab', version='3', capabilities=['posture','live-guidance','profile-link','care-sharing','rtsp-recording','personal-health','medication','local-assistant','health-archive'])
+        return dict(ok=True, service='mobile-rehab', version='3.1', capabilities=['posture','live-guidance','profile-link','care-sharing','rtsp-recording','personal-health','medication','local-assistant','health-archive','archive-trash','health-backup-restore','local-text-adapters'])
 
     @app.post('/api/pair')
     async def pair(request: Request):

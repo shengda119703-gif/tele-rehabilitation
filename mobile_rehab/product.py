@@ -1,10 +1,12 @@
 """Authenticated phone adapter, reusing the partner's Ankang domain service."""
 import asyncio
+import base64
 import json
 import math
 import re
 import threading
 from pathlib import Path
+from urllib.parse import quote
 
 from fastapi import HTTPException, Request
 from fastapi.responses import Response
@@ -44,6 +46,10 @@ class MobileProduct:
                     raise HTTPException(503, '健康服务已停止，请重试') from None
                 if '请先建立当前用户健康档案' in str(e):
                     raise HTTPException(409, '请先完善健康档案') from None
+                if 'Attachment not found' in str(e):
+                    raise HTTPException(404,'找不到资料，可能已移入回收站') from None
+                if '当前已有健康档案' in str(e):
+                    raise HTTPException(409,'当前已有健康档案，不能覆盖恢复') from None
                 raise HTTPException(400, str(e)) from None
 
     def close(self):
@@ -66,7 +72,7 @@ class MobileProduct:
     def save_archive(self, uid, data):
         with self.lock:
             current = self.call(uid, 'snapshot')
-            attachments = current.get('attachments', [])
+            attachments = current.get('attachments', [])+self.call(uid,'archive.trash.list')
             if len(attachments) >= 50 or sum(x.get('size', 0) for x in attachments)+len(data['bytes']) > 64*1024*1024:
                 raise HTTPException(507, '当前档案资料空间已满')
             return self.call(uid, 'archive.save', data)
@@ -135,7 +141,14 @@ def install_product(app, data_dir, owner, small_json, backend=None):
 
     @app.post('/api/product/{operation}')
     async def operation(operation: str, request: Request):
-        uid=owner(request);data=validate(operation,await small_json(request))
+        uid=owner(request)
+        raw=bytearray()
+        async for chunk in request.stream():
+            raw.extend(chunk)
+            if len(raw)>16384:raise HTTPException(413,'请求内容过长')
+        try:value=json.loads(raw)
+        except (ValueError,UnicodeError,RecursionError):raise HTTPException(400,'请求格式不正确') from None
+        data=validate(operation,value)
         if operation == 'profile.save':
             return await asyncio.to_thread(product.edit_profile, uid, data)
         return await asyncio.to_thread(product.call,uid,operation,data)
@@ -143,8 +156,31 @@ def install_product(app, data_dir, owner, small_json, backend=None):
     @app.get('/api/product-backup')
     async def backup(request: Request):
         data=await asyncio.to_thread(product.call,owner(request),'lifecycle.export')
+        data['version']=2
+        data['kind']='mobile-health-backup'
+        for attachment in data['attachments']:
+            attachment['content']=base64.b64encode(bytes(attachment.pop('bytes'))).decode('ascii')
         return Response(json.dumps(data,ensure_ascii=False),media_type='application/json',
                         headers={'Content-Disposition':'attachment; filename="health-backup.json"'})
+
+    @app.post('/api/product-restore')
+    async def restore(request: Request):
+        uid=owner(request)
+        if request.query_params.get('confirm')!='yes':raise HTTPException(400,'请确认恢复本人健康备份')
+        try:
+            await asyncio.to_thread(product.call,uid,'snapshot')
+        except HTTPException as e:
+            if e.status_code!=409:raise
+        else:raise HTTPException(409,'当前已有健康档案，不能覆盖恢复；请使用已配对的新浏览器')
+        raw=bytearray()
+        async for chunk in request.stream():
+            raw.extend(chunk)
+            if len(raw)>100*1024*1024:raise HTTPException(413,'备份文件最多 100 MB')
+        try:data=json.loads(raw)
+        except (ValueError,UnicodeError,RecursionError):raise HTTPException(400,'请选择导出的 JSON 健康备份') from None
+        from .backup import unpack
+        payload=await asyncio.to_thread(unpack,data,validate,CATEGORIES)
+        return await asyncio.to_thread(product.call,uid,'mobile.restore',payload)
 
     @app.post('/api/product-archive')
     async def archive(request: Request):
@@ -187,6 +223,31 @@ def install_product(app, data_dir, owner, small_json, backend=None):
     async def read_archive(ident: str, request: Request):
         if not re.fullmatch('[a-f0-9-]{36}',ident): raise HTTPException(404,'找不到资料')
         result=await asyncio.to_thread(product.call,owner(request),'archive.read',dict(id=ident))
+        extension={'application/pdf':'.pdf','image/jpeg':'.jpg','image/png':'.png','video/mp4':'.mp4','text/plain':'.txt'}.get(result['mediaType'],'.bin')
+        name='health-'+re.sub(r'[\x00-\x1f\\/:*?"<>|]','_',result['name'])[:80]+extension
         # Download only: uploaded content is never interpreted as executable same-origin HTML.
         return Response(bytes(result['bytes']),media_type='application/octet-stream',
-                        headers={'Content-Disposition':'attachment; filename="health-document"'})
+                        headers={'Content-Disposition':f'attachment; filename="health-document{extension}"; filename*=UTF-8\'\'{quote(name,safe="")}'})
+
+    @app.get('/api/product-trash')
+    async def trash(request: Request):
+        return await asyncio.to_thread(product.call,owner(request),'archive.trash.list')
+
+    @app.post('/api/product-archive/{ident}/{action}')
+    async def archive_action(ident: str, action: str, request: Request):
+        uid=owner(request)
+        if not re.fullmatch('[a-f0-9-]{36}',ident) or action not in ('trash','restore'):
+            raise HTTPException(404,'找不到资料操作')
+        data=await small_json(request)
+        if data.get('confirm') is not True:
+            raise HTTPException(400,'请确认本次资料操作')
+        return await asyncio.to_thread(product.call,uid,'archive.'+action,dict(id=ident))
+
+    @app.get('/api/product-rehab')
+    async def rehab_context(request: Request):
+        uid=owner(request)
+        from .care import body_summary
+        data=body_summary(app.state.jobs,uid)
+        # Exact records only; never suggest an unverified normal ROM or diagnosis.
+        return dict(latest=data['latest'][:12],total=data['total'],training_count=data['training_count'],
+                    next_step=data['next_step'],source='current-mobile-profile')

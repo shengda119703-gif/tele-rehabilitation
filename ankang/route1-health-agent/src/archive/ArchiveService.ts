@@ -28,12 +28,14 @@ export interface Attachment extends OwnerScope {
   mediaType: string;
   bytes: Uint8Array;
   visibility: 'private' | 'family_ok';
+  trashedAt?: string;
 }
 export type AttachmentMetadata = Omit<Attachment, 'bytes'> & { size: number };
 export interface AttachmentPort {
   list(scope: OwnerScope): Promise<Attachment[]>;
   put(scope: OwnerScope, attachment: Attachment): Promise<void>;
   clear(scope: OwnerScope): Promise<void>;
+  setTrash?(scope: OwnerScope, id: string, at: string | null): Promise<void>;
 }
 export class InMemoryAttachmentPort implements AttachmentPort {
   private values = new Map<string, Attachment[]>();
@@ -73,7 +75,19 @@ export class ArchiveService {
     return [
       ...seeds.filter((a) => scopeKey(a) === scopeKey(this.scope) && !saved.some((s) => s.id === a.id)),
       ...saved,
-    ].filter((a) => this.viewer === 'self' || a.visibility !== 'private');
+    ].filter((a) => !a.trashedAt && (this.viewer === 'self' || a.visibility !== 'private'));
+  }
+  async trashList(): Promise<AttachmentMetadata[]> {
+    this.check();
+    if (this.viewer !== 'self') throw new Error('Only owner can view archive trash');
+    return (await this.port.list(this.scope)).filter(a => scopeKey(a) === scopeKey(this.scope) && a.trashedAt)
+      .map(({bytes,...metadata}) => ({...metadata,size:bytes.byteLength}));
+  }
+  async setTrash(id: string, at: string | null) {
+    this.check();
+    if (this.viewer !== 'self' || !this.port.setTrash) throw new Error('Archive trash unavailable');
+    await this.port.setTrash(this.scope,id,at);
+    this.check();
   }
   async list(): Promise<AttachmentMetadata[]> {
     return (await this.entries()).map(({ bytes, ...metadata }) => ({ ...metadata, size: bytes.byteLength }));

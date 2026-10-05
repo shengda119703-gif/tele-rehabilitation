@@ -15,7 +15,8 @@ def main():
     segments,_=model.transcribe(audio,language='zh',beam_size=3,vad_filter=True,
         condition_on_previous_text=False,without_timestamps=True)
     text=''.join(s.text.strip() for s in segments if s.no_speech_prob<.6 and s.avg_logprob> -1).strip()
-    sys.stdout.write(json.dumps({'text':text},ensure_ascii=False))
+    # Windows pipes may default to GBK; the HTTP host always consumes UTF-8 JSON.
+    sys.stdout.buffer.write(json.dumps({'text':text},ensure_ascii=False).encode('utf-8'))
 
 
 if __name__=='__main__':main()
