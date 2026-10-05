@@ -1,11 +1,7 @@
 'use strict';
 let liveSession=null;
 function mountAssessmentExtras(){
-  const box=document.createElement('div');box.className='feature-links';
-  box.innerHTML='<button class="secondary" id="posture-entry">站姿体态评估</button><button class="secondary" id="body-entry">身体汇总</button>';
-  $('.hero').after(box);
-  $('#posture-entry').onclick=()=>navigate('posture');$('#body-entry').onclick=()=>navigate('body');
-  const button=document.createElement('button');button.className='secondary feature-entry';button.textContent='打开实时动作指导';button.onclick=livePage;$('#guide').append(button);
+  const button=document.createElement('button');button.className='secondary feature-entry';button.textContent='实时跟练';button.onclick=livePage;$('#guide').append(button);
 }
 function posturePage(){
   if(!state.postureCatalog?.length){toast('请刷新页面加载体态评估');return;}
@@ -60,7 +56,8 @@ function mountDeviceExtras(){
 function livePage(){
   clearFile();const ex=selected();
   app.innerHTML=`<button class="back" id="live-back">‹ 返回评估</button><div class="page-head"><h1>${esc(ex.label)} · 实时指导</h1><p>${esc(ex.instructions.camera)}</p></div><div class="card"><div class="live-preview mirrored"><video id="live-video" autoplay playsinline muted></video><canvas id="live-overlay"></canvas></div><div class="live-cue" id="live-cue" aria-live="polite">摆好手机，点击开始</div><div class="live-stats"><span id="live-count">0 次</span><span id="live-angle">—</span></div><p class="caption live-status" id="live-status"></p><label class="consent">镜头 <select id="live-facing"><option value="user">前置摄像头</option><option value="environment">后置摄像头</option></select></label><label class="consent"><input id="live-voice" type="checkbox">语音提示</label><label class="consent"><input id="live-consent" type="checkbox">同意将实时画面传到电脑分析，不保存画面。</label><div class="live-controls"><button class="primary" id="live-start">开始指导</button><button class="danger" id="live-stop" disabled>停止</button></div><p class="tip">这是实时练习指导，结束后不保存为评估依据。需要报告时请录制上传；疼痛、头晕或不适时停止。</p></div>`;
-  $('#live-back').onclick=()=>navigate('assess');$('#live-start').onclick=startLive;$('#live-stop').onclick=()=>stopLive();
+  $('#live-back').textContent=state.training?'返回本次训练':'返回动作详情';
+  $('#live-back').onclick=()=>{stopLive();assessment();};$('#live-start').onclick=startLive;$('#live-stop').onclick=()=>stopLive();
   if(!window.isSecureContext||!navigator.mediaDevices?.getUserMedia){$('#live-start').disabled=true;$('#live-status').textContent='当前 HTTP 地址不能调用实时相机。请使用可信 HTTPS 地址，或返回录制上传。';}
 }
 async function startLive(){
@@ -106,7 +103,6 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden)stopLive();
 window.addEventListener('pagehide',stopLive);
 
 async function mountNetwork(){
-  const old=document.querySelector('.layout > .card');if(old)old.remove();
   const section=document.createElement('section');section.className='card';section.id='network-devices';app.append(section);
   try{const cameras=await api('/cameras');if(!$('#network-devices'))return;
     section.innerHTML=`<h2>网络摄像头</h2>${cameras.length?`<form class="care-form" id="network-form"><label for="network-camera">选择摄像头</label><select id="network-camera">${cameras.map(c=>`<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('')}</select><button class="secondary" type="button" id="network-test">测试画面</button><div id="network-preview"></div><label for="network-action">录制项目</label><select id="network-action">${[['assessment',state.catalog],['posture',state.postureCatalog],['fitness',state.fitnessCatalog]].map(([mode,items])=>`<optgroup label="${{assessment:'康复评估',posture:'体态评估',fitness:'健身分析'}[mode]}">${(items||[]).map(x=>`<option value="${mode}:${x.id}">${esc(x.label)}</option>`).join('')}</optgroup>`).join('')}</select><label for="network-side">测试侧</label><select id="network-side"><option value="left">本人左侧</option><option value="right">本人右侧</option></select><label for="network-seconds">录制秒数</label><input type="number" id="network-seconds" min="5" max="60" value="15" required><label class="consent"><input type="checkbox" required>同意电脑录制并保存摄像头画面，用于本次分析。</label><button class="primary">开始录制并分析</button><p class="tip">请先测试画面并摆好姿势。录制后可从记录页删除视频。</p></form>`:'<p class="status-text">尚未配置摄像头</p><p class="tip">已支持 RTSP 测试画面、定时录制和分析。购买摄像头后，在电脑端添加地址即可使用；地址与密码不会发到手机页面。</p>'}`;

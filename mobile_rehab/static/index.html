@@ -3,27 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#126b5d">
+  <meta name="theme-color" content="#ffffff">
   <meta name="description" content="手机拍摄，电脑分析。康复评估与个人活动建议。">
   <title>康复随行 · 手机评估</title>
   <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/fitness.css">
-  <link rel="stylesheet" href="/static/extensions.css">
-  <script src="/static/app.js" defer></script>
-  <script src="/static/fitness.js" defer></script>
-  <script src="/static/barbell.js" defer></script>
-  <script src="/static/extensions.js" defer></script>
+  <link rel="stylesheet" href="/static/style.css?v=20261005">
+  <link rel="stylesheet" href="/static/fitness.css?v=20261005">
+  <link rel="stylesheet" href="/static/extensions.css?v=20261005">
+  <link rel="stylesheet" href="/static/product.css?v=20261005">
+  <script src="/static/app.js?v=20261005" defer></script>
+  <script src="/static/fitness.js?v=20261005" defer></script>
+  <script src="/static/barbell.js?v=20261005" defer></script>
+  <script src="/static/extensions.js?v=20261005" defer></script>
 </head>
 <body>
-  <header class="topbar"><a class="brand" href="/" aria-label="康复随行首页"><img src="/static/icon.svg" alt="" width="36" height="36"><span>康复随行<small>康复评估 · 训练记录</small></span></a><span class="connection" id="connection">等待连接</span></header>
+  <header class="topbar"><a class="brand" href="/" aria-label="康复随行首页">康复随行</a><span class="connection" id="connection" role="status">等待连接</span></header>
   <main id="app"><p class="loading">正在连接你的电脑…</p></main>
   <nav class="bottom-nav" aria-label="主导航" hidden>
-    <button data-tab="assess" class="active"><span aria-hidden="true">◎</span>身体评估</button>
-    <button data-tab="plan"><span aria-hidden="true">▤</span>训练中心</button>
-    <button data-tab="fitness"><span aria-hidden="true">↗</span>健身分析</button>
-    <button data-tab="history"><span aria-hidden="true">◷</span>我的记录</button>
-    <button data-tab="device"><span aria-hidden="true">▣</span>设备连接</button>
+    <button data-tab="plan" class="active">训练</button>
+    <button data-tab="assess">评估</button>
+    <button data-tab="fitness">健身</button>
+    <button data-tab="history">记录</button>
+    <button data-tab="device">设备</button>
   </nav>
   <div id="toast" role="alert" hidden></div>
 </body>

@@ -49,6 +49,8 @@ def test_auth_catalog_and_static(client):
     assert response.headers['cache-control'] == 'no-store'
     assert client.get('/').status_code == 200
     assert client.get('/static/app.js').status_code == 200
+    assert client.get('/static/product.css').status_code == 200
+    assert 'product.css?v=20261005' in client.get('/').text
     with TestClient(client.app) as other:
         assert other.get('/api/jobs').status_code == 401
         assert other.post('/api/pair', json={'code': 'test-key'}).status_code == 403

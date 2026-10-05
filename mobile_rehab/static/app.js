@@ -1,7 +1,7 @@
 'use strict';
 const $ = (s) => document.querySelector(s);
 const app = $('#app');
-const state = {tab:'assess', catalog:[], joint:'shoulder', selected:'shoulder_abduction', side:'left', jobs:[], file:null, url:null, job:null, upload:null, training:null};
+const state = {tab:'plan', catalog:[], joint:'all', selected:'shoulder_abduction', side:'left', jobs:[], file:null, url:null, job:null, upload:null, training:null, detail:false, search:'', viewFilter:'all', fitnessGroup:'all'};
 let pollTimer, toastTimer;
 const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = (v, unit='') => Number.isFinite(v) ? `${Math.round(v*10)/10}${unit}` : '未测得';
@@ -27,40 +27,59 @@ function clearFile(){if(state.url)URL.revokeObjectURL(state.url);state.file=null
 function navigate(tab){
   if(state.upload){toast('正在上传，请先完成或取消上传');return;}
   if(typeof stopLive==='function')stopLive();
-  clearTimeout(pollTimer);state.tab=tab;state.job=null;state.training=null;clearFile();
+  clearTimeout(pollTimer);state.tab=tab;state.job=null;state.training=null;state.detail=false;state.search='';state.viewFilter='all';clearFile();
   if(tab==='assess'&&!selected()){state.selected='shoulder_abduction';state.joint='shoulder';}
-  document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  syncNavigation();
   render();window.scrollTo({top:0,behavior:'instant'});
 }
+function syncNavigation(){
+  const active=['posture','body','care'].includes(state.tab)?'assess':state.training?'plan':state.tab;
+  document.querySelectorAll('[data-tab]').forEach(b=>{b.classList.toggle('active',b.dataset.tab===active);if(b.dataset.tab===active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+}
+function libraryRows(items,mode){
+  return items.length?items.map(x=>`<button class="action-row" data-action="${esc(x.id)}"><span><strong>${esc(x.label)}</strong><small>${esc(mode==='fitness'?x.group:x.joint_label)} · ${mode==='fitness'||x.view==='sagittal'?'侧面':'正面'}拍摄</small></span><span class="row-link">查看</span></button>`).join(''):'<p class="library-empty" role="status">没有找到这个动作，试试其他名称或部位。</p>';
+}
+function filteredActions(items,mode){
+  return items.filter(x=>(mode==='fitness'?(state.fitnessGroup==='all'||x.group===state.fitnessGroup):(state.joint==='all'||x.joint===state.joint))&&(state.viewFilter==='all'||(mode==='fitness'?'sagittal':x.view)===state.viewFilter)&&(!state.search||x.label.toLowerCase().includes(state.search.toLowerCase())));
+}
+function actionLibrary(mode){
+  const fitness=mode==='fitness', items=fitness?state.fitnessCatalog:state.catalog;
+  const groups=fitness?[...new Set(items.map(x=>x.group))].map(x=>[x,x]):[...new Map(items.map(x=>[x.joint,x.joint_label]))];
+  const active=fitness?state.fitnessGroup:state.joint;
+  app.innerHTML=`<div class="page-head library-heading"><h1>${fitness?'健身动作库':'康复评估'}</h1><span class="caption">${items.length} 个动作</span></div>${fitness?'<div class="entry-links"><button id="fitness-demo">示例报告<span>模拟数据</span></button></div>':'<div class="entry-links"><button id="posture-entry">站姿体态<span>正面 / 侧面</span></button><button id="body-entry">身体汇总<span>评估与训练</span></button></div>'}<div class="library-toolbar"><label class="search-field"><span class="sr-only">搜索动作</span><input type="search" id="action-search" placeholder="搜索动作" value="${esc(state.search)}" autocomplete="off"></label>${fitness?'':'<label><span class="sr-only">拍摄机位</span><select id="view-filter"><option value="all">全部机位</option><option value="frontal">正面拍摄</option><option value="sagittal">侧面拍摄</option></select></label>'}</div><div class="action-library"><aside class="body-categories" aria-label="${fitness?'动作分类':'身体部位'}">${[['all','全部'],...groups].map(([id,name])=>`<button data-category="${esc(id)}" class="${id===active?'selected':''}" aria-pressed="${id===active}">${esc(name)}</button>`).join('')}</aside><section class="action-list" id="action-list" aria-label="动作列表">${libraryRows(filteredActions(items,mode),mode)}</section></div>`;
+  function bindRows(){document.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>{clearFile();state.selected=b.dataset.action;state.detail=true;fitness?fitnessPage():assessment();window.scrollTo(0,0);});}
+  function updateRows(){ $('#action-list').innerHTML=libraryRows(filteredActions(items,mode),mode);bindRows();}
+  document.querySelectorAll('[data-category]').forEach(b=>b.onclick=()=>{if(fitness)state.fitnessGroup=b.dataset.category;else state.joint=b.dataset.category;actionLibrary(mode);});
+  $('#action-search').oninput=e=>{state.search=e.target.value.trim();updateRows();};
+  if(!fitness){$('#view-filter').value=state.viewFilter;$('#view-filter').onchange=e=>{state.viewFilter=e.target.value;updateRows();};$('#posture-entry').onclick=()=>navigate('posture');$('#body-entry').onclick=()=>navigate('body');}
+  else $('#fitness-demo').onclick=showBarDemo;
+  bindRows();
+}
+function backToLibrary(mode){if(state.upload)return;clearFile();state.detail=false;mode==='fitness'?fitnessPage():assessment();window.scrollTo(0,0);}
 function render(){if(state.tab==='assess')assessment();else if(state.tab==='history')history();else if(state.tab==='plan')plan();else if(state.tab==='fitness')fitnessPage();else if(state.tab==='posture')posturePage();else if(state.tab==='body')bodyPage();else if(state.tab==='care')carePage();else devices();}
 function assessment(){
+  if(!state.detail&&!state.training){actionLibrary('assessment');return;}
   const ex=selected(), i=ex.instructions;
-  const joints=[...new Map(state.catalog.map(x=>[x.joint,x.joint_label]))];
-  app.innerHTML=`<section class="hero"><div class="hero-orbit" aria-hidden="true"></div><h1>身体评估</h1><p>选择部位，拍摄动作，查看评估结果。</p></section>
-  <div class="steps"><span class="current">01 选择动作</span><span>02 拍摄上传</span><span>03 查看结果</span></div>
-  <div class="layout"><section><div class="section-head"><h2>选择部位</h2><small>按身体部位选择</small></div><div class="chips" aria-label="身体部位">${joints.map(([id,name])=>`<button class="chip ${id===state.joint?'selected':''}" data-joint="${id}" aria-pressed="${id===state.joint}">${esc(name)}</button>`).join('')}</div>
-  <div class="exercise-grid">${state.catalog.filter(x=>x.joint===state.joint).map(x=>`<button class="exercise ${x.id===ex.id?'selected':''}" data-exercise="${x.id}" aria-pressed="${x.id===ex.id}"><strong>${esc(x.label)}</strong><small>${x.view==='frontal'?'正面':'侧面'}拍摄${x.experimental?' · 探索性观察':''}</small></button>`).join('')}</div>
-  <div class="card tint"><span class="tag">拍摄小贴士</span><h3>拍摄准备</h3><p class="tip">手机放稳，开始前停留 3 秒，按提示完成动作并回位。建议录制 15–40 秒。</p><p class="tip">不追求极限幅度；疼痛、头晕或不适时立即停止。</p></div></section>
-  <section><div class="card" id="guide"><span class="tag">${esc(i.view_label)}</span><h2>${esc(ex.label)}</h2><div class="side" aria-label="本人测试侧"><button data-side="left" class="${state.side==='left'?'selected':''}">本人左侧</button><button data-side="right" class="${state.side==='right'?'selected':''}">本人右侧</button></div>
-  <div class="camera-note">${esc(i.camera)}</div>${[['1',i.start],['2',i.move],['3',i.return]].map(([n,t])=>`<div class="instruction"><span class="number">${n}</span><p>${esc(t)}</p></div>`).join('')}
-  <details><summary>了解本次测量</summary>${esc(i.boundary)}<br>${esc(i.count)}</details></div>
-  <div class="card"><div class="section-head"><h3>上传评估视频</h3><small>最长 2 分钟</small></div><button class="primary" id="camera-btn">拍摄视频</button><button class="secondary" id="gallery-btn">选择视频</button><input id="camera-file" type="file" accept="video/*" capture="environment" hidden><input id="gallery-file" type="file" accept="video/*" hidden><div id="file-area"></div><p class="tip">拍摄后返回本页。也可选择相册或网络摄像头导出的录像。</p></div></section></div>`;
-  document.querySelectorAll('[data-joint]').forEach(b=>b.onclick=()=>{clearFile();state.joint=b.dataset.joint;state.selected=state.catalog.find(x=>x.joint===state.joint).id;assessment();});
-  document.querySelectorAll('[data-exercise]').forEach(b=>b.onclick=()=>{clearFile();state.selected=b.dataset.exercise;assessment();if(innerWidth<651)$('#guide').scrollIntoView({behavior:'smooth',block:'start'});});
+  app.innerHTML=`<button class="back" id="action-back">返回${state.training?'训练':'动作库'}</button><section class="hero action-title"><h1>${esc(ex.label)}</h1><p>${esc(ex.joint_label)} · ${esc(i.view_label)}</p></section>
+  <div class="steps"><span class="current">1 看动作</span><span>2 拍摄</span><span>3 看结果</span></div>
+  <div class="layout detail-layout"><section><div class="card" id="guide"><div class="section-head"><h2>怎么做</h2><small>缓慢完成，再回位</small></div><div class="side" aria-label="本人测试侧"><button data-side="left" class="${state.side==='left'?'selected':''}" aria-pressed="${state.side==='left'}">本人左侧</button><button data-side="right" class="${state.side==='right'?'selected':''}" aria-pressed="${state.side==='right'}">本人右侧</button></div>
+  ${[['1',i.start],['2',i.move],['3',i.return]].map(([n,t])=>`<div class="instruction"><span class="number">${n}</span><p>${esc(t)}</p></div>`).join('')}
+  <details><summary>拍摄与测量说明</summary><p>${esc(i.camera)}</p><p>开始前停留 3 秒，建议录制 15–40 秒。不适时停止。</p>${esc(i.boundary)}<br>${esc(i.count)}</details></div></section>
+  <section><div id="training-dose"></div><div class="card capture-card"><div class="section-head"><h2>${state.training?'记录本次训练':'开始评估'}</h2><small>录像上传</small></div><p class="caption">手机放稳，${ex.view==='frontal'?'正面':'侧面'}拍摄。</p><button class="primary file-actions" id="camera-btn">拍摄视频</button><button class="secondary" id="gallery-btn">选择已有视频</button><input id="camera-file" type="file" accept="video/*" capture="environment" hidden><input id="gallery-file" type="file" accept="video/*" hidden><div id="file-area"></div></div></section></div>`;
+  $('#action-back').onclick=()=>state.training?navigate('plan'):backToLibrary('assessment');
   document.querySelectorAll('[data-side]').forEach(b=>b.onclick=()=>{if(state.file && !confirm('更改测试侧会清除当前选择的录像，是否继续？'))return;clearFile();state.side=b.dataset.side;assessment();});
   $('#camera-btn').onclick=()=>$('#camera-file').click();$('#gallery-btn').onclick=()=>$('#gallery-file').click();
   for(const id of ['camera-file','gallery-file'])$('#'+id).onchange=e=>chooseFile(e.target.files[0]);
   if(state.training){
     const t=state.training.entry;
-    $('.hero h1').textContent='本次训练';
-    $('.hero p').textContent='录制训练 · 上传分析 · 查看完成情况';
-    $('.steps').innerHTML='<span class="current">01 查看训练安排</span><span>02 录制并上传</span><span>03 反馈与下一项</span>';
-    $('.layout > section:first-child').innerHTML=`<div class="card tint"><span class="tag">本次训练安排 · ${sideLabel(t.side)}</span><h2>${esc(label(t.exercise_id))}</h2><div class="stat-grid"><div class="stat"><strong>${t.settings.target_reps}<small> 次</small></strong><small>本次目标</small></div><div class="stat"><strong>${t.settings.target_sets}<small> 组</small></strong><small>按舒适范围进行</small></div></div><p class="caption">${t.settings.target_angle_deg!==null?'个人角度目标 '+number(t.settings.target_angle_deg,'°')+'。':'本项未设置角度目标。'} 按动作提示录制。</p><p class="warning">感到疼痛、头晕或不适，请立即停止。</p><button class="secondary" id="back-plan">返回训练中心</button></div>`;
+    $('.hero p').textContent='本次训练 · '+sideLabel(t.side);
+    $('.steps').innerHTML='<span class="current">1 看动作</span><span>2 记录训练</span><span>3 填写感受</span>';
+    $('#training-dose').innerHTML=`<div class="card"><h2>本次目标</h2><div class="stat-grid"><div class="stat"><strong>${t.settings.target_reps}<small> 次</small></strong><small>每组次数</small></div><div class="stat"><strong>${t.settings.target_sets}<small> 组</small></strong><small>训练组数</small></div></div>${Number.isFinite(t.settings.target_angle_deg)?'<p class="caption">个人角度目标 '+number(t.settings.target_angle_deg,'°')+'</p>':''}<p class="tip">感到疼痛、头晕或不适，请停止。</p><button class="secondary" id="back-plan">返回训练</button></div>`;
     $('.side').innerHTML=`<p class="caption">测试侧：本人${sideLabel(t.side)}，由本次计划确定</p>`;
     $('#back-plan').onclick=()=>navigate('plan');
   }
   fileArea();
-  if(!state.training)mountAssessmentExtras();
+  mountAssessmentExtras();
 }
 function chooseFile(file){if(!file)return;if(file.size>256*1024*1024){toast('视频超过 256 MB，请缩短视频或降低分辨率');return;}clearFile();state.file=file;state.url=URL.createObjectURL(file);fileArea();}
 function fileArea(){
@@ -139,26 +158,32 @@ function renderJob(j){
   }
 }
 function devices(){
-  app.innerHTML=`<div class="page-head"><h1>设备连接</h1><p>手机负责拍摄与查看，电脑负责分析。</p></div><div class="layout"><div><div class="card"><div class="device-icon">▣</div><div class="section-head"><h2>手机摄像头</h2><span class="device-state">可使用</span></div><p class="caption">用手机相机拍摄，上传后查看结果。</p><button class="primary file-actions" id="device-assess">去拍摄评估</button></div><div class="card"><div class="section-head"><h2>电脑分析服务</h2><span class="device-state">已连接</span></div><p class="caption">${esc(location.host)}</p><p class="tip">保持电脑服务开启。手机锁屏可能中断正在进行的上传；上传成功后电脑会独立继续分析。</p></div></div><div class="card"><span class="tag">网络摄像头</span><h2>网络摄像头</h2><p class="status-text">暂未连接</p><p class="caption">网络摄像头通常先与手机、电脑连接同一路由器，由电脑接收视频流，再给手机展示画面。</p><div class="camera-note">暂支持上传摄像头导出的录像。</div><p class="tip">实时预览和远程录制暂未开放。</p></div></div>`;
+  app.innerHTML=`<div class="page-head"><h1>我的设备</h1></div><div class="layout"><div class="card"><div class="section-head"><h2>手机相机</h2><span class="device-state">录像上传</span></div><p class="caption">拍摄后返回网页，上传分析。</p><button class="primary file-actions" id="device-assess">选择评估动作</button></div><section class="card"><div class="section-head"><h2>分析电脑</h2><span class="device-state">已连接</span></div><p class="caption">${esc(location.host)}</p><details><summary>连接说明</summary>保持电脑服务开启，上传期间不要锁屏。上传成功后，可离开网页等待分析结果。</details></section></div>`;
   $('#device-assess').onclick=()=>navigate('assess');
   mountDeviceExtras();
 }
-async function init(){if(location.hash.startsWith('#care=')){state.shareCode=decodeURIComponent(location.hash.slice(6));window.history.replaceState(null,'',location.pathname);carePage();return;}let data;try{data=await api('/catalog');}catch(e){pairPage();return;}state.catalog=data.exercises;state.fitnessCatalog=data.fitness||[];state.postureCatalog=data.posture||[];$('.bottom-nav').hidden=false;$('#connection').textContent='电脑已连接';try{render();}catch(e){console.error('页面未能加载',e);toast('页面未能加载，请刷新重试');}}
+async function init(){if(location.hash.startsWith('#care=')){state.shareCode=decodeURIComponent(location.hash.slice(6));window.history.replaceState(null,'',location.pathname);carePage();return;}let data;try{data=await api('/catalog');}catch(e){pairPage();return;}state.catalog=data.exercises;state.fitnessCatalog=data.fitness||[];state.postureCatalog=data.posture||[];$('.bottom-nav').hidden=false;$('#connection').textContent='已连接';syncNavigation();try{render();}catch(e){console.error('页面未能加载',e);toast('页面未能加载，请刷新重试');}}
+function weekStrip(now=new Date()){
+  const monday=new Date(now.getFullYear(),now.getMonth(),now.getDate());monday.setDate(monday.getDate()-(monday.getDay()+6)%7);
+  return `<div class="week-strip" aria-label="本周日期">${['一','二','三','四','五','六','日'].map((name,i)=>{const day=new Date(monday);day.setDate(day.getDate()+i);const today=day.toDateString()===now.toDateString(),iso=`${day.getFullYear()}-${String(day.getMonth()+1).padStart(2,'0')}-${String(day.getDate()).padStart(2,'0')}`;return `<div class="week-day ${today?'today':''}" ${today?'aria-current="date"':''}><strong>${today?'今':name}</strong><time datetime="${iso}">${day.getDate()}</time></div>`;}).join('')}</div>`;
+}
 function plan(){
-  app.innerHTML='<div class="page-head"><span class="tag">训练中心</span><h1>训练计划</h1><p>根据评估结果安排训练。</p></div><div id="plan-content"><p class="loading">正在汇总评估…</p></div>';
+  app.innerHTML=`<div class="page-head"><h1>我的训练</h1></div>${weekStrip()}<div class="schedule-tools"><button id="schedule-assess">康复动作库</button><button id="schedule-body">身体汇总</button><button id="schedule-history">训练记录</button></div><div id="plan-content"><p class="loading" role="status">正在读取训练安排…</p></div>`;
+  $('#schedule-assess').onclick=()=>navigate('assess');$('#schedule-body').onclick=()=>navigate('body');$('#schedule-history').onclick=()=>{state.historyFilter='rehab';navigate('history');};
   api('/plan').then(data=>{
     if(state.tab!=='plan')return;
     const {proposal,progress}=data, record=data.plan, items=proposal.candidates.slice(0,4), area=$('#plan-content');
     area.innerHTML='';
     if(record){
-      area.innerHTML=`<div class="card"><span class="tag">已确认的个人计划</span><h2>已完成 ${progress.completed} / ${progress.total} 项</h2>${record.items.map((i,n)=>`<div class="plan-item"><strong>${n+1}. ${esc(label(i.exercise_id))} · ${sideLabel(i.side)}</strong><p class="caption">${i.settings.target_reps} 次 × ${i.settings.target_sets} 组 · ${progress.items[n].done?'已达到次数目标':'待完成'}</p></div>`).join('')}${progress.blocked?`<p class="warning">${esc(progress.blocked)}</p><button id="training-records" class="secondary">查看训练记录 / 补充感受</button>`:progress.next_key?'<button class="primary file-actions" id="train-next">开始下一项训练 →</button>':'<p class="warning">本轮训练已完成。</p>'}</div>`;
-      if($('#train-next'))$('#train-next').onclick=()=>{const entry=record.items.find(i=>i.key===progress.next_key);state.training={id:record.id,entry};state.selected=entry.exercise_id;state.side=entry.side;state.joint=selected().joint;state.tab='assess';clearFile();assessment();window.scrollTo(0,0);};
+      const next=record.items.find(i=>i.key===progress.next_key);
+      area.innerHTML=`<div class="card"><div class="schedule-header"><h2>${progress.next_key?'本轮安排':'本轮完成'}</h2><p>${progress.completed} / ${progress.total} 项</p></div>${next?`<h1>${esc(label(next.exercise_id))}</h1><p class="caption">${sideLabel(next.side)} · ${next.settings.target_reps} 次 × ${next.settings.target_sets} 组</p>`:''}<progress class="schedule-progress" max="${Math.max(1,progress.total)}" value="${progress.completed}" aria-label="本轮训练完成项数"></progress>${progress.blocked?`<p class="warning">${esc(progress.blocked)}</p><button id="training-records" class="secondary">补充训练感受</button>`:progress.next_key?'<button class="primary file-actions" id="train-next">开始训练</button>':'<p class="tip">本轮训练已完成。</p>'}</div><div class="card"><h2>训练清单</h2>${record.items.map((i,n)=>`<div class="plan-item"><strong>${esc(label(i.exercise_id))}</strong><p class="caption">${sideLabel(i.side)} · ${i.settings.target_reps} 次 × ${i.settings.target_sets} 组 <span class="${progress.items[n].done?'plan-done':''}">· ${progress.items[n].done?'已完成':'待完成'}</span></p></div>`).join('')}</div>`;
+      if($('#train-next'))$('#train-next').onclick=()=>{const entry=record.items.find(i=>i.key===progress.next_key);state.training={id:record.id,entry};state.selected=entry.exercise_id;state.side=entry.side;state.joint=selected().joint;state.tab='assess';state.detail=true;syncNavigation();clearFile();assessment();window.scrollTo(0,0);};
       if($('#training-records'))$('#training-records').onclick=()=>navigate('history');
     }
     if(!record || progress.blocked || !progress.next_key){
-      area.insertAdjacentHTML('beforeend',items.length?`<div class="card"><div class="section-head"><h2>根据评估生成的建议</h2><small>${items.length} 项</small></div>${items.map(i=>`<div class="plan-item"><strong>${esc(i.label)}</strong><br><span class="dose">${i.settings.target_reps} 次 × ${i.settings.target_sets} 组 · 组间休息 ${i.settings.rest_between_sets_s} 秒</span><p>${esc(i.rationale)}</p><p class="caption">${esc(i.instruction)}</p><details><summary>为什么安排这个动作？</summary>参考：${esc(i.source.title)} / ${esc(i.source.section)}。次数及幅度是本项目按本人评估适配，不是指南直接开出的个人处方。</details></div>`).join('')}<form id="plan-form"><label class="consent"><input id="activity-ok" type="checkbox" required><span>我目前无疼痛、头晕等不适，无疾病、术后或医嘱活动限制，并已获准进行这类基础活动；不确定时先咨询专业人员。</span></label><label class="consent"><input id="support-ok" type="checkbox"><span>站立项目已准备稳固支撑，并具备安全完成的条件（不选则排除站立项目）。</span></label><button class="primary">确认适用，生成本次训练计划</button></form><p class="tip">一般基础活动安排，不是疾病治疗处方。手机端采用录制后分析，不是实时监护。</p></div>`:!record?'<div class="card empty"><div class="status-orb">▤</div><h3>先完成一次有效评估</h3><p>完成评估后，这里会生成适合本次表现的训练建议。</p><button class="primary" id="plan-assess">开始身体评估</button></div>':'');
+      area.insertAdjacentHTML('beforeend',items.length?`<div class="card"><div class="section-head"><h2>${record?'下一轮计划':'你的训练建议'}</h2><small>${items.length} 项</small></div>${items.map(i=>`<div class="plan-item"><strong>${esc(i.label)}</strong><span class="dose">${i.settings.target_reps} 次 × ${i.settings.target_sets} 组 · 休息 ${i.settings.rest_between_sets_s} 秒</span><details><summary>动作安排与依据</summary><p>${esc(i.instruction)}</p><p>${esc(i.rationale)}</p>参考：${esc(i.source.title)} / ${esc(i.source.section)}。次数及幅度按本人评估适配，不是疾病治疗处方。</details></div>`).join('')}<form id="plan-form"><label class="consent"><input id="activity-ok" type="checkbox" required><span>目前无疼痛、头晕等不适，无疾病、术后或医嘱活动限制，并已获准进行基础活动。不确定时先咨询专业人员。</span></label><label class="consent"><input id="support-ok" type="checkbox"><span>站立项目已准备稳固支撑，可安全完成。</span></label><button class="primary">使用这份计划</button></form></div>`:!record?'<div class="card empty"><h2>从一次评估开始</h2><p>完成动作评估后，自动生成本轮训练建议。</p><button class="primary" id="plan-assess">开始评估</button></div>':'');
     }
-    if(proposal.excluded.length)area.insertAdjacentHTML('beforeend',`<div class="card"><h3>需要再观察的项目</h3>${proposal.excluded.map(x=>`<p class="tip">${esc(x.label)}：${esc(x.reason)}</p>`).join('')}</div>`);
+    if(proposal.excluded.length)area.insertAdjacentHTML('beforeend',`<div class="card"><details><summary>待补充评估 · ${proposal.excluded.length} 项</summary>${proposal.excluded.map(x=>`<p class="tip">${esc(x.label)}：${esc(x.reason)}</p>`).join('')}</details></div>`);
     if($('#plan-assess'))$('#plan-assess').onclick=()=>navigate('assess');
     if($('#plan-form'))$('#plan-form').onsubmit=async e=>{e.preventDefault();const b=e.currentTarget.querySelector('button');b.disabled=true;try{await api('/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({general_activity_ok:$('#activity-ok').checked,standing_support_ok:$('#support-ok').checked,companion_present:false})});plan();}catch(e){toast(e.message);b.disabled=false;}};
   }).catch(e=>{if($('#plan-content'))$('#plan-content').innerHTML='<div class="card empty"><h3>暂时没有读取到训练安排</h3><button class="secondary" id="reload-plan">重试</button></div>';if($('#reload-plan'))$('#reload-plan').onclick=plan;toast(e.message);});
