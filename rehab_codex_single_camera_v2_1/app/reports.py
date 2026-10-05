@@ -404,7 +404,7 @@ def render_result_summary(s, *, document=True):
     body += _training_execution_html(s)
     body += '<h2>下一步</h2><p>'
     if session_value(s,'submode')=='training':
-        body += '本次训练记录已保存。请记录训练感受，再返回今日恢复查看安排；需要休息时可稍后继续。'
+        body += '本次训练记录已保存。请记录训练感受，再返回康复查看安排；需要休息时可稍后继续。'
     elif evidence['guided']:
         body += ('本次活动已保存。想要可比较的测量记录时，可在光线和取景较好时重做一次自动测量评估；'
                  '引导计时记录只保存在历史中。')

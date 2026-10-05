@@ -62,10 +62,10 @@ def test_path_1_original_training_engine_real_feedback_and_home(tmp_path,monkeyp
         dialog.scores['pain'].setValue(0);dialog.notes.setPlainText('TEST 控制器完成后反馈')
         dialog.save.click();wait(app,lambda:w.legacy.feedback_dialog is None and not w.legacy.busy)
         assert 'TEST 控制器完成后反馈' in report.overview.toPlainText()
-        assert '返回今日恢复' in report.overview.toPlainText()
+        assert '返回康复' in report.overview.toPlainText()
         assert '可继续评估其他动作' not in report.overview.toPlainText()
-        next(b for b in report.findChildren(QPushButton) if b.text()=='返回今日恢复').click();settle(w,app)
-        assert w.rehab_tabs.currentIndex()==0 and w.rehab_sections.currentIndex()==0
+        next(b for b in report.findChildren(QPushButton) if b.text()=='返回康复').click();settle(w,app)
+        assert w.rehab_tabs.currentIndex()==3 and w.rehab_sections.currentIndex()==0
         assert 'TEST 控制器完成后反馈' in w.recovery_fields['result'].text()
         w.interface_buttons['rehabHome'].click();settle(w,app)
         assert w.active_page=='home'

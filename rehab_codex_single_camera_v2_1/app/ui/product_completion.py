@@ -18,7 +18,7 @@ STABLE_ACTION_IDS = dict(zip(
     (0,1,2,3,4,5,6,7,8,9,10,199,200,201,202,77,75,69,70,71,72,37,40,41,42,43,44,45,32,31,27,28)))
 
 MODULE_NAV_ACTIONS={'rehabWorkspaceBack','healthMetricsEntry','healthMetricsBack','medTodayActions','medTodayActionsBack'}
-RECOVERY_NAV_ACTIONS={'recoveryAssessment','recoveryHistory','recoveryPlans','recoveryAsk','contextReturn'}
+RECOVERY_NAV_ACTIONS={'recoveryAssessment','recoveryHistory','recoveryPlans','recoveryAsk','contextReturn','rehabCreatePlan'}
 
 
 class ProductCompletion:
@@ -97,16 +97,21 @@ class ProductCompletion:
         for index in range(top.count()):
             widget=top.itemAt(index).widget()
             if widget:visual(widget,appearance='ghost')
-        overview_box.addLayout(top)
+        # Retain published action identities, without duplicate page navigation.
+        top_host=QWidget();top_host.setLayout(top);top_host.hide();overview_box.addWidget(top_host)
         self.rehab_tabs=QTabWidget()
-        self.rehab_summary={};self.rehab_tables={}
+        self.rehab_summary={};self.rehab_tables={};self.rehab_areas={};self.recovery_sections={}
         definitions=[('今日恢复',['动作','恢复流程（计划累计）','目标']),('康复评估',['时间','动作 / 侧别','有效性']),
                      ('训练计划',['计划','累计完成情况','创建时间']),('康复进度',['时间','训练','完成 / 反馈'])]
         for title,headers in definitions:
             sub=QWidget();area=QVBoxLayout(sub)
             area.setSpacing(SPACING['sm']);area.setContentsMargins(*([SPACING['lg']]*4))
+            area.setAlignment(Qt.AlignTop);self.rehab_areas[title]=area
             self.rehab_summary[title]=visual(label('正在读取…'),typography='body');area.addWidget(self.rehab_summary[title])
             if title=='今日恢复':
+                visual(self.rehab_summary[title],typography='section')
+                self.rehab_next_detail=visual(label(''),typography='body');area.addWidget(self.rehab_next_detail)
+                self.rehab_scope_label=visual(label(''),typography='caption');area.addWidget(self.rehab_scope_label)
                 self.rehab_progress=QProgressBar();self.rehab_progress.setTextVisible(False)
                 self.rehab_progress.setAccessibleName('当前计划累计进度');area.addWidget(self.rehab_progress)
             self.rehab_tables[title]=table(headers);self.rehab_tables[title].setMinimumHeight(90)
@@ -114,13 +119,15 @@ class ProductCompletion:
             area.addWidget(self.rehab_tables[title])
             row=QHBoxLayout()
             if title=='今日恢复':
-                self._action(row,'rehabContinue','继续训练',self._continue_training,target='原训练准备与确认')
+                self._action(row,'rehabContinue','开始评估',self._rehab_next_action,target='当前状态对应的评估 / 原训练准备')
                 self._action(row,'rehabAction','查看下一项 / 动作目录',self._show_training_action,target='原动作目录')
                 self._action(row,'rehabStart','开始训练',self._start_existing_training,kind='A',target='原 Runtime.start')
             elif title=='康复评估':
                 self._action(row,'rehabAssess','开始新评估',lambda:self._rehab_action('assessment'),target='原康复评估')
                 self._action(row,'rehabAssessmentDetail','查看详情',lambda:self._rehab_detail('assessment'),target='原 report')
                 self._action(row,'rehabBody','身体档案与测量条件',lambda:self._rehab_action('body'),target='原 Body Profile')
+                area.addWidget(self.interface_buttons['rehabOverview'])
+                self.interface_buttons['rehabOverview'].setText('摄像头与训练设置')
             elif title=='训练计划':
                 self._action(row,'rehabLibrary','我的训练计划',self._plan_library,target='原计划库')
                 self._action(row,'rehabAutomatic','根据评估自动安排',self._automatic_plan,target='原自动计划/接受/准备')
@@ -137,19 +144,28 @@ class ProductCompletion:
                 # Put the primary action before the plan table in the reading order.
                 area.removeWidget(self.rehab_tables[title]);area.addWidget(self.rehab_tables[title])
                 self.recovery_fields={};details=ResponsiveGrid(columns=1,threshold=0)
-                for key,heading in [('flow','今日恢复流程'),('result','最近训练结果'),('assessment','最近评估'),('trend','恢复趋势')]:
+                for key,heading in [('flow','计划执行情况'),('result','最近保存的训练'),('assessment','最近评估'),('trend','训练与反馈变化')]:
                     section,section_box=core_card(heading);section_box.setContentsMargins(0,12,0,8)
                     field=WrappingLabel('正在读取…');field.setWordWrap(True);visual(field,typography='body')
-                    field.setObjectName('recovery-'+key);self.recovery_fields[key]=field;section_box.addWidget(field);details.add(section)
+                    field.setObjectName('recovery-'+key);self.recovery_fields[key]=field;section_box.addWidget(field)
+                    self.recovery_sections[key]=section
+                    if key=='result':details.add(section)
+                    else:section.setParent(sub)
                 area.addWidget(details)
                 shortcuts=QHBoxLayout()
                 self._action(shortcuts,'recoveryAssessment','新评估 / 查看详情',lambda:self.rehab_tabs.setCurrentIndex(1),target='康复评估')
                 self._action(shortcuts,'recoveryHistory','历史训练 / 反馈',lambda:self.rehab_tabs.setCurrentIndex(3),target='康复进度')
                 self._action(shortcuts,'recoveryPlans','安排训练计划',lambda:self.rehab_tabs.setCurrentIndex(2),target='训练计划')
                 self._action(shortcuts,'recoveryAsk','问问康复管家',self._open_global_assistant,target='同一用户管家侧栏')
-                area.addLayout(shortcuts)
+                shortcuts_host=QWidget();shortcuts_host.setLayout(shortcuts);shortcuts_host.hide();area.addWidget(shortcuts_host)
+                create=self._action(row,'rehabCreatePlan','建立训练计划',self._plan_library,target='原计划库')
+                row.removeWidget(create);row.insertWidget(1,create)
             scroll=QScrollArea();scroll.setWidgetResizable(True);scroll.setFrameShape(QFrame.NoFrame);scroll.setWidget(sub)
             self.rehab_tabs.addTab(scroll,title)
+        for key,title in [('flow','训练计划'),('assessment','康复评估'),('trend','康复进度')]:
+            self.rehab_areas[title].addWidget(self.recovery_sections[key])
+        for area in self.rehab_areas.values():area.addStretch(1)
+        self.rehab_tabs.setTabText(0,'训练');self.rehab_tabs.setTabText(3,'训练记录')
         overview_box.addWidget(self.rehab_tabs,1);self.rehab_sections.addWidget(overview)
         # Original cameras, dual-camera, report and training UI keep their native layout.
         # A scroll boundary lets 1024px windows use it without shrinking its controls.
@@ -157,7 +173,7 @@ class ProductCompletion:
         self.rehab_workspace.setFrameShape(QFrame.NoFrame)
         self.rehab_workspace.setWidget(self.legacy)
         workspace=QWidget();workspace_box=QVBoxLayout(workspace);workspace_box.setContentsMargins(0,0,0,0)
-        self._action(workspace_box,'rehabWorkspaceBack','返回今日恢复',self._return_recovery,target='今日恢复，刷新已保存数据')
+        self._action(workspace_box,'rehabWorkspaceBack','返回康复',self._return_recovery,target='返回来源页签，刷新已保存数据')
         workspace_box.addWidget(self.rehab_workspace,1);self.rehab_sections.addWidget(workspace)
         self.rehab_tabs.currentChanged.connect(self._rehab_tab_changed)
         self.pages.addWidget(page);self.page_widgets['rehab']=page
@@ -205,6 +221,8 @@ class ProductCompletion:
             p=QWidget();area=QVBoxLayout(p);area.setAlignment(Qt.AlignTop);self.settings_tabs.addTab(p,title);return area
         area=tab('个人资料');self.profile_summary=label('请建立个人资料。');self.profile_summary.setMaximumHeight(120);area.addWidget(self.profile_summary)
         self._action(area,'settingsProfile','编辑个人资料与康复目标',self._profile,kind='A',target='profile.save')
+        area.addWidget(self.interface_buttons['rehabPerson'])
+        self.interface_buttons['rehabPerson'].setText('康复测量个人资料')
         from PySide6.QtCore import QSettings
         from PySide6.QtWidgets import QCheckBox
         preference=QSettings('Ankang','ProductUI')
@@ -366,11 +384,19 @@ class ProductCompletion:
             '特殊硬件：当前仅保留数据接入接口，没有独立厂商连接驱动。'],
             [('导入设备数据',self._import_device_file),('摄像头 / 回放设置',lambda:self._rehab_action('assessment'))])
 
-    def _continue_training(self):
-        if not self._rehab_action('training'): return
+    def _rehab_next_action(self):
         plans=self._rehab_data('rehab.get_training_plan')
         if not plans:
-            self._message('今天暂无康复计划。可先做评估，再使用下方自动安排或训练计划库。');return
+            self._rehab_action('assessment');return
+        if not plans[0].get('progress',{}).get('next_key'):
+            self.rehab_tabs.setCurrentIndex(3);return
+        self._continue_training()
+
+    def _continue_training(self):
+        plans=self._rehab_data('rehab.get_training_plan')
+        if not plans:
+            self._rehab_action('assessment');return
+        if not self._rehab_action('training'): return
         if plans[0].get('record_origin')=='assessment_rules': self.legacy._open_automatic_plan()
         else: self.legacy._open_plan_library()
 
@@ -418,15 +444,15 @@ class ProductCompletion:
             return False
         self.rehab_overview_collapsed=workspace
         self.rehab_sections.setCurrentIndex(1 if workspace else 0)
-        self.interface_buttons['rehabOverview'].setText('展开概览' if workspace else '收起概览')
+        self.interface_buttons['rehabOverview'].setText('摄像头与训练设置')
         return True
 
     def _return_recovery(self):
         if self._show_rehab_scope(False):
-            self.rehab_tabs.setCurrentIndex(0)
+            self.rehab_tabs.setCurrentIndex(getattr(self,'last_rehab_tab',0))
             if not self.pending:self._request('snapshot')
             else:self.refresh_needed=True
-            self._message('已返回今日恢复，正在读取已保存的训练和反馈。')
+            self._message('已返回康复，正在读取已保存的训练和反馈。')
 
     def _toggle_rehab_overview(self):
         collapsed=not getattr(self,'rehab_overview_collapsed',False)
@@ -585,11 +611,12 @@ class ProductCompletion:
         scope=self.legacy._body_scope_key()
         self.rehab_summary['今日恢复'].setText('今天的恢复\n数据范围：'+SOURCES.get(scope['source_kind'],scope['source_kind'])+' / '+CONTEXTS.get(scope['usage_context'],scope['usage_context'])+'\n'+self.next_training.text()+f'\n今日完成 {completed} 次训练；计划项目状态按累计记录显示。')
         self._render_recovery(training,assessments,p,today)
+        self._present_rehab(p,training,assessments,scope)
         rows(self.rehab_tables['训练计划'],[(p['name'],f"{p['progress']['completed']}/{p['progress']['total']}",p.get('created_utc','未记录')) for p in plans],keys=[p['id'] for p in plans])
         self.rehab_summary['训练计划'].setText('当前保存的计划，无按周排期接口；动作目标及接受 / 准备由原计划窗口核对。' if plans else '暂无训练计划，可先评估再安排。')
         rows(self.rehab_tables['康复评估'],[(r.get('end_utc',''),r['exercise_label']+' · '+{'left':'左侧','right':'右侧'}.get(r.get('side'),'不分侧'),{'ASSESSED':'已评估','UNAVAILABLE':'数据不足','INCOMPARABLE':'条件不可比'}.get(r.get('status'),'需查看报告')) for r in assessments],keys=[r['session_id'] for r in assessments])
         self.rehab_summary['康复评估'].setText('查看原报告可核对测量条件，或打开身体档案查看汇总。' if assessments else '暂无评估记录，请先完成新评估。')
-        rows(self.rehab_tables['康复进度'],[(r.get('end_utc',''),r['exercise_label'],f"完成 {r.get('summary',{}).get('completed','未记录')} 次；"+self._feedback_text(r.get('training_feedback',{}))) for r in training],keys=[r['id'] for r in training])
+        rows(self.rehab_tables['康复进度'],[(r.get('end_utc',''),r['exercise_label'],f"完成 {r.get('summary',{}).get('completed','未记录')} 次；"+self._feedback_preview(r.get('training_feedback',{}))) for r in training],keys=[r['id'] for r in training])
         self.rehab_summary['康复进度'].setText(f'已保存 {len(training)} 次训练。数据变化不等于临床改善，条件比较见原康复历史。' if training else '暂无训练记录，完成训练并反馈后会显示。')
         rows(self.today_medications,[(m['name'],m.get('dose') or '未填写',m.get('times') or '未填写','在用') for m in active],keys=[m['id'] for m in active])
         if not active:self.medication_today.setText('暂无用药安排')
@@ -610,6 +637,47 @@ class ProductCompletion:
     def _feedback_text(feedback):
         return '；'.join(f'{title}：{feedback[key]}' for key,title in [('pain','疼痛评分'),('fatigue','疲劳评分'),('notes','本人说明')] if feedback.get(key) is not None) or '反馈尚未填写'
 
+    def _feedback_preview(self,feedback):
+        preview=dict(feedback)
+        notes=str(preview.get('notes') or '')
+        if len(notes)>64:preview['notes']=notes[:64]+'…（完整说明见详情）'
+        return self._feedback_text(preview)
+
+    def _present_rehab(self,plan,training,assessments,scope):
+        progress=plan.get('progress',{}) if plan else {}
+        next_item=next((i for i in plan['items'] if i['key']==progress.get('next_key')),None) if plan else None
+        primary=self.interface_buttons['rehabContinue']
+        if not plan:
+            self.rehab_summary['今日恢复'].setText('还没有训练计划')
+            self.rehab_next_detail.setText('先完成康复评估，或建立已有的训练安排。')
+            primary.setText('开始评估')
+        elif next_item:
+            self.rehab_summary['今日恢复'].setText('下一项训练：'+next_item['exercise_label'])
+            side={'left':'左侧','right':'右侧'}.get(next_item.get('side'),'双侧 / 不分侧')
+            detail=side+' · '+self._plan_settings(next_item['settings'])
+            detail+='\n'+plan['name']+' · 累计完成 '+str(progress['completed'])+'/'+str(progress['total'])+' 项'
+            if not plan.get('next_available',True):detail+='\n暂不能准备：'+str(plan.get('availability_reason') or '请在计划中核对适用条件。')
+            self.rehab_next_detail.setText(detail);primary.setText('准备训练')
+        else:
+            self.rehab_summary['今日恢复'].setText('当前计划已完成')
+            self.rehab_next_detail.setText('查看已保存的训练与反馈，或在训练计划中管理安排。')
+            primary.setText('查看训练记录')
+        self.rehab_scope_label.setText('记录范围：'+SOURCES.get(scope['source_kind'],scope['source_kind'])+' / '+CONTEXTS.get(scope['usage_context'],scope['usage_context']))
+        self.rehab_progress.setVisible(bool(plan))
+        self.rehab_tables['今日恢复'].hide()
+        self.interface_buttons['rehabAction'].setVisible(bool(next_item))
+        self.interface_buttons['rehabAction'].setText('查看动作说明')
+        self.interface_buttons['rehabCreatePlan'].setVisible(not plan)
+        # Starting is available in the prepared workspace, where all conditions are visible.
+        self.interface_buttons['rehabStart'].hide()
+        self.interface_buttons['rehabReports'].hide()
+        self.recovery_sections['flow'].hide()  # Same cumulative data is in plan details.
+        self.recovery_sections['result'].setVisible(bool(training))
+        self.recovery_sections['assessment'].setVisible(bool(assessments))
+        self.recovery_sections['trend'].setVisible(bool(training))
+        for key,data in [('康复评估',assessments),('训练计划',self._rehab_data('rehab.get_training_plan')),('康复进度',training)]:
+            self.rehab_tables[key].setVisible(bool(data))
+
     def _render_recovery(self,training,assessments,plan,today):
         def day(record):
             try:return datetime.fromisoformat(record.get('end_utc','').replace('Z','+00:00')).astimezone().date()
@@ -620,7 +688,7 @@ class ProductCompletion:
         latest=training[0] if training else None
         feedback=(latest or {}).get('training_feedback') or {}
         self.recovery_fields['flow'].setText(
-            ('查看计划 → 准备下一项 → 训练 → 训练后反馈 → 返回今日恢复' if plan else '还没有训练计划：先做评估，或在训练计划页建立安排。')+
+            ('查看计划 → 准备下一项 → 训练 → 训练后反馈 → 返回康复' if plan else '还没有训练计划：先做评估，或在训练计划页建立安排。')+
             ('\n最近训练反馈：已保存。' if feedback.get('revision') else '\n最近训练反馈：尚未填写，可从历史训练打开。' if latest else '\n训练后会在这里显示保存结果和反馈。'))
         self.recovery_fields['result'].setText(
             latest['exercise_label']+' · '+display_time(latest.get('end_utc'))+'\n'+
@@ -648,7 +716,7 @@ class ProductCompletion:
             if len(rated)>1:trend+=f"\n{title}（本人反馈）：{rated[1]['training_feedback'][key]} → {rated[0]['training_feedback'][key]}。"
             elif rated:trend+=f"\n{title}：{rated[0]['training_feedback'][key]}；暂无上一次反馈。"
             else:trend+=f'\n暂无{title}反馈数据。'
-        self.recovery_fields['trend'].setText(trend+'\n评估变化见最近评估，完整训练记录见康复进度。')
+        self.recovery_fields['trend'].setText(trend+'\n评估变化请核对测量条件；完整训练详情见上方记录。')
 
     def _completion_clear(self):
         if not hasattr(self,'page_states'):return
@@ -673,6 +741,9 @@ class ProductCompletion:
         self.next_training.setText('正在读取当前用户计划…');self.health_rehab_summary.setText('正在读取当前用户资料…')
         for field in self.rehab_summary.values():field.setText('正在读取…')
         for field in self.recovery_fields.values():field.setText('正在读取当前用户资料…')
+        for section in self.recovery_sections.values():section.hide()
+        self.rehab_next_detail.setText('正在读取当前用户的训练安排…')
+        self.rehab_scope_label.clear();self.rehab_progress.hide()
         for field in self.page_states.values():field.setText('正在读取当前用户资料…')
         if getattr(self,'last_detail',None):self.last_detail.close()
 
@@ -737,6 +808,15 @@ class ProductCompletion:
             if key=='rehabStart':
                 enabled=enabled and self.legacy.start_button.isEnabled() and self.legacy.submode.currentData()=='training'
                 item.setToolTip('开始已经确认的训练。' if enabled else '先点击“继续训练”，选择计划、打开输入并确认准备后，才能开始。')
+            if key=='rehabContinue':
+                plans=self._rehab_data('rehab.get_training_plan')
+                if plans and plans[0].get('progress',{}).get('next_key'):
+                    enabled=enabled and plans[0].get('next_available',True)
+                enabled=enabled and not self._rehab_locked()
+                item.setToolTip('进入准备流程，核对条件后再开始；不会自动开启摄像头。')
+            if key in ('rehabAssessmentDetail','rehabPlanDetail','rehabTrainingDetail'):
+                kind={'rehabAssessmentDetail':'康复评估','rehabPlanDetail':'训练计划','rehabTrainingDetail':'康复进度'}[key]
+                enabled=enabled and self.rehab_tables[kind].rowCount()>0
             if key=='rehabWorkspaceBack':
                 enabled=enabled and not self._rehab_locked()
                 item.setToolTip('先结束并保存当前任务、关闭摄像头测试后返回。' if not enabled else '返回概览，保留已保存数据和工作区设置。')

@@ -37,13 +37,13 @@ class ProductRehabWindow(MainWindow):
             parent=self.parentWidget()
             while parent and not hasattr(parent,'_return_recovery'):parent=parent.parentWidget()
             if parent:
-                entry=QPushButton('返回今日恢复',dialog)
+                entry=QPushButton('返回康复',dialog)
                 entry.clicked.connect(lambda: self._report_to_recovery(dialog,parent))
                 dialog.layout().addWidget(entry)
 
     def _report_to_recovery(self,dialog,parent):
         if parent._rehab_locked():
-            self.notice.setText('请先结束并保存当前任务，再返回今日恢复。');return
+            self.notice.setText('请先结束并保存当前任务，再返回康复。');return
         dialog.close();parent._return_recovery()
 
     def _silver_command(self, operation):

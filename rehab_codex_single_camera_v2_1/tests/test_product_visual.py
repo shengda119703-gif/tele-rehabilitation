@@ -18,7 +18,10 @@ def test_published_116_button_contract_and_native_connections(desktop):
         expected={r['ID']:(r['用户按钮'],r['实际动作']) for r in csv.DictReader(stream)}
     # The previous CSV captured visible pages; the already-existing closed dock is extra.
     expected['dockSend']=('发送','chat')
-    expected['rehabAction']=('查看下一项 / 动作目录','原动作目录')
+    expected['rehabAction']=('查看动作说明','原动作目录')
+    expected['rehabContinue']=('开始评估','当前状态对应的评估 / 原训练准备')
+    expected['rehabOverview']=('摄像头与训练设置','收起/展开康复概览，保留训练工作区')
+    expected['rehabPerson']=('康复测量个人资料','原参与者档案')
     # Explicitly requested input-only dictation replaces the old immediate-send route.
     expected['voiceInput']=('开始录音','ui.voice.transcribe')
     expected['voiceCancel']=('取消录音','voice.cancel')
