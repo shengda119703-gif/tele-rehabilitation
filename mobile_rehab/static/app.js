@@ -18,7 +18,7 @@ async function api(path, opts={}) {
   try{
     const res=await fetch('/api'+path,{...requestOpts,signal:controller.signal,headers:{'X-Rehab-Client':'mobile-v1',...opts.headers}});
     let body; try {body=await res.json();} catch(e){if(e.name==='AbortError')throw e;throw Error('电脑服务没有正常响应，请稍后重试');}
-    if(!res.ok) {if(res.status===401 && path!=='/pair') {pairPage();} throw Error(typeof body.detail==='string'?body.detail:'请求未完成，请稍后重试');}
+    if(!res.ok) {if(res.status===401 && path!=='/pair') {pairPage();} const error=Error(typeof body.detail==='string'?body.detail:'请求未完成，请稍后重试');error.status=res.status;throw error;}
     return body;
   }catch(e){if(e.name==='AbortError')throw Error('连接超时，请检查电脑服务后重试');if(e instanceof TypeError)throw Error('无法连接电脑，请检查 Wi-Fi 和网页服务');throw e;}
   finally{clearTimeout(timer);opts.signal?.removeEventListener('abort',cancel);}
@@ -131,9 +131,13 @@ function history(){
     if($('#start-assess'))$('#start-assess').onclick=()=>navigate(filter==='fitness'?'fitness':'assess');
   }).catch(e=>toast(e.message));
 }
-async function showJob(id){
+async function showJob(id,retry=0){
   clearTimeout(pollTimer);state.job=id;
-  try{const j=await api('/jobs/'+id);if(state.job!==id)return;renderJob(j);if(['queued','analyzing','uploading'].includes(j.state))pollTimer=setTimeout(()=>showJob(id),2000);}catch(e){toast(e.message);if(state.job===id){app.innerHTML='<div class="card empty"><h2>暂时没有连上电脑</h2><p>检查 Wi-Fi 与电脑服务，已上传的任务不会因关闭网页而停止。</p><button class="primary" id="retry">重新连接</button></div>';$('#retry').onclick=()=>showJob(id);}}
+  try{const j=await api('/jobs/'+id);if(state.job!==id)return;renderJob(j);if(['queued','analyzing','uploading'].includes(j.state))pollTimer=setTimeout(()=>showJob(id),2000);}catch(e){
+    if(state.job!==id)return;
+    if(e.status===503&&retry<5){if(!$('#job-content'))app.innerHTML='<div class="card center"><h2>正在保存结果</h2><p>保存完成后会自动显示。</p></div>';pollTimer=setTimeout(()=>{if(state.job===id)showJob(id,retry+1);},1000);return;}
+    toast(e.message);app.innerHTML=`<div class="card empty"><h2>${e.status===503?'结果暂时无法读取':'暂时没有连上电脑'}</h2><p>${e.status===503?'请稍后重试，已保存的记录不会清除。':'检查 Wi-Fi 与电脑服务，已上传的任务不会因关闭网页而停止。'}</p><button class="primary" id="retry">重试</button></div>`;$('#retry').onclick=()=>showJob(id);
+  }
 }
 function renderJob(j){
   if(j.mode==='posture'&&j.state==='done'){renderPostureReport(j);return;}

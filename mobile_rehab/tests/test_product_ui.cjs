@@ -109,6 +109,16 @@ test('network mounting no longer removes phone card',()=>{
 });
 
 function healthFixture(){return {needs_profile:false,metrics:[['weight','体重','kg']],categories:['其他资料'],snapshot:{profile:{profile:{name:'TEST <img>',age:65,conditions:[],medicationRecords:[{id:'m1',name:'TEST medicine',dose:'医嘱剂量',times:'早餐后',status:'active'}]}},state:{healthData:{measurements:[{metric:'weight',value:60,unit:'kg',timestamp:'2026-10-05T01:00:00Z'}]},chat:[{role:'elder',text:'<script>TEST</script>',persisted:false}],tasks:[{id:'t1',title:'核对用药',description:'TEST',kind:'medication_check',status:'pending'}]},attachments:[],history:{report:{sections:[],rangeText:'TEST'}}}};}
+
+test('temporary result sharing lock retries automatically and ignores a page that was left',async()=>{
+  const h=harness();let scheduled,calls=0;
+  h.c.setTimeout=fn=>{scheduled=fn;return 1;};h.c.clearTimeout=()=>{};
+  h.c.fetch=async()=>{calls++;return {ok:calls>1,status:calls>1?200:503,json:async()=>calls>1?{id:'job',state:'done'}:{detail:'结果正在保存'}};};
+  h.run("renderJob=j=>{app.innerHTML='<h2>分析完成</h2>'}");
+  await h.run("showJob('job')");assert.match(h.html,/正在保存结果/);assert.doesNotMatch(h.html,/没有连上电脑/);
+  scheduled();await new Promise(resolve=>setImmediate(resolve));assert.match(h.html,/分析完成/);assert.equal(calls,2);
+  calls=0;await h.run("showJob('job')");h.run("state.job=null");scheduled();await new Promise(resolve=>setImmediate(resolve));assert.equal(calls,1);
+});
 test('my hub exposes health, medication, assistant, archive and family without removing devices',async()=>{
   const h=harness();h.c.healthFixture=healthFixture();h.run("api=async()=>healthFixture;state.tab='more';healthPage()");await new Promise(resolve=>setImmediate(resolve));
   for(const title of ['健康指标','我的用药','健康管家','健康资料','家庭照护','设备连接'])assert.match(h.html,new RegExp(title));

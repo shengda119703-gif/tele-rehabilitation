@@ -28,6 +28,7 @@ from .core import ROOT, EXERCISE_IDS, catalog
 from .fitness import EXERCISES as FITNESS_EXERCISES, catalog as fitness_catalog
 from .barbell import validate_calibration, demo_report, SUPPORTED as BARBELL_EXERCISES
 from .posture import TASKS as POSTURE_TASKS, catalog as posture_catalog
+from .jsonio import write_json, read_json
 from app.storage import Storage
 from app.assessment import build_body_profile
 from app.automatic_plans import generate_proposal, create_automatic_plan, program_progress, validate_automatic_use
@@ -42,9 +43,7 @@ def now():
 
 
 def save(path, data):
-    temp = path.with_suffix('.tmp')
-    temp.write_text(json.dumps(data, ensure_ascii=False), encoding='utf-8')
-    temp.replace(path)
+    write_json(path, data)
 
 
 class Jobs:
@@ -105,7 +104,12 @@ class Jobs:
                 continue
             path = self.folder(item) / (name + '.json')
             if path.exists() and (name != 'result' or item['state'] == 'done'):
-                result[name] = json.loads(path.read_text(encoding='utf-8'))
+                try:
+                    raw = read_json(path, optional=name == 'progress')
+                except PermissionError:
+                    raise HTTPException(503, '结果正在保存，请稍后刷新。')
+                if raw is not None:
+                    result[name] = json.loads(raw)
         result['video_available'] = (self.folder(item) / 'video.mp4').exists()
         return result
 
@@ -276,7 +280,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
 
     @app.get('/api/health')
     def health():
-        return dict(ok=True, service='mobile-rehab', version='3.1', capabilities=['posture','live-guidance','profile-link','care-sharing','rtsp-recording','personal-health','medication','local-assistant','health-archive','archive-trash','health-backup-restore','local-text-adapters'])
+        return dict(ok=True, service='mobile-rehab', version='3.1.1', capabilities=['posture','live-guidance','profile-link','care-sharing','rtsp-recording','personal-health','medication','local-assistant','health-archive','archive-trash','health-backup-restore','local-text-adapters'])
 
     @app.post('/api/pair')
     async def pair(request: Request):

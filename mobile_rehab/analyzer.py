@@ -16,12 +16,12 @@ from app.domain import clean_json
 from app.assessment import build_body_profile
 from app.automatic_plans import generate_proposal, validate_automatic_use, observed_quality
 from app.training_plans import prepare_training_plan
+from .jsonio import write_json as atomic_json
+from .replay_status import replay_ended
 
 
 def write_json(path, value):
-    temp = path.with_suffix('.tmp')
-    temp.write_text(json.dumps(clean_json(value), ensure_ascii=False), encoding='utf-8')
-    temp.replace(path)
+    atomic_json(path, clean_json(value))
 
 
 def analyze(job_path):
@@ -47,6 +47,7 @@ def analyze(job_path):
     last_frame = time.monotonic()
     last_progress = 0.
     processed = 0
+    timing = dict(basis='opencv_media_pts', skipped_leading_frames=0)
     try:
         if job.get('mode') == 'training':
             sessions = storage.list_sessions()
@@ -61,12 +62,8 @@ def analyze(job_path):
         while True:
             worker = camera.worker
             statuses = worker.read_status()
-            if any(s['status'] == 'ERROR' for s in statuses):
-                raise ValueError('视频无法解码。请使用手机普通录像模式，选择 MP4 / H.264 后重试。')
-            if any(s['status'] == 'EOF' for s in statuses):
+            if replay_ended(statuses, timing):
                 break
-            if any(s['status'] in ('RELEASED', 'RELEASE_UNCONFIRMED') for s in statuses):
-                raise ValueError('视频读取提前结束，请重新录制或转换为 MP4。')
             packet = worker.read_latest()
             if packet is None:
                 if time.monotonic() - last_frame > 45:
@@ -87,11 +84,15 @@ def analyze(job_path):
                 started = True
             processed += 1
             if time.monotonic() - last_progress > 1:
-                write_json(folder / 'progress.json', dict(processed_frames=processed,
-                           analyzed_seconds=round(packet.time_s, 1)))
+                try:
+                    write_json(folder / 'progress.json', dict(processed_frames=processed,
+                               analyzed_seconds=round(packet.time_s, 1)))
+                except PermissionError:
+                    pass  # Optional display progress is not the saved result.
                 last_progress = time.monotonic()
         if not started or processed < 3:
             raise ValueError('视频太短或没有可读取画面，请重新录制。')
+        controller.session['replay_timing'] = timing.copy()
         controller.stop('user_stop')
         session = storage.get_session(controller.last_saved_id)
         sessions = storage.list_sessions()
@@ -101,7 +102,8 @@ def analyze(job_path):
                       summary=session['summary'], repetitions=session.get('repetitions', []),
                       finished_at=session.get('end_utc'), proposal=proposal,
                       measurement_type='2d_projection', clinical_rom=False,
-                      processed_frames=processed, quality=observed_quality(session.get('repetitions', [])))
+                      processed_frames=processed, input_timing=timing,
+                      quality=observed_quality(session.get('repetitions', [])))
         write_json(folder / 'result.json', result)
     finally:
         try:

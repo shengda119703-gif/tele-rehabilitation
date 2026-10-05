@@ -9,6 +9,7 @@ from .analyzer import write_json
 from app.camera_manager import CameraManager
 from app.vision import VisionWorker
 from app.domain import Context, utc_now
+from .replay_status import replay_ended
 
 
 def analyze(job_path):
@@ -18,16 +19,13 @@ def analyze(job_path):
     camera, vision = CameraManager(), VisionWorker(start_thread=False)
     context = Context(1, 'posture', job['id'], 'REPLAY_FILE', 'SELF_USE', job['id'])
     last, last_progress, size, model = time.monotonic(), 0., None, ''
+    timing = dict(basis='opencv_media_pts', skipped_leading_frames=0)
     try:
         camera.open_replay(str(folder/'video.mp4'), context, dict(speed=1000))
         while True:
             statuses = camera.worker.read_status()
-            if any(s['status'] == 'ERROR' for s in statuses):
-                raise ValueError('录像读取中断，请重新上传普通 MP4 视频。')
-            if any(s['status'] == 'EOF' for s in statuses):
+            if replay_ended(statuses, timing):
                 break
-            if any(s['status'] in ('RELEASED', 'RELEASE_UNCONFIRMED') for s in statuses):
-                raise ValueError('录像提前中断，请重新上传。')
             packet = camera.worker.read_latest()
             if packet is None:
                 if time.monotonic()-last > 45:
@@ -44,13 +42,17 @@ def analyze(job_path):
             engine.consume(pose)
             camera.worker.acknowledge(packet.seq)
             if time.monotonic()-last_progress > 1:
-                write_json(folder/'progress.json', dict(processed_frames=engine.frames, analyzed_seconds=round(packet.time_s, 1)))
+                try:
+                    write_json(folder/'progress.json', dict(processed_frames=engine.frames, analyzed_seconds=round(packet.time_s, 1)))
+                except PermissionError:
+                    pass
                 last_progress = time.monotonic()
         if engine.frames < 3:
             raise ValueError('录像过短')
         write_json(folder/'result.json', dict(kind='posture', rule_version=VERSION,
             source_kind='REPLAY_FILE', usage_context='SELF_USE', exercise=job['exercise'], side=job['side'],
             finished_at=utc_now(), summary=engine.summary(),
+            input_timing=timing,
             conditions=dict(view=TASKS[job['exercise']]['view'], side=job['side'], size=size,
                             model_manifest_id=model, schema='coco17-v1'),
             limitations=['不诊断骨盆前倾、圆肩、脊柱侧弯或颈椎疾病。',

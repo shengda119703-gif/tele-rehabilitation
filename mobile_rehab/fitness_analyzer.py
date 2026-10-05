@@ -10,6 +10,7 @@ from .analyzer import write_json
 from app.camera_manager import CameraManager
 from app.vision import VisionWorker
 from app.domain import Context, utc_now
+from .replay_status import replay_ended
 
 
 def analyze(job_path):
@@ -22,17 +23,14 @@ def analyze(job_path):
     context = Context(1, 'fitness', job['id'], 'REPLAY_FILE', 'SELF_USE', job['id'])
     last_frame, last_progress = time.monotonic(), 0.
     size, model_id = None, None
+    timing = dict(basis='opencv_media_pts', skipped_leading_frames=0)
     try:
         camera.open_replay(str(folder / 'video.mp4'), context, dict(speed=1000))
         while True:
             worker = camera.worker
             statuses = worker.read_status()
-            if any(s['status'] == 'ERROR' for s in statuses):
-                raise ValueError('录像读取失败，请选择普通 MP4 录像重新上传。')
-            if any(s['status'] == 'EOF' for s in statuses):
+            if replay_ended(statuses, timing):
                 break
-            if any(s['status'] in ('RELEASED', 'RELEASE_UNCONFIRMED') for s in statuses):
-                raise ValueError('录像提前中断，本次没有生成完整健身报告。')
             packet = worker.read_latest()
             if packet is None:
                 if time.monotonic()-last_frame > 45:
@@ -53,8 +51,11 @@ def analyze(job_path):
             engine.consume(pose)
             worker.acknowledge(packet.seq)
             if time.monotonic()-last_progress > 1:
-                write_json(folder / 'progress.json', dict(processed_frames=engine.frames,
-                           analyzed_seconds=round(packet.time_s, 1)))
+                try:
+                    write_json(folder / 'progress.json', dict(processed_frames=engine.frames,
+                               analyzed_seconds=round(packet.time_s, 1)))
+                except PermissionError:
+                    pass
                 last_progress = time.monotonic()
         if engine.frames < 3:
             raise ValueError('视频太短，请重新录制一组完整动作。')
@@ -63,6 +64,7 @@ def analyze(job_path):
             finished_at=utc_now(), summary=engine.summary(), repetitions=engine.repetitions,
             barbell=bar.report() if bar is not None else None,
             series=engine.series, spec=EXERCISES[job['exercise']], processed_frames=engine.frames,
+            input_timing=timing,
             conditions=dict(view='sagittal_user_selected', size=size, schema='coco17-v1',
                             model_manifest_id=model_id, confidence_min=.5, gap_s=engine.GAP,
                             smoothing='causal-ema-tau-0.1s', timing='opencv_media_pts'),
