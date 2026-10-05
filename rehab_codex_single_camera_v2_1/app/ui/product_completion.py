@@ -313,6 +313,7 @@ class ProductCompletion:
     def _detail(self,title,lines,actions=()):
         if getattr(self,'last_detail',None):self.last_detail.close()
         dialog=QDialog(self);dialog.setWindowTitle(title);dialog.resize(650,480)
+        dialog.setProperty('visualScope','core')
         area=QVBoxLayout(dialog);text=QTextBrowser();text.setPlainText('\n'.join(lines));area.addWidget(text)
         for caption,callback in actions:
             item=button(caption,lambda checked=False,call=callback:(dialog.accept(),call()))
@@ -322,6 +323,7 @@ class ProductCompletion:
             area.addWidget(item)
         close=QDialogButtonBox(QDialogButtonBox.Close);close.rejected.connect(dialog.reject);area.addWidget(close)
         close_button=close.button(QDialogButtonBox.Close)
+        close_button.setText('关闭')
         close_button.setProperty('actionId','detailClose');close_button.setProperty('actionKind','B');close_button.setProperty('actionTarget','关闭详情返回原页面')
         self.detail_owner=self.owner
         dialog.setAttribute(Qt.WA_DeleteOnClose);dialog.show();self.last_detail=dialog
@@ -373,6 +375,7 @@ class ProductCompletion:
 
     def _show_today_tasks(self):
         if self.navigate('home'):
+            if hasattr(self,'home_sections'):self.home_sections.setCurrentIndex(1)
             self.page_widgets['home'].ensureWidgetVisible(self.tasks)
             self.tasks.setFocus();self._message('已定位今日任务，选择任务后可确认或暂不处理。')
 
@@ -575,7 +578,7 @@ class ProductCompletion:
 
     @staticmethod
     def _plan_settings(settings):
-        return ' · '.join(f'{title}：{settings[key]}' for key,title in [('sets','组数'),('target_reps','次数'),('reps','次数'),('rest_seconds','休息秒数'),('target_deg','目标角度')] if settings.get(key) is not None) or '按原计划准备时核对'
+        return ' · '.join(f'{title}：{settings[key]}' for key,title in [('target_sets','组数'),('target_reps','次数'),('rest_between_sets_s','休息秒数'),('target_angle_deg','目标角度')] if settings.get(key) is not None) or '按原计划准备时核对'
 
     @staticmethod
     def _sharing_record(record):
@@ -720,6 +723,13 @@ class ProductCompletion:
 
     def _completion_clear(self):
         if not hasattr(self,'page_states'):return
+        if hasattr(self,'home_sections'):
+            self.daily_data={};self.visible_doses=[];self.visible_schedule=[]
+            for item in (self.dose_table,self.dose_history,self.schedule_table,self.linked_family):rows(item,[])
+            for item in (self.home_schedule,self.home_attention,self.family_attention,self.health_archive_profile,self.current_plan_text):item.setText('正在读取当前用户资料…')
+            self.current_plan.clear()
+            self.family_sections.setCurrentIndex(0)
+            if self.daily_dialog:self.daily_dialog.close()
         self._visual_progress({})
         for widget in [self.today_medications,self.missed_medications,self.family_members,*self.rehab_tables.values()]:rows(widget,[])
         self.health_entries=[];self.filtered_entries=[];self.visible_notifications=[]
@@ -757,11 +767,14 @@ class ProductCompletion:
 
     def _completion_controls(self):
         if not hasattr(self,'page_states'):return
+        if getattr(self,'photo_return_needed',False) and not self._rehab_locked():
+            self.photo_return_needed=False
+            if self.navigate('health',refresh=False):self.health_tabs.setCurrentIndex(2)
         busy=bool(self.pending)
         focus=self.active_page=='rehab' and self.legacy.scene=='rehab' and self.legacy.submode.currentData()=='training' and self.legacy.state in ('ONLINE','SAVE_FAILED')
         self.product_sidebar.setVisible(not focus);self.product_top.setVisible(not focus)
         conversation=self._assistant_conversation_active()
-        self.interface_buttons['globalAssistant'].setVisible(not focus and not conversation)
+        self.interface_buttons['globalAssistant'].setVisible(not hasattr(self,'home_sections') and not focus and not conversation)
         self.product_meta.setVisible(not conversation)
         self.assistant_connection.setText(self.storage_label.text())
         self.assistant_status_toggle.setText('助手状态' if self.snapshot.get('modelAvailable') else '基础模式')
@@ -820,6 +833,15 @@ class ProductCompletion:
             if key=='rehabWorkspaceBack':
                 enabled=enabled and not self._rehab_locked()
                 item.setToolTip('先结束并保存当前任务、关闭摄像头测试后返回。' if not enabled else '返回概览，保留已保存数据和工作区设置。')
+            if key in ('planSchedule','planPractice','planManualCopy','rehabEvaluateNow'):
+                enabled=enabled and not self._rehab_locked()
+                if key!='rehabEvaluateNow':enabled=enabled and bool(self._selected_plan())
+            if key in ('doseTaken','doseSkipped','doseReset'):
+                enabled=enabled and self.dose_table.currentRow()>=0 and self.med_day.date()<=__import__('PySide6.QtCore',fromlist=['QDate']).QDate.currentDate()
+            if key in ('scheduleOpen','scheduleMove','scheduleRemove'):
+                enabled=enabled and self.schedule_table.currentRow()>=0 and not self._rehab_locked()
+            if key in ('familyReadOnly','familyCategories','familyDisconnect'):
+                enabled=enabled and self.linked_family.currentRow()>=0
             if key=='contextReturn':
                 enabled=enabled and not self._rehab_locked()
                 item.setToolTip('先结束并保存当前任务后返回。' if not enabled else '返回来源页面，保留筛选和所选记录。')

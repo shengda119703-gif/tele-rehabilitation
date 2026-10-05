@@ -36,7 +36,7 @@ def test_rehab_summary_tabs_open_workspace_only_on_action_and_block_active_back(
 
 def test_health_metric_details_save_back_refresh_and_clear_on_owner_switch(desktop):
     w,app=desktop;w.navigate('health');settle(w,app)
-    assert w.twin_text.isVisible() and not w.metrics.isVisible()
+    assert w.health_archive_profile.isVisible() and not w.metrics.isVisible()
     entry=w.interface_buttons['healthMetricsEntry'];entry.setFocus();QTest.keyClick(entry,Qt.Key_Space)
     assert w.metrics.isVisible() and not w.twin_text.isVisible()
     w.metric_select.setCurrentIndex(w.metric_select.findData('weight'));w.metric_value.setValue(62)
@@ -44,9 +44,9 @@ def test_health_metric_details_save_back_refresh_and_clear_on_owner_switch(deskt
     assert w.snapshot['state']['events'][-1]['measurement']['value']==62
     assert w.metrics.isVisible() and '62' in w.health_metric_summary.text()
     w.interface_buttons['healthMetricsBack'].click()
-    assert not w.metrics.isVisible() and w.twin_text.isVisible()
+    assert not w.metrics.isVisible() and w.health_archive_profile.isVisible()
     w.navigate('home');settle(w,app);w.navigate('health');settle(w,app)
-    assert w.twin_text.isVisible() and '62' in w.health_metric_summary.text()
+    assert w.health_archive_profile.isVisible() and '62' in w.health_metric_summary.text()
     with AgentBridge(data_dir=w.backend.data_dir/'product') as bridge:
         bridge.product('profile.save','second-module-owner',dict(profile=blank_health('TEST 新用户')))
     w._request('profile.list');settle(w,app)
@@ -60,6 +60,8 @@ def test_today_medication_detail_operations_use_original_task_and_chat(desktop):
     w,app=desktop
     w._request('medication.save',dict(record=dict(id='test-module-med',name='TEST 医嘱药物',dose='TEST 剂量',times='TEST 08:00',purpose='',status='active')));settle(w,app)
     w.navigate('medication');settle(w,app)
+    assert w.medication_tabs.currentIndex()==0 and not w.today_medications.isVisible()
+    w.medication_tabs.setCurrentIndex(4)
     assert w.today_medications.isVisible() and not w.interface_buttons['medConfirm'].isVisible()
     w.interface_buttons['medTodayActions'].click();app.processEvents()
     assert w.interface_buttons['medConfirm'].isVisible() and not w.today_medications.isVisible()

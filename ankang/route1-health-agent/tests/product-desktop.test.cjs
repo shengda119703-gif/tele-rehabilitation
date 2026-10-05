@@ -7,6 +7,28 @@ const {ProductService} = require('../.bridge-build/product/ProductService.js');
 const {ProductLocalStore} = require('../scripts/product-local-store.cjs');
 const profile = name => ({name, age:65, conditions:[], medications:[], familyContact:'家属',familyPhone:'',
   mobility:'unknown', usesCane:false, nightVision:'unknown', cognition:'unknown', familySharing:'denied'});
+test('photo corrections keep original validation, explicit confirmation and private provenance', async t => {
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'ankang-photo-review-'));
+  t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+  const vision={name:'TEST-vision',analyzeImage:async()=>({kind:'weight',confidence:.95,measurements:[{metric:'weight',value:62,unit:'kg',confidence:.9}],labResults:[]})};
+  const service=new ProductService(new ProductLocalStore(root),undefined,vision);
+  const now=new Date('2026-10-05T09:00:00+08:00');
+  const call=(op,owner,input={})=>service.request(op,owner,input,now);
+  for(const owner of ['self','other'])await call('profile.save',owner,{profile:profile('TEST '+owner)});
+  await call('image.parse','self',{bytes:[1],mediaType:'image/png',consent:true});
+  await assert.rejects(call('image.confirm','other',{confirmed:true,values:[63]}));
+  await assert.rejects(call('image.confirm','self',{confirmed:true,values:[Infinity]}));
+  await assert.rejects(call('image.confirm','self',{confirmed:true,values:[999]}));
+  assert.equal((await call('snapshot','self')).state.events.length,0);
+  await call('image.confirm','self',{confirmed:true,values:[63]});
+  const measurement=(await call('snapshot','self')).history.measurements[0];
+  assert.equal(measurement.value,63);
+  assert.equal(measurement.source,'photo');
+  assert.equal(measurement.visibility,'private');
+  assert.equal(measurement.confidence,.9);
+  assert.equal(measurement.metadata.originalPhotoValue,62);
+  await assert.rejects(call('image.confirm','self',{confirmed:true,values:[64]}));
+});
 test('temporary file sharing errors recover without losing the backup', t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ankang-file-sharing-'));
   t.after(() => fs.rmSync(root, {recursive:true, force:true}));

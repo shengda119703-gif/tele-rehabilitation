@@ -21,7 +21,13 @@ class AgentBridge:
         child_env = dict(os.environ)
         if voice_host is not None: child_env['ANKANG_NATIVE_VOICE'] = '1'
         else: child_env.pop('ANKANG_NATIVE_VOICE', None)
-        if not (ROUTE_ROOT / ".bridge-build" / "runtime" / "index.js").is_file():
+        entry = ROUTE_ROOT / ".bridge-build" / "runtime" / "index.js"
+        # A successful staged build swaps directories in milliseconds. Never report
+        # a missing installation during that small publication window.
+        deadline = time.monotonic() + 3
+        while not entry.is_file() and time.monotonic() < deadline:
+            time.sleep(.025)
+        if not entry.is_file():
             raise RuntimeError("Build the bridge first: npm run build:bridge (in route1-health-agent)")
         self._process = subprocess.Popen(
             [node, str(ROUTE_ROOT / "scripts" / "agent-bridge.cjs"), *([str(Path(data_dir).resolve())] if data_dir else [])],

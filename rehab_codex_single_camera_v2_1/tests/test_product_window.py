@@ -61,7 +61,7 @@ def desktop(tmp_path,monkeypatch):
 
 def test_all_pages_connected_to_real_bridge_and_rehab_gates(desktop):
     w,app = desktop
-    assert len(NAVIGATION)==7
+    assert [item[0] for item in NAVIGATION]==['home','rehab','health','medication','family']
     assert w.owner == 'person-test'
     assert w.legacy.participant_id == w.owner
     assert w.snapshot['storage']=='persistent-local'
@@ -106,12 +106,10 @@ def test_empty_first_run_waits_for_runtime_then_saves(tmp_path,monkeypatch):
     monkeypatch.setenv('ANKANG_PRODUCT_DISABLE_MODEL','1')
     app = QApplication.instance() or QApplication([])
     seen = []
-    def complete(dialog):
+    def complete(window,existing=False):
         seen.append(True)
-        dialog.inputs['name'].setText('TEST 首次用户')
-        dialog._save()
-        return dialog.result()
-    monkeypatch.setattr(ProductProfileDialog,'exec',complete)
+        window._request('profile.save',dict(profile=blank_health('TEST 首次用户')),'TEST-first')
+    monkeypatch.setattr(ProductWindow,'_first_use',complete)
     w = ProductWindow(runtime=PassiveRuntime(tmp_path),backend=ProductBackend(tmp_path))
     w.legacy.busy = 1
     w.show()

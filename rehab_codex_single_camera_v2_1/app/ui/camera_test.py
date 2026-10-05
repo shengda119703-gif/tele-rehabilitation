@@ -20,6 +20,7 @@ class CameraTestDialog(QDialog):
             self.setMinimumSize(700, 520)
         self._released = False
         self.stopping = False
+        self.last_packet = None
         layout = QVBoxLayout(self)
         layout.setContentsMargins(20, 18, 20, 18)
         title = QLabel(device_name)
@@ -63,6 +64,7 @@ class CameraTestDialog(QDialog):
         if data.get('error'):
             self.show_error(data['error'])
         elif packet is not None and packet.context == data.get('context') and data['state'] == 'PREVIEW':
+            self.last_packet = packet
             fresh = self.video_pair.render(data, mirror=self.mirror_toggle.isChecked(), enabled=bool(self.dual_view),
                                            primary_view=(self.dual_view or {}).get('primary_view', 'frontal'))
             self.status.setText(('已收到两路画面，请核对正面与侧面位置' if self.dual_view else '已收到画面，请确认能看清自己')
@@ -71,12 +73,14 @@ class CameraTestDialog(QDialog):
             fps = packet.received_fps
             self.frame_info.setText(f'{w} × {h} · '+('帧率统计中' if fps is None else f'{fps:.1f} 帧/秒'))
         elif data['state'] != 'PREVIEW':
+            self.last_packet = None
             self.video_pair.clear()
             self.frame_info.clear()
             self.canvas.caption = '正在连接摄像头' if data['state'] == 'CONNECTING' else '摄像头未连接'
             self.status.setText('正在打开摄像头…' if data['state'] == 'CONNECTING' else '没有取得画面，请关闭后检查设备并重试')
 
     def show_error(self, text):
+        self.last_packet = None
         self.stopping = False
         self.status.setText(text)
         self.canvas.caption = '暂时无法显示画面'
@@ -90,6 +94,7 @@ class CameraTestDialog(QDialog):
         if self._released or self.stopping:
             return
         self.stopping = True
+        self.last_packet = None
         self.status.setText('正在关闭摄像头…')
         self.video_pair.clear()
         self.frame_info.clear()

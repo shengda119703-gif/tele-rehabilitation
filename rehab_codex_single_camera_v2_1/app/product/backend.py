@@ -15,6 +15,8 @@ class ProductBackend:
         self.stop_event = threading.Event()
         self.bridge = None
         self.factory = bridge_factory
+        from .daily_store import DailyStore
+        self.daily = DailyStore(self.data_dir)
         from .native_voice import NativeVoiceHost
         self.voice = NativeVoiceHost()
         self.thread = threading.Thread(target=self._run, daemon=True, name='ankang-product')
@@ -69,11 +71,53 @@ class ProductBackend:
                     if self.bridge is None:
                         self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150)
                     tools = RehabReadTools(self.data_dir/'home_rehab.sqlite3', scope) if scope else None
+                    if operation.startswith('daily.'):
+                        own = self.bridge.product('snapshot', owner, {}, tool_handler=tools)
+                        if operation in ('daily.dose', 'daily.medSchedule'):
+                            medicines = own['profile']['profile'].get('medicationRecords', [])
+                            medicine = next((m for m in medicines if m['id'] == payload['medId']), None)
+                            if not medicine or operation == 'daily.medSchedule' and medicine['status'] != 'active':
+                                raise ValueError('请选择当前在用药物；停用药物的过去记录仍可更正。')
+                            payload = dict(payload, medName=medicine['name'], dose=medicine.get('dose', ''))
+                        if operation == 'daily.schedule' and payload.get('planId'):
+                            plans = tools.desktop_snapshot()['rehab.get_training_plan']['records'] if tools else []
+                            if not any(p['id'] == payload['planId'] and p['revision'] == payload['revision'] for p in plans):
+                                raise ValueError('计划已变化，请刷新后重新安排。')
+                        result = self.daily.apply(owner, operation, payload, scope)
+                        self.results.put((operation, owner, token, result, None))
+                        continue
                     result = self.bridge.product(operation, owner, payload, tool_handler=tools)
+                    if operation == 'lifecycle.clear':
+                        self.daily.clear(owner)
+                    if operation == 'lifecycle.export' and isinstance(result, dict):
+                        result['dailyProduct'] = self.daily.snapshot(owner, scope)
                     snapshot = result.get('snapshot', result) if isinstance(result, dict) else None
                     if isinstance(snapshot, dict) and 'state' in snapshot and tools:
                         snapshot['rehabilitation'] = {name: tools(name, {}) for name in TOOLS}
                         snapshot['rehabilitation_ui'] = tools.desktop_snapshot()
+                        snapshot['dailyProduct'] = self.daily.snapshot(owner, scope)
+                        members = []
+                        for member, categories in self.daily.allowed_members(owner):
+                            profiles = self.bridge.product('profile.list', '', {})
+                            profile = next((p for p in profiles if p['ownerId'] == member), None)
+                            if not profile:
+                                continue
+                            view = {'ownerId': member, 'name': profile['profile']['name'], 'categories': categories}
+                            # Only explicitly shared summaries leave this worker. Never return another owner's raw snapshot.
+                            if categories:
+                                shared = self.bridge.product('snapshot', member, {})
+                                if 'health' in categories:
+                                    events = [e for e in shared['state']['events'] if (e.get('observation') or e.get('measurement') or e.get('labResult') or {}).get('visibility') == 'family_ok']
+                                    view['health'] = [dict(timestamp=e['timestamp'], text=e['observation']['text'] if e['type'] == 'observation' else str((e.get('measurement') or e.get('labResult')).get('metric') or (e.get('labResult') or {}).get('name')) + ': ' + str((e.get('measurement') or e.get('labResult'))['value']) + ' ' + str((e.get('measurement') or e.get('labResult'))['unit'])) for e in sorted(events, key=lambda e: e['timestamp'], reverse=True)[:3]]
+                                if 'medication' in categories:
+                                    view['doses'] = list(self.daily.snapshot(member, {})['doses'].values())[-30:]
+                                if 'rehab' in categories:
+                                    member_scope = dict(scope, participant_id=member)
+                                    read = RehabReadTools(self.data_dir/'home_rehab.sqlite3', member_scope)
+                                    records = read.desktop_snapshot()['rehab.get_training_history']['records'][:3]
+                                    view['rehab'] = [dict(timestamp=r.get('end_utc', ''), text=r.get('exercise_label', '') + ' · ' + ('目标已完成' if r.get('summary', {}).get('plan_completed') is True else '已保存，目标未核实完成')) for r in records]
+                            members.append(view)
+                        snapshot['familyMembers'] = members
                     if export_path:
                         data = bytes(result['bytes']) if operation == 'archive.read' else json.dumps(result, ensure_ascii=False, indent=2).encode('utf-8')
                         Path(export_path).write_bytes(data)

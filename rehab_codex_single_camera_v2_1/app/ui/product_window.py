@@ -23,12 +23,13 @@ from .product_theme import rehab_product_style
 from .product_dialogs import ProductProfileDialog, MedicationDialog
 from .product_interfaces import ProductInterfaces
 from .product_completion import ProductCompletion
+from .product_experience import ProductExperience
 from .product_assistant import build_assistant, show_section, back, refresh_summary, refresh_record_review
-from .product_widgets import label, button, card, table, rows, visual, conversation_html, display_time, ResponsiveGrid
+from .product_widgets import label, button, card, table, rows, visual, conversation_html, display_time, ResponsiveGrid, CurrentStack
 
-NAVIGATION = [('home','首页','home'),('assistant','AI 康复管家','assistant'),('rehab','康复','tasks'),
+NAVIGATION = [('home','首页','home'),('rehab','康复','tasks'),
               ('health','健康','health'),('medication','用药','medication'),('family','家庭','profile'),
-              ('history','记录','report')]
+              ]
 METRIC_LABELS = {'steps':('活动步数','步'),'walkSpeed':('步行速度','m/s'),'sleepHours':('睡眠时长','小时'),
     'nightWakes':('夜间醒来','次'),'restingHr':('静息心率','bpm'),'weight':('体重','kg'),
     'spo2':('血氧','%'),'systolic':('收缩压','mmHg'),'diastolic':('舒张压','mmHg'),'bloodGlucose':('血糖','mmol/L')}
@@ -48,7 +49,7 @@ escape = lambda text: html.escape(str(text))
 
 
 
-class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
+class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMainWindow):
     def __init__(self, data_dir=None, runtime=None, backend=None):
         super().__init__()
         self.setObjectName('productWindow')
@@ -82,6 +83,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.refresh_needed = False
         self._build()
         self._completion_setup()
+        self._experience_setup()
         self.product_theme=ProductTheme(self)
         self.chat_shortcut=QShortcut(QKeySequence('Ctrl+Return'),self.chat_input)
         self.chat_shortcut.setContext(Qt.WidgetShortcut);self.chat_shortcut.activated.connect(self._send_chat)
@@ -140,9 +142,9 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.user_select.setAccessibleName('当前产品用户')
         self.user_select.currentIndexChanged.connect(self._user_changed)
         top.addWidget(self.user_select)
-        top.addWidget(button('新建用户',lambda:self._profile(new=True)))
+        self.account_button=button('我的档案',self._account)
+        top.addWidget(self.account_button)
         top.addWidget(button('通知',lambda:self.navigate('notifications')))
-        top.addWidget(button('设置',lambda:self.navigate('settings')))
         top.setContentsMargins(0,0,0,0)
         self.product_top=QWidget();self.product_top.setLayout(top);main.addWidget(self.product_top)
         self.context_return=button('返回',self._return_context)
@@ -219,7 +221,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         box.addWidget(tabs)
         status = QWidget()
         layout = QVBoxLayout(status)
-        self.health_status_sections=QStackedWidget();layout.addWidget(self.health_status_sections)
+        self.health_status_sections=CurrentStack();layout.addWidget(self.health_status_sections)
         summary=QWidget();summary_box=QVBoxLayout(summary)
         twin,area = card('我的健康 · 当前状态')
         self.twin_text = label('等待真实资料；状态不等于临床诊断。')
@@ -271,7 +273,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         layout.addWidget(self.image_status)
         self.image_candidates = table(['识别项目','候选值','单位'])
         layout.addWidget(self.image_candidates)
-        self.image_confirm = button('确认识别结果并记录',lambda:self._request('image.confirm',{'confirmed':True}))
+        self.image_confirm = button('确认识别结果并记录',self._confirm_image)
         self.image_confirm.setEnabled(False)
         layout.addWidget(self.image_confirm)
         tabs.addTab(archive,'健康档案与附件')
@@ -365,6 +367,10 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
 
 
     def navigate(self,key,*,refresh=True):
+        if key=='history' and hasattr(self,'home_sections'):
+            if not self.navigate('health',refresh=refresh):return False
+            self.health_tabs.setCurrentIndex(4)
+            return True
         if key != 'rehab' and (self.legacy.state in ('CONNECTING','PREVIEW','ONLINE','SAVE_FAILED') or self.legacy._camera_testing or self.active_page=='rehab' and self.legacy.busy):
             self._message('请先结束并保存当前康复任务，再离开监护页面。')
             return False
@@ -375,16 +381,19 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         if self.return_context and key!=self.return_context[1]:
             self.return_context=None;self.context_return.hide()
         if key=='assistant':self._show_assistant_section('conversation')
-        if key=='rehab' and not self._rehab_locked():self._show_rehab_scope(False)
+        if key=='rehab' and not self._rehab_locked():
+            self._show_rehab_scope(False)
+            if hasattr(self,'home_sections'):self.rehab_tabs.setCurrentIndex(2)
+        if key=='home' and hasattr(self,'home_sections'):self.home_sections.setCurrentIndex(0)
         if key=='health':self.health_status_sections.setCurrentIndex(0)
         if key=='medication':self.med_today_sections.setCurrentIndex(0)
         self.pages.setCurrentWidget(self.page_widgets[key])
-        self.title.setText(dict((k,t) for k,t,_ in NAVIGATION).get(key,{'settings':'设置','notifications':'通知'}.get(key,key)))
+        self.title.setText(dict((k,t) for k,t,_ in NAVIGATION).get(key,{'assistant':'康复管家','history':'健康记录','settings':'设置','notifications':'通知'}.get(key,key)))
         if hasattr(self,'assistant_context'):
             self.assistant_context.setText('当前页面：'+self.title.text()+'。使用同一用户及已保存数据；页面内容尚不自动传给模型。')
         self.selection_rail.select(self.nav_buttons.get(key))
         for name,nav in self.nav_buttons.items():
-            nav.setChecked(name == key)
+            nav.setChecked(name == key or name=='home' and key=='assistant')
         if self.owner and not self.pending and refresh:
             self._request('snapshot')
         elif self.owner and self.pending and refresh:
@@ -392,9 +401,9 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         return True
 
     def _remember_return(self,source):
-        if source in ('history','notifications') and source!=self.active_page:
+        if source in ('health','history','notifications') and source!=self.active_page:
             self.return_context=(source,self.active_page)
-            self.context_return.setText('返回'+('记录' if source=='history' else '通知'))
+            self.context_return.setText('返回'+('健康档案' if source=='health' else '记录' if source=='history' else '通知'))
             self.context_return.show()
 
     def _return_context(self):
@@ -458,6 +467,8 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
                 self._dictation_result(result,error)
                 continue
             if error:
+                if operation=='archive.save':self.parse_after_archive=None
+                if operation=='archive.read':self.pending_parse_attachment=False
                 if operation == 'extensions.status':self._manual_extension_refresh=False
                 self.storage_label.setText('本机操作未完成')
                 self._message(error,severity='info' if '语音已取消' in error else 'danger')
@@ -472,11 +483,13 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
                 continue
             if self._interface_result(operation,result):
                 continue
+            if self._daily_result(operation,result):
+                continue
             if operation == 'profile.list':
                 self.profiles = result
                 self._refresh_users()
                 if not self.profiles:
-                    self._message('首次使用：点击“建立 / 编辑资料”，可复用已有康复用户。')
+                    self._message('首次使用：先建立本机档案，初始问题可以跳过。')
                     self.onboarding_needed = not getattr(self,'onboarding_shown',False)
                 elif not self.owner:
                     self._select_owner(self.profiles[0]['ownerId'])
@@ -507,12 +520,19 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
                 values = [(METRIC_LABELS.get(m['metric'],(m['metric'],''))[0],m['value'],m['unit']) for m in result['measurements']]
                 values += [(m['name'],m['value'],m['unit']) for m in result['labResults']]
                 rows(self.image_candidates,values)
+                self.image_candidates.setEditTriggers(QAbstractItemView.DoubleClicked|QAbstractItemView.EditKeyPressed)
+                for row in range(self.image_candidates.rowCount()):
+                    for column in (0,2):self.image_candidates.item(row,column).setFlags(self.image_candidates.item(row,column).flags() & ~Qt.ItemIsEditable)
                 self.image_confirm.setEnabled(bool(values))
-                self.image_status.setText('识别结果尚未保存。请对照原图核对后确认；不确定时不要记录。')
+                self.image_status.setText('识别结果尚未保存。对照原图核对；双击候选数值可更正，确认后才记录。')
                 if self.navigate('health'):
                     self.health_tabs.setCurrentIndex(2)
                 continue
             if operation == 'archive.read':
+                if getattr(self,'pending_parse_attachment',False):
+                    self.pending_parse_attachment=False
+                    self._request('image.parse',{'bytes':result['bytes'],'mediaType':result['mediaType'],'kind':'report','consent':True})
+                    continue
                 self._write_file(self.pending_export,bytes(result['bytes']))
                 self.pending_export = None
                 continue
@@ -543,16 +563,22 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
                     rows(self.image_candidates,[])
                 if operation not in ('snapshot','extensions.status'):
                     self._message('管家已回复。' if operation in ('chat','voice.input') else '操作已完成，已刷新本机资料。',severity='success')
+                if operation=='profile.save' and (getattr(self,'initial_answers',None) or {}).get('owner')==owner:
+                    answers=self.initial_answers;self.initial_answers=None
+                    self._request('daily.onboarding',{k:v for k,v in answers.items() if k!='owner'})
                 # Uploading from the assistant must keep its visible Back control
                 # and the unsent conversation available. Archive entry is explicit.
                 if operation in ('archive.save','media.import') and self.active_page != 'assistant' and self.navigate('health',refresh=False):
                     self.health_tabs.setCurrentIndex(2)
+                if operation=='archive.save' and getattr(self,'parse_after_archive',None):
+                    payload=self.parse_after_archive;self.parse_after_archive=None
+                    self._request('image.parse',payload)
         if not self.owner and self.profiles and not self.pending and not self.legacy.busy and not self.closing:
             self._select_owner(self.profiles[0]['ownerId'])
         if getattr(self,'onboarding_needed',False) and not self.pending and not self.legacy.busy and not self.closing:
             self.onboarding_needed = False
             self.onboarding_shown = True
-            QTimer.singleShot(0,self._profile)
+            QTimer.singleShot(0,self._first_use)
         if self.closing and self.legacy._allow_close:
             self.close()
         self._completion_controls()
@@ -582,6 +608,9 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
             self._select_owner(selected)
 
     def _select_owner(self,owner):
+        if self.legacy.plan_library_dialog and self.legacy.plan_library_dialog.editing:
+            self._message('计划草稿尚未保存，请先保存或放弃修改，再切换档案。')
+            self._refresh_users();return
         if self.pending or self.legacy.busy or self.legacy.state in ('CONNECTING','PREVIEW','ONLINE','SAVE_FAILED'):
             self._refresh_users()
             self._message('请先等待操作完成，并结束保存当前任务，再切换用户。')
@@ -604,6 +633,8 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self._request('snapshot')
 
     def _clear_views(self):
+        self.parse_after_archive=None;self.pending_parse_attachment=False
+        self.photo_requested=False;self.photo_return_needed=False
         # No old-owner data remains visible while the new owner is loading or a read fails.
         for grid in (self.plan_table,self.metrics,self.attachments,self.medications,self.timeline,
                      self.trends,self.notifications,self.image_candidates,self.health_timeline,self.medication_history):
@@ -786,11 +817,27 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         if not self.snapshot.get('capabilities',{}).get('imageRecognitionAvailable'):
             self._message('尚未配置既有图片识别代理服务。可先添加图片附件或手动记录指标。')
             return
+        entries=self.snapshot.get('attachments',[]);r=self.attachments.currentRow()
+        if 0<=r<len(entries) and entries[r]['mediaType'].startswith('image/'):
+            if QMessageBox.question(self,'识别已选图片','把这份资料发送到已配置的识别服务？核对确认后才保存识别结果。')==QMessageBox.Yes:
+                self.pending_parse_attachment=True
+                self._request('archive.read',{'id':entries[r]['id']})
+            return
         filename,_ = QFileDialog.getOpenFileName(self,'选择健康图片','','图片 (*.png *.jpg *.jpeg *.webp)')
-        if filename and QMessageBox.question(self,'识别图片','将所选图片发送到已配置的图片识别服务，识别后还需你核对确认。是否继续？') == QMessageBox.Yes:
+        if filename and QMessageBox.question(self,'识别图片','先保存原图，再发送到已配置的图片识别服务；识别后还需你核对确认。是否继续？') == QMessageBox.Yes:
             path = Path(filename)
-            self._request('image.parse',{'_local_file':str(path),'mediaType':mimetypes.guess_type(path.name)[0],
-                                        'kind':'report','consent':True})
+            media=mimetypes.guess_type(path.name)[0]
+            self.parse_after_archive={'_local_file':str(path),'mediaType':media,'kind':'report','consent':True}
+            self._request('archive.save',{'_local_file':str(path),'name':path.stem,'fileName':path.name,'mediaType':media,'category':'影像资料','visibility':'private'})
+
+    def _confirm_image(self):
+        import math
+        try:
+            values=[float(self.image_candidates.item(r,1).text()) for r in range(self.image_candidates.rowCount())]
+            if not values or not all(math.isfinite(v) for v in values):raise ValueError()
+        except (ValueError,TypeError):
+            self._message('请核对候选数值，填写有效数字后再确认。');return
+        self._request('image.confirm',{'confirmed':True,'values':values})
 
     def _backup(self):
         if self.pending:
@@ -838,6 +885,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         dialog.deleteLater()
 
     def _render(self):
+        self.date_label.setText(datetime.now().strftime('%Y年%m月%d日'))
         s = self.snapshot
         state = s['state']
         stored = s['profile']
@@ -909,6 +957,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.profile_summary.setText(profile['name']+' · '+(str(profile['age'])+' 岁' if profile['age'] else '年龄未填')+'\n当前状态：'+(stored.get('currentState') or '未填写')+'\n康复目标：'+(stored.get('rehabGoal') or '未填写'))
         self.capabilities_text.setText('康复、健康自报、用药、家庭授权、附件、健康状态、记录与报告已接本机业务。\n图片识别：'+('代理已配置' if s['capabilities']['imageRecognitionAvailable'] else '待配置代理')+'\n语音、设备、同步及外部通知状态见下方与健康设备页。')
         self._completion_render()
+        if hasattr(self,'home_sections'):self._experience_render()
         refresh_summary(self)
         self._request('extensions.status')
 

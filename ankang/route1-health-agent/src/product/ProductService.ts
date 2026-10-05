@@ -22,6 +22,7 @@ import { buildMedicationCareView } from '../engine/medicationCare';
 import { appendHealthEvents, measurementToEvent, labResultToEvent, type HealthEvent } from '../pipeline/events';
 import { METRICS, type CareTask, type ElderProfile, type MetricKey, type MedicationRecord } from '../types';
 import { RealImageHealthParser } from '../adapters/RealImageHealthParser';
+import { buildParsedHealthData } from '../adapters/imageNormalizer';
 import type { HealthVisionProvider, ParsedHealthData } from '../adapters/ImageHealthParser';
 import type { RehabToolPort } from '../runtime/rehabTools';
 
@@ -393,8 +394,22 @@ export class ProductService {
       this.pendingImages.set(owner, parsed);
       return parsed;
     } else if (operation === 'image.confirm') {
-      const parsed = this.pendingImages.get(owner);
+      let parsed = this.pendingImages.get(owner);
       if (!parsed || input.confirmed !== true) throw new Error('没有待确认的图片识别结果');
+      if (input.values !== undefined) {
+        const all = [...parsed.measurements, ...parsed.labResults];
+        if (!Array.isArray(input.values) || input.values.length !== all.length || input.values.some((v:unknown) => typeof v !== 'number' || !Number.isFinite(v))) throw new Error('请填写每项有效数值，或取消识别确认');
+        // Reuse the original OCR normalizer and thresholds. This is explicit user
+        // correction, not a change to medical interpretation or confidence rules.
+        const reviewed = buildParsedHealthData({
+          kind: parsed.parseMeta?.detectedKind ?? 'report',
+          confidence: parsed.parseMeta?.overallConfidence ?? 1,
+          measurements: parsed.measurements.map((m,i) => ({metric:m.metric,value:input.values[i],unit:m.unit,confidence:m.confidence ?? 1})),
+          labResults: parsed.labResults.map((m,i) => ({name:m.name,value:input.values[parsed!.measurements.length+i],unit:m.unit,confidence:m.confidence ?? 1,referenceRange:m.referenceRange})),
+        }, {capturedAt:all[0]?.timestamp}, parsed.parseMeta?.provider ?? 'reviewed-photo');
+        parsed = {...parsed, measurements:reviewed.measurements.map((m,i) => ({...m,id:parsed!.measurements[i].id,visibility:'private',metadata:{...parsed!.measurements[i].metadata,reviewedByUser:true,originalPhotoValue:parsed!.measurements[i].value}})),
+          labResults:reviewed.labResults.map((m,i) => ({...m,id:parsed!.labResults[i].id,visibility:'private'}))};
+      }
       await this.append(owner, [...parsed.measurements.map(measurementToEvent), ...parsed.labResults.map(labResultToEvent)], now);
       this.pendingImages.delete(owner);
     } else if (operation === 'notification.plan') {

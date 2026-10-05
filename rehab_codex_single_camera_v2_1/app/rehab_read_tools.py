@@ -121,6 +121,8 @@ class RehabReadTools:
                             'completed', 'partial', 'invalid', 'completed_sets', 'plan_completed', 'valid_ratio')),
                         training_feedback=pick(session.get('training_feedback') or {}, (
                             'pain', 'fatigue', 'reason', 'notes', 'record_origin', 'revision', 'updated_utc'))))
+                    if desktop:
+                        result['records'][-1]['plan_reference']=pick(session_value(session,'saved_plan_reference') or {}, ('id','revision','entry_key'))
             result['status'] = 'found' if result['records'] else 'empty'
             return result
         finally:

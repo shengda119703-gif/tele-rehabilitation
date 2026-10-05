@@ -47,6 +47,8 @@ def test_summaries_and_utilities_have_single_visible_home(desktop):
     w.navigate('settings');wait(app,lambda:not w.pending)
     assert w.interface_buttons['rehabPerson'].isVisible()
     w.navigate('family');wait(app,lambda:not w.pending)
+    assert not w.interface_buttons['silverFamily'].isVisible()
+    w.interface_buttons['familyOldTools'].click()
     assert w.interface_buttons['silverFamily'].isVisible()
 
 def test_long_feedback_preview_keeps_original_record_and_full_detail(desktop):

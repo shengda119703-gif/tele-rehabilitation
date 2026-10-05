@@ -6,9 +6,33 @@ from PySide6.QtCore import Qt, QSize, QEvent
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QLabel, QPushButton, QFrame, QVBoxLayout, QTableWidget,
     QHeaderView, QAbstractItemView, QTableWidgetItem, QWidget, QGridLayout, QSizePolicy,
-    QHBoxLayout, QStylePainter, QStyleOptionButton, QStyle, QTabWidget)
+    QHBoxLayout, QStylePainter, QStyleOptionButton, QStyle, QTabWidget, QStackedWidget)
 
 escape = lambda text: html.escape(str(text))
+
+
+class CurrentStack(QStackedWidget):
+    """Inactive detail panes must not make a short overview scroll unnecessarily."""
+    def __init__(self,parent=None):
+        super().__init__(parent)
+        self.currentChanged.connect(self._fit_current)
+
+    def addWidget(self,widget):
+        index=super().addWidget(widget)
+        self._fit_current(self.currentIndex())
+        return index
+
+    def _fit_current(self,index):
+        for i in range(self.count()):
+            policy=QSizePolicy.Preferred if i==index else QSizePolicy.Ignored
+            self.widget(i).setSizePolicy(policy,policy)
+        self.updateGeometry()
+
+    def sizeHint(self):
+        return self.currentWidget().sizeHint() if self.currentWidget() else super().sizeHint()
+
+    def minimumSizeHint(self):
+        return self.currentWidget().minimumSizeHint() if self.currentWidget() else super().minimumSizeHint()
 
 
 def display_time(value):

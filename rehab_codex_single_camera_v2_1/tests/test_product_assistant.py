@@ -134,10 +134,11 @@ def test_conversation_chrome_keeps_errors_receipts_and_contextual_assistant(desk
     assert w.notice.isVisible() and w.notice.property('fluentStatus')=='danger'
     w._message('TEST 需要确认人物关系');w._completion_controls();assert w.notice.isVisible()
     w.interface_buttons['assistantVoiceSettings'].click()
-    assert w.product_meta.isVisible() and w.interface_buttons['globalAssistant'].isVisible()
+    assert w.product_meta.isVisible() and not w.interface_buttons['globalAssistant'].isVisible()
+    assert w.assistant_shortcut.isEnabled()  # Ctrl+J still opens the retained contextual assistant.
     w.interface_buttons['assistantVoiceText'].click();assert not w.product_meta.isVisible()
     w.navigate('health');wait(app,lambda:not w.pending)
-    assert w.product_meta.isVisible() and w.interface_buttons['globalAssistant'].isVisible()
+    assert w.product_meta.isVisible() and not w.interface_buttons['globalAssistant'].isVisible()
     QTest.mouseClick(w.interface_buttons['globalAssistant'],Qt.LeftButton);assert w.assistant_dock.isVisible()
     w.assistant_dock.close();w.navigate('assistant');wait(app,lambda:not w.pending)
     QTest.keyClick(w.chat_input,Qt.Key_J,Qt.ControlModifier);app.processEvents()

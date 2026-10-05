@@ -8,7 +8,7 @@ from uuid import uuid4
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel,
     QComboBox, QLineEdit, QPushButton, QTableWidget, QTableWidgetItem, QHeaderView,
-    QAbstractItemView, QWidget)
+    QAbstractItemView, QWidget, QMessageBox, QDialogButtonBox, QCheckBox)
 
 from ..domain import SOURCES, CONTEXTS
 from ..exercises import EXERCISE_IDS, exercise_spec
@@ -148,7 +148,8 @@ class PlanLibraryDialog(QDialog):
     def populate(self, plans, selected_id=None, *, saved=False):
         if self.editing and not saved:
             return  # A stale read must not replace an unsaved draft.
-        selected_id = selected_id or self.selector.currentData()
+        selected_id = getattr(self,'select_source_id',None) or selected_id or self.selector.currentData()
+        self.select_source_id = None
         self.records = copy.deepcopy(plans)
         self.editing = False
         self.draft = None
@@ -164,6 +165,14 @@ class PlanLibraryDialog(QDialog):
         self.selector.blockSignals(False)
         self._select_record()
         self.error.setText('已保存，可在下次启动后继续使用。' if saved else '')
+        source_id=getattr(self,'copy_source_id',None)
+        source=next((p for p in self.records if p['id']==source_id),None)
+        if source:
+            self.copy_source_id=None
+            self.draft=copy.deepcopy(source)
+            self.draft.update(id=uuid4().hex,revision=0,record_origin='manual',name=source['name']+' · 个人调整')
+            self.draft.pop('automatic',None)
+            self.editing=True;self._render(self.draft)
 
     def _select_record(self):
         if self.editing:
@@ -291,7 +300,47 @@ class PlanLibraryDialog(QDialog):
         except ValueError as exc:
             self.error.setText(str(exc))
             return
+        previous=next((p for p in self.records if p['id']==value['id']),None)
+        if getattr(self,'five_page_flow',False) and previous:
+            selected=self._review_changes(previous,value)
+            if selected is None:return
+            value=selected
+            answer=QMessageBox.question(self,'保存计划','覆盖当前计划？选择“否”会另存新计划，原计划继续保留。',QMessageBox.Yes|QMessageBox.No|QMessageBox.Cancel,QMessageBox.No)
+            if answer==QMessageBox.Cancel:return
+            if answer==QMessageBox.No:
+                value.update(id=uuid4().hex,name=value['name']+' · 新计划');revision=0
+            else:
+                try:self.version_store.remember_plan(self.scope['participant_id'],previous)
+                except Exception as exc:self.error.setText('旧版本保存失败，本次未覆盖：'+str(exc));return
+                revision=self.draft['revision']
+            self.save_requested.emit(value,revision)
+            return
         self.save_requested.emit(value, self.draft['revision'])
+
+    def _review_changes(self, previous, proposed):
+        """Each checked change is explicit; unchecked changes retain the saved item."""
+        before={i['key']:i for i in validate_training_plan(previous)['items']};after={i['key']:i for i in proposed['items']}
+        changes=[key for key in dict.fromkeys([*before,*after]) if before.get(key)!=after.get(key)]
+        dialog=QDialog(self);dialog.setWindowTitle('核对计划变化');box=QVBoxLayout(dialog)
+        box.addWidget(QLabel('勾选要采用的变化；没有勾选的项目保留原安排。'))
+        checks={}
+        for key in changes:
+            entry=after.get(key) or before[key]
+            operation='新增' if key not in before else '删除' if key not in after else '修改'
+            c=QCheckBox(operation+'：'+exercise_spec(entry['exercise_id'])['label']+' · '+('左侧' if entry['side']=='left' else '右侧'))
+            c.setChecked(True);box.addWidget(c);checks[key]=c
+        if not changes:box.addWidget(QLabel('动作安排没有变化，只保存名称等信息。'))
+        controls=QDialogButtonBox(QDialogButtonBox.Ok|QDialogButtonBox.Cancel);box.addWidget(controls)
+        controls.accepted.connect(dialog.accept);controls.rejected.connect(dialog.reject)
+        if dialog.exec()!=QDialog.Accepted:return None
+        kept=copy.deepcopy(after)
+        for key,c in checks.items():
+            if not c.isChecked():
+                if key in before:kept[key]=copy.deepcopy(before[key])
+                else:kept.pop(key,None)
+        value=copy.deepcopy(proposed);value['items']=list(kept.values())
+        try:return validate_training_plan(value)
+        except ValueError as exc:self.error.setText(str(exc));return None
 
     def _cancel_edit(self):
         if self.pending:
@@ -314,6 +363,8 @@ class PlanLibraryDialog(QDialog):
     def _buttons(self):
         record, entry = self.current_record(), self.current_item()
         free = not self.pending
+        if getattr(self,'five_page_flow',False):
+            for control in (self.selector,self.refresh,self.new,self.edit,self.archive):control.setVisible(not self.editing)
         self.selector.setEnabled(free and not self.editing)
         self.refresh.setEnabled(free and not self.editing)
         self.new.setEnabled(free and not self.editing)

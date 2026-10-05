@@ -6,6 +6,27 @@ from PySide6.QtWidgets import QMessageBox, QPushButton
 
 
 class ProductRehabWindow(MainWindow):
+    def _start_camera_test(self):
+        super()._start_camera_test()
+        parent=self.parentWidget()
+        while parent and not hasattr(parent,'_save_camera_photo'):parent=parent.parentWidget()
+        dialog=self.camera_test_dialog
+        if parent and getattr(parent,'photo_requested',False) and dialog and not getattr(dialog,'photo_button',None):
+            dialog.setWindowTitle('拍摄健康资料')
+            dialog.details.setText('把病历或设备读数放入画面；拍摄后只保存原图，识别须另行核对。')
+            item=QPushButton('拍摄并保存原图',dialog);item.setObjectName('primary')
+            item.setProperty('actionId','cameraPhotoSave');item.setProperty('actionKind','A');item.setProperty('actionTarget','archive.save')
+            dialog.photo_button=item
+            dialog.layout().insertWidget(dialog.layout().count()-1,item)
+            item.clicked.connect(lambda:parent._save_camera_photo(dialog))
+            dialog.finished.connect(lambda *_:setattr(parent,'photo_requested',False))
+
+    def _activate_saved_plan(self, prepared):
+        super()._activate_saved_plan(prepared)
+        parent=self.parentWidget()
+        while parent and not hasattr(parent,'_show_rehab_scope'):parent=parent.parentWidget()
+        if parent:parent._show_rehab_scope(True)
+
     def _refresh_guidance_visibility(self,*args):
         super()._refresh_guidance_visibility(*args)
         if self.scene=='rehab' and self.submode.currentData()=='training' and self.state=='ONLINE':
@@ -44,7 +65,9 @@ class ProductRehabWindow(MainWindow):
     def _report_to_recovery(self,dialog,parent):
         if parent._rehab_locked():
             self.notice.setText('请先结束并保存当前任务，再返回康复。');return
-        dialog.close();parent._return_recovery()
+        dialog.close()
+        if parent.return_context and parent.return_context[0]=='health':parent._return_context()
+        else:parent._return_recovery()
 
     def _silver_command(self, operation):
         sharing=operation.get('operation')=='consent' or operation.get('operation')=='feedback' and operation.get('share')

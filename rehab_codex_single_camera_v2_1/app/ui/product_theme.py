@@ -121,7 +121,7 @@ class ProductTheme:
         p=QPalette(palette or self.window.palette())
         for role,key in ((QPalette.Window,'window'),(QPalette.Base,'surface'),(QPalette.AlternateBase,'surface'),(QPalette.Text,'text'),
                          (QPalette.WindowText,'text'),(QPalette.ButtonText,'text'),(QPalette.Button,'surface'),
-                         (QPalette.PlaceholderText,'secondary'),(QPalette.Highlight,'brand'),(QPalette.HighlightedText,'on_brand')):
+                         (QPalette.PlaceholderText,'secondary'),(QPalette.Link,'text'),(QPalette.LinkVisited,'text'),(QPalette.Highlight,'brand'),(QPalette.HighlightedText,'on_brand')):
             p.setColor(role,QColor(self.colors[key]))
         for role in (QPalette.Text,QPalette.WindowText,QPalette.ButtonText):
             p.setColor(QPalette.Disabled,role,QColor(self.colors['disabled_text']))
@@ -150,7 +150,9 @@ class ProductTheme:
                         view_palette.setColor(QPalette.HighlightedText,QColor(self.colors['selected_text']));widget.setPalette(view_palette)
         self.window.record_dialog.setPalette(p)
         self.window.record_dialog.setStyleSheet('QDialog { background:'+self.colors['window']+'; color:'+self.colors['text']+'; }'+shell_style(self.colors))
-        if self.window.snapshot:self.window._render_conversation()
+        if self.window.snapshot:
+            self.window._render_conversation()
+            if hasattr(self.window,'product_theme'):self.window._experience_render()
 
 
 def rehab_product_style(style):

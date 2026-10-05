@@ -6,7 +6,7 @@ import html
 
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
-                              QCheckBox, QTextBrowser, QWidget)
+                              QCheckBox, QTextBrowser, QWidget, QMessageBox)
 
 from ..domain import SOURCES, CONTEXTS
 from ..exercises import exercise_spec
@@ -15,6 +15,7 @@ from ..exercises import exercise_spec
 class AutomaticPlanDialog(QDialog):
     requested = Signal(str, dict)
     feedback_requested = Signal(str)
+    archive_requested = Signal(dict)
 
     def __init__(self, scope, parent=None):
         super().__init__(parent)
@@ -82,6 +83,12 @@ class AutomaticPlanDialog(QDialog):
         if message['kind'] == 'automatic_proposal':
             self.proposal = copy.deepcopy(message['proposal'])
         self.record, self.progress = copy.deepcopy(message.get('record')), copy.deepcopy(message.get('progress'))
+        replaced=getattr(self,'replaced_record',None)
+        if replaced and self.record and self.record['id']!=replaced['id']:
+            self.replaced_record=None
+            self.archive_requested.emit(replaced)
+        if getattr(self,'generate_new',False) and self.proposal:
+            self.generate_new=False;self.show_proposal();return
         if self.record:
             self.show_progress()
         else:
@@ -98,6 +105,17 @@ class AutomaticPlanDialog(QDialog):
         self.feedback_button.hide()
         self.new.hide()
         p = self.proposal
+        if not p['candidates']:
+            self.title.setText('先完成有效评估，再制定计划')
+            self.checks.hide()
+            lines = ['<h3>目前还不能生成动作计划</h3><p>返回计划概览，点击“开始评估”。保存有效评估后，再让康复管家制定计划。</p>']
+            for entry in p['excluded'][:6]:
+                lines.append('<p>'+html.escape(entry['label']+'：'+entry['reason'])+'</p>')
+            lines.append('<p>'+html.escape(p['note'])+'</p>')
+            self.browser.setHtml(''.join(lines))
+            self.error.setText('\n'.join(p['blockers']))
+            self.primary.setText('尚无可用安排'); self.primary.setEnabled(False)
+            return
         self.title.setText('系统已读取评估，为你安排基础练习')
         lines = ['<h3>1 · 你的测试情况</h3>']
         for row in p['body']:
@@ -160,6 +178,27 @@ class AutomaticPlanDialog(QDialog):
 
     def _primary(self):
         if self.mode == 'proposal':
+            if getattr(self,'five_page_flow',False) and self.record:
+                from ..automatic_plans import create_automatic_plan
+                try:
+                    candidate=create_automatic_plan(self.proposal,{'general_activity_ok':self.general.isChecked(),'standing_support_ok':self.standing.isChecked(),'companion_present':self.companion.isChecked()})
+                except ValueError as exc:self.error.setText(str(exc));return
+                before={i['key']:i for i in self.record['items']};after={i['key']:i for i in candidate['items']}
+                changes=[]
+                for key in dict.fromkeys([*before,*after]):
+                    entry=after.get(key) or before[key]
+                    if key not in after:prefix='移除（当前条件不再适用）'
+                    elif key not in before:prefix='新增'
+                    elif before[key]['settings']!=after[key]['settings']:prefix='调整参数'
+                    else:prefix='保留'
+                    changes.append(prefix+'：'+exercise_spec(entry['exercise_id'])['label'])
+                if QMessageBox.question(self,'核对新计划','\n'.join(changes)+'\n\n按当前有效评估与已确认条件保存此安排？如需手动改参数，保存后选择“修改为个人计划”。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
+                answer=QMessageBox.question(self,'保存新计划','替换当前活动计划？选择“否”另存新计划；原计划保留。选择“是”将原计划归档，记录仍保留。',QMessageBox.Yes|QMessageBox.No|QMessageBox.Cancel,QMessageBox.No)
+                if answer==QMessageBox.Cancel:return
+                if answer==QMessageBox.Yes:
+                    try:self.version_store.remember_plan(self.scope['participant_id'],self.record)
+                    except Exception as exc:self.error.setText('原计划备份失败，本次未替换：'+str(exc));return
+                    self.replaced_record=copy.deepcopy(self.record)
             self._request('accept_automatic_plan', fingerprint=self.proposal['fingerprint'], screening={
                 'general_activity_ok': self.general.isChecked(), 'standing_support_ok': self.standing.isChecked(),
                 'companion_present': self.companion.isChecked()})

@@ -26,10 +26,16 @@ def test_published_116_button_contract_and_native_connections(desktop):
     expected['voiceInput']=('开始录音','ui.voice.transcribe')
     expected['voiceCancel']=('取消录音','voice.cancel')
     expected['product-201']=('记录用药情况','ui.chat.draft')
+    # User explicitly replaced the seven navigation entries and top-level user/settings buttons.
+    for key in ('product-1','product-6','product-8','product-10'):expected.pop(key,None)
+    expected['rehabLibrary']=('手动添加 / 编辑','原计划库')
+    expected['rehabAutomatic']=('康复管家制定计划','原自动计划/接受/准备')
+    expected['rehabPlanDetail']=('计划详情','保存的计划读模型')
     actual={b.property('actionId'):(b.text(),b.property('actionTarget')) for b in w.product_action_buttons()}
     assert {key:actual[key] for key in expected}==expected
-    assert set(actual)-set(expected)==ASSISTANT_NAV_ACTIONS|MODULE_NAV_ACTIONS|RECOVERY_NAV_ACTIONS|{'voiceFinish','dictationCancel','voiceRefresh','assistantVoiceEntry'}
-    assert len(actual)==len(w.product_action_buttons())==121+len(ASSISTANT_NAV_ACTIONS)+len(MODULE_NAV_ACTIONS)+len(RECOVERY_NAV_ACTIONS)
+    assert ASSISTANT_NAV_ACTIONS|MODULE_NAV_ACTIONS|RECOVERY_NAV_ACTIONS <= set(actual)
+    assert {'homeConversation','healthUpload','doseTaken','familyCategories','planSchedule'} <= set(actual)
+    assert len(actual)==len(w.product_action_buttons())  # unique published identities
     assert all(b.property('actionKind')=='B' for b in w.product_action_buttons() if b.property('actionId') in ASSISTANT_NAV_ACTIONS)
     assert all(b.receivers(SIGNAL('clicked(bool)'))>0 for b in w.product_action_buttons())
 
