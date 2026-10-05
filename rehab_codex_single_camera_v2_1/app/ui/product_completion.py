@@ -11,7 +11,7 @@ from ..domain import SOURCES, CONTEXTS
 # Published audit identities remain stable when widgets change parents.
 STABLE_ACTION_IDS = dict(zip(
     ('首页','AI 康复管家','康复','健康','用药','家庭','记录','我需要帮助','新建用户','通知','设置',
-     '我的训练计划','最近的评估结果','今天漏服了药','发送','记录数值','记录身体感受 / 更正记录',
+     '我的训练计划','最近的评估结果','记录用药情况','发送','记录数值','记录身体感受 / 更正记录',
      '添加资料 / 图片 / 视频','导出所选附件','识别健康图片','确认识别结果并记录','编辑联系人',
      '生成本机邀请码','确认绑定','授权家庭共享','撤销共享','解绑','刷新家属摘要',
      '查看原康复历史与评估趋势','导出健康报告','核对可共享通知并建立台账','确认所选通知'),
@@ -775,7 +775,7 @@ class ProductCompletion:
         # Old controls keep their original callbacks; annotate the final result for coverage.
         route={'首页','AI 康复管家','康复','健康','用药','家庭','记录','通知','设置','记录身体感受 / 更正记录','查看原康复历史与评估趋势'}
         operations={'我需要帮助':'emergency.contacts','新建用户':'profile.save','发送':'chat','我的训练计划':'chat',
-            '最近的评估结果':'chat','今天漏服了药':'chat','记录数值':'health.record','添加资料 / 图片 / 视频':'archive.save',
+            '最近的评估结果':'chat','记录用药情况':'ui.chat.draft','记录数值':'health.record','添加资料 / 图片 / 视频':'archive.save',
             '导出所选附件':'archive.read','识别健康图片':'image.parse','确认识别结果并记录':'image.confirm',
             '编辑联系人':'profile.save','生成本机邀请码':'family.invite','确认绑定':'family.bind',
             '授权家庭共享':'family.grant','撤销共享':'family.revoke','解绑':'family.unbind','刷新家属摘要':'family.summary',

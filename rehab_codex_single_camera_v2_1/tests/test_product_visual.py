@@ -22,6 +22,7 @@ def test_published_116_button_contract_and_native_connections(desktop):
     # Explicitly requested input-only dictation replaces the old immediate-send route.
     expected['voiceInput']=('开始录音','ui.voice.transcribe')
     expected['voiceCancel']=('取消录音','voice.cancel')
+    expected['product-201']=('记录用药情况','ui.chat.draft')
     actual={b.property('actionId'):(b.text(),b.property('actionTarget')) for b in w.product_action_buttons()}
     assert {key:actual[key] for key in expected}==expected
     assert set(actual)-set(expected)==ASSISTANT_NAV_ACTIONS|MODULE_NAV_ACTIONS|RECOVERY_NAV_ACTIONS|{'voiceFinish','dictationCancel','voiceRefresh','assistantVoiceEntry'}

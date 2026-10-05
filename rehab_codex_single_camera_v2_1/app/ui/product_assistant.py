@@ -90,8 +90,11 @@ def build_assistant(window):
     w.chat.setAccessibleName('与康复管家的对话历史');w.chat.setMinimumHeight(METRICS['chat_minimum'])
     area.addWidget(w.chat,1)
     quick=QHBoxLayout();quick.setSpacing(SPACING['sm'])
-    for text in ('我的训练计划','最近的评估结果','今天漏服了药'):
+    for text in ('我的训练计划','最近的评估结果'):
         quick.addWidget(visual(button(text,lambda checked=False,t=text:w._send_chat(t)),appearance='ghost'))
+    medication=visual(button('记录用药情况',w._prepare_medication_draft),appearance='ghost')
+    medication.setToolTip('先填写用药情况，检查后发送；已有草稿会保留。')
+    quick.addWidget(medication)
     quick.addStretch();area.addLayout(quick)
     composer=QFrame();composer.setObjectName('assistantComposer')
     compose=QVBoxLayout(composer);compose.setContentsMargins(16,12,16,12);compose.setSpacing(8)

@@ -82,3 +82,34 @@ def test_owner_switch_resets_modules_and_drafts_and_materials_links_to_real_arch
     w.interface_buttons['assistantArchiveEntry'].click();wait(app,lambda:not w.pending)
     assert w.active_page=='health' and w.health_tabs.currentIndex()==2
     w.navigate('assistant');wait(app,lambda:not w.pending);assert section(w,'conversation')
+
+
+def test_medication_shortcut_edits_draft_only_and_explicit_send_keeps_privacy(desktop):
+    from copy import deepcopy
+    w,app=desktop;w.navigate('assistant');wait(app,lambda:not w.pending)
+    shortcut=next(b for b in w.product_action_buttons() if b.property('actionId')=='product-201')
+    assert shortcut.text()=='记录用药情况' and shortcut.property('actionTarget')=='ui.chat.draft'
+    before=deepcopy(w.snapshot['state'])
+    w.private_turn.setChecked(True)
+    QTest.mouseClick(shortcut,Qt.LeftButton);app.processEvents()
+    assert w.chat_input.toPlainText()=='我想记录今天的用药情况。'
+    assert w.chat_input.hasFocus() and not w.pending
+    assert w.private_turn.isChecked() and w.snapshot['state']==before
+    # Repeating the shortcut neither duplicates the starter nor sends it.
+    shortcut.setFocus();QTest.keyClick(shortcut,Qt.Key_Space);app.processEvents()
+    assert w.chat_input.toPlainText()=='我想记录今天的用药情况。' and not w.pending
+    draft='TEST 我今天没有漏服药，只想核对记录。'
+    w.chat_input.setPlainText(draft)
+    QTest.mouseClick(shortcut,Qt.LeftButton);app.processEvents()
+    assert w.chat_input.toPlainText()==draft and w.chat_input.hasFocus()
+    assert not w.pending and w.snapshot['state']==before
+    # Re-read persistence before explicit send; no hidden turn/event was created.
+    w._request('snapshot');wait(app,lambda:not w.pending)
+    assert w.snapshot['state']['chat']==before['chat'] and w.snapshot['state']['events']==before['events']
+    QTest.keyClick(w.chat_input,Qt.Key_Return,Qt.ControlModifier);wait(app,lambda:not w.pending)
+    assert draft in w.chat.toPlainText() and not w.chat_input.toPlainText()
+    assert w.snapshot['state']['events']==before['events']
+    assert '本轮不记录' in w.record_receipt.text()
+    # Explicit medication commands retain their original domain route.
+    assert w.interface_buttons['medMiss'].property('actionTarget')=='chat'
+    assert w.interface_buttons['medMissedAdd'].property('actionTarget')=='chat'

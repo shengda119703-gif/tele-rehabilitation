@@ -177,8 +177,11 @@ if __name__ == '__main__':
     def edit(field, value):
         reveal(field); click_focus(field)
         QTest.keyClick(field, Qt.Key_A, Qt.ControlModifier)
-        app.clipboard().setText(str(value))
-        QTest.keyClick(field, Qt.Key_V, Qt.ControlModifier)
+        if str(value):
+            app.clipboard().setText(str(value))
+            QTest.keyClick(field, Qt.Key_V, Qt.ControlModifier)
+        else:
+            QTest.keyClick(field, Qt.Key_Backspace)
         pump(30)
 
 
@@ -405,11 +408,19 @@ if __name__ == '__main__':
         check(field.toPlainText()=='TEST 未发送草稿','draft lost on return')
         action('assistantReferenceEntry');action('assistantBackReference')
         action('assistantVoiceEntry');check(window.assistant_sections.currentWidget() is window.assistant_views['conversation'],'unavailable microphone left composer');action('assistantVoiceSettings');action('assistantVoiceText')
-        for key in ('product-199','product-200','product-201'):action(key)
+        for key in ('product-199','product-200'):action(key)
+        before=list(window.snapshot['state']['chat'])
+        action('product-201')
+        check(field.toPlainText()=='TEST 未发送草稿','medication shortcut replaced draft')
+        check(window.snapshot['state']['chat']==before,'medication shortcut sent a message')
+        edit(field,'');action('product-201')
+        check(field.toPlainText()=='我想记录今天的用药情况。','neutral medication draft missing')
+        check(window.snapshot['state']['chat']==before,'empty-draft shortcut sent a message')
+        window.grab().save(str(OUT/'medication-shortcut-draft.png'))
         action('assistantReferenceEntry');action('assistantRehab');check(window.findChild(QLabel,'productTitle').text()=='康复','rehab link wrong')
 
 
-    record('AI 四模块、发送、三推荐问题、草稿、返回、康复链接',assistant)
+    record('AI 四模块、发送、查询建议、用药草稿、返回、康复链接',assistant)
 
 
     def dock():

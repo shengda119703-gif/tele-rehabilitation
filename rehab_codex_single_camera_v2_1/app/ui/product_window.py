@@ -663,6 +663,14 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self._message('已打开康复工作区，请按实际评估 / 训练流程继续；完成后可返回康复概览。')
         return True
 
+    def _prepare_medication_draft(self):
+        if self.pending or not self.owner:return
+        if not self.chat_input.toPlainText().strip():
+            self.chat_input.setPlainText('我想记录今天的用药情况。')
+            cursor=self.chat_input.textCursor();cursor.movePosition(cursor.MoveOperation.End)
+            self.chat_input.setTextCursor(cursor)
+        self.chat_input.setFocus()
+
     def _send_chat(self,text=None,*,inline=False):
         if self.pending:
             self._message('上一条操作正在完成，请稍候。')
