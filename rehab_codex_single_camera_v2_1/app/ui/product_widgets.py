@@ -2,6 +2,7 @@
 import html
 from datetime import datetime
 from .product_theme import SPACING
+from .product_segments import SegmentTabs
 from PySide6.QtCore import Qt, QSize, QEvent
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QLabel, QPushButton, QFrame, QVBoxLayout, QTableWidget,
@@ -27,12 +28,37 @@ class CurrentStack(QStackedWidget):
             policy=QSizePolicy.Preferred if i==index else QSizePolicy.Ignored
             self.widget(i).setSizePolicy(policy,policy)
         self.updateGeometry()
+        self._fit_height()
+
+    def _fit_height(self):
+        if not self.property('activeHeightOnly') or not self.currentWidget():return
+        height=self.heightForWidth(max(1,self.width()))
+        if height>0 and self.maximumHeight()!=height:self.setMaximumHeight(height)
+
+    def resizeEvent(self,event):
+        super().resizeEvent(event);self._fit_height()
+
+    def event(self,event):
+        result=super().event(event)
+        if event.type()==QEvent.LayoutRequest:self._fit_height()
+        return result
 
     def sizeHint(self):
         return self.currentWidget().sizeHint() if self.currentWidget() else super().sizeHint()
 
     def minimumSizeHint(self):
         return self.currentWidget().minimumSizeHint() if self.currentWidget() else super().minimumSizeHint()
+
+    def hasHeightForWidth(self):
+        return bool(self.currentWidget() and self.currentWidget().hasHeightForWidth())
+
+    def heightForWidth(self, width):
+        # QStackedLayout otherwise takes the tallest *hidden* wrapping page.
+        # SizeHint alone cannot prevent the scroll area's phantom vertical range.
+        current=self.currentWidget()
+        if current is None:return super().heightForWidth(width)
+        height=current.heightForWidth(width)
+        return height if height>=0 else current.sizeHint().height()
 
 
 def display_time(value):
@@ -43,7 +69,7 @@ def display_time(value):
     except ValueError:return str(value)
 
 
-class ContentTabs(QTabWidget):
+class ContentTabs(SegmentTabs):
     """Size a short settings pane to the active content, not its tallest sibling."""
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -61,7 +87,7 @@ class ContentTabs(QTabWidget):
         layout=self.currentWidget().layout()
         height=layout.heightForWidth(max(1,self.width()-4)) if layout and layout.hasHeightForWidth() else -1
         if height<0:height=self.currentWidget().sizeHint().height()
-        height+=self.tabBar().sizeHint().height()+12
+        height+=self.tabBar().sizeHint().height()+14  # core pane padding-top
         if self.maximumHeight()!=height:self.setMaximumHeight(height)
 
     def resizeEvent(self,event):
@@ -78,12 +104,12 @@ class ContentTabs(QTabWidget):
     def sizeHint(self):
         if self.currentWidget() is None:return super().sizeHint()
         size=self.currentWidget().sizeHint()
-        return QSize(max(size.width(),self.tabBar().sizeHint().width()),size.height()+self.tabBar().sizeHint().height()+12)
+        return QSize(max(size.width(),self.tabBar().sizeHint().width()),size.height()+self.tabBar().sizeHint().height()+14)
 
     def minimumSizeHint(self):
         if self.currentWidget() is None:return super().minimumSizeHint()
         size=self.currentWidget().minimumSizeHint()
-        return QSize(size.width(),size.height()+self.tabBar().sizeHint().height()+12)
+        return QSize(size.width(),size.height()+self.tabBar().sizeHint().height()+14)
 
 
 class WrappingLabel(QLabel):
@@ -233,6 +259,7 @@ def table(headers):
     item = QTableWidget(0,len(headers))
     item.setHorizontalHeaderLabels(headers)
     item.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+    item.horizontalHeader().setDefaultAlignment(Qt.AlignLeft | Qt.AlignVCenter)
     item.verticalHeader().hide()
     item.setEditTriggers(QAbstractItemView.NoEditTriggers)
     item.setSelectionBehavior(QAbstractItemView.SelectRows)

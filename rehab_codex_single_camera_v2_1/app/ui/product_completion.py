@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QTabWidget, QC
     QProgressBar, QScrollArea, QFrame, QStackedWidget)
 from .product_widgets import label, button, card, table, rows, core_card, visual, ResponsiveGrid, WrappingLabel, display_time, ContentTabs
 from .product_theme import SPACING, METRICS
+from .product_segments import SegmentTabs
 from ..domain import SOURCES, CONTEXTS
 
 # Published audit identities remain stable when widgets change parents.
@@ -99,7 +100,7 @@ class ProductCompletion:
             if widget:visual(widget,appearance='ghost')
         # Retain published action identities, without duplicate page navigation.
         top_host=QWidget();top_host.setLayout(top);top_host.hide();overview_box.addWidget(top_host)
-        self.rehab_tabs=QTabWidget()
+        self.rehab_tabs=SegmentTabs()
         self.rehab_summary={};self.rehab_tables={};self.rehab_areas={};self.recovery_sections={}
         definitions=[('今日恢复',['动作','恢复流程（计划累计）','目标']),('康复评估',['时间','动作 / 侧别','有效性']),
                      ('训练计划',['计划','累计完成情况','创建时间']),('康复进度',['时间','训练','完成 / 反馈'])]
@@ -179,7 +180,7 @@ class ProductCompletion:
         self.pages.addWidget(page);self.page_widgets['rehab']=page
 
     def _medication_page(self):
-        box=self._page('medication');self.medication_tabs=QTabWidget();box.addWidget(self.medication_tabs)
+        box=self._page('medication');self.medication_tabs=ContentTabs();box.addWidget(self.medication_tabs)
         def tab(title):
             p=QWidget();area=QVBoxLayout(p);area.setAlignment(Qt.AlignTop);self.medication_tabs.addTab(p,title);return area
         area=tab('今日用药');self.medication_today=label('暂无用药安排');area.addWidget(self.medication_today)
@@ -216,10 +217,12 @@ class ProductCompletion:
         box.addStretch()
 
     def _settings_page(self):
+        def settings_text(text=''):
+            item=WrappingLabel(text);item.setWordWrap(True);return item
         box=self._page('settings');self.settings_tabs=ContentTabs();box.addWidget(self.settings_tabs)
         def tab(title):
             p=QWidget();area=QVBoxLayout(p);area.setAlignment(Qt.AlignTop);self.settings_tabs.addTab(p,title);return area
-        area=tab('个人资料');self.profile_summary=label('请建立个人资料。');self.profile_summary.setMaximumHeight(120);area.addWidget(self.profile_summary)
+        area=tab('个人资料');self.profile_summary=settings_text('请建立个人资料。');self.profile_summary.setMaximumHeight(120);area.addWidget(self.profile_summary)
         self._action(area,'settingsProfile','编辑个人资料与康复目标',self._profile,kind='A',target='profile.save')
         area.addWidget(self.interface_buttons['rehabPerson'])
         self.interface_buttons['rehabPerson'].setText('康复测量个人资料')
@@ -228,18 +231,18 @@ class ProductCompletion:
         preference=QSettings('Ankang','ProductUI')
         self.reduce_motion=QCheckBox('减少界面动画');self.reduce_motion.setChecked(preference.value('reducedMotion',False,type=bool))
         self.reduce_motion.toggled.connect(lambda value:preference.setValue('reducedMotion',value));area.addWidget(self.reduce_motion)
-        area=tab('数据与隐私');self.data_location=label('本机资料独立保存；清除前可导出备份。');area.addWidget(self.data_location)
+        area=tab('数据与隐私');self.data_location=settings_text('本机资料独立保存；清除前可导出备份。');area.addWidget(self.data_location)
         self._action(area,'settingsBackup','导出本人本地备份',self._backup,kind='A',target='lifecycle.export')
         self._action(area,'settingsClear','清除本人健康聊天与附件',self._clear,kind='D',target='lifecycle.clear')
-        area.addWidget(label('清除健康记录、聊天、附件、共享许可和通知，保留药物档案及原康复记录。'))
+        area.addWidget(settings_text('清除健康记录、聊天、附件、共享许可和通知，保留药物档案及原康复记录。'))
         area=tab('家庭共享');self._action(area,'settingsSharing','我的照护圈 / 允许查看',lambda:self.navigate('family'),target='家庭')
-        area=tab('设备与同步');self.capabilities_text=label();area.addWidget(self.capabilities_text)
+        area=tab('设备与同步');self.capabilities_text=settings_text();area.addWidget(self.capabilities_text)
         self._sync_controls(area)
         self._interface_button(area,'settingsDevices','查看设备与健康数据',self._open_devices)
         self._interface_button(area,'settingsRefresh','刷新连接状态',self._refresh_extensions)
         area=tab('通知');self._action(area,'settingsNotification','通知与渠道状态',lambda:self.navigate('notifications'),target='通知')
-        area.addWidget(label('外部通知渠道尚未配置时不发送；允许查看、渠道接受和对端送达是不同状态。'))
-        area=tab('开发者设置');area.addWidget(label('仅用于本机开发配置，不属于日常健康操作。'))
+        area.addWidget(settings_text('外部通知渠道尚未配置时不发送；允许查看、渠道接受和对端送达是不同状态。'))
+        area=tab('开发者设置');area.addWidget(settings_text('仅用于本机开发配置，不属于日常健康操作。'))
         self._action(area,'settingsDeveloper','打开开发者配置',self._developer,kind='D',target='工作区外模型凭据配置')
         self._action(box,'settingsHome','返回首页',lambda:self.navigate('home'),target='首页');box.addStretch()
 

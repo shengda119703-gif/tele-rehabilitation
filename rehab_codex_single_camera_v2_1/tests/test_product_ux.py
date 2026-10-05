@@ -98,3 +98,39 @@ def test_assistant_entry_keyboard_and_current_settings_height(desktop):
     w.settings_tabs.setCurrentIndex(3);app.processEvents();large=w.settings_tabs.height()
     w.settings_tabs.setCurrentIndex(0);app.processEvents()
     assert w.settings_tabs.height()<large
+
+
+def test_family_short_overview_is_not_sized_by_hidden_legacy_forms(desktop):
+    w,app=desktop;w.resize(1024,720);w.navigate('family');wait(app,lambda:not w.pending)
+    QTest.qWait(150)
+    assert w.page_widgets['family'].verticalScrollBar().maximum()==0
+    w.family_sections.setCurrentIndex(2);QTest.qWait(100)
+    assert w.page_widgets['family'].verticalScrollBar().maximum()>0
+    w.family_sections.setCurrentIndex(0);QTest.qWait(100)
+    assert w.page_widgets['family'].verticalScrollBar().maximum()==0
+    w.resize(1440,940);w.navigate('home');wait(app,lambda:not w.pending);QTest.qWait(100)
+    from PySide6.QtWidgets import QFrame
+    greeting=w.findChild(QFrame,'careConversation');viewport=w.page_widgets['home'].viewport()
+    assert greeting.mapTo(viewport,greeting.rect().topLeft()).y()<40
+
+
+def test_real_archive_tab_motion_survives_active_pane_height_change(desktop,monkeypatch):
+    from PySide6.QtCore import QAbstractAnimation
+    monkeypatch.setenv('ANKANG_REDUCED_MOTION','0')
+    w,app=desktop;w.resize(1024,720);w.navigate('health');wait(app,lambda:not w.pending)
+    tabs=w.health_tabs;bar=tabs.tabBar();tabs.setCurrentIndex(0);QTest.qWait(350)
+    tabs.setCurrentIndex(2);QTest.qWait(70)
+    assert bar._motion.state()==QAbstractAnimation.Running
+    assert bar._thumb!=bar._destination()
+    QTest.qWait(350)
+    assert bar._thumb==bar._destination() and tabs.currentIndex()==2
+
+
+def test_settings_explanations_fit_their_actual_wrapped_width(desktop):
+    from PySide6.QtWidgets import QLabel
+    w,app=desktop;w.resize(1024,720);w.navigate('settings');wait(app,lambda:not w.pending)
+    for index in range(w.settings_tabs.count()):
+        w.settings_tabs.setCurrentIndex(index);QTest.qWait(150)
+        for text in w.settings_tabs.currentWidget().findChildren(QLabel):
+            if text.isVisible() and text.wordWrap() and text.text():
+                assert text.height()>=text.heightForWidth(text.width()),(index,text.text(),text.size())

@@ -25,7 +25,7 @@ from .product_interfaces import ProductInterfaces
 from .product_completion import ProductCompletion
 from .product_experience import ProductExperience
 from .product_assistant import build_assistant, show_section, back, refresh_summary, refresh_record_review
-from .product_widgets import label, button, card, table, rows, visual, conversation_html, display_time, ResponsiveGrid, CurrentStack
+from .product_widgets import label, button, card, table, rows, visual, conversation_html, display_time, ResponsiveGrid, CurrentStack, ContentTabs
 
 NAVIGATION = [('home','首页','home'),('rehab','康复','tasks'),
               ('health','健康','health'),('medication','用药','medication'),('family','家庭','profile'),
@@ -84,6 +84,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         self._build()
         self._completion_setup()
         self._experience_setup()
+        from .product_polish import polish_product
+        polish_product(self)
         self.product_theme=ProductTheme(self)
         self.chat_shortcut=QShortcut(QKeySequence('Ctrl+Return'),self.chat_input)
         self.chat_shortcut.setContext(Qt.WidgetShortcut);self.chat_shortcut.activated.connect(self._send_chat)
@@ -107,7 +109,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         sidebar = QFrame()
         sidebar.setObjectName('productSidebar')
         self.product_sidebar=sidebar
-        sidebar.setFixedWidth(184)
+        sidebar.setFixedWidth(176)
         nav = QVBoxLayout(sidebar)
         nav.setContentsMargins(18,26,14,20);nav.setSpacing(6)
         nav.addWidget(label('安康','productBrand'))
@@ -184,6 +186,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         scroll.setWidgetResizable(True)
         scroll.setFrameShape(QFrame.NoFrame)
         content = QWidget()
+        content.setMaximumWidth(980)
+        scroll.setAlignment(Qt.AlignLeft | Qt.AlignTop)
         content.setProperty('visualScope','core')
         box = QVBoxLayout(content)
         box.setContentsMargins(0,0,8,0)
@@ -216,7 +220,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
 
     def _health_page(self):
         box = self._page('health')
-        tabs = QTabWidget()
+        tabs = ContentTabs()
         self.health_tabs = tabs
         box.addWidget(tabs)
         status = QWidget()
@@ -323,7 +327,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
 
     def _history_page(self):
         box = self._page('history')
-        tabs = QTabWidget()
+        tabs = ContentTabs()
         box.addWidget(tabs)
         timeline = QWidget()
         layout = QVBoxLayout(timeline)

@@ -50,7 +50,13 @@ for width,theme in ((1440,'light'),(1024,'light'),(1440,'dark'),(1024,'dark')):
             QTest.qWait(120)
             w.grab().save(str(out/f'{width}-{theme}-editor.png'))
             wait(app,lambda:editor.save.isEnabled())
-            editor.save.click();wait(app,lambda:not w.legacy.busy and editor.records)
+            editor.save.click()
+            # Real Runtime I/O may exceed the 12-second passive-UI test wait
+            # under load. Keep the bounded real-Runtime timeout and diagnostics.
+            try:wait_runtime(lambda:not w.legacy.busy and editor.records)
+            except AssertionError:
+                print('save state:',w.legacy.busy,editor.pending,editor.error.text(),w.legacy.notice.text(),flush=True)
+                raise
             wait(app,lambda:editor.close_button.isEnabled())
             editor.close_button.click();wait(app,lambda:not w.pending)
             assert w.legacy.plan_library_dialog is None, 'Editor did not close'

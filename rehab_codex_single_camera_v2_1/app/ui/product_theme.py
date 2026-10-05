@@ -9,7 +9,7 @@ from PySide6.QtCore import Qt
 
 # Product aliases are the only visual values consumed by migrated pages.
 SPACING = dict(xs=4, sm=8, md=12, lg=16, xl=24, xxl=32)
-RADIUS = dict(control=4, card=0, hero=0)
+RADIUS = dict(control=6, card=0, hero=0)
 TYPE = dict(display=(26,600), section=(20,600), card=(16,600),
             body=(14,400), secondary=(14,400), caption=(12,400))
 METRICS = dict(overview=300, overview_collapsed=60, chat_minimum=110,
@@ -58,6 +58,9 @@ def core_style(c):
 {s} QFrame#productHero[fluentCard="hero"] {{ background:{c['surface']}; border:0; border-left:3px solid {c['brand']}; border-radius:0px; }}
 {s} QLabel#productTitle {{ font-size:{TYPE['display'][0]}px; color:{c['text']}; }}
 {s} QLabel#productMuted {{ color:{c['secondary']}; }}
+{s} QFrame#careConversation {{ background:{c['soft']}; border:0; border-radius:12px; }}
+{s} QLabel[careSummary="true"] {{ background:{c['soft']}; border:0; border-radius:8px; padding:18px; }}
+{s} QLabel[careEmpty="true"] {{ background:transparent; color:{c['secondary']}; padding:12px 0; }}
 {s} QPushButton#productPrimary {{ background:{c['brand']}; color:{c['on_brand']}; border:1px solid {c['brand']}; }}
 {s} QPushButton#productPrimary:hover {{ background:{c['brand_hover']}; }}
 {s} QPushButton#productPrimary:pressed {{ background:{c['brand_pressed']}; }}
@@ -90,7 +93,7 @@ def core_style(c):
 {s} QTableWidget::item, {s} QListWidget::item {{ padding:8px; }}
 {s} QTableWidget::item:selected, {s} QListWidget::item:selected {{ background:{c['selected_bg']}; color:{c['selected_text']}; }}
 {s} QTableWidget:focus, {s} QListWidget:focus {{ border-color:{c['brand']}; }}
-{s} QTabWidget::pane {{ background:{c['surface']}; border:0; }}
+{s} QTabWidget::pane {{ background:{c['window']}; border:0; padding-top:14px; }}
 {s} QTabBar::tab {{ background:transparent; color:{c['secondary']}; border-bottom:3px solid transparent; padding:10px 16px; }}
 {s} QTabBar::tab:hover {{ background:{c['soft']}; }}
 {s} QTabBar::tab:selected {{ background:{c['surface']}; color:{c['brand']}; border-bottom-color:{c['brand']}; font-weight:600; }}
@@ -148,6 +151,22 @@ class ProductTheme:
                     if isinstance(widget,QAbstractItemView):
                         view_palette=QPalette(p);view_palette.setColor(QPalette.Highlight,QColor(self.colors['selected_bg']))
                         view_palette.setColor(QPalette.HighlightedText,QColor(self.colors['selected_text']));widget.setPalette(view_palette)
+        from .product_segments import SegmentBar
+        for bar in self.window.findChildren(SegmentBar):
+            segment_palette=QPalette(p)
+            segment_palette.setColor(QPalette.AlternateBase,QColor(self.colors['soft']))
+            segment_palette.setColor(QPalette.Base,QColor(self.colors['brand'] if mode=='high-contrast' else self.colors['window']))
+            segment_palette.setColor(QPalette.Text,QColor(self.colors['on_brand'] if mode=='high-contrast' else self.colors['text']))
+            segment_palette.setColor(QPalette.WindowText,QColor(self.colors['secondary']))
+            bar.setPalette(segment_palette);bar.update()
+        from PySide6.QtWidgets import QDateEdit
+        for day in self.window.findChildren(QDateEdit):
+            if day.calendarPopup():
+                calendar=day.calendarWidget();calendar.setPalette(p)
+                for view in calendar.findChildren(QAbstractItemView):view.setPalette(p)
+                for name,direction in (('qt_calendar_prevmonth',-1),('qt_calendar_nextmonth',1)):
+                    control=calendar.findChild(QAbstractButton,name)
+                    if control:control.setIcon(calendar_arrow(direction,self.colors['text']))
         self.window.record_dialog.setPalette(p)
         self.window.record_dialog.setStyleSheet('QDialog { background:'+self.colors['window']+'; color:'+self.colors['text']+'; }'+shell_style(self.colors))
         if self.window.snapshot:
@@ -182,17 +201,30 @@ def themed_icon(name,color):
     return icon
 
 
+def calendar_arrow(direction,color):
+    """Recolor the existing native calendar buttons; keep their handlers and names."""
+    path='m14 6-6 6 6 6' if direction<0 else 'm10 6 6 6-6 6'
+    svg=f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="{path}" fill="none" stroke="{color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    icon=QIcon()
+    for scale in (1,2):
+        pixmap=QPixmap(20*scale,20*scale);pixmap.fill(Qt.transparent)
+        painter=QPainter(pixmap);QSvgRenderer(svg.encode()).render(painter);painter.end()
+        pixmap.setDevicePixelRatio(scale);icon.addPixmap(pixmap)
+    return icon
+
+
 def shell_style(c):
     """One semantic stylesheet for product pages; legacy workspace retains its local owner."""
     check=(Path(__file__).resolve().parents[2]/'assets/ui'/('check-dark.svg' if QColor(c['on_brand']).lightness()<128 else 'check.svg')).as_posix()
+    chevron=(Path(__file__).resolve().parents[2]/'assets/ui'/('chevron-dark.svg' if QColor(c['text']).lightness()>128 else 'chevron.svg')).as_posix()
     return f'''
 QWidget {{ font-size:14px; font-family:'Microsoft YaHei UI'; }}
 QMainWindow#productWindow, QWidget#productRoot {{ background:{c['window']}; color:{c['text']}; font-family:'Microsoft YaHei UI'; font-size:14px; }}
-QFrame#productSidebar {{ background:{c['window']}; border-right:1px solid {c['border']}; }}
+QFrame#productSidebar {{ background:{c['surface']}; border-right:1px solid {c['border']}; }}
 QLabel#productBrand {{ font-size:25px; font-weight:700; color:{c['text']}; }}
 QLabel#productBrandSub, QLabel#productMuted {{ color:{c['secondary']}; }}
 QLabel#productBrandSub {{ font-size:12px; }}
-QPushButton#productNav {{ text-align:left; padding:10px 14px; border:1px solid transparent; border-radius:0px; background:transparent; color:{c['secondary']}; font-size:15px; }}
+QPushButton#productNav {{ text-align:left; padding:10px 14px; border:1px solid transparent; border-radius:7px; background:transparent; color:{c['secondary']}; font-size:15px; }}
 QPushButton#productNav:hover {{ background:{c['soft']}; color:{c['text']}; }}
 QPushButton#productNav:checked {{ background:{c['soft']}; color:{c['text']}; font-weight:700; border-left-color:transparent; }}
 QPushButton#productNav:focus {{ border-color:{c['brand']}; }}
@@ -216,6 +248,17 @@ QLineEdit, QPlainTextEdit, QTextBrowser, QComboBox, QSpinBox, QDoubleSpinBox {{ 
 QLineEdit:focus, QPlainTextEdit:focus, QTextBrowser:focus, QComboBox:focus, QSpinBox:focus, QDoubleSpinBox:focus {{ border-color:{c['brand']}; }}
 QLineEdit:disabled, QComboBox:disabled, QSpinBox:disabled, QDoubleSpinBox:disabled {{ color:{c['disabled_text']}; background:{c['disabled_bg']}; }}
 QComboBox QAbstractItemView {{ color:{c['text']}; background:{c['surface']}; selection-background-color:{c['brand']}; selection-color:{c['on_brand']}; }}
+QComboBox::drop-down, QDateEdit::drop-down {{ subcontrol-origin:padding; subcontrol-position:top right; width:28px; border:0; }}
+QComboBox::down-arrow, QDateEdit::down-arrow {{ image:url("{chevron}"); width:14px; height:14px; }}
+QComboBox {{ padding-right:30px; }}
+QDateEdit, QTimeEdit {{ color:{c['text']}; background:{c['surface']}; border:1px solid {c['border']}; border-radius:6px; padding:8px 12px; min-height:20px; }}
+QDateEdit:focus, QTimeEdit:focus {{ border-color:{c['brand']}; }}
+QDateEdit:disabled, QTimeEdit:disabled {{ color:{c['disabled_text']}; background:{c['disabled_bg']}; }}
+QCalendarWidget QWidget {{ background:{c['window']}; color:{c['text']}; }}
+QCalendarWidget QAbstractItemView {{ background:{c['window']}; color:{c['text']}; selection-background-color:{c['brand']}; selection-color:{c['on_brand']}; }}
+QCalendarWidget QToolButton {{ color:{c['text']}; background:{c['soft']}; border:0; border-radius:4px; padding:4px 8px; }}
+QCalendarWidget QToolButton:hover {{ background:{c['surface_background_hover']}; }}
+QCalendarWidget QSpinBox {{ background:{c['surface']}; color:{c['text']}; }}
 QCheckBox {{ color:{c['text']}; spacing:8px; background:transparent; }}
 QCheckBox:disabled {{ color:{c['disabled_text']}; }}
 QCheckBox:focus {{ outline:1px solid {c['brand']}; }}
