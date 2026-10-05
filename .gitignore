@@ -23,3 +23,10 @@ backups/
 /*.7z
 **/*.bak
 **/application.lock
+# Android local builds, dependency cache, private signing material and weights.
+android_offline/node_modules/
+android_offline/.gradle/
+**/*.apk
+**/*.jks
+**/*.keystore
+**/local.properties
