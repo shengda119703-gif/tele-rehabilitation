@@ -25,7 +25,7 @@ def build_assistant(window):
     w.assistant_view_history=['overview']
     box.addWidget(w.assistant_sections,1)
 
-    def page(key,title=None):
+    def page(key,title=None,*,show_title=True):
         item=QWidget();area=QVBoxLayout(item)
         area.setContentsMargins(0,0,0,0);area.setSpacing(SPACING['md'])
         w.assistant_views[key]=item;w.assistant_sections.addWidget(item)
@@ -33,7 +33,8 @@ def build_assistant(window):
             top=QHBoxLayout()
             back=w._action(top,'assistantBack'+key.title(),'返回',w._assistant_back,target='AI 康复管家/上一模块')
             visual(back,appearance='ghost');back.setToolTip('返回上一模块，对话和输入草稿保留')
-            top.addWidget(visual(label(title),typography='section'),1)
+            if show_title:top.addWidget(visual(label(title),typography='section'),1)
+            else:top.addStretch()
             area.addLayout(top)
             return area,top
         return area,None
@@ -63,14 +64,24 @@ def build_assistant(window):
         grid.addWidget(item,index,0)
     portal.addLayout(grid);portal.addStretch()
 
-    conversation,top=page('conversation','康复管家')
+    conversation,top=page('conversation','康复管家',show_title=False)
     w.interface_buttons['assistantBackConversation'].setText('更多')
     visual(w._action(top,'assistantVoiceSettings','语音与设备',lambda:w._show_assistant_section('voice'),target='AI 康复管家/voice'),appearance='ghost')
     visual(w._action(top,'assistantReferenceEntry','查看参考资料',
         lambda:w._show_assistant_section('reference'),target='AI 康复管家/reference'),appearance='ghost')
     item,area=core_card();area.setContentsMargins(0,16,0,0);area.setSpacing(10)
     w.agent_status=visual(label('正在读取助手状态…','productMuted'),typography='secondary')
-    area.addWidget(w.agent_status)
+    w.assistant_status_toggle=QToolButton();w.assistant_status_toggle.setObjectName('assistantStatusToggle')
+    w.assistant_status_toggle.setText('助手状态');w.assistant_status_toggle.setCheckable(True)
+    w.assistant_status_toggle.setToolButtonStyle(Qt.ToolButtonTextBesideIcon);w.assistant_status_toggle.setArrowType(Qt.RightArrow)
+    w.assistant_status_toggle.setAccessibleName('展开助手能力与连接状态')
+    top.addWidget(w.assistant_status_toggle)
+    w.assistant_status_details=QWidget();details=QVBoxLayout(w.assistant_status_details)
+    details.setContentsMargins(0,0,0,0);details.setSpacing(SPACING['sm']);details.addWidget(w.agent_status)
+    w.assistant_connection=visual(label(''),typography='caption');details.addWidget(w.assistant_connection)
+    area.addWidget(w.assistant_status_details);w.assistant_status_details.hide()
+    w.assistant_status_toggle.toggled.connect(w.assistant_status_details.setVisible)
+    w.assistant_status_toggle.toggled.connect(lambda opened:w.assistant_status_toggle.setArrowType(Qt.DownArrow if opened else Qt.RightArrow))
     w.record_receipt=visual(label('表达 → 理解 → 需要时澄清 → 记录 → 后续追踪'),typography='caption')
     area.addWidget(w.record_receipt);w.record_receipt.hide()
     w.record_disclosure=QToolButton();w.record_disclosure.setText('查看理解与记录结果')
@@ -176,6 +187,7 @@ def show_section(window,key,*,remember=True):
     w.page_widgets['assistant'].widget().setSizePolicy(QSizePolicy.Expanding,QSizePolicy.Ignored if key=='conversation' else QSizePolicy.Preferred)
     w.page_widgets['assistant'].verticalScrollBar().setValue(0)
     if key=='conversation':w.chat_input.setFocus()
+    if hasattr(w,'page_states'):w._completion_controls()
 
 
 def back(window):

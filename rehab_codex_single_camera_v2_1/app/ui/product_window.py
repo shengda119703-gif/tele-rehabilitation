@@ -156,7 +156,8 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         meta.addWidget(self.date_label,1)
         self.storage_label = label('正在连接本机服务…','productMuted')
         meta.addWidget(self.storage_label)
-        main.addLayout(meta)
+        self.product_meta=QWidget();self.product_meta.setLayout(meta);meta.setContentsMargins(0,0,0,0)
+        main.addWidget(self.product_meta)
         self.notice = label('', 'productNotice')
         self.notice.hide()
         main.addWidget(self.notice)
@@ -399,9 +400,15 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
     def _return_context(self):
         if self.return_context:self.navigate(self.return_context[0])
 
+    def _assistant_conversation_active(self):
+        return self.active_page=='assistant' and self.assistant_sections.currentWidget() is self.assistant_views['conversation']
+
+    def _quiet_assistant_feedback(self,text):
+        return self._assistant_conversation_active() and text=='管家已回复。'
+
     def _message(self,text,*,severity='info'):
         self.notice.setText(text)
-        self.notice.setVisible(bool(text))
+        self.notice.setVisible(bool(text) and not self._quiet_assistant_feedback(text))
         visual(self.notice,status=severity)
         if hasattr(self,'page_states') and text:
             self.page_states[self.active_page].setText(text)
@@ -609,6 +616,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.timeline_entries = []
         self.record_receipt.setText('正在读取当前用户资料…');self.record_review.clear()
         self.record_dialog.close();self.record_disclosure.hide();self.record_receipt.hide()
+        self.assistant_status_toggle.setChecked(False)
         self.assistant_reference.setText('正在读取当前用户资料…')
         self._render_extensions({})
         self.tasks.clear()

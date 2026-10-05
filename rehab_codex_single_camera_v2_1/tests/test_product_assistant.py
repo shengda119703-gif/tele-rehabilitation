@@ -113,3 +113,33 @@ def test_medication_shortcut_edits_draft_only_and_explicit_send_keeps_privacy(de
     # Explicit medication commands retain their original domain route.
     assert w.interface_buttons['medMiss'].property('actionTarget')=='chat'
     assert w.interface_buttons['medMissedAdd'].property('actionTarget')=='chat'
+
+
+def test_conversation_chrome_keeps_errors_receipts_and_contextual_assistant(desktop):
+    w,app=desktop;w.navigate('assistant');wait(app,lambda:not w.pending)
+    assert not w.product_meta.isVisible() and not w.interface_buttons['globalAssistant'].isVisible()
+    assert not w.agent_status.isVisible() and w.assistant_status_toggle.text()=='基础模式'
+    w.assistant_status_toggle.setFocus();QTest.keyClick(w.assistant_status_toggle,Qt.Key_Space)
+    assert w.agent_status.isVisible() and '尚未配置' in w.agent_status.text()
+    assert w.assistant_connection.text()==w.storage_label.text()
+    QTest.keyClick(w.assistant_status_toggle,Qt.Key_Space);assert not w.agent_status.isVisible()
+    w._send_chat('今天头晕');wait(app,lambda:not w.pending)
+    assert w.record_receipt.isVisible() and w.record_disclosure.isVisible()
+    assert not w.notice.isVisible() and not w.page_states['assistant'].isVisible()
+    w._message('操作已完成，已刷新本机资料。',severity='success');w._completion_controls()
+    assert w.notice.isVisible()  # A non-chat operation may have only this acknowledgement.
+    w._message('TEST 导出已保存',severity='success');w._completion_controls()
+    assert w.notice.isVisible()  # Specific successful actions still have feedback.
+    w._message('TEST 保存失败，记录尚未保存',severity='danger');w._completion_controls()
+    assert w.notice.isVisible() and w.notice.property('fluentStatus')=='danger'
+    w._message('TEST 需要确认人物关系');w._completion_controls();assert w.notice.isVisible()
+    w.interface_buttons['assistantVoiceSettings'].click()
+    assert w.product_meta.isVisible() and w.interface_buttons['globalAssistant'].isVisible()
+    w.interface_buttons['assistantVoiceText'].click();assert not w.product_meta.isVisible()
+    w.navigate('health');wait(app,lambda:not w.pending)
+    assert w.product_meta.isVisible() and w.interface_buttons['globalAssistant'].isVisible()
+    QTest.mouseClick(w.interface_buttons['globalAssistant'],Qt.LeftButton);assert w.assistant_dock.isVisible()
+    w.assistant_dock.close();w.navigate('assistant');wait(app,lambda:not w.pending)
+    QTest.keyClick(w.chat_input,Qt.Key_J,Qt.ControlModifier);app.processEvents()
+    assert w.assistant_dock.isVisible()  # Original keyboard capability remains available.
+    w.assistant_dock.close();w._clear_views();assert not w.assistant_status_toggle.isChecked()

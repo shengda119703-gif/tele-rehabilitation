@@ -689,7 +689,13 @@ class ProductCompletion:
         busy=bool(self.pending)
         focus=self.active_page=='rehab' and self.legacy.scene=='rehab' and self.legacy.submode.currentData()=='training' and self.legacy.state in ('ONLINE','SAVE_FAILED')
         self.product_sidebar.setVisible(not focus);self.product_top.setVisible(not focus)
-        self.interface_buttons['globalAssistant'].setVisible(not focus)
+        conversation=self._assistant_conversation_active()
+        self.interface_buttons['globalAssistant'].setVisible(not focus and not conversation)
+        self.product_meta.setVisible(not conversation)
+        self.assistant_connection.setText(self.storage_label.text())
+        self.assistant_status_toggle.setText('助手状态' if self.snapshot.get('modelAvailable') else '基础模式')
+        self.assistant_status_toggle.setToolTip(self.agent_status.text()+'\n'+self.storage_label.text())
+        if self._quiet_assistant_feedback(self.notice.text()):self.notice.hide()
         self.assistant_shortcut.setEnabled(not focus)
         if focus:self.assistant_dock.hide()
         voice=self.extension_status.get('voice',{})
@@ -749,7 +755,7 @@ class ProductCompletion:
         # Keep one receipt in the header instead of repeating it inside core pages.
         if self.active_page in self.page_states:
             field=self.page_states[self.active_page]
-            field.setVisible(not self.notice.isVisible() and (busy or not self.snapshot or self.active_page in self.page_feedback))
+            field.setVisible(not self.notice.isVisible() and (busy or not self.snapshot or self.active_page in self.page_feedback) and not self._quiet_assistant_feedback(field.text()))
         self.rehab_tabs.setEnabled(not self.legacy.busy and self.legacy.state not in ('CONNECTING','PREVIEW','ONLINE','SAVE_FAILED'))
         status=self.extension_status
         camera='已连接，输入已打开' if self.legacy.state in ('PREVIEW','ONLINE') else '未连接 / 尚未开启'
