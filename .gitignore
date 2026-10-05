@@ -23,3 +23,7 @@ backups/
 /*.7z
 **/*.bak
 **/application.lock
+/.venv-ui-polish/
+# Versioned design knowledge is not application/patient data.
+!/.agents/skills/ui-ux-pro-max/data/
+!/.agents/skills/ui-ux-pro-max/data/**

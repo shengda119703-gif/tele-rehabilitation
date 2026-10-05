@@ -1,0 +1,30 @@
+{
+  "target": "local QA fixture, NOT Qt product",
+  "browser": "154.0.4258.53",
+  "results": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 940,
+      "consoleErrors": [],
+      "screenshot": "desktop.png",
+      "interaction": "PASS"
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024,
+      "consoleErrors": [],
+      "screenshot": "tablet.png",
+      "interaction": "PASS"
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "consoleErrors": [],
+      "screenshot": "mobile.png",
+      "interaction": "PASS"
+    }
+  ]
+}

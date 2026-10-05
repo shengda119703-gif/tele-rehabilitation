@@ -1,0 +1,66 @@
+╔═════════════════════════════════════════════════════════════════════════════════════════╗
+║  TARGET: Ankang - RECOMMENDED DESIGN SYSTEM                                             ║
+╚═════════════════════════════════════════════════════════════════════════════════════════╝
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+├─── PATTERN ─────────────────────────────────────────────────────────────────────────────┤
+│  Name: Trust & Authority + Conversion                                                   │
+│     Conversion: Security badges. Case studies. Transparent pricing. Low-friction form.  │
+│     Provide pause/stop and stop the logo carousel on focus, hover, and reduced motion.  │
+│     Previous/next controls provide the keyboard equivalent; pause offscreen/hidden and  │
+│     render a static logo set under reduced motion.                                      │
+│     CTA: Contact Sales / Get Quote (primary) + Nav                                      │
+│     Sections:                                                                           │
+│       1. Hero (mission/credibility)                                                     │
+│       2. Proof (logos, certs, stats)                                                    │
+│       3. Solution overview                                                              │
+│       4. Clear CTA path                                                                 │
+├─── STYLE ───────────────────────────────────────────────────────────────────────────────┤
+│  Name: Accessible & Ethical                                                             │
+│     Mode Support: Light supported | Dark supported                                      │
+│     Keywords: Accessible, inclusive interface, high contrast, large text (16px+),       │
+│     keyboard navigation, screen reader friendly, accessibility standards aware, focus   │
+│     state, semantic                                                                     │
+│     Best For: Government, healthcare, education, inclusive products, large audience,    │
+│     legal compliance, public                                                            │
+│     Performance: cost:low|drivers:none | Accessibility:                                 │
+│     risk:low|requires:contrast-text-4.5,keyboard,visible-focus,reduced-motion           │
+├─── COLORS ──────────────────────────────────────────────────────────────────────────────┤
+│     Primary:           #0369A1    (--color-primary)                                     │
+│     On Primary:        #FFFFFF    (--color-on-primary)                                  │
+│     Secondary:         #38BDF8    (--color-secondary)                                   │
+│     On Secondary:      #0F172A    (--color-on-secondary)                                │
+│     Accent/CTA:        #16A34A    (--color-accent)                                      │
+│     On Accent/CTA:     #000000    (--color-on-accent)                                   │
+│     Background:        #F0F9FF    (--color-background)                                  │
+│     Foreground:        #0C4A6E    (--color-foreground)                                  │
+│     Card:              #FFFFFF    (--color-card)                                        │
+│     Card Foreground:   #0C4A6E    (--color-card-foreground)                             │
+│     Muted:             #E7EFF5    (--color-muted)                                       │
+│     Muted Foreground:  #475569    (--color-muted-foreground)                            │
+│     Border:            #E0F2FE    (--color-border)                                      │
+│     Destructive:       #DC2626    (--color-destructive)                                 │
+│     On Destructive:    #FFFFFF    (--color-on-destructive)                              │
+│     Ring:              #0369A1    (--color-ring)                                        │
+│     Notes: Calm blue + reassuring green [Accent adjusted from #22C55E]                  │
+├─── TYPOGRAPHY ──────────────────────────────────────────────────────────────────────────┤
+│  Atkinson Hyperlegible / Atkinson Hyperlegible                                          │
+│     Mood: accessible, readable, inclusive, WCAG, dyslexia-friendly, clear               │
+│     Best For: Accessibility-critical sites, government, healthcare, inclusive design    │
+│     Google Fonts:                                                                       │
+│     https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&displa  │
+│     y=swap                                                                              │
+│     CSS Import: @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hype...  │
+├─── KEY EFFECTS ─────────────────────────────────────────────────────────────────────────┤
+│     Clear focus rings (3-4px), ARIA labels, skip links, responsive design, reduced      │
+│     motion, 44x44px touch targets                                                       │
+├─── AVOID ───────────────────────────────────────────────────────────────────────────────┤
+│     Small text + Complex navigation + AI purple/pink gradients                          │
+├─── PRE-DELIVERY CHECKLIST ──────────────────────────────────────────────────────────────┤
+│     [ ] No emojis as icons (use SVG: Heroicons/Lucide)                                  │
+│     [ ] cursor-pointer on all clickable elements                                        │
+│     [ ] Hover states with smooth transitions (150-300ms)                                │
+│     [ ] Light mode: text contrast 4.5:1 minimum                                         │
+│     [ ] Focus states visible for keyboard nav                                           │
+│     [ ] prefers-reduced-motion respected                                                │
+│     [ ] Responsive: 375px, 768px, 1024px, 1440px                                        │
+└─────────────────────────────────────────────────────────────────────────────────────────┘

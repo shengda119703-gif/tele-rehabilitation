@@ -1,5 +1,11 @@
 # 项目协作约定
 
+## UI Polish Mode
+
+当用户说“进入 UI polish mode”或明确请求纯视觉打磨，先读取 `.agents/skills/ui-polish/SKILL.md`，执行其功能冻结、截图审查、设计系统、组件采购、呈现实现与回归闭环。项目正式 UI 是 PySide6/Qt Widgets；React Bits 是组件发现与交互参考，不能因此引入 React 或重写产品。业务/API/Runtime/数据/医疗/Agent/路由和状态语义冻结。常见 UI primitive 必须 SEARCH BEFORE INVENT。构建通过不能代替实际截图审查。环境配置/审计请求不授权修改正式 UI。
+
+Skills 固定在 `.agents/skills/`，依赖来源和 hash 在 `tools/ui-polish/sources.lock.json`。新会话未自动列出 skill 时，依此规则显式读取文件。操作命令、维护方法和已验证边界见 `docs/ui-polish/WORKFLOW.md` 和 `docs/UI_ENVIRONMENT_REPORT.md`。保留其他会话正在修改的文件，只提交本轮自己负责的文件。
+
 ## Git 提交与上传
 
 - 本项目的 GitHub 仓库为 https://github.com/shengda119703-gif/tele-rehabilitation ，远端名称为 `origin`，当前主分支为 `main`。
