@@ -88,6 +88,7 @@ def test_assistant_entry_keyboard_and_current_settings_height(desktop):
     from PySide6.QtTest import QTest
     w,app=desktop
     w.resize(1024,720);w.navigate('assistant');wait(app,lambda:not w.pending)
+    w._show_assistant_section('overview')
     entry=w.assistant_module_buttons['conversation'];entry.setFocus(Qt.TabFocusReason)
     QTest.keyClick(entry,Qt.Key_Space);app.processEvents()
     assert w.assistant_sections.currentWidget() is w.assistant_views['conversation']

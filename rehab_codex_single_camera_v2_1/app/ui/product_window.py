@@ -367,12 +367,13 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         if key != 'rehab' and (self.legacy.state in ('CONNECTING','PREVIEW','ONLINE','SAVE_FAILED') or self.legacy._camera_testing or self.active_page=='rehab' and self.legacy.busy):
             self._message('请先结束并保存当前康复任务，再离开监护页面。')
             return False
+        if key!='assistant' and getattr(self,'dictation_active',False):self._voice_cancel()
         if key!=self.active_page:
             self.notice.clear();self.notice.hide()
         self.active_page = key
         if self.return_context and key!=self.return_context[1]:
             self.return_context=None;self.context_return.hide()
-        if key=='assistant':self._show_assistant_section('overview')
+        if key=='assistant':self._show_assistant_section('conversation')
         if key=='rehab' and not self._rehab_locked():self._show_rehab_scope(False)
         if key=='health':self.health_status_sections.setCurrentIndex(0)
         if key=='medication':self.med_today_sections.setCurrentIndex(0)
@@ -420,7 +421,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.last_operation = operation
         self.pending += 1
         self.chat_send.setEnabled(False)
-        self.storage_label.setText('正在读取 / 保存…')
+        self.storage_label.setText('麦克风正在使用' if operation=='ui.voice.transcribe' else '正在读取 / 保存…')
         scope = dict(self.legacy._body_scope_key())
         scope['participant_id'] = selected
         token={'owner':selected,'scope':scope}
@@ -428,6 +429,8 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
             sent=(payload or {}).get('text','')
             token['drafts']={key:view.toPlainText() for key,view in (('chat',self.chat_input),('dock',self.dock_input))
                 if view.toPlainText().strip() and sent in (view.toPlainText().strip(),'不要记录：'+view.toPlainText().strip())}
+            self.record_receipt.show()
+            self.dictation_status.clear();self.dictation_status.hide()
             self.record_receipt.setText('正在理解与处理记录，请稍候…')
         self.backend.submit(operation,selected,payload,scope if selected else None,token=token)
         self._completion_controls()
@@ -442,6 +445,10 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
                 self.mutation_pending = False
             self.chat_send.setEnabled(self.pending == 0)
             if owner and owner != self.owner and operation != 'profile.save':
+                continue
+            if operation=='ui.voice.transcribe':
+                self.storage_label.setText('已连接本机数据')
+                self._dictation_result(result,error)
                 continue
             if error:
                 if operation == 'extensions.status':self._manual_extension_refresh=False
@@ -597,9 +604,11 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         for view in (self.chat,self.family_summary,self.report,self.audit_view,self.dock_chat):
             view.clear();view.setProperty('renderedConversation',None)
         self.dock_input.clear()
+        if getattr(self,'dictation_active',False):self._voice_cancel()
+        self.dictation_active=False;self.dictation_status.clear();self.dictation_status.hide()
         self.timeline_entries = []
         self.record_receipt.setText('正在读取当前用户资料…');self.record_review.clear()
-        self.record_dialog.close();self.record_disclosure.hide()
+        self.record_dialog.close();self.record_disclosure.hide();self.record_receipt.hide()
         self.assistant_reference.setText('正在读取当前用户资料…')
         self._render_extensions({})
         self.tasks.clear()
@@ -612,7 +621,7 @@ class ProductWindow(ProductCompletion, ProductInterfaces, QMainWindow):
         self.invite_input.clear()
         self.invite_hint.setText('绑定与共享授权分别确认；跨设备连接状态见设置。')
         self._completion_clear()
-        self._show_assistant_section('overview')
+        self._show_assistant_section('conversation')
         self.assistant_portal_status.setText('正在读取当前用户资料…')
         self.assistant_module_buttons['reference'].setDescription('等待当前用户的康复记录。')
 

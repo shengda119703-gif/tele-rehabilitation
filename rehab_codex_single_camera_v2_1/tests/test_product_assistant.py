@@ -12,6 +12,8 @@ def section(w,key):
 
 def test_portal_cards_are_clickable_and_tools_are_not_piled_into_first_screen(desktop):
     w,app=desktop;w.navigate('assistant');wait(app,lambda:not w.pending)
+    assert section(w,'conversation') and w.chat.isVisible()
+    w.interface_buttons['assistantBackConversation'].click()
     assert section(w,'overview')
     assert all(b.isVisible() for b in w.assistant_module_buttons.values())
     assert not w.chat.isVisible() and not w.voice_status.isVisible() and not w.assistant_reference.isVisible()
@@ -48,17 +50,15 @@ def test_visible_voice_entry_opens_honest_status_without_starting_unavailable_as
     assert entry.isVisible() and entry.isEnabled() and not entry.icon().isNull()
     editor=w.chat_input;editor.setPlainText('TEST 保留文字')
     pending=w.pending;entry.click();app.processEvents()
-    assert section(w,'voice') and w.pending==pending
-    assert '未接入' in w.voice_status.text()
-    assert not w.interface_buttons['voiceInput'].isEnabled()
+    assert section(w,'conversation') and w.pending==pending
+    assert '未接入' in w.dictation_status.text()
+    w.interface_buttons['assistantVoiceSettings'].click();assert section(w,'voice')
     assert not w.interface_buttons['voiceOutput'].isEnabled()
     w.interface_buttons['assistantVoiceText'].click();assert section(w,'conversation')
     assert editor.toPlainText()=='TEST 保留文字'
     # UI capability state only; no claim that the fixture has a physical ASR host.
-    w._render_extensions({'voice':{'available':True}});w._completion_controls()
-    w._show_assistant_section('voice');assert w.interface_buttons['voiceInput'].isEnabled()
-    w.private_turn.setChecked(True);w.interface_buttons['voiceInput'].click()
-    assert '不记录' in w.notice.text() and w.pending==0
+    w.private_turn.setChecked(True)
+    assert editor.toPlainText()=='TEST 保留文字' and w.pending==0
 
 
 def test_owner_switch_resets_modules_and_drafts_and_materials_links_to_real_archive(desktop):
@@ -71,9 +71,9 @@ def test_owner_switch_resets_modules_and_drafts_and_materials_links_to_real_arch
     w._send_chat('TEST 前一位的对话');wait(app,lambda:not w.pending)
     assert 'TEST 前一位的对话' in w.chat.toPlainText()
     w.chat_input.setPlainText('TEST 前一位的草稿')
-    w.interface_buttons['assistantVoiceEntry'].click();assert section(w,'voice')
+    w.interface_buttons['assistantVoiceSettings'].click();assert section(w,'voice')
     w._select_owner('person-second');wait(app,lambda:not w.pending and not w.legacy.busy)
-    assert section(w,'overview') and not w.chat_input.toPlainText()
+    assert section(w,'conversation') and not w.chat_input.toPlainText()
     assert not w.snapshot['state']['chat'] and '前一位' not in w.chat.toPlainText()
     assert '前一位' not in w.dock_chat.toPlainText()
     assert '前一位' not in w.assistant_portal_status.text()
@@ -81,4 +81,4 @@ def test_owner_switch_resets_modules_and_drafts_and_materials_links_to_real_arch
     assert w.interface_buttons['assistantAttachment'].isVisible()
     w.interface_buttons['assistantArchiveEntry'].click();wait(app,lambda:not w.pending)
     assert w.active_page=='health' and w.health_tabs.currentIndex()==2
-    w.navigate('assistant');wait(app,lambda:not w.pending);assert section(w,'overview')
+    w.navigate('assistant');wait(app,lambda:not w.pending);assert section(w,'conversation')

@@ -393,6 +393,7 @@ if __name__ == '__main__':
 
     def assistant():
         nav('AI 康复管家')
+        action('assistantBackConversation')
         for key,back in [('assistantModuleConversation','assistantBackConversation'),('assistantModuleVoice','assistantBackVoice'),
                          ('assistantModuleMaterials','assistantBackMaterials'),('assistantModuleRecords','assistantBackReference')]:
             action(key);action(back)
@@ -403,7 +404,7 @@ if __name__ == '__main__':
         edit(field,'TEST 未发送草稿');action('assistantMaterialsEntry');action('assistantBackMaterials')
         check(field.toPlainText()=='TEST 未发送草稿','draft lost on return')
         action('assistantReferenceEntry');action('assistantBackReference')
-        action('assistantVoiceEntry');action('assistantVoiceText')
+        action('assistantVoiceEntry');check(window.assistant_sections.currentWidget() is window.assistant_views['conversation'],'unavailable microphone left composer');action('assistantVoiceSettings');action('assistantVoiceText')
         for key in ('product-199','product-200','product-201'):action(key)
         action('assistantReferenceEntry');action('assistantRehab');check(window.findChild(QLabel,'productTitle').text()=='康复','rehab link wrong')
 

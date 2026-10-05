@@ -695,6 +695,11 @@ class ProductCompletion:
         voice=self.extension_status.get('voice',{})
         phase=self.backend.voice.live_status()['phase']
         voice_busy=busy and self.last_operation=='voice.input'
+        dictating=getattr(self,'dictation_active',False)
+        finishing=getattr(self,'dictation_stopping',False) or getattr(self,'dictation_cancelled',False)
+        self.dictation_cancel.setVisible(dictating)
+        self.interface_buttons['voiceCancel'].setVisible(dictating)
+        self.voice_level.setVisible(dictating)
         self.private_turn.setEnabled(not voice_busy);self.dock_private.setEnabled(not voice_busy)
         for item in self.product_action_buttons():
             kind=item.property('actionKind');reason=item.property('unavailableReason')
@@ -702,16 +707,20 @@ class ProductCompletion:
             if item.property('actionTarget')=='profile.save':enabled=not busy
             key=item.property('actionId')
             if key in ('voiceInput','voiceOutput','voiceCancel'):enabled=enabled and bool(self.extension_status.get('voice',{}).get('available'))
-            if key=='voiceInput':item.setToolTip('在本机识别中文，开始前需确认。' if enabled else voice.get('detail','语音输入尚未配置。'))
+            if key in ('voiceInput','assistantVoiceEntry'):
+                enabled=bool(self.owner) and ((dictating and phase in ('opening','recording') and not finishing) or not busy and not dictating)
+                if key=='voiceInput' and not dictating:enabled=enabled and bool(voice.get('available'))
+                item.setText('结束录音' if dictating else '开始录音' if key=='voiceInput' else '语音输入')
+                item.setToolTip('点击开始录音，再点结束；文字可修改后发送。' if voice.get('available') else voice.get('detail','语音输入尚未配置。'))
             if key=='voiceOutput':
                 enabled=enabled and bool(voice.get('outputAvailable',voice.get('available')))
                 item.setToolTip('朗读已保存的管家回复' if enabled else '当前语音宿主尚未接入朗读功能。')
-            if key=='voiceCancel':
-                enabled=bool(self.owner) and phase in ('opening','recording','transcribing')
+            if key in ('voiceCancel','dictationCancel'):
+                enabled=dictating and not getattr(self,'dictation_cancelled',False)
                 item.setToolTip('取消当前录音或识别，本轮不发送。' if enabled else '当前没有正在进行的录音或识别。')
             if key=='voiceFinish':
-                enabled=bool(self.owner) and phase=='recording'
-                item.setToolTip('结束录音，识别并交给管家处理。' if enabled else '仅在录音期间可以结束录音。')
+                enabled=dictating and phase in ('opening','recording') and not finishing
+                item.setToolTip('结束录音，将识别文字填入草稿。' if enabled else '仅在录音期间可以结束录音。')
             if item.property('actionTarget')=='image.parse':
                 enabled=enabled and bool(self.snapshot.get('capabilities',{}).get('imageRecognitionAvailable'))
                 item.setToolTip('将图片发送至已配置服务，上传前须确认。' if enabled else '图片识别服务尚未配置；附件存档仍可用。')
@@ -732,7 +741,7 @@ class ProductCompletion:
             item.setEnabled(enabled)
         self.user_select.setEnabled(not busy and not self.legacy.busy and not self.legacy._camera_testing and self.legacy.state not in ('CONNECTING','PREVIEW','ONLINE','SAVE_FAILED'))
         if busy:
-            self.page_states[self.active_page].setText('正在读取或保存，请稍候。')
+            self.page_states[self.active_page].setText('正在处理语音，内容尚未发送。' if dictating else '正在读取或保存，请稍候。')
         elif self.active_page in self.page_feedback:
             self.page_states[self.active_page].setText(self.page_feedback[self.active_page])
         else:
@@ -772,7 +781,7 @@ class ProductCompletion:
             '授权家庭共享':'family.grant','撤销共享':'family.revoke','解绑':'family.unbind','刷新家属摘要':'family.summary',
             '导出健康报告':'ui.file.write','核对可共享通知并建立台账':'notification.plan','确认所选通知':'notification.ack'}
         interface_routes={'globalAssistant','silverRehab','silverFamily','cameraSettings','settingsDevices','familySettings','notificationSettings','deviceConnect'}
-        interface_operations={'assistantAttachment':'archive.save','assistantImage':'image.parse','voiceInput':'voice.input','voiceOutput':'voice.output',
+        interface_operations={'assistantAttachment':'archive.save','assistantImage':'image.parse','voiceInput':'ui.voice.transcribe','voiceOutput':'voice.output',
             'voiceCancel':'voice.cancel','deviceRefresh':'extensions.status','deviceImport':'device.import','devicePull':'device.pull',
             'healthkitImport':'healthkit.import','healthkitDiagnostics':'healthkit.diagnostics','syncStart':'sync.start',
             'syncStatus':'sync.status','syncPoll':'sync.poll','syncPublish':'sync.publish','syncClose':'sync.close',

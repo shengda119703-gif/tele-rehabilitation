@@ -15,6 +15,8 @@ import time
 
 from ..settings import ROOT
 
+MAX_RECORD_SECONDS = 120
+
 MODEL_PATH = ROOT/'.runtime/voice/whisper-base'
 
 
@@ -48,7 +50,7 @@ class NativeVoiceHost:
     def prepare(self):
         # Runs at submit time, before a queued host call; early cancellation cannot be lost.
         self.finished.clear();self.cancelled.clear()
-        with self.lock:self.state['phase']='opening'
+        with self.lock:self.state.update(phase='opening',elapsed=0,level=0)
 
     def stop(self):self.finished.set()
 
@@ -74,13 +76,15 @@ class NativeVoiceHost:
             self._check_cancelled()
             with sd.InputStream(samplerate=16000,channels=1,dtype='float32') as stream:
                 with self.lock:self.state['phase']='recording'
-                deadline=time.monotonic()+30
+                started=time.monotonic()
+                deadline=started+MAX_RECORD_SECONDS
                 while not self.finished.is_set() and time.monotonic()<deadline:
                     chunk,overflow=stream.read(1024)
                     if overflow:raise RuntimeError('麦克风输入中断，请重试')
                     frames.append(chunk.copy())
+                    with self.lock:self.state.update(elapsed=time.monotonic()-started,level=min(1.0,float(np.sqrt(np.mean(chunk*chunk)))*12))
             self._check_cancelled()
-            samples=np.concatenate(frames,axis=0).reshape(-1)[:480000] if frames else np.array([],dtype=np.float32)
+            samples=np.concatenate(frames,axis=0).reshape(-1)[:16000*MAX_RECORD_SECONDS] if frames else np.array([],dtype=np.float32)
             if samples.size<4000 or not np.isfinite(samples).all() or float(np.sqrt(np.mean(samples*samples)))<.001:
                 raise RuntimeError('未听到清晰语音，请检查麦克风后重试')
             with self.lock:self.state['phase']='transcribing'

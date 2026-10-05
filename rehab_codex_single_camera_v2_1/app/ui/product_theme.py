@@ -240,5 +240,8 @@ QScrollBar::add-line, QScrollBar::sub-line {{ width:0; height:0; }}
 QFrame#productSelectionRail {{ background:{c['brand']}; border:0; }}
 QTextBrowser[readingSurface="true"] {{ border:0; padding:12px 0; background:transparent; }}
 QPushButton[fluentAppearance="module"] {{ border:0; border-bottom:1px solid {c['border']}; border-radius:0; text-align:left; padding:14px 0; }}
+QFrame#assistantComposer {{ background:{c['soft']}; border:1px solid {c['border']}; border-radius:18px; }}
+QPlainTextEdit#assistantEditor {{ background:transparent; border:0; padding:0; }}
+QPlainTextEdit#assistantEditor:focus {{ border:0; }}
 QToolTip {{ color:{c['text']}; background:{c['surface']}; border:1px solid {c['border']}; padding:8px; }}
 '''

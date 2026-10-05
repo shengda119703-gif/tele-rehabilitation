@@ -21,7 +21,7 @@ class ProductBackend:
         self.thread.start()
 
     def submit(self, operation, owner='', payload=None, scope=None, token=None):
-        if operation=='voice.input':self.voice.prepare()
+        if operation in ('voice.input','ui.voice.transcribe'):self.voice.prepare()
         self.jobs.put((operation, owner, payload or {}, dict(scope or {}), token))
 
     def submit_capture(self, owner, batch, *, visibility='private', scope=None, token=None):
@@ -41,6 +41,11 @@ class ProductBackend:
                 operation, owner, payload, scope, token = job
                 try:
                     payload = dict(payload)
+                    if operation == 'ui.voice.transcribe':
+                        # Input-only operation: no Agent turn, health event or persistence.
+                        result = self.voice.handle('voice.recognize', {})
+                        self.results.put((operation, owner, token, result, None))
+                        continue
                     if operation == 'ui.file.write':
                         content = payload.get('text')
                         data = content.encode('utf-8') if isinstance(content, str) else bytes(payload['bytes'])

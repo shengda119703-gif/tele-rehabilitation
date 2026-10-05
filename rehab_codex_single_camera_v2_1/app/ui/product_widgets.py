@@ -172,7 +172,8 @@ def conversation_html(messages,colors):
                 parts.append('<p style="color:'+color+'">'+escape(title+block.get('text','')).replace('\n','<br>')+'</p>')
             content=''.join(parts)
         else:content=escape(message['text']).replace('\n','<br>')
-        result.append(f'<table width="100%" cellspacing="0" cellpadding="12"><tr><td bgcolor="{colors["soft"] if user else colors["surface"]}"><p style="color:{colors["secondary"]}"><b>{name}</b> · {escape(message["time"])}</p><p style="color:{colors["text"]}">{content}</p></td></tr></table><br>')
+        spacer='<td width="22%"></td>' if user else ''
+        result.append(f'<table width="100%" cellspacing="0" cellpadding="12"><tr>{spacer}<td bgcolor="{colors["soft"] if user else colors["surface"]}"><p style="color:{colors["secondary"]}"><b>{name}</b> · {escape(message["time"])}</p><p style="color:{colors["text"]}">{content}</p></td></tr></table><br>')
     return ''.join(result)
 
 

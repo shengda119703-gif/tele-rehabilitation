@@ -5,7 +5,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QShortcut, QKeySequence
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QComboBox, QDateEdit, QFileDialog, QMessageBox, QDockWidget, QTextBrowser,
-    QPlainTextEdit, QCheckBox, QSizePolicy)
+    QPlainTextEdit, QCheckBox, QSizePolicy, QToolButton)
 
 
 class ProductInterfaces:
@@ -71,37 +71,87 @@ class ProductInterfaces:
         self._interface_button(row, 'assistantAttachment', '上传资料 / 图片 / 视频', self._add_attachment)
         self._interface_button(row, 'assistantImage', '识别健康图片', self._parse_image)
         materials.addLayout(row)
-        self._interface_button(voice, 'voiceInput', '语音输入', self._voice_input)
-        self._interface_button(voice, 'voiceOutput', '朗读最近回复', self._voice_output)
-        self._interface_button(voice, 'voiceCancel', '停止语音', self._voice_cancel)
-        self._action(voice,'voiceFinish','说完了，开始识别',self._voice_finish,kind='A',target='本机录音结束 / 原 voice.input')
+        controls=QHBoxLayout();controls.addStretch()
+        start=self._interface_button(controls, 'voiceInput', '开始录音', self._voice_input)
+        start.setProperty('fluentAppearance','primary');start.setMinimumHeight(40)
+        self._interface_button(controls, 'voiceCancel', '取消录音', self._voice_cancel)
+        controls.addStretch();voice.addLayout(controls)
+        options=QToolButton();options.setText('更多语音选项');options.setCheckable(True)
+        extras=QWidget();extra=QHBoxLayout(extras)
+        self._interface_button(extra, 'voiceOutput', '朗读最近回复', self._voice_output)
+        self._action(extra,'voiceFinish','结束录音',self._voice_finish,kind='A',target='本机录音结束 / 听写草稿')
+        options.toggled.connect(extras.setVisible);extras.hide()
+        voice.addWidget(options,0,Qt.AlignHCenter);voice.addWidget(extras)
         self.voice_status = QLabel('语音接口已保留，正在核对桌面端支持情况。')
-        self.voice_status.setWordWrap(True)
-        voice.insertWidget(1,self.voice_status)
+        self.voice_status.setWordWrap(True);self.voice_status.setAlignment(Qt.AlignCenter)
+        voice.addWidget(self.voice_status)
 
     def _voice_input(self):
-        if self.private_turn.isChecked():
-            self._message('当前语音接口不支持本轮不记录。请使用文字输入，隐私选项保持有效。')
+        if getattr(self,'dictation_active',False):
+            self._voice_finish()
             return
-        if QMessageBox.question(self, '语音输入', '开始使用麦克风；说完后点击“说完了，开始识别”。识别文字会作为一轮管家对话处理和记录。录音不保存，最长 30 秒；“停止语音”取消本轮。是否继续？') == QMessageBox.Yes:
-            self._request('voice.input', {})
+        if self.pending or not self.owner:return
+        voice=self.extension_status.get('voice',{})
+        if not voice.get('available'):
+            self._dictation_feedback(voice.get('detail') or '麦克风或语音服务尚未就绪，请在语音设置中检查。')
+            return
+        self.dictation_active=True;self.dictation_cancelled=False;self.dictation_stopping=False
+        self._dictation_feedback('正在打开麦克风… 再点一次可结束。')
+        if not self._request('ui.voice.transcribe',{}):self.dictation_active=False
 
     def _voice_finish(self):
+        if not getattr(self,'dictation_active',False):return
+        phase=self.backend.voice.live_status()['phase']
+        if phase not in ('opening','recording'):return
+        self.dictation_stopping=True
         self.backend.voice.stop()
-        self._message('已请求结束录音，正在等待本机识别。')
+        self._dictation_feedback('录音已结束，正在转成文字…')
+        self._completion_controls()
 
     def _voice_cancel(self):
-        # A queued cancellation cannot interrupt the serialized in-flight host call.
-        cancelled=self.backend.voice.cancel()
-        self._message('已请求取消语音；取消完成前请稍候，本轮不会发送。' if cancelled else '语音采集已经结束；已提交的对话不能通过停止语音撤回。')
+        if getattr(self,'dictation_active',False):
+            self.dictation_cancelled=True
+            self.backend.voice.cancel()
+            self._dictation_feedback('已取消，正在释放麦克风；原草稿保留。')
+        else:
+            self.backend.voice.cancel()
+
+    def _dictation_feedback(self,text):
+        self.dictation_status.setText(text)
+        self.dictation_status.setVisible(bool(text))
+        self.voice_status.setText(text)
+
+    def _dictation_result(self,result=None,error=None):
+        cancelled=getattr(self,'dictation_cancelled',False)
+        self.dictation_active=False;self.dictation_stopping=False
+        self.voice_level.setValue(0);self.voice_meter.setValue(0)
+        if cancelled or error:
+            text='语音已取消，原草稿保留。' if cancelled or '语音已取消' in str(error) else str(error)+'；原草稿保留，可重试。'
+            self._dictation_feedback(text)
+            self._message(text,severity='info' if cancelled or '取消' in text else 'danger')
+            return
+        text=str((result or {}).get('text','')).strip()
+        if not text:
+            self._dictation_feedback('未识别到文字，请重试。');return
+        # Append to the current draft; never replace text typed during recognition.
+        cursor=self.chat_input.textCursor();cursor.movePosition(cursor.MoveOperation.End)
+        cursor.insertText(('\n' if self.chat_input.toPlainText() else '')+text)
+        self.chat_input.setTextCursor(cursor)
+        self._dictation_feedback('已转成文字，可修改后发送。')
+        if self.active_page=='assistant':self._show_assistant_section('conversation')
+        self.chat_input.setFocus()
 
     def _voice_live(self):
-        voice=self.backend.voice.live_status()
-        phase=voice['phase']
-        if self.last_operation=='voice.input' and self.pending:
-            self.voice_status.setText({'opening':'正在准备麦克风…',
-                'recording':'正在录音（最长 30 秒）。说完后点击“说完了，开始识别”；停止语音会取消本轮。',
-                'transcribing':'正在本机识别中文语音，仍可停止取消。'}.get(phase,'正在等待语音处理结果…'))
+        if not getattr(self,'dictation_active',False):return
+        voice=self.backend.voice.live_status();phase=voice['phase']
+        if self.dictation_cancelled:return
+        if phase=='recording' and not self.dictation_stopping:
+            elapsed=int(voice.get('elapsed',0))
+            self._dictation_feedback(f'正在录音 {elapsed//60:02d}:{elapsed%60:02d} · 再点一次结束（最长 2 分钟）')
+            self.voice_level.setValue(round(voice.get('level',0)*100));self.voice_meter.setValue(self.voice_level.value())
+        elif phase=='transcribing' or self.dictation_stopping:
+            self._dictation_feedback('正在转成文字… 可取消，完成后不会自动发送。')
+            self.voice_level.setValue(0);self.voice_meter.setValue(0)
 
     def _voice_output(self):
         message = next((m for m in reversed(self.snapshot.get('state', {}).get('chat', [])) if m['role']=='agent'), None)
