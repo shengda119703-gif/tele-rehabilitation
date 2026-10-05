@@ -1,0 +1,3 @@
+# Optional local phone recording recognition; same versions as partner voice branch.
+faster-whisper==1.2.1
+av==16.0.1

@@ -16,5 +16,13 @@ if errorlevel 1 (
     exit /b 1
   )
 )
+if exist "ankang\route1-health-agent\node_modules\typescript\bin\tsc" (
+  pushd "ankang\route1-health-agent"
+  call npm.cmd run build:bridge
+  if errorlevel 1 echo 健康模块编译失败，手机康复仍可使用。请检查错误后运行准备手机健康服务。
+  popd
+) else (
+  echo 如需健康档案与管家，请先运行准备手机健康服务.cmd。
+)
 "rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe" -m mobile_rehab.server --host 0.0.0.0 --port 8765
 pause

@@ -19,6 +19,7 @@ async function api(path, opts={}) {
 }
 function pairPage(){
   state.job=null;
+  if(typeof resetHealth==='function')resetHealth();
   clearTimeout(pollTimer); $('.bottom-nav').hidden=true; $('#connection').textContent='等待连接';
   app.innerHTML=`<section class="pair"><span class="tag">连接电脑</span><h1>手机康复评估</h1><p>手机和电脑连接同一 Wi-Fi，输入电脑启动窗口中的连接码。</p><form id="pair-form"><label class="caption" for="pair-code">电脑连接码</label><input id="pair-code" name="code" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="输入连接码" required maxlength="32"><button class="primary">连接</button></form><p class="tip">视频保存在这台电脑上。请在可信 Wi-Fi 下使用。</p></section>`;
   $('#pair-form').onsubmit=async e=>{e.preventDefault();const b=e.currentTarget.querySelector('button');b.disabled=true;try{await api('/pair',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('#pair-code').value.trim()})});await init();}catch(e){toast(e.message);b.disabled=false;}};
@@ -33,7 +34,7 @@ function navigate(tab){
   render();window.scrollTo({top:0,behavior:'instant'});
 }
 function syncNavigation(){
-  const active=['posture','body','care'].includes(state.tab)?'assess':state.training?'plan':state.tab;
+  const active=['more','health','medication','assistant','archive','family','device','care'].includes(state.tab)?'more':['posture','body'].includes(state.tab)?'assess':state.training?'plan':state.tab;
   document.querySelectorAll('[data-tab]').forEach(b=>{b.classList.toggle('active',b.dataset.tab===active);if(b.dataset.tab===active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
 }
 function libraryRows(items,mode){
@@ -56,7 +57,7 @@ function actionLibrary(mode){
   bindRows();
 }
 function backToLibrary(mode){if(state.upload)return;clearFile();state.detail=false;mode==='fitness'?fitnessPage():assessment();window.scrollTo(0,0);}
-function render(){if(state.tab==='assess')assessment();else if(state.tab==='history')history();else if(state.tab==='plan')plan();else if(state.tab==='fitness')fitnessPage();else if(state.tab==='posture')posturePage();else if(state.tab==='body')bodyPage();else if(state.tab==='care')carePage();else devices();}
+function render(){if(state.tab==='assess')assessment();else if(state.tab==='history')history();else if(state.tab==='plan')plan();else if(state.tab==='fitness')fitnessPage();else if(state.tab==='posture')posturePage();else if(state.tab==='body')bodyPage();else if(state.tab==='care')carePage();else if(['more','health','medication','assistant','archive','family'].includes(state.tab))healthPage();else devices();}
 function assessment(){
   if(!state.detail&&!state.training){actionLibrary('assessment');return;}
   const ex=selected(), i=ex.instructions;

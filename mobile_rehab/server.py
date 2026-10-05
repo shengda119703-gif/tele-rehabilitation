@@ -200,6 +200,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
         finally:
             watcher.cancel()
             await asyncio.to_thread(app.state.live.close)
+            await asyncio.to_thread(app.state.product.close)
             await asyncio.to_thread(jobs.close)
 
     app = FastAPI(title='康复随行 · 手机演示', docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
@@ -253,6 +254,10 @@ def create_app(data_dir=None, pair_key=None, runner=None):
     install_live(app, owner, small_json)
     from .network import install_network
     install_network(app, data_dir, jobs, owner, small_json)
+    from .product import install_product
+    install_product(app, data_dir, owner, small_json)
+    from .voice import install_voice
+    install_voice(app, data_dir, owner)
 
     @app.middleware('http')
     async def protect(request, call_next):
@@ -269,7 +274,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
 
     @app.get('/api/health')
     def health():
-        return dict(ok=True, service='mobile-rehab', version='2', capabilities=['posture','live-guidance','profile-link','care-sharing','rtsp-recording'])
+        return dict(ok=True, service='mobile-rehab', version='3', capabilities=['posture','live-guidance','profile-link','care-sharing','rtsp-recording','personal-health','medication','local-assistant','health-archive'])
 
     @app.post('/api/pair')
     async def pair(request: Request):

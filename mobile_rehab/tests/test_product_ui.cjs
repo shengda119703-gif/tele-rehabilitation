@@ -8,19 +8,19 @@ const staticDir=path.resolve(__dirname,'../static');
 function harness(){
   let html='',rendered=[];
   const fixed=new Map();
-  function parse(v){return [...v.matchAll(/<(?:button|input|select|div|form|section)\b([^>]*)>/g)].map(m=>node(m[1]));}
+  function parse(v){return [...v.matchAll(/<(?:button|input|select|textarea|h1|h2|h3|div|form|section|p|a)\b([^>]*)>/g)].map(m=>node(m[1]));}
   function node(attrs=''){
     let content='';
     const e={dataset:{},textContent:'',value:'',hidden:false,disabled:false,
       get innerHTML(){return content;},set innerHTML(v){content=v;rendered.push(...parse(v));},
       insertAdjacentHTML(_,v){this.innerHTML=content+v;},
-      classList:{toggle(){}},setAttribute(){},removeAttribute(){},click(){this.clicked=true;},append(){},after(){},scrollIntoView(){}};
+      classList:{toggle(){}},setAttribute(){},removeAttribute(){},click(){this.clicked=true;},append(){},after(){},scrollIntoView(){},querySelector(){return {disabled:false};}};
     for(const a of attrs.matchAll(/([\w-]+)="([^"]*)"/g)){
       e[a[1]]=a[2];if(a[1].startsWith('data-'))e.dataset[a[1].slice(5).replace(/-([a-z])/g,(_,x)=>x.toUpperCase())]=a[2];
     }return e;
   }
   const root={get innerHTML(){return html;},set innerHTML(v){html=v;rendered=parse(v);},insertAdjacentHTML(_,v){this.innerHTML=html+v;}};
-  const nav=['plan','assess','fitness','history','device'].map(x=>node(`data-tab="${x}"`));
+  const nav=['plan','assess','fitness','history','more'].map(x=>node(`data-tab="${x}"`));
   function query(s){
     if(s==='#app')return root;
     if(s.startsWith('#'))return rendered.find(e=>e.id===s.slice(1))||fixed.get(s)||null;
@@ -31,7 +31,7 @@ function harness(){
     window:{addEventListener(){},scrollTo(){}},location:{hash:'',host:'localhost'},URL:{revokeObjectURL(){}},
     setTimeout,clearTimeout,console,confirm:()=>true};
   vm.createContext(c);
-  for(const file of ['app.js','fitness.js','barbell.js','extensions.js'])vm.runInContext(fs.readFileSync(path.join(staticDir,file),'utf8'),c);
+  for(const file of ['app.js','fitness.js','barbell.js','extensions.js','health.js'])vm.runInContext(fs.readFileSync(path.join(staticDir,file),'utf8'),c);
   const instructions={view_label:'正面拍摄',camera:'保持肩肘入镜',start:'双臂自然下垂',move:'缓慢抬起手臂',return:'放下手臂',boundary:'测试说明',count:'回位计一次'};
   const exercises=[{id:'shoulder_abduction',label:'肩外展',joint:'shoulder',joint_label:'肩部',view:'frontal',instructions},
     {id:'elbow_flexion',label:'肘屈曲',joint:'elbow',joint_label:'肘部',view:'sagittal',instructions},
@@ -106,4 +106,37 @@ test('plan candidate explanations are folded and real consent fields remain',asy
 });
 test('network mounting no longer removes phone card',()=>{
   const script=fs.readFileSync(path.join(staticDir,'extensions.js'),'utf8');assert.doesNotMatch(script,/layout > \.card/);
+});
+
+function healthFixture(){return {needs_profile:false,metrics:[['weight','体重','kg']],categories:['其他资料'],snapshot:{profile:{profile:{name:'TEST <img>',age:65,conditions:[],medicationRecords:[{id:'m1',name:'TEST medicine',dose:'医嘱剂量',times:'早餐后',status:'active'}]}},state:{healthData:{measurements:[{metric:'weight',value:60,unit:'kg',timestamp:'2026-10-05T01:00:00Z'}]},chat:[{role:'elder',text:'<script>TEST</script>',persisted:false}],tasks:[{id:'t1',title:'核对用药',description:'TEST',kind:'medication_check',status:'pending'}]},attachments:[],history:{report:{sections:[],rangeText:'TEST'}}}};}
+test('my hub exposes health, medication, assistant, archive and family without removing devices',async()=>{
+  const h=harness();h.c.healthFixture=healthFixture();h.run("api=async()=>healthFixture;state.tab='more';healthPage()");await new Promise(resolve=>setImmediate(resolve));
+  for(const title of ['健康指标','我的用药','健康管家','健康资料','家庭照护','设备连接'])assert.match(h.html,new RegExp(title));
+  assert.match(h.html,/TEST &lt;img&gt;/);assert.doesNotMatch(h.html,/<img>/);
+  assert.match(fs.readFileSync(path.join(staticDir,'index.html'),'utf8'),/data-tab="more">我的/);
+});
+test('health loading result never overwrites another tab',async()=>{
+  const h=harness();let finish;h.c.deferred=new Promise(resolve=>{finish=resolve;});h.run("api=()=>deferred;state.tab='health';healthPage();navigate('assess')");
+  finish(healthFixture());await new Promise(resolve=>setImmediate(resolve));assert.match(h.html,/康复评估/);assert.doesNotMatch(h.html,/id="metric-form"/);
+});
+test('medication editing binds actual record and task, saves through domain endpoint',async()=>{
+  const h=harness();h.c.healthFixture=healthFixture();h.c.calls=[];h.run("api=async(path,opts)=>{calls.push([path,opts]);return healthFixture};state.tab='medication';healthPage()");await new Promise(resolve=>setImmediate(resolve));
+  h.all('[data-med-edit]')[0].onclick();assert.equal(h.get('#med-id').value,'m1');assert.equal(h.get('#med-name').value,'TEST medicine');
+  h.all('[data-health-task]')[0].onclick();await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(h.c.calls[1][0],'/product/task.status');assert.equal(JSON.parse(h.c.calls[1][1].body).id,'t1');
+});
+test('chat escapes text, exposes local/private state and reset clears draft',async()=>{
+  const h=harness();h.c.healthFixture=healthFixture();h.run("api=async()=>healthFixture;state.tab='assistant';healthDraft='私密草稿';healthPage()");await new Promise(resolve=>setImmediate(resolve));
+  assert.match(h.html,/&lt;script&gt;TEST&lt;\/script&gt;/);assert.doesNotMatch(h.html,/<script>/);assert.match(h.html,/本次不记录/);assert.match(h.html,/本地规则助手/);
+  h.run('resetHealth()');assert.equal(h.run('healthDraft'),'');assert.equal(h.run('healthData'),null);
+});
+test('shared summary and contacts escape content, never permit javascript telephone targets',()=>{
+  const h=harness();h.c.summary={measurements:[],medications:[{name:'<script>',dose:'TEST',times:'TEST'}]};
+  const html=h.run('sharedHealthMarkup(summary)');assert.match(html,/&lt;script&gt;/);assert.doesNotMatch(html,/<script>/);
+  assert.equal(h.run("dialLink('javascript:alert(1)','TEST')"),'');assert.match(h.run("dialLink('13800138000','家人')"),/href="tel:13800138000"/);
+});
+test('single point or empty trend does not invent baseline, static scripts have no persistent private draft',()=>{
+  const h=harness();assert.match(h.run('metricTrendMarkup([])'),/暂无记录/);h.c.point=[{metric:'weight',value:60,unit:'kg',timestamp:'2026-10-05T01:00:00Z'}];
+  assert.doesNotMatch(h.run('metricTrendMarkup(point)'),/<svg/);
+  const script=fs.readFileSync(path.join(staticDir,'health.js'),'utf8');assert.doesNotMatch(script,/localStorage\.(setItem|getItem)|speechSynthesis|navigator.mediaDevices/);
 });

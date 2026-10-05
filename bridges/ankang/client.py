@@ -14,19 +14,20 @@ ROUTE_ROOT = Path(__file__).resolve().parents[2] / "ankang" / "route1-health-age
 
 
 class AgentBridge:
-    def __init__(self, node: str | None = None, timeout: float = 60, data_dir=None):
+    def __init__(self, node: str | None = None, timeout: float = 60, data_dir=None, *, script=None, env=None):
         node = node or os.environ.get("ANKANG_NODE", "node")
         self.timeout = timeout
         if not (ROUTE_ROOT / ".bridge-build" / "runtime" / "index.js").is_file():
             raise RuntimeError("Build the bridge first: npm run build:bridge (in route1-health-agent)")
         self._process = subprocess.Popen(
-            [node, str(ROUTE_ROOT / "scripts" / "agent-bridge.cjs"), *([str(Path(data_dir).resolve())] if data_dir else [])],
+            [node, str(script or ROUTE_ROOT / "scripts" / "agent-bridge.cjs"), *([str(Path(data_dir).resolve())] if data_dir else [])],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             text=True,
             encoding="utf-8",
             bufsize=1,
             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+            env={**os.environ, **env} if env else None,
         )
 
         self._lines = queue.Queue()
