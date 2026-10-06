@@ -1,6 +1,6 @@
 @echo off
 chcp 65001 >nul
-cd /d "%~dp0"
+cd /d "%~dp0..\..\"
 if not exist "rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe" (
   echo 未找到项目 Python 环境，请先完成电脑版安装。
   pause

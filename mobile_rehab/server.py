@@ -56,6 +56,7 @@ class Jobs:
         self.closed = False
         self.process = None
         self.items = {}
+        self.shared_context = {}
         for path in self.root.glob('*/*/job.json'):
             item = json.loads(path.read_text(encoding='utf-8'))
             if item['state'] in ACTIVE:
@@ -85,6 +86,7 @@ class Jobs:
                 raise HTTPException(507, '录像存储空间不足，请在记录页删除不需要的录像。')
             item = dict(id=uuid4().hex, owner=owner, exercise=exercise, side=side,
                         state='uploading', created_at=now(), consent_at=now(), message='正在接收录像')
+            item.update(self.shared_context)
             self.folder(item).mkdir(parents=True)
             self.items[item['id']] = item
             self.update(item['id'])
@@ -98,7 +100,7 @@ class Jobs:
             return item.copy()
 
     def public(self, item, *, brief=False):
-        result = {k: v for k, v in item.items() if k != 'owner'}
+        result = {k: v for k, v in item.items() if k not in ('owner', 'shared_database', 'participant_id')}
         for name in ('progress', 'result'):
             if brief and name == 'result':
                 continue
@@ -178,7 +180,7 @@ class Jobs:
         self.pool.shutdown(wait=True, cancel_futures=True)
 
 
-def create_app(data_dir=None, pair_key=None, runner=None):
+def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None):
     data_dir = Path(data_dir or ROOT / '.runtime/mobile')
     data_dir.mkdir(parents=True, exist_ok=True)
     key_file = data_dir / 'pair-key.txt'
@@ -187,6 +189,8 @@ def create_app(data_dir=None, pair_key=None, runner=None):
             key_file.write_text(secrets.token_hex(8), encoding='utf-8')
         pair_key = key_file.read_text(encoding='utf-8').strip()
     jobs = Jobs(data_dir / 'jobs', runner)
+    if shared:
+        jobs.shared_context = dict(shared_database=str(shared.backend.data_dir / 'home_rehab.sqlite3'), participant_id=shared.owner)
     failures = []
 
     @asynccontextmanager
@@ -213,7 +217,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
 
     @contextmanager
     def store_for(uid):
-        store = Storage(jobs.root / uid / 'assessments.sqlite3')
+        store = Storage(shared.backend.data_dir / 'home_rehab.sqlite3' if shared else jobs.root / uid / 'assessments.sqlite3')
         try:
             yield store
         finally:
@@ -221,7 +225,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
 
     def evidence(store, uid):
         sessions = store.list_sessions()
-        profile = build_body_profile(sessions, uid, 'REPLAY_FILE', 'SELF_USE')
+        profile = build_body_profile(sessions, shared.owner if shared else uid, 'REPLAY_FILE', 'SELF_USE')
         return sessions, profile
 
     async def small_json(request):
@@ -248,7 +252,8 @@ def create_app(data_dir=None, pair_key=None, runner=None):
     def owner(request):
         cookie = request.cookies.get('rehab_device', '')
         uid = cookie.split('.')[0]
-        if not re.fullmatch('[a-f0-9]{32}', uid) or not hmac.compare_digest(sign(uid), cookie):
+        if (not re.fullmatch('[a-f0-9]{32}', uid) or not hmac.compare_digest(sign(uid), cookie)
+                or shared and uid != hashlib.sha256(shared.owner.encode()).hexdigest()[:32]):
             raise HTTPException(401, '请先输入电脑上显示的连接码')
         return uid
 
@@ -259,7 +264,10 @@ def create_app(data_dir=None, pair_key=None, runner=None):
     from .network import install_network
     install_network(app, data_dir, jobs, owner, small_json)
     from .product import install_product
-    install_product(app, data_dir, owner, small_json)
+    install_product(app, data_dir, owner, small_json, backend=shared)
+    if shared:
+        from .unified import install_unified
+        install_unified(app, owner, shared, small_json)
     from .voice import install_voice
     install_voice(app, data_dir, owner)
     from .ocr import install_ocr
@@ -267,6 +275,8 @@ def create_app(data_dir=None, pair_key=None, runner=None):
 
     @app.middleware('http')
     async def protect(request, call_next):
+        if shared and shared.revoked and request.url.path.startswith('/api/'):
+            return JSONResponse({'detail': '电脑已停止本次手机连接。'}, status_code=401)
         allowed_hosts = os.environ.get('REHAB_ALLOWED_HOSTS', '').split(',')
         if allowed_hosts != [''] and request.url.hostname not in allowed_hosts:
             return JSONResponse({'detail':'访问地址不正确'}, status_code=400)
@@ -304,7 +314,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
         try:
             uid = owner(request)
         except HTTPException:
-            uid = uuid4().hex
+            uid = hashlib.sha256(shared.owner.encode()).hexdigest()[:32] if shared else uuid4().hex
         response = JSONResponse(dict(ok=True))
         response.set_cookie('rehab_device', sign(uid), max_age=30 * 86400,
                             httponly=True, samesite='strict', secure=request.url.scheme == 'https')
@@ -314,7 +324,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
     def get_catalog(request: Request):
         owner(request)
         return dict(exercises=catalog(), max_bytes=MAX_BYTES, max_seconds=120,
-                    fitness=fitness_catalog(),
+                    shared=bool(shared), fitness=fitness_catalog(),
                     posture=posture_catalog(),
                     network_camera=dict(connected=False, supported=True, message='在设备页测试已配置的 RTSP 摄像头。'))
 
@@ -323,13 +333,13 @@ def create_app(data_dir=None, pair_key=None, runner=None):
         uid = owner(request)
         with store_for(uid) as store:
             sessions, profile = evidence(store, uid)
-            proposal = generate_proposal(profile, sessions)
+            proposal = generate_proposal(profile, sessions, store.get_participant(shared.owner) if shared else None)
             plans = store.list_training_plans(profile)
             record = plans[0] if plans else None
             progress = program_progress(record, sessions) if record else None
             if record and progress['next_key'] and not progress['blocked']:
                 try:
-                    validate_automatic_use(record, progress['next_key'], profile, sessions, None)
+                    validate_automatic_use(record, progress['next_key'], profile, sessions, store.get_participant(shared.owner) if shared else None)
                 except ValueError as exc:
                     progress['blocked'] = str(exc)
             return dict(proposal=proposal, plan=record, progress=progress)
@@ -341,7 +351,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
         def create():
             with store_for(uid) as store:
                 sessions, profile = evidence(store, uid)
-                record = create_automatic_plan(generate_proposal(profile, sessions), screening)
+                record = create_automatic_plan(generate_proposal(profile, sessions, store.get_participant(shared.owner) if shared else None), screening)
                 return store.save_training_plan(record, expected_revision=0)
         return await asyncio.to_thread(create)
 
@@ -402,7 +412,7 @@ def create_app(data_dir=None, pair_key=None, runner=None):
                     record = store.get_training_plan(plan_id)
                     if not record:
                         raise ValueError('请先在训练中心生成今天的计划')
-                    validate_automatic_use(record, entry_key, profile, sessions, None)
+                    validate_automatic_use(record, entry_key, profile, sessions, store.get_participant(shared.owner) if shared else None)
                     entry = next(i for i in record['items'] if i['key'] == entry_key)
                     if (entry['exercise_id'], entry['side']) != (exercise, side):
                         raise ValueError('动作与训练计划不一致，请重新选择')
@@ -457,9 +467,13 @@ def create_app(data_dir=None, pair_key=None, runner=None):
     static = Path(__file__).parent / 'static'
     app.mount('/static', StaticFiles(directory=static), name='static')
 
+    @app.get('/capture')
+    def capture_page():
+        return FileResponse(static / 'index.html')
+
     @app.get('/')
     def index():
-        return FileResponse(static / 'index.html')
+        return FileResponse(static / ('unified.html' if shared else 'index.html'))
 
     return app
 

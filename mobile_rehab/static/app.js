@@ -2,6 +2,8 @@
 const $ = (s) => document.querySelector(s);
 const app = $('#app');
 const state = {tab:'plan', catalog:[], joint:'all', selected:'shoulder_abduction', side:'left', jobs:[], file:null, url:null, job:null, upload:null, training:null, detail:false, search:'', viewFilter:'all', fitnessGroup:'all'};
+const requestedTab=new URLSearchParams(location.search).get('tab');
+if(['assess','plan','history','fitness','archive','more'].includes(requestedTab))state.tab=requestedTab;
 let pollTimer, toastTimer;
 const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = (v, unit='') => Number.isFinite(v) ? `${Math.round(v*10)/10}${unit}` : '未测得';
@@ -173,13 +175,13 @@ function devices(){
   $('#device-assess').onclick=()=>navigate('assess');
   mountDeviceExtras();
 }
-async function init(){if(location.hash.startsWith('#care=')){state.shareCode=decodeURIComponent(location.hash.slice(6));window.history.replaceState(null,'',location.pathname);carePage();return;}let data;try{data=await api('/catalog');}catch(e){pairPage();return;}state.catalog=data.exercises;state.fitnessCatalog=data.fitness||[];state.postureCatalog=data.posture||[];$('.bottom-nav').hidden=false;$('#connection').textContent='已连接';syncNavigation();try{render();}catch(e){console.error('页面未能加载',e);toast('页面未能加载，请刷新重试');}}
+async function init(){if(location.hash.startsWith('#care=')){state.shareCode=decodeURIComponent(location.hash.slice(6));window.history.replaceState(null,'',location.pathname);carePage();return;}let data;try{data=await api('/catalog');}catch(e){pairPage();return;}if(data.shared){document.body.classList.add('shared-product');document.title='安康 · 康复动作';$('.brand').textContent='返回安康';$('.brand').setAttribute('aria-label','返回安康首页');$('.bottom-nav').innerHTML=['首页','康复','健康','用药','家庭'].map((n,i)=>'<a '+(i===1?'aria-current="page"':'')+' href="/#'+['home','rehab','health','medication','family'][i]+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+["M3 10 12 3l9 7v11h-6v-7H9v7H3Z", "M8 3h8v4H8z M7 5H4v16h16V5h-3 M8 12h8 M8 16h5", "M12 20S2 14 2 8a5 5 0 0 1 10-2 5 5 0 0 1 10 2c0 6-10 12-10 12Z", "M5 19a5 5 0 0 1 0-7l7-7a5 5 0 0 1 7 7l-7 7a5 5 0 0 1-7 0 M8 9l7 7", "M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M1 21v-3a7 7 0 0 1 14 0v3 M17 4a4 4 0 0 1 0 8 M19 15a6 6 0 0 1 4 6"][i]+'"/></svg>'+n+'</a>').join('');}state.catalog=data.exercises;state.fitnessCatalog=data.fitness||[];state.postureCatalog=data.posture||[];$('.bottom-nav').hidden=false;$('#connection').textContent='已连接';syncNavigation();try{render();}catch(e){console.error('页面未能加载',e);toast('页面未能加载，请刷新重试');}}
 function weekStrip(now=new Date()){
   const monday=new Date(now.getFullYear(),now.getMonth(),now.getDate());monday.setDate(monday.getDate()-(monday.getDay()+6)%7);
   return `<div class="week-strip" aria-label="本周日期">${['一','二','三','四','五','六','日'].map((name,i)=>{const day=new Date(monday);day.setDate(day.getDate()+i);const today=day.toDateString()===now.toDateString(),iso=`${day.getFullYear()}-${String(day.getMonth()+1).padStart(2,'0')}-${String(day.getDate()).padStart(2,'0')}`;return `<div class="week-day ${today?'today':''}" ${today?'aria-current="date"':''}><strong>${today?'今':name}</strong><time datetime="${iso}">${day.getDate()}</time></div>`;}).join('')}</div>`;
 }
 function plan(){
-  app.innerHTML=`<div class="page-head"><h1>我的训练</h1></div>${weekStrip()}<div class="schedule-tools"><button id="schedule-assess">康复动作库</button><button id="schedule-body">身体汇总</button><button id="schedule-history">训练记录</button></div><div id="plan-content"><p class="loading" role="status">正在读取训练安排…</p></div>`;
+  app.innerHTML=`<div class="page-head"><h1>我的训练</h1></div><p class="caption">手机录像训练 · 本轮进度按已保存记录累计，日期安排请回到安康康复页。</p><div class="schedule-tools"><button id="schedule-assess">康复动作库</button><button id="schedule-body">身体汇总</button><button id="schedule-history">训练记录</button></div><div id="plan-content"><p class="loading" role="status">正在读取训练安排…</p></div>`;
   $('#schedule-assess').onclick=()=>navigate('assess');$('#schedule-body').onclick=()=>navigate('body');$('#schedule-history').onclick=()=>{state.historyFilter='rehab';navigate('history');};
   api('/plan').then(data=>{
     if(state.tab!=='plan')return;

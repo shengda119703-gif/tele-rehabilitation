@@ -1,0 +1,84 @@
+/* Existing capture workflow, adapted to the shared Ankang visual system. */
+body.shared-product {
+  --ink: #202220;
+  --muted: #656965;
+  --green: #202220;
+  --light: #eef0eb;
+  --paper: #fafaf8;
+  --line: #dfe2db;
+  background: var(--paper);
+  color: var(--ink);
+}
+.shared-product .bottom-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  background: #fff;
+}
+.shared-product .bottom-nav a {
+  flex: 1;
+  max-width: 135px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 52px;
+  gap: 3px;
+  margin: 0;
+  padding: 6px 8px;
+  text-decoration: none;
+  font-size: 13px;
+  color: var(--muted);
+  border-radius: 10px;
+}
+.shared-product .bottom-nav a[aria-current] {
+  background: var(--light);
+  color: var(--ink);
+  font-weight: 600;
+}
+.shared-product .bottom-nav svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.shared-product .primary {
+  border-radius: 10px;
+  background: var(--ink);
+  color: #fff;
+}
+.shared-product .secondary,
+.shared-product .feature-entry {
+  border-radius: 10px;
+}
+.shared-product .body-categories button.selected {
+  box-shadow: inset 3px 0 var(--ink);
+}
+.shared-product .schedule-progress {
+  accent-color: var(--ink);
+}
+.shared-product .card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: none;
+}
+.shared-product .card.tint {
+  background: var(--light);
+}
+.shared-product .connection {
+  color: var(--muted);
+  background: var(--light);
+}
+.shared-product button:focus-visible,
+.shared-product a:focus-visible,
+.shared-product input:focus-visible {
+  outline-color: #608772;
+}
+.shared-product [hidden] {
+  display: none !important;
+}

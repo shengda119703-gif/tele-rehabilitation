@@ -2,7 +2,7 @@
 from datetime import date, datetime
 from uuid import uuid4
 
-from PySide6.QtCore import Qt, QDate, QTime
+from PySide6.QtCore import Qt, QDate, QTime, QTimer
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QStackedWidget,
     QDateEdit, QTimeEdit, QDialog, QDialogButtonBox, QFormLayout, QLineEdit,
     QComboBox, QCheckBox, QSpinBox, QMessageBox, QInputDialog, QPushButton)
@@ -30,6 +30,7 @@ class ProductExperience:
         self._experience_health()
         self._experience_meds()
         self._experience_family()
+        self._action(self.settings_tabs.widget(0).layout(), 'phoneConnect', '连接手机', self._connect_phone, target='本人手机连接与停止共享服务')
         self.interface_buttons['globalAssistant'].hide()
         self.user_select.hide()
         self.account_button.setText('我的档案')
@@ -38,6 +39,41 @@ class ProductExperience:
         self.last_rehab_tab = 2
         for widget in (self.dose_table, self.schedule_table, self.linked_family):
             widget.itemSelectionChanged.connect(self._completion_controls)
+
+    def _connect_phone(self):
+        if not self.owner:
+            self._message('先建立或选择本人的档案。'); return
+        dialog = QDialog(self); dialog.setWindowTitle('连接我的手机'); dialog.resize(520, 340)
+        area = QVBoxLayout(dialog)
+        area.addWidget(visual(label('手机与电脑，共用一份档案'), typography='section'))
+        area.addWidget(label('手机连接同一可信 Wi-Fi，在浏览器打开下面的地址，输入连接码。电脑需保持开启。连接码允许操作本人的资料，只给自己的设备使用。', 'productMuted'))
+        status = label('正在启动手机连接…'); status.setTextInteractionFlags(Qt.TextSelectableByMouse); area.addWidget(status)
+        area.addWidget(label('当前为局域网 HTTP 连接；不向互联网发布，不会自动调整防火墙。', 'productMuted'))
+        try:
+            from mobile_rehab.desktop import PhoneHost
+            hosts = getattr(self, 'phone_hosts', {})
+            self.phone_hosts = hosts
+            host = hosts.get(self.owner)
+            if not host or host.stopped.is_set():
+                hosts[self.owner] = host = PhoneHost(self.backend, self.owner)
+            self.phone_host = host
+        except Exception as error:
+            status.setText('连接未启动：' + str(error)); host = None
+        timer = QTimer(dialog)
+        def refresh():
+            if not host: return
+            if host.error: status.setText('连接未启动：' + host.error); timer.stop()
+            elif host.closing.is_set(): status.setText('手机连接正在停止，请稍后重新打开本窗口。'); timer.stop()
+            elif host.server and host.server.started:
+                status.setText('本人手机地址：\n' + '\n'.join(host.urls) + '\n\n连接码：' + host.code + '\n关闭此窗口后仍可连接；停止连接会撤销本次连接码。'); timer.stop()
+            elif host.stopped.is_set(): status.setText('手机连接已停止。'); timer.stop()
+        timer.timeout.connect(refresh); timer.start(200); refresh()
+        actions = QHBoxLayout(); area.addLayout(actions)
+        def stop():
+            if host: host.close()
+            status.setText('正在停止手机连接，已配对手机将无法继续访问。'); timer.stop()
+        actions.addWidget(button('停止手机连接', stop)); actions.addStretch(); actions.addWidget(button('完成', dialog.accept))
+        dialog.exec()
 
     def _experience_home(self):
         scroll = self.page_widgets['home']
@@ -75,11 +111,11 @@ class ProductExperience:
         self.rehab_tabs.tabBar().hide()
         overview = self.rehab_sections.widget(0).layout()
         header = QHBoxLayout()
-        header.addWidget(visual(label('我的训练计划'), typography='section')); header.addStretch()
+        header.addWidget(visual(label('今天的康复'), typography='section')); header.addStretch()
         self._action(header, 'rehabEvaluateNow', '开始评估', lambda: self._rehab_action('assessment'), target='原评估流程')
         overview.insertLayout(1, header)
         area = self.rehab_areas['训练计划']
-        self.plan_hint = label('生成计划或添加已有安排，然后选择训练日期。'); area.insertWidget(0, self.plan_hint)
+        self.plan_hint = label('先完成评估，康复管家会根据已保存的结果准备计划。'); area.insertWidget(0, self.plan_hint)
         self.interface_buttons['rehabAutomatic'].setText('康复管家制定计划')
         self.interface_buttons['rehabLibrary'].setText('手动添加 / 编辑')
         self.interface_buttons['rehabPlanDetail'].setText('计划详情')
@@ -112,12 +148,28 @@ class ProductExperience:
         for index,old_key in enumerate(('今日恢复', '康复评估', '康复进度')):
             item=self._action(self.rehab_areas[old_key],'rehabDetailsBack'+str(index),'返回训练计划',lambda:self.rehab_tabs.setCurrentIndex(2),target='训练计划')
             self.rehab_areas[old_key].removeWidget(item);self.rehab_areas[old_key].insertWidget(0,item)
-        area.removeWidget(self.plan_manage);area.insertWidget(0,self.plan_manage)
+        area.removeWidget(self.plan_manage)
+        self.plan_manage.hide()
+        self.plan_tools = QWidget(); tools_box = QVBoxLayout(self.plan_tools); tools_box.setContentsMargins(0,0,0,0)
+        tools_box.addWidget(self.plan_manage); tools_box.addWidget(self.current_plan)
+        for key in ('planSchedule','planManualCopy','planVersions'):
+            tools_box.addWidget(self.interface_buttons[key])
+        toggle = self._action(area, 'planManageToggle', '管理计划与日期', lambda:self._toggle_plan_tools(), target='展开计划管理')
+        area.removeWidget(toggle); area.insertWidget(1,toggle); area.insertWidget(2,self.plan_tools)
+        self.plan_tools.hide()
+        self.plan_next = visual(label(''), typography='display'); area.insertWidget(0,self.plan_next)
+        self.current_plan_text.hide()
+        self.plan_hint.setWordWrap(True)
         # Keep overview and editing separate even when a snapshot updates child visibility.
         original=self.rehab_tabs.widget(2).widget()
         self.plan_overview=QWidget(original);self.plan_overview.setLayout(area)
         self.plan_editor_area=QVBoxLayout(original);self.plan_editor_area.setContentsMargins(0,0,0,0)
         self.plan_editor_area.addWidget(self.plan_overview)
+
+    def _toggle_plan_tools(self):
+        opened = not self.plan_tools.isVisible()
+        self.plan_tools.setVisible(opened); self.plan_manage.setVisible(opened)
+        self.interface_buttons['planManageToggle'].setText('收起计划管理' if opened else '管理计划与日期')
 
     def _experience_health(self):
         self.health_tabs.setTabText(0, '我的档案')
@@ -141,6 +193,23 @@ class ProductExperience:
         self.health_status_sections.widget(0).layout().itemAt(0).widget().hide()
         entry=self._action(area, 'healthRehabRecords', '查看康复评估与训练记录', lambda: self._show_health_history('康复'), target='健康内康复记录')
         area.removeWidget(entry);area.insertWidget(3,entry)
+        phone=self._action(area, 'healthPhoneRecords', '查看手机录像记录与计划', self._phone_records, target='同一本人数据库的录像来源记录')
+        area.removeWidget(phone);area.insertWidget(4,phone)
+
+    def _phone_records(self):
+        data=self.snapshot.get('phoneRehabilitation',{})
+        lines=[]
+        for key,title in (('rehab.get_training_plan','手机录像计划'),('rehab.get_recent_assessments','手机录像评估'),('rehab.get_training_history','手机录像训练')):
+            records=data.get(key,{}).get('records',[])
+            lines.append(title+'：'+str(len(records))+' 项')
+            for r in records[:20]:
+                if key=='rehab.get_training_plan':
+                    lines.append(r['name']+' · v'+str(r['revision'])+'\n'+'\n'.join(i['exercise_label']+' · '+self._plan_settings(i['settings']) for i in r['items']))
+                else:
+                    completed = (r.get('summary') or {}).get('completed', r.get('completed'))
+                    progress = f'完成 {completed} 次' if isinstance(completed, (int, float)) else '次数未测得'
+                    lines.append(str(r.get('exercise_label') or r.get('exercise_id'))+' · '+str(r.get('end_utc') or r.get('timestamp') or '')+'\n'+progress+'；'+str(r.get('reason') or r.get('measurement_note') or '详细分析报告可在手机健康页查看。'))
+        self._detail('手机录像记录与计划',lines+['手机录像与电脑实时测量保留各自来源条件，不直接互换为训练依据。'])
 
     def _experience_meds(self):
         self.medication_tabs.setTabText(0, '按日记录')
@@ -196,7 +265,7 @@ class ProductExperience:
         self._action(relation, 'familyLocalBind', '关联家人', self._family_link, kind='D', target='daily.familyBind')
         self._action(relation, 'familyOldTools', '联系人与照护工具', lambda: self.family_sections.setCurrentIndex(1), target='原照护能力与联系人')
         relation.addStretch(); box.addLayout(relation)
-        box.addWidget(label('本版为同一台电脑上的档案联动；没有向远程手机发送数据。', 'productMuted')); box.addStretch()
+        box.addWidget(label('家人分别选择共享范围。本人手机可在“我的档案 → 设置与数据管理 → 连接手机”中连接，读取同一份获准摘要。', 'productMuted')); box.addStretch()
         self.family_sections.addWidget(page)
         tools=QWidget();tools_box=QVBoxLayout(tools);tools_box.setAlignment(Qt.AlignTop);tools_box.setSpacing(16)
         self._action(tools_box,'familyToolsBack','返回家人近况',lambda:self.family_sections.setCurrentIndex(0),target='家人近况')
@@ -278,6 +347,7 @@ class ProductExperience:
         area.addWidget(button('切换到所选档案', lambda: (dialog.accept(), self._select_owner(select.currentData()))))
         area.addWidget(button('编辑我的资料', lambda: (dialog.accept(), self._profile())))
         area.addWidget(button('新建本机档案', lambda: (dialog.accept(), self._first_use())))
+        area.addWidget(button('连接我的手机', lambda: (dialog.accept(), self._connect_phone())))
         area.addWidget(button('设置与数据管理', lambda: (dialog.accept(), self.navigate('settings'))))
         close = QDialogButtonBox(QDialogButtonBox.Close); close.rejected.connect(dialog.reject); area.addWidget(close)
         dialog.exec()
@@ -291,6 +361,11 @@ class ProductExperience:
             return
         p = self._selected_plan()
         self.current_plan_text.setText(p['name'] + '\n' + '\n'.join(i['exercise_label'] + ' · ' + ('左侧' if i['side'] == 'left' else '右侧') + ' · ' + self._plan_settings(i['settings']) for i in p['items']) if p else '还没有动作计划。可先开始评估，或添加已有安排。')
+        if hasattr(self, 'plan_next'):
+            next_item = next((i for i in (p or {}).get('items', []) if i['key'] == (p or {}).get('progress', {}).get('next_key')), None)
+            self.plan_next.setText(next_item['exercise_label'] if next_item else '这一轮已完成' if p else '从一次评估开始')
+            self.plan_hint.setText(('下一项 · ' + ('左侧' if next_item['side']=='left' else '右侧') + ' · ' + self._plan_settings(next_item['settings']) + ('\n' + p['availability_reason'] if p.get('availability_reason') else '')) if next_item else '可制定下一轮计划，已保存的训练记录会保留。' if p else '点击“开始评估”完成一次动作测试，再让康复管家制定计划。已有安排可在管理计划中添加。')
+            self.interface_buttons['planPractice'].setText('制定下一轮' if p and not p.get('has_next') else '补充评估' if p and not p.get('next_available') else '开始下一项')
         if p:
             self.rehab_tables['训练计划'].selectRow(self.current_plan.currentIndex())
 
@@ -345,9 +420,14 @@ class ProductExperience:
         if not p:
             self._message('请先选择已保存的计划。'); return
         if not p.get('has_next'):
-            self._message('这份计划已完成。可保存新计划后重新安排，原记录保留。'); return
+            self._automatic_plan(); return
         if not p.get('next_available'):
-            self._message('暂不能开始：' + p.get('availability_reason', '请补充有效评估。')); return
+            if self._rehab_action('assessment'):
+                item=next((i for i in p['items'] if i['key']==p.get('progress',{}).get('next_key')),None)
+                if item:
+                    self.legacy._choose_catalog_exercise(item['exercise_id'])
+                    self.legacy.side.setCurrentIndex(self.legacy.side.findData(item['side']))
+            return
         if self._rehab_action('training'):
             if p['record_origin'] == 'assessment_rules':
                 self.legacy._open_automatic_plan()
@@ -644,6 +724,7 @@ class ProductExperience:
         self.current_plan.setCurrentIndex(max(0, self.current_plan.findData(selected))); self.current_plan.blockSignals(False)
         self._experience_plan_change(); self._experience_schedule_render()
         has_plan=bool(self._selected_plan())
+        visual(self.interface_buttons['rehabEvaluateNow'], appearance='secondary' if has_plan else 'primary')
         self.current_plan.setVisible(has_plan)
         for key in ('planSchedule','planPractice'):self.interface_buttons[key].setVisible(has_plan)
         for key in ('planManualCopy','planVersions'):self.interface_buttons[key].hide()

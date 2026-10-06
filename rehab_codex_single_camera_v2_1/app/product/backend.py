@@ -8,6 +8,12 @@ from pathlib import Path
 from ..rehab_read_tools import RehabReadTools, TOOLS
 
 
+class _Reply:
+    def __init__(self):
+        self.queue = queue.Queue(maxsize=1)
+        self.cancelled = False
+
+
 class ProductBackend:
     def __init__(self, data_dir, bridge_factory=None):
         self.data_dir = Path(data_dir)
@@ -26,6 +32,29 @@ class ProductBackend:
         if operation in ('voice.input','ui.voice.transcribe'):self.voice.prepare()
         self.jobs.put((operation, owner, payload or {}, dict(scope or {}), token))
 
+    def call(self, operation, owner, payload=None, scope=None, timeout=165):
+        """Phone requests share the desktop's single writer, with private replies."""
+        if self.stop_event.is_set():
+            raise RuntimeError('电脑服务已停止。')
+        reply = _Reply()
+        self.submit(operation, owner, payload, scope, reply)
+        try:
+            _, _, _, result, error = reply.queue.get(timeout=timeout)
+        except queue.Empty:
+            reply.cancelled = True
+            raise TimeoutError('请求超时，请刷新核对是否已保存后再操作。') from None
+        if error:
+            raise RuntimeError(error)
+        return result
+
+    def _deliver(self, value):
+        reply = value[2]
+        if isinstance(reply, _Reply):
+            if not reply.cancelled:
+                reply.queue.put_nowait(value)
+        else:
+            self.results.put(value)
+
     def submit_capture(self, owner, batch, *, visibility='private', scope=None, token=None):
         from .capture import archive_payload
         self.submit('media.import', owner, archive_payload(batch, visibility=visibility), scope, token)
@@ -41,18 +70,20 @@ class ProductBackend:
                 if job is None or self.stop_event.is_set():
                     break
                 operation, owner, payload, scope, token = job
+                if isinstance(token, _Reply) and token.cancelled:
+                    continue
                 try:
                     payload = dict(payload)
                     if operation == 'ui.voice.transcribe':
                         # Input-only operation: no Agent turn, health event or persistence.
                         result = self.voice.handle('voice.recognize', {})
-                        self.results.put((operation, owner, token, result, None))
+                        self._deliver((operation, owner, token, result, None))
                         continue
                     if operation == 'ui.file.write':
                         content = payload.get('text')
                         data = content.encode('utf-8') if isinstance(content, str) else bytes(payload['bytes'])
                         Path(payload['path']).write_bytes(data)
-                        self.results.put((operation, owner, token, {'fileExport': True}, None))
+                        self._deliver((operation, owner, token, {'fileExport': True}, None))
                         continue
                     local_file = payload.pop('_local_file', None)
                     export_path = payload.pop('_local_export_path', None)
@@ -84,7 +115,7 @@ class ProductBackend:
                             if not any(p['id'] == payload['planId'] and p['revision'] == payload['revision'] for p in plans):
                                 raise ValueError('计划已变化，请刷新后重新安排。')
                         result = self.daily.apply(owner, operation, payload, scope)
-                        self.results.put((operation, owner, token, result, None))
+                        self._deliver((operation, owner, token, result, None))
                         continue
                     result = self.bridge.product(operation, owner, payload, tool_handler=tools)
                     if operation == 'lifecycle.clear':
@@ -95,6 +126,8 @@ class ProductBackend:
                     if isinstance(snapshot, dict) and 'state' in snapshot and tools:
                         snapshot['rehabilitation'] = {name: tools(name, {}) for name in TOOLS}
                         snapshot['rehabilitation_ui'] = tools.desktop_snapshot()
+                        phone_scope = dict(participant_id=owner, source_kind='REPLAY_FILE', usage_context='SELF_USE')
+                        snapshot['phoneRehabilitation'] = RehabReadTools(self.data_dir/'home_rehab.sqlite3', phone_scope).desktop_snapshot()
                         snapshot['dailyProduct'] = self.daily.snapshot(owner, scope)
                         members = []
                         for member, categories in self.daily.allowed_members(owner):
@@ -122,13 +155,13 @@ class ProductBackend:
                         data = bytes(result['bytes']) if operation == 'archive.read' else json.dumps(result, ensure_ascii=False, indent=2).encode('utf-8')
                         Path(export_path).write_bytes(data)
                         result = {'fileExport': True}
-                    self.results.put((operation, owner, token, result, None))
+                    self._deliver((operation, owner, token, result, None))
                 except Exception as error:
                     # Preserve in-flight domain sessions on validation failures. Failed child resets on next job.
                     if self.bridge and self.bridge._process.poll() is not None:
                         self.bridge.close()
                         self.bridge = None
-                    self.results.put((operation, owner, token, None, str(error)))
+                    self._deliver((operation, owner, token, None, str(error)))
         finally:
             if self.bridge:
                 self.bridge.close()

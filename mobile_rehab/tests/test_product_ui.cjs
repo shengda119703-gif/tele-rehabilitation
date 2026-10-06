@@ -29,7 +29,7 @@ function harness(){
   const all=s=>s==='[data-tab]'?nav:s.startsWith('[data-')?rendered.filter(e=>Object.hasOwn(e.dataset,s.slice(6,-1).replace(/-([a-z])/g,(_,x)=>x.toUpperCase()))):[];
   const c={document:{querySelector:query,querySelectorAll:all,createElement:()=>node(),addEventListener(){}},
     window:{addEventListener(){},scrollTo(){}},location:{hash:'',host:'localhost'},URL:{revokeObjectURL(){}},
-    setTimeout,clearTimeout,console,AbortController,TypeError,confirm:()=>true};
+    setTimeout,clearTimeout,console,AbortController,TypeError,URLSearchParams,confirm:()=>true};
   vm.createContext(c);
   for(const file of ['app.js','fitness.js','barbell.js','extensions.js','health.js'])vm.runInContext(fs.readFileSync(path.join(staticDir,file),'utf8'),c);
   const instructions={view_label:'正面拍摄',camera:'保持肩肘入镜',start:'双臂自然下垂',move:'缓慢抬起手臂',return:'放下手臂',boundary:'测试说明',count:'回位计一次'};

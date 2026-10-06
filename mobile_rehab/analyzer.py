@@ -34,11 +34,11 @@ def analyze(job_path):
         from .fitness_analyzer import analyze as analyze_fitness
         return analyze_fitness(job_path)
     folder = job_path.parent
-    storage = Storage(folder.parent / 'assessments.sqlite3')
+    storage = Storage(Path(job['shared_database']) if job.get('shared_database') else folder.parent / 'assessments.sqlite3')
     camera, vision = CameraManager(), VisionWorker(start_thread=False)
     controller = SceneController(storage, camera)
     setup = default_setup('rehab', job['exercise'])
-    setup['plan'].update(side=job['side'], participant_id=job['owner'])
+    setup['plan'].update(side=job['side'], participant_id=job.get('participant_id', job['owner']))
     # This confirms the selected replay configuration, not a human identity or
     # camera placement inferred by AI. Upload consent is recorded separately.
     setup['mirror'] = False
@@ -51,9 +51,9 @@ def analyze(job_path):
     try:
         if job.get('mode') == 'training':
             sessions = storage.list_sessions()
-            profile = build_body_profile(sessions, job['owner'], 'REPLAY_FILE', 'SELF_USE')
+            profile = build_body_profile(sessions, job.get('participant_id', job['owner']), 'REPLAY_FILE', 'SELF_USE')
             record = storage.get_training_plan(job['plan_id'])
-            validate_automatic_use(record, job['entry_key'], profile, sessions, None)
+            validate_automatic_use(record, job['entry_key'], profile, sessions, storage.get_participant(job.get('participant_id', job['owner'])))
             setup['plan'] = prepare_training_plan(record, job['entry_key'], profile)
             setup['plan']['training_plan_confirmed'] = True
         controller.open(dict(kind='REPLAY_FILE', ref=job['id'], usage_context='SELF_USE',
@@ -96,8 +96,8 @@ def analyze(job_path):
         controller.stop('user_stop')
         session = storage.get_session(controller.last_saved_id)
         sessions = storage.list_sessions()
-        profile = build_body_profile(sessions, job['owner'], 'REPLAY_FILE', 'SELF_USE')
-        proposal = generate_proposal(profile, sessions)
+        profile = build_body_profile(sessions, job.get('participant_id', job['owner']), 'REPLAY_FILE', 'SELF_USE')
+        proposal = generate_proposal(profile, sessions, storage.get_participant(job.get('participant_id', job['owner'])))
         result = dict(session_id=session['id'], source_kind='REPLAY_FILE', usage_context='SELF_USE',
                       summary=session['summary'], repetitions=session.get('repetitions', []),
                       finished_at=session.get('end_utc'), proposal=proposal,

@@ -881,6 +881,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         dialog = DeepSeekDeveloperDialog(self)
         if dialog.exec() == QDialog.Accepted:
             # New product bridge recreates sessions with the same local persisted health data.
+            for host in getattr(self, 'phone_hosts', {}).values(): host.close()
             self.backend.close()
             self.backend = ProductBackend(self.legacy.runtime.data_dir)
             if self.owner:
@@ -998,6 +999,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
     def closeEvent(self,event):
         self.backend.voice.cancel()
         if self.legacy._allow_close:
+            for host in getattr(self, 'phone_hosts', {}).values(): host.close()
             self.backend.close()
             self.poller.stop()
             self.refresher.stop()

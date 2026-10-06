@@ -29,7 +29,7 @@ def assert_native_input(window):
 def wait_runtime(predicate):
     deadline=time.monotonic()+55
     while not predicate() and time.monotonic()<deadline:
-        app.processEvents();QTest.qWait(20)
+        app.processEvents();time.sleep(.01)
     assert predicate()
 
 app=QApplication.instance() or QApplication([])
@@ -55,17 +55,19 @@ for width,theme in ((1440,'light'),(1024,'light'),(1440,'dark'),(1024,'dark')):
             editor=w.legacy.plan_library_dialog
             assert not editor.isWindow()
             assert_native_input(w)
+            wait_runtime(lambda:not editor.pending and editor.new.isEnabled() and not w.legacy.busy)
             editor.new.click();editor.name.setText('TEST 已有人工安排')
+            assert editor.editing, 'New plan must enter the editor before filling it'
             editor._append_item(default_plan('shoulder_abduction'))
             QTest.qWait(120)
             w.grab().save(str(out/f'{width}-{theme}-editor.png'))
-            wait(app,lambda:editor.save.isEnabled())
+            wait_runtime(lambda:editor.save.isEnabled() and not w.legacy.busy and not editor.pending)
             editor.save.click()
             # Real Runtime I/O may exceed the 12-second passive-UI test wait
             # under load. Keep the bounded real-Runtime timeout and diagnostics.
             try:wait_runtime(lambda:not w.legacy.busy and editor.records)
             except AssertionError:
-                print('save state:',w.legacy.busy,editor.pending,editor.error.text(),w.legacy.notice.text(),flush=True)
+                print('save state:',w.legacy.busy,editor.pending,editor.editing,editor.scope,w.legacy._body_scope_key(),editor.error.text(),w.legacy.notice.text(),flush=True)
                 raise
             wait(app,lambda:editor.close_button.isEnabled())
             editor.close_button.click();wait(app,lambda:not w.pending)
