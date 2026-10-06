@@ -1,0 +1,8 @@
+{
+  "name": "tele-rehabilitation-offline",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-only Android rehabilitation demo; no computer server required",
+  "scripts": {"test": "node --test tests/*.test.cjs"},
+  "dependencies": {"@mediapipe/tasks-vision": "0.10.32"}
+}

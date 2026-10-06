@@ -27,3 +27,11 @@ backups/
 # Versioned design knowledge is not application/patient data.
 !/.agents/skills/ui-ux-pro-max/data/
 !/.agents/skills/ui-ux-pro-max/data/**
+
+# Android local builds, dependency cache, private signing material and weights.
+android_offline/node_modules/
+android_offline/.gradle/
+**/*.apk
+**/*.jks
+**/*.keystore
+**/local.properties

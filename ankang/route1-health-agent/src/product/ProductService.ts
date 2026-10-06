@@ -382,6 +382,11 @@ export class ProductService {
     } else if (operation === 'archive.save') {
       const archive = new ArchiveService(this.scope(owner), this.port.attachments, () => this.family(owner).readState());
       await archive.save({...input, bytes: new Uint8Array(input.bytes)} as Parameters<ArchiveService['save']>[0], now.toISOString());
+    } else if (operation === 'archive.trash' || operation === 'archive.restore' || operation === 'archive.trash.list') {
+      const archive = new ArchiveService(this.scope(owner), this.port.attachments, () => this.family(owner).readState());
+      if (operation === 'archive.trash.list') return archive.trashList();
+      if (typeof input.id !== 'string') throw new Error('Attachment ID required');
+      await archive.setTrash(input.id, operation === 'archive.trash' ? now.toISOString() : null);
     } else if (operation === 'archive.read') {
       const archive = new ArchiveService(this.scope(owner), this.port.attachments, () => this.family(owner).readState());
       const entry = await archive.read(input.id);

@@ -31,6 +31,13 @@ class ProductLocalStore {
         this.write(key, [...previous.filter(a => a.id !== entry.id), {...metadata, content: Buffer.from(bytes).toString('base64')}]);
       },
       clear: async scope => this.remove(this.attachmentKey(scope)),
+      setTrash: async (scope,id,at) => {
+        const key=this.attachmentKey(scope), entries=this.read(key)||[];
+        const entry=entries.find(a=>a.id===id && a.ownerId===scope.ownerId && a.dataMode===scope.dataMode);
+        if(!entry) throw new Error('Attachment not found');
+        if(at) entry.trashedAt=at; else delete entry.trashedAt;
+        this.write(key,entries);
+      },
     };
   }
   attachmentKey(scope) { return 'attachments:' + scope.dataMode + ':' + encodeURIComponent(scope.ownerId); }

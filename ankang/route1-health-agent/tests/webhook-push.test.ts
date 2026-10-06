@@ -98,3 +98,17 @@ void test('describeDeliveries：台账包含微信推送渠道标签', () => {
   assert.match(text, /微信推送已发送，送达未确认/);
   assert.doesNotMatch(text, /已送达/);
 });
+
+void test('describeDeliveries：只有真实回执才显示送达，受理和待发送分别展示', () => {
+  const record: FamilyNotificationRecord = {
+    findingId:'TEST',severity:'alert',title:'TEST',message:'TEST',reason:'TEST',createdAt:'2026-10-05T00:00:00Z',lifecycle:'new',
+    deliveries:[{channel:'in_app',status:'delivered',detail:'真实回执',at:'TEST'},
+      {channel:'browser_push',status:'accepted',detail:'受理',at:'TEST'},
+      {channel:'webhook_push',status:'pending',detail:'待发送',at:'TEST'}],
+  };
+  const text=describeDeliveries(record);
+  assert.match(text,/通知中心已送达/);
+  assert.match(text,/系统通知已受理，送达未确认/);
+  assert.match(text,/微信推送待发送/);
+  assert.doesNotMatch(text,/系统通知已送达|微信推送已送达/);
+});

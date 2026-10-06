@@ -14,11 +14,11 @@ ROUTE_ROOT = Path(__file__).resolve().parents[2] / "ankang" / "route1-health-age
 
 
 class AgentBridge:
-    def __init__(self, node: str | None = None, timeout: float = 60, data_dir=None, voice_host=None):
+    def __init__(self, node: str | None = None, timeout: float = 60, data_dir=None, voice_host=None, *, script=None, env=None):
         node = node or os.environ.get("ANKANG_NODE", "node")
         self.timeout = timeout
         self.voice_host = voice_host
-        child_env = dict(os.environ)
+        child_env = {**os.environ, **(env or {})}
         if voice_host is not None: child_env['ANKANG_NATIVE_VOICE'] = '1'
         else: child_env.pop('ANKANG_NATIVE_VOICE', None)
         entry = ROUTE_ROOT / ".bridge-build" / "runtime" / "index.js"
@@ -30,7 +30,7 @@ class AgentBridge:
         if not entry.is_file():
             raise RuntimeError("Build the bridge first: npm run build:bridge (in route1-health-agent)")
         self._process = subprocess.Popen(
-            [node, str(ROUTE_ROOT / "scripts" / "agent-bridge.cjs"), *([str(Path(data_dir).resolve())] if data_dir else [])],
+            [node, str(script or ROUTE_ROOT / "scripts" / "agent-bridge.cjs"), *([str(Path(data_dir).resolve())] if data_dir else [])],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             text=True,

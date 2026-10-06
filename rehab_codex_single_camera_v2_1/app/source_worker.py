@@ -52,6 +52,7 @@ def _capture(source, context, options, frames, statuses, commands, acknowledgeme
         put_latest(statuses, {'status': 'OPENED', 'set_results': set_results, 'reported_fps': reported})
         received = deque(maxlen=60)
         seq, previous_pts, preview_sent, pending_seq = 0, None, False, None
+        leading_skipped = 0
         previous_wall = None
         preview_until = None
         while not stop.is_set():
@@ -95,6 +96,16 @@ def _capture(source, context, options, frames, statuses, commands, acknowledgeme
                 analysis_t, basis = now, 'monotonic_receive'
             else:
                 pts = float(cap.get(cv2.CAP_PROP_POS_MSEC))/1000
+                # Some phone MP4s expose a small negative first timestamp in
+                # OpenCV even though the decoder can read the picture. Omit
+                # only a bounded leading preroll, never invent frame times or
+                # repair an in-stream discontinuity. Keep subsequent PTS exact.
+                if (previous_pts is None and not options.get('seek_s', 0)
+                        and math.isfinite(pts) and -.25 <= pts < 0 and leading_skipped < 4):
+                    leading_skipped += 1
+                    put_latest(statuses, {'status': 'REPLAY_PREROLL_SKIPPED',
+                                          'skipped_frames': leading_skipped, 'raw_time_s': pts})
+                    continue
                 if not math.isfinite(pts) or pts < 0 or (previous_pts is not None and pts <= previous_pts):
                     raise RuntimeError('录像媒体时间不可用或非单调；已停止分析，不以推理耗时替代')
                 if previous_pts is not None and previous_wall is not None:
