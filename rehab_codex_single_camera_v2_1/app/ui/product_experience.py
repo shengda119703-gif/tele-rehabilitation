@@ -361,6 +361,11 @@ class ProductExperience:
             return
         area = self.plan_editor_area
         self.plan_overview.hide()
+        # The legacy opener already showed this as a window-modal dialog.
+        # Hide while its modal window still exists so Qt releases the native
+        # parent lock before changing modality/flags/parent. Otherwise Windows
+        # keeps the product window disabled although activeModalWidget is None.
+        dialog.hide()
         dialog.setWindowModality(Qt.NonModal)
         dialog.setWindowFlags(Qt.Widget)
         dialog.setParent(self.rehab_tabs.widget(2).widget())

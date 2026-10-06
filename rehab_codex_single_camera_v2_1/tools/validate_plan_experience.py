@@ -16,6 +16,15 @@ from app.settings import default_plan
 from bridges.ankang.client import AgentBridge
 from test_product_window import wait
 import time
+import ctypes
+
+native_enabled=ctypes.windll.user32.IsWindowEnabled
+native_enabled.argtypes=[ctypes.c_void_p]
+native_enabled.restype=ctypes.c_bool
+
+def assert_native_input(window):
+    assert native_enabled(int(window.winId())), 'Native main window is disabled'
+    assert QApplication.activeModalWidget() is None
 
 def wait_runtime(predicate):
     deadline=time.monotonic()+55
@@ -45,6 +54,7 @@ for width,theme in ((1440,'light'),(1024,'light'),(1440,'dark'),(1024,'dark')):
             w._plan_library();wait(app,lambda:w.legacy.plan_library_dialog and not w.legacy.busy)
             editor=w.legacy.plan_library_dialog
             assert not editor.isWindow()
+            assert_native_input(w)
             editor.new.click();editor.name.setText('TEST 已有人工安排')
             editor._append_item(default_plan('shoulder_abduction'))
             QTest.qWait(120)
@@ -60,6 +70,7 @@ for width,theme in ((1440,'light'),(1024,'light'),(1440,'dark'),(1024,'dark')):
             wait(app,lambda:editor.close_button.isEnabled())
             editor.close_button.click();wait(app,lambda:not w.pending)
             assert w.legacy.plan_library_dialog is None, 'Editor did not close'
+            assert_native_input(w)
             try:wait(app,lambda:bool(w._rehab_data('rehab.get_training_plan')))
             except AssertionError:
                 print('saved state:',w.owner,w.legacy._body_scope_key(),editor.scope,editor.records,w.notice.text(),w.snapshot.get('rehabilitation_ui'),flush=True)
@@ -74,9 +85,16 @@ for width,theme in ((1440,'light'),(1024,'light'),(1440,'dark'),(1024,'dark')):
             QTest.qWait(100);w.grab().save(str(out/f'{width}-{theme}-saved-plan.png'))
             w._automatic_plan();wait(app,lambda:w.legacy.automatic_dialog and not w.legacy.busy)
             assert w.legacy.automatic_dialog.proposal
+            assert_native_input(w)
             QTest.qWait(100);w.grab().save(str(out/f'{width}-{theme}-automatic-empty.png'))
             w.legacy.automatic_dialog.close_button.click();wait(app,lambda:not w.pending)
-            print(f'{width} {theme}: real Runtime plan save and dated schedule PASS',flush=True)
+            assert_native_input(w)
+            # Exercise the real shutdown handshake, not the fixture bypass.
+            w.close()
+            wait_runtime(lambda:not w.isVisible() and w.legacy._allow_close)
+            runtime.thread.join(5)
+            assert not runtime.thread.is_alive()
+            print(f'{width} {theme}: native input, real Runtime save/schedule, empty generator and normal close PASS',flush=True)
         finally:
             w.legacy._allow_close=True;w.close();w.deleteLater();app.processEvents()
             runtime.command('shutdown');runtime.thread.join(5)
