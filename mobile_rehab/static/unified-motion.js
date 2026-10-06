@@ -37,7 +37,7 @@
       const content=document.querySelector('#content'),hero=content.querySelector('.hero');
       if(hero&&!content.querySelector('.home-layout')){
         const layout=document.createElement('div'),today=document.createElement('section');layout.className='home-layout';today.className='today-panel';
-        while(hero.nextSibling)today.append(hero.nextSibling);layout.append(hero,today);content.append(layout);
+        const schedule=content.querySelector(".today-panel");if(schedule)today.append(schedule);layout.append(hero,today);content.prepend(layout);
       }
     }
   }

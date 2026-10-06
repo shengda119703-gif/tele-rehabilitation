@@ -21,6 +21,7 @@ const ui = {
   snapshot: null,
   day: today(),
   source: "LIVE_CAMERA",
+  rehabMode: "training",
   draft: "",
   private: false,
   generation: 0,
@@ -166,7 +167,7 @@ function nav() {
     )
     .join("");
   $("#nav").querySelectorAll('a').forEach(a => {
-    if(a.hash === '#' + (ui.page === 'assistant' ? 'home' : ui.page)) a.setAttribute('aria-current','page');
+    if(a.hash === '#' + (['assistant','records'].includes(ui.page) ? 'home' : ui.page)) a.setAttribute('aria-current','page');
     else a.removeAttribute('aria-current');
   });
   window.ProductMotion?.selectNavigation();
@@ -178,7 +179,7 @@ function route() {
     return;
   }
   const key = location.hash.slice(1) || "home";
-  ui.page = Object.hasOwn(names, key) || key === "assistant" ? key : "home";
+  ui.page = Object.hasOwn(names, key) || ["assistant", "records"].includes(key) ? key : "home";
   ui.day = today();
   nav();
   if (ui.snapshot) render();
@@ -201,7 +202,7 @@ function pair() {
 }
 function render() {
   nav();
-  ({ home, rehab, health, medication, family, assistant })[ui.page]();
+  ({ home, rehab, health, medication, family, assistant, records })[ui.page]();
   window.ProductMotion?.decorate(ui.page);
 }
 function schedules(day = ui.day) {
@@ -249,7 +250,7 @@ function home() {
     })),
   ].sort((a, b) => a.time.localeCompare(b.time));
   $("#content").innerHTML =
-    `<section class="hero"><p class="eyebrow">${E(new Date().toLocaleDateString("zh-CN", { month: "long", day: "numeric", weekday: "long" }))}</p><h1>${E(profile().name)}，<br>今天感觉怎么样？</h1><p class="muted">说说身体感受，整理今天的记录。<br>康复管家会陪你一步一步来。</p>${link("和康复管家聊聊", "#assistant", true)}</section><div class="heading"><h2>今天的安排</h2><a href="#rehab">查看康复安排</a></div>${
+    `<section class="hero"><p class="eyebrow">${E(new Date().toLocaleDateString("zh-CN", { month: "long", day: "numeric", weekday: "long" }))}</p><h1>${E(profile().name)}，<br>今天感觉怎么样？</h1><p class="muted">说说身体感受，整理今天的记录。<br>康复管家会陪你一步一步来。</p>${link("和康复管家聊聊", "#assistant", true)}</section><section class="today-panel"><div class="heading"><h2>今天的安排</h2><a href="#rehab">查看康复安排</a></div>${
       items
         .slice(0, 4)
         .map(
@@ -258,8 +259,26 @@ function home() {
         )
         .join("") ||
       '<p class="empty">今天没有安排。可以先完成一次评估，或在康复页选择训练日期。</p>'
-    }${items.length > 4 ? '<p class="muted">其余安排可在康复和用药页查看。</p>' : ""}<p class="eyebrow">已连接电脑 · 本人资料同步保存</p>`;
+    }${items.length > 4 ? '<p class="muted">其余安排可在康复和用药页查看。</p>' : ""}<p class="eyebrow">已连接电脑 · 本人资料同步保存</p></section>${weeklyPreview()}`;
 }
+
+function weeklyPreview() {
+ const report=snapshot().history?.report||{};
+ return `<section class="journal"><div class="heading"><h2>我的记录与周报</h2>${link("全部记录与周报","#records")}</div><p class="muted">${E(report.rangeText||"本周")}</p><div class="report-preview">${(report.sections||[]).slice(0,3).map(s=>`<article><h3>${E(s.title)}</h3><p>${E((s.lines||[]).slice(0,2).join("；"))}</p></article>`).join("")||'<p>记录身体情况或完成评估后，在这里回看。</p>'}</div></section>`;
+}
+function records() {
+ const report=snapshot().history?.report||{},entries=(snapshot().state?.events||[]).slice().sort((a,b)=>String(b.timestamp).localeCompare(String(a.timestamp)));
+ const rehab=Object.entries(snapshot().rehabilitation_ui||{}).filter(([k])=>k!=="rehab.get_training_plan").flatMap(([,v])=>v.records||[]);
+ $("#content").innerHTML=`<div class="heading"><h1>我的记录与周报</h1><a href="#home">返回首页</a></div><section class="weekly-report"><h2>本周健康周报</h2><p class="muted">${E(report.rangeText||"")}</p>${(report.sections||[]).map(s=>`<article><h3>${E(s.title)}</h3>${(s.lines||[]).map(x=>`<p>${E(x)}</p>`).join("")}</article>`).join("")}</section><details><summary>健康记录</summary>${entries.map(e=>`<article class="row"><div><small>${stamp(e.timestamp)}</small><p>${E(eventText(e))}</p></div></article>`).join("")||'<p class="empty">暂无记录。</p>'}</details><p>${link("查看逐次服药记录","#medication")}</p><details open><summary>康复评估与训练记录</summary>${sourcePicker()}${rehab.map(r=>`<article class="row"><div><strong>${E(r.exercise_label||r.exercise_id||"动作记录")}</strong><p>${stamp(r.end_utc||r.timestamp)} · ${E(r.side==='left'?'左侧':r.side==='right'?'右侧':'')}</p></div></article>`).join("")||'<p class="empty">当前来源尚无保存的康复记录。</p>'}${link("查看手机分析报告","/capture?tab=history")}</details>`;
+ bindSource();
+}
+
+function eventText(e) {
+ const labels={weight:'体重',sbp:'收缩压',dbp:'舒张压',heartRate:'心率',spo2:'血氧',temperature:'体温',glucose:'血糖',steps:'步数'};
+ const m=e.measurement,l=e.labResult;
+ return e.observation?.text || (m ? `${labels[m.metric]||m.metric} ${m.value} ${m.unit||''}` : l ? `${l.name} ${l.value} ${l.unit||''}` : '健康记录');
+}
+
 function sourcePicker() {
   return `<label class="source">康复记录来源<select id="source"><option value="LIVE_CAMERA">电脑实时评估与训练</option><option value="REPLAY_FILE">手机录像评估与训练</option></select></label>`;
 }
@@ -272,11 +291,20 @@ function bindSource() {
     };
   }
 }
+function rehabModes() {
+  return `<div class="mode-nav" role="group" aria-label="康复功能">${[["training","训练"],["assessment","评估"],["fitness","健身"]].map(([k,t])=>`<button data-rehab-mode="${k}" aria-pressed="${ui.rehabMode===k}">${t}</button>`).join("")}</div>`;
+}
+function bindModes() {document.querySelectorAll('[data-rehab-mode]').forEach(b=>b.onclick=()=>{ui.rehabMode=b.dataset.rehabMode;rehab();});}
 function rehab() {
+  if(ui.rehabMode!=="training") {
+    const assessment=ui.rehabMode==="assessment";
+    $("#content").innerHTML=`<div class="heading"><h1>康复</h1></div>${rehabModes()}<section class="tool-intro"><h2>${assessment?"了解现在的活动情况":"选择适合自己的健身动作"}</h2><p>${assessment?"选择身体部位或动作，查看指导，再拍摄或选择视频进行评估。":"从健身动作库选择动作，查看做法，再拍摄或选择已有视频。"}</p>${link(assessment?"打开身体评估":"打开健身动作库",assessment?"/capture?tab=assess":"/capture?tab=fitness",true)}<p class="muted">完成后可从首页的“我的记录与周报”回看结果。</p></section>`;
+    bindModes();return;
+  }
   const p = plans()[0],
     next = p?.items.find((i) => i.key === p.progress?.next_key);
   $("#content").innerHTML =
-    `<div class="heading"><h1>康复</h1>${link("开始评估", "/capture?tab=assess")}</div>${sourcePicker()}<section class="hero"><p class="eyebrow">${p ? "下一项训练" : "我的训练计划"}</p><h1>${E(next?.exercise_label || (p ? "这一轮已完成" : "从一次评估开始"))}</h1><p class="muted">${next ? `${next.side === "left" ? "左侧" : "右侧"} · ${E(next.settings.target_reps ?? "未设置")} 次 × ${E(next.settings.target_sets ?? 1)} 组` : p ? "已保存的训练会留在健康记录里。" : "完成动作评估后，康复管家根据有效结果准备计划。"}</p>${p ? `<progress value="${Number(p.progress?.completed) || 0}" max="${Math.max(1, Number(p.progress?.total) || 1)}" aria-label="本轮完成进度"></progress>` : ""}${p?.availability_reason ? `<p class="notice">${E(p.availability_reason)}</p>` : ""}<div class="actions">${ui.source === "REPLAY_FILE" ? link(p && next ? "开始下一项" : "康复管家制定计划", "/capture?tab=plan", true) : p ? button("查看这份计划", "plan-detail", true) : link("用手机完成评估", "/capture?tab=assess", true)}${p ? button("安排日期", "schedule") : ""}</div>${ui.source === "LIVE_CAMERA" && p ? '<p class="muted">这份计划使用电脑实时测量条件。请在电脑“康复”页开始；手机可查看和安排日期。</p>' : ""}</section><div class="heading"><h2>日期安排</h2><input class="date" id="day" type="date" aria-label="查看康复日期" value="${ui.day}"></div>${
+    `<div class="heading"><h1>康复</h1></div>${rehabModes()}${sourcePicker()}<section class="hero"><p class="eyebrow">${p ? "下一项训练" : "我的训练计划"}</p><h1>${E(next?.exercise_label || (p ? "这一轮已完成" : "从一次评估开始"))}</h1><p class="muted">${next ? `${next.side === "left" ? "左侧" : "右侧"} · ${E(next.settings.target_reps ?? "未设置")} 次 × ${E(next.settings.target_sets ?? 1)} 组` : p ? "已保存的训练可在首页的记录中回看。" : "完成动作评估后，康复管家根据有效结果准备计划。"}</p>${p ? `<progress value="${Number(p.progress?.completed) || 0}" max="${Math.max(1, Number(p.progress?.total) || 1)}" aria-label="本轮完成进度"></progress>` : ""}${p?.availability_reason ? `<p class="notice">${E(p.availability_reason)}</p>` : ""}<div class="actions">${ui.source === "REPLAY_FILE" ? link(p && next ? "开始下一项" : "康复管家制定计划", "/capture?tab=plan", true) : p ? button("查看这份计划", "plan-detail", true) : link("用手机完成评估", "/capture?tab=assess", true)}${p ? button("安排日期", "schedule") : ""}</div>${ui.source === "LIVE_CAMERA" && p ? '<p class="muted">这份计划使用电脑实时测量条件。请在电脑“康复”页开始；手机可查看和安排日期。</p>' : ""}</section><div class="heading"><h2>日期安排</h2><input class="date" id="day" type="date" aria-label="查看康复日期" value="${ui.day}"></div>${
       schedules()
         .map(
           (s) =>
@@ -299,6 +327,7 @@ function rehab() {
       rehab();
     }
   };
+  bindModes();
   bind("plan-detail", () => planDetail(p));
   bind("schedule", () => schedule(p));
   document
@@ -372,28 +401,17 @@ function health() {
   const events = (snapshot().state?.events || [])
     .slice()
     .sort((a, b) => String(b.timestamp).localeCompare(String(a.timestamp)));
-  const records = Object.entries(snapshot().rehabilitation_ui || {})
-    .filter(([k]) => k !== "rehab.get_training_plan")
-    .flatMap(([, v]) => v.records || []);
   $("#content").innerHTML =
-    `<div class="heading"><h1>健康档案</h1>${button("编辑资料", "edit-profile")}</div><p class="muted">${E(profile().name)}${profile().age ? " · " + E(profile().age) + " 岁" : ""}<br>${E((profile().conditions || []).join("、") || "尚未填写已知健康情况")}</p><div class="actions">${button("拍照 / 上传资料", "upload", true)}${link("记录身体感受", "#assistant")}</div><div class="heading"><h2>资料与图片</h2></div>${(snapshot().attachments || []).map((a) => `<div class="row"><div><strong>${E(a.name)}</strong><p><small>${E(a.category)} · ${stamp(a.createdAt || a.savedAt)}</small></p></div><button data-archive="${E(a.id)}">查看</button></div>`).join("") || '<p class="empty">把病历、报告或仪器照片放在这里。识别文字后，先核对，再选择是否记录。</p>'}<div class="heading"><h2>最近记录</h2></div><div class="timeline">${
+    `<div class="heading"><h1>健康档案</h1>${button("编辑资料", "edit-profile")}</div><p class="muted">${E(profile().name)}${profile().age ? " · " + E(profile().age) + " 岁" : ""}<br>${E((profile().conditions || []).join("、") || "尚未填写已知健康情况")}</p><div class="actions">${button("拍照 / 上传资料", "upload", true)}${link("记录身体感受", "#assistant")}</div><div class="heading"><h2>资料与图片</h2></div>${(snapshot().attachments || []).map((a) => `<div class="row"><div><strong>${E(a.name)}</strong><p><small>${E(a.category)} · ${stamp(a.date)}</small></p></div><button data-archive="${E(a.id)}">查看</button></div>`).join("") || '<p class="empty">把病历、报告或仪器照片放在这里。识别文字后，先核对，再选择是否记录。</p>'}<div class="heading"><h2>最近记录</h2></div><div class="timeline">${
       events
         .slice(0, 20)
         .map(
           (e) =>
-            `<article><small>${stamp(e.timestamp)}</small><p>${E(e.observation?.text || [e.measurement?.metric || e.labResult?.name, e.measurement?.value ?? e.labResult?.value, e.measurement?.unit || e.labResult?.unit].filter((x) => x !== undefined).join(" ") || "健康记录")}</p></article>`,
+            `<article><small>${stamp(e.timestamp)}</small><p>${E(eventText(e))}</p></article>`,
         )
         .join("") ||
       '<p class="empty">还没有身体记录，可以和康复管家说说今天的情况。</p>'
-    }</div><details><summary>康复记录与更多资料</summary>${sourcePicker()}${
-      records
-        .slice(0, 20)
-        .map(
-          (r) =>
-            `<div class="row"><div><strong>${E(r.exercise_label || r.exercise_id || "动作记录")}</strong><p><small>${stamp(r.end_utc || r.timestamp)} · ${E(r.side === "left" ? "左侧" : r.side === "right" ? "右侧" : "")}</small></p></div></div>`,
-        )
-        .join("") || '<p class="muted">当前来源尚无保存的康复记录。</p>'
-    }<div class="actions">${link("查看手机分析报告", "/capture?tab=history")}${link("资料回收站与备份", "/capture?tab=archive")}</div></details>`;
+    }</div><div class="actions">${link("资料回收站与备份", "/capture?tab=archive")}</div>`;
   bind("edit-profile", editProfile);
   bind("upload", upload);
   bindSource();
@@ -727,7 +745,7 @@ let recorder = null,
 function assistant() {
   const chat = snapshot().state?.chat || [];
   $("#content").innerHTML =
-    `<div class="heading"><h1>康复管家</h1><a href="#home">返回首页</a></div><p class="muted">表达 → 理解 → 核对 → 记录。需要更正时，可以直接说“撤回上一条记录”。</p><section class="conversation" aria-label="对话记录">${chat.map((m) => `<div class="bubble ${m.role === "elder" ? "mine" : ""}"><small>${m.role === "elder" ? "我" : "康复管家"}${m.time ? " · " + stamp(m.time) : ""}${m.persisted === false ? " · 本次不记录" : ""}${m.pending ? " · 待确认" : ""}</small>${E(m.text)}</div>`).join("") || '<section class="hero"><h2>说说你今天的情况</h2><p class="muted">可以说身体感受、用药情况，或询问已有康复安排。识别出的内容由你核对。</p></section>'}</section><form id="chat-form" class="composer"><label for="draft">发消息给康复管家</label><textarea id="draft" required maxlength="1900" placeholder="例如：今天左肩有点酸，想记下来">${E(ui.draft)}</textarea><div class="actions"><label><input id="private" type="checkbox" ${ui.private ? "checked" : ""}>本次不记录</label><div>${button("语音输入", "voice")} <button type="button" id="voice-cancel" hidden>取消录音</button> <button type="submit" class="primary">发送</button></div></div><p id="voice-state" class="muted" role="status"></p><input id="audio-file" type="file" accept="audio/*" hidden></form>`;
+    `<div class="heading"><h1>康复管家</h1><a href="#home">返回首页</a></div><details class="assistant-capability"><summary>连接与能力说明</summary><p>${snapshot().modelAvailable?"康复记录智能查询已配置。":"基础健康对话和记录可用；联网模型尚未配置，无法进行智能康复记录查询。"}</p><p>上传资料保存在健康档案，不自动成为模型上下文。</p></details><p class="muted">表达 → 理解 → 核对 → 记录。需要更正时，可以直接说“撤回上一条记录”。</p><section class="conversation" aria-label="对话记录">${chat.map((m) => `<div class="bubble ${m.role === "elder" ? "mine" : ""}"><small>${m.role === "elder" ? "我" : "康复管家"}${m.time ? " · " + stamp(m.time) : ""}${m.persisted === false ? " · 本次不记录" : ""}${m.pending ? " · 待确认" : ""}</small>${E(m.text)}</div>`).join("") || '<section class="hero"><h2>说说你今天的情况</h2><p class="muted">可以说身体感受、用药情况，或询问已有康复安排。识别出的内容由你核对。</p></section>'}</section><form id="chat-form" class="composer"><label for="draft">发消息给康复管家</label><textarea id="draft" required maxlength="1900" placeholder="例如：今天左肩有点酸，想记下来">${E(ui.draft)}</textarea><div class="actions"><label><input id="private" type="checkbox" ${ui.private ? "checked" : ""}>本次不记录</label><div>${button("语音输入", "voice")} <button type="button" id="voice-cancel" hidden>取消录音</button> <button type="submit" class="primary">发送</button></div></div><p id="voice-state" class="muted" role="status"></p><input id="audio-file" type="file" accept="audio/*" hidden></form>`;
   $("#draft").oninput = (e) => (ui.draft = e.target.value);
   $("#private").onchange = (e) => (ui.private = e.target.checked);
   $("#chat-form").onsubmit = async (e) => {

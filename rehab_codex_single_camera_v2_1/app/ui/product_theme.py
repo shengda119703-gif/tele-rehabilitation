@@ -67,6 +67,8 @@ def core_style(c):
 {s} QLabel#productTitle {{ font-size:{TYPE['display'][0]}px; color:{c['text']}; }}
 {s} QLabel#productMuted {{ color:{c['secondary']}; }}
 {s} QFrame#careConversation {{ background:{c['soft']}; border:0; border-radius:12px; }}
+{s} QFrame#careJournal {{ background:{c['surface']}; border:1px solid {c['border']}; border-radius:10px; }}
+{s} QLabel#homeWeekPreview {{ padding:4px 0; font-size:16px; }}
 {s} QFrame#careNext {{ background:{c['soft']}; border:0; border-left:4px solid {c['brand']}; border-radius:12px; }}
 {s} QWidget#carePlanTools {{ background:{c['surface']}; border:1px solid {c['border']}; border-radius:8px; }}
 {s} QLabel[careSchedule="true"] {{ padding:16px 0; font-size:16px; }}
@@ -181,6 +183,7 @@ class ProductTheme:
             segment_palette.setColor(QPalette.Base,QColor(self.colors['brand'] if mode=='high-contrast' else self.colors['window']))
             segment_palette.setColor(QPalette.Text,QColor(self.colors['on_brand'] if mode=='high-contrast' else self.colors['text']))
             segment_palette.setColor(QPalette.WindowText,QColor(self.colors['secondary']))
+            bar._care_palette=QPalette(segment_palette)
             bar.setPalette(segment_palette);bar.update()
         from PySide6.QtWidgets import QDateEdit
         for day in self.window.findChildren(QDateEdit):

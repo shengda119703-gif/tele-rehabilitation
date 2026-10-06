@@ -86,6 +86,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         self._experience_setup()
         from .product_polish import polish_product
         polish_product(self)
+        from .product_structure import assemble
+        assemble(self)
         self.product_theme=ProductTheme(self)
         self.chat_shortcut=QShortcut(QKeySequence('Ctrl+Return'),self.chat_input)
         self.chat_shortcut.setContext(Qt.WidgetShortcut);self.chat_shortcut.activated.connect(self._send_chat)
@@ -372,8 +374,9 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
 
     def navigate(self,key,*,refresh=True):
         if key=='history' and hasattr(self,'home_sections'):
-            if not self.navigate('health',refresh=refresh):return False
-            self.health_tabs.setCurrentIndex(4)
+            if not self.navigate('home',refresh=refresh):return False
+            self.home_sections.setCurrentIndex(self.home_history_index)
+            self.title.setText('我的记录与周报')
             return True
         if key != 'rehab' and (self.legacy.state in ('CONNECTING','PREVIEW','ONLINE','SAVE_FAILED') or self.legacy._camera_testing or self.active_page=='rehab' and self.legacy.busy):
             self._message('请先结束并保存当前康复任务，再离开监护页面。')
@@ -624,6 +627,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             return
         self.owner = owner
         self.snapshot = {}
+        if self.notice.text()=='请先等待操作完成，并结束保存当前任务，再切换用户。':
+            self._message('')
         self._clear_views()
         self.pending_image = None
         for dialog in (getattr(self,'last_detail',None),self.legacy.silver_dialog):

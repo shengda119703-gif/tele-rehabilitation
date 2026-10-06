@@ -93,10 +93,14 @@ def test_onboarding_and_owner_switch_clear_old_data(desktop):
     wait(app,lambda:w.pending==0)
     assert any(p['ownerId']==owner for p in w.profiles)
     w.chat.setPlainText('旧用户内容')
+    w.home_week_preview.setText('TEST 旧用户周报')
+    w.home_week_range.setText('TEST 旧用户日期')
     w.legacy.busy = 0
     w._select_owner('person-test' if w.owner==owner else owner)
     assert w.chat.toPlainText()==''
     assert w.metrics.rowCount()==0
+    assert '旧用户' not in w.home_week_preview.text()
+    assert '旧用户' not in w.home_week_range.text()
     wait(app,lambda:w.pending==0)
     assert w.snapshot['profile']['ownerId']==w.owner
     dialog.deleteLater()

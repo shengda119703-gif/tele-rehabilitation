@@ -83,7 +83,7 @@ class SegmentBar(QTabBar):
     def paintEvent(self, event):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
-        palette = self.palette()
+        palette = getattr(self,'_care_palette',self.palette())
         visible = [i for i in range(self.count()) if self.isTabVisible(i)]
         if not visible:
             return

@@ -76,7 +76,7 @@ def test_primary_navigation_and_health_records_remain_accessible(desktop):
     w.navigate('rehab');settle(w,app)
     assert w.rehab_tabs.currentIndex()==2 and not w.rehab_tabs.tabBar().isVisible()
     w.navigate('history');settle(w,app)
-    assert w.active_page=='health' and w.health_tabs.currentIndex()==4
+    assert w.active_page=='home' and w.home_sections.currentWidget() is w.page_widgets['history']
     assert w.timeline.isVisible()
 
 

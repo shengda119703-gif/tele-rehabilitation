@@ -730,6 +730,9 @@ class ProductCompletion:
             self.daily_data={};self.visible_doses=[];self.visible_schedule=[]
             for item in (self.dose_table,self.dose_history,self.schedule_table,self.linked_family):rows(item,[])
             for item in (self.home_schedule,self.home_attention,self.family_attention,self.health_archive_profile,self.current_plan_text):item.setText('正在读取当前用户资料…')
+            for name in ('home_week_range','home_week_preview'):
+                item=getattr(self,name,None)
+                if item is not None:item.setText('正在读取当前用户资料…')
             self.current_plan.clear()
             self.family_sections.setCurrentIndex(0)
             if self.daily_dialog:self.daily_dialog.close()
@@ -780,7 +783,7 @@ class ProductCompletion:
         self.interface_buttons['globalAssistant'].setVisible(not hasattr(self,'home_sections') and not focus and not conversation)
         self.product_meta.setVisible(not conversation)
         self.assistant_connection.setText(self.storage_label.text())
-        self.assistant_status_toggle.setText('助手状态' if self.snapshot.get('modelAvailable') else '基础模式')
+        self.assistant_status_toggle.setText('连接与能力')
         self.assistant_status_toggle.setToolTip(self.agent_status.text()+'\n'+self.storage_label.text())
         if self._quiet_assistant_feedback(self.notice.text()):self.notice.hide()
         self.assistant_shortcut.setEnabled(not focus)

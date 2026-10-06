@@ -69,6 +69,16 @@ class ProductExperience:
             elif host.stopped.is_set(): status.setText('手机连接已停止。'); timer.stop()
         timer.timeout.connect(refresh); timer.start(200); refresh()
         actions = QHBoxLayout(); area.addLayout(actions)
+        def open_browser():
+            if not host or not host.server or not host.server.started:
+                status.setText('连接正在启动，请稍候再打开。'); return
+            from PySide6.QtGui import QDesktopServices
+            from PySide6.QtCore import QUrl
+            from PySide6.QtWidgets import QApplication
+            QApplication.clipboard().setText(host.code)
+            QDesktopServices.openUrl(QUrl(f'http://127.0.0.1:{host.port}/'))
+            status.setText('已复制本人连接码。在浏览器粘贴连接后，进入“康复 → 健身”。\n连接码：'+host.code)
+        area.addWidget(button('复制连接码并在电脑浏览器打开',open_browser))
         def stop():
             if host: host.close()
             status.setText('正在停止手机连接，已配对手机将无法继续访问。'); timer.stop()
@@ -353,8 +363,8 @@ class ProductExperience:
         dialog.exec()
 
     def _show_health_history(self, selected='全部'):
-        if self.navigate('health'):
-            self.health_tabs.setCurrentIndex(4); self.history_filter.setCurrentText(selected)
+        from .product_structure import open_records
+        open_records(self,selected=selected)
 
     def _experience_plan_change(self):
         if not hasattr(self, 'current_plan_text'):
@@ -364,7 +374,7 @@ class ProductExperience:
         if hasattr(self, 'plan_next'):
             next_item = next((i for i in (p or {}).get('items', []) if i['key'] == (p or {}).get('progress', {}).get('next_key')), None)
             self.plan_next.setText(next_item['exercise_label'] if next_item else '这一轮已完成' if p else '从一次评估开始')
-            self.plan_hint.setText(('下一项 · ' + ('左侧' if next_item['side']=='left' else '右侧') + ' · ' + self._plan_settings(next_item['settings']) + ('\n' + p['availability_reason'] if p.get('availability_reason') else '')) if next_item else '可制定下一轮计划，已保存的训练记录会保留。' if p else '点击“开始评估”完成一次动作测试，再让康复管家制定计划。已有安排可在管理计划中添加。')
+            self.plan_hint.setText(('下一项 · ' + ('左侧' if next_item['side']=='left' else '右侧') + ' · ' + self._plan_settings(next_item['settings']) + ('\n' + p['availability_reason'] if p.get('availability_reason') else '')) if next_item else '可制定下一轮计划，已保存的训练记录会保留。' if p else '点击“去做评估”完成一次动作测试，再让康复管家制定计划。已有安排可在管理计划中添加。')
             self.interface_buttons['planPractice'].setText('制定下一轮' if p and not p.get('has_next') else '补充评估' if p and not p.get('next_available') else '开始下一项')
         if p:
             self.rehab_tables['训练计划'].selectRow(self.current_plan.currentIndex())
@@ -714,6 +724,7 @@ class ProductExperience:
             text=('今天没有康复安排。下一次：<a href="rehab">'+html.escape(upcoming[0]['date']+' '+upcoming[0]['time']+' '+upcoming[0]['name'])+'</a>') if upcoming else '今天还没有安排。可到康复制定计划，或到用药设置服用时间。'
         color=self.product_theme.colors['text']
         self.home_schedule.setText(text.replace('<a href=', '<a style="color:'+color+';" href='))
+        self.home_schedule.setMinimumHeight(max(72,32+len(lines[:4])*44))
         pending = [t for t in self.snapshot['state']['tasks'] if t['status'] in ('pending', 'in_progress')]
         self.home_attention.setText('需要确认：' + '；'.join(t['title'] for t in pending[:2]) if pending else '')
         self.interface_buttons['homeAllTasks'].setVisible(bool(pending))
@@ -738,6 +749,9 @@ class ProductExperience:
         for key in ('familyReadOnly','familyCategories','familyDisconnect'):self.interface_buttons[key].setVisible(bool(members))
         skipped = [(m['name'], d) for m in members for d in m.get('doses', []) if d['status'] == 'skipped' and d['date'] == date.today().isoformat()]
         self.family_attention.setText('值得关注：' + '；'.join(name + ' 今天有已跳过的用药记录' for name, _ in skipped) if skipped else '暂无已共享的待关注事项；未更新不代表一切正常。')
+        if hasattr(self,'home_week_preview'):
+            from .product_structure import refresh
+            refresh(self)
 
     def _daily_result(self, operation, result):
         if not isinstance(result, dict) or not result.get('dailyReceipt'):

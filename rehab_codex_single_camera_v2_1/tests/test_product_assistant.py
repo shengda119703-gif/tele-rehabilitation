@@ -118,7 +118,7 @@ def test_medication_shortcut_edits_draft_only_and_explicit_send_keeps_privacy(de
 def test_conversation_chrome_keeps_errors_receipts_and_contextual_assistant(desktop):
     w,app=desktop;w.navigate('assistant');wait(app,lambda:not w.pending)
     assert not w.product_meta.isVisible() and not w.interface_buttons['globalAssistant'].isVisible()
-    assert not w.agent_status.isVisible() and w.assistant_status_toggle.text()=='基础模式'
+    assert not w.agent_status.isVisible() and w.assistant_status_toggle.text()=='连接与能力'
     w.assistant_status_toggle.setFocus();QTest.keyClick(w.assistant_status_toggle,Qt.Key_Space)
     assert w.agent_status.isVisible() and '尚未配置' in w.agent_status.text()
     assert w.assistant_connection.text()==w.storage_label.text()

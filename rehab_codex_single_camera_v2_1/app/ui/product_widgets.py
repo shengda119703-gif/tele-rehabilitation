@@ -3,7 +3,7 @@ import html
 from datetime import datetime
 from .product_theme import SPACING
 from .product_segments import SegmentTabs
-from PySide6.QtCore import Qt, QSize, QEvent
+from PySide6.QtCore import Qt, QSize, QEvent, QTimer
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (QLabel, QPushButton, QFrame, QVBoxLayout, QTableWidget,
     QHeaderView, QAbstractItemView, QTableWidgetItem, QWidget, QGridLayout, QSizePolicy,
@@ -176,8 +176,19 @@ class ResponsiveGrid(QWidget):
         if columns==self.current_columns and self.grid.count()==len(self.items):return
         while self.grid.count():self.grid.takeAt(0)
         for column in range(self.columns):self.grid.setColumnStretch(column,1 if column<columns else 0)
-        for index,widget in enumerate(self.items):self.grid.addWidget(widget,index//columns,index%columns)
+        for index,widget in enumerate(self.items):
+            alignment=Qt.AlignTop if widget.sizePolicy().verticalPolicy()==QSizePolicy.Maximum else Qt.AlignmentFlag(0)
+            self.grid.addWidget(widget,index//columns,index%columns,alignment)
         self.current_columns=columns
+
+    def event(self,event):
+        result=super().event(event)
+        if event.type()==QEvent.LayoutRequest and hasattr(self,'grid'):
+            self.grid.invalidate()
+            height=self.grid.minimumSize().height()
+            if self.minimumHeight()!=height:self.setMinimumHeight(height)
+            self.updateGeometry()
+        return result
 
 
 def visual(widget, *, typography=None, appearance=None, status=None):
@@ -255,8 +266,31 @@ def card(title, hero=False):
     return item,box
 
 
+class ContentTable(QTableWidget):
+    """Measure wrapped rows after their actual viewport width is known."""
+    def _schedule_fit(self):
+        if getattr(self,'_fit_queued',False):return
+        self._fit_queued=True
+        QTimer.singleShot(0,self._fit_rows)
+
+    def _fit_rows(self):
+        self._fit_queued=False
+        if not self.isVisible():return
+        self.resizeRowsToContents()
+        count=min(self.rowCount(),4 if self.property('compactSummary') else 8)
+        for row in range(self.rowCount()):self.setRowHeight(row,max(44,self.rowHeight(row)))
+        height=min(380,self.horizontalHeader().height()+sum(self.rowHeight(row) for row in range(count))+6) if count else 70
+        if self.minimumHeight()!=height or self.maximumHeight()!=height:self.setFixedHeight(height)
+
+    def resizeEvent(self,event):
+        super().resizeEvent(event);self._schedule_fit()
+
+    def showEvent(self,event):
+        super().showEvent(event);self._schedule_fit()
+
+
 def table(headers):
-    item = QTableWidget(0,len(headers))
+    item = ContentTable(0,len(headers))
     item.setHorizontalHeaderLabels(headers)
     item.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
     item.horizontalHeader().setDefaultAlignment(Qt.AlignLeft | Qt.AlignVCenter)

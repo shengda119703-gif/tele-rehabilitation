@@ -1,0 +1,40 @@
+{
+  "browser": "154.0.4258.53",
+  "results": [
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "theme": "light",
+      "errors": []
+    },
+    {
+      "name": "small",
+      "width": 320,
+      "height": 740,
+      "theme": "light",
+      "errors": []
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024,
+      "theme": "light",
+      "errors": []
+    },
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 940,
+      "theme": "light",
+      "errors": []
+    },
+    {
+      "name": "dark",
+      "width": 390,
+      "height": 844,
+      "theme": "dark",
+      "errors": []
+    }
+  ]
+}

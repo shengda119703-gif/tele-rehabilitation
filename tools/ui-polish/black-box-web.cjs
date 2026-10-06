@@ -1,0 +1,70 @@
+// Real UI and local TEST service. No response stubs and no application-state reads.
+const {chromium}=require('../../ankang/route1-health-agent/node_modules/playwright');
+const fs=require('node:fs/promises'),path=require('node:path');
+(async()=>{
+ const out=path.resolve(process.argv[2]);await fs.mkdir(out,{recursive:true});
+ const browser=await chromium.launch({channel:'msedge',headless:true});
+ const context=await browser.newContext({viewport:{width:390,height:844}}),page=await context.newPage();
+ const results=[],errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const capture=async n=>page.screenshot({path:path.join(out,n+'.png'),fullPage:true});
+ const nav=async key=>page.locator(`#nav a[href="#${key}"]`).click();
+ const hidden=()=>page.locator('dialog').waitFor({state:'hidden'});
+ const pass=flow=>results.push({flow,status:'PASS'});
+ try {
+  await page.goto('http://127.0.0.1:8876');await page.locator('[name=code]').fill('invalid-test');
+  await page.locator('#pair-form button').click();await page.locator('#message:not([hidden])').waitFor();
+  if(!await page.locator('#pair-form').isVisible())throw Error('Invalid code admitted');
+  await capture('pair-error');await page.locator('[name=code]').fill('test-code');await page.locator('#pair-form button').click();
+  await page.locator('#nav:not([hidden])').waitFor();pass('错误连接码反馈 → 正确连接');
+  await nav('health');await page.locator('#edit-profile').click();
+  await page.locator('#profile-form [name=name]').fill('');await page.locator('#profile-form button').click();
+  if(!await page.locator('#profile-form [name=name]').evaluate(e=>!e.validity.valid))throw Error('Empty name accepted');
+  await page.keyboard.press('Escape');await hidden();
+  await page.locator('#edit-profile').click();await page.locator('#profile-form [name=age]').fill('131');
+  await page.locator('#profile-form button').click();
+  if(!await page.locator('#profile-form [name=age]').evaluate(e=>e.validity.rangeOverflow))throw Error('Age boundary accepted');
+  await page.locator('#profile-form [name=age]').fill('68');await page.locator('#profile-form button').click();await hidden();
+  await page.reload();await page.locator('#edit-profile').waitFor();
+  if(!(await page.locator('#content').innerText()).includes('68'))throw Error('Profile save did not persist');
+  pass('档案空输入/年龄边界 → 修正保存 → 刷新保留；Escape 取消');
+  await page.locator('#upload').click();await page.locator('#upload-form [name=name]').fill('TEST 黑箱资料');
+  await page.locator('#upload-form button[type=submit]').click();await page.getByText('先拍照或选择文件。',{exact:true}).waitFor();
+  await page.locator('#file').setInputFiles({name:'TEST-note.txt',mimeType:'text/plain',buffer:Buffer.from('TEST only. No patient data.')});
+  await page.locator('#upload-form button[type=submit]').click();await hidden();
+  const archive=page.locator('.row').filter({hasText:'TEST 黑箱资料'}).last();await archive.getByRole('button',{name:'查看',exact:true}).click();
+  const download=page.waitForEvent('download');await page.getByRole('link',{name:'下载原件'}).click();await (await download).saveAs(path.join(out,'TEST-downloaded.txt'));
+  if(await fs.readFile(path.join(out,'TEST-downloaded.txt'),'utf8')!=='TEST only. No patient data.')throw Error('Downloaded content mismatch');
+  await capture('archive-detail');await page.keyboard.press('Escape');pass('资料未选文件提示 → 上传 → 查看 → 原件下载内容一致');
+  await nav('medication');await page.locator('#add-med').click();
+  await page.locator('#med-form [name=name]').fill('TEST 黑箱用药');await page.locator('#med-form [name=dose]').fill('按已有医嘱');
+  await page.locator('#med-form button[type=submit]').click();await page.locator('#times-form').waitFor();
+  await page.locator('#times-form [name=times]').fill('25:99');await page.locator('#times-form button[type=submit]').click();
+  await page.waitForFunction(()=>!document.querySelector('#times-form button').disabled && !document.querySelector('#message').hidden);
+  if(!await page.locator('#times-form').isVisible())throw Error('Invalid medication time accepted');await capture('invalid-dose-time');
+  await page.locator('#times-form [name=times]').fill('09:30');await page.locator('#times-form button[type=submit]').click();await hidden();
+  const dose=page.locator('.row').filter({hasText:'TEST 黑箱用药'}).filter({has:page.locator('[data-dose]')}).last();
+  await dose.locator('[data-dose]').click();await page.locator('#skipped').click();await hidden();
+  await dose.getByText('已跳过',{exact:true}).waitFor();
+  await dose.locator('[data-dose]').click();await page.locator('#unrecorded').click();await hidden();await dose.getByText('未记录',{exact:true}).waitFor();
+  await page.locator('summary').filter({hasText:'记录更正历史'}).click();await capture('dose-correction-history');
+  pass('添加药物 → 非法时间错误 → 修正安排 → 跳过 → 更正未记录 → 历史回看');
+  await nav('family');await page.locator('#invite').click();await page.locator('dialog h1').waitFor();
+  if(!(await page.locator('dialog h1').innerText()).trim())throw Error('No invite');await page.keyboard.press('Escape');
+  await page.locator('#bind').click();await page.locator('#bind-form [name=code]').fill('00000000');await page.locator('#bind-form button').click();
+  await page.waitForFunction(()=>!document.querySelector('#bind-form button').disabled&&!document.querySelector('#message').hidden);
+  if(!await page.locator('#bind-form').isVisible())throw Error('Invalid family invite accepted');await capture('family-invalid-invite');await page.keyboard.press('Escape');
+  pass('家庭空状态 → 生成邀请码 → 无效邀请错误 → 取消返回（未绑定真实家人）');
+  await nav('home');await page.locator('a[href="#assistant"]').first().click();await page.locator('#draft').fill('TEST 保留未发送的草稿');
+  await nav('health');await nav('home');await page.locator('a[href="#assistant"]').first().click();
+  if(await page.locator('#draft').inputValue()!=='TEST 保留未发送的草稿')throw Error('Draft lost on navigation');
+  await page.keyboard.press('Tab');await capture('keyboard-draft');pass('跨页面草稿保留与键盘焦点');
+  // Browser-level offline state creates a real fetch failure, not a fake API payload.
+  await context.setOffline(true);await page.locator('#chat-form button[type=submit]').click();
+  await page.getByText('已断开电脑连接。请确认电脑仍开启，并连接同一 Wi-Fi。',{exact:true}).waitFor();
+  if(await page.locator('#draft').inputValue()!=='TEST 保留未发送的草稿')throw Error('Draft lost on network failure');
+  await capture('offline-draft-preserved');await context.setOffline(false);await page.reload();await page.locator('#nav:not([hidden])').waitFor();
+  pass('断网发送明确错误、草稿保留 → 恢复联网重新加载');
+  if(errors.length)throw Error(errors.join('\n'));
+ }catch(e){results.push({flow:'acceptance',status:'FAIL',reason:String(e)});await capture('FAIL');process.exitCode=1;}
+ finally{await fs.writeFile(path.join(out,'results.json'),JSON.stringify({results,errors},null,2));console.log(JSON.stringify({results,errors}));await browser.close();}
+})();

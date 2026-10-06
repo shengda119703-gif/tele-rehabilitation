@@ -18,19 +18,42 @@ const fs=require('node:fs/promises');const path=require('node:path');
    await page.screenshot({path:path.join(out,name+'-navigation-travel.png')});await page.waitForTimeout(350);
    const aligned=await page.evaluate(()=>{const a=document.querySelector('#nav [aria-current]').getBoundingClientRect(),b=document.querySelector('.nav-thumb').getBoundingClientRect();return Math.abs(a.left-b.left)<2&&Math.abs(a.top-b.top)<2&&Math.abs(a.width-b.width)<2;});
    if(!aligned)throw Error('Navigation marker does not settle onto selected link');
-   for(const key of ['home','rehab','health','medication','family','assistant']){
+   for(const key of ['home','rehab','health','medication','family','assistant','records']){
     await page.evaluate(k=>{location.hash=k},key);await page.waitForTimeout(330);
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);
     if(overflow)throw Error(name+'/'+key+' horizontal overflow');
     await page.screenshot({path:path.join(out,name+'-'+key+'.png'),fullPage:true});
+    if(['home','records','assistant'].includes(key)) {
+     await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));await page.waitForTimeout(150);
+     await page.screenshot({path:path.join(out,name+'-'+key+'-scrolled.png')});
+    }
+   }
+   // Follow the new public entries, including browser Back and persisted data.
+   await page.locator('#nav a[href="#home"]').click();
+   await page.locator('a[href="#records"]').click();await page.locator('.weekly-report').waitFor();
+   await page.locator('summary').filter({hasText:/^健康记录$/}).click();
+   if(!await page.locator('#content').innerText().then(t=>t.includes('62')||t.includes('63')))throw Error('Saved metric missing from records');
+   await page.getByRole('link',{name:'返回首页',exact:true}).click();
+   await page.locator('#nav a[href="#rehab"]').click();
+   for(const [mode,tab] of [['assessment','assess'],['fitness','fitness']]) {
+    await page.locator(`[data-rehab-mode="${mode}"]`).click();
+    await page.screenshot({path:path.join(out,name+'-rehab-'+mode+'.png'),fullPage:true});
+    await page.locator(`a[href="/capture?tab=${tab}"]`).click();await page.waitForURL('**/capture?tab='+tab);
+    await page.goBack();await page.locator('[data-rehab-mode="training"]').waitFor();
    }
    await page.evaluate(()=>{location.hash='health'});await page.waitForTimeout(200);await page.locator('#edit-profile').click();
    await page.waitForTimeout(330);
    await page.screenshot({path:path.join(out,name+'-profile-dialog.png'),fullPage:true});await page.keyboard.press('Escape');
+   if(await page.locator('dialog').isVisible())throw Error('Escape did not close profile dialog');
    await page.evaluate(()=>{location.hash='assistant'});await page.waitForTimeout(200);
    await page.locator('#draft').fill('TEST 今天感觉还好');
    if(await page.locator('.composer').getAttribute('data-charged')!=='true')throw Error('Composer charge feedback missing');
    await page.screenshot({path:path.join(out,name+'-composer-charged.png'),fullPage:true});
+   await page.locator('#draft').fill('我今天体重63公斤');await page.locator('#chat-form button[type="submit"]').click();
+   await page.waitForFunction(()=>document.querySelector('.conversation')?.textContent.includes('63')&&!document.querySelector('#chat-form button[type="submit"]').disabled);
+   await page.locator('#nav a[href="#health"]').click();
+   await page.waitForFunction(()=>document.querySelector('.timeline')?.textContent.includes('63'));
+   await page.screenshot({path:path.join(out,name+'-chat-record-saved.png'),fullPage:true});
    await page.emulateMedia({reducedMotion:'reduce'});await page.evaluate(()=>{location.hash='family'});await page.waitForTimeout(50);
    if(await page.evaluate(()=>document.querySelector('.nav-thumb').getAnimations().length))throw Error('Reduced motion still travels');
    await page.emulateMedia({reducedMotion:'no-preference'});

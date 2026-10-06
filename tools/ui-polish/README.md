@@ -1,5 +1,21 @@
 # UI 环境工具
 
+## 真实产品黑箱与截图
+
+在根目录使用已验证的 Python 环境。以下测试仅创建临时 TEST 档案，测试文件与报告写入忽略目录。不要替换为个人 data 目录。
+
+```powershell
+.venv-ui-polish/Scripts/python.exe tools/ui-polish/black-box-desktop.py --out qa-output/acceptance/native --width 1440
+.venv-ui-polish/Scripts/python.exe tools/ui-polish/black-box-desktop.py --out qa-output/acceptance/native-dark --width 1024 --theme dark
+# 独立终端启动 TEST 服务，完成后用 Ctrl+C 停止
+.venv-ui-polish/Scripts/python.exe tools/ui-polish/serve-review.py
+# 服务运行期间执行
+node tools/ui-polish/review-product.cjs qa-output/acceptance/web
+node tools/ui-polish/black-box-web.cjs qa-output/acceptance/web-flows
+```
+
+`review-product` 覆盖五种视口/主题、七个页面、三康复入口、原 capture 工具、减少动态效果和实际保存。`black-box-web` 另测输入边界、上传/下载、用药更正、无效邀请、草稿和断网。桌面测试通过可见控件事件操作；联网模型状态单独报告，缺失配置不算 PASS。截图仍须实际打开审查，脚本退出码不能代表视觉验收。
+
 在仓库根目录运行。正式产品是 Qt；下列工具都不修改正式 UI。
 
 ## 一次环境准备
