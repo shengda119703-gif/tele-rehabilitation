@@ -18,7 +18,7 @@ class SelectionRail(QObject):
         self.mark.setAttribute(Qt.WA_TransparentForMouseEvents)
         self.mark.hide()
         self.animation = QPropertyAnimation(self.mark, b'geometry', self)
-        self.animation.setDuration(160)
+        self.animation.setDuration(300)
         self.animation.setEasingCurve(QEasingCurve.OutCubic)
 
     def select(self, target):
@@ -34,12 +34,16 @@ class SelectionRail(QObject):
         if self.target is None: return
         target = self.target
         point = target.mapTo(self.mark.parentWidget(), target.rect().topLeft())
-        destination = QRect(8, point.y() + 10, 3, max(12, target.height() - 20))
+        destination = QRect(point.x(), point.y(), target.width(), target.height())
         start = self.mark.geometry()
         visible = self.mark.isVisible()
         self.animation.stop()
-        self.mark.show(); self.mark.raise_()
+        self.mark.show(); self.mark.stackUnder(target)
         if animate and visible and not reduced_motion():
+            # Rubber Segment stretch/catch/settle adapted to native navigation.
+            # The original buttons retain focus, clicks and enabled semantics.
+            self.animation.setKeyValueAt(.38,start.united(destination))
+            self.animation.setKeyValueAt(.78,destination.adjusted(0,-2,0,2))
             self.animation.setStartValue(start); self.animation.setEndValue(destination); self.animation.start()
         else:
             self.mark.setGeometry(destination)

@@ -10,8 +10,8 @@ from PySide6.QtCore import Qt
 # Product aliases are the only visual values consumed by migrated pages.
 SPACING = dict(xs=4, sm=8, md=12, lg=16, xl=24, xxl=32)
 RADIUS = dict(control=6, card=0, hero=0)
-TYPE = dict(display=(26,600), section=(20,600), card=(16,600),
-            body=(14,400), secondary=(14,400), caption=(12,400))
+TYPE = dict(display=(30,600), section=(20,600), card=(17,600),
+            body=(15,400), secondary=(15,400), caption=(12,400))
 METRICS = dict(overview=300, overview_collapsed=60, chat_minimum=110,
                input_minimum=52, input_maximum=72, reference_width=280, module_minimum=126)
 
@@ -34,6 +34,14 @@ def design_tokens(mode='light', palette=None):
         success_bg='#25382c' if dark else '#eef5ef', success='#a1dab5' if dark else '#286342',
         warning_bg='#493b24' if dark else '#fff5e3', warning='#f0d197' if dark else '#765525',
         danger_bg='#482d2d' if dark else '#fff0ed', danger='#f4b8ad' if dark else '#a13f35')
+    # Shared care palette; the existing status aliases retain their meanings.
+    c.update(window='#18201b' if dark else '#f7f8f5', surface='#202a23' if dark else '#ffffff',
+        text='#edf3ed' if dark else '#25322b',secondary='#b5c2b7' if dark else '#5c6b60',
+        brand='#b8d7bc' if dark else '#345b44',on_brand='#18291d' if dark else '#ffffff',
+        brand_hover='#cee4ce' if dark else '#264a35',brand_pressed='#a2c4a6' if dark else '#1f3d2c',
+        soft='#2b392f' if dark else '#e9efe7',border='#526456' if dark else '#cbd6cb',
+        surface_background_hover='#303e33' if dark else '#edf2eb',
+        surface_background_pressed='#35483a' if dark else '#dce7d9')
     if mode=='high-contrast':
         p=palette or QPalette()
         c.update(window=p.color(QPalette.Window).name(), surface=p.color(QPalette.Base).name(),
@@ -59,6 +67,10 @@ def core_style(c):
 {s} QLabel#productTitle {{ font-size:{TYPE['display'][0]}px; color:{c['text']}; }}
 {s} QLabel#productMuted {{ color:{c['secondary']}; }}
 {s} QFrame#careConversation {{ background:{c['soft']}; border:0; border-radius:12px; }}
+{s} QFrame#careNext {{ background:{c['soft']}; border:0; border-left:4px solid {c['brand']}; border-radius:12px; }}
+{s} QWidget#carePlanTools {{ background:{c['surface']}; border:1px solid {c['border']}; border-radius:8px; }}
+{s} QLabel[careSchedule="true"] {{ padding:16px 0; font-size:16px; }}
+{s} QLabel[careInstruction="true"] {{ font-size:16px; }}
 {s} QLabel[careSummary="true"] {{ background:{c['soft']}; border:0; border-radius:8px; padding:18px; }}
 {s} QLabel[careEmpty="true"] {{ background:transparent; color:{c['secondary']}; padding:12px 0; }}
 {s} QPushButton#productPrimary {{ background:{c['brand']}; color:{c['on_brand']}; border:1px solid {c['brand']}; }}
@@ -81,6 +93,7 @@ def core_style(c):
 {s} QPushButton[fluentAppearance="danger"] {{ color:{c['danger']}; background:{c['danger_bg']}; }}
 {s} QPushButton:focus, {s} QPushButton[fluentAppearance]:focus {{ border-color:{c['text']}; }}
 {s} QPushButton:disabled, {s} QPushButton[fluentAppearance]:disabled {{ background:{c['disabled_bg']}; color:{c['disabled_text']}; border-color:{c['border']}; }}
+{s} QPushButton[careSend="true"][careCharged="false"]:enabled {{ background:{c['soft']}; color:{c['secondary']}; border-color:{c['border']}; }}
 {s} QLineEdit, {s} QPlainTextEdit, {s} QTextBrowser, {s} QComboBox {{ background:{c['surface']}; color:{c['text']}; border:1px solid {c['border']}; border-radius:{RADIUS['control']}px; padding:8px; selection-background-color:{c['brand']}; selection-color:{c['on_brand']}; }}
 {s} QLineEdit:focus, {s} QPlainTextEdit:focus, {s} QTextBrowser:focus, {s} QComboBox:focus {{ border-color:{c['brand']}; }}
 {s} QLineEdit:disabled, {s} QPlainTextEdit:disabled, {s} QComboBox:disabled {{ background:{c['disabled_bg']}; color:{c['disabled_text']}; }}
@@ -121,6 +134,16 @@ class ProductTheme:
     def apply(self,mode='light',palette=None):
         self.mode=mode;self.colors=design_tokens(mode,palette)
         self.window.setStyleSheet(shell_style(self.colors)+core_style(self.colors))
+        from .theme import STYLE
+        self.window.legacy.setStyleSheet(rehab_product_style(STYLE,self.colors))
+        from .body_map import BodyMap
+        for body in self.window.legacy.findChildren(BodyMap):
+            # Existing illustrated control has an intentional local stylesheet.
+            # Reuse its state/geometry rules and only supply semantic colors.
+            if not hasattr(body,'_care_source_style'):body._care_source_style=body.styleSheet()
+            body._care_colors=self.colors
+            body.setStyleSheet(rehab_product_style(body._care_source_style,self.colors))
+            body.update()
         p=QPalette(palette or self.window.palette())
         for role,key in ((QPalette.Window,'window'),(QPalette.Base,'surface'),(QPalette.AlternateBase,'surface'),(QPalette.Text,'text'),
                          (QPalette.WindowText,'text'),(QPalette.ButtonText,'text'),(QPalette.Button,'surface'),
@@ -174,21 +197,36 @@ class ProductTheme:
             if hasattr(self.window,'product_theme'):self.window._experience_render()
 
 
-def rehab_product_style(style):
+def rehab_product_style(style,colors=None):
     """Recolor the retained rehabilitation widgets without changing geometry or behavior."""
+    c=colors or design_tokens()
     def recolor(match):
         code = match.group(0)
         if code.lower() in ('#7048df','#7048cf'):
-            return '#252525'
+            return c['brand']
         if code.lower() == '#5c37c6':
-            return '#3d3d3d'
+            return c['brand_hover']
         r,g,b = (int(code[i:i+2],16)/255 for i in (1,3,5))
         hue,light,saturation = colorsys.rgb_to_hls(r,g,b)
         if .64 <= hue <= .87:
-            r,g,b = colorsys.hls_to_rgb(0,light,0)
-            return '#'+''.join(f'{round(v*255):02x}' for v in (r,g,b))
-        return code
-    return re.sub(r'#[0-9a-fA-F]{6}',recolor,style)
+            if light>.92:return c['window']
+            if light>.85:return c['soft']
+            if light>.7:return c['border']
+            if saturation>.4:return c['brand']
+            return c['text'] if light<.3 else c['secondary']
+        # Existing semantic status hues stay status hues in both themes.
+        if saturation>.15:
+            status='success' if .2<hue<.5 else 'info' if .5<=hue<.64 else 'warning' if .05<hue<.2 else 'danger'
+            return c[status+'_bg'] if light>.7 else c[status]
+        if light>.96:return c['surface']
+        if light>.85:return c['soft']
+        if light>.65:return c['border']
+        return c['text'] if light<.3 else c['secondary']
+    adapted=re.sub(r'#[0-9a-fA-F]{6}',recolor,style)
+    adapted=re.sub(r'background\s*:\s*white\b', 'background:'+c['surface'], adapted)
+    adapted=re.sub(r'(?<![-\w])color\s*:\s*white\b', 'color:'+c['on_brand'], adapted)
+    adapted+=f"\nQPushButton#primary:disabled {{ color:{c['disabled_text']}; background:{c['disabled_bg']}; border-color:{c['border']}; }}"
+    return adapted
 
 def themed_icon(name,color):
     source=Path(__file__).resolve().parents[2]/'assets/ui/ankang'/f'{name}.svg'
@@ -220,13 +258,13 @@ def shell_style(c):
     return f'''
 QWidget {{ font-size:14px; font-family:'Microsoft YaHei UI'; }}
 QMainWindow#productWindow, QWidget#productRoot {{ background:{c['window']}; color:{c['text']}; font-family:'Microsoft YaHei UI'; font-size:14px; }}
-QFrame#productSidebar {{ background:{c['surface']}; border-right:1px solid {c['border']}; }}
+QFrame#productSidebar {{ background:{c['window']}; border-right:1px solid {c['border']}; }}
 QLabel#productBrand {{ font-size:25px; font-weight:700; color:{c['text']}; }}
 QLabel#productBrandSub, QLabel#productMuted {{ color:{c['secondary']}; }}
 QLabel#productBrandSub {{ font-size:12px; }}
 QPushButton#productNav {{ text-align:left; padding:10px 14px; border:1px solid transparent; border-radius:7px; background:transparent; color:{c['secondary']}; font-size:15px; }}
 QPushButton#productNav:hover {{ background:{c['soft']}; color:{c['text']}; }}
-QPushButton#productNav:checked {{ background:{c['soft']}; color:{c['text']}; font-weight:700; border-left-color:transparent; }}
+QPushButton#productNav:checked {{ background:transparent; color:{c['brand']}; font-weight:700; border-left-color:transparent; }}
 QPushButton#productNav:focus {{ border-color:{c['brand']}; }}
 QPushButton#productNav:pressed {{ background:{c['surface_background_pressed']}; }}
 QFrame#productCard {{ background:transparent; border:0; border-top:1px solid {c['border']}; border-radius:0px; }}
@@ -282,7 +320,7 @@ QScrollBar:vertical {{ width:10px; background:transparent; }}
 QScrollBar:horizontal {{ height:10px; background:transparent; }}
 QScrollBar::handle {{ background:{c['border']}; border-radius:4px; min-height:32px; min-width:32px; }}
 QScrollBar::add-line, QScrollBar::sub-line {{ width:0; height:0; }}
-QFrame#productSelectionRail {{ background:{c['brand']}; border:0; }}
+QFrame#productSelectionRail {{ background:{c['soft']}; border:0; border-left:3px solid {c['brand']}; border-radius:7px; }}
 QTextBrowser[readingSurface="true"] {{ border:0; padding:12px 0; background:transparent; }}
 QPushButton[fluentAppearance="module"] {{ border:0; border-bottom:1px solid {c['border']}; border-radius:0; text-align:left; padding:14px 0; }}
 QFrame#assistantComposer {{ background:{c['soft']}; border:1px solid {c['border']}; border-radius:18px; }}

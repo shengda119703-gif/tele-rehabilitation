@@ -76,15 +76,16 @@ class BodyMap(QWidget):
             self.labels[joint].setGeometry(lx, ly, 78, 40)
 
     def paintEvent(self, event):
+        colors=getattr(self,'_care_colors',{})
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
         if not self.pixmap.isNull():
             painter.drawPixmap(self.image_rect(), self.pixmap, QRectF(self.pixmap.rect()))
         else:
-            painter.setPen(QColor('#756a86'))
+            painter.setPen(QColor(colors.get('secondary','#756a86')))
             painter.drawText(self.rect(), Qt.AlignmentFlag.AlignCenter, '请选择部位名称')
-        painter.setPen(QPen(QColor('#b7a6d8'), 1.2))
+        painter.setPen(QPen(QColor(colors.get('border','#b7a6d8')), 1.2))
         for joint, (_, _, lane, _) in ANCHORS.items():
             label = self.labels[joint].geometry()
             marker = self.markers[joint].geometry()

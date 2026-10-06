@@ -6,7 +6,7 @@ from PySide6.QtGui import QColor,QPalette
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QPushButton
 from test_product_window import desktop,wait
-from app.ui.product_theme import design_tokens
+from app.ui.product_theme import design_tokens, TYPE
 from app.ui.product_assistant import ASSISTANT_NAV_ACTIONS
 from app.ui.product_completion import MODULE_NAV_ACTIONS, RECOVERY_NAV_ACTIONS
 
@@ -45,8 +45,8 @@ def test_minimum_window_composer_keyboard_focus_and_disabled_controls(desktop):
     w.resize(1024,720);w.navigate('assistant');wait(app,lambda:not w.pending)
     w.interface_buttons['assistantModuleConversation'].click()
     app.processEvents()
-    assert w.next_training.font().pixelSize()==20
-    assert w.greeting.font().pixelSize()==26
+    assert w.next_training.font().pixelSize()==TYPE['section'][0]
+    assert w.greeting.font().pixelSize()==TYPE['display'][0]
     viewport=w.page_widgets['assistant'].viewport()
     assert viewport.rect().contains(w.chat_send.mapTo(viewport,w.chat_send.rect().bottomRight()))
     assert w.page_widgets['assistant'].horizontalScrollBar().maximum()==0

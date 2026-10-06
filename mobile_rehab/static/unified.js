@@ -118,6 +118,7 @@ function bind(id, fn) {
 async function act(fn, success = "已保存") {
   if (ui.busy) return;
   ui.busy = true;
+  document.body.dataset.busy = 'true';
   say("正在处理，请稍候…");
   clearTimeout(messageTimer);
   document
@@ -133,6 +134,7 @@ async function act(fn, success = "已保存") {
     return false;
   } finally {
     ui.busy = false;
+    document.body.dataset.busy = 'false';
     document
       .querySelectorAll("button[type=submit],dialog button.primary")
       .forEach((b) => (b.disabled = false));
@@ -157,12 +159,17 @@ async function load() {
   }
 }
 function nav() {
-  $("#nav").innerHTML = Object.entries(names)
+  if (!$("#nav").querySelector('a')) $("#nav").innerHTML = Object.entries(names)
     .map(
       ([key, title]) =>
         `<a href="#${key}" ${ui.page === key || (ui.page === "assistant" && key === "home") ? 'aria-current="page"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${icons[key]}"/></svg>${title}</a>`,
     )
     .join("");
+  $("#nav").querySelectorAll('a').forEach(a => {
+    if(a.hash === '#' + (ui.page === 'assistant' ? 'home' : ui.page)) a.setAttribute('aria-current','page');
+    else a.removeAttribute('aria-current');
+  });
+  window.ProductMotion?.selectNavigation();
 }
 function route() {
   if (voiceStarting || recorder?.state === "recording") {
@@ -195,6 +202,7 @@ function pair() {
 function render() {
   nav();
   ({ home, rehab, health, medication, family, assistant })[ui.page]();
+  window.ProductMotion?.decorate(ui.page);
 }
 function schedules(day = ui.day) {
   return (data().schedules || [])
@@ -802,6 +810,7 @@ function assistant() {
     const file = e.target.files[0];
     if (file) transcribe(file);
   };
+  window.ProductMotion?.decorate(ui.page);
 }
 async function transcribe(file) {
   if (file.size > 8 * 1024 * 1024) {

@@ -15,7 +15,7 @@ python -m venv .venv-ui-polish
 node ankang/route1-health-agent/scripts/build-agent-bridge.cjs
 ```
 
-这是 Python 3.12 QA 环境，不含 YOLO/torch/ASR 权重，不代替 `Setup-Rehab.ps1` 的完整 Python 3.13 正式环境。不能据此宣称摄像头/真人训练通过。使用既有工具启动正式 ProductWindow/Runtime/ProductService，全部数据在临时目录。
+以上最小安装是 Python 3.12 QA 环境，不含 YOLO/torch/ASR 权重，不代替 `Setup-Rehab.ps1` 的完整 Python 3.13 正式环境。不能据此宣称摄像头/真人训练通过。使用既有工具启动正式 ProductWindow/Runtime/ProductService，全部数据在临时目录。
 
 ## 可复用命令
 
@@ -42,3 +42,14 @@ node tools/ui-polish/inspect-web.cjs https://reactbits.dev/c/micro/warm-tooltip 
 Skills 位于 `.agents/skills`，无需用户级安装。`sources.lock.json` 记录 revision、许可和文件 SHA256（文本先归一化 CRLF→LF，与 Git 换行规则一致）。更新时：clone 到忽略的 `qa-output` → 查看 diff/许可/脚本 → 替换选定文件 → 重跑知识检索/registry/browser/Qt → 更新 hash 与报告 → 提交。禁止执行第三方一键安装脚本。Qt skill 本机已装的用户级原件保持不变；项目快照保证可移植。删除环境时仅移除已确认位于仓库内的 `.venv-ui-polish` 和本套 skills/tools/docs，并从 AGENTS.md 删除对应规则；不能删除正式数据或其他人的工作。
 
 本会话新增 Skill 通过文件读取调用；新会话的自动发现依 Codex skill 扫描，AGENTS.md 提供显式读取兜底。不要声称热加载或跨机/browser 已永久生效。
+
+## 双端产品真实界面审查
+
+2026-10-06 的本机 `.venv-ui-polish` 已补齐项目现有视觉、语音和 OCR requirements，使用 Python 3.12.10、PySide6 6.11.2、torch 2.9.1 CPU；模型文件仍沿用已有本地资源。这个扩展环境与上面的最小 QA 安装不同，不代表其他机器已经安装。
+
+```powershell
+./.venv-ui-polish/Scripts/python.exe tools/ui-polish/serve-review.py
+node tools/ui-polish/review-product.cjs qa-output/ui-polish-review
+```
+
+服务只绑定本机，使用临时 TEST 档案和真实 ProductBackend/SharedProduct，不打开个人数据。浏览器脚本通过原界面连接 `test-code`，审查五种尺寸、六个页面和原 `/capture` 四页；检查导航完整可见、动画中间帧与终态、原生 dialog/Escape、草稿状态、减少动态效果、逐次用药写回、横向溢出以及控制台/page errors。结束后关闭自己启动的 QA 服务。截图必须打开审查，不能仅凭 JSON 宣称设计通过。

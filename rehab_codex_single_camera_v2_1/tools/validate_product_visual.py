@@ -114,13 +114,17 @@ def main():
                     w.interface_buttons['healthMetricsEntry'].click();app.processEvents();capture('health-metrics')
                     assert w.metrics.isVisible()
                     w.interface_buttons['healthMetricsBack'].click();app.processEvents()
-                    assert w.twin_text.isVisible() and not w.metrics.isVisible()
+                    assert w.health_archive_profile.isVisible() and not w.metrics.isVisible()
                 if key=='medication':
+                    w.medication_tabs.setCurrentIndex(w.medication_tabs.count()-1)
+                    app.processEvents()
                     assert not w.interface_buttons['medConfirm'].isVisible()
                     w.interface_buttons['medTodayActions'].click();app.processEvents();capture('medication-actions')
                     assert w.interface_buttons['medConfirm'].isVisible()
                     w.interface_buttons['medTodayActionsBack'].click();app.processEvents()
                     assert w.today_medications.isVisible()
+            # Global dock remains a legacy route; formal five-page UI uses the
+            # retained assistant page. Exercise the original dock independently.
             w._open_global_assistant();capture('global-assistant');w.assistant_dock.close()
             if args.phase=='ux-audit':
                 w.navigate('assistant');settle();w.assistant_module_buttons['conversation'].click();app.processEvents()
