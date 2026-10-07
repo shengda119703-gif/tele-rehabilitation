@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cn.tele.rehabilitation.offline" android:versionCode="2" android:versionName="0.2.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cn.tele.rehabilitation.offline" android:versionCode="3" android:versionName="0.2.1">
     <uses-sdk android:minSdkVersion="29" android:targetSdkVersion="35" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />

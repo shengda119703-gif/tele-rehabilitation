@@ -211,12 +211,13 @@ public final class MainActivity extends Activity {
             network.execute(()->{int status;String json;try{CloudTransport.Reply reply=cloud.request(path,method,body);status=reply.status;json=reply.body;}catch(Exception e){status=503;json="{\"detail\":\"云端暂时无法连接，本机记录保留\"}";}
                 final int code=status;final String value=json;runOnUiThread(()->{if(!isDestroyed())web.evaluateJavascript("PhoneCloud.reply("+JSONObject.quote(id)+","+code+","+JSONObject.quote(value)+")",null);});});
         }
-        @JavascriptInterface public void settings(){runOnUiThread(()->new AlertDialog.Builder(MainActivity.this).setTitle("手机与云端").setItems(new String[]{"连接云端","暂停云端连接","导出本机备份","恢复本机备份","备份到云端","恢复云端备份"},(d,which)->{
-            if(which==0)connectionDialog();
+        @JavascriptInterface public void settings(){runOnUiThread(()->new AlertDialog.Builder(MainActivity.this).setTitle("手机与云端").setItems(new String[]{"连接云端","暂停云端连接","导出本机备份","恢复本机备份","备份到云端","恢复云端备份","打开 TEST 林女士档案","返回个人档案"},(d,which)->{
+            if(which==0)web.evaluateJavascript("PhoneLocal.store.key===PhoneStore.LIN_KEY",v->{if("true".equals(v))notice("请先返回个人档案，再连接云端");else connectionDialog();});
             else if(which==1){cloud.disconnect();notice("已暂停云端连接，本机功能可继续使用");}
             else if(which==2)web.evaluateJavascript("PhoneLocal.exportBackup()",null);
             else if(which==3)new AlertDialog.Builder(MainActivity.this).setMessage("恢复会替换当前文字记录和计划。旧数据将保留恢复前副本，录像与资料原件请单独保管。继续选择备份？").setPositiveButton("选择备份",(a,b)->startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("application/json"),IMPORT_BACKUP)).setNegativeButton("取消",null).show();
-            else web.evaluateJavascript(which==4?"PhoneLocal.cloudBackup()":"PhoneLocal.cloudRestore()",null);
+            else if(which<6)web.evaluateJavascript(which==4?"PhoneLocal.cloudBackup()":"PhoneLocal.cloudRestore()",null);
+            else web.evaluateJavascript("PhoneLocal.selectProfile("+(which==6?"PhoneStore.LIN_KEY":"PhoneStore.KEY")+").catch(e=>alert(e.message))",null);
         }).show());}
         @JavascriptInterface public boolean speechAvailable(){return android.os.Build.VERSION.SDK_INT>=31&&SpeechRecognizer.isOnDeviceRecognitionAvailable(MainActivity.this);}
         @JavascriptInterface public void speechStart(){runOnUiThread(()->{if(!speechAvailable()){speechResult("","手机未安装本地语音识别服务，可使用键盘语音输入");return;}if(checkSelfPermission(Manifest.permission.RECORD_AUDIO)!=PackageManager.PERMISSION_GRANTED)requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},SPEECH_PERMISSION);else startSpeech();});}

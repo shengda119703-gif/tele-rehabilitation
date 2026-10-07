@@ -28,6 +28,7 @@ $apkSigning = Join-Path $apkProject '.runtime/signing'
 $apkRun = Join-Path $apkBuild ([guid]::NewGuid().ToString('N'))
 foreach ($apkDirectory in @($apkRun,$apkOutput,$apkSigning)) { New-Item -ItemType Directory -Force $apkDirectory | Out-Null }
 Invoke-ApkTool $Python @((Join-Path $PSScriptRoot 'prepare_assets.py'))
+Invoke-ApkTool $Python @((Join-Path $PSScriptRoot 'prepare_lin_profile.py'))
 Invoke-ApkTool 'node' @((Join-Path $PSScriptRoot 'bundle_product.cjs'))
 $apkClasses = Join-Path $apkRun 'classes'
 $apkDex = Join-Path $apkRun 'dex'
@@ -60,7 +61,7 @@ try {
     if (-not (Test-Path $apkKeystore)) {
         Invoke-ApkTool (Join-Path $JdkRoot 'bin/keytool.exe') @('-genkeypair','-keystore',$apkKeystore,'-alias','offline-demo','-keyalg','RSA','-keysize','3072','-validity','10000','-dname','CN=Tele Rehabilitation Local Demo','-storepass:env','REHAB_APK_SIGNING_PASSWORD','-keypass:env','REHAB_APK_SIGNING_PASSWORD')
     }
-    $apkFinal = Join-Path $apkOutput 'tele-rehabilitation-mobile-0.2.0.apk'
+    $apkFinal = Join-Path $apkOutput 'tele-rehabilitation-mobile-0.2.1.apk'
     Invoke-ApkTool (Join-Path $apkTools 'apksigner.bat') @('sign','--ks',$apkKeystore,'--ks-key-alias','offline-demo','--ks-pass','env:REHAB_APK_SIGNING_PASSWORD','--key-pass','env:REHAB_APK_SIGNING_PASSWORD','--out',$apkFinal,$apkAligned)
     Invoke-ApkTool (Join-Path $apkTools 'apksigner.bat') @('verify','--verbose','--print-certs',$apkFinal)
     Get-FileHash -LiteralPath $apkFinal -Algorithm SHA256

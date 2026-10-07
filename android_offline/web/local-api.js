@@ -1,12 +1,15 @@
 (function(root){
 'use strict';
 const nativeFetch=root.fetch.bind(root),NativeXHR=root.XMLHttpRequest,PS=PhoneStore,PM=PhoneMotion;
-const store=new PS.Store(),owner=store.value.owner,now=()=>new Date(),copy=v=>structuredClone(v);
+const store=new PS.Store(localStorage,PS.selectedKey()),now=()=>new Date(),copy=v=>structuredClone(v);
+let owner=store.value.owner;
 const metrics=[['steps','活动步数','步'],['walkSpeed','步行速度','m/s'],['sleepHours','睡眠时长','小时'],['nightWakes','夜间醒来','次'],['restingHr','静息心率','bpm'],['weight','体重','kg'],['spo2','血氧','%'],['systolic','收缩压','mmHg'],['diastolic','舒张压','mmHg'],['bloodGlucose','血糖','mmol/L']];
 const categories=['体检报告','就诊记录','检验检查','影像资料','病历资料','其他资料'];
 const profile=()=>store.read('profile:'+owner)?.profile;
-const domain=new AnkangDomain.ProductService({read:k=>store.read(k),write:(k,v)=>store.write(k,v),remove:k=>store.remove(k),profiles:()=>store.profiles(),attachments:PS.attachments(owner)});
+const domain=new AnkangDomain.ProductService({read:k=>store.read(k),write:(k,v)=>store.write(k,v),remove:k=>store.remove(k),profiles:()=>store.profiles(),attachments:{list:s=>PS.attachments(owner).list(s),put:(s,a)=>PS.attachments(owner).put(s,a),clear:s=>PS.attachments(owner).clear(s),setTrash:(s,id,at)=>PS.attachments(owner).setTrash(s,id,at)}});
 const ready=store.serial(async()=>{
+ await PhoneLin.initialize(store,nativeFetch);
+ owner=store.value.owner;
  await store.migrate(domain);
  if(!profile())await domain.request('profile.save',owner,{profile:{name:'本机用户',age:0,conditions:[],medications:[],mobility:'unknown',usesCane:false,nightVision:'unknown',cognition:'unknown',familySharing:'denied'}},now());
  // Interrupted jobs are explicitly failed, not silently counted as successful.
@@ -34,7 +37,7 @@ async function snapshot(){const s=await domain.request('snapshot',owner,{},now()
  const scope={participant_id:owner,source_kind:'PHONE_LOCAL',usage_context:'SELF_USE'};
  const jobs=store.value.jobs.filter(j=>j.state==='done');
  const plan=p?{...p,progress,items:p.items.map(i=>({...i,exercise_label:c.rehab.find(s=>s.id===i.exercise_id)?.label||i.exercise_id}))}:null;
- s.dailyProduct=copy(store.value.daily);s.familyMembers=[];
+ s.dailyProduct=copy(store.value.daily);s.familyMembers=PhoneLin.family(store);
  if(PhoneCloud.configured()){
   if(Date.now()-cloudState.at<60000){s.familyMembers=copy(cloudState.familyMembers);s.dailyProduct.grants=copy(cloudState.grants);}
   if(Date.now()-cloudState.at>20000)setTimeout(cloudRefresh,0);
@@ -70,6 +73,7 @@ async function request(path,opts={}){
   if(route.startsWith('/unified/daily.')){
    const operation=route.slice(15);
    if(operation.startsWith('family')){
+    if(PhoneLin.isLin(store))return PhoneLin.familyOperation(store,operation,payload);
     const action=({familyInvite:'invite',familyBind:'bind',familyGrant:'grant',familyUnbind:'unbind'})[operation];if(!action)failure('家庭操作无效');
     const r=await PhoneCloud.request('/v1/family/'+action,'POST',payload);cloudState={...await PhoneCloud.request('/v1/family'),at:Date.now()};await PhoneCloud.publish(root.PhoneLocal);return r;
    }
@@ -168,9 +172,11 @@ async function restore(text){try{
  const value=PS.validateBackup(JSON.parse(text));
  if(PM.active)throw Error('请先结束当前分析');
  // Preserve the previous state before any replacement; quota failure aborts restore.
- store.storage.setItem(PS.KEY+':before-restore',JSON.stringify(store.value));
- value.jobs.forEach(j=>{j.video_available=false;});value.daily.grants={};
- store.commit(value);root.OfflineAndroid&&OfflineAndroid.cloudConfigured()&&OfflineAndroid.cloudDisconnect?.();location.href='/';
+ if((value.fixture?.schema==='test-lin-apk-v1')!==(store.key===PS.LIN_KEY))throw Error('请先切换到对应档案，再恢复备份');
+ store.storage.setItem(store.key+':before-restore',JSON.stringify(store.value));
+ value.jobs.forEach(j=>{j.video_available=false;});
+ if(store.key!==PS.LIN_KEY)value.daily.grants={};
+ store.commit(value);if(store.key!==PS.LIN_KEY&&root.OfflineAndroid?.cloudConfigured())OfflineAndroid.cloudDisconnect?.();location.href='/';
 }catch(e){alert(e.message+'；当前数据未覆盖。');}}
 async function exportBackup(){try{await ready;OfflineAndroid.saveJson(JSON.stringify(await backup()));}catch(e){alert(e.message);}}
 async function cloudBackup(){try{
@@ -182,5 +188,5 @@ async function cloudRestore(){try{const b=await PhoneCloud.request('/v1/backup')
 document.addEventListener('click',async e=>{const a=e.target.closest?.('a[href^="/api/"]');if(!a)return;e.preventDefault();try{const r=await root.fetch(a.href);if(!r.ok)throw Error((await r.json()).detail);const blob=await r.blob();if(root.OfflineAndroid){if(blob.type.includes('json'))OfflineAndroid.saveJson(await blob.text());else{const bytes=new Uint8Array(await blob.arrayBuffer());let text='';for(let i=0;i<bytes.length;i+=8192)text+=String.fromCharCode(...bytes.subarray(i,i+8192));OfflineAndroid.saveDocument(decodeURIComponent(r.headers.get('X-File-Name')||'健康资料'),btoa(text),blob.type);}}else{const u=URL.createObjectURL(blob),link=document.createElement('a');link.href=u;link.download='健康记录';link.click();setTimeout(()=>URL.revokeObjectURL(u),1000);}}catch(err){alert(err.message);}});
 root.offlinePause=()=>{speechPending=false;PM.pause();if(typeof stopLive==='function')stopLive();};
 root.offlineBack=()=>{const d=document.querySelector('dialog[open]');if(d){d.close();return true;}if(PM.active){if(confirm('结束本次分析？原录像保留。'))PM.pause();return true;}if(location.pathname==='/capture'){location.href='/';return true;}if(location.hash&&location.hash!=='#home'){location.hash='#home';return true;}return false;};
-root.PhoneLocal={store,domain,ready,request,snapshot,proposal,body,planProgress,backup,restore,exportBackup,cloudBackup,cloudRestore,cloudRefresh,speechResult,get cloudState(){return cloudState;}};
+root.PhoneLocal={store,domain,ready,request,snapshot,proposal,body,planProgress,backup,restore,exportBackup,cloudBackup,cloudRestore,cloudRefresh,speechResult,selectProfile:key=>PhoneLin.select(store,key),get cloudState(){return cloudState;}};
 })(globalThis);

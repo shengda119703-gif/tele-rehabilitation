@@ -24,7 +24,7 @@ for name in ['app.js','index.html','style.css']:
 # Formal UI is copied unchanged. Only non-visual loaders are inserted in HTML.
 static = ROOT / 'mobile_rehab/static'
 shutil.copytree(static, OUTPUT / 'static', dirs_exist_ok=True)
-adapters = ''.join('<script src="' + path + '"></script>' for path in ['/local/engine.js','/local/product.js','/local/store.js','/local/motion.js','/ocr/tesseract.min.js','/local/ocr.js','/local/cloud.js','/local/local-api.js'])
+adapters = ''.join('<script src="' + path + '"></script>' for path in ['/local/engine.js','/local/product.js','/local/store.js','/local/motion.js','/local/lin-profile.js','/ocr/tesseract.min.js','/local/ocr.js','/local/cloud.js','/local/local-api.js'])
 for source, target in [('unified.html', 'index.html'), ('index.html', 'capture.html')]:
     html = (static / source).read_text(encoding='utf-8').replace('<head>', '<head>' + adapters)
     (OUTPUT / target).write_text(html, encoding='utf-8')

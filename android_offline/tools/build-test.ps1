@@ -13,6 +13,7 @@ New-Item -ItemType Directory -Force "$apkTest/classes","$apkTest/dex","$apkTest/
 Copy-Item -LiteralPath 'E:/game/test video/肩外展.mp4' -Destination "$apkTest/assets/shoulder.mp4"
 Copy-Item -LiteralPath 'E:/game/test video/深蹲.mp4' -Destination "$apkTest/assets/squat.mp4"
 Copy-Item -LiteralPath "$apkProject/tests/android/smoke.js" -Destination "$apkTest/assets/smoke.js"
+Copy-Item -LiteralPath "$apkProject/tests/android/lin-smoke.js" -Destination "$apkTest/assets/lin-smoke.js"
 function TestTool([string]$exe,[string[]]$argv){& $exe @argv;if($LASTEXITCODE -ne 0){throw "Failed: $exe"}}
 TestTool "$JdkRoot/bin/javac.exe" (@('-encoding','UTF-8','--release','8','-classpath',$apkJar,'-d',"$apkTest/classes")+@(Get-ChildItem "$apkProject/tests/android" -Filter '*.java'|ForEach-Object{$_.FullName}))
 $apkClasses=@(Get-ChildItem "$apkTest/classes" -Recurse -Filter '*.class'|ForEach-Object{$_.FullName})

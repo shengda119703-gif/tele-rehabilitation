@@ -2,7 +2,7 @@
 (function(root){
 'use strict';
 const pending=new Map();let sequence=0;
-function configured(){return !!root.OfflineAndroid?.cloudConfigured();}
+function configured(){if(root.PhoneLocal?.store.key===PhoneStore.LIN_KEY)return false;return !!root.OfflineAndroid?.cloudConfigured();}
 function request(path,method='GET',data=null){
  if(!configured())return Promise.reject(Error('尚未连接云端。长按右上角“我的档案”设置；个人功能仍可离线使用。'));
  return new Promise((resolve,reject)=>{const id=String(++sequence),timer=setTimeout(()=>{pending.delete(id);reject(Error('云端暂时无法连接，本机记录保留'));},15000);pending.set(id,{resolve,reject,timer});OfflineAndroid.cloudRequest(id,path,method,data===null?'':JSON.stringify(data));});

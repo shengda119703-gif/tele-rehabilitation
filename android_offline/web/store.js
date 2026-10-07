@@ -1,11 +1,13 @@
 (function(root){
 'use strict';
 const KEY='ankang-phone-product-2',OLD='rehab-offline-state-1';
+const LIN_KEY='ankang-phone-test-lin-1',ACTIVE_KEY='ankang-phone-active-1';
+function selectedKey(storage=localStorage){const selected=storage.getItem(ACTIVE_KEY);if([KEY,LIN_KEY].includes(selected))return selected;return storage.getItem(KEY)||storage.getItem(OLD)?KEY:LIN_KEY;}
 const clone=v=>structuredClone(v),now=()=>new Date().toISOString();
 function blank(){return{version:2,owner:crypto.randomUUID(),kv:{},jobs:[],plans:[],daily:{schedules:[],medSchedules:{},doses:{},doseAudit:[],grants:{}},migration:null};}
 class Store{
- constructor(storage=localStorage){this.storage=storage;const raw=storage.getItem(KEY);this.value=raw?JSON.parse(raw):blank();if(this.value.version!==2||!this.value.owner||!Array.isArray(this.value.jobs)||!this.value.kv)throw Error('本地档案格式不正确，原数据没有覆盖');this.tail=Promise.resolve();}
- commit(value){const text=JSON.stringify(value);if(text.length>12*1024*1024)throw Error('记录空间已满，请先导出备份');this.storage.setItem(KEY,text);this.value=value;}
+ constructor(storage=localStorage,key=KEY){if(![KEY,LIN_KEY].includes(key))throw Error('档案位置无效');this.key=key;this.storage=storage;const raw=storage.getItem(key);this.value=raw?JSON.parse(raw):blank();if(this.value.version!==2||!this.value.owner||!Array.isArray(this.value.jobs)||!this.value.kv)throw Error('本地档案格式不正确，原数据没有覆盖');this.tail=Promise.resolve();}
+ commit(value){const text=JSON.stringify(value);if(text.length>12*1024*1024)throw Error('记录空间已满，请先导出备份');this.storage.setItem(this.key,text);this.value=value;}
  change(fn){const next=clone(this.value),result=fn(next);this.commit(next);return result;}
  read(key){return clone(this.value.kv[key]??null);}
  write(key,value){this.change(v=>v.kv[key]=clone(value));}
@@ -13,6 +15,7 @@ class Store{
  profiles(){return Object.entries(this.value.kv).filter(([k])=>k.startsWith('profile:')).map(([,v])=>clone(v));}
  serial(fn){const result=this.tail.then(fn);this.tail=result.catch(()=>{});return result;}
  async migrate(service){
+  if(this.key!==KEY)return;
   if(this.value.migration||this.profiles().length)return;
   const raw=this.storage.getItem(OLD);if(!raw)return;const legacy=JSON.parse(raw);
   if(legacy.version!==1||!Array.isArray(legacy.records)||!legacy.profile)throw Error('旧版档案无法读取，未删除旧数据');
@@ -47,12 +50,15 @@ function validateBackup(b){
  const v=clone(b.data),uuid=/^[a-f0-9-]{36}$/;
  if(v.version!==2||!uuid.test(v.owner)||!v.kv||Array.isArray(v.kv)||!Array.isArray(v.jobs)||v.jobs.length>250||!Array.isArray(v.plans)||v.plans.length>250||!v.daily||!Array.isArray(v.daily.schedules)||!v.daily.medSchedules||!v.daily.doses||!Array.isArray(v.daily.doseAudit)||!v.kv['profile:'+v.owner]?.profile)bad();
  const p=v.kv['profile:'+v.owner].profile;if(typeof p.name!=='string'||p.name.length>40||!Number.isInteger(p.age)||p.age<0||p.age>130||!Array.isArray(p.conditions)||!Array.isArray(p.medicationRecords||[]))bad();
- for(const key of Object.keys(v.kv))if(!/^(profile|health|tasks|audit|notifications|family|healthkit-revision|sync-consent|sync-summary):/.test(key)||!key.includes(v.owner)||key.includes('__proto__'))bad();
+ const fixture=v.fixture?.schema==='test-lin-apk-v1'&&v.fixture.synthetic===true&&v.fixture.primaryOwner===v.owner&&v.kv['profile:'+v.owner].dataMode==='demo'&&p.name==='TEST 林女士';
+ const members=fixture?v.fixture.members:[];
+ if(!Array.isArray(members)||members.length>1||members.some(id=>!uuid.test(id)||v.kv['profile:'+id]?.dataMode!=='demo'||v.kv['profile:'+id]?.profile?.name!=='TEST 林晓'))bad();
+ for(const key of Object.keys(v.kv))if(!/^(profile|health|tasks|audit|notifications|family|healthkit-revision|sync-consent|sync-summary):/.test(key)||![v.owner,...members].some(id=>key.endsWith(':'+id))||key.includes('__proto__'))bad();
  for(const j of v.jobs){if(!uuid.test(j.id)||!['assessment','training','fitness','posture'].includes(j.mode)||!['done','failed'].includes(j.state)||!['left','right'].includes(j.side)||!Number.isFinite(Date.parse(j.created_at)))bad();if(j.state==='done'&&(j.measurement_version!=='android-local-projection-1'||j.result?.local_report?.contract!=='android-local-projection-1'||!j.result.summary))bad();}
  const ids=new Set(v.jobs.map(j=>j.id));if(ids.size!==v.jobs.length)bad();
  for(const plan of v.plans){if(!uuid.test(plan.id)||!Number.isInteger(plan.revision)||!Array.isArray(plan.items)||plan.items.length>53)bad();for(const i of plan.items)if(!uuid.test(i.key)||!['left','right'].includes(i.side)||!Number.isInteger(i.settings?.target_reps)||i.settings.target_reps<1||i.settings.target_reps>5||!ids.has(i.assessment_id))bad();}
  // Permissions are server-authoritative and never revived from a stale backup.
- v.daily.grants={};return v;
+ if(!fixture)v.daily.grants={};return v;
 }
 function applyDaily(store,operation,p,profile){return store.change(v=>{
  const d=v.daily,med=(profile.medicationRecords||[]).find(m=>m.id===p.medId);
@@ -73,6 +79,6 @@ function applyDaily(store,operation,p,profile){return store.change(v=>{
  }else throw Error('此操作需要连接演示云端');
  return{dailyReceipt:true};
 });}
-root.PhoneStore={Store,files,attachments,applyDaily,day,validDate,validateBackup,KEY};
+root.PhoneStore={Store,files,attachments,applyDaily,day,validDate,validateBackup,KEY,LIN_KEY,ACTIVE_KEY,selectedKey};
 if(typeof module!=='undefined')module.exports=root.PhoneStore;
 })(globalThis);
