@@ -274,7 +274,7 @@ function records() {
 }
 
 function eventText(e) {
- const labels={weight:'体重',sbp:'收缩压',dbp:'舒张压',heartRate:'心率',spo2:'血氧',temperature:'体温',glucose:'血糖',steps:'步数'};
+ const labels={weight:'体重',sbp:'收缩压',systolic:'收缩压',dbp:'舒张压',diastolic:'舒张压',heartRate:'心率',restingHr:'静息心率',spo2:'血氧',temperature:'体温',glucose:'血糖',bloodGlucose:'血糖',steps:'步数',walkSpeed:'步行速度',sleepHours:'睡眠时长',nightWakes:'夜间醒来'};
  const m=e.measurement,l=e.labResult;
  return e.observation?.text || (m ? `${labels[m.metric]||m.metric} ${m.value} ${m.unit||''}` : l ? `${l.name} ${l.value} ${l.unit||''}` : '健康记录');
 }

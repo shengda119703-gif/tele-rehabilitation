@@ -28,6 +28,14 @@ function page(){
   const run=code=>vm.runInContext(code,c);run('ui.snapshot=fixture');
   return {run,c,get:query,get html(){return html;}};
 }
+
+test('all current health metric keys have Chinese display labels without changing values',()=>{
+  const p=page();
+  for(const [key,label] of Object.entries({weight:'体重',steps:'步数',walkSpeed:'步行速度',sleepHours:'睡眠时长',nightWakes:'夜间醒来',restingHr:'静息心率',spo2:'血氧',systolic:'收缩压',diastolic:'舒张压',bloodGlucose:'血糖'})){
+    p.c.event={measurement:{metric:key,value:12.3,unit:'unit'}};
+    assert.equal(p.run('eventText(event)'),`${label} 12.3 unit`);
+  }
+});
 test('home has one concise entry, keeps original routes and folds the unchanged weekly data',()=>{
   const p=page();p.run('home()');assert.match(p.html,/href="#assistant"/);assert.match(p.html,/href="#records"/);
   assert.match(p.html,/<details class="weekly-preview"><summary>本周摘要/);assert.match(p.html,/TEST 原始记录/);
