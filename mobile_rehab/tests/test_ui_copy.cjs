@@ -8,8 +8,9 @@ function context(){
   const elements=new Map();
   const app={innerHTML:''};
   const sandbox={app,esc:s=>String(s??''),number:v=>Number.isFinite(v)?String(v):'未测得',
+    document:{querySelectorAll:()=>[]},
     sideLabel:()=> '左侧',dateLabel:()=> '测试日期',
-    $:s=>{if(!elements.has(s))elements.set(s,{});return elements.get(s);}};
+    $:s=>{if(!elements.has(s))elements.set(s,{insertAdjacentHTML:(_,html)=>app.innerHTML+=html});return elements.get(s);}};
   vm.createContext(sandbox);
   for(const file of ['barbell.js','fitness.js'])vm.runInContext(readFileSync(path.join(staticDir,file),'utf8'),sandbox);
   return sandbox;
@@ -29,6 +30,33 @@ test('empty bar report does not invent a peak and assumptions stay in details',(
   assert.match(html,/暂无数据/);
   assert.match(html,/未识别到完整上升/);
   assert.match(html,/<details><summary>更多数据与测量说明<\/summary>[\s\S]*测试测量条件[\s\S]*<\/details>/);
+});
+test('marked TEST history uses compact fields without changing stored provenance',()=>{
+  const r={...bar(true),fixture:'test-lin-profile-v1',participant_name:'TEST 林女士',
+    calibration:{length_m:.5,mass_kg:20},summary:{bounded_segments:8,tracked_ratio:1,peak_power_w:140}};
+  const before=JSON.stringify(r);
+  const html=context().barReport(r,{testHistory:true});
+  assert.match(html,/负重 20.0 kg/);
+  assert.match(html,/峰值外力 · N/);
+  assert.match(html,/峰值功率 · W/);
+  assert.doesNotMatch(html,/模拟|估算|示例|不计入训练记录/);
+  assert.equal(JSON.stringify(r),before);
+});
+test('compact TEST labels require both history context and marked TEST provenance',()=>{
+  const c=context(),r={...bar(true),fixture:'test-lin-profile-v1',participant_name:'TEST 林女士'};
+  assert.match(c.barReport(r),/示例数据/);
+  for(const altered of [{...r,synthetic:false},{...r,fixture:'other'},{...r,participant_name:'林女士'}]){
+    assert.match(c.barReport(altered,{testHistory:true}),/峰值功率（估算）/);
+  }
+});
+test('saved TEST report displays the named account and passes compact history context',()=>{
+  const c=context(),fixture='test-lin-profile-v1';
+  c.renderFitnessReport({synthetic:true,fixture,side:'left',video_available:false,result:{
+    synthetic:true,fixture,participant_name:'TEST 林女士',barbell:{...bar(true),fixture,participant_name:'TEST 林女士'},
+    summary:{completed:0,partial:0,valid_ratio:0,mean_cycle_s:null,metrics:{},primary_metric_label:'膝角度'},
+    spec:{label:'深蹲',note:'测试测量范围',start_angle:155,turn_angle:105},series:[],repetitions:[],limitations:[]}});
+  assert.match(c.$('.page-head .tag').textContent,/TEST 林女士/);
+  assert.doesNotMatch(c.app.innerHTML,/模拟|估算|示例/);
 });
 test('fitness report keeps results prominent and puts measurement explanation in closed details',()=>{
   const c=context();

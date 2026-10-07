@@ -18,6 +18,8 @@ FAMILY = 'visual-test-daughter'
 SCHEMA = 'test-lin-profile-v1'
 MARKER = 'fixture-manifest.json'
 PROVENANCE = dict(synthetic=True, fixture=SCHEMA)
+LOAD_SCHEMA = 'test-lin-load-v1'
+FITNESS_IDS = ('fitness_squat', 'fitness_row')
 
 
 def _checked_path(data: Path, workspace: Path) -> Path:
@@ -258,6 +260,96 @@ def _rehab(backend, data, now):
         store.close()
 
 
+def _fitness_load_report(result, mass=20.):
+    """Assumed TEST trajectories aligned to existing reps; not footage tracking."""
+    from mobile_rehab.barbell import analyze_track
+    eid = result['exercise']
+    if eid not in FITNESS_IDS or result.get('fixture') != SCHEMA or result.get('synthetic') is not True:
+        raise ValueError('器械补充只接受本 TEST 档案的两项健身记录。')
+    repetitions = result['repetitions']
+    if not repetitions or len(repetitions) != result['summary']['completed']:
+        raise ValueError('动作记录不完整，未补充器械数据。')
+    phases = []
+    previous = 0.
+    for rep in repetitions:
+        start, turn, end = (float(rep[key]['t']) for key in ('start', 'turn', 'end'))
+        if not all(math.isfinite(t) for t in (start, turn, end)) or not previous < start < turn < end:
+            raise ValueError('动作时间不连续，未补充器械数据。')
+        phases.append((start, turn, end))
+        previous = end
+    # 60 Hz fixture sampling with a 0.5 m reference spanning 500 pixels.
+    # Squat lowers before rising; row rises before lowering. Each has rest bounds.
+    travel = -.35 if eid == 'fitness_squat' else .20
+    samples = []
+    for n in range(math.ceil((phases[-1][2]+.5)*60)+1):
+        t, height = n/60, 0.
+        for start, turn, end in phases:
+            if start <= t <= turn:
+                height = travel*.5*(1-math.cos(math.pi*(t-start)/(turn-start)))
+                break
+            if turn < t <= end:
+                height = travel*.5*(1+math.cos(math.pi*(t-turn)/(end-turn)))
+                break
+        samples.append(dict(t=t, x=500., y=600.-height*1000.))
+    calibration = dict(size=[1000,1000], reference_a=[.1,.2], reference_b=[.1,.7],
+                       target=[.5,.6], length_m=.5, mass_kg=mass, confirmed=True)
+    report = analyze_track(samples, calibration, synthetic=True)
+    if report['summary']['bounded_segments'] != len(repetitions):
+        raise ValueError('器械上升次数与已有动作不一致，未写入。')
+    report.update(PROVENANCE, fixture_load=LOAD_SCHEMA, participant_name=NAME,
+                  trajectory=dict(source='fixture_cosine', travel_m=abs(travel), sample_hz=60))
+    return report
+
+
+def refresh_fitness_load(backend, data: Path, *, workspace: Path = ROOT):
+    """Guarded, backed-up upgrade of exactly two TEST results; never adds jobs."""
+    from mobile_rehab.jsonio import write_json
+    data = _checked_path(data, workspace)
+    manifest = _read_manifest(data)
+    if not manifest.get('complete') or backend.data_dir.resolve() != (data/'desktop').resolve():
+        raise ValueError('只接受已完成的独立 TEST 档案及匹配的读取器。')
+    identity(backend)
+    uid = hashlib.sha256(OWNER.encode()).hexdigest()[:32]
+    updates, reports = [], []
+    # Validate both targets and backups before any write, including resolved paths.
+    for eid in FITNESS_IDS:
+        sid = hashlib.sha256((SCHEMA+eid).encode()).hexdigest()[:32]
+        folder = data/'phone'/'jobs'/uid/sid
+        for path in (folder/'job.json', folder/'result.json', folder/'result.before-load-v1.json'):
+            if not path.resolve().is_relative_to(data) or path.is_symlink():
+                raise ValueError('报告路径越界，未写入。')
+        job = json.loads((folder/'job.json').read_text(encoding='utf-8'))
+        result = json.loads((folder/'result.json').read_text(encoding='utf-8'))
+        if any(job.get(k) != v for k,v in dict(id=sid, owner=uid, participant_id=OWNER,
+                mode='fitness', exercise=eid, state='done', **PROVENANCE).items()):
+            raise ValueError('报告不属于 TEST 林女士，未写入。')
+        if any(result.get(k) != v for k,v in dict(kind='fitness', exercise=eid, **PROVENANCE).items()):
+            raise ValueError('结果来源已变化，未写入。')
+        old = result.get('barbell')
+        if old is not None:
+            if old.get('fixture_load') != LOAD_SCHEMA or old.get('synthetic') is not True or old.get('fixture') != SCHEMA:
+                raise ValueError('已有其他器械结果，未覆盖。')
+            if old.get('calibration',{}).get('mass_kg') != 20. or old.get('participant_name') != NAME:
+                raise ValueError('器械记录已修改，未覆盖。')
+            reports.append(dict(exercise=eid, changed=False, summary=old['summary']))
+            continue
+        backup = folder/'result.before-load-v1.json'
+        if backup.exists() and json.loads(backup.read_text(encoding='utf-8')) != result:
+            raise ValueError('备份与原结果不一致，未覆盖。')
+        barbell = _fitness_load_report(result)
+        updated = dict(result, barbell=barbell, participant_name=NAME)
+        updates.append((folder/'result.json', backup, result, updated))
+        reports.append(dict(exercise=eid, changed=True, summary=barbell['summary']))
+    for path, backup, original, updated in updates:
+        # Refuse intervening edits between validation and the atomic replacement.
+        if json.loads(path.read_text(encoding='utf-8')) != original:
+            raise ValueError('报告刚被修改，原记录保留。')
+        if not backup.exists():
+            write_json(backup, original)
+        write_json(path, updated)
+    return reports
+
+
 def _movement_reports(data, now):
     from app.domain import Context, PoseFrame, PosePerson
     from mobile_rehab.fitness import FitnessEngine, EXERCISES, VERSION as FITNESS_VERSION
@@ -302,6 +394,7 @@ def _movement_reports(data, now):
             processed_frames=engine.frames, conditions=dict(view='sagittal_user_selected', size=[1000,1000],
                 model_manifest_id='fixture-geometry', schema='coco17-v1'),
             limitations=['仅观察二维投影，不测肌肉力量。'], **PROVENANCE)
+        result.update(barbell=_fitness_load_report(result), participant_name=NAME)
         _job(data, dict(id=sid), mode='fitness', result=result, when=at, exercise=eid)
     for eid in TASKS:
         engine = PostureEngine(eid, 'left')
@@ -382,3 +475,25 @@ def seed(backend, data: Path, clock: FixtureClock, *, now=None, workspace: Path 
         return manifest
     finally:
         clock.at = None
+
+
+if __name__ == '__main__':
+    import argparse
+    import os
+    import sys
+    parser = argparse.ArgumentParser(description='补充独立 TEST 林女士的两份器械报告。')
+    parser.add_argument('--refresh-fitness', action='store_true', required=True)
+    parser.add_argument('--data-root', type=Path, default=ROOT/'qa-output'/'test-lin-profile')
+    args = parser.parse_args()
+    data = _checked_path(args.data_root, ROOT)
+    if not _read_manifest(data).get('complete'):
+        raise ValueError('档案尚未完成，未写入。')
+    sys.path[:0] = [str(ROOT/'rehab_codex_single_camera_v2_1'), str(ROOT)]
+    os.environ['ANKANG_PRODUCT_DISABLE_MODEL'] = '1'
+    os.environ['ANKANG_VOICE_DISABLED'] = '1'
+    from app.product.backend import ProductBackend
+    backend = ProductBackend(data/'desktop')
+    try:
+        print(json.dumps(refresh_fitness_load(backend, data), ensure_ascii=False, allow_nan=False))
+    finally:
+        backend.close()

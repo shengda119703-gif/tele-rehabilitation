@@ -9,7 +9,8 @@ from fastapi.testclient import TestClient
 ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT/'rehab_codex_single_camera_v2_1'), str(ROOT), str(Path(__file__).parent)]
 
-from test_lin_profile import OWNER, NAME, FAMILY, MARKER, FixtureClock, claim_directory, scope, seed
+from test_lin_profile import (OWNER, NAME, FAMILY, MARKER, SCHEMA, PROVENANCE, FITNESS_IDS,
+    FixtureClock, claim_directory, scope, seed, _fitness_load_report, refresh_fitness_load)
 from app.product.backend import ProductBackend
 from app.storage import Storage
 from mobile_rehab.server import create_app
@@ -142,6 +143,13 @@ def test_normal_phone_routes_and_report_readers(complete):
             assert result['synthetic']
             if row['mode']=='fitness':
                 assert result['summary']['completed'] in (6,8) and result['series']
+                bar = result['barbell']
+                assert result['participant_name']==NAME and bar['participant_name']==NAME
+                assert bar['synthetic'] and bar['fixture']==SCHEMA
+                assert bar['source']=='SYNTHETIC / TEST' and bar['calibration']['mass_kg']==20.
+                assert bar['summary']['bounded_segments']==result['summary']['completed']
+                assert bar['summary']['peak_velocity_m_s']>0 and bar['summary']['peak_power_w']>0
+                assert not any(word in json.dumps(result,ensure_ascii=False) for word in ('模拟','估算','示例'))
                 if row['exercise']=='fitness_squat':
                     metrics=result['summary']['metrics']
                     assert metrics['torso']['max']<=30
@@ -164,3 +172,88 @@ def test_restart_is_idempotent_and_preserves_new_usage(complete):
         assert len(other.call('snapshot',OWNER)['state']['healthData']['measurements'])==before+1
     finally:
         other.close()
+
+
+def _legacy_fixture(tmp_path, complete):
+    """Only generated TEST reports copied to a separate temporary QA directory."""
+    import hashlib
+    from types import SimpleNamespace
+    source,_,_,_,manifest=complete
+    data=tmp_path/'qa-output'/'legacy'
+    data.mkdir(parents=True)
+    (data/MARKER).write_text(json.dumps(manifest),encoding='utf-8')
+    uid=hashlib.sha256(OWNER.encode()).hexdigest()[:32]
+    paths=[]
+    for eid in FITNESS_IDS:
+        sid=hashlib.sha256((SCHEMA+eid).encode()).hexdigest()[:32]
+        folder=data/'phone'/'jobs'/uid/sid
+        folder.mkdir(parents=True)
+        original=source/'phone'/'jobs'/uid/sid
+        (folder/'job.json').write_bytes((original/'job.json').read_bytes())
+        result=json.loads((original/'result.json').read_text(encoding='utf-8'))
+        result['barbell']=None
+        result.pop('participant_name')
+        (folder/'result.json').write_text(json.dumps(result),encoding='utf-8')
+        paths.append(folder)
+    backend=SimpleNamespace(data_dir=data/'desktop',call=lambda *a,**kw:[
+        dict(ownerId=OWNER,dataMode='demo',profile=dict(name=NAME))])
+    return data,backend,paths
+
+
+def test_load_upgrade_preserves_history_and_is_backed_up_idempotent(tmp_path,complete):
+    data,b,paths=_legacy_fixture(tmp_path,complete)
+    originals=[json.loads((p/'result.json').read_text(encoding='utf-8')) for p in paths]
+    jobs=[(p/'job.json').read_bytes() for p in paths]
+    changed=refresh_fitness_load(b,data,workspace=tmp_path)
+    assert len(changed)==2 and all(r['changed'] for r in changed)
+    for p,old,job in zip(paths,originals,jobs):
+        result=json.loads((p/'result.json').read_text(encoding='utf-8'))
+        assert (p/'job.json').read_bytes()==job
+        assert json.loads((p/'result.before-load-v1.json').read_text(encoding='utf-8'))==old
+        assert {k:v for k,v in result.items() if k not in ('barbell','participant_name')}=={
+            k:v for k,v in old.items() if k!='barbell'}
+    before=[(p/'result.json').read_bytes() for p in paths]
+    assert not any(r['changed'] for r in refresh_fitness_load(b,data,workspace=tmp_path))
+    assert before==[(p/'result.json').read_bytes() for p in paths]
+    assert len(list((data/'phone'/'jobs').glob('*/*/job.json')))==2
+
+
+@pytest.mark.parametrize('problem',['foreign_job','foreign_result','changed_bar','backup','identity','writer'])
+def test_load_upgrade_validates_all_targets_before_writing(tmp_path,complete,problem):
+    data,b,paths=_legacy_fixture(tmp_path,complete)
+    path=paths[1]/('job.json' if problem=='foreign_job' else 'result.json')
+    value=json.loads(path.read_text(encoding='utf-8'))
+    if problem=='foreign_job': value['owner']='real-person'
+    if problem=='foreign_result': value['synthetic']=False
+    if problem=='changed_bar': value['barbell']={'synthetic':False}
+    if problem=='backup': (paths[1]/'result.before-load-v1.json').write_text('{}')
+    if problem=='identity': b.call=lambda *a,**kw:[]
+    if problem=='writer': b.data_dir=data/'wrong-desktop'
+    path.write_text(json.dumps(value),encoding='utf-8')
+    before=[(p/'result.json').read_bytes() for p in paths]
+    with pytest.raises(ValueError): refresh_fitness_load(b,data,workspace=tmp_path)
+    assert before==[(p/'result.json').read_bytes() for p in paths]
+    assert not (paths[0]/'result.before-load-v1.json').exists()
+
+
+def test_load_uses_original_rep_phases_and_mass_scales_force_and_power(tmp_path,complete):
+    import math
+    data,b,paths=_legacy_fixture(tmp_path,complete)
+    for p in paths:
+        result=json.loads((p/'result.json').read_text(encoding='utf-8'))
+        original=json.loads(json.dumps(result))
+        low=_fitness_load_report(result,20.)
+        high=_fitness_load_report(result,40.)
+        assert result==original
+        assert low['summary']['bounded_segments']==len(result['repetitions'])
+        assert high['summary']['peak_velocity_m_s']==low['summary']['peak_velocity_m_s']
+        for key in ('peak_force_n','peak_power_w'):
+            assert high['summary'][key]==pytest.approx(low['summary'][key]*2)
+        for rep,lift in zip(result['repetitions'],low['lifts']):
+            start=rep['turn']['t'] if result['exercise']=='fitness_squat' else rep['start']['t']
+            end=rep['end']['t'] if result['exercise']=='fitness_squat' else rep['turn']['t']
+            assert start-.18<=lift['start_s']<lift['peak_time_s']<lift['end_s']<=end+.18
+            assert lift['peak_force_n']>0 and lift['peak_power_w']>0
+        for row in low['series']:
+            assert all(v is None or math.isfinite(v) for k,v in row.items() if k!='point')
+            assert all(0<=v<=1 for v in row['point'])
