@@ -18,7 +18,7 @@ function bar(synthetic){return {synthetic,summary:{bounded_segments:0,tracked_ra
   calibration:{length_m:.5,mass_kg:40},series:[],lifts:[],assumptions:['测试测量条件'],version:'test-only'};}
 test('demo remains clearly labelled and estimates are not renamed as direct measurements',()=>{
   const html=context().barReport(bar(true));
-  assert.match(html,/模拟数据/);
+  assert.match(html,/示例数据/);
   assert.match(html,/不计入训练记录/);
   assert.match(html,/峰值外力（估算）/);
   assert.match(html,/峰值功率（估算）/);
