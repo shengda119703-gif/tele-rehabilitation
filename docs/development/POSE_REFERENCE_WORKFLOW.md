@@ -38,7 +38,7 @@
 
 本机锁定库Ultralytics8.3.199的`utils/loss.py`第643–647行：坐标损失用`visibility != 0`遮罩，关键点objectness BCE对全部点计算。该文件SHA256为`c09d05d83a514c8f7e7bd69dc489b68a8d3371745ad114d615339ced6992d7e0`。因此把未标点写成visibility0仍会训练“不存在”负例，工具拒绝任何annotation_mask=false的stock YOLO导出，而不是悄悄丢弃样本。只有明确标注为不可定位的0才输出`0 0 0`。
 
-导出格式正确只返回`labels_format_ready=true`，`fine_tuning_qualified`仍false；尚须合法真人数据、旧模型同集误差／覆盖验收、实验资格与独立验证，不能导出后自动训练或覆盖权重。缺标部分骨架如果要训练，未来需同时修正坐标和objectness的masked loss，当前没有这条训练器。
+导出格式正确只返回`labels_format_ready=true`，`fine_tuning_qualified`仍false；尚须合法真人数据、旧模型同集误差／覆盖验收、实验资格与独立验证，不能导出后自动训练或覆盖权重。后续增量已实现 [双层masked loss及原YOLO工程烟测](POSE_DUAL_MASKED_LOSS.md)，未标点同时屏蔽坐标和objectness；仍未实现完整增广／多轮选模微调器，也不改变本转换器对stock部分标注导出的拒绝。
 
 ## 3. 实际命令
 

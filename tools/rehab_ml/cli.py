@@ -69,6 +69,9 @@ def parser():
     item.add_argument('--output-dir', type=Path, required=True)
     item = sub.add_parser('train-pose', help='Qualification gate: pose fine-tuning requires verified independent labels')
     item.add_argument('--config', type=Path, required=True)
+    item = sub.add_parser('smoke-pose-masked', help='TEST-only original YOLO dual-mask backward, one engineering step and checkpoint reload; not fine-tuning')
+    item.add_argument('--reference', type=Path, required=True)
+    item.add_argument('--output-dir', type=Path, required=True)
     item = sub.add_parser('extract-pose', help='Analyze authorized local RGB video; does not grant training permission')
     item.add_argument('--video', type=Path, required=True)
     item.add_argument('--exercise', choices=['shoulder_abduction', 'sit_to_stand', 'rehab_squat'], required=True)
@@ -119,6 +122,9 @@ def main(argv=None):
             from tools.rehab_ml.pose_dataset import evaluate
             value = evaluate(args.reference, args.predictions, args.output_dir, split=args.split,
                              confidence_min=args.confidence_min, pck_threshold=args.pck_threshold)
+        elif args.command == 'smoke-pose-masked':
+            from tools.rehab_ml.pose_masked_smoke import smoke_masked_pose
+            value = smoke_masked_pose(args.reference, args.output_dir)
         elif args.command in ('build-pose-dataset', 'train-pose'):
             from tools.rehab_ml.target_domain import supervision_status
             from tools.rehab_ml.common import write_json

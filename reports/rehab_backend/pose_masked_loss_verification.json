@@ -1,0 +1,184 @@
+{
+  "run_id": "pose-masked-audit-d8188b3a",
+  "evidence_scope": "synthetic_engineering_loss_not_human_finetuning",
+  "commands": [
+    {
+      "name": "unit",
+      "arguments": [
+        "-m",
+        "unittest",
+        "-v",
+        "test_pose_masked_loss"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "elapsed_s": 2.6159073999988323,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-masked-audit-d8188b3a\\unit.txt",
+      "log_sha256": "d27ce7f826dd339eaa5c67e2af72d72a806d4ba33ee29a1956b2b745594f85e0",
+      "tail": " (test_pose_masked_loss.MaskedPoseLossTests.test_timeout_terminates_only_owned_child_and_has_no_success) ... ok\ntest_training_permission_and_bounded_batch_required (test_pose_masked_loss.MaskedPoseLossTests.test_training_permission_and_bounded_batch_required) ... ok\ntest_unknown_anchors_do_not_dilute_supervised_denominators (test_pose_masked_loss.MaskedPoseLossTests.test_unknown_anchors_do_not_dilute_supervised_denominators) ... ok\ntest_unknown_xy_and_objectness_have_zero_output_gradient (test_pose_masked_loss.MaskedPoseLossTests.test_unknown_xy_and_objectness_have_zero_output_gradient) ... ok\n\n----------------------------------------------------------------------\nRan 23 tests in 0.592s\n\nOK\n"
+    },
+    {
+      "name": "native_smoke",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "smoke-pose-masked",
+        "--reference",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-masked-audit-d8188b3a\\reference.json",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-masked-audit-d8188b3a\\native-smoke"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "elapsed_s": 4.083450999998604,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-masked-audit-d8188b3a\\native_smoke.txt",
+      "log_sha256": "b38fdf255de724901399d8b7de04591f779fb9f7b69d14611d963c731eb9b46b",
+      "tail": "{\"ok\": true, \"command\": \"smoke-pose-masked\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-masked-audit-d8188b3a\\\\native-smoke\\\\result.json\", \"result_sha256\": \"89486e80095dc1ba86369f0786269dc1d11033cc818e959fd3edbc35f2dc64f7\", \"owned_exit_confirmed\": true, \"engineering_optimizer_steps\": 1, \"human_training_performed\": false, \"clinical_accuracy\": null, \"product_enabled\": false}}\n"
+    },
+    {
+      "name": "reject_without_training_permission",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "smoke-pose-masked",
+        "--reference",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-masked-audit-d8188b3a\\not-authorized.json",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-masked-audit-d8188b3a\\must-not-exist"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "passed": true,
+      "elapsed_s": 0.14479389999905834,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-masked-audit-d8188b3a\\reject_without_training_permission.txt",
+      "log_sha256": "8929aeaa27f0bd92125f5cb2c0772d87a9744adf08979fc92486953033348b0e",
+      "tail": "{\"ok\": false, \"command\": \"smoke-pose-masked\", \"error_type\": \"ValueError\", \"error\": \"explicit_verified_analysis_or_training_permission_required\"}\n"
+    }
+  ],
+  "human_training_performed": false,
+  "fine_tuning_qualified": false,
+  "product_enabled": false,
+  "clinical_accuracy": null,
+  "implementation_sha256": {
+    "tools/rehab_ml/pose_masked_loss.py": "7458e07f952c7e363053f2cdb9c0388e272ca1b3084d5851bb8ed578e8c76bf1",
+    "tools/rehab_ml/pose_masked_smoke.py": "24f381e3dca61f2639958a7dd5c9863121b36f07e9b10ab33c5f9c3074e166ee",
+    "tools/rehab_ml/verify_pose_masked_loss.py": "a2f9ae0f78ff89a6661e605a0297fc80099e147d895a0b036b78db62eada3cf4",
+    "tools/rehab_ml/cli.py": "9f14d7b417b1d3c432e181d4eb01c602f9cb75d9df8380b31b981a33a6f5ec84",
+    "tests/rehab_backend/test_pose_masked_loss.py": "70fba36bcbcb333844a945cd9462c7d7485c502fdf8bdde331bde7e7bd7ef900"
+  },
+  "native_result": {
+    "kind": "synthetic_native_dual_masked_loss_smoke_not_finetuning",
+    "contract": {
+      "version": "rehab-coco17-dual-masked-loss-1",
+      "ultralytics": "8.3.199",
+      "loss_source_sha256": "c09d05d83a514c8f7e7bd69dc489b68a8d3371745ad114d615339ced6992d7e0",
+      "code_license_route": "Ultralytics AGPL-3.0 or separately obtained Enterprise; no Enterprise asserted",
+      "stock_detection_loss_reused": true,
+      "unknown_coordinate_and_objectness_supervision": false,
+      "clinical_accuracy": null,
+      "product_enabled": false
+    },
+    "provenance": {
+      "reference_sha256": "794c0b87d4a366696463840d28504c2e0e1137638e69aec0ec355201b7e7a2a4",
+      "train_sample_ids": [
+        "TEST-train"
+      ],
+      "train_subject_groups": [
+        "TEST-person-train"
+      ],
+      "transforms": [
+        {
+          "sample_id": "TEST-train",
+          "original_size": [
+            96,
+            64
+          ],
+          "resized_size": [
+            128,
+            85
+          ],
+          "scales": [
+            1.3333333333333333,
+            1.328125
+          ],
+          "pad_left_top": [
+            0,
+            21
+          ],
+          "output_size": [
+            128,
+            128
+          ],
+          "preprocessing": "actual_integer_axis_resize_then_letterbox_no_flip_or_augmentation"
+        }
+      ],
+      "validation_test_used_for_optimization": false,
+      "random_augmentation": false
+    },
+    "seed": 20261011,
+    "device": "cpu",
+    "image_size": 128,
+    "threads": 2,
+    "optimizer": {
+      "type": "SGD",
+      "lr": 1e-05,
+      "momentum": 0.0,
+      "weight_decay": 0.0,
+      "clip_norm": 10.0
+    },
+    "loss_gains": {
+      "box": 7.5,
+      "pose": 12.0,
+      "kobj": 1.0,
+      "cls": 0.5,
+      "dfl": 1.5
+    },
+    "engineering_optimizer_steps": 1,
+    "human_training_performed": false,
+    "fine_tuning_qualified": false,
+    "clinical_accuracy": null,
+    "product_enabled": false,
+    "original_weight_unchanged": true,
+    "parameter_digest_before": "58f59b1a5a7dbf8b624ee7c23d2caced21cfa30a100bd6fcc28a76f4579e873e",
+    "parameter_digest_after": "987b687a0c56a0a6b509602c491261eb5dbc7aeb5ea41e14c4f92a0f845ad84d",
+    "gradient_audit": {
+      "unknown_joint_gradient_max": 0.0,
+      "known_absent_xy_gradient_max": 0.0,
+      "known_absent_objectness_gradient_l1": 0.027695000171661377,
+      "stock_unknown_objectness_gradient_l1": 0.02916155569255352,
+      "reviewed_locatable_gradient_l1": 3.3291165828704834,
+      "output_gradient_not_shared_trunk_parameter_claim": true
+    },
+    "loss_components": [
+      3.003070592880249,
+      11.002466201782227,
+      1.2640914916992188,
+      3.8619472980499268,
+      2.202538013458252
+    ],
+    "component_order": [
+      "box",
+      "pose",
+      "kobj",
+      "cls",
+      "dfl"
+    ],
+    "assigned_supervision": {
+      "assigned_anchors": 10,
+      "coordinate_slots": 150,
+      "objectness_slots": 160
+    },
+    "gradient_norm_before_clip": 10145.783203125,
+    "checkpoint_sha256": "b6eebae2eef01c8529368232d41d511169055b66955061f57abbe8a3908c72ea",
+    "reload_prediction_max_abs_difference": 0.0,
+    "elapsed_s": 1.4715357999994012
+  },
+  "artifact_sha256": {
+    "reference.json": "794c0b87d4a366696463840d28504c2e0e1137638e69aec0ec355201b7e7a2a4",
+    "native-smoke/result.json": "89486e80095dc1ba86369f0786269dc1d11033cc818e959fd3edbc35f2dc64f7",
+    "native-smoke/provenance.json": "347574b7d7e9bbeb3088be9af9fbd9cb40bc153d43e9c63d565169330c1c6b88",
+    "native-smoke/child.log": "86bb4d2770c06cb54b88e30456c904b817ea17087f2b5e6f5ecf13ad4fb14033",
+    "native-smoke/TEST-engineering-checkpoint.pt": "b6eebae2eef01c8529368232d41d511169055b66955061f57abbe8a3908c72ea"
+  },
+  "passed": true
+}

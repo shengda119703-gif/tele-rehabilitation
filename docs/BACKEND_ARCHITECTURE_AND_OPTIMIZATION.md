@@ -2,9 +2,9 @@
 
 > 用途：供团队讨论准确性、可靠性和下一轮后端重构。本文不是路演宣传稿，也不是医疗操作指南。
 >
-> 核对日期：2026-10-11。本轮基准工作树为 `bf698a3be2e7b6a94d174b41716cd8ae8ae95e34`；本轮Python VIDEO姿态输入近似及真实两原片对照随本文件交付。基准包含原三端产品、康复v2所属推理／报告、SQLite边界与独立关键点工具。电脑端与托管手机产品为0.20.0、APK0.2.1。第4–15节描述原产品；第17节说明默认关闭v2与研究模型；第18–23节用于代码／信息交接和优化实验。
+> 核对日期：2026-10-11。实施基准为 `d0b21d240422e1788b73e072d365f9072436ea4b`，交付前复验基准为 `ab47ee0f7478c948ab77310f66c0e7000fa86108`；部分标注双层masked loss及原YOLO实际工程烟测随本文件交付。基准包含原三端产品、康复v2所属推理／报告、SQLite边界、关键点工具与Python VIDEO对照。电脑端与托管手机产品为0.20.0、APK0.2.1。第4–15节描述原产品；第17节说明默认关闭v2与研究模型；第18–23节用于代码／信息交接和优化实验。
 >
-> 本轮继续任务书12.4，补17.11的MP VIDEO输入与时间／像素配对工具，见 [工作流](development/MEDIAPIPE_VIDEO_AUDIT.md) 和 [验收](validation/REHAB_MEDIAPIPE_VIDEO_2026-10-11.md)，不改正式UI、权重、APK、原服务或用户数据库。17.10及 [关键点验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)保留上次范围；SQLite见17.5.4及 [存储验收](validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md)，报告见 [隔离验收](validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)。旧性能／训练不倒改版本。“源码实现”“工程测试通过”“用户端接通”“真人准确性验证”是不同结论。总任务未整体完成。
+> 本轮继续任务书12.2，补17.12的坐标／objectness双层mask、标签分配与原生梯度／更新／重载，见 [工作流](development/POSE_DUAL_MASKED_LOSS.md) 和 [验收](validation/REHAB_POSE_MASKED_LOSS_2026-10-11.md)。不改正式UI、权重、APK、原服务或用户数据库。17.11的 [VIDEO验收](validation/REHAB_MEDIAPIPE_VIDEO_2026-10-11.md)、17.10的关键点、SQLite和报告验收保留各自实际范围；旧性能／训练不倒改版本。“源码实现”“工程测试通过”“用户端接通”“真人准确性验证”是不同结论。总任务未整体完成。
 
 ### 快速阅读
 
@@ -1009,7 +1009,7 @@ JSON 原子替换可降低半写文件风险，但没有跨文件事务，也不
 
 此前字段文档交付收取已经启动的会话CLI，`replay-2167d5a9` 的100项／82.646秒通过，命令耗时83.272秒、exit0，日志SHA256为 `e97c209a9307264c90005e2dbe4c28faeb701297fce4e865b7f17adaa40495e4`。100项是130项子集，本轮核对日志后随存储实现发布；另专项复验12项／12.689秒通过。不称重新启动的完整回归或算法准确率。历史字段核对保留在 [数据契约核对](validation/BACKEND_FIELD_CONTRACTS_2026-10-11.md)。
 
-前一轮关键点工具实际运行`verification-0bba991b`160／12／19项，专项30项及7条CLI，见17.10及 [当时验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)。本轮`verification-b2b7fc2e`177／12／19项、1308保护通过，包含17项VIDEO；`mediapipe-audit-97d814f4`实际跑两原片／7条CLI、时间和像素配对，见17.11与 [本轮验收](validation/REHAB_MEDIAPIPE_VIDEO_2026-10-11.md)。没有独立参考或手机验证，工程计数不当准确率；会话CLI100项仍为历史，本轮未重跑。
+此前关键点`verification-0bba991b`160／12／19项、VIDEO`verification-b2b7fc2e`177／12／19项与两原片7条CLI保留各自历史，见17.10–17.11。本轮末次`verification-9d1cdb62`200／12／19项、1308保护通过，含23项双层masked loss；专项`pose-masked-audit-d8188b3a`实际原YOLO前向／反向／一步TEST更新／重载及权限拒绝，见17.12与 [验收](validation/REHAB_POSE_MASKED_LOSS_2026-10-11.md)。此前`999f96ea`／`91fab841`保留独立日志、不累加。没有真人微调或手机验证，工程计数不当准确率；会话CLI100项仍为历史，本轮未重跑。
 
 以上是有日期和范围的验证，本轮没有重跑全部产品／Android／Agent 回归。它们不能替代真人角度／器械精度、疾病预测、公网、手环、相机和红米实机验收，也不能互相累加成一个“总准确率”。原产品细节见 [本机同步验证](validation/GITHUB_SYNC_2026-10-11.md)。
 
@@ -1339,7 +1339,7 @@ TCN 感受野 `R = 1 + 2×(3−1)×(1+2+4+8) = 61` 步。20 Hz 名义采样下�
 
 现有两段私人录像的真实回放：肩外展 443 帧、主指标可观测 434 帧，新协议 0 次／旧引擎 2 次；深蹲 429 帧、膝主指标可观测 48 帧，新协议 0 次。前者缺默认稳定准备段，后者大部分腿部证据不可用；这说明验证必须覆盖准备／视野条件，不能把“工具跑完”当成“自动计次已准确”。没有独立专业参考标签，准确率仍未知，也未授予这些录像训练权限。
 
-`build-pose-dataset --reference`现已实现独立RGB参考核验和标签转换，原模型预测与误差／覆盖评估见17.10；`train-pose`仍明确拒绝缺资格训练，不是完整微调器。下一步需同域授权RGB、独立关节／可见性与专业动作／变式标签，以及按人独立测试集；部分标注训练器和候选微调尚未实现。
+`build-pose-dataset --reference`现已实现独立RGB参考核验和标签转换，原模型预测与误差／覆盖评估见17.10；双层masked loss与原生工程烟测见17.12。`train-pose`仍明确拒绝缺资格训练，不是完整微调器。下一步需同域授权RGB、独立关节／可见性与专业动作／变式标签、同集原模型基线及按人独立测试集；完整增广／多轮选模微调器和候选微调仍未实现。
 
 比较契约现已区分“指标含义是否兼容”和“本次证据身份 fingerprint”；但仅是二维投影的工程比较，不是临床 ROM 一致性证据。任意相机旋转、裁切、非等比例拉伸、跨端或解剖参考改变仍需单独验证。代码：[temporal.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/temporal.py)、[compatibility.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/compatibility.py)。
 
@@ -1356,7 +1356,7 @@ TCN 感受野 `R = 1 + 2×(3−1)×(1+2+4+8) = 61` 步。20 Hz 名义采样下�
 
 设J为人工已定位参考点，C为其中当前有效预测点：`e_j=||p_j-r_j||₂`，`d_s`为完整人体框对角线；`coverage=|C|/|J|`，像素均误差`Σe_j/|C|`，`PCK_all=Σ1[e_j/d_s≤τ]/|J|`，`PCK_covered`分母为`|C|`。缺帧／低conf／出画不能成为0误差，只降低覆盖和PCK_all；空集合对应指标null。默认τ=0.05为工程比较参数，非临床标准。疑似左右交换单列，不当作已证实的解剖错误。
 
-本机原Ultralytics的坐标损失用visibility遮罩，而objectness对全部点计算；未标点不能简单写0，所以工具拒绝部分mask的stock YOLO导出。masked格式保留两种损失mask，但尚无对应训练器。原YOLO每图重置Context并用参考框辅助匹配，因此不能用其结果证明无人辅助跟踪、专业角度／计次正确或手机性能。实际工具验证与源文件hash见 [验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)。
+本机原Ultralytics的坐标损失用visibility遮罩，而objectness对全部点计算；未标点不能简单写0，所以工具仍拒绝部分mask的stock YOLO导出。masked格式保留两种mask；17.12新增对应损失实例和TEST原生烟测，不是完整微调器。原YOLO每图重置Context并用参考框辅助匹配，因此不能用其结果证明无人辅助跟踪、专业角度／计次正确或手机性能。此前工具验证与源文件hash见 [验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)。
 
 ### 17.11 原手机权重的 Python VIDEO → 33点证据 → 同帧模型差异
 
@@ -1374,6 +1374,16 @@ TCN 感受野 `R = 1 + 2×(3−1)×(1+2+4+8) = 61` 步。20 Hz 名义采样下�
 所属子进程超时／取消只清理准确对象，未确认退出明确失败；OS创建本身没有硬截止。17项含受控Popen故障及真实4帧白色TEST视频，两段真人录像另独立实际推理；不混成真人准确性证据。模型原样保留，不训练／上线，验收见 [本轮记录](validation/REHAB_MEDIAPIPE_VIDEO_2026-10-11.md)。
 
 <a id="backend-optimization"></a>
+
+### 17.12 独立部分标注 → 同对象mask → 双层损失 → 原生工程烟测
+
+输入仍是17.10的权限、原图hash、bbox、分人split、人工visibility和annotation_mask。`training_batch`只把train图变成张量，原图整数resize＋letterbox同时变换bbox与点；真实缩放轴／padding保存，不猜标缺失关节。原YOLO forward／TaskAlignedAssigner产生每图GT ordinal，`assigned_targets`映射回同一原对象及其mask，背景dummy ordinal不gather；不能把另一个人或另一个关节的标签用于当前输出。
+
+`MaskedPoseLoss`实例锁定原库8.3.199与loss.py hash，继承bbox／类别／DFL与原COCO sigma，仅版本化替换关节监督。令m为人工已标mask、c=m·[visibility>0]：坐标项按每个有坐标的anchor对有效点取OKS式均值，再对这些anchor取均值；objectness项只对m=true槽取BCE均值。unknown不作负例，不稀释分母；已复核无法定位点只监督objectness负例，已可靠定位的visibility1／2都有坐标及存在监督。无标签项为连图0，输出梯度0；其他点／框仍可更新共享模型参数。完整公式和变换边界见 [工作流](development/POSE_DUAL_MASKED_LOSS.md)。
+
+只TEST的`smoke-pose-masked`使用所属进程、原权重、CPU2线程、128图、seed20261011，实际forward／反向、SGD一步、新TEST检查点和严格重载，默认120秒等待／准确句柄释放，非真人微调器。末次`pose-masked-audit-d8188b3a`23项和3条CLI按预期退出；原TAL10anchor、150坐标／160objectness监督槽、unknown输出梯度max0、重载输出最大差0。原stock对照确实给unknown置信负例梯度，不以抹掉整个人体检测达到mask效果。取消／释放未确认为受控Popen故障，不能写成原生卡死或OS创建硬截止已测。
+
+`train-pose`缺资格仍拒绝，完整多轮／增广／选模训练、合法真人RGB与独立精度比较尚未完成。新检查点明确fixture_only／product_enabled=false，不覆盖原模型或接入客户端；原训练历史不重算。实际命令／失败日志／恢复操作／hash见 [验收](validation/REHAB_POSE_MASKED_LOSS_2026-10-11.md)，聚合结果见 [报告](../reports/rehab_backend/pose_masked_loss_verification.json)。
 
 ## 18. 你下一轮可以怎样从算法入手
 
