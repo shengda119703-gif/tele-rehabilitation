@@ -2,9 +2,9 @@
 
 > 用途：供团队讨论准确性、可靠性和下一轮后端重构。本文不是路演宣传稿，也不是医疗操作指南。
 >
-> 核对日期：2026-10-11。本轮已提交源码基准为 `06366bdac2bddbd0888d8fe1b67a7abab62f9067`：包含原三端产品、康复 v2 所属推理／诊断及默认派生报告隔离。电脑端与托管手机产品版本为 0.20.0，现有 APK 安装包为 0.2.1。第 4–15 节描述原产品路径；第 17 节说明默认关闭的康复 v2 与研究模型；第 18–23 节用于定位代码、追查信息传递和设计优化实验。
+> 核对日期：2026-10-11。本轮核对的已提交工作树为 `f181d04f9b82eb8e943fc01c9ea4dec6b1410f3d`；最近后端实现基准为 `06366bdac2bddbd0888d8fe1b67a7abab62f9067`，之后的 `f181d04` 是文档更新。基准包含原三端产品、康复 v2 所属推理／诊断及默认派生报告隔离。电脑端与托管手机产品版本为 0.20.0，现有 APK 安装包为 0.2.1。第 4–15 节描述原产品路径；第 17 节说明默认关闭的康复 v2 与研究模型；第 18–23 节用于定位代码、追查信息传递和设计优化实验。
 >
-> 本轮只整理文档，不实施算法，不改正式 UI、模型、APK、原服务或正常用户数据。工作区已有未提交的 SQLite 故障边界及测试，单列在 17.5.4，不随文档提交。旧性能报告保留运行当时的基准，不倒改实验版本。下文的“源码实现”“工程测试通过”“用户端已接通”“真人准确性已验证”是四种不同结论。已提交报告实现见 [报告隔离验收](validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)；本轮核对见 [文档与优化依赖核对](validation/BACKEND_MAP_OPTIMIZATION_2026-10-11.md)。后端实施总任务仍未整体完成。
+> 本轮只整理文档，不实施算法，不改正式 UI、模型、APK、原服务或正常用户数据。工作区已有未提交的 SQLite 故障边界及测试，单列在 17.5.4，不随文档提交。旧性能报告保留运行当时的基准，不倒改实验版本。下文的“源码实现”“工程测试通过”“用户端已接通”“真人准确性已验证”是四种不同结论。已提交报告实现见 [报告隔离验收](validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)；此前梳理见 [文档与优化依赖核对](validation/BACKEND_MAP_OPTIMIZATION_2026-10-11.md)，本轮字段核对见 [数据契约核对](validation/BACKEND_FIELD_CONTRACTS_2026-10-11.md)。后端实施总任务仍未整体完成。
 
 ### 快速阅读
 
@@ -12,6 +12,7 @@
 | --- | --- |
 | 整个后端有哪些功能、分别在哪个端运行 | 第 1–2 节的功能目录和三端对照 |
 | 一个功能的结果怎样进入另一个功能 | [第 3 节：对象与调用链](#backend-data-flow)、[第 21 节：逐跳交接与错误传播](#backend-handoffs) |
+| 怎样在源码中找到这些结果，为什么同名指标会不同 | [第 3.7–3.8 节：字段路径、分母与完成口径](#backend-field-contracts) |
 | 视频怎样变成角度、次数、节奏、功率和体态 | [第 4–7 节：视觉与动作](#backend-vision) |
 | 健康指标怎样进入管家、用药和家庭 | [第 8–10 节：健康与照护](#backend-health) |
 | 结果保存在哪里，超时、重试和崩溃怎么办 | [第 11 节：持久化与任务](#backend-storage) |
@@ -131,14 +132,14 @@ Observation → 场景／动作状态机         result.json                本�
 | --- | --- | --- | --- |
 | `Context` | generation、scene_id、source_ref、source_kind、usage_context、run_id、epoch | Runtime／场景控制器 | 采集、推理、控制器；阻止旧结果污染新任务 |
 | `FramePacket` | seq、time_s、received_monotonic、captured_utc、image、time_basis、帧率、双摄配对 | SourceWorker | 推理、时间门控、双摄；区分媒体时间与处理耗时 |
-| `PoseFrame` | people、xy、conf、track_key、size、schema_id、坐标空间、关键点顺序、模型清单、backend | 视觉后端 | PoseAnalyzer；保证不同骨架不会被当成同一种 |
+| `PoseFrame` | context、seq、time_s、size、schema_id、坐标空间、关键点顺序、模型清单、backend；people 中每个 PosePerson 的 xy、conf、track_key、bbox | 视觉后端 | PoseAnalyzer；保证不同骨架不会被当成同一种，不能把一个人的点和另一个人的跟踪号拼起来 |
 | `Observation` | 指标、valid／reason、track_key、status、原始中心／bbox、time_s | PoseAnalyzer | 动作、日常活动、卧室、安全引擎 |
 | `Metric` | value、valid、reason | 几何计算 | 下游不能把缺测 `null` 当成 0°或正常 |
 | `session` | 档案、来源情境、配置快照、算法契约、汇总、逐次结果、条件、结束原因 | 场景控制器／分析器 | 历史、报告、自动计划、纵向比较 |
 | 康复身体汇总 | exercise_id + side、最新 session、观察幅度、有效比例、状态 | assessment | 自动建议、训练参考、只读管家工具 |
-| 计划／条目 | plan_id、revision、entry_key、动作、侧别、剂量、目标、证据指纹 | automatic_plans／training_plans | 上传校验、训练绑定、进度、改期 |
+| 计划／条目 | 原计划为 id、revision、items[].key、动作、侧别、settings；执行引用为 saved_plan_reference.id／revision／entry_key | automatic_plans／training_plans | 上传校验、训练绑定、进度、改期；v2 外层另用 plan_id，见3.7 |
 | 训练感受 | pain、fatigue、reason、notes、record_origin=self_report | 用户反馈 | 下一项资格、计划继续；不是视觉推断 |
-| `HealthEvent` | id、type、timestamp、source、metric／value／unit 或主诉、visibility、metadata | 产品事件管道 | 持久化、每日物化、检测、管家与共享 |
+| `HealthEvent` | 顶层 id、type、timestamp、source；内容在 measurement／observation／labResult 中，visibility 和可选 metadata 随对应内容保存 | 产品事件管道 | 持久化、每日物化、检测、管家与共享；不是把数值、主诉和权限全部展平在事件顶层 |
 | `Finding` | ruleId、severity、evidence、score、signalKeys、familyEligible | DetectionEngine | 建议和通知；score 不是患病概率 |
 | `CareWorkflow`／`Receipt` | requestId、scope、期限、步骤、原事实校验、确认凭证、幂等键、提交回执 | CareCoordinator／宿主 | 确认、恢复、审计；提议不是已执行 |
 
@@ -216,6 +217,64 @@ Observation → 场景／动作状态机         result.json                本�
 | 健康／康复／用药 → 家庭 | 分类授权后投影的摘要、真实可见状态 | 不把整库或私密原话直接外发 |
 
 因此，后续若要做“长期步态变化调整康复安排”，需要新增并审核一条明确的决策链：有效步态事件 → 变化证据 → 专业适用条件 → 原计划审核／调整。现在不能从一个风险分数直接跳到加量或治疗方案。
+
+<a id="backend-field-contracts"></a>
+
+### 3.7 从真实字段追查：一个结果到底传给了谁
+
+下表是当前源码的字段对照，不是新设计的统一 API。`.` 表示对象内的字段，`[]` 表示列表元素；各行所属对象不同，不能把它们直接拼成一个请求。原路径、APK 和 v2 的适配边界仍按第2、12、17节区分。
+
+| 上游对象／字段路径 | 产生方法 | 接给哪个功能 | 优化时不能丢的信息 |
+| --- | --- | --- | --- |
+| `PoseFrame.people[].xy/conf/track_key/bbox`；顶层 `context/seq/time_s/size/schema_id` | 视觉推理与跟踪 | PoseAnalyzer → 几何、动作、活动与安全 | 人物、骨架顺序、像素尺度、真实帧时；`track_key` 不是患者档案 |
+| `Observation.metrics[metric_id].value/valid/reason` | 必要点检查、滤波和几何 | 康复状态机；对应场景规则 | 数值有效性按指标判断；一个辅助指标缺失不应被翻译为全部指标为0 |
+| 原 `session.summary.motion_range.{min_deg,max_deg,range_deg}`、`valid_ratio/completed` | RehabEngine 的角度证据与计次 | `build_body_profile` → 自动建议和训练参考 | 这是一份结束记录的观察，不是目标、诊断或长期平均 |
+| 身体汇总 `items[].session_id/status/conditions/motion_range/completed` | 同作用域、动作及侧别选最新结束评估 | `generate_proposal`、`build_training_reference` | 最新失败、测量契约和原记录ID必须保留；`ASSESSED` 不等于符合自动计划准入 |
+| 建议 `candidates[].assessment_id/assessment_fingerprint/settings`；顶层 `fingerprint/participant_fingerprint/blockers` | 原评估 + 适用条件 + `general-activity-rules-1` | `create_automatic_plan` | 建议指纹和原证据绑定；目标与次数不能仅从页面数字回填 |
+| 原计划 `id/revision/items[].key/settings`；`automatic.entries/body/screening` | 保存计划、冻结筛查与依据 | `prepare_training_plan`、`validate_automatic_use` | 自动计划的扩展依据在 `automatic` 中；普通 `items` 不包含全部评估说明 |
+| 执行 `assessment_reference`、`saved_plan_reference.id/revision/entry_key/item/session_overrides` | 选择原计划条目、校验当前评估 | TrainingEngine → 保存训练 → `program_progress` | 原条目、版本与本次实际改动；不能用动作名称代替计划引用 |
+| 原训练 `summary.plan_completed`、`repetitions[]`、`training_feedback.{pain,fatigue,reason}` | 组次、逐次证据与独立用户自评 | 进度 `items[].done/quality`、`completed/total/blocked/next_key` | 完成、质量和继续资格分别判断；缺反馈不当作0分 |
+| 健身 `result.summary`、`repetitions[]`、`series[]` 与可选 `barbell` | FitnessEngine；另行标定时才调用 BarTracker | 健身历史、关键帧、曲线与器械表现 | 动作完整次与器械上升段不是同一个列表；关节角可用不代表器械功率可用 |
+| `barbell.summary.peak_velocity_m_s/peak_force_n/peak_power_w`；`calibration/lifts/series/version/source` | 标定轨迹、求导、器械质量与自由重量模型 | 器械报告 | 数值连同标尺、采样和来源保存；没有质量或加速度证据不能补外力／功率 |
+| `HealthEvent.measurement.metric/value/unit/visibility/metadata`；或 `observation.text/tags/status/visibility` | 数值归一或接受的主诉事实 | 每日物化 → baseline／Finding／PersonTwin → 管家／获准共享 | 权限在具体内容上；`observation.status` 的否定／假设不能在转成事件时丢失 |
+| `Finding.ruleId/severity/evidence/score/signalKeys/familyEligible` | 有效日数据、主诉与检测规则 | 管家优先级、任务和通知 | `evidence` 为当前接口的证据说明，不保证每项都是稳定事件ID；不能据此假定已有完整逐证据血缘 |
+| `CareWorkflow.id/requestId/scope/steps[].action.expected/expiresAt`；确认凭证 | 原业务事实 + 明确意图形成提议 | `care.confirm` → 宿主执行 → `steps[].receipt` | `CareReceipt.status/idempotencyKey/operation` 才是执行回执；确认凭证不能进入普通日志 |
+| v2 `snapshot.completed/repetitions/training`；`canonical_commit.visual_snapshot_digest` | 指标协议、组次和最终事务 | v2 历史、唯一贡献与派生报告 | 与原 `summary` 不是同一封套；默认不进入旧身体汇总或管家工具 |
+| v2 `feedback_revision/feedback_status/latest_feedback`；`derived_report_state` | 最终事实后追加自评；按反馈版本构建报告 | 查询、继续政策及报告重建 | 反馈版本可增加，已终结视觉快照和原回执不回写；旧反馈报告不能覆盖新版本 |
+
+对应源码：[domain.py](../rehab_codex_single_camera_v2_1/app/domain.py)、[assessment.py](../rehab_codex_single_camera_v2_1/app/assessment.py)、[automatic_plans.py](../rehab_codex_single_camera_v2_1/app/automatic_plans.py)、[training_plans.py](../rehab_codex_single_camera_v2_1/app/training_plans.py)、[events.ts](../ankang/route1-health-agent/src/pipeline/events.ts)、[types.ts](../ankang/route1-health-agent/src/types.ts)、[CareCoordinator.ts](../ankang/route1-health-agent/src/care/CareCoordinator.ts)、[v2 sessions.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/sessions.py)。
+
+例如，发现“肩外展已经做完，下一项却不开放”时，应沿 **session ID → 身体汇总 status → 当前计划 revision／entry_key → 训练 plan_completed → 原自评 → progress.blocked／next_key** 查，而不是先修改角度模型。发现“历史里有次数，报告还在等待”时，v2 应先查 `persistence_state` 和 `canonical_commit`，再查 `derived_report_state`；报告未完成不等于训练事实没提交。
+
+### 3.8 同名字段的分母和完成口径
+
+这部分直接影响“准确率变高了”的判断。当前很多百分比描述的是覆盖，不是正确率；一些端的零值和空值也不同。
+
+| 位置／字段 | 当前计算含义 | 不能直接比较的情况 |
+| --- | --- | --- |
+| 电脑康复评估 `summary.valid_ratio` | `valid_s / observed_span_s`，观察跨度为首末时间差；无跨度返回 `null` | 不是有效帧数／总帧数，也不是角度正确率 |
+| 电脑训练 `summary.valid_ratio` | `min(1, valid_s / active_span_s)`，由训练阶段维护活动跨度；无跨度为 `null` | 分母不是整个会话时长；另有 `training.session_span_s/rest_s/paused_s` |
+| 电脑健身 `summary.valid_ratio` 与 `metrics[k].coverage` | 前者是有效观察时间／首末跨度；后者是该指标样本数／处理帧数 | 两者一个按时间，一个按帧；不规则采样时会不同 |
+| 电脑体态 `metrics[].coverage/sample_count/variation` | coverage 是该指标全部可测样本／处理帧数；value／sample_count／MAD variation 来自所选最长连续片段 | 高coverage不证明存在足够连续片段，也不证明片段测量正确 |
+| 器械 `summary.tracked_ratio/bounded_segments` | tracked_ratio 是有 y 轨迹样本／全部输入样本；bounded_segments 是边界已观察的上升段数 | 跟踪点存在不代表求导质量；上升段数不能替代人体动作计次 |
+| APK `LocalEngine.report().validRatio` | `min(1, validSeconds / 首末跨度)`；无跨度返回0，由 `motion.js` 适配为 `summary.valid_ratio` | 与电脑无跨度返回null不同；不能只按字段名合并统计 |
+| 康复 v2 `snapshot` | 分别保存逐指标证据、次数、相位、训练与诊断；没有原路径同义的顶层 `valid_ratio` | 不应从accepted／processed比例臆造原计划要求的有效观察比例 |
+
+幅度也有不同口径：电脑原 `_AngleEvidence` 对连续三个角度取中位数，再累计这些中位数的最小／最大；APK 普通动作报告的 `min/max` 来自保存的有效角样本极值。两者即使使用同一关键点，也可能因一个噪声峰产生不同范围和目标。是否改为稳健分位数应通过独立参考实验确定，不在本文悄悄替换。
+
+计划完成字段同样不能直接改名：
+
+| 路径 | 真实字段／方法 | 实际判断 |
+| --- | --- | --- |
+| 电脑 TrainingEngine | `summary.plan_completed` | 完成组数等于原目标组数；幅度、代偿和节奏另有结果 |
+| 原计划进度 | `program_progress().items[].done` | 同计划ID／revision／条目下的最新训练、非引导计时、结束状态与plan_completed；自评另影响blocked |
+| APK 录像结果适配 | `summary.plan_completed` | 有goal时，`targetMet !== false` 的逐次数达到目标次数×组数；这不等于全部质量条件已通过 |
+| v2 组次 | `snapshot.training.plan_complete` | 已确认组数等于显式目标组数；不是原字段的无条件复制 |
+| v2 查询提交 | `GET .../commit` 的 `receipt` | 对应会话的权威提交回执；其中completed_reps不是“完整治疗计划已完成” |
+
+完整继续资格还要看各端自己的计划、自评与来源规则，第5.6、12、17.6节有详细边界。建议下一轮先做同关键点、同时间轴、同目标的差分测试，并同时记录 **数值误差、观察覆盖、完成判定和继续资格**，不要将它们压成一个百分比。
+
+源码：[RehabEngine](../rehab_codex_single_camera_v2_1/app/rehab.py)、[TrainingEngine](../rehab_codex_single_camera_v2_1/app/training.py)、[FitnessEngine](../mobile_rehab/fitness.py)、[体态汇总](../mobile_rehab/posture.py)、[器械汇总](../mobile_rehab/barbell.py)、[APK引擎](../android_offline/web/engine.js)、[APK结果适配](../android_offline/web/motion.js)、[v2组次](../rehab_codex_single_camera_v2_1/app/rehab_v2/rounds.py)。
 
 <a id="backend-vision"></a>
 
@@ -946,7 +1005,9 @@ JSON 原子替换可降低半写文件风险，但没有跨文件事务，也不
 
 上段数量指`23696de`的时间／贡献范围。随后`129e5cb`的交付实际运行100项后端、12项旧康复、19项旧手机及1308文件保护检查；会话CLI为其中70项，见历史 [进程与诊断验收](validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md)。`4c48195`文档交付只复核既存日志，`06366bd`报告隔离交付实际运行118／12／19项、1308保护核验及会话88项子集，见 [报告隔离验收](validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)。18项报告专测包含在118项中。大量输入仍为夹具，真实YOLO接口使用无人白图，不能当真人准确性数据。
 
-本轮读取此前已启动、现已结束的 `verification-1d000563`：工作区130项新后端、12项旧康复、19项旧手机通过，1308文件保护一致。130项包含12项未提交的原生SQLite故障测试，不是本轮新增运行或已发布版本的验收；新CLI子集未在本轮运行。精确日志指纹见本轮文档核对。工程用例数量不等于测量精度，不能与历史数量相加。
+此前文档交付读取已结束的 `verification-1d000563`：工作区130项新后端、12项旧康复、19项旧手机通过，1308文件保护一致。130项包含12项未提交的原生SQLite故障测试，不是文档任务新增运行或已发布版本的验收；精确日志指纹见此前文档核对。工程用例数量不等于测量精度，不能与历史数量相加。
+
+本轮另外收取此前已经启动的会话CLI，`replay-2167d5a9` 的100项／82.646秒通过，命令耗时83.272秒、exit0，日志SHA256为 `e97c209a9307264c90005e2dbe4c28faeb701297fce4e865b7f17adaa40495e4`。100项是工作区130项中的子集，含未提交存储测试，不算本轮重新启动的完整回归，也不是新发布算法的准确率。本轮实际新做的是源码字段、文档链接和文件保留核对，见 [数据契约核对](validation/BACKEND_FIELD_CONTRACTS_2026-10-11.md)。
 
 以上是有日期和范围的验证，本轮没有重跑全部产品／Android／Agent 回归。它们不能替代真人角度／器械精度、疾病预测、公网、手环、相机和红米实机验收，也不能互相累加成一个“总准确率”。原产品细节见 [本机同步验证](validation/GITHUB_SYNC_2026-10-11.md)。
 

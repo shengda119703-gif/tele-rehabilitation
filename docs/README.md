@@ -4,8 +4,9 @@
 
 | 文档 | 内容 |
 | --- | --- |
-| [后端功能、算法与数据流梳理](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md) | 06366bd三端后端域、公式／状态、逐跳信息、代码入口；第22–23节为改动影响、候选算法及验收 |
-| [后端文档与优化依赖核对](validation/BACKEND_MAP_OPTIMIZATION_2026-10-11.md) | 本轮仅文档、已提交／工作区区别、日志指纹、保护范围与文档检查 |
+| [后端功能、算法与数据流梳理](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md) | 三端后端域、公式／状态、逐跳信息与代码；3.7–3.8为真实字段／统计口径，22–23为优化影响及验收 |
+| [后端字段与数据契约核对](validation/BACKEND_FIELD_CONTRACTS_2026-10-11.md) | 本轮仅文档；真实字段、分母／完成口径、既有检查结果、保护范围与保留文件 |
+| [后端文档与优化依赖核对](validation/BACKEND_MAP_OPTIMIZATION_2026-10-11.md) | 此前仅文档、已提交／工作区区别、日志指纹、保护范围与文档检查 |
 | [后端文档此前源码核对](validation/BACKEND_MAP_CURRENT_2026-10-11.md) | 历史文档交付、当时已提交状态、现存日志指纹与文档检查 |
 | [后端文档此次核对](validation/BACKEND_MAP_REFRESH_2026-10-11.md) | 已提交与工作区状态区分、日志指纹、文档验证及未测范围 |
 | [康复 v2 进程与诊断验收](validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md) | 所属 YOLO 进程、取消／故障保护、有界 trace 及实际 ASGI 性能 |
