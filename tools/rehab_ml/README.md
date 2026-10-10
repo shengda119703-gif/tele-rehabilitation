@@ -34,7 +34,7 @@
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py verify-sessions --database-mode isolated
 ```
 
-2026-10-11 最新完整 `verify_all` 运行160项新后端、12项旧康复、19项旧手机测试及1308文件保护核验；30项关键点工具、12项原生存储和18项报告专测包含在160项中。[本轮工具验收](../../docs/validation/REHAB_POSE_TOOLS_2026-10-11.md)保留实际命令、日志与边界。此前会话CLI100项、[存储验收](../../docs/validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md)、118／88项 [报告隔离验收](../../docs/validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)、100／70项 [推理／诊断验收](../../docs/validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md) 和时间／贡献验证保留历史范围，不累加；本轮未另重跑会话CLI。这些是隔离工程测试，不是临床准确率或手机实机验收。
+2026-10-11 最新完整 `verify_all` 运行177项新后端、12项旧康复、19项旧手机测试及1308文件保护核验；17项VIDEO、30项关键点工具、12项原生存储和18项报告专测包含其中。[本轮VIDEO验收](../../docs/validation/REHAB_MEDIAPIPE_VIDEO_2026-10-11.md)与此前 [160项工具验收](../../docs/validation/REHAB_POSE_TOOLS_2026-10-11.md)保留各自实际命令、日志与边界。此前会话CLI100项、[存储验收](../../docs/validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md)、118／88项 [报告隔离验收](../../docs/validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)、100／70项 [推理／诊断验收](../../docs/validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md) 和时间／贡献验证保留历史范围，不累加；本轮未另重跑会话CLI。这些是隔离工程测试，不是临床准确率或手机实机验收。
 
 `RehabStorageBoundary`只适配v2的原Storage owning thread，不增加连接或写入器。实际SQLite结果码分为capacity／readonly／busy／corrupt／io／unavailable；初始化后的锁等待250ms不等于整个HTTP硬截止。错误返回`commit_state=not_confirmed_by_this_error`；恢复存储后先查询权威提交，再以原键重试。损坏文件保留，禁止自动删库或重建。运行态`last_storage_fault`是最后观察记录，不是当前健康探针。真实只读、外部写锁、SQLite容量上限和TEST文件头损坏已测，未占满物理硬盘或验证介质损坏／断电；已知一致备份只恢复备份内已有事实。
 
@@ -59,6 +59,10 @@ IRDS 整次正误标签只训练 Kinect 三维肩外展质量候选。坐站、�
 `extract-pose --video ... --exercise ... --side ... --analysis-consent yes` 使用原采集进程和真实 YOLO，保存私人骨架与新旧协议结果，不授予训练权限，也不把规则自身输出当真值。视频路径、私人骨架不上传 Git。
 
 `build-pose-dataset --reference ...` 已实现独立二维COCO17参考核验，以及masked／完整YOLO标签转换；`infer-pose-reference`复用原所属YOLO进程，`evaluate-pose`核对逐帧身份并输出误差、有效覆盖、PCK和分层证据。旧`--dataset`资格检查保留；`train-pose`仍以非零退出明确拒绝缺资格训练，没有微调器或自动上线。需要核实RGB权限、独立关节／可见性标注与专业动作参考；缺标关节不能写成负例，部分标注必须保留坐标／objectness分别的mask。具体输入、公式、命令和30项工具验证见 [工作流](../../docs/development/POSE_REFERENCE_WORKFLOW.md)。
+
+## 手机姿态输入的离线对照
+
+`extract-mediapipe-video`处理本地授权视频，权重与本机APK build核对、参数参照原worker；不改原IMAGE组件／Android，不声称SDK相同或手机性能。`compare-video-pose`检查同录像、PTS、原像素hash和骨架语义再计算模型差异；无独立参考时不是误差或准确率。17项与两段原片真实7条CLI见 [VIDEO工作流](../../docs/development/MEDIAPIPE_VIDEO_AUDIT.md)，公开聚合证据见`reports/rehab_backend/mediapipe_video_verification.json`；原片和33点只在忽略目录。
 
 ## 骨架审核图
 

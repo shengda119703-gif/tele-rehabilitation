@@ -1,5 +1,13 @@
 # 当前交接：安康双端整合
 
+## 2026-10-11 手机姿态输入的 MediaPipe VIDEO 对照
+
+基于`bf698a3`继续任务书12.4，新增分析授权录像的Python VIDEO子进程工具与同帧模型差异比较，复用本机`.venv-landmarks`／原full.task，不改Android或正式IMAGE后端。本机Android build与原模型SHA相同，Python1.0.1与APK JS0.10.32仍是不同SDK，不能声称手机已验证。保留33点visibility／presence／图像z及原PTS，不把world估计当真值；复用EvidenceAdapter／ProtocolEngine做离线回放，不保存患者训练历史。
+
+实际`mediapipe-audit-97d814f4`跑17项及7条CLI，两段原片分别由原YOLO和MP重新处理，再按PTS＋解码BGR SHA配对443／429帧；每段MP首帧单列未配对。肩主指标共享帧覆盖YOLO434／443、MP424／443，平均模型角度差4.491°；MP完整输入425／444可观测。深蹲YOLO48／429、MP0／429。两模型新协议次数均0，没有独立参考，不能写准确率改善。最新完整`verification-b2b7fc2e`177／12／19项通过，1308保护文件一致，17项为177项子集。命令、SHA及受控取消／原生烟测区别见 [验收](validation/REHAB_MEDIAPIPE_VIDEO_2026-10-11.md) 和 [工作流](development/MEDIAPIPE_VIDEO_AUDIT.md)。
+
+深蹲宿主现有计划库没有独立动作定义，本轮没有把膝屈曲或健身深蹲改名，也没有新处方／剂量／资格政策；适用计划绑定仍待补。真人RGB权限／专业参考、姿态微调、目标手机／压力／物理故障验证也未完成。280份用户素材等不改、不提交。产品0.20.0、APK0.2.1、v2默认关闭，首页／康复／健康／用药／家庭不变；桌面“安康康复（最新版本）”提交后仅刷新Git描述，不开相机／重启原服务／关闭旧窗口。整体任务保持进行中。
+
 ## 2026-10-11 RGB 关键点转换与独立误差评估
 
 按后端任务书12.1–12.3补齐缺少真人标注时仍可完成的工具，基于`a9e31cc`交付。新增独立参考清单／模板、原图与帧身份核验、masked导出、完整COCO17的YOLO导出、原模型所属进程预测及分关节／人员／动作／视角误差与覆盖评估。未标点不作为不存在负例；原Ultralytics坐标与objectness损失不同，部分标注明确拒绝进入stock训练格式。所有预测与参考绑定hash／尺寸／帧序／源时间；无预测仍进入覆盖分母，不填0误差。数据流、公式、命令与限制见 [关键点工作流](development/POSE_REFERENCE_WORKFLOW.md) 和 [验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)。

@@ -5,6 +5,8 @@
 | 文档 | 内容 |
 | --- | --- |
 | [后端功能、算法与数据流梳理](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md) | 三端后端域、公式／状态、逐跳信息与代码；3.7–3.8为真实字段／统计口径，22–23为优化影响及验收 |
+| [手机姿态输入VIDEO工作流](development/MEDIAPIPE_VIDEO_AUDIT.md) | 同模型Python近似、33点原语义、源时间／像素配对与模型差异；不修改APK |
+| [MediaPipe VIDEO本机验收](validation/REHAB_MEDIAPIPE_VIDEO_2026-10-11.md) | 两段真实分析授权录像、7条CLI、17项子集及177／12／19回归；不是准确率或手机性能 |
 | [RGB 关键点参考与评估工作流](development/POSE_REFERENCE_WORKFLOW.md) | 权限／独立标点、缺标mask、YOLO导出、原模型预测、逐关节误差与覆盖公式；不代表微调完成 |
 | [RGB 关键点工具验收](validation/REHAB_POSE_TOOLS_2026-10-11.md) | 160／12／19回归、30项工具子集、7条CLI及本机YOLO格式解析；夹具与真人证据区别 |
 | [康复 v2 原生存储验收](validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md) | 实际SQLite只读／锁／容量／损坏副本、幂等重试与备份恢复；130／100项工程范围与物理故障区别 |

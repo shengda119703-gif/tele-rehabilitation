@@ -1,0 +1,232 @@
+{
+  "run_id": "mediapipe-audit-97d814f4",
+  "commands": [
+    {
+      "name": "unit",
+      "exit_code": 0,
+      "elapsed_s": 3.337070199999289,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mediapipe-audit-97d814f4\\unit.txt",
+      "log_sha256": "eea9a9801d6cfbddcdc3b6b1d9cf162340f94c0da15365ab0bff607e39122774",
+      "tail": "(test_mediapipe_video.MediaPipeVideoTests.test_same_pts_different_pixels_is_rejected) ... ok\ntest_source_action_side_and_training_scope_are_not_mixed (test_mediapipe_video.MediaPipeVideoTests.test_source_action_side_and_training_scope_are_not_mixed) ... ok\ntest_unconfirmed_owned_release_remains_failure (test_mediapipe_video.MediaPipeVideoTests.test_unconfirmed_owned_release_remains_failure) ... ok\n\n----------------------------------------------------------------------\nRan 17 tests in 3.129s\n\nOK\n"
+    },
+    {
+      "name": "shoulder_yolo",
+      "exit_code": 0,
+      "elapsed_s": 25.906888999998046,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mediapipe-audit-97d814f4\\shoulder_yolo.txt",
+      "log_sha256": "e57895dd7207f8faf6267fc6c337f8d2f09c8dc80ba8b9a055c2bd65dfc5a624",
+      "tail": "{\"ok\": true, \"command\": \"extract-pose\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\target-replay-97a9fa1b9f06-d3db6567\\\\result.json\", \"video_sha256\": \"97a9fa1b9f06de6482c06c109f40bc4e6e1681f53dde6fd7f478b5ac59405e0d\", \"frames\": 443, \"v2_completed\": 0, \"legacy_completed\": 2, \"observable_frames\": 434, \"elapsed_s\": 25.329489899999317, \"training_authorized\": false}}\n"
+    },
+    {
+      "name": "shoulder_mediapipe",
+      "exit_code": 0,
+      "elapsed_s": 16.38485969999965,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mediapipe-audit-97d814f4\\shoulder_mediapipe.txt",
+      "log_sha256": "ad8560797bbe2210c69bfd82dc50502dbb68a7a1f5b2ba44bab8ac8ae2a83507",
+      "tail": "diapipe-video\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\mediapipe-audit-97d814f4\\\\shoulder-mp\\\\result.json\", \"video_sha256\": \"97a9fa1b9f06de6482c06c109f40bc4e6e1681f53dde6fd7f478b5ac59405e0d\", \"frames\": 444, \"observable_frames\": 425, \"v2_completed\": 0, \"elapsed_s\": 14.62989060000109, \"training_authorized\": false, \"phone_performance\": null, \"result_sha256\": \"fa5806dde0be11e4fad41a31069490abeb78d7ebbbd6e46d6798d03ca306f059\", \"owned_exit_confirmed\": true}}\n"
+    },
+    {
+      "name": "shoulder_compare",
+      "exit_code": 0,
+      "elapsed_s": 0.25346929999795975,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mediapipe-audit-97d814f4\\shoulder_compare.txt",
+      "log_sha256": "3f5d22f34ece32292fc97a8faf0f4ac48cc6e519dec40e6d6ab1d4678450862c",
+      "tail": ": true, \"command\": \"compare-video-pose\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\mediapipe-audit-97d814f4\\\\shoulder-comparison\\\\comparison.json\", \"artifact_sha256\": \"1717df965fdf34ad7f0f42a05cd98843727a53e3cb0d9c14a777d6b6d0fe726e\", \"frames\": {\"yolo\": 443, \"mediapipe\": 444, \"timestamp_and_pixel_matched\": 443, \"yolo_unpaired\": 0, \"mediapipe_unpaired\": 1}, \"clinical_accuracy\": null, \"comparison_kind\": \"model_disagreement_not_independent_reference_error\"}}\n"
+    },
+    {
+      "name": "squat_yolo",
+      "exit_code": 0,
+      "elapsed_s": 24.817485800002032,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mediapipe-audit-97d814f4\\squat_yolo.txt",
+      "log_sha256": "b97680e49f565d958a65216ec1df1712fe21e59f514340a3b669456f66e5d43a",
+      "tail": "{\"ok\": true, \"command\": \"extract-pose\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\target-replay-c384d08c0bc6-555c85dd\\\\result.json\", \"video_sha256\": \"c384d08c0bc64d12939940e85b1f62b4ae29d470d27d0695054d786873779c95\", \"frames\": 429, \"v2_completed\": 0, \"legacy_completed\": null, \"observable_frames\": 48, \"elapsed_s\": 24.275343400000565, \"training_authorized\": false}}\n"
+    },
+    {
+      "name": "squat_mediapipe",
+      "exit_code": 0,
+      "elapsed_s": 15.878575299997465,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mediapipe-audit-97d814f4\\squat_mediapipe.txt",
+      "log_sha256": "086aaa63b3bb7fe683ca7c46b6ccfa1ccbea3b7933fc42309d87affcba02288f",
+      "tail": "t-mediapipe-video\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\mediapipe-audit-97d814f4\\\\squat-mp\\\\result.json\", \"video_sha256\": \"c384d08c0bc64d12939940e85b1f62b4ae29d470d27d0695054d786873779c95\", \"frames\": 430, \"observable_frames\": 0, \"v2_completed\": 0, \"elapsed_s\": 13.949090999998589, \"training_authorized\": false, \"phone_performance\": null, \"result_sha256\": \"69ae81fa96538c9d8695e8e1a6f2a0cbf325bc393023945f5c87f5f553da4174\", \"owned_exit_confirmed\": true}}\n"
+    },
+    {
+      "name": "squat_compare",
+      "exit_code": 0,
+      "elapsed_s": 0.21783700000014505,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mediapipe-audit-97d814f4\\squat_compare.txt",
+      "log_sha256": "953e367916680be85a3b85706717be104580360f172dab6b8844f182df4de2ac",
+      "tail": "ok\": true, \"command\": \"compare-video-pose\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\mediapipe-audit-97d814f4\\\\squat-comparison\\\\comparison.json\", \"artifact_sha256\": \"df3dcfdf4e556227e0384d89231f8e72a4c916d7617048ce8161926524a41889\", \"frames\": {\"yolo\": 429, \"mediapipe\": 430, \"timestamp_and_pixel_matched\": 429, \"yolo_unpaired\": 0, \"mediapipe_unpaired\": 1}, \"clinical_accuracy\": null, \"comparison_kind\": \"model_disagreement_not_independent_reference_error\"}}\n"
+    }
+  ],
+  "results": [
+    {
+      "exercise_id": "shoulder_abduction",
+      "video_sha256": "97a9fa1b9f06de6482c06c109f40bc4e6e1681f53dde6fd7f478b5ac59405e0d",
+      "yolo_result_sha256": "b1ca2e7a59e1a13e91baad6119b0aef190c8fb1f2901f2f40748760e770cc99b",
+      "mediapipe_result_sha256": "fa5806dde0be11e4fad41a31069490abeb78d7ebbbd6e46d6798d03ca306f059",
+      "comparison_sha256": "1717df965fdf34ad7f0f42a05cd98843727a53e3cb0d9c14a777d6b6d0fe726e",
+      "frames": {
+        "yolo": 443,
+        "mediapipe": 444,
+        "timestamp_and_pixel_matched": 443,
+        "yolo_unpaired": 0,
+        "mediapipe_unpaired": 1
+      },
+      "yolo_observable_frames": 434,
+      "mediapipe_observable_frames": 425,
+      "yolo_v2_completed": 0,
+      "mediapipe_v2_completed": 0,
+      "yolo_timing": {
+        "basis": "opencv_media_pts",
+        "skipped_leading_frames": 1,
+        "last_skipped_raw_time_s": -0.03447777777777778
+      },
+      "mediapipe_timing": {
+        "basis": "opencv_media_pts",
+        "skipped_leading_frames": 0,
+        "last_skipped_raw_time_s": null,
+        "video_api_timestamp": "round(media_pts_seconds*1000)",
+        "timestamps_not_filled": true
+      },
+      "mediapipe_runtime": {
+        "python": "3.13.12",
+        "mediapipe": "1.0.1",
+        "opencv": "5.0.0",
+        "numpy": "2.5.3"
+      },
+      "mediapipe_model": {
+        "weights_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+        "python_sdk_required": "1.0.1",
+        "apk_javascript_sdk_locked": "0.10.32",
+        "apk_build_model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+        "apk_build_weight_matches": true,
+        "installed_apk_weights_not_verified": true,
+        "mode": "VIDEO",
+        "delegate": "CPU",
+        "num_poses": 1,
+        "min_pose_detection_confidence": 0.5,
+        "min_pose_presence_confidence": 0.5,
+        "min_tracking_confidence": 0.5,
+        "options_basis": "unchanged_android_offline/web/worker.js",
+        "sdk_platform_and_decoding_not_identical": true,
+        "phone_performance_not_measured": true
+      },
+      "mediapipe_inference_latency_ms": {
+        "p50": 21.11210000293795,
+        "p95": 22.65350000016042
+      },
+      "angle_disagreement": {
+        "elbow_flexion_deg": {
+          "shared_valid_samples": 423,
+          "mean_absolute_disagreement": 5.880649638324082,
+          "p95_absolute_disagreement": 16.255126280700154,
+          "yolo_valid": 431,
+          "mediapipe_valid": 423,
+          "shared_frame_denominator": 443
+        },
+        "raise_deg": {
+          "shared_valid_samples": 424,
+          "mean_absolute_disagreement": 4.491231680712728,
+          "p95_absolute_disagreement": 10.404513265372422,
+          "yolo_valid": 434,
+          "mediapipe_valid": 424,
+          "shared_frame_denominator": 443
+        },
+        "trunk_tilt_deg": {
+          "shared_valid_samples": 420,
+          "mean_absolute_disagreement": 0.7332771411046292,
+          "p95_absolute_disagreement": 2.0485176547558894,
+          "yolo_valid": 420,
+          "mediapipe_valid": 434,
+          "shared_frame_denominator": 443
+        }
+      },
+      "parent_provenance_sha256": "b34ea41d9da7aae4fafd7d51461ededa573d5c3d7a162a9e0f9acf6ea61f796a",
+      "owned_mediapipe_exit_confirmed": true
+    },
+    {
+      "exercise_id": "rehab_squat",
+      "video_sha256": "c384d08c0bc64d12939940e85b1f62b4ae29d470d27d0695054d786873779c95",
+      "yolo_result_sha256": "28b67f23cc535ba756c914af1608d311b2655e2ed113ab368b3ee9f876d98f5e",
+      "mediapipe_result_sha256": "69ae81fa96538c9d8695e8e1a6f2a0cbf325bc393023945f5c87f5f553da4174",
+      "comparison_sha256": "df3dcfdf4e556227e0384d89231f8e72a4c916d7617048ce8161926524a41889",
+      "frames": {
+        "yolo": 429,
+        "mediapipe": 430,
+        "timestamp_and_pixel_matched": 429,
+        "yolo_unpaired": 0,
+        "mediapipe_unpaired": 1
+      },
+      "yolo_observable_frames": 48,
+      "mediapipe_observable_frames": 0,
+      "yolo_v2_completed": 0,
+      "mediapipe_v2_completed": 0,
+      "yolo_timing": {
+        "basis": "opencv_media_pts",
+        "skipped_leading_frames": 1,
+        "last_skipped_raw_time_s": -0.03333333333333333
+      },
+      "mediapipe_timing": {
+        "basis": "opencv_media_pts",
+        "skipped_leading_frames": 0,
+        "last_skipped_raw_time_s": null,
+        "video_api_timestamp": "round(media_pts_seconds*1000)",
+        "timestamps_not_filled": true
+      },
+      "mediapipe_runtime": {
+        "python": "3.13.12",
+        "mediapipe": "1.0.1",
+        "opencv": "5.0.0",
+        "numpy": "2.5.3"
+      },
+      "mediapipe_model": {
+        "weights_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+        "python_sdk_required": "1.0.1",
+        "apk_javascript_sdk_locked": "0.10.32",
+        "apk_build_model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+        "apk_build_weight_matches": true,
+        "installed_apk_weights_not_verified": true,
+        "mode": "VIDEO",
+        "delegate": "CPU",
+        "num_poses": 1,
+        "min_pose_detection_confidence": 0.5,
+        "min_pose_presence_confidence": 0.5,
+        "min_tracking_confidence": 0.5,
+        "options_basis": "unchanged_android_offline/web/worker.js",
+        "sdk_platform_and_decoding_not_identical": true,
+        "phone_performance_not_measured": true
+      },
+      "mediapipe_inference_latency_ms": {
+        "p50": 20.998100000724662,
+        "p95": 22.82550000018091
+      },
+      "angle_disagreement": {
+        "knee_flexion_deg": {
+          "shared_valid_samples": 0,
+          "mean_absolute_disagreement": null,
+          "p95_absolute_disagreement": null,
+          "yolo_valid": 48,
+          "mediapipe_valid": 0,
+          "shared_frame_denominator": 429
+        }
+      },
+      "parent_provenance_sha256": "bda4374a387ebe3dea45eca7536635616883b28864868a87eddf1808f3df18cf",
+      "owned_mediapipe_exit_confirmed": true
+    }
+  ],
+  "passed": true,
+  "evidence_scope": "two_authorized_private_RGB_clips_python_VIDEO_approximation_not_phone_or_accuracy",
+  "private_RGB_and_keypoints_published": false,
+  "independent_reference_available": false,
+  "clinical_accuracy": null,
+  "training_performed": false,
+  "apk_modified": false,
+  "implementation_sha256": {
+    "tools/rehab_ml/mediapipe_video.py": "43f10804601a0ef87e4cb47f3108be2e21a0de4652e4464d18630d2099a60c99",
+    "tools/rehab_ml/pose_video_compare.py": "0ed92c239129fe842651b83e053e68968bd76b3cdd77aae2d6a025f7263de64d",
+    "tools/rehab_ml/verify_mediapipe_video.py": "fb038ca31797c1b916da497ac01ccd46af62d0bbded18c42e9e904c8c1db6e6f",
+    "tools/rehab_ml/target_domain.py": "f61bb03e20f8d4097f849664d716c102521f50fe0bb58b4a35caf201178dc79e",
+    "tools/rehab_ml/cli.py": "f4f6007b76fe619dce43c33edc76f5fc9a2c61afa905e850c268bf6491270806",
+    "tests/rehab_backend/test_mediapipe_video.py": "f4c116306809c8a5a739433ac57c3339169b877c3fbbf77f179a09357ee634b5"
+  }
+}

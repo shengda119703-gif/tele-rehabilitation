@@ -74,6 +74,16 @@ def parser():
     item.add_argument('--exercise', choices=['shoulder_abduction', 'sit_to_stand', 'rehab_squat'], required=True)
     item.add_argument('--side', choices=['left', 'right'], required=True)
     item.add_argument('--analysis-consent', choices=['yes'], required=True)
+    item = sub.add_parser('extract-mediapipe-video', help='Offline Python VIDEO approximation using existing APK-matched model; not phone validation')
+    item.add_argument('--video', type=Path, required=True)
+    item.add_argument('--exercise', choices=['shoulder_abduction', 'sit_to_stand', 'rehab_squat'], required=True)
+    item.add_argument('--side', choices=['left', 'right'], required=True)
+    item.add_argument('--analysis-consent', choices=['yes'], required=True)
+    item.add_argument('--output-dir', type=Path)
+    item = sub.add_parser('compare-video-pose', help='Compare timestamp and decoded-pixel matched pose inputs; disagreement is not accuracy')
+    item.add_argument('--yolo-result', type=Path, required=True)
+    item.add_argument('--mediapipe-result', type=Path, required=True)
+    item.add_argument('--output-dir', type=Path, required=True)
     sub.add_parser('supervision-status', help='Report missing license/target-domain supervision; never imply training success')
     item = sub.add_parser('verify-sessions', help='Run lifecycle, idempotency, crash and boundary tests on isolated databases')
     item.add_argument('--database-mode', choices=['isolated'], required=True)
@@ -117,6 +127,13 @@ def main(argv=None):
             write_json(output, dict(status, requested_command=args.command,
                 implemented='reference_conversion_and_evaluation_available_pose_training_refused'))
             raise RuntimeError('Pose training refused: verified target RGB permission and independent 2D/visibility labels missing; '+str(output))
+        elif args.command == 'extract-mediapipe-video':
+            from tools.rehab_ml.mediapipe_video import extract_mediapipe
+            value = extract_mediapipe(args.video, args.exercise, args.side,
+                analysis_consent=args.analysis_consent == 'yes', output_dir=args.output_dir)
+        elif args.command == 'compare-video-pose':
+            from tools.rehab_ml.pose_video_compare import compare_video_inputs
+            value = compare_video_inputs(args.yolo_result, args.mediapipe_result, args.output_dir)
         elif args.command in ('extract-pose', 'supervision-status'):
             from tools.rehab_ml.target_domain import extract_pose, supervision_status
             value = extract_pose(args.video, args.exercise, args.side) if args.command == 'extract-pose' else supervision_status()

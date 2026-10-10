@@ -2,9 +2,9 @@
 
 > 用途：供团队讨论准确性、可靠性和下一轮后端重构。本文不是路演宣传稿，也不是医疗操作指南。
 >
-> 核对日期：2026-10-11。本轮基准工作树为 `a9e31cce518c0fa2367b1394848c570afcf72307`；本轮RGB关键点转换／独立误差评估随本文件所在交付提交发布。基准包含原三端产品、康复 v2 所属推理／诊断、默认派生报告隔离及原生SQLite故障边界。电脑端与托管手机产品版本为 0.20.0，现有 APK 安装包为 0.2.1。第 4–15 节描述原产品路径；第 17 节说明默认关闭的康复 v2 与研究模型；第 18–23 节用于定位代码、追查信息传递和设计优化实验。
+> 核对日期：2026-10-11。本轮基准工作树为 `bf698a3be2e7b6a94d174b41716cd8ae8ae95e34`；本轮Python VIDEO姿态输入近似及真实两原片对照随本文件交付。基准包含原三端产品、康复v2所属推理／报告、SQLite边界与独立关键点工具。电脑端与托管手机产品为0.20.0、APK0.2.1。第4–15节描述原产品；第17节说明默认关闭v2与研究模型；第18–23节用于代码／信息交接和优化实验。
 >
-> 本轮继续后端任务书，补齐17.10的RGB参考／转换／评估工具，见 [工作流](development/POSE_REFERENCE_WORKFLOW.md) 和 [工具验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)；不改正式UI、权重、APK、原服务或正常用户数据。此前SQLite实现见17.5.4和 [存储验收](validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md)。旧性能报告保留当时的基准，不倒改实验版本。下文的“源码实现”“工程测试通过”“用户端已接通”“真人准确性已验证”是四种不同结论。此前报告实现见 [报告隔离验收](validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)；历史梳理见 [文档与优化依赖核对](validation/BACKEND_MAP_OPTIMIZATION_2026-10-11.md) 和 [数据契约核对](validation/BACKEND_FIELD_CONTRACTS_2026-10-11.md)。后端实施总任务仍未整体完成。
+> 本轮继续任务书12.4，补17.11的MP VIDEO输入与时间／像素配对工具，见 [工作流](development/MEDIAPIPE_VIDEO_AUDIT.md) 和 [验收](validation/REHAB_MEDIAPIPE_VIDEO_2026-10-11.md)，不改正式UI、权重、APK、原服务或用户数据库。17.10及 [关键点验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)保留上次范围；SQLite见17.5.4及 [存储验收](validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md)，报告见 [隔离验收](validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)。旧性能／训练不倒改版本。“源码实现”“工程测试通过”“用户端接通”“真人准确性验证”是不同结论。总任务未整体完成。
 
 ### 快速阅读
 
@@ -1009,7 +1009,7 @@ JSON 原子替换可降低半写文件风险，但没有跨文件事务，也不
 
 此前字段文档交付收取已经启动的会话CLI，`replay-2167d5a9` 的100项／82.646秒通过，命令耗时83.272秒、exit0，日志SHA256为 `e97c209a9307264c90005e2dbe4c28faeb701297fce4e865b7f17adaa40495e4`。100项是130项子集，本轮核对日志后随存储实现发布；另专项复验12项／12.689秒通过。不称重新启动的完整回归或算法准确率。历史字段核对保留在 [数据契约核对](validation/BACKEND_FIELD_CONTRACTS_2026-10-11.md)。
 
-本轮关键点工具交付实际运行`verification-0bba991b`：160项新后端、12项旧康复、19项旧手机通过，1308保护文件一致。专项`pose-tools-57a19221`30项包含于160项，7条CLI均按预期退出；本机YOLO库另实际解析三份导出标签。参考点／空图为明确TEST夹具，不是新真人标注或精度验收，实际误差／覆盖口径见17.10及 [本轮工具验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)。会话CLI100项是此前记录，本轮未重跑。
+前一轮关键点工具实际运行`verification-0bba991b`160／12／19项，专项30项及7条CLI，见17.10及 [当时验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)。本轮`verification-b2b7fc2e`177／12／19项、1308保护通过，包含17项VIDEO；`mediapipe-audit-97d814f4`实际跑两原片／7条CLI、时间和像素配对，见17.11与 [本轮验收](validation/REHAB_MEDIAPIPE_VIDEO_2026-10-11.md)。没有独立参考或手机验证，工程计数不当准确率；会话CLI100项仍为历史，本轮未重跑。
 
 以上是有日期和范围的验证，本轮没有重跑全部产品／Android／Agent 回归。它们不能替代真人角度／器械精度、疾病预测、公网、手环、相机和红米实机验收，也不能互相累加成一个“总准确率”。原产品细节见 [本机同步验证](validation/GITHUB_SYNC_2026-10-11.md)。
 
@@ -1357,6 +1357,21 @@ TCN 感受野 `R = 1 + 2×(3−1)×(1+2+4+8) = 61` 步。20 Hz 名义采样下�
 设J为人工已定位参考点，C为其中当前有效预测点：`e_j=||p_j-r_j||₂`，`d_s`为完整人体框对角线；`coverage=|C|/|J|`，像素均误差`Σe_j/|C|`，`PCK_all=Σ1[e_j/d_s≤τ]/|J|`，`PCK_covered`分母为`|C|`。缺帧／低conf／出画不能成为0误差，只降低覆盖和PCK_all；空集合对应指标null。默认τ=0.05为工程比较参数，非临床标准。疑似左右交换单列，不当作已证实的解剖错误。
 
 本机原Ultralytics的坐标损失用visibility遮罩，而objectness对全部点计算；未标点不能简单写0，所以工具拒绝部分mask的stock YOLO导出。masked格式保留两种损失mask，但尚无对应训练器。原YOLO每图重置Context并用参考框辅助匹配，因此不能用其结果证明无人辅助跟踪、专业角度／计次正确或手机性能。实际工具验证与源文件hash见 [验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)。
+
+### 17.11 原手机权重的 Python VIDEO → 33点证据 → 同帧模型差异
+
+离线输入复用原full.task与独立landmark环境，参数参照原APK worker：VIDEO、CPU、单人、detection／presence／tracking均0.5；Python1.0.1与JS0.10.32不同，不等于目标手机运行。原IMAGE组件／Android／正式计划和SQL都不改。实现：[mediapipe_video.py](../tools/rehab_ml/mediapipe_video.py)、[pose_video_compare.py](../tools/rehab_ml/pose_video_compare.py)，命令与边界见 [工作流](development/MEDIAPIPE_VIDEO_AUDIT.md)。
+
+| 输入与输出链 | 保留／核对的信息 | 后续用途 |
+| --- | --- | --- |
+| 原录像 → 解码 | 原视频SHA、原PTS、尺寸、BGR SHA、明确跳过的preroll | 确认两环境处理的是同帧；不补时间 |
+| VIDEO → Pose33 | 原pixel x／y、visibility／presence／图像z；world不用于几何 | 按原阈值／原解剖顺序交给EvidenceAdapter／ProtocolEngine；不是临床真值 |
+| YOLO与MP → 配对 | 同视频／动作／侧、时间≤1µs、尺寸与像素SHA一致；未配对单列 | COCO17名称映射Pose33，共同有效点才算数值差异 |
+| 配对 → 报告 | `||p_y−p_mp||₂`、`|θ_y−θ_mp|`、共同有效样本数及各端覆盖 | 发现需专业参考的分歧，不用一致性证明准确或自动换模型 |
+
+本轮肩443共享帧：主指标YOLO434有效、MP424有效，共同424帧角差均值4.491°／p95 10.405°；深蹲429共享帧，YOLO48、MP0，没有共同有效角度，差异null。每段MP额外首帧单列，自己的EMA和准备历史保留。两端新协议次数均0；数据说明不是换模型就能解决本片缺测，不能降低门控来制造完成。两种confidence未概率校准，参考机位也未专业核验。
+
+所属子进程超时／取消只清理准确对象，未确认退出明确失败；OS创建本身没有硬截止。17项含受控Popen故障及真实4帧白色TEST视频，两段真人录像另独立实际推理；不混成真人准确性证据。模型原样保留，不训练／上线，验收见 [本轮记录](validation/REHAB_MEDIAPIPE_VIDEO_2026-10-11.md)。
 
 <a id="backend-optimization"></a>
 

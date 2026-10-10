@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -65,12 +66,15 @@ def extract_pose(video, exercise, side):
                 frames += 1
                 latencies.append(1000*(time.perf_counter()-tick))
                 stream.write(json.dumps(clean_json(dict(seq=pose.seq, time_s=pose.time_s,
+                     decoded_bgr_sha256=hashlib.sha256(packet.image.tobytes()).hexdigest(),
                      schema_id=pose.schema_id, coordinate_space=pose.coordinate_space,
                      model_manifest_id=pose.model_manifest_id, size=pose.size,
                      people=pose.people, metrics=evidence.metrics)), ensure_ascii=False, allow_nan=False)+'\n')
                 camera.worker.acknowledge(packet.seq)
         if frames < 3:
             raise ValueError('No usable decoded frames')
+        if file_hash(source) != source_hash:
+            raise ValueError('Replay source changed during analysis')
         engine.finish('user_stopped')
         if legacy:
             legacy.finish('user_stop')
