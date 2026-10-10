@@ -131,4 +131,6 @@ def supervision_status():
                              'professionally_reviewed_phase_and_observability_labels'],
                 dataset_status={key: value['license_status'] for key, value in load_registry().items()},
                 training_allowed=False, model_activated=False,
+                available_pose_tools=['build-pose-dataset --reference', 'infer-pose-reference', 'evaluate-pose'],
+                pose_tool_scope='consented_independent_rgb_reference_conversion_and_offline_evaluation_not_training',
                 next_required='Verified dataset eligibility/access or consented independently annotated target video')

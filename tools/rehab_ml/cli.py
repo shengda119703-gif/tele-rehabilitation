@@ -49,9 +49,24 @@ def parser():
     item.add_argument('--suite', choices=['rehab_core'], required=True)
     item.add_argument('--baseline', required=True)
     item.add_argument('--candidate', required=True)
-    item = sub.add_parser('build-pose-dataset', help='Qualification gate: no absent joints written as negative labels')
-    item.add_argument('--dataset', choices=['rehab24_6', 'mobiphysio', 'sumedipose'], required=True)
+    item = sub.add_parser('build-pose-dataset', help='Convert verified independent RGB labels; unknown masks never become negatives')
+    source = item.add_mutually_exclusive_group(required=True)
+    source.add_argument('--dataset', choices=['rehab24_6', 'mobiphysio', 'sumedipose'])
+    source.add_argument('--reference', type=Path, help='Consent-scoped RGB reference manifest, not model pseudo-labels')
     item.add_argument('--target-schema', choices=['coco17'], required=True)
+    item.add_argument('--output-format', choices=['masked', 'yolo_pose'], default='masked')
+    item.add_argument('--output-dir', type=Path)
+    item = sub.add_parser('infer-pose-reference', help='Pinned original YOLO on authorized reference images; no training or camera')
+    item.add_argument('--reference', type=Path, required=True)
+    item.add_argument('--split', choices=['val', 'test'], required=True)
+    item.add_argument('--output-dir', type=Path, required=True)
+    item = sub.add_parser('evaluate-pose', help='Independent per-joint RGB error and coverage; missing predictions remain in denominators')
+    item.add_argument('--reference', type=Path, required=True)
+    item.add_argument('--predictions', type=Path, required=True)
+    item.add_argument('--split', choices=['val', 'test'], required=True)
+    item.add_argument('--confidence-min', type=float, default=.5)
+    item.add_argument('--pck-threshold', type=float, default=.05)
+    item.add_argument('--output-dir', type=Path, required=True)
     item = sub.add_parser('train-pose', help='Qualification gate: pose fine-tuning requires verified independent labels')
     item.add_argument('--config', type=Path, required=True)
     item = sub.add_parser('extract-pose', help='Analyze authorized local RGB video; does not grant training permission')
@@ -82,13 +97,25 @@ def main(argv=None):
         elif args.command == 'compare':
             from tools.rehab_ml.model_registry import compare
             value = compare(args.baseline, args.candidate)
+        elif args.command == 'build-pose-dataset' and args.reference is not None:
+            from tools.rehab_ml.pose_dataset import convert
+            if args.output_dir is None:
+                raise ValueError('Explicit new --output-dir required for private pose conversion')
+            value = convert(args.reference, args.output_dir, output_format=args.output_format)
+        elif args.command == 'infer-pose-reference':
+            from tools.rehab_ml.pose_inference import infer_baseline
+            value = infer_baseline(args.reference, args.output_dir, split=args.split)
+        elif args.command == 'evaluate-pose':
+            from tools.rehab_ml.pose_dataset import evaluate
+            value = evaluate(args.reference, args.predictions, args.output_dir, split=args.split,
+                             confidence_min=args.confidence_min, pck_threshold=args.pck_threshold)
         elif args.command in ('build-pose-dataset', 'train-pose'):
             from tools.rehab_ml.target_domain import supervision_status
             from tools.rehab_ml.common import write_json
             status = supervision_status()
             output = ROOT / 'reports/rehab_backend/pose_supervision_blocker.json'
             write_json(output, dict(status, requested_command=args.command,
-                implemented='qualification_and_refusal_only_not_a_pose_training_pipeline'))
+                implemented='reference_conversion_and_evaluation_available_pose_training_refused'))
             raise RuntimeError('Pose training refused: verified target RGB permission and independent 2D/visibility labels missing; '+str(output))
         elif args.command in ('extract-pose', 'supervision-status'):
             from tools.rehab_ml.target_domain import extract_pose, supervision_status

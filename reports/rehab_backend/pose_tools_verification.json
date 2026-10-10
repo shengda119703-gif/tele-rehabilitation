@@ -1,0 +1,165 @@
+{
+  "run_id": "pose-tools-57a19221",
+  "evidence_scope": "synthetic_tool_verification_not_target_accuracy",
+  "commands": [
+    {
+      "name": "unit",
+      "arguments": [
+        "-m",
+        "unittest",
+        "-v",
+        "test_pose_dataset"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "elapsed_s": 5.211977499999193,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\unit.txt",
+      "log_sha256": "9bd5f75850a8c619ecc5cb2a09396adf7f1b330a90576c0b0d6fc5de9f5ce113",
+      "tail": "se_dataset.PoseDatasetTests.test_unannotated_point_does_not_enter_error_or_absence_denominator) ... ok\ntest_unknown_joint_zero_placeholder_is_not_a_negative_label (test_pose_dataset.PoseDatasetTests.test_unknown_joint_zero_placeholder_is_not_a_negative_label) ... ok\ntest_unmatched_status_cannot_carry_predicted_evidence (test_pose_dataset.PoseDatasetTests.test_unmatched_status_cannot_carry_predicted_evidence) ... ok\ntest_yolo_complete_labels_use_original_bbox_axes_and_anatomical_flip (test_pose_dataset.PoseDatasetTests.test_yolo_complete_labels_use_original_bbox_axes_and_anatomical_flip) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 5.043s\n\nOK\n"
+    },
+    {
+      "name": "masked",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "build-pose-dataset",
+        "--reference",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\reference.json",
+        "--target-schema",
+        "coco17",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\masked"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "elapsed_s": 0.16900220000025,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\masked.txt",
+      "log_sha256": "0fa5ae1b483e80cb9b338833830c2859f21562c66629d2e80f04284d6e1bcaa6",
+      "tail": "{\"ok\": true, \"command\": \"build-pose-dataset\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-tools-57a19221\\\\masked\\\\conversion.json\", \"samples\": 3, \"output_format\": \"masked\", \"labels_format_ready\": false, \"fine_tuning_qualified\": false, \"artifact_sha256\": \"eb7e5d0cf33758226e70b6e1b533b8f370786c116925eddd86bcd0d5ca889466\"}}\n"
+    },
+    {
+      "name": "yolo",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "build-pose-dataset",
+        "--reference",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\reference.json",
+        "--target-schema",
+        "coco17",
+        "--output-format",
+        "yolo_pose",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\yolo"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "elapsed_s": 0.20093529999940074,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\yolo.txt",
+      "log_sha256": "c9d536d8db0f7eab01ae2894b5f0eb03f9573a67192733c13b775d945ba7d8b2",
+      "tail": "{\"ok\": true, \"command\": \"build-pose-dataset\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-tools-57a19221\\\\yolo\\\\conversion.json\", \"samples\": 3, \"output_format\": \"yolo_pose\", \"labels_format_ready\": true, \"fine_tuning_qualified\": false, \"artifact_sha256\": \"46821c6fc0db9addb3f5b40f3d4d967c7c694e241e9d307046f80ebd2c8f1013\"}}\n"
+    },
+    {
+      "name": "baseline",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "infer-pose-reference",
+        "--reference",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\reference.json",
+        "--split",
+        "test",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\baseline"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "elapsed_s": 2.5262814999987313,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\baseline.txt",
+      "log_sha256": "0907357ef08ca01ff483640f71591bd49291d6836426659397bd49cbbdd8bd04",
+      "tail": "{\"ok\": true, \"command\": \"infer-pose-reference\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-tools-57a19221\\\\baseline\\\\predictions.json\", \"artifact_sha256\": \"edbda784f79403f2c3bc6bbd0f9840785718d319683617e4544abbbe82785653\", \"images\": 1, \"weights_sha256\": \"869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0\", \"owned_release_confirmed\": true, \"clinical_accuracy\": null}}\n"
+    },
+    {
+      "name": "evaluation",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "evaluate-pose",
+        "--reference",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\reference.json",
+        "--predictions",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\baseline\\predictions.json",
+        "--split",
+        "test",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\evaluation"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "elapsed_s": 0.17368039999928442,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\evaluation.txt",
+      "log_sha256": "1650aec1d81d7e4e5f1e0c4ea2d7c03eeb22db1e524ae1eb6fdb22e9590091e9",
+      "tail": "ath\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-tools-57a19221\\\\evaluation\\\\evaluation.json\", \"artifact_sha256\": \"7c44f383ed5d83b2b76aa06b3bea61beb6571347d686c5ba89a47ba8719c7479\", \"evidence_scope\": \"synthetic_tool_verification_not_target_accuracy\", \"summary\": {\"slots\": 17, \"unannotated\": 0, \"coordinate_reference_count\": 17, \"covered_coordinate_count\": 0, \"coordinate_coverage\": 0.0, \"mean_euclidean_error_px\": null, \"mean_bbox_diagonal_normalized_error\": null, \"pck_all_coordinate_references\": 0.0, \"pck_on_covered_coordinates\": null, \"known_not_locatable_count\": 0, \"predicted_present_on_not_locatable\": 0, \"left_right_suspected_swaps\": 0, \"left_right_assessable\": 0}}}\n"
+    },
+    {
+      "name": "reject_partial_stock_yolo",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "build-pose-dataset",
+        "--reference",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\partial-reference.json",
+        "--target-schema",
+        "coco17",
+        "--output-format",
+        "yolo_pose",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\must-not-exist"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "passed": true,
+      "elapsed_s": 0.15624390000084531,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\reject_partial_stock_yolo.txt",
+      "log_sha256": "b38b51c21d21effffa5d01cda1d816b6f15d8686b6aec6dad0d2a8d36218335a",
+      "tail": "{\"ok\": false, \"command\": \"build-pose-dataset\", \"error_type\": \"ValueError\", \"error\": \"partial_annotation_cannot_enter_stock_yolo_coordinate_and_objectness_loss\"}\n"
+    },
+    {
+      "name": "reject_unqualified_training",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "train-pose",
+        "--config",
+        "configs/rehab_ml/backend.yaml"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "passed": true,
+      "elapsed_s": 0.15116679999846383,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-tools-57a19221\\reject_unqualified_training.txt",
+      "log_sha256": "f7a7a72c4d8d421b6ab22f443c1345f79f035a13151bb4b3f125d1fb994348de",
+      "tail": "{\"ok\": false, \"command\": \"train-pose\", \"error_type\": \"RuntimeError\", \"error\": \"Pose training refused: verified target RGB permission and independent 2D/visibility labels missing; E:\\\\game\\\\health-care-software-main\\\\reports\\\\rehab_backend\\\\pose_supervision_blocker.json\"}\n"
+    }
+  ],
+  "artifact_hashes": {
+    "reference.json": "b0af468043b66c2dad97844cf3dcb11ee10f5af4efd5f432b09b04dc51c928bc",
+    "masked/conversion.json": "eb7e5d0cf33758226e70b6e1b533b8f370786c116925eddd86bcd0d5ca889466",
+    "yolo/conversion.json": "46821c6fc0db9addb3f5b40f3d4d967c7c694e241e9d307046f80ebd2c8f1013",
+    "yolo/dataset.yaml": "3a69a8126cc40c640c42b59ce2bc73458e46a7b8bacba932baa64a2ce1e8692a",
+    "baseline/predictions.json": "edbda784f79403f2c3bc6bbd0f9840785718d319683617e4544abbbe82785653",
+    "evaluation/evaluation.json": "7c44f383ed5d83b2b76aa06b3bea61beb6571347d686c5ba89a47ba8719c7479"
+  },
+  "training_performed": false,
+  "clinical_accuracy": null,
+  "implementation_sha256": {
+    "tools/rehab_ml/pose_dataset.py": "d1ab0a1f9685cd7cbe69980c3903171e42c35718a901b3b525252fed539edd17",
+    "tools/rehab_ml/pose_inference.py": "a83c119314b54688f7cff927a68eded3859adfd59e79f4dd4e7c0615b30948eb",
+    "tools/rehab_ml/cli.py": "8e0b0da6836a110ba382a4a4c583db0358ca84f0f70cfc184cbdc54ba94a7eb8",
+    "tools/rehab_ml/target_domain.py": "dfa3081ce2d38fbc628e2d58bd9f2802039d8f4678616a1978b28cde569f6d14",
+    "tools/rehab_ml/verify_pose_tools.py": "96fe3691eb805a32fc9d130391ab7cb28fa966a234a87e913980c23e7076e858",
+    "tests/rehab_backend/test_pose_dataset.py": "5b4d05fb03e467c445478ca18d4ced416d053a7a9059a6ecebb46ff16ebf2695",
+    "configs/rehab_ml/pose-reference-template.json": "33b59c29e7b89c2df721c280458b12ce415863eb7b1ea6fd0381ae265bd6505c"
+  },
+  "passed": true,
+  "unobserved_fixture_coverage": 0.0
+}

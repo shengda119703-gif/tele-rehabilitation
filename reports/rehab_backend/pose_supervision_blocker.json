@@ -17,7 +17,13 @@
   },
   "training_allowed": false,
   "model_activated": false,
+  "available_pose_tools": [
+    "build-pose-dataset --reference",
+    "infer-pose-reference",
+    "evaluate-pose"
+  ],
+  "pose_tool_scope": "consented_independent_rgb_reference_conversion_and_offline_evaluation_not_training",
   "next_required": "Verified dataset eligibility/access or consented independently annotated target video",
-  "requested_command": "build-pose-dataset",
-  "implemented": "qualification_and_refusal_only_not_a_pose_training_pipeline"
+  "requested_command": "train-pose",
+  "implemented": "reference_conversion_and_evaluation_available_pose_training_refused"
 }

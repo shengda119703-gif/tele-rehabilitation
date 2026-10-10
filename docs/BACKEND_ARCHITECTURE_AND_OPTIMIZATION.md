@@ -2,9 +2,9 @@
 
 > 用途：供团队讨论准确性、可靠性和下一轮后端重构。本文不是路演宣传稿，也不是医疗操作指南。
 >
-> 核对日期：2026-10-11。本轮基准工作树为 `98e1c18a7e34a674e9d7512c766fa91bcf0277a1`；此前后端实现为 `06366bdac2bddbd0888d8fe1b67a7abab62f9067`，本轮原生SQLite故障边界随本文件所在交付提交发布。基准包含原三端产品、康复 v2 所属推理／诊断及默认派生报告隔离。电脑端与托管手机产品版本为 0.20.0，现有 APK 安装包为 0.2.1。第 4–15 节描述原产品路径；第 17 节说明默认关闭的康复 v2 与研究模型；第 18–23 节用于定位代码、追查信息传递和设计优化实验。
+> 核对日期：2026-10-11。本轮基准工作树为 `a9e31cce518c0fa2367b1394848c570afcf72307`；本轮RGB关键点转换／独立误差评估随本文件所在交付提交发布。基准包含原三端产品、康复 v2 所属推理／诊断、默认派生报告隔离及原生SQLite故障边界。电脑端与托管手机产品版本为 0.20.0，现有 APK 安装包为 0.2.1。第 4–15 节描述原产品路径；第 17 节说明默认关闭的康复 v2 与研究模型；第 18–23 节用于定位代码、追查信息传递和设计优化实验。
 >
-> 本轮继续后端任务书，验收并发布此前SQLite故障边界及测试，见17.5.4和 [存储验收](validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md)；不改正式UI、模型、APK、原服务或正常用户数据。旧性能报告保留运行当时的基准，不倒改实验版本。下文的“源码实现”“工程测试通过”“用户端已接通”“真人准确性已验证”是四种不同结论。此前报告实现见 [报告隔离验收](validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)；历史文档梳理见 [文档与优化依赖核对](validation/BACKEND_MAP_OPTIMIZATION_2026-10-11.md) 和 [数据契约核对](validation/BACKEND_FIELD_CONTRACTS_2026-10-11.md)。后端实施总任务仍未整体完成。
+> 本轮继续后端任务书，补齐17.10的RGB参考／转换／评估工具，见 [工作流](development/POSE_REFERENCE_WORKFLOW.md) 和 [工具验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)；不改正式UI、权重、APK、原服务或正常用户数据。此前SQLite实现见17.5.4和 [存储验收](validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md)。旧性能报告保留当时的基准，不倒改实验版本。下文的“源码实现”“工程测试通过”“用户端已接通”“真人准确性已验证”是四种不同结论。此前报告实现见 [报告隔离验收](validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)；历史梳理见 [文档与优化依赖核对](validation/BACKEND_MAP_OPTIMIZATION_2026-10-11.md) 和 [数据契约核对](validation/BACKEND_FIELD_CONTRACTS_2026-10-11.md)。后端实施总任务仍未整体完成。
 
 ### 快速阅读
 
@@ -1009,6 +1009,8 @@ JSON 原子替换可降低半写文件风险，但没有跨文件事务，也不
 
 此前字段文档交付收取已经启动的会话CLI，`replay-2167d5a9` 的100项／82.646秒通过，命令耗时83.272秒、exit0，日志SHA256为 `e97c209a9307264c90005e2dbe4c28faeb701297fce4e865b7f17adaa40495e4`。100项是130项子集，本轮核对日志后随存储实现发布；另专项复验12项／12.689秒通过。不称重新启动的完整回归或算法准确率。历史字段核对保留在 [数据契约核对](validation/BACKEND_FIELD_CONTRACTS_2026-10-11.md)。
 
+本轮关键点工具交付实际运行`verification-0bba991b`：160项新后端、12项旧康复、19项旧手机通过，1308保护文件一致。专项`pose-tools-57a19221`30项包含于160项，7条CLI均按预期退出；本机YOLO库另实际解析三份导出标签。参考点／空图为明确TEST夹具，不是新真人标注或精度验收，实际误差／覆盖口径见17.10及 [本轮工具验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)。会话CLI100项是此前记录，本轮未重跑。
+
 以上是有日期和范围的验证，本轮没有重跑全部产品／Android／Agent 回归。它们不能替代真人角度／器械精度、疾病预测、公网、手环、相机和红米实机验收，也不能互相累加成一个“总准确率”。原产品细节见 [本机同步验证](validation/GITHUB_SYNC_2026-10-11.md)。
 
 相关测试目录：
@@ -1337,9 +1339,24 @@ TCN 感受野 `R = 1 + 2×(3−1)×(1+2+4+8) = 61` 步。20 Hz 名义采样下�
 
 现有两段私人录像的真实回放：肩外展 443 帧、主指标可观测 434 帧，新协议 0 次／旧引擎 2 次；深蹲 429 帧、膝主指标可观测 48 帧，新协议 0 次。前者缺默认稳定准备段，后者大部分腿部证据不可用；这说明验证必须覆盖准备／视野条件，不能把“工具跑完”当成“自动计次已准确”。没有独立专业参考标签，准确率仍未知，也未授予这些录像训练权限。
 
-姿态微调命令 `build-pose-dataset / train-pose` 当前只是资格检查与明确拒绝，不是完整微调实现。下一步需要与产品同域的授权 RGB、可见关节标注、专业动作／变式标签和独立人员测试集。
+`build-pose-dataset --reference`现已实现独立RGB参考核验和标签转换，原模型预测与误差／覆盖评估见17.10；`train-pose`仍明确拒绝缺资格训练，不是完整微调器。下一步需同域授权RGB、独立关节／可见性与专业动作／变式标签，以及按人独立测试集；部分标注训练器和候选微调尚未实现。
 
 比较契约现已区分“指标含义是否兼容”和“本次证据身份 fingerprint”；但仅是二维投影的工程比较，不是临床 ROM 一致性证据。任意相机旋转、裁切、非等比例拉伸、跨端或解剖参考改变仍需单独验证。代码：[temporal.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/temporal.py)、[compatibility.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/compatibility.py)。
+
+### 17.10 RGB 关键点参考 → 转换 → 旧模型预测 → 独立评估
+
+这条离线链是后端优化的测量工具，不进入正式相机、计划或数据库。代码：[pose_dataset.py](../tools/rehab_ml/pose_dataset.py)、[pose_inference.py](../tools/rehab_ml/pose_inference.py)。详细输入、命令和限制见 [工作流](development/POSE_REFERENCE_WORKFLOW.md)。
+
+| 环节 | 输入与检查 | 输出／下一消费者 |
+| --- | --- | --- |
+| 独立参考 | 原PNG／JPEG、权限文件、人／录制／帧序／时间、完整人体框、17点人工坐标与visibility、独立复核 | 带hash的reference；train／val／test按人、录制、同图隔离 |
+| 转换 | annotation_mask与visibility分开；原尺寸和原图hash匹配；只有完整mask能导stock YOLO | masked原值＋双mask，或图片／标签／YAML；格式可用不等于训练获准 |
+| 原模型推理 | 原manifest／权重、CPU640、原帧quality95 JPEG、受限所属进程、参考框唯一匹配 | predictions绑定reference／原图／推理字节hash；no_person／ambiguous没有有效点 |
+| 独立误差 | 预测和参考的人／图／帧／时间／尺寸逐项对齐；仅已标且可定位点进入参考集合 | 逐点误差、覆盖、两种PCK、关节／人员／动作／视角分层；用于比较而非自动上线 |
+
+设J为人工已定位参考点，C为其中当前有效预测点：`e_j=||p_j-r_j||₂`，`d_s`为完整人体框对角线；`coverage=|C|/|J|`，像素均误差`Σe_j/|C|`，`PCK_all=Σ1[e_j/d_s≤τ]/|J|`，`PCK_covered`分母为`|C|`。缺帧／低conf／出画不能成为0误差，只降低覆盖和PCK_all；空集合对应指标null。默认τ=0.05为工程比较参数，非临床标准。疑似左右交换单列，不当作已证实的解剖错误。
+
+本机原Ultralytics的坐标损失用visibility遮罩，而objectness对全部点计算；未标点不能简单写0，所以工具拒绝部分mask的stock YOLO导出。masked格式保留两种损失mask，但尚无对应训练器。原YOLO每图重置Context并用参考框辅助匹配，因此不能用其结果证明无人辅助跟踪、专业角度／计次正确或手机性能。实际工具验证与源文件hash见 [验收](validation/REHAB_POSE_TOOLS_2026-10-11.md)。
 
 <a id="backend-optimization"></a>
 

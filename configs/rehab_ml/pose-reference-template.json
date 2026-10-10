@@ -1,0 +1,46 @@
+{
+  "schema_version": "rehab-rgb-pose-reference-1",
+  "schema_id": "coco17-v1",
+  "coordinate_space": "raw_image_pixels",
+  "keypoint_order": ["nose", "left_eye", "right_eye", "left_ear", "right_ear", "left_shoulder", "right_shoulder", "left_elbow", "right_elbow", "left_wrist", "right_wrist", "left_hip", "right_hip", "left_knee", "right_knee", "left_ankle", "right_ankle"],
+  "dataset_id": null,
+  "usage_context": "RESEARCH",
+  "permissions": {
+    "analysis": false,
+    "training": false,
+    "verified_by": null,
+    "evidence_ref": null,
+    "evidence_sha256": null
+  },
+  "samples": [
+    {
+      "sample_id": null,
+      "subject_group": null,
+      "recording_id": null,
+      "split": null,
+      "exercise_id": null,
+      "side": null,
+      "view": null,
+      "image_ref": null,
+      "image_sha256": null,
+      "frame_seq": null,
+      "source_time_s": null,
+      "time_basis": null,
+      "frame_size": null,
+      "bbox_xyxy_px": null,
+      "bbox_origin": "human_full_person_box",
+      "xy": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+      "visibility": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+      "annotation_mask": [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      "annotations": {
+        "origin": "human",
+        "annotator": null,
+        "reviewer": null,
+        "version": null,
+        "independently_reviewed": false
+      }
+    }
+  ],
+  "template_only": true,
+  "notes": "Fill independent original-pixel labels and verified permission evidence; group subjects/recordings before sampling. Null is unannotated, never a negative. Include nonempty isolated train/val/test. This template cannot run as an authorized dataset."
+}

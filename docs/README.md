@@ -5,6 +5,8 @@
 | 文档 | 内容 |
 | --- | --- |
 | [后端功能、算法与数据流梳理](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md) | 三端后端域、公式／状态、逐跳信息与代码；3.7–3.8为真实字段／统计口径，22–23为优化影响及验收 |
+| [RGB 关键点参考与评估工作流](development/POSE_REFERENCE_WORKFLOW.md) | 权限／独立标点、缺标mask、YOLO导出、原模型预测、逐关节误差与覆盖公式；不代表微调完成 |
+| [RGB 关键点工具验收](validation/REHAB_POSE_TOOLS_2026-10-11.md) | 160／12／19回归、30项工具子集、7条CLI及本机YOLO格式解析；夹具与真人证据区别 |
 | [康复 v2 原生存储验收](validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md) | 实际SQLite只读／锁／容量／损坏副本、幂等重试与备份恢复；130／100项工程范围与物理故障区别 |
 | [后端字段与数据契约核对](validation/BACKEND_FIELD_CONTRACTS_2026-10-11.md) | 本轮仅文档；真实字段、分母／完成口径、既有检查结果、保护范围与保留文件 |
 | [后端文档与优化依赖核对](validation/BACKEND_MAP_OPTIMIZATION_2026-10-11.md) | 此前仅文档、已提交／工作区区别、日志指纹、保护范围与文档检查 |
