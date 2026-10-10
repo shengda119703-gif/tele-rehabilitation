@@ -20,7 +20,8 @@ const product = productRoot ? new ProductService(new ProductLocalStore(productRo
     healthkit: process.env.ANKANG_HEALTHKIT_ENDPOINT ? new HealthKitDeviceAdapter(process.env.ANKANG_HEALTHKIT_ENDPOINT, process.env.HEALTHKIT_BRIDGE_TOKEN || '') : undefined,
     delivery: process.env.ANKANG_WEBHOOK_TOKEN ? webhookFamilyDelivery({provider:process.env.ANKANG_WEBHOOK_PROVIDER || 'custom',token:process.env.ANKANG_WEBHOOK_TOKEN,customUrl:process.env.ANKANG_WEBHOOK_URL}) : undefined,
     voice: nativeVoice,
-  }) : null;
+  }, owner => ({read:() => readFromPython(owner,{name:'care.read',arguments:{}}),
+    execute:(action,idempotencyKey,expiresAt) => readFromPython(owner,{name:'care.execute',arguments:{action,idempotencyKey,expiresAt}})})) : null;
 const pending = new Map();
 let sequence = 0;
 const send = (value) => process.stdout.write(JSON.stringify(value) + '\n');

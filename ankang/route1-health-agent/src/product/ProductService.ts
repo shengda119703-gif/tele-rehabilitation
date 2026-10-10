@@ -25,6 +25,7 @@ import { RealImageHealthParser } from '../adapters/RealImageHealthParser';
 import { buildParsedHealthData } from '../adapters/imageNormalizer';
 import type { HealthVisionProvider, ParsedHealthData } from '../adapters/ImageHealthParser';
 import type { RehabToolPort } from '../runtime/rehabTools';
+import { CareCoordinator, type CarePort } from '../care/CareCoordinator';
 
 export interface ProductLocalPort {
   read<T>(key: string): T | null;
@@ -53,7 +54,15 @@ export class ProductService {
   private notifications = new Map<string, NotificationService>();
   private pendingImages = new Map<string, ParsedHealthData>();
   constructor(private port: ProductLocalPort, private rehab?: (owner: string) => RehabToolPort | undefined,
-    private vision?: HealthVisionProvider, private extensions: ProductExtensions = {}) {}
+    private vision?: HealthVisionProvider, private extensions: ProductExtensions = {}, private careHost?: (owner:string)=>CarePort|undefined) {}
+  private careCoordinators = new Map<string,CareCoordinator>();
+  private care(owner:string):CareCoordinator|undefined {
+    if(!this.careCoordinators.has(owner)) {
+      const host=this.careHost?.(owner);
+      if(host)this.careCoordinators.set(owner,new CareCoordinator(scopeKey(this.scope(owner)),this.port,host));
+    }
+    return this.careCoordinators.get(owner);
+  }
   private syncs = new Map<string, {port:SyncPort; inbox:unknown[]; unsubscribe:() => void}>();
   private sync(owner:string) {
     if (!this.syncs.has(owner)) {
@@ -199,7 +208,7 @@ export class ProductService {
     if (!this.open.has(owner)) {
       const profile = {...this.profile(owner).profile, familySharing: this.family(owner).readState().familySharing};
       await this.runtime.openSession({sessionId: id, profile, now, persistence: this.persistence(owner),
-        rehabTools: this.rehab?.(owner)});
+        rehabTools: this.rehab?.(owner), careTools:this.care(owner)});
       this.open.add(owner);
       const history = this.port.read<CareTask[]>(this.key(owner, 'tasks')) ?? [];
       for (const task of this.runtime.readSnapshot(id).tasks) {
@@ -250,7 +259,7 @@ export class ProductService {
       audits: this.port.read<unknown[]>(this.key(owner, 'audit')) ?? [],
       trends: Object.fromEntries(Object.keys(METRICS).map(key => [key, metricTrend(history.records, key as MetricKey, state.today)])),
       capabilities: {...productCapabilities, imageRecognitionAvailable: Boolean(this.vision)},
-      storage: 'persistent-local', modelAvailable: Boolean(this.rehab?.(owner))};
+      storage: 'persistent-local', modelAvailable: Boolean(this.rehab?.(owner)), careAvailable:Boolean(this.care(owner))};
   }
   async request(operation: string, owner: string, input: Record<string, any>, now: Date): Promise<any> {
     if (!Number.isFinite(now.getTime())) throw new Error('Invalid clock');
@@ -272,6 +281,25 @@ export class ProductService {
       return this.snapshot(owner, now);
     }
     this.profile(owner);
+    if(operation.startsWith('care.')) {
+      const coordinator=this.care(owner);if(!coordinator)throw Error('当前宿主尚未接入照护调度');
+      const fields:Record<string,string[]>={
+        'care.overview':[], 'care.next':[], 'care.prepare':['requestId','intents','text'],
+        'care.status':['id'], 'care.confirm':['id','confirmationToken','confirmed'],
+        'care.cancel':['id','confirmationToken','confirmed'],
+      };
+      if(!fields[operation]||!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!fields[operation].includes(k)))
+        throw Error('未知照护调度操作或字段');
+      if(operation==='care.overview')return coordinator.overview(now);
+      if(operation==='care.next')return coordinator.nextStep(now);
+      if(operation==='care.prepare')return coordinator.prepare(input,now);
+      if(typeof input.id!=='string')throw Error('请提供当前照护任务编号');
+      if(operation==='care.status')return coordinator.status(input.id);
+      if(input.confirmed!==true||typeof input.confirmationToken!=='string'||!input.confirmationToken)throw Error('请明确确认本次操作');
+      if(operation==='care.confirm')return coordinator.confirm(input.id,input.confirmationToken,now);
+      if(operation==='care.cancel')return coordinator.cancel(input.id,input.confirmationToken);
+      throw Error('未知照护调度操作');
+    }
     if (operation === 'extensions.status') return {voice:this.extensions.voice?.status() ?? {available:false,phase:'unavailable'},
       devices:Object.keys(this.extensions.devices ?? {}), healthkit:Boolean(this.extensions.healthkit),
       notification:Boolean(this.extensions.delivery), syncAvailable:Boolean(this.extensions.sync), syncSummary:this.port.read(this.key(owner,'sync-summary')), sync:this.syncs.get(owner)?.port.status() ?? {mode:'local-only', detail:'未连接外部通道',peerId:null}, externalAcceptance:'unverified'};
@@ -438,6 +466,7 @@ export class ProductService {
       const durableSnapshot = {...snapshot, state:{...snapshot.state,
         chat:snapshot.state.chat.filter(m => m.persisted !== false && !m.pending)}};
       return {version: 1, exportedAt: now.toISOString(), snapshot: durableSnapshot,
+        careAudit:this.care(owner)?.audit()??[],
         attachments: (await this.port.attachments.list(this.scope(owner))).map(a => ({...a, bytes:Array.from(a.bytes)}))};
     } else if (operation === 'lifecycle.clear') {
       if (input.confirmOwner !== owner) throw new Error('请明确确认当前用户编号');
@@ -449,6 +478,8 @@ export class ProductService {
       this.families.get(owner)?.close(); this.families.delete(owner);
       this.notifications.get(owner)?.close(); this.notifications.delete(owner);
       this.pendingImages.delete(owner);
+      this.port.remove('care:'+scopeKey(this.scope(owner)));
+      this.careCoordinators.delete(owner);
       // Profile/medications and the authoritative rehabilitation database are retained.
     } else throw new Error('Unknown product operation');
     return this.snapshot(owner, now);

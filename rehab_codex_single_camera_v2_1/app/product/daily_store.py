@@ -17,6 +17,7 @@ class DailyStore:
         with self.connect() as db:
             db.execute('CREATE TABLE IF NOT EXISTS data(owner TEXT, kind TEXT, value TEXT, PRIMARY KEY(owner,kind))')
             db.execute('CREATE TABLE IF NOT EXISTS audit(id INTEGER PRIMARY KEY, owner TEXT, at TEXT, action TEXT, payload TEXT)')
+            db.execute('CREATE TABLE IF NOT EXISTS care_receipts(owner TEXT, scope TEXT, request_key TEXT, signature TEXT, receipt TEXT, PRIMARY KEY(owner,scope,request_key))')
 
     @contextmanager
     def connect(self):
@@ -60,11 +61,29 @@ class DailyStore:
     def schedule_key(scope):
         return 'schedule:' + str(scope.get('source_kind')) + ':' + str(scope.get('usage_context'))
 
-    def apply(self, owner, operation, payload, scope):
+    def apply(self, owner, operation, payload, scope, *, idempotency_key=None, expected=None, care_validate=None):
         if not owner:
             raise ValueError('请先建立本机档案。')
         with self.connect() as db:
             db.execute('BEGIN IMMEDIATE')
+            receipt_scope = self.schedule_key(scope)
+            signature = None
+            if idempotency_key is not None:
+                if operation not in ('daily.dose', 'daily.schedule') or not isinstance(idempotency_key, str) or not re.fullmatch(r'[\w:-]{1,200}', idempotency_key):
+                    raise ValueError('照护执行编号或操作无效。')
+                signature = json.dumps([operation, payload, expected], sort_keys=True, ensure_ascii=False)
+                saved = db.execute('SELECT signature,receipt FROM care_receipts WHERE owner=? AND scope=? AND request_key=?',
+                                   (owner, receipt_scope, idempotency_key)).fetchone()
+                if saved:
+                    if saved[0] != signature:
+                        raise ValueError('同一执行编号不能用于不同操作。')
+                    return json.loads(saved[1])
+                if not callable(care_validate):
+                    raise ValueError('照护执行必须重新核对业务条件。')
+                if db.execute('SELECT count(*) FROM care_receipts WHERE owner=?', (owner,)).fetchone()[0] >= 1000:
+                    raise ValueError('照护执行回执已满，请先导出核对。')
+                # Preconditions and the receipt share this business transaction. Lost replies can safely replay.
+                care_validate(db, payload)
             if operation == 'daily.onboarding':
                 value = dict(payload)
                 value.update(completedAt=self.now())
@@ -165,6 +184,12 @@ class DailyStore:
             else:
                 raise ValueError('未知本机产品操作。')
             self.audit(db, owner, operation, payload)
+            if idempotency_key is not None:
+                receipt = {'status': 'succeeded', 'idempotencyKey': idempotency_key, 'operation': operation,
+                           'dailyReceipt': True, 'savedAt': self.now()}
+                db.execute('INSERT INTO care_receipts VALUES(?,?,?,?,?)',
+                           (owner, receipt_scope, idempotency_key, signature, json.dumps(receipt, ensure_ascii=False)))
+                return receipt
         return {'dailyReceipt': True}
 
     def allowed_members(self, owner):
@@ -189,3 +214,4 @@ class DailyStore:
                 self.put(db, other, 'grants', grants)
             db.execute("DELETE FROM data WHERE owner=? AND kind NOT LIKE 'schedule:%' AND kind!='planVersions'", (owner,))
             db.execute('DELETE FROM audit WHERE owner=?', (owner,))
+            db.execute('DELETE FROM care_receipts WHERE owner=?', (owner,))

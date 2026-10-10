@@ -102,6 +102,13 @@ class ProductBackend:
                     if self.bridge is None:
                         self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150)
                     tools = RehabReadTools(self.data_dir/'home_rehab.sqlite3', scope) if scope else None
+                    def host_tools(name, arguments):
+                        if name.startswith('care.'):
+                            from .care_host import CareHost
+                            return CareHost(self.data_dir, self.daily, owner, scope)(name, arguments)
+                        if tools:
+                            return tools(name, arguments)
+                        raise ValueError('当前请求没有本人康复工具范围。')
                     if operation.startswith('daily.'):
                         own = self.bridge.product('snapshot', owner, {}, tool_handler=tools)
                         if operation in ('daily.dose', 'daily.medSchedule'):
@@ -117,7 +124,7 @@ class ProductBackend:
                         result = self.daily.apply(owner, operation, payload, scope)
                         self._deliver((operation, owner, token, result, None))
                         continue
-                    result = self.bridge.product(operation, owner, payload, tool_handler=tools)
+                    result = self.bridge.product(operation, owner, payload, tool_handler=host_tools)
                     if operation == 'lifecycle.clear':
                         self.daily.clear(owner)
                     if operation == 'lifecycle.export' and isinstance(result, dict):

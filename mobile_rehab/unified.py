@@ -43,6 +43,12 @@ DAILY_FIELDS = {
     'daily.familyInvite': set(), 'daily.familyBind': {'code'},
     'daily.familyGrant': {'member', 'categories'}, 'daily.familyUnbind': {'member'},
 }
+CARE_FIELDS = {
+    'care.overview': set(), 'care.next': set(),
+    'care.prepare': {'requestId', 'intents', 'text'}, 'care.status': {'id'},
+    'care.confirm': {'id', 'confirmationToken', 'confirmed'},
+    'care.cancel': {'id', 'confirmationToken', 'confirmed'},
+}
 
 
 def install_unified(app, owner, shared, small_json):
@@ -57,10 +63,11 @@ def install_unified(app, owner, shared, small_json):
     @app.post('/api/unified/{operation}')
     async def operation(operation: str, request: Request, source: str = 'LIVE_CAMERA'):
         uid = owner(request)
-        if source not in ('LIVE_CAMERA', 'REPLAY_FILE') or operation not in DAILY_FIELDS:
+        fields = {**DAILY_FIELDS, **CARE_FIELDS}
+        if source not in ('LIVE_CAMERA', 'REPLAY_FILE') or operation not in fields:
             raise HTTPException(404, '未开放此操作。')
         payload = await small_json(request)
-        if set(payload) - DAILY_FIELDS[operation]:
+        if not isinstance(payload, dict) or set(payload) - fields[operation]:
             raise HTTPException(400, '操作包含不支持的字段。')
         try:
             return await asyncio.to_thread(shared.call, uid, operation, payload, source=source)

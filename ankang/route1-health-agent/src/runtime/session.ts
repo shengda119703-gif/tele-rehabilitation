@@ -12,6 +12,7 @@ import { prepareRehabReply, type RehabToolPort } from './rehabTools';
 import { deriveHealthState } from './derive';
 import { changeTaskStatus, ensureMedicationTask, reconcileCareTasks } from './careTasks';
 import type { DeliveryPort, DeliveryReceipt, PersistencePort, PersistenceReceipt, StoredSession } from './ports';
+import type { CareCoordinator } from '../care/CareCoordinator';
 
 const copy = <T>(value: T): T => structuredClone(value);
 const emptyHealth = (): HealthRecordSnapshot => ({ events: [], familyEvents: [], chat: [] });
@@ -36,6 +37,7 @@ export interface OpenSessionOptions {
   replyAdapter?: LlmAdapter;
   understandingLlm?: UnderstandingLlmConfig | null;
   rehabTools?: RehabToolPort;
+  careTools?: Pick<CareCoordinator, 'replyToText'>;
 }
 export interface TurnInput {
   text: string;
@@ -168,9 +170,18 @@ class Session {
       this.check(generation);
       const privacyIntent = parsePrivacyIntent(captured.text);
       let rehab: Awaited<ReturnType<typeof prepareRehabReply>> = null;
+      let care: Awaited<ReturnType<CareCoordinator['replyToText']>> = null;
+      if (this.options.careTools && privacyIntent === 'none' && !plan.safetyAction && !plan.correction &&
+        !plan.medicationMissed && !plan.eventsToAppend.length && !plan.familyEventsToAppend.length &&
+        !plan.sharingAuditEntries.length && !plan.shareFindingIds.length && !plan.shareFamilyEventIds.length) {
+        care = await this.options.careTools.replyToText(captured.text, captured.now, sourceMessageId);
+        this.check(generation);
+        if (care) plan = { ...plan, replyText: care.reply, replyBlocks: [{kind:'main',text:care.reply}], toast:'' };
+      }
       // Keep original safety/correction/sharing paths. Private turns never reach the model or host tool.
       if (
         this.options.rehabTools &&
+        !care &&
         privacyIntent === 'none' &&
         !plan.safetyAction &&
         !plan.correction &&
@@ -276,6 +287,7 @@ class Session {
         delivery: draft.delivery,
         revision: draft.revision,
         ...(rehab ? { rehab: { call: rehab.call, data: rehab.data } } : {}),
+        ...(care ? { care } : {}),
       });
     });
   }

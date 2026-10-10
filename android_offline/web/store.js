@@ -11,7 +11,10 @@ class Store{
  change(fn){const next=clone(this.value),result=fn(next);this.commit(next);return result;}
  read(key){return clone(this.value.kv[key]??null);}
  write(key,value){this.change(v=>v.kv[key]=clone(value));}
- remove(key){this.change(v=>delete v.kv[key]);}
+ remove(key){this.change(v=>{
+  delete v.kv[key];
+  if(key.startsWith('care:')&&key.endsWith(':'+v.owner))delete v.careReceipts;
+ });}
  profiles(){return Object.entries(this.value.kv).filter(([k])=>k.startsWith('profile:')).map(([,v])=>clone(v));}
  serial(fn){const result=this.tail.then(fn);this.tail=result.catch(()=>{});return result;}
  async migrate(service){
@@ -47,7 +50,9 @@ function validDate(value){if(typeof value!=='string'||!DATE.test(value))return f
 function validateBackup(b){
  const bad=()=>{throw Error('备份结构或测量版本无效');};
  if(b?.kind!=='ankang-phone-backup'||b.version!==2||!b.data||JSON.stringify(b).length>12*1048576)bad();
- const v=clone(b.data),uuid=/^[a-f0-9-]{36}$/;
+ // Pending confirmations and execution credentials are device-local, even if
+ // an older or manually assembled backup contains them.
+ const v=backupData(b.data),uuid=/^[a-f0-9-]{36}$/;
  if(v.version!==2||!uuid.test(v.owner)||!v.kv||Array.isArray(v.kv)||!Array.isArray(v.jobs)||v.jobs.length>250||!Array.isArray(v.plans)||v.plans.length>250||!v.daily||!Array.isArray(v.daily.schedules)||!v.daily.medSchedules||!v.daily.doses||!Array.isArray(v.daily.doseAudit)||!v.kv['profile:'+v.owner]?.profile)bad();
  const p=v.kv['profile:'+v.owner].profile;if(typeof p.name!=='string'||p.name.length>40||!Number.isInteger(p.age)||p.age<0||p.age>130||!Array.isArray(p.conditions)||!Array.isArray(p.medicationRecords||[]))bad();
  const fixture=v.fixture?.schema==='test-lin-apk-v1'&&v.fixture.synthetic===true&&v.fixture.primaryOwner===v.owner&&v.kv['profile:'+v.owner].dataMode==='demo'&&p.name==='TEST 林女士';
@@ -60,7 +65,7 @@ function validateBackup(b){
  // Permissions are server-authoritative and never revived from a stale backup.
  if(!fixture)v.daily.grants={};return v;
 }
-function applyDaily(store,operation,p,profile){return store.change(v=>{
+function applyDailyValue(v,operation,p,profile){
  const d=v.daily,med=(profile.medicationRecords||[]).find(m=>m.id===p.medId);
  if(operation==='medSchedule'){
   if(!med||!Array.isArray(p.times)||p.times.length<1||p.times.length>12||p.times.some(t=>!TIME.test(t))||!validDate(p.start)||(p.end&&(!validDate(p.end)||p.end<p.start)))throw Error('请核对药物、日期和 HH:mm 时间');
@@ -78,7 +83,68 @@ function applyDaily(store,operation,p,profile){return store.change(v=>{
   if(!d.schedules.some(x=>x.id===p.id))throw Error('安排已变化，请刷新');d.schedules=d.schedules.filter(x=>x.id!==p.id);
  }else throw Error('此操作需要连接演示云端');
  return{dailyReceipt:true};
-});}
-root.PhoneStore={Store,files,attachments,applyDaily,day,validDate,validateBackup,KEY,LIN_KEY,ACTIVE_KEY,selectedKey};
+}
+function applyDaily(store,operation,p,profile){return store.change(v=>applyDailyValue(v,operation,p,profile));}
+function canonical(v){
+ if(v===undefined)return 'null';if(v===null||typeof v!=='object')return JSON.stringify(v);
+ if(Array.isArray(v))return '['+v.map(canonical).join(',')+']';
+ return '{'+Object.keys(v).sort().filter(k=>v[k]!==undefined).map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}';
+}
+function exact(value,keys){if(!value||typeof value!=='object'||Array.isArray(value)||Object.keys(value).length!==keys.length||Object.keys(value).some(k=>!keys.includes(k)))throw Error('照护操作含未知或缺失字段');}
+// Both domain mutation and durable receipt use the same localStorage commit.
+// The owner/source/context come from the installed local host, never request fields.
+function createCarePort(store,owner,rehabFacts=async v=>({plans:v.plans,history:v.jobs.filter(j=>j.mode==='training'&&j.state==='done').reverse()})){
+ const scope={participant_id:owner,source_kind:'PHONE_LOCAL',usage_context:'SELF_USE'};
+ function medicationProfile(v){
+  if(v.owner!==owner)throw Error('照护档案已变化，请重新打开当前档案');
+  const stored=v.kv['profile:'+owner];if(!stored?.profile||(stored.ownerId!==undefined&&stored.ownerId!==owner))throw Error('找不到本人用药档案');
+  return stored.profile;
+ }
+ return{
+  async read(){const v=clone(store.value),p=medicationProfile(v),rehab=await rehabFacts(v);return{scope:clone(scope),medications:clone(p.medicationRecords||[]),daily:clone(v.daily),plans:clone(rehab.plans),history:clone(rehab.history)};},
+  async execute(action,idempotencyKey,expiresAt){
+   if(typeof idempotencyKey!=='string'||!/^[-\w:]{1,200}$/.test(idempotencyKey))throw Error('照护执行编号无效');
+   if(typeof expiresAt!=='string'||!Number.isFinite(Date.parse(expiresAt)))throw Error('照护确认期限无效');
+   exact(action,['operation','payload','expected','label']);
+   if(!['daily.dose','daily.schedule'].includes(action.operation)||typeof action.label!=='string')throw Error('没有此照护执行工具');
+   const p=action.payload;
+   exact(p,action.operation==='daily.dose'?['medId','date','time','status']:['id','date','time','kind','name','planId','revision']);
+   const signature=canonical([action.operation,p,action.expected,expiresAt]);
+   function existing(v){
+    medicationProfile(v);if(v.careReceipts!==undefined&&!Array.isArray(v.careReceipts))throw Error('照护执行回执无法读取');
+    const old=v.careReceipts?.find(r=>r.owner===owner&&canonical(r.scope)===canonical(scope)&&r.idempotencyKey===idempotencyKey);
+    if(old&&old.signature!==signature)throw Error('执行编号已用于不同操作');return old;
+   }
+   // Recover a durable acknowledgement without requiring another storage write.
+   const recovered=existing(store.value);if(recovered)return clone(recovered.receipt);
+   return store.change(v=>{
+    const profile=medicationProfile(v),receipts=v.careReceipts??=[];
+    if(!Array.isArray(receipts))throw Error('照护执行回执无法读取');
+    const old=existing(v);if(old)return clone(old.receipt);
+    if(Date.now()>Date.parse(expiresAt))throw Error('照护确认已过期，请重新核对当前安排');
+    if(receipts.length>=1000)throw Error('照护执行回执空间已满，请先核对记录');
+    let evidence;
+    if(action.operation==='daily.dose'){
+     evidence={medicine:(profile.medicationRecords||[]).find(m=>m.id===p.medId)??null,schedule:v.daily.medSchedules[p.medId]??null,dose:v.daily.doses[p.medId+'|'+p.date+'|'+p.time]??null};
+    }else{
+     const saved=v.daily.schedules.find(s=>s.id===p.id),plan=saved?v.plans.find(x=>x.id===saved.planId):null;
+     evidence={schedule:saved??null,plan:plan?{id:plan.id,revision:plan.revision}:null};
+     if(!saved||saved.kind!=='training'||!plan||saved.revision!==plan.revision||['id','kind','name','planId','revision'].some(k=>canonical(p[k])!==canonical(saved[k])))throw Error('原训练安排或计划版本已变化，请重新核对');
+    }
+    if(canonical(evidence)!==canonical(action.expected))throw Error('原药物、逐次记录或训练安排已变化，请重新核对');
+    const applied=applyDailyValue(v,action.operation.slice(6),clone(p),profile);
+    const receipt={...applied,status:'succeeded',idempotencyKey,operation:action.operation,savedAt:now()};
+    receipts.push({owner,scope:clone(scope),idempotencyKey,signature,receipt:clone(receipt)});
+    return receipt;
+   });
+  }
+ };
+}
+function backupData(value){
+ const data=clone(value);delete data.careReceipts;
+ for(const key of Object.keys(data.kv))if(key.startsWith('care:'))delete data.kv[key];
+ return data;
+}
+root.PhoneStore={Store,files,attachments,applyDaily,createCarePort,backupData,day,validDate,validateBackup,KEY,LIN_KEY,ACTIVE_KEY,selectedKey};
 if(typeof module!=='undefined')module.exports=root.PhoneStore;
 })(globalThis);

@@ -6,7 +6,7 @@ let owner=store.value.owner;
 const metrics=[['steps','活动步数','步'],['walkSpeed','步行速度','m/s'],['sleepHours','睡眠时长','小时'],['nightWakes','夜间醒来','次'],['restingHr','静息心率','bpm'],['weight','体重','kg'],['spo2','血氧','%'],['systolic','收缩压','mmHg'],['diastolic','舒张压','mmHg'],['bloodGlucose','血糖','mmol/L']];
 const categories=['体检报告','就诊记录','检验检查','影像资料','病历资料','其他资料'];
 const profile=()=>store.read('profile:'+owner)?.profile;
-const domain=new AnkangDomain.ProductService({read:k=>store.read(k),write:(k,v)=>store.write(k,v),remove:k=>store.remove(k),profiles:()=>store.profiles(),attachments:{list:s=>PS.attachments(owner).list(s),put:(s,a)=>PS.attachments(owner).put(s,a),clear:s=>PS.attachments(owner).clear(s),setTrash:(s,id,at)=>PS.attachments(owner).setTrash(s,id,at)}});
+const domain=new AnkangDomain.ProductService({read:k=>store.read(k),write:(k,v)=>store.write(k,v),remove:k=>store.remove(k),profiles:()=>store.profiles(),attachments:{list:s=>PS.attachments(owner).list(s),put:(s,a)=>PS.attachments(owner).put(s,a),clear:s=>PS.attachments(owner).clear(s),setTrash:(s,id,at)=>PS.attachments(owner).setTrash(s,id,at)}},undefined,undefined,{},participant=>PS.createCarePort(store,participant,careRehabFacts));
 const ready=store.serial(async()=>{
  await PhoneLin.initialize(store,nativeFetch);
  owner=store.value.owner;
@@ -24,11 +24,19 @@ async function cloudRefresh(){
 }
 function publicJob(j,brief=false){const out=copy(j);if(PM.errors.has(j.id)){out.state='failed';out.message=PM.errors.get(j.id);}if(brief)delete out.result;return out;}
 function findJob(id){const j=store.value.jobs.find(j=>j.id===id);if(!j)throw Error('找不到这项记录');return j;}
-function planProgress(p){const items=p?.items||[],statuses=items.map(i=>{
- const job=store.value.jobs.filter(j=>j.mode==='training'&&j.plan_id===p.id&&j.entry_key===i.key&&j.state==='done').at(-1);
+function planProgress(p,value=store.value){const items=p?.items||[],statuses=items.map(i=>{
+ const job=value.jobs.filter(j=>j.mode==='training'&&j.plan_id===p.id&&j.entry_key===i.key&&j.state==='done').at(-1);
  const f=job?.feedback,done=!!(job?.result.summary.plan_completed&&job.result.local_report.validRatio>=.8&&f&&f.pain===0&&f.fatigue<5);
  return{key:i.key,done,job_id:job?.id||null,blocked:job&&!f?'请补充上次训练感受':f&&(f.pain>0||f.fatigue>=5)?'上次训练有不适，请先停止并咨询专业人员':'',};
  }),next=statuses.find(i=>!i.done);return{completed:statuses.filter(i=>i.done).length,total:items.length,next_key:next?.key||null,items:statuses,blocked:next?.blocked||''};}
+async function careRehabFacts(value){
+ // Reuse saved plans and the existing progress/feedback gates. No new dose or
+ // clinical threshold is introduced by the coordination adapter.
+ const p=value.plans.at(-1),progress=p?planProgress(p,value):null;
+ const plans=p?[{...p,progress,next_available:!!(progress.next_key&&!progress.blocked),availability_reason:progress.blocked||(progress.next_key?'':'这一轮已完成')}]:[];
+ const history=value.jobs.filter(j=>j.mode==='training'&&j.state==='done').reverse().map(j=>({exercise_id:j.exercise,side:j.side,end_utc:j.created_at,plan_id:j.plan_id,entry_key:j.entry_key,summary:j.result?.summary,feedback:j.feedback}));
+ return{plans,history};
+}
 async function proposal(){const c=await PM.catalog(),records=store.value.jobs.filter(j=>j.state==='done'&&j.result.local_report).map(j=>({id:j.id,exercise:j.exercise,side:j.side,created:new Date(j.created_at).getTime(),kind:j.mode||'assessment',report:j.result.local_report,feedback:j.feedback}));
  const p=LocalEngine.propose(records,c,Date.now(),{restrictions:(profile().conditions||[]).join('；')});
  return{candidates:p.items.map(i=>{const s=c.rehab.find(s=>s.id===i.exercise);return{...i,exercise_id:i.exercise,label:s.label,settings:{target_reps:i.reps,target_sets:1,target_angle_deg:i.target,rest_between_sets_s:30},instruction:s.instructions.move+'；'+s.instructions.return,rationale:'按最近本人评估中的可见次数和舒适活动幅度安排。',source:typeof i.source==='string'?{title:i.source,section:''}:i.source};}),excluded:p.excluded.map(reason=>({label:'待补充',reason}))};}
@@ -63,6 +71,14 @@ async function request(path,opts={}){
   if(route==='/pair')return{ok:true,local:true};
   if(route==='/unified')return{snapshot:await snapshot(),source:'PHONE_LOCAL',shared:true,local:true};
   if(route==='/product')return{needs_profile:false,snapshot:await snapshot(),metrics,categories,assistant:'local',external_model:false};
+  if(route.startsWith('/product/care.')||route.startsWith('/unified/care.')){
+   if(u.origin!==location.origin)failure('请使用当前手机本地档案',403);
+   const operation=route.slice(9);
+   if(!['care.overview','care.next','care.prepare','care.status','care.confirm','care.cancel'].includes(operation))failure('未开放此照护操作',404);
+   if(!['GET','POST'].includes(method)||(!['care.overview','care.next'].includes(operation)&&method!=='POST'))failure('请使用明确的照护操作请求',405);
+   if(q.toString())failure('照护请求不接受档案或来源查询参数');
+   return domain.request(operation,owner,payload,now());
+  }
   if(route.startsWith('/product/')){
    const operation=route.slice(9),p=payload;
    if(operation==='profile.save'){const old=profile();if(!p.profile||typeof p.profile.name!=='string'||p.profile.name.length>40||!Number.isInteger(p.profile.age)||p.profile.age<0||p.profile.age>130||!Array.isArray(p.profile.conditions)||p.profile.conditions.length>20)failure('请核对称呼、年龄和健康情况');p.profile={...old,...p.profile,medications:old.medications,medicationRecords:old.medicationRecords,familySharing:old.familySharing};}
@@ -165,7 +181,7 @@ async function backup(){
  const exported=await domain.request('lifecycle.export',owner,{},now());
  // Binary originals remain independently exportable; keep JSON restore bounded.
  exported.attachments=exported.attachments.map(({bytes,...a})=>({...a,originalIncluded:false}));
- const data=copy(store.value);data.jobs.forEach(j=>{if(!['done','failed'].includes(j.state)){j.state='failed';j.message='备份时分析尚未完成，未计入结果。';}});
+ const data=PS.backupData(store.value);data.jobs.forEach(j=>{if(!['done','failed'].includes(j.state)){j.state='failed';j.message='备份时分析尚未完成，未计入结果。';}});
  return{kind:'ankang-phone-backup',version:2,exportedAt:now().toISOString(),data,domain:exported,note:'仅文字记录、评估结果和计划；录像及资料原件请单独导出。'};
 }
 async function restore(text){try{
