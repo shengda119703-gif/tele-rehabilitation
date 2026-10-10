@@ -1,0 +1,2115 @@
+{
+  "startedAt": "2026-10-10T03:02:50.292912+00:00",
+  "finishedAt": "2026-10-10T03:03:44.500710+00:00",
+  "baseline": "1604ad64124c2aa35d0a5b1285006a103d06bee9",
+  "completed": true,
+  "fatalError": null,
+  "counts": {
+    "PASS": 59,
+    "FAIL": 10
+  },
+  "scope": "real localhost HTTP -> Python ProductBackend -> Node AgentBridge -> isolated SQLite",
+  "requestEntries": 213,
+  "scriptSha256": "5B39E28155EB586C5625858222EE6BFAC97B282823AD062DFC4929437D97C4A9",
+  "originalResultSha256": "6420FBE4A618F941F26B9D2ACD4F5342A22C7DB528A40A35413703DB9CF09A1E",
+  "cases": [
+    {
+      "id": "BB-001",
+      "title": "未配对拒绝访问",
+      "expected": "401",
+      "status": "PASS",
+      "evidence": "符合预期",
+      "request_range": [
+        0,
+        1
+      ],
+      "elapsed_ms": 0
+    },
+    {
+      "id": "BB-002",
+      "title": "错误连接码",
+      "expected": "401",
+      "status": "PASS",
+      "evidence": "符合预期",
+      "request_range": [
+        1,
+        2
+      ],
+      "elapsed_ms": 16
+    },
+    {
+      "id": "BB-003",
+      "title": "缺少客户端保护标记",
+      "expected": "403",
+      "status": "PASS",
+      "evidence": null,
+      "request_range": [
+        3,
+        4
+      ],
+      "elapsed_ms": 0
+    },
+    {
+      "id": "BB-004",
+      "title": "今天安排保留未记录状态",
+      "expected": "4 次未记录，查询不写服药事实",
+      "status": "PASS",
+      "evidence": {
+        "scope": {
+          "participant_id": "TEST-blackbox-primary",
+          "source_kind": "LIVE_CAMERA",
+          "usage_context": "SELF_USE"
+        },
+        "date": "2026-10-10",
+        "doses": [
+          {
+            "medId": "TEST-med-A",
+            "name": "TEST 药物 A",
+            "dose": "按原说明",
+            "date": "2026-10-10",
+            "time": "08:00",
+            "status": "unrecorded"
+          },
+          {
+            "medId": "TEST-med-B",
+            "name": "TEST 药物 B",
+            "dose": "按原说明",
+            "date": "2026-10-10",
+            "time": "09:00",
+            "status": "unrecorded"
+          },
+          {
+            "medId": "TEST-med-A",
+            "name": "TEST 药物 A",
+            "dose": "按原说明",
+            "date": "2026-10-10",
+            "time": "12:00",
+            "status": "unrecorded"
+          },
+          {
+            "medId": "TEST-med-A",
+            "name": "TEST 药物 A",
+            "dose": "按原说明",
+            "date": "2026-10-10",
+            "time": "20:00",
+            "status": "unrecorded"
+          }
+        ],
+        "schedules": [
+          {
+            "id": "TEST-schedule",
+            "date": "2026-10-10",
+            "time": "14:00",
+            "kind": "training",
+            "name": "TEST 已有训练",
+            "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+            "revision": 1,
+            "createdAt": "2026-10-10T03:02:53.455664+00:00"
+          }
+        ],
+        "note": "未记录不等于漏服；安排存在不等于训练已完成。"
+      },
+      "request_range": [
+        10,
+        12
+      ],
+      "elapsed_ms": 359
+    },
+    {
+      "id": "BB-005",
+      "title": "无评估的下一项查询",
+      "expected": "available=false，不伪造可执行状态",
+      "status": "PASS",
+      "evidence": "符合预期",
+      "request_range": [
+        12,
+        13
+      ],
+      "elapsed_ms": 94
+    },
+    {
+      "id": "BB-006",
+      "title": "复合提议不写业务数据",
+      "expected": "awaiting_confirmation；服药为空、训练仍14:00",
+      "status": "PASS",
+      "evidence": {
+        "id": "878d46f0-9196-40aa-8dd1-35e7154870f0",
+        "requestId": "TEST-compound",
+        "requestSignature": "<redacted TEST credential>",
+        "scope": {
+          "participant_id": "TEST-blackbox-primary",
+          "source_kind": "LIVE_CAMERA",
+          "usage_context": "SELF_USE"
+        },
+        "status": "awaiting_confirmation",
+        "createdAt": "2026-10-10T03:02:53.929Z",
+        "expiresAt": "2026-10-10T03:17:53.929Z",
+        "confirmationToken": "<redacted TEST credential>",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.dose",
+              "payload": {
+                "medId": "TEST-med-A",
+                "date": "2026-10-10",
+                "time": "08:00",
+                "status": "taken"
+              },
+              "expected": {
+                "medicine": {
+                  "id": "TEST-med-A",
+                  "name": "TEST 药物 A",
+                  "dose": "按原说明",
+                  "purpose": "",
+                  "times": "",
+                  "status": "active"
+                },
+                "schedule": {
+                  "times": [
+                    "08:00",
+                    "12:00",
+                    "20:00"
+                  ],
+                  "start": "2026-10-10",
+                  "end": "",
+                  "savedAt": "2026-10-10T03:02:53.121711+00:00"
+                },
+                "dose": null
+              },
+              "label": "2026-10-10 08:00 TEST 药物 A → 已服用"
+            },
+            "status": "pending"
+          },
+          {
+            "action": {
+              "operation": "daily.schedule",
+              "payload": {
+                "id": "TEST-schedule",
+                "date": "2026-10-10",
+                "time": "16:00",
+                "kind": "training",
+                "name": "TEST 已有训练",
+                "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                "revision": 1
+              },
+              "expected": {
+                "schedule": {
+                  "id": "TEST-schedule",
+                  "date": "2026-10-10",
+                  "time": "14:00",
+                  "kind": "training",
+                  "name": "TEST 已有训练",
+                  "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1,
+                  "createdAt": "2026-10-10T03:02:53.455664+00:00"
+                },
+                "plan": {
+                  "id": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1
+                }
+              },
+              "label": "TEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）"
+            },
+            "status": "pending"
+          }
+        ],
+        "reply": "以下操作尚未执行，请逐项核对后确认：\n2026-10-10 08:00 TEST 药物 A → 已服用\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）"
+      },
+      "request_range": [
+        14,
+        16
+      ],
+      "elapsed_ms": 500
+    },
+    {
+      "id": "BB-007",
+      "title": "重复 requestId 复用提议",
+      "expected": "相同工作流 id",
+      "status": "PASS",
+      "evidence": "符合预期",
+      "request_range": [
+        16,
+        17
+      ],
+      "elapsed_ms": 94
+    },
+    {
+      "id": "BB-008",
+      "title": "同 requestId 更换操作拒绝",
+      "expected": "400",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 请求编号已用于不同需求或来源"
+      },
+      "request_range": [
+        17,
+        18
+      ],
+      "elapsed_ms": 109
+    },
+    {
+      "id": "BB-009",
+      "title": "伪造确认凭据",
+      "expected": "400 且不执行",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 确认凭据无效"
+      },
+      "request_range": [
+        18,
+        21
+      ],
+      "elapsed_ms": 531
+    },
+    {
+      "id": "BB-010",
+      "title": "confirmed=false",
+      "expected": "400 且不执行",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 请明确确认本次操作"
+      },
+      "request_range": [
+        21,
+        24
+      ],
+      "elapsed_ms": 485
+    },
+    {
+      "id": "BB-011",
+      "title": "确认夹带其他 owner",
+      "expected": "400 且不执行",
+      "status": "PASS",
+      "evidence": {
+        "detail": "操作包含不支持的字段。"
+      },
+      "request_range": [
+        24,
+        27
+      ],
+      "elapsed_ms": 531
+    },
+    {
+      "id": "BB-012",
+      "title": "跨来源确认拒绝",
+      "expected": "400",
+      "status": "PASS",
+      "evidence": "符合预期",
+      "request_range": [
+        27,
+        28
+      ],
+      "elapsed_ms": 109
+    },
+    {
+      "id": "BB-013",
+      "title": "查询状态不提供确认凭据",
+      "expected": "无 confirmationToken/requestSignature",
+      "status": "PASS",
+      "evidence": "符合预期",
+      "request_range": [
+        28,
+        29
+      ],
+      "elapsed_ms": 32
+    },
+    {
+      "id": "BB-014",
+      "title": "并发双确认执行一次且保留原计划",
+      "expected": "两请求成功；仅1条服药审计、原训练改16:00",
+      "status": "PASS",
+      "evidence": {
+        "statuses": [
+          "succeeded",
+          "succeeded"
+        ],
+        "doseAudit": 1,
+        "schedule": {
+          "id": "TEST-schedule",
+          "date": "2026-10-10",
+          "time": "16:00",
+          "kind": "training",
+          "name": "TEST 已有训练",
+          "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+          "revision": 1,
+          "createdAt": "2026-10-10T03:02:59.091442+00:00"
+        }
+      },
+      "request_range": [
+        29,
+        31
+      ],
+      "elapsed_ms": 3093
+    },
+    {
+      "id": "BB-015",
+      "title": "完成后重复确认",
+      "expected": "succeeded，审计仍1条",
+      "status": "PASS",
+      "evidence": "符合预期",
+      "request_range": [
+        31,
+        33
+      ],
+      "elapsed_ms": 344
+    },
+    {
+      "id": "BB-016",
+      "title": "取消后禁止执行",
+      "expected": "cancelled；确认400",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 该任务不能执行，请重新提出明确需求"
+      },
+      "request_range": [
+        34,
+        36
+      ],
+      "elapsed_ms": 156
+    },
+    {
+      "id": "BB-017",
+      "title": "未支持的开药",
+      "expected": "400，无新业务写入",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 该操作没有受限执行工具"
+      },
+      "request_range": [
+        36,
+        39
+      ],
+      "elapsed_ms": 578
+    },
+    {
+      "id": "BB-018",
+      "title": "不存在的药物",
+      "expected": "400，无新业务写入",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 该次服药不在已保存的安排中"
+      },
+      "request_range": [
+        39,
+        42
+      ],
+      "elapsed_ms": 579
+    },
+    {
+      "id": "BB-019",
+      "title": "不在服药安排中的时刻",
+      "expected": "400，无新业务写入",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 该次服药不在已保存的安排中"
+      },
+      "request_range": [
+        42,
+        45
+      ],
+      "elapsed_ms": 640
+    },
+    {
+      "id": "BB-020",
+      "title": "未来已服用",
+      "expected": "400，无新业务写入",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 请核对药物、已发生的日期、时间和实际状态"
+      },
+      "request_range": [
+        45,
+        48
+      ],
+      "elapsed_ms": 516
+    },
+    {
+      "id": "BB-021",
+      "title": "无效日期",
+      "expected": "400，无新业务写入",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 请核对药物、已发生的日期、时间和实际状态"
+      },
+      "request_range": [
+        48,
+        51
+      ],
+      "elapsed_ms": 562
+    },
+    {
+      "id": "BB-022",
+      "title": "无效时间",
+      "expected": "400，无新业务写入",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 请核对药物、已发生的日期、时间和实际状态"
+      },
+      "request_range": [
+        51,
+        54
+      ],
+      "elapsed_ms": 610
+    },
+    {
+      "id": "BB-023",
+      "title": "嵌套附加字段",
+      "expected": "400，无新业务写入",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 操作含未知字段"
+      },
+      "request_range": [
+        54,
+        57
+      ],
+      "elapsed_ms": 515
+    },
+    {
+      "id": "BB-024",
+      "title": "不存在的训练安排",
+      "expected": "400，无新业务写入",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 没有同来源的有效计划安排，请刷新核对"
+      },
+      "request_range": [
+        57,
+        60
+      ],
+      "elapsed_ms": 594
+    },
+    {
+      "id": "BB-025",
+      "title": "同次服药重复",
+      "expected": "400，无新业务写入",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 同一服药记录不能重复提议"
+      },
+      "request_range": [
+        60,
+        63
+      ],
+      "elapsed_ms": 594
+    },
+    {
+      "id": "BB-026",
+      "title": "超出四项上限",
+      "expected": "400，无新业务写入",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 每次支持1至4项明确操作"
+      },
+      "request_range": [
+        63,
+        66
+      ],
+      "elapsed_ms": 578
+    },
+    {
+      "id": "BB-027",
+      "title": "第二步真实业务失败",
+      "expected": "第一步保存；第二步失败；报告部分成功",
+      "status": "PASS",
+      "evidence": {
+        "id": "50ef940c-f15b-4b60-9f07-58911f566d39",
+        "requestId": "TEST-blackbox-14",
+        "requestSignature": "<redacted TEST credential>",
+        "scope": {
+          "participant_id": "TEST-blackbox-primary",
+          "source_kind": "LIVE_CAMERA",
+          "usage_context": "SELF_USE"
+        },
+        "status": "partially_succeeded",
+        "createdAt": "2026-10-10T03:03:06.011Z",
+        "expiresAt": "2026-10-10T03:18:06.011Z",
+        "confirmationToken": "<redacted TEST credential>",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.dose",
+              "payload": {
+                "medId": "TEST-med-A",
+                "date": "2026-10-10",
+                "time": "12:00",
+                "status": "taken"
+              },
+              "expected": {
+                "medicine": {
+                  "id": "TEST-med-A",
+                  "name": "TEST 药物 A",
+                  "dose": "按原说明",
+                  "purpose": "",
+                  "times": "",
+                  "status": "active"
+                },
+                "schedule": {
+                  "times": [
+                    "08:00",
+                    "12:00",
+                    "20:00"
+                  ],
+                  "start": "2026-10-10",
+                  "end": "",
+                  "savedAt": "2026-10-10T03:02:53.121711+00:00"
+                },
+                "dose": null
+              },
+              "label": "2026-10-10 12:00 TEST 药物 A → 已服用"
+            },
+            "status": "succeeded",
+            "receipt": {
+              "status": "succeeded",
+              "idempotencyKey": "50ef940c-f15b-4b60-9f07-58911f566d39:0",
+              "operation": "daily.dose",
+              "dailyReceipt": true,
+              "savedAt": "2026-10-10T03:03:06.269253+00:00"
+            }
+          },
+          {
+            "action": {
+              "operation": "daily.schedule",
+              "payload": {
+                "id": "TEST-schedule",
+                "date": "2026-10-10",
+                "time": "17:00",
+                "kind": "training",
+                "name": "TEST 已有训练",
+                "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                "revision": 1
+              },
+              "expected": {
+                "schedule": {
+                  "id": "TEST-schedule",
+                  "date": "2026-10-10",
+                  "time": "14:00",
+                  "kind": "training",
+                  "name": "TEST 已有训练",
+                  "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1,
+                  "createdAt": "2026-10-10T03:03:05.993210+00:00"
+                },
+                "plan": {
+                  "id": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1
+                }
+              },
+              "label": "TEST 已有训练：2026-10-10 14:00 → 2026-10-10 17:00（仅改安排）"
+            },
+            "status": "failed",
+            "error": "Error: 该时间已经安排了同一计划。"
+          }
+        ],
+        "reply": "2026-10-10 12:00 TEST 药物 A → 已服用：已保存\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 17:00（仅改安排）：失败，请核对后重试",
+        "approvedAt": "2026-10-10T03:03:06.190Z"
+      },
+      "request_range": [
+        69,
+        72
+      ],
+      "elapsed_ms": 735
+    },
+    {
+      "id": "BB-028",
+      "title": "消除冲突后重试未完成项",
+      "expected": "第二步成功；服药审计仍2条",
+      "status": "PASS",
+      "evidence": {
+        "workflow": {
+          "id": "50ef940c-f15b-4b60-9f07-58911f566d39",
+          "requestId": "TEST-blackbox-14",
+          "requestSignature": "<redacted TEST credential>",
+          "scope": {
+            "participant_id": "TEST-blackbox-primary",
+            "source_kind": "LIVE_CAMERA",
+            "usage_context": "SELF_USE"
+          },
+          "status": "succeeded",
+          "createdAt": "2026-10-10T03:03:06.011Z",
+          "expiresAt": "2026-10-10T03:18:06.011Z",
+          "confirmationToken": "<redacted TEST credential>",
+          "steps": [
+            {
+              "action": {
+                "operation": "daily.dose",
+                "payload": {
+                  "medId": "TEST-med-A",
+                  "date": "2026-10-10",
+                  "time": "12:00",
+                  "status": "taken"
+                },
+                "expected": {
+                  "medicine": {
+                    "id": "TEST-med-A",
+                    "name": "TEST 药物 A",
+                    "dose": "按原说明",
+                    "purpose": "",
+                    "times": "",
+                    "status": "active"
+                  },
+                  "schedule": {
+                    "times": [
+                      "08:00",
+                      "12:00",
+                      "20:00"
+                    ],
+                    "start": "2026-10-10",
+                    "end": "",
+                    "savedAt": "2026-10-10T03:02:53.121711+00:00"
+                  },
+                  "dose": null
+                },
+                "label": "2026-10-10 12:00 TEST 药物 A → 已服用"
+              },
+              "status": "succeeded",
+              "receipt": {
+                "status": "succeeded",
+                "idempotencyKey": "50ef940c-f15b-4b60-9f07-58911f566d39:0",
+                "operation": "daily.dose",
+                "dailyReceipt": true,
+                "savedAt": "2026-10-10T03:03:06.269253+00:00"
+              }
+            },
+            {
+              "action": {
+                "operation": "daily.schedule",
+                "payload": {
+                  "id": "TEST-schedule",
+                  "date": "2026-10-10",
+                  "time": "17:00",
+                  "kind": "training",
+                  "name": "TEST 已有训练",
+                  "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1
+                },
+                "expected": {
+                  "schedule": {
+                    "id": "TEST-schedule",
+                    "date": "2026-10-10",
+                    "time": "14:00",
+                    "kind": "training",
+                    "name": "TEST 已有训练",
+                    "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                    "revision": 1,
+                    "createdAt": "2026-10-10T03:03:05.993210+00:00"
+                  },
+                  "plan": {
+                    "id": "cd9ac3e17d7c43ac8235e495890e8296",
+                    "revision": 1
+                  }
+                },
+                "label": "TEST 已有训练：2026-10-10 14:00 → 2026-10-10 17:00（仅改安排）"
+              },
+              "status": "succeeded",
+              "receipt": {
+                "status": "succeeded",
+                "idempotencyKey": "50ef940c-f15b-4b60-9f07-58911f566d39:1",
+                "operation": "daily.schedule",
+                "dailyReceipt": true,
+                "savedAt": "2026-10-10T03:03:07.189565+00:00"
+              }
+            }
+          ],
+          "reply": "2026-10-10 12:00 TEST 药物 A → 已服用：已保存\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 17:00（仅改安排）：已保存",
+          "approvedAt": "2026-10-10T03:03:06.190Z"
+        },
+        "auditCount": 2
+      },
+      "request_range": [
+        72,
+        75
+      ],
+      "elapsed_ms": 593
+    },
+    {
+      "id": "BB-029",
+      "title": "确认前药物档案变化",
+      "expected": "failed，不写原提议",
+      "status": "PASS",
+      "evidence": {
+        "id": "718db37d-c1fe-42d3-9959-34cba9b0c439",
+        "requestId": "TEST-blackbox-15",
+        "requestSignature": "<redacted TEST credential>",
+        "scope": {
+          "participant_id": "TEST-blackbox-primary",
+          "source_kind": "LIVE_CAMERA",
+          "usage_context": "SELF_USE"
+        },
+        "status": "failed",
+        "createdAt": "2026-10-10T03:03:07.518Z",
+        "expiresAt": "2026-10-10T03:18:07.518Z",
+        "confirmationToken": "<redacted TEST credential>",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.dose",
+              "payload": {
+                "medId": "TEST-med-A",
+                "date": "2026-10-10",
+                "time": "20:00",
+                "status": "taken"
+              },
+              "expected": {
+                "medicine": {
+                  "id": "TEST-med-A",
+                  "name": "TEST 药物 A",
+                  "dose": "按原说明",
+                  "purpose": "",
+                  "times": "",
+                  "status": "active"
+                },
+                "schedule": {
+                  "times": [
+                    "08:00",
+                    "12:00",
+                    "20:00"
+                  ],
+                  "start": "2026-10-10",
+                  "end": "",
+                  "savedAt": "2026-10-10T03:02:53.121711+00:00"
+                },
+                "dose": null
+              },
+              "label": "2026-10-10 20:00 TEST 药物 A → 已服用"
+            },
+            "status": "failed",
+            "error": "Error: 药物或该次服药记录已变化，请重新核对。"
+          }
+        ],
+        "reply": "2026-10-10 20:00 TEST 药物 A → 已服用：失败，请核对后重试",
+        "approvedAt": "2026-10-10T03:03:07.976Z"
+      },
+      "request_range": [
+        77,
+        79
+      ],
+      "elapsed_ms": 485
+    },
+    {
+      "id": "BB-030",
+      "title": "确认前服药记录变化",
+      "expected": "failed，不覆盖已更新的 skipped",
+      "status": "PASS",
+      "evidence": {
+        "id": "32e74b9a-6811-43fc-924c-6e947aa4ac91",
+        "requestId": "TEST-blackbox-16",
+        "requestSignature": "<redacted TEST credential>",
+        "scope": {
+          "participant_id": "TEST-blackbox-primary",
+          "source_kind": "LIVE_CAMERA",
+          "usage_context": "SELF_USE"
+        },
+        "status": "failed",
+        "createdAt": "2026-10-10T03:03:08.726Z",
+        "expiresAt": "2026-10-10T03:18:08.726Z",
+        "confirmationToken": "<redacted TEST credential>",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.dose",
+              "payload": {
+                "medId": "TEST-med-A",
+                "date": "2026-10-10",
+                "time": "20:00",
+                "status": "taken"
+              },
+              "expected": {
+                "medicine": {
+                  "id": "TEST-med-A",
+                  "name": "TEST 药物 A",
+                  "dose": "按原说明",
+                  "purpose": "",
+                  "times": "",
+                  "status": "active"
+                },
+                "schedule": {
+                  "times": [
+                    "08:00",
+                    "12:00",
+                    "20:00"
+                  ],
+                  "start": "2026-10-10",
+                  "end": "",
+                  "savedAt": "2026-10-10T03:02:53.121711+00:00"
+                },
+                "dose": null
+              },
+              "label": "2026-10-10 20:00 TEST 药物 A → 已服用"
+            },
+            "status": "failed",
+            "error": "Error: 药物或该次服药记录已变化，请重新核对。"
+          }
+        ],
+        "reply": "2026-10-10 20:00 TEST 药物 A → 已服用：失败，请核对后重试",
+        "approvedAt": "2026-10-10T03:03:08.929Z"
+      },
+      "request_range": [
+        82,
+        84
+      ],
+      "elapsed_ms": 468
+    },
+    {
+      "id": "BB-031",
+      "title": "确认前训练安排变化",
+      "expected": "failed，保留15:00",
+      "status": "PASS",
+      "evidence": "符合预期",
+      "request_range": [
+        86,
+        88
+      ],
+      "elapsed_ms": 484
+    },
+    {
+      "id": "BB-032",
+      "title": "语言：明确服药记录",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "记录今天08:00的TEST 药物 A已服用",
+        "status": "awaiting_confirmation",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.dose",
+              "payload": {
+                "medId": "TEST-med-A",
+                "date": "2026-10-10",
+                "time": "08:00",
+                "status": "taken"
+              },
+              "expected": {
+                "medicine": {
+                  "id": "TEST-med-A",
+                  "name": "TEST 药物 A",
+                  "dose": "按原说明",
+                  "purpose": "",
+                  "times": "",
+                  "status": "active"
+                },
+                "schedule": {
+                  "times": [
+                    "08:00",
+                    "12:00",
+                    "20:00"
+                  ],
+                  "start": "2026-10-10",
+                  "end": "",
+                  "savedAt": "2026-10-10T03:02:53.121711+00:00"
+                },
+                "dose": {
+                  "medId": "TEST-med-A",
+                  "date": "2026-10-10",
+                  "time": "08:00",
+                  "status": "taken",
+                  "medName": "TEST 药物 A",
+                  "dose": "按原说明",
+                  "recordedAt": "2026-10-10T03:02:58.973675+00:00"
+                }
+              },
+              "label": "2026-10-10 08:00 TEST 药物 A → 已服用"
+            },
+            "status": "pending"
+          }
+        ]
+      },
+      "request_range": [
+        89,
+        92
+      ],
+      "elapsed_ms": 797
+    },
+    {
+      "id": "BB-033",
+      "title": "语言：明确训练改期",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "今天14:00的训练改到今天16:00",
+        "status": "awaiting_confirmation",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.schedule",
+              "payload": {
+                "id": "TEST-schedule",
+                "date": "2026-10-10",
+                "time": "16:00",
+                "kind": "training",
+                "name": "TEST 已有训练",
+                "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                "revision": 1
+              },
+              "expected": {
+                "schedule": {
+                  "id": "TEST-schedule",
+                  "date": "2026-10-10",
+                  "time": "14:00",
+                  "kind": "training",
+                  "name": "TEST 已有训练",
+                  "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1,
+                  "createdAt": "2026-10-10T03:03:10.200240+00:00"
+                },
+                "plan": {
+                  "id": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1
+                }
+              },
+              "label": "TEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）"
+            },
+            "status": "pending"
+          }
+        ]
+      },
+      "request_range": [
+        92,
+        95
+      ],
+      "elapsed_ms": 687
+    },
+    {
+      "id": "BB-034",
+      "title": "语言：明确跨日改期",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "今天14:00的训练改到明天16:00",
+        "status": "awaiting_confirmation",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.schedule",
+              "payload": {
+                "id": "TEST-schedule",
+                "date": "2026-10-11",
+                "time": "16:00",
+                "kind": "training",
+                "name": "TEST 已有训练",
+                "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                "revision": 1
+              },
+              "expected": {
+                "schedule": {
+                  "id": "TEST-schedule",
+                  "date": "2026-10-10",
+                  "time": "14:00",
+                  "kind": "training",
+                  "name": "TEST 已有训练",
+                  "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1,
+                  "createdAt": "2026-10-10T03:03:10.200240+00:00"
+                },
+                "plan": {
+                  "id": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1
+                }
+              },
+              "label": "TEST 已有训练：2026-10-10 14:00 → 2026-10-11 16:00（仅改安排）"
+            },
+            "status": "pending"
+          }
+        ]
+      },
+      "request_range": [
+        95,
+        98
+      ],
+      "elapsed_ms": 532
+    },
+    {
+      "id": "BB-035",
+      "title": "语言：否定已服药",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "记录今天08:00的TEST 药物 A没吃",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        98,
+        101
+      ],
+      "elapsed_ms": 562
+    },
+    {
+      "id": "BB-036",
+      "title": "语言：无需改期",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "今天14:00的训练无需改到16:00",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        101,
+        104
+      ],
+      "elapsed_ms": 656
+    },
+    {
+      "id": "BB-037",
+      "title": "语言：假设改期",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "如果今天14:00的训练改到16:00",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        104,
+        107
+      ],
+      "elapsed_ms": 625
+    },
+    {
+      "id": "BB-038",
+      "title": "语言：父亲的安排",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "爸爸今天14:00的训练改到16:00",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        107,
+        110
+      ],
+      "elapsed_ms": 688
+    },
+    {
+      "id": "BB-039",
+      "title": "语言：他人的安排",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "他今天14:00的训练改到16:00",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        110,
+        113
+      ],
+      "elapsed_ms": 609
+    },
+    {
+      "id": "BB-040",
+      "title": "语言：具名第三人的安排",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "FAIL",
+      "evidence": "AssertionError: {\"input\": \"张三今天14:00的训练改到16:00\", \"status\": \"awaiting_confirmation\", \"steps\": [{\"action\": {\"operation\": \"daily.schedule\", \"payload\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"16:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}, \"expected\": {\"schedule\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"14:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1, \"createdAt\": \"2026-10-10T03:03:10.200240+00:00\"}, \"plan\": {\"id\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}}, \"label\": \"TEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}, \"status\": \"pending\"}], \"reply\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}",
+      "request_range": [
+        113,
+        116
+      ],
+      "elapsed_ms": 719
+    },
+    {
+      "id": "BB-041",
+      "title": "语言：朋友的安排",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "FAIL",
+      "evidence": "AssertionError: {\"input\": \"我朋友今天14:00的训练改到16:00\", \"status\": \"awaiting_confirmation\", \"steps\": [{\"action\": {\"operation\": \"daily.schedule\", \"payload\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"16:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}, \"expected\": {\"schedule\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"14:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1, \"createdAt\": \"2026-10-10T03:03:10.200240+00:00\"}, \"plan\": {\"id\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}}, \"label\": \"TEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}, \"status\": \"pending\"}], \"reply\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}",
+      "request_range": [
+        116,
+        119
+      ],
+      "elapsed_ms": 641
+    },
+    {
+      "id": "BB-042",
+      "title": "语言：引用示例",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "例如今天14:00的训练改到16:00",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        119,
+        122
+      ],
+      "elapsed_ms": 640
+    },
+    {
+      "id": "BB-043",
+      "title": "语言：问句",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "今天14:00的训练改到16:00吗？",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        122,
+        125
+      ],
+      "elapsed_ms": 641
+    },
+    {
+      "id": "BB-044",
+      "title": "语言：没有明确药名",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "记录今天08:00的药已服用",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        125,
+        128
+      ],
+      "elapsed_ms": 594
+    },
+    {
+      "id": "BB-045",
+      "title": "语言：没有明确日期",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "记录08:00的TEST 药物 A已服用",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        128,
+        131
+      ],
+      "elapsed_ms": 578
+    },
+    {
+      "id": "BB-046",
+      "title": "语言：没有明确时刻",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "记录今天的TEST 药物 A已服用",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        131,
+        134
+      ],
+      "elapsed_ms": 625
+    },
+    {
+      "id": "BB-047",
+      "title": "语言：无日期午夜",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "今天14:00的训练改到晚上12点",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        134,
+        137
+      ],
+      "elapsed_ms": 640
+    },
+    {
+      "id": "BB-048",
+      "title": "语言：分钟不完整",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "今天14:00的训练改到下午四点一刻",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        137,
+        140
+      ],
+      "elapsed_ms": 672
+    },
+    {
+      "id": "BB-049",
+      "title": "语言：上午与16点冲突",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "FAIL",
+      "evidence": "AssertionError: {\"input\": \"今天14:00的训练改到上午16:00\", \"status\": \"awaiting_confirmation\", \"steps\": [{\"action\": {\"operation\": \"daily.schedule\", \"payload\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"16:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}, \"expected\": {\"schedule\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"14:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1, \"createdAt\": \"2026-10-10T03:03:10.200240+00:00\"}, \"plan\": {\"id\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}}, \"label\": \"TEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}, \"status\": \"pending\"}], \"reply\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}",
+      "request_range": [
+        140,
+        143
+      ],
+      "elapsed_ms": 610
+    },
+    {
+      "id": "BB-050",
+      "title": "语言：中午四点含糊",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "FAIL",
+      "evidence": "AssertionError: {\"input\": \"今天14:00的训练改到中午四点\", \"status\": \"awaiting_confirmation\", \"steps\": [{\"action\": {\"operation\": \"daily.schedule\", \"payload\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"04:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}, \"expected\": {\"schedule\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"14:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1, \"createdAt\": \"2026-10-10T03:03:10.200240+00:00\"}, \"plan\": {\"id\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}}, \"label\": \"TEST 已有训练：2026-10-10 14:00 → 2026-10-10 04:00（仅改安排）\"}, \"status\": \"pending\"}], \"reply\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 04:00（仅改安排）\"}",
+      "request_range": [
+        143,
+        146
+      ],
+      "elapsed_ms": 625
+    },
+    {
+      "id": "BB-051",
+      "title": "语言：新增剂量信息",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "FAIL",
+      "evidence": "AssertionError: {\"input\": \"记录今天08:00的TEST 药物 A已服用两倍剂量\", \"status\": \"awaiting_confirmation\", \"steps\": [{\"action\": {\"operation\": \"daily.dose\", \"payload\": {\"medId\": \"TEST-med-A\", \"date\": \"2026-10-10\", \"time\": \"08:00\", \"status\": \"taken\"}, \"expected\": {\"medicine\": {\"id\": \"TEST-med-A\", \"name\": \"TEST 药物 A\", \"dose\": \"按原说明\", \"purpose\": \"\", \"times\": \"\", \"status\": \"active\"}, \"schedule\": {\"times\": [\"08:00\", \"12:00\", \"20:00\"], \"start\": \"2026-10-10\", \"end\": \"\", \"savedAt\": \"2026-10-10T03:02:53.121711+00:00\"}, \"dose\": {\"medId\": \"TEST-med-A\", \"date\": \"2026-10-10\", \"time\": \"08:00\", \"status\": \"taken\", \"medName\": \"TEST 药物 A\", \"dose\": \"按原说明\", \"recordedAt\": \"2026-10-10T03:02:58.973675+00:00\"}}, \"label\": \"2026-10-10 08:00 TEST 药物 A → 已服用\"}, \"status\": \"pending\"}], \"reply\": \"以下操作尚未执行，请逐项核对后确认：\\n2026-10-10 08:00 TEST 药物 A → 已服用\"}",
+      "request_range": [
+        146,
+        149
+      ],
+      "elapsed_ms": 641
+    },
+    {
+      "id": "BB-052",
+      "title": "语言：一并要求增加剂量",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "记录今天08:00的TEST 药物 A已服用，然后把剂量加倍",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        149,
+        152
+      ],
+      "elapsed_ms": 453
+    },
+    {
+      "id": "BB-053",
+      "title": "语言：一并取消另一安排",
+      "expected": "明确命令可提议；其他应先澄清；均不写数据",
+      "status": "PASS",
+      "evidence": {
+        "input": "今天14:00的训练改到16:00，然后取消明天的训练",
+        "status": "needs_clarification",
+        "steps": []
+      },
+      "request_range": [
+        152,
+        155
+      ],
+      "elapsed_ms": 484
+    },
+    {
+      "id": "BB-054",
+      "title": "聊天语义：具名第三人的安排",
+      "expected": "澄清或走原理解路径，不产生错误的可确认提议",
+      "status": "FAIL",
+      "evidence": "AssertionError: {\"input\": \"张三今天14:00的训练改到16:00\", \"care\": {\"reply\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\", \"workflow\": {\"id\": \"51b1a717-7817-4395-a06a-4180b82d480d\", \"requestId\": \"personal:TEST-blackbox-primary:0:elder:1\", \"requestSignature\": \"<redacted TEST credential>\", \"scope\": {\"participant_id\": \"TEST-blackbox-primary\", \"source_kind\": \"LIVE_CAMERA\", \"usage_context\": \"SELF_USE\"}, \"status\": \"awaiting_confirmation\", \"createdAt\": \"2026-10-10T03:03:24.227Z\", \"expiresAt\": \"2026-10-10T03:18:24.227Z\", \"confirmationToken\": \"<redacted TEST credential>\", \"steps\": [{\"action\": {\"operation\": \"daily.schedule\", \"payload\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"16:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}, \"expected\": {\"schedule\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"14:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1, \"createdAt\": \"2026-10-10T03:03:10.200240+00:00\"}, \"plan\": {\"id\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}}, \"label\": \"TEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}, \"status\": \"pending\"}], \"reply\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}}, \"reply\": {\"id\": \"personal:TEST-blackbox-primary:0:agent:1\", \"role\": \"agent\", \"text\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\", \"time\": \"10-10 11:03\", \"persisted\": true, \"safetyAction\": false, \"blocks\": [{\"kind\": \"main\", \"text\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}]}}",
+      "request_range": [
+        155,
+        158
+      ],
+      "elapsed_ms": 875
+    },
+    {
+      "id": "BB-055",
+      "title": "聊天语义：朋友的安排",
+      "expected": "澄清或走原理解路径，不产生错误的可确认提议",
+      "status": "FAIL",
+      "evidence": "AssertionError: {\"input\": \"我朋友今天14:00的训练改到16:00\", \"care\": {\"reply\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\", \"workflow\": {\"id\": \"d73a331d-610a-4e15-87d8-af73f39a3b61\", \"requestId\": \"personal:TEST-blackbox-primary:0:elder:2\", \"requestSignature\": \"<redacted TEST credential>\", \"scope\": {\"participant_id\": \"TEST-blackbox-primary\", \"source_kind\": \"LIVE_CAMERA\", \"usage_context\": \"SELF_USE\"}, \"status\": \"awaiting_confirmation\", \"createdAt\": \"2026-10-10T03:03:25.089Z\", \"expiresAt\": \"2026-10-10T03:18:25.089Z\", \"confirmationToken\": \"<redacted TEST credential>\", \"steps\": [{\"action\": {\"operation\": \"daily.schedule\", \"payload\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"16:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}, \"expected\": {\"schedule\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"14:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1, \"createdAt\": \"2026-10-10T03:03:10.200240+00:00\"}, \"plan\": {\"id\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}}, \"label\": \"TEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}, \"status\": \"pending\"}], \"reply\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}}, \"reply\": {\"id\": \"personal:TEST-blackbox-primary:0:agent:2\", \"role\": \"agent\", \"text\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\", \"time\": \"10-10 11:03\", \"persisted\": true, \"safetyAction\": false, \"blocks\": [{\"kind\": \"main\", \"text\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}]}}",
+      "request_range": [
+        158,
+        161
+      ],
+      "elapsed_ms": 922
+    },
+    {
+      "id": "BB-056",
+      "title": "聊天语义：上午与16点冲突",
+      "expected": "澄清或走原理解路径，不产生错误的可确认提议",
+      "status": "FAIL",
+      "evidence": "AssertionError: {\"input\": \"今天14:00的训练改到上午16:00\", \"care\": {\"reply\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\", \"workflow\": {\"id\": \"86430a20-7a68-4ed8-b8a6-13ba452186c8\", \"requestId\": \"personal:TEST-blackbox-primary:0:elder:3\", \"requestSignature\": \"<redacted TEST credential>\", \"scope\": {\"participant_id\": \"TEST-blackbox-primary\", \"source_kind\": \"LIVE_CAMERA\", \"usage_context\": \"SELF_USE\"}, \"status\": \"awaiting_confirmation\", \"createdAt\": \"2026-10-10T03:03:26.032Z\", \"expiresAt\": \"2026-10-10T03:18:26.032Z\", \"confirmationToken\": \"<redacted TEST credential>\", \"steps\": [{\"action\": {\"operation\": \"daily.schedule\", \"payload\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"16:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}, \"expected\": {\"schedule\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"14:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1, \"createdAt\": \"2026-10-10T03:03:10.200240+00:00\"}, \"plan\": {\"id\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}}, \"label\": \"TEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}, \"status\": \"pending\"}], \"reply\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}}, \"reply\": {\"id\": \"personal:TEST-blackbox-primary:0:agent:3\", \"role\": \"agent\", \"text\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\", \"time\": \"10-10 11:03\", \"persisted\": true, \"safetyAction\": false, \"blocks\": [{\"kind\": \"main\", \"text\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）\"}]}}",
+      "request_range": [
+        161,
+        164
+      ],
+      "elapsed_ms": 938
+    },
+    {
+      "id": "BB-057",
+      "title": "聊天语义：中午四点含糊",
+      "expected": "澄清或走原理解路径，不产生错误的可确认提议",
+      "status": "FAIL",
+      "evidence": "AssertionError: {\"input\": \"今天14:00的训练改到中午四点\", \"care\": {\"reply\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 04:00（仅改安排）\", \"workflow\": {\"id\": \"7a1f5af2-7d74-44b7-b13e-515fe9faabc8\", \"requestId\": \"personal:TEST-blackbox-primary:0:elder:4\", \"requestSignature\": \"<redacted TEST credential>\", \"scope\": {\"participant_id\": \"TEST-blackbox-primary\", \"source_kind\": \"LIVE_CAMERA\", \"usage_context\": \"SELF_USE\"}, \"status\": \"awaiting_confirmation\", \"createdAt\": \"2026-10-10T03:03:27.001Z\", \"expiresAt\": \"2026-10-10T03:18:27.001Z\", \"confirmationToken\": \"<redacted TEST credential>\", \"steps\": [{\"action\": {\"operation\": \"daily.schedule\", \"payload\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"04:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}, \"expected\": {\"schedule\": {\"id\": \"TEST-schedule\", \"date\": \"2026-10-10\", \"time\": \"14:00\", \"kind\": \"training\", \"name\": \"TEST 已有训练\", \"planId\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1, \"createdAt\": \"2026-10-10T03:03:10.200240+00:00\"}, \"plan\": {\"id\": \"cd9ac3e17d7c43ac8235e495890e8296\", \"revision\": 1}}, \"label\": \"TEST 已有训练：2026-10-10 14:00 → 2026-10-10 04:00（仅改安排）\"}, \"status\": \"pending\"}], \"reply\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 04:00（仅改安排）\"}}, \"reply\": {\"id\": \"personal:TEST-blackbox-primary:0:agent:4\", \"role\": \"agent\", \"text\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 04:00（仅改安排）\", \"time\": \"10-10 11:03\", \"persisted\": true, \"safetyAction\": false, \"blocks\": [{\"kind\": \"main\", \"text\": \"以下操作尚未执行，请逐项核对后确认：\\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 04:00（仅改安排）\"}]}}",
+      "request_range": [
+        164,
+        167
+      ],
+      "elapsed_ms": 953
+    },
+    {
+      "id": "BB-058",
+      "title": "聊天语义：新增剂量信息",
+      "expected": "澄清或走原理解路径，不产生错误的可确认提议",
+      "status": "FAIL",
+      "evidence": "AssertionError: {\"input\": \"记录今天08:00的TEST 药物 A已服用两倍剂量\", \"care\": {\"reply\": \"以下操作尚未执行，请逐项核对后确认：\\n2026-10-10 08:00 TEST 药物 A → 已服用\", \"workflow\": {\"id\": \"347e54dc-1e33-4b37-940d-ff81856ddeb5\", \"requestId\": \"personal:TEST-blackbox-primary:0:elder:5\", \"requestSignature\": \"<redacted TEST credential>\", \"scope\": {\"participant_id\": \"TEST-blackbox-primary\", \"source_kind\": \"LIVE_CAMERA\", \"usage_context\": \"SELF_USE\"}, \"status\": \"awaiting_confirmation\", \"createdAt\": \"2026-10-10T03:03:27.806Z\", \"expiresAt\": \"2026-10-10T03:18:27.806Z\", \"confirmationToken\": \"<redacted TEST credential>\", \"steps\": [{\"action\": {\"operation\": \"daily.dose\", \"payload\": {\"medId\": \"TEST-med-A\", \"date\": \"2026-10-10\", \"time\": \"08:00\", \"status\": \"taken\"}, \"expected\": {\"medicine\": {\"id\": \"TEST-med-A\", \"name\": \"TEST 药物 A\", \"dose\": \"按原说明\", \"purpose\": \"\", \"times\": \"\", \"status\": \"active\"}, \"schedule\": {\"times\": [\"08:00\", \"12:00\", \"20:00\"], \"start\": \"2026-10-10\", \"end\": \"\", \"savedAt\": \"2026-10-10T03:02:53.121711+00:00\"}, \"dose\": {\"medId\": \"TEST-med-A\", \"date\": \"2026-10-10\", \"time\": \"08:00\", \"status\": \"taken\", \"medName\": \"TEST 药物 A\", \"dose\": \"按原说明\", \"recordedAt\": \"2026-10-10T03:02:58.973675+00:00\"}}, \"label\": \"2026-10-10 08:00 TEST 药物 A → 已服用\"}, \"status\": \"pending\"}], \"reply\": \"以下操作尚未执行，请逐项核对后确认：\\n2026-10-10 08:00 TEST 药物 A → 已服用\"}}, \"reply\": {\"id\": \"personal:TEST-blackbox-primary:0:agent:5\", \"role\": \"agent\", \"text\": \"以下操作尚未执行，请逐项核对后确认：\\n2026-10-10 08:00 TEST 药物 A → 已服用\", \"time\": \"10-10 11:03\", \"persisted\": true, \"safetyAction\": false, \"blocks\": [{\"kind\": \"main\", \"text\": \"以下操作尚未执行，请逐项核对后确认：\\n2026-10-10 08:00 TEST 药物 A → 已服用\"}]}}",
+      "request_range": [
+        167,
+        170
+      ],
+      "elapsed_ms": 437
+    },
+    {
+      "id": "BB-059",
+      "title": "聊天查安排",
+      "expected": "按现有入口返回；无未经确认的业务写入",
+      "status": "PASS",
+      "evidence": {
+        "care": {
+          "reply": "今天的安排：\n08:00 TEST 药物 A：已服用\n09:00 TEST 药物 B：未记录\n12:00 TEST 药物 A：已服用\n20:00 TEST 药物 A：已跳过\n14:00 TEST 已有训练（仅为安排）\n未记录不等于漏服；安排存在不等于训练已完成。",
+          "data": {
+            "scope": {
+              "participant_id": "TEST-blackbox-primary",
+              "source_kind": "LIVE_CAMERA",
+              "usage_context": "SELF_USE"
+            },
+            "date": "2026-10-10",
+            "doses": [
+              {
+                "medId": "TEST-med-A",
+                "name": "TEST 药物 A",
+                "dose": "按原说明",
+                "date": "2026-10-10",
+                "time": "08:00",
+                "status": "taken"
+              },
+              {
+                "medId": "TEST-med-B",
+                "name": "TEST 药物 B",
+                "dose": "按原说明",
+                "date": "2026-10-10",
+                "time": "09:00",
+                "status": "unrecorded"
+              },
+              {
+                "medId": "TEST-med-A",
+                "name": "TEST 药物 A",
+                "dose": "按原说明",
+                "date": "2026-10-10",
+                "time": "12:00",
+                "status": "taken"
+              },
+              {
+                "medId": "TEST-med-A",
+                "name": "TEST 药物 A",
+                "dose": "按原说明",
+                "date": "2026-10-10",
+                "time": "20:00",
+                "status": "skipped"
+              }
+            ],
+            "schedules": [
+              {
+                "id": "TEST-schedule",
+                "date": "2026-10-10",
+                "time": "14:00",
+                "kind": "training",
+                "name": "TEST 已有训练",
+                "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                "revision": 1,
+                "createdAt": "2026-10-10T03:03:29.745136+00:00"
+              }
+            ],
+            "note": "未记录不等于漏服；安排存在不等于训练已完成。"
+          }
+        },
+        "reply": {
+          "id": "personal:TEST-blackbox-primary:0:agent:6",
+          "role": "agent",
+          "text": "今天的安排：\n08:00 TEST 药物 A：已服用\n09:00 TEST 药物 B：未记录\n12:00 TEST 药物 A：已服用\n20:00 TEST 药物 A：已跳过\n14:00 TEST 已有训练（仅为安排）\n未记录不等于漏服；安排存在不等于训练已完成。",
+          "time": "10-10 11:03",
+          "persisted": true,
+          "safetyAction": false,
+          "blocks": [
+            {
+              "kind": "main",
+              "text": "今天的安排：\n08:00 TEST 药物 A：已服用\n09:00 TEST 药物 B：未记录\n12:00 TEST 药物 A：已服用\n20:00 TEST 药物 A：已跳过\n14:00 TEST 已有训练（仅为安排）\n未记录不等于漏服；安排存在不等于训练已完成。"
+            }
+          ]
+        }
+      },
+      "request_range": [
+        183,
+        186
+      ],
+      "elapsed_ms": 843
+    },
+    {
+      "id": "BB-060",
+      "title": "聊天提议",
+      "expected": "按现有入口返回；无未经确认的业务写入",
+      "status": "PASS",
+      "evidence": {
+        "care": {
+          "reply": "以下操作尚未执行，请逐项核对后确认：\n2026-10-10 08:00 TEST 药物 A → 已服用",
+          "workflow": {
+            "id": "38fd79ca-61ef-41ca-9cfa-05f6c1908fcb",
+            "requestId": "personal:TEST-blackbox-primary:0:elder:7",
+            "requestSignature": "<redacted TEST credential>",
+            "scope": {
+              "participant_id": "TEST-blackbox-primary",
+              "source_kind": "LIVE_CAMERA",
+              "usage_context": "SELF_USE"
+            },
+            "status": "awaiting_confirmation",
+            "createdAt": "2026-10-10T03:03:31.789Z",
+            "expiresAt": "2026-10-10T03:18:31.789Z",
+            "confirmationToken": "<redacted TEST credential>",
+            "steps": [
+              {
+                "action": {
+                  "operation": "daily.dose",
+                  "payload": {
+                    "medId": "TEST-med-A",
+                    "date": "2026-10-10",
+                    "time": "08:00",
+                    "status": "taken"
+                  },
+                  "expected": {
+                    "medicine": {
+                      "id": "TEST-med-A",
+                      "name": "TEST 药物 A",
+                      "dose": "按原说明",
+                      "purpose": "",
+                      "times": "",
+                      "status": "active"
+                    },
+                    "schedule": {
+                      "times": [
+                        "08:00",
+                        "12:00",
+                        "20:00"
+                      ],
+                      "start": "2026-10-10",
+                      "end": "",
+                      "savedAt": "2026-10-10T03:02:53.121711+00:00"
+                    },
+                    "dose": {
+                      "medId": "TEST-med-A",
+                      "date": "2026-10-10",
+                      "time": "08:00",
+                      "status": "taken",
+                      "medName": "TEST 药物 A",
+                      "dose": "按原说明",
+                      "recordedAt": "2026-10-10T03:03:30.032081+00:00"
+                    }
+                  },
+                  "label": "2026-10-10 08:00 TEST 药物 A → 已服用"
+                },
+                "status": "pending"
+              }
+            ],
+            "reply": "以下操作尚未执行，请逐项核对后确认：\n2026-10-10 08:00 TEST 药物 A → 已服用"
+          }
+        },
+        "reply": {
+          "id": "personal:TEST-blackbox-primary:0:agent:7",
+          "role": "agent",
+          "text": "以下操作尚未执行，请逐项核对后确认：\n2026-10-10 08:00 TEST 药物 A → 已服用",
+          "time": "10-10 11:03",
+          "persisted": true,
+          "safetyAction": false,
+          "blocks": [
+            {
+              "kind": "main",
+              "text": "以下操作尚未执行，请逐项核对后确认：\n2026-10-10 08:00 TEST 药物 A → 已服用"
+            }
+          ]
+        }
+      },
+      "request_range": [
+        186,
+        189
+      ],
+      "elapsed_ms": 985
+    },
+    {
+      "id": "BB-061",
+      "title": "单发确认",
+      "expected": "按现有入口返回；无未经确认的业务写入",
+      "status": "PASS",
+      "evidence": {
+        "care": null,
+        "reply": {
+          "id": "personal:TEST-blackbox-primary:0:agent:8",
+          "role": "agent",
+          "text": "我在听。您可以说说身体的情况——比如血压、血糖、睡得怎么样，或者哪里不舒服；其他想说的事也可以慢慢讲。",
+          "time": "10-10 11:03",
+          "persisted": true,
+          "safetyAction": false,
+          "blocks": [
+            {
+              "kind": "main",
+              "text": "我在听。您可以说说身体的情况——比如血压、血糖、睡得怎么样，或者哪里不舒服；其他想说的事也可以慢慢讲。"
+            }
+          ]
+        }
+      },
+      "request_range": [
+        189,
+        192
+      ],
+      "elapsed_ms": 906
+    },
+    {
+      "id": "BB-062",
+      "title": "安全路径",
+      "expected": "按现有入口返回；无未经确认的业务写入",
+      "status": "PASS",
+      "evidence": {
+        "care": null,
+        "reply": {
+          "id": "personal:TEST-blackbox-primary:0:agent:9",
+          "role": "agent",
+          "text": "先停止活动并保持安全姿势。如果胸痛明显或持续，尤其伴喘、冷汗、头晕，应立即寻求急救。\n我已经记下：胸痛、疼痛。\n这部分只供您本人使用。",
+          "time": "10-10 11:03",
+          "persisted": true,
+          "safetyAction": true,
+          "blocks": [
+            {
+              "kind": "main",
+              "text": "先停止活动并保持安全姿势。如果胸痛明显或持续，尤其伴喘、冷汗、头晕，应立即寻求急救。"
+            },
+            {
+              "kind": "receipt",
+              "text": "我已经记下：胸痛、疼痛。"
+            },
+            {
+              "kind": "privacy",
+              "text": "这部分只供您本人使用。"
+            }
+          ]
+        }
+      },
+      "request_range": [
+        192,
+        195
+      ],
+      "elapsed_ms": 891
+    },
+    {
+      "id": "BB-063",
+      "title": "不记录聊天和导出凭据边界",
+      "expected": "private 不进入 care；导出无私密标记和确认凭据",
+      "status": "PASS",
+      "evidence": {
+        "privateCare": null,
+        "markerInBackup": false,
+        "auditTokens": false
+      },
+      "request_range": [
+        195,
+        197
+      ],
+      "elapsed_ms": 578
+    },
+    {
+      "id": "BB-064",
+      "title": "跨用户拿旧 id 查询",
+      "expected": "400",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 没有当前用户的照护任务"
+      },
+      "request_range": [
+        199,
+        200
+      ],
+      "elapsed_ms": 219
+    },
+    {
+      "id": "BB-065",
+      "title": "跨用户拿旧凭据执行",
+      "expected": "400",
+      "status": "PASS",
+      "evidence": {
+        "detail": "Error: 没有当前用户的照护任务"
+      },
+      "request_range": [
+        200,
+        201
+      ],
+      "elapsed_ms": 15
+    },
+    {
+      "id": "BB-066",
+      "title": "重开后待确认任务保留",
+      "expected": "原id仍待确认且未写入",
+      "status": "PASS",
+      "evidence": "符合预期",
+      "request_range": [
+        202,
+        204
+      ],
+      "elapsed_ms": 328
+    },
+    {
+      "id": "BB-067",
+      "title": "丢失真实确认响应后重试",
+      "expected": "已提交可查询，重试不重复记药",
+      "status": "PASS",
+      "evidence": {
+        "clientReadResponse": false,
+        "auditDeltaAfterReplay": 1
+      },
+      "request_range": [
+        204,
+        210
+      ],
+      "elapsed_ms": 312
+    },
+    {
+      "id": "BB-068",
+      "title": "完成后重开并重试",
+      "expected": "succeeded，服药审计仍5条",
+      "status": "PASS",
+      "evidence": "符合预期",
+      "request_range": [
+        211,
+        213
+      ],
+      "elapsed_ms": 453
+    },
+    {
+      "id": "BB-069",
+      "title": "确认期限元数据",
+      "expected": "expiresAt-createdAt=15分钟；不等同实际过期测试",
+      "status": "PASS",
+      "evidence": "符合预期",
+      "request_range": [
+        213,
+        213
+      ],
+      "elapsed_ms": 0
+    }
+  ],
+  "reproductions": [
+    {
+      "input": "张三今天14:00的训练改到16:00",
+      "proposal": {
+        "id": "7953569c-9492-458a-9445-6168fd3a3715",
+        "requestId": "TEST-blackbox-40",
+        "requestSignature": "<redacted TEST credential>",
+        "scope": {
+          "participant_id": "TEST-blackbox-primary",
+          "source_kind": "LIVE_CAMERA",
+          "usage_context": "SELF_USE"
+        },
+        "status": "awaiting_confirmation",
+        "createdAt": "2026-10-10T03:03:28.146Z",
+        "expiresAt": "2026-10-10T03:18:28.146Z",
+        "confirmationToken": "<redacted TEST credential>",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.schedule",
+              "payload": {
+                "id": "TEST-schedule",
+                "date": "2026-10-10",
+                "time": "16:00",
+                "kind": "training",
+                "name": "TEST 已有训练",
+                "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                "revision": 1
+              },
+              "expected": {
+                "schedule": {
+                  "id": "TEST-schedule",
+                  "date": "2026-10-10",
+                  "time": "14:00",
+                  "kind": "training",
+                  "name": "TEST 已有训练",
+                  "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1,
+                  "createdAt": "2026-10-10T03:03:28.127898+00:00"
+                },
+                "plan": {
+                  "id": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1
+                }
+              },
+              "label": "TEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）"
+            },
+            "status": "pending"
+          }
+        ],
+        "reply": "以下操作尚未执行，请逐项核对后确认：\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）"
+      },
+      "confirmation": {
+        "id": "7953569c-9492-458a-9445-6168fd3a3715",
+        "requestId": "TEST-blackbox-40",
+        "requestSignature": "<redacted TEST credential>",
+        "scope": {
+          "participant_id": "TEST-blackbox-primary",
+          "source_kind": "LIVE_CAMERA",
+          "usage_context": "SELF_USE"
+        },
+        "status": "succeeded",
+        "createdAt": "2026-10-10T03:03:28.146Z",
+        "expiresAt": "2026-10-10T03:18:28.146Z",
+        "confirmationToken": "<redacted TEST credential>",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.schedule",
+              "payload": {
+                "id": "TEST-schedule",
+                "date": "2026-10-10",
+                "time": "16:00",
+                "kind": "training",
+                "name": "TEST 已有训练",
+                "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                "revision": 1
+              },
+              "expected": {
+                "schedule": {
+                  "id": "TEST-schedule",
+                  "date": "2026-10-10",
+                  "time": "14:00",
+                  "kind": "training",
+                  "name": "TEST 已有训练",
+                  "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1,
+                  "createdAt": "2026-10-10T03:03:28.127898+00:00"
+                },
+                "plan": {
+                  "id": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1
+                }
+              },
+              "label": "TEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）"
+            },
+            "status": "succeeded",
+            "receipt": {
+              "status": "succeeded",
+              "idempotencyKey": "7953569c-9492-458a-9445-6168fd3a3715:0",
+              "operation": "daily.schedule",
+              "dailyReceipt": true,
+              "savedAt": "2026-10-10T03:03:28.427742+00:00"
+            }
+          }
+        ],
+        "reply": "TEST 已有训练：2026-10-10 14:00 → 2026-10-10 16:00（仅改安排）：已保存",
+        "approvedAt": "2026-10-10T03:03:28.217Z"
+      },
+      "actual": [
+        {
+          "id": "TEST-schedule",
+          "date": "2026-10-10",
+          "time": "16:00",
+          "kind": "training",
+          "name": "TEST 已有训练",
+          "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+          "revision": 1,
+          "createdAt": "2026-10-10T03:03:28.423746+00:00"
+        }
+      ]
+    },
+    {
+      "input": "今天14:00的训练改到中午四点",
+      "proposal": {
+        "id": "57c6cb5b-fe85-436f-9a9e-8957e3bfddf1",
+        "requestId": "TEST-blackbox-41",
+        "requestSignature": "<redacted TEST credential>",
+        "scope": {
+          "participant_id": "TEST-blackbox-primary",
+          "source_kind": "LIVE_CAMERA",
+          "usage_context": "SELF_USE"
+        },
+        "status": "awaiting_confirmation",
+        "createdAt": "2026-10-10T03:03:28.952Z",
+        "expiresAt": "2026-10-10T03:18:28.952Z",
+        "confirmationToken": "<redacted TEST credential>",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.schedule",
+              "payload": {
+                "id": "TEST-schedule",
+                "date": "2026-10-10",
+                "time": "04:00",
+                "kind": "training",
+                "name": "TEST 已有训练",
+                "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                "revision": 1
+              },
+              "expected": {
+                "schedule": {
+                  "id": "TEST-schedule",
+                  "date": "2026-10-10",
+                  "time": "14:00",
+                  "kind": "training",
+                  "name": "TEST 已有训练",
+                  "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1,
+                  "createdAt": "2026-10-10T03:03:28.925721+00:00"
+                },
+                "plan": {
+                  "id": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1
+                }
+              },
+              "label": "TEST 已有训练：2026-10-10 14:00 → 2026-10-10 04:00（仅改安排）"
+            },
+            "status": "pending"
+          }
+        ],
+        "reply": "以下操作尚未执行，请逐项核对后确认：\nTEST 已有训练：2026-10-10 14:00 → 2026-10-10 04:00（仅改安排）"
+      },
+      "confirmation": {
+        "id": "57c6cb5b-fe85-436f-9a9e-8957e3bfddf1",
+        "requestId": "TEST-blackbox-41",
+        "requestSignature": "<redacted TEST credential>",
+        "scope": {
+          "participant_id": "TEST-blackbox-primary",
+          "source_kind": "LIVE_CAMERA",
+          "usage_context": "SELF_USE"
+        },
+        "status": "succeeded",
+        "createdAt": "2026-10-10T03:03:28.952Z",
+        "expiresAt": "2026-10-10T03:18:28.952Z",
+        "confirmationToken": "<redacted TEST credential>",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.schedule",
+              "payload": {
+                "id": "TEST-schedule",
+                "date": "2026-10-10",
+                "time": "04:00",
+                "kind": "training",
+                "name": "TEST 已有训练",
+                "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                "revision": 1
+              },
+              "expected": {
+                "schedule": {
+                  "id": "TEST-schedule",
+                  "date": "2026-10-10",
+                  "time": "14:00",
+                  "kind": "training",
+                  "name": "TEST 已有训练",
+                  "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1,
+                  "createdAt": "2026-10-10T03:03:28.925721+00:00"
+                },
+                "plan": {
+                  "id": "cd9ac3e17d7c43ac8235e495890e8296",
+                  "revision": 1
+                }
+              },
+              "label": "TEST 已有训练：2026-10-10 14:00 → 2026-10-10 04:00（仅改安排）"
+            },
+            "status": "succeeded",
+            "receipt": {
+              "status": "succeeded",
+              "idempotencyKey": "57c6cb5b-fe85-436f-9a9e-8957e3bfddf1:0",
+              "operation": "daily.schedule",
+              "dailyReceipt": true,
+              "savedAt": "2026-10-10T03:03:29.331100+00:00"
+            }
+          }
+        ],
+        "reply": "TEST 已有训练：2026-10-10 14:00 → 2026-10-10 04:00（仅改安排）：已保存",
+        "approvedAt": "2026-10-10T03:03:29.109Z"
+      },
+      "actual": [
+        {
+          "id": "TEST-schedule",
+          "date": "2026-10-10",
+          "time": "04:00",
+          "kind": "training",
+          "name": "TEST 已有训练",
+          "planId": "cd9ac3e17d7c43ac8235e495890e8296",
+          "revision": 1,
+          "createdAt": "2026-10-10T03:03:29.327098+00:00"
+        }
+      ]
+    },
+    {
+      "input": "记录今天08:00的TEST 药物 A已服用两倍剂量",
+      "proposal": {
+        "id": "8c18a66a-08a1-4654-a40f-74f24e683e31",
+        "requestId": "TEST-blackbox-42",
+        "requestSignature": "<redacted TEST credential>",
+        "scope": {
+          "participant_id": "TEST-blackbox-primary",
+          "source_kind": "LIVE_CAMERA",
+          "usage_context": "SELF_USE"
+        },
+        "status": "awaiting_confirmation",
+        "createdAt": "2026-10-10T03:03:29.777Z",
+        "expiresAt": "2026-10-10T03:18:29.777Z",
+        "confirmationToken": "<redacted TEST credential>",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.dose",
+              "payload": {
+                "medId": "TEST-med-A",
+                "date": "2026-10-10",
+                "time": "08:00",
+                "status": "taken"
+              },
+              "expected": {
+                "medicine": {
+                  "id": "TEST-med-A",
+                  "name": "TEST 药物 A",
+                  "dose": "按原说明",
+                  "purpose": "",
+                  "times": "",
+                  "status": "active"
+                },
+                "schedule": {
+                  "times": [
+                    "08:00",
+                    "12:00",
+                    "20:00"
+                  ],
+                  "start": "2026-10-10",
+                  "end": "",
+                  "savedAt": "2026-10-10T03:02:53.121711+00:00"
+                },
+                "dose": {
+                  "medId": "TEST-med-A",
+                  "date": "2026-10-10",
+                  "time": "08:00",
+                  "status": "taken",
+                  "medName": "TEST 药物 A",
+                  "dose": "按原说明",
+                  "recordedAt": "2026-10-10T03:02:58.973675+00:00"
+                }
+              },
+              "label": "2026-10-10 08:00 TEST 药物 A → 已服用"
+            },
+            "status": "pending"
+          }
+        ],
+        "reply": "以下操作尚未执行，请逐项核对后确认：\n2026-10-10 08:00 TEST 药物 A → 已服用"
+      },
+      "confirmation": {
+        "id": "8c18a66a-08a1-4654-a40f-74f24e683e31",
+        "requestId": "TEST-blackbox-42",
+        "requestSignature": "<redacted TEST credential>",
+        "scope": {
+          "participant_id": "TEST-blackbox-primary",
+          "source_kind": "LIVE_CAMERA",
+          "usage_context": "SELF_USE"
+        },
+        "status": "succeeded",
+        "createdAt": "2026-10-10T03:03:29.777Z",
+        "expiresAt": "2026-10-10T03:18:29.777Z",
+        "confirmationToken": "<redacted TEST credential>",
+        "steps": [
+          {
+            "action": {
+              "operation": "daily.dose",
+              "payload": {
+                "medId": "TEST-med-A",
+                "date": "2026-10-10",
+                "time": "08:00",
+                "status": "taken"
+              },
+              "expected": {
+                "medicine": {
+                  "id": "TEST-med-A",
+                  "name": "TEST 药物 A",
+                  "dose": "按原说明",
+                  "purpose": "",
+                  "times": "",
+                  "status": "active"
+                },
+                "schedule": {
+                  "times": [
+                    "08:00",
+                    "12:00",
+                    "20:00"
+                  ],
+                  "start": "2026-10-10",
+                  "end": "",
+                  "savedAt": "2026-10-10T03:02:53.121711+00:00"
+                },
+                "dose": {
+                  "medId": "TEST-med-A",
+                  "date": "2026-10-10",
+                  "time": "08:00",
+                  "status": "taken",
+                  "medName": "TEST 药物 A",
+                  "dose": "按原说明",
+                  "recordedAt": "2026-10-10T03:02:58.973675+00:00"
+                }
+              },
+              "label": "2026-10-10 08:00 TEST 药物 A → 已服用"
+            },
+            "status": "succeeded",
+            "receipt": {
+              "status": "succeeded",
+              "idempotencyKey": "8c18a66a-08a1-4654-a40f-74f24e683e31:0",
+              "operation": "daily.dose",
+              "dailyReceipt": true,
+              "savedAt": "2026-10-10T03:03:30.037203+00:00"
+            }
+          }
+        ],
+        "reply": "2026-10-10 08:00 TEST 药物 A → 已服用：已保存",
+        "approvedAt": "2026-10-10T03:03:29.891Z"
+      },
+      "actual": {
+        "medId": "TEST-med-A",
+        "date": "2026-10-10",
+        "time": "08:00",
+        "status": "taken",
+        "medName": "TEST 药物 A",
+        "dose": "按原说明",
+        "recordedAt": "2026-10-10T03:03:30.032081+00:00"
+      }
+    }
+  ],
+  "interruptedRun": {
+    "rootCause": "unknown",
+    "afterRequest": {
+      "status": 400,
+      "path": "/api/unified",
+      "method": "GET",
+      "output": {
+        "detail": "database disk image is malformed"
+      }
+    },
+    "completedCases": 58,
+    "path": "qa-output/care-blackbox-20261010-110038/results.json",
+    "counts": {
+      "FAIL": 10,
+      "PASS": 48
+    },
+    "subsequentCompleteRuns": [
+      {
+        "path": "qa-output/care-blackbox-20261010-110121/results.json",
+        "counts": {
+          "FAIL": 10,
+          "PASS": 59
+        }
+      },
+      {
+        "path": "qa-output/care-blackbox-20261010-110250/results.json",
+        "counts": {
+          "FAIL": 10,
+          "PASS": 59
+        }
+      }
+    ]
+  }
+}
