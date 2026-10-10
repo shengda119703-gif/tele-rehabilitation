@@ -180,7 +180,7 @@ class Jobs:
         self.pool.shutdown(wait=True, cancel_futures=True)
 
 
-def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None):
+def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_v2=False):
     data_dir = Path(data_dir or ROOT / '.runtime/mobile')
     data_dir.mkdir(parents=True, exist_ok=True)
     key_file = data_dir / 'pair-key.txt'
@@ -207,6 +207,8 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None):
             yield
         finally:
             watcher.cancel()
+            if hasattr(app.state, 'rehab_v2'):
+                await asyncio.to_thread(app.state.rehab_v2.close)
             await asyncio.to_thread(app.state.live.close)
             await asyncio.to_thread(app.state.product.close)
             await asyncio.to_thread(jobs.close)
@@ -261,6 +263,32 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None):
     install_care(app, data_dir, jobs, owner, sign, small_json)
     from .live import install_live
     install_live(app, owner, small_json)
+    if rehab_v2:
+        from .rehab_v2.api import install_rehab_v2
+        from app.training_plans import prepare_training_plan
+        from app.rehab_v2.sessions import SessionError
+
+        def formal_plan(uid, request):
+            with store_for(uid) as store:
+                record = store.get_training_plan(request.get('plan_id'))
+                if not record or record.get('participant_id') != (shared.owner if shared else uid):
+                    raise SessionError('owned_training_plan_required', 400)
+                if type(request.get('expected_plan_revision')) is not int or request['expected_plan_revision'] != record['revision']:
+                    raise SessionError('plan_revision_conflict')
+                sessions, profile = evidence(store, uid)
+                entry_key = request.get('entry_key')
+                validate_automatic_use(record, entry_key, profile, sessions,
+                                       store.get_participant(shared.owner) if shared else None)
+                plan = prepare_training_plan(record, entry_key, profile)
+                if plan['exercise_id'] not in ('shoulder_abduction', 'sit_to_stand'):
+                    raise SessionError('exercise_not_in_v2_pilot', 400)
+                if plan['exercise_id'] == 'sit_to_stand' and plan.get('target_angle_deg') is not None:
+                    raise SessionError('sitstand_target_definition_requires_v2_plan', 409)
+                return dict(plan_id=record['id'], plan_revision=record['revision'], entry_key=entry_key,
+                            plan=plan, reference=plan['saved_plan_reference'],
+                            eligibility=record.get('record_origin'), legacy_progress_unchanged=True)
+
+        install_rehab_v2(app, data_dir / 'rehab-v2.sqlite3', owner, small_json, formal_plan)
     from .network import install_network
     install_network(app, data_dir, jobs, owner, small_json)
     from .product import install_product

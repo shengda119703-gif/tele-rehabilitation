@@ -1,0 +1,13 @@
+experiment: irds_shoulder_rep_quality
+model: logistic_regression
+input_domain: kinect_3d
+seed: 20261011
+l2: 0.01
+learning_rate: 0.02
+max_epochs: 600
+patience: 60
+selection: val_macro_f1
+class_weights: train_only
+product_enabled: false
+after_end_only: true
+disabled_heads: [phase, bodypart_error, cue_timing]

@@ -1,0 +1,2239 @@
+{
+  "kind": "real_licensed_grouped_IRDS_pipeline",
+  "seed": 20261011,
+  "stages": [
+    {
+      "name": "resolve_official_metadata",
+      "elapsed_s": 3.695873399999982,
+      "result": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\registry-resolved.json",
+        "status": {
+          "intellirehabds": "ready",
+          "rehab24_6": "blocked_requires_eligibility_confirmation",
+          "mobiphysio": "blocked_metadata",
+          "sumedipose": "blocked_metadata",
+          "keraal": "excluded_nc_sa_and_action_mismatch",
+          "fit3d": "excluded_account_and_noncommercial_terms",
+          "qevd": "excluded_product_license_restrictions"
+        }
+      }
+    },
+    {
+      "name": "fetch_pinned_skeleton_only",
+      "elapsed_s": 0.939951000000292,
+      "result": {
+        "manifest": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\intellirehabds\\2.0.1\\download-manifest.json",
+        "files": [
+          {
+            "name": "readme.txt",
+            "md5": "655525729cd70a00ae5b6863e98141d3",
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\intellirehabds\\2.0.1\\raw\\readme.txt",
+            "bytes": 1974,
+            "sha256": "c22584330c29d32b712e5b32e96fa842243540c37a5583a6f0a2de28ddb27bc6",
+            "cached": true
+          },
+          {
+            "name": "SkeletonData.zip",
+            "md5": "c243bcdbd1492e4928032e158accdd29",
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\intellirehabds\\2.0.1\\raw\\SkeletonData.zip",
+            "bytes": 198985485,
+            "sha256": "a5fa88829f8538d415e0f0a24d5cdf473a006e23cba5d845ed0f0176cb6c8106",
+            "cached": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "verify_download",
+      "elapsed_s": 3.002503499999875,
+      "result": {
+        "dataset": "intellirehabds",
+        "verified": true,
+        "files": [
+          {
+            "name": "readme.txt",
+            "sha256": "c22584330c29d32b712e5b32e96fa842243540c37a5583a6f0a2de28ddb27bc6",
+            "entries": 0
+          },
+          {
+            "name": "SkeletonData.zip",
+            "sha256": "a5fa88829f8538d415e0f0a24d5cdf473a006e23cba5d845ed0f0176cb6c8106",
+            "entries": 5185
+          }
+        ]
+      }
+    },
+    {
+      "name": "prepare_named_joints_and_labels",
+      "elapsed_s": 12.015370699999039,
+      "result": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\intellirehabds\\2.0.1\\prepared\\manifest.json",
+        "fingerprint": "7ce09eae40508843179123bfef632d8b83cf5db72889eb67fb1a10b36c8bb0f5",
+        "counts": {
+          "samples": 534,
+          "subjects": 29,
+          "eligible": 532,
+          "quality_labels": {
+            "1": 449,
+            "2": 83,
+            "3": 2
+          },
+          "posture": {
+            "chair": 175,
+            "stand": 258,
+            "wheelchair": 66,
+            "Stand-frame": 10,
+            "sit": 25
+          }
+        },
+        "excluded": 0,
+        "product_enabled": false
+      }
+    },
+    {
+      "name": "split_people_before_features",
+      "elapsed_s": 0.0311533000003692,
+      "result": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\intellirehabds\\2.0.1\\prepared\\split.json",
+        "split_hash": "854f5791d7dcbfabdb2be89d81b7e1497b61053118900ba0669f7dc833c2fa28",
+        "subject_groups": {
+          "train": [
+            "103",
+            "302",
+            "101",
+            "105",
+            "306",
+            "307",
+            "106",
+            "301",
+            "215",
+            "201",
+            "210",
+            "203",
+            "211",
+            "212",
+            "213",
+            "204",
+            "217"
+          ],
+          "val": [
+            "303",
+            "305",
+            "104",
+            "205",
+            "206",
+            "202"
+          ],
+          "test": [
+            "304",
+            "102",
+            "107",
+            "214",
+            "216",
+            "209"
+          ]
+        },
+        "counts": {
+          "train": 310,
+          "val": 131,
+          "test": 91
+        }
+      }
+    },
+    {
+      "name": "build_causal_kinect_features",
+      "elapsed_s": 5.230562500000815,
+      "result": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\intellirehabds\\2.0.1\\prepared\\features\\manifest.json",
+        "fingerprint": "f3188bede2e3ee4f2a90bd9c1166fcd1a1c8006069c9bf40bbab6bd9881c4959",
+        "samples": 532,
+        "dimensions": 128
+      }
+    },
+    {
+      "name": "train_baseline",
+      "elapsed_s": 1.360647899999094,
+      "result": {
+        "run_id": "20261010T185211Z-logistic_regression-c78b48c6",
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\20261010T185211Z-logistic_regression-c78b48c6",
+        "checkpoint_sha256": "ed8ca32d15f15615dfc83ec782beafbebe1c4218c27456521a3540bf1a0c694d",
+        "training": {
+          "best_epoch": 17,
+          "val_macro_f1": 0.6374761699772462,
+          "stop_reason": "early_stopping",
+          "checkpoint": "checkpoint.npz",
+          "class_weights": [
+            0.5762081784386617,
+            3.7804878048780486
+          ],
+          "device": "cpu_numpy",
+          "elapsed_s": 0.8731499999994412
+        },
+        "product_enabled": false
+      }
+    },
+    {
+      "name": "evaluate_baseline_val",
+      "elapsed_s": 0.5920280999998795,
+      "result": {
+        "run_id": "20261010T185211Z-logistic_regression-c78b48c6",
+        "partition": "val",
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\20261010T185211Z-logistic_regression-c78b48c6\\evaluation-val.json",
+        "overall": {
+          "samples": 131,
+          "confusion_matrix": [
+            [
+              58,
+              39
+            ],
+            [
+              6,
+              28
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.6374761699772462,
+          "balanced_accuracy": 0.7107337780473013,
+          "accuracy": 0.6564885496183206,
+          "precision_incorrect": 0.417910447761194,
+          "recall_incorrect": 0.8235294117647058,
+          "f1_incorrect": 0.5544554455445545,
+          "roc_auc": 0.6673741661613098,
+          "decision_threshold": 0.5
+        },
+        "majority_baseline": {
+          "samples": 131,
+          "confusion_matrix": [
+            [
+              97,
+              0
+            ],
+            [
+              34,
+              0
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.42543859649122806,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.7404580152671756,
+          "precision_incorrect": 0.0,
+          "recall_incorrect": 0.0,
+          "f1_incorrect": 0.0,
+          "roc_auc": 0.5,
+          "decision_threshold": 0.5
+        },
+        "macro_f1_subject_bootstrap_95_interval": [
+          0.3581322290446951,
+          0.8478142959770114
+        ],
+        "product_enabled": false
+      }
+    },
+    {
+      "name": "evaluate_baseline_test",
+      "elapsed_s": 0.5725385999994614,
+      "result": {
+        "run_id": "20261010T185211Z-logistic_regression-c78b48c6",
+        "partition": "test",
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\20261010T185211Z-logistic_regression-c78b48c6\\evaluation-test.json",
+        "overall": {
+          "samples": 91,
+          "confusion_matrix": [
+            [
+              61,
+              22
+            ],
+            [
+              0,
+              8
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.6341374269005848,
+          "balanced_accuracy": 0.8674698795180723,
+          "accuracy": 0.7582417582417582,
+          "precision_incorrect": 0.26666666666666666,
+          "recall_incorrect": 1.0,
+          "f1_incorrect": 0.42105263157894735,
+          "roc_auc": 0.963855421686747,
+          "decision_threshold": 0.5
+        },
+        "majority_baseline": {
+          "samples": 91,
+          "confusion_matrix": [
+            [
+              83,
+              0
+            ],
+            [
+              8,
+              0
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.47701149425287354,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.9120879120879121,
+          "precision_incorrect": 0.0,
+          "recall_incorrect": 0.0,
+          "f1_incorrect": 0.0,
+          "roc_auc": 0.5,
+          "decision_threshold": 0.5
+        },
+        "macro_f1_subject_bootstrap_95_interval": [
+          0.412460716530484,
+          0.7390191897654584
+        ],
+        "product_enabled": false
+      }
+    },
+    {
+      "name": "train_tcn",
+      "elapsed_s": 11.775845100000879,
+      "result": {
+        "run_id": "20261010T185214Z-causal_tcn-84cbc486",
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\20261010T185214Z-causal_tcn-84cbc486",
+        "checkpoint_sha256": "ef76c10bf543999fe18eb84d5e340f6335cba6b84037ee4cf17233e4d7d14b8b",
+        "training": {
+          "best_epoch": 11,
+          "val_macro_f1": 0.6572061191626409,
+          "stop_reason": "early_stopping",
+          "checkpoint": "checkpoint.pt",
+          "class_weights": [
+            0.5762081784386617,
+            3.7804878048780486
+          ],
+          "device": "cuda",
+          "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+          "peak_allocated_bytes": 94780416,
+          "parameters": 108226,
+          "receptive_field_steps": 61,
+          "elapsed_s": 11.300726400000713
+        },
+        "product_enabled": false
+      }
+    },
+    {
+      "name": "evaluate_tcn_val",
+      "elapsed_s": 0.6469057999984216,
+      "result": {
+        "run_id": "20261010T185214Z-causal_tcn-84cbc486",
+        "partition": "val",
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\20261010T185214Z-causal_tcn-84cbc486\\evaluation-val.json",
+        "overall": {
+          "samples": 131,
+          "confusion_matrix": [
+            [
+              95,
+              2
+            ],
+            [
+              24,
+              10
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.6572061191626409,
+          "balanced_accuracy": 0.6367495451788963,
+          "accuracy": 0.8015267175572519,
+          "precision_incorrect": 0.8333333333333334,
+          "recall_incorrect": 0.29411764705882354,
+          "f1_incorrect": 0.43478260869565216,
+          "roc_auc": 0.7216494845360825,
+          "decision_threshold": 0.5
+        },
+        "majority_baseline": {
+          "samples": 131,
+          "confusion_matrix": [
+            [
+              97,
+              0
+            ],
+            [
+              34,
+              0
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.42543859649122806,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.7404580152671756,
+          "precision_incorrect": 0.0,
+          "recall_incorrect": 0.0,
+          "f1_incorrect": 0.0,
+          "roc_auc": 0.5,
+          "decision_threshold": 0.5
+        },
+        "macro_f1_subject_bootstrap_95_interval": [
+          0.43626503868688227,
+          0.7487684729064039
+        ],
+        "product_enabled": false
+      }
+    },
+    {
+      "name": "evaluate_tcn_test",
+      "elapsed_s": 0.5888348000007682,
+      "result": {
+        "run_id": "20261010T185214Z-causal_tcn-84cbc486",
+        "partition": "test",
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\20261010T185214Z-causal_tcn-84cbc486\\evaluation-test.json",
+        "overall": {
+          "samples": 91,
+          "confusion_matrix": [
+            [
+              79,
+              4
+            ],
+            [
+              7,
+              1
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.5443786982248521,
+          "balanced_accuracy": 0.5384036144578312,
+          "accuracy": 0.8791208791208791,
+          "precision_incorrect": 0.2,
+          "recall_incorrect": 0.125,
+          "f1_incorrect": 0.15384615384615385,
+          "roc_auc": 0.8945783132530121,
+          "decision_threshold": 0.5
+        },
+        "majority_baseline": {
+          "samples": 91,
+          "confusion_matrix": [
+            [
+              83,
+              0
+            ],
+            [
+              8,
+              0
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.47701149425287354,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.9120879120879121,
+          "precision_incorrect": 0.0,
+          "recall_incorrect": 0.0,
+          "f1_incorrect": 0.0,
+          "roc_auc": 0.5,
+          "decision_threshold": 0.5
+        },
+        "macro_f1_subject_bootstrap_95_interval": [
+          0.42458528669311213,
+          1.0
+        ],
+        "product_enabled": false
+      }
+    },
+    {
+      "name": "check_replay",
+      "elapsed_s": 0.2869561000006797,
+      "result": {
+        "ok": true,
+        "command": "replay",
+        "result": {
+          "exit_code": 0,
+          "elapsed_s": 0.1566234000001714,
+          "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\replay\\protocols.txt",
+          "log_sha256": "9198f04e17b3392892401ae1bab82ddaee3533446b3203cc2c99d820f1a5ab15",
+          "clinical_accuracy": null
+        }
+      }
+    },
+    {
+      "name": "check_verify-sessions",
+      "elapsed_s": 8.791492899999866,
+      "result": {
+        "ok": true,
+        "command": "verify-sessions",
+        "result": {
+          "exit_code": 0,
+          "elapsed_s": 8.678973799998857,
+          "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\replay\\sessions.txt",
+          "log_sha256": "b5f039bd2b5039c9a3737a7d4dcd41a8aaf2350f8e89ce5e748a02591c957cfd",
+          "clinical_accuracy": null
+        }
+      }
+    }
+  ],
+  "experiments": [
+    {
+      "train": {
+        "run_id": "20261010T185211Z-logistic_regression-c78b48c6",
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\20261010T185211Z-logistic_regression-c78b48c6",
+        "checkpoint_sha256": "ed8ca32d15f15615dfc83ec782beafbebe1c4218c27456521a3540bf1a0c694d",
+        "training": {
+          "best_epoch": 17,
+          "val_macro_f1": 0.6374761699772462,
+          "stop_reason": "early_stopping",
+          "checkpoint": "checkpoint.npz",
+          "class_weights": [
+            0.5762081784386617,
+            3.7804878048780486
+          ],
+          "device": "cpu_numpy",
+          "elapsed_s": 0.8731499999994412
+        },
+        "product_enabled": false
+      },
+      "val": {
+        "run_id": "20261010T185211Z-logistic_regression-c78b48c6",
+        "partition": "val",
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\20261010T185211Z-logistic_regression-c78b48c6\\evaluation-val.json",
+        "overall": {
+          "samples": 131,
+          "confusion_matrix": [
+            [
+              58,
+              39
+            ],
+            [
+              6,
+              28
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.6374761699772462,
+          "balanced_accuracy": 0.7107337780473013,
+          "accuracy": 0.6564885496183206,
+          "precision_incorrect": 0.417910447761194,
+          "recall_incorrect": 0.8235294117647058,
+          "f1_incorrect": 0.5544554455445545,
+          "roc_auc": 0.6673741661613098,
+          "decision_threshold": 0.5
+        },
+        "majority_baseline": {
+          "samples": 131,
+          "confusion_matrix": [
+            [
+              97,
+              0
+            ],
+            [
+              34,
+              0
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.42543859649122806,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.7404580152671756,
+          "precision_incorrect": 0.0,
+          "recall_incorrect": 0.0,
+          "f1_incorrect": 0.0,
+          "roc_auc": 0.5,
+          "decision_threshold": 0.5
+        },
+        "macro_f1_subject_bootstrap_95_interval": [
+          0.3581322290446951,
+          0.8478142959770114
+        ],
+        "product_enabled": false
+      },
+      "test": {
+        "run_id": "20261010T185211Z-logistic_regression-c78b48c6",
+        "partition": "test",
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\20261010T185211Z-logistic_regression-c78b48c6\\evaluation-test.json",
+        "overall": {
+          "samples": 91,
+          "confusion_matrix": [
+            [
+              61,
+              22
+            ],
+            [
+              0,
+              8
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.6341374269005848,
+          "balanced_accuracy": 0.8674698795180723,
+          "accuracy": 0.7582417582417582,
+          "precision_incorrect": 0.26666666666666666,
+          "recall_incorrect": 1.0,
+          "f1_incorrect": 0.42105263157894735,
+          "roc_auc": 0.963855421686747,
+          "decision_threshold": 0.5
+        },
+        "majority_baseline": {
+          "samples": 91,
+          "confusion_matrix": [
+            [
+              83,
+              0
+            ],
+            [
+              8,
+              0
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.47701149425287354,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.9120879120879121,
+          "precision_incorrect": 0.0,
+          "recall_incorrect": 0.0,
+          "f1_incorrect": 0.0,
+          "roc_auc": 0.5,
+          "decision_threshold": 0.5
+        },
+        "macro_f1_subject_bootstrap_95_interval": [
+          0.412460716530484,
+          0.7390191897654584
+        ],
+        "product_enabled": false
+      },
+      "provenance": {
+        "run_id": "20261010T185211Z-logistic_regression-c78b48c6",
+        "git_commit": "b6d22fc392915738401fe6e14d9cc32b877a5acc",
+        "dirty_paths": [
+          "M mobile_rehab/server.py",
+          " M rehab_codex_single_camera_v2_1/assets/exercise-guides/README.md",
+          "?? configs/rehab_ml/annotation-template.json",
+          "?? configs/rehab_ml/backend.yaml",
+          "?? configs/rehab_ml/baseline.yaml",
+          "?? configs/rehab_ml/datasets.yaml",
+          "?? configs/rehab_ml/tcn.yaml",
+          "?? docs/assets/EXERCISE_IMAGE_IMPORT_REPORT.csv",
+          "?? \"docs/\\345\\256\\211\\345\\272\\267\\345\\272\\267\\345\\244\\215\\350\\256\\255\\347\\273\\203\\345\\220\\216\\347\\253\\257\\345\\256\\236\\346\\226\\275\\344\\270\\216\\350\\256\\255\\347\\273\\203\\344\\273\\273\\345\\212\\241\\344\\271\\246.md\"",
+          "?? mobile_rehab/rehab_v2/__init__.py",
+          "?? mobile_rehab/rehab_v2/api.py",
+          "?? mobile_rehab/rehab_v2/service.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/__init__.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/cues.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/engine.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/evidence.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/protocols.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/rounds.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/sessions.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/temporal.py",
+          "?? \"rehab_codex_single_camera_v2_1/assets/exercise-guides/01\\346\\211\\271\\346\\254\\241/77a22636-639e-4c54-a176-1f33fd528cc9.png\"",
+          "?? \"rehab_codex_single_camera_v2_1/assets/exercise-guides/01\\346\\211\\271\\346\\254\\241/7ee257e7-f8fe-4ec5-9c38-9ccd0fc3d2a8.png\"",
+          "?? \"rehab_codex_single_camera_v2_1/assets/exercise-guides/01\\346\\211\\271\\346\\254\\241/b9925b53-5bc5-44f8-879a-411b86eeb612.png\"",
+          "?? \"rehab_codex_single_camera_v2_1/assets/exercise-guides/01\\346\\211\\271\\346\\254\\241/\\350\\202\\251\\345\\211\\215\\345\\261\\210 \\345\\217\\263\\344\\276\\247 \\345\\207\\206\\345\\244\\207.png\"",
+          "?? \"rehab_codex_single_camera_v2_1/assets/exercise-guides/01\\346\\211\\271\\346\\254\\241/\\350\\202\\251\\345\\211\\215\\345\\261\\210 \\345\\217\\263\\344\\276\\247 \\345\\212\\250\\344\\275\\234.png\"",
+          "?? \"rehab_codex_single_camera_v2_1/assets/exercise-guides/01\\346\\211\\271\\346\\254\\241/\\350\\202\\251\\345\\211\\215\\345\\261\\210 \\345\\217\\263\\344\\276\\247 \\345\\233\\236\\344\\275\\215.png\"",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_dorsiflexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_dorsiflexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_dorsiflexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_dorsiflexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_dorsiflexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_dorsiflexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_plantarflexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_plantarflexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_plantarflexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_plantarflexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_plantarflexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_plantarflexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_abduction/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_abduction/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_abduction/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_abduction/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_abduction/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_abduction/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_adduction/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_adduction/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_adduction/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_adduction/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_adduction/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_adduction/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_lateral_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_lateral_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_lateral_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_lateral_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_lateral_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_lateral_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_abduction/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_abduction/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_abduction/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_abduction/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_abduction/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_abduction/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_adduction/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_adduction/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_adduction/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_adduction/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_adduction/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_adduction/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/sit_to_stand/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/sit_to_stand/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/sit_to_stand/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/sit_to_stand/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/sit_to_stand/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/sit_to_stand/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_lateral_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_lateral_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_lateral_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_lateral_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_lateral_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_lateral_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_radial_deviation/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_radial_deviation/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_radial_deviation/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_radial_deviation/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_radial_deviation/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_radial_deviation/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_ulnar_deviation/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_ulnar_deviation/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_ulnar_deviation/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_ulnar_deviation/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_ulnar_deviation/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_ulnar_deviation/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/scripts/import_exercise_images.py",
+          "?? reports/rehab_backend/experiment_summary.json",
+          "?? reports/rehab_backend/performance.json",
+          "?? reports/rehab_backend/protected_files.json",
+          "?? reports/rehab_backend/protocol_replay.json",
+          "?? reports/rehab_backend/scope_verification.json",
+          "?? reports/rehab_backend/session_verification.json",
+          "?? reports/rehab_backend_inventory.md",
+          "?? tests/rehab_backend/test_api.py",
+          "?? tests/rehab_backend/test_ml.py",
+          "?? tests/rehab_backend/test_protocols.py",
+          "?? tests/rehab_backend/test_sessions.py",
+          "?? tools/rehab_ml/__init__.py",
+          "?? tools/rehab_ml/benchmark.py",
+          "?? tools/rehab_ml/cli.py",
+          "?? tools/rehab_ml/common.py",
+          "?? tools/rehab_ml/crash_probe.py",
+          "?? tools/rehab_ml/data.py",
+          "?? tools/rehab_ml/download.py",
+          "?? tools/rehab_ml/features.py",
+          "?? tools/rehab_ml/inventory.py",
+          "?? tools/rehab_ml/models.py",
+          "?? tools/rehab_ml/run_minimal.py",
+          "?? tools/rehab_ml/target_domain.py",
+          "?? tools/rehab_ml/training.py"
+        ],
+        "config_sha256": "da03619a6d1a668df6be3eec63e964b04d4ba6125079fa3ba68f3fb0c562a36c",
+        "seed": 20261011,
+        "model": "logistic_regression",
+        "data_fingerprint": "7ce09eae40508843179123bfef632d8b83cf5db72889eb67fb1a10b36c8bb0f5",
+        "split_hash": "854f5791d7dcbfabdb2be89d81b7e1497b61053118900ba0669f7dc833c2fa28",
+        "feature_fingerprint": "f3188bede2e3ee4f2a90bd9c1166fcd1a1c8006069c9bf40bbab6bd9881c4959",
+        "feature_version": "kinect25-shoulder-causal20hz-1",
+        "environment_lock_sha256": "c79e1d359212de16ec8b9c8031168390a13d156cfdf54e23e8f953dbf4c14860",
+        "python": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\venv\\Scripts\\python.exe",
+        "source_archive_sha256": "a5fa88829f8538d415e0f0a24d5cdf473a006e23cba5d845ed0f0176cb6c8106",
+        "subject_groups": {
+          "train": [
+            "103",
+            "302",
+            "101",
+            "105",
+            "306",
+            "307",
+            "106",
+            "301",
+            "215",
+            "201",
+            "210",
+            "203",
+            "211",
+            "212",
+            "213",
+            "204",
+            "217"
+          ],
+          "val": [
+            "303",
+            "305",
+            "104",
+            "205",
+            "206",
+            "202"
+          ],
+          "test": [
+            "304",
+            "102",
+            "107",
+            "214",
+            "216",
+            "209"
+          ]
+        },
+        "split_class_counts": {
+          "train": {
+            "0": 269,
+            "1": 41
+          },
+          "val": {
+            "0": 97,
+            "1": 34
+          },
+          "test": {
+            "0": 83,
+            "1": 8
+          }
+        },
+        "majority_class": 0,
+        "license": "CC-BY-4.0",
+        "attribution": "Miron, A.; Sadawi, N.; Ismail, W.; Hussain, H.; Grosan, C. IntelliRehabDS (IRDS), Data 2021, 6, 46. DOI 10.3390/data6050046.",
+        "product_enabled": false,
+        "source_code_hashes": {
+          "tools/rehab_ml/common.py": "b2517a6bc5d86d04bb1d97fd99bcc6b83672150a68addf3d52d6911cce36c6e6",
+          "tools/rehab_ml/data.py": "19b4480ecb0d641cd0a898cc93e533e83ef6c3e6b6fd1f97fb8432ff4db514c5",
+          "tools/rehab_ml/features.py": "5cf935cd6d26d79f2eb36042dc0d33e5323f256ec15be4a4904f1b441906ce97",
+          "tools/rehab_ml/models.py": "b5a3fd0b6f92d8e105ed9a07d8f15929e3509af30fd82f376225de384142ec05",
+          "tools/rehab_ml/training.py": "8804831c74ebd8aa3a6fc2eb31e20d541a4ce68c00beeb1f0c3f7e1875753f37"
+        }
+      },
+      "model_card": {
+        "model_id": "20261010T185211Z-logistic_regression-c78b48c6",
+        "role": "rep_quality_candidate",
+        "model": "logistic_regression",
+        "artifact": "checkpoint.npz",
+        "artifact_sha256": "ed8ca32d15f15615dfc83ec782beafbebe1c4218c27456521a3540bf1a0c694d",
+        "input_domain": "kinect_3d",
+        "schema_id": "kinect25-v1",
+        "coordinate_space": "kinect_camera_3d",
+        "feature_version": "kinect25-shoulder-causal20hz-1",
+        "data_fingerprint": "7ce09eae40508843179123bfef632d8b83cf5db72889eb67fb1a10b36c8bb0f5",
+        "split_hash": "854f5791d7dcbfabdb2be89d81b7e1497b61053118900ba0669f7dc833c2fa28",
+        "after_end_only": true,
+        "product_enabled": false,
+        "deployment_status": "offline_research_only",
+        "license": "CC-BY-4.0",
+        "license_status": "verified_dataset_license",
+        "attribution": "Miron, A.; Sadawi, N.; Ismail, W.; Hussain, H.; Grosan, C. IntelliRehabDS (IRDS), Data 2021, 6, 46. DOI 10.3390/data6050046.",
+        "actions": [
+          "shoulder_abduction"
+        ],
+        "sides": [
+          "left",
+          "right"
+        ],
+        "camera_views": [
+          "kinect_recording_only"
+        ],
+        "protocol_versions": [
+          "irds-rep-label-1"
+        ],
+        "unavailable_heads": [
+          "phase",
+          "bodypart_error",
+          "cue_timing"
+        ],
+        "limitations": [
+          "No YOLO/MediaPipe/mobile domain validation",
+          "Whole-repetition correctness is not clinical quality or diagnosis",
+          "Small grouped test set; class and posture/cohort confounding"
+        ],
+        "training": {
+          "history": [
+            {
+              "epoch": 1,
+              "loss": 0.6944883827360189,
+              "val_macro_f1": 0.5244730679156908
+            },
+            {
+              "epoch": 2,
+              "loss": 0.5527077338085684,
+              "val_macro_f1": 0.5469784889514095
+            },
+            {
+              "epoch": 3,
+              "loss": 0.5446841724732396,
+              "val_macro_f1": 0.531621827559932
+            },
+            {
+              "epoch": 4,
+              "loss": 0.4659864645541339,
+              "val_macro_f1": 0.5528483992467044
+            },
+            {
+              "epoch": 5,
+              "loss": 0.3667050688452323,
+              "val_macro_f1": 0.5945238095238095
+            },
+            {
+              "epoch": 6,
+              "loss": 0.33335107847092793,
+              "val_macro_f1": 0.5876343766704282
+            },
+            {
+              "epoch": 7,
+              "loss": 0.34854832566559496,
+              "val_macro_f1": 0.5668398677373643
+            },
+            {
+              "epoch": 8,
+              "loss": 0.31493204099092775,
+              "val_macro_f1": 0.5598585322723253
+            },
+            {
+              "epoch": 9,
+              "loss": 0.2636615719942363,
+              "val_macro_f1": 0.5682674199623352
+            },
+            {
+              "epoch": 10,
+              "loss": 0.24888343348143552,
+              "val_macro_f1": 0.5541079812206573
+            },
+            {
+              "epoch": 11,
+              "loss": 0.25379721079918777,
+              "val_macro_f1": 0.5694835680751174
+            },
+            {
+              "epoch": 12,
+              "loss": 0.25534044801880806,
+              "val_macro_f1": 0.5694835680751174
+            },
+            {
+              "epoch": 13,
+              "loss": 0.24746053905494197,
+              "val_macro_f1": 0.5765998707175177
+            },
+            {
+              "epoch": 14,
+              "loss": 0.23108688092826385,
+              "val_macro_f1": 0.5668398677373643
+            },
+            {
+              "epoch": 15,
+              "loss": 0.21131290116447163,
+              "val_macro_f1": 0.6150986388439168
+            },
+            {
+              "epoch": 16,
+              "loss": 0.1953177474499229,
+              "val_macro_f1": 0.6332765335929893
+            },
+            {
+              "epoch": 17,
+              "loss": 0.18730118766463447,
+              "val_macro_f1": 0.6374761699772462
+            },
+            {
+              "epoch": 18,
+              "loss": 0.18504944712572519,
+              "val_macro_f1": 0.6184544834851584
+            },
+            {
+              "epoch": 19,
+              "loss": 0.18241763489206786,
+              "val_macro_f1": 0.6280246913580247
+            },
+            {
+              "epoch": 20,
+              "loss": 0.17520077057944766,
+              "val_macro_f1": 0.6118518518518519
+            },
+            {
+              "epoch": 21,
+              "loss": 0.16603679431138485,
+              "val_macro_f1": 0.5986519607843137
+            },
+            {
+              "epoch": 22,
+              "loss": 0.1597469170904764,
+              "val_macro_f1": 0.5825980392156863
+            },
+            {
+              "epoch": 23,
+              "loss": 0.15672606033677186,
+              "val_macro_f1": 0.5694985394352483
+            },
+            {
+              "epoch": 24,
+              "loss": 0.1541043140190609,
+              "val_macro_f1": 0.5694985394352483
+            },
+            {
+              "epoch": 25,
+              "loss": 0.14933444395184897,
+              "val_macro_f1": 0.5760517799352751
+            },
+            {
+              "epoch": 26,
+              "loss": 0.1433404126107116,
+              "val_macro_f1": 0.5825980392156863
+            },
+            {
+              "epoch": 27,
+              "loss": 0.1394731288787341,
+              "val_macro_f1": 0.5730274890843121
+            },
+            {
+              "epoch": 28,
+              "loss": 0.13872632224180592,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 29,
+              "loss": 0.1382207411058285,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 30,
+              "loss": 0.13574154667665927,
+              "val_macro_f1": 0.5989378319275227
+            },
+            {
+              "epoch": 31,
+              "loss": 0.13201942483413628,
+              "val_macro_f1": 0.5795061728395061
+            },
+            {
+              "epoch": 32,
+              "loss": 0.1283486812035886,
+              "val_macro_f1": 0.5920498259754534
+            },
+            {
+              "epoch": 33,
+              "loss": 0.1255522207804238,
+              "val_macro_f1": 0.5986519607843137
+            },
+            {
+              "epoch": 34,
+              "loss": 0.12401775117246472,
+              "val_macro_f1": 0.5986519607843137
+            },
+            {
+              "epoch": 35,
+              "loss": 0.12298934145518924,
+              "val_macro_f1": 0.5986519607843137
+            },
+            {
+              "epoch": 36,
+              "loss": 0.12120688395800355,
+              "val_macro_f1": 0.5891396593075456
+            },
+            {
+              "epoch": 37,
+              "loss": 0.11867402008025098,
+              "val_macro_f1": 0.595679012345679
+            },
+            {
+              "epoch": 38,
+              "loss": 0.11663631237212752,
+              "val_macro_f1": 0.5889809236947792
+            },
+            {
+              "epoch": 39,
+              "loss": 0.11561191094040246,
+              "val_macro_f1": 0.5889809236947792
+            },
+            {
+              "epoch": 40,
+              "loss": 0.11464593718950605,
+              "val_macro_f1": 0.5889809236947792
+            },
+            {
+              "epoch": 41,
+              "loss": 0.11311406634186735,
+              "val_macro_f1": 0.5889809236947792
+            },
+            {
+              "epoch": 42,
+              "loss": 0.11168278869945013,
+              "val_macro_f1": 0.5889809236947792
+            },
+            {
+              "epoch": 43,
+              "loss": 0.11078445156005871,
+              "val_macro_f1": 0.5889809236947792
+            },
+            {
+              "epoch": 44,
+              "loss": 0.10998316722330068,
+              "val_macro_f1": 0.5889809236947792
+            },
+            {
+              "epoch": 45,
+              "loss": 0.10903604706495956,
+              "val_macro_f1": 0.5889809236947792
+            },
+            {
+              "epoch": 46,
+              "loss": 0.10816355964083171,
+              "val_macro_f1": 0.5889809236947792
+            },
+            {
+              "epoch": 47,
+              "loss": 0.10732475317105546,
+              "val_macro_f1": 0.5989378319275227
+            },
+            {
+              "epoch": 48,
+              "loss": 0.10624525705021433,
+              "val_macro_f1": 0.5989378319275227
+            },
+            {
+              "epoch": 49,
+              "loss": 0.10509133804559394,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 50,
+              "loss": 0.10426191413567541,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 51,
+              "loss": 0.10367485999908163,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 52,
+              "loss": 0.10296127839808866,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 53,
+              "loss": 0.10212459091256422,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 54,
+              "loss": 0.10141478339158944,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 55,
+              "loss": 0.10082024835503434,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 56,
+              "loss": 0.10017788077999704,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 57,
+              "loss": 0.09951255069640165,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 58,
+              "loss": 0.09891418570312782,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 59,
+              "loss": 0.09832632013923481,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 60,
+              "loss": 0.0976867159780033,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 61,
+              "loss": 0.09707908149108227,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 62,
+              "loss": 0.09657132919469916,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 63,
+              "loss": 0.09607668523556079,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 64,
+              "loss": 0.09552566159062595,
+              "val_macro_f1": 0.6022185040589949
+            },
+            {
+              "epoch": 65,
+              "loss": 0.09498864888024278,
+              "val_macro_f1": 0.6022185040589949
+            },
+            {
+              "epoch": 66,
+              "loss": 0.0945150672526166,
+              "val_macro_f1": 0.5924589347934295
+            },
+            {
+              "epoch": 67,
+              "loss": 0.0940512035080259,
+              "val_macro_f1": 0.6022185040589949
+            },
+            {
+              "epoch": 68,
+              "loss": 0.09357068106610897,
+              "val_macro_f1": 0.6022185040589949
+            },
+            {
+              "epoch": 69,
+              "loss": 0.09311324566218482,
+              "val_macro_f1": 0.6022185040589949
+            },
+            {
+              "epoch": 70,
+              "loss": 0.09268162584648793,
+              "val_macro_f1": 0.6022185040589949
+            },
+            {
+              "epoch": 71,
+              "loss": 0.09223594861394269,
+              "val_macro_f1": 0.6022185040589949
+            },
+            {
+              "epoch": 72,
+              "loss": 0.09178286655276251,
+              "val_macro_f1": 0.6022185040589949
+            },
+            {
+              "epoch": 73,
+              "loss": 0.0913599573239942,
+              "val_macro_f1": 0.6022185040589949
+            },
+            {
+              "epoch": 74,
+              "loss": 0.09095655456028648,
+              "val_macro_f1": 0.6022185040589949
+            },
+            {
+              "epoch": 75,
+              "loss": 0.0905400113369878,
+              "val_macro_f1": 0.6022185040589949
+            },
+            {
+              "epoch": 76,
+              "loss": 0.09012159098673203,
+              "val_macro_f1": 0.6022185040589949
+            },
+            {
+              "epoch": 77,
+              "loss": 0.08972613903626284,
+              "val_macro_f1": 0.6022185040589949
+            }
+          ],
+          "best_epoch": 17,
+          "val_macro_f1": 0.6374761699772462,
+          "stop_reason": "early_stopping",
+          "checkpoint": "checkpoint.npz",
+          "class_weights": [
+            0.5762081784386617,
+            3.7804878048780486
+          ],
+          "device": "cpu_numpy",
+          "elapsed_s": 0.8731499999994412
+        }
+      },
+      "artifact_hashes": {
+        "checkpoint.npz": "ed8ca32d15f15615dfc83ec782beafbebe1c4218c27456521a3540bf1a0c694d",
+        "environment.lock.txt": "c79e1d359212de16ec8b9c8031168390a13d156cfdf54e23e8f953dbf4c14860",
+        "evaluation-test.json": "636687794532bfe58f2ac9bf130edb2ff2bfb25c8afdaccbe1894fbc234e358f",
+        "evaluation-val.json": "9f733751949c373cd48b3c4864ca888c29fcc09b04d8c178f6dc486c1684b9af",
+        "model-card.json": "b324e70d0edcc9dd227cba0a2b3fedaba1740ba89553d01b1c4713744ba4af2d",
+        "predictions-test.json": "de3c511e822e9769f63b10dff7d4b5452f0a7eadce1d08bc739873703acfb797",
+        "predictions-val.json": "b4460b9786ea5fe5a6e17998f9e7bb7c8c30fdb7073194496c2fd70ab6b9ce1f",
+        "provenance.json": "faaad572fec5aefba715728163cb4352cd7968ce493d012414d6e263eb0dd02e",
+        "resolved-config.json": "15124cf611183371c630ff582d5242ba0e3b8375fbaf87d68e7f94ebee469878",
+        "training.json": "86cd0d258c0c8c11d10f23d4a50fe87c20d3798734293975b151b8ab8a31e451"
+      }
+    },
+    {
+      "train": {
+        "run_id": "20261010T185214Z-causal_tcn-84cbc486",
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\20261010T185214Z-causal_tcn-84cbc486",
+        "checkpoint_sha256": "ef76c10bf543999fe18eb84d5e340f6335cba6b84037ee4cf17233e4d7d14b8b",
+        "training": {
+          "best_epoch": 11,
+          "val_macro_f1": 0.6572061191626409,
+          "stop_reason": "early_stopping",
+          "checkpoint": "checkpoint.pt",
+          "class_weights": [
+            0.5762081784386617,
+            3.7804878048780486
+          ],
+          "device": "cuda",
+          "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+          "peak_allocated_bytes": 94780416,
+          "parameters": 108226,
+          "receptive_field_steps": 61,
+          "elapsed_s": 11.300726400000713
+        },
+        "product_enabled": false
+      },
+      "val": {
+        "run_id": "20261010T185214Z-causal_tcn-84cbc486",
+        "partition": "val",
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\20261010T185214Z-causal_tcn-84cbc486\\evaluation-val.json",
+        "overall": {
+          "samples": 131,
+          "confusion_matrix": [
+            [
+              95,
+              2
+            ],
+            [
+              24,
+              10
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.6572061191626409,
+          "balanced_accuracy": 0.6367495451788963,
+          "accuracy": 0.8015267175572519,
+          "precision_incorrect": 0.8333333333333334,
+          "recall_incorrect": 0.29411764705882354,
+          "f1_incorrect": 0.43478260869565216,
+          "roc_auc": 0.7216494845360825,
+          "decision_threshold": 0.5
+        },
+        "majority_baseline": {
+          "samples": 131,
+          "confusion_matrix": [
+            [
+              97,
+              0
+            ],
+            [
+              34,
+              0
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.42543859649122806,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.7404580152671756,
+          "precision_incorrect": 0.0,
+          "recall_incorrect": 0.0,
+          "f1_incorrect": 0.0,
+          "roc_auc": 0.5,
+          "decision_threshold": 0.5
+        },
+        "macro_f1_subject_bootstrap_95_interval": [
+          0.43626503868688227,
+          0.7487684729064039
+        ],
+        "product_enabled": false
+      },
+      "test": {
+        "run_id": "20261010T185214Z-causal_tcn-84cbc486",
+        "partition": "test",
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\20261010T185214Z-causal_tcn-84cbc486\\evaluation-test.json",
+        "overall": {
+          "samples": 91,
+          "confusion_matrix": [
+            [
+              79,
+              4
+            ],
+            [
+              7,
+              1
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.5443786982248521,
+          "balanced_accuracy": 0.5384036144578312,
+          "accuracy": 0.8791208791208791,
+          "precision_incorrect": 0.2,
+          "recall_incorrect": 0.125,
+          "f1_incorrect": 0.15384615384615385,
+          "roc_auc": 0.8945783132530121,
+          "decision_threshold": 0.5
+        },
+        "majority_baseline": {
+          "samples": 91,
+          "confusion_matrix": [
+            [
+              83,
+              0
+            ],
+            [
+              8,
+              0
+            ]
+          ],
+          "classes": [
+            "correct",
+            "incorrect"
+          ],
+          "positive_class": "incorrect",
+          "macro_f1": 0.47701149425287354,
+          "balanced_accuracy": 0.5,
+          "accuracy": 0.9120879120879121,
+          "precision_incorrect": 0.0,
+          "recall_incorrect": 0.0,
+          "f1_incorrect": 0.0,
+          "roc_auc": 0.5,
+          "decision_threshold": 0.5
+        },
+        "macro_f1_subject_bootstrap_95_interval": [
+          0.42458528669311213,
+          1.0
+        ],
+        "product_enabled": false
+      },
+      "provenance": {
+        "run_id": "20261010T185214Z-causal_tcn-84cbc486",
+        "git_commit": "b6d22fc392915738401fe6e14d9cc32b877a5acc",
+        "dirty_paths": [
+          "M mobile_rehab/server.py",
+          " M rehab_codex_single_camera_v2_1/assets/exercise-guides/README.md",
+          "?? configs/rehab_ml/annotation-template.json",
+          "?? configs/rehab_ml/backend.yaml",
+          "?? configs/rehab_ml/baseline.yaml",
+          "?? configs/rehab_ml/datasets.yaml",
+          "?? configs/rehab_ml/tcn.yaml",
+          "?? docs/assets/EXERCISE_IMAGE_IMPORT_REPORT.csv",
+          "?? \"docs/\\345\\256\\211\\345\\272\\267\\345\\272\\267\\345\\244\\215\\350\\256\\255\\347\\273\\203\\345\\220\\216\\347\\253\\257\\345\\256\\236\\346\\226\\275\\344\\270\\216\\350\\256\\255\\347\\273\\203\\344\\273\\273\\345\\212\\241\\344\\271\\246.md\"",
+          "?? mobile_rehab/rehab_v2/__init__.py",
+          "?? mobile_rehab/rehab_v2/api.py",
+          "?? mobile_rehab/rehab_v2/service.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/__init__.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/cues.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/engine.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/evidence.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/protocols.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/rounds.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/sessions.py",
+          "?? rehab_codex_single_camera_v2_1/app/rehab_v2/temporal.py",
+          "?? \"rehab_codex_single_camera_v2_1/assets/exercise-guides/01\\346\\211\\271\\346\\254\\241/77a22636-639e-4c54-a176-1f33fd528cc9.png\"",
+          "?? \"rehab_codex_single_camera_v2_1/assets/exercise-guides/01\\346\\211\\271\\346\\254\\241/7ee257e7-f8fe-4ec5-9c38-9ccd0fc3d2a8.png\"",
+          "?? \"rehab_codex_single_camera_v2_1/assets/exercise-guides/01\\346\\211\\271\\346\\254\\241/b9925b53-5bc5-44f8-879a-411b86eeb612.png\"",
+          "?? \"rehab_codex_single_camera_v2_1/assets/exercise-guides/01\\346\\211\\271\\346\\254\\241/\\350\\202\\251\\345\\211\\215\\345\\261\\210 \\345\\217\\263\\344\\276\\247 \\345\\207\\206\\345\\244\\207.png\"",
+          "?? \"rehab_codex_single_camera_v2_1/assets/exercise-guides/01\\346\\211\\271\\346\\254\\241/\\350\\202\\251\\345\\211\\215\\345\\261\\210 \\345\\217\\263\\344\\276\\247 \\345\\212\\250\\344\\275\\234.png\"",
+          "?? \"rehab_codex_single_camera_v2_1/assets/exercise-guides/01\\346\\211\\271\\346\\254\\241/\\350\\202\\251\\345\\211\\215\\345\\261\\210 \\345\\217\\263\\344\\276\\247 \\345\\233\\236\\344\\275\\215.png\"",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_dorsiflexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_dorsiflexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_dorsiflexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_dorsiflexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_dorsiflexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_dorsiflexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_plantarflexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_plantarflexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_plantarflexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_plantarflexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_plantarflexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ankle_plantarflexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/elbow_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_abduction/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_abduction/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_abduction/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_abduction/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_abduction/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_abduction/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_adduction/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_adduction/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_adduction/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_adduction/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_adduction/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_adduction/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/hip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_dip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/index_pip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/knee_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_dip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_mcp_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/middle_pip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_lateral_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_lateral_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_lateral_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_lateral_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_lateral_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/neck_lateral_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/pinky_mcp_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_dip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_mcp_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/ring_pip_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_abduction/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_abduction/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_abduction/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_abduction/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_abduction/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_abduction/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_adduction/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_adduction/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_adduction/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_adduction/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_adduction/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_adduction/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/shoulder_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/sit_to_stand/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/sit_to_stand/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/sit_to_stand/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/sit_to_stand/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/sit_to_stand/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/sit_to_stand/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/thumb_mcp_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_lateral_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_lateral_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_lateral_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_lateral_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_lateral_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/trunk_lateral_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_extension/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_extension/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_extension/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_extension/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_extension/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_extension/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_flexion/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_flexion/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_flexion/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_flexion/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_flexion/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_flexion/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_radial_deviation/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_radial_deviation/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_radial_deviation/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_radial_deviation/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_radial_deviation/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_radial_deviation/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_ulnar_deviation/left/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_ulnar_deviation/left/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_ulnar_deviation/left/start.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_ulnar_deviation/right/move.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_ulnar_deviation/right/return.png",
+          "?? rehab_codex_single_camera_v2_1/assets/exercise-guides/wrist_ulnar_deviation/right/start.png",
+          "?? rehab_codex_single_camera_v2_1/scripts/import_exercise_images.py",
+          "?? reports/rehab_backend/experiment_summary.json",
+          "?? reports/rehab_backend/performance.json",
+          "?? reports/rehab_backend/protected_files.json",
+          "?? reports/rehab_backend/protocol_replay.json",
+          "?? reports/rehab_backend/scope_verification.json",
+          "?? reports/rehab_backend/session_verification.json",
+          "?? reports/rehab_backend_inventory.md",
+          "?? tests/rehab_backend/test_api.py",
+          "?? tests/rehab_backend/test_ml.py",
+          "?? tests/rehab_backend/test_protocols.py",
+          "?? tests/rehab_backend/test_sessions.py",
+          "?? tools/rehab_ml/__init__.py",
+          "?? tools/rehab_ml/benchmark.py",
+          "?? tools/rehab_ml/cli.py",
+          "?? tools/rehab_ml/common.py",
+          "?? tools/rehab_ml/crash_probe.py",
+          "?? tools/rehab_ml/data.py",
+          "?? tools/rehab_ml/download.py",
+          "?? tools/rehab_ml/features.py",
+          "?? tools/rehab_ml/inventory.py",
+          "?? tools/rehab_ml/models.py",
+          "?? tools/rehab_ml/run_minimal.py",
+          "?? tools/rehab_ml/target_domain.py",
+          "?? tools/rehab_ml/training.py"
+        ],
+        "config_sha256": "8cfb74dde1c6b600da44cc1d99f734cc215826b3fc98d79a7f8869cfe266d0f4",
+        "seed": 20261011,
+        "model": "causal_tcn",
+        "data_fingerprint": "7ce09eae40508843179123bfef632d8b83cf5db72889eb67fb1a10b36c8bb0f5",
+        "split_hash": "854f5791d7dcbfabdb2be89d81b7e1497b61053118900ba0669f7dc833c2fa28",
+        "feature_fingerprint": "f3188bede2e3ee4f2a90bd9c1166fcd1a1c8006069c9bf40bbab6bd9881c4959",
+        "feature_version": "kinect25-shoulder-causal20hz-1",
+        "environment_lock_sha256": "c79e1d359212de16ec8b9c8031168390a13d156cfdf54e23e8f953dbf4c14860",
+        "python": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\venv\\Scripts\\python.exe",
+        "source_archive_sha256": "a5fa88829f8538d415e0f0a24d5cdf473a006e23cba5d845ed0f0176cb6c8106",
+        "subject_groups": {
+          "train": [
+            "103",
+            "302",
+            "101",
+            "105",
+            "306",
+            "307",
+            "106",
+            "301",
+            "215",
+            "201",
+            "210",
+            "203",
+            "211",
+            "212",
+            "213",
+            "204",
+            "217"
+          ],
+          "val": [
+            "303",
+            "305",
+            "104",
+            "205",
+            "206",
+            "202"
+          ],
+          "test": [
+            "304",
+            "102",
+            "107",
+            "214",
+            "216",
+            "209"
+          ]
+        },
+        "split_class_counts": {
+          "train": {
+            "0": 269,
+            "1": 41
+          },
+          "val": {
+            "0": 97,
+            "1": 34
+          },
+          "test": {
+            "0": 83,
+            "1": 8
+          }
+        },
+        "majority_class": 0,
+        "license": "CC-BY-4.0",
+        "attribution": "Miron, A.; Sadawi, N.; Ismail, W.; Hussain, H.; Grosan, C. IntelliRehabDS (IRDS), Data 2021, 6, 46. DOI 10.3390/data6050046.",
+        "product_enabled": false,
+        "source_code_hashes": {
+          "tools/rehab_ml/common.py": "b2517a6bc5d86d04bb1d97fd99bcc6b83672150a68addf3d52d6911cce36c6e6",
+          "tools/rehab_ml/data.py": "19b4480ecb0d641cd0a898cc93e533e83ef6c3e6b6fd1f97fb8432ff4db514c5",
+          "tools/rehab_ml/features.py": "5cf935cd6d26d79f2eb36042dc0d33e5323f256ec15be4a4904f1b441906ce97",
+          "tools/rehab_ml/models.py": "b5a3fd0b6f92d8e105ed9a07d8f15929e3509af30fd82f376225de384142ec05",
+          "tools/rehab_ml/training.py": "8804831c74ebd8aa3a6fc2eb31e20d541a4ce68c00beeb1f0c3f7e1875753f37"
+        }
+      },
+      "model_card": {
+        "model_id": "20261010T185214Z-causal_tcn-84cbc486",
+        "role": "rep_quality_candidate",
+        "model": "causal_tcn",
+        "artifact": "checkpoint.pt",
+        "artifact_sha256": "ef76c10bf543999fe18eb84d5e340f6335cba6b84037ee4cf17233e4d7d14b8b",
+        "input_domain": "kinect_3d",
+        "schema_id": "kinect25-v1",
+        "coordinate_space": "kinect_camera_3d",
+        "feature_version": "kinect25-shoulder-causal20hz-1",
+        "data_fingerprint": "7ce09eae40508843179123bfef632d8b83cf5db72889eb67fb1a10b36c8bb0f5",
+        "split_hash": "854f5791d7dcbfabdb2be89d81b7e1497b61053118900ba0669f7dc833c2fa28",
+        "after_end_only": true,
+        "product_enabled": false,
+        "deployment_status": "offline_research_only",
+        "license": "CC-BY-4.0",
+        "license_status": "verified_dataset_license",
+        "attribution": "Miron, A.; Sadawi, N.; Ismail, W.; Hussain, H.; Grosan, C. IntelliRehabDS (IRDS), Data 2021, 6, 46. DOI 10.3390/data6050046.",
+        "actions": [
+          "shoulder_abduction"
+        ],
+        "sides": [
+          "left",
+          "right"
+        ],
+        "camera_views": [
+          "kinect_recording_only"
+        ],
+        "protocol_versions": [
+          "irds-rep-label-1"
+        ],
+        "unavailable_heads": [
+          "phase",
+          "bodypart_error",
+          "cue_timing"
+        ],
+        "limitations": [
+          "No YOLO/MediaPipe/mobile domain validation",
+          "Whole-repetition correctness is not clinical quality or diagnosis",
+          "Small grouped test set; class and posture/cohort confounding"
+        ],
+        "training": {
+          "history": [
+            {
+              "epoch": 1,
+              "loss": 0.591939689218998,
+              "val_macro_f1": 0.6360065152821692
+            },
+            {
+              "epoch": 2,
+              "loss": 0.3972671624273062,
+              "val_macro_f1": 0.45588420390182505
+            },
+            {
+              "epoch": 3,
+              "loss": 0.38368184939026834,
+              "val_macro_f1": 0.527927927927928
+            },
+            {
+              "epoch": 4,
+              "loss": 0.23359892526641488,
+              "val_macro_f1": 0.6469658953628845
+            },
+            {
+              "epoch": 5,
+              "loss": 0.15965197016485036,
+              "val_macro_f1": 0.49550706033376124
+            },
+            {
+              "epoch": 6,
+              "loss": 0.18827943918295204,
+              "val_macro_f1": 0.6235632183908046
+            },
+            {
+              "epoch": 7,
+              "loss": 0.2694787072017789,
+              "val_macro_f1": 0.5356547122602169
+            },
+            {
+              "epoch": 8,
+              "loss": 0.09058641286101192,
+              "val_macro_f1": 0.6469658953628845
+            },
+            {
+              "epoch": 9,
+              "loss": 0.11329094820248428,
+              "val_macro_f1": 0.5140322580645161
+            },
+            {
+              "epoch": 10,
+              "loss": 0.17245960618602113,
+              "val_macro_f1": 0.48475909537856443
+            },
+            {
+              "epoch": 11,
+              "loss": 0.15894590537645853,
+              "val_macro_f1": 0.6572061191626409
+            },
+            {
+              "epoch": 12,
+              "loss": 0.08741610686993226,
+              "val_macro_f1": 0.6235632183908046
+            },
+            {
+              "epoch": 13,
+              "loss": 0.14801464388001478,
+              "val_macro_f1": 0.5721919841662544
+            },
+            {
+              "epoch": 14,
+              "loss": 0.04461731062328909,
+              "val_macro_f1": 0.6046815104803849
+            },
+            {
+              "epoch": 15,
+              "loss": 0.04148459724747226,
+              "val_macro_f1": 0.5518154729058603
+            },
+            {
+              "epoch": 16,
+              "loss": 0.05786077908851439,
+              "val_macro_f1": 0.6401098901098901
+            },
+            {
+              "epoch": 17,
+              "loss": 0.031348835696917376,
+              "val_macro_f1": 0.5029320455329425
+            },
+            {
+              "epoch": 18,
+              "loss": 0.01831053348396381,
+              "val_macro_f1": 0.48072072072072075
+            },
+            {
+              "epoch": 19,
+              "loss": 0.0069263554196368204,
+              "val_macro_f1": 0.5687586280131677
+            },
+            {
+              "epoch": 20,
+              "loss": 0.01566086167904359,
+              "val_macro_f1": 0.6572061191626409
+            },
+            {
+              "epoch": 21,
+              "loss": 0.03735024048955893,
+              "val_macro_f1": 0.610903516336112
+            }
+          ],
+          "best_epoch": 11,
+          "val_macro_f1": 0.6572061191626409,
+          "stop_reason": "early_stopping",
+          "checkpoint": "checkpoint.pt",
+          "class_weights": [
+            0.5762081784386617,
+            3.7804878048780486
+          ],
+          "device": "cuda",
+          "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+          "peak_allocated_bytes": 94780416,
+          "parameters": 108226,
+          "receptive_field_steps": 61,
+          "elapsed_s": 11.300726400000713
+        }
+      },
+      "artifact_hashes": {
+        "checkpoint.pt": "ef76c10bf543999fe18eb84d5e340f6335cba6b84037ee4cf17233e4d7d14b8b",
+        "environment.lock.txt": "c79e1d359212de16ec8b9c8031168390a13d156cfdf54e23e8f953dbf4c14860",
+        "evaluation-test.json": "88e17ae0b3a57b777f4773e2d09294687de5f290f263d5df7370a36385a1f9f4",
+        "evaluation-val.json": "4e1dff10aa7d1ae9ba8184536bffadb4cbdca3338d11581530ee8ca06fc33f13",
+        "model-card.json": "055a40cb7283c7da673c67be956c7a53ce383e988b26af9ce1d9b4f3571a5089",
+        "predictions-test.json": "c8dcfe475affc2ec7ea64cb5d46f971762fa019ec7db48b8788fcdde3cce1cd4",
+        "predictions-val.json": "789c57bde7cf596709a2a4e86fc6d4204d5cb3c5d9973d73aedbf4dc79ec4dd3",
+        "provenance.json": "b134c2648f3cadb0a31a58cc3038ab2f6bdbad50e0325d84b1032e116a1d8e63",
+        "resolved-config.json": "3379d380ff708e96c26f0a1159df3e86579fdc5a2053d5448cf7ba27680d0d88",
+        "training-progress.json": "5c616d5b1ef655a77d126087e530b7bcf3c2078af9015d50f19989c36c101208",
+        "training.json": "5249dbe79db4b660e5ba17865ebe4a1c8aea6944b200990db1bd10eef3f97853"
+      }
+    }
+  ],
+  "product_enabled": false,
+  "clinical_accuracy": null,
+  "dataset_counts": {
+    "samples": 534,
+    "subjects": 29,
+    "eligible": 532,
+    "quality_labels": {
+      "1": 449,
+      "2": 83,
+      "3": 2
+    },
+    "posture": {
+      "chair": 175,
+      "stand": 258,
+      "wheelchair": 66,
+      "Stand-frame": 10,
+      "sit": 25
+    }
+  },
+  "status": "minimal_pipeline_passed_not_whole_task_complete"
+}

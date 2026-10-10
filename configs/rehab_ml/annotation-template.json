@@ -1,0 +1,21 @@
+{
+  "schema_version": "rehab-professional-label-1",
+  "sample_id": null,
+  "subject_group": null,
+  "exercise_id": null,
+  "side": null,
+  "view": null,
+  "protocol_version": null,
+  "raw_video_ref": null,
+  "raw_video_sha256": null,
+  "keypoints_ref": null,
+  "time_basis": null,
+  "permissions": {"analysis": false, "training": false, "redistribution": false, "license": null, "consent_document_ref": null},
+  "boundaries": {"preparation_confirmed_s": null, "outbound_start_s": null, "endpoint_start_s": null, "endpoint_end_s": null, "return_start_s": null, "end_s": null},
+  "physical_completion": null,
+  "observable_completion": null,
+  "quality_problems": [{"problem_id": null, "state": "unknown", "assessable": false, "start_s": null, "end_s": null, "acceptable_variation_conditions": null}],
+  "cue_opportunities": [{"start_s": null, "end_s": null, "category": null, "priority": null, "actually_received": null, "later_improved": null}],
+  "annotations": {"annotator": null, "reviewer": null, "annotation_version": null, "independently_reviewed": false, "disagreements": null, "final_resolution": null},
+  "label_masks": {"physical_completion": false, "observable_completion": false, "phase": false, "error": false, "cue_timing": false}
+}

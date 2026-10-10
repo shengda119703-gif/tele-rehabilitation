@@ -1,0 +1,267 @@
+{
+  "baseline_id": "20261010T185211Z-logistic_regression-c78b48c6",
+  "candidate_id": "20261010T185214Z-causal_tcn-84cbc486",
+  "partition": "frozen_test",
+  "baseline": {
+    "samples": 91,
+    "confusion_matrix": [
+      [
+        61,
+        22
+      ],
+      [
+        0,
+        8
+      ]
+    ],
+    "classes": [
+      "correct",
+      "incorrect"
+    ],
+    "positive_class": "incorrect",
+    "macro_f1": 0.6341374269005848,
+    "balanced_accuracy": 0.8674698795180723,
+    "accuracy": 0.7582417582417582,
+    "precision_incorrect": 0.26666666666666666,
+    "recall_incorrect": 1.0,
+    "f1_incorrect": 0.42105263157894735,
+    "roc_auc": 0.963855421686747,
+    "decision_threshold": 0.5
+  },
+  "candidate": {
+    "samples": 91,
+    "confusion_matrix": [
+      [
+        79,
+        4
+      ],
+      [
+        7,
+        1
+      ]
+    ],
+    "classes": [
+      "correct",
+      "incorrect"
+    ],
+    "positive_class": "incorrect",
+    "macro_f1": 0.5443786982248521,
+    "balanced_accuracy": 0.5384036144578312,
+    "accuracy": 0.8791208791208791,
+    "precision_incorrect": 0.2,
+    "recall_incorrect": 0.125,
+    "f1_incorrect": 0.15384615384615385,
+    "roc_auc": 0.8945783132530121,
+    "decision_threshold": 0.5
+  },
+  "candidate_minus_baseline_macro_f1": -0.08975872867573276,
+  "disagreements": [
+    {
+      "sample_id": "irds-1debd8864417499b",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-3200813abc2fb598",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-4a30a4513fa59c3d",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 1
+    },
+    {
+      "sample_id": "irds-4c0a3175e9462013",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 1
+    },
+    {
+      "sample_id": "irds-4d00775488ebf8c4",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 1
+    },
+    {
+      "sample_id": "irds-52de7b8dc6df4b12",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-637f3838f76184cf",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-7386f01887cb34e5",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-74f596d6fea33ae7",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-7f5ae814b1f13a55",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-7f744f1b43bbac93",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-8a2aabee236c1c66",
+      "baseline": 0,
+      "candidate": 1,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-8b7806b9a862c51c",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-a9fe8713d9842580",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 1
+    },
+    {
+      "sample_id": "irds-ae3fba990e9930fe",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-ae40648f8c234c1a",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-c1c004cc1350e572",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-c950468f168ae6d0",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 1
+    },
+    {
+      "sample_id": "irds-cab099b672129593",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-dfb8523ead58c7a9",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-e77471fc1622bcfd",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-e80679ad32e5c750",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 1
+    },
+    {
+      "sample_id": "irds-e82f06c4af4d481c",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-e9a3c9385586fd0d",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-ec1e49046a49d37b",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-f90647f7f8ad47b4",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-fb6d11e103e7ee27",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-fd4c3a55c5f868c2",
+      "baseline": 0,
+      "candidate": 1,
+      "label": 0
+    },
+    {
+      "sample_id": "irds-fd768e21d2a9c929",
+      "baseline": 1,
+      "candidate": 0,
+      "label": 1
+    }
+  ],
+  "domain_gate_match": {
+    "status": "shadow_candidate",
+    "output": {
+      "probability_incorrect": 0.0067013041116297245
+    },
+    "evidence_kind": "predicted",
+    "model_id": "20261010T185214Z-causal_tcn-84cbc486",
+    "authoritative": false,
+    "cannot_modify": [
+      "completed_reps",
+      "plan_progress",
+      "eligibility",
+      "dosage",
+      "current_cue"
+    ]
+  },
+  "rgb_rejection": {
+    "status": "unsupported_input_domain",
+    "fallback": "versioned_rules",
+    "authoritative": false
+  },
+  "product_enabled": false,
+  "model_activated": false,
+  "clinical_accuracy": null,
+  "selection_note": "Fixed configurations were declared before test evaluation; no test-driven tuning or activation",
+  "artifacts": {
+    "20261010T185211Z-logistic_regression-c78b48c6/model-card.json": "b324e70d0edcc9dd227cba0a2b3fedaba1740ba89553d01b1c4713744ba4af2d",
+    "20261010T185211Z-logistic_regression-c78b48c6/evaluation-test.json": "636687794532bfe58f2ac9bf130edb2ff2bfb25c8afdaccbe1894fbc234e358f",
+    "20261010T185211Z-logistic_regression-c78b48c6/predictions-test.json": "de3c511e822e9769f63b10dff7d4b5452f0a7eadce1d08bc739873703acfb797",
+    "20261010T185214Z-causal_tcn-84cbc486/model-card.json": "055a40cb7283c7da673c67be956c7a53ce383e988b26af9ce1d9b4f3571a5089",
+    "20261010T185214Z-causal_tcn-84cbc486/evaluation-test.json": "88e17ae0b3a57b777f4773e2d09294687de5f290f263d5df7370a36385a1f9f4",
+    "20261010T185214Z-causal_tcn-84cbc486/predictions-test.json": "c8dcfe475affc2ec7ea64cb5d46f971762fa019ec7db48b8788fcdde3cce1cd4"
+  }
+}

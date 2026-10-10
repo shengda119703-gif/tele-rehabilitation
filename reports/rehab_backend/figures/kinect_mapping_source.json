@@ -1,0 +1,265 @@
+{
+  "sample_id": "irds-0052720e8fc08f9b",
+  "frame_index": 21,
+  "schema_id": "kinect25-v1",
+  "source_member": "SkeletonData/Simplified/215_18_5_5_1_stand.txt",
+  "npz_sha256": "73b3e8d7e166534954d71ab083adef8d5f3ea3a02da499345c1e9f631fcf6282",
+  "coordinate_unit": "metre",
+  "coordinate_space": "kinect_camera_3d",
+  "side": "right",
+  "time_basis": "nominal_30fps_not_exposure_clock",
+  "license": "CC-BY-4.0",
+  "attribution": "Miron, A.; Sadawi, N.; Ismail, W.; Hussain, H.; Grosan, C. IntelliRehabDS (IRDS), Data 2021, 6, 46. DOI 10.3390/data6050046.",
+  "joints": [
+    {
+      "index": 0,
+      "name": "SpineBase",
+      "xyz": [
+        -0.3959459960460663,
+        0.04687897861003876,
+        2.146056890487671
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 1,
+      "name": "SpineMid",
+      "xyz": [
+        -0.4065040946006775,
+        0.34190699458122253,
+        2.098655939102173
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 2,
+      "name": "Neck",
+      "xyz": [
+        -0.4154619872570038,
+        0.6280977129936218,
+        2.040247917175293
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 3,
+      "name": "Head",
+      "xyz": [
+        -0.41809380054473877,
+        0.7610756754875183,
+        2.023413896560669
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 4,
+      "name": "ShoulderLeft",
+      "xyz": [
+        -0.589996874332428,
+        0.6005576848983765,
+        2.023566961288452
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 5,
+      "name": "ElbowLeft",
+      "xyz": [
+        -0.7089961171150208,
+        0.7883545756340027,
+        1.9473249912261963
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 6,
+      "name": "WristLeft",
+      "xyz": [
+        -0.7786250710487366,
+        0.9651048183441162,
+        1.8592900037765503
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 7,
+      "name": "HandLeft",
+      "xyz": [
+        -0.7753698229789734,
+        0.9828624725341797,
+        1.8532929420471191
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 8,
+      "name": "ShoulderRight",
+      "xyz": [
+        -0.23408439755439758,
+        0.5476155877113342,
+        2.0836429595947266
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 9,
+      "name": "ElbowRight",
+      "xyz": [
+        -0.1263888031244278,
+        0.3622826039791107,
+        2.1642839908599854
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 10,
+      "name": "WristRight",
+      "xyz": [
+        -0.1489337980747223,
+        0.15695470571517944,
+        2.106600046157837
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 11,
+      "name": "HandRight",
+      "xyz": [
+        -0.200346902012825,
+        0.11971790343523026,
+        2.10115909576416
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 12,
+      "name": "HipLeft",
+      "xyz": [
+        -0.46921980381011963,
+        0.05038141831755638,
+        2.0958409309387207
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 13,
+      "name": "KneeLeft",
+      "xyz": [
+        -0.4672847092151642,
+        -0.34317150712013245,
+        2.198599100112915
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 14,
+      "name": "AnkleLeft",
+      "xyz": [
+        -0.471288800239563,
+        -0.6582375168800354,
+        2.2515249252319336
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 15,
+      "name": "FootLeft",
+      "xyz": [
+        -0.48972371220588684,
+        -0.7267053127288818,
+        2.178239107131958
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 16,
+      "name": "HipRight",
+      "xyz": [
+        -0.31018930673599243,
+        0.042039960622787476,
+        2.12821102142334
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 17,
+      "name": "KneeRight",
+      "xyz": [
+        -0.27040600776672363,
+        -0.3739457130432129,
+        2.238132953643799
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 18,
+      "name": "AnkleRight",
+      "xyz": [
+        -0.18285760283470154,
+        -0.6673920750617981,
+        2.281248092651367
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 19,
+      "name": "FootRight",
+      "xyz": [
+        -0.159123495221138,
+        -0.7215802073478699,
+        2.2130110263824463
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 20,
+      "name": "SpineShoulder",
+      "xyz": [
+        -0.4134480059146881,
+        0.5578249096870422,
+        2.0568249225616455
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 21,
+      "name": "HandTipLeft",
+      "xyz": [
+        -0.7880802154541016,
+        1.066573977470398,
+        1.8863439559936523
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 22,
+      "name": "ThumbLeft",
+      "xyz": [
+        -0.7734600901603699,
+        0.9951881766319275,
+        1.7771669626235962
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 23,
+      "name": "HandTipRight",
+      "xyz": [
+        -0.20587700605392456,
+        0.05509214848279953,
+        2.104578971862793
+      ],
+      "tracking_state": 2
+    },
+    {
+      "index": 24,
+      "name": "ThumbRight",
+      "xyz": [
+        -0.24672329425811768,
+        0.15927919745445251,
+        2.101593017578125
+      ],
+      "tracking_state": 2
+    }
+  ]
+}

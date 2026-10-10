@@ -1,0 +1,52 @@
+{
+  "notice": "Export completed with explicit settings. This report does not establish visual, accessibility, scientific-integrity, or journal-submission compliance.",
+  "outputs": [
+    {
+      "format": "png",
+      "kind": "raster",
+      "path": "E:\\game\\health-care-software-main\\reports\\rehab_backend\\figures\\kinect_mapping.png",
+      "size_bytes": 112915
+    },
+    {
+      "format": "svg",
+      "kind": "vector-container",
+      "path": "E:\\game\\health-care-software-main\\reports\\rehab_backend\\figures\\kinect_mapping.svg",
+      "size_bytes": 57086
+    }
+  ],
+  "provenance": {
+    "alt_text": "Two camera-axis projections of one public Kinect25 frame; numeric joint labels map to JSON names.",
+    "intended_medium": "offline developer audit, not a journal or product UI",
+    "missing_data": "inferred/not-tracked marked; unknown coordinates never connected as evidence",
+    "raw_data": "E:\\game\\health-care-software-main\\reports\\rehab_backend\\figures\\kinect_mapping_source.json",
+    "sample_rule": "first sorted eligible sample, middle frame",
+    "source_sha256": "f871f98a7cc9af99a3d7894ed3d04204963008f254f88f97e8d393609dd33d95",
+    "transformations": [
+      "orthogonal projection only; links only when both endpoints observed"
+    ],
+    "uncertainty": "not an estimate; one frame, not a population figure"
+  },
+  "schema_version": "1.0",
+  "settings": {
+    "bbox_inches": null,
+    "dpi": 150.0,
+    "facecolor": "white",
+    "figure_size_inches": [
+      12.0,
+      7.2
+    ],
+    "font_mode": "truetype",
+    "formats": [
+      "png",
+      "svg"
+    ],
+    "pad_inches": 0.1,
+    "tiff_rgb": false,
+    "transparent": false
+  },
+  "versions": {
+    "matplotlib": "3.10.8",
+    "pillow": "12.1.1"
+  },
+  "warnings": []
+}

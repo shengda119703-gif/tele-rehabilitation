@@ -1,0 +1,14 @@
+version: rehab-backend-2.0
+pose_backend: existing_verified_baseline
+preprocess_backend: existing_causal_ema
+temporal_model_enabled: false
+temporal_model_mode: offline_research_only
+structured_cue_events: true
+formal_sessions_v2: opt_in_only
+legacy_live_autosave: false
+frontend_changes: false
+android_changes: false
+performance_predeclared:
+  feature_plus_small_tcn_p95_ms: 20
+  control_response_p95_ms: 200
+  note: Engineering targets to measure; not claimed achieved.

@@ -1,0 +1,62 @@
+{
+  "results": [
+    {
+      "result_file_sha256": "3d09bfce932c35c0be16c97fea926c66e133ec668c1b528ce0f42995e121aa69",
+      "video_sha256": "97a9fa1b9f06de6482c06c109f40bc4e6e1681f53dde6fd7f478b5ac59405e0d",
+      "exercise_id": "shoulder_abduction",
+      "side": "left",
+      "frames": 443,
+      "observable_frames": 434,
+      "observed_fraction": 0.9796839729119639,
+      "v2_completed": 0,
+      "legacy_completed": 2,
+      "baseline_available": false,
+      "input_timing": {
+        "basis": "opencv_media_pts",
+        "skipped_leading_frames": 1,
+        "last_skipped_raw_time_s": -0.03447777777777778
+      },
+      "elapsed_s": 21.929530099998374,
+      "latency_ms": {
+        "p50": 36.341999999422114,
+        "p95": 44.30358999852615
+      },
+      "model_manifest_id": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0",
+      "training_authorized": false,
+      "professional_labels_available": false,
+      "clinical_accuracy": null,
+      "count_accuracy": null,
+      "status": "pipeline_completed_not_accuracy_acceptance"
+    },
+    {
+      "result_file_sha256": "9a82b46657363a98146f8afc962cdb5e6ebd3eedadf5ccea869c93dec1c5149f",
+      "video_sha256": "c384d08c0bc64d12939940e85b1f62b4ae29d470d27d0695054d786873779c95",
+      "exercise_id": "rehab_squat",
+      "side": "left",
+      "frames": 429,
+      "observable_frames": 48,
+      "observed_fraction": 0.11188811188811189,
+      "v2_completed": 0,
+      "legacy_completed": null,
+      "baseline_available": false,
+      "input_timing": {
+        "basis": "opencv_media_pts",
+        "skipped_leading_frames": 1,
+        "last_skipped_raw_time_s": -0.03333333333333333
+      },
+      "elapsed_s": 21.033186799999385,
+      "latency_ms": {
+        "p50": 34.88090000064403,
+        "p95": 43.86917999981961
+      },
+      "model_manifest_id": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0",
+      "training_authorized": false,
+      "professional_labels_available": false,
+      "clinical_accuracy": null,
+      "count_accuracy": null,
+      "status": "pipeline_completed_not_accuracy_acceptance"
+    }
+  ],
+  "private_RGB_and_keypoints_published": false,
+  "limitation": "Two clips without a stable observed baseline or adequate knee evidence; no independent reference or real-world accuracy estimate"
+}

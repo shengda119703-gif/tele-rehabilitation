@@ -1,0 +1,23 @@
+{
+  "status": "blocked_missing_supervision",
+  "existing_licensed_dataset": "IRDS whole-repetition Kinect quality labels",
+  "unavailable": [
+    "qualified_target_RGB_training_data",
+    "verified_2d_joint_and_visibility_labels",
+    "professionally_reviewed_phase_and_observability_labels"
+  ],
+  "dataset_status": {
+    "intellirehabds": "verified_dataset_license",
+    "rehab24_6": "blocked_requires_eligibility_confirmation",
+    "mobiphysio": "pending_file_level_license_and_access",
+    "sumedipose": "pending_file_level_license_and_access",
+    "keraal": "excluded_nc_sa_and_action_mismatch",
+    "fit3d": "excluded_account_and_noncommercial_terms",
+    "qevd": "excluded_product_license_restrictions"
+  },
+  "training_allowed": false,
+  "model_activated": false,
+  "next_required": "Verified dataset eligibility/access or consented independently annotated target video",
+  "requested_command": "build-pose-dataset",
+  "implemented": "qualification_and_refusal_only_not_a_pose_training_pipeline"
+}

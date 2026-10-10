@@ -1,0 +1,25 @@
+experiment: irds_shoulder_rep_quality
+model: causal_tcn
+input_domain: kinect_3d
+seed: 20261011
+channels: 64
+blocks: 4
+convolutions_per_block: 2
+kernel_size: 3
+dilations: [1, 2, 4, 8]
+dropout: 0.1
+normalization: per_timestep_layer_norm
+receptive_field_steps: 61
+pooling: masked_full_repetition_mean_after_end
+optimizer: AdamW
+learning_rate: 0.001
+weight_decay: 0.0001
+batch_size: 16
+max_epochs: 60
+patience: 10
+grad_clip: 1.0
+selection: val_macro_f1
+class_weights: train_only
+product_enabled: false
+after_end_only: true
+disabled_heads: [phase, bodypart_error, cue_timing]

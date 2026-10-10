@@ -1,0 +1,67 @@
+registry_version: rehab-datasets-1
+datasets:
+  intellirehabds:
+    version: '2.0.1'
+    record_id: 4610859
+    api: https://zenodo.org/api/records/4610859
+    source: https://zenodo.org/records/4610859
+    doi: 10.5281/zenodo.4610859
+    license: CC-BY-4.0
+    license_status: verified_dataset_license
+    license_evidence: https://www.mdpi.com/2306-5729/6/5/46
+    license_evidence_location: 'Data descriptor first page: Dataset License (not merely article license)'
+    attribution: 'Miron, A.; Sadawi, N.; Ismail, W.; Hussain, H.; Grosan, C. IntelliRehabDS (IRDS), Data 2021, 6, 46. DOI 10.3390/data6050046.'
+    input_domain: kinect_3d
+    schema: kinect25-v1
+    nominal_fps: 30
+    experiment: irds_shoulder_rep_quality
+    product_enabled: false
+    allowed_tasks: [rep_quality]
+    unavailable_labels: [phase, bodypart_error, cue_timing]
+    action_mapping: {4: shoulder_abduction_left, 5: shoulder_abduction_right}
+    quality_mapping: {1: 0, 2: 1}
+    quarantine_labels: [3]
+    files:
+      - name: readme.txt
+        bytes: 1974
+        md5: 655525729cd70a00ae5b6863e98141d3
+        url: https://zenodo.org/records/4610859/files/readme.txt?download=1
+      - name: SkeletonData.zip
+        bytes: 198985485
+        md5: c243bcdbd1492e4928032e158accdd29
+        url: https://zenodo.org/records/4610859/files/SkeletonData.zip?download=1
+  rehab24_6:
+    version: 'record-13305826'
+    source: https://zenodo.org/records/13305826
+    license: noncommercial_academic_nonprofit_only
+    license_status: blocked_requires_eligibility_confirmation
+    input_domain: rgb_and_skeleton
+    product_enabled: false
+    allowed_tasks: []
+    reason: 'No authority to accept research-only terms on behalf of this project.'
+  mobiphysio:
+    source: https://doi.org/10.7910/DVN/XSI0QN
+    api: https://dataverse.harvard.edu/api/datasets/:persistentId/?persistentId=doi:10.7910/DVN/XSI0QN
+    version: unresolved_published_version
+    license_status: pending_file_level_license_and_access
+    product_enabled: false
+    allowed_tasks: []
+  sumedipose:
+    source: https://doi.org/10.7910/DVN/GRRROM
+    api: https://dataverse.harvard.edu/api/datasets/:persistentId/?persistentId=doi:10.7910/DVN/GRRROM
+    version: unresolved_published_version
+    license_status: pending_file_level_license_and_access
+    product_enabled: false
+    allowed_tasks: []
+  keraal:
+    license_status: excluded_nc_sa_and_action_mismatch
+    product_enabled: false
+    allowed_tasks: []
+  fit3d:
+    license_status: excluded_account_and_noncommercial_terms
+    product_enabled: false
+    allowed_tasks: []
+  qevd:
+    license_status: excluded_product_license_restrictions
+    product_enabled: false
+    allowed_tasks: []

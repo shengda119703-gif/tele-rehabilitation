@@ -1,0 +1,52 @@
+{
+  "run_id": "20261010T185214Z-causal_tcn-84cbc486",
+  "checkpoint_sha256": "ef76c10bf543999fe18eb84d5e340f6335cba6b84037ee4cf17233e4d7d14b8b",
+  "declared_budgets": {
+    "feature_plus_small_tcn_p95_ms": 20,
+    "control_response_p95_ms": 200,
+    "note": "Engineering targets to measure; not claimed achieved."
+  },
+  "benchmark": "isolated_cpu_full_rep_feature_and_small_tcn",
+  "sample_id": "irds-058407a89ac63080",
+  "steps": 51,
+  "dimensions": 128,
+  "torch_version": "2.11.0+cu128",
+  "device": "cpu",
+  "threads": 4,
+  "feature": {
+    "n": 100,
+    "p50_ms": 0.6023499990988057,
+    "p95_ms": 0.7922550000330375,
+    "max_ms": 0.8527999998477753
+  },
+  "temporal": {
+    "n": 100,
+    "p50_ms": 1.8113500000254135,
+    "p95_ms": 2.281254999161319,
+    "max_ms": 2.4347000016859965
+  },
+  "total": {
+    "n": 100,
+    "p50_ms": 2.4133500000971253,
+    "p95_ms": 3.057994998471258,
+    "max_ms": 3.2296000008500414
+  },
+  "control": {
+    "n": 80,
+    "p50_ms": 15.265050000380143,
+    "p95_ms": 17.40826999994169,
+    "max_ms": 19.802099999651546
+  },
+  "rss_bytes": 534720512,
+  "feature_temporal_budget_met": true,
+  "control_budget_met": true,
+  "exclusions": [
+    "phone_performance",
+    "camera_decode",
+    "pose_inference",
+    "network",
+    "many_clients",
+    "live_training_concurrency",
+    "clinical_accuracy"
+  ]
+}
