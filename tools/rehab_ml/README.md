@@ -28,13 +28,27 @@
 
 显式 `timing_plan` 复用原 `movement_timing.py`，分别记录出程、峰区／站位停留、回程、最长连续目标保持及 `MET/NOT_MET/UNASSESSABLE/NOT_SET`。v2 封套版本 `rehab-observed-timing-2`，写明原算法版本、time_basis 和证据 seq/epoch。保持只用当前连续有效观测；缺测、暂停、丢帧、换人和长间隔不能补时间。肩／深蹲的峰区分段是完整往返后的回顾计算，不冒充实时相位。坐站在站起时计一次，后续回坐仅更新尚未终结草稿的时间字段；已确认计次和最终回执不允许重写。节奏是否达标不修改计次、组数或原完成政策。
 
-结束请求冻结接收高水位，最多等待 2 秒保留的在途帧，然后原子保存逐次事实/快照/回执。派生报告异步生成，重启可对账；报告失败不回滚事实。未填感受为 null/missing，追加反馈独立 revision。默认最多一个正式活动会话、一个待处理帧槽、8 个并发控制请求；20 分钟时间上限、24,000 接收帧上限。推理/报告线程若挂起，关闭会明确拒绝宣称资源释放，尚无硬隔离进程超时杀除。
+结束请求冻结接收高水位，最多等待 2 秒保留的在途帧，然后原子保存逐次事实/快照/回执。派生报告异步生成，重启可对账；报告失败不回滚事实。未填感受为 null/missing，追加反馈独立 revision。默认最多一个正式活动会话、一个待处理帧槽、8 个并发控制请求；20 分钟时间上限、24,000 接收帧上限。JPEG 解码／原 YOLO 已改为一份所属 spawn 子进程；超时后只终止该对象并确认释放。报告仍是线程，硬挂起不能安全强杀；关闭未确认时保留存储与所属资源，允许再次关闭，不伪称释放。
 
 ```powershell
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py verify-sessions --database-mode isolated
 ```
 
-2026-10-11 该命令实际运行 44 项会话／贡献／时间／HTTP 测试；完整 `verify_all` 运行 74 项新后端、12 项旧康复、19 项旧手机测试及 1308 文件保护核验。44 项是 74 项的子集，不累加。实际日志与边界见 [本轮验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。这些是隔离工程测试，不是临床准确率或手机实机验收。
+2026-10-11 该命令实际运行 70 项会话／贡献／时间／所属进程／诊断／HTTP 测试；完整 `verify_all` 运行 100 项新后端、12 项旧康复、19 项旧手机测试及 1308 文件保护核验。70 项是 100 项的子集，不累加。实际日志与边界见 [进程与诊断验收](../../docs/validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md)；上一轮时间／贡献验证保留自己的日期与范围。这些是隔离工程测试，不是临床准确率或手机实机验收。
+
+## 会话诊断与实跑性能
+
+新增认证的 `GET /api/rehab/v2/sessions/{sid}/diagnostics`，只看自己的会话。服务端生成 `execution_trace_id`，保存在 source 元数据，创建重试／重开不改变；没有随机字段加入请求幂等摘要。正式 JPEG 会话没有录像 job，故 `job_id=null`，不伪造作业关联。
+
+`rehab-session-diagnostics-1` 分开记录队列、解码、推理、所属进程往返、特征、规则、指导、检查点、控制、最终提交、报告及结果年龄。每个固定阶段最多 512 个数值、事件总尾部 128 条，计数是累计值；p50／p95 按保留窗口 nearest-rank 计算。没有执行／候选关闭时保持 null，不补 0 ms。观察的是宿主接收／处理速率，不是相机曝光 FPS、网络延迟或临床证据。诊断不参与计次／计划，且不含图像、骨架、音频、用户原话、owner 或凭证。
+
+每会话缓存随运行对象保留；终结对象最多保留 32 个（另有在途／当前对象），之后删除诊断缓存但保留正式 SQL。重启／缓存淘汰时返回 `available=false`、稳定 trace_id 和未知统计，不从历史编造耗时。查询还给出当前队列／在途／持久待处理数量与可观测 RSS；这是短时观测，不是事务快照或内存峰值。OS 内存观测不可用时为 null。
+
+```powershell
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py benchmark-sessions --frames 12
+```
+
+该命令实际走隔离 ASGI HTTP／认证／原 YOLO／SQL，会话源图像为无人白色 JPEG，计划为显式 TEST 工程夹具，物理动作次数为 0；不打开相机、不操作原服务、不修改患者库。每帧等结果后暂停／恢复，首个冷推理与后续热运行分开，输出 `reports/rehab_backend/session_performance.json` 和忽略目录内原始摘要及 SHA。本机末次运行 `session-performance-a394a83e`：冷往返 2286.91 ms；热推理 p95 40.87 ms、宿主结果年龄 p95 57.19 ms；暂停／恢复 HTTP p95 17.78／13.58 ms。仅该单生产者、空图、电脑 CPU 负载，不代表多人压力、实际直播、手机或准确率；候选 TCN 没有执行。旧 `benchmark --run-id ...` 的 IRDS 整段微基准仍与此分开。
 
 ## 实验边界
 

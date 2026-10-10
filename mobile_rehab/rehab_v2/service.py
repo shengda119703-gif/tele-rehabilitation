@@ -6,17 +6,21 @@ from io import BytesIO
 import os
 from pathlib import Path
 import queue
+import sys
 import threading
 import time
+from uuid import uuid4
 
 from ..core import CORE
-from app.domain import Context, FramePacket, digest, utc_now
+from app.domain import Context, digest, utc_now
 from app.storage import Storage
 from app.rehab_v2.cues import CueEvents
 from app.rehab_v2.engine import ProtocolEngine
 from app.rehab_v2.rounds import TrainingRounds
 from app.rehab_v2.evidence import EvidenceAdapter
 from app.rehab_v2.sessions import SessionError, SessionRepository, identifier
+from app.rehab_v2.telemetry import SessionTelemetry, VERSION as DIAGNOSTICS_VERSION
+from .pose_worker import IsolatedPoseWorker
 
 
 class StoreLease:
@@ -61,6 +65,8 @@ class Runtime:
         self.terminal_epoch = item['terminal_epoch']
         self.context = Context(1, 'rehab', item['source']['source_ref'], item['source']['source_kind'],
                                item['source']['usage_context'], item['session_id'], item['source_epoch'])
+        self.telemetry = SessionTelemetry(item['source'].get('execution_trace_id'),
+                                         item['session_id'], self.engine.spec['protocol_version'])
 
 
 class SessionService:
@@ -88,7 +94,9 @@ class SessionService:
         self.controls = threading.BoundedSemaphore(8)
         self.runtimes = {}
         self.closed, self.worker_stop, self.inflight = False, threading.Event(), None
-        self.vision = None
+        self.resources_released = False
+        self.worker_failure = None
+        self.inference_worker = IsolatedPoseWorker()
         self.latencies = {'control_ms': [], 'decode_ms': [], 'inference_ms': [],
                           'feature_ms': [], 'cue_ms': [], 'commit_ms': [], 'queue_wait_ms': []}
         self.report_stop = threading.Event()
@@ -137,6 +145,7 @@ class SessionService:
             self.controls.release()
 
     def create(self, owner, request):
+        started = time.perf_counter()
         def create():
             key = identifier(request.get('idempotency_key'))
             fingerprint = digest(request)
@@ -149,6 +158,8 @@ class SessionService:
             with self.guard:
                 if self.closed:
                     raise SessionError('service_closed', 503)
+                if not self.worker.is_alive() or self.worker_failure:
+                    raise SessionError('formal_inference_worker_unavailable', 503)
                 self._prune_terminal_runtimes()
                 active = [sid for sid, runtime in self.runtimes.items() if runtime.engine.run_state != 'ended']
                 if active:
@@ -180,7 +191,10 @@ class SessionService:
                               usage_context='TEST' if self.internal_replay else 'SELF_USE',
                               input_mode='trusted_internal_evidence' if self.internal_replay else 'server_inferred_jpeg',
                               consent_at=utc_now(), time_basis='mapped_source_seconds',
-                              no_exposure_synchronization_claim=True)
+                              no_exposure_synchronization_claim=True,
+                              execution_trace_id=uuid4().hex, diagnostics_version=DIAGNOSTICS_VERSION)
+                if not self.internal_replay and self.inference_provider is None:
+                    source['inference_execution_contract'] = self.inference_worker.contract
                 if frozen.get('progress_scope') is not None:
                     from app.assessment_batches import scope_key
                     scope = scope_key(frozen['progress_scope'])
@@ -190,7 +204,24 @@ class SessionService:
                 item = self.repository.create(owner, key, fingerprint, frozen, source)
                 self.runtimes[item['session_id']] = Runtime(item)
                 return item
-        return self._bounded(create)
+        result = self._bounded(create)
+        runtime = self.runtimes.get(result['session_id'])
+        if runtime:
+            runtime.telemetry.observe('create_request_ms', 1000*(time.perf_counter()-started))
+        return result
+
+    def _session_operation(self, owner, sid, stage, fn):
+        # Authenticate before reading or writing per-session diagnostic state.
+        self.repository.get(owner, sid)
+        runtime = self.runtimes.get(sid)
+        started = time.perf_counter()
+        try:
+            return self._bounded(fn)
+        finally:
+            if runtime:
+                duration = 1000*(time.perf_counter()-started)
+                runtime.telemetry.observe(stage, duration)
+                runtime.telemetry.observe('control_ms', duration)
 
     def _runtime(self, owner, sid):
         item = self.repository.get(owner, sid)
@@ -200,6 +231,7 @@ class SessionService:
         return item, runtime
 
     def submit_jpeg(self, owner, sid, event_id, seq, encoded):
+        request_started = time.perf_counter()
         if self.internal_replay:
             raise SessionError('replay_host_does_not_accept_camera_frames', 400)
         if not isinstance(encoded, bytes) or not 0 < len(encoded) <= 512*1024:
@@ -216,10 +248,13 @@ class SessionService:
         except Exception:
             raise SessionError('invalid_jpeg_frame', 400)
         item, runtime = self._runtime(owner, sid)
+        if self.closed or not self.worker.is_alive() or self.worker_failure:
+            raise SessionError('formal_inference_worker_unavailable', 503)
         fingerprint = digest(dict(event_id=event_id, seq=seq, image_sha256=hashlib.sha256(encoded).hexdigest()))
         with self.guard, runtime.lock:
             accepted = self.repository.accept_frame(owner, sid, event_id, seq, fingerprint)
             if accepted['duplicate']:
+                runtime.telemetry.event('duplicate', seq=seq)
                 return dict(status=accepted['status'], duplicate=True, seq=seq)
             received = time.monotonic()
             frame = dict(owner=owner, sid=sid, event_id=event_id, seq=seq, encoded=encoded,
@@ -235,8 +270,13 @@ class SessionService:
                     previous_runtime.engine.note_input_gap(previous['seq'], previous['source_time_s'], 'latest_frame_replaced')
                     self.repository.checkpoint(previous['owner'], previous['sid'], previous_runtime.engine.summary(),
                                                seq=previous['seq'], frame_status='dropped', reason='latest_frame_replaced')
+                    previous_runtime.telemetry.event('latest_replaced', seq=previous['seq'])
                     self.frames.task_done()
             self.frames.put_nowait(frame)
+            runtime.telemetry.event('accepted', seq=seq, control_epoch=runtime.control_epoch,
+                                    terminal_epoch=runtime.terminal_epoch)
+            runtime.telemetry.arrival('accepted', received, queue_depth=1)
+            runtime.telemetry.observe('frame_request_ms', 1000*(time.perf_counter()-request_started))
             return dict(status='accepted', duplicate=False, seq=seq, accepted_last_seq=accepted['session']['accepted_last_seq'])
 
     def submit_evidence(self, owner, sid, event_id, evidence):
@@ -249,32 +289,44 @@ class SessionService:
         with runtime.lock:
             accepted = self.repository.accept_frame(owner, sid, event_id, evidence.seq, digest(asdict(evidence)))
             if accepted['duplicate']:
+                runtime.telemetry.event('duplicate', seq=evidence.seq)
                 return accepted
-            runtime.engine.process(evidence)
-            cue = runtime.cues.update(runtime.engine, evidence, emission_monotonic=time.monotonic())
-            return self.repository.checkpoint(owner, sid, runtime.engine.summary(), seq=evidence.seq,
-                                              frame_status='processed', cue=cue)
+            runtime.telemetry.event('accepted', seq=evidence.seq)
+            runtime.telemetry.arrival('accepted', time.monotonic())
+            with runtime.telemetry.span('rules_ms'):
+                runtime.engine.process(evidence)
+            with runtime.telemetry.span('cue_ms'):
+                cue = runtime.cues.update(runtime.engine, evidence, emission_monotonic=time.monotonic())
+            with runtime.telemetry.span('checkpoint_ms'):
+                result = self.repository.checkpoint(owner, sid, runtime.engine.summary(), seq=evidence.seq,
+                                                    frame_status='processed', cue=cue)
+            runtime.telemetry.event('processed', seq=evidence.seq)
+            runtime.telemetry.arrival('processed', time.monotonic())
+            return result
 
     def _infer(self, value, runtime):
         if self.inference_provider:
             return self.inference_provider(value, runtime)
-        import cv2
-        import numpy as np
-        from app.vision import VisionWorker
-        started = time.perf_counter()
-        image = cv2.imdecode(np.frombuffer(value['encoded'], np.uint8), cv2.IMREAD_COLOR)
-        if image is None or image.shape[0]*image.shape[1] > 1920*1080:
-            raise ValueError('invalid_decoded_frame')
-        self.latencies['decode_ms'].append(1000*(time.perf_counter()-started))
-        if self.vision is None:
-            self.vision = VisionWorker(start_thread=False)
-        packet = FramePacket(runtime.context, value['seq'], value['source_time_s'], value['received'], utc_now(), image)
-        started = time.perf_counter()
-        pose = self.vision.infer(packet, backend='yolo', side=runtime.engine.spec['side'])
-        self.latencies['inference_ms'].append(1000*(time.perf_counter()-started))
+        pose, durations = self.inference_worker.infer(value, runtime)
+        for key, duration in durations.items():
+            self.latencies[key].append(duration)
+            runtime.telemetry.observe(key, duration)
         return pose  # Do not mutate EMA before checking the control epoch.
 
     def _run(self):
+        try:
+            self._run_frames()
+        except Exception as exc:
+            # Persistence may be unavailable: do not pretend a failure fact
+            # was saved, and do not accept new work into a dead frame consumer.
+            self.worker_failure = getattr(exc, 'code', type(exc).__name__)
+        finally:
+            try:
+                self.inference_worker.close()
+            except Exception as exc:
+                self.worker_failure = getattr(exc, 'code', type(exc).__name__)
+
+    def _run_frames(self):
         while not self.worker_stop.is_set():
             try:
                 value = self.frames.get(timeout=.05)
@@ -294,15 +346,31 @@ class SessionService:
             with self.guard:
                 self.inflight = value
             try:
-                self.latencies['queue_wait_ms'].append(1000*(time.monotonic()-value['received']))
-                evidence = self._infer(value, runtime)
                 with runtime.lock:
                     item = self.repository.get(value['owner'], value['sid'])
                     if item['persistence_state'] == 'finalized':
+                        runtime.telemetry.event('terminal_discarded', seq=value['seq'])
+                        continue
+                    if value['control_epoch'] != runtime.control_epoch or value['terminal_epoch'] != runtime.terminal_epoch:
+                        self.repository.checkpoint(value['owner'], value['sid'], runtime.engine.summary(),
+                            seq=value['seq'], frame_status='dropped', reason='control_or_terminal_epoch_changed')
+                        runtime.telemetry.event('epoch_discarded', seq=value['seq'])
+                        continue
+                waiting = 1000*(time.monotonic()-value['received'])
+                self.latencies['queue_wait_ms'].append(waiting)
+                runtime.telemetry.observe('queue_wait_ms', waiting)
+                with runtime.telemetry.span('pose_roundtrip_ms'):
+                    evidence = self._infer(value, runtime)
+                runtime.telemetry.observe('pose_result_age_ms', 1000*(time.monotonic()-value['received']))
+                with runtime.lock:
+                    item = self.repository.get(value['owner'], value['sid'])
+                    if item['persistence_state'] == 'finalized':
+                        runtime.telemetry.event('terminal_discarded', seq=value['seq'])
                         continue  # Frozen fact and frame audit remain immutable after terminal boundary.
                     if value['control_epoch'] != runtime.control_epoch or value['terminal_epoch'] != runtime.terminal_epoch:
                         self.repository.checkpoint(value['owner'], value['sid'], runtime.engine.summary(),
                                                    seq=value['seq'], frame_status='dropped', reason='control_or_terminal_epoch_changed')
+                        runtime.telemetry.event('epoch_discarded', seq=value['seq'])
                         continue
                     from app.domain import PoseFrame
                     if isinstance(evidence, PoseFrame):
@@ -310,37 +378,55 @@ class SessionService:
                         evidence = runtime.adapter.analyze(evidence,
                             processing_age_ms=1000*(time.monotonic()-value['received']))
                         self.latencies['feature_ms'].append(1000*(time.perf_counter()-started))
-                    runtime.engine.process(evidence)
+                        runtime.telemetry.observe('feature_ms', 1000*(time.perf_counter()-started))
+                    with runtime.telemetry.span('rules_ms'):
+                        runtime.engine.process(evidence)
                     started = time.perf_counter()
                     cue = runtime.cues.update(runtime.engine, evidence, emission_monotonic=time.monotonic())
                     self.latencies['cue_ms'].append(1000*(time.perf_counter()-started))
+                    runtime.telemetry.observe('cue_ms', 1000*(time.perf_counter()-started))
                     started = time.perf_counter()
                     self.repository.checkpoint(value['owner'], value['sid'], runtime.engine.summary(),
                                                seq=value['seq'], frame_status='processed', cue=cue)
                     self.latencies['commit_ms'].append(1000*(time.perf_counter()-started))
+                    runtime.telemetry.observe('checkpoint_ms', 1000*(time.perf_counter()-started))
+                    runtime.telemetry.event('processed', seq=value['seq'])
+                    runtime.telemetry.arrival('processed', time.monotonic())
+                    runtime.telemetry.observe('result_age_ms', 1000*(time.monotonic()-value['received']))
             except Exception as exc:
+                runtime.telemetry.event('inference_cancelled' if getattr(exc, 'code', '') == 'pose_worker_cancelled'
+                                        else 'input_failed', seq=value['seq'])
+                if getattr(exc, 'code', '').endswith('_timeout'):
+                    runtime.telemetry.event('timeout', seq=value['seq'])
                 with runtime.lock:
                     item = self.repository.get(value['owner'], value['sid'])
                     if item['persistence_state'] != 'finalized':
+                        if (self.worker_stop.is_set() or value['control_epoch'] != runtime.control_epoch
+                                or value['terminal_epoch'] != runtime.terminal_epoch):
+                            self.repository.checkpoint(value['owner'], value['sid'], runtime.engine.summary(),
+                                seq=value['seq'], frame_status='dropped', reason='control_or_terminal_epoch_changed')
+                            runtime.telemetry.event('epoch_discarded', seq=value['seq'])
+                            continue  # A failed old inference cannot terminate a resumed context.
                         runtime.engine.invalidate('input_failed')
                         runtime.cues.cancel('input_failed')
                         self.repository.checkpoint(value['owner'], value['sid'], runtime.engine.summary(),
-                                                   seq=value['seq'], frame_status='failed', reason=type(exc).__name__)
+                                                   seq=value['seq'], frame_status='failed', reason=getattr(exc, 'code', type(exc).__name__))
                         item = self.repository.freeze(value['owner'], value['sid'], 'worker-input-failure',
                             digest(dict(seq=value['seq'], error_type=type(exc).__name__)), item['revision'], 'input_failed')
                         runtime.engine.finish(item['requested_end_reason'])
-                        self.repository.finalize(value['owner'], value['sid'], runtime.engine.summary(), item['requested_end_reason'])
+                        with runtime.telemetry.span('final_commit_ms'):
+                            self.repository.finalize(value['owner'], value['sid'], runtime.engine.summary(), item['requested_end_reason'])
+                        runtime.telemetry.event('commit_success')
                         runtime.terminal_epoch += 1
                         self.report_wake.set()
             finally:
+                if sys.exc_info()[0] is not None:
+                    runtime.telemetry.event('background_failure', seq=value['seq'])
                 with self.guard:
                     self.inflight = None
                 self.frames.task_done()
                 for key in self.latencies:
                     self.latencies[key] = self.latencies[key][-512:]
-        if self.vision:
-            self.vision.close()
-
     def control(self, owner, sid, operation, request):
         if operation not in ('pause', 'resume'):
             raise SessionError('unknown_control', 400)
@@ -369,10 +455,10 @@ class SessionService:
                 runtime.control_epoch += 1
                 runtime.cues.cancel(operation)
                 return receipt
-        return self._bounded(control)
+        return self._session_operation(owner, sid, operation+'_request_ms', control)
 
     def finish(self, owner, sid, request):
-        return self._bounded(lambda: self._finish(owner, sid, request))
+        return self._session_operation(owner, sid, 'finish_request_ms', lambda: self._finish(owner, sid, request))
 
     def _finish(self, owner, sid, request):
         key, fingerprint = identifier(request.get('idempotency_key')), digest(request)
@@ -400,8 +486,14 @@ class SessionService:
                     return latest['canonical_commit']
                 runtime.engine.finish(item['requested_end_reason'])
                 runtime.cues.cancel('finish')
-                receipt = self.repository.finalize(owner, sid, runtime.engine.summary(), item['requested_end_reason'])
+                pending = self.repository.pending_frames(owner, sid)
+                with runtime.telemetry.span('final_commit_ms'):
+                    receipt = self.repository.finalize(owner, sid, runtime.engine.summary(), item['requested_end_reason'])
+                runtime.telemetry.event('commit_success')
+                if pending:
+                    runtime.telemetry.event('unprocessed_at_finish', count=pending)
                 runtime.terminal_epoch += 1
+            self.inference_worker.cancel_current(sid)  # Only after the immutable terminal fact exists.
             self.report_wake.set()
             return receipt
 
@@ -410,13 +502,16 @@ class SessionService:
         found = self.repository.lookup_operation(owner, sid, 'feedback', key, fingerprint)
         if found:
             return found
-        result = self._bounded(lambda: self.repository.feedback(owner, sid, key, fingerprint,
+        result = self._session_operation(owner, sid, 'feedback_request_ms', lambda: self.repository.feedback(owner, sid, key, fingerprint,
                                request.get('expected_revision'), request.get('feedback', {})))
         self.report_wake.set()
         return result
 
     def get(self, owner, sid):
         item = self.repository.get(owner, sid)
+        item['backend_execution'] = dict(frame_consumer_alive=self.worker.is_alive(),
+            failure=self.worker_failure, report_consumer_alive=self.report_worker.is_alive(),
+            resources_released=self.resources_released)
         item['plan_contribution'] = self.repository.plan_contribution(owner, sid)
         runtime = self.runtimes.get(sid)
         if runtime and item.get('current_cue'):
@@ -430,6 +525,36 @@ class SessionService:
 
     def history(self, owner, *, limit=20, before=None):
         return self.repository.history(owner, limit=limit, before=before)
+
+    def diagnostics(self, owner, sid):
+        item = self.repository.get(owner, sid)  # No metrics before authorization.
+        runtime = self.runtimes.get(sid)
+        if runtime is None:
+            return dict(version=DIAGNOSTICS_VERSION, available=False,
+                        reason='runtime_not_retained_or_host_restarted',
+                        trace_id=item['source'].get('execution_trace_id'), session_id=sid,
+                        job_id=None, protocol_version=item['frozen_plan']['protocol']['protocol_version'],
+                        stages=None, counters=None)
+        result = runtime.telemetry.snapshot()
+        with self.frames.mutex:
+            retained = sum(1 for value in self.frames.queue if value['sid'] == sid)
+        active = self.inflight
+        result['backlog'] = dict(retained_frames=retained,
+            in_flight=bool(active and active['sid'] == sid),
+            durable_pending_frames=self.repository.pending_frames(owner, sid), retained_capacity=1)
+        result['memory'] = dict(host_rss_bytes=None, owned_pose_rss_bytes=None,
+                                measurement='current_process_rss_not_peak_or_device_memory')
+        try:
+            import psutil
+            result['memory']['host_rss_bytes'] = psutil.Process(os.getpid()).memory_info().rss
+            process = self.inference_worker.process
+            if runtime.engine.run_state != 'ended' and process is not None and process.is_alive():
+                result['memory']['owned_pose_rss_bytes'] = psutil.Process(process.pid).memory_info().rss
+        except Exception:
+            pass  # Missing observation stays null; do not fabricate zero bytes.
+        result['consumers'] = dict(frame_alive=self.worker.is_alive(), frame_failure=self.worker_failure,
+                                   report_alive=self.report_worker.is_alive())
+        return result
 
     def plan(self, owner, plan_id):
         if self.plan_reader is None:
@@ -457,18 +582,27 @@ class SessionService:
 
     def rebuild_report(self, owner, sid):
         item = self.repository.get(owner, sid)
+        runtime = self.runtimes.get(sid)
+        started = time.perf_counter()
         try:
             report = self.report_builder(item)
             saved = self.repository.report_state(owner, sid, 'ready', report,
                 expected_feedback_revision=item['feedback_revision'])
+            if runtime:
+                runtime.telemetry.event('report_ready' if saved else 'report_superseded')
             return dict(state='ready' if saved else 'pending_newer_feedback')
         except Exception as exc:
+            if runtime:
+                runtime.telemetry.event('report_failed')
             saved = self.repository.report_state(owner, sid, 'failed', error=type(exc).__name__,
                 expected_feedback_revision=item['feedback_revision'])
             return dict(state='failed' if saved else 'pending_newer_feedback', error=type(exc).__name__)
+        finally:
+            if runtime:
+                runtime.telemetry.observe('report_ms', 1000*(time.perf_counter()-started))
 
     def close(self, *, graceful=True):
-        if self.closed:
+        if self.resources_released:
             return
         self.closed = True
         if graceful:
@@ -478,6 +612,7 @@ class SessionService:
                 if item['persistence_state'] == 'draft':
                     self.finish(item['owner'], sid, dict(idempotency_key='host-close', expected_revision=item['revision'], reason='interrupted'))
         self.worker_stop.set()
+        self.inference_worker.request_stop()
         self.report_stop.set()
         self.report_wake.set()
         self.worker.join(timeout=max(3., self.drain_timeout_s+1.))
@@ -485,5 +620,15 @@ class SessionService:
         if self.worker.is_alive() or self.report_worker.is_alive():
             # Do not close SQLite while its owning inference thread may still write.
             raise SessionError('vision_shutdown_not_confirmed', 503)
+        self.inference_worker.close()
+        # Discard only this host's volatile pending JPEGs. Durable accepted
+        # rows remain recorded by finalize or subsequent restart recovery.
+        while True:
+            try:
+                self.frames.get_nowait()
+            except queue.Empty:
+                break
+            self.frames.task_done()
         self.storage.close()
         self.lease.close()
+        self.resources_released = True

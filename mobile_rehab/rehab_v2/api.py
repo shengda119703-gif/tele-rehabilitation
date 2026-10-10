@@ -70,6 +70,10 @@ def install_rehab_v2(app, database, owner, small_json, plan_resolver, *, plan_re
     async def commit(sid: str, request: Request):
         return await asyncio.to_thread(service.commit, owner(request), sid)
 
+    @app.get('/api/rehab/v2/sessions/{sid}/diagnostics')
+    async def diagnostics(sid: str, request: Request):
+        return await asyncio.to_thread(service.diagnostics, owner(request), sid)
+
     @app.post('/api/rehab/v2/sessions/{sid}/feedback')
     async def feedback(sid: str, request: Request):
         uid, payload = owner(request), await small_json(request)

@@ -1,0 +1,594 @@
+{
+  "run_id": "session-performance-a394a83e",
+  "benchmark": "isolated_asgi_real_yolo_empty_jpeg",
+  "hardware": {
+    "python": "3.13.12 (tags/v3.13.12:1cbe481, Feb  3 2026, 18:22:25) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "E:\\game\\health-care-software-main\\rehab_codex_single_camera_v2_1\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.22631-SP0",
+    "dependencies": {
+      "numpy": "2.2.6",
+      "torch": "2.9.1",
+      "PySide6": null,
+      "requests": "2.34.2",
+      "PyYAML": "6.0.3",
+      "ultralytics": "8.3.199"
+    },
+    "roots": {
+      "data": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data",
+      "run": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run",
+      "model": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\model"
+    },
+    "disk": {
+      "C:/": {
+        "total": 322122543104,
+        "used": 322082000896,
+        "free": 40542208
+      },
+      "D:/": {
+        "total": 701020237824,
+        "used": 684914987008,
+        "free": 16105250816
+      },
+      "E:/": {
+        "total": 1024191361024,
+        "used": 1011658063872,
+        "free": 12533297152
+      }
+    },
+    "git_commit": "4d46061520427a59bf75d68305cb42042939faa9"
+  },
+  "declared_budgets": {
+    "feature_plus_small_tcn_p95_ms": 20,
+    "control_response_p95_ms": 200,
+    "note": "Engineering targets to measure; not claimed achieved."
+  },
+  "frames": 12,
+  "image_size": [
+    320,
+    240
+  ],
+  "clinical_accuracy": null,
+  "fixture": "empty_image_and_manual_plan_not_reference_motion",
+  "load": "one_producer_waiting_each_result_controls_between_frames",
+  "diagnostics": {
+    "version": "rehab-session-diagnostics-1",
+    "available": true,
+    "trace_id": "03d1e29a35f2417a9b79badae26a1c59",
+    "session_id": "f37a8768a2134182b175c7bb9cd6e7f6",
+    "job_id": null,
+    "protocol_version": "rehab-protocol-2.0",
+    "retention": "volatile_current_host_not_reconstructed_after_restart",
+    "consistency": "bounded_stage_snapshot_not_a_business_transaction",
+    "percentile_method": "nearest_rank_retained_window",
+    "limits": {
+      "samples_per_stage": 512,
+      "events": 128,
+      "stage_count": 20,
+      "arrival_samples_per_stream": 512
+    },
+    "stages": {
+      "create_request_ms": {
+        "total_samples": 1,
+        "retained_samples": 1,
+        "p50_ms": 12.747299999318784,
+        "p95_ms": 12.747299999318784,
+        "max_ms": 12.747299999318784
+      },
+      "frame_request_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 12.411299998348113,
+        "p95_ms": 13.168399997084634,
+        "max_ms": 13.168399997084634
+      },
+      "queue_wait_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 0.7298999989870936,
+        "p95_ms": 1.127000003180001,
+        "max_ms": 1.127000003180001
+      },
+      "decode_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 0.23090000104275532,
+        "p95_ms": 0.49900000158231705,
+        "max_ms": 0.49900000158231705
+      },
+      "inference_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 39.60440000082599,
+        "p95_ms": 2035.6849999989208,
+        "max_ms": 2035.6849999989208
+      },
+      "pose_roundtrip_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 41.3302000015392,
+        "p95_ms": 2286.9078000003356,
+        "max_ms": 2286.9078000003356
+      },
+      "feature_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 0.03610000203480013,
+        "p95_ms": 0.057600002037361264,
+        "max_ms": 0.057600002037361264
+      },
+      "rules_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 0.015199999324977398,
+        "p95_ms": 0.026300000172341242,
+        "max_ms": 0.026300000172341242
+      },
+      "temporal_ms": {
+        "total_samples": 0,
+        "retained_samples": 0,
+        "p50_ms": null,
+        "p95_ms": null,
+        "max_ms": null
+      },
+      "cue_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 0.0029000002541579306,
+        "p95_ms": 0.005800000508315861,
+        "max_ms": 0.005800000508315861
+      },
+      "checkpoint_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 13.091500000882661,
+        "p95_ms": 28.153799998108298,
+        "max_ms": 28.153799998108298
+      },
+      "control_ms": {
+        "total_samples": 25,
+        "retained_samples": 25,
+        "p50_ms": 11.406199999328237,
+        "p95_ms": 16.61930000045686,
+        "max_ms": 32.13079999841284
+      },
+      "pause_request_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 11.5747999989253,
+        "p95_ms": 16.61930000045686,
+        "max_ms": 16.61930000045686
+      },
+      "resume_request_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 11.12730000022566,
+        "p95_ms": 12.39989999885438,
+        "max_ms": 12.39989999885438
+      },
+      "finish_request_ms": {
+        "total_samples": 1,
+        "retained_samples": 1,
+        "p50_ms": 32.13079999841284,
+        "p95_ms": 32.13079999841284,
+        "max_ms": 32.13079999841284
+      },
+      "feedback_request_ms": {
+        "total_samples": 0,
+        "retained_samples": 0,
+        "p50_ms": null,
+        "p95_ms": null,
+        "max_ms": null
+      },
+      "final_commit_ms": {
+        "total_samples": 1,
+        "retained_samples": 1,
+        "p50_ms": 18.919499998446554,
+        "p95_ms": 18.919499998446554,
+        "max_ms": 18.919499998446554
+      },
+      "report_ms": {
+        "total_samples": 0,
+        "retained_samples": 0,
+        "p50_ms": null,
+        "p95_ms": null,
+        "max_ms": null
+      },
+      "pose_result_age_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 42.07749999841326,
+        "p95_ms": 2288.0500000028405,
+        "max_ms": 2288.0500000028405
+      },
+      "result_age_ms": {
+        "total_samples": 12,
+        "retained_samples": 12,
+        "p50_ms": 55.05949999860604,
+        "p95_ms": 2316.507700001239,
+        "max_ms": 2316.507700001239
+      }
+    },
+    "temporal_model": {
+      "enabled": false,
+      "reason": "candidate_not_active"
+    },
+    "counters": {
+      "accepted": 12,
+      "duplicate": 0,
+      "processed": 12,
+      "latest_replaced": 0,
+      "epoch_discarded": 0,
+      "terminal_discarded": 0,
+      "input_failed": 0,
+      "inference_cancelled": 0,
+      "timeout": 0,
+      "commit_success": 1,
+      "report_failed": 0,
+      "report_ready": 0,
+      "report_superseded": 0,
+      "background_failure": 0,
+      "unprocessed_at_finish": 0
+    },
+    "events": [
+      {
+        "kind": "accepted",
+        "count": 1,
+        "seq": 1,
+        "control_epoch": 0,
+        "terminal_epoch": 0
+      },
+      {
+        "kind": "processed",
+        "count": 1,
+        "seq": 1
+      },
+      {
+        "kind": "accepted",
+        "count": 1,
+        "seq": 2,
+        "control_epoch": 2,
+        "terminal_epoch": 0
+      },
+      {
+        "kind": "processed",
+        "count": 1,
+        "seq": 2
+      },
+      {
+        "kind": "accepted",
+        "count": 1,
+        "seq": 3,
+        "control_epoch": 4,
+        "terminal_epoch": 0
+      },
+      {
+        "kind": "processed",
+        "count": 1,
+        "seq": 3
+      },
+      {
+        "kind": "accepted",
+        "count": 1,
+        "seq": 4,
+        "control_epoch": 6,
+        "terminal_epoch": 0
+      },
+      {
+        "kind": "processed",
+        "count": 1,
+        "seq": 4
+      },
+      {
+        "kind": "accepted",
+        "count": 1,
+        "seq": 5,
+        "control_epoch": 8,
+        "terminal_epoch": 0
+      },
+      {
+        "kind": "processed",
+        "count": 1,
+        "seq": 5
+      },
+      {
+        "kind": "accepted",
+        "count": 1,
+        "seq": 6,
+        "control_epoch": 10,
+        "terminal_epoch": 0
+      },
+      {
+        "kind": "processed",
+        "count": 1,
+        "seq": 6
+      },
+      {
+        "kind": "accepted",
+        "count": 1,
+        "seq": 7,
+        "control_epoch": 12,
+        "terminal_epoch": 0
+      },
+      {
+        "kind": "processed",
+        "count": 1,
+        "seq": 7
+      },
+      {
+        "kind": "accepted",
+        "count": 1,
+        "seq": 8,
+        "control_epoch": 14,
+        "terminal_epoch": 0
+      },
+      {
+        "kind": "processed",
+        "count": 1,
+        "seq": 8
+      },
+      {
+        "kind": "accepted",
+        "count": 1,
+        "seq": 9,
+        "control_epoch": 16,
+        "terminal_epoch": 0
+      },
+      {
+        "kind": "processed",
+        "count": 1,
+        "seq": 9
+      },
+      {
+        "kind": "accepted",
+        "count": 1,
+        "seq": 10,
+        "control_epoch": 18,
+        "terminal_epoch": 0
+      },
+      {
+        "kind": "processed",
+        "count": 1,
+        "seq": 10
+      },
+      {
+        "kind": "accepted",
+        "count": 1,
+        "seq": 11,
+        "control_epoch": 20,
+        "terminal_epoch": 0
+      },
+      {
+        "kind": "processed",
+        "count": 1,
+        "seq": 11
+      },
+      {
+        "kind": "accepted",
+        "count": 1,
+        "seq": 12,
+        "control_epoch": 22,
+        "terminal_epoch": 0
+      },
+      {
+        "kind": "processed",
+        "count": 1,
+        "seq": 12
+      },
+      {
+        "kind": "commit_success",
+        "count": 1
+      }
+    ],
+    "total_events": 25,
+    "host_rates": {
+      "accepted": {
+        "retained_arrivals": 12,
+        "window_s": 3.3205261000002793,
+        "hz": 3.3127280643868677
+      },
+      "processed": {
+        "retained_arrivals": 12,
+        "window_s": 1.060712300000887,
+        "hz": 10.37038978429005
+      }
+    },
+    "max_retained_queue_depth": 1,
+    "clock_basis": "host_receipt_and_processing_not_capture_or_network_latency",
+    "backlog": {
+      "retained_frames": 0,
+      "in_flight": false,
+      "durable_pending_frames": 0,
+      "retained_capacity": 1
+    },
+    "memory": {
+      "host_rss_bytes": 63586304,
+      "owned_pose_rss_bytes": null,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    },
+    "consumers": {
+      "frame_alive": true,
+      "frame_failure": null,
+      "report_alive": true
+    }
+  },
+  "http": {
+    "frame": {
+      "total_samples": 12,
+      "retained_samples": 12,
+      "p50_ms": 13.422599997284124,
+      "p95_ms": 14.459699999861186,
+      "max_ms": 14.459699999861186
+    },
+    "state": {
+      "total_samples": 245,
+      "retained_samples": 245,
+      "p50_ms": 1.541400000860449,
+      "p95_ms": 2.7716000004147645,
+      "max_ms": 24.355699999432545
+    },
+    "diagnostics": {
+      "total_samples": 12,
+      "retained_samples": 12,
+      "p50_ms": 1.8295999980182387,
+      "p95_ms": 12.17470000119647,
+      "max_ms": 12.17470000119647
+    },
+    "pause": {
+      "total_samples": 12,
+      "retained_samples": 12,
+      "p50_ms": 12.690499999735039,
+      "p95_ms": 17.78299999932642,
+      "max_ms": 17.78299999932642
+    },
+    "resume": {
+      "total_samples": 12,
+      "retained_samples": 12,
+      "p50_ms": 12.217999999847962,
+      "p95_ms": 13.579700000263983,
+      "max_ms": 13.579700000263983
+    },
+    "finish": {
+      "total_samples": 1,
+      "retained_samples": 1,
+      "p50_ms": 33.74479999911273,
+      "p95_ms": 33.74479999911273,
+      "max_ms": 33.74479999911273
+    }
+  },
+  "warm_stages": {
+    "decode_ms": {
+      "total_samples": 11,
+      "retained_samples": 11,
+      "p50_ms": 0.23090000104275532,
+      "p95_ms": 0.33650000113993883,
+      "max_ms": 0.33650000113993883
+    },
+    "inference_ms": {
+      "total_samples": 11,
+      "retained_samples": 11,
+      "p50_ms": 39.60440000082599,
+      "p95_ms": 40.865800001483876,
+      "max_ms": 40.865800001483876
+    },
+    "pose_roundtrip_ms": {
+      "total_samples": 11,
+      "retained_samples": 11,
+      "p50_ms": 41.3302000015392,
+      "p95_ms": 42.55849999753991,
+      "max_ms": 42.55849999753991
+    },
+    "result_age_ms": {
+      "total_samples": 11,
+      "retained_samples": 11,
+      "p50_ms": 55.05949999860604,
+      "p95_ms": 57.18920000072103,
+      "max_ms": 57.18920000072103
+    }
+  },
+  "cold_first": {
+    "decode_ms": 0.49900000158231705,
+    "inference_ms": 2035.6849999989208,
+    "pose_roundtrip_ms": 2286.9078000003356,
+    "result_age_ms": 2316.507700001239
+  },
+  "control_http_budget_met": true,
+  "max_retained_queue_depth": 1,
+  "final_commit": {
+    "commit_id": "6c9cbf9930f4410982e9032981a363b8",
+    "session_id": "f37a8768a2134182b175c7bb9cd6e7f6",
+    "status": "finalized",
+    "committed_at": "2026-10-10T20:50:10.075099+00:00",
+    "end_reason": "user_stopped",
+    "completed_reps": 0,
+    "accepted_last_seq": 12,
+    "processed_last_seq": 12,
+    "persisted_evidence_seq": 12,
+    "visual_snapshot_digest": "341826f61c09b4dd386507f24e31e6945c521485eb8f134321277f11219c092a",
+    "plan_progress": "unique_v2_contribution_committed"
+  },
+  "memory_samples": [
+    {
+      "host_rss_bytes": 62570496,
+      "owned_pose_rss_bytes": 313798656,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    },
+    {
+      "host_rss_bytes": 62722048,
+      "owned_pose_rss_bytes": 318623744,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    },
+    {
+      "host_rss_bytes": 62783488,
+      "owned_pose_rss_bytes": 318980096,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    },
+    {
+      "host_rss_bytes": 62881792,
+      "owned_pose_rss_bytes": 319029248,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    },
+    {
+      "host_rss_bytes": 62902272,
+      "owned_pose_rss_bytes": 319045632,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    },
+    {
+      "host_rss_bytes": 62930944,
+      "owned_pose_rss_bytes": 319049728,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    },
+    {
+      "host_rss_bytes": 62963712,
+      "owned_pose_rss_bytes": 319066112,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    },
+    {
+      "host_rss_bytes": 63107072,
+      "owned_pose_rss_bytes": 319066112,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    },
+    {
+      "host_rss_bytes": 63135744,
+      "owned_pose_rss_bytes": 319066112,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    },
+    {
+      "host_rss_bytes": 63172608,
+      "owned_pose_rss_bytes": 319066112,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    },
+    {
+      "host_rss_bytes": 63299584,
+      "owned_pose_rss_bytes": 319066112,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    },
+    {
+      "host_rss_bytes": 63356928,
+      "owned_pose_rss_bytes": 319066112,
+      "measurement": "current_process_rss_not_peak_or_device_memory"
+    }
+  ],
+  "memory_sampling": "after_each_processed_frame_not_peak_measurement",
+  "pose_model": {
+    "device": "cpu",
+    "imgsz": 640,
+    "weights_sha256": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0"
+  },
+  "exclusions": [
+    "phone",
+    "camera",
+    "network_before_receipt",
+    "target_motion_accuracy",
+    "multiple_clients",
+    "full_load_stream",
+    "candidate_tcn_runtime"
+  ],
+  "shutdown": {
+    "resources_released": true,
+    "pose_process_retained": false,
+    "frame_consumer_alive": false,
+    "report_consumer_alive": false
+  },
+  "raw_summary": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-performance-a394a83e\\summary.json",
+  "raw_summary_sha256": "be9f8dfa1f4c94f6a8d660a5283d09bc42fdc4f06831022b3a490e93177f8371"
+}

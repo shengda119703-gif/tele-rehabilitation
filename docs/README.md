@@ -6,6 +6,7 @@
 | --- | --- |
 | [后端功能、算法与数据流梳理](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md) | 三端全部后端域、公式与状态、信息流、代码入口、准确性／可靠性实验 |
 | [后端文档此次核对](validation/BACKEND_MAP_REFRESH_2026-10-11.md) | 已提交与工作区状态区分、日志指纹、文档验证及未测范围 |
+| [康复 v2 进程与诊断验收](validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md) | 所属 YOLO 进程、取消／故障保护、有界 trace 及实际 ASGI 性能 |
 | [康复 v2 时间与贡献验收](validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md) | 已提交后端的时间测量、唯一计划贡献、历史及工程验证 |
 | [自动评估到训练闭环](history/AUTOMATIC_REHAB_V0_18.md) | 53 项动作接入、自动身体汇总、计划来源、顺序监督及边界 |
 | [0.18.0 本机验收](validation/AUTOMATIC_REHAB_V0_18_2026-09-12.md) | 本轮完整回归、界面证据和未完成真人 / 临床验证 |

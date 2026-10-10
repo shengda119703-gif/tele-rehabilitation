@@ -64,6 +64,8 @@ def parser():
     item.add_argument('--database-mode', choices=['isolated'], required=True)
     item = sub.add_parser('benchmark', help='Measure declared CPU/model/control budgets; not phone performance')
     item.add_argument('--run-id', required=True)
+    item = sub.add_parser('benchmark-sessions', help='Measure isolated ASGI lifecycle and real baseline YOLO; no camera or accuracy claims')
+    item.add_argument('--frames', type=int, choices=range(8, 61), default=20)
     return result
 
 
@@ -94,6 +96,9 @@ def main(argv=None):
         elif args.command == 'benchmark':
             from tools.rehab_ml.benchmark import benchmark
             value = benchmark(args.run_id)
+        elif args.command == 'benchmark-sessions':
+            from tools.rehab_ml.session_benchmark import benchmark_sessions
+            value = benchmark_sessions(args.frames)
         elif args.command in ('train', 'evaluate'):
             from tools.rehab_ml.training import train, evaluate
             value = train(args.config) if args.command == 'train' else evaluate(args.run_id, args.split)
@@ -109,7 +114,7 @@ def main(argv=None):
             started = time.perf_counter()
             arguments = (['-m', 'unittest', 'discover', '-s', 'tests/rehab_backend', '-p', 'test_protocols.py', '-v']
                          if args.command == 'replay' else ['-m', 'unittest', '-v',
-                                                          'test_sessions', 'test_progress', 'test_timing', 'test_api'])
+                                                          'test_sessions', 'test_progress', 'test_timing', 'test_isolation', 'test_telemetry', 'test_api'])
             environment = dict(os.environ)
             environment['PYTHONPATH'] = os.pathsep.join((str(ROOT/'tests/rehab_backend'),
                                                        str(ROOT/'rehab_codex_single_camera_v2_1'), str(ROOT)))

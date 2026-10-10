@@ -1,10 +1,10 @@
 # 康复后端实施与真实训练：阶段记录与增量交付
 
-日期：2026-10-11（Asia/Shanghai）。第一阶段实施基准：`b6d22fc392915738401fe6e14d9cc32b877a5acc`，提交 `1463929`；本次增量相对于上轮 `64b0b15`，以本文件所在交付提交为准。任务依据：本机 `docs/安康康复训练后端实施与训练任务书.md`。产品版本仍为 0.20.0，APK 仍为 0.2.1；新增后端协议版本 `rehab-protocol-2.0`，不是新客户端发布。
+日期：2026-10-11（Asia/Shanghai）。第一阶段实施基准：`b6d22fc392915738401fe6e14d9cc32b877a5acc`，提交 `1463929`；最新进程／诊断增量相对于 `4d46061`，以本文件所在交付提交为准；先前时间／贡献为 `23696de`。任务依据：本机 `docs/安康康复训练后端实施与训练任务书.md`。产品版本仍为 0.20.0，APK 仍为 0.2.1；后端协议为 `rehab-protocol-2.0`，不是新客户端发布。
 
 结论：P0–P4 的核心链路与一部分 P7 已实际完成。下载了真实获许可数据，训练了两个真实模型，也发现候选没有优于简单基线。正式会话为独立 opt-in 后端，尚未成为现有 UI/APK 的正式路径。P5 只有两段分析授权录像回放，缺独立参考标注；P6 没有姿态微调或产品影子上线。整个任务未完成，不能据此宣称真人准确度提高。
 
-本次增量已接通唯一计划贡献、分页最终历史、原继续政策与跨计划版本反馈、显式时间安排和原手动保存计划。坐站站起计一次，随后回坐只补时间字段；逐次持久表和最终快照一致，不会重复计次。末次完整回归为 **74 项新后端、12 项旧康复、19 项旧手机接口通过**，1308 个受保护文件一致；会话 CLI 的 44 项是其中子集。新增日志、修复和未测边界见 [本次验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。以下历史训练结果、真人回放与性能数值没有重新运行，不能当本次新增验收。
+已有增量接通唯一计划贡献、分页最终历史、原继续政策与跨计划版本反馈、显式时间安排和原手动保存计划。最新增量落实默认 YOLO 的所属进程隔离／取消／清理、存储失败后拒收及关闭重试，并新增有界会话诊断和实际 ASGI 性能命令。最新回归为 **100 项新后端、12 项旧康复、19 项旧手机接口通过**，1308 个受保护文件一致；会话 CLI 的 70 项是其中子集。[本次验收](../../docs/validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md)记录实际命令／日志／边界；[上轮时间验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)仍是 74／44 项历史范围。以下旧训练、真人回放与微基准未重跑；新空图会话性能不能替代真人准确性。
 
 ## A. 实际完成情况
 
@@ -12,13 +12,13 @@
 | --- | --- | --- | --- |
 | P0 盘点与保护 | done | [开工清单](../rehab_backend_inventory.md)、[1308 文件基准](protected_files.json)、[末次 hash 核验](scope_verification.json) | 仅本轮范围；不代表其他会话或临床验收 |
 | P1 三动作后端协议 | done（工程定义） | `app/rehab_v2/protocols.py`、`engine.py`、`rounds.py`；15 项协议回放及几何契约测试 | 定义是二维投影和训练观察，不是解剖 ROM 金标准；实际机位仍由计划给出 |
-| P2 正式会话与幂等 | partial | 74 项新增后端回归含 HTTP/JPEG、原自动／手动计划、时间、唯一贡献、历史、并发终结、退出恢复、报告与反馈 CAS | 独立 v2 事实及进度接口已接；旧页面未接入，深蹲尚无宿主兼容计划，完整故障验收待做 |
+| P2 正式会话与幂等 | partial | 100 项新后端回归含原 74 项及 17 项所属进程、9 项有界诊断；真实 YOLO/JPEG、挂起／退出、晚结果、故障保护与 HTTP | 旧页面未接入，深蹲尚无宿主兼容计划，报告硬隔离／真实存储故障验收待做 |
 | P3 IRDS 下载与适配 | done | 198,985,485 字节骨架 ZIP、1974 字节 readme；CRC/MD5/SHA 校验；534 条/29 人，532 训练资格、2 隔离 | Kinect25 三维肩外展，不是手机 RGB、坐站或深蹲标签 |
 | P4 模型训练 | done（离线实验） | [实验包摘要](experiment_summary.json)，两次完整训练链结果；检查点、验证/测试预测和锁文件均存在于忽略目录 | TCN 测试 macro-F1 低于 logistic；只整次正误，不可作为相位/提示/诊断 |
 | P5 真人目标域验证 | partial | [目标域回放摘要](target_replay_summary.json)，443 帧肩外展与429帧深蹲真实 YOLO 输出 | 新协议均0确认次数；没有专业真值或规范准备，不能计算计次准确率 |
 | P6 姿态微调 | blocked（数据条件） | [监督资格记录](pose_supervision_blocker.json)、标注模板 | 缺 RGB 训练授权、独立关节/可见性及动作边界标注；只实现拒绝入口，没有微调器 |
 | 候选后端接入 | offline / off | [冻结模型对照](model_comparison.json)，Kinect 匹配返回非权威候选，RGB 被拒绝 | 未在实际服务加载新权重，没有正式质量判断/提示接管 |
-| P7 回归与交付 | partial | [回归日志与 hash](regression.json)、[CPU 微基准](performance.json)、本报告与复现工具 | 未做规范真人标注、实机性能、全部 UI/API 回归或长期多用户压力验收 |
+| P7 回归与交付 | partial | [回归日志与 hash](regression.json)、[实际会话性能](session_performance.json)、[历史 CPU 微基准](performance.json)、本报告与复现工具 | 无人空图负载、ASGI 而非公网；尚缺真人、实机、全负载、报告硬隔离和真实存储故障 |
 | 禁改范围 | pass | 1308 个 protected 文件 SHA256 一致；唯一现有业务文件改动为 `mobile_rehab/server.py` 的 opt-in 康复入口 | 用户本来未提交的动作图片、脚本、CSV、任务书仍原样保留、不纳入本次提交 |
 
 ## B. 修改清单：问题、实现与验证
@@ -59,7 +59,17 @@
 - feedback missing/null 保持缺失；自报不会改原视觉快照，反馈追加不重复增加执行量。
 - 本次新回执标记 `unique_v2_contribution_committed`；唯一贡献与最终事实同事务，故障注入证明贡献失败一起回滚。旧回执保留其原标记。本人最终历史按 ordinal 游标分页，单页 1–100；计划查询只取当前版本最新条目尝试，并在同人／来源／情境／动作／侧别范围读取跨计划反馈。复用 `general-activity-rules-1`，不写旧测量，不把 v2 质量解释成旧 ROM。现有历史页面和 `/api/plan` 仍未接入。
 
-### B3. 数据与实验工具
+### B2.1 最新所属推理进程与诊断（本轮）
+
+新增 `mobile_rehab/rehab_v2/pose_worker.py`，只复用原 VisionWorker／YOLO 的解码和推理，宿主仍负责时间、EMA、状态机、SQL 和原继续政策。512 KiB JPEG + 4 MiB 姿态 JSON 的共享内存只由父进程拥有；≤4 KiB 的管道通知不传外部 Python 对象。父进程核对载荷 hash、ticket、完整 Context、seq、源时间和有限耗时，再检查控制／终结 epoch，才处理 EMA。启动握手／冷推理／热推理预算 10／30／5 秒；只释放准确所属对象，未确认退出时隔离并保留清理句柄，不能另起泄漏进程。成功后清空传输区，失败后确认退出再清理；不宣称存活模型 RAM 全部擦除。Process.start 本身尚未有 OS 级硬截止。
+
+帧消费者因持久化故障退出后，来源运行态 failure 可查，新帧／新建返回 503，不能虚构失败已经保存。终结先保存事实，再取消该 sid 在途推理；旧失败不能结束恢复后的新控制 epoch。关闭若报告仍占用存储则明确失败，后续可再关闭，不提前释放 lease。实际报告仍为线程，硬挂起与真实磁盘满／损坏尚未完成；OSError 注入仅证明对应故障路径。
+
+新增 `app/rehab_v2/telemetry.py` 与认证诊断路由。服务端 trace_id 放入 source 元数据，创建重试／重开稳定，不加入客户端幂等摘要；JPEG 会话 `job_id=null`。每个固定阶段保留 512 个耗时、事件尾部 128 条；计数累计，分位数为保留窗口 nearest-rank。队列／解码／推理／IPC往返／特征／规则／指导／检查点／控制／最终提交／报告／结果年龄分别统计，旧 commit_ms 数组只是检查点兼容，不称最终提交。关闭候选不伪造 temporal 耗时，未知 RSS／重启统计保持 null。只有所属会话鉴权后可读，不含原媒体、骨架、用户原话、owner 或凭证；诊断不参与测量、计划或最终事实摘要。
+
+新增 `tests/rehab_backend/test_isolation.py`（17 项）、`test_telemetry.py`（9 项），扩展真实 JPEG 与身份 HTTP 测试，CLI 会话集纳入两者。新增 `tools/rehab_ml/session_benchmark.py`／`benchmark-sessions` 和 [性能摘要](session_performance.json)。实际测试覆盖真实所属挂起／退出、共享区容量与 hash、取消后不重开旧帧、释放未确认后重试、失败检查点拒收、报告慢任务不阻断控制、统计有界／并发／未知和正式事实不变。
+
+### B3. 数据与实验工具（第一阶段，保留）
 
 新增 `tools/rehab_ml/`：common、inventory、download、data、features、models、training、benchmark、target_domain、model_registry、visual_audit、crash_probe、summarize_target、run_minimal、verify_all、cli及README。新增 `configs/rehab_ml/{datasets,baseline,tcn,backend}.yaml` 和 `annotation-template.json`。
 
@@ -137,7 +147,9 @@ seed20261011；17/6/6人，310/131/91条。正/误分别 train269/41、val97/34�
 
 ## D. 后端验证与回退
 
-### D1. 最新增量回归与第一阶段记录
+### D1. 最新进程／诊断回归及历史记录
+
+最新产品环境完整回归 100／12／19 项、保护文件 1308 个一致；会话 CLI 70 项子集。[本次验收](../../docs/validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md)保留末次 run、SHA、实际日志及未测范围。真实 OS 所属进程故障与受控注入分开报告，真实 YOLO 使用无人白图，不能用于计次／角度准确率。下面 `verification-3b62b733` 是上轮时间／贡献增量的历史运行，不与最新数量相加。
 
 产品环境本次运行 `python -X utf8 tools/rehab_ml/verify_all.py`，全新隔离目录 `verification-3b62b733`；74项新后端、12项旧康复、19项旧手机接口通过。另运行 `cli.py verify-sessions --database-mode isolated`，44项通过，是74项子集。手机1条既有 Starlette/httpx弃用warning，未升级依赖。日志命令/退出码/摘要/hash详见[regression.json](regression.json)、[session_verification.json](session_verification.json)与[本轮验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。第一阶段 `verification-303d8fcf` 的49项是历史结果；此前61项属于尚未提交阶段，不代替最新结果。没有借用交接中之前的324项计数，本轮没有跑全UI/Android/照护回归。
 
@@ -161,7 +173,9 @@ C20禁改范围以独立文件保护命令核验，不混入74项计数。新增
 
 这是CPU微基准，不包含手机、相机解码/YOLO、网络、多客户、与正式训练并发。真实录像逐帧包含原YOLO的时间只作为离线记录，不能等同实时直播采样/手机FPS。结束有2秒收尾例外，不用pause/resume的p95冒充finish或整个系统p95。实时服务单活动会话/最新帧槽1/并发控制8/24,000帧/20分钟上限；队列覆盖和终止丢帧记录可复核。
 
-尚缺完整trace汇总、用户负载下所有阶段p50/p95、任务取消/检查点恢复压力测试和报告/推理硬挂起进程隔离。推理及报告是独立线程；挂起时关闭不会假称资源释放，但尚不能安全杀除线程。数据库磁盘满/真实损坏/持久化失败自动重试未完成，之前照护库异常不是本轮已修复事项。
+最新增量补齐会话级 trace、有界阶段统计和默认 YOLO 所属推理进程。实跑 `benchmark-sessions --frames 12` 的 `session-performance-a394a83e`：CPU／imgsz640／原权重 SHA `869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0`；12 张320×240无人JPEG，单生产者等结果后控制。冷推理 2035.68 ms、进程往返 2286.91 ms；11 次热推理 p95 40.87 ms、热宿主结果年龄 p95 57.19 ms；暂停／恢复 ASGI HTTP p95 17.78／13.58 ms，结束仅 1 次 33.74 ms，最终事务仅 1 次 18.92 ms，不能将单样本称稳定 p95。最近帧后观测 RSS：宿主63,356,928字节、所属推理319,066,112字节，不是峰值。统计、原始摘要 SHA 和排除项见 [session_performance.json](session_performance.json)。
+
+此实跑不是摄像头／网络／手机／真人运动／并发压力；关闭候选 TCN，没有测新质量头。采样率只描述宿主接收／处理，trace 尚非全产品跨任务分布式追踪。报告仍为独立线程，硬挂起不能安全杀除；OS 进程创建自身的硬截止、用户负载压力、真实磁盘满／损坏和持久化自动恢复仍未完成。之前照护库异常不属于本轮已修复事项。整个任务继续局部完成。
 
 ### D4. 关闭与历史比较
 
@@ -184,6 +198,8 @@ C20禁改范围以独立文件保护命令核验，不混入74项计数。新增
 ```powershell
 & '.\.runtime\rehab_ml\venv\Scripts\python.exe' -X utf8 tools/rehab_ml/run_minimal.py
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/verify_all.py
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py verify-sessions --database-mode isolated
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py benchmark-sessions --frames 12
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py compare --suite rehab_core --baseline 20261010T185211Z-logistic_regression-c78b48c6 --candidate 20261010T185214Z-causal_tcn-84cbc486
 & '.\.runtime\rehab_ml\venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py benchmark --run-id 20261010T185214Z-causal_tcn-84cbc486
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py verify-scope --baseline reports/rehab_backend/protected_files.json

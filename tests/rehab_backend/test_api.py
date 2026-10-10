@@ -82,12 +82,17 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(history['items'][0]['session_id'], sid)
         self.assertEqual(history['items'][0]['feedback_revision'], 1)
         self.assertEqual(self.client.get(base+'?limit=101').status_code, 400)
+        diagnostics = self.client.get(endpoint+'/diagnostics')
+        self.assertEqual(diagnostics.status_code, 200)
+        self.assertEqual(diagnostics.json()['counters']['commit_success'], 1)
         self.client.cookies.set('test-owned-session', 'other-owner')
         self.assertEqual(self.client.get(endpoint).status_code, 404)
+        self.assertEqual(self.client.get(endpoint+'/diagnostics').status_code, 404)
         self.assertEqual(self.client.get(base).json()['items'], [])
         self.assertEqual(self.client.get(base+'?before='+sid).status_code, 404)
         self.client.cookies.clear()
         self.assertEqual(self.client.post(base, json=request()).status_code, 401)
+        self.assertEqual(self.client.get(endpoint+'/diagnostics').status_code, 401)
 
     def test_jpeg_endpoint_runs_real_baseline_pose_backend(self):
         from PIL import Image
@@ -107,6 +112,22 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(state['processed_count'], 1, state)
         self.assertEqual(state['snapshot']['completed'], 0)
         self.assertEqual(state['observation_state'], 'missing')
+        worker = self.service.inference_worker
+        self.assertIsNotNone(worker.process)
+        self.assertTrue(worker.process.is_alive())
+        self.assertNotEqual(worker.process.pid, __import__('os').getpid())
+        self.assertEqual(state['source']['inference_execution_contract']['version'], 'rehab-pose-process-1')
+        self.assertTrue(self.service.latencies['decode_ms'])
+        self.assertTrue(self.service.latencies['inference_ms'])
+        value = self.client.get(base+'/'+sid+'/diagnostics').json()
+        self.assertEqual(value['counters']['processed'], 1)
+        for stage in ('decode_ms', 'inference_ms', 'pose_roundtrip_ms', 'feature_ms', 'rules_ms',
+                      'cue_ms', 'checkpoint_ms', 'pose_result_age_ms', 'result_age_ms'):
+            self.assertEqual(value['stages'][stage]['total_samples'], 1, (stage, value))
+            self.assertIsNotNone(value['stages'][stage]['p95_ms'])
+        self.assertGreater(value['memory']['host_rss_bytes'], 0)
+        self.assertGreater(value['memory']['owned_pose_rss_bytes'], 0)
+        self.assertFalse(value['temporal_model']['enabled'])
 
 
 class HostIntegrationTests(unittest.TestCase):
