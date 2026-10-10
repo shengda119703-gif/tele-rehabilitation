@@ -22,11 +22,19 @@
 
 原 `mobile_rehab.server.create_app` 增加显式关键字 `rehab_v2=True`，默认关闭；该参数启用认证后的 `/api/rehab/v2/sessions` 生命周期。原 `/api/live` 和其删除仍是预览，不保存训练历史。新事实库为宿主数据目录的 `rehab-v2.sqlite3`，复用现有 `Storage` owning thread 和备份机制，和原病人库分开。
 
-创建需要本人身份、consent、创建幂等键、现有自动计划 ID/revision/entry_key；计划和原证据引用由宿主解析并冻结，客户端不能随意伪造处方。帧仅支持受限 JPEG，由原 YOLO 后端推理。任意关键点 JSON 输入被拒绝；确定性回放仅内部 `internal_replay=True` 并标记 TEST/SYNTHETIC。
+创建需要本人身份、consent、创建幂等键、现有本人计划 ID/revision/entry_key 和明确机位；计划、剂量、节奏和原证据引用由宿主解析并冻结，客户端不能随意伪造处方。自动计划复用原继续资格；已有手动计划还需 `training_plan_confirmed=true`，计划要求陪同时需 `companion_confirmed=true`。实际输入必须匹配计划的 `LIVE_CAMERA/SELF_USE` scope，原录像计划不能改名使用。帧仅支持受限 JPEG，由原 YOLO 后端推理。任意关键点 JSON 输入被拒绝；确定性回放仅内部 `internal_replay=True` 并标记 TEST/SYNTHETIC。
 
-三动作协议内部均可运行，当前宿主自动计划适配仅肩外展与坐站，不能把旧动作别名冒充康复深蹲。新事实尚未投射进旧历史页面/计划进度；前端、APK、旧继续资格和剂量规则未接入/未改。本轮没有重新部署原运行服务。
+三动作协议内部均可运行，当前宿主计划适配仅肩外展与坐站，不能把旧动作别名冒充康复深蹲。新增 `GET /api/rehab/v2/sessions` 为本人最终历史，`GET /api/rehab/v2/plans/{plan_id}` 查询本人计划、唯一贡献、进度与继续状态。namespace 2 的贡献与最终事实在同一事务提交；v1 升级前备份，保留原回执和视觉快照。最新尝试按提交 ordinal 取值，跨计划版本的不适反馈仍参与原政策校验。只给原政策生成临时视图，不往旧库写伪测量。前端、APK、旧历史页面和 `/api/plan` 未接入；旧继续资格与剂量规则未改，本轮没有重新部署原运行服务。
+
+显式 `timing_plan` 复用原 `movement_timing.py`，分别记录出程、峰区／站位停留、回程、最长连续目标保持及 `MET/NOT_MET/UNASSESSABLE/NOT_SET`。v2 封套版本 `rehab-observed-timing-2`，写明原算法版本、time_basis 和证据 seq/epoch。保持只用当前连续有效观测；缺测、暂停、丢帧、换人和长间隔不能补时间。肩／深蹲的峰区分段是完整往返后的回顾计算，不冒充实时相位。坐站在站起时计一次，后续回坐仅更新尚未终结草稿的时间字段；已确认计次和最终回执不允许重写。节奏是否达标不修改计次、组数或原完成政策。
 
 结束请求冻结接收高水位，最多等待 2 秒保留的在途帧，然后原子保存逐次事实/快照/回执。派生报告异步生成，重启可对账；报告失败不回滚事实。未填感受为 null/missing，追加反馈独立 revision。默认最多一个正式活动会话、一个待处理帧槽、8 个并发控制请求；20 分钟时间上限、24,000 接收帧上限。推理/报告线程若挂起，关闭会明确拒绝宣称资源释放，尚无硬隔离进程超时杀除。
+
+```powershell
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py verify-sessions --database-mode isolated
+```
+
+2026-10-11 该命令实际运行 44 项会话／贡献／时间／HTTP 测试；完整 `verify_all` 运行 74 项新后端、12 项旧康复、19 项旧手机测试及 1308 文件保护核验。44 项是 74 项的子集，不累加。实际日志与边界见 [本轮验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。这些是隔离工程测试，不是临床准确率或手机实机验收。
 
 ## 实验边界
 

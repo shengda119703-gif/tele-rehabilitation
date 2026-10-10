@@ -65,7 +65,7 @@ class Runtime:
 
 class SessionService:
     def __init__(self, database, plan_resolver, *, internal_replay=False, report_builder=None,
-                 inference_provider=None, drain_timeout_s=2.):
+                 inference_provider=None, drain_timeout_s=2., plan_reader=None):
         self.database = Path(database).resolve()
         self.database.parent.mkdir(parents=True, exist_ok=True)
         self.lease = StoreLease(str(self.database)+'.owner-lock')
@@ -79,6 +79,7 @@ class SessionService:
             self.lease.close()
             raise
         self.plan_resolver, self.internal_replay = plan_resolver, internal_replay
+        self.plan_reader = plan_reader
         self.report_builder = report_builder or self._report
         self.inference_provider = inference_provider
         self.drain_timeout_s = drain_timeout_s
@@ -157,10 +158,22 @@ class SessionService:
                     raise SessionError('invalid_frozen_plan', 400)
                 if not all(k in frozen for k in ('plan_id', 'plan_revision', 'entry_key', 'reference')):
                     raise SessionError('missing_plan_provenance', 400)
+                if (not isinstance(frozen['plan_id'], str) or not 1 <= len(frozen['plan_id']) <= 128
+                        or type(frozen['plan_revision']) is not int or frozen['plan_revision'] < 1
+                        or not isinstance(frozen['reference'], dict)):
+                    raise SessionError('invalid_plan_provenance', 400)
                 plan = frozen['plan']
+                if plan.get('submode') not in ('assessment', 'training'):
+                    raise SessionError('explicit_session_submode_required', 400)
                 # Validate protocol before persisting; does not invent dosage.
                 validator = TrainingRounds if plan.get('submode') == 'training' else ProtocolEngine
-                checked = validator(plan, source_epoch='validation').spec
+                checked_engine = validator(plan, source_epoch='validation')
+                if plan.get('needs_companion') and request.get('companion_confirmed') is not True:
+                    raise SessionError('required_companion_confirmation_missing')
+                checked = checked_engine.spec
+                frozen['plan'] = checked_engine.plan  # Freeze actual engineering defaults too.
+                if frozen['entry_key'] != checked['exercise_id']+':'+checked['side']:
+                    raise SessionError('plan_entry_does_not_match_action', 400)
                 frozen['protocol'] = checked
                 source = dict(source_ref='internal-replay' if self.internal_replay else 'browser-camera',
                               source_kind='SYNTHETIC' if self.internal_replay else 'LIVE_CAMERA',
@@ -168,6 +181,12 @@ class SessionService:
                               input_mode='trusted_internal_evidence' if self.internal_replay else 'server_inferred_jpeg',
                               consent_at=utc_now(), time_basis='mapped_source_seconds',
                               no_exposure_synchronization_claim=True)
+                if frozen.get('progress_scope') is not None:
+                    from app.assessment_batches import scope_key
+                    scope = scope_key(frozen['progress_scope'])
+                    if (scope['source_kind'] != source['source_kind'] or scope['usage_context'] != source['usage_context']
+                            or scope['participant_id'] != frozen['plan'].get('participant_id')):
+                        raise SessionError('actual_input_does_not_match_plan_scope')
                 item = self.repository.create(owner, key, fingerprint, frozen, source)
                 self.runtimes[item['session_id']] = Runtime(item)
                 return item
@@ -213,7 +232,7 @@ class SessionService:
                     previous = None
                 if previous is not None:
                     previous_runtime = self.runtimes[previous['sid']]
-                    previous_runtime.engine.gap = True
+                    previous_runtime.engine.note_input_gap(previous['seq'], previous['source_time_s'], 'latest_frame_replaced')
                     self.repository.checkpoint(previous['owner'], previous['sid'], previous_runtime.engine.summary(),
                                                seq=previous['seq'], frame_status='dropped', reason='latest_frame_replaced')
                     self.frames.task_done()
@@ -398,6 +417,7 @@ class SessionService:
 
     def get(self, owner, sid):
         item = self.repository.get(owner, sid)
+        item['plan_contribution'] = self.repository.plan_contribution(owner, sid)
         runtime = self.runtimes.get(sid)
         if runtime and item.get('current_cue'):
             with runtime.lock:
@@ -408,10 +428,19 @@ class SessionService:
                 item['current_cue'] = current
         return item
 
+    def history(self, owner, *, limit=20, before=None):
+        return self.repository.history(owner, limit=limit, before=before)
+
+    def plan(self, owner, plan_id):
+        if self.plan_reader is None:
+            raise SessionError('host_plan_reader_not_configured', 503)
+        return self._bounded(lambda: self.plan_reader(owner, plan_id))
+
     def commit(self, owner, sid):
         item = self.repository.get(owner, sid)
         return dict(session_id=sid, persistence_state=item['persistence_state'],
-                    receipt=item['canonical_commit'], derived_report_state=item['derived_report_state'])
+                    receipt=item['canonical_commit'], derived_report_state=item['derived_report_state'],
+                    plan_contribution=self.repository.plan_contribution(owner, sid))
 
     @staticmethod
     def _report(item):

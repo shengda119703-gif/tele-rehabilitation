@@ -39,9 +39,9 @@ class SessionRepository:
             exists = conn.execute("SELECT 1 FROM sqlite_master WHERE name='rehab_v2_meta'").fetchone()
             if exists:
                 version = conn.execute('SELECT version FROM rehab_v2_meta').fetchone()[0]
-                if version != 1:
+                if version not in (1, 2):
                     raise SessionError('unsupported_session_schema')
-            else:
+            if not exists or version == 1:
                 # Consistent SQLite backup, including WAL state, before adding a namespace.
                 import sqlite3
                 backup = storage.path.with_name(storage.path.name+'.before-rehab-v2-'+uuid4().hex+'.bak')
@@ -73,9 +73,47 @@ class SessionRepository:
                     PRIMARY KEY(session_id,revision));
                 CREATE TABLE IF NOT EXISTS rehab_v2_reports(
                     session_id TEXT PRIMARY KEY, state TEXT NOT NULL, payload TEXT, error TEXT);
-                COMMIT;
+                CREATE TABLE IF NOT EXISTS rehab_v2_plan_contributions(
+                    ordinal INTEGER PRIMARY KEY AUTOINCREMENT, session_id TEXT NOT NULL UNIQUE,
+                    owner TEXT NOT NULL, plan_id TEXT NOT NULL,
+                    plan_revision INTEGER NOT NULL, entry_key TEXT NOT NULL,
+                    committed_at TEXT NOT NULL, payload TEXT NOT NULL,
+                    UNIQUE(session_id,plan_id,plan_revision,entry_key));
+                CREATE INDEX IF NOT EXISTS rehab_v2_contribution_plan
+                    ON rehab_v2_plan_contributions(owner,plan_id,plan_revision,entry_key,ordinal);
+                CREATE INDEX IF NOT EXISTS rehab_v2_contribution_history
+                    ON rehab_v2_plan_contributions(owner,ordinal);
+                CREATE INDEX IF NOT EXISTS rehab_v2_contribution_scope
+                    ON rehab_v2_plan_contributions(owner,
+                        json_extract(payload,'$.scope.participant_id'),
+                        json_extract(payload,'$.scope.source_kind'),
+                        json_extract(payload,'$.scope.usage_context'),
+                        json_extract(payload,'$.exercise_id'),json_extract(payload,'$.side'),ordinal)
+                    WHERE json_extract(payload,'$.progress_eligible')=1;
             ''')
+            # Additive namespace migration. Old final receipts and visual
+            # snapshots remain byte-for-byte unchanged; projection is separate.
+            if not exists or version == 1:
+                for row in conn.execute('SELECT payload FROM rehab_v2_sessions ORDER BY rowid').fetchall():
+                    item = json.loads(row[0])
+                    if item['persistence_state'] == 'finalized':
+                        self._contribute(conn, item)
+                conn.execute('UPDATE rehab_v2_meta SET version=2')
         storage._call(initialize)
+
+    @staticmethod
+    def _contribute(conn, item):
+        from .progress import contribution
+        value = contribution(item)
+        conn.execute('INSERT OR IGNORE INTO rehab_v2_plan_contributions '
+                     '(session_id,owner,plan_id,plan_revision,entry_key,committed_at,payload) VALUES(?,?,?,?,?,?,?)',
+                     (item['session_id'], item['owner'], value['plan_id'], value['plan_revision'],
+                      value['entry_key'], value['committed_at'], dumps(value)))
+        row = conn.execute('SELECT payload FROM rehab_v2_plan_contributions WHERE session_id=?',
+                           (item['session_id'],)).fetchone()
+        if json.loads(row[0]) != value:
+            raise SessionError('immutable_plan_contribution_conflict')
+        return value
 
     @staticmethod
     def _row(conn, owner, sid):
@@ -87,6 +125,35 @@ class SessionRepository:
     @staticmethod
     def _save(conn, item):
         conn.execute('UPDATE rehab_v2_sessions SET payload=? WHERE id=?', (dumps(item), item['session_id']))
+
+    @staticmethod
+    def _sync_repetitions(conn, sid, summary):
+        """Extend only draft timing, never re-decide an already confirmed rep.
+
+        Sit-to-stand is confirmed at standing. Its hold/return observations
+        arrive later, before finalization. Materialized repetition rows must
+        match the terminal snapshot, without writing another count event.
+        All callers hold the same fact transaction and reject finalized rows.
+        """
+        old = {row[0]: json.loads(row[1]) for row in conn.execute(
+            'SELECT rep_index,payload FROM rehab_v2_repetitions WHERE session_id=?', (sid,))}
+        reps = summary['repetitions']
+        indices = [rep['rep_index'] for rep in reps]
+        if len(set(indices)) != len(indices) or not set(old).issubset(indices):
+            raise SessionError('confirmed_repetition_fact_changed')
+        if summary['completed'] != sum(rep['completion_status'] == 'COMPLETE' for rep in reps):
+            raise SessionError('confirmed_repetition_count_mismatch')
+        timing_fields = {'movement_timing', 'rise_time_s', 'lowering_time_s'}
+        for rep in reps:
+            previous = old.get(rep['rep_index'])
+            if previous is not None:
+                original = {key: value for key, value in previous.items() if key not in timing_fields}
+                current = {key: value for key, value in rep.items() if key not in timing_fields}
+                if original != current:
+                    raise SessionError('confirmed_repetition_fact_changed')
+            conn.execute('INSERT INTO rehab_v2_repetitions VALUES(?,?,?) '
+                         'ON CONFLICT(session_id,rep_index) DO UPDATE SET payload=excluded.payload',
+                         (sid, rep['rep_index'], dumps(rep)))
 
     @staticmethod
     def _audit(conn, sid, kind, payload):
@@ -189,8 +256,7 @@ class SessionRepository:
             elif previous_cue and not cue:
                 self._audit(conn, sid, 'cue_cancelled', dict(cue_id=previous_cue['cue_id'], reason='evidence_or_phase_changed'))
             item['current_cue'] = cue
-            for rep in summary['repetitions']:
-                conn.execute('INSERT OR IGNORE INTO rehab_v2_repetitions VALUES(?,?,?)', (sid, rep['rep_index'], dumps(rep)))
+            self._sync_repetitions(conn, sid, summary)
             self._save(conn, item)
             return item
         return self.storage._call(checkpoint)
@@ -216,8 +282,7 @@ class SessionRepository:
                 raise SessionError('already_paused')
             item.update(run_state=summary['run_state'], snapshot=summary, revision=item['revision']+1,
                         control_epoch=item['control_epoch']+1, current_cue=None)
-            for rep in summary['repetitions']:
-                conn.execute('INSERT OR IGNORE INTO rehab_v2_repetitions VALUES(?,?,?)', (sid, rep['rep_index'], dumps(rep)))
+            self._sync_repetitions(conn, sid, summary)
             receipt = dict(operation=operation, session_id=sid, revision=item['revision'], run_state=item['run_state'])
             conn.execute('INSERT INTO rehab_v2_operations VALUES(?,?,?,?,?,?)', (owner, sid, operation, key, request_digest, dumps(receipt)))
             self._audit(conn, sid, operation, receipt)
@@ -262,8 +327,7 @@ class SessionRepository:
             item = self._row(conn, owner, sid)
             if item['persistence_state'] == 'finalized':
                 return item['canonical_commit']
-            for rep in summary['repetitions']:
-                conn.execute('INSERT OR IGNORE INTO rehab_v2_repetitions VALUES(?,?,?)', (sid, rep['rep_index'], dumps(rep)))
+            self._sync_repetitions(conn, sid, summary)
             pending = conn.execute("SELECT seq,event_id FROM rehab_v2_frames WHERE session_id=? AND status='accepted'", (sid,)).fetchall()
             for seq, event_id in pending:
                 conn.execute("UPDATE rehab_v2_frames SET status='unprocessed',reason='finish_boundary_timeout' WHERE session_id=? AND event_id=?", (sid, event_id))
@@ -272,12 +336,15 @@ class SessionRepository:
                            end_reason=reason, completed_reps=summary['completed'],
                            accepted_last_seq=item['accepted_last_seq'], processed_last_seq=item['processed_last_seq'],
                            persisted_evidence_seq=item['persisted_evidence_seq'],
-                           visual_snapshot_digest=digest(summary), plan_progress='facts_only_not_legacy_plan_completion')
+                           visual_snapshot_digest=digest(summary), plan_progress='unique_v2_contribution_committed')
             item.update(run_state='ended', persistence_state='finalized', end_reason=reason, snapshot=summary,
                         canonical_commit=receipt, terminal_epoch=item['terminal_epoch']+1, revision=item['revision']+1,
                         current_cue=None, derived_report_state='pending')
             conn.execute("UPDATE rehab_v2_operations SET receipt=? WHERE owner=? AND session_id=? AND operation='finish'", (dumps(receipt), owner, sid))
             conn.execute('INSERT OR IGNORE INTO rehab_v2_reports VALUES(?,?,?,?)', (sid, 'pending', None, None))
+            value = self._contribute(conn, item)
+            self._audit(conn, sid, 'plan_contribution', dict(contribution_id=value['contribution_id'],
+                        plan_completed=value['plan_completed'], policy_version=value['policy_version']))
             self._audit(conn, sid, 'finalize', receipt)
             self._save(conn, item)
             return receipt
@@ -348,15 +415,16 @@ class SessionRepository:
                         quality_status='UNASSESSABLE', quality_assessable=False,
                         reason='process_restart_interrupted', end_time_s=None)
                     snapshot.setdefault('repetitions', []).append(partial)
-                    conn.execute('INSERT OR IGNORE INTO rehab_v2_repetitions VALUES(?,?,?)',
-                                 (sid, partial['rep_index'], dumps(partial)))
-                snapshot.update(run_state='ended', phase='ENDED', current=None, recovery='process_restart_interrupted')
+                snapshot.update(run_state='ended', phase='ENDED', current=None,
+                                movement_timing_live=None, pending_input_gap=None,
+                                recovery='process_restart_interrupted')
+                self._sync_repetitions(conn, sid, snapshot)
                 # Confirmed repetitions already persisted survive. Unconfirmed halves never resume.
                 receipt = dict(commit_id=uuid4().hex, session_id=sid, status='finalized', committed_at=utc_now(),
                                end_reason='interrupted', completed_reps=snapshot['completed'],
                                accepted_last_seq=item['accepted_last_seq'], processed_last_seq=item['processed_last_seq'],
                                persisted_evidence_seq=item['persisted_evidence_seq'], visual_snapshot_digest=digest(snapshot),
-                               plan_progress='facts_only_not_legacy_plan_completion')
+                               plan_progress='unique_v2_contribution_committed')
                 item.update(run_state='ended', persistence_state='finalized', end_reason='interrupted', snapshot=snapshot,
                             canonical_commit=receipt, terminal_epoch=item['terminal_epoch']+1,
                             revision=item['revision']+1, current_cue=None, derived_report_state='pending')
@@ -366,11 +434,102 @@ class SessionRepository:
                 conn.execute("UPDATE rehab_v2_frames SET status='unprocessed',reason='process_restart' WHERE session_id=? AND status='accepted'", (sid,))
                 conn.execute("UPDATE rehab_v2_operations SET receipt=? WHERE session_id=? AND operation='finish'", (dumps(receipt), sid))
                 conn.execute('INSERT OR IGNORE INTO rehab_v2_reports VALUES(?,?,?,?)', (sid, 'pending', None, None))
+                self._contribute(conn, item)
                 self._audit(conn, sid, 'restart_recovery', receipt)
                 self._save(conn, item)
                 recovered.append(sid)
             return recovered
         return self.storage._call(recover)
+
+    def plan_contribution(self, owner, sid):
+        def get(conn):
+            self._row(conn, owner, sid)
+            row = conn.execute('SELECT payload FROM rehab_v2_plan_contributions WHERE session_id=? AND owner=?',
+                               (sid, owner)).fetchone()
+            return json.loads(row[0]) if row else None
+        return self.storage._call(get)
+
+    def plan_items(self, owner, plan_id, revision):
+        """Latest committed attempt per entry. Feedback joins are read-only."""
+        if not isinstance(plan_id, str) or type(revision) is not int or revision < 1:
+            raise SessionError('invalid_plan_identity', 400)
+        def get(conn):
+            rows = conn.execute('''
+                SELECT s.payload,c.payload FROM rehab_v2_plan_contributions c
+                JOIN rehab_v2_sessions s ON s.id=c.session_id AND s.owner=c.owner
+                WHERE c.owner=? AND c.plan_id=? AND c.plan_revision=? AND NOT EXISTS(
+                    SELECT 1 FROM rehab_v2_plan_contributions newer WHERE
+                        newer.owner=c.owner AND newer.plan_id=c.plan_id AND newer.plan_revision=c.plan_revision
+                        AND newer.entry_key=c.entry_key AND
+                        newer.ordinal>c.ordinal)
+                ORDER BY c.entry_key LIMIT 107
+            ''', (owner, plan_id, revision)).fetchall()
+            if len(rows) > 106:
+                raise SessionError('plan_entry_capacity_exceeded', 503)
+            return [dict(json.loads(row[0]), plan_contribution=json.loads(row[1])) for row in rows]
+        return self.storage._call(get)
+
+    def scope_items(self, owner, scope):
+        """Latest known feedback per actual person/action, across plan versions.
+
+        JSON predicates retain the original namespace layout. This bounded six
+        action-side result must not omit previous-plan discomfort during a new
+        plan's eligibility check. It never grants progress to a different plan.
+        """
+        from ..assessment_batches import scope_key
+        scope = scope_key(scope)
+        def get(conn):
+            rows = conn.execute('''
+                SELECT s.payload,c.payload FROM rehab_v2_plan_contributions c
+                JOIN rehab_v2_sessions s ON s.id=c.session_id AND s.owner=c.owner
+                WHERE c.owner=? AND json_extract(c.payload,'$.scope.participant_id')=?
+                    AND json_extract(c.payload,'$.scope.source_kind')=?
+                    AND json_extract(c.payload,'$.scope.usage_context')=?
+                    AND json_extract(c.payload,'$.progress_eligible')=1 AND NOT EXISTS(
+                    SELECT 1 FROM rehab_v2_plan_contributions newer WHERE newer.owner=c.owner
+                        AND json_extract(newer.payload,'$.scope.participant_id')=json_extract(c.payload,'$.scope.participant_id')
+                        AND json_extract(newer.payload,'$.scope.source_kind')=json_extract(c.payload,'$.scope.source_kind')
+                        AND json_extract(newer.payload,'$.scope.usage_context')=json_extract(c.payload,'$.scope.usage_context')
+                        AND json_extract(newer.payload,'$.exercise_id')=json_extract(c.payload,'$.exercise_id')
+                        AND json_extract(newer.payload,'$.side')=json_extract(c.payload,'$.side')
+                        AND json_extract(newer.payload,'$.progress_eligible')=1 AND
+                        newer.ordinal>c.ordinal)
+                ORDER BY c.session_id LIMIT 7
+            ''', (owner, scope['participant_id'], scope['source_kind'], scope['usage_context'])).fetchall()
+            if len(rows) > 6:
+                raise SessionError('pilot_action_capacity_exceeded', 503)
+            return [dict(json.loads(row[0]), plan_contribution=json.loads(row[1])) for row in rows]
+        return self.storage._call(get)
+
+    def history(self, owner, *, limit=20, before=None):
+        if type(limit) is not int or not 1 <= limit <= 100:
+            raise SessionError('invalid_history_page_size', 400)
+        def get(conn):
+            parameters, clause = [owner], ''
+            if before is not None:
+                self._row(conn, owner, before)
+                anchor = conn.execute('SELECT ordinal FROM rehab_v2_plan_contributions WHERE owner=? AND session_id=?',
+                                      (owner, before)).fetchone()
+                if not anchor:
+                    raise SessionError('history_cursor_not_finalized', 400)
+                clause = ' AND c.ordinal<?'
+                parameters.append(anchor[0])
+            rows = conn.execute('SELECT s.payload,c.payload FROM rehab_v2_plan_contributions c '
+                'JOIN rehab_v2_sessions s ON s.id=c.session_id AND s.owner=c.owner '
+                'WHERE c.owner=?'+clause+' ORDER BY c.ordinal DESC LIMIT ?',
+                (*parameters, limit+1)).fetchall()
+            items = []
+            for row in rows[:limit]:
+                item, value = json.loads(row[0]), json.loads(row[1])
+                items.append(dict(session_id=item['session_id'], created_at=item['created_at'],
+                    end_reason=item['end_reason'], source=item['source'], persistence_state=item['persistence_state'],
+                    observation_state=item['observation_state'], feedback_status=item['feedback_status'],
+                    feedback_revision=item['feedback_revision'], latest_feedback=item.get('latest_feedback'),
+                    derived_report_state=item['derived_report_state'], contribution=value,
+                    facts_url='/api/rehab/v2/sessions/'+item['session_id']))
+            return dict(items=items, next_cursor=items[-1]['session_id'] if len(rows)>limit else None,
+                        history_version='committed-rehab-v2-1', not_legacy_assessment_history=True)
+        return self.storage._call(get)
 
     def audit_view(self, owner, sid):
         def view(conn):

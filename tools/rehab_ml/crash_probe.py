@@ -21,7 +21,8 @@ def main():
         raise RuntimeError('Probe requires a new database under the dedicated run root')
     def plan(owner, request):
         return dict(plan_id='TEST-probe-plan', plan_revision=1, entry_key='shoulder_abduction:left',
-                    reference=dict(owner=owner, fixture=True), plan=dict(exercise_id='shoulder_abduction'))
+                    reference=dict(owner=owner, fixture=True),
+                    plan=dict(exercise_id='shoulder_abduction', side='left', submode='assessment'))
     service = SessionService(target, plan, internal_replay=True)
     owner = 'TEST-crash-owner'
     item = service.create(owner, dict(idempotency_key='probe', consent=True))

@@ -34,15 +34,27 @@ class CueEvents:
         summary = dict(phase=phase, training={'stage': 'ACTIVE'},
                        current_issues=engine.current_issues,
                        message='当前已观察到超出安排的姿势' if engine.current_issues else '')
-        if spec['exercise_id'] == 'rehab_squat':
-            key = 'start' if phase == 'WAIT_READY' else 'return' if phase == 'LOWERING' else 'move'
-            instruction = {'start': '保持站姿，准备好后屈膝。', 'move': '缓慢屈膝，到舒适范围。',
-                           'return': '缓慢伸膝，回到站姿。'}[key]
-            result = dict(cue_key=key, instruction=instruction, level='action')
-        else:
-            result = self.policy.render(dict(context=(self.session_id, engine.calibration_epoch),
-                                              state='ONLINE', summary=summary,
-                                              current_measurement_valid=True), plan, now=frame.time_s)
+        live = engine.timing_live()
+        # GuidancePolicy's existing hold renderer expects an anchored sample.
+        # A valid angle below the target has elapsed=0 but is not a hold cue.
+        if live and live['at_target']:
+            summary['movement_timing_live'] = live
+            goal = live['hold_min_s']
+            if goal is not None and live['hold_elapsed_s']+1e-8 >= goal:
+                summary['message'] = '已观察到本次连续保持目标'
+            elif goal is None and plan['target_angle_deg'] is not None:
+                summary['message'] = '已观察到目标范围；'
+        squat = spec['exercise_id'] == 'rehab_squat'
+        # The shared policy owns priority, hold and next-action decisions.
+        # Only its plain action template is replaced for this backend pilot;
+        # knee_flexion is never used as the measurement or prescription ID.
+        template_plan = dict(plan, exercise_id='knee_flexion') if squat else plan
+        result = self.policy.render(dict(context=(self.session_id, engine.calibration_epoch),
+                                          state='ONLINE', summary=summary,
+                                          current_measurement_valid=True), template_plan, now=frame.time_s)
+        if squat and result.get('level') == 'action' and result.get('cue_key') in ('start', 'move', 'return'):
+            result['instruction'] = {'start': '保持站姿，准备好后屈膝。', 'move': '缓慢屈膝，到舒适范围。',
+                                     'return': '缓慢伸膝，回到站姿。'}[result['cue_key']]
         key = result.get('cue_key') or result.get('level')
         if result.get('level') == 'adjust' and engine.current_issues:
             key = 'adjust:'+engine.current_issues[0]['rule_id']

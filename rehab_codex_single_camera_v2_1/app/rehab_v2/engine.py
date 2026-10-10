@@ -6,6 +6,8 @@ import math
 from statistics import median
 
 from .protocols import validated_plan
+from .timing import TIMING_VERSION, snapshot as timing_snapshot
+from ..movement_timing import MovementTiming
 
 
 class ProtocolEngine:
@@ -32,6 +34,69 @@ class ProtocolEngine:
         self.diagnostics = {'rejected': {}, 'missing_frames': 0}
         self.issue_starts = {}
         self.current_issues = []
+        self.timing_history = deque(maxlen=128)
+        self.timing = self.standing_timing = self.standing_rep = None
+        self.pending_input_gap = None
+
+    def note_input_gap(self, seq, stamp, reason):
+        # A dropped pending frame may be newer than an in-flight valid frame.
+        # Break continuity at the next processed prefix beyond that sequence,
+        # not by retroactively invalidating the earlier in-flight observation.
+        if self.pending_input_gap is None or seq > self.pending_input_gap['seq']:
+            self.pending_input_gap = dict(seq=seq, time_s=stamp, reason=reason)
+
+    def _timing_ref(self, seq, stamp):
+        return dict(seq=seq, source_epoch=self.source_epoch, time_s=stamp)
+
+    def _add_timing(self, timer, stamp, value, standing, seq):
+        timer.add(stamp, value, at_standing=standing)
+        ref = self._timing_ref(seq, stamp)
+        if getattr(timer, 'first_ref', None) is None:
+            timer.first_ref = ref
+        timer.latest_ref = ref
+
+    def _timing_snapshot(self, timer, completion, *, cycle_complete=False, reason=None):
+        return timing_snapshot(timer, completion, cycle_complete=cycle_complete, reason=reason,
+                               time_basis=self.signature[4] if self.signature else None)
+
+    def _break_timing(self, stamp, reason):
+        self.timing_history.clear()
+        for timer in (self.timing, self.standing_timing):
+            if timer is not None:
+                timer.break_continuity(stamp, reason)
+        self._update_timing()
+
+    def _update_timing(self):
+        if self.current is not None and self.timing is not None:
+            self.current['movement_timing'] = self._timing_snapshot(self.timing, 'PARTIAL')
+        if self.standing_timing is not None and self.standing_rep is not None:
+            self.standing_rep['movement_timing'] = self._timing_snapshot(self.standing_timing, 'COMPLETE')
+
+    def _close_standing_timing(self, reason=None, *, cycle_complete=False):
+        if self.standing_timing is not None and self.standing_rep is not None:
+            result = self._timing_snapshot(self.standing_timing, 'COMPLETE',
+                                          cycle_complete=cycle_complete, reason=reason)
+            self.standing_rep['movement_timing'] = result
+            self.standing_rep['lowering_time_s'] = result['return_s']['value']
+        self.standing_timing = self.standing_rep = None
+
+    def _timing_observation(self, frame, value):
+        standing = self.spec['exercise_id'] == 'sit_to_stand' and value <= self.spec['standing_max_deg']
+        self.timing_history.append((frame.time_s, value, standing, frame.seq))
+        cutoff = frame.time_s-max(2., self.plan['dwell_s']+self.plan['max_gap_s']+.5)
+        while len(self.timing_history) > 1 and self.timing_history[1][0] < cutoff:
+            self.timing_history.popleft()
+        timer = self.timing or self.standing_timing
+        if timer is not None:
+            self._add_timing(timer, frame.time_s, value, standing, frame.seq)
+        self._update_timing()
+
+    def timing_live(self):
+        timer = self.timing or self.standing_timing
+        if (timer is None or self.latest is None or self.pending_input_gap is not None or self.run_state in ('paused', 'ended')
+                or self.observation_state in ('missing', 'unavailable')):
+            return None
+        return dict(timer.live(), version=TIMING_VERSION)
 
     @property
     def completed(self):
@@ -50,13 +115,19 @@ class ProtocolEngine:
 
     def _partial(self, reason):
         if self.current is not None:
+            if self.timing is not None:
+                self.current['movement_timing'] = self._timing_snapshot(self.timing, 'UNASSESSABLE', reason=reason)
             self.repetitions.append(dict(self.current, completion_status='UNASSESSABLE',
                                          end_time_s=self.last_t, reason=reason, target_status='UNKNOWN',
                                          quality_status='UNASSESSABLE', quality_assessable=False))
             self.current = None
+        self.timing = None
 
     def invalidate(self, reason, *, keep_baseline=False):
+        self._break_timing(self.last_t, reason)
         self._partial(reason)
+        self._close_standing_timing(reason)
+        self.pending_input_gap = None
         self.holds.clear()
         self.ready_values.clear()
         self.issue_starts.clear()
@@ -82,7 +153,12 @@ class ProtocolEngine:
         self.pause_reason = None
 
     def finish(self, reason='user_stopped'):
+        if self.pending_input_gap is not None:
+            self._break_timing(self.pending_input_gap['time_s'], self.pending_input_gap['reason'])
+            self.pending_input_gap = None
         self._partial(reason)
+        self._close_standing_timing(reason)
+        self.timing_history.clear()
         self.run_state, self.phase = 'ended', 'ENDED'
         self.holds.clear()
 
@@ -98,6 +174,19 @@ class ProtocolEngine:
                             evidence_refs=[], metric_validity={}, issues=[],
                             quality_evaluated=False, observed_turn=False,
                             completion_status='PARTIAL', target_status='UNKNOWN')
+        seated = self.spec['exercise_id'] == 'sit_to_stand'
+        self.timing = MovementTiming(direction=-1 if seated else 1,
+                                     max_gap_s=self.plan['max_gap_s'],
+                                     target=self.plan['target_angle_deg'],
+                                     goals=self.plan['timing_plan'], sit_to_stand=seated)
+        # Replay only the observed departure dwell and its preceding sample.
+        # Ready time is not part of a repetition's movement time.
+        start = self.holds.get('depart', stamp)
+        history = list(self.timing_history)
+        first = next((i for i, sample in enumerate(history) if sample[0] >= start), len(history))
+        for t, value, standing, seq in history[max(0, first-1):]:
+            self._add_timing(self.timing, t, value, standing, seq)
+        self._update_timing()
 
     def _collect(self, frame, excursion):
         rep = self.current
@@ -139,6 +228,15 @@ class ProtocolEngine:
 
     def _complete(self, stamp):
         rep = self.current
+        seated = self.spec['exercise_id'] == 'sit_to_stand'
+        if seated:
+            self.timing.mark_standing(stamp)
+            self.timing.standing_ref = self._timing_ref(self.last_seq, stamp)
+        rep['movement_timing'] = self._timing_snapshot(self.timing, 'COMPLETE', cycle_complete=not seated)
+        if seated:
+            rep.update(rise_time_s=rep['movement_timing']['outbound_s']['value'], lowering_time_s=None)
+            self.standing_timing, self.standing_rep = self.timing, rep
+        self.timing = None
         target = self.plan['target_angle_deg']
         target_value = rep['peak_excursion_deg'] if self.spec['exercise_id'] == 'sit_to_stand' else rep['peak_metric_deg']
         assessable = (rep['quality_evaluated'] and
@@ -180,6 +278,13 @@ class ProtocolEngine:
         if self.last_good_t is not None and frame.time_s - self.last_good_t > self.plan['max_gap_s']:
             self.invalidate('long_evidence_gap', keep_baseline=True)
         self.last_seq, self.last_t = frame.seq, frame.time_s
+        if self.pending_input_gap is not None and frame.seq > self.pending_input_gap['seq']:
+            self._break_timing(frame.time_s, self.pending_input_gap['reason'])
+            self.pending_input_gap = None
+            self.gap = True
+            self.holds.clear()
+            self.ready_values.clear()
+            self.issue_starts.clear()
         self.current_issues = []
         evidence = frame.metrics.get(self.spec['metric'])
         valid = evidence is not None and evidence.observable(self.plan['max_age_ms']) and frame.track_key is not None
@@ -187,6 +292,7 @@ class ProtocolEngine:
             self.observation_state = 'missing'
             self.latest = None
             self.gap = True
+            self._break_timing(frame.time_s, 'missing_interval')
             self.holds.clear()
             self.ready_values.clear()
             self.issue_starts.clear()
@@ -200,6 +306,7 @@ class ProtocolEngine:
             self.observation_state = 'unavailable'
             self.latest = None
             self.gap = True
+            self._break_timing(frame.time_s, 'invalid_metric_contract')
             self.holds.clear()
             self.ready_values.clear()
             return self._reject('invalid_metric_contract')
@@ -219,6 +326,7 @@ class ProtocolEngine:
                 self.invalidate('hidden_motion_boundary', keep_baseline=True)
         self.gap = False
         self.last_good_t, self.last_value = frame.time_s, value
+        self._timing_observation(frame, value)
         if self.phase == 'WAIT_READY':
             posture = self._ready_posture(value)
             if posture:
@@ -253,7 +361,14 @@ class ProtocolEngine:
                 self.holds.clear()
             elif self.phase == 'STANDING_REACHED' and value > self.spec['standing_max_deg'] + 5:
                 self.phase = 'LOWERING'
+                if self.standing_timing is not None:
+                    self.standing_timing.mark_return(stamp)
+                    self.standing_timing.return_ref = self._timing_ref(frame.seq, stamp)
+                    self._update_timing()
             elif self.phase == 'LOWERING' and self._held('seated', self._ready_posture(value), stamp, dwell):
+                if self.standing_timing is not None:
+                    self.standing_timing.seated_ref = self._timing_ref(frame.seq, stamp)
+                self._close_standing_timing(cycle_complete=True)
                 self.phase = 'SEATED_READY'
                 self.holds.clear()
         elif self.current is not None:
@@ -275,6 +390,11 @@ class ProtocolEngine:
                     baseline=self.baseline, repetitions=self.repetitions, completed=self.completed,
                     current=self.current, metric=self.latest, diagnostics=self.diagnostics,
                     current_issues=self.current_issues,
+                    movement_timing_version=TIMING_VERSION,
+                    movement_timing_live=self.timing_live(),
+                    last_movement_timing=(self.repetitions[-1].get('movement_timing')
+                                          if self.repetitions else None),
+                    pending_input_gap=self.pending_input_gap,
                     measurement_contract=dict(signature=self.signature, coordinate_space='raw_image_pixels',
                                               metric_version=self.spec['metric_version'],
                                               preprocess_version='causal-ema-schema-0.3.0',

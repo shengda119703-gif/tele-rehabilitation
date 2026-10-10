@@ -103,19 +103,24 @@ def main(argv=None):
             value = (prepare(args.actions) if args.command == 'prepare' else split(args.seed)
                      if args.command == 'split' else build_features(args.domain))
         elif args.command in ('replay', 'verify-sessions'):
+            import os
             import subprocess
             import time
             started = time.perf_counter()
-            proc = subprocess.run([sys.executable, '-X', 'utf8', '-m', 'unittest', 'discover', '-s',
-                                   'tests/rehab_backend', '-p', 'test_protocols.py' if args.command == 'replay'
-                                   else 'test_sessions.py', '-v'],
-                                  cwd=ROOT, capture_output=True, text=True, encoding='utf-8', timeout=90)
+            arguments = (['-m', 'unittest', 'discover', '-s', 'tests/rehab_backend', '-p', 'test_protocols.py', '-v']
+                         if args.command == 'replay' else ['-m', 'unittest', '-v',
+                                                          'test_sessions', 'test_progress', 'test_timing', 'test_api'])
+            environment = dict(os.environ)
+            environment['PYTHONPATH'] = os.pathsep.join((str(ROOT/'tests/rehab_backend'),
+                                                       str(ROOT/'rehab_codex_single_camera_v2_1'), str(ROOT)))
+            proc = subprocess.run([sys.executable, '-X', 'utf8', *arguments], cwd=ROOT, env=environment,
+                                  capture_output=True, text=True, encoding='utf-8', timeout=90)
             from tools.rehab_ml.common import paths, file_hash, write_json
             from uuid import uuid4
             log = paths()['run'] / ('replay-'+uuid4().hex[:8]) / ('protocols.txt' if args.command == 'replay' else 'sessions.txt')
             log.parent.mkdir(parents=True, exist_ok=True)
             log.write_text(proc.stdout + proc.stderr, encoding='utf-8')
-            value = dict(exit_code=proc.returncode, elapsed_s=time.perf_counter()-started,
+            value = dict(exit_code=proc.returncode, arguments=arguments, elapsed_s=time.perf_counter()-started,
                          log=str(log), log_sha256=file_hash(log), clinical_accuracy=None)
             write_json(ROOT / 'reports/rehab_backend' / ('protocol_replay.json' if args.command == 'replay'
                                                        else 'session_verification.json'), value)

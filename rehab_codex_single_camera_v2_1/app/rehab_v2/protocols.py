@@ -4,6 +4,7 @@ import copy
 import math
 
 from . import PROTOCOL_VERSION
+from ..movement_timing import timing_for_plan
 
 PROTOCOLS = {
     'shoulder_abduction': dict(
@@ -83,4 +84,7 @@ def validated_plan(value):
     # No automatic repetitions, sets, target or support prescription is created here.
     plan.setdefault('submode', 'training')
     plan.setdefault('use_of_hands', 'not_recorded')
+    # Reuse the original explicit arrangement validation, including the old
+    # sit-to-stand lowering fields. Nothing is prescribed when they are absent.
+    plan['timing_plan'] = timing_for_plan(plan)
     return plan, spec

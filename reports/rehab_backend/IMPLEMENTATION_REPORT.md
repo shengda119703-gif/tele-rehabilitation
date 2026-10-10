@@ -1,8 +1,10 @@
-# 康复后端实施与真实训练：第一阶段交付
+# 康复后端实施与真实训练：阶段记录与增量交付
 
-日期：2026-10-11（Asia/Shanghai）。实施基准：`b6d22fc392915738401fe6e14d9cc32b877a5acc`；任务依据：本机 `docs/安康康复训练后端实施与训练任务书.md`。产品版本仍为 0.20.0，APK 仍为 0.2.1；新增后端协议版本 `rehab-protocol-2.0`，不是新客户端发布。
+日期：2026-10-11（Asia/Shanghai）。第一阶段实施基准：`b6d22fc392915738401fe6e14d9cc32b877a5acc`，提交 `1463929`；本次增量相对于上轮 `64b0b15`，以本文件所在交付提交为准。任务依据：本机 `docs/安康康复训练后端实施与训练任务书.md`。产品版本仍为 0.20.0，APK 仍为 0.2.1；新增后端协议版本 `rehab-protocol-2.0`，不是新客户端发布。
 
 结论：P0–P4 的核心链路与一部分 P7 已实际完成。下载了真实获许可数据，训练了两个真实模型，也发现候选没有优于简单基线。正式会话为独立 opt-in 后端，尚未成为现有 UI/APK 的正式路径。P5 只有两段分析授权录像回放，缺独立参考标注；P6 没有姿态微调或产品影子上线。整个任务未完成，不能据此宣称真人准确度提高。
+
+本次增量已接通唯一计划贡献、分页最终历史、原继续政策与跨计划版本反馈、显式时间安排和原手动保存计划。坐站站起计一次，随后回坐只补时间字段；逐次持久表和最终快照一致，不会重复计次。末次完整回归为 **74 项新后端、12 项旧康复、19 项旧手机接口通过**，1308 个受保护文件一致；会话 CLI 的 44 项是其中子集。新增日志、修复和未测边界见 [本次验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。以下历史训练结果、真人回放与性能数值没有重新运行，不能当本次新增验收。
 
 ## A. 实际完成情况
 
@@ -10,7 +12,7 @@
 | --- | --- | --- | --- |
 | P0 盘点与保护 | done | [开工清单](../rehab_backend_inventory.md)、[1308 文件基准](protected_files.json)、[末次 hash 核验](scope_verification.json) | 仅本轮范围；不代表其他会话或临床验收 |
 | P1 三动作后端协议 | done（工程定义） | `app/rehab_v2/protocols.py`、`engine.py`、`rounds.py`；15 项协议回放及几何契约测试 | 定义是二维投影和训练观察，不是解剖 ROM 金标准；实际机位仍由计划给出 |
-| P2 正式会话与幂等 | partial | 49 项新增后端回归含真实 HTTP/JPEG、现有自动计划、并发终结、实际进程退出、异步报告及反馈 CAS | 独立 v2 事实库，不投射旧历史/进度；深蹲尚无宿主兼容计划；前端未接入 |
+| P2 正式会话与幂等 | partial | 74 项新增后端回归含 HTTP/JPEG、原自动／手动计划、时间、唯一贡献、历史、并发终结、退出恢复、报告与反馈 CAS | 独立 v2 事实及进度接口已接；旧页面未接入，深蹲尚无宿主兼容计划，完整故障验收待做 |
 | P3 IRDS 下载与适配 | done | 198,985,485 字节骨架 ZIP、1974 字节 readme；CRC/MD5/SHA 校验；534 条/29 人，532 训练资格、2 隔离 | Kinect25 三维肩外展，不是手机 RGB、坐站或深蹲标签 |
 | P4 模型训练 | done（离线实验） | [实验包摘要](experiment_summary.json)，两次完整训练链结果；检查点、验证/测试预测和锁文件均存在于忽略目录 | TCN 测试 macro-F1 低于 logistic；只整次正误，不可作为相位/提示/诊断 |
 | P5 真人目标域验证 | partial | [目标域回放摘要](target_replay_summary.json)，443 帧肩外展与429帧深蹲真实 YOLO 输出 | 新协议均0确认次数；没有专业真值或规范准备，不能计算计次准确率 |
@@ -23,7 +25,7 @@
 
 ### B1. 动作、观测、组次与提示
 
-新增 `rehab_codex_single_camera_v2_1/app/rehab_v2/`：`__init__.py`、`protocols.py`、`evidence.py`、`engine.py`、`rounds.py`、`cues.py`、`temporal.py`、`sessions.py`、`compatibility.py`。
+新增 `rehab_codex_single_camera_v2_1/app/rehab_v2/`：`__init__.py`、`protocols.py`、`evidence.py`、`engine.py`、`rounds.py`、`cues.py`、`temporal.py`、`sessions.py`、`compatibility.py`，本次补 `progress.py`、`timing.py`。
 
 | 问题 | 实现 | 新行为 | 验证 |
 | --- | --- | --- | --- |
@@ -35,16 +37,19 @@
 | 组次/休息与视觉次数混在一起 | TrainingRounds 只编排明示的 reps/sets/rest，不生成新剂量 | 坐站到站立计次，但坐回后才结束组；休息/暂停不计；恢复核对给定休息 | C10 |
 | 历史错误不断触发提示 | 当前有效质量约束与已完成次的历史问题分离，复用原 GuidancePolicy | 一条当前事件，证据引用、相位/epoch/TTL、取消；动作改善后旧纠正取消 | C11；取消/发出写审计 |
 | 新视频被当作不能比较 | compatibility 与具体 evidence_fingerprint 分开 | 新 session/job/source identity 本身不阻断绝对投影角比较；相对幅度仍保留基线条件 | `test_contracts.py` |
+| 明确节奏安排被 v2 拒绝 | 复用原 MovementTiming 和 timing_for_plan，加版本／时间基准／证据封套 | 出程、回程、保持与计次独立；缺测不补时间，完整往返后才做峰区分段 | `test_timing.py` 12 项，含持久化 |
+| 坐站回坐时间未同步逐次表 | 同事务同步草稿时间扩展，同时校验已确认计次事实不可改 | 站起仍计一次；坐回时间在终结前补齐，终结后快照／回执不重写 | 时间持久化、重开、篡改回滚测试 |
+| 覆盖新待处理帧污染较早在途帧 | 丢帧按 seq 前缀兑现，期间隐藏实时保持提示 | 旧有效帧可处理，下一幸存帧不得跨丢帧累计保持；隐藏转折不补次 | latest-frame replacement 时间回放 |
 
 没有改原 `runtime.py`、`quality.py`、`rehab.py`、`training.py`、`guidance.py`、`storage.py` 或域对象。新路径组合原组件；旧引擎保持原结果。没有增加处方、继续资格或训练剂量决策。
 
 ### B2. 会话与数据库
 
-新增 `mobile_rehab/rehab_v2/{__init__,api,service}.py`。现有 `server.py` 只增加 `create_app(..., rehab_v2=False)`、显式安装及关闭回收；默认不启用。新宿主解析现有本人自动计划的 ID、revision、entry_key、证据引用和已有资格，不接受用户关键点来伪造相机观测。
+新增 `mobile_rehab/rehab_v2/{__init__,api,service}.py`。现有 `server.py` 只在显式 v2 块增加安装、计划解析／查询及关闭回收；默认不启用。新宿主解析现有本人自动或手动保存计划的 ID、revision、entry_key、证据引用和已有资格，不接受用户关键点来伪造相机观测。手动计划复用 prepare_training_plan／validate_saved_binding，要求 training_plan_confirmed；安排要求陪同时另需 companion_confirmed，不让请求覆盖原剂量／节奏。
 
-新增 namespace 表：`rehab_v2_meta/sessions/operations/frames/repetitions/audit/feedback/reports`。使用原 Storage 的数据库 owning thread；原 `PRAGMA user_version=4` 不改，新 namespace 独立版本1。迁移前用 SQLite backup 保留一致副本。实际宿主 v2 使用独立 `rehab-v2.sqlite3`，不把测试写进正常患者库。
+新增 namespace 表：`rehab_v2_meta/sessions/operations/frames/repetitions/audit/feedback/reports`，本次加 `rehab_v2_plan_contributions`，namespace 从 1 迁移到 2。使用原 Storage 的数据库 owning thread；原 `PRAGMA user_version=4` 不改。迁移前用 SQLite backup 保留一致副本；v1 最终事实回填贡献但不重写原回执／视觉快照。实际宿主 v2 使用独立 `rehab-v2.sqlite3`，不把测试写进正常患者库。
 
-事实链：认证本人 → 查创建幂等记录 → 核验现有计划/明示剂量 → 冻结计划与来源 → JPEG原模型推理 → 逐次检查点 → 控制 revision → 冻结接收边界 → 有界收尾 → 单事务最终逐次事实/快照/回执 → 独立派生报告 → 追加反馈及审计。
+事实链：认证本人 → 查创建幂等记录 → 核验现有计划/明示剂量与节奏 → 冻结计划与来源 → JPEG原模型推理 → 逐次检查点及时间更新 → 控制 revision → 冻结接收边界 → 有界收尾 → 单事务最终逐次事实/快照/回执/唯一贡献 → 独立派生报告 → 追加反馈及审计 → 本人最终历史／原政策进度查询。
 
 - 创建、frame event/seq、操作键和 repetition index 有 SQL 唯一性；同键改载荷冲突。已提交/正在执行的重复请求先查回执，再检查新前置条件。
 - 并发不同 finish key 只能得到一个 commit_id；accepted/processed/persisted seq 分开，丢帧/超时未处理逐项记证据，terminal 之后晚结果不修改快照。
@@ -52,13 +57,13 @@
 - 解码/推理异常明确保存 frame failed，终结 input_failed，而非永远留在准备中。持久化自身不可用时不能保证写下失败事实，仍需后续独立故障验收。
 - 报告生成异步，不延迟最终回执；pending/failed 可在重启对账。反馈 revision CAS 防止旧报告覆盖新反馈。报告失败不会倒退已保存事实。
 - feedback missing/null 保持缺失；自报不会改原视觉快照，反馈追加不重复增加执行量。
-- 新 v2 事实不自动增加旧计划进度；明确标记 `facts_only_not_legacy_plan_completion`。尚需独立版本的历史/贡献投射，不能声称已连通现有历史页面。
+- 本次新回执标记 `unique_v2_contribution_committed`；唯一贡献与最终事实同事务，故障注入证明贡献失败一起回滚。旧回执保留其原标记。本人最终历史按 ordinal 游标分页，单页 1–100；计划查询只取当前版本最新条目尝试，并在同人／来源／情境／动作／侧别范围读取跨计划反馈。复用 `general-activity-rules-1`，不写旧测量，不把 v2 质量解释成旧 ROM。现有历史页面和 `/api/plan` 仍未接入。
 
 ### B3. 数据与实验工具
 
 新增 `tools/rehab_ml/`：common、inventory、download、data、features、models、training、benchmark、target_domain、model_registry、visual_audit、crash_probe、summarize_target、run_minimal、verify_all、cli及README。新增 `configs/rehab_ml/{datasets,baseline,tcn,backend}.yaml` 和 `annotation-template.json`。
 
-新增 `tests/rehab_backend/{test_protocols,test_sessions,test_api,test_contracts,test_ml}.py`。报告为本目录及 `reports/rehab_backend_inventory.md`，交接更新在 `docs/HANDOFF.md`。
+新增 `tests/rehab_backend/{test_protocols,test_sessions,test_api,test_contracts,test_ml}.py`，本次补 `test_progress.py`、`test_timing.py`。报告为本目录及 `reports/rehab_backend_inventory.md`，交接更新在 `docs/HANDOFF.md`。
 
 下载器校验固定版本/字节/MD5，.part续传，206核对偏移；200不追加旧片段，完整损坏文件隔离，最终原子更名。ZIP检查目录穿越、链接、体积/文件数、压缩比、Windows保留名及大小写别名，CRC实际通过。原始数据/模型不提交Git。
 
@@ -132,13 +137,13 @@ seed20261011；17/6/6人，310/131/91条。正/误分别 train269/41、val97/34�
 
 ## D. 后端验证与回退
 
-### D1. 本轮实际回归
+### D1. 最新增量回归与第一阶段记录
 
-产品环境运行 `python -X utf8 tools/rehab_ml/verify_all.py`，全新隔离目录 `verification-303d8fcf`；49项新后端、12项旧康复、19项旧手机接口通过。手机1条既有 Starlette/httpx弃用warning，未升级依赖。日志命令/退出码/摘要/hash详见[regression.json](regression.json)。没有借用交接中之前的324项计数，本轮没有跑全UI/Android/照护回归。
+产品环境本次运行 `python -X utf8 tools/rehab_ml/verify_all.py`，全新隔离目录 `verification-3b62b733`；74项新后端、12项旧康复、19项旧手机接口通过。另运行 `cli.py verify-sessions --database-mode isolated`，44项通过，是74项子集。手机1条既有 Starlette/httpx弃用warning，未升级依赖。日志命令/退出码/摘要/hash详见[regression.json](regression.json)、[session_verification.json](session_verification.json)与[本轮验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。第一阶段 `verification-303d8fcf` 的49项是历史结果；此前61项属于尚未提交阶段，不代替最新结果。没有借用交接中之前的324项计数，本轮没有跑全UI/Android/照护回归。
 
 确定性覆盖：C01肩腕缺测，C02短gap不累积保持，C03隐藏转折，C04站姿进入，C05坐站rearm，C06真膝角，C07左右/水平镜像/等比例分辨率及契约变化，C08乱序/epoch/年龄/慢推理污染，C09换人，C10组休息，C11提示TTL/当前纠正，C12因果特征与70前缀TCN未来扰动，C13缓存隔离，C14–16持久幂等，C17报告失败，C18真实退出恢复，C19未知感受，C21跨域拒绝，C22无标签零梯度，C23接收/丢帧/超时收尾边界。
 
-C20禁改范围以独立文件保护命令核验，不混入49项计数。C07尚不覆盖任意相机旋转/剪裁/非等比例拉伸；显示镜像不会换解剖侧，外部未经声明的视频翻转或实质机位变化不能自动宣称等价。未知设备时钟、全部动作、人群真实误差与跨端重启仍未验收。
+C20禁改范围以独立文件保护命令核验，不混入74项计数。新增测试覆盖贡献迁移／回滚／范围／游标、反馈跨计划版本、手动计划原保存绑定和显式时间连续性。C07尚不覆盖任意相机旋转/剪裁/非等比例拉伸；显示镜像不会换解剖侧，外部未经声明的视频翻转或实质机位变化不能自动宣称等价。未知设备时钟、全部动作、人群真实误差与跨端重启仍未验收。
 
 最初工具测试的失败也保留：unittest从根目录找不到app（补子进程PYTHONPATH）；默认宿主探路被旧X-Rehab-Client保护403（正确加header并检查路由确实未注册）；异步报告刚提交状态仍pending（测试等待最终派生状态）；崩溃半次只输入一帧、实际尚未形成半次（改为6帧并断言current真实存在）。没有把这些失败计为通过，末次证据才是本轮结果。
 
@@ -170,7 +175,7 @@ C20禁改范围以独立文件保护命令核验，不混入49项计数。C07尚
 2. 采集三动作目标域素材：规范准备→动作→回位，肩肘/髋膝踝依动作可见；另有遮挡、旁人、换人、站姿进入坐站、可接受扶手和异常动作。独立专业人员标注物理/可观察完成、相位、错误/许可变式、提示窗口并复核；需明确训练与分享授权。不能只给模型现有结果当标签。
 3. 再训练真实RGB域的质量/相位任务，比较旧EMA/规则、版本化规则、简单基线、因果候选四组；动作计数仍由观察规则确认。今后的模型改进先由新验证集/交叉验证确定，不用当前固定test反复调参。
 4. 只有独立2D关节和visibility mask到位才实现姿态微调；如果原标签不含完整关节，先自定义masked loss，不能将没标的关节写成0负例。两个资格拒绝命令没有完成这条训练线。
-5. 后端继续完善：康复深蹲的版本化本人计划绑定；旧计划/历史的去重事实投射、完整故障/容量压力与任务硬隔离、时间/坐标契约更细的审核、医疗参考误差及不同来源的可比性验证。客户端/前端仍不在本轮范围。
+5. 后端继续完善：康复深蹲的版本化本人计划绑定；v2 时间结果的专门比较契约、完整故障/容量压力与任务硬隔离、时间/坐标契约更细的审核、医疗参考误差及不同来源的可比性验证。唯一贡献和后端历史／进度已实现，但旧页面／APK未连接；不能用新增 API 通过代替跨端上线。客户端/前端仍不在本轮范围。
 
 ### 实际复现入口
 

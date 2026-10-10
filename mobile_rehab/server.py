@@ -265,30 +265,93 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
     install_live(app, owner, small_json)
     if rehab_v2:
         from .rehab_v2.api import install_rehab_v2
-        from app.training_plans import prepare_training_plan
+        from app.training_plans import prepare_training_plan, validate_saved_binding
         from app.rehab_v2.sessions import SessionError
+        from app.rehab_v2.protocols import protocol
+        from app.rehab_v2.progress import plan_progress, eligibility_views
+        from app.assessment_batches import scope_key
+
+        def formal_context(uid, plan_id):
+            with store_for(uid) as store:
+                record = store.get_training_plan(plan_id)
+                if not record or record.get('participant_id') != (shared.owner if shared else uid):
+                    raise SessionError('owned_training_plan_required', 404)
+                scope = scope_key(record)
+                sessions = store.list_sessions()
+                profile = build_body_profile(sessions, **scope)
+                participant = store.get_participant(shared.owner) if shared else None
+            return record, sessions, profile, participant
+
+        def formal_plan_view(uid, plan_id):
+            record, sessions, profile, participant = formal_context(uid, plan_id)
+            items = app.state.rehab_v2.repository.plan_items(uid, record['id'], record['revision'])
+            scope_items = app.state.rehab_v2.repository.scope_items(uid, record)
+            policy_items = list({i['session_id']: i for i in items+scope_items}.values())
+            progress = plan_progress(record, sessions, items)
+            progress['input_compatible'] = (record['source_kind'], record['usage_context']) == ('LIVE_CAMERA', 'SELF_USE')
+            supported = {}
+            for entry in record['items']:
+                settings = entry['settings']
+                reason = (None if entry['exercise_id'] in ('shoulder_abduction', 'sit_to_stand')
+                          else 'exercise_not_in_v2_pilot')
+                if entry['exercise_id'] == 'sit_to_stand' and settings.get('target_angle_deg') is not None:
+                    reason = 'sitstand_target_definition_requires_v2_plan'
+                supported[entry['key']] = dict(supported=reason is None, reason=reason)
+            if not progress['input_compatible']:
+                progress['blocked'] = progress['blocked'] or 'actual_input_does_not_match_plan_scope'
+            if progress['next_key'] and supported[progress['next_key']]['reason']:
+                progress['blocked'] = progress['blocked'] or supported[progress['next_key']]['reason']
+            if progress['next_key'] and not progress['blocked']:
+                try:
+                    if record.get('record_origin') == 'assessment_rules':
+                        validate_automatic_use(record, progress['next_key'], profile,
+                            sessions+eligibility_views(policy_items), participant)
+                    else:
+                        prepare_training_plan(record, progress['next_key'], profile)
+                except ValueError as exc:
+                    progress['blocked'] = str(exc)
+            return dict(plan=record, progress=progress, entry_support=supported, actual_input_required=dict(
+                        source_kind='LIVE_CAMERA', usage_context='SELF_USE'),
+                        manual_confirmation_required=record.get('record_origin') != 'assessment_rules',
+                        frontend_not_connected=True)
 
         def formal_plan(uid, request):
-            with store_for(uid) as store:
-                record = store.get_training_plan(request.get('plan_id'))
-                if not record or record.get('participant_id') != (shared.owner if shared else uid):
-                    raise SessionError('owned_training_plan_required', 400)
-                if type(request.get('expected_plan_revision')) is not int or request['expected_plan_revision'] != record['revision']:
-                    raise SessionError('plan_revision_conflict')
-                sessions, profile = evidence(store, uid)
-                entry_key = request.get('entry_key')
-                validate_automatic_use(record, entry_key, profile, sessions,
-                                       store.get_participant(shared.owner) if shared else None)
-                plan = prepare_training_plan(record, entry_key, profile)
-                if plan['exercise_id'] not in ('shoulder_abduction', 'sit_to_stand'):
-                    raise SessionError('exercise_not_in_v2_pilot', 400)
-                if plan['exercise_id'] == 'sit_to_stand' and plan.get('target_angle_deg') is not None:
-                    raise SessionError('sitstand_target_definition_requires_v2_plan', 409)
-                return dict(plan_id=record['id'], plan_revision=record['revision'], entry_key=entry_key,
-                            plan=plan, reference=plan['saved_plan_reference'],
-                            eligibility=record.get('record_origin'), legacy_progress_unchanged=True)
+            record, sessions, profile, participant = formal_context(uid, request.get('plan_id'))
+            if type(request.get('expected_plan_revision')) is not int or request['expected_plan_revision'] != record['revision']:
+                raise SessionError('plan_revision_conflict')
+            # A live camera fact cannot be relabelled as a replay-plan training.
+            # Existing /api/plan remains replay-scoped; v2 uses the owned record.
+            if (record['source_kind'], record['usage_context']) != ('LIVE_CAMERA', 'SELF_USE'):
+                raise SessionError('actual_input_does_not_match_plan_scope')
+            items = app.state.rehab_v2.repository.plan_items(uid, record['id'], record['revision'])
+            scope_items = app.state.rehab_v2.repository.scope_items(uid, record)
+            policy_items = list({i['session_id']: i for i in items+scope_items}.values())
+            entry_key = request.get('entry_key')
+            automatic = record.get('record_origin') == 'assessment_rules'
+            if automatic:
+                validate_automatic_use(record, entry_key, profile, sessions+eligibility_views(policy_items), participant)
+            elif request.get('training_plan_confirmed') is not True:
+                raise SessionError('manual_training_plan_confirmation_required')
+            plan = prepare_training_plan(record, entry_key, profile)
+            # Reuse the existing manual-plan binding and current assessment
+            # contract. Request fields cannot override the saved dose/timing.
+            plan['saved_plan_reference'] = validate_saved_binding(record, plan['saved_plan_reference'], plan, record)
+            if not automatic:
+                plan['training_plan_confirmed'] = True
+            if plan['exercise_id'] not in ('shoulder_abduction', 'sit_to_stand'):
+                raise SessionError('exercise_not_in_v2_pilot', 400)
+            if plan['exercise_id'] == 'sit_to_stand' and plan.get('target_angle_deg') is not None:
+                raise SessionError('sitstand_target_definition_requires_v2_plan', 409)
+            if request.get('view') is None:
+                raise SessionError('camera_view_confirmation_required', 400)
+            protocol(plan['exercise_id'], plan['side'], request['view'])
+            plan['view'] = request['view']
+            return dict(plan_id=record['id'], plan_revision=record['revision'], entry_key=entry_key,
+                        plan=plan, reference=plan['saved_plan_reference'], progress_scope=scope_key(record),
+                        eligibility=record.get('record_origin'), legacy_records_unchanged=True)
 
-        install_rehab_v2(app, data_dir / 'rehab-v2.sqlite3', owner, small_json, formal_plan)
+        install_rehab_v2(app, data_dir / 'rehab-v2.sqlite3', owner, small_json, formal_plan,
+                         plan_reader=formal_plan_view)
     from .network import install_network
     install_network(app, data_dir, jobs, owner, small_json)
     from .product import install_product

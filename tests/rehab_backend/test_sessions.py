@@ -84,6 +84,12 @@ class SessionTests(unittest.TestCase):
         audit = self.service.repository.audit_view(self.owner, sid)
         self.assertEqual(len([r for r in audit['repetitions'] if r['completion_status'] == 'COMPLETE']), 1)
         self.assertEqual(len([a for a in audit['audit'] if a['kind'] == 'finalize']), 1)
+        contribution = self.service.repository.plan_contribution(self.owner, sid)
+        self.assertEqual(contribution['commit_id'], receipts[0]['commit_id'])
+        self.assertEqual(contribution['completed_reps'], 1)
+        self.assertFalse(contribution['plan_completed'])  # Prescribed two, only one confirmed.
+        self.assertEqual(self.service.storage._call(lambda conn: conn.execute(
+            'SELECT COUNT(*) FROM rehab_v2_plan_contributions WHERE session_id=?', (sid,)).fetchone()[0]), 1)
 
     def test_C16_same_create_or_finish_key_different_payload_conflicts(self):
         sid = self.create()

@@ -1,7 +1,16 @@
 {
   "exit_code": 0,
-  "elapsed_s": 8.987625099998695,
-  "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\replay-fe38088b\\sessions.txt",
-  "log_sha256": "a026461bb4760c52dba64f20bdf4a7fae450ceebab6d235c726ed497109c9c03",
+  "arguments": [
+    "-m",
+    "unittest",
+    "-v",
+    "test_sessions",
+    "test_progress",
+    "test_timing",
+    "test_api"
+  ],
+  "elapsed_s": 32.89033299999937,
+  "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\replay-c09bc19e\\sessions.txt",
+  "log_sha256": "a869b4310c96f6325d984f26aa4f9883043bb88fa609f18b105763b3d6c2cbae",
   "clinical_accuracy": null
 }

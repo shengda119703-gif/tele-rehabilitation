@@ -14,6 +14,26 @@ from mobile_rehab.rehab_v2.api import install_rehab_v2
 from test_sessions import frozen_plan, request
 
 
+def live_plan(client, *, both_sides=False):
+    """Isolated legacy-schema fixtures using the real plan generator, not GT."""
+    from mobile_rehab.tests.test_mobile import add_assessment, owner, SCREEN
+    from app.storage import Storage
+    from app.assessment import build_body_profile
+    from app.automatic_plans import generate_proposal, create_automatic_plan
+    seed = add_assessment(client)
+    uid = owner(client)
+    storage = Storage(client.app.state.jobs.root / uid / 'assessments.sqlite3')
+    try:
+        for side in ('left', 'right') if both_sides else ('left',):
+            storage.save_session(dict(seed, id='TEST-live-assessment-'+side, side=side, source_kind='LIVE_CAMERA'))
+        sessions = storage.list_sessions()
+        profile = build_body_profile(sessions, uid, 'LIVE_CAMERA', 'SELF_USE')
+        plan = create_automatic_plan(generate_proposal(profile, sessions), SCREEN)
+        return storage.save_training_plan(plan, expected_revision=0)
+    finally:
+        storage.close()
+
+
 class ApiTests(unittest.TestCase):
     def setUp(self):
         from fastapi import FastAPI, Request, HTTPException
@@ -58,8 +78,14 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(self.client.get(endpoint+'/commit').json()['receipt']['commit_id'], receipt.json()['commit_id'])
         self.assertEqual(self.client.post(endpoint+'/feedback', json=dict(idempotency_key='feedback', expected_revision=0,
                          feedback=dict(pain=None, fatigue=None))).status_code, 200)
+        history = self.client.get(base).json()
+        self.assertEqual(history['items'][0]['session_id'], sid)
+        self.assertEqual(history['items'][0]['feedback_revision'], 1)
+        self.assertEqual(self.client.get(base+'?limit=101').status_code, 400)
         self.client.cookies.set('test-owned-session', 'other-owner')
         self.assertEqual(self.client.get(endpoint).status_code, 404)
+        self.assertEqual(self.client.get(base).json()['items'], [])
+        self.assertEqual(self.client.get(base+'?before='+sid).status_code, 404)
         self.client.cookies.clear()
         self.assertEqual(self.client.post(base, json=request()).status_code, 401)
 
@@ -84,6 +110,57 @@ class ApiTests(unittest.TestCase):
 
 
 class HostIntegrationTests(unittest.TestCase):
+    def test_existing_manual_timing_plan_requires_confirmation_and_freezes_saved_arrangement(self):
+        from copy import deepcopy
+        from fastapi.testclient import TestClient
+        from mobile_rehab.server import create_app
+        from mobile_rehab.tests.test_mobile import owner
+        from app.storage import Storage
+        from app.training_plans import new_training_plan
+        with tempfile.TemporaryDirectory(dir=paths()['run']) as directory:
+            app = create_app(directory, pair_key='TEST-timing-host', runner=lambda item: None, rehab_v2=True)
+            with TestClient(app, headers={'X-Rehab-Client': 'mobile-v1'}) as client:
+                client.post('/api/pair', json=dict(code='TEST-timing-host'))
+                initial = live_plan(client)
+                entry = deepcopy(initial['items'][0])
+                entry['settings'].update(target_angle_deg=60., needs_companion=True,
+                    timing_plan=dict(outbound_min_s=1., outbound_max_s=3., return_min_s=1., hold_min_s=.7))
+                record = new_training_plan(initial, 'TEST explicit timing', [entry])
+                storage = Storage(app.state.jobs.root/owner(client)/'assessments.sqlite3')
+                try:
+                    record = storage.save_training_plan(record, expected_revision=0)
+                finally:
+                    storage.close()
+                base = '/api/rehab/v2/sessions'
+                payload = dict(idempotency_key='TEST-timed-create', consent=True, plan_id=record['id'],
+                    expected_plan_revision=record['revision'], entry_key=entry['key'], view='frontal')
+                view = client.get('/api/rehab/v2/plans/'+record['id']).json()
+                self.assertTrue(view['entry_support'][entry['key']]['supported'])
+                self.assertTrue(view['manual_confirmation_required'])
+                self.assertEqual(view['progress']['blocked'], '')
+                denied = client.post(base, json=payload)
+                self.assertEqual(denied.status_code, 409, denied.text)
+                self.assertEqual(denied.json()['detail'], 'manual_training_plan_confirmation_required')
+                payload['training_plan_confirmed'] = True
+                denied = client.post(base, json=payload)
+                self.assertEqual(denied.status_code, 409, denied.text)
+                self.assertEqual(denied.json()['detail'], 'required_companion_confirmation_missing')
+                self.assertEqual(client.get(base).json()['items'], [])
+                self.assertEqual(app.state.rehab_v2.storage._call(lambda conn: conn.execute(
+                    'SELECT COUNT(*) FROM rehab_v2_sessions').fetchone()[0]), 0)
+                payload.update(companion_confirmed=True, timing_plan=dict(hold_min_s=0.), target_reps=999)
+                created = client.post(base, json=payload)
+                self.assertEqual(created.status_code, 200, created.text)
+                item = created.json()
+                self.assertEqual(item['frozen_plan']['plan']['timing_plan'], record['items'][0]['settings']['timing_plan'])
+                self.assertEqual(item['frozen_plan']['plan']['target_reps'], entry['settings']['target_reps'])
+                self.assertTrue(item['frozen_plan']['plan']['training_plan_confirmed'])
+                self.assertEqual(client.post(base, json=payload).json()['session_id'], item['session_id'])
+                finished = client.post(base+'/'+item['session_id']+'/finish', json=dict(
+                    idempotency_key='finish', expected_revision=0, reason='user_stopped'))
+                self.assertEqual(finished.status_code, 200, finished.text)
+                self.assertEqual(finished.json()['completed_reps'], 0)
+
     def test_real_host_auth_existing_auto_plan_and_legacy_live_stays_preview(self):
         from fastapi.testclient import TestClient
         from mobile_rehab.server import create_app
@@ -92,12 +169,9 @@ class HostIntegrationTests(unittest.TestCase):
             app = create_app(directory, pair_key='TEST-host-qualification', runner=lambda item: None, rehab_v2=True)
             with TestClient(app, headers={'X-Rehab-Client': 'mobile-v1'}) as client:
                 self.assertEqual(client.post('/api/pair', json={'code': 'TEST-host-qualification'}).status_code, 200)
-                add_assessment(client)  # Original fixture: isolated existing schema, not fabricated real patient data.
-                plan = client.post('/api/plan', json=SCREEN)
-                self.assertEqual(plan.status_code, 200, plan.text)
-                plan = plan.json()
+                plan = live_plan(client)
                 payload = dict(idempotency_key='formal-create', consent=True, plan_id=plan['id'],
-                    expected_plan_revision=plan['revision'], entry_key=plan['items'][0]['key'])
+                    expected_plan_revision=plan['revision'], entry_key=plan['items'][0]['key'], view='frontal')
                 response = client.post('/api/rehab/v2/sessions', json=payload)
                 self.assertEqual(response.status_code, 200, response.text)
                 sid = response.json()['session_id']
@@ -108,7 +182,106 @@ class HostIntegrationTests(unittest.TestCase):
                 self.assertEqual(finished.json()['completed_reps'], 0)
                 self.assertEqual(client.get('/api/rehab/v2/sessions/'+sid+'/commit').json()['receipt'], finished.json())
                 # New explicit namespace is not projected into legacy history/progress.
-                self.assertEqual(client.get('/api/plan').json()['progress']['next_key'], plan['items'][0]['key'])
+                self.assertIsNone(client.get('/api/plan').json()['plan'])
+                formal = client.get('/api/rehab/v2/plans/'+plan['id']).json()
+                self.assertEqual(formal['progress']['next_key'], plan['items'][0]['key'])
+                self.assertEqual(formal['progress']['completed'], 0)
+
+    def test_replay_plan_and_unconfirmed_camera_view_cannot_be_relabelled_as_live(self):
+        from fastapi.testclient import TestClient
+        from mobile_rehab.server import create_app
+        from mobile_rehab.tests.test_mobile import add_assessment, SCREEN
+        with tempfile.TemporaryDirectory(dir=paths()['run']) as directory:
+            app = create_app(directory, pair_key='TEST-scope-host', runner=lambda item: None, rehab_v2=True)
+            with TestClient(app, headers={'X-Rehab-Client': 'mobile-v1'}) as client:
+                client.post('/api/pair', json=dict(code='TEST-scope-host'))
+                add_assessment(client)
+                replay_plan = client.post('/api/plan', json=SCREEN).json()
+                payload = dict(idempotency_key='TEST-source-gate', consent=True, plan_id=replay_plan['id'],
+                    expected_plan_revision=replay_plan['revision'], entry_key=replay_plan['items'][0]['key'], view='frontal')
+                result = client.post('/api/rehab/v2/sessions', json=payload)
+                self.assertEqual(result.status_code, 409, result.text)
+                self.assertEqual(result.json()['detail'], 'actual_input_does_not_match_plan_scope')
+                plan = live_plan(client)
+                payload.update(plan_id=plan['id'], expected_plan_revision=plan['revision'])
+                del payload['view']
+                result = client.post('/api/rehab/v2/sessions', json=payload)
+                self.assertEqual(result.status_code, 400, result.text)
+                self.assertEqual(result.json()['detail'], 'camera_view_confirmation_required')
+                self.assertEqual(client.get('/api/rehab/v2/sessions').json()['items'], [])
+
+    def test_v2_completed_sets_feedback_and_original_policy_allow_next_entry_once(self):
+        from fastapi.testclient import TestClient
+        from PIL import Image
+        from app.rehab_v2.evidence import EvidenceFrame, MetricEvidence
+        from mobile_rehab.server import create_app
+        with tempfile.TemporaryDirectory(dir=paths()['run']) as directory:
+            app = create_app(directory, pair_key='TEST-progress-host', runner=lambda item: None, rehab_v2=True)
+            with TestClient(app, headers={'X-Rehab-Client': 'mobile-v1'}) as client:
+                client.post('/api/pair', json=dict(code='TEST-progress-host'))
+                plan = live_plan(client, both_sides=True)
+                service, base = app.state.rehab_v2, '/api/rehab/v2/sessions'
+                # Deterministic pose-provider injection ONLY in this isolated
+                # HTTP test. Source time is still the actual server receipt
+                # timeline, not a substituted replay/processing clock.
+                def provider(value, runtime):
+                    seq, stamp = value['seq'], value['source_time_s']
+                    angle = 0. if seq <= 30 or (seq-31)%20 >= 10 else 70.
+                    metric = MetricEvidence(angle, 'degree', True, None, 'observed', stamp, stamp, 0.,
+                                            tuple(runtime.engine.spec['required_joints']))
+                    return EvidenceFrame(seq, stamp, runtime.context.epoch, 'TEST-person', 'coco17-v1',
+                        'TEST-http-fixed-pose', (320, 240), {'raise_deg': metric}, 'VALID', 'browser-camera')
+                service.inference_provider = provider
+                payload = dict(idempotency_key='TEST-plan-start', consent=True, plan_id=plan['id'],
+                    expected_plan_revision=plan['revision'], entry_key=plan['items'][0]['key'], view='frontal')
+                created = client.post(base, json=payload)
+                self.assertEqual(created.status_code, 200, created.text)
+                sid = created.json()['session_id']
+                stream = BytesIO()
+                Image.new('RGB', (320, 240), 'white').save(stream, format='JPEG')
+                for seq in range(1, 91):
+                    response = client.post(base+'/'+sid+'/frames', content=stream.getvalue(),
+                        headers={'content-type': 'image/jpeg', 'x-rehab-event-id': 'TEST-progress-frame-'+str(seq),
+                                 'x-rehab-seq': str(seq)})
+                    self.assertEqual(response.status_code, 200, response.text)
+                    service.frames.join()
+                    time.sleep(.05)
+                finished = client.post(base+'/'+sid+'/finish', json=dict(idempotency_key='finish', expected_revision=0))
+                self.assertEqual(finished.status_code, 200, finished.text)
+                self.assertEqual(finished.json()['completed_reps'], 3)
+                self.assertTrue(client.get(base+'/'+sid+'/commit').json()['plan_contribution']['plan_completed'])
+                endpoint = '/api/rehab/v2/plans/'+plan['id']
+                self.assertTrue(client.get(endpoint).json()['progress']['blocked'])
+                next_payload = dict(payload, idempotency_key='next-entry', entry_key=plan['items'][1]['key'])
+                self.assertEqual(client.post(base, json=next_payload).status_code, 400)
+                feedback = dict(idempotency_key='feedback', expected_revision=0, feedback=dict(pain=0, fatigue=2, reason='completed'))
+                self.assertEqual(client.post(base+'/'+sid+'/feedback', json=feedback).status_code, 200)
+                self.assertEqual(client.post(base+'/'+sid+'/feedback', json=feedback).status_code, 200)
+                progress = client.get(endpoint).json()['progress']
+                self.assertEqual(progress['completed'], 1)
+                self.assertEqual(progress['blocked'], '')
+                self.assertEqual(progress['next_key'], plan['items'][1]['key'])
+                started = client.post(base, json=next_payload)
+                self.assertEqual(started.status_code, 200, started.text)
+                second_sid = started.json()['session_id']
+                self.assertEqual(client.post(base, json=payload).json()['session_id'], sid)  # Lost create response.
+                self.assertEqual(len(client.get(base).json()['items']), 1)
+                client.post(base+'/'+second_sid+'/finish', json=dict(idempotency_key='stop-second', expected_revision=0))
+                self.assertEqual(client.post(base+'/'+sid+'/feedback', json=dict(idempotency_key='discomfort',
+                    expected_revision=1, feedback=dict(pain=1, fatigue=2, reason='discomfort'))).status_code, 200)
+                new_plan = live_plan(client, both_sides=True)
+                fresh_payload = dict(payload, idempotency_key='new-plan-after-pain', plan_id=new_plan['id'],
+                    expected_plan_revision=new_plan['revision'])
+                self.assertEqual(client.post(base, json=fresh_payload).status_code, 400)
+                self.assertTrue(client.get('/api/rehab/v2/plans/'+new_plan['id']).json()['progress']['blocked'])
+                # Known IDs do not grant history or plan access to another paired user.
+                other = TestClient(app, headers={'X-Rehab-Client': 'mobile-v1'})
+                try:
+                    other.post('/api/pair', json=dict(code='TEST-progress-host'))
+                    self.assertEqual(other.get(endpoint).status_code, 404)
+                    self.assertEqual(other.get(base).json()['items'], [])
+                finally:
+                    other.close()
 
     def test_default_host_does_not_enable_formal_routes(self):
         from fastapi.testclient import TestClient
