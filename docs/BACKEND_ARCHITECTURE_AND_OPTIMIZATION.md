@@ -2,9 +2,9 @@
 
 > 用途：供团队讨论准确性、可靠性和下一轮后端重构。本文不是路演宣传稿，也不是医疗操作指南。
 >
-> 核对日期：2026-10-11。第一阶段源码基准为 `1463929`；本次增量相对于上轮 `64b0b15`，以本文件所在交付提交为准。电脑端与托管手机产品版本仍为 0.20.0，现有 APK 安装包仍为 0.2.1。第 4–15 节主要描述原产品路径；第 17 节补充新增康复 v2、历史／计划贡献、时间测量与离线训练，第 18 节给出可执行的优化实验。
+> 核对日期：2026-10-11。已提交源码基准为 `23696de7a35a47d8227e026fea25cf79fb62a6d0`，包含第一阶段 `1463929` 和后续 v2 历史、贡献与时间算法。电脑端与托管手机产品版本为 0.20.0，现有 APK 安装包为 0.2.1。第 4–15 节描述原产品路径；第 17 节说明 opt-in 康复 v2 与研究模型；第 18–20 节用于定位代码、设计优化和验证实验。
 >
-> 本轮按后端任务书接通 v2 贡献和原时间算法，未修改 UI、原医疗／剂量规则、个人数据库或安装包。下文的“源码实现”“已验证”“用户端已接通”是不同结论；原只读文档核对保留在 [文档核对记录](validation/BACKEND_DOCUMENT_AUDIT_2026-10-11.md)，最新工程验证见 [时间与贡献验收](validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。
+> 本轮只整理文档，不实施算法修改，不改 UI、业务、数据、服务或安装包。工作区另有尚未提交的 v2 推理子进程与故障保护，单列在 17.5.1；不把它当作已发布能力，也不捎带提交。下文的“源码实现”“工程测试通过”“用户端已接通”“真人准确性已验证”是四种不同结论。此次核对范围见 [文档刷新记录](validation/BACKEND_MAP_REFRESH_2026-10-11.md)，已提交后端工程验证见 [时间与贡献验收](validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。
 
 ## 1. 先看结论
 
@@ -22,7 +22,7 @@
 - 串行队列、超时后的写入、多个存储之间的非原子提交，是“界面没反应”“失败后重试重复”的重要排查方向。
 - 已有回归测试证明部分规则和接口可运行；尚不能证明真人动作角度、跌倒或疾病风险的准确率。
 
-建议阅读顺序：第 2–3 节看架构与信息如何流动，第 4–11 节查具体功能，第 12–15 节查原路径的优化与验证方案，第 17–18 节看最新后端工作和下一轮实验。文中的功能是业务能力级划分，不是把每个内部辅助函数列为一个产品功能。
+建议阅读顺序：第 2–3 节看架构与信息如何流动，第 4–11 节查具体功能，第 12–15 节查跨端差异和验证方案，第 17 节看 v2 后端，第 18–20 节选择实验、定位代码和判断优化效果。文中的功能按业务能力划分，不把每个内部辅助函数都列为一个产品功能。
 
 ### 1.1 功能查找与相互依赖
 
@@ -44,6 +44,20 @@
 | 离线训练与模型评价 | 有许可的数据、独立标签、冻结划分 | 特征、基线／TCN训练、明确 run 评估、领域门控 | 研究模型卡与验证报告；不自动上线 | 17.7–17.9 |
 
 其中最重要的依赖是：**输入与身份正确 → 指标含义正确 → 相位／计次可信 → 评估可用 → 计划有依据 → 训练事实只提交一次 → 反馈与进度一致**。上游出错，下游增加规则或换语言模型不能自动补救。
+
+### 1.2 这份文档怎样用于优化
+
+| 你遇到的现象 | 先看哪一层 | 不宜先做什么 |
+| --- | --- | --- |
+| 骨架抖动、左右混淆、被旁人抢占 | 4.3–4.4 的模型、骨架契约与焦点 | 直接调计次阈值掩盖点错误 |
+| 骨架看起来对，但角度偏大／偏小 | 4.5 的参考轴、机位、基线 | 将模型 confidence 当角度误差保证 |
+| 次数漏记、半次也算、提示慢一拍 | 5.2–5.3、17.2–17.5 的相位和时间 | 只改提示文字或取消全部证据检查 |
+| 评估有结果，计划却不可用 | 5.4–5.6、17.6 的来源、筛查和版本绑定 | 回退过去最好成绩或自动代填自评 |
+| 返回失败，重试后重复／进度不一致 | 11、17.5–17.6 的提交与回执 | 把 HTTP 超时直接当成未保存 |
+| 手机、电脑对同一视频结果不同 | 2、12 的模型和规则差异 | 混拼两个端的角度与功率曲线 |
+| 管家记错对象、时间或药物情况 | 8–10 的语义、事件与确认 | 用更自然的回答掩盖错误事实 |
+
+每项优化最好一次只改变一层，保存对照版本和同一组独立输入。先定位错误，再选择滤波、状态机、模型或持久化的改动；第 20 节给出最小实验记录。
 
 ## 2. 三种运行方式：代码复用，不等于能力相同
 
@@ -136,6 +150,55 @@ Observation → 场景／动作状态机         result.json                本�
 | 历史／管家 | 受作用域限制的记录和计划快照 | 只读解释，不新增一次测量或训练 |
 
 以“本人某时已服药”接逐次记录为例：原话 → 人物／时间／状态解析 → 匹配已保存 medId 与当天 time → pending workflow → 明确确认 → 再核对药物原说明与原逐次状态 → `medId|date|time` 业务事实与同事务 receipt → 页面／管家查询实际提交。任一环节存在歧义，不应通过猜药名、猜时间或猜对象补齐。
+
+### 3.5 原产品实际调用链：从文件定位到结果
+
+下面是职责顺序，不是声称所有调用都在同一进程或同一事务。
+
+```text
+电脑实时康复
+  runtime.py / scene_controller.py：选场景、本人、动作、机位和运行上下文
+    → camera_manager.py / source_worker.py：所属采集进程、FramePacket
+    → vision.py / landmark_backend.py：PoseFrame
+    → quality.py / geometry.py / axial_geometry.py：Observation、逐指标 valid/reason
+    → rehab.py / training.py / movement_timing.py：相位、次数、组次、时间
+    → guidance.py：下一步指令，不能反向修改观测事实
+    → storage.py：session、逐次、配置与算法快照
+    → assessment.py：本人／来源／情境下各动作侧别的最新评估
+    → automatic_plans.py / training_plans.py：建议、保存和使用校验
+    → 训练记录 + 自评 → program_progress / 下一项资格
+
+电脑托管手机录像
+  server.py：认证、上传、创建 job、绑定当前档案
+    → 分析子进程 analyzer.py
+       ├─康复：复用原 CameraManager / SceneController / Storage
+       ├─健身：fitness_analyzer.py → fitness.py；可选 barbell.py
+       └─体态：posture_analyzer.py → posture.py
+    → result.json / error.json + job 状态
+    → 普通历史与报告；康复可另引用 SQLite session_id
+
+独立 APK
+  local-api.js：适配原页面操作
+    → worker.js：本地 MediaPipe 关键点
+    → engine.js / motion.js：手机动作／训练／健身／体态规则
+    → store.js：本地业务状态与媒体持久化
+    → 按需通过原生受限连接 → phone_cloud.py：摘要／文字备份
+```
+
+关键差别：康复录像可能同时生成 SQLite 事实和作业 `result.json`；健身／体态作业不因此变成一份康复评估。APK 的本地报告也不会自动进入电脑患者库。判断“全部保存成功”必须核对对应路径的权威记录，而不是只看一个通用 `done`。
+
+### 3.6 健康、康复和管家在哪里相接，哪里没有自动相接
+
+| 上游 → 下游 | 当前传递内容 | 当前没有做的自动推断 |
+| --- | --- | --- |
+| 康复历史／计划 → 管家 | 受 owner、来源与情境限制的只读工具结果 | 不因查询制造新的测量或训练完成事实 |
+| 健康对话 → 健康趋势 | 经理解接受的事实、来源、日期、状态和权限 | 不把所有聊天句子都当本人已发生事实 |
+| 健康档案 → 康复计划 | 本人限制、已确认筛查等原计划输入 | PersonTwin／Finding 不自动变成病种诊断、禁忌或新剂量 |
+| 训练自评 → 下一项资格 | 已保存的疼痛／疲劳／不适结束与计划版本 | 摄像头不代填疼痛；空值不当作 0 |
+| 调度 → 训练 | 既有计划的安排日期／时间 | 改期不启动训练、不改目标、不改变原评估 |
+| 健康／康复／用药 → 家庭 | 分类授权后投影的摘要、真实可见状态 | 不把整库或私密原话直接外发 |
+
+因此，后续若要做“长期步态变化调整康复安排”，需要新增并审核一条明确的决策链：有效步态事件 → 变化证据 → 专业适用条件 → 原计划审核／调整。现在不能从一个风险分数直接跳到加量或治疗方案。
 
 ## 4. 采集、双摄、模型和测量
 
@@ -661,6 +724,33 @@ JSON 原子替换可降低半写文件风险，但没有跨文件事务，也不
 
 建议为每条请求贯穿 `trace_id + owner + job/session/request_id + algorithm_contract`；记录排队时间、解码、推理、规则处理、持久化、总延迟和取消状态。正常日志不要存原始健康对话或凭证。
 
+### 11.2.1 六种状态不能合并成“成功”
+
+| 状态 | 它实际证明什么 | 它不证明什么 |
+| --- | --- | --- |
+| 请求已接收／帧 accepted | 身份、格式和接收记录通过该入口校验 | 图像已被模型处理、动作已被确认 |
+| 帧 processed | 对应帧已完成该后端处理和检查点 | 每个关节都可测、整次动作已经完成 |
+| 动作 completed | 按当前版本规则取得了完整动作证据 | 幅度／节奏全部达标、没有代偿 |
+| session finalized／canonical commit | 权威最终事实及该路径要求的事务已提交 | 派生报告、家庭通知已送达 |
+| report ready | 报告由已保存结果派生成功 | 测量具备临床准确度 |
+| plan complete／next eligible | 对应计划版本和继续规则的条件成立 | 已诊断恢复、可以自动增加剂量 |
+
+原路径与 v2 的字段名称不同，不能把此表当成已经统一的枚举。该表用于设计接口适配和对账：保存链路失败时，必须说明停在哪一层，不能让页面自己猜。
+
+### 11.2.2 哪些地方有事务，哪些地方还需要对账
+
+| 边界 | 当前保证 | 发生中断后应查什么 |
+| --- | --- | --- |
+| 原康复 Storage 内的会话保存 | 同一 SQLite owning thread 的对应事务 | session、逐次、配置快照是否一起存在 |
+| v2 最终事实 → 唯一计划贡献 | 同事务，终结重试找回 canonical commit | commit_id、snapshot digest、contribution 及 ordinal |
+| DailyStore 业务变化 → Care 回执 | 宿主业务提交与 receipt 同事务 | 原事实、逐步回执，不能重做已成功步骤 |
+| SQLite 会话 → 上传作业 result 文件 | 不是跨文件原子事务 | job 引用的 session_id、文件内容与实际库状态 |
+| 产品不同 JSON 文件之间 | 每文件替换／备份，不是跨文件事务 | 各 key 的版本、原事实和派生状态是否一致 |
+| APK 业务 JSON → IndexedDB 原件 | 不是单个 SQL 事务 | 记录是否可读、原文件是否存在、是否成为孤儿 |
+| 本地通知账本 → 外部渠道 | 渠道状态与回执分阶段 | 本地 pending 与外部 delivered，是否有真实送达证据 |
+
+建议后续建立“权威事实 → 可重建派生物”的对账器，而不是让报表、页面缓存和队列都成为独立事实源。当前 v2 派生报告已经部分遵循这个模式；不能据此说整个项目都已实现事务性 outbox 或恰好一次外部投递。
+
 ### 11.3 当前安全机制与未覆盖部分
 
 - 托管网页有连接码／签名 cookie、HttpOnly／SameSite、请求头约束、部分限流、CSP 与禁止缓存；绑定后不能随意改 owner。
@@ -830,6 +920,8 @@ JSON 原子替换可降低半写文件风险，但没有跨文件事务，也不
 
 新增 v2 第一阶段记录为新后端 49 项、旧康复 12 项、旧手机接口 19 项通过；文档核对期间曾记录未提交增量的 61 项。最新完整运行 `verification-3b62b733` 为新后端 74 项、旧康复 12 项、旧手机接口 19 项通过，包含历史／贡献、显式时间安排与手动计划绑定；独立会话 CLI 44 项是其中子集。1308 个受保护文件与原基准 hash 相同。详见 [实施报告](../reports/rehab_backend/IMPLEMENTATION_REPORT.md) 和 [最新验收](validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。
 
+上段的“最新”指已提交 `23696de` 的范围。当前工作区另有尚未提交的推理隔离扩展，现存运行 `verification-1de72179` 为新后端 91 项、旧康复 12 项、旧手机接口 19 项通过，1308 文件一致；本次只读取并逐份核对日志 SHA256，未重新运行这些测试，也不把工作区报告捎带发布。新增测试包括真实所属子进程挂起／退出／释放、共享缓冲区和失效后拒收；大量输入仍是工程夹具，真实 YOLO 接口样例是无人白图，不能当真人准确性数据。准确边界与指纹见 [此次核对](validation/BACKEND_MAP_REFRESH_2026-10-11.md)。
+
 以上是有日期和范围的验证，本轮没有重跑全部产品／Android／Agent 回归。它们不能替代真人角度／器械精度、疾病预测、公网、手环、相机和红米实机验收，也不能互相累加成一个“总准确率”。原产品细节见 [本机同步验证](validation/GITHUB_SYNC_2026-10-11.md)。
 
 相关测试目录：
@@ -856,9 +948,10 @@ JSON 原子替换可降低半写文件风险，但没有跨文件事务，也不
 
 | 内容 | 当前状态 | 用户端状态 |
 | --- | --- | --- |
-| 三动作协议、指标级证据、组次、提示事件、正式会话和离线训练 | 第一阶段 `1463929`，本轮继续完善；默认不启用 | 未接正式页面／APK；原用户路径不替换 |
-| v2 分页历史、唯一计划贡献、同事务保存、跨计划版本的反馈继续校验 | 本次交付；同一轮 74 项新后端回归覆盖 | 仅后端 opt-in 路径，尚未接页面 |
-| 出程／回程／保持时间、原手动保存计划绑定 | 本次接通原时间算法和保存契约；不新增剂量 | 仅 v2 API；不改变旧客户端报告 |
+| 三动作协议、指标级证据、组次、提示事件、正式会话和离线训练 | 第一阶段 `1463929`，后续增量已提交至 `23696de`；默认不启用 | 未接正式页面／APK；原用户路径不替换 |
+| v2 分页历史、唯一计划贡献、同事务保存、跨计划版本的反馈继续校验 | 已提交 `23696de`；74 项新后端回归覆盖该版本 | 仅后端 opt-in 路径，尚未接页面 |
+| 出程／回程／保持时间、原手动保存计划绑定 | 已提交 `23696de`；复用原时间算法和保存契约，不新增剂量 | 仅 v2 API；不改变旧客户端报告 |
+| 默认 YOLO 所属子进程、共享内存、失败拒收与关闭重试 | 当前工作区未提交；见 17.5.1 | 本次只说明状态，不发布代码、不启用服务 |
 | 全 53 动作迁移、手机 RGB 域质量模型、姿态模型微调、通用训练处方 | 未完成 | 不能作为当前可演示功能 |
 
 `create_app(..., rehab_v2=True)` 才安装新 API 并初始化新库；默认 `False`。YAML 的开关声明不能单独启动服务，本文也没有启动／切换服务。原 `/api/live` 仍是实时预览，删除预览不自动新增正式记录。
@@ -929,7 +1022,7 @@ JSON 原子替换可降低半写文件风险，但没有跨文件事务，也不
 
 #### 17.4.1 节奏与保持怎样计算、怎样保存
 
-本次接通原 [movement_timing.py](../rehab_codex_single_camera_v2_1/app/movement_timing.py)，未修改原算法；新 [timing.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/timing.py) 加入 `rehab-observed-timing-2` 封套、原算法版本 `observed-timing-1`、time_basis、样本数与首末／站起／开始回坐／坐回证据引用。计划只消费已明确保存的 `outbound_min_s/max_s、return_min_s/max_s、hold_min_s`，缺失不自动填训练要求。
+提交 `23696de` 接通原 [movement_timing.py](../rehab_codex_single_camera_v2_1/app/movement_timing.py)，未修改原算法；新 [timing.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/timing.py) 加入 `rehab-observed-timing-2` 封套、原算法版本 `observed-timing-1`、time_basis、样本数与首末／站起／开始回坐／坐回证据引用。计划只消费已明确保存的 `outbound_min_s/max_s、return_min_s/max_s、hold_min_s`，缺失不自动填训练要求。
 
 ```text
 肩／康复深蹲：仅完整、连续观察的往返结束后
@@ -978,13 +1071,41 @@ JSON 原子替换可降低半写文件风险，但没有跨文件事务，也不
 
 收尾最多等待 2 秒，不无限等慢推理；接收、处理、保存序列分开，覆盖／未处理帧记录原因。相同请求键与相同载荷返回旧回执，同键换载荷冲突。结束后的晚结果不改最终快照；报告失败不撤销已经提交的训练事实。
 
-持久库采用独立 `rehab-v2.sqlite3`，复用原 Storage 的 owning thread；原 SQLite `user_version=4` 不变，v2 namespace 单独迁移和备份。v2 第一阶段 namespace 为 1，本次贡献扩展为 2。真实进程退出后保留已确认次数，未确认动作不补完整；重开终结为 interrupted，清空实时保持，不自动恢复一段无法保证连续性的动作。
+持久库采用独立 `rehab-v2.sqlite3`，复用原 Storage 的 owning thread；原 SQLite `user_version=4` 不变，v2 namespace 单独迁移和备份。v2 第一阶段 namespace 为 1，`23696de` 的贡献扩展为 2。真实进程退出后保留已确认次数，未确认动作不补完整；重开终结为 interrupted，清空实时保持，不自动恢复一段无法保证连续性的动作。
 
-代码：[service.py](../mobile_rehab/rehab_v2/service.py)、[sessions.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/sessions.py)、[cues.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/cues.py)。推理／报告仍为线程；硬挂起的进程隔离、磁盘满与真实损坏恢复尚未完整验收。
+代码：[service.py](../mobile_rehab/rehab_v2/service.py)、[sessions.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/sessions.py)、[cues.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/cues.py)。已提交 `23696de` 的推理／报告仍为线程；当前工作区默认推理已改为以下所属子进程方案。报告仍是线程，磁盘满与真实损坏恢复尚未完整验收。
+
+#### 17.5.1 工作区未提交：推理隔离和故障保护
+
+这是读取到的工作区实现，不是本次文档任务新增的功能。暂未提交的文件为 `mobile_rehab/rehab_v2/pose_worker.py`，另有 `service.py` 和相关测试的修改；GitHub 已提交基准不含这个文件。下述数值来自当前类默认值，不是 YAML 会自动加载的运行设置。
+
+```text
+宿主会话：owner / session / source_epoch / control_epoch / seq / 源时间
+  → 有界 JPEG 共享缓冲区 + 小型 JSON 通知
+  → 一份所属 spawn 子进程：解码 → 原 VisionWorker / YOLO
+  → 有界 JSON 姿态共享缓冲区 + 长度／SHA256 通知
+  → 宿主核对 ticket、Context、seq、源时间和载荷
+  → 再核对控制／结束 epoch → EMA → MetricEvidence → 状态机 → 保存
+```
+
+| 项目 | 当前工作区实现 | 不能扩大成的保证 |
+| --- | --- | --- |
+| 资源职责 | 子进程只解码、推理；宿主持有业务状态、时钟、EMA 和数据库 | 没有将所有慢业务或全部产品进程隔离 |
+| 传输容量 | JPEG 512 KiB；姿态 JSON 4 MiB；总共享内存 4.5 MiB；通知≤4 KiB | 不是整个模型内存或服务总内存只有 4.5 MiB |
+| 超时预算 | 启动握手 10 s，首个冷推理 30 s，热推理 5 s；终止／强杀各等待 1 s | 握手预算从 Process.start 返回后计；未证明 OS 创建调用本身有硬截止 |
+| 时间契约 | 子进程报告自身阶段耗时；证据源时间与年龄由宿主负责 | 不相减两个进程时钟，不把接收时间说成曝光时间 |
+| 超时／退出 | 终止准确的所属 Process 并确认退出，失败原因保留；后续新任务可重建 | 不杀其他服务，不宣称错误动作已经完成 |
+| 清理 | 成功调用后清空传输缓冲；失败时确认退出后关闭共享内存／管道 | 不宣称成功存活模型内部的全部 RAM 都被逐字节清零 |
+| 未确认释放 | 保留所属句柄、隔离资源，重试释放前不另起一份泄漏的进程 | 没有“返回关闭成功但旧进程还活着”的承诺 |
+| 持久化故障 | 帧消费者失败后记录运行态 failure，拒绝新帧／新建，返回 backend_execution | 失效数据库中的故障记录不保证已保存；不把草稿说成最终提交 |
+| 暂停／结束 | 晚结果先核对 epoch；结束先保存不可变事实，再取消当前 sid 的在途推理 | 不让旧失败终止已经恢复的新控制上下文 |
+| 关闭重试 | 未确认释放不关闭仍可能被使用的存储；资源后来释放后可再次关闭 | 报告线程硬挂起仍不能安全强杀；实际磁盘满／损坏还待测 |
+
+17 项隔离测试是 91 项工作区回归的子集。它们能说明这些指定工程场景的行为，不能证明模型对真人、手机长运行、未知原生死锁或真实硬盘故障全部可靠。尚缺全链路 trace、负载下阶段 p50／p95、报告硬隔离和真实存储故障验收。
 
 ### 17.6 本次增量：事实怎样贡献到历史和计划
 
-以下为本次后端交付，不是原页面已经可见的行为。
+以下已包含在提交 `23696de`，不是原页面已经可见的行为。
 
 新增 `rehab_v2_plan_contributions`，一条最终事实按 `session_id + plan_id + plan_revision + entry_key` 唯一关联。贡献和最终事实在同一事务中保存；写贡献失败会一起回滚，不出现“训练保存了但计划凭空完成”。贡献保存实际来源、scope、原计划引用 digest、视觉快照 digest、完成次数／组数、完成状态和排除原因。
 
@@ -1106,3 +1227,133 @@ TCN 感受野 `R = 1 + 2×(3−1)×(1+2+4+8) = 61` 步。20 Hz 名义采样下�
 6. 上线决定：达到预先约定的工程／专业审核条件才灰度启用，保留旧路径和回退；不能以单次演示成功取代验证。
 
 对当前项目，我建议首先做**准备／恢复证据、参考轴与时间、正式事实的绑定／提交**；再基于授权同域数据优化姿态和质量模型。管家与健康趋势的语义问题单独修复，不与视觉模型训练混成一个“整体准确率”。
+
+## 19. 代码导航：具体优化应该从哪里动手
+
+这里列的是后端职责入口，不要求重写全部文件。当前未提交的推理隔离单列在 17.5.1；下面其余位置来自已提交源码。页面如何显示不属于本轮范围。
+
+### 19.1 视觉、动作和训练
+
+| 功能／层 | 主要实现位置 | 输入 → 输出 | 改动时必须一起核对 |
+| --- | --- | --- | --- |
+| 输入时钟／帧连续性 | [source_worker.py](../rehab_codex_single_camera_v2_1/app/source_worker.py)、[domain.py](../rehab_codex_single_camera_v2_1/app/domain.py) | 设备／文件 → 带 Context、seq、time_basis 的 FramePacket | 原媒体时间、断流、负首帧兼容、上下文，不用推理耗时替代源时间 |
+| 相机释放／双摄配对 | [camera_manager.py](../rehab_codex_single_camera_v2_1/app/camera_manager.py)、[dual_camera.py](../rehab_codex_single_camera_v2_1/app/dual_camera.py) | 两路独立帧 → 有配对质量的主／辅输入 | 设备身份、一次消费、接收时差、旧所属进程退出 |
+| 模型推理／骨架契约 | [vision.py](../rehab_codex_single_camera_v2_1/app/vision.py)、[landmark_backend.py](../rehab_codex_single_camera_v2_1/app/landmark_backend.py)、[landmark_schemas.py](../rehab_codex_single_camera_v2_1/app/landmark_schemas.py) | 图像 → 点／置信度／跟踪／模型和坐标契约 | 模型 hash、关节顺序、左右侧、坐标、不同后端域，不只替换权重 |
+| 焦点／滤波／可观测性 | [quality.py](../rehab_codex_single_camera_v2_1/app/quality.py) | PoseFrame → Observation | 换人重置、跳变、缺测不补、滤波滞后和辅助指标独立性 |
+| 测量公式／动作参考 | [geometry.py](../rehab_codex_single_camera_v2_1/app/geometry.py)、[axial_geometry.py](../rehab_codex_single_camera_v2_1/app/axial_geometry.py)、[exercises.py](../rehab_codex_single_camera_v2_1/app/exercises.py) | 可见必要点 + 起点 → 指标 value／valid／reason | 内角／屈曲区别、参考轴、baseline、方向和 measurement version |
+| 旧相位／计次 | [rehab.py](../rehab_codex_single_camera_v2_1/app/rehab.py) | 连续 Observation → 相位、完成次、部分次 | 准备、阈值滞回、驻留、半次、坐站重装和失踪转折 |
+| 旧训练／时间／提示 | [training.py](../rehab_codex_single_camera_v2_1/app/training.py)、[movement_timing.py](../rehab_codex_single_camera_v2_1/app/movement_timing.py)、[guidance.py](../rehab_codex_single_camera_v2_1/app/guidance.py) | 动作证据 + 明确计划 → 组次／节奏／下一步 | 时间因果性、暂停、连续保持、提示取消，不能新增剂量 |
+| 会话编排 | [runtime.py](../rehab_codex_single_camera_v2_1/app/runtime.py)、[scene_controller.py](../rehab_codex_single_camera_v2_1/app/scene_controller.py) | 控制命令 + 观测 → 当前场景与保存请求 | 一次主要场景、Context、未保存结果、停止与生命周期 |
+| 评估／建议／计划 | [assessment.py](../rehab_codex_single_camera_v2_1/app/assessment.py)、[automatic_plans.py](../rehab_codex_single_camera_v2_1/app/automatic_plans.py)、[training_plans.py](../rehab_codex_single_camera_v2_1/app/training_plans.py) | 最新同作用域评估 + 条件 → 版本化建议／计划／继续资格 | 最新失败、7 天证据、筛查、自评、原 reference、revision 和顺序 |
+| 历史可比性／导出 | [longitudinal.py](../rehab_codex_single_camera_v2_1/app/longitudinal.py)、[reports.py](../rehab_codex_single_camera_v2_1/app/reports.py) | 保存快照 → 比较、图表、文件 | 未知条件、具体证据与含义契约分开、缺测断线和导出一致性 |
+| v2 证据／协议／组次 | [evidence.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/evidence.py)、[engine.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/engine.py)、[rounds.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/rounds.py) | 有时钟与来源的指标 → 三动作确认／组次 | observed／predicted 区别、准备姿势、epoch、age、缺口和质量独立 |
+| v2 正式事实／贡献 | [sessions.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/sessions.py)、[progress.py](../rehab_codex_single_camera_v2_1/app/rehab_v2/progress.py)、[service.py](../mobile_rehab/rehab_v2/service.py) | 幂等操作 + 冻结计划 → 权威事实／贡献／自评／报告 | 相同键冲突、CAS、同事务、晚结果、报告可重建；service 工作区状态见 17.5.1 |
+| 托管录像／作业 | [server.py](../mobile_rehab/server.py)、[analyzer.py](../mobile_rehab/analyzer.py) | 认证上传 → 子进程分析 → job 与 result／error | owner、限额、来源、SQLite／文件对账、进程超时和失败重试 |
+| 健身动作 | [fitness.py](../mobile_rehab/fitness.py)、[fitness_analyzer.py](../mobile_rehab/fitness_analyzer.py) | 所选动作 + 关键点 → 往返、节奏、附加观察 | 固定动作阈值、局部遮挡、半次与完整次、不是肌肉发力 |
+| 器械运动学 | [barbell.py](../mobile_rehab/barbell.py) | 标尺／跟踪点／质量 + 录像 → 轨迹、导数、外力、功率 | 同平面、采样频率、求导窗口、残差、断跟；质量不代替标尺 |
+| 体态 | [posture.py](../mobile_rehab/posture.py)、[posture_analyzer.py](../mobile_rehab/posture_analyzer.py) | 固定视图 + 连续关键点 → 中位数／MAD／覆盖 | 无人／换人片段、解剖标志缺失、异常方向和专业参考 |
+| 活动／卧室／安全 | [activity.py](../rehab_codex_single_camera_v2_1/app/activity.py)、[bedroom.py](../rehab_codex_single_camera_v2_1/app/bedroom.py)、[safety.py](../rehab_codex_single_camera_v2_1/app/safety.py) | ROI + 当前可见动作 → 状态、事件、人工响应 | 不可见不算正常，卧床与跌倒区分、误报负担、未解决警报 |
+| 银龄支持 | [silver_service.py](../rehab_codex_single_camera_v2_1/app/silver_service.py)、[silver_store.py](../rehab_codex_single_camera_v2_1/app/silver_store.py)、[change_cards.py](../rehab_codex_single_camera_v2_1/app/change_cards.py) | 受权的冻结记录 → 支持／变化卡／人工反馈 | 有界可选任务、作用域、独立存储、不占相机或制造医疗结论 |
+
+### 19.2 健康、管家、调度、手机与基础设施
+
+| 功能／层 | 主要实现位置 | 输入 → 输出 | 改动时必须一起核对 |
+| --- | --- | --- | --- |
+| 产品统一入口 | [ProductService.ts](../ankang/route1-health-agent/src/product/ProductService.ts) | operation + owner + input → 产品事实与快照 | 当前档案、dataMode、权限、未配置端口 unavailable |
+| 对话运行／语义 | [session.ts（AgentRuntime）](../ankang/route1-health-agent/src/runtime/session.ts)、[understanding.ts](../ankang/route1-health-agent/src/engine/understanding.ts)、[elderTurn.ts](../ankang/route1-health-agent/src/engine/elderTurn.ts) | 原话 + 已有上下文 → 接受事实、澄清、回复 | 主语、否定、假设、日期、更正、隐私；调度已复现反例 |
+| 事件归一／每日数据 | [events.ts](../ankang/route1-health-agent/src/pipeline/events.ts)、[normalize.ts](../ankang/route1-health-agent/src/data/normalize.ts) | 有来源的事实 → HealthEvent／每日值 | 稳定 ID、单位、UTC／当地日、测次配对、重复与更正 |
+| 基线／检测／个人摘要 | [baseline.ts](../ankang/route1-health-agent/src/engine/baseline.ts)、[detect.ts](../ankang/route1-health-agent/src/engine/detect.ts)、[personTwin.ts](../ankang/route1-health-agent/src/engine/personTwin.ts) | 日数据 + 主诉 → baseline／Finding／PersonTwin | 覆盖、来源切换、异常值、状态过滤；score 不冒充概率 |
+| 康复只读接入管家 | [rehab_read_tools.py](../rehab_codex_single_camera_v2_1/app/rehab_read_tools.py) | 宿主 scope + 查询 → 已有评估／训练／计划 | owner、source_kind、usage_context、数量边界、不新增事实 |
+| 用药／安排／照护协调 | [CareCoordinator.ts](../ankang/route1-health-agent/src/care/CareCoordinator.ts)、[care_host.py](../rehab_codex_single_camera_v2_1/app/product/care_host.py)、[daily_store.py](../rehab_codex_single_camera_v2_1/app/product/daily_store.py) | 原事实 + 明确确认 → 允许写入及逐步回执 | 药物原说明、第三人、歧义时间、倍量、期限、版本及原子幂等 |
+| Python／Node 串行桥接 | [backend.py](../rehab_codex_single_camera_v2_1/app/product/backend.py)、[client.py](../bridges/ankang/client.py) | 宿主请求 → JSON 行消息／工具回执 → 结果 | 私有回执队列、超时后核对、无界积压、慢任务阻塞 |
+| 语音／OCR | [native_voice.py](../rehab_codex_single_camera_v2_1/app/product/native_voice.py)、[voice_worker.py](../mobile_rehab/voice_worker.py)、[ocr_worker.py](../mobile_rehab/ocr_worker.py) | 受权音频／图片 → 草稿 | 数字／药名错误、大小／时限、本地资源、草稿不等于确认事实 |
+| 图片结构化／资料 | [RealImageHealthParser.ts](../ankang/route1-health-agent/src/adapters/RealImageHealthParser.ts)、[ArchiveService.ts](../ankang/route1-health-agent/src/archive/ArchiveService.ts) | 图片服务候选／原件 → 待确认指标／存档 | 同意、原候选、确认来源、owner、文件与记录一致性 |
+| 家庭／通知／同步 | [NotificationService.ts](../ankang/route1-health-agent/src/notification/NotificationService.ts)、[sync/protocol.ts](../ankang/route1-health-agent/src/sync/protocol.ts)、[phone_cloud.py](../mobile_rehab/phone_cloud.py) | 分类授权 + 摘要 → 可共享视图／账本／备份 | 不混合三套关系存储、撤销、外发真实回执、digest 与 revision |
+| 独立手机算法 | [engine.js](../android_offline/web/engine.js)、[motion.js](../android_offline/web/motion.js)、[barbell.js](../android_offline/web/barbell.js) | MediaPipe + 原媒体时间 → 本地动作／训练／器械报告 | 低频降级、和电脑不同的计次／剂量／求导契约 |
+| 独立手机适配／原生 | [local-api.js](../android_offline/web/local-api.js)、[store.js](../android_offline/web/store.js)、[MainActivity.java](../android_offline/src/cn/tele/rehabilitation/offline/MainActivity.java) | 原页面 API → 手机本地状态／媒体／受限原生操作 | 包内实际资源、可信 origin、熄屏／后台、文件持久化和原生超时 |
+| 研究训练工具 | [README](../tools/rehab_ml/README.md)、[features.py](../tools/rehab_ml/features.py)、[models.py](../tools/rehab_ml/models.py)、[training.py](../tools/rehab_ml/training.py) | 有许可数据 + 独立标签 → 明确 run 与模型卡 | 分人划分、train-only 标准化、test 不调参、Kinect／RGB 不跨域 |
+
+本轮没有将这些模块合并或统一。建议先建立共享契约和测试向量，再决定哪些计算真正需要共享实现；网络、数据库、手机算力边界不能靠统一函数名消失。
+
+## 20. 给下一轮算法优化留一套判断方法
+
+### 20.1 分开看五类准确性
+
+| 层级 | 问题 | 最小参考材料 | 应报告什么 |
+| --- | --- | --- | --- |
+| 感知 | 点是否落在正确人和正确位置 | 独立可见点／人物标注 | 点误差、漏点、错人、左右错误、有效覆盖 |
+| 测量 | 点变成的角／距离是否是想测的量 | 相同定义与机位的几何／专业参考 | MAE、偏差、重复性、机位依赖；缺测单列 |
+| 时间与动作 | 何时离开／到达／回位，算不算一次 | 逐次时间边界和完整／半次标签 | 漏／多计、边界时间误差、错误恢复和提示延迟 |
+| 业务判断 | 该证据能否进入汇总／计划／提醒 | 审核过的输入条件与预期决策 | 错准入、错拒绝、解释依据、继续资格和授权一致性 |
+| 事实可靠性 | 正确结果是否只保存一次、能否重开 | 事务、回执和故障日志 | 丢失、重复、跨人污染、恢复、派生物不一致 |
+
+五类不能平均成一个“系统准确率”。例如点误差降低，但换人次数增加，整体风险可能更大；只减少警告也可能只是降低有效性要求。
+
+### 20.2 建议的评价公式，不是当前已算出的成绩
+
+以下用于下一轮评测。`ŷ` 是后端输出，`y` 是独立参考；单位必须与被评价指标一致，缺测不得补为 0 后加入误差。
+
+```text
+误差 e_i = ŷ_i - y_i
+MAE = mean(|e_i|)
+Bias = mean(e_i)
+RMSE = sqrt(mean(e_i²))
+
+覆盖率 = 输出可评价结果的参考样本数 / 具备参考标签的全部纳入样本数
+  同时报告：未输出原因、不同机位／人群的覆盖；不能只报有效片段误差
+
+逐次事件匹配：先冻结动作定义和允许时间误差，按时间一对一匹配
+  TP：匹配上的真实完整次
+  FP：多计或把半次当完整
+  FN：漏掉真实完整次
+Precision = TP / (TP+FP)
+Recall = TP / (TP+FN)
+F1 = 2TP / (2TP+FP+FN)
+  分母为 0 时注明无可评价样本，不自动记满分
+
+相位边界时间误差 = 输出边界源时间 - 参考边界源时间
+误报警负担 = 误报警次数 / 有效监测小时
+  另报离线／无人覆盖时间，不能用大量未监测时长稀释误报
+
+重复提交率 = 额外产生的同一业务事实数 / 被测试的逻辑操作数
+丢失率 = 未能查回的已确认提交事实数 / 已确认提交事实数
+  原本未确认成功的草稿不计为“已提交丢失”，要另列提交不确定状态
+```
+
+绝对误差、覆盖、事件匹配和存储一致性分别统计。对于角度和力学量，还要比较不同速度／机位下的偏差；对长期风险模型，需要真实结局及独立队列，现有规则的分数不能自作训练真值。
+
+### 20.3 每个实验保留这些信息就能追查结果
+
+下面是一份实验模板，不是现有患者记录，也不是当前全部后端对象已经采用的统一 schema。
+
+```yaml
+experiment_id: <独立实验编号>
+question: <明确到一层，例如“快动作 EMA 延迟是否导致端点时间偏晚”>
+scope:
+  host: <desktop / hosted_web / apk>
+  exercise: <动作与变式>
+  view: <实际机位与采集条件>
+inputs:
+  consent_scope: <允许分析 / 训练 / 分享的具体用途>
+  media_sha256: <原片或授权数据指纹>
+  reference_sha256: <独立标注或仪器参考指纹>
+  participant_split: <按人冻结的 train / val / test>
+versions:
+  git: <完整源码提交>
+  model_and_schema: <权重指纹、关节顺序、坐标定义>
+  measurement_and_protocol: <参考轴、基线、完成规则>
+  filter_and_sampling: <滤波参数、时间基准、降级档位>
+comparison:
+  baseline: <原参数 / 原规则>
+  candidate: <只改变的内容>
+  predeclared_metrics: <误差、覆盖、漏多计、延迟、失败等>
+results:
+  numeric: <分层结果，未知保持空值>
+  failures: <所有失败样本与原因，不删掉坏片>
+decision:
+  enabled: false
+  rationale: <是否满足预先约定条件，是否需要专业复核>
+  rollback: <原版本和切回办法>
+```
+
+第一轮不必大规模训练：先把肩外展、坐站、康复深蹲的准备、完整／半次、遮挡、换人、暂停和保存链跑成可重复的后端用例。确认参考定义、数据和时间可信后，再比较自适应滤波或同域质量模型。这比先扩大模型、然后凭几个成功演示调整阈值更容易判断真实改善。
