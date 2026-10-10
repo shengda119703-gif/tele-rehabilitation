@@ -114,7 +114,7 @@ def main(argv=None):
             started = time.perf_counter()
             arguments = (['-m', 'unittest', 'discover', '-s', 'tests/rehab_backend', '-p', 'test_protocols.py', '-v']
                          if args.command == 'replay' else ['-m', 'unittest', '-v',
-                                                          'test_sessions', 'test_progress', 'test_timing', 'test_isolation', 'test_telemetry', 'test_api'])
+                                                          'test_sessions', 'test_progress', 'test_timing', 'test_isolation', 'test_report_isolation', 'test_telemetry', 'test_api'])
             environment = dict(os.environ)
             environment['PYTHONPATH'] = os.pathsep.join((str(ROOT/'tests/rehab_backend'),
                                                        str(ROOT/'rehab_codex_single_camera_v2_1'), str(ROOT)))

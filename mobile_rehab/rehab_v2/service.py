@@ -21,6 +21,8 @@ from app.rehab_v2.evidence import EvidenceAdapter
 from app.rehab_v2.sessions import SessionError, SessionRepository, identifier
 from app.rehab_v2.telemetry import SessionTelemetry, VERSION as DIAGNOSTICS_VERSION
 from .pose_worker import IsolatedPoseWorker
+from .report_worker import IsolatedReportWorker
+from app.rehab_v2.reporting import build_report
 
 
 class StoreLease:
@@ -71,7 +73,7 @@ class Runtime:
 
 class SessionService:
     def __init__(self, database, plan_resolver, *, internal_replay=False, report_builder=None,
-                 inference_provider=None, drain_timeout_s=2., plan_reader=None):
+                 inference_provider=None, drain_timeout_s=2., plan_reader=None, report_executor=None):
         self.database = Path(database).resolve()
         self.database.parent.mkdir(parents=True, exist_ok=True)
         self.lease = StoreLease(str(self.database)+'.owner-lock')
@@ -97,6 +99,10 @@ class SessionService:
         self.resources_released = False
         self.worker_failure = None
         self.inference_worker = IsolatedPoseWorker()
+        self.report_executor = report_executor if report_executor is not None else IsolatedReportWorker()
+        # Local callable test hooks remain in-process; public default is owned.
+        self.report_slots = threading.BoundedSemaphore(1)
+        self.report_worker_failure = None
         self.latencies = {'control_ms': [], 'decode_ms': [], 'inference_ms': [],
                           'feature_ms': [], 'cue_ms': [], 'commit_ms': [], 'queue_wait_ms': []}
         self.report_stop = threading.Event()
@@ -114,16 +120,18 @@ class SessionService:
             try:
                 work = self.repository.report_work(include_failed=first)
                 first = False
+                busy = False
                 for owner, sid in work:
                     if self.report_stop.is_set():
                         break
-                    self.rebuild_report(owner, sid)
-                if len(work) == 16:
+                    busy = self.rebuild_report(owner, sid)['state'] == 'running' or busy
+                self.report_worker_failure = None
+                if len(work) == 16 and not busy:
                     continue
-            except Exception:
+            except Exception as exc:
                 # SQLite failures must not be reported as successful rebuilds.
                 # Durable pending rows remain recoverable at the next start.
-                pass
+                self.report_worker_failure = getattr(exc, 'code', type(exc).__name__)
             self.report_wake.wait(.2)
             self.report_wake.clear()
 
@@ -193,6 +201,7 @@ class SessionService:
                               consent_at=utc_now(), time_basis='mapped_source_seconds',
                               no_exposure_synchronization_claim=True,
                               execution_trace_id=uuid4().hex, diagnostics_version=DIAGNOSTICS_VERSION)
+                source['report_execution_contract'] = self._report_execution_contract()
                 if not self.internal_replay and self.inference_provider is None:
                     source['inference_execution_contract'] = self.inference_worker.contract
                 if frozen.get('progress_scope') is not None:
@@ -511,6 +520,8 @@ class SessionService:
         item = self.repository.get(owner, sid)
         item['backend_execution'] = dict(frame_consumer_alive=self.worker.is_alive(),
             failure=self.worker_failure, report_consumer_alive=self.report_worker.is_alive(),
+            report_failure=self.report_worker_failure,
+            report_execution_mode=self._report_execution_contract()['mode'],
             resources_released=self.resources_released)
         item['plan_contribution'] = self.repository.plan_contribution(owner, sid)
         runtime = self.runtimes.get(sid)
@@ -542,7 +553,7 @@ class SessionService:
         result['backlog'] = dict(retained_frames=retained,
             in_flight=bool(active and active['sid'] == sid),
             durable_pending_frames=self.repository.pending_frames(owner, sid), retained_capacity=1)
-        result['memory'] = dict(host_rss_bytes=None, owned_pose_rss_bytes=None,
+        result['memory'] = dict(host_rss_bytes=None, owned_pose_rss_bytes=None, owned_report_rss_bytes=None,
                                 measurement='current_process_rss_not_peak_or_device_memory')
         try:
             import psutil
@@ -550,10 +561,14 @@ class SessionService:
             process = self.inference_worker.process
             if runtime.engine.run_state != 'ended' and process is not None and process.is_alive():
                 result['memory']['owned_pose_rss_bytes'] = psutil.Process(process.pid).memory_info().rss
+            process = self.report_executor.process
+            if (self.report_executor.active_sid == sid and process is not None and process.is_alive()):
+                result['memory']['owned_report_rss_bytes'] = psutil.Process(process.pid).memory_info().rss
         except Exception:
             pass  # Missing observation stays null; do not fabricate zero bytes.
         result['consumers'] = dict(frame_alive=self.worker.is_alive(), frame_failure=self.worker_failure,
-                                   report_alive=self.report_worker.is_alive())
+                                   report_alive=self.report_worker.is_alive(), report_failure=self.report_worker_failure,
+                                   report_execution_mode=self._report_execution_contract()['mode'])
         return result
 
     def plan(self, owner, plan_id):
@@ -569,37 +584,55 @@ class SessionService:
 
     @staticmethod
     def _report(item):
-        from app.rehab_v2.compatibility import comparison_contract
-        snapshot = item['snapshot']
-        contract = comparison_contract(item)
-        return dict(session_id=item['session_id'], end_reason=item['end_reason'],
-                    completed_reps=snapshot['completed'], visual_evidence=snapshot,
-                    source=item['source'], frozen_plan=item['frozen_plan'],
-                    feedback_status=item['feedback_status'],
-                    interpretation='observed_training_facts_not_diagnosis',
-                    protocol_compatibility=contract,
-                    evidence_fingerprint=contract['evidence_fingerprint'])
+        return build_report(item)
+
+    def _report_execution_contract(self):
+        if self.report_builder is self._report:
+            return self.report_executor.contract
+        return dict(mode='trusted_local_callable', concurrency=1, hard_cancellation=False)
 
     def rebuild_report(self, owner, sid):
         item = self.repository.get(owner, sid)
+        if item['persistence_state'] != 'finalized':
+            raise SessionError('report_requires_finalized_session', 409)
+        if self.closed or self.report_stop.is_set():
+            raise SessionError('service_closed', 503)
         runtime = self.runtimes.get(sid)
+        if not self.report_slots.acquire(blocking=False):
+            if runtime:
+                runtime.telemetry.event('report_busy')
+            return dict(state='running')
         started = time.perf_counter()
         try:
-            report = self.report_builder(item)
+            if self.closed or self.report_stop.is_set():
+                raise SessionError('service_closed', 503)
+            if self.report_builder is self._report:
+                report, durations = self.report_executor.build(item)
+                if runtime:
+                    for stage, duration in durations.items():
+                        runtime.telemetry.observe(stage, duration)
+            else:
+                report = self.report_builder(item)
             saved = self.repository.report_state(owner, sid, 'ready', report,
                 expected_feedback_revision=item['feedback_revision'])
             if runtime:
                 runtime.telemetry.event('report_ready' if saved else 'report_superseded')
             return dict(state='ready' if saved else 'pending_newer_feedback')
         except Exception as exc:
+            error = getattr(exc, 'code', type(exc).__name__)
             if runtime:
                 runtime.telemetry.event('report_failed')
-            saved = self.repository.report_state(owner, sid, 'failed', error=type(exc).__name__,
+                if error.endswith('_timeout'):
+                    runtime.telemetry.event('report_timeout')
+                elif error == 'report_worker_cancelled':
+                    runtime.telemetry.event('report_cancelled')
+            saved = self.repository.report_state(owner, sid, 'failed', error=error,
                 expected_feedback_revision=item['feedback_revision'])
-            return dict(state='failed' if saved else 'pending_newer_feedback', error=type(exc).__name__)
+            return dict(state='failed' if saved else 'pending_newer_feedback', error=error)
         finally:
             if runtime:
                 runtime.telemetry.observe('report_ms', 1000*(time.perf_counter()-started))
+            self.report_slots.release()
 
     def close(self, *, graceful=True):
         if self.resources_released:
@@ -614,6 +647,7 @@ class SessionService:
         self.worker_stop.set()
         self.inference_worker.request_stop()
         self.report_stop.set()
+        self.report_executor.request_stop()
         self.report_wake.set()
         self.worker.join(timeout=max(3., self.drain_timeout_s+1.))
         self.report_worker.join(timeout=3.)
@@ -621,6 +655,11 @@ class SessionService:
             # Do not close SQLite while its owning inference thread may still write.
             raise SessionError('vision_shutdown_not_confirmed', 503)
         self.inference_worker.close()
+        self.report_executor.close()
+        # An explicit local rebuild may run outside the durable consumer thread.
+        if not self.report_slots.acquire(timeout=3.):
+            raise SessionError('report_shutdown_not_confirmed', 503)
+        self.report_slots.release()  # Closed flag prevents any subsequent writer.
         # Discard only this host's volatile pending JPEGs. Durable accepted
         # rows remain recorded by finalize or subsequent restart recovery.
         while True:

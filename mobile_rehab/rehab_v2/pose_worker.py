@@ -12,13 +12,12 @@ from dataclasses import asdict
 import hashlib
 import json
 import math
-import multiprocessing as mp
 from multiprocessing.shared_memory import SharedMemory
-import threading
 import time
 from uuid import uuid4
 
 from ..core import CORE
+from .owned_worker import OwnedJsonWorker
 from app.domain import Context, FramePacket, PoseFrame, PosePerson, dumps, utc_now
 
 VERSION = 'rehab-pose-process-1'
@@ -98,22 +97,17 @@ def pose_process(pipe, memory_name):
         pipe.close()
 
 
-class IsolatedPoseWorker:
+class IsolatedPoseWorker(OwnedJsonWorker):
     def __init__(self, *, target=pose_process, startup_timeout_s=10., cold_timeout_s=30.,
                  frame_timeout_s=5., release_timeout_s=1.):
         for value in (startup_timeout_s, cold_timeout_s, frame_timeout_s, release_timeout_s):
             if type(value) not in (int, float) or not math.isfinite(value) or not .01 <= value <= 120:
                 raise ValueError('finite_bounded_pose_worker_budget_required')
-        self.target = target  # Only a trusted local constructor, never an HTTP field.
+        super().__init__(target=target, version=VERSION, role='pose', memory_capacity=MEMORY_CAPACITY,
+                         error_type=PoseWorkerError, startup_timeout_s=startup_timeout_s,
+                         release_timeout_s=release_timeout_s)
         self.startup_timeout_s, self.cold_timeout_s = startup_timeout_s, cold_timeout_s
         self.frame_timeout_s, self.release_timeout_s = frame_timeout_s, release_timeout_s
-        self.lock, self.stop = threading.Lock(), threading.Event()
-        self.state_lock, self.cancel = threading.Lock(), threading.Event()
-        self.active_sid = None
-        self.process = self.pipe = self.memory = None
-        self.warm = False
-        self.quarantined = False
-        self.last_release = self.last_request = None
 
     @property
     def contract(self):
@@ -122,65 +116,6 @@ class IsolatedPoseWorker:
                     startup_timeout_s=self.startup_timeout_s, cold_timeout_s=self.cold_timeout_s,
                     frame_timeout_s=self.frame_timeout_s, release_timeout_s=self.release_timeout_s,
                     no_camera_or_storage_in_child=True, child_clock_not_used_for_evidence_age=True)
-
-    def _receive(self, budget, stage):
-        deadline = time.monotonic()+budget
-        while time.monotonic() < deadline:
-            if self.stop.is_set() or self.cancel.is_set():
-                raise PoseWorkerError('pose_worker_cancelled')
-            if self.pipe.poll(min(.02, max(0., deadline-time.monotonic()))):
-                try:
-                    value = json.loads(self.pipe.recv_bytes(REQUEST_CAPACITY))
-                except (EOFError, OSError, ValueError):
-                    raise PoseWorkerError('invalid_pose_worker_response') from None
-                if not isinstance(value, dict):
-                    raise PoseWorkerError('invalid_pose_worker_response')
-                return value
-            if not self.process.is_alive():
-                raise PoseWorkerError('pose_worker_exited')
-        raise PoseWorkerError('pose_worker_'+stage+'_timeout')
-
-    def _start(self):
-        context = mp.get_context('spawn')
-        self.memory = SharedMemory(create=True, size=MEMORY_CAPACITY)
-        self.pipe, child = context.Pipe()
-        self.process = context.Process(target=self.target, args=(child, self.memory.name),
-                                       name='rehab-v2-owned-pose', daemon=True)
-        try:
-            self.process.start()
-        finally:
-            child.close()
-        if self._receive(self.startup_timeout_s, 'startup').get('ready') != VERSION:
-            raise PoseWorkerError('pose_worker_handshake_mismatch')
-
-    def _release(self, reason):
-        if self.process is None and self.memory is None and self.pipe is None:
-            return
-        process = self.process
-        pid = process.pid if process is not None else None
-        if process is not None and pid is not None:
-            if process.is_alive():
-                process.terminate()  # Only this exact owned process object, no PID pattern.
-            process.join(self.release_timeout_s)
-            if process.is_alive():
-                process.kill()
-                process.join(self.release_timeout_s)
-            if process.is_alive():
-                self.quarantined = True
-                raise PoseWorkerError('pose_worker_release_unconfirmed')
-        exit_code = process.exitcode if process is not None else None
-        if self.memory is not None:
-            self.memory.buf[:] = b'\0'*MEMORY_CAPACITY
-            self.memory.close()
-            self.memory.unlink()
-        if self.pipe is not None:
-            self.pipe.close()
-        if process is not None:
-            process.close()
-        self.last_release = dict(pid=pid, exit_code=exit_code, reason=reason, confirmed=True)
-        self.process = self.pipe = self.memory = None
-        self.warm = False
-        self.quarantined = False
 
     def infer(self, value, runtime):
         encoded = value['encoded']
@@ -247,20 +182,3 @@ class IsolatedPoseWorker:
                 with self.state_lock:
                     self.active_sid = None
                     self.cancel.clear()
-
-    def cancel_current(self, sid):
-        with self.state_lock:
-            if self.active_sid == sid:
-                self.cancel.set()
-
-    def request_stop(self):
-        self.stop.set()  # Does not wait for an inference or acquire its lock.
-
-    def close(self):
-        self.request_stop()
-        if not self.lock.acquire(timeout=2*self.release_timeout_s+1.):
-            raise PoseWorkerError('pose_worker_shutdown_lock_unconfirmed')
-        try:
-            self._release('host_shutdown')
-        finally:
-            self.lock.release()
