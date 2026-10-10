@@ -4,6 +4,8 @@
 
 | 文档 | 内容 |
 | --- | --- |
+| [后端功能与技术实现阅读版](后端功能与技术实现梳理.md) | 逐功能输入／方法／输出／消费者、三条信息链、三端差异与分层优化验收；本轮仅文档 |
+| [后端阅读版本轮核对](validation/BACKEND_OVERVIEW_2026-10-11.md) | 源码对照、文档检查、保留工作区增量与未测范围 |
 | [后端功能、算法与数据流梳理](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md) | 三端后端域、公式／状态、逐跳信息与代码；3.7–3.8为真实字段／统计口径，22–23为优化影响及验收 |
 | [手机姿态输入VIDEO工作流](development/MEDIAPIPE_VIDEO_AUDIT.md) | 同模型Python近似、33点原语义、源时间／像素配对与模型差异；不修改APK |
 | [MediaPipe VIDEO本机验收](validation/REHAB_MEDIAPIPE_VIDEO_2026-10-11.md) | 两段真实分析授权录像、7条CLI、17项子集及177／12／19回归；不是准确率或手机性能 |
