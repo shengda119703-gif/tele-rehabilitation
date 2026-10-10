@@ -34,7 +34,9 @@
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py verify-sessions --database-mode isolated
 ```
 
-2026-10-11 最新完整 `verify_all` 运行118项新后端、12项旧康复、19项旧手机测试及1308文件保护核验；18项报告专测包含在118项中。会话CLI为88项子集，实际命令、日志与边界见 [报告隔离验收](../../docs/validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)。旧100／70项 [推理／诊断验收](../../docs/validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md) 和时间／贡献验证保留历史范围，不累加。这些是隔离工程测试，不是临床准确率或手机实机验收。
+2026-10-11 最新完整 `verify_all` 运行130项新后端、12项旧康复、19项旧手机测试及1308文件保护核验；12项原生存储专测和18项报告专测包含在130项中。会话CLI为100项子集，实际命令、日志与边界见 [存储验收](../../docs/validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md)。旧118／88项 [报告隔离验收](../../docs/validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)、100／70项 [推理／诊断验收](../../docs/validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md) 和时间／贡献验证保留历史范围，不累加。这些是隔离工程测试，不是临床准确率或手机实机验收。
+
+`RehabStorageBoundary`只适配v2的原Storage owning thread，不增加连接或写入器。实际SQLite结果码分为capacity／readonly／busy／corrupt／io／unavailable；初始化后的锁等待250ms不等于整个HTTP硬截止。错误返回`commit_state=not_confirmed_by_this_error`；恢复存储后先查询权威提交，再以原键重试。损坏文件保留，禁止自动删库或重建。运行态`last_storage_fault`是最后观察记录，不是当前健康探针。真实只读、外部写锁、SQLite容量上限和TEST文件头损坏已测，未占满物理硬盘或验证介质损坏／断电；已知一致备份只恢复备份内已有事实。
 
 ## 会话诊断与实跑性能
 

@@ -23,6 +23,7 @@ from app.rehab_v2.telemetry import SessionTelemetry, VERSION as DIAGNOSTICS_VERS
 from .pose_worker import IsolatedPoseWorker
 from .report_worker import IsolatedReportWorker
 from app.rehab_v2.reporting import build_report
+from app.rehab_v2.storage_boundary import RehabStorageBoundary, StorageFault, classify_sqlite_fault
 
 
 class StoreLease:
@@ -77,14 +78,19 @@ class SessionService:
         self.database = Path(database).resolve()
         self.database.parent.mkdir(parents=True, exist_ok=True)
         self.lease = StoreLease(str(self.database)+'.owner-lock')
+        self.last_storage_fault = None
         try:
             self.storage = Storage(self.database)
-            self.repository = SessionRepository(self.storage)
+            self.storage_boundary = RehabStorageBoundary(self.storage, self._storage_fault)
+            self.repository = SessionRepository(self.storage_boundary)
             self.recovered = self.repository.recover_unfinished()
-        except Exception:
+        except Exception as error:
             if hasattr(self, 'storage'):
                 self.storage.close()
             self.lease.close()
+            fault = classify_sqlite_fault(error)
+            if fault is not None:
+                raise fault from None
             raise
         self.plan_resolver, self.internal_replay = plan_resolver, internal_replay
         self.plan_reader = plan_reader
@@ -111,6 +117,11 @@ class SessionService:
         self.worker.start()
         self.report_worker = threading.Thread(target=self._run_reports, name='rehab-v2-reports', daemon=True)
         self.report_worker.start()
+
+    def _storage_fault(self, fault):
+        # Immutable last-observed metadata, not a health probe or saved fact.
+        # Callback runs after Storage has rolled back and returned the error.
+        self.last_storage_fault = fault.public
 
     def _run_reports(self):
         # Durable pending rows are the queue. An unfinished report never holds
@@ -202,6 +213,7 @@ class SessionService:
                               no_exposure_synchronization_claim=True,
                               execution_trace_id=uuid4().hex, diagnostics_version=DIAGNOSTICS_VERSION)
                 source['report_execution_contract'] = self._report_execution_contract()
+                source['storage_execution_contract'] = self.storage_boundary.contract
                 if not self.internal_replay and self.inference_provider is None:
                     source['inference_execution_contract'] = self.inference_worker.contract
                 if frozen.get('progress_scope') is not None:
@@ -403,6 +415,10 @@ class SessionService:
                     runtime.telemetry.arrival('processed', time.monotonic())
                     runtime.telemetry.observe('result_age_ms', 1000*(time.monotonic()-value['received']))
             except Exception as exc:
+                if isinstance(exc, StorageFault):
+                    # Persistence failed, not the camera or motion evidence.
+                    # Do not attempt to save memory-only progress as input_failed.
+                    raise
                 runtime.telemetry.event('inference_cancelled' if getattr(exc, 'code', '') == 'pose_worker_cancelled'
                                         else 'input_failed', seq=value['seq'])
                 if getattr(exc, 'code', '').endswith('_timeout'):
@@ -522,6 +538,7 @@ class SessionService:
             failure=self.worker_failure, report_consumer_alive=self.report_worker.is_alive(),
             report_failure=self.report_worker_failure,
             report_execution_mode=self._report_execution_contract()['mode'],
+            last_storage_fault=self.last_storage_fault,
             resources_released=self.resources_released)
         item['plan_contribution'] = self.repository.plan_contribution(owner, sid)
         runtime = self.runtimes.get(sid)
@@ -569,6 +586,7 @@ class SessionService:
         result['consumers'] = dict(frame_alive=self.worker.is_alive(), frame_failure=self.worker_failure,
                                    report_alive=self.report_worker.is_alive(), report_failure=self.report_worker_failure,
                                    report_execution_mode=self._report_execution_contract()['mode'])
+        result['last_storage_fault'] = self.last_storage_fault
         return result
 
     def plan(self, owner, plan_id):

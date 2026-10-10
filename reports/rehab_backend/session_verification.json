@@ -9,11 +9,12 @@
     "test_timing",
     "test_isolation",
     "test_report_isolation",
+    "test_storage_faults",
     "test_telemetry",
     "test_api"
   ],
-  "elapsed_s": 63.95692029999918,
-  "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\replay-382d0cb8\\sessions.txt",
-  "log_sha256": "2add7a7ea1d4f9df7f0661bcd72a8a74db82fa4fda633d546b4ac2e83243cf61",
+  "elapsed_s": 83.27156960000138,
+  "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\replay-2167d5a9\\sessions.txt",
+  "log_sha256": "e97c209a9307264c90005e2dbe4c28faeb701297fce4e865b7f17adaa40495e4",
   "clinical_accuracy": null
 }

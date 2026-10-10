@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 
 from .service import SessionService
 from app.rehab_v2.sessions import SessionError
+from app.rehab_v2.storage_boundary import StorageFault
 
 
 def install_rehab_v2(app, database, owner, small_json, plan_resolver, *, plan_reader=None):
@@ -15,7 +16,10 @@ def install_rehab_v2(app, database, owner, small_json, plan_resolver, *, plan_re
 
     @app.exception_handler(SessionError)
     async def session_error(request, error):
-        return JSONResponse(dict(detail=error.code), status_code=error.status)
+        body = dict(detail=error.code)
+        if isinstance(error, StorageFault):
+            body['storage_fault'] = error.public
+        return JSONResponse(body, status_code=error.status)
 
     @app.get('/api/rehab/v2/sessions')
     async def history(request: Request, limit: int = 20, before: str | None = None):
