@@ -1,0 +1,72 @@
+{
+  "scope": "storage_blocked_TEST_subset_on_different_actual_volume",
+  "whole_regression_passed": false,
+  "source_failed_summary": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-e8c8c33f\\summary.json",
+  "source_failed_summary_sha256": "bd8e7aacb6de52e386ad0a23a553580761aa7f56e7983ea3e99281e320e6e7ae",
+  "scratch_root": "D:\\RehabBackendVerification\\annotation-storage-20261012-ec47f951",
+  "actual_free_bytes_before": 16105250816,
+  "disk_usage_mocked": false,
+  "storage_threshold_changed": false,
+  "raw_data_relocated": false,
+  "user_files_removed": false,
+  "product_environment": "E:\\game\\health-care-software-main\\rehab_codex_single_camera_v2_1\\.venv\\Scripts\\python.exe",
+  "product_enabled": false,
+  "clinical_accuracy": null,
+  "commands": [
+    {
+      "name": "pose_training",
+      "arguments": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/rehab_backend",
+        "-p",
+        "test_pose_training.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 3.852443100000528,
+      "log": "D:\\RehabBackendVerification\\annotation-storage-20261012-ec47f951\\pose_training.txt",
+      "log_sha256": "6ff9de7f092ad4ff241e022532cd354c7ea49778050bb2e17cea24f29e9b770b",
+      "tail": "ining.PoseTrainingTests.test_train_tensor_rejects_validation_and_test_rows) ... ok\ntest_unknown_option_cannot_change_production_or_augmentation (test_pose_training.PoseTrainingTests.test_unknown_option_cannot_change_production_or_augmentation) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 1.754s\n\nOK\n"
+    },
+    {
+      "name": "legacy_mobile",
+      "arguments": [
+        "-m",
+        "pytest",
+        "mobile_rehab/tests/test_mobile.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "D:\\RehabBackendVerification\\annotation-storage-20261012-ec47f951\\pytest-temporary"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 12.303187000000435,
+      "log": "D:\\RehabBackendVerification\\annotation-storage-20261012-ec47f951\\legacy_mobile.txt",
+      "log_sha256": "625c510a736c4534d50528d34383f4f1e9e9eba61e833619c920ca312b847212",
+      "tail": "le_camera_v2_1\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n19 passed, 1 warning in 11.80s\n"
+    },
+    {
+      "name": "scope",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "verify-scope",
+        "--baseline",
+        "reports/rehab_backend/protected_files.json"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 5.186072999999851,
+      "log": "D:\\RehabBackendVerification\\annotation-storage-20261012-ec47f951\\scope.txt",
+      "log_sha256": "e2e7df3fd4c7f457a411d9a9e2ceb5377ecb12127b8e3dd2c57c80eb22aab97a",
+      "tail": "{\"ok\": true, \"command\": \"verify-scope\", \"result\": {\"ok\": true, \"checked\": 1308, \"changes\": [], \"baseline_sha256\": \"75f736e75795a334431f0d87664f720fede7093c62d3614f9969d0af35b3d742\", \"verified_at\": \"2026-10-11T16:54:33.716846+00:00\"}}\n"
+    }
+  ],
+  "passed": true,
+  "actual_free_bytes_after": 16103890944,
+  "original_failure_evidence_unchanged": true,
+  "artifact": "D:\\RehabBackendVerification\\annotation-storage-20261012-ec47f951\\summary.json",
+  "summary_sha256": "f3fc06590302f0c16fc23c59ede25ec498b050995ebae8a707092f5e1c48f524"
+}

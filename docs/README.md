@@ -4,6 +4,8 @@
 
 | 文档 | 内容 |
 | --- | --- |
+| [独立专业标注与导入](development/REHAB_PROFESSIONAL_ANNOTATION.md) | 双人独立JSONL、第三人复核、逐边界／问题mask、真实PTS、部分导入及待标／排除分母；不预填预测或训练模型 |
+| [专业标注本机验收](validation/REHAB_PROFESSIONAL_ANNOTATION_2026-10-12.md) | 真实24段源／PTS、34项TEST、空监督拒绝、明确零次及三类篡改；实际标签仍待人工，不是微调或准确性提升 |
 | [HTTP时钟与断流证据](development/REHAB_HTTP_CLOCK_AUDIT.md) | 固定TEST证据时钟和实际接收时钟分开；逐帧探针、真实断流半次、不修改生产规则 |
 | [HTTP时钟本机验收](validation/REHAB_HTTP_CLOCK_2026-10-12.md) | 四诊断run／原失败与开发错误保留、19项专项及456／12／19回归；不是原根因或人体精度证明 |
 | [真实RGB质量实验与信息链](development/REHAB_MOBIPHYSIO_RGB.md) | 24段完整下载、真实PTS／原YOLO、坐标／mask、train-only统计、Ridge／TCN和已有预测独立核对 |
@@ -21,7 +23,7 @@
 | [异步结束本机验证](validation/REHAB_ASYNC_FINISH_2026-10-11.md) | 原阻塞失败、冷／热三轮、372／12／19回归、旧证据归档、日志／hash与未完成目标 |
 | [康复v2连续输入工程验收](development/REHAB_SESSION_LOAD.md) | 原YOLO、固定短时持续JPEG／并发控制、逐帧对账、独立重开和失败门槛；不修改生产算法或客户端 |
 | [连续输入本机记录](validation/REHAB_SESSION_LOAD_2026-10-11.md) | 三次预声明负载、源码／日志hash、冷热耗时与控制预算、完整回归及未测范围 |
-| [后端功能与技术实现阅读版](后端功能与技术实现梳理.md) | 2026-10-12核对：F01–F34、七条信息链、字段／公式／函数／参数；第27节将动作、器械、健康照护、居家及保存恢复连成最小联测用例，明确独立参考和未接通边界 |
+| [后端功能与技术实现阅读版](后端功能与技术实现梳理.md) | F01–F34、七条信息链、字段／公式／函数／参数；第16.14节补独立标注与导入链、0真值及实际空间失败；第27节串联动作、器械、健康照护、居家和保存恢复的最小联测 |
 | [后端阅读版本次核对](validation/BACKEND_OVERVIEW_END_TO_END_2026-10-12.md) | 1cdfee6源码快照、远端固定SHA、仅文档检查和现有材料资格；不新跑业务／训练，不把已有回归当本次验收 |
 | [本次后端阅读整理核对](validation/BACKEND_OVERVIEW_INFORMATION_MAP_2026-10-11.md) | 972e6f5本机源码基准；只整理文档与静态核对，不运行训练、录像或业务测试；保护现有用户文件、单独分支发布 |
 | [当前后端阅读版核对](validation/BACKEND_OVERVIEW_ASYNC_HANDOFF_2026-10-11.md) | 本次只整理文档；源码连接键、异步结束／恢复路径与既有372／12／19及冷热工程证据核对，不新跑业务或训练 |

@@ -1,30 +1,44 @@
 # 康复后端实施与真实训练：阶段记录与增量交付
 
+> 2026-10-12当前增量：B3.19独立专业标注链。最终34项专项通过，24段真实RGB仍0真值。最终完整`verification-e8c8c33f`490项有4个真实空间预检错误、旧手机19项中7项507；原康复12项及1308保护通过。D盘真实容量下30项姿态工程＋19项旧手机子集通过，不替代完整回归。生产门槛、源／正常库、UI／APK均不变。后面的早期“最新456”等为原阶段记录，不是当前全量通过；整个任务仍未完成。
+
 日期：2026-10-11（Asia/Shanghai）。第一阶段实施基准：`b6d22fc392915738401fe6e14d9cc32b877a5acc`，提交`1463929`；所属推理／诊断`129e5cb`，报告隔离`06366bd`，时间／贡献`23696de`，原生存储`a9e31cc`，关键点工具`bf698a3`，VIDEO对照`d0b21d2`，双层masked loss`d5c351f`，显式续训`1a4dd43`，显式安排交付`fc8ba23`。时间比较阶段以`fc8ba232e82bf13582ae317bef4ef408d2d07337`为基准，最新真实HTTP恢复以`1fd6806666d4f41cb6b235d4f99d95154b7611b5`为基准，源码以本文件所在提交为准。任务依据：本机`docs/安康康复训练后端实施与训练任务书.md`。产品仍0.20.0、APK0.2.1，协议`rehab-protocol-2.0`，不是新客户端发布。
 
-结论：P0–P4核心链路与一部分P7已有实际证据。IRDS真实获许可数据上训练两个模型，候选未优于简单基线。B3.17已下载MobiPhysio3.0的24人／24段RGB，完成原YOLO提取与整视频EAAQ质量实验；Ridge／TCN没有优于训练分数中位数常量。2026-10-12最新B3.18补HTTP时钟诊断和独立断流用例，完整456／12／19回归全部通过；旧455项失败原记录保留，其根因未证明，不能说已修复人体漏计。正式会话仍独立opt-in，未成为现有UI/APK路径；P5／P6缺独立目标2D／visibility／相位／可观察完成参考，未完成合格真人微调或影子上线。整个任务未完成，不能宣称真人准确度提高或产品发布。
+结论：P0–P4核心链路与一部分P7已有实际证据。IRDS真实获许可数据上训练两个模型，候选未优于简单基线。B3.17已下载MobiPhysio3.0的24人／24段RGB，完成原YOLO提取与整视频EAAQ质量实验；Ridge／TCN没有优于训练分数中位数常量。B3.18补HTTP时钟诊断和独立断流用例，该阶段完整456／12／19通过；旧455项失败原记录保留，根因未证明，不能说已修复人体漏计。当前B3.19的34项标注专项通过，但24份仍0真值；最终完整490受实际存储条件阻断，D盘子集通过不替代全套验收。正式会话仍独立opt-in，未成为现有UI/APK路径；P5／P6缺独立目标2D／visibility／相位／可观察完成参考，未完成合格真人微调或影子上线。整个任务未完成，不能宣称真人准确度提高或产品发布。
 
 已有增量接通唯一贡献、最终历史、原继续政策、冻结计划、显式时间、所属推理／报告、SQLite故障边界、关键点工具、同权重Python VIDEO、双层masked loss和条件式多轮优化。资源双锁／报告延期见B3.6，显式恢复／CPU数值／原子写见B3.7，三动作安排见B3.8，时间比较见B3.9，采样见B3.10，持续输入／冷启动见B3.11–12，三窗口退出见B3.13，Windows保护见B3.14，HTTP恢复见B3.15，发布评分见B3.16，真实RGB质量实验见B3.17。各阶段计数不累加；没有目标域角度／计次准确率或保持时间真值。最新新增仅离线工具／数据配置／TEST探针／报告／必要文档，生产服务、算法、规则、权重、患者库和整个客户端不改；没有再次分析私人原片。
 
 ## A. 实际完成情况
 
-最新工程增量以`3376265167d329aed980e5af718bd48a370eee98`为基准，见B3.18。[末次回归](regression.json)为`verification-dc63e7b4`456／12／19全部退出0，1308保护不变；19项时间专项是456子集。原`verification-f28dac51`455项／1失败及38项RGB／TEST消费者1项的范围保留历史。[时钟核对](timing_http_clock_verification.json)与[RGB证据](mobiphysio_rgb_experiment.json)分别报告，根因未证明、临床准确率null。真实RGB实验仍以`d18bd57`及逐源码SHA为基准，本轮没有新训练或重跑私人原片。没有手机／LAN／TLS或临床准确性新增验收。
+最新增量基准`3a51edbfb7dcf466d3d92ccfb1b0e7e0c2bbb810`，见B3.19。[末次完整回归](regression.json)为`verification-e8c8c33f`490项／4空间错误、原康复12通过、旧手机19项／7个507失败，1308保护通过；[D盘实际空间子集](storage_recheck_verification.json)30项姿态工程与19项旧手机通过，不替代全量。[34项标注及实际包核对](professional_annotation_verification.json)是490子集，24人均待人工、0真值。之前487／12／19通过及原456／455失败均保留历史，不相加、不抹去失败。RGB实验仍以`d18bd57`及逐源码SHA为基准，视频质量负结果和旧HTTP根因未证明保持；本轮不训练真实候选、不重跑私人原片，无手机／LAN／TLS或临床准确性新增验收。
 
 | 工作 | 状态 | 实际证据 | 剩余限制 |
 | --- | --- | --- | --- |
 | P0 盘点与保护 | done | [开工清单](../rehab_backend_inventory.md)、[1308 文件基准](protected_files.json)、[末次 hash 核验](scope_verification.json) | 仅本轮范围；不代表其他会话或临床验收 |
 | P1 三动作后端协议 | done（工程定义） | `app/rehab_v2/protocols.py`、`engine.py`、`rounds.py`；15 项协议回放及几何契约测试 | 定义是二维投影和训练观察，不是解剖 ROM 金标准；实际机位仍由计划给出 |
-| P2 正式会话与幂等 | partial | 既有SQL冻结／202／最终事务／重试、真实TCP丢响应及Windows退出对账；最新456项通过，另真实接收断流保存半次 | 原455失败无逐帧证据，根因未证明；旧UI／APK未接入，真人计时与完整故障待做 |
+| P2 正式会话与幂等 | partial | 既有SQL冻结／202／最终事务／重试、真实TCP丢响应及Windows退出对账；B3.18阶段456项通过，另真实接收断流保存半次 | 原455失败无逐帧证据，根因未证明；当前全量存储失败另列P7；旧UI／APK未接入，真人计时与完整故障待做 |
 | P3 IRDS 下载与适配 | done | 198,985,485 字节骨架 ZIP、1974 字节 readme；CRC/MD5/SHA 校验；534 条/29 人，532 训练资格、2 隔离 | Kinect25 三维肩外展，不是手机 RGB、坐站或深蹲标签 |
 | P3 RGB候选前置 | done（限定队列） | Mobi3.0／CC0、3008组评分核对；E01／AF／VFL的24段680355016字节全部校验、14／5／5人固定划分 | 非完整数据集；视频评分不等于逐帧关节／相位，SUMedi资格未验收 |
 | P4 模型训练 | done（离线实验） | [实验包摘要](experiment_summary.json)，两次完整训练链结果；检查点、验证/测试预测和锁文件均存在于忽略目录 | TCN 测试 macro-F1 低于 logistic；只整次正误，不可作为相位/提示/诊断 |
-| P5 真人目标域验证 | partial | 既有两原片与缓存采样；[真实24段RGB质量实验](mobiphysio_rgb_experiment.json)21579显示帧、2569采样、独立视频EAAQ标签 | 没有独立点／相位／完成真值；视频质量MAE不是角度或计次准确率 |
+| P5 真人目标域验证 | partial | 原RGB／视频EAAQ实验；新增[双人专业标注包／导入工具](professional_annotation_verification.json)，24原片与真实PTS、34项工程检查 | 24份仍待人工、0真值；工具通过不等于独立点／相位／完成标注完成 |
 | P6 姿态微调 | partial；缺独立监督 | 转换、双层loss、多轮与续训工具；合法RGB及视频质量训练已完成，[监督门](pose_supervision_blocker.json)仍拒绝pose／phase训练 | 缺独立2D／visibility／相位与同集点误差基线；未做真人姿态微调、不自动上线 |
 | 候选后端接入 | offline / off | [冻结模型对照](model_comparison.json)，Kinect 匹配返回非权威候选，RGB 被拒绝 | 未在实际服务加载新权重，没有正式质量判断/提示接管 |
-| P7 回归与交付 | partial | [回归日志与hash](regression.json)、[真实HTTP三轮](socket_verification.json)、[Windows原生退出三轮](native_parent_verification.json)、[三窗口退出三轮](async_recovery_verification.json)、既有负载／SQLite／采样实验 | 本机TCP不是LAN／TLS／公网或全平台；真人参考、手机、多客户端负载、长时及完整物理故障仍缺 |
+| P7 回归与交付 | partial | [最终全量490的存储错误](regression.json)、[D盘30／19子集重验](storage_recheck_verification.json)、既有HTTP／Windows／SQL／采样证据；原1308保护不变 | 默认E盘容量不足未恢复；子集不替代全量；真人参考、手机／LAN／TLS、多客户端、长时及完整物理故障仍缺 |
 | 禁改范围 | pass | 1308个protected文件SHA256一致，原baseline不重建；本次正式产品源码不改，只有离线工具／数据配置／测试／报告／文档 | 原280份动作图片、脚本、CSV、任务书仍原样保留、不纳入本次提交 |
 
 ## B. 修改清单：问题、实现与验证
+
+### B3.19 独立专业标注、复核与参考导入（2026-10-12）
+
+问题：有合法RGB／视频总分，但缺独立相位、可观察完成与质量参考；原模板没有可执行的双人标注／第三人复核导入链。按任务书10.4–10.6／13继续，而不是重新训练没有对应监督的头。
+
+实现：离线`professional_annotations.py`、CLI三命令、TEST契约与`verify_professional_annotations.py`；新v2标签逐边界、问题及可评价性mask，source／split／时间不能改；双人独立声明和第三人资格／分歧／canonical输入digest绑定。部分合格参考保留完整原队列、pending和excluded，不将它们变成阴性。原v1和原视频EAAQ实验不改，新参考不提供pose监督、不上线、不写正常历史。
+
+实际：`professional-annotation-audit-3581f13f`34项TEST退出0；固定Mobi3.0／CC0的24人24段原视频、680355016字节、14／5／5人复核与真实PTS生成通过。24份A／B／REVIEW各为空标注，approved=0、known_labels=0，空导入拒绝且未创建输出；三种TEST篡改被拒绝，原包和1308保护不变。summary SHA为`ebb1e831bdaf2b8cc8d304f999dc730b05605b255a01ab767eb8cc8649f25318`。原片仅引用，不复制、下载、推理或训练。前三轮27／31／33项保留，不相加。显式独立审查的0次参考在TEST可导入，空表／unknown不自动变0；单帧不能证明完整往返。
+
+边界：人工独立性／资格尚未实际组织，不能凭三字符串宣告真值。当前仅同视频可见物理参考；同步外部参考及干预回执仍需资格适配。坐站／康复深蹲条件素材、独立点／visibility和真实相位仍缺，P5／P6仍partial，整个任务未完成。细节见[规范](../../docs/development/REHAB_PROFESSIONAL_ANNOTATION.md)、[本轮验收](../../docs/validation/REHAB_PROFESSIONAL_ANNOTATION_2026-10-12.md)与[聚合证据](professional_annotation_verification.json)。
+
+全量失败与替代验证：最后490项四个pose工程用例在实际512MiB预检前被拒绝，旧手机七个用例在真实Jobs容量门返回507，原日志和hash保留。仅用显式D盘新TEST目录重验整份pose工程30项和旧手机19项，全部通过、1308保护不变；D盘起始实际空闲16105250816字节，无disk_usage mock、不改生产阈值、不搬数据、不删文件。`verify_storage_recheck.py`与[聚合证据](storage_recheck_verification.json)记录原失败绑定和新环境；不能据此宣称默认E盘已恢复或最终全量通过。
 
 ### B1. 动作、观测、组次与提示
 

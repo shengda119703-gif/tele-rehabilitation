@@ -1,0 +1,260 @@
+{
+  "run_dir": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f",
+  "source_receipt_sha256": "ede498eb5551a7028f7229af2577ff5384c7626af179a2dcf712d95486f6926e",
+  "commands": [
+    {
+      "name": "prepare-annotations-help",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "prepare-annotations",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 0.10761809999985417,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\prepare-annotations-help.txt",
+      "log_sha256": "d281c79b26150b0a1dd548971794d0dec8e7cb77e3cb6eab726859a6c83289dd"
+    },
+    {
+      "name": "validate-annotations-help",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "validate-annotations",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 0.10602710000057414,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\validate-annotations-help.txt",
+      "log_sha256": "bfacbcd588370ab6784475a1b220d618aebe7a17a452fb3262b44f221483317f"
+    },
+    {
+      "name": "import-annotations-help",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "import-annotations",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 0.10509529999944789,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\import-annotations-help.txt",
+      "log_sha256": "24af390d7b2d4d5752280ca0ff660374f65c8e29611e18913b76088ce0f36fb7"
+    },
+    {
+      "name": "unit",
+      "arguments": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/rehab_backend",
+        "-p",
+        "test_professional_annotations.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 0.49189170000045124,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\unit.txt",
+      "log_sha256": "4031c46a27c996f6177f91e0b711b17858daaef9a71fb5c60e92322a23b72ed2"
+    },
+    {
+      "name": "prepare",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "prepare-annotations",
+        "--receipt",
+        ".runtime\\rehab_ml\\data\\mobiphysio\\3.0\\rgb-e01-front-fl-9ac33275\\download-a157e0e1.json",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\cohort"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 7.503106799999841,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\prepare.txt",
+      "log_sha256": "4f4d485ed084997e8ec33670a04e276e5a4f4d54a160e881578026997b24a4a9"
+    },
+    {
+      "name": "validate",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "validate-annotations",
+        "--bundle",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\cohort\\bundle.json",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\validation"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 5.137360299999273,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\validate.txt",
+      "log_sha256": "9311d70a50d9730786a064beffbb0e046ce5b5a9b70dde21f5c64c58f9a3da6d"
+    },
+    {
+      "name": "blank-import-refused",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "import-annotations",
+        "--bundle",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\cohort\\bundle.json",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\must-not-import"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "elapsed_s": 4.96083230000022,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\blank-import-refused.txt",
+      "log_sha256": "3e8864877a6a9aa69318295c3b9eb0a6f65542780c16ee4739904e95a94d0b8f"
+    },
+    {
+      "name": "score-prefill-refused",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "validate-annotations",
+        "--bundle",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\TEST-score-prefill\\bundle.json",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\must-not-score-prefill"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "elapsed_s": 5.213499599999523,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\score-prefill-refused.txt",
+      "log_sha256": "29eac88c2cf52df1d50045acf500e3c15a22c684346e800c9a9dd67e103fdd91"
+    },
+    {
+      "name": "split-change-refused",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "validate-annotations",
+        "--bundle",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\TEST-split-change\\bundle.json",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\must-not-split-change"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "elapsed_s": 3.660010399999919,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\split-change-refused.txt",
+      "log_sha256": "86a1f2fcbbf2ba272cbc8eb343cfdbdde1750c6d072338c481bed065467a0e19"
+    },
+    {
+      "name": "rewritten-timeline-refused",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "validate-annotations",
+        "--bundle",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\TEST-rewritten-timeline\\bundle.json",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\must-not-rewritten-timeline"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "elapsed_s": 3.749450899999829,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\rewritten-timeline-refused.txt",
+      "log_sha256": "e979bb23c0f86f651cfce694a476cc38d79b15b308b76e5a5145b640914fd953"
+    },
+    {
+      "name": "scope",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "verify-scope",
+        "--baseline",
+        "reports/rehab_backend/protected_files.json"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 5.079749599999559,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\scope.txt",
+      "log_sha256": "c855125821861f7679523e46821a566f11a11db3e2781d74264bb5a623115c5c"
+    }
+  ],
+  "implementation_sha256": {
+    "tools\\rehab_ml\\verify_professional_annotations.py": "bdc4f3756695c6372dd2d10eaf05a7f598d5972a8205d5c0251ec9ef51804fc6",
+    "tools\\rehab_ml\\professional_annotations.py": "1e85cfb5832526af076d338cd9469afa277b57bc6a2e22f160ec3ee3525ba4be",
+    "tools\\rehab_ml\\cli.py": "758cdda08cbe2685ba613f90daa62accb06dc2e6244a854a0c219cfbb9bc9575",
+    "tests\\rehab_backend\\test_professional_annotations.py": "0c151bd85e26b66a2f8870621676c6e6a4e2af0a0c89b7336f2f2513fdc4706b"
+  },
+  "product_environment": "E:\\game\\health-care-software-main\\rehab_codex_single_camera_v2_1\\.venv\\Scripts\\python.exe",
+  "product_enabled": false,
+  "training_performed": false,
+  "independent_labels_available": false,
+  "passed": true,
+  "prepared": {
+    "status": "pending_human_review",
+    "bundle": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\cohort\\bundle.json",
+    "product_enabled": false,
+    "training_performed": false,
+    "completed_samples": 24,
+    "samples": 24,
+    "split_counts": {
+      "train": 14,
+      "val": 5,
+      "test": 5
+    },
+    "labeled_repetitions": 0,
+    "reference_generated": false,
+    "bundle_sha256": "bb3a57bdd0717bb971309005c7b360b5f2f58c1e6a3d1b5e07acc419c8c8df45",
+    "artifacts": [
+      "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\cohort\\bundle.json",
+      "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\cohort\\GUIDE.md",
+      "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\cohort\\templates.json",
+      "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\cohort\\annotator-A.jsonl",
+      "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\cohort\\annotator-B.jsonl",
+      "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\cohort\\review.jsonl"
+    ]
+  },
+  "validation": {
+    "status": "pending_human_review",
+    "samples": 24,
+    "approved": 0,
+    "excluded": 0,
+    "pending": 24,
+    "pending_sample_ids": [
+      "mobi3-e01-P01",
+      "mobi3-e01-P02",
+      "mobi3-e01-P03",
+      "mobi3-e01-P04",
+      "mobi3-e01-P05",
+      "mobi3-e01-P06",
+      "mobi3-e01-P07",
+      "mobi3-e01-P08",
+      "mobi3-e01-P09",
+      "mobi3-e01-P10",
+      "mobi3-e01-P11",
+      "mobi3-e01-P12",
+      "mobi3-e01-P13",
+      "mobi3-e01-P14",
+      "mobi3-e01-P15",
+      "mobi3-e01-P16",
+      "mobi3-e01-P17",
+      "mobi3-e01-P18",
+      "mobi3-e01-P19",
+      "mobi3-e01-P20",
+      "mobi3-e01-P21",
+      "mobi3-e01-P22",
+      "mobi3-e01-P23",
+      "mobi3-e01-P24"
+    ],
+    "excluded_sample_ids": [],
+    "known_labels": 0,
+    "product_enabled": false,
+    "pose_labels_available": false,
+    "forms_sha256": {
+      "A": "4e054869f885656992d3529e9fcd8ba5ff3a7c0436e6c72d752d75c37989efc5",
+      "B": "8c9c63a5ea956098d9e606d90b4cd79685a610b822b17f40d0c55758c571324b",
+      "REVIEW": "31c7670da94dd53cefc02c4f76fd56135af3dd80ff2c5ab5cbd009fa80d4d89c"
+    },
+    "bundle_sha256": "bb3a57bdd0717bb971309005c7b360b5f2f58c1e6a3d1b5e07acc419c8c8df45",
+    "artifact": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\validation\\validation.json"
+  },
+  "original_bundle_files_unchanged": true,
+  "reference_generated": false,
+  "actual_video_count": 24,
+  "actual_video_bytes": 680355016,
+  "pending_professional_review": 24,
+  "mutation_rejections": 3,
+  "summary_sha256": "ebb1e831bdaf2b8cc8d304f999dc730b05605b255a01ab767eb8cc8649f25318",
+  "artifact": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\summary.json"
+}

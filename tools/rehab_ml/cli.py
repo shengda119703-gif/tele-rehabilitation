@@ -38,6 +38,13 @@ def parser():
     item.add_argument('--receipt', type=Path, required=True)
     item = sub.add_parser('train-mobiphysio-quality', help='Train and compare video-level EAAQ regression on the frozen person split; no phase, pose fine-tuning or product activation')
     item.add_argument('--extraction', type=Path, required=True)
+    item = sub.add_parser('prepare-annotations', help='Score-free independent human review forms for the verified fixed CC0 RGB cohort; no labels or training')
+    item.add_argument('--receipt', type=Path, required=True)
+    item.add_argument('--output-dir', type=Path, required=True)
+    for name in ('validate-annotations', 'import-annotations'):
+        item = sub.add_parser(name, help='Check independent temporal labels and professional resolution; never auto-activate')
+        item.add_argument('--bundle', type=Path, required=True)
+        item.add_argument('--output-dir', type=Path, required=True)
     for name in ('fetch', 'verify'):
         item = sub.add_parser(name, help=name.capitalize() + ' a licensed, pinned official dataset')
         item.add_argument('--dataset', choices=['intellirehabds'], required=True)
@@ -157,6 +164,11 @@ def main(argv=None):
         elif args.command == 'train-mobiphysio-quality':
             from tools.rehab_ml.mobiphysio_quality import train_quality
             value = train_quality(args.extraction)
+        elif args.command in ('prepare-annotations', 'validate-annotations', 'import-annotations'):
+            from tools.rehab_ml.professional_annotations import build_bundle, validate_bundle, import_reviewed
+            value = (build_bundle(args.receipt, args.output_dir) if args.command == 'prepare-annotations'
+                     else validate_bundle(args.bundle, args.output_dir) if args.command == 'validate-annotations'
+                     else import_reviewed(args.bundle, args.output_dir))
         elif args.command == 'visual-audit':
             from tools.rehab_ml.visual_audit import render
             value = render(args.output_dir)
