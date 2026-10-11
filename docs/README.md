@@ -4,6 +4,9 @@
 
 | 文档 | 内容 |
 | --- | --- |
+| [真实RGB质量实验与信息链](development/REHAB_MOBIPHYSIO_RGB.md) | 24段完整下载、真实PTS／原YOLO、坐标／mask、train-only统计、Ridge／TCN和已有预测独立核对 |
+| [RGB实际结果与未通过回归](validation/REHAB_MOBIPHYSIO_RGB_2026-10-11.md) | 680355016字节、14／5／5人、候选不优、全部媒体／回归失败和保护范围；不冒称临床准确率 |
+| [当前后端阅读版及研究交接核对](validation/BACKEND_OVERVIEW_RGB_HANDOFF_2026-10-11.md) | 当前文档请求与此前研究分开；34功能／七链／字段／公式／函数／参数、静态核对和未通过工程边界 |
 | [发布数据与治疗师评分交接](development/REHAB_DATAVERSE_METADATA.md) | 官方latest-published／数字版固定、CC0说明与评分实际下载、视频名／三人评分／清单连接及标签缺口 |
 | [Dataverse本机核验](validation/REHAB_DATAVERSE_2026-10-11.md) | 实际3.0／551744字节／3008评分通过与异常隔离、SUMedi超时、源码／数据hash和回归保护 |
 | [康复v2真实HTTP丢响应与重启](development/REHAB_SOCKET_RECOVERY.md) | 原create_app／配对／签名cookie、TCP RST丢响应、原YOLO／报告、第二独立服务器恢复与SQL对账 |
