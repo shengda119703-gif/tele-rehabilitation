@@ -1,0 +1,457 @@
+{
+  "schema_version": "rehab-dataverse-evidence-1",
+  "verification": {
+    "run_id": "verification-e726e3db",
+    "passed": true,
+    "new_backend_tests": 416,
+    "legacy_rehab_tests": 12,
+    "legacy_mobile_tests": 19,
+    "dataverse_test_subset": 20,
+    "score_parser_test_subset": 10,
+    "commands": [
+      {
+        "name": "new_backend",
+        "arguments": [
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests/rehab_backend",
+          "-p",
+          "test_*.py",
+          "-v"
+        ],
+        "exit_code": 0,
+        "elapsed_s": 195.80619899999874,
+        "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-e726e3db\\new_backend.txt",
+        "log_sha256": "ded9c063ba399938b0cf48922a00bb4901a615df72be8fdd9b6cce14536a71d5",
+        "tail": "ests.test_training_dose_is_a_condition_and_cannot_be_missing_or_changed) ... ok\ntest_unsupported_algorithm_phase_count_semantics_or_bad_evidence_are_not_compared (test_timing_comparison.TimingComparisonTests.test_unsupported_algorithm_phase_count_semantics_or_bad_evidence_are_not_compared) ... ok\n\n----------------------------------------------------------------------\nRan 416 tests in 192.607s\n\nOK\n"
+      },
+      {
+        "name": "legacy_rehab",
+        "arguments": [
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "rehab_codex_single_camera_v2_1/tests",
+          "-p",
+          "test_app_rehab.py",
+          "-v"
+        ],
+        "exit_code": 0,
+        "elapsed_s": 0.23589349999929254,
+        "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-e726e3db\\legacy_rehab.txt",
+        "log_sha256": "d02a26e84c4b111c1022056c665d6658871a3550921b524b210bb8e790a5c375",
+        "tail": "st_app_rehab.SitStandTests.test_count_at_standing_and_finish_keeps_n) ... ok\ntest_partial_rise_is_retained (test_app_rehab.SitStandTests.test_partial_rise_is_retained) ... ok\ntest_standing_alone_does_not_count_or_rearm (test_app_rehab.SitStandTests.test_standing_alone_does_not_count_or_rearm) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.086s\n\nOK\n"
+      },
+      {
+        "name": "legacy_mobile",
+        "arguments": [
+          "-m",
+          "pytest",
+          "mobile_rehab/tests/test_mobile.py",
+          "-q",
+          "-p",
+          "no:cacheprovider",
+          "--basetemp",
+          "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-e726e3db\\pytest-temporary"
+        ],
+        "exit_code": 0,
+        "elapsed_s": 15.529221099999631,
+        "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-e726e3db\\legacy_mobile.txt",
+        "log_sha256": "a2b3f5ca11f6e0739042f59133565164e9a054094073a637f90e25a5c4aa3312",
+        "tail": "E:\\game\\health-care-software-main\\rehab_codex_single_camera_v2_1\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n19 passed, 1 warning in 14.99s\n"
+      },
+      {
+        "name": "scope",
+        "arguments": [
+          "tools/rehab_ml/cli.py",
+          "verify-scope",
+          "--baseline",
+          "reports/rehab_backend/protected_files.json"
+        ],
+        "exit_code": 0,
+        "elapsed_s": 5.412809399998878,
+        "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-e726e3db\\scope.txt",
+        "log_sha256": "0a81117bae783bed82a5d84cca1caa42b98e4a66c6e61e19374485cebbbd54a0",
+        "tail": "{\"ok\": true, \"command\": \"verify-scope\", \"result\": {\"ok\": true, \"checked\": 1308, \"changes\": [], \"baseline_sha256\": \"75f736e75795a334431f0d87664f720fede7093c62d3614f9969d0af35b3d742\", \"verified_at\": \"2026-10-11T10:33:47.572486+00:00\"}}\n"
+      }
+    ],
+    "protected_baseline_sha256": "75f736e75795a334431f0d87664f720fede7093c62d3614f9969d0af35b3d742",
+    "protected_files": 1308,
+    "protected_changes": 0,
+    "existing_dirty_files": 280,
+    "existing_dirty_changes": [],
+    "final_implementation_sha256": [
+      {
+        "path": "tools/rehab_ml/dataverse.py",
+        "sha256": "fd49eada79bc73b24d40c02db924d503ba2789cbc965d06fe185b00b39fcd797"
+      },
+      {
+        "path": "tools/rehab_ml/mobiphysio.py",
+        "sha256": "a065a360d60b6b74afd5ec9993e93450695c11100859b2ac39c1ef6f5193529d"
+      },
+      {
+        "path": "tools/rehab_ml/cli.py",
+        "sha256": "d776c521346d31825618f1d5fa40540f243bfa85b1a73bfb821112f828174f6d"
+      },
+      {
+        "path": "tools/rehab_ml/download.py",
+        "sha256": "38385fabf9f49c229b214a706e6eb272259f133d84c79db7b9ee707574be8f4b"
+      },
+      {
+        "path": "tools/rehab_ml/target_domain.py",
+        "sha256": "d5837e27e7f0b6983a6f0c5ac26cd2d993e9c08733a65abfbd61a691c766fe85"
+      },
+      {
+        "path": "configs/rehab_ml/datasets.yaml",
+        "sha256": "5b91e6bed785979a474853bb7a223d698300b0f8111f29a2ca5f145fd014d55b"
+      },
+      {
+        "path": "tests/rehab_backend/test_dataverse.py",
+        "sha256": "a1ced6e7da49044cf9f680185cd8f4165711ff0fe12072f3f432db25003546e5"
+      },
+      {
+        "path": "tests/rehab_backend/test_mobiphysio.py",
+        "sha256": "0113bbb81a70ac557275464a8560131734bf59d146c037c9114dd7f1e55dc6d7"
+      }
+    ]
+  },
+  "implementation_base": "98e15e63b9868253e491f3d6cee0dc8f2e4664db",
+  "product_version": "0.20.0",
+  "apk_version": "0.2.1",
+  "product_enabled": false,
+  "scope": "offline published metadata, verified documentation download and video-level score reconciliation only",
+  "mobiphysio": {
+    "metadata_summary": {
+      "path": ".runtime/rehab_ml/run/dataverse-mobiphysio-13110f5c/summary.json",
+      "sha256": "be09b80e4a5313a66850d6d84f847f688c283487de7519e8ae04bc039ef3e91d",
+      "schema_version": "dataverse-published-metadata-1",
+      "dataset": "mobiphysio",
+      "resolved_status": "blocked_license_and_task_review",
+      "metadata_status": "published_version_pinned",
+      "published_inventory_sha256": "4a549d1d2ff44a24aadb6a61eb0d00a9ba0239bf51ba429e152bfa9aae8d41d8",
+      "pinned_metadata_url": "https://dataverse.harvard.edu/api/v1/datasets/:persistentId/versions/3.0?persistentId=doi%3A10.7910%2FDVN%2FXSI0QN",
+      "license_name": "CC0 1.0",
+      "license_uri": "http://creativecommons.org/publicdomain/zero/1.0",
+      "guestbook_id": null,
+      "guestbook_status": "not_reported",
+      "file_count": 3688,
+      "total_file_bytes": 158714197650,
+      "file_access_counts": {
+        "unrestricted_metadata": 3688,
+        "restricted": 0,
+        "embargoed": 0,
+        "unknown": 0
+      },
+      "license_status": "pending_application_license_and_task_review",
+      "downloaded_data_bytes": 0,
+      "download_authorized": false,
+      "training_authorized": false,
+      "product_enabled": false,
+      "limitations": [
+        "Metadata availability does not prove file download access or usage eligibility.",
+        "Tabular original-format bytes/checksums may differ from stored/archival metadata.",
+        "No account, guestbook response, terms acceptance or access request is submitted.",
+        "RGB, keypoint mapping and independent supervision have not been validated."
+      ],
+      "run_id": "dataverse-mobiphysio-13110f5c",
+      "resolved_at": "2026-10-11T18:20:21.335036+08:00",
+      "source_sha256": {
+        "E:\\game\\health-care-software-main\\tools\\rehab_ml\\dataverse.py": "fec6d93c012c8fe528a56d94f657549f0af2221699b1402af5489f67388dc7d4",
+        "E:\\game\\health-care-software-main\\configs\\rehab_ml\\datasets.yaml": "61f552bbf746fdec853d1f9c95d4ba113cb71d63cc58b4e7ec3c096c8fbe1f1b"
+      },
+      "requests": [
+        {
+          "url": "https://dataverse.harvard.edu/api/v1/datasets/:persistentId/?persistentId=doi%3A10.7910%2FDVN%2FXSI0QN",
+          "timeout_connect_s": 10,
+          "timeout_read_s": 20,
+          "max_response_bytes": 16777216,
+          "credentials_sent": false,
+          "http_status": 200,
+          "bytes": 2155550,
+          "snapshot": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\dataverse-mobiphysio-13110f5c\\response-01.json",
+          "snapshot_sha256": "1e2fb50a74aa66f36839b92633b887b8ac023be3001df95f22f2cd64ec7e0508",
+          "payload_sha256": "f8538cc5d2362bec52c65d515418f26cedca4e4f2ae97cd9c1aa174d03c63001",
+          "status": "received",
+          "elapsed_s": 18.594137400001273
+        },
+        {
+          "url": "https://dataverse.harvard.edu/api/v1/datasets/:persistentId/versions/:latest-published?persistentId=doi%3A10.7910%2FDVN%2FXSI0QN",
+          "timeout_connect_s": 10,
+          "timeout_read_s": 20,
+          "max_response_bytes": 16777216,
+          "credentials_sent": false,
+          "http_status": 200,
+          "bytes": 2155170,
+          "snapshot": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\dataverse-mobiphysio-13110f5c\\response-02.json",
+          "snapshot_sha256": "f872020a79e2ff58aedbeb22f915f4ad8ac655bc5865ea23845fd0e5798c393f",
+          "payload_sha256": "b10ae1356c1d8fc1ce9e66739ac27d28815f7dd27b5f9deb10d04d5a2e3d0096",
+          "status": "received",
+          "elapsed_s": 23.334199900000385
+        },
+        {
+          "url": "https://dataverse.harvard.edu/api/v1/datasets/:persistentId/versions/3.0?persistentId=doi%3A10.7910%2FDVN%2FXSI0QN",
+          "timeout_connect_s": 10,
+          "timeout_read_s": 20,
+          "max_response_bytes": 16777216,
+          "credentials_sent": false,
+          "http_status": 200,
+          "bytes": 2155170,
+          "snapshot": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\dataverse-mobiphysio-13110f5c\\response-03.json",
+          "snapshot_sha256": "f872020a79e2ff58aedbeb22f915f4ad8ac655bc5865ea23845fd0e5798c393f",
+          "payload_sha256": "b10ae1356c1d8fc1ce9e66739ac27d28815f7dd27b5f9deb10d04d5a2e3d0096",
+          "status": "received",
+          "elapsed_s": 23.491694700000153
+        }
+      ]
+    },
+    "current_license_interpretation": "verified_cc0_published_metadata_and_documentation",
+    "acquisition_classifier_note": "The preserved acquisition summary used an earlier classifier; it is not rewritten. The exact CC0 URI and all published terms were retained and reviewed before the bounded documentation fetch.",
+    "documentation": {
+      "path": ".runtime/rehab_ml/data/mobiphysio/3.0/metadata-6ee01ba1/manifest.json",
+      "sha256": "cf4ad297df79c6a8932a9017145d9cb7a46a7f0aba75cb0d7809a1cb49a07207",
+      "schema_version": "dataverse-documentation-fetch-1",
+      "dataset": "mobiphysio",
+      "version": "3.0",
+      "status": "verified_documentation_download",
+      "audit_run": "dataverse-mobiphysio-13110f5c",
+      "audit_summary_sha256": "be09b80e4a5313a66850d6d84f847f688c283487de7519e8ae04bc039ef3e91d",
+      "official_inventory_sha256": "4a549d1d2ff44a24aadb6a61eb0d00a9ba0239bf51ba429e152bfa9aae8d41d8",
+      "license": {
+        "name": "CC0 1.0",
+        "uri": "http://creativecommons.org/publicdomain/zero/1.0",
+        "iconUri": "https://licensebuttons.net/p/zero/1.0/88x31.png",
+        "rightsIdentifier": "CC0-1.0",
+        "rightsIdentifierScheme": "SPDX",
+        "schemeUri": "https://spdx.org/licenses/",
+        "languageCode": "en"
+      },
+      "files": [
+        {
+          "file_id": 13453294,
+          "filename": "MobiPhysio.md",
+          "md5": "0c8411ef74a9d04eceea3ac08d0c217b",
+          "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\mobiphysio\\3.0\\metadata-6ee01ba1\\MobiPhysio.md",
+          "bytes": 12668,
+          "sha256": "80784a069d47088df73c105c6eda95b99052183b13d7d9c34bf08717090b5412",
+          "cached": false
+        },
+        {
+          "file_id": 13453292,
+          "filename": "Physiotherapist Exercise Marking .csv",
+          "md5": "f517c958e0aba21745d802a601b304a2",
+          "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\mobiphysio\\3.0\\metadata-6ee01ba1\\Physiotherapist Exercise Marking .csv",
+          "bytes": 539076,
+          "sha256": "f6e97b3f7ab3771cba19536f3b27c867b73b2084b4e8542414d9882a5430f3ed",
+          "cached": false
+        }
+      ],
+      "training_authorized": false,
+      "rgb_video_downloaded": false,
+      "model_activated": false,
+      "downloaded_bytes": 551744,
+      "manifest": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\mobiphysio\\3.0\\metadata-6ee01ba1\\manifest.json",
+      "completed_at": "2026-10-11T18:23:38.399588+08:00"
+    },
+    "score_audit": {
+      "path": ".runtime/rehab_ml/run/mobiphysio-index-1622f855/summary.json",
+      "sha256": "c03e1d9bd9e868a818c78e27cf5fa3fb76c0f6062a6d0b1d600f87489e5bb768",
+      "schema_version": "mobiphysio-score-audit-1",
+      "run_id": "mobiphysio-index-1622f855",
+      "dataset": "mobiphysio",
+      "published_version": "3.0",
+      "readme_declared_version": "1.1",
+      "official_video_count": 3686,
+      "csv_video_groups": 3010,
+      "reviewed_inventory_count": 3685,
+      "unreviewed_inventory_count": 1,
+      "eligible_video_scores": 3008,
+      "quarantined_groups": 2,
+      "missing_video_scores": 676,
+      "blank_rows": 19,
+      "reviewed_inventory_by_exercise": {
+        "E01": 558,
+        "E02": 384,
+        "E03": 549,
+        "E04": 383,
+        "E05": 511,
+        "E06": 354,
+        "E07": 251,
+        "E08": 356,
+        "E09": 339
+      },
+      "eligible_by_exercise": {
+        "E01": 380,
+        "E02": 384,
+        "E03": 383,
+        "E04": 383,
+        "E05": 371,
+        "E06": 354,
+        "E07": 251,
+        "E08": 252,
+        "E09": 250
+      },
+      "quarantine_reasons": {
+        "missing_or_invalid_number": 1,
+        "three_distinct_judges_required": 2,
+        "unexpected_average_on_continuation": 1
+      },
+      "eligible_subject_count": 24,
+      "reviewed_inventory_subject_count": 58,
+      "numeric_tolerance": 0.00001,
+      "score_scale": [
+        0,
+        100
+      ],
+      "label_scope": "whole_video",
+      "independent_labels_available": [
+        "video_eaaq"
+      ],
+      "unavailable_labels": [
+        "2d_keypoint_reference",
+        "visibility_reference",
+        "phase",
+        "error_timing",
+        "affected_side"
+      ],
+      "video_downloaded": false,
+      "split_created": false,
+      "training_performed": false,
+      "product_enabled": false,
+      "source_manifest_sha256": "cf4ad297df79c6a8932a9017145d9cb7a46a7f0aba75cb0d7809a1cb49a07207",
+      "audit_summary_sha256": "be09b80e4a5313a66850d6d84f847f688c283487de7519e8ae04bc039ef3e91d",
+      "official_inventory_sha256": "4a549d1d2ff44a24aadb6a61eb0d00a9ba0239bf51ba429e152bfa9aae8d41d8",
+      "source_files_sha256": {
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\mobiphysio\\3.0\\metadata-6ee01ba1\\MobiPhysio.md": "80784a069d47088df73c105c6eda95b99052183b13d7d9c34bf08717090b5412",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\mobiphysio\\3.0\\metadata-6ee01ba1\\Physiotherapist Exercise Marking .csv": "f6e97b3f7ab3771cba19536f3b27c867b73b2084b4e8542414d9882a5430f3ed",
+        "E:\\game\\health-care-software-main\\tools\\rehab_ml\\mobiphysio.py": "a065a360d60b6b74afd5ec9993e93450695c11100859b2ac39c1ef6f5193529d",
+        "E:\\game\\health-care-software-main\\tools\\rehab_ml\\dataverse.py": "fd49eada79bc73b24d40c02db924d503ba2789cbc965d06fe185b00b39fcd797"
+      },
+      "index_path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-index-1622f855\\video_score_index.json",
+      "index_sha256": "1fe77e6dc012bae641e8ff4c621f210d0e1d26884b8f359d62d4271ba25ae1a0",
+      "completed_at": "2026-10-11T18:28:35.599389+08:00"
+    },
+    "shoulder_scores": {
+      "eligible_videos": 380,
+      "subjects": 24,
+      "views": {
+        "front": 128,
+        "left_view": 128,
+        "right_view": 124
+      },
+      "label_scope": "whole_video",
+      "affected_side": null
+    },
+    "inventory_unknown_code": {
+      "file_id": 11704662,
+      "filename": "E03_P41_AF_VP_GM.mp4",
+      "mapped": false
+    },
+    "quarantined_groups": [
+      {
+        "video_name": "E01_P01_AL_VLJ_GM",
+        "judge_count": 6,
+        "reasons": [
+          "three_distinct_judges_required",
+          "unexpected_average_on_continuation"
+        ]
+      },
+      {
+        "video_name": "E09_P23_AR_VO_GM",
+        "judge_count": 15,
+        "reasons": [
+          "missing_or_invalid_number",
+          "three_distinct_judges_required"
+        ]
+      }
+    ]
+  },
+  "sumedipose": {
+    "observed_official_published_response": {
+      "version": "1.0",
+      "license": "CC BY-NC-SA 4.0",
+      "file_count": 3654,
+      "retained_full_numeric_snapshot": false
+    },
+    "audits": [
+      {
+        "path": ".runtime/rehab_ml/run/dataverse-sumedipose-2e411b52/summary.json",
+        "sha256": "296d38ba0622542732d1495cbf1c86b28454436e91a249aa37a2a3047e46dff2",
+        "schema_version": "dataverse-published-metadata-1",
+        "dataset": "sumedipose",
+        "metadata_status": "unverified",
+        "resolved_status": "blocked_metadata",
+        "error_type": "ReadTimeout",
+        "error": "HTTPSConnectionPool(host='dataverse.harvard.edu', port=443): Read timed out. (read timeout=20)",
+        "downloaded_data_bytes": 0,
+        "download_authorized": false,
+        "training_authorized": false,
+        "product_enabled": false,
+        "run_id": "dataverse-sumedipose-2e411b52",
+        "resolved_at": "2026-10-11T18:19:36.739275+08:00",
+        "source_sha256": {
+          "E:\\game\\health-care-software-main\\tools\\rehab_ml\\dataverse.py": "fec6d93c012c8fe528a56d94f657549f0af2221699b1402af5489f67388dc7d4",
+          "E:\\game\\health-care-software-main\\configs\\rehab_ml\\datasets.yaml": "61f552bbf746fdec853d1f9c95d4ba113cb71d63cc58b4e7ec3c096c8fbe1f1b"
+        },
+        "requests": [
+          {
+            "url": "https://dataverse.harvard.edu/api/v1/datasets/:persistentId/?persistentId=doi%3A10.7910%2FDVN%2FGRRROM",
+            "timeout_connect_s": 10,
+            "timeout_read_s": 20,
+            "max_response_bytes": 16777216,
+            "credentials_sent": false,
+            "status": "failed",
+            "error_type": "ReadTimeout",
+            "error": "HTTPSConnectionPool(host='dataverse.harvard.edu', port=443): Read timed out. (read timeout=20)",
+            "elapsed_s": 20.857021600000735
+          }
+        ]
+      },
+      {
+        "path": ".runtime/rehab_ml/run/dataverse-sumedipose-59a41b51/summary.json",
+        "sha256": "ec61a5b68a24441cb5b0c857a49340800757f7158c1470d3c5046442848455e5",
+        "schema_version": "dataverse-published-metadata-1",
+        "dataset": "sumedipose",
+        "metadata_status": "unverified",
+        "resolved_status": "blocked_metadata",
+        "error_type": "ReadTimeout",
+        "error": "HTTPSConnectionPool(host='dataverse.harvard.edu', port=443): Read timed out. (read timeout=20)",
+        "downloaded_data_bytes": 0,
+        "download_authorized": false,
+        "training_authorized": false,
+        "product_enabled": false,
+        "run_id": "dataverse-sumedipose-59a41b51",
+        "resolved_at": "2026-10-11T18:24:00.000603+08:00",
+        "source_sha256": {
+          "E:\\game\\health-care-software-main\\tools\\rehab_ml\\dataverse.py": "1b47255a97b4869635f8cbc868806c6f5e2ddd9af98f784c9a547dce109f0931",
+          "E:\\game\\health-care-software-main\\configs\\rehab_ml\\datasets.yaml": "61f552bbf746fdec853d1f9c95d4ba113cb71d63cc58b4e7ec3c096c8fbe1f1b"
+        },
+        "requests": [
+          {
+            "url": "https://dataverse.harvard.edu/api/v1/datasets/:persistentId/?persistentId=doi%3A10.7910%2FDVN%2FGRRROM",
+            "timeout_connect_s": 10,
+            "timeout_read_s": 20,
+            "max_response_bytes": 16777216,
+            "credentials_sent": false,
+            "status": "failed",
+            "error_type": "ReadTimeout",
+            "error": "HTTPSConnectionPool(host='dataverse.harvard.edu', port=443): Read timed out. (read timeout=20)",
+            "elapsed_s": 20.805908599999384
+          }
+        ]
+      }
+    ],
+    "download_performed": false,
+    "training_performed": false,
+    "eligibility_confirmed": false
+  },
+  "limitations": [
+    "No RGB video downloaded or decoded in this increment.",
+    "Therapist scores label entire videos, not repetitions, phase, keypoints, visibility, error timing, cue benefit or symptoms.",
+    "No independent 2D supervision, person split, fine-tuning, candidate activation or clinical accuracy gain.",
+    "CC0 copyright status does not waive privacy/publicity rights or establish suitability for a medical use.",
+    "SUMediPose response observation is not a complete pinned audit; failed attempts are retained."
+  ]
+}

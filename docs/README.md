@@ -4,6 +4,8 @@
 
 | 文档 | 内容 |
 | --- | --- |
+| [发布数据与治疗师评分交接](development/REHAB_DATAVERSE_METADATA.md) | 官方latest-published／数字版固定、CC0说明与评分实际下载、视频名／三人评分／清单连接及标签缺口 |
+| [Dataverse本机核验](validation/REHAB_DATAVERSE_2026-10-11.md) | 实际3.0／551744字节／3008评分通过与异常隔离、SUMedi超时、源码／数据hash和回归保护 |
 | [康复v2真实HTTP丢响应与重启](development/REHAB_SOCKET_RECOVERY.md) | 原create_app／配对／签名cookie、TCP RST丢响应、原YOLO／报告、第二独立服务器恢复与SQL对账 |
 | [真实HTTP本机验收](validation/REHAB_SOCKET_RECOVERY_2026-10-11.md) | 3项专项＋预声明三轮×22条件、准确宿主／native退出、源与日志hash；不是手机、LAN或TLS验收 |
 | [康复v2原生宿主生命周期](development/REHAB_NATIVE_HOST_LIFETIME.md) | 实测宿主退出后native子进程残留；WindowsJob／启动门／准确句柄释放及非Windows边界 |

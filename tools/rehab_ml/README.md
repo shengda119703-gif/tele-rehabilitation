@@ -4,6 +4,8 @@
 
 ## 实际入口
 
+官方RGB候选核验使用`resolve-dataverse --dataset mobiphysio`，显式固定数字发布版，不取草稿。`fetch-dataverse-metadata --audit-run <明确run> --file-ids 13453294 13453292`仅下载已校验CC0的小说明／评分文件，拒绝MP4；`index-mobiphysio-scores --audit-run <明确run> --metadata-manifest <明确manifest>`核对两行表头、三治疗师／数值／视频清单，保留缺标和隔离，不下载视频或训练。实际本机README／CSV551744字节，肩外展380个整视频评分／24人；SUMedi完整审计超时且NC-SA资格未确认。见[方法与复现](../../docs/development/REHAB_DATAVERSE_METADATA.md)及[本机验收](../../docs/validation/REHAB_DATAVERSE_2026-10-11.md)，后者区分真实数据与30项TEST契约。原数据／评分／索引继续忽略，未作为模型上线、逐帧标注或产品历史。
+
 产品后端解释器：`rehab_codex_single_camera_v2_1/.venv/Scripts/python.exe`。
 
 离线训练解释器：`.runtime/rehab_ml/venv/Scripts/python.exe`。本机训练环境继承系统 site-packages，实际版本与 GPU 见实验 `environment.lock.txt`、`provenance.json`，不能当成产品环境。迁移到其他机器应依据该锁文件建立独立环境。
@@ -42,7 +44,7 @@
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_timing_comparison.py
 ```
 
-2026-10-11 最新完整`verify_all`为`verification-6fe7c7c8`，实际386项新后端、12项旧康复、19项旧手机接口通过及1308保护变化0。新增3项socket专项为386子集；另有预声明三轮各22条件，真正的原create_app／Uvicorn／配对／cookie／原JPEG与报告、TCP RST丢响应、第二个实际服务恢复及SQL对账。工作流见[真实HTTP恢复](../../docs/development/REHAB_SOCKET_RECOVERY.md)，源、日志／hash和边界见[本机验证](../../docs/validation/REHAB_SOCKET_RECOVERY_2026-10-11.md)。当前命令为`python -X utf8 -B tools/rehab_ml/verify_socket_recovery.py`；只用OS临时本机端口与TEST库，不启停用户8765／1396服务／相机，不分析私人录像或训练。
+2026-10-11最新完整`verify_all`为`verification-e726e3db`，实际416项新后端、12项旧康复、19项旧手机接口通过及1308保护变化0；新20项Dataverse＋10项评分TEST为416子集，真实文件／评分索引另见[本次数据验收](../../docs/validation/REHAB_DATAVERSE_2026-10-11.md)。此前`verification-6fe7c7c8`386项含3项socket契约，预声明三轮各22条件走原create_app／Uvicorn／配对／cookie／原JPEG与报告、TCP RST丢响应、第二实际服务与SQL对账，不称本轮重跑专项。见[真实HTTP恢复](../../docs/development/REHAB_SOCKET_RECOVERY.md)与[原验收](../../docs/validation/REHAB_SOCKET_RECOVERY_2026-10-11.md)。其入口`python -X utf8 -B tools/rehab_ml/verify_socket_recovery.py`只用临时本机端口与TEST库，不启停用户8765／1396服务／相机或分析私人录像／训练。
 
 此前383／376／372／364／357／340及更早阶段不相加；[Windows所属生命周期](../../docs/development/REHAB_NATIVE_HOST_LIFETIME.md)、[异步结束恢复](../../docs/development/REHAB_ASYNC_RECOVERY.md)、[时间验收](../../docs/validation/REHAB_TIMING_COMPARISON_2026-10-11.md)、[原安排验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)、[续训验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)及[多轮验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)保留原证据。工程通过不等于临床准确率、手机／LAN／TLS或全平台验收；OS Process.start仍无硬截止，完整P7尚未完成。
 

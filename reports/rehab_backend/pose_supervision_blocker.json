@@ -9,11 +9,21 @@
   "dataset_status": {
     "intellirehabds": "verified_dataset_license",
     "rehab24_6": "blocked_requires_eligibility_confirmation",
-    "mobiphysio": "pending_file_level_license_and_access",
-    "sumedipose": "pending_file_level_license_and_access",
+    "mobiphysio": "verified_cc0_published_metadata_and_documentation",
+    "sumedipose": "blocked_requires_eligibility_confirmation",
     "keraal": "excluded_nc_sa_and_action_mismatch",
     "fit3d": "excluded_account_and_noncommercial_terms",
     "qevd": "excluded_product_license_restrictions"
+  },
+  "rgb_candidate_evidence": {
+    "mobiphysio": {
+      "published_version": "3.0",
+      "license": "CC0-1.0",
+      "downloaded": "README and official score CSV only",
+      "label_scope": "whole_video_eaaq",
+      "independent_2d_reference": false,
+      "evidence": "reports/rehab_backend/dataverse_metadata.json"
+    }
   },
   "training_allowed": false,
   "model_activated": false,
@@ -26,6 +36,6 @@
   ],
   "pose_tool_scope": "conversion_evaluation_and_conditional_offline_training_not_proof_of_qualified_human_data",
   "next_required": "Verified dataset eligibility/access or consented independently annotated target video",
-  "requested_command": "train-pose",
-  "implemented": "conditional_multi_epoch_trainer_ready_human_training_still_blocked_missing_supervision"
+  "requested_command": "build-pose-dataset",
+  "implemented": "reference_conversion_and_evaluation_available_pose_training_refused"
 }

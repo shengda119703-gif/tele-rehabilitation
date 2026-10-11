@@ -46,6 +46,11 @@ def resolve(registry=None):
         if not record.get('api'):
             resolved[key] = result
             continue
+        if key in ('mobiphysio', 'sumedipose'):
+            from .dataverse import audit_dataverse
+            result.update(audit_dataverse(key, record))
+            resolved[key] = result
+            continue
         try:
             response = requests.get(record['api'], timeout=TIMEOUT)
             response.raise_for_status()
@@ -61,11 +66,7 @@ def resolve(registry=None):
                 result['resolved_status'] = 'ready'
                 result['record_metadata'] = data
             else:
-                versions = data.get('data', {}).get('latestVersion', {})
-                result['published_metadata'] = versions
-                result['resolved_status'] = 'blocked_license_review'
-                if versions.get('versionState') != 'RELEASED':
-                    result['resolved_status'] = 'blocked_no_verified_released_version'
+                result['resolved_status'] = 'blocked_unsupported_metadata_adapter'
         except (requests.RequestException, ValueError, KeyError) as exc:
             result['resolved_status'] = 'blocked_metadata'
             result['error'] = str(exc)

@@ -140,6 +140,10 @@ def supervision_status():
                 unavailable=['qualified_target_RGB_training_data', 'verified_2d_joint_and_visibility_labels',
                              'professionally_reviewed_phase_and_observability_labels'],
                 dataset_status={key: value['license_status'] for key, value in load_registry().items()},
+                rgb_candidate_evidence=dict(mobiphysio=dict(
+                    published_version='3.0', license='CC0-1.0', downloaded='README and official score CSV only',
+                    label_scope='whole_video_eaaq', independent_2d_reference=False,
+                    evidence='reports/rehab_backend/dataverse_metadata.json')),
                 training_allowed=False, model_activated=False,
                 available_pose_tools=['build-pose-dataset --reference', 'infer-pose-reference', 'evaluate-pose',
                                       'train-pose --config', 'cancel-pose-training --run-dir'],

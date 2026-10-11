@@ -21,6 +21,14 @@ def parser():
     item.add_argument('--baseline', type=Path, required=True)
     item = sub.add_parser('resolve', help='Resolve official metadata and record license/access blockers')
     item.add_argument('--registry', type=Path, default=ROOT / 'configs/rehab_ml/datasets.yaml')
+    item = sub.add_parser('resolve-dataverse', help='Pin read-only released metadata; no terms acceptance, data download or training')
+    item.add_argument('--dataset', choices=['mobiphysio', 'sumedipose'], required=True)
+    item = sub.add_parser('fetch-dataverse-metadata', help='Fetch one or two verified CC0 documentation/score files, not videos or training data')
+    item.add_argument('--audit-run', type=Path, required=True)
+    item.add_argument('--file-ids', type=int, nargs='+', required=True)
+    item = sub.add_parser('index-mobiphysio-scores', help='Reconcile verified video-level therapist scores with the pinned inventory; no video download or training')
+    item.add_argument('--metadata-manifest', type=Path, required=True)
+    item.add_argument('--audit-run', type=Path, required=True)
     for name in ('fetch', 'verify'):
         item = sub.add_parser(name, help=name.capitalize() + ' a licensed, pinned official dataset')
         item.add_argument('--dataset', choices=['intellirehabds'], required=True)
@@ -109,6 +117,17 @@ def main(argv=None):
             from tools.rehab_ml.inventory import doctor, inventory, verify_scope
             value = (doctor() if args.command == 'doctor' else inventory()
                      if args.command == 'inventory' else verify_scope(args.baseline))
+        elif args.command == 'resolve-dataverse':
+            from tools.rehab_ml.dataverse import audit_dataverse
+            value = audit_dataverse(args.dataset)
+            # Full public metadata is stored in the explicit run, not printed.
+            value = {key: item for key, item in value.items() if key != 'published'}
+        elif args.command == 'fetch-dataverse-metadata':
+            from tools.rehab_ml.dataverse import fetch_metadata
+            value = fetch_metadata(args.audit_run, args.file_ids)
+        elif args.command == 'index-mobiphysio-scores':
+            from tools.rehab_ml.mobiphysio import index_scores
+            value = index_scores(args.metadata_manifest, args.audit_run)
         elif args.command == 'visual-audit':
             from tools.rehab_ml.visual_audit import render
             value = render(args.output_dir)
