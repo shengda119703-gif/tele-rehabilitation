@@ -1,0 +1,192 @@
+{
+  "http": {
+    "pause": {
+      "total_samples": 1,
+      "retained_samples": 1,
+      "p50_ms": 13.7019999997392,
+      "p95_ms": 13.7019999997392,
+      "max_ms": 13.7019999997392
+    },
+    "resume": {
+      "total_samples": 1,
+      "retained_samples": 1,
+      "p50_ms": 13.986900000418245,
+      "p95_ms": 13.986900000418245,
+      "max_ms": 13.986900000418245
+    },
+    "finish": {
+      "total_samples": 4,
+      "retained_samples": 4,
+      "p50_ms": 13.052499999957945,
+      "p95_ms": 15.294300000277872,
+      "max_ms": 15.294300000277872
+    },
+    "state": {
+      "total_samples": 0,
+      "retained_samples": 0,
+      "p50_ms": null,
+      "p95_ms": null,
+      "max_ms": null
+    },
+    "commit": {
+      "total_samples": 130,
+      "retained_samples": 130,
+      "p50_ms": 1.6194999998333515,
+      "p95_ms": 1.998200000343786,
+      "max_ms": 21.852900000340014
+    }
+  },
+  "reconciliation": {
+    "status_counts": {
+      "unprocessed": 1
+    },
+    "checks": {
+      "unique_frame_sequences": true,
+      "accepted_count_matches_rows": true,
+      "processed_count_matches_rows": true,
+      "accepted_boundary_matches_rows": true,
+      "processed_boundary_matches_rows": true,
+      "persisted_boundary_matches_rows": true,
+      "no_pending_after_terminal": true,
+      "known_statuses": true,
+      "exclusions_explicit": true,
+      "one_finalize": true,
+      "one_contribution": true,
+      "controls_observed_during_cold_native_work": true,
+      "all_finish_responses_one_operation": true,
+      "one_freeze_boundary": true,
+      "same_and_new_key_recover_canonical": true,
+      "changed_payload_conflict": true,
+      "late_frame_rejected": true,
+      "visual_fact_immutable": true,
+      "frame_rows_immutable": true,
+      "no_people_no_confirmed_reps": true,
+      "null_feedback_not_zero": true,
+      "feedback_retry_once": true,
+      "independent_reopen_same_fact": true
+    }
+  },
+  "final_commit": {
+    "commit_id": "5c3b02aff43d47b0a39b78aa4066c523",
+    "session_id": "34336e0e2ec949d99793f8a0e1e9e53f",
+    "status": "finalized",
+    "committed_at": "2026-10-11T08:52:39.941655+00:00",
+    "end_reason": "user_stopped",
+    "completed_reps": 0,
+    "accepted_last_seq": 1,
+    "processed_last_seq": -1,
+    "persisted_evidence_seq": -1,
+    "visual_snapshot_digest": "e832cb144032a894254e692419ea31e0850be5258df1342eda5e96a1b9ed6ffd",
+    "plan_progress": "unique_v2_contribution_committed"
+  },
+  "finish_to_commit_observed_ms": 2057.4428999998418,
+  "shutdown": {
+    "resources_released": true,
+    "pose_process_retained": false,
+    "consumers_alive": false
+  },
+  "run_id": "session-cold-caf7cbab",
+  "predeclared": {
+    "workload": {
+      "version": "rehab-session-cold-1",
+      "image_size": [
+        320,
+        240
+      ],
+      "frames": 1,
+      "pause_resume_pairs": 1,
+      "concurrent_finish_requests": 4,
+      "deadline_s": 45,
+      "inference_provider": "original_owned_yolo",
+      "wait_for_warm_result": false,
+      "transport": "in_process_ASGI_HTTP_not_socket_network",
+      "fixture": "TEST_empty_jpeg_and_manual_plan_no_human_reference"
+    },
+    "budgets": {
+      "feature_plus_small_tcn_p95_ms": 20,
+      "control_response_p95_ms": 200,
+      "note": "Engineering targets to measure; not claimed achieved."
+    },
+    "source_sha256": {
+      "tools/rehab_ml/session_cold_audit.py": "2a433a575f92084bca869a546eeeda7c51d8a17af73de3a5e2194a655a30e032",
+      "tools/rehab_ml/session_load_audit.py": "3b6288628567bcf435b38e72104df518edd3e4437ff0fcb8a8b42c59244a9c7c",
+      "mobile_rehab/rehab_v2/api.py": "3560384d8df0fb8bd12aa4340a59357ec286ebf49b9f75f1e13862b8bac78356",
+      "mobile_rehab/rehab_v2/service.py": "61ec22ad6442daf247a1444cbab8378e9df5ae75f4929319bb56e1c8fac7f4c5",
+      "mobile_rehab/rehab_v2/pose_worker.py": "5ae9a211ed925743446c4f6e6f9bc99b981df71550b553637a0dec502de5f09b",
+      "mobile_rehab/rehab_v2/owned_worker.py": "499fc70ef65d69c30bfbb124e971135b9ce3aecaa1bb2a623b646d6645b7fd9d",
+      "rehab_codex_single_camera_v2_1/app/rehab_v2/sessions.py": "d9979d30eacbdd168e974791a265d0e05b28fbab27abd391310487c853ac287a",
+      "configs/rehab_ml/backend.yaml": "d7db4ccb166d7f98ba4477dcda240c64847cd29eae1b393fd27de826947e41cd",
+      "rehab_codex_single_camera_v2_1/assets/models/yolo11n-pose.pt": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0"
+    },
+    "environment": {
+      "python": "3.13.12 (tags/v3.13.12:1cbe481, Feb  3 2026, 18:22:25) [MSC v.1944 64 bit (AMD64)]",
+      "executable": "E:\\game\\health-care-software-main\\rehab_codex_single_camera_v2_1\\.venv\\Scripts\\python.exe",
+      "platform": "Windows-11-10.0.22631-SP0",
+      "dependencies": {
+        "numpy": "2.2.6",
+        "torch": "2.9.1",
+        "PySide6": null,
+        "requests": "2.34.2",
+        "PyYAML": "6.0.3",
+        "ultralytics": "8.3.199"
+      },
+      "roots": {
+        "data": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data",
+        "run": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run",
+        "model": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\model"
+      },
+      "disk": {
+        "C:/": {
+          "total": 322122543104,
+          "used": 321988554752,
+          "free": 133988352
+        },
+        "D:/": {
+          "total": 701020237824,
+          "used": 684914987008,
+          "free": 16105250816
+        },
+        "E:/": {
+          "total": 1024191361024,
+          "used": 1022818807808,
+          "free": 1372553216
+        }
+      },
+      "git_commit": "17a0827c9468949ffe029356f7c5b76bfd8bd774"
+    }
+  },
+  "clinical_accuracy": null,
+  "source_unchanged": true,
+  "exclusions": [
+    "phone",
+    "camera",
+    "socket_network",
+    "human_accuracy",
+    "long_duration_soak"
+  ],
+  "engineering_invariants_passed": true,
+  "control_budget": {
+    "pause": {
+      "p95_ms": 13.7019999997392,
+      "budget_ms": 200
+    },
+    "resume": {
+      "p95_ms": 13.986900000418245,
+      "budget_ms": 200
+    },
+    "finish": {
+      "p95_ms": 15.294300000277872,
+      "budget_ms": 200
+    }
+  },
+  "control_budget_met": true,
+  "passed": true,
+  "raw_details": {
+    "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-cold-caf7cbab\\details.json",
+    "sha256": "409e06f74d33674c7e6e37c73b26408910f60ea1fc314fd6f9cfbb578bd04ddc"
+  },
+  "raw_summary": {
+    "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-cold-caf7cbab\\summary.json",
+    "sha256": "80420038d9c9a030a9758d1f8e92e0467c2ebb4edb3e94403ddc9e6d720481fb"
+  }
+}

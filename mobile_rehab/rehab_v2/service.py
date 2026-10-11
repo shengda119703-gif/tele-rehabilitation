@@ -76,6 +76,7 @@ class Runtime:
                                item['source']['usage_context'], item['session_id'], item['source_epoch'])
         self.telemetry = SessionTelemetry(item['source'].get('execution_trace_id'),
                                          item['session_id'], self.engine.spec['protocol_version'])
+        self.finish_failure = None
 
 
 class SessionService:
@@ -123,6 +124,13 @@ class SessionService:
                           'feature_ms': [], 'cue_ms': [], 'commit_ms': [], 'queue_wait_ms': []}
         self.report_stop = threading.Event()
         self.report_wake = threading.Event()
+        # One active formal session, one retained finalization request. This
+        # queue owns no new facts: the SQL freeze/operation is authoritative.
+        self.finish_queue = queue.Queue(maxsize=1)
+        self.finish_pending = set()
+        self.finish_stop = threading.Event()
+        self.finish_worker = threading.Thread(target=self._run_finishes, name='rehab-v2-finalize', daemon=True)
+        self.finish_worker.start()
         self.worker = threading.Thread(target=self._run, name='rehab-v2-vision', daemon=True)
         self.worker.start()
         self.report_worker = threading.Thread(target=self._run_reports, name='rehab-v2-reports', daemon=True)
@@ -530,7 +538,59 @@ class SessionService:
         return self._session_operation(owner, sid, operation+'_request_ms', control)
 
     def finish(self, owner, sid, request):
+        # Blocking internal lifecycle operation, also used during shutdown.
+        # HTTP uses request_finish so native inference never holds its reply.
         return self._session_operation(owner, sid, 'finish_request_ms', lambda: self._finish(owner, sid, request))
+
+    def request_finish(self, owner, sid, request):
+        def accept():
+            key, fingerprint = identifier(request.get('idempotency_key')), digest(request)
+            found = self.repository.lookup_operation(owner, sid, 'finish', key, fingerprint)
+            if found and found.get('status') == 'finalized':
+                return found
+            with self.guard:
+                if found and sid in self.finish_pending:
+                    return found
+                item = self.repository.get(owner, sid)
+                if item['persistence_state'] == 'finalized':
+                    self.repository.freeze(owner, sid, key, fingerprint, request.get('expected_revision'),
+                                           request.get('reason', 'user_stopped'))
+                    return item['canonical_commit']
+                if self.closed or self.finish_stop.is_set() or not self.finish_worker.is_alive():
+                    raise SessionError('finish_consumer_unavailable', 503)
+                _, runtime = self._runtime(owner, sid)
+                if sid not in self.finish_pending and self.finish_queue.full():
+                    raise SessionError('finish_queue_full', 503)
+                with runtime.lock:
+                    # Persist before queuing or replying. freeze looks up the
+                    # original digest before testing an advanced revision.
+                    self.repository.freeze(owner, sid, key, fingerprint, request.get('expected_revision'),
+                                           request.get('reason', 'user_stopped'))
+                    if sid not in self.finish_pending:
+                        self.finish_pending.add(sid)
+                        runtime.finish_failure = None
+                        self.finish_queue.put_nowait((owner, sid, copy.deepcopy(request)))
+                return self.repository.lookup_operation(owner, sid, 'finish', key, fingerprint)
+        return self._session_operation(owner, sid, 'finish_request_ms', accept)
+
+    def _run_finishes(self):
+        while not self.finish_stop.is_set() or not self.finish_queue.empty():
+            try:
+                owner, sid, request = self.finish_queue.get(timeout=.05)
+            except queue.Empty:
+                continue
+            try:
+                self._finish(owner, sid, request)
+            except Exception as error:
+                # No false commit. The durable operation remains finishing;
+                # an identical retry can requeue it after this attempt settles.
+                runtime = self.runtimes.get(sid)
+                if runtime:
+                    runtime.finish_failure = getattr(error, 'code', type(error).__name__)
+            finally:
+                with self.guard:
+                    self.finish_pending.discard(sid)
+                self.finish_queue.task_done()
 
     def _finish(self, owner, sid, request):
         key, fingerprint = identifier(request.get('idempotency_key')), digest(request)
@@ -585,6 +645,8 @@ class SessionService:
         item = self.repository.get(owner, sid)
         item['backend_execution'] = dict(frame_consumer_alive=self.worker.is_alive(),
             failure=self.worker_failure, report_consumer_alive=self.report_worker.is_alive(),
+            finish_consumer_alive=self.finish_worker.is_alive(),
+            finish_failure=getattr(self.runtimes.get(sid), 'finish_failure', None),
             report_failure=self.report_worker_failure,
             report_execution_mode=self._report_execution_contract()['mode'],
             last_storage_fault=self.last_storage_fault,
@@ -757,13 +819,15 @@ class SessionService:
                 if item['persistence_state'] == 'draft':
                     self.finish(item['owner'], sid, dict(idempotency_key='host-close', expected_revision=item['revision'], reason='interrupted'))
         self.worker_stop.set()
+        self.finish_stop.set()
         self.inference_worker.request_stop()
         self.report_stop.set()
         self.report_executor.request_stop()
         self.report_wake.set()
         self.worker.join(timeout=max(3., self.drain_timeout_s+1.))
+        self.finish_worker.join(timeout=max(3., self.drain_timeout_s+1.))
         self.report_worker.join(timeout=3.)
-        if self.worker.is_alive() or self.report_worker.is_alive():
+        if self.worker.is_alive() or self.report_worker.is_alive() or self.finish_worker.is_alive():
             # Do not close SQLite while its owning inference thread may still write.
             raise SessionError('vision_shutdown_not_confirmed', 503)
         self.inference_worker.close()

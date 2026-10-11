@@ -8,20 +8,20 @@
 
 ## A. 实际完成情况
 
-本次增量以`bead4d3`为基准，新增持续JPEG／并发控制原YOLO工程验收，见B3.11。[最终专项](session_load_verification.json)三次预声明重复和7项工具测试退出0；[完整回归](regression.json)实际为`verification-6077fb98`364／12／19项，7项是364子集，1308保护不变。前段357项与B3.10属于历史采样阶段，不是本次重跑其独立实验；此次没有训练、私人原片分析、手机或临床准确性验证。
+最新增量以`17a0827c9468949ffe029356f7c5b76bfd8bd774`为基准，实测并修复冷启动HTTP结束等待原推理的问题，见B3.12。[冷启动专项](session_cold_verification.json)八项测试及三轮预声明原YOLO实验通过；[完整回归](regression.json)实际为`verification-2e35a106`372／12／19项，八项是372子集，1308保护不变。此前B3.11／364项和B3.10／357项均保留为历史；[阻塞接口负载归档](session_load_before_async_finish.json)固定旧证据。本次没有训练、私人原片分析、手机或临床准确性验证。
 
 | 工作 | 状态 | 实际证据 | 剩余限制 |
 | --- | --- | --- | --- |
 | P0 盘点与保护 | done | [开工清单](../rehab_backend_inventory.md)、[1308 文件基准](protected_files.json)、[末次 hash 核验](scope_verification.json) | 仅本轮范围；不代表其他会话或临床验收 |
 | P1 三动作后端协议 | done（工程定义） | `app/rehab_v2/protocols.py`、`engine.py`、`rounds.py`；15 项协议回放及几何契约测试 | 定义是二维投影和训练观察，不是解剖 ROM 金标准；实际机位仍由计划给出 |
-| P2 正式会话与幂等 | partial | 364项当前新后端回归，含时间比较／显式安排及原SQLite、资源、报告、反馈CAS与HTTP；三动作左右侧可用本人版本化安排 | 旧页面／APK未接入；原保存计划适配仅两动作；真人计时、物理故障和完整压力待做 |
+| P2 正式会话与幂等 | partial | 372项当前新后端回归，新增SQL先冻结／HTTP202接收／有界后台最终事务／合法重试；三动作左右侧可用本人版本化安排 | 旧页面／APK未接入；原保存计划适配仅两动作；真人计时、物理故障和完整压力待做 |
 | P3 IRDS 下载与适配 | done | 198,985,485 字节骨架 ZIP、1974 字节 readme；CRC/MD5/SHA 校验；534 条/29 人，532 训练资格、2 隔离 | Kinect25 三维肩外展，不是手机 RGB、坐站或深蹲标签 |
 | P4 模型训练 | done（离线实验） | [实验包摘要](experiment_summary.json)，两次完整训练链结果；检查点、验证/测试预测和锁文件均存在于忽略目录 | TCN 测试 macro-F1 低于 logistic；只整次正误，不可作为相位/提示/诊断 |
 | P5 真人目标域验证 | partial | [此前回放](target_replay_summary.json)、[两原片YOLO／MP](mediapipe_video_verification.json)443／429帧配对；[本次缓存采样](sampling_sensitivity.json)九条件共18次 | 新协议均0确认次数；无专业真值，不计算计次准确率、不以模型或零次数一致证明正确 |
 | P6 姿态微调 | partial；真人训练缺资格 | 转换／独立评估、双层loss、[多轮复验](pose_training_verification.json)、[基础恢复](pose_resume_verification.json)、[多批次恢复](pose_resume_verification_multibatch.json)、[监督资格](pose_supervision_blocker.json) | train颜色增广／多轮／val选模／epoch恢复已实现；缺合法真人RGB／独立参考／同集原误差基线与真人候选对照，不自动上线 |
 | 候选后端接入 | offline / off | [冻结模型对照](model_comparison.json)，Kinect 匹配返回非权威候选，RGB 被拒绝 | 未在实际服务加载新权重，没有正式质量判断/提示接管 |
-| P7 回归与交付 | partial | [回归日志与hash](regression.json)、[连续输入三轮](session_load_verification.json)、[采样专项](../../docs/validation/REHAB_SAMPLING_2026-10-11.md)、原生SQLite故障、[历史单帧基准](session_performance.json) | 短时单活动会话ASGI非公网；尚缺真人参考、手机、网络、多客户端、长时／冷启动并发及物理故障 |
-| 禁改范围 | pass | 1308 个 protected 文件 SHA256 一致；唯一现有业务文件改动为 `mobile_rehab/server.py` 的 opt-in 康复入口 | 用户本来未提交的动作图片、脚本、CSV、任务书仍原样保留、不纳入本次提交 |
+| P7 回归与交付 | partial | [回归日志与hash](regression.json)、[冷启动三轮](session_cold_verification.json)、[连续输入复验](session_load_verification.json)、原生SQLite故障与历史采样实验 | 短时单活动会话ASGI非公网；尚缺真人参考、手机、网络、多客户端、长时和完整物理故障 |
+| 禁改范围 | pass | 1308 个 protected 文件 SHA256 一致，原baseline不重建；本次业务改动仅默认关闭的 `mobile_rehab/rehab_v2/api.py` 与 `service.py` | 用户本来未提交的动作图片、脚本、CSV、任务书仍原样保留、不纳入本次提交 |
 
 ## B. 修改清单：问题、实现与验证
 
@@ -201,6 +201,16 @@
 
 冷原YOLO进程往返2.25–2.28秒与热结果年龄p95 88.48–92.68毫秒分开；状态压力p95不用大量冷等待查询稀释。CPU／原权重／imgsz640不变，候选TCN阶段null；周期RSS不是峰值。前期试跑保留，不替代最终源码核验。源码和日志hash、实际命令、31条件、完整回归及未测范围见[工作流](../../docs/development/REHAB_SESSION_LOAD.md)、[验收](../../docs/validation/REHAB_SESSION_LOAD_2026-10-11.md)和[三轮报告](session_load_verification.json)。本次不重跑IRDS或私人录像、不改UI／整个Android／生产规则／正常库，完整任务继续局部完成。
 
+### B3.12 冷启动结束短路径、持久化处理中回执与后台收尾
+
+原连续工具先等首帧处理，漏掉冷启动控制场景。新审计在原所属YOLO进程／首native ticket实际存活且warm=false时发控制；未改服务的`session-cold-a2227f99`finish p95为2040.33毫秒，超200预算，尽管23项事实对账通过；[失败摘要](session_cold_before.json)及私有原日志保留，不称通过。
+
+HTTP改用`request_finish`：SQL原freeze先保存操作与接收边界，再由一个所属消费者／容量1／同session去重集合调用原`_finish`。202只表示持久化接收，commit仍null；最终事务确认后重试返回200／同canonical。原2秒收尾上限、未处理区间、最终唯一事实／贡献、反馈、动作计数与权重均未改。保存失败保持finishing、公开稳定执行故障，所属尝试退出后原key可重排；关机join新消费者后才关闭库。内部阻塞finish和旧live保留。
+
+八项新工程测试覆盖处理中去重、载荷冲突／本人／revision、消费者不可用、保存失败重试、关机实际join、HTTP202→commit→200及null自评；已有HTTP生命周期改为显式等最终receipt，不把202假装成保存。更新原单帧和连续工具，也测试失败CLI返回非零。
+
+`session-cold-verification-d7229cf9`八项及原模型三轮退出0；HTTP finish p95 14.72／17.08／15.29毫秒，从请求至查询到最终事实仍2048.51／2056.24／2057.44毫秒。每轮1帧明确超时未处理、23条件通过、0视觉次、null反馈保留和实际退出；是响应隔离收益，不是模型提速。完整`verification-2e35a106`372／12／19退出0、1308保护一致。工作流、日志／源码hash、负载复验与未测范围见[异步结束](../../docs/development/REHAB_ASYNC_FINISH.md)及[本机验收](../../docs/validation/REHAB_ASYNC_FINISH_2026-10-11.md)。
+
 ## C. 数据与训练事实
 
 ### C1. 实际下载、许可与映射
@@ -301,7 +311,7 @@ C20禁改范围以独立文件保护命令核验，不混入74项计数。新增
 
 ### D4. 关闭与历史比较
 
-持续输入性能增量见B3.11与[三轮核验](session_load_verification.json)。此前单生产者／CPU微基准只说明当时负载；本次也仍是短时进程内ASGI工程压力，不补足网络、手机、真人、长时或完整物理故障。
+持续输入性能增量见B3.11的[历史三轮](session_load_before_async_finish.json)和B3.12的[冷启动核验](session_cold_verification.json)。最新结束接收不再等待冷模型；HTTP202不等于最终事务，旧阻塞finish时延不能与新接收时延混为同一口径。本次仍是短时进程内ASGI工程压力，不补足网络、手机、真人、长时或完整物理故障。
 
 正式前端和旧live未更改，也未重启原服务。使用默认 `create_app(..., rehab_v2=False)` 即不安装新入口、不初始化v2库；已有新事实库保留，不删除。候选默认无生产加载；ShadowSequence research_mode默认false，Kinect模型不得接YOLO/MediaPipe。`backend.yaml`是实验/开关声明，不会单凭改YAML自动上线；实际宿主入口参数才是启用条件。
 

@@ -100,7 +100,18 @@ def benchmark_sessions(frames=20):
             response = client.post(endpoint+'/finish', json=dict(idempotency_key='finish', expected_revision=revision))
             http['finish'].append(1000*(time.perf_counter()-started))
             response.raise_for_status()
-            receipt = response.json()
+            acceptance = response.json()
+            deadline = time.monotonic()+45.
+            while True:
+                query = client.get(endpoint+'/commit')
+                query.raise_for_status()
+                receipt = query.json().get('receipt')
+                if receipt is not None:
+                    break
+                if time.monotonic() >= deadline:
+                    raise RuntimeError('accepted_finish_did_not_commit')
+                time.sleep(.01)
+            finish_to_commit_observed_ms = 1000*(time.perf_counter()-started)
             diagnostic = client.get(endpoint+'/diagnostics').json()
             runtime = service.runtimes[sid]
             with runtime.telemetry.lock:
@@ -119,6 +130,7 @@ def benchmark_sessions(frames=20):
                 control_http_budget_met=max(percentiles(http[key])['p95_ms'] for key in ('pause', 'resume'))
                                         <= declared['control_response_p95_ms'],
                 max_retained_queue_depth=max(queue_peaks), final_commit=receipt,
+                finish_acceptance=acceptance, finish_to_commit_observed_ms=finish_to_commit_observed_ms,
                 memory_samples=memory_samples, memory_sampling='after_each_processed_frame_not_peak_measurement',
                 pose_model=dict(device='cpu', imgsz=640,
                     weights_sha256=file_hash(ROOT/'rehab_codex_single_camera_v2_1/assets/models/yolo11n-pose.pt')),
@@ -127,7 +139,8 @@ def benchmark_sessions(frames=20):
     result['shutdown'] = dict(resources_released=service.resources_released,
                               pose_process_retained=service.inference_worker.process is not None,
                               frame_consumer_alive=service.worker.is_alive(),
-                              report_consumer_alive=service.report_worker.is_alive())
+                              report_consumer_alive=service.report_worker.is_alive(),
+                              finish_consumer_alive=service.finish_worker.is_alive())
     output = run/'summary.json'
     write_json(output, result)
     summary = dict(result, raw_summary=str(output), raw_summary_sha256=file_hash(output))

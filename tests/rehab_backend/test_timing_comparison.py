@@ -20,6 +20,7 @@ from mobile_rehab.rehab_v2.service import SessionService
 from tools.rehab_ml.common import paths
 from test_protocols import Replay
 from test_timing import shoulder_cycle
+from http_finish import finish_http
 
 
 def observed_cycle(replay, baseline=0.):
@@ -400,9 +401,8 @@ class TimingComparisonHttpTests(unittest.TestCase):
                             if time.monotonic()>=deadline: self.fail('owned TEST geometry result timeout')
                             time.sleep(.01)
                         time.sleep(.05)
-                    finished = client.post(base+'/'+sid+'/finish',json=dict(idempotency_key='finish',expected_revision=0,reason='completed'))
-                    self.assertEqual(finished.status_code,200,finished.text)
-                    self.assertEqual(finished.json()['completed_reps'],1,finished.text)
+                    finished = finish_http(client, base+'/'+sid, dict(idempotency_key='finish',expected_revision=0,reason='completed'))
+                    self.assertEqual(finished['completed_reps'],1,finished)
                     ids.append(sid)
                 payload = dict(left_session_id=ids[0],right_session_id=ids[1])
                 result = client.post(endpoint,json=payload)

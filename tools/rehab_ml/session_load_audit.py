@@ -169,6 +169,17 @@ async def exercise(app, service, encoded, details):
             for response in finished:
                 response.raise_for_status()
             receipts = [response.json() for response in finished]
+            details['finish_response_statuses'] = [response.status_code for response in finished]
+            deadline = time.monotonic()+WORKLOAD['deadline_s']
+            while True:
+                queried = await call('GET', endpoint+'/commit')
+                queried.raise_for_status()
+                canonical = queried.json().get('receipt')
+                if canonical is not None:
+                    break
+                if time.monotonic() >= deadline:
+                    raise RuntimeError('accepted_finish_did_not_commit')
+                await asyncio.sleep(.01)
             frozen = service.get(owner, sid)
             first_fact, first_audit = fact(frozen), service.repository.audit_view(owner, sid)
             details['producer'] = await asyncio.wait_for(tasks[0], WORKLOAD['deadline_s'])
@@ -198,11 +209,13 @@ async def exercise(app, service, encoded, details):
             checks = reconcile(final, audit)
             checks['checks'].update(
                 create_retry_same_session=duplicate.json()['session_id'] == sid,
-                concurrent_finish_same_receipt=all(row == receipts[0] for row in receipts),
-                same_key_retry_same_receipt=retry.json() == receipts[0],
-                new_key_retry_same_receipt=changed_key.json() == receipts[0],
+                concurrent_finish_same_receipt=all(row == canonical if row.get('status') == 'finalized' else
+                    response.status_code == 202 and row == dict(status='finishing', session_id=sid,
+                        accepted_last_seq=frozen['accepted_last_seq']) for row, response in zip(receipts, finished)),
+                same_key_retry_same_receipt=retry.json() == canonical,
+                new_key_retry_same_receipt=changed_key.json() == canonical,
                 changed_payload_conflict=conflict.status_code == 409 and conflict.json().get('detail') == 'idempotency_payload_conflict',
-                commit_query_same_receipt=commit.json()['receipt'] == receipts[0],
+                commit_query_same_receipt=commit.json()['receipt'] == canonical,
                 visual_fact_frozen=fact(final) == first_fact,
                 frame_audit_frozen=audit['frames'] == first_audit['frames'],
                 no_people_no_confirmed_reps=final['snapshot']['completed'] == 0,
@@ -226,7 +239,7 @@ async def exercise(app, service, encoded, details):
                            finish_receipts=receipts, reconciliation=checks, raw_stage_samples_ms=stages)
             return dict(http={key: percentiles(values) for key, values in timings.items()},
                         frame_status_codes=dict(Counter(str(row['status']) for row in responses)),
-                        reconciliation=checks, final_commit=receipts[0], diagnostics=diagnostics,
+                        reconciliation=checks, final_commit=canonical, diagnostics=diagnostics,
                         at_finish=details['at_finish']['backlog'],
                         producer_done_at_finish=details['producer_done_at_finish'],
                         producer=details['producer'], clinical_accuracy=None,
@@ -313,7 +326,8 @@ def benchmark_session_load():
         result['shutdown'] = None if service is None else dict(
             resources_released=service.resources_released,
             pose_process_retained=service.inference_worker.process is not None,
-            frame_consumer_alive=service.worker.is_alive(), report_consumer_alive=service.report_worker.is_alive())
+            frame_consumer_alive=service.worker.is_alive(), report_consumer_alive=service.report_worker.is_alive(),
+            finish_consumer_alive=service.finish_worker.is_alive())
     sources_after = {path: file_hash(ROOT/path) for path in source_paths}
     result.update(run_id=run.name, predeclared=declared, clinical_accuracy=None,
                   source_sha256_after=sources_after, source_unchanged=sources == sources_after,
@@ -324,7 +338,7 @@ def benchmark_session_load():
     shutdown = result['shutdown']
     result['engineering_invariants_passed'] = bool(checks) and all(checks.values()) and result['source_unchanged'] and bool(
         shutdown and shutdown['resources_released'] and not any(shutdown[key] for key in
-        ('pose_process_retained', 'frame_consumer_alive', 'report_consumer_alive')))
+        ('pose_process_retained', 'frame_consumer_alive', 'report_consumer_alive', 'finish_consumer_alive')))
     result['control_budget'] = {key: dict(p95_ms=result.get('http', {}).get(key, {}).get('p95_ms'),
         budget_ms=budgets['control_response_p95_ms']) for key in ('pause', 'resume', 'finish')}
     result['control_budget_met'] = all(row['p95_ms'] is not None and row['p95_ms'] <= row['budget_ms']

@@ -1,0 +1,470 @@
+{
+  "run_id": "session-load-verification-d0c856cf",
+  "commands": [
+    {
+      "name": "unit",
+      "arguments": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/rehab_backend",
+        "-p",
+        "test_session_load_audit.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 0.20734740000011698,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-load-verification-d0c856cf\\unit.txt",
+      "log_sha256": "084e4ecc77b1a466a7e1a533b574c455e281ba88148bb8cd38a752d0cd0fff9c",
+      "tests": 7
+    },
+    {
+      "name": "native_1",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "benchmark-session-load"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 5.686377699999866,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-load-verification-d0c856cf\\native_1.txt",
+      "log_sha256": "251c53ba87d3784a44814e28b497161292971fb4e80914a0b138da1364d2bf05",
+      "tests": null
+    },
+    {
+      "name": "native_2",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "benchmark-session-load"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 5.917863800000077,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-load-verification-d0c856cf\\native_2.txt",
+      "log_sha256": "397ef1081b16ddb3828645d039e56f8394e459d3d17089868f4984b37adc6a57",
+      "tests": null
+    },
+    {
+      "name": "native_3",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "benchmark-session-load"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 5.791611300000113,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-load-verification-d0c856cf\\native_3.txt",
+      "log_sha256": "10b2702b4f4581bbc2aec487da2080d10e22185cc1014406dca1e655e7891dd5",
+      "tests": null
+    }
+  ],
+  "attempts": [
+    {
+      "run_id": "session-load-34b1275b",
+      "passed": true,
+      "engineering_invariants_passed": true,
+      "control_budget": {
+        "pause": {
+          "p95_ms": 43.520100000023376,
+          "budget_ms": 200
+        },
+        "resume": {
+          "p95_ms": 20.675299999993513,
+          "budget_ms": 200
+        },
+        "finish": {
+          "p95_ms": 141.83379999985846,
+          "budget_ms": 200
+        }
+      },
+      "at_finish": {
+        "retained_frames": 0,
+        "in_flight": true,
+        "durable_pending_frames": 1,
+        "retained_capacity": 1
+      },
+      "producer_done_at_finish": false,
+      "load_http": {
+        "frame": {
+          "total_samples": 160,
+          "retained_samples": 160,
+          "p50_ms": 3.1197000000702246,
+          "p95_ms": 30.088599999999133,
+          "max_ms": 41.449900000088746
+        },
+        "state": {
+          "total_samples": 29,
+          "retained_samples": 29,
+          "p50_ms": 12.142600000061066,
+          "p95_ms": 22.755799999913506,
+          "max_ms": 27.83529999987877
+        },
+        "diagnostics": {
+          "total_samples": 29,
+          "retained_samples": 29,
+          "p50_ms": 16.321100000141087,
+          "p95_ms": 30.36729999985255,
+          "max_ms": 32.00450000008459
+        },
+        "pause": {
+          "total_samples": 6,
+          "retained_samples": 6,
+          "p50_ms": 30.878300000040326,
+          "p95_ms": 43.520100000023376,
+          "max_ms": 43.520100000023376
+        },
+        "resume": {
+          "total_samples": 6,
+          "retained_samples": 6,
+          "p50_ms": 14.185100000077,
+          "p95_ms": 20.675299999993513,
+          "max_ms": 20.675299999993513
+        },
+        "finish": {
+          "total_samples": 4,
+          "retained_samples": 4,
+          "p50_ms": 140.49569999997402,
+          "p95_ms": 141.83379999985846,
+          "max_ms": 141.83379999985846
+        },
+        "feedback": {
+          "total_samples": 2,
+          "retained_samples": 2,
+          "p50_ms": 1.4584000000468222,
+          "p95_ms": 14.20109999980923,
+          "max_ms": 14.20109999980923
+        }
+      },
+      "status_counts": {
+        "processed": 25,
+        "dropped": 33
+      },
+      "cold_first": {
+        "decode_ms": 0.48670000001038716,
+        "inference_ms": 2022.3468000001503,
+        "pose_roundtrip_ms": 2275.902700000188,
+        "pose_result_age_ms": 2276.6438000001017,
+        "result_age_ms": 2306.524999999965
+      },
+      "warm_stages": {
+        "decode_ms": {
+          "total_samples": 29,
+          "retained_samples": 29,
+          "p50_ms": 0.22520000015902042,
+          "p95_ms": 0.2468000000135362,
+          "max_ms": 0.34700000014709076
+        },
+        "inference_ms": {
+          "total_samples": 29,
+          "retained_samples": 29,
+          "p50_ms": 37.93789999986075,
+          "p95_ms": 43.719400000099995,
+          "max_ms": 54.64539999979934
+        },
+        "pose_roundtrip_ms": {
+          "total_samples": 29,
+          "retained_samples": 29,
+          "p50_ms": 40.50469999992856,
+          "p95_ms": 46.24069999999847,
+          "max_ms": 57.58459999992738
+        },
+        "pose_result_age_ms": {
+          "total_samples": 29,
+          "retained_samples": 29,
+          "p50_ms": 67.73369999996248,
+          "p95_ms": 78.71689999979026,
+          "max_ms": 85.98920000008548
+        },
+        "result_age_ms": {
+          "total_samples": 24,
+          "retained_samples": 24,
+          "p50_ms": 85.06820000002335,
+          "p95_ms": 92.67539999996188,
+          "max_ms": 98.90109999992092
+        }
+      },
+      "raw_summary": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-load-34b1275b\\summary.json",
+        "sha256": "2265fa797e04c7b916713bd7a07122bf4f006527d977e07abbff8ee3bfe4062a"
+      },
+      "raw_details": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-load-34b1275b\\details.json",
+        "sha256": "4f27b8d53400c1d32dce1e2a02bacd57c14ab2f0ffe79ebeaae331d0388929d3"
+      }
+    },
+    {
+      "run_id": "session-load-2e98475a",
+      "passed": true,
+      "engineering_invariants_passed": true,
+      "control_budget": {
+        "pause": {
+          "p95_ms": 44.68689999998787,
+          "budget_ms": 200
+        },
+        "resume": {
+          "p95_ms": 16.912999999931344,
+          "budget_ms": 200
+        },
+        "finish": {
+          "p95_ms": 144.41290000013396,
+          "budget_ms": 200
+        }
+      },
+      "at_finish": {
+        "retained_frames": 0,
+        "in_flight": true,
+        "durable_pending_frames": 2,
+        "retained_capacity": 1
+      },
+      "producer_done_at_finish": false,
+      "load_http": {
+        "frame": {
+          "total_samples": 160,
+          "retained_samples": 160,
+          "p50_ms": 14.446099999986473,
+          "p95_ms": 29.901500000050873,
+          "max_ms": 31.63259999996626
+        },
+        "state": {
+          "total_samples": 33,
+          "retained_samples": 33,
+          "p50_ms": 10.641500000019732,
+          "p95_ms": 20.275099999935264,
+          "max_ms": 26.216499999918597
+        },
+        "diagnostics": {
+          "total_samples": 33,
+          "retained_samples": 33,
+          "p50_ms": 16.74189999994269,
+          "p95_ms": 31.06090000005679,
+          "max_ms": 36.23410000000149
+        },
+        "pause": {
+          "total_samples": 6,
+          "retained_samples": 6,
+          "p50_ms": 26.868200000080833,
+          "p95_ms": 44.68689999998787,
+          "max_ms": 44.68689999998787
+        },
+        "resume": {
+          "total_samples": 6,
+          "retained_samples": 6,
+          "p50_ms": 14.786200000116878,
+          "p95_ms": 16.912999999931344,
+          "max_ms": 16.912999999931344
+        },
+        "finish": {
+          "total_samples": 4,
+          "retained_samples": 4,
+          "p50_ms": 143.20180000004257,
+          "p95_ms": 144.41290000013396,
+          "max_ms": 144.41290000013396
+        },
+        "feedback": {
+          "total_samples": 2,
+          "retained_samples": 2,
+          "p50_ms": 1.569900000049529,
+          "p95_ms": 12.82020000007833,
+          "max_ms": 12.82020000007833
+        }
+      },
+      "status_counts": {
+        "processed": 30,
+        "dropped": 37
+      },
+      "cold_first": {
+        "decode_ms": 0.491200000169556,
+        "inference_ms": 2009.9346999998033,
+        "pose_roundtrip_ms": 2261.0277999999653,
+        "pose_result_age_ms": 2261.769299999969,
+        "result_age_ms": 2289.4988000000467
+      },
+      "warm_stages": {
+        "decode_ms": {
+          "total_samples": 34,
+          "retained_samples": 34,
+          "p50_ms": 0.22449999983109592,
+          "p95_ms": 0.26330000014240795,
+          "max_ms": 0.3778000000238535
+        },
+        "inference_ms": {
+          "total_samples": 34,
+          "retained_samples": 34,
+          "p50_ms": 39.08909999995558,
+          "p95_ms": 40.86920000008831,
+          "max_ms": 41.09680000010485
+        },
+        "pose_roundtrip_ms": {
+          "total_samples": 34,
+          "retained_samples": 34,
+          "p50_ms": 41.19900000000598,
+          "p95_ms": 43.36790000002111,
+          "max_ms": 44.25119999996241
+        },
+        "pose_result_age_ms": {
+          "total_samples": 34,
+          "retained_samples": 34,
+          "p50_ms": 68.11100000004444,
+          "p95_ms": 74.52990000001591,
+          "max_ms": 85.0090999999793
+        },
+        "result_age_ms": {
+          "total_samples": 29,
+          "retained_samples": 29,
+          "p50_ms": 84.67990000008285,
+          "p95_ms": 88.47609999997985,
+          "max_ms": 98.38200000012876
+        }
+      },
+      "raw_summary": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-load-2e98475a\\summary.json",
+        "sha256": "6425eb8e67e45e878b5aa35a0925f1d71bc352157ac7f750ba73efb7a927f57a"
+      },
+      "raw_details": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-load-2e98475a\\details.json",
+        "sha256": "9d6ec47daf4b952e49035ad49795a9d5bf4c9a1c08216971596087ddbe8693cd"
+      }
+    },
+    {
+      "run_id": "session-load-f5e113bb",
+      "passed": true,
+      "engineering_invariants_passed": true,
+      "control_budget": {
+        "pause": {
+          "p95_ms": 39.635800000041854,
+          "budget_ms": 200
+        },
+        "resume": {
+          "p95_ms": 16.477899999927104,
+          "budget_ms": 200
+        },
+        "finish": {
+          "p95_ms": 139.6445999998832,
+          "budget_ms": 200
+        }
+      },
+      "at_finish": {
+        "retained_frames": 0,
+        "in_flight": true,
+        "durable_pending_frames": 2,
+        "retained_capacity": 1
+      },
+      "producer_done_at_finish": false,
+      "load_http": {
+        "frame": {
+          "total_samples": 160,
+          "retained_samples": 160,
+          "p50_ms": 4.740800000035961,
+          "p95_ms": 30.12100000000828,
+          "max_ms": 31.846800000039366
+        },
+        "state": {
+          "total_samples": 31,
+          "retained_samples": 31,
+          "p50_ms": 13.47000000009757,
+          "p95_ms": 18.894999999929496,
+          "max_ms": 25.634299999865107
+        },
+        "diagnostics": {
+          "total_samples": 31,
+          "retained_samples": 31,
+          "p50_ms": 16.379400000005262,
+          "p95_ms": 31.303299999990486,
+          "max_ms": 32.21540000004097
+        },
+        "pause": {
+          "total_samples": 6,
+          "retained_samples": 6,
+          "p50_ms": 27.683799999977055,
+          "p95_ms": 39.635800000041854,
+          "max_ms": 39.635800000041854
+        },
+        "resume": {
+          "total_samples": 6,
+          "retained_samples": 6,
+          "p50_ms": 14.818800000057308,
+          "p95_ms": 16.477899999927104,
+          "max_ms": 16.477899999927104
+        },
+        "finish": {
+          "total_samples": 4,
+          "retained_samples": 4,
+          "p50_ms": 138.40529999993123,
+          "p95_ms": 139.6445999998832,
+          "max_ms": 139.6445999998832
+        },
+        "feedback": {
+          "total_samples": 2,
+          "retained_samples": 2,
+          "p50_ms": 1.472700000022087,
+          "p95_ms": 13.414199999942866,
+          "max_ms": 13.414199999942866
+        }
+      },
+      "status_counts": {
+        "processed": 28,
+        "dropped": 35
+      },
+      "cold_first": {
+        "decode_ms": 0.5003999999644293,
+        "inference_ms": 1995.2773999998499,
+        "pose_roundtrip_ms": 2253.6406000001534,
+        "pose_result_age_ms": 2254.6532999999727,
+        "result_age_ms": 2289.1021000000364
+      },
+      "warm_stages": {
+        "decode_ms": {
+          "total_samples": 32,
+          "retained_samples": 32,
+          "p50_ms": 0.22540000009030337,
+          "p95_ms": 0.3145000000586151,
+          "max_ms": 0.4213999998228246
+        },
+        "inference_ms": {
+          "total_samples": 32,
+          "retained_samples": 32,
+          "p50_ms": 38.43490000008387,
+          "p95_ms": 40.1480000000447,
+          "max_ms": 40.42389999995066
+        },
+        "pose_roundtrip_ms": {
+          "total_samples": 32,
+          "retained_samples": 32,
+          "p50_ms": 40.532099999836646,
+          "p95_ms": 42.53059999996367,
+          "max_ms": 42.56089999989854
+        },
+        "pose_result_age_ms": {
+          "total_samples": 32,
+          "retained_samples": 32,
+          "p50_ms": 68.0993999999373,
+          "p95_ms": 71.83159999999589,
+          "max_ms": 80.91480000007323
+        },
+        "result_age_ms": {
+          "total_samples": 27,
+          "retained_samples": 27,
+          "p50_ms": 84.99370000004092,
+          "p95_ms": 90.07930000007036,
+          "max_ms": 93.47170000000915
+        }
+      },
+      "raw_summary": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-load-f5e113bb\\summary.json",
+        "sha256": "15b9d5043665360f6d6cd4c976a9242c617c67fadb067878a0ba036a311a981c"
+      },
+      "raw_details": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\session-load-f5e113bb\\details.json",
+        "sha256": "0a7a61ecb1509885bf1a451bbd42da7a7753dfa0eb146eb2a5df7257ae1ba5cf"
+      }
+    }
+  ],
+  "implementation_sha256": {
+    "tools/rehab_ml/session_load_audit.py": "b97347369c96e56bc08ded79dc76917560ef8831db63456926b86923fcb6a502",
+    "tools/rehab_ml/verify_session_load.py": "06e917b6223c9024829ef3657effa7f3751421c70e5acfd23621851eab1e3e34",
+    "tools/rehab_ml/cli.py": "1c3b9daceddcdd7e072eb31ba1f0805f5a18233795e51bdde7a0750254f68b27",
+    "tests/rehab_backend/test_session_load_audit.py": "3e9a8ce56bdaa59bf961495742b4f4b9740c87bbe491a0bb93895d9645d1d0b2"
+  },
+  "repetitions_declared_before_running": 3,
+  "clinical_accuracy": null,
+  "implementation_unchanged": true,
+  "passed": true
+}

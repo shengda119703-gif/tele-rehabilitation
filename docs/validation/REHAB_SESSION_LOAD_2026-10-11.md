@@ -24,7 +24,7 @@ $env:PYTHONDONTWRITEBYTECODE='1'
 
 最终专项`session-load-verification-d0c856cf`：7项算术／冻结投影测试，0.207秒命令退出0；3个原YOLO／真实ASGI子命令分别5.686／5.918／5.792秒，全部退出0。每轮发送1张冷启动图＋160次持续请求；目标80Hz，实际生产者耗时2.099／2.348／2.240秒，不能声称实现80FPS推理。
 
-先保存三次计划再执行，不挑最好运行。完整命令／stdout与stderr日志hash、源码hash、每轮summary及details路径见[专项汇总](../../reports/rehab_backend/session_load_verification.json)。[单次摘要](../../reports/rehab_backend/session_load.json)只代表末轮，不覆盖原单帧基准。详情在忽略run中的独立SQLite和JSON，未纳入Git。
+先保存三次计划再执行，不挑最好运行。完整命令／stdout与stderr日志hash、源码hash、每轮summary及details路径见[本阶段专项归档](../../reports/rehab_backend/session_load_before_async_finish.json)，该文件保留`session-load-verification-d0c856cf`，不随后续异步结束复验覆盖。末轮`session-load-f5e113bb`的单次摘要路径与hash在该归档中；共享最近结果文件不作为此历史验收的固定证据。详情在忽略run中的独立SQLite和JSON，未纳入Git。
 
 ## 3. 接收、排队与冻结证据
 

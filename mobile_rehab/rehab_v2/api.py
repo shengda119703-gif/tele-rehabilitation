@@ -88,7 +88,8 @@ def install_rehab_v2(app, database, owner, small_json, plan_resolver, *, plan_re
     @app.post('/api/rehab/v2/sessions/{sid}/finish')
     async def finish(sid: str, request: Request):
         uid, payload = owner(request), await small_json(request)
-        return await asyncio.to_thread(service.finish, uid, sid, payload)
+        receipt = await asyncio.to_thread(service.request_finish, uid, sid, payload)
+        return JSONResponse(receipt, status_code=202 if receipt['status'] == 'finishing' else 200)
 
     @app.get('/api/rehab/v2/sessions/{sid}')
     async def state(sid: str, request: Request):

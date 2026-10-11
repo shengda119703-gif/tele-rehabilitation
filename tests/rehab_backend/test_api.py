@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT))
 from tools.rehab_ml.common import paths
 from mobile_rehab.rehab_v2.api import install_rehab_v2
 from test_sessions import frozen_plan, request
+from http_finish import finish_http
 
 
 def live_plan(client, *, both_sides=False):
@@ -73,9 +74,8 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(self.client.post(endpoint+'/pause', json=dict(idempotency_key='pause', expected_revision=0)).status_code, 200)
         self.assertEqual(self.client.post(endpoint+'/resume', json=dict(idempotency_key='resume', expected_revision=1)).status_code, 200)
         self.assertEqual(self.client.post(endpoint+'/frames', json=dict(keypoints=[])).status_code, 415)
-        receipt = self.client.post(endpoint+'/finish', json=dict(idempotency_key='finish', expected_revision=2, reason='user_stopped'))
-        self.assertEqual(receipt.status_code, 200, receipt.text)
-        self.assertEqual(self.client.get(endpoint+'/commit').json()['receipt']['commit_id'], receipt.json()['commit_id'])
+        receipt = finish_http(self.client, endpoint, dict(idempotency_key='finish', expected_revision=2, reason='user_stopped'))
+        self.assertEqual(self.client.get(endpoint+'/commit').json()['receipt']['commit_id'], receipt['commit_id'])
         self.assertEqual(self.client.post(endpoint+'/feedback', json=dict(idempotency_key='feedback', expected_revision=0,
                          feedback=dict(pain=None, fatigue=None))).status_code, 200)
         history = self.client.get(base).json()
@@ -177,10 +177,9 @@ class HostIntegrationTests(unittest.TestCase):
                 self.assertEqual(item['frozen_plan']['plan']['target_reps'], entry['settings']['target_reps'])
                 self.assertTrue(item['frozen_plan']['plan']['training_plan_confirmed'])
                 self.assertEqual(client.post(base, json=payload).json()['session_id'], item['session_id'])
-                finished = client.post(base+'/'+item['session_id']+'/finish', json=dict(
+                finished = finish_http(client, base+'/'+item['session_id'], dict(
                     idempotency_key='finish', expected_revision=0, reason='user_stopped'))
-                self.assertEqual(finished.status_code, 200, finished.text)
-                self.assertEqual(finished.json()['completed_reps'], 0)
+                self.assertEqual(finished['completed_reps'], 0)
 
     def test_real_host_auth_existing_auto_plan_and_legacy_live_stays_preview(self):
         from fastapi.testclient import TestClient
@@ -197,11 +196,10 @@ class HostIntegrationTests(unittest.TestCase):
                 self.assertEqual(response.status_code, 200, response.text)
                 sid = response.json()['session_id']
                 self.assertEqual(response.json()['frozen_plan']['reference']['revision'], plan['revision'])
-                finished = client.post('/api/rehab/v2/sessions/'+sid+'/finish',
-                    json=dict(idempotency_key='formal-finish', expected_revision=0, reason='user_stopped'))
-                self.assertEqual(finished.status_code, 200, finished.text)
-                self.assertEqual(finished.json()['completed_reps'], 0)
-                self.assertEqual(client.get('/api/rehab/v2/sessions/'+sid+'/commit').json()['receipt'], finished.json())
+                finished = finish_http(client, '/api/rehab/v2/sessions/'+sid,
+                    dict(idempotency_key='formal-finish', expected_revision=0, reason='user_stopped'))
+                self.assertEqual(finished['completed_reps'], 0)
+                self.assertEqual(client.get('/api/rehab/v2/sessions/'+sid+'/commit').json()['receipt'], finished)
                 # New explicit namespace is not projected into legacy history/progress.
                 self.assertIsNone(client.get('/api/plan').json()['plan'])
                 formal = client.get('/api/rehab/v2/plans/'+plan['id']).json()
@@ -267,9 +265,8 @@ class HostIntegrationTests(unittest.TestCase):
                     self.assertEqual(response.status_code, 200, response.text)
                     service.frames.join()
                     time.sleep(.05)
-                finished = client.post(base+'/'+sid+'/finish', json=dict(idempotency_key='finish', expected_revision=0))
-                self.assertEqual(finished.status_code, 200, finished.text)
-                self.assertEqual(finished.json()['completed_reps'], 3)
+                finished = finish_http(client, base+'/'+sid, dict(idempotency_key='finish', expected_revision=0))
+                self.assertEqual(finished['completed_reps'], 3)
                 self.assertTrue(client.get(base+'/'+sid+'/commit').json()['plan_contribution']['plan_completed'])
                 endpoint = '/api/rehab/v2/plans/'+plan['id']
                 self.assertTrue(client.get(endpoint).json()['progress']['blocked'])
@@ -287,7 +284,7 @@ class HostIntegrationTests(unittest.TestCase):
                 second_sid = started.json()['session_id']
                 self.assertEqual(client.post(base, json=payload).json()['session_id'], sid)  # Lost create response.
                 self.assertEqual(len(client.get(base).json()['items']), 1)
-                client.post(base+'/'+second_sid+'/finish', json=dict(idempotency_key='stop-second', expected_revision=0))
+                finish_http(client, base+'/'+second_sid, dict(idempotency_key='stop-second', expected_revision=0))
                 self.assertEqual(client.post(base+'/'+sid+'/feedback', json=dict(idempotency_key='discomfort',
                     expected_revision=1, feedback=dict(pain=1, fatigue=2, reason='discomfort'))).status_code, 200)
                 new_plan = live_plan(client, both_sides=True)

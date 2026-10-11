@@ -98,6 +98,7 @@ def parser():
     item = sub.add_parser('benchmark-sessions', help='Measure isolated ASGI lifecycle and real baseline YOLO; no camera or accuracy claims')
     item.add_argument('--frames', type=int, choices=range(8, 61), default=20)
     sub.add_parser('benchmark-session-load', help='Fixed continuous JPEG/control load with original YOLO on an isolated database')
+    sub.add_parser('benchmark-session-cold', help='Controls during first owned native inference; distinguish acceptance from commit')
     return result
 
 
@@ -162,6 +163,12 @@ def main(argv=None):
         elif args.command == 'benchmark-session-load':
             from tools.rehab_ml.session_load_audit import benchmark_session_load
             value = benchmark_session_load()
+            if not value['passed']:
+                print(json.dumps(dict(ok=False, command=args.command, result=value), ensure_ascii=False, allow_nan=False))
+                return 1
+        elif args.command == 'benchmark-session-cold':
+            from tools.rehab_ml.session_cold_audit import benchmark_session_cold
+            value = benchmark_session_cold()
             if not value['passed']:
                 print(json.dumps(dict(ok=False, command=args.command, result=value), ensure_ascii=False, allow_nan=False))
                 return 1

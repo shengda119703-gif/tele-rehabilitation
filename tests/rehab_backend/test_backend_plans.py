@@ -19,6 +19,7 @@ from app.rehab_v2.reporting import build_report
 from mobile_rehab.rehab_v2.service import SessionService
 from test_protocols import Replay
 from test_sessions import frozen_plan
+from http_finish import finish_http
 
 
 class BackendPlanTests(unittest.TestCase):
@@ -473,9 +474,7 @@ class BackendPlanHttpTests(unittest.TestCase):
             time.sleep(.05)
 
     def finish(self, sid):
-        result = self.client.post(self.base+'/'+sid+'/finish', json=dict(idempotency_key='finish', expected_revision=0, reason='completed'))
-        self.assertEqual(result.status_code, 200, result.text)
-        return result.json()
+        return finish_http(self.client, self.base+'/'+sid, dict(idempotency_key='finish', expected_revision=0, reason='completed'))
 
     def test_native_jpeg_missing_person_cannot_qualify_a_plan(self):
         item = self.create(self.assess_request())
