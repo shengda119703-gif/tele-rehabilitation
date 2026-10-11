@@ -89,4 +89,4 @@ function createConversationModel({ apiKey, fetchImpl = fetch } = {}) {
   };
 }
 
-module.exports = { createConversationModel };
+module.exports = { createConversationModel, conversationSystem:system };

@@ -85,7 +85,7 @@ DeepSeek 是可选的联网理解适配器：模型只能从当前开放的工�
 | --- | --- | --- |
 | 当前电脑桌面产品 | 当前仓库的 Python 宿主、Node 桥与 TypeScript 产品服务 | 本人及来源由宿主隔离，调用本机已有模块服务 |
 | 与电脑配对的网页 | 当前统一网页资源及对应电脑后端 | 可使用管家查询、导航和待核对操作；需连接当前电脑服务 |
-| 已有独立 APK 0.2.1 | APK 内打包的旧资源和本地适配器 | 更新电脑仓库不会自动更新已安装 APK；不能据此认定新管家功能已进入旧 APK |
+| 独立 APK 0.3.0 | 同一管家核心、原生DeepSeek和手机本地适配器 | 安装新包后，在设置→智能服务配置本机Key；旧0.2.1不自动更新 |
 | iOS／HealthKit 桥接 | 可选宿主适配器和连接状态接口 | 查询配置状态不等于 iOS 产品发布、真机授权或 HealthKit 数据流验收 |
 
 不同端的数据库、附件和历史不能因为页面相似就认定已经完全同步。本轮没有重新发布独立手机安装包。
@@ -99,3 +99,5 @@ DeepSeek 是可选的联网理解适配器：模型只能从当前开放的工�
 当前仍没有全模块任意写入、持续后台任务、通用多轮规划、相机或训练自动操作，以及已经送达的外部通知。分享授权、处方编辑、附件导入与正文处理、导出／清理、设备连接、相机和训练开始等必要操作仍由原页面承载。本轮提供模块查询、导航和有限确认执行的基础，不能将其描述为所有模块已经完全自动化。
 
 源码入口：[工具注册与计划校验](../../ankang/route1-health-agent/src/product/ProductAgent.ts)、[产品模块适配与本人视图](../../ankang/route1-health-agent/src/product/ProductService.ts)、[照护确认与恢复](../../ankang/route1-health-agent/src/care/CareCoordinator.ts)、[桌面核对控件](../../rehab_codex_single_camera_v2_1/app/ui/product_care_controls.py)、[配对网页](../../mobile_rehab/static/unified.js)、[可选模型适配器](../../ankang/route1-health-agent/scripts/rehab-model.cjs)。
+
+当前交付版本电脑0.23.0／安卓0.3.0；平台数据和苹果取数边界见[交付范围](ANKANG_DELIVERY_SCOPE.md)。

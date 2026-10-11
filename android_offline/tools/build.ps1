@@ -1,7 +1,9 @@
 param(
     [string]$SdkRoot,
     [string]$JdkRoot,
-    [string]$Python
+    [string]$Python,
+    [string]$SigningRoot,
+    [string]$StagingRoot
 )
 $ErrorActionPreference = 'Stop'
 $apkProject = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
@@ -24,12 +26,16 @@ function Invoke-ApkTool([string]$Executable, [string[]]$Arguments) {
 $env:JAVA_HOME = $JdkRoot
 $apkBuild = Join-Path $apkProject 'build'
 $apkOutput = Join-Path $apkProject 'dist'
-$apkSigning = Join-Path $apkProject '.runtime/signing'
-$apkRun = Join-Path $apkBuild ([guid]::NewGuid().ToString('N'))
+$apkSigning = if ($SigningRoot) { (Resolve-Path -LiteralPath $SigningRoot).Path } else { Join-Path $apkProject '.runtime/signing' }
+$apkStage = if ($StagingRoot) { $StagingRoot } else { Join-Path $env:LOCALAPPDATA 'AnkangAndroid/build' }
+$apkRun = Join-Path $apkStage ([guid]::NewGuid().ToString('N'))
 foreach ($apkDirectory in @($apkRun,$apkOutput,$apkSigning)) { New-Item -ItemType Directory -Force $apkDirectory | Out-Null }
 Invoke-ApkTool $Python @((Join-Path $PSScriptRoot 'prepare_assets.py'))
 Invoke-ApkTool $Python @((Join-Path $PSScriptRoot 'prepare_lin_profile.py'))
 Invoke-ApkTool 'node' @((Join-Path $PSScriptRoot 'bundle_product.cjs'))
+Copy-Item -LiteralPath (Join-Path $apkProject 'res') -Destination (Join-Path $apkRun 'res') -Recurse
+Copy-Item -LiteralPath (Join-Path $apkProject 'AndroidManifest.xml') -Destination (Join-Path $apkRun 'AndroidManifest.xml')
+Copy-Item -LiteralPath (Join-Path $apkBuild 'assets') -Destination (Join-Path $apkRun 'assets') -Recurse
 $apkClasses = Join-Path $apkRun 'classes'
 $apkDex = Join-Path $apkRun 'dex'
 New-Item -ItemType Directory -Force $apkClasses,$apkDex | Out-Null
@@ -37,9 +43,9 @@ $apkSources = @(Get-ChildItem (Join-Path $apkProject 'src') -Recurse -Filter '*.
 Invoke-ApkTool (Join-Path $JdkRoot 'bin/javac.exe') (@('-J-Dfile.encoding=UTF-8','-encoding','UTF-8','--release','8','-classpath',$apkPlatform,'-d',$apkClasses) + $apkSources)
 $apkCompiled = @(Get-ChildItem $apkClasses -Recurse -Filter '*.class' | ForEach-Object { $_.FullName })
 Invoke-ApkTool (Join-Path $apkTools 'd8.bat') (@('--lib',$apkPlatform,'--min-api','29','--output',$apkDex) + $apkCompiled)
-Invoke-ApkTool (Join-Path $apkTools 'aapt2.exe') @('compile','--dir',(Join-Path $apkProject 'res'),'-o',(Join-Path $apkRun 'resources.zip'))
+Invoke-ApkTool (Join-Path $apkTools 'aapt2.exe') @('compile','--dir',(Join-Path $apkRun 'res'),'-o',(Join-Path $apkRun 'resources.zip'))
 $apkUnsigned = Join-Path $apkRun 'unsigned.apk'
-Invoke-ApkTool (Join-Path $apkTools 'aapt2.exe') @('link','--manifest',(Join-Path $apkProject 'AndroidManifest.xml'),'-I',$apkPlatform,'-A',(Join-Path $apkBuild 'assets'),'-o',$apkUnsigned,'--auto-add-overlay',(Join-Path $apkRun 'resources.zip'))
+Invoke-ApkTool (Join-Path $apkTools 'aapt2.exe') @('link','--manifest',(Join-Path $apkRun 'AndroidManifest.xml'),'-I',$apkPlatform,'-A',(Join-Path $apkRun 'assets'),'-o',$apkUnsigned,'--auto-add-overlay',(Join-Path $apkRun 'resources.zip'))
 $apkNormalized = Join-Path $apkRun 'normalized.apk'
 Invoke-ApkTool $Python @((Join-Path $PSScriptRoot 'normalize_apk.py'),$apkUnsigned,$apkNormalized)
 Invoke-ApkTool (Join-Path $JdkRoot 'bin/jar.exe') @('uf',$apkNormalized,'-C',$apkDex,'classes.dex')
@@ -61,7 +67,8 @@ try {
     if (-not (Test-Path $apkKeystore)) {
         Invoke-ApkTool (Join-Path $JdkRoot 'bin/keytool.exe') @('-genkeypair','-keystore',$apkKeystore,'-alias','offline-demo','-keyalg','RSA','-keysize','3072','-validity','10000','-dname','CN=Tele Rehabilitation Local Demo','-storepass:env','REHAB_APK_SIGNING_PASSWORD','-keypass:env','REHAB_APK_SIGNING_PASSWORD')
     }
-    $apkFinal = Join-Path $apkOutput 'tele-rehabilitation-mobile-0.2.1.apk'
+    $apkVersion = ([xml](Get-Content -LiteralPath (Join-Path $apkProject 'AndroidManifest.xml') -Raw)).manifest.GetAttribute('versionName','http://schemas.android.com/apk/res/android')
+    $apkFinal = Join-Path $apkOutput ('tele-rehabilitation-mobile-' + $apkVersion + '.apk')
     Invoke-ApkTool (Join-Path $apkTools 'apksigner.bat') @('sign','--ks',$apkKeystore,'--ks-key-alias','offline-demo','--ks-pass','env:REHAB_APK_SIGNING_PASSWORD','--key-pass','env:REHAB_APK_SIGNING_PASSWORD','--out',$apkFinal,$apkAligned)
     Invoke-ApkTool (Join-Path $apkTools 'apksigner.bat') @('verify','--verbose','--print-certs',$apkFinal)
     Get-FileHash -LiteralPath $apkFinal -Algorithm SHA256

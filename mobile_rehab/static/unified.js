@@ -281,6 +281,12 @@ function settings() {
   const mode = snapshot().profile?.dataMode;
   $("#content").innerHTML = `<div class="heading"><h1>设置</h1><a href="#home">返回首页</a></div><section><h2>我的档案</h2><p>${E(profile().name || "称呼未填写")}${profile().age ? " · " + E(profile().age) + " 岁" : ""}</p><p class="muted">${mode === "demo" ? "演示档案" : mode === "personal" ? "个人档案" : "请在电脑核对档案类型"}</p>${button("编辑我的档案", "settings-profile")}</section><section><h2>查看记录的来源</h2>${sourcePicker()}<p class="muted">来源选择用于查看康复记录，不会启动摄像头或训练。</p></section><p>${link("查看通知记录", "#notifications")}</p>`;
   bind("settings-profile", editProfile);
+  if (globalThis.OfflineAndroid?.deepSeekSettings) {
+    const section=document.createElement("section");
+    section.innerHTML=`<h2>智能服务</h2><p>${snapshot().conversationModelAvailable ? "DeepSeek 已配置；每条回复标明实际来源。" : "DeepSeek 尚未配置，本地功能仍可使用。"}</p>${button("配置 DeepSeek", "settings-deepseek")}`;
+    $("#content").append(section);
+    bind("settings-deepseek",()=>globalThis.OfflineAndroid.deepSeekSettings());
+  }
   bindSource();
 }
 

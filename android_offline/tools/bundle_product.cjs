@@ -16,4 +16,7 @@ const entry=collect(path.join(root,'src/product/ProductService.ts'));
 const output='(function(){"use strict";const factories={'+[...modules].map(([id,code])=>JSON.stringify(id)+':function(module,exports,require){\n'+code+'\n}').join(',')+'};const cache={};function require(id){if(cache[id])return cache[id].exports;const m=cache[id]={exports:{}};if(!factories[id])throw Error("Missing domain module "+id);factories[id](m,m.exports,require);return m.exports;}globalThis.AnkangDomain=require('+JSON.stringify(entry)+');})();';
 fs.mkdirSync(path.resolve(__dirname,'../build/assets/local'),{recursive:true});
 fs.writeFileSync(path.resolve(__dirname,'../build/assets/local/product.js'),output);
+// Share the desktop conversation policy; do not bundle its Node credential reader.
+const {conversationSystem}=require(path.join(root,'scripts/chat-model.cjs'));
+fs.writeFileSync(path.resolve(__dirname,'../build/assets/local/model-policy.js'),'globalThis.AnkangConversationSystem='+JSON.stringify(conversationSystem)+';');
 console.log('Bundled '+modules.size+' original domain modules');

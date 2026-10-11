@@ -6,7 +6,8 @@ let owner=store.value.owner;
 const metrics=[['steps','活动步数','步'],['walkSpeed','步行速度','m/s'],['sleepHours','睡眠时长','小时'],['nightWakes','夜间醒来','次'],['restingHr','静息心率','bpm'],['weight','体重','kg'],['spo2','血氧','%'],['systolic','收缩压','mmHg'],['diastolic','舒张压','mmHg'],['bloodGlucose','血糖','mmol/L']];
 const categories=['体检报告','就诊记录','检验检查','影像资料','病历资料','其他资料'];
 const profile=()=>store.read('profile:'+owner)?.profile;
-const domain=new AnkangDomain.ProductService({read:k=>store.read(k),write:(k,v)=>store.write(k,v),remove:k=>store.remove(k),profiles:()=>store.profiles(),attachments:{list:s=>PS.attachments(owner).list(s),put:(s,a)=>PS.attachments(owner).put(s,a),clear:s=>PS.attachments(owner).clear(s),setTrash:(s,id,at)=>PS.attachments(owner).setTrash(s,id,at)}},undefined,undefined,{},participant=>PS.createCarePort(store,participant,careRehabFacts));
+const domain=new AnkangDomain.ProductService({read:k=>store.read(k),write:(k,v)=>store.write(k,v),remove:k=>store.remove(k),profiles:()=>store.profiles(),attachments:{list:s=>PS.attachments(owner).list(s),put:(s,a)=>PS.attachments(owner).put(s,a),clear:s=>PS.attachments(owner).clear(s),setTrash:(s,id,at)=>PS.attachments(owner).setTrash(s,id,at)}},undefined,undefined,{},participant=>PS.createCarePort(store,participant,careRehabFacts),
+ ()=>root.PhoneDeepSeek?.agentModel(),participant=>({read:call=>rehabRead(participant,call)}),()=>root.PhoneDeepSeek?.conversationModel());
 const ready=store.serial(async()=>{
  await PhoneLin.initialize(store,nativeFetch);
  owner=store.value.owner;
@@ -36,6 +37,12 @@ async function careRehabFacts(value){
  const plans=p?[{...p,progress,next_available:!!(progress.next_key&&!progress.blocked),availability_reason:progress.blocked||(progress.next_key?'':'这一轮已完成')}]:[];
  const history=value.jobs.filter(j=>j.mode==='training'&&j.state==='done').reverse().map(j=>({exercise_id:j.exercise,side:j.side,end_utc:j.created_at,plan_id:j.plan_id,entry_key:j.entry_key,summary:j.result?.summary,feedback:j.feedback}));
  return{plans,history};
+}
+async function rehabRead(participant,call){
+ if(participant!==owner||!['rehab.get_training_plan','rehab.get_recent_assessments','rehab.get_training_history'].includes(call.name)||Object.keys(call.arguments||{}).length)throw Error('康复查询范围无效');
+ const facts=await careRehabFacts(store.value);
+ const records=call.name==='rehab.get_training_plan'?facts.plans:call.name==='rehab.get_training_history'?facts.history:store.value.jobs.filter(j=>j.mode==='assessment'&&j.state==='done').map(j=>({exercise_id:j.exercise,side:j.side,end_utc:j.created_at,summary:j.result?.summary}));
+ return{tool:call.name,read_only:true,status:records.length?'found':'empty',records:copy(records),scope:{participant_id:owner,source_kind:'PHONE_LOCAL',usage_context:PhoneLin.isLin(store)?'TEST':'SELF_USE'}};
 }
 async function proposal(){const c=await PM.catalog(),records=store.value.jobs.filter(j=>j.state==='done'&&j.result.local_report).map(j=>({id:j.id,exercise:j.exercise,side:j.side,created:new Date(j.created_at).getTime(),kind:j.mode||'assessment',report:j.result.local_report,feedback:j.feedback}));
  const p=LocalEngine.propose(records,c,Date.now(),{restrictions:(profile().conditions||[]).join('；')});
@@ -70,7 +77,7 @@ async function request(path,opts={}){
   const payload=opts.body instanceof Blob?null:await jsonBody(opts);
   if(route==='/pair')return{ok:true,local:true};
   if(route==='/unified')return{snapshot:await snapshot(),source:'PHONE_LOCAL',shared:true,local:true};
-  if(route==='/product')return{needs_profile:false,snapshot:await snapshot(),metrics,categories,assistant:'local',external_model:false};
+  if(route==='/product')return{needs_profile:false,snapshot:await snapshot(),metrics,categories,assistant:root.PhoneDeepSeek?.configured()?'deepseek':'local',external_model:!!root.PhoneDeepSeek?.configured()};
   if(route.startsWith('/product/care.')||route.startsWith('/unified/care.')){
    if(u.origin!==location.origin)failure('请使用当前手机本地档案',403);
    const operation=route.slice(9);
@@ -83,6 +90,7 @@ async function request(path,opts={}){
    const operation=route.slice(9),p=payload;
    if(operation==='profile.save'){const old=profile();if(!p.profile||typeof p.profile.name!=='string'||p.profile.name.length>40||!Number.isInteger(p.profile.age)||p.profile.age<0||p.profile.age>130||!Array.isArray(p.profile.conditions)||p.profile.conditions.length>20)failure('请核对称呼、年龄和健康情况');p.profile={...old,...p.profile,medications:old.medications,medicationRecords:old.medicationRecords,familySharing:old.familySharing};}
    if(operation==='chat'&&p.private===true)p.text='不要记录：'+p.text;
+   if(operation==='chat')p._conversationScope='PHONE_LOCAL:'+(PhoneLin.isLin(store)?'TEST':'SELF_USE');
    if(!['profile.save','chat','health.record','medication.save','medication.status','task.status','notification.plan','notification.ack'].includes(operation))failure('未开放此操作',404);
    return domain.request(operation,owner,p,now());
   }

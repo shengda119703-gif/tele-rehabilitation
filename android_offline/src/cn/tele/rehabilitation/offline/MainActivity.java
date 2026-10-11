@@ -48,6 +48,7 @@ public final class MainActivity extends Activity {
     private boolean capturePending;
     private byte[] exportBytes;
     private CloudTransport cloud;
+    private DeepSeekTransport deepSeek;
     private final ExecutorService network = Executors.newFixedThreadPool(2);
     private SpeechRecognizer speech;
     private static final int IMPORT_BACKUP=44, SPEECH_PERMISSION=45;
@@ -55,6 +56,7 @@ public final class MainActivity extends Activity {
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         cloud=new CloudTransport(this);
+        deepSeek=new DeepSeekTransport(this);
         getWindow().setStatusBarColor(Color.WHITE);
         getWindow().setNavigationBarColor(Color.WHITE);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
@@ -205,14 +207,25 @@ public final class MainActivity extends Activity {
             } catch (Exception e) { runOnUiThread(() -> notice("资料读取失败")); }
         }
         @JavascriptInterface public boolean cloudConfigured(){return cloud.configured();}
+        @JavascriptInterface public boolean deepSeekConfigured(){return deepSeek.configured();}
+        @JavascriptInterface public void deepSeekSettings(){runOnUiThread(()->deepSeekDialog());}
+        @JavascriptInterface public void deepSeekRequest(String id,String body){
+            if(id==null||!id.matches("[0-9]{1,10}")||body==null||body.length()>32000)return;
+            network.execute(()->{
+                boolean ok;String json;try{json=deepSeek.request(body);ok=true;}catch(Exception e){deepSeek.failure(e);json="{}";ok=false;}
+                final boolean success=ok;final String value=json;
+                runOnUiThread(()->{if(!isDestroyed())web.evaluateJavascript("PhoneDeepSeek.reply("+JSONObject.quote(id)+","+success+","+JSONObject.quote(value)+")",null);});
+            });
+        }
         @JavascriptInterface public void cloudDisconnect(){cloud.disconnect();}
         @JavascriptInterface public void cloudRequest(String id,String path,String method,String body){
             if(id==null||!id.matches("[0-9]{1,10}")||body==null||body.length()>12*1024*1024)return;
             network.execute(()->{int status;String json;try{CloudTransport.Reply reply=cloud.request(path,method,body);status=reply.status;json=reply.body;}catch(Exception e){status=503;json="{\"detail\":\"云端暂时无法连接，本机记录保留\"}";}
                 final int code=status;final String value=json;runOnUiThread(()->{if(!isDestroyed())web.evaluateJavascript("PhoneCloud.reply("+JSONObject.quote(id)+","+code+","+JSONObject.quote(value)+")",null);});});
         }
-        @JavascriptInterface public void settings(){runOnUiThread(()->new AlertDialog.Builder(MainActivity.this).setTitle("手机与云端").setItems(new String[]{"连接云端","暂停云端连接","导出本机备份","恢复本机备份","备份到云端","恢复云端备份","打开 TEST 林女士档案","返回个人档案"},(d,which)->{
-            if(which==0)web.evaluateJavascript("PhoneLocal.store.key===PhoneStore.LIN_KEY",v->{if("true".equals(v))notice("请先返回个人档案，再连接云端");else connectionDialog();});
+        @JavascriptInterface public void settings(){runOnUiThread(()->new AlertDialog.Builder(MainActivity.this).setTitle("手机与云端").setItems(new String[]{"连接云端","暂停云端连接","导出本机备份","恢复本机备份","备份到云端","恢复云端备份","打开 TEST 林女士档案","返回个人档案","DeepSeek 智能服务"},(d,which)->{
+            if(which==8)deepSeekDialog();
+            else if(which==0)web.evaluateJavascript("PhoneLocal.store.key===PhoneStore.LIN_KEY",v->{if("true".equals(v))notice("请先返回个人档案，再连接云端");else connectionDialog();});
             else if(which==1){cloud.disconnect();notice("已暂停云端连接，本机功能可继续使用");}
             else if(which==2)web.evaluateJavascript("PhoneLocal.exportBackup()",null);
             else if(which==3)new AlertDialog.Builder(MainActivity.this).setMessage("恢复会替换当前文字记录和计划。旧数据将保留恢复前副本，录像与资料原件请单独保管。继续选择备份？").setPositiveButton("选择备份",(a,b)->startActivityForResult(new Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("application/json"),IMPORT_BACKUP)).setNegativeButton("取消",null).show();
@@ -223,6 +236,20 @@ public final class MainActivity extends Activity {
         @JavascriptInterface public void speechStart(){runOnUiThread(()->{if(!speechAvailable()){speechResult("","手机未安装本地语音识别服务，可使用键盘语音输入");return;}if(checkSelfPermission(Manifest.permission.RECORD_AUDIO)!=PackageManager.PERMISSION_GRANTED)requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},SPEECH_PERMISSION);else startSpeech();});}
         @JavascriptInterface public void speechCancel(){runOnUiThread(()->{endSpeech();speechResult("","已取消，原草稿保留");});}
         @JavascriptInterface public void printPage(){runOnUiThread(()->{android.print.PrintManager manager=(android.print.PrintManager)getSystemService(PRINT_SERVICE);manager.print("安康康复报告",web.createPrintDocumentAdapter("安康康复报告"),null);});}
+    }
+    private void deepSeekDialog(){
+        LinearLayout fields=new LinearLayout(this);fields.setOrientation(LinearLayout.VERTICAL);fields.setPadding(40,0,40,0);
+        EditText key=new EditText(this);key.setHint("输入新的 DeepSeek API Key");
+        key.setInputType(android.text.InputType.TYPE_CLASS_TEXT|android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);fields.addView(key);
+        AlertDialog dialog=new AlertDialog.Builder(this).setTitle("DeepSeek 智能服务")
+            .setMessage((deepSeek.configured()?"本机已配置。":"本机尚未配置。")+"启用后普通聊天及有限工具规划会向 DeepSeek 发送请求。健康档案、附件不会自动上传；密钥加密保存在本机，不随备份导出。")
+            .setView(fields).setPositiveButton("保存",null).setNegativeButton("取消",null).setNeutralButton("清除连接",(d,w)->{
+                deepSeek.clear();key.setText("");web.evaluateJavascript("PhoneDeepSeek.changed()",null);
+            }).create();
+        dialog.setOnShowListener(v->dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(button->{
+            try{deepSeek.save(key.getText().toString());key.setText("");dialog.dismiss();notice("配置已保存；实际连接结果以回复来源为准");web.evaluateJavascript("PhoneDeepSeek.changed()",null);}
+            catch(Exception e){notice("无法保存，请检查 Key 输入");}
+        }));dialog.show();
     }
     private void connectionDialog(){
         LinearLayout fields=new LinearLayout(this);fields.setOrientation(LinearLayout.VERTICAL);fields.setPadding(40,0,40,0);

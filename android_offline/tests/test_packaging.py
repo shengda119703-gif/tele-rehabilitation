@@ -13,13 +13,15 @@ SCRIPT = Path(__file__).resolve().parents[1] / 'tools' / 'normalize_apk.py'
 class PackagingTest(unittest.TestCase):
     def test_release_lin_assets_keep_official_ui_and_exclude_private_qa_files(self):
         root = SCRIPT.parents[2]
-        apk = root/'android_offline/dist/tele-rehabilitation-mobile-0.2.1.apk'
-        self.assertTrue(apk.is_file(), 'Build 0.2.1 before running release QA')
+        apk = root/'android_offline/dist/tele-rehabilitation-mobile-0.3.0.apk'
+        self.assertTrue(apk.is_file(), 'Build 0.3.0 before running release QA')
         with zipfile.ZipFile(apk) as archive:
             names = archive.namelist()
             self.assertFalse(any('\\' in n or '..' in n.split('/') for n in names))
             self.assertFalse(any(n.endswith(('.mp4', '.sqlite3', '.db', '.jks', '.dpapi')) or
                                  n.endswith(('smoke.js', 'lin-smoke.js')) for n in names))
+            self.assertIn('assets/local/deepseek.js', names)
+            self.assertIn('assets/local/model-policy.js', names)
             locked = json.loads(archive.read('assets/ui-lock.json'))
             for name, digest in locked.items():
                 self.assertEqual(hashlib.sha256(archive.read('assets/static/'+name)).hexdigest(), digest)

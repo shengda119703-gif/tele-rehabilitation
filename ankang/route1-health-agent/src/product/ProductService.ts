@@ -95,7 +95,7 @@ export class ProductService {
         if(!data||data.tool!==hostName||data.read_only!==true||!['empty','found'].includes(data.status)||!Array.isArray(data.records)
           ||!data.scope||!['participant_id','source_kind','usage_context'].every(k=>typeof (data.scope as any)[k]==='string'&&(data.scope as any)[k].trim())
           ||data.scope.participant_id!==owner)throw Error('康复工具回执或本人来源标识无效，请在原页面核对。');
-        const source=({LIVE_CAMERA:'电脑实时',REPLAY_FILE:'录像分析',SYNTHETIC:'合成测试'} as Record<string,string>)[data.scope.source_kind]??'其他来源，请在原页面核对';
+        const source=({LIVE_CAMERA:'电脑实时',REPLAY_FILE:'录像分析',SYNTHETIC:'合成测试',PHONE_LOCAL:'手机本地'} as Record<string,string>)[data.scope.source_kind]??'其他来源，请在原页面核对';
         const summaries=data.records.slice(0,10).map((record:any)=>{
           const r=record&&typeof record==='object'?record:{};
           return [r.name??r.exercise_label??'已保存记录',typeof r.revision==='number'?`计划版本${r.revision}`:'',r.created_at??r.createdAt??r.started_at??r.date??''].filter(v=>typeof v==='string'&&v).join(' · ');
