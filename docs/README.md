@@ -6,6 +6,8 @@
 | --- | --- |
 | [管家模块与自检](development/AGENT_MODULES_V0_21.md) | 本地查询、导航、双端确认、重开待办与后续扩展边界 |
 | [本轮管家验收与审计对齐](validation/ANKANG_AGENT_2026-10-11.md) | 本机实际回归／真实HTTP／浏览器／Qt截图、人物时间和导出修复、旧失败与未测范围 |
+| [康复v2原生宿主生命周期](development/REHAB_NATIVE_HOST_LIFETIME.md) | 实测宿主退出后native子进程残留；WindowsJob／启动门／准确句柄释放及非Windows边界 |
+| [原生生命周期本机验证](validation/REHAB_NATIVE_HOST_LIFETIME_2026-10-11.md) | 失败归档、7项专项＋三轮×三用例、原YOLO冷ticket与TEST native wait、日志／hash和未测范围 |
 | [康复v2异步退出恢复](development/REHAB_ASYNC_RECOVERY.md) | 202后、最终事务提交前、提交后未回应三窗口的准确所属进程退出、原恢复路径及不重复贡献 |
 | [三窗口本机验证](validation/REHAB_ASYNC_RECOVERY_2026-10-11.md) | 4项专项＋3轮×3窗口、32条件、原始日志／hash、开发失败与未测原生子进程范围 |
 | [康复v2异步结束](development/REHAB_ASYNC_FINISH.md) | 冷启动实测阻塞、SQL先冻结／HTTP202接收／后台最终保存、幂等和失败重试；不改客户端 |

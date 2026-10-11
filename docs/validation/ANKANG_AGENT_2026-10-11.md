@@ -2,6 +2,8 @@
 
 本轮按用户直接授权修复问题并扩展Agent。队友的《UIUX重构前项目审计报告》描述2026-10-10固定快照`6d09457822894dd071614d9849847bc1b37c4752`，没有启动应用或测试；其中重构建议是参考资料，不作为要求重写全部界面、算法或存储的指令。开工主线先同步到`bead4d3`，收尾再次同步到`a1b96143773f0911f401636685238cc8d87a5739`，本轮源码以此文档所在提交为准。
 
+交付又并入队友`1fd6806666d4f41cb6b235d4f99d95154b7611b5`的默认关闭v2所属进程保护；两处交接／索引冲突保留双方新增内容。该提交未修改本轮Agent与正式界面路径，合并后再跑共享手机接口；队友383／12／19等验收保留在其报告，不算本轮测试。
+
 ## 审计事项的当前状态
 
 | 审计事项 | 本轮对齐与处理 | 状态 |
@@ -39,7 +41,7 @@ DeepSeek适配器使用[官方Tool Calls协议](https://api-docs.deepseek.com/gu
 | TypeScript完整测试 | 441通过、0失败 | `qa-output/agent-final-ts-r11.log` |
 | 产品服务／扩展／DeepSeek协议测试 | 22通过、0失败 | `qa-output/agent-final-product-r11.log` |
 | 原生管家／窗口／确认控件 | 24通过、0失败 | `qa-output/agent-qt-final-r5.log` |
-| 共享手机接口 | 13通过、0失败 | `qa-output/agent-mobile-final-r6.log` |
+| 共享手机接口，含最终合并后复验 | 13通过、0失败 | `qa-output/agent-mobile-merged-r7.log` |
 | 真实环回HTTP照护黑箱 | 69通过、0失败，含真实重开与丢失确认响应重试 | `qa-output/agent-blackbox-final-20261011-r4/results.json` |
 | 真实Edge网页流程 | 12条流程，0页面异常；最终仅1条服药审计 | `qa-output/agent-ui-final-20261011-r6/results.json` |
 | 静态密钥检查 | 退出0，无明显硬编码密钥 | `qa-output/agent-security-final.log` |

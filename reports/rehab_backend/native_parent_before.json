@@ -1,0 +1,112 @@
+{
+  "run_id": "native-parent-acc2c753",
+  "predeclared": {
+    "version": "rehab-native-parent-audit-1",
+    "cases": [
+      "TEST_native_pose_wait",
+      "TEST_native_report_wait",
+      "original_YOLO_cold_ticket"
+    ],
+    "host_barrier_s": 30,
+    "child_exit_after_host_s": 2,
+    "owned_cleanup_s": 5,
+    "TEST_native_wait_s": 60,
+    "no_camera_or_patient_database": true,
+    "scope": "Windows_exact_owned_process_handles_not_cross_platform",
+    "clinical_accuracy": null
+  },
+  "source_sha256": {
+    "tools/rehab_ml/native_parent_audit.py": "3110bb47a081ea87f4d373a0809b0e373e954897045ae6c10c6bc87de5c781db",
+    "mobile_rehab/rehab_v2/owned_worker.py": "499fc70ef65d69c30bfbb124e971135b9ce3aecaa1bb2a623b646d6645b7fd9d",
+    "mobile_rehab/rehab_v2/host_lifetime.py": "7608a375a94deb37f3ff306aeffe7071e7d45e396ec58266013b8e4e676b3ae8",
+    "mobile_rehab/rehab_v2/pose_worker.py": "5ae9a211ed925743446c4f6e6f9bc99b981df71550b553637a0dec502de5f09b",
+    "mobile_rehab/rehab_v2/report_worker.py": "bcca3fd3b935f42edd3c02bc86bffcdfc2122176d3fe474074bf5b506e09f9a5",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/resources.py": "eb86c8a4c1ef99b77a8780d78ec527b51a2bb151bebb6d99c7ad850280692abe"
+  },
+  "cases": [
+    {
+      "case": "TEST_native_pose_wait",
+      "checks": {
+        "exact_host_and_child_live": true,
+        "native_task_still_live": true,
+        "child_auto_exit_without_supervisor_kill": false,
+        "actual_child_exit_confirmed": true,
+        "compute_lease_released_after_actual_exit": true,
+        "volatile_memory_released": true,
+        "checkpoint_confirmed_rep_preserved": true,
+        "canonical_found_not_duplicated": true,
+        "prior_final_commit_or_interrupted_recovery": true,
+        "one_final_contribution": true,
+        "null_feedback_not_replaced": true
+      },
+      "host_exit": 1,
+      "auto_exit_wait_ms": 2009.3010000000504,
+      "child_exit_before_cleanup": 259,
+      "supervisor_cleanup_required": true,
+      "host_actual_exit_confirmed": true,
+      "log": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\native-parent-acc2c753\\TEST_native_pose_wait\\host.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": false
+    },
+    {
+      "case": "TEST_native_report_wait",
+      "checks": {
+        "exact_host_and_child_live": true,
+        "native_task_still_live": true,
+        "child_auto_exit_without_supervisor_kill": false,
+        "actual_child_exit_confirmed": true,
+        "compute_lease_released_after_actual_exit": true,
+        "volatile_memory_released": true,
+        "checkpoint_confirmed_rep_preserved": true,
+        "canonical_found_not_duplicated": true,
+        "prior_final_commit_or_interrupted_recovery": true,
+        "one_final_contribution": true,
+        "null_feedback_not_replaced": true
+      },
+      "host_exit": 1,
+      "auto_exit_wait_ms": 2009.0731000000233,
+      "child_exit_before_cleanup": 259,
+      "supervisor_cleanup_required": true,
+      "host_actual_exit_confirmed": true,
+      "log": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\native-parent-acc2c753\\TEST_native_report_wait\\host.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": false
+    },
+    {
+      "case": "original_YOLO_cold_ticket",
+      "checks": {
+        "exact_host_and_child_live": true,
+        "native_task_still_live": true,
+        "child_auto_exit_without_supervisor_kill": false,
+        "actual_child_exit_confirmed": true,
+        "compute_lease_released_after_actual_exit": true,
+        "volatile_memory_released": true,
+        "checkpoint_confirmed_rep_preserved": true,
+        "canonical_found_not_duplicated": true,
+        "prior_final_commit_or_interrupted_recovery": true,
+        "one_final_contribution": true,
+        "null_feedback_not_replaced": true
+      },
+      "host_exit": 1,
+      "auto_exit_wait_ms": 2003.9374999996653,
+      "child_exit_before_cleanup": 259,
+      "supervisor_cleanup_required": true,
+      "host_actual_exit_confirmed": true,
+      "log": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\native-parent-acc2c753\\original_YOLO_cold_ticket\\host.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": false
+    }
+  ],
+  "source_unchanged": true,
+  "passed": false,
+  "raw_summary": {
+    "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\native-parent-acc2c753\\summary.json",
+    "sha256": "cdab597c9e1a41bd677316a277f0dc57e134c07f468e0d7c43d61ea082e682d5"
+  }
+}

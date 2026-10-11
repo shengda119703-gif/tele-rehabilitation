@@ -19,6 +19,7 @@ from uuid import uuid4
 
 from ..core import CORE
 from .owned_worker import OwnedJsonWorker
+from .host_lifetime import lifetime_contract
 from app.domain import Context, FramePacket, PoseFrame, PosePerson, dumps, utc_now
 from app.rehab_v2.resources import ComputeLease, ResourceBusy, ResourceUnavailable, compute_contract
 
@@ -142,7 +143,8 @@ class IsolatedPoseWorker(OwnedJsonWorker):
                     frame_timeout_s=self.frame_timeout_s, release_timeout_s=self.release_timeout_s,
                     compute_execution_contract=compute_contract(),
                     compute_role='offline_heavy' if self.target is offline_pose_process else 'formal',
-                    no_camera_or_storage_in_child=True, child_clock_not_used_for_evidence_age=True)
+                    no_camera_or_storage_in_child=True, child_clock_not_used_for_evidence_age=True,
+                    host_lifetime=lifetime_contract())
 
     def infer(self, value, runtime):
         encoded = value['encoded']
