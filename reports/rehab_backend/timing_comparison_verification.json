@@ -1,5 +1,5 @@
 {
-  "run_id": "timing-comparison-audit-07d9c64b",
+  "run_id": "timing-comparison-audit-8cf7fe7c",
   "commands": [
     {
       "arguments": [
@@ -13,20 +13,20 @@
         "-v"
       ],
       "exit_code": 0,
-      "elapsed_s": 35.14612589999888,
-      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\timing-comparison-audit-07d9c64b\\timing-comparison.txt",
-      "log_sha256": "3a46db8198498f06bf8dd1efdd46b931e01df3f68ef93e17c1759ad9ef5136e2",
-      "tests": 18,
-      "tail": "ComparisonTests.test_legacy_context_is_not_backfilled_and_bad_binding_is_excluded) ... ok\ntest_median_difference_is_not_index_pairing_or_an_improvement_score (test_timing_comparison.TimingComparisonTests.test_median_difference_is_not_index_pairing_or_an_improvement_score) ... ok\ntest_partial_hold_is_lower_bound_not_full_hold_even_when_count_complete (test_timing_comparison.TimingComparisonTests.test_partial_hold_is_lower_bound_not_full_hold_even_when_count_complete) ... ok\ntest_source_clock_conditions_differ_and_nominal_time_is_not_measured_time (test_timing_comparison.TimingComparisonTests.test_source_clock_conditions_differ_and_nominal_time_is_not_measured_time) ... ok\ntest_standing_finish_can_compare_observed_rise_but_cannot_invent_return_or_hold (test_timing_comparison.TimingComparisonTests.test_standing_finish_can_compare_observed_rise_but_cannot_invent_return_or_hold) ... ok\ntest_three_actions_compare_complete_durations_with_explicit_denominators (test_timing_comparison.TimingComparisonTests.test_three_actions_compare_complete_durations_with_explicit_denominators) ... ok\ntest_training_dose_is_a_condition_and_cannot_be_missing_or_changed (test_timing_comparison.TimingComparisonTests.test_training_dose_is_a_condition_and_cannot_be_missing_or_changed) ... ok\ntest_unsupported_algorithm_phase_count_semantics_or_bad_evidence_are_not_compared (test_timing_comparison.TimingComparisonTests.test_unsupported_algorithm_phase_count_semantics_or_bad_evidence_are_not_compared) ... ok\n\n----------------------------------------------------------------------\nRan 18 tests in 34.853s\n\nOK\n"
+      "elapsed_s": 34.891402899999775,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\timing-comparison-audit-8cf7fe7c\\timing-comparison.txt",
+      "log_sha256": "34243b2a06e170539ce92feb4f9bc66bdd497a288d92721f56f55584ffd1f1a6",
+      "tests": 19,
+      "tail": "ComparisonTests.test_legacy_context_is_not_backfilled_and_bad_binding_is_excluded) ... ok\ntest_median_difference_is_not_index_pairing_or_an_improvement_score (test_timing_comparison.TimingComparisonTests.test_median_difference_is_not_index_pairing_or_an_improvement_score) ... ok\ntest_partial_hold_is_lower_bound_not_full_hold_even_when_count_complete (test_timing_comparison.TimingComparisonTests.test_partial_hold_is_lower_bound_not_full_hold_even_when_count_complete) ... ok\ntest_source_clock_conditions_differ_and_nominal_time_is_not_measured_time (test_timing_comparison.TimingComparisonTests.test_source_clock_conditions_differ_and_nominal_time_is_not_measured_time) ... ok\ntest_standing_finish_can_compare_observed_rise_but_cannot_invent_return_or_hold (test_timing_comparison.TimingComparisonTests.test_standing_finish_can_compare_observed_rise_but_cannot_invent_return_or_hold) ... ok\ntest_three_actions_compare_complete_durations_with_explicit_denominators (test_timing_comparison.TimingComparisonTests.test_three_actions_compare_complete_durations_with_explicit_denominators) ... ok\ntest_training_dose_is_a_condition_and_cannot_be_missing_or_changed (test_timing_comparison.TimingComparisonTests.test_training_dose_is_a_condition_and_cannot_be_missing_or_changed) ... ok\ntest_unsupported_algorithm_phase_count_semantics_or_bad_evidence_are_not_compared (test_timing_comparison.TimingComparisonTests.test_unsupported_algorithm_phase_count_semantics_or_bad_evidence_are_not_compared) ... ok\n\n----------------------------------------------------------------------\nRan 19 tests in 34.561s\n\nOK\n"
     }
   ],
   "implementation_sha256": {
     "rehab_codex_single_camera_v2_1/app/rehab_v2/timing_comparison.py": "f40810aaff3833199e9ead172bb51c26d11be36cfc7e72fc549af267aaf839f4",
     "rehab_codex_single_camera_v2_1/app/rehab_v2/engine.py": "e339dae493dc6bc03edb27a12cb650a568045dce22c13bc64704db0aa4869283",
     "rehab_codex_single_camera_v2_1/app/rehab_v2/timing.py": "2757e354ad1f5796681f590afe304064fe6a04382beb2a56d00c63cc870835b2",
-    "mobile_rehab/rehab_v2/service.py": "652619e43a31a62fc09f8864e6ae3e47f1153a5d9358bd2d06eab69e43922f0e",
-    "mobile_rehab/rehab_v2/api.py": "094db18b741138cbcb8e11d3403e47de6a8f35a4f538faa4937cc4883e415aff",
-    "tests/rehab_backend/test_timing_comparison.py": "cf2bd94a8e0f85ae998df3587141a0206486c926df6e21fe7711cd027ebb20da",
+    "mobile_rehab/rehab_v2/service.py": "61ec22ad6442daf247a1444cbab8378e9df5ae75f4929319bb56e1c8fac7f4c5",
+    "mobile_rehab/rehab_v2/api.py": "3560384d8df0fb8bd12aa4340a59357ec286ebf49b9f75f1e13862b8bac78356",
+    "tests/rehab_backend/test_timing_comparison.py": "4da1f563fc062edb9148b5507ccdbc2a6a6952f3c78c1ec3d9c1ae41dc047a99",
     "tools/rehab_ml/verify_timing_comparison.py": "c135f6f61452c2a299aab87763f0f25380af1b4001b55a47a587c22739211191"
   },
   "scope": "isolated_recorded_clock_comparison_and_actual_host_http",

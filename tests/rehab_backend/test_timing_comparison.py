@@ -369,19 +369,30 @@ class TimingComparisonHttpTests(unittest.TestCase):
                 self.assertEqual(client.post(endpoint,json={}).status_code,401)
                 client.post('/api/pair',json=dict(code='TEST-timing-http'))
                 service = app.state.rehab_v2
+                # This case checks HTTP/authorization/comparison contracts,
+                # using a declared TEST recorded evidence clock. Real HTTP
+                # receive/queue/deadline clocks remain unchanged. Sleeping on
+                # a busy host cannot promise continuous observed motion.
+                recorded_clock = getattr(self,'recorded_clock',True)
+                expected_reps = getattr(self,'expected_reps',1)
+                evidence_trace = []
                 def provider(value,runtime):
-                    seq,stamp = value['seq'],value['source_time_s']
+                    seq = value['seq']
+                    stamp = seq*.05 if recorded_clock else value['source_time_s']
+                    evidence_trace.append(dict(seq=seq,time_s=stamp,
+                        receive_time_s=value['source_time_s'],before_phase=runtime.engine.phase))
                     angle = 0. if seq <=30 or seq>54 else 70.
                     metric = MetricEvidence(angle,'degree',True,None,'observed',stamp,stamp,0.,tuple(runtime.engine.spec['required_joints']))
                     return EvidenceFrame(seq,stamp,runtime.context.epoch,'TEST-person','coco17-v1',
-                        'TEST-geometry-provider',(320,240),{runtime.engine.spec['metric']:metric},'VALID','browser-camera')
+                        'TEST-geometry-provider',(320,240),{runtime.engine.spec['metric']:metric},'VALID',
+                        'TEST-recorded-http-evidence' if recorded_clock else 'browser-camera')
                 service.inference_provider = provider  # TEST hook; not actual human camera evidence.
                 stream = BytesIO()
                 Image.new('RGB',(320,240),'white').save(stream,format='JPEG')
                 encoded = stream.getvalue()
                 ids = []
                 base = '/api/rehab/v2/sessions'
-                for index in range(2):
+                for index in range(1 if expected_reps == 0 else 2):
                     payload = dict(idempotency_key='assessment-'+str(index),consent=True,submode='assessment',
                                    exercise_id='shoulder_abduction',side='left',view='frontal')
                     deadline = time.monotonic()+3.
@@ -393,6 +404,10 @@ class TimingComparisonHttpTests(unittest.TestCase):
                     self.assertEqual(response.status_code,200,response.text)
                     sid = response.json()['session_id']
                     for seq in range(1,65):
+                        if getattr(self,'inject_receive_gap',False) and seq == 55:
+                            before = client.get(base+'/'+sid).json()['snapshot']
+                            self.assertEqual(before['phase'],'RAISING',evidence_trace[-8:])
+                            time.sleep(.65)  # Actual receive-clock gap, not a forged timestamp.
                         frame = client.post(base+'/'+sid+'/frames',content=encoded,headers={
                             'content-type':'image/jpeg','x-rehab-event-id':'frame-'+str(seq),'x-rehab-seq':str(seq)})
                         self.assertEqual(frame.status_code,200,frame.text)
@@ -400,10 +415,24 @@ class TimingComparisonHttpTests(unittest.TestCase):
                         while client.get(base+'/'+sid).json()['processed_last_seq']<seq:
                             if time.monotonic()>=deadline: self.fail('owned TEST geometry result timeout')
                             time.sleep(.01)
-                        time.sleep(.05)
+                        if not recorded_clock:
+                            time.sleep(.05)
                     finished = finish_http(client, base+'/'+sid, dict(idempotency_key='finish',expected_revision=0,reason='completed'))
-                    self.assertEqual(finished['completed_reps'],1,finished)
+                    diagnostic = dict(receipt=finished,clock='TEST-recorded' if recorded_clock else 'actual-receive',
+                                      transitions=[row for row in evidence_trace if row['seq'] in (30,31,54,55,64)])
+                    self.assertEqual(finished['completed_reps'],expected_reps,diagnostic)
+                    self.assertEqual((finished['accepted_last_seq'],finished['processed_last_seq'],
+                                      finished['persisted_evidence_seq']),(64,64,64))
+                    if expected_reps == 0:
+                        snapshot = client.get(base+'/'+sid).json()['snapshot']
+                        self.assertEqual(len(snapshot['repetitions']),1,diagnostic)
+                        self.assertEqual(snapshot['repetitions'][0]['completion_status'],'UNASSESSABLE')
+                        self.assertEqual(snapshot['repetitions'][0]['reason'],'long_evidence_gap')
+                        gap = evidence_trace[54]['time_s']-evidence_trace[53]['time_s']
+                        self.assertGreater(gap,.65)
                     ids.append(sid)
+                if expected_reps == 0:
+                    return
                 payload = dict(left_session_id=ids[0],right_session_id=ids[1])
                 result = client.post(endpoint,json=payload)
                 self.assertEqual(result.status_code,200,result.text)
@@ -422,6 +451,12 @@ class TimingComparisonHttpTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(dir=paths()['run']) as directory:
             app = create_app(directory,pair_key='TEST-default-off',runner=lambda item:None)
             self.assertNotIn(endpoint,{r.path for r in app.routes})
+
+    def test_actual_receive_clock_gap_is_persisted_without_confirming_hidden_return(self):
+        self.recorded_clock = False
+        self.expected_reps = 0
+        self.inject_receive_gap = True
+        self.test_actual_authenticated_host_endpoint_and_default_off_routes()
 
 
 if __name__=='__main__':

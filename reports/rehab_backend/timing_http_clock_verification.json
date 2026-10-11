@@ -1,0 +1,144 @@
+{
+  "run_id": "timing-http-audit-2c92dc6a",
+  "created_at": "2026-10-11T16:05:02.283788+00:00",
+  "passed": true,
+  "cases": {
+    "natural": {
+      "run_id": "timing-http-probe-41d401af",
+      "expected_test_success": true,
+      "sessions": 2,
+      "processed_frames": 128,
+      "max_dt_s": 0.10129190000043309,
+      "completed_per_session": 1,
+      "repetition_status": "COMPLETE"
+    },
+    "known_gap": {
+      "run_id": "timing-http-probe-eb16b425",
+      "expected_test_success": false,
+      "sessions": 1,
+      "processed_frames": 64,
+      "max_dt_s": 0.7532320000000254,
+      "completed_per_session": 0,
+      "repetition_status": "UNASSESSABLE"
+    },
+    "recorded": {
+      "run_id": "timing-http-probe-c61513b3",
+      "expected_test_success": true,
+      "sessions": 2,
+      "processed_frames": 128,
+      "max_dt_s": 0.050000000000000266,
+      "completed_per_session": 1,
+      "repetition_status": "COMPLETE"
+    },
+    "host_gap": {
+      "run_id": "timing-http-probe-e61cf5dd",
+      "expected_test_success": true,
+      "sessions": 1,
+      "processed_frames": 64,
+      "max_dt_s": 0.7568056999998589,
+      "completed_per_session": 0,
+      "repetition_status": "UNASSESSABLE"
+    }
+  },
+  "sources": {
+    "E001": {
+      "run_id": "timing-http-probe-41d401af",
+      "summary_sha256": "c10b51795249f35dd35bf7d026958258a40b60a58a470966135646e08715dd35",
+      "artifacts": {
+        "trace.json": {
+          "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\timing-http-probe-41d401af\\trace.json",
+          "sha256": "e90a8284bee5ef420b2332621b9f22285515d35633e5fca26e07dcba78514264"
+        },
+        "test_output.json": {
+          "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\timing-http-probe-41d401af\\test_output.json",
+          "sha256": "ac16c34dd9ab08a94c3401bcd8c520e88b1aa9712fdfaa227442c310adb40e4e"
+        }
+      },
+      "agent_checked": true,
+      "human_verified": false
+    },
+    "E002": {
+      "run_id": "timing-http-probe-eb16b425",
+      "summary_sha256": "49bcf59785cd964a75403d09d58a8593855df3be2e9bd22c46634462c1d49923",
+      "artifacts": {
+        "trace.json": {
+          "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\timing-http-probe-eb16b425\\trace.json",
+          "sha256": "7887eb6f7c38a8c1a78d982c344bdc7f73d5317f53c719920f08cb959c0af4fe"
+        },
+        "test_output.json": {
+          "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\timing-http-probe-eb16b425\\test_output.json",
+          "sha256": "cb6c93c1ec9088c188ef27cc2c142f897a1e7de3a72dbae5f62158d7ac8ba07a"
+        }
+      },
+      "agent_checked": true,
+      "human_verified": false
+    },
+    "E003": {
+      "run_id": "timing-http-probe-c61513b3",
+      "summary_sha256": "88ea6050cf81a452f73df1f5dddbb78b4db679bb1f405ef080a03f5561f2e625",
+      "artifacts": {
+        "trace.json": {
+          "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\timing-http-probe-c61513b3\\trace.json",
+          "sha256": "50a580d2cfc42d68eeb2aaf7c481d008741baeb6934c99d3ef3096241b5adde4"
+        },
+        "test_output.json": {
+          "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\timing-http-probe-c61513b3\\test_output.json",
+          "sha256": "ce4e608e3a53b7cdecc2745629252c451a206a1f0fd155f59b0bcdd887458b93"
+        }
+      },
+      "agent_checked": true,
+      "human_verified": false
+    },
+    "E004": {
+      "run_id": "timing-http-probe-e61cf5dd",
+      "summary_sha256": "c9fde47ae068972a3b886bcf746fe074bcea293c006eca707fa8d697bd07f8bf",
+      "artifacts": {
+        "trace.json": {
+          "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\timing-http-probe-e61cf5dd\\trace.json",
+          "sha256": "3adc93486f355d865953aabfd9a194be7c6096de25446e8f42c3847f84dff67e"
+        },
+        "test_output.json": {
+          "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\timing-http-probe-e61cf5dd\\test_output.json",
+          "sha256": "6c1df2e0bb16aae47210ec665c34c7ece452df5207b95c94c80edbe32c855184"
+        }
+      },
+      "agent_checked": true,
+      "human_verified": false
+    },
+    "E005": {
+      "run_id": "verification-f28dac51",
+      "summary_sha256": "1a8543c73159e3009a5c3c806faaf3988e11c4e44044210f339f1f2f3c74fa92",
+      "log_sha256": "30d5c467f0c01e801b6bfc9704e7aa2f02cb2fcd9e7f790eb3eb9d8a7943f020",
+      "original_failed_test": true,
+      "missing_per_frame_clock_trace": true,
+      "human_verified": false
+    }
+  },
+  "original_failure_root_cause_proven": false,
+  "human_verification": "pending",
+  "submission_ready": false,
+  "clinical_accuracy": null,
+  "candidate_enabled": false,
+  "scope": "TEST evidence clocks, actual authenticated HTTP lifecycle and saved regression logs",
+  "audit_self_checks": {
+    "rejected_TEST_mutations": [
+      "count",
+      "timestamp",
+      "observed_kind"
+    ],
+    "not_additional_HTTP_runs": true
+  },
+  "regression": {
+    "run_id": "verification-dc63e7b4",
+    "counts": {
+      "new_backend": 456,
+      "legacy_rehab": 12,
+      "legacy_mobile": 19
+    },
+    "summary_sha256": "0b54da5c0a243a3bb63d150f132ac3e9213d153156fe360c5bb9c9e19135a065"
+  },
+  "production_sha256": {
+    "mobile_rehab/rehab_v2/service.py": "61ec22ad6442daf247a1444cbab8378e9df5ae75f4929319bb56e1c8fac7f4c5",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/engine.py": "e339dae493dc6bc03edb27a12cb650a568045dce22c13bc64704db0aa4869283"
+  }
+}

@@ -4,6 +4,8 @@
 
 | 文档 | 内容 |
 | --- | --- |
+| [HTTP时钟与断流证据](development/REHAB_HTTP_CLOCK_AUDIT.md) | 固定TEST证据时钟和实际接收时钟分开；逐帧探针、真实断流半次、不修改生产规则 |
+| [HTTP时钟本机验收](validation/REHAB_HTTP_CLOCK_2026-10-12.md) | 四诊断run／原失败与开发错误保留、19项专项及456／12／19回归；不是原根因或人体精度证明 |
 | [真实RGB质量实验与信息链](development/REHAB_MOBIPHYSIO_RGB.md) | 24段完整下载、真实PTS／原YOLO、坐标／mask、train-only统计、Ridge／TCN和已有预测独立核对 |
 | [RGB实际结果与未通过回归](validation/REHAB_MOBIPHYSIO_RGB_2026-10-11.md) | 680355016字节、14／5／5人、候选不优、全部媒体／回归失败和保护范围；不冒称临床准确率 |
 | [当前后端阅读版及研究交接核对](validation/BACKEND_OVERVIEW_RGB_HANDOFF_2026-10-11.md) | 当前文档请求与此前研究分开；34功能／七链／字段／公式／函数／参数、静态核对和未通过工程边界 |
