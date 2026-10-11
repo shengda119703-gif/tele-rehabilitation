@@ -1,0 +1,211 @@
+................................F....................................... [ 49%]
+........s..ss...................FF..................F................... [ 98%]
+..                                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_real_local_model_live_empty_frame_no_false_counts ____________
+
+self = <mobile_rehab.live.LiveManager object at 0x11542c2c0>, uid = 'test-only'
+ident = '7cb4aa4bd48a4be190a02600bf226ea8'
+encoded = b'\xff\xd8\xff\xe0\x00\x10JFIF\x00\x01\x01\x00\x00\x01\x00\x01\x00\x00\xff\xdb\x00C\x00\x08\x06\x06\x07\x06\x05\x08\x0...a0\x02\x8a(\xa0\x02\x8a(\xa0\x02\x8a(\xa0\x02\x8a(\xa0\x02\x8a(\xa0\x02\x8a(\xa0\x02\x8a(\xa0\x02\x8a(\xa0\x0f\xff\xd9'
+
+    def frame(self, uid, ident, encoded):
+        from PIL import Image
+        try:
+            with Image.open(BytesIO(encoded)) as im:
+                if im.format != 'JPEG' or max(im.size) > 1280 or min(im.size) < 64:
+                    raise ValueError()
+                im.verify()
+        except Exception:
+            raise HTTPException(400, '请发送 1280 像素以内的 JPEG 画面')
+        with self.lock:
+            s = self._get(uid, ident)
+            if s['busy']:
+                raise HTTPException(429, '上一帧仍在分析')
+            if time.monotonic()-s['started'] > 600:
+                self._close()
+                raise HTTPException(409, '本次指导已达10分钟，请休息后重新开始')
+            s.update(seq=s['seq']+1, touched=time.monotonic(), busy=True)
+        try:
+            s['pipe'].send((s['seq'], time.monotonic()-s['started'], encoded))
+            if not s['pipe'].poll(25):
+                raise RuntimeError('实时分析超时')
+            result = s['pipe'].recv()
+            if not result.get('ok'):
+>               raise RuntimeError(result.get('error'))
+E               RuntimeError: 实时分析中断，请检查本机模型后重新开始。
+
+mobile_rehab/live.py:122: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+    def test_real_local_model_live_empty_frame_no_false_counts():
+        """Real local model + IPC on generated blank pixels, NOT a human/camera test."""
+        manager=LiveManager()
+        try:
+            session=manager.start('test-only','shoulder_abduction','left')
+>           data=manager.frame('test-only',session['id'],jpeg())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+mobile_rehab/tests/test_extensions.py:182:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <mobile_rehab.live.LiveManager object at 0x11542c2c0>, uid = 'test-only'
+ident = '7cb4aa4bd48a4be190a02600bf226ea8'
+encoded = b'\xff\xd8\xff\xe0\x00\x10JFIF\x00\x01\x01\x00\x00\x01\x00\x01\x00\x00\xff\xdb\x00C\x00\x08\x06\x06\x07\x06\x05\x08\x0...a0\x02\x8a(\xa0\x02\x8a(\xa0\x02\x8a(\xa0\x02\x8a(\xa0\x02\x8a(\xa0\x02\x8a(\xa0\x02\x8a(\xa0\x02\x8a(\xa0\x0f\xff\xd9'
+
+    def frame(self, uid, ident, encoded):
+        from PIL import Image
+        try:
+            with Image.open(BytesIO(encoded)) as im:
+                if im.format != 'JPEG' or max(im.size) > 1280 or min(im.size) < 64:
+                    raise ValueError()
+                im.verify()
+        except Exception:
+            raise HTTPException(400, '请发送 1280 像素以内的 JPEG 画面')
+        with self.lock:
+            s = self._get(uid, ident)
+            if s['busy']:
+                raise HTTPException(429, '上一帧仍在分析')
+            if time.monotonic()-s['started'] > 600:
+                self._close()
+                raise HTTPException(409, '本次指导已达10分钟，请休息后重新开始')
+            s.update(seq=s['seq']+1, touched=time.monotonic(), busy=True)
+        try:
+            s['pipe'].send((s['seq'], time.monotonic()-s['started'], encoded))
+            if not s['pipe'].poll(25):
+                raise RuntimeError('实时分析超时')
+            result = s['pipe'].recv()
+            if not result.get('ok'):
+                raise RuntimeError(result.get('error'))
+            return result['data']
+        except (EOFError, OSError, RuntimeError, ValueError):
+            with self.lock:
+                if self.session is s:
+                    self._close()
+>           raise HTTPException(503, '实时分析已断开，请检查电脑模型后重新开始')
+E           fastapi.exceptions.HTTPException: 503: 实时分析已断开，请检查电脑模型后重新开始
+
+mobile_rehab/live.py:128: HTTPException
+___________________ test_fitness_mode_real_model_empty_video ___________________
+
+tmp_path = PosixPath('/private/var/folders/46/p9g6_wgn68l4h6w2gkyqblbm0000gn/T/pytest-of-wangzhe/pytest-0/test_fitness_mode_real_model_e0')
+
+    def test_fitness_mode_real_model_empty_video(tmp_path):
+        import cv2
+        import numpy as np
+        import subprocess
+        import sys
+        from mobile_rehab.core import ROOT
+        folder = tmp_path / 'fitness-empty'
+        folder.mkdir()
+        writer = cv2.VideoWriter(str(folder / 'video.mp4'), cv2.VideoWriter_fourcc(*'mp4v'), 10., (320, 240))
+        assert writer.isOpened()
+        for _ in range(12):
+            writer.write(np.zeros((240, 320, 3), dtype=np.uint8))
+        writer.release()
+        save(folder / 'job.json', dict(id='empty', owner='test-only', mode='fitness', exercise='fitness_deadlift', side='left'))
+        process = subprocess.run([sys.executable, '-m', 'mobile_rehab.analyzer', str(folder / 'job.json')], cwd=ROOT, capture_output=True, timeout=100)
+>       assert process.returncode == 0, process.stderr.decode(errors='replace')
+E       AssertionError: Traceback (most recent call last):
+E           File "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/home-v36-integration/repository/mobile_rehab/analyzer.py", line 119, in <module>
+E             analyze(sys.argv[1])
+E           File "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/home-v36-integration/repository/mobile_rehab/analyzer.py", line 35, in analyze
+E             return analyze_fitness(job_path)
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/home-v36-integration/repository/mobile_rehab/fitness_analyzer.py", line 49, in analyze
+E             pose = vision.infer(packet, backend='yolo', side=job['side'])
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/home-v36-integration/repository/rehab_codex_single_camera_v2_1/app/vision.py", line 75, in infer
+E             self._load()
+E           File "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/home-v36-integration/repository/rehab_codex_single_camera_v2_1/app/vision.py", line 36, in _load
+E             raise RuntimeError('尚未配置本地 YOLO11n-pose 权重，程序不会自动下载')
+E         RuntimeError: 尚未配置本地 YOLO11n-pose 权重，程序不会自动下载
+E
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/ui-ux-au...x87\x8d\xef\xbc\x8c\xe7\xa8\x8b\xe5\xba\x8f\xe4\xb8\x8d\xe4\xbc\x9a\xe8\x87\xaa\xe5\x8a\xa8\xe4\xb8\x8b\xe8\xbd\xbd\n').returncode
+
+mobile_rehab/tests/test_mobile.py:236: AssertionError
+___________________ test_real_capture_model_and_empty_report ___________________
+
+tmp_path = PosixPath('/private/var/folders/46/p9g6_wgn68l4h6w2gkyqblbm0000gn/T/pytest-of-wangzhe/pytest-0/test_real_capture_model_and_em0')
+
+    def test_real_capture_model_and_empty_report(tmp_path):
+        """Real local YOLO + SourceWorker; black test clip must yield NO movement."""
+        import cv2
+        import numpy as np
+        import subprocess
+        import sys
+        from mobile_rehab.core import ROOT
+        folder = tmp_path / ('b'*32) / ('c'*32)
+        folder.mkdir(parents=True)
+        writer = cv2.VideoWriter(str(folder / 'video.mp4'), cv2.VideoWriter_fourcc(*'mp4v'), 10., (320, 240))
+        assert writer.isOpened()
+        for _ in range(30):
+            writer.write(np.zeros((240, 320, 3), dtype=np.uint8))
+        writer.release()
+        save(folder / 'job.json', dict(id='c'*32, owner='b'*32, exercise='shoulder_abduction', side='left'))
+        result = subprocess.run([sys.executable, '-m', 'mobile_rehab.analyzer', str(folder / 'job.json')],
+                                cwd=ROOT, capture_output=True, timeout=100)
+>       assert result.returncode == 0, result.stderr.decode(errors='replace')
+E       AssertionError: Traceback (most recent call last):
+E           File "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/home-v36-integration/repository/mobile_rehab/analyzer.py", line 119, in <module>
+E             analyze(sys.argv[1])
+E           File "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/home-v36-integration/repository/mobile_rehab/analyzer.py", line 78, in analyze
+E             pose = vision.infer(packet, backend=spec['backend'], side=job['side'])
+E                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           File "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/home-v36-integration/repository/rehab_codex_single_camera_v2_1/app/vision.py", line 75, in infer
+E             self._load()
+E           File "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/home-v36-integration/repository/rehab_codex_single_camera_v2_1/app/vision.py", line 36, in _load
+E             raise RuntimeError('尚未配置本地 YOLO11n-pose 权重，程序不会自动下载')
+E         RuntimeError: 尚未配置本地 YOLO11n-pose 权重，程序不会自动下载
+E
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/ui-ux-au...x87\x8d\xef\xbc\x8c\xe7\xa8\x8b\xe5\xba\x8f\xe4\xb8\x8d\xe4\xbc\x9a\xe8\x87\xaa\xe5\x8a\xa8\xe4\xb8\x8b\xe8\xbd\xbd\n').returncode
+
+mobile_rehab/tests/test_mobile.py:262: AssertionError
+_______ test_real_blank_video_saves_under_desktop_owner_and_keeps_source _______
+
+shared = (<app.product.backend.ProductBackend object at 0x12039d100>, <mobile_rehab.unified.SharedProduct object at 0x1203bfc20>, <fastapi.applications.FastAPI object at 0x1203bf530>, <starlette.testclient.TestClient object at 0x1202b7dd0>)
+tmp_path = PosixPath('/private/var/folders/46/p9g6_wgn68l4h6w2gkyqblbm0000gn/T/pytest-of-wangzhe/pytest-0/test_real_blank_video_saves_un0')
+
+    def test_real_blank_video_saves_under_desktop_owner_and_keeps_source(shared, tmp_path):
+        import cv2
+        import numpy as np
+        from app.storage import Storage
+        from app.assessment import session_value
+        backend, adapter, app, c = shared
+        pair(c)
+        video=tmp_path/'blank.mp4'
+        writer=cv2.VideoWriter(str(video),cv2.VideoWriter_fourcc(*'mp4v'),10.,(320,240))
+        assert writer.isOpened()
+        for _ in range(20):writer.write(np.zeros((240,320,3),dtype=np.uint8))
+        writer.release()
+        app.state.jobs.runner=app.state.jobs.run
+        r=c.post('/api/jobs?exercise=shoulder_abduction&side=left&consent=yes',content=video.read_bytes(),headers={'Content-Type':'video/mp4'})
+        assert r.status_code==200,r.text
+        ident=r.json()['id']
+        deadline=time.monotonic()+60
+        while time.monotonic()<deadline:
+            job=c.get('/api/jobs/'+ident).json()
+            if job['state'] in ('done','failed'):break
+            time.sleep(.1)
+>       assert job['state']=='done',job
+E       AssertionError: {'id': 'c110d560edb04545ac773d2d29a4b3b9', 'exercise': 'shoulder_abduction', 'side': 'left', 'state': 'failed', ...}
+E       assert 'failed' == 'done'
+E
+E         - done
+E         + failed
+
+mobile_rehab/tests/test_unified.py:133: AssertionError
+=============================== warnings summary ===============================
+../../ui-ux-audit-20261010/qa-env/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/ui-ux-audit-20261010/qa-env/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED mobile_rehab/tests/test_extensions.py::test_real_local_model_live_empty_frame_no_false_counts
+FAILED mobile_rehab/tests/test_mobile.py::test_fitness_mode_real_model_empty_video
+FAILED mobile_rehab/tests/test_mobile.py::test_real_capture_model_and_empty_report
+FAILED mobile_rehab/tests/test_unified.py::test_real_blank_video_saves_under_desktop_owner_and_keeps_source
+4 failed, 139 passed, 3 skipped, 1 warning in 30.00s
