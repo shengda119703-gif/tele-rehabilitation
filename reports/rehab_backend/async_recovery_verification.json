@@ -1,0 +1,545 @@
+{
+  "run_id": "async-recovery-verification-f00e75d2",
+  "commands": [
+    {
+      "name": "unit",
+      "arguments": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/rehab_backend",
+        "-p",
+        "test_async_recovery.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "tests": 4,
+      "elapsed_s": 16.458942500000376,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-verification-f00e75d2\\unit.txt",
+      "log_sha256": "c2a59be45e962d6f55d86f43eac8f08bfbf7a2fead85610b2832d82244ccc4d6"
+    },
+    {
+      "name": "repeat_1",
+      "arguments": [
+        "tools/rehab_ml/async_recovery.py"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 16.84285060000002,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-verification-f00e75d2\\repeat_1.txt",
+      "log_sha256": "0450a65cad98780f597aed68dea6edc53cbf05a5e64d58777fc90461db867a13"
+    },
+    {
+      "name": "repeat_2",
+      "arguments": [
+        "tools/rehab_ml/async_recovery.py"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 16.81157069999972,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-verification-f00e75d2\\repeat_2.txt",
+      "log_sha256": "9e7a62bc2d0869276e287fcef735560ab65cf19e5a78dd5683f2e521b37c2864"
+    },
+    {
+      "name": "repeat_3",
+      "arguments": [
+        "tools/rehab_ml/async_recovery.py"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 16.00551709999945,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-verification-f00e75d2\\repeat_3.txt",
+      "log_sha256": "635d28b5119324fdf82d4741d6fc0ac76faffe42321bf6a3d7b047abd7f44f69"
+    }
+  ],
+  "attempts": [
+    {
+      "run_id": "async-recovery-a50b48ce",
+      "passed": true,
+      "raw_summary": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-a50b48ce\\summary.json",
+        "sha256": "5221176acfd48dc1c55bfb9db779978ba84901ec811548cb8144b0fc2c40cb31"
+      },
+      "cases": [
+        {
+          "case": "accepted_before_commit",
+          "passed": true,
+          "checks": {
+            "exact_owned_process_live": true,
+            "no_native_child_at_barrier": true,
+            "independent_database_matches_window": true,
+            "finish_HTTP_response_boundary": true,
+            "pending_operation_or_canonical": true,
+            "checkpoint_has_confirmed_rep": true,
+            "actual_forced_exit_confirmed": true,
+            "restart_ended_finalized": true,
+            "end_reason_policy": true,
+            "exact_prior_commit_or_new_recovery_commit": true,
+            "confirmed_rep_survives_without_half_resume": true,
+            "one_confirmed_and_one_unassessable": true,
+            "confirmed_rep_unchanged": true,
+            "visual_digest_matches_snapshot": true,
+            "missing_feedback_not_zero": true,
+            "same_and_new_key_return_original_commit": true,
+            "same_key_changed_payload_conflicts": true,
+            "finalized_cannot_resume": true,
+            "foreign_owner_cannot_read": true,
+            "create_retry_returns_same_session": true,
+            "null_feedback_retry_once": true,
+            "commit_immutable_after_retries_feedback": true,
+            "one_fact_one_contribution": true,
+            "materialized_repetitions_match_snapshot": true,
+            "one_feedback_row": true,
+            "all_finish_receipts_canonical": true,
+            "pending_frame_explicitly_unprocessed": true,
+            "no_accepted_frame_left": true,
+            "one_terminal_transition": true,
+            "second_restart_no_recovery": true,
+            "second_restart_same_fact": true,
+            "second_restart_database_unchanged": true
+          },
+          "actual_exit_confirmed": true,
+          "exit_code": 1,
+          "elapsed_s": 4.589485999999852,
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-a50b48ce\\accepted_before_commit\\child.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "details": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-a50b48ce\\accepted_before_commit\\details.json",
+            "sha256": "909d28af3603b227d7dd7eee830308a54eb2c5516ae0192f72f2fffa616ceb20"
+          }
+        },
+        {
+          "case": "uncommitted_finalize",
+          "passed": true,
+          "checks": {
+            "exact_owned_process_live": true,
+            "no_native_child_at_barrier": true,
+            "independent_database_matches_window": true,
+            "finish_HTTP_response_boundary": true,
+            "pending_operation_or_canonical": true,
+            "checkpoint_has_confirmed_rep": true,
+            "actual_forced_exit_confirmed": true,
+            "restart_ended_finalized": true,
+            "end_reason_policy": true,
+            "exact_prior_commit_or_new_recovery_commit": true,
+            "confirmed_rep_survives_without_half_resume": true,
+            "one_confirmed_and_one_unassessable": true,
+            "confirmed_rep_unchanged": true,
+            "visual_digest_matches_snapshot": true,
+            "missing_feedback_not_zero": true,
+            "same_and_new_key_return_original_commit": true,
+            "same_key_changed_payload_conflicts": true,
+            "finalized_cannot_resume": true,
+            "foreign_owner_cannot_read": true,
+            "create_retry_returns_same_session": true,
+            "null_feedback_retry_once": true,
+            "commit_immutable_after_retries_feedback": true,
+            "one_fact_one_contribution": true,
+            "materialized_repetitions_match_snapshot": true,
+            "one_feedback_row": true,
+            "all_finish_receipts_canonical": true,
+            "pending_frame_explicitly_unprocessed": true,
+            "no_accepted_frame_left": true,
+            "one_terminal_transition": true,
+            "second_restart_no_recovery": true,
+            "second_restart_same_fact": true,
+            "second_restart_database_unchanged": true
+          },
+          "actual_exit_confirmed": true,
+          "exit_code": 1,
+          "elapsed_s": 5.92933979999998,
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-a50b48ce\\uncommitted_finalize\\child.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "details": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-a50b48ce\\uncommitted_finalize\\details.json",
+            "sha256": "9e98242ee712ca6b0b1d21a805101b7159aab33f51a070c0cbf4a533a117b4c9"
+          }
+        },
+        {
+          "case": "committed_before_http_reply",
+          "passed": true,
+          "checks": {
+            "exact_owned_process_live": true,
+            "no_native_child_at_barrier": true,
+            "independent_database_matches_window": true,
+            "finish_HTTP_response_boundary": true,
+            "pending_operation_or_canonical": true,
+            "checkpoint_has_confirmed_rep": true,
+            "actual_forced_exit_confirmed": true,
+            "restart_ended_finalized": true,
+            "end_reason_policy": true,
+            "exact_prior_commit_or_new_recovery_commit": true,
+            "confirmed_rep_survives_without_half_resume": true,
+            "one_confirmed_and_one_unassessable": true,
+            "confirmed_rep_unchanged": true,
+            "visual_digest_matches_snapshot": true,
+            "missing_feedback_not_zero": true,
+            "same_and_new_key_return_original_commit": true,
+            "same_key_changed_payload_conflicts": true,
+            "finalized_cannot_resume": true,
+            "foreign_owner_cannot_read": true,
+            "create_retry_returns_same_session": true,
+            "null_feedback_retry_once": true,
+            "commit_immutable_after_retries_feedback": true,
+            "one_fact_one_contribution": true,
+            "materialized_repetitions_match_snapshot": true,
+            "one_feedback_row": true,
+            "all_finish_receipts_canonical": true,
+            "pending_frame_explicitly_unprocessed": true,
+            "no_accepted_frame_left": true,
+            "one_terminal_transition": true,
+            "second_restart_no_recovery": true,
+            "second_restart_same_fact": true,
+            "second_restart_database_unchanged": true
+          },
+          "actual_exit_confirmed": true,
+          "exit_code": 1,
+          "elapsed_s": 6.027986899999632,
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-a50b48ce\\committed_before_http_reply\\child.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "details": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-a50b48ce\\committed_before_http_reply\\details.json",
+            "sha256": "b7734596a6442b3821ceeef17091b1c7d000e334f61ea3c47dbaf8cdd04753d5"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "async-recovery-18ea068c",
+      "passed": true,
+      "raw_summary": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-18ea068c\\summary.json",
+        "sha256": "cd0d41ebe913f6e28672bfe996b5629c6e8bd759e9b65febd098e648e58c04bc"
+      },
+      "cases": [
+        {
+          "case": "accepted_before_commit",
+          "passed": true,
+          "checks": {
+            "exact_owned_process_live": true,
+            "no_native_child_at_barrier": true,
+            "independent_database_matches_window": true,
+            "finish_HTTP_response_boundary": true,
+            "pending_operation_or_canonical": true,
+            "checkpoint_has_confirmed_rep": true,
+            "actual_forced_exit_confirmed": true,
+            "restart_ended_finalized": true,
+            "end_reason_policy": true,
+            "exact_prior_commit_or_new_recovery_commit": true,
+            "confirmed_rep_survives_without_half_resume": true,
+            "one_confirmed_and_one_unassessable": true,
+            "confirmed_rep_unchanged": true,
+            "visual_digest_matches_snapshot": true,
+            "missing_feedback_not_zero": true,
+            "same_and_new_key_return_original_commit": true,
+            "same_key_changed_payload_conflicts": true,
+            "finalized_cannot_resume": true,
+            "foreign_owner_cannot_read": true,
+            "create_retry_returns_same_session": true,
+            "null_feedback_retry_once": true,
+            "commit_immutable_after_retries_feedback": true,
+            "one_fact_one_contribution": true,
+            "materialized_repetitions_match_snapshot": true,
+            "one_feedback_row": true,
+            "all_finish_receipts_canonical": true,
+            "pending_frame_explicitly_unprocessed": true,
+            "no_accepted_frame_left": true,
+            "one_terminal_transition": true,
+            "second_restart_no_recovery": true,
+            "second_restart_same_fact": true,
+            "second_restart_database_unchanged": true
+          },
+          "actual_exit_confirmed": true,
+          "exit_code": 1,
+          "elapsed_s": 4.604237599999578,
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-18ea068c\\accepted_before_commit\\child.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "details": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-18ea068c\\accepted_before_commit\\details.json",
+            "sha256": "a0356b4065cb01ab4ed18c786720b871f32878fd9fd82dc4010c4dd6672b6017"
+          }
+        },
+        {
+          "case": "uncommitted_finalize",
+          "passed": true,
+          "checks": {
+            "exact_owned_process_live": true,
+            "no_native_child_at_barrier": true,
+            "independent_database_matches_window": true,
+            "finish_HTTP_response_boundary": true,
+            "pending_operation_or_canonical": true,
+            "checkpoint_has_confirmed_rep": true,
+            "actual_forced_exit_confirmed": true,
+            "restart_ended_finalized": true,
+            "end_reason_policy": true,
+            "exact_prior_commit_or_new_recovery_commit": true,
+            "confirmed_rep_survives_without_half_resume": true,
+            "one_confirmed_and_one_unassessable": true,
+            "confirmed_rep_unchanged": true,
+            "visual_digest_matches_snapshot": true,
+            "missing_feedback_not_zero": true,
+            "same_and_new_key_return_original_commit": true,
+            "same_key_changed_payload_conflicts": true,
+            "finalized_cannot_resume": true,
+            "foreign_owner_cannot_read": true,
+            "create_retry_returns_same_session": true,
+            "null_feedback_retry_once": true,
+            "commit_immutable_after_retries_feedback": true,
+            "one_fact_one_contribution": true,
+            "materialized_repetitions_match_snapshot": true,
+            "one_feedback_row": true,
+            "all_finish_receipts_canonical": true,
+            "pending_frame_explicitly_unprocessed": true,
+            "no_accepted_frame_left": true,
+            "one_terminal_transition": true,
+            "second_restart_no_recovery": true,
+            "second_restart_same_fact": true,
+            "second_restart_database_unchanged": true
+          },
+          "actual_exit_confirmed": true,
+          "exit_code": 1,
+          "elapsed_s": 5.924729899999875,
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-18ea068c\\uncommitted_finalize\\child.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "details": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-18ea068c\\uncommitted_finalize\\details.json",
+            "sha256": "e6c69340561f6ec172aaa65c584ba58d288f11415a030cc3619fc119ef6714f7"
+          }
+        },
+        {
+          "case": "committed_before_http_reply",
+          "passed": true,
+          "checks": {
+            "exact_owned_process_live": true,
+            "no_native_child_at_barrier": true,
+            "independent_database_matches_window": true,
+            "finish_HTTP_response_boundary": true,
+            "pending_operation_or_canonical": true,
+            "checkpoint_has_confirmed_rep": true,
+            "actual_forced_exit_confirmed": true,
+            "restart_ended_finalized": true,
+            "end_reason_policy": true,
+            "exact_prior_commit_or_new_recovery_commit": true,
+            "confirmed_rep_survives_without_half_resume": true,
+            "one_confirmed_and_one_unassessable": true,
+            "confirmed_rep_unchanged": true,
+            "visual_digest_matches_snapshot": true,
+            "missing_feedback_not_zero": true,
+            "same_and_new_key_return_original_commit": true,
+            "same_key_changed_payload_conflicts": true,
+            "finalized_cannot_resume": true,
+            "foreign_owner_cannot_read": true,
+            "create_retry_returns_same_session": true,
+            "null_feedback_retry_once": true,
+            "commit_immutable_after_retries_feedback": true,
+            "one_fact_one_contribution": true,
+            "materialized_repetitions_match_snapshot": true,
+            "one_feedback_row": true,
+            "all_finish_receipts_canonical": true,
+            "pending_frame_explicitly_unprocessed": true,
+            "no_accepted_frame_left": true,
+            "one_terminal_transition": true,
+            "second_restart_no_recovery": true,
+            "second_restart_same_fact": true,
+            "second_restart_database_unchanged": true
+          },
+          "actual_exit_confirmed": true,
+          "exit_code": 1,
+          "elapsed_s": 5.974703399999271,
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-18ea068c\\committed_before_http_reply\\child.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "details": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-18ea068c\\committed_before_http_reply\\details.json",
+            "sha256": "503036951d2ad0182a47e27dc8e7b66884a6f45e393f7c33be615c54b4d7af81"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "async-recovery-eb570147",
+      "passed": true,
+      "raw_summary": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-eb570147\\summary.json",
+        "sha256": "863c10583cce7ce647405a6316ef275383022e633eee844a0f17ff828ac45133"
+      },
+      "cases": [
+        {
+          "case": "accepted_before_commit",
+          "passed": true,
+          "checks": {
+            "exact_owned_process_live": true,
+            "no_native_child_at_barrier": true,
+            "independent_database_matches_window": true,
+            "finish_HTTP_response_boundary": true,
+            "pending_operation_or_canonical": true,
+            "checkpoint_has_confirmed_rep": true,
+            "actual_forced_exit_confirmed": true,
+            "restart_ended_finalized": true,
+            "end_reason_policy": true,
+            "exact_prior_commit_or_new_recovery_commit": true,
+            "confirmed_rep_survives_without_half_resume": true,
+            "one_confirmed_and_one_unassessable": true,
+            "confirmed_rep_unchanged": true,
+            "visual_digest_matches_snapshot": true,
+            "missing_feedback_not_zero": true,
+            "same_and_new_key_return_original_commit": true,
+            "same_key_changed_payload_conflicts": true,
+            "finalized_cannot_resume": true,
+            "foreign_owner_cannot_read": true,
+            "create_retry_returns_same_session": true,
+            "null_feedback_retry_once": true,
+            "commit_immutable_after_retries_feedback": true,
+            "one_fact_one_contribution": true,
+            "materialized_repetitions_match_snapshot": true,
+            "one_feedback_row": true,
+            "all_finish_receipts_canonical": true,
+            "pending_frame_explicitly_unprocessed": true,
+            "no_accepted_frame_left": true,
+            "one_terminal_transition": true,
+            "second_restart_no_recovery": true,
+            "second_restart_same_fact": true,
+            "second_restart_database_unchanged": true
+          },
+          "actual_exit_confirmed": true,
+          "exit_code": 1,
+          "elapsed_s": 3.804540299999644,
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-eb570147\\accepted_before_commit\\child.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "details": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-eb570147\\accepted_before_commit\\details.json",
+            "sha256": "04d89a45533c3a45a1687c20611b07bce75ae57f269aca4db5f387344cb26252"
+          }
+        },
+        {
+          "case": "uncommitted_finalize",
+          "passed": true,
+          "checks": {
+            "exact_owned_process_live": true,
+            "no_native_child_at_barrier": true,
+            "independent_database_matches_window": true,
+            "finish_HTTP_response_boundary": true,
+            "pending_operation_or_canonical": true,
+            "checkpoint_has_confirmed_rep": true,
+            "actual_forced_exit_confirmed": true,
+            "restart_ended_finalized": true,
+            "end_reason_policy": true,
+            "exact_prior_commit_or_new_recovery_commit": true,
+            "confirmed_rep_survives_without_half_resume": true,
+            "one_confirmed_and_one_unassessable": true,
+            "confirmed_rep_unchanged": true,
+            "visual_digest_matches_snapshot": true,
+            "missing_feedback_not_zero": true,
+            "same_and_new_key_return_original_commit": true,
+            "same_key_changed_payload_conflicts": true,
+            "finalized_cannot_resume": true,
+            "foreign_owner_cannot_read": true,
+            "create_retry_returns_same_session": true,
+            "null_feedback_retry_once": true,
+            "commit_immutable_after_retries_feedback": true,
+            "one_fact_one_contribution": true,
+            "materialized_repetitions_match_snapshot": true,
+            "one_feedback_row": true,
+            "all_finish_receipts_canonical": true,
+            "pending_frame_explicitly_unprocessed": true,
+            "no_accepted_frame_left": true,
+            "one_terminal_transition": true,
+            "second_restart_no_recovery": true,
+            "second_restart_same_fact": true,
+            "second_restart_database_unchanged": true
+          },
+          "actual_exit_confirmed": true,
+          "exit_code": 1,
+          "elapsed_s": 5.962363599999662,
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-eb570147\\uncommitted_finalize\\child.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "details": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-eb570147\\uncommitted_finalize\\details.json",
+            "sha256": "e9589e0f9f2f44e079ec56f53f850ae6ac6283a58fc8ce25b9b459da86685f84"
+          }
+        },
+        {
+          "case": "committed_before_http_reply",
+          "passed": true,
+          "checks": {
+            "exact_owned_process_live": true,
+            "no_native_child_at_barrier": true,
+            "independent_database_matches_window": true,
+            "finish_HTTP_response_boundary": true,
+            "pending_operation_or_canonical": true,
+            "checkpoint_has_confirmed_rep": true,
+            "actual_forced_exit_confirmed": true,
+            "restart_ended_finalized": true,
+            "end_reason_policy": true,
+            "exact_prior_commit_or_new_recovery_commit": true,
+            "confirmed_rep_survives_without_half_resume": true,
+            "one_confirmed_and_one_unassessable": true,
+            "confirmed_rep_unchanged": true,
+            "visual_digest_matches_snapshot": true,
+            "missing_feedback_not_zero": true,
+            "same_and_new_key_return_original_commit": true,
+            "same_key_changed_payload_conflicts": true,
+            "finalized_cannot_resume": true,
+            "foreign_owner_cannot_read": true,
+            "create_retry_returns_same_session": true,
+            "null_feedback_retry_once": true,
+            "commit_immutable_after_retries_feedback": true,
+            "one_fact_one_contribution": true,
+            "materialized_repetitions_match_snapshot": true,
+            "one_feedback_row": true,
+            "all_finish_receipts_canonical": true,
+            "pending_frame_explicitly_unprocessed": true,
+            "no_accepted_frame_left": true,
+            "one_terminal_transition": true,
+            "second_restart_no_recovery": true,
+            "second_restart_same_fact": true,
+            "second_restart_database_unchanged": true
+          },
+          "actual_exit_confirmed": true,
+          "exit_code": 1,
+          "elapsed_s": 5.961240199999338,
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-eb570147\\committed_before_http_reply\\child.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "details": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\async-recovery-eb570147\\committed_before_http_reply\\details.json",
+            "sha256": "7ad29058d294e7ac245ea5736b93854def26257af5b691682221de9e7f8739d1"
+          }
+        }
+      ]
+    }
+  ],
+  "source_sha256": {
+    "tools/rehab_ml/async_recovery.py": "33921f6c8541c1711db9f410d246a5b5d698c575dcfb1749574b3484a8bb3502",
+    "mobile_rehab/rehab_v2/api.py": "3560384d8df0fb8bd12aa4340a59357ec286ebf49b9f75f1e13862b8bac78356",
+    "mobile_rehab/rehab_v2/service.py": "61ec22ad6442daf247a1444cbab8378e9df5ae75f4929319bb56e1c8fac7f4c5",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/sessions.py": "d9979d30eacbdd168e974791a265d0e05b28fbab27abd391310487c853ac287a",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/rounds.py": "aed02630cbed7e6561f7890412ba3d0511cc2093ede7217505b07070dc2a0243",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/engine.py": "e339dae493dc6bc03edb27a12cb650a568045dce22c13bc64704db0aa4869283",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/progress.py": "5c4734a8ed64401edec4012cc3f8545cf1bc2815a9024431cb76145ab3d85dff",
+    "rehab_codex_single_camera_v2_1/app/storage.py": "02a6e35f2941148a30883b23aa01a34a767ef4f3fc733c487288d16fe7876549",
+    "tools/rehab_ml/verify_async_recovery.py": "20d3f001bc87810cf723af5b161d4d2818907d638e21c57ccbeb56cff98102f8",
+    "tests/rehab_backend/test_async_recovery.py": "7ec72c1979529d105e5452d239cd15843733b754ee6f3ff8e7d46af178b03d22"
+  },
+  "repetitions_declared_before_running": 3,
+  "command_timeout_s": 180,
+  "clinical_accuracy": null,
+  "network_test": false,
+  "native_inflight_child": false,
+  "source_unchanged": true,
+  "passed": true
+}

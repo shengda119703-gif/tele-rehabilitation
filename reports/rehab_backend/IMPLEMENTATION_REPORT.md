@@ -4,24 +4,24 @@
 
 结论：P0–P4 的核心链路与一部分 P7 已实际完成。下载了真实获许可数据，训练了两个真实模型，也发现候选没有优于简单基线。正式会话为独立 opt-in 后端，尚未成为现有 UI/APK 的正式路径。P5 只有两段分析授权录像回放，缺独立参考标注；P6已有条件式多轮姿态训练器，但没有合格真人微调或产品影子上线。整个任务未完成，不能据此宣称真人准确度提高。
 
-已有增量接通唯一贡献、最终历史、原继续政策、冻结计划、显式时间、所属推理／报告、SQLite故障边界、关键点工具、同权重Python VIDEO、双层masked loss和条件式多轮优化。资源双锁／报告延期见B3.6，显式恢复／CPU数值／原子写见B3.7，三动作安排见B3.8，逐次时间条件及比较见B3.9；本次固定采样／已知丢帧实验见B3.10。两段分析授权缓存、九条件共18次复算和17项TEST专项通过；完整新后端**357项**、原康复**12项**、原手机接口**19项**退出0，1308保护不变，17项是357子集、不累加。没有目标域准确率或保持时间真值；[验收](../../docs/validation/REHAB_SAMPLING_2026-10-11.md)及[日志](regression.json)可核对，历史340／12／19在[时间验收](../../docs/validation/REHAB_TIMING_COMPARISON_2026-10-11.md)保留。本次未重跑IRDS全训练、原片解码／模型、专门原生续训或完整性能，未改生产算法／阈值。
+已有增量接通唯一贡献、最终历史、原继续政策、冻结计划、显式时间、所属推理／报告、SQLite故障边界、关键点工具、同权重Python VIDEO、双层masked loss和条件式多轮优化。资源双锁／报告延期见B3.6，显式恢复／CPU数值／原子写见B3.7，三动作安排见B3.8，逐次时间条件及比较见B3.9；此前固定采样／已知丢帧实验见B3.10及[当时357项验收](../../docs/validation/REHAB_SAMPLING_2026-10-11.md)，后续持续输入／冷启动见B3.11–12。本轮三窗口宿主退出见B3.13，最新完整376／12／19工程回归另列A／D1。各阶段不累加，没有目标域准确率或保持时间真值。本轮未训练、分析私人原片或更改生产算法／阈值。
 
 ## A. 实际完成情况
 
-最新增量以`17a0827c9468949ffe029356f7c5b76bfd8bd774`为基准，实测并修复冷启动HTTP结束等待原推理的问题，见B3.12。[冷启动专项](session_cold_verification.json)八项测试及三轮预声明原YOLO实验通过；[完整回归](regression.json)实际为`verification-2e35a106`372／12／19项，八项是372子集，1308保护不变。此前B3.11／364项和B3.10／357项均保留为历史；[阻塞接口负载归档](session_load_before_async_finish.json)固定旧证据。本次没有训练、私人原片分析、手机或临床准确性验证。
+最新增量以`a9156c7622071bbf32db2551678481bc831775fc`为基准，只新增异步结束三窗口实际宿主退出验证，见B3.13。[专项](async_recovery_verification.json)4项测试＋3轮×3窗口通过；[完整回归](regression.json)为`verification-62f925a1`376／12／19退出0，4项为376子集，1308保护不变。此前B3.12冷启动／372项、B3.11持续输入／364项、B3.10采样／357项均保留为历史。本次没有更改生产源码、训练、私人原片分析、手机或临床准确性验证。
 
 | 工作 | 状态 | 实际证据 | 剩余限制 |
 | --- | --- | --- | --- |
 | P0 盘点与保护 | done | [开工清单](../rehab_backend_inventory.md)、[1308 文件基准](protected_files.json)、[末次 hash 核验](scope_verification.json) | 仅本轮范围；不代表其他会话或临床验收 |
 | P1 三动作后端协议 | done（工程定义） | `app/rehab_v2/protocols.py`、`engine.py`、`rounds.py`；15 项协议回放及几何契约测试 | 定义是二维投影和训练观察，不是解剖 ROM 金标准；实际机位仍由计划给出 |
-| P2 正式会话与幂等 | partial | 372项当前新后端回归，新增SQL先冻结／HTTP202接收／有界后台最终事务／合法重试；三动作左右侧可用本人版本化安排 | 旧页面／APK未接入；原保存计划适配仅两动作；真人计时、物理故障和完整压力待做 |
+| P2 正式会话与幂等 | partial | 376项当前新后端回归，SQL先冻结／HTTP202接收／后台最终事务／合法重试；三窗口实际宿主退出不重复事实／贡献 | 旧页面／APK未接入；原保存计划适配仅两动作；真人计时、完整物理故障及压力待做 |
 | P3 IRDS 下载与适配 | done | 198,985,485 字节骨架 ZIP、1974 字节 readme；CRC/MD5/SHA 校验；534 条/29 人，532 训练资格、2 隔离 | Kinect25 三维肩外展，不是手机 RGB、坐站或深蹲标签 |
 | P4 模型训练 | done（离线实验） | [实验包摘要](experiment_summary.json)，两次完整训练链结果；检查点、验证/测试预测和锁文件均存在于忽略目录 | TCN 测试 macro-F1 低于 logistic；只整次正误，不可作为相位/提示/诊断 |
 | P5 真人目标域验证 | partial | [此前回放](target_replay_summary.json)、[两原片YOLO／MP](mediapipe_video_verification.json)443／429帧配对；[本次缓存采样](sampling_sensitivity.json)九条件共18次 | 新协议均0确认次数；无专业真值，不计算计次准确率、不以模型或零次数一致证明正确 |
 | P6 姿态微调 | partial；真人训练缺资格 | 转换／独立评估、双层loss、[多轮复验](pose_training_verification.json)、[基础恢复](pose_resume_verification.json)、[多批次恢复](pose_resume_verification_multibatch.json)、[监督资格](pose_supervision_blocker.json) | train颜色增广／多轮／val选模／epoch恢复已实现；缺合法真人RGB／独立参考／同集原误差基线与真人候选对照，不自动上线 |
 | 候选后端接入 | offline / off | [冻结模型对照](model_comparison.json)，Kinect 匹配返回非权威候选，RGB 被拒绝 | 未在实际服务加载新权重，没有正式质量判断/提示接管 |
-| P7 回归与交付 | partial | [回归日志与hash](regression.json)、[冷启动三轮](session_cold_verification.json)、[连续输入复验](session_load_verification.json)、原生SQLite故障与历史采样实验 | 短时单活动会话ASGI非公网；尚缺真人参考、手机、网络、多客户端、长时和完整物理故障 |
-| 禁改范围 | pass | 1308 个 protected 文件 SHA256 一致，原baseline不重建；本次业务改动仅默认关闭的 `mobile_rehab/rehab_v2/api.py` 与 `service.py` | 用户本来未提交的动作图片、脚本、CSV、任务书仍原样保留、不纳入本次提交 |
+| P7 回归与交付 | partial | [回归日志与hash](regression.json)、[三窗口退出三轮](async_recovery_verification.json)、既有冷启动／持续输入、原生SQLite与采样实验 | TEST／短时ASGI非公网；活跃原生子进程退出、真人参考、手机、网络、多客户端、长时及完整物理故障仍缺 |
+| 禁改范围 | pass | 1308 个 protected 文件 SHA256 一致，原baseline不重建；本次无生产源码改动 | 原280份动作图片、脚本、CSV、任务书仍原样保留、不纳入本次提交 |
 
 ## B. 修改清单：问题、实现与验证
 
@@ -211,6 +211,14 @@ HTTP改用`request_finish`：SQL原freeze先保存操作与接收边界，再由
 
 `session-cold-verification-d7229cf9`八项及原模型三轮退出0；HTTP finish p95 14.72／17.08／15.29毫秒，从请求至查询到最终事实仍2048.51／2056.24／2057.44毫秒。每轮1帧明确超时未处理、23条件通过、0视觉次、null反馈保留和实际退出；是响应隔离收益，不是模型提速。完整`verification-2e35a106`372／12／19退出0、1308保护一致。工作流、日志／源码hash、负载复验与未测范围见[异步结束](../../docs/development/REHAB_ASYNC_FINISH.md)及[本机验收](../../docs/validation/REHAB_ASYNC_FINISH_2026-10-11.md)。
 
+### B3.13 异步结束三窗口准确所属宿主退出
+
+新增[async_recovery.py](../../tools/rehab_ml/async_recovery.py)、[核验器](../../tools/rehab_ml/verify_async_recovery.py)及[4项测试](../../tests/rehab_backend/test_async_recovery.py)，生产源码不动。分别在202已接收、原最终写事务未提交、最终提交但HTTP还没回应处设置TEST屏障；父持有实际解释器句柄，独立SQL先证明窗口，再强制结束准确所持宿主并确认实际退出。Windowsvenv启动器PID不一致失败保留；参照本机CPython直接持有base解释器并保留venv初始化，未改原生生产worker。
+
+最终`async-recovery-verification-f00e75d2`4项＋预声明3轮×3窗口退出0，每窗口32条件／实际宿主退出1。新Storage／Service生命周期走原API恢复：1个确认次不变，半次UNASSESSABLE，前两窗口interrupted、后者原user_stopped／canonical不变，逐次表／digest／唯一贡献／null反馈／重试／权限／二次重开全部对账。源码10份、原始summary／child log／details hash逐项匹配；完整`verification-62f925a1`376／12／19退出0，1308保护不变。
+
+TEST来源不具正式计划完成资格；pending仅内部accepted证据行，不是真实原生在途推理。报告消费者预先退出，无原生pose／report子进程；实际旧宿主被杀，恢复在父监督程序新生命周期，不是第二个socket服务器。工程结果不代表真人精度、原生孤儿清理、断电、网络、手机或完整P7；原公开输入校验不放宽。方法／失败／边界见[工作流](../../docs/development/REHAB_ASYNC_RECOVERY.md)及[本机验证](../../docs/validation/REHAB_ASYNC_RECOVERY_2026-10-11.md)。
+
 ## C. 数据与训练事实
 
 ### C1. 实际下载、许可与映射
@@ -281,9 +289,9 @@ seed20261011；17/6/6人，310/131/91条。正/误分别 train269/41、val97/34�
 
 ### D1. 最新工具／存储／报告／推理回归及历史记录
 
-当前产品环境完整回归`verification-6077fb98`为364／12／19项，保护1308文件一致，7项负载工具算术测试包含其中；原模型持续输入三轮另外实跑，详见[当前验收](../../docs/validation/REHAB_SESSION_LOAD_2026-10-11.md)。历史`verification-3ce388f3`322项及19项计划专项保留[安排验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)。此前`verification-a171e3d9`318项、`verification-3cd67228`303项及60项恢复／训练／数值与4项原子写子集保留[续训验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)；269／251／230项保留[报告准入记录](../../docs/validation/REHAB_REPORT_COORDINATION_2026-10-11.md)。阶段不累加，工程通过不是准确率。
+当前产品环境完整回归`verification-62f925a1`为376／12／19项，实际退出0、1308保护一致；4项新退出专项包含其中，3轮×3窗口的实跑另列[当前验收](../../docs/validation/REHAB_ASYNC_RECOVERY_2026-10-11.md)。历史372／364／357／340与更早阶段分别保留冷启动、持续输入、采样、时间、安排、续训及报告验收；阶段和子集不累加，工程通过不是准确率。
 
-历史时间／贡献`verification-3b62b733`为74／12／19项，见[当时验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。此前`verification-6adfee5b`340项及时间／安排专项、`verification-5dda0d64`357项采样阶段分别保留；[regression.json](regression.json)现在为364项的新实跑。[session_verification.json](session_verification.json)仍为此前100项，不称重跑。既有Starlette/httpx warning保留，无依赖升级；未跑全UI／Android／照护或实机验收。
+历史时间／贡献`verification-3b62b733`为74／12／19项，见[当时验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。[regression.json](regression.json)现在为376项的新实跑；[session_verification.json](session_verification.json)仍为此前100项，不称重跑。既有Starlette/httpx warning保留，无依赖升级；未跑全UI／Android／照护或实机验收。
 
 确定性覆盖：C01肩腕缺测，C02短gap不累积保持，C03隐藏转折，C04站姿进入，C05坐站rearm，C06真膝角，C07左右/水平镜像/等比例分辨率及契约变化，C08乱序/epoch/年龄/慢推理污染，C09换人，C10组休息，C11提示TTL/当前纠正，C12因果特征与70前缀TCN未来扰动，C13缓存隔离，C14–16持久幂等，C17报告失败，C18真实退出恢复，C19未知感受，C21跨域拒绝，C22无标签零梯度，C23接收/丢帧/超时收尾边界。
 
