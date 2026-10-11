@@ -4,8 +4,9 @@
 
 | 文档 | 内容 |
 | --- | --- |
-| [后端功能与技术实现阅读版](后端功能与技术实现梳理.md) | 逐功能输入／方法／输出／消费者、三条信息链、三端差异与分层优化验收；本轮仅文档 |
-| [后端阅读版本轮核对](validation/BACKEND_OVERVIEW_2026-10-11.md) | 源码对照、文档检查、保留工作区增量与未测范围 |
+| [后端功能与技术实现阅读版](后端功能与技术实现梳理.md) | 当前逐功能输入／算法／公式／输出／消费者、真实字段交接、代码入口与优化闭环；本轮仅文档 |
+| [后端阅读版当前核对](validation/BACKEND_OVERVIEW_CURRENT_2026-10-11.md) | d5c351f 基准、已提交／工作区区别、文档验证、保留文件与未重跑范围 |
+| [后端阅读版此前核对](validation/BACKEND_OVERVIEW_2026-10-11.md) | d0b21d2 阶段的文档检查与当时边界，不作为当前实现验收 |
 | [后端功能、算法与数据流梳理](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md) | 三端后端域、公式／状态、逐跳信息与代码；3.7–3.8为真实字段／统计口径，22–23为优化影响及验收 |
 | [部分标注的双层masked loss](development/POSE_DUAL_MASKED_LOSS.md) | 坐标／objectness分别监督、TAL标签身份、实际原YOLO梯度／更新／重载；不是正式微调 |
 | [双层masked loss本机验收](validation/REHAB_POSE_MASKED_LOSS_2026-10-11.md) | 23项专项、TEST原生烟测、失败与重跑证据、完整回归和未测范围 |
