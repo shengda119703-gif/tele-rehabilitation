@@ -25,6 +25,7 @@ from .pose_worker import IsolatedPoseWorker
 from .report_worker import IsolatedReportWorker
 from app.rehab_v2.reporting import build_report
 from app.rehab_v2.storage_boundary import RehabStorageBoundary, StorageFault, classify_sqlite_fault
+from app.rehab_v2.plans import BackendPlans, PREFIX as PLAN_PREFIX
 
 REPORT_RETRY_S = .5
 
@@ -79,15 +80,19 @@ class Runtime:
 
 class SessionService:
     def __init__(self, database, plan_resolver, *, internal_replay=False, report_builder=None,
-                 inference_provider=None, drain_timeout_s=2., plan_reader=None, report_executor=None):
+                 inference_provider=None, drain_timeout_s=2., plan_reader=None, report_executor=None,
+                 participant_provider=None):
         self.database = Path(database).resolve()
         self.database.parent.mkdir(parents=True, exist_ok=True)
         self.lease = StoreLease(str(self.database)+'.owner-lock')
         self.last_storage_fault = None
+        self.participant_provider = participant_provider or (lambda owner: owner)
+        self.internal_replay = internal_replay
         try:
             self.storage = Storage(self.database)
             self.storage_boundary = RehabStorageBoundary(self.storage, self._storage_fault)
             self.repository = SessionRepository(self.storage_boundary)
+            self.plans = BackendPlans(self)
             self.recovered = self.repository.recover_unfinished()
         except Exception as error:
             if hasattr(self, 'storage'):
@@ -206,7 +211,12 @@ class SessionService:
                 active = [sid for sid, runtime in self.runtimes.items() if runtime.engine.run_state != 'ended']
                 if active:
                     raise SessionError('formal_camera_capacity_reached', 429)
-                frozen = self.plan_resolver(owner, copy.deepcopy(request))
+                if request.get('submode') == 'assessment':
+                    frozen = self.plans.assessment(owner, copy.deepcopy(request))
+                elif isinstance(request.get('plan_id'), str) and request['plan_id'].startswith(PLAN_PREFIX):
+                    frozen = self.plans.resolve(owner, copy.deepcopy(request))
+                else:
+                    frozen = self.plan_resolver(owner, copy.deepcopy(request))
                 if not isinstance(frozen, dict) or not isinstance(frozen.get('plan'), dict):
                     raise SessionError('invalid_frozen_plan', 400)
                 if not all(k in frozen for k in ('plan_id', 'plan_revision', 'entry_key', 'reference')):
@@ -629,9 +639,22 @@ class SessionService:
         return result
 
     def plan(self, owner, plan_id):
+        if isinstance(plan_id, str) and plan_id.startswith(PLAN_PREFIX):
+            return self._bounded(lambda: self.plans.view(owner, plan_id))
         if self.plan_reader is None:
             raise SessionError('host_plan_reader_not_configured', 503)
         return self._bounded(lambda: self.plan_reader(owner, plan_id))
+
+    def save_plan(self, owner, payload, *, plan_id=None, archive=False):
+        def save():
+            # Same host serialization as create: a revision cannot change
+            # between its start validation and the persisted frozen binding.
+            with self.guard:
+                return self.plans.save(owner, payload, pid=plan_id, archive=archive)
+        return self._bounded(save)
+
+    def plans_list(self, owner, limit=20):
+        return self._bounded(lambda: self.plans.list(owner, limit))
 
     def commit(self, owner, sid):
         item = self.repository.get(owner, sid)

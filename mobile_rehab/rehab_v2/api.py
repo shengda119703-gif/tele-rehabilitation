@@ -10,8 +10,8 @@ from app.rehab_v2.sessions import SessionError
 from app.rehab_v2.storage_boundary import StorageFault
 
 
-def install_rehab_v2(app, database, owner, small_json, plan_resolver, *, plan_reader=None):
-    service = SessionService(database, plan_resolver, plan_reader=plan_reader)
+def install_rehab_v2(app, database, owner, small_json, plan_resolver, *, plan_reader=None, participant_provider=None):
+    service = SessionService(database, plan_resolver, plan_reader=plan_reader, participant_provider=participant_provider)
     app.state.rehab_v2 = service
 
     @app.exception_handler(SessionError)
@@ -28,6 +28,25 @@ def install_rehab_v2(app, database, owner, small_json, plan_resolver, *, plan_re
     @app.get('/api/rehab/v2/plans/{plan_id}')
     async def plan(plan_id: str, request: Request):
         return await asyncio.to_thread(service.plan, owner(request), plan_id)
+
+    @app.post('/api/rehab/v2/plans')
+    async def save_plan(request: Request):
+        uid, payload = owner(request), await small_json(request)
+        return await asyncio.to_thread(service.save_plan, uid, payload)
+
+    @app.get('/api/rehab/v2/plans')
+    async def plans(request: Request, limit: int = 20):
+        return await asyncio.to_thread(service.plans_list, owner(request), limit)
+
+    @app.post('/api/rehab/v2/plans/{plan_id}/revise')
+    async def revise_plan(plan_id: str, request: Request):
+        uid, payload = owner(request), await small_json(request)
+        return await asyncio.to_thread(service.save_plan, uid, payload, plan_id=plan_id)
+
+    @app.post('/api/rehab/v2/plans/{plan_id}/archive')
+    async def archive_plan(plan_id: str, request: Request):
+        uid, payload = owner(request), await small_json(request)
+        return await asyncio.to_thread(service.save_plan, uid, payload, plan_id=plan_id, archive=True)
 
     @app.post('/api/rehab/v2/sessions')
     async def create(request: Request):

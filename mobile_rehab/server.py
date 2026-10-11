@@ -351,7 +351,7 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
                         eligibility=record.get('record_origin'), legacy_records_unchanged=True)
 
         install_rehab_v2(app, data_dir / 'rehab-v2.sqlite3', owner, small_json, formal_plan,
-                         plan_reader=formal_plan_view)
+                         plan_reader=formal_plan_view, participant_provider=lambda uid: shared.owner if shared else uid)
     from .network import install_network
     install_network(app, data_dir, jobs, owner, small_json)
     from .product import install_product

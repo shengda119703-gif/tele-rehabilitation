@@ -24,7 +24,9 @@
 
 创建需要本人身份、consent、创建幂等键、现有本人计划 ID/revision/entry_key 和明确机位；计划、剂量、节奏和原证据引用由宿主解析并冻结，客户端不能随意伪造处方。自动计划复用原继续资格；已有手动计划还需 `training_plan_confirmed=true`，计划要求陪同时需 `companion_confirmed=true`。实际输入必须匹配计划的 `LIVE_CAMERA/SELF_USE` scope，原录像计划不能改名使用。帧仅支持受限 JPEG，由原 YOLO 后端推理。任意关键点 JSON 输入被拒绝；确定性回放仅内部 `internal_replay=True` 并标记 TEST/SYNTHETIC。
 
-三动作协议内部均可运行，当前宿主计划适配仅肩外展与坐站，不能把旧动作别名冒充康复深蹲。新增 `GET /api/rehab/v2/sessions` 为本人最终历史，`GET /api/rehab/v2/plans/{plan_id}` 查询本人计划、唯一贡献、进度与继续状态。namespace 2 的贡献与最终事实在同一事务提交；v1 升级前备份，保留原回执和视觉快照。最新尝试按提交 ordinal 取值，跨计划版本的不适反馈仍参与原政策校验。只给原政策生成临时视图，不往旧库写伪测量。前端、APK、旧历史页面和 `/api/plan` 未接入；旧继续资格与剂量规则未改，本轮没有重新部署原运行服务。
+三动作协议内部均可运行，原宿主保存计划适配仍仅肩外展与坐站，不能把旧动作别名冒充康复深蹲。本轮新增自己的显式assessment和`v2plan-`已有安排契约，覆盖肩外展／坐站／康复深蹲左右侧，核对本人最新已提交评估、协议及视觉digest。九类setting包含可选肩部质量限值，保存条目→训练冻结；坐站／深蹲拒绝非null肩部限值。系统不生成剂量或认定临床适用，不代填自评。plan meta1与原namespace2／user_version4分开，首次扩展一致备份；快照／不可变revision／幂等回执同事务，客户端不能覆盖剂量和陪同要求。信息链、接口与参数见 [显式评估／安排工作流](../../docs/development/REHAB_BACKEND_PLANS.md)。
+
+`GET /api/rehab/v2/sessions` 为本人最终历史，`GET /api/rehab/v2/plans/{plan_id}` 查询本人计划、唯一贡献、进度与继续状态；新安排另有保存、列表、修改和归档接口。namespace 2 的贡献与最终事实在同一事务提交；v1 升级前备份，保留原回执和视觉快照。最新训练尝试按提交 ordinal 取值，跨计划版本的不适反馈仍参与原政策校验。只给原政策生成临时视图，不往旧库写伪测量。前端、APK、旧历史页面和 `/api/plan` 未接入；旧继续资格与剂量规则未改，本轮没有重新部署原运行服务。
 
 显式 `timing_plan` 复用原 `movement_timing.py`，分别记录出程、峰区／站位停留、回程、最长连续目标保持及 `MET/NOT_MET/UNASSESSABLE/NOT_SET`。v2 封套版本 `rehab-observed-timing-2`，写明原算法版本、time_basis 和证据 seq/epoch。保持只用当前连续有效观测；缺测、暂停、丢帧、换人和长间隔不能补时间。肩／深蹲的峰区分段是完整往返后的回顾计算，不冒充实时相位。坐站在站起时计一次，后续回坐仅更新尚未终结草稿的时间字段；已确认计次和最终回执不允许重写。节奏是否达标不修改计次、组数或原完成政策。
 
@@ -32,9 +34,10 @@
 
 ```powershell
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py verify-sessions --database-mode isolated
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_backend_plans.py
 ```
 
-2026-10-11 最新完整`verify_all`为`verification-b4bcb387`，运行230项新后端、12项旧康复、19项旧手机测试及1308文件保护核验；30项训练、23项双层损失、17项VIDEO、30项关键点工具、12项原生存储和18项报告专测包含其中。[本轮多轮训练验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)、此前200项双层损失、177项VIDEO和160项工具保留各自实际命令、日志与边界。此前会话CLI100项、[存储验收](../../docs/validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md)、118／88项 [报告隔离验收](../../docs/validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)、100／70项 [推理／诊断验收](../../docs/validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md) 和时间／贡献验证保留历史范围，不累加；本轮未另重跑会话CLI。这些是隔离工程测试，不是临床准确率或手机实机验收。
+2026-10-11 最新完整`verify_all`为`verification-3ce388f3`，实际322项新后端、12项旧康复、19项旧手机测试通过及1308文件变化0；19项计划专项是322项子集，`backend-plan-audit-2851010b`另核对六份源码前后hash一致，见 [本轮安排验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)。此前318／303／269／251／230／200／177／160项属于各阶段，不相加；[续训验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)、[多轮训练验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)及其他历史记录保留各自实际命令／日志／边界。本轮未另重跑会话CLI、原生续训审计、真人原片或完整性能。这些是隔离工程测试，不是临床准确率或手机实机验收。
 
 `RehabStorageBoundary`只适配v2的原Storage owning thread，不增加连接或写入器。实际SQLite结果码分为capacity／readonly／busy／corrupt／io／unavailable；初始化后的锁等待250ms不等于整个HTTP硬截止。错误返回`commit_state=not_confirmed_by_this_error`；恢复存储后先查询权威提交，再以原键重试。损坏文件保留，禁止自动删库或重建。运行态`last_storage_fault`是最后观察记录，不是当前健康探针。真实只读、外部写锁、SQLite容量上限和TEST文件头损坏已测，未占满物理硬盘或验证介质损坏／断电；已知一致备份只恢复备份内已有事实。
 
