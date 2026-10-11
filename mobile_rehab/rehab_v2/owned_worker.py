@@ -10,8 +10,11 @@ import json
 import math
 import multiprocessing as mp
 from multiprocessing.shared_memory import SharedMemory
+import os
 import threading
 import time
+
+from .host_lifetime import HostJob, admitted_target
 
 NOTIFICATION_CAPACITY = 4096
 
@@ -29,6 +32,7 @@ class OwnedJsonWorker:
         self.state_lock, self.cancel = threading.Lock(), threading.Event()
         self.active_sid = None
         self.process = self.pipe = self.memory = None
+        self.host_job = None
         self.warm = False
         self.quarantined = False
         self.last_release = self.last_request = None
@@ -55,12 +59,27 @@ class OwnedJsonWorker:
 
     def _start(self):
         context = mp.get_context('spawn')
+        if os.name == 'nt':
+            try:
+                self.host_job = HostJob()
+            except OSError:
+                raise self._error('host_lifetime_unavailable') from None
         self.memory = SharedMemory(create=True, size=self.memory_capacity)
         self.pipe, child = context.Pipe()
-        self.process = context.Process(target=self.target, args=(child, self.memory.name),
+        admission = context.Event() if self.host_job is not None else None
+        target = admitted_target if admission is not None else self.target
+        arguments = ((self.target, child, self.memory.name, admission, self.startup_timeout_s)
+                     if admission is not None else (child, self.memory.name))
+        self.process = context.Process(target=target, args=arguments,
                                        name='rehab-v2-owned-'+self.role, daemon=True)
         try:
             self.process.start()
+            if self.host_job is not None:
+                try:
+                    self.host_job.assign(self.process)
+                except OSError:
+                    raise self._error('host_lifetime_unavailable') from None
+                admission.set()  # A target cannot begin before containment succeeds.
         finally:
             child.close()
         ready = self._receive(self.startup_timeout_s, 'startup')
@@ -70,7 +89,7 @@ class OwnedJsonWorker:
             raise self._error('handshake_mismatch')
 
     def _release(self, reason):
-        if self.process is None and self.memory is None and self.pipe is None:
+        if self.process is None and self.memory is None and self.pipe is None and self.host_job is None:
             return
         process = self.process
         pid = process.pid if process is not None else None
@@ -85,6 +104,13 @@ class OwnedJsonWorker:
                 self.quarantined = True
                 raise self._error('release_unconfirmed')
         exit_code = process.exitcode if process is not None else None
+        if self.host_job is not None:
+            try:
+                self.host_job.close()
+            except OSError:
+                self.quarantined = True
+                raise self._error('host_lifetime_release_unconfirmed') from None
+            self.host_job = None
         if self.memory is not None:
             self.memory.buf[:] = b'\0'*self.memory_capacity
             self.memory.close()

@@ -42,7 +42,9 @@
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_timing_comparison.py
 ```
 
-2026-10-11 最新完整`verify_all`为`verification-62f925a1`，实际376项新后端、12项旧康复、19项旧手机接口通过及1308保护变化0。新增4项异步退出专项为376子集，另有预声明3轮×3窗口的实际所属宿主退出；工作流见[异步退出恢复](../../docs/development/REHAB_ASYNC_RECOVERY.md)，命令、日志／hash及失败见[本机验证](../../docs/validation/REHAB_ASYNC_RECOVERY_2026-10-11.md)。此前372／364／357／340及更早阶段不相加；[时间验收](../../docs/validation/REHAB_TIMING_COMPARISON_2026-10-11.md)、[原安排验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)、[续训验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)及[多轮验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)保留原证据。当前专项命令为`python -X utf8 -B tools/rehab_ml/verify_async_recovery.py`；不启用户服务／相机、真人原片或训练，工程通过不等于临床准确率或手机实机验收。
+2026-10-11 最新完整`verify_all`为`verification-6fbb8b9c`，实际383项新后端、12项旧康复、19项旧手机接口通过及1308保护变化0。新增7项生命周期专项为383子集，另有预声明3轮×3原生用例；Windows匿名不可继承Job与启动门保证绑定后才运行原目标，创建／绑定失败拒绝，不凭旧PID清理。工作流见[所属子进程保护](../../docs/development/REHAB_NATIVE_HOST_LIFETIME.md)，命令、日志／hash、原始失败及平台边界见[本机验证](../../docs/validation/REHAB_NATIVE_HOST_LIFETIME_2026-10-11.md)。当前专项命令为`python -X utf8 -B tools/rehab_ml/verify_native_parent.py`；不会启停用户服务／相机、分析真人原片或训练。
+
+此前376／372／364／357／340及更早阶段不相加；[异步结束恢复](../../docs/development/REHAB_ASYNC_RECOVERY.md)、[时间验收](../../docs/validation/REHAB_TIMING_COMPARISON_2026-10-11.md)、[原安排验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)、[续训验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)及[多轮验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)保留原证据。工程通过不等于临床准确率、全平台保证或手机实机验收；OS Process.start仍无硬截止，完整P7尚未完成。
 
 `RehabStorageBoundary`只适配v2的原Storage owning thread，不增加连接或写入器。实际SQLite结果码分为capacity／readonly／busy／corrupt／io／unavailable；初始化后的锁等待250ms不等于整个HTTP硬截止。错误返回`commit_state=not_confirmed_by_this_error`；恢复存储后先查询权威提交，再以原键重试。损坏文件保留，禁止自动删库或重建。运行态`last_storage_fault`是最后观察记录，不是当前健康探针。真实只读、外部写锁、SQLite容量上限和TEST文件头损坏已测，未占满物理硬盘或验证介质损坏／断电；已知一致备份只恢复备份内已有事实。
 

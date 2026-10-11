@@ -18,6 +18,7 @@ from app.domain import digest, dumps
 from app.rehab_v2.reporting import REPORT_INPUT_FIELDS, build_report
 from app.rehab_v2.resources import ComputeLease, ResourceBusy, ResourceUnavailable, compute_contract
 from .owned_worker import NOTIFICATION_CAPACITY, OwnedJsonWorker
+from .host_lifetime import lifetime_contract
 
 VERSION = 'rehab-report-process-2'
 INPUT_CAPACITY = 2*1024*1024
@@ -108,7 +109,8 @@ class IsolatedReportWorker(OwnedJsonWorker):
                     release_timeout_s=self.release_timeout_s, no_camera_or_storage_in_child=True,
                     commit_authority='host_feedback_revision_cas', os_process_start_hard_deadline=False,
                     compute=compute_contract(), busy='durable_pending_retry',
-                    preemption='same_host_nonblocking_request_then_confirmed_owned_exit')
+                    preemption='same_host_nonblocking_request_then_confirmed_owned_exit',
+                    host_lifetime=lifetime_contract())
 
     def preempt_current(self):
         """Request only this worker's active job; never wait/kill in create."""

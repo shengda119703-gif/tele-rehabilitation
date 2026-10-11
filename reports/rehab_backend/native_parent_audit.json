@@ -1,0 +1,2288 @@
+{
+  "run_id": "native-parent-49130fa6",
+  "predeclared": {
+    "version": "rehab-native-parent-audit-1",
+    "cases": [
+      "TEST_native_pose_wait",
+      "TEST_native_report_wait",
+      "original_YOLO_cold_ticket"
+    ],
+    "host_barrier_s": 30,
+    "child_exit_after_host_s": 2,
+    "owned_cleanup_s": 5,
+    "TEST_native_wait_s": 60,
+    "no_camera_or_patient_database": true,
+    "scope": "Windows_exact_owned_process_handles_not_cross_platform",
+    "clinical_accuracy": null
+  },
+  "source_sha256": {
+    "tools/rehab_ml/native_parent_audit.py": "c664c64ae31387a0348abcbb0f65f53d70ccf19bce7281929182367fbcba7ebf",
+    "mobile_rehab/rehab_v2/owned_worker.py": "35426a8f6431242c1ca8a692d85fdad9ee2d889ba7ce987109a5d065f42c068a",
+    "mobile_rehab/rehab_v2/host_lifetime.py": "7608a375a94deb37f3ff306aeffe7071e7d45e396ec58266013b8e4e676b3ae8",
+    "mobile_rehab/rehab_v2/pose_worker.py": "7044dfce4b93c5e7142e922a6a23d156d6df1cc6eac385902fabc306eac82595",
+    "mobile_rehab/rehab_v2/report_worker.py": "f74b282b0908c8a5eeb77206ed5a553b4f66ae1f433eb7bc2aa198fe61916b70",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/resources.py": "eb86c8a4c1ef99b77a8780d78ec527b51a2bb151bebb6d99c7ad850280692abe",
+    "rehab_codex_single_camera_v2_1/assets/models/yolo11n-pose.pt": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0"
+  },
+  "cases": [
+    {
+      "case": "TEST_native_pose_wait",
+      "checks": {
+        "exact_host_and_child_live": true,
+        "native_task_still_live": true,
+        "child_auto_exit_without_supervisor_kill": true,
+        "actual_child_exit_confirmed": true,
+        "compute_lease_released_after_actual_exit": true,
+        "volatile_memory_released": true,
+        "checkpoint_confirmed_rep_preserved": true,
+        "canonical_found_not_duplicated": true,
+        "prior_final_commit_or_interrupted_recovery": true,
+        "one_final_contribution": true,
+        "null_feedback_not_replaced": true
+      },
+      "proof": {
+        "host_pid": 17100,
+        "child_pid": 952,
+        "case": "TEST_native_pose_wait",
+        "session_id": "d24ed435638046cc990ed17af9d433d2",
+        "memory_name": "wnsm_067a9df1",
+        "last_request": {
+          "ticket": "004411dcfdba4939a571d704a567dc96",
+          "session_id": "d24ed435638046cc990ed17af9d433d2",
+          "seq": 57,
+          "pid": 952,
+          "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741"
+        },
+        "operation_thread_alive": true,
+        "warm": false,
+        "prior_commit": null,
+        "runtime_snapshot": {
+          "protocol": {
+            "exercise_id": "shoulder_abduction",
+            "metric": "raise_deg",
+            "unit": "degree",
+            "metric_version": "upper-arm-image-vertical-2",
+            "view": "frontal",
+            "required_joints": [
+              "left_shoulder",
+              "left_elbow"
+            ],
+            "optional_quality_metrics": {
+              "elbow_flexion_deg": [
+                "left_shoulder",
+                "left_elbow",
+                "left_wrist"
+              ],
+              "trunk_tilt_deg": [
+                "left_shoulder",
+                "right_shoulder",
+                "left_hip",
+                "right_hip"
+              ]
+            },
+            "start_posture": "arm_at_comfortable_side",
+            "ready_max_deg": 20.0,
+            "excursion_min_deg": 10.0,
+            "phases": [
+              "WAIT_READY",
+              "REST",
+              "RAISING",
+              "PEAK_OR_HOLD",
+              "LOWERING"
+            ],
+            "completion": "observed_departure_turn_and_return",
+            "baseline_reference": "image_down_vertical",
+            "eligibility_rule_ref": "existing-general-activity-rules-1-no-dosage-change",
+            "protocol_version": "rehab-protocol-2.0",
+            "side": "left",
+            "required_metric": "raise_deg",
+            "missing_policy": "pause_evidence_keep_short_context",
+            "quality_version": "explicit-observed-constraints-2",
+            "target_definition": "personal_prescribed_projected_metric_maximum",
+            "validity": "current_observed_or_causally_filtered_required_joints_only"
+          },
+          "run_state": "active",
+          "phase": "RAISING",
+          "observation_state": "partially_observable",
+          "calibration_epoch": 0,
+          "baseline": {
+            "raw_value": 0.0,
+            "unit": "degree",
+            "time_s": 1.1,
+            "reference": "image_down_vertical",
+            "quality": "observed_posture_and_stability",
+            "calibration_epoch": 0
+          },
+          "repetitions": [
+            {
+              "rep_index": 1,
+              "start_time_s": 1.75,
+              "calibration_epoch": 0,
+              "peak_excursion_deg": 70.0,
+              "peak_metric_deg": 70.0,
+              "evidence_refs": [
+                {
+                  "seq": 35,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 1.75
+                },
+                {
+                  "seq": 36,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 1.8
+                },
+                {
+                  "seq": 37,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 1.85
+                },
+                {
+                  "seq": 38,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 1.9000000000000001
+                },
+                {
+                  "seq": 39,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 1.9500000000000002
+                },
+                {
+                  "seq": 40,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 2.0
+                },
+                {
+                  "seq": 41,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 2.0500000000000003
+                },
+                {
+                  "seq": 42,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 2.1
+                },
+                {
+                  "seq": 43,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 2.15
+                },
+                {
+                  "seq": 44,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 2.2
+                },
+                {
+                  "seq": 45,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 2.25
+                },
+                {
+                  "seq": 46,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 2.3000000000000003
+                },
+                {
+                  "seq": 47,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 2.35
+                },
+                {
+                  "seq": 48,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 2.4000000000000004
+                },
+                {
+                  "seq": 49,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 2.45
+                }
+              ],
+              "metric_validity": {},
+              "issues": [],
+              "quality_evaluated": false,
+              "observed_turn": true,
+              "completion_status": "COMPLETE",
+              "target_status": "MET",
+              "movement_timing": {
+                "outbound_s": {
+                  "value": 0.050000000000000044,
+                  "valid": true,
+                  "reason": null
+                },
+                "endpoint_dwell_s": {
+                  "value": 0.44999999999999996,
+                  "valid": true,
+                  "reason": null
+                },
+                "return_s": {
+                  "value": 0.4500000000000002,
+                  "valid": true,
+                  "reason": null
+                },
+                "target_hold_s": {
+                  "value": 0.44999999999999996,
+                  "valid": true,
+                  "reason": null
+                },
+                "version": "rehab-observed-timing-2",
+                "method": "peak_band_3deg_median3",
+                "cycle_complete": true,
+                "partial_observation": false,
+                "goals": {
+                  "outbound": "NOT_SET",
+                  "return": "NOT_SET",
+                  "hold": "NOT_SET"
+                },
+                "arrangement": {
+                  "outbound_min_s": null,
+                  "outbound_max_s": null,
+                  "return_min_s": null,
+                  "return_max_s": null,
+                  "hold_min_s": null
+                },
+                "algorithm_version": "observed-timing-1",
+                "time_basis": "mapped_source_seconds",
+                "count_gate": false,
+                "live_hold_method": "consecutive_current_observations",
+                "phase_timing_mode": "after_observed_cycle",
+                "observed_sample_count": 20,
+                "comparison_context": {
+                  "version": "rehab-timing-context-1",
+                  "calibration_epoch": 0,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "source_ref": "internal-replay",
+                  "participant_id": null,
+                  "submode": "training",
+                  "protocol": {
+                    "exercise_id": "shoulder_abduction",
+                    "metric": "raise_deg",
+                    "unit": "degree",
+                    "metric_version": "upper-arm-image-vertical-2",
+                    "view": "frontal",
+                    "required_joints": [
+                      "left_shoulder",
+                      "left_elbow"
+                    ],
+                    "optional_quality_metrics": {
+                      "elbow_flexion_deg": [
+                        "left_shoulder",
+                        "left_elbow",
+                        "left_wrist"
+                      ],
+                      "trunk_tilt_deg": [
+                        "left_shoulder",
+                        "right_shoulder",
+                        "left_hip",
+                        "right_hip"
+                      ]
+                    },
+                    "start_posture": "arm_at_comfortable_side",
+                    "ready_max_deg": 20.0,
+                    "excursion_min_deg": 10.0,
+                    "phases": [
+                      "WAIT_READY",
+                      "REST",
+                      "RAISING",
+                      "PEAK_OR_HOLD",
+                      "LOWERING"
+                    ],
+                    "completion": "observed_departure_turn_and_return",
+                    "baseline_reference": "image_down_vertical",
+                    "eligibility_rule_ref": "existing-general-activity-rules-1-no-dosage-change",
+                    "protocol_version": "rehab-protocol-2.0",
+                    "side": "left",
+                    "required_metric": "raise_deg",
+                    "missing_policy": "pause_evidence_keep_short_context",
+                    "quality_version": "explicit-observed-constraints-2",
+                    "target_definition": "personal_prescribed_projected_metric_maximum",
+                    "validity": "current_observed_or_causally_filtered_required_joints_only"
+                  },
+                  "domain": {
+                    "schema_id": "coco17-v1",
+                    "model_manifest_id": "TEST-not-a-model",
+                    "frame_size": [
+                      640,
+                      480
+                    ],
+                    "time_basis": "mapped_source_seconds",
+                    "coordinate_space": "raw_image_pixels",
+                    "preprocess_version": "causal-ema-schema-0.3.0"
+                  },
+                  "baseline": {
+                    "raw_value": 0.0,
+                    "unit": "degree",
+                    "reference": "image_down_vertical"
+                  },
+                  "parameters": {
+                    "ready_s": 1.0,
+                    "dwell_s": 0.18,
+                    "max_gap_s": 0.5,
+                    "max_age_ms": 500.0,
+                    "return_tolerance_deg": 8.0,
+                    "turn_delta_deg": 5.0
+                  },
+                  "target_angle_deg": 60.0,
+                  "timing_plan": {
+                    "outbound_min_s": null,
+                    "outbound_max_s": null,
+                    "return_min_s": null,
+                    "return_max_s": null,
+                    "hold_min_s": null
+                  },
+                  "support": {
+                    "use_of_hands": "not_recorded",
+                    "needs_companion": null
+                  },
+                  "dose": {
+                    "target_reps": 2,
+                    "target_sets": 1,
+                    "rest_between_sets_s": null
+                  }
+                },
+                "evidence_refs": {
+                  "first": {
+                    "seq": 30,
+                    "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                    "time_s": 1.5
+                  },
+                  "latest": {
+                    "seq": 49,
+                    "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                    "time_s": 2.45
+                  },
+                  "standing": null,
+                  "return_start": null,
+                  "seated_rearm": null
+                },
+                "hold_anchor": "prescribed_projected_metric"
+              },
+              "end_time_s": 2.45,
+              "quality_assessable": false,
+              "quality_status": "UNASSESSABLE",
+              "plan_progress": "confirmed_rep_only",
+              "eligibility": "not_evaluated_by_counter"
+            }
+          ],
+          "completed": 1,
+          "current": {
+            "rep_index": 2,
+            "start_time_s": 2.75,
+            "calibration_epoch": 0,
+            "peak_excursion_deg": 70.0,
+            "peak_metric_deg": 70.0,
+            "evidence_refs": [
+              {
+                "seq": 55,
+                "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                "time_s": 2.75
+              },
+              {
+                "seq": 56,
+                "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                "time_s": 2.8000000000000003
+              }
+            ],
+            "metric_validity": {},
+            "issues": [],
+            "quality_evaluated": false,
+            "observed_turn": false,
+            "completion_status": "PARTIAL",
+            "target_status": "UNKNOWN",
+            "movement_timing": {
+              "outbound_s": {
+                "value": null,
+                "valid": false,
+                "reason": "incomplete_cycle"
+              },
+              "endpoint_dwell_s": {
+                "value": null,
+                "valid": false,
+                "reason": "incomplete_cycle"
+              },
+              "return_s": {
+                "value": null,
+                "valid": false,
+                "reason": "incomplete_cycle"
+              },
+              "target_hold_s": {
+                "value": 0.25,
+                "valid": true,
+                "reason": null
+              },
+              "version": "rehab-observed-timing-2",
+              "method": "peak_band_3deg_median3",
+              "cycle_complete": false,
+              "partial_observation": true,
+              "goals": {
+                "outbound": "NOT_SET",
+                "return": "NOT_SET",
+                "hold": "NOT_SET"
+              },
+              "arrangement": {
+                "outbound_min_s": null,
+                "outbound_max_s": null,
+                "return_min_s": null,
+                "return_max_s": null,
+                "hold_min_s": null
+              },
+              "algorithm_version": "observed-timing-1",
+              "time_basis": "mapped_source_seconds",
+              "count_gate": false,
+              "live_hold_method": "consecutive_current_observations",
+              "phase_timing_mode": "after_observed_cycle",
+              "observed_sample_count": 7,
+              "comparison_context": {
+                "version": "rehab-timing-context-1",
+                "calibration_epoch": 0,
+                "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                "source_ref": "internal-replay",
+                "participant_id": null,
+                "submode": "training",
+                "protocol": {
+                  "exercise_id": "shoulder_abduction",
+                  "metric": "raise_deg",
+                  "unit": "degree",
+                  "metric_version": "upper-arm-image-vertical-2",
+                  "view": "frontal",
+                  "required_joints": [
+                    "left_shoulder",
+                    "left_elbow"
+                  ],
+                  "optional_quality_metrics": {
+                    "elbow_flexion_deg": [
+                      "left_shoulder",
+                      "left_elbow",
+                      "left_wrist"
+                    ],
+                    "trunk_tilt_deg": [
+                      "left_shoulder",
+                      "right_shoulder",
+                      "left_hip",
+                      "right_hip"
+                    ]
+                  },
+                  "start_posture": "arm_at_comfortable_side",
+                  "ready_max_deg": 20.0,
+                  "excursion_min_deg": 10.0,
+                  "phases": [
+                    "WAIT_READY",
+                    "REST",
+                    "RAISING",
+                    "PEAK_OR_HOLD",
+                    "LOWERING"
+                  ],
+                  "completion": "observed_departure_turn_and_return",
+                  "baseline_reference": "image_down_vertical",
+                  "eligibility_rule_ref": "existing-general-activity-rules-1-no-dosage-change",
+                  "protocol_version": "rehab-protocol-2.0",
+                  "side": "left",
+                  "required_metric": "raise_deg",
+                  "missing_policy": "pause_evidence_keep_short_context",
+                  "quality_version": "explicit-observed-constraints-2",
+                  "target_definition": "personal_prescribed_projected_metric_maximum",
+                  "validity": "current_observed_or_causally_filtered_required_joints_only"
+                },
+                "domain": {
+                  "schema_id": "coco17-v1",
+                  "model_manifest_id": "TEST-not-a-model",
+                  "frame_size": [
+                    640,
+                    480
+                  ],
+                  "time_basis": "mapped_source_seconds",
+                  "coordinate_space": "raw_image_pixels",
+                  "preprocess_version": "causal-ema-schema-0.3.0"
+                },
+                "baseline": {
+                  "raw_value": 0.0,
+                  "unit": "degree",
+                  "reference": "image_down_vertical"
+                },
+                "parameters": {
+                  "ready_s": 1.0,
+                  "dwell_s": 0.18,
+                  "max_gap_s": 0.5,
+                  "max_age_ms": 500.0,
+                  "return_tolerance_deg": 8.0,
+                  "turn_delta_deg": 5.0
+                },
+                "target_angle_deg": 60.0,
+                "timing_plan": {
+                  "outbound_min_s": null,
+                  "outbound_max_s": null,
+                  "return_min_s": null,
+                  "return_max_s": null,
+                  "hold_min_s": null
+                },
+                "support": {
+                  "use_of_hands": "not_recorded",
+                  "needs_companion": null
+                },
+                "dose": {
+                  "target_reps": 2,
+                  "target_sets": 1,
+                  "rest_between_sets_s": null
+                }
+              },
+              "evidence_refs": {
+                "first": {
+                  "seq": 50,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 2.5
+                },
+                "latest": {
+                  "seq": 56,
+                  "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                  "time_s": 2.8000000000000003
+                },
+                "standing": null,
+                "return_start": null,
+                "seated_rearm": null
+              },
+              "hold_anchor": "prescribed_projected_metric"
+            }
+          },
+          "metric": {
+            "value": 70.0,
+            "unit": "degree",
+            "valid": true,
+            "reason": null,
+            "evidence_kind": "observed",
+            "observed_at_s": 2.8000000000000003,
+            "computed_at_s": 2.8000000000000003,
+            "age_ms": 0.0,
+            "required_joints": [
+              "left_shoulder",
+              "left_elbow"
+            ]
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 0
+          },
+          "current_issues": [],
+          "movement_timing_version": "rehab-observed-timing-2",
+          "movement_timing_live": {
+            "hold_elapsed_s": 0.25,
+            "hold_min_s": null,
+            "at_target": true,
+            "version": "rehab-observed-timing-2"
+          },
+          "last_movement_timing": {
+            "outbound_s": {
+              "value": 0.050000000000000044,
+              "valid": true,
+              "reason": null
+            },
+            "endpoint_dwell_s": {
+              "value": 0.44999999999999996,
+              "valid": true,
+              "reason": null
+            },
+            "return_s": {
+              "value": 0.4500000000000002,
+              "valid": true,
+              "reason": null
+            },
+            "target_hold_s": {
+              "value": 0.44999999999999996,
+              "valid": true,
+              "reason": null
+            },
+            "version": "rehab-observed-timing-2",
+            "method": "peak_band_3deg_median3",
+            "cycle_complete": true,
+            "partial_observation": false,
+            "goals": {
+              "outbound": "NOT_SET",
+              "return": "NOT_SET",
+              "hold": "NOT_SET"
+            },
+            "arrangement": {
+              "outbound_min_s": null,
+              "outbound_max_s": null,
+              "return_min_s": null,
+              "return_max_s": null,
+              "hold_min_s": null
+            },
+            "algorithm_version": "observed-timing-1",
+            "time_basis": "mapped_source_seconds",
+            "count_gate": false,
+            "live_hold_method": "consecutive_current_observations",
+            "phase_timing_mode": "after_observed_cycle",
+            "observed_sample_count": 20,
+            "comparison_context": {
+              "version": "rehab-timing-context-1",
+              "calibration_epoch": 0,
+              "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+              "source_ref": "internal-replay",
+              "participant_id": null,
+              "submode": "training",
+              "protocol": {
+                "exercise_id": "shoulder_abduction",
+                "metric": "raise_deg",
+                "unit": "degree",
+                "metric_version": "upper-arm-image-vertical-2",
+                "view": "frontal",
+                "required_joints": [
+                  "left_shoulder",
+                  "left_elbow"
+                ],
+                "optional_quality_metrics": {
+                  "elbow_flexion_deg": [
+                    "left_shoulder",
+                    "left_elbow",
+                    "left_wrist"
+                  ],
+                  "trunk_tilt_deg": [
+                    "left_shoulder",
+                    "right_shoulder",
+                    "left_hip",
+                    "right_hip"
+                  ]
+                },
+                "start_posture": "arm_at_comfortable_side",
+                "ready_max_deg": 20.0,
+                "excursion_min_deg": 10.0,
+                "phases": [
+                  "WAIT_READY",
+                  "REST",
+                  "RAISING",
+                  "PEAK_OR_HOLD",
+                  "LOWERING"
+                ],
+                "completion": "observed_departure_turn_and_return",
+                "baseline_reference": "image_down_vertical",
+                "eligibility_rule_ref": "existing-general-activity-rules-1-no-dosage-change",
+                "protocol_version": "rehab-protocol-2.0",
+                "side": "left",
+                "required_metric": "raise_deg",
+                "missing_policy": "pause_evidence_keep_short_context",
+                "quality_version": "explicit-observed-constraints-2",
+                "target_definition": "personal_prescribed_projected_metric_maximum",
+                "validity": "current_observed_or_causally_filtered_required_joints_only"
+              },
+              "domain": {
+                "schema_id": "coco17-v1",
+                "model_manifest_id": "TEST-not-a-model",
+                "frame_size": [
+                  640,
+                  480
+                ],
+                "time_basis": "mapped_source_seconds",
+                "coordinate_space": "raw_image_pixels",
+                "preprocess_version": "causal-ema-schema-0.3.0"
+              },
+              "baseline": {
+                "raw_value": 0.0,
+                "unit": "degree",
+                "reference": "image_down_vertical"
+              },
+              "parameters": {
+                "ready_s": 1.0,
+                "dwell_s": 0.18,
+                "max_gap_s": 0.5,
+                "max_age_ms": 500.0,
+                "return_tolerance_deg": 8.0,
+                "turn_delta_deg": 5.0
+              },
+              "target_angle_deg": 60.0,
+              "timing_plan": {
+                "outbound_min_s": null,
+                "outbound_max_s": null,
+                "return_min_s": null,
+                "return_max_s": null,
+                "hold_min_s": null
+              },
+              "support": {
+                "use_of_hands": "not_recorded",
+                "needs_companion": null
+              },
+              "dose": {
+                "target_reps": 2,
+                "target_sets": 1,
+                "rest_between_sets_s": null
+              }
+            },
+            "evidence_refs": {
+              "first": {
+                "seq": 30,
+                "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                "time_s": 1.5
+              },
+              "latest": {
+                "seq": 49,
+                "source_epoch": "2684c79b2a0f451eb5a55b55c4d1f741",
+                "time_s": 2.45
+              },
+              "standing": null,
+              "return_start": null,
+              "seated_rearm": null
+            },
+            "hold_anchor": "prescribed_projected_metric"
+          },
+          "pending_input_gap": null,
+          "measurement_contract": {
+            "signature": [
+              "internal-replay",
+              "coco17-v1",
+              "TEST-not-a-model",
+              [
+                640,
+                480
+              ],
+              "mapped_source_seconds"
+            ],
+            "coordinate_space": "raw_image_pixels",
+            "metric_version": "upper-arm-image-vertical-2",
+            "preprocess_version": "causal-ema-schema-0.3.0",
+            "view": "frontal",
+            "side": "left"
+          },
+          "target_result_separate": true,
+          "quality_result_separate": true,
+          "eligibility": "unchanged_requires_existing_plan_validation",
+          "training": {
+            "stage": "ACTIVE",
+            "completed_sets": 0,
+            "target_sets": 1,
+            "target_reps": 2,
+            "sets": [],
+            "rest_started_s": null,
+            "prescribed_rest_s": null,
+            "plan_complete": false,
+            "progress_policy": "confirmed_sets-2-not-legacy-progress"
+          }
+        },
+        "native": {
+          "pid": 952,
+          "parent_pid": 17100,
+          "ticket": "004411dcfdba4939a571d704a567dc96",
+          "role": "pose",
+          "memory": "wnsm_067a9df1",
+          "next_call": "kernel32.Sleep_60000_via_PyDLL_GIL_held"
+        }
+      },
+      "host_exit": 1,
+      "auto_exit_wait_ms": 0.01249999968422344,
+      "child_exit_before_cleanup": 0,
+      "supervisor_cleanup_required": false,
+      "host_actual_exit_confirmed": true,
+      "log": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\native-parent-49130fa6\\TEST_native_pose_wait\\host.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true
+    },
+    {
+      "case": "TEST_native_report_wait",
+      "checks": {
+        "exact_host_and_child_live": true,
+        "native_task_still_live": true,
+        "child_auto_exit_without_supervisor_kill": true,
+        "actual_child_exit_confirmed": true,
+        "compute_lease_released_after_actual_exit": true,
+        "volatile_memory_released": true,
+        "checkpoint_confirmed_rep_preserved": true,
+        "canonical_found_not_duplicated": true,
+        "prior_final_commit_or_interrupted_recovery": true,
+        "one_final_contribution": true,
+        "null_feedback_not_replaced": true
+      },
+      "proof": {
+        "host_pid": 8096,
+        "child_pid": 8280,
+        "case": "TEST_native_report_wait",
+        "session_id": "e3d3fa2bc8f14916a4350ac54805254d",
+        "memory_name": "wnsm_2f45653a",
+        "last_request": {
+          "ticket": "683054fb43834a3e8e85df6966fc7788",
+          "length": 19408,
+          "session_id": "e3d3fa2bc8f14916a4350ac54805254d",
+          "feedback_revision": 0,
+          "input_sha256": "b030a3f503e0bc4d367e88a6ff6a82312ceed1253b2fe214f818e956d42bd31a",
+          "pid": 8280
+        },
+        "operation_thread_alive": true,
+        "warm": false,
+        "prior_commit": {
+          "commit_id": "942b483aaf5141baa9d66cc4b0679c9b",
+          "session_id": "e3d3fa2bc8f14916a4350ac54805254d",
+          "status": "finalized",
+          "committed_at": "2026-10-11T09:39:51.635138+00:00",
+          "end_reason": "user_stopped",
+          "completed_reps": 1,
+          "accepted_last_seq": 56,
+          "processed_last_seq": 56,
+          "persisted_evidence_seq": 56,
+          "visual_snapshot_digest": "549ed4c5aa22f727a6726f8c669a20e0a13d2808d2472929cffd40c9d37daa92",
+          "plan_progress": "unique_v2_contribution_committed"
+        },
+        "runtime_snapshot": {
+          "protocol": {
+            "exercise_id": "shoulder_abduction",
+            "metric": "raise_deg",
+            "unit": "degree",
+            "metric_version": "upper-arm-image-vertical-2",
+            "view": "frontal",
+            "required_joints": [
+              "left_shoulder",
+              "left_elbow"
+            ],
+            "optional_quality_metrics": {
+              "elbow_flexion_deg": [
+                "left_shoulder",
+                "left_elbow",
+                "left_wrist"
+              ],
+              "trunk_tilt_deg": [
+                "left_shoulder",
+                "right_shoulder",
+                "left_hip",
+                "right_hip"
+              ]
+            },
+            "start_posture": "arm_at_comfortable_side",
+            "ready_max_deg": 20.0,
+            "excursion_min_deg": 10.0,
+            "phases": [
+              "WAIT_READY",
+              "REST",
+              "RAISING",
+              "PEAK_OR_HOLD",
+              "LOWERING"
+            ],
+            "completion": "observed_departure_turn_and_return",
+            "baseline_reference": "image_down_vertical",
+            "eligibility_rule_ref": "existing-general-activity-rules-1-no-dosage-change",
+            "protocol_version": "rehab-protocol-2.0",
+            "side": "left",
+            "required_metric": "raise_deg",
+            "missing_policy": "pause_evidence_keep_short_context",
+            "quality_version": "explicit-observed-constraints-2",
+            "target_definition": "personal_prescribed_projected_metric_maximum",
+            "validity": "current_observed_or_causally_filtered_required_joints_only"
+          },
+          "run_state": "ended",
+          "phase": "ENDED",
+          "observation_state": "partially_observable",
+          "calibration_epoch": 0,
+          "baseline": {
+            "raw_value": 0.0,
+            "unit": "degree",
+            "time_s": 1.1,
+            "reference": "image_down_vertical",
+            "quality": "observed_posture_and_stability",
+            "calibration_epoch": 0
+          },
+          "repetitions": [
+            {
+              "rep_index": 1,
+              "start_time_s": 1.75,
+              "calibration_epoch": 0,
+              "peak_excursion_deg": 70.0,
+              "peak_metric_deg": 70.0,
+              "evidence_refs": [
+                {
+                  "seq": 35,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 1.75
+                },
+                {
+                  "seq": 36,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 1.8
+                },
+                {
+                  "seq": 37,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 1.85
+                },
+                {
+                  "seq": 38,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 1.9000000000000001
+                },
+                {
+                  "seq": 39,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 1.9500000000000002
+                },
+                {
+                  "seq": 40,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 2.0
+                },
+                {
+                  "seq": 41,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 2.0500000000000003
+                },
+                {
+                  "seq": 42,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 2.1
+                },
+                {
+                  "seq": 43,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 2.15
+                },
+                {
+                  "seq": 44,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 2.2
+                },
+                {
+                  "seq": 45,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 2.25
+                },
+                {
+                  "seq": 46,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 2.3000000000000003
+                },
+                {
+                  "seq": 47,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 2.35
+                },
+                {
+                  "seq": 48,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 2.4000000000000004
+                },
+                {
+                  "seq": 49,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 2.45
+                }
+              ],
+              "metric_validity": {},
+              "issues": [],
+              "quality_evaluated": false,
+              "observed_turn": true,
+              "completion_status": "COMPLETE",
+              "target_status": "MET",
+              "movement_timing": {
+                "outbound_s": {
+                  "value": 0.050000000000000044,
+                  "valid": true,
+                  "reason": null
+                },
+                "endpoint_dwell_s": {
+                  "value": 0.44999999999999996,
+                  "valid": true,
+                  "reason": null
+                },
+                "return_s": {
+                  "value": 0.4500000000000002,
+                  "valid": true,
+                  "reason": null
+                },
+                "target_hold_s": {
+                  "value": 0.44999999999999996,
+                  "valid": true,
+                  "reason": null
+                },
+                "version": "rehab-observed-timing-2",
+                "method": "peak_band_3deg_median3",
+                "cycle_complete": true,
+                "partial_observation": false,
+                "goals": {
+                  "outbound": "NOT_SET",
+                  "return": "NOT_SET",
+                  "hold": "NOT_SET"
+                },
+                "arrangement": {
+                  "outbound_min_s": null,
+                  "outbound_max_s": null,
+                  "return_min_s": null,
+                  "return_max_s": null,
+                  "hold_min_s": null
+                },
+                "algorithm_version": "observed-timing-1",
+                "time_basis": "mapped_source_seconds",
+                "count_gate": false,
+                "live_hold_method": "consecutive_current_observations",
+                "phase_timing_mode": "after_observed_cycle",
+                "observed_sample_count": 20,
+                "comparison_context": {
+                  "version": "rehab-timing-context-1",
+                  "calibration_epoch": 0,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "source_ref": "internal-replay",
+                  "participant_id": null,
+                  "submode": "training",
+                  "protocol": {
+                    "exercise_id": "shoulder_abduction",
+                    "metric": "raise_deg",
+                    "unit": "degree",
+                    "metric_version": "upper-arm-image-vertical-2",
+                    "view": "frontal",
+                    "required_joints": [
+                      "left_shoulder",
+                      "left_elbow"
+                    ],
+                    "optional_quality_metrics": {
+                      "elbow_flexion_deg": [
+                        "left_shoulder",
+                        "left_elbow",
+                        "left_wrist"
+                      ],
+                      "trunk_tilt_deg": [
+                        "left_shoulder",
+                        "right_shoulder",
+                        "left_hip",
+                        "right_hip"
+                      ]
+                    },
+                    "start_posture": "arm_at_comfortable_side",
+                    "ready_max_deg": 20.0,
+                    "excursion_min_deg": 10.0,
+                    "phases": [
+                      "WAIT_READY",
+                      "REST",
+                      "RAISING",
+                      "PEAK_OR_HOLD",
+                      "LOWERING"
+                    ],
+                    "completion": "observed_departure_turn_and_return",
+                    "baseline_reference": "image_down_vertical",
+                    "eligibility_rule_ref": "existing-general-activity-rules-1-no-dosage-change",
+                    "protocol_version": "rehab-protocol-2.0",
+                    "side": "left",
+                    "required_metric": "raise_deg",
+                    "missing_policy": "pause_evidence_keep_short_context",
+                    "quality_version": "explicit-observed-constraints-2",
+                    "target_definition": "personal_prescribed_projected_metric_maximum",
+                    "validity": "current_observed_or_causally_filtered_required_joints_only"
+                  },
+                  "domain": {
+                    "schema_id": "coco17-v1",
+                    "model_manifest_id": "TEST-not-a-model",
+                    "frame_size": [
+                      640,
+                      480
+                    ],
+                    "time_basis": "mapped_source_seconds",
+                    "coordinate_space": "raw_image_pixels",
+                    "preprocess_version": "causal-ema-schema-0.3.0"
+                  },
+                  "baseline": {
+                    "raw_value": 0.0,
+                    "unit": "degree",
+                    "reference": "image_down_vertical"
+                  },
+                  "parameters": {
+                    "ready_s": 1.0,
+                    "dwell_s": 0.18,
+                    "max_gap_s": 0.5,
+                    "max_age_ms": 500.0,
+                    "return_tolerance_deg": 8.0,
+                    "turn_delta_deg": 5.0
+                  },
+                  "target_angle_deg": 60.0,
+                  "timing_plan": {
+                    "outbound_min_s": null,
+                    "outbound_max_s": null,
+                    "return_min_s": null,
+                    "return_max_s": null,
+                    "hold_min_s": null
+                  },
+                  "support": {
+                    "use_of_hands": "not_recorded",
+                    "needs_companion": null
+                  },
+                  "dose": {
+                    "target_reps": 2,
+                    "target_sets": 1,
+                    "rest_between_sets_s": null
+                  }
+                },
+                "evidence_refs": {
+                  "first": {
+                    "seq": 30,
+                    "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                    "time_s": 1.5
+                  },
+                  "latest": {
+                    "seq": 49,
+                    "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                    "time_s": 2.45
+                  },
+                  "standing": null,
+                  "return_start": null,
+                  "seated_rearm": null
+                },
+                "hold_anchor": "prescribed_projected_metric"
+              },
+              "end_time_s": 2.45,
+              "quality_assessable": false,
+              "quality_status": "UNASSESSABLE",
+              "plan_progress": "confirmed_rep_only",
+              "eligibility": "not_evaluated_by_counter"
+            },
+            {
+              "rep_index": 2,
+              "start_time_s": 2.75,
+              "calibration_epoch": 0,
+              "peak_excursion_deg": 70.0,
+              "peak_metric_deg": 70.0,
+              "evidence_refs": [
+                {
+                  "seq": 55,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 2.75
+                },
+                {
+                  "seq": 56,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "time_s": 2.8000000000000003
+                }
+              ],
+              "metric_validity": {},
+              "issues": [],
+              "quality_evaluated": false,
+              "observed_turn": false,
+              "completion_status": "UNASSESSABLE",
+              "target_status": "UNKNOWN",
+              "movement_timing": {
+                "outbound_s": {
+                  "value": null,
+                  "valid": false,
+                  "reason": "user_stopped"
+                },
+                "endpoint_dwell_s": {
+                  "value": null,
+                  "valid": false,
+                  "reason": "user_stopped"
+                },
+                "return_s": {
+                  "value": null,
+                  "valid": false,
+                  "reason": "user_stopped"
+                },
+                "target_hold_s": {
+                  "value": 0.25,
+                  "valid": true,
+                  "reason": null
+                },
+                "version": "rehab-observed-timing-2",
+                "method": "peak_band_3deg_median3",
+                "cycle_complete": false,
+                "partial_observation": true,
+                "goals": {
+                  "outbound": "NOT_SET",
+                  "return": "NOT_SET",
+                  "hold": "NOT_SET"
+                },
+                "arrangement": {
+                  "outbound_min_s": null,
+                  "outbound_max_s": null,
+                  "return_min_s": null,
+                  "return_max_s": null,
+                  "hold_min_s": null
+                },
+                "algorithm_version": "observed-timing-1",
+                "time_basis": "mapped_source_seconds",
+                "count_gate": false,
+                "live_hold_method": "consecutive_current_observations",
+                "phase_timing_mode": "after_observed_cycle",
+                "observed_sample_count": 7,
+                "comparison_context": {
+                  "version": "rehab-timing-context-1",
+                  "calibration_epoch": 0,
+                  "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                  "source_ref": "internal-replay",
+                  "participant_id": null,
+                  "submode": "training",
+                  "protocol": {
+                    "exercise_id": "shoulder_abduction",
+                    "metric": "raise_deg",
+                    "unit": "degree",
+                    "metric_version": "upper-arm-image-vertical-2",
+                    "view": "frontal",
+                    "required_joints": [
+                      "left_shoulder",
+                      "left_elbow"
+                    ],
+                    "optional_quality_metrics": {
+                      "elbow_flexion_deg": [
+                        "left_shoulder",
+                        "left_elbow",
+                        "left_wrist"
+                      ],
+                      "trunk_tilt_deg": [
+                        "left_shoulder",
+                        "right_shoulder",
+                        "left_hip",
+                        "right_hip"
+                      ]
+                    },
+                    "start_posture": "arm_at_comfortable_side",
+                    "ready_max_deg": 20.0,
+                    "excursion_min_deg": 10.0,
+                    "phases": [
+                      "WAIT_READY",
+                      "REST",
+                      "RAISING",
+                      "PEAK_OR_HOLD",
+                      "LOWERING"
+                    ],
+                    "completion": "observed_departure_turn_and_return",
+                    "baseline_reference": "image_down_vertical",
+                    "eligibility_rule_ref": "existing-general-activity-rules-1-no-dosage-change",
+                    "protocol_version": "rehab-protocol-2.0",
+                    "side": "left",
+                    "required_metric": "raise_deg",
+                    "missing_policy": "pause_evidence_keep_short_context",
+                    "quality_version": "explicit-observed-constraints-2",
+                    "target_definition": "personal_prescribed_projected_metric_maximum",
+                    "validity": "current_observed_or_causally_filtered_required_joints_only"
+                  },
+                  "domain": {
+                    "schema_id": "coco17-v1",
+                    "model_manifest_id": "TEST-not-a-model",
+                    "frame_size": [
+                      640,
+                      480
+                    ],
+                    "time_basis": "mapped_source_seconds",
+                    "coordinate_space": "raw_image_pixels",
+                    "preprocess_version": "causal-ema-schema-0.3.0"
+                  },
+                  "baseline": {
+                    "raw_value": 0.0,
+                    "unit": "degree",
+                    "reference": "image_down_vertical"
+                  },
+                  "parameters": {
+                    "ready_s": 1.0,
+                    "dwell_s": 0.18,
+                    "max_gap_s": 0.5,
+                    "max_age_ms": 500.0,
+                    "return_tolerance_deg": 8.0,
+                    "turn_delta_deg": 5.0
+                  },
+                  "target_angle_deg": 60.0,
+                  "timing_plan": {
+                    "outbound_min_s": null,
+                    "outbound_max_s": null,
+                    "return_min_s": null,
+                    "return_max_s": null,
+                    "hold_min_s": null
+                  },
+                  "support": {
+                    "use_of_hands": "not_recorded",
+                    "needs_companion": null
+                  },
+                  "dose": {
+                    "target_reps": 2,
+                    "target_sets": 1,
+                    "rest_between_sets_s": null
+                  }
+                },
+                "evidence_refs": {
+                  "first": {
+                    "seq": 50,
+                    "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                    "time_s": 2.5
+                  },
+                  "latest": {
+                    "seq": 56,
+                    "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                    "time_s": 2.8000000000000003
+                  },
+                  "standing": null,
+                  "return_start": null,
+                  "seated_rearm": null
+                },
+                "hold_anchor": "prescribed_projected_metric"
+              },
+              "end_time_s": 2.8000000000000003,
+              "reason": "user_stopped",
+              "quality_status": "UNASSESSABLE",
+              "quality_assessable": false
+            }
+          ],
+          "completed": 1,
+          "current": null,
+          "metric": {
+            "value": 70.0,
+            "unit": "degree",
+            "valid": true,
+            "reason": null,
+            "evidence_kind": "observed",
+            "observed_at_s": 2.8000000000000003,
+            "computed_at_s": 2.8000000000000003,
+            "age_ms": 0.0,
+            "required_joints": [
+              "left_shoulder",
+              "left_elbow"
+            ]
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 0
+          },
+          "current_issues": [],
+          "movement_timing_version": "rehab-observed-timing-2",
+          "movement_timing_live": null,
+          "last_movement_timing": {
+            "outbound_s": {
+              "value": null,
+              "valid": false,
+              "reason": "user_stopped"
+            },
+            "endpoint_dwell_s": {
+              "value": null,
+              "valid": false,
+              "reason": "user_stopped"
+            },
+            "return_s": {
+              "value": null,
+              "valid": false,
+              "reason": "user_stopped"
+            },
+            "target_hold_s": {
+              "value": 0.25,
+              "valid": true,
+              "reason": null
+            },
+            "version": "rehab-observed-timing-2",
+            "method": "peak_band_3deg_median3",
+            "cycle_complete": false,
+            "partial_observation": true,
+            "goals": {
+              "outbound": "NOT_SET",
+              "return": "NOT_SET",
+              "hold": "NOT_SET"
+            },
+            "arrangement": {
+              "outbound_min_s": null,
+              "outbound_max_s": null,
+              "return_min_s": null,
+              "return_max_s": null,
+              "hold_min_s": null
+            },
+            "algorithm_version": "observed-timing-1",
+            "time_basis": "mapped_source_seconds",
+            "count_gate": false,
+            "live_hold_method": "consecutive_current_observations",
+            "phase_timing_mode": "after_observed_cycle",
+            "observed_sample_count": 7,
+            "comparison_context": {
+              "version": "rehab-timing-context-1",
+              "calibration_epoch": 0,
+              "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+              "source_ref": "internal-replay",
+              "participant_id": null,
+              "submode": "training",
+              "protocol": {
+                "exercise_id": "shoulder_abduction",
+                "metric": "raise_deg",
+                "unit": "degree",
+                "metric_version": "upper-arm-image-vertical-2",
+                "view": "frontal",
+                "required_joints": [
+                  "left_shoulder",
+                  "left_elbow"
+                ],
+                "optional_quality_metrics": {
+                  "elbow_flexion_deg": [
+                    "left_shoulder",
+                    "left_elbow",
+                    "left_wrist"
+                  ],
+                  "trunk_tilt_deg": [
+                    "left_shoulder",
+                    "right_shoulder",
+                    "left_hip",
+                    "right_hip"
+                  ]
+                },
+                "start_posture": "arm_at_comfortable_side",
+                "ready_max_deg": 20.0,
+                "excursion_min_deg": 10.0,
+                "phases": [
+                  "WAIT_READY",
+                  "REST",
+                  "RAISING",
+                  "PEAK_OR_HOLD",
+                  "LOWERING"
+                ],
+                "completion": "observed_departure_turn_and_return",
+                "baseline_reference": "image_down_vertical",
+                "eligibility_rule_ref": "existing-general-activity-rules-1-no-dosage-change",
+                "protocol_version": "rehab-protocol-2.0",
+                "side": "left",
+                "required_metric": "raise_deg",
+                "missing_policy": "pause_evidence_keep_short_context",
+                "quality_version": "explicit-observed-constraints-2",
+                "target_definition": "personal_prescribed_projected_metric_maximum",
+                "validity": "current_observed_or_causally_filtered_required_joints_only"
+              },
+              "domain": {
+                "schema_id": "coco17-v1",
+                "model_manifest_id": "TEST-not-a-model",
+                "frame_size": [
+                  640,
+                  480
+                ],
+                "time_basis": "mapped_source_seconds",
+                "coordinate_space": "raw_image_pixels",
+                "preprocess_version": "causal-ema-schema-0.3.0"
+              },
+              "baseline": {
+                "raw_value": 0.0,
+                "unit": "degree",
+                "reference": "image_down_vertical"
+              },
+              "parameters": {
+                "ready_s": 1.0,
+                "dwell_s": 0.18,
+                "max_gap_s": 0.5,
+                "max_age_ms": 500.0,
+                "return_tolerance_deg": 8.0,
+                "turn_delta_deg": 5.0
+              },
+              "target_angle_deg": 60.0,
+              "timing_plan": {
+                "outbound_min_s": null,
+                "outbound_max_s": null,
+                "return_min_s": null,
+                "return_max_s": null,
+                "hold_min_s": null
+              },
+              "support": {
+                "use_of_hands": "not_recorded",
+                "needs_companion": null
+              },
+              "dose": {
+                "target_reps": 2,
+                "target_sets": 1,
+                "rest_between_sets_s": null
+              }
+            },
+            "evidence_refs": {
+              "first": {
+                "seq": 50,
+                "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                "time_s": 2.5
+              },
+              "latest": {
+                "seq": 56,
+                "source_epoch": "ced2ceb441e7486a8cca522512cc576a",
+                "time_s": 2.8000000000000003
+              },
+              "standing": null,
+              "return_start": null,
+              "seated_rearm": null
+            },
+            "hold_anchor": "prescribed_projected_metric"
+          },
+          "pending_input_gap": null,
+          "measurement_contract": {
+            "signature": [
+              "internal-replay",
+              "coco17-v1",
+              "TEST-not-a-model",
+              [
+                640,
+                480
+              ],
+              "mapped_source_seconds"
+            ],
+            "coordinate_space": "raw_image_pixels",
+            "metric_version": "upper-arm-image-vertical-2",
+            "preprocess_version": "causal-ema-schema-0.3.0",
+            "view": "frontal",
+            "side": "left"
+          },
+          "target_result_separate": true,
+          "quality_result_separate": true,
+          "eligibility": "unchanged_requires_existing_plan_validation",
+          "training": {
+            "stage": "FINISHED",
+            "completed_sets": 0,
+            "target_sets": 1,
+            "target_reps": 2,
+            "sets": [],
+            "rest_started_s": null,
+            "prescribed_rest_s": null,
+            "plan_complete": false,
+            "progress_policy": "confirmed_sets-2-not-legacy-progress"
+          }
+        },
+        "native": {
+          "pid": 8280,
+          "parent_pid": 8096,
+          "ticket": "683054fb43834a3e8e85df6966fc7788",
+          "role": "report",
+          "memory": "wnsm_2f45653a",
+          "next_call": "kernel32.Sleep_60000_via_PyDLL_GIL_held"
+        }
+      },
+      "host_exit": 1,
+      "auto_exit_wait_ms": 0.012800000149582047,
+      "child_exit_before_cleanup": 0,
+      "supervisor_cleanup_required": false,
+      "host_actual_exit_confirmed": true,
+      "log": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\native-parent-49130fa6\\TEST_native_report_wait\\host.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true
+    },
+    {
+      "case": "original_YOLO_cold_ticket",
+      "checks": {
+        "exact_host_and_child_live": true,
+        "native_task_still_live": true,
+        "child_auto_exit_without_supervisor_kill": true,
+        "actual_child_exit_confirmed": true,
+        "compute_lease_released_after_actual_exit": true,
+        "volatile_memory_released": true,
+        "checkpoint_confirmed_rep_preserved": true,
+        "canonical_found_not_duplicated": true,
+        "prior_final_commit_or_interrupted_recovery": true,
+        "one_final_contribution": true,
+        "null_feedback_not_replaced": true
+      },
+      "proof": {
+        "host_pid": 1696,
+        "child_pid": 28624,
+        "case": "original_YOLO_cold_ticket",
+        "session_id": "1eca1ea5d10a4639ac6b24c6e0097188",
+        "memory_name": "wnsm_60dc3c09",
+        "last_request": {
+          "ticket": "7e08006a68424761b3f526c9c5f06a33",
+          "session_id": "1eca1ea5d10a4639ac6b24c6e0097188",
+          "seq": 57,
+          "pid": 28624,
+          "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d"
+        },
+        "operation_thread_alive": true,
+        "warm": false,
+        "prior_commit": null,
+        "runtime_snapshot": {
+          "protocol": {
+            "exercise_id": "shoulder_abduction",
+            "metric": "raise_deg",
+            "unit": "degree",
+            "metric_version": "upper-arm-image-vertical-2",
+            "view": "frontal",
+            "required_joints": [
+              "left_shoulder",
+              "left_elbow"
+            ],
+            "optional_quality_metrics": {
+              "elbow_flexion_deg": [
+                "left_shoulder",
+                "left_elbow",
+                "left_wrist"
+              ],
+              "trunk_tilt_deg": [
+                "left_shoulder",
+                "right_shoulder",
+                "left_hip",
+                "right_hip"
+              ]
+            },
+            "start_posture": "arm_at_comfortable_side",
+            "ready_max_deg": 20.0,
+            "excursion_min_deg": 10.0,
+            "phases": [
+              "WAIT_READY",
+              "REST",
+              "RAISING",
+              "PEAK_OR_HOLD",
+              "LOWERING"
+            ],
+            "completion": "observed_departure_turn_and_return",
+            "baseline_reference": "image_down_vertical",
+            "eligibility_rule_ref": "existing-general-activity-rules-1-no-dosage-change",
+            "protocol_version": "rehab-protocol-2.0",
+            "side": "left",
+            "required_metric": "raise_deg",
+            "missing_policy": "pause_evidence_keep_short_context",
+            "quality_version": "explicit-observed-constraints-2",
+            "target_definition": "personal_prescribed_projected_metric_maximum",
+            "validity": "current_observed_or_causally_filtered_required_joints_only"
+          },
+          "run_state": "active",
+          "phase": "RAISING",
+          "observation_state": "partially_observable",
+          "calibration_epoch": 0,
+          "baseline": {
+            "raw_value": 0.0,
+            "unit": "degree",
+            "time_s": 1.1,
+            "reference": "image_down_vertical",
+            "quality": "observed_posture_and_stability",
+            "calibration_epoch": 0
+          },
+          "repetitions": [
+            {
+              "rep_index": 1,
+              "start_time_s": 1.75,
+              "calibration_epoch": 0,
+              "peak_excursion_deg": 70.0,
+              "peak_metric_deg": 70.0,
+              "evidence_refs": [
+                {
+                  "seq": 35,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 1.75
+                },
+                {
+                  "seq": 36,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 1.8
+                },
+                {
+                  "seq": 37,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 1.85
+                },
+                {
+                  "seq": 38,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 1.9000000000000001
+                },
+                {
+                  "seq": 39,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 1.9500000000000002
+                },
+                {
+                  "seq": 40,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 2.0
+                },
+                {
+                  "seq": 41,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 2.0500000000000003
+                },
+                {
+                  "seq": 42,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 2.1
+                },
+                {
+                  "seq": 43,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 2.15
+                },
+                {
+                  "seq": 44,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 2.2
+                },
+                {
+                  "seq": 45,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 2.25
+                },
+                {
+                  "seq": 46,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 2.3000000000000003
+                },
+                {
+                  "seq": 47,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 2.35
+                },
+                {
+                  "seq": 48,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 2.4000000000000004
+                },
+                {
+                  "seq": 49,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 2.45
+                }
+              ],
+              "metric_validity": {},
+              "issues": [],
+              "quality_evaluated": false,
+              "observed_turn": true,
+              "completion_status": "COMPLETE",
+              "target_status": "MET",
+              "movement_timing": {
+                "outbound_s": {
+                  "value": 0.050000000000000044,
+                  "valid": true,
+                  "reason": null
+                },
+                "endpoint_dwell_s": {
+                  "value": 0.44999999999999996,
+                  "valid": true,
+                  "reason": null
+                },
+                "return_s": {
+                  "value": 0.4500000000000002,
+                  "valid": true,
+                  "reason": null
+                },
+                "target_hold_s": {
+                  "value": 0.44999999999999996,
+                  "valid": true,
+                  "reason": null
+                },
+                "version": "rehab-observed-timing-2",
+                "method": "peak_band_3deg_median3",
+                "cycle_complete": true,
+                "partial_observation": false,
+                "goals": {
+                  "outbound": "NOT_SET",
+                  "return": "NOT_SET",
+                  "hold": "NOT_SET"
+                },
+                "arrangement": {
+                  "outbound_min_s": null,
+                  "outbound_max_s": null,
+                  "return_min_s": null,
+                  "return_max_s": null,
+                  "hold_min_s": null
+                },
+                "algorithm_version": "observed-timing-1",
+                "time_basis": "mapped_source_seconds",
+                "count_gate": false,
+                "live_hold_method": "consecutive_current_observations",
+                "phase_timing_mode": "after_observed_cycle",
+                "observed_sample_count": 20,
+                "comparison_context": {
+                  "version": "rehab-timing-context-1",
+                  "calibration_epoch": 0,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "source_ref": "internal-replay",
+                  "participant_id": null,
+                  "submode": "training",
+                  "protocol": {
+                    "exercise_id": "shoulder_abduction",
+                    "metric": "raise_deg",
+                    "unit": "degree",
+                    "metric_version": "upper-arm-image-vertical-2",
+                    "view": "frontal",
+                    "required_joints": [
+                      "left_shoulder",
+                      "left_elbow"
+                    ],
+                    "optional_quality_metrics": {
+                      "elbow_flexion_deg": [
+                        "left_shoulder",
+                        "left_elbow",
+                        "left_wrist"
+                      ],
+                      "trunk_tilt_deg": [
+                        "left_shoulder",
+                        "right_shoulder",
+                        "left_hip",
+                        "right_hip"
+                      ]
+                    },
+                    "start_posture": "arm_at_comfortable_side",
+                    "ready_max_deg": 20.0,
+                    "excursion_min_deg": 10.0,
+                    "phases": [
+                      "WAIT_READY",
+                      "REST",
+                      "RAISING",
+                      "PEAK_OR_HOLD",
+                      "LOWERING"
+                    ],
+                    "completion": "observed_departure_turn_and_return",
+                    "baseline_reference": "image_down_vertical",
+                    "eligibility_rule_ref": "existing-general-activity-rules-1-no-dosage-change",
+                    "protocol_version": "rehab-protocol-2.0",
+                    "side": "left",
+                    "required_metric": "raise_deg",
+                    "missing_policy": "pause_evidence_keep_short_context",
+                    "quality_version": "explicit-observed-constraints-2",
+                    "target_definition": "personal_prescribed_projected_metric_maximum",
+                    "validity": "current_observed_or_causally_filtered_required_joints_only"
+                  },
+                  "domain": {
+                    "schema_id": "coco17-v1",
+                    "model_manifest_id": "TEST-not-a-model",
+                    "frame_size": [
+                      640,
+                      480
+                    ],
+                    "time_basis": "mapped_source_seconds",
+                    "coordinate_space": "raw_image_pixels",
+                    "preprocess_version": "causal-ema-schema-0.3.0"
+                  },
+                  "baseline": {
+                    "raw_value": 0.0,
+                    "unit": "degree",
+                    "reference": "image_down_vertical"
+                  },
+                  "parameters": {
+                    "ready_s": 1.0,
+                    "dwell_s": 0.18,
+                    "max_gap_s": 0.5,
+                    "max_age_ms": 500.0,
+                    "return_tolerance_deg": 8.0,
+                    "turn_delta_deg": 5.0
+                  },
+                  "target_angle_deg": 60.0,
+                  "timing_plan": {
+                    "outbound_min_s": null,
+                    "outbound_max_s": null,
+                    "return_min_s": null,
+                    "return_max_s": null,
+                    "hold_min_s": null
+                  },
+                  "support": {
+                    "use_of_hands": "not_recorded",
+                    "needs_companion": null
+                  },
+                  "dose": {
+                    "target_reps": 2,
+                    "target_sets": 1,
+                    "rest_between_sets_s": null
+                  }
+                },
+                "evidence_refs": {
+                  "first": {
+                    "seq": 30,
+                    "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                    "time_s": 1.5
+                  },
+                  "latest": {
+                    "seq": 49,
+                    "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                    "time_s": 2.45
+                  },
+                  "standing": null,
+                  "return_start": null,
+                  "seated_rearm": null
+                },
+                "hold_anchor": "prescribed_projected_metric"
+              },
+              "end_time_s": 2.45,
+              "quality_assessable": false,
+              "quality_status": "UNASSESSABLE",
+              "plan_progress": "confirmed_rep_only",
+              "eligibility": "not_evaluated_by_counter"
+            }
+          ],
+          "completed": 1,
+          "current": {
+            "rep_index": 2,
+            "start_time_s": 2.75,
+            "calibration_epoch": 0,
+            "peak_excursion_deg": 70.0,
+            "peak_metric_deg": 70.0,
+            "evidence_refs": [
+              {
+                "seq": 55,
+                "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                "time_s": 2.75
+              },
+              {
+                "seq": 56,
+                "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                "time_s": 2.8000000000000003
+              }
+            ],
+            "metric_validity": {},
+            "issues": [],
+            "quality_evaluated": false,
+            "observed_turn": false,
+            "completion_status": "PARTIAL",
+            "target_status": "UNKNOWN",
+            "movement_timing": {
+              "outbound_s": {
+                "value": null,
+                "valid": false,
+                "reason": "incomplete_cycle"
+              },
+              "endpoint_dwell_s": {
+                "value": null,
+                "valid": false,
+                "reason": "incomplete_cycle"
+              },
+              "return_s": {
+                "value": null,
+                "valid": false,
+                "reason": "incomplete_cycle"
+              },
+              "target_hold_s": {
+                "value": 0.25,
+                "valid": true,
+                "reason": null
+              },
+              "version": "rehab-observed-timing-2",
+              "method": "peak_band_3deg_median3",
+              "cycle_complete": false,
+              "partial_observation": true,
+              "goals": {
+                "outbound": "NOT_SET",
+                "return": "NOT_SET",
+                "hold": "NOT_SET"
+              },
+              "arrangement": {
+                "outbound_min_s": null,
+                "outbound_max_s": null,
+                "return_min_s": null,
+                "return_max_s": null,
+                "hold_min_s": null
+              },
+              "algorithm_version": "observed-timing-1",
+              "time_basis": "mapped_source_seconds",
+              "count_gate": false,
+              "live_hold_method": "consecutive_current_observations",
+              "phase_timing_mode": "after_observed_cycle",
+              "observed_sample_count": 7,
+              "comparison_context": {
+                "version": "rehab-timing-context-1",
+                "calibration_epoch": 0,
+                "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                "source_ref": "internal-replay",
+                "participant_id": null,
+                "submode": "training",
+                "protocol": {
+                  "exercise_id": "shoulder_abduction",
+                  "metric": "raise_deg",
+                  "unit": "degree",
+                  "metric_version": "upper-arm-image-vertical-2",
+                  "view": "frontal",
+                  "required_joints": [
+                    "left_shoulder",
+                    "left_elbow"
+                  ],
+                  "optional_quality_metrics": {
+                    "elbow_flexion_deg": [
+                      "left_shoulder",
+                      "left_elbow",
+                      "left_wrist"
+                    ],
+                    "trunk_tilt_deg": [
+                      "left_shoulder",
+                      "right_shoulder",
+                      "left_hip",
+                      "right_hip"
+                    ]
+                  },
+                  "start_posture": "arm_at_comfortable_side",
+                  "ready_max_deg": 20.0,
+                  "excursion_min_deg": 10.0,
+                  "phases": [
+                    "WAIT_READY",
+                    "REST",
+                    "RAISING",
+                    "PEAK_OR_HOLD",
+                    "LOWERING"
+                  ],
+                  "completion": "observed_departure_turn_and_return",
+                  "baseline_reference": "image_down_vertical",
+                  "eligibility_rule_ref": "existing-general-activity-rules-1-no-dosage-change",
+                  "protocol_version": "rehab-protocol-2.0",
+                  "side": "left",
+                  "required_metric": "raise_deg",
+                  "missing_policy": "pause_evidence_keep_short_context",
+                  "quality_version": "explicit-observed-constraints-2",
+                  "target_definition": "personal_prescribed_projected_metric_maximum",
+                  "validity": "current_observed_or_causally_filtered_required_joints_only"
+                },
+                "domain": {
+                  "schema_id": "coco17-v1",
+                  "model_manifest_id": "TEST-not-a-model",
+                  "frame_size": [
+                    640,
+                    480
+                  ],
+                  "time_basis": "mapped_source_seconds",
+                  "coordinate_space": "raw_image_pixels",
+                  "preprocess_version": "causal-ema-schema-0.3.0"
+                },
+                "baseline": {
+                  "raw_value": 0.0,
+                  "unit": "degree",
+                  "reference": "image_down_vertical"
+                },
+                "parameters": {
+                  "ready_s": 1.0,
+                  "dwell_s": 0.18,
+                  "max_gap_s": 0.5,
+                  "max_age_ms": 500.0,
+                  "return_tolerance_deg": 8.0,
+                  "turn_delta_deg": 5.0
+                },
+                "target_angle_deg": 60.0,
+                "timing_plan": {
+                  "outbound_min_s": null,
+                  "outbound_max_s": null,
+                  "return_min_s": null,
+                  "return_max_s": null,
+                  "hold_min_s": null
+                },
+                "support": {
+                  "use_of_hands": "not_recorded",
+                  "needs_companion": null
+                },
+                "dose": {
+                  "target_reps": 2,
+                  "target_sets": 1,
+                  "rest_between_sets_s": null
+                }
+              },
+              "evidence_refs": {
+                "first": {
+                  "seq": 50,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 2.5
+                },
+                "latest": {
+                  "seq": 56,
+                  "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                  "time_s": 2.8000000000000003
+                },
+                "standing": null,
+                "return_start": null,
+                "seated_rearm": null
+              },
+              "hold_anchor": "prescribed_projected_metric"
+            }
+          },
+          "metric": {
+            "value": 70.0,
+            "unit": "degree",
+            "valid": true,
+            "reason": null,
+            "evidence_kind": "observed",
+            "observed_at_s": 2.8000000000000003,
+            "computed_at_s": 2.8000000000000003,
+            "age_ms": 0.0,
+            "required_joints": [
+              "left_shoulder",
+              "left_elbow"
+            ]
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 0
+          },
+          "current_issues": [],
+          "movement_timing_version": "rehab-observed-timing-2",
+          "movement_timing_live": {
+            "hold_elapsed_s": 0.25,
+            "hold_min_s": null,
+            "at_target": true,
+            "version": "rehab-observed-timing-2"
+          },
+          "last_movement_timing": {
+            "outbound_s": {
+              "value": 0.050000000000000044,
+              "valid": true,
+              "reason": null
+            },
+            "endpoint_dwell_s": {
+              "value": 0.44999999999999996,
+              "valid": true,
+              "reason": null
+            },
+            "return_s": {
+              "value": 0.4500000000000002,
+              "valid": true,
+              "reason": null
+            },
+            "target_hold_s": {
+              "value": 0.44999999999999996,
+              "valid": true,
+              "reason": null
+            },
+            "version": "rehab-observed-timing-2",
+            "method": "peak_band_3deg_median3",
+            "cycle_complete": true,
+            "partial_observation": false,
+            "goals": {
+              "outbound": "NOT_SET",
+              "return": "NOT_SET",
+              "hold": "NOT_SET"
+            },
+            "arrangement": {
+              "outbound_min_s": null,
+              "outbound_max_s": null,
+              "return_min_s": null,
+              "return_max_s": null,
+              "hold_min_s": null
+            },
+            "algorithm_version": "observed-timing-1",
+            "time_basis": "mapped_source_seconds",
+            "count_gate": false,
+            "live_hold_method": "consecutive_current_observations",
+            "phase_timing_mode": "after_observed_cycle",
+            "observed_sample_count": 20,
+            "comparison_context": {
+              "version": "rehab-timing-context-1",
+              "calibration_epoch": 0,
+              "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+              "source_ref": "internal-replay",
+              "participant_id": null,
+              "submode": "training",
+              "protocol": {
+                "exercise_id": "shoulder_abduction",
+                "metric": "raise_deg",
+                "unit": "degree",
+                "metric_version": "upper-arm-image-vertical-2",
+                "view": "frontal",
+                "required_joints": [
+                  "left_shoulder",
+                  "left_elbow"
+                ],
+                "optional_quality_metrics": {
+                  "elbow_flexion_deg": [
+                    "left_shoulder",
+                    "left_elbow",
+                    "left_wrist"
+                  ],
+                  "trunk_tilt_deg": [
+                    "left_shoulder",
+                    "right_shoulder",
+                    "left_hip",
+                    "right_hip"
+                  ]
+                },
+                "start_posture": "arm_at_comfortable_side",
+                "ready_max_deg": 20.0,
+                "excursion_min_deg": 10.0,
+                "phases": [
+                  "WAIT_READY",
+                  "REST",
+                  "RAISING",
+                  "PEAK_OR_HOLD",
+                  "LOWERING"
+                ],
+                "completion": "observed_departure_turn_and_return",
+                "baseline_reference": "image_down_vertical",
+                "eligibility_rule_ref": "existing-general-activity-rules-1-no-dosage-change",
+                "protocol_version": "rehab-protocol-2.0",
+                "side": "left",
+                "required_metric": "raise_deg",
+                "missing_policy": "pause_evidence_keep_short_context",
+                "quality_version": "explicit-observed-constraints-2",
+                "target_definition": "personal_prescribed_projected_metric_maximum",
+                "validity": "current_observed_or_causally_filtered_required_joints_only"
+              },
+              "domain": {
+                "schema_id": "coco17-v1",
+                "model_manifest_id": "TEST-not-a-model",
+                "frame_size": [
+                  640,
+                  480
+                ],
+                "time_basis": "mapped_source_seconds",
+                "coordinate_space": "raw_image_pixels",
+                "preprocess_version": "causal-ema-schema-0.3.0"
+              },
+              "baseline": {
+                "raw_value": 0.0,
+                "unit": "degree",
+                "reference": "image_down_vertical"
+              },
+              "parameters": {
+                "ready_s": 1.0,
+                "dwell_s": 0.18,
+                "max_gap_s": 0.5,
+                "max_age_ms": 500.0,
+                "return_tolerance_deg": 8.0,
+                "turn_delta_deg": 5.0
+              },
+              "target_angle_deg": 60.0,
+              "timing_plan": {
+                "outbound_min_s": null,
+                "outbound_max_s": null,
+                "return_min_s": null,
+                "return_max_s": null,
+                "hold_min_s": null
+              },
+              "support": {
+                "use_of_hands": "not_recorded",
+                "needs_companion": null
+              },
+              "dose": {
+                "target_reps": 2,
+                "target_sets": 1,
+                "rest_between_sets_s": null
+              }
+            },
+            "evidence_refs": {
+              "first": {
+                "seq": 30,
+                "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                "time_s": 1.5
+              },
+              "latest": {
+                "seq": 49,
+                "source_epoch": "f4eda9e257bf40e18fe991ca2b058d6d",
+                "time_s": 2.45
+              },
+              "standing": null,
+              "return_start": null,
+              "seated_rearm": null
+            },
+            "hold_anchor": "prescribed_projected_metric"
+          },
+          "pending_input_gap": null,
+          "measurement_contract": {
+            "signature": [
+              "internal-replay",
+              "coco17-v1",
+              "TEST-not-a-model",
+              [
+                640,
+                480
+              ],
+              "mapped_source_seconds"
+            ],
+            "coordinate_space": "raw_image_pixels",
+            "metric_version": "upper-arm-image-vertical-2",
+            "preprocess_version": "causal-ema-schema-0.3.0",
+            "view": "frontal",
+            "side": "left"
+          },
+          "target_result_separate": true,
+          "quality_result_separate": true,
+          "eligibility": "unchanged_requires_existing_plan_validation",
+          "training": {
+            "stage": "ACTIVE",
+            "completed_sets": 0,
+            "target_sets": 1,
+            "target_reps": 2,
+            "sets": [],
+            "rest_started_s": null,
+            "prescribed_rest_s": null,
+            "plan_complete": false,
+            "progress_policy": "confirmed_sets-2-not-legacy-progress"
+          }
+        },
+        "native": null
+      },
+      "host_exit": 1,
+      "auto_exit_wait_ms": 1.1021999998774845,
+      "child_exit_before_cleanup": 0,
+      "supervisor_cleanup_required": false,
+      "host_actual_exit_confirmed": true,
+      "log": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\native-parent-49130fa6\\original_YOLO_cold_ticket\\host.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "passed": true
+    }
+  ],
+  "source_unchanged": true,
+  "passed": true,
+  "raw_summary": {
+    "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\native-parent-49130fa6\\summary.json",
+    "sha256": "63da514d8c38ab546c9cea63a7e7f1b4120f65568ecff57ed0c45f461550f009"
+  }
+}
