@@ -55,6 +55,6 @@ deploy/mobile/                 独立手机服务部署材料（独立数据，�
 
 ## 开发与验收
 
-康复后端最新独立增量：v2正式会话与主要离线训练／录像研究入口的非阻塞资源准入。见 [实现与范围](docs/development/REHAB_COMPUTE_COORDINATION.md) 和 [251／12／19项回归及原生验收](docs/validation/REHAB_COMPUTE_COORDINATION_2026-10-11.md)。不改旧前端／Android／正式权重，v2默认关闭；旧桌面、全部报告作业和跨端调度尚未覆盖，不等于用户端或全产品协调已经更新。
+康复后端最新独立增量：在v2正式／离线重任务准入上增加默认报告延期、持久待办和同宿主所属抢占。见 [双锁实现与范围](docs/development/REHAB_COMPUTE_COORDINATION.md) 和 [269／12／19项回归与报告验收](docs/validation/REHAB_REPORT_COORDINATION_2026-10-11.md)。57项资源／报告专项为269项子集；旧251项留在原验收。旧前端／Android／正式权重不改，v2默认关闭；旧桌面、非v2报告和跨端调度尚未覆盖，不等于用户端或全产品协调已更新。
 
 当前电脑版本 **0.20.0**。先读 [当前交接](docs/HANDOFF.md)、[调度逻辑与接入](docs/plans/ANKANG_CARE_COORDINATION_2026-10-10.md)、[本轮验证](docs/validation/ANKANG_CARE_2026-10-10.md) 与 [医学依据](docs/plans/ANKANG_MEDICAL_EVIDENCE_2026-10-10.md)。本地协调支持安排查询、原下一项查询及经确认的逐次服药记录／训练改期；前端确认入口尚待接入。原可选联网康复查询需要有效 API 配置。历史医疗与测量约束继续适用，软件测试不等同于临床效果或真人动作准确率验收。

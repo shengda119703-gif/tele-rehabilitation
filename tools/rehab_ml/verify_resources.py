@@ -53,6 +53,20 @@ def control_probe(service, owner, sid, count=40):
                 scope='internal_TEST_control_not_camera_or_multi_user_pressure')
 
 
+def wait_heavy_admission(timeout_s=20.):
+    """Prove both OS handles are available, allowing independent reports to end."""
+    from app.rehab_v2.resources import ResourceBusy
+    started = time.perf_counter()
+    while True:
+        try:
+            with heavy_compute():
+                return time.perf_counter()-started
+        except ResourceBusy:
+            if time.perf_counter()-started >= timeout_s:
+                raise RuntimeError('actual_heavy_admission_still_busy_after_finalization') from None
+            time.sleep(.02)
+
+
 def native_audit(root):
     from PIL import Image
     from app.domain import Context
@@ -88,8 +102,9 @@ def native_audit(root):
         result['formal_controls'] = control_probe(service, owner, sid)
         receipt = service.finish(owner, sid, dict(idempotency_key='finish',
             expected_revision=service.get(owner, sid)['revision']))
-        with heavy_compute():
-            pass  # Confirm actual session lease released, not just an ended label.
+        # Fact finalization releases formal capacity; a separately admitted
+        # report may still be ending. Prove both real handles, not an ended label.
+        result['heavy_admission_after_finalization_s'] = wait_heavy_admission()
 
         output, environment, arguments = prepare_child(root, reference, 'actual-trainer')
         log = root/'actual-trainer.txt'

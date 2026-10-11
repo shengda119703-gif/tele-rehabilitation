@@ -24,7 +24,8 @@ STAGES = ('create_request_ms', 'frame_request_ms', 'queue_wait_ms', 'decode_ms',
 COUNTERS = ('accepted', 'duplicate', 'processed', 'latest_replaced',
             'epoch_discarded', 'terminal_discarded', 'input_failed', 'inference_cancelled', 'timeout',
             'commit_success', 'report_failed', 'report_ready', 'report_superseded',
-            'report_timeout', 'report_cancelled', 'report_busy', 'background_failure', 'unprocessed_at_finish')
+            'report_timeout', 'report_cancelled', 'report_busy', 'report_deferred', 'report_preempted',
+            'background_failure', 'unprocessed_at_finish')
 
 
 def _number(value):

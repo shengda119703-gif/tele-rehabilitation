@@ -1,0 +1,115 @@
+{
+  "run_id": "report-resource-audit-5d0a9f94",
+  "clinical_accuracy": null,
+  "human_media_processed": false,
+  "product_enabled": false,
+  "source_kind": "SYNTHETIC",
+  "usage_context": "TEST",
+  "scope": "v2_report_admission_not_full_product_or_device_pressure",
+  "implementation_sha256": {
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/resources.py": "eb86c8a4c1ef99b77a8780d78ec527b51a2bb151bebb6d99c7ad850280692abe",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/telemetry.py": "1c6cf1359b0ca215ac01179b42e424f7d578206f95fd2fa5073d34f7fd0ea1f2",
+    "mobile_rehab/rehab_v2/report_worker.py": "bcca3fd3b935f42edd3c02bc86bffcdfc2122176d3fe474074bf5b506e09f9a5",
+    "mobile_rehab/rehab_v2/service.py": "ba87241834e71ca90048f0c694975b01a1e80081dc028245e1980f1c55365193",
+    "mobile_rehab/rehab_v2/owned_worker.py": "499fc70ef65d69c30bfbb124e971135b9ce3aecaa1bb2a623b646d6645b7fd9d",
+    "tests/rehab_backend/test_resources.py": "5a6ba1d002d39f0cb1d18c708c412dfbd7d6b84431484e48a5d168be6460f673",
+    "tests/rehab_backend/test_report_resources.py": "d0491c822a703ab0d254c0b7aba3fbcf69bb498f1282a847b100e36203375b17",
+    "tests/rehab_backend/test_report_isolation.py": "157b60bdf8005de3719a578ef97ee136b5fd1a030a5e37181063b20b7e8f00bd",
+    "tools/rehab_ml/verify_resources.py": "952355701e6793b9fce0a93bb646dbed403e5c2bae6c513b4512f84c89f6d282",
+    "tools/rehab_ml/verify_report_resources.py": "abc5393f8b138e23950abc682ee6d5feab98d14a7e807bfd26e42121430db2f0"
+  },
+  "tests": {
+    "arguments": [
+      "-X",
+      "utf8",
+      "-B",
+      "-m",
+      "unittest",
+      "test_resources",
+      "test_report_resources",
+      "test_report_isolation",
+      "-v"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 44.80449559999988,
+    "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\report-resource-audit-5d0a9f94\\tests.txt",
+    "log_sha256": "37aa7ac5aacb25509ee4d532c46135713e3a32ccf941086f9af406c356af9be7",
+    "tail": "ReportTransportTests.test_real_exit_is_failed_report_not_zero_measurement) ... ok\ntest_real_hang_is_released_and_next_report_can_restart (test_report_isolation.ReportTransportTests.test_real_hang_is_released_and_next_report_can_restart) ... ok\ntest_release_unconfirmed_retains_handles_and_retry_uses_same_owner (test_report_isolation.ReportTransportTests.test_release_unconfirmed_retains_handles_and_retry_uses_same_owner) ... ok\ntest_startup_timeout_and_bad_handshake_release_exact_child (test_report_isolation.ReportTransportTests.test_startup_timeout_and_bad_handshake_release_exact_child) ... ok\n\n----------------------------------------------------------------------\nRan 57 tests in 44.511s\n\nOK\n"
+  },
+  "native": {
+    "formal_deferral": {
+      "response": {
+        "state": "deferred",
+        "reason": "rehab_compute_resource_busy",
+        "retry_after_s": 0.5
+      },
+      "child_absent": true,
+      "completed_reps": 1,
+      "immutable_sha256": "361ae73763d389697f9ff5169357777d1fb542c603297bdcb180c33ff94e9389"
+    },
+    "default_report_after_release": {
+      "pid": 27420,
+      "ready": true,
+      "immutable_sha256": "361ae73763d389697f9ff5169357777d1fb542c603297bdcb180c33ff94e9389",
+      "contract": {
+        "version": "rehab-report-process-2",
+        "mode": "owned_spawn",
+        "start_method": "spawn",
+        "input_buffer_bytes": 2097152,
+        "response_buffer_bytes": 2097152,
+        "shared_memory_bytes": 4194304,
+        "concurrency": 1,
+        "startup_timeout_s": 10.0,
+        "report_timeout_s": 2.0,
+        "release_timeout_s": 1.0,
+        "no_camera_or_storage_in_child": true,
+        "commit_authority": "host_feedback_revision_cas",
+        "os_process_start_hard_deadline": false,
+        "compute": {
+          "version": "rehab-compute-coordination-2",
+          "scope": "instrumented_processes_in_this_checkout",
+          "formal": "shared",
+          "offline_heavy": "exclusive",
+          "admission": "nonblocking",
+          "derived_report": "primary_exclusive_preflight_then_background_shared",
+          "report_holds_primary_during_work": false,
+          "formal_can_start_during_admitted_report": true,
+          "report_preemption": "same_host_exact_owned_worker_only",
+          "older_running_versions_covered": false,
+          "release": "os_handle_close_or_actual_process_exit",
+          "path_not_derived_from_job_output_root": true,
+          "no_queue_or_automatic_job_start": true,
+          "uninstrumented_entry_points_covered": false
+        },
+        "busy": "durable_pending_retry",
+        "preemption": "same_host_nonblocking_request_then_confirmed_owned_exit"
+      }
+    },
+    "same_host_preemption": {
+      "owned_pid": 14280,
+      "owned_exit_confirmed": true,
+      "shared_memory_unlinked": true,
+      "formal_create_ms": 21.0824999999204,
+      "state": "pending",
+      "immutable_sha256": "21b074e437b8142169e3653e7a0c2e75f544859c9a97afe9d7e80096201e6e6a",
+      "release": {
+        "pid": 14280,
+        "exit_code": -15,
+        "reason": "report_worker_cancelled",
+        "confirmed": true
+      },
+      "scope": "internal_TEST_create_with_native_hanging_report_not_network_or_pressure"
+    },
+    "restart_during_heavy": {
+      "state": "pending",
+      "durable_work_present": true,
+      "child_absent": true,
+      "immutable_sha256": "21b074e437b8142169e3653e7a0c2e75f544859c9a97afe9d7e80096201e6e6a"
+    },
+    "restart_after_release": {
+      "state": "ready",
+      "immutable_sha256": "21b074e437b8142169e3653e7a0c2e75f544859c9a97afe9d7e80096201e6e6a"
+    }
+  },
+  "passed": true
+}

@@ -26,6 +26,8 @@ from .report_worker import IsolatedReportWorker
 from app.rehab_v2.reporting import build_report
 from app.rehab_v2.storage_boundary import RehabStorageBoundary, StorageFault, classify_sqlite_fault
 
+REPORT_RETRY_S = .5
+
 
 class StoreLease:
     """OS-released single-host lease; a second host must not recover a live draft."""
@@ -138,7 +140,10 @@ class SessionService:
                 for owner, sid in work:
                     if self.report_stop.is_set():
                         break
-                    busy = self.rebuild_report(owner, sid)['state'] == 'running' or busy
+                    state = self.rebuild_report(owner, sid)['state']
+                    if state in ('running', 'deferred', 'pending_newer_feedback'):
+                        busy = True
+                        break  # Shared capacity: don't spin through 16 rows.
                 self.report_worker_failure = None
                 if len(work) == 16 and not busy:
                     continue
@@ -146,7 +151,7 @@ class SessionService:
                 # SQLite failures must not be reported as successful rebuilds.
                 # Durable pending rows remain recoverable at the next start.
                 self.report_worker_failure = getattr(exc, 'code', type(exc).__name__)
-            self.report_wake.wait(.2)
+            self.report_wake.wait(REPORT_RETRY_S)
             self.report_wake.clear()
 
     def _release_terminal_compute(self):
@@ -195,6 +200,8 @@ class SessionService:
                     raise SessionError('service_closed', 503)
                 if not self.worker.is_alive() or self.worker_failure:
                     raise SessionError('formal_inference_worker_unavailable', 503)
+                if self.report_builder is self._report and self.report_executor.quarantined:
+                    raise SessionError('formal_report_release_unconfirmed', 503)
                 self._prune_terminal_runtimes()
                 active = [sid for sid, runtime in self.runtimes.items() if runtime.engine.run_state != 'ended']
                 if active:
@@ -250,6 +257,7 @@ class SessionService:
                 except BaseException:
                     compute_lease.close()
                     raise
+                self.report_executor.preempt_current()  # Request only; no wait on report/native exit.
                 return item
         result = self._bounded(create)
         runtime = self.runtimes.get(result['session_id'])
@@ -638,7 +646,8 @@ class SessionService:
     def _report_execution_contract(self):
         if self.report_builder is self._report:
             return self.report_executor.contract
-        return dict(mode='trusted_local_callable', concurrency=1, hard_cancellation=False)
+        return dict(mode='trusted_local_callable', concurrency=1, hard_cancellation=False,
+                    compute=compute_contract(), preemption='not_supported_for_local_callable')
 
     def rebuild_report(self, owner, sid):
         item = self.repository.get(owner, sid)
@@ -661,7 +670,8 @@ class SessionService:
                     for stage, duration in durations.items():
                         runtime.telemetry.observe(stage, duration)
             else:
-                report = self.report_builder(item)
+                with ComputeLease('report'):
+                    report = self.report_builder(item)
             saved = self.repository.report_state(owner, sid, 'ready', report,
                 expected_feedback_revision=item['feedback_revision'])
             if runtime:
@@ -669,14 +679,20 @@ class SessionService:
             return dict(state='ready' if saved else 'pending_newer_feedback')
         except Exception as exc:
             error = getattr(exc, 'code', type(exc).__name__)
+            deferred = error in (ResourceBusy.code, 'report_worker_preempted')
             if runtime:
-                runtime.telemetry.event('report_failed')
+                runtime.telemetry.event('report_deferred' if deferred else 'report_failed')
+                if error == 'report_worker_preempted':
+                    runtime.telemetry.event('report_preempted')
                 if error.endswith('_timeout'):
                     runtime.telemetry.event('report_timeout')
                 elif error == 'report_worker_cancelled':
                     runtime.telemetry.event('report_cancelled')
-            saved = self.repository.report_state(owner, sid, 'failed', error=error,
+            saved = self.repository.report_state(owner, sid, 'pending' if deferred else 'failed', error=error,
                 expected_feedback_revision=item['feedback_revision'])
+            if deferred:
+                return dict(state='deferred' if saved else 'pending_newer_feedback',
+                            reason=error, retry_after_s=REPORT_RETRY_S)
             return dict(state='failed' if saved else 'pending_newer_feedback', error=error)
         finally:
             if runtime:

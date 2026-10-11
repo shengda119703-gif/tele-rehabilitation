@@ -8,7 +8,7 @@
 
 ### 快速阅读
 
-最新后续增量基于`5b42cb0`补v2与主要离线重任务的合作式资源准入，见17.14。最新回归251／12／19项及实际所属原生审计见 [资源验收](validation/REHAB_COMPUTE_COORDINATION_2026-10-11.md)；旧章节的实验版本和历史数值不倒改为本轮重跑。
+后续基于`5b42cb0`补v2与主要离线重任务准入；本轮基于`863283a`扩展双锁和默认报告延期／所属抢占，见17.14及 [本轮报告验收](validation/REHAB_REPORT_COORDINATION_2026-10-11.md)。此前251／12／19项保留 [原资源验收](validation/REHAB_COMPUTE_COORDINATION_2026-10-11.md)；旧章节实验版本和历史数值不倒改为本轮重跑。
 
 | 你要弄清什么 | 从哪里读 |
 | --- | --- |
@@ -1011,7 +1011,7 @@ JSON 原子替换可降低半写文件风险，但没有跨文件事务，也不
 
 此前字段文档交付收取已经启动的会话CLI，`replay-2167d5a9` 的100项／82.646秒通过，命令耗时83.272秒、exit0，日志SHA256为 `e97c209a9307264c90005e2dbe4c28faeb701297fce4e865b7f17adaa40495e4`。100项是130项子集，本轮核对日志后随存储实现发布；另专项复验12项／12.689秒通过。不称重新启动的完整回归或算法准确率。历史字段核对保留在 [数据契约核对](validation/BACKEND_FIELD_CONTRACTS_2026-10-11.md)。
 
-此前关键点`verification-0bba991b`160项、VIDEO`verification-b2b7fc2e`177项与两原片7条CLI、双层损失`verification-9d1cdb62`200项、多轮`verification-b4bcb387`230项保留各自历史，见17.10–17.13。最新`verification-b5e899f3`251／12／19项、1308保护通过，含21项资源准入测试；实际原生双向拒绝／工程优化／取消／退出审计`resource-audit-ccedd673`见17.14及 [验收](validation/REHAB_COMPUTE_COORDINATION_2026-10-11.md)。旧227项工作区试验及各专项不累加；没有真人微调或手机验证，工程计数不当准确率；会话CLI100项仍为历史，本轮未重跑。
+此前160／177／200／230项保留各自历史，见17.10–17.13；第一版资源`verification-b5e899f3`251项与原生`resource-audit-ccedd673`保留 [原验收](validation/REHAB_COMPUTE_COORDINATION_2026-10-11.md)。本轮最新`verification-a380a260`269／12／19项及1308保护通过，含25项资源＋14项报告准入＋18项原报告隔离，共57项专项子集。`report-resource-audit-5d0a9f94`实际默认报告／所属退出／重启补建和原生离线复验`resource-audit-4f2f9ba6`见17.14及 [本轮验收](validation/REHAB_REPORT_COORDINATION_2026-10-11.md)。历史与专项不累加；无真人微调或手机验证，工程计数不当准确率；会话CLI100项仍为历史，本轮未重跑。
 
 以上是有日期和范围的验证，本轮没有重跑全部产品／Android／Agent 回归。它们不能替代真人角度／器械精度、疾病预测、公网、手环、相机和红米实机验收，也不能互相累加成一个“总准确率”。原产品细节见 [本机同步验证](validation/GITHUB_SYNC_2026-10-11.md)。
 
@@ -1411,7 +1411,9 @@ TCN 感受野 `R = 1 + 2×(3−1)×(1+2+4+8) = 61` 步。20 Hz 名义采样下�
 
 finish取消请求不作为退出回执，未确认原生释放或最终SQL失败仍保留保护；晚结果仍按terminal epoch丢弃。幂等历史回执查找在准入之前，不会因为重任务正在运行而重复创建。实际进程测试确认双向拒绝、原YOLO工程更新／取消后重新创建、离线参考子进程跨图片持锁，原模型不变。
 
-实现、调用链、错误字段和复现见 [资源工作流](development/REHAB_COMPUTE_COORDINATION.md)。旧桌面／旧live／APK／其他checkout、全部预处理／评估／报告导出及v2报告准入延期尚未接入；不能称全产品协调、同硬件负载对照或真人准确率已完成。
+本轮默认v2报告为主锁短暂独占预检＋后台共享锁；宿主序列化／spawn／核对期间持后台锁，真实child收到请求后再次预检。正式或heavy忙时CAS记pending、响应deferred；同宿主新create成功后仅设置所属取消事件，报告线程确认退出才记report_worker_preempted并重建。旧反馈晚到不覆盖新反馈，报告延期不改快照、回执、次数或唯一贡献；真实退出未确认保留后台锁，资源不可用和SQL错误不冒充普通busy。消费者容量忙时0.5秒或事件后再查，不循环16条pending空转。
+
+实现、调用链、错误字段和复现见 [资源工作流](development/REHAB_COMPUTE_COORDINATION.md) 与 [本轮验收](validation/REHAB_REPORT_COORDINATION_2026-10-11.md)。正式create仍可能与报告短暂主锁预检发生立即冲突；其他宿主已准入报告／可信本地callable不可硬取消。旧桌面／旧live／APK／其他checkout、全部预处理／评估／非v2报告导出与旧版本运行进程尚未覆盖；不是全产品协调、同硬件负载对照或真人准确率验证。
 
 ## 18. 你下一轮可以怎样从算法入手
 

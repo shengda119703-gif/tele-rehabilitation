@@ -142,6 +142,55 @@ class ComputeLeaseTests(unittest.TestCase):
             self.assertEqual(heavy_compute().path, LOCK_PATH)
             self.assertEqual(ComputeLease('formal').path, LOCK_PATH)
 
+    def test_formal_and_heavy_refuse_new_actual_report_child(self):
+        for role in ('formal', 'heavy'):
+            with self.subTest(role=role), ComputeLease(role, _path=self.path):
+                child, _, receipt = self.child('report')
+                self.assertFalse(receipt['held'])
+                self.assertEqual(receipt['error'], ResourceBusy.code)
+                child.join(3.)
+                self.assertEqual(child.exitcode, 0)
+
+    def test_admitted_reports_share_background_allow_formal_and_rollback_heavy(self):
+        with ComputeLease('report', _path=self.path):
+            child, _, receipt = self.child('report')
+            self.assertTrue(receipt['held'])
+            self.assertTrue(child.is_alive())
+            rejected = ComputeLease('heavy', _path=self.path)
+            with self.assertRaises(ResourceBusy):
+                rejected.acquire()
+            self.assertFalse(rejected.held)
+            # Heavy obtained primary first, but rolled it back when its
+            # background acquisition failed. Formal starts without waiting.
+            with ComputeLease('formal', _path=self.path):
+                with self.assertRaises(ResourceBusy):
+                    ComputeLease('report', _path=self.path).acquire()
+            rejected.close()
+
+    def test_report_crash_releases_background_and_keeps_non_authoritative_files(self):
+        child, pipe, receipt = self.child('report')
+        self.assertTrue(receipt['held'])
+        with self.assertRaises(ResourceBusy):
+            ComputeLease('heavy', _path=self.path).acquire()
+        pipe.send('crash')
+        child.join(3.)
+        self.assertEqual(child.exitcode, 31)
+        with ComputeLease('heavy', _path=self.path):
+            pass
+        self.assertTrue(self.path.is_file())
+        self.assertTrue(self.path.with_name(self.path.name+'.background').is_file())
+
+    def test_background_open_failure_rolls_back_primary_for_report_and_heavy(self):
+        self.path.with_name(self.path.name+'.background').mkdir()
+        for role in ('report', 'heavy'):
+            lease = ComputeLease(role, _path=self.path)
+            with self.subTest(role=role), self.assertRaises(ResourceUnavailable):
+                lease.acquire()
+            self.assertFalse(lease.held)
+            with ComputeLease('formal', _path=self.path):
+                pass
+            lease.close()
+
 
 class SessionComputeTests(unittest.TestCase):
     def setUp(self):
@@ -166,8 +215,15 @@ class SessionComputeTests(unittest.TestCase):
             ComputeLease('heavy').acquire()
 
     def assert_free(self):
-        with ComputeLease('heavy'):
-            pass
+        def available():
+            try:
+                with ComputeLease('heavy'):
+                    return True
+            except ResourceBusy:
+                return False
+        # Final fact releases formal admission, not necessarily the separately
+        # admitted derived report. Require its real background work to end.
+        wait_until(available)
 
     def test_active_and_paused_session_keep_lease(self):
         sid = self.create()

@@ -16,9 +16,10 @@ from uuid import uuid4
 from ..core import CORE
 from app.domain import digest, dumps
 from app.rehab_v2.reporting import REPORT_INPUT_FIELDS, build_report
+from app.rehab_v2.resources import ComputeLease, ResourceBusy, ResourceUnavailable, compute_contract
 from .owned_worker import NOTIFICATION_CAPACITY, OwnedJsonWorker
 
-VERSION = 'rehab-report-process-1'
+VERSION = 'rehab-report-process-2'
 INPUT_CAPACITY = 2*1024*1024
 RESPONSE_CAPACITY = 2*1024*1024
 MEMORY_CAPACITY = INPUT_CAPACITY+RESPONSE_CAPACITY
@@ -55,22 +56,27 @@ def report_process(pipe, memory_name):
                 break
             identity = {key: request[key] for key in ('ticket', 'session_id', 'feedback_revision', 'input_sha256')}
             try:
-                length = request['length']
-                if type(length) is not int or not 0 < length <= INPUT_CAPACITY:
-                    raise ValueError('invalid_report_input_length')
-                payload = bytes(memory.buf[:length])
-                if hashlib.sha256(payload).hexdigest() != request['input_sha256']:
-                    raise ValueError('report_input_fingerprint_mismatch')
-                item = json.loads(payload)
-                del payload
-                if (set(item) != set(REPORT_INPUT_FIELDS) or item['session_id'] != request['session_id']
-                        or item['feedback_revision'] != request['feedback_revision']):
-                    raise ValueError('report_input_identity_mismatch')
-                started = time.perf_counter()
-                report = build_report(item)
-                compute_ms = 1000*(time.perf_counter()-started)
-                _reply(pipe, memory, dict(identity, ok=True, report=report, compute_ms=compute_ms))
-                del item, report
+                # Recheck after host admission/spawn. Retain an actual child
+                # handle through work/reply even if its host suddenly exits.
+                with ComputeLease('report'):
+                    length = request['length']
+                    if type(length) is not int or not 0 < length <= INPUT_CAPACITY:
+                        raise ValueError('invalid_report_input_length')
+                    payload = bytes(memory.buf[:length])
+                    if hashlib.sha256(payload).hexdigest() != request['input_sha256']:
+                        raise ValueError('report_input_fingerprint_mismatch')
+                    item = json.loads(payload)
+                    del payload
+                    if (set(item) != set(REPORT_INPUT_FIELDS) or item['session_id'] != request['session_id']
+                            or item['feedback_revision'] != request['feedback_revision']):
+                        raise ValueError('report_input_identity_mismatch')
+                    started = time.perf_counter()
+                    report = build_report(item)
+                    compute_ms = 1000*(time.perf_counter()-started)
+                    _reply(pipe, memory, dict(identity, ok=True, report=report, compute_ms=compute_ms))
+                    del item, report
+            except (ResourceBusy, ResourceUnavailable) as exc:
+                _reply(pipe, memory, dict(identity, ok=False, resource_error=exc.code))
             except Exception as exc:
                 _reply(pipe, memory, dict(identity, ok=False, error_type=type(exc).__name__))
     except (EOFError, BrokenPipeError, OSError):
@@ -90,6 +96,8 @@ class IsolatedReportWorker(OwnedJsonWorker):
                          error_type=ReportWorkerError, startup_timeout_s=startup_timeout_s,
                          release_timeout_s=release_timeout_s)
         self.report_timeout_s = report_timeout_s
+        self.compute_lease = None
+        self.preempted = False
 
     @property
     def contract(self):
@@ -98,7 +106,29 @@ class IsolatedReportWorker(OwnedJsonWorker):
                     shared_memory_bytes=MEMORY_CAPACITY, concurrency=1,
                     startup_timeout_s=self.startup_timeout_s, report_timeout_s=self.report_timeout_s,
                     release_timeout_s=self.release_timeout_s, no_camera_or_storage_in_child=True,
-                    commit_authority='host_feedback_revision_cas', os_process_start_hard_deadline=False)
+                    commit_authority='host_feedback_revision_cas', os_process_start_hard_deadline=False,
+                    compute=compute_contract(), busy='durable_pending_retry',
+                    preemption='same_host_nonblocking_request_then_confirmed_owned_exit')
+
+    def preempt_current(self):
+        """Request only this worker's active job; never wait/kill in create."""
+        with self.state_lock:
+            if self.active_sid is not None:
+                self.preempted = True
+                self.cancel.set()
+                return self.active_sid
+        return None
+
+    def _release_compute(self):
+        if self.compute_lease is not None and not self.quarantined:
+            self.compute_lease.close()
+            self.compute_lease = None
+
+    def _release(self, reason):
+        super()._release(reason)
+        # Parent lease survives unconfirmed native release, including trusted
+        # test targets without their own child-side lease.
+        self._release_compute()
 
     def build(self, item):
         if not self.lock.acquire(blocking=False):
@@ -106,17 +136,28 @@ class IsolatedReportWorker(OwnedJsonWorker):
         try:
             if self.stop.is_set():
                 raise ReportWorkerError('report_worker_cancelled')
-            # Serialize inside the single slot: no unbounded queue of snapshots.
-            facts = {key: item[key] for key in REPORT_INPUT_FIELDS}
-            payload = dumps(facts, sort_keys=True).encode('utf-8')
-            if not 0 < len(payload) <= INPUT_CAPACITY:
-                raise ReportWorkerError('report_worker_input_capacity_exceeded')
+            if self.quarantined:
+                self._release('retry_quarantined_release')
             with self.state_lock:
-                self.active_sid = facts['session_id']
+                # Atomically publish the current job with admission. A new
+                # formal create cannot miss a cold-start job in this host.
+                lease = ComputeLease('report')
+                try:
+                    lease.acquire()
+                except (ResourceBusy, ResourceUnavailable) as exc:
+                    raise ReportWorkerError(exc.code) from None
+                self.compute_lease = lease
+                self.active_sid = item['session_id']
+                self.preempted = False
                 self.cancel.clear()
             try:
-                if self.quarantined:
-                    self._release('retry_quarantined_release')
+                # Serialize inside the admitted single slot, not a work queue.
+                facts = {key: item[key] for key in REPORT_INPUT_FIELDS}
+                payload = dumps(facts, sort_keys=True).encode('utf-8')
+                if not 0 < len(payload) <= INPUT_CAPACITY:
+                    raise ReportWorkerError('report_worker_input_capacity_exceeded')
+                if self.stop.is_set() or self.cancel.is_set():
+                    raise ReportWorkerError('report_worker_cancelled')
                 if self.process is None:
                     self._start()
                 request = dict(ticket=uuid4().hex, length=len(payload),
@@ -143,7 +184,11 @@ class IsolatedReportWorker(OwnedJsonWorker):
                     if type(result.get(key)) is not type(request[key]) or result.get(key) != request[key]:
                         raise ReportWorkerError('report_worker_identity_mismatch')
                 if result.get('ok') is not True:
+                    if result.get('resource_error') in (ResourceBusy.code, ResourceUnavailable.code):
+                        raise ReportWorkerError(result['resource_error'])
                     raise ReportWorkerError('report_worker_build_failed')
+                if self.stop.is_set() or self.cancel.is_set():
+                    raise ReportWorkerError('report_worker_cancelled')
                 duration = result.get('compute_ms')
                 if type(duration) not in (int, float) or not math.isfinite(duration) or duration < 0:
                     raise ReportWorkerError('invalid_report_worker_stage_duration')
@@ -156,7 +201,13 @@ class IsolatedReportWorker(OwnedJsonWorker):
                 return report, dict(report_compute_ms=duration,
                                     report_roundtrip_ms=1000*(time.perf_counter()-started))
             except Exception as exc:
-                self._release(getattr(exc, 'code', type(exc).__name__))
+                code = getattr(exc, 'code', type(exc).__name__)
+                if code != ResourceBusy.code:
+                    self._release(code)
+                if code == 'report_worker_cancelled' and self.preempted and not self.stop.is_set():
+                    # This conversion occurs only after _release confirmed
+                    # exit; an unconfirmed release retains its real failure.
+                    raise ReportWorkerError('report_worker_preempted') from None
                 raise
             finally:
                 if self.memory is not None and not self.quarantined:
@@ -165,4 +216,7 @@ class IsolatedReportWorker(OwnedJsonWorker):
                     self.active_sid = None
                     self.cancel.clear()
         finally:
-            self.lock.release()
+            try:
+                self._release_compute()
+            finally:
+                self.lock.release()

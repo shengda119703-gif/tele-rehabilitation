@@ -1,12 +1,12 @@
 {
-  "run_id": "resource-audit-ccedd673",
+  "run_id": "resource-audit-4f2f9ba6",
   "clinical_accuracy": null,
   "human_training_performed": false,
   "product_enabled": false,
   "scope": "v2_formal_and_instrumented_offline_tasks_not_full_product_pressure",
   "implementation_sha256": {
-    "rehab_codex_single_camera_v2_1/app/rehab_v2/resources.py": "1002a4836915ff0916f27980a0d2322ccf3071ff932ec582c888d15679ea5dfe",
-    "mobile_rehab/rehab_v2/service.py": "ca241e02dec47d3ae15717b4935f2883149f02b681b32bc7d80cc6312e8ba24e",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/resources.py": "eb86c8a4c1ef99b77a8780d78ec527b51a2bb151bebb6d99c7ad850280692abe",
+    "mobile_rehab/rehab_v2/service.py": "ba87241834e71ca90048f0c694975b01a1e80081dc028245e1980f1c55365193",
     "mobile_rehab/rehab_v2/pose_worker.py": "5ae9a211ed925743446c4f6e6f9bc99b981df71550b553637a0dec502de5f09b",
     "mobile_rehab/rehab_v2/owned_worker.py": "499fc70ef65d69c30bfbb124e971135b9ce3aecaa1bb2a623b646d6645b7fd9d",
     "tools/rehab_ml/resource_gate.py": "69f5d2096822db703233b17367ea17df58da1e84b5c5e77e67f876f2fab5c7a3",
@@ -16,8 +16,8 @@
     "tools/rehab_ml/pose_inference.py": "c79c9e5017a9a928c0b9a50409d27a3733c75d0a09860e9f2795878687b67597",
     "tools/rehab_ml/mediapipe_video.py": "b576820097345a674f6496bac6d3d4d713e42ffdf2549548f3e0d1109ef12e0b",
     "tools/rehab_ml/target_domain.py": "e3c5ceaa3ea8e18f718c7e9d5833849c1c779740d02e214cf96e15898cfbff05",
-    "tests/rehab_backend/test_resources.py": "ad4f96d61d65efab2376b3c75f18312c43c26122f873afe23ded14fa03ba763d",
-    "tools/rehab_ml/verify_resources.py": "073455ef6a893b38c006ffe2f1ab2b37ecbd66eb387defd9e5b86b6f60742329"
+    "tests/rehab_backend/test_resources.py": "5a6ba1d002d39f0cb1d18c708c412dfbd7d6b84431484e48a5d168be6460f673",
+    "tools/rehab_ml/verify_resources.py": "952355701e6793b9fce0a93bb646dbed403e5c2bae6c513b4512f84c89f6d282"
   },
   "native": {
     "formal_blocks_training": {
@@ -29,32 +29,33 @@
         "completed": false,
         "product_enabled": false
       },
-      "elapsed_s": 0.16175939999993716,
+      "elapsed_s": 0.15847559999974692,
       "checkpoint_absent": true,
-      "log_sha256": "c7e7ebdb208d3b2f91242baab2b1dcacb3ff884adebd539faa46169042848f3c",
-      "request_sha256": "04391e158a6fa75c310e0211fecce5efe5b334dd7d6cfeb614fd5f4a1aa0639a"
+      "log_sha256": "4936d10270eae3d0723d3f64dc0886943ca85c9bfc2ad501fd92d0e17fb39b03",
+      "request_sha256": "0f427b470e3dd3ca34d0bc743260c382ecb07fcc545e6589ac8f05b89edea51e"
     },
     "formal_controls": {
       "requests": 40,
-      "p50_ms": 13.011499999947773,
-      "p95_ms": 14.680499999940366,
-      "maximum_ms": 14.892899999949805,
+      "p50_ms": 11.268000000200118,
+      "p95_ms": 13.155000000097061,
+      "maximum_ms": 13.95009999987451,
       "scope": "internal_TEST_control_not_camera_or_multi_user_pressure"
     },
+    "heavy_admission_after_finalization_s": 0.0006793000002289773,
     "actual_training_blocks_formal": {
       "observed_phase": {
         "version": "rehab-pose-finetune-1",
         "phase": "validation",
         "epoch": 1,
         "optimizer_steps": 1,
-        "elapsed_s": 1.9990845000000945,
+        "elapsed_s": 2.001128200000039,
         "product_enabled": false,
         "human_training_performed": false
       },
-      "owned_pid": 18348,
+      "owned_pid": 22968,
       "owned_exit_confirmed": true,
       "exit_code": 1,
-      "formal_create_denied_ms": 0.6656000000475615,
+      "formal_create_denied_ms": 0.6763000001228647,
       "cancel_receipt": {
         "cancel_requested": true,
         "exit_confirmed": false,
@@ -67,23 +68,23 @@
         "completed": false,
         "product_enabled": false
       },
-      "checkpoint_sha256": "70fb4fc785421be7f1866c463c7520e33f1fc61b65fb27251817139499c9577f",
+      "checkpoint_sha256": "15097e49fc8abd4d7c8852d570eb74f91926fb41c1f1f157fbf403fa24ce4486",
       "result_absent": true,
-      "elapsed_s": 4.533801899999958,
-      "log_sha256": "5de75b9e41d20e23e7d76a03d2df04996351933370603bf379df3b4688b544af"
+      "elapsed_s": 4.553513600000315,
+      "log_sha256": "009e709d0a78fc18e24fdf94575fb5b6dbbd840003f7c229c3d71ace5445cae2"
     },
     "formal_create_after_exit": true,
     "actual_offline_yolo": {
-      "pid": 7904,
+      "pid": 16128,
       "predicted_people": 0,
       "model_manifest_id": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0",
       "stages_ms": {
-        "decode_ms": 0.23629999998320272,
-        "inference_ms": 2025.701300000037
+        "decode_ms": 0.23339999961535796,
+        "inference_ms": 2025.05390000033
       },
       "held_between_images": true,
       "release": {
-        "pid": 7904,
+        "pid": 16128,
         "exit_code": -15,
         "reason": "host_shutdown",
         "confirmed": true

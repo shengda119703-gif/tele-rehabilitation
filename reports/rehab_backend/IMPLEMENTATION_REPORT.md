@@ -4,7 +4,7 @@
 
 结论：P0–P4 的核心链路与一部分 P7 已实际完成。下载了真实获许可数据，训练了两个真实模型，也发现候选没有优于简单基线。正式会话为独立 opt-in 后端，尚未成为现有 UI/APK 的正式路径。P5 只有两段分析授权录像回放，缺独立参考标注；P6已有条件式多轮姿态训练器，但没有合格真人微调或产品影子上线。整个任务未完成，不能据此宣称真人准确度提高。
 
-已有增量接通唯一贡献、最终历史、原继续政策、冻结计划、显式时间、所属推理／报告、SQLite故障边界、关键点工具、同权重Python VIDEO、双层masked loss和条件式多轮优化。基于`5b42cb0`最新增量补v2正式与主要离线重任务共享／独占准入，见B3.5。最新完整 **251项新后端、12项旧康复、19项旧手机通过**，1308保护文件一致；21项资源及30项训练专测均为251项子集。实际双向拒绝、原生工程优化／取消／退出和限制见 [资源验收](../../docs/validation/REHAB_COMPUTE_COORDINATION_2026-10-11.md)。此前230项多轮训练、200项双层损失、177项VIDEO和160项工具验收保留历史不累加；本次未重跑IRDS全训练、真人原片、会话CLI或性能benchmark，没有真人微调或准确性改善结论。
+已有增量接通唯一贡献、最终历史、原继续政策、冻结计划、显式时间、所属推理／报告、SQLite故障边界、关键点工具、同权重Python VIDEO、双层masked loss和条件式多轮优化。基于`863283a`最新增量将原资源准入扩展为双锁，补默认v2报告延期／durable重建／同宿主所属抢占，见B3.6。最新完整 **269项新后端、12项旧康复、19项旧手机通过**，1308保护文件一致；57项资源／报告及30项训练专测为269项子集。实际默认报告、所属退出、重启补建与原生离线互斥复验见 [本轮验收](../../docs/validation/REHAB_REPORT_COORDINATION_2026-10-11.md)。此前251／230／200／177／160项保留历史不累加；本次未重跑IRDS全训练、真人原片、会话CLI或完整性能benchmark，没有真人微调或准确性改善结论。
 
 ## A. 实际完成情况
 
@@ -12,7 +12,7 @@
 | --- | --- | --- | --- |
 | P0 盘点与保护 | done | [开工清单](../rehab_backend_inventory.md)、[1308 文件基准](protected_files.json)、[末次 hash 核验](scope_verification.json) | 仅本轮范围；不代表其他会话或临床验收 |
 | P1 三动作后端协议 | done（工程定义） | `app/rehab_v2/protocols.py`、`engine.py`、`rounds.py`；15 项协议回放及几何契约测试 | 定义是二维投影和训练观察，不是解剖 ROM 金标准；实际机位仍由计划给出 |
-| P2 正式会话与幂等 | partial | 251项新后端回归，含原生SQLite12项及资源准入21项；真实YOLO/JPEG、报告挂起／退出、释放重试、反馈CAS与HTTP | 旧页面未接入，深蹲尚无宿主兼容计划；物理存储故障与完整压力验收待做 |
+| P2 正式会话与幂等 | partial | 269项新后端回归，含SQLite12项、资源25项及报告准入14项；真实YOLO/JPEG、报告退出／延期／重建、释放重试、反馈CAS与HTTP | 旧页面未接入，深蹲尚无宿主兼容计划；物理存储故障与完整压力验收待做 |
 | P3 IRDS 下载与适配 | done | 198,985,485 字节骨架 ZIP、1974 字节 readme；CRC/MD5/SHA 校验；534 条/29 人，532 训练资格、2 隔离 | Kinect25 三维肩外展，不是手机 RGB、坐站或深蹲标签 |
 | P4 模型训练 | done（离线实验） | [实验包摘要](experiment_summary.json)，两次完整训练链结果；检查点、验证/测试预测和锁文件均存在于忽略目录 | TCN 测试 macro-F1 低于 logistic；只整次正误，不可作为相位/提示/诊断 |
 | P5 真人目标域验证 | partial | [此前回放](target_replay_summary.json)、[上轮两原片YOLO／MP](mediapipe_video_verification.json)，443／429帧时间＋解码像素配对 | 新协议均0确认次数；无专业真值，不能计算计次准确率或以模型一致性证明正确 |
@@ -141,7 +141,19 @@
 
 实际pose训练child／IRDS训练／masked smoke／YOLO回放／MP VIDEO持独占句柄，原参考YOLO采用固定offline target并跨图片持独占。路径固定于checkout，不由输出根切换；文件存在不是活占用，实际句柄关闭／进程退出释放。未确认原生释放时保留句柄，不关闭他人服务或修改旧Runtime／前端。
 
-末次`resource-audit-ccedd673`实际双向拒绝／原生工程AdamW／取消／退出后重建及原参考YOLO跨图片持锁均通过。内部40次控制p95 14.6805ms，活训练child时拒绝新create 0.6656ms；不是网络／相机／手机或完整压力。源码、流程和边界见 [工作流](../../docs/development/REHAB_COMPUTE_COORDINATION.md)、[验收](../../docs/validation/REHAB_COMPUTE_COORDINATION_2026-10-11.md) 和 [摘要](resource_verification.json)。旧桌面／旧live／APK、其他业务入口、全部预处理／评估／报告导出及v2派生报告准入延期仍未覆盖，不称全产品资源协调完成。
+第一版`resource-audit-ccedd673`双向拒绝／原生工程AdamW／取消／退出后重建及原参考YOLO跨图片持锁均通过；当时内部40次控制p95 14.6805ms，新create拒绝0.6656ms。历史结果留在 [原验收](../../docs/validation/REHAB_COMPUTE_COORDINATION_2026-10-11.md)，不是网络／相机／手机或完整压力。本轮双锁及原生复验见B3.6、[工作流](../../docs/development/REHAB_COMPUTE_COORDINATION.md) 和 [当前摘要](resource_verification.json)。旧桌面／旧live／APK、其他业务入口、全部预处理／评估／非v2报告导出仍未覆盖，不称全产品资源协调完成。
+
+### B3.6 默认v2报告准入、durable延期与同宿主所属抢占
+
+基于`863283a`，资源契约升为`rehab-compute-coordination-2`，报告升为`rehab-report-process-2`。formal保留主共享；heavy同时持主＋后台独占；report短暂主独占预检、获得后台共享后立即释放主锁，再序列化／spawn／核对。真实默认report child收到请求后再次预检、工作／回复期间自己持后台共享，父退出不代表实际计算结束。两锁失败回滚，不删除文件／按PID列表清理／关闭他人任务。
+
+正式／heavy忙或已确认所属抢占，报告按feedback CAS记pending并返回deferred，0.5秒或事件后重新查durable work；批次遇忙即停止，16条不空转。failed首次重启扫描遇busy转pending，后续可重建。新正式create成功只设置本宿主报告取消事件，不在create等待kill；无效／历史幂等请求不抢占。真实所属退出未确认保留后台句柄、不记成功抢占，预先已有隔离拒绝新create。资源unavailable、超时、SQL错误和普通busy区分。
+
+更高feedback_revision先保存时旧ready／pending／failed不能覆盖，快照、canonical_commit、确认次数及唯一贡献均不变；诊断增加固定deferred／preempted计数，不参与事实摘要。本地callable仍无硬取消；其他宿主已有报告不被擅自结束。短暂主锁预检可与create立即冲突，OS／spawn／序列化尚无独立硬截止，不称严格全机器优先级调度。
+
+实际`report-resource-audit-5d0a9f94`57项及独立原生链通过：默认报告释放后ready、TEST挂起报告PID14280确实退出并清理共享区、重启heavy期间pending、释放后ready、事实digest始终一致。内部一次create21.0825ms不是p95。原离线复验`resource-audit-4f2f9ba6`确认真实AdamW一步／val活进程、新create拒绝0.6763ms、准确所属取消退出1且last保留／result不存在；40次内部控制p95 13.155ms。原YOLO无人JPEG0人、冷推理2025.054ms和跨图片持锁另列，不是精度或稳定p95。
+
+源码hash／日志、两类原生审计和受控故障区别见 [本轮验收](../../docs/validation/REHAB_REPORT_COORDINATION_2026-10-11.md)、[报告摘要](report_resource_verification.json) 与 [离线摘要](resource_verification.json)。本轮未改UI、整个Android、原模型、正常库或非康复，不启停用户服务；原版本运行进程不会自动升级两锁。
 
 ## C. 数据与训练事实
 
@@ -213,9 +225,9 @@ seed20261011；17/6/6人，310/131/91条。正/误分别 train269/41、val97/34�
 
 ### D1. 最新工具／存储／报告／推理回归及历史记录
 
-最新产品环境完整回归`verification-b5e899f3`为251／12／19项，保护1308文件一致；新增21项资源测试，其余训练／双层损失／VIDEO／关键点／存储／报告子集均包含在251项内。最新专项`resource-audit-ccedd673`见 [资源验收](../../docs/validation/REHAB_COMPUTE_COORDINATION_2026-10-11.md)。此前`verification-b4bcb387`230项和`pose-training-audit-6c350f29`五条命令保留 [多轮验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)；227／200／177／160等历史不累加。原生SQLite、真实OS故障、受控异常注入、空图／真人无标注回放分别说明，工程通过不等于准确率。
+最新产品环境完整回归`verification-a380a260`为269／12／19项，保护1308文件一致；本轮增18项，57项资源／报告专项和其他训练／双层损失／VIDEO／关键点／存储子集均包含在269项内。`report-resource-audit-5d0a9f94`及原生`resource-audit-4f2f9ba6`见 [本轮验收](../../docs/validation/REHAB_REPORT_COORDINATION_2026-10-11.md)。此前`verification-b5e899f3`251项保留原资源验收；230项和`pose-training-audit-6c350f29`五条命令保留 [多轮验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)。227／200／177／160等历史不累加；工程通过不等于准确率，真实OS／受控SQL／无人原生工程／无标注真人分别说明。
 
-历史时间／贡献曾运行`verification-3b62b733`，74项新后端、12项旧康复、19项旧手机通过，会话CLI44项为74项子集；详见 [当时验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。[regression.json](regression.json)记录本轮251／12／19项；[session_verification.json](session_verification.json)保留此前100项，不称本轮重跑。历史49／61项不代替它们。手机与HTTP测试仍有既有Starlette/httpx弃用warning，未升级依赖。没有借用交接中324项计数，本轮未跑全UI／Android／照护回归。
+历史时间／贡献曾运行`verification-3b62b733`，74项新后端、12项旧康复、19项旧手机通过，会话CLI44项为74项子集；详见 [当时验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。[regression.json](regression.json)记录本轮269／12／19项；[session_verification.json](session_verification.json)保留此前100项，不称本轮重跑。历史49／61项不代替它们。手机与HTTP测试仍有既有Starlette/httpx弃用warning，未升级依赖。没有借用交接中324项计数，本轮未跑全UI／Android／照护回归。
 
 确定性覆盖：C01肩腕缺测，C02短gap不累积保持，C03隐藏转折，C04站姿进入，C05坐站rearm，C06真膝角，C07左右/水平镜像/等比例分辨率及契约变化，C08乱序/epoch/年龄/慢推理污染，C09换人，C10组休息，C11提示TTL/当前纠正，C12因果特征与70前缀TCN未来扰动，C13缓存隔离，C14–16持久幂等，C17报告失败，C18真实退出恢复，C19未知感受，C21跨域拒绝，C22无标签零梯度，C23接收/丢帧/超时收尾边界。
 
