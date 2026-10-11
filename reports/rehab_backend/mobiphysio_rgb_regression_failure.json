@@ -1,0 +1,40 @@
+{
+  "schema_version": "mobiphysio-regression-failure-1",
+  "run": "verification-f2c6728f",
+  "passed": false,
+  "new_backend": {"exit_code": null, "status": "timeout", "deadline_s": 240, "elapsed_s": 240.02761920000012},
+  "legacy_rehab": {"exit_code": 0, "tests": 12},
+  "legacy_mobile": {"exit_code": 0, "tests": 19},
+  "scope": {"exit_code": 0, "protected_files": 1308, "changed": 0},
+  "partial_new_backend_log": "not_retained_by_previous_verify_all_timeout_handler",
+  "second_failed_run": {
+    "run": "verification-a6ba4ccd",
+    "new_backend_tests": 454,
+    "failures": 1,
+    "exit_code": 1,
+    "new_backend_log_sha256": "cde0aeac656f9bf790a0bfc8035d0ccc950e2721c96a4d82c6e9f7403ac1f8aa",
+    "fault_probe_summary": ".runtime/rehab_ml/run/async-recovery-6e47d73c/summary.json",
+    "fault_probe_summary_sha256": "54c900dd0b19a0cdf91f44c137239456d396c86cb1840e31751add5089e48629",
+    "failed_check": "second_restart_database_unchanged",
+    "independent_SQL_changed_top_keys": ["item"],
+    "changed_item_field": "derived_report_state: pending -> ready",
+    "correction": "Only TEST FaultProbeService stops the report consumer before reading pending work; keep the whole database equality check and production report behavior unchanged."
+  },
+  "third_failed_run": {
+    "run": "verification-f28dac51",
+    "new_backend_tests": 455,
+    "failures": 1,
+    "exit_code": 1,
+    "elapsed_s": 227.1758620999999,
+    "new_backend_log_sha256": "30d5c467f0c01e801b6bfc9704e7aa2f02cb2fcd9e7f790eb3eb9d8a7943f020",
+    "failed_test": "test_timing_comparison.TimingComparisonHttpTests.test_actual_authenticated_host_endpoint_and_default_off_routes",
+    "assertion": "completed_reps expected 1, observed 0; finalized; accepted_last_seq=processed_last_seq=persisted_evidence_seq=64",
+    "root_cause": "not_established",
+    "legacy_rehab": {"exit_code": 0, "tests": 12},
+    "legacy_mobile": {"exit_code": 0, "tests": 19},
+    "scope": {"exit_code": 0, "protected_files": 1308, "changed": 0},
+    "publication_gate": "Full backend regression is not passed. This is offline research evidence, not a validated product update."
+  },
+  "correction": "Stream test progress to the explicit owned run and retain terminal summary there; keep the same 240-second deadline and fail on timeout. Do not call incomplete or failed tests passed.",
+  "clinical_accuracy": null
+}

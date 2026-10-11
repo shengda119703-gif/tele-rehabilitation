@@ -27,21 +27,29 @@ def main():
     ]
     for name, arguments in cases:
         started = time.perf_counter()
+        log = root / (name+'.txt')
         try:
             environment = dict(os.environ)
             environment['PYTHONPATH'] = str(ROOT / 'rehab_codex_single_camera_v2_1')+os.pathsep+str(ROOT)
-            completed = subprocess.run([sys.executable, '-X', 'utf8', *arguments], cwd=ROOT, env=environment,
-                capture_output=True, text=True, encoding='utf-8', timeout=240 if name == 'new_backend' else 150)
-            log = root / (name+'.txt')
-            log.write_text(completed.stdout+completed.stderr, encoding='utf-8')
+            # Stream progress to the owned run. TimeoutExpired previously lost
+            # all partial output and hid the exact test that had stalled.
+            with log.open('w', encoding='utf-8') as stream:
+                completed = subprocess.run([sys.executable, '-X', 'utf8', *arguments], cwd=ROOT, env=environment,
+                    stdout=stream, stderr=subprocess.STDOUT, text=True, encoding='utf-8',
+                    timeout=240 if name == 'new_backend' else 150)
+            output = log.read_text(encoding='utf-8')
             summary['commands'].append(dict(name=name, arguments=arguments, exit_code=completed.returncode,
                 elapsed_s=time.perf_counter()-started, log=str(log), log_sha256=file_hash(log),
-                tail=(completed.stdout+completed.stderr)[-400:]))
+                tail=output[-400:]))
         except subprocess.TimeoutExpired:
             summary['commands'].append(dict(name=name, arguments=arguments, exit_code=None, status='timeout',
+                                           log=str(log), log_sha256=file_hash(log),
+                                           tail=log.read_text(encoding='utf-8')[-400:],
                                            elapsed_s=time.perf_counter()-started))
+        write_json(root/'summary.json', summary)
         write_json(ROOT / 'reports/rehab_backend/regression.json', summary)
     summary['passed'] = all(c.get('exit_code') == 0 for c in summary['commands'])
+    write_json(root/'summary.json', summary)
     write_json(ROOT / 'reports/rehab_backend/regression.json', summary)
     print(json.dumps(summary, ensure_ascii=False))
     return 0 if summary['passed'] else 1

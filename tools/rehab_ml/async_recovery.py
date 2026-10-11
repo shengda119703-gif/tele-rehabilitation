@@ -62,9 +62,14 @@ def test_host(database, *, inference=None):
         return json.loads(await req.body())
     # Constructor injection is confined to this TEST process, not a public
     # keypoint endpoint or a change to the product's installed/default service.
+    class FaultProbeService(SessionService):
+        def _run_reports(self):
+            # Stop before any durable pending-report read. Stopping only AFTER
+            # construction races a reopened finalized session's fast report.
+            self.report_stop.set()
     original = api.SessionService
     def isolated(*args, **kwargs):
-        return SessionService(*args, **kwargs, internal_replay=True, inference_provider=inference)
+        return FaultProbeService(*args, **kwargs, internal_replay=True, inference_provider=inference)
     try:
         api.SessionService = isolated
         service = api.install_rehab_v2(app, database, owner, small_json, frozen_plan)

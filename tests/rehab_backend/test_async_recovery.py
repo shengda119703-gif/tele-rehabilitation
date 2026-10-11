@@ -14,6 +14,20 @@ from tools.rehab_ml.common import paths
 
 
 class AsyncRecoveryTests(unittest.TestCase):
+    def test_fault_probe_disables_report_before_any_pending_work_read(self):
+        from app.rehab_v2.sessions import SessionRepository
+        with tempfile.TemporaryDirectory(dir=paths()['run']) as folder, \
+                patch.object(SessionRepository, 'report_work', side_effect=AssertionError('TEST_report_must_not_run')) as read:
+            _, service = audit.test_host(Path(folder)/'TEST-host.sqlite3')
+            try:
+                read.assert_not_called()
+                self.assertTrue(service.report_stop.is_set())
+                self.assertFalse(service.report_worker.is_alive())
+                self.assertIsNone(service.report_worker_failure)
+                self.assertIsNone(service.report_executor.process)
+            finally:
+                service.close(graceful=False)
+
     def test_three_real_process_windows_recover_exactly_one_fact_and_contribution(self):
         result = audit.audit_async_recovery()
         self.assertTrue(result['passed'], str(result))

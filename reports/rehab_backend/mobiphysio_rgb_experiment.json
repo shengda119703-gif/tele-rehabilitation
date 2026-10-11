@@ -1,0 +1,257 @@
+{
+  "schema_version": "mobiphysio-rgb-evidence-audit-1",
+  "status": "reconciled",
+  "audited_at": "2026-10-11T15:24:28.487187+00:00",
+  "study": "exploratory_offline_video_eaaq_regression_not_clinical_validation",
+  "evidence": {
+    "E001": {
+      "name": "plan",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\mobiphysio\\3.0\\rgb-e01-front-fl-9ac33275\\plan.json",
+      "sha256": "2b4c484ab6655ff05aa6878cd3516019a542fc74c070713cd3f88a1e74290d36",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E002": {
+      "name": "complete_download",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\mobiphysio\\3.0\\rgb-e01-front-fl-9ac33275\\download-a157e0e1.json",
+      "sha256": "ede498eb5551a7028f7229af2577ff5384c7626af179a2dcf712d95486f6926e",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E003": {
+      "name": "interrupted_download",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\mobiphysio\\3.0\\rgb-e01-front-fl-9ac33275\\download-66c6f9f3.json",
+      "sha256": "b3dd19d4278ac7cf57e2fa6404b887826f36f1af3463f6495453e042a7423266",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E004": {
+      "name": "extraction",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-pose-78a27c8b\\summary.json",
+      "sha256": "d62ca9df99aaa2bcba309838055048ac0b4953065e6d3c4b22f851d8b94c2d3a",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E005": {
+      "name": "experiment",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-quality-71c92ec5\\summary.json",
+      "sha256": "2f791975d9fd2f24ce5a430e030c8846ce2244847353738a7ba422f351bc1453",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E006": {
+      "name": "original_failed_extraction_1",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-pose-7c6c5119\\summary.json",
+      "sha256": "bd39becf760ff3c17faad9e5b30d439b5eccbe93101b00c7edd51a6c2aaa259d",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E007": {
+      "name": "original_failed_extraction_2",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-pose-8fec51f0\\summary.json",
+      "sha256": "7a0ae113cedc425543a893b4ad68da52f2b3d7c6ac273b29afc9e2c8a8754b73",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E008": {
+      "name": "original_failed_extraction_3",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-pose-fee5e7ea\\summary.json",
+      "sha256": "6614533a5cce8237d123af05ceb26d539c953296ad0e086de2d1b2dad96ec703",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E009": {
+      "name": "ridge",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-quality-71c92ec5\\ridge.npz",
+      "sha256": "36605f5b9d0637d5bb674f4e42987643b8f07ad3a3c2ea665ebb798720967836",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E010": {
+      "name": "tcn",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-quality-71c92ec5\\tcn-best.pt",
+      "sha256": "7083e0564995ce7c50b4f0301eaa78efcad737abdf2ceba671244ce88fc27a00",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E011": {
+      "name": "training_log",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-quality-71c92ec5\\training_log.json",
+      "sha256": "527fc86b036cd64694e4dfd37461fc9a012caa1f12223bcb70b38a610c5b85f6",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E012": {
+      "name": "config",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-quality-71c92ec5\\resolved_config.json",
+      "sha256": "2ce5ce5f94b79d911121178809d52ebcb10e7490114f1c37bf12f98485d7e3f8",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E013": {
+      "name": "provenance",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-quality-71c92ec5\\provenance.json",
+      "sha256": "c21c69479c5e6fca38453902f457a0c453a48d1ff43f3d51b4b5a7a441949aed",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E014": {
+      "name": "predictions",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-quality-71c92ec5\\predictions.json",
+      "sha256": "ded2c1326f26c6154047a0417d6798fa9826dead622491ad78dec1a84384cfa0",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    },
+    "E015": {
+      "name": "model_card",
+      "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\mobiphysio-quality-71c92ec5\\model-card.json",
+      "sha256": "a1b45d905b345224dfb26730c255fea7b6f04fdc4fe79d0a2a50601304cdda58",
+      "agent_checked": true,
+      "human_verification": "pending",
+      "verified_by": null
+    }
+  },
+  "numeric_facts": {
+    "N001": {
+      "videos": 24,
+      "people": 24,
+      "splits": {
+        "train": 14,
+        "val": 5,
+        "test": 5
+      }
+    },
+    "N002": {
+      "verified_rgb_bytes": 680355016
+    },
+    "N003": {
+      "decoded_frames": 21579,
+      "sampled_frames": 2569,
+      "usable_frames": 2193,
+      "explicit_discard_packets": 4,
+      "leading_negative_pts_skipped": 0
+    },
+    "N004": {
+      "worker_roundtrip_ms_p50": 35.014500000215776,
+      "worker_roundtrip_ms_p95": 38.18754000003537,
+      "includes_cold": true,
+      "includes_decode": false,
+      "phone_performance": false
+    }
+  },
+  "methods": {
+    "M001": "fixed official whole-video labels, all 24 E01 AF VFL people, split before extraction",
+    "M002": "actual PyAV frame PTS matched to non-discard packet PTS relative to explicit stream origin; no nominal repair",
+    "M003": "original YOLO, explicit coordinate transform and unknown masks, causal69 features",
+    "M004": "train-only normalization, validation epoch selection, held-out test predicted once"
+  },
+  "results": {
+    "train_median": {
+      "train": {
+        "videos": 14,
+        "mae": 8.911564627142857,
+        "rmse": 10.846874246911517,
+        "r2": -0.0006297229253353631
+      },
+      "val": {
+        "videos": 5,
+        "mae": 13.809523812000004,
+        "rmse": 16.97670806860451,
+        "r2": -0.0038225816661490164
+      },
+      "test": {
+        "videos": 5,
+        "mae": 11.333333332,
+        "rmse": 12.82182096825016,
+        "r2": -0.012569832394271563
+      }
+    },
+    "standardized_ridge": {
+      "train": {
+        "videos": 14,
+        "mae": 0.17423488105728577,
+        "rmse": 0.22926002074288915,
+        "r2": 0.9995529862897765
+      },
+      "val": {
+        "videos": 5,
+        "mae": 10.716125619582993,
+        "rmse": 14.276695920209042,
+        "r2": 0.29008652586580796
+      },
+      "test": {
+        "videos": 5,
+        "mae": 16.26312141675904,
+        "rmse": 18.737872344156166,
+        "r2": -1.1625498083736896
+      }
+    },
+    "causal_tcn": {
+      "train": {
+        "videos": 14,
+        "mae": 5.740631597320034,
+        "rmse": 6.890960994080821,
+        "r2": 0.5961465735454683
+      },
+      "val": {
+        "videos": 5,
+        "mae": 15.673943222437504,
+        "rmse": 19.07864510072293,
+        "r2": -0.2677833936391345
+      },
+      "test": {
+        "videos": 5,
+        "mae": 11.333420599550783,
+        "rmse": 13.207574588701014,
+        "r2": -0.07441412997775743
+      }
+    }
+  },
+  "epochs_run": 10,
+  "best_epoch": 4,
+  "frozen_config_sha256": "c4b8a073d0c4bdf20042210f957573cdc5a04bffaa97860b33033eb4603b73cb",
+  "failures_retained": {
+    "original_extraction_errors": [
+      "Decoder ended before the advertised full video; no truncated-score training",
+      "Decoded frame does not match container presentation PTS",
+      "Decoded frame does not match container presentation PTS"
+    ],
+    "original_download_verified_bytes": 618556665,
+    "original_download_handle_missing": true
+  },
+  "safety": {
+    "product_enabled": false,
+    "pose_finetuning": false,
+    "independent_2d_reference": false,
+    "clinical_accuracy": null,
+    "raw_videos_or_keypoints_in_git": false
+  },
+  "report_gates": {
+    "submission_ready": false,
+    "human_source_verification": "pending",
+    "venue": "not_requested_engineering_report",
+    "official_reporting_adherence": "not_claimed",
+    "ethics_and_consent": "no new human collection; original source statements not independently attested"
+  },
+  "limitations": [
+    "24-person single front/full-light slice, one video per person; not a patient validation cohort.",
+    "Uses model predictions, no independent 2D or visibility reference; no pose accuracy metric.",
+    "Offline video-end score, not real-time phase/error/cue, diagnosis, pain or prescription.",
+    "Same fixed test must not be reused to tune this experiment.",
+    "Original YOLO pretraining overlap with this public source has not been independently verified."
+  ]
+}

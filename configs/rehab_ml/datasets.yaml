@@ -46,7 +46,7 @@ datasets:
     version: '3.0'
     license: CC0-1.0
     license_uri: http://creativecommons.org/publicdomain/zero/1.0
-    license_status: verified_cc0_published_metadata_and_documentation
+    license_status: verified_cc0_published_metadata_documentation_and_scoped_rgb
     metadata_status: published_version_pinned
     license_evidence: https://dataverse.harvard.edu/api/v1/datasets/:persistentId/versions/3.0?persistentId=doi:10.7910/DVN/XSI0QN
     published_inventory_sha256: 4a549d1d2ff44a24aadb6a61eb0d00a9ba0239bf51ba429e152bfa9aae8d41d8
@@ -55,9 +55,15 @@ datasets:
     available_labels: [video_eaaq]
     unavailable_labels: [phase, bodypart_error_timing, coco17_keypoints, visibility, affected_side]
     reviewed_action_hint: {E01: shoulder_abduction}
-    reason: 'Only README and official score CSV downloaded. Video access, participant split and RGB inference not run. Camera view is not affected body side; E08 is not mapped to squat or sit-to-stand.'
+    rgb_experiment: mobiphysio_e01_front_fl_video_quality_v1
+    cohort_plan_sha256: 2b4c484ab6655ff05aa6878cd3516019a542fc74c070713cd3f88a1e74290d36
+    rgb_downloaded_bytes: 680355016
+    rgb_videos: 24
+    rgb_people_split: {train: 14, val: 5, test: 5}
+    experiment_evidence: reports/rehab_backend/mobiphysio_rgb_experiment.json
+    reason: 'Complete reviewed E01 AF VFL cohort downloaded, original YOLO extracted, whole-video EAAQ ridge/TCN compared on frozen person splits. No demonstrated TCN advantage over train-median baseline. No independent 2D/visibility/phase/cue reference or production eligibility. Camera view is not affected side; E08 not mapped to squat or sit-to-stand.'
     product_enabled: false
-    allowed_tasks: [metadata_inspection, video_score_index]
+    allowed_tasks: [metadata_inspection, video_score_index, bounded_e01_front_fl_rgb, offline_video_eaaq_research]
   sumedipose:
     persistent_id: 'doi:10.7910/DVN/GRRROM'
     source: https://doi.org/10.7910/DVN/GRRROM

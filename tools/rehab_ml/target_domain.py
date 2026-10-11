@@ -137,15 +137,18 @@ def supervision_status():
     from .common import load_registry
     return dict(status='blocked_missing_supervision',
                 existing_licensed_dataset='IRDS whole-repetition Kinect quality labels',
-                unavailable=['qualified_target_RGB_training_data', 'verified_2d_joint_and_visibility_labels',
+                unavailable=['qualified_target_RGB_pose_training_data', 'verified_2d_joint_and_visibility_labels',
                              'professionally_reviewed_phase_and_observability_labels'],
                 dataset_status={key: value['license_status'] for key, value in load_registry().items()},
                 rgb_candidate_evidence=dict(mobiphysio=dict(
-                    published_version='3.0', license='CC0-1.0', downloaded='README and official score CSV only',
+                    published_version='3.0', license='CC0-1.0', downloaded='README, official score CSV and complete reviewed E01 AF VFL cohort',
+                    rgb_videos=24, rgb_bytes=680355016, person_split=dict(train=14, val=5, test=5),
+                    original_pose_extraction_completed=True, offline_video_eaaq_training_completed=True,
                     label_scope='whole_video_eaaq', independent_2d_reference=False,
-                    evidence='reports/rehab_backend/dataverse_metadata.json')),
+                    evidence='reports/rehab_backend/mobiphysio_rgb_experiment.json')),
                 training_allowed=False, model_activated=False,
+                training_allowed_scope='pose_or_phase_supervision_not_whole_video_eaaq_research',
                 available_pose_tools=['build-pose-dataset --reference', 'infer-pose-reference', 'evaluate-pose',
                                       'train-pose --config', 'cancel-pose-training --run-dir'],
                 pose_tool_scope='conversion_evaluation_and_conditional_offline_training_not_proof_of_qualified_human_data',
-                next_required='Verified dataset eligibility/access or consented independently annotated target video')
+                next_required='Independent target 2D/visibility and professionally reviewed phase/observability references; video score is not pose truth')

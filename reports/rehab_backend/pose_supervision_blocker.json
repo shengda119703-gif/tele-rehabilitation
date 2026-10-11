@@ -2,14 +2,14 @@
   "status": "blocked_missing_supervision",
   "existing_licensed_dataset": "IRDS whole-repetition Kinect quality labels",
   "unavailable": [
-    "qualified_target_RGB_training_data",
+    "qualified_target_RGB_pose_training_data",
     "verified_2d_joint_and_visibility_labels",
     "professionally_reviewed_phase_and_observability_labels"
   ],
   "dataset_status": {
     "intellirehabds": "verified_dataset_license",
     "rehab24_6": "blocked_requires_eligibility_confirmation",
-    "mobiphysio": "verified_cc0_published_metadata_and_documentation",
+    "mobiphysio": "verified_cc0_published_metadata_documentation_and_scoped_rgb",
     "sumedipose": "blocked_requires_eligibility_confirmation",
     "keraal": "excluded_nc_sa_and_action_mismatch",
     "fit3d": "excluded_account_and_noncommercial_terms",
@@ -19,14 +19,24 @@
     "mobiphysio": {
       "published_version": "3.0",
       "license": "CC0-1.0",
-      "downloaded": "README and official score CSV only",
+      "downloaded": "README, official score CSV and complete reviewed E01 AF VFL cohort",
+      "rgb_videos": 24,
+      "rgb_bytes": 680355016,
+      "person_split": {
+        "train": 14,
+        "val": 5,
+        "test": 5
+      },
+      "original_pose_extraction_completed": true,
+      "offline_video_eaaq_training_completed": true,
       "label_scope": "whole_video_eaaq",
       "independent_2d_reference": false,
-      "evidence": "reports/rehab_backend/dataverse_metadata.json"
+      "evidence": "reports/rehab_backend/mobiphysio_rgb_experiment.json"
     }
   },
   "training_allowed": false,
   "model_activated": false,
+  "training_allowed_scope": "pose_or_phase_supervision_not_whole_video_eaaq_research",
   "available_pose_tools": [
     "build-pose-dataset --reference",
     "infer-pose-reference",
@@ -35,7 +45,7 @@
     "cancel-pose-training --run-dir"
   ],
   "pose_tool_scope": "conversion_evaluation_and_conditional_offline_training_not_proof_of_qualified_human_data",
-  "next_required": "Verified dataset eligibility/access or consented independently annotated target video",
+  "next_required": "Independent target 2D/visibility and professionally reviewed phase/observability references; video score is not pose truth",
   "requested_command": "build-pose-dataset",
   "implemented": "reference_conversion_and_evaluation_available_pose_training_refused"
 }
