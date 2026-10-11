@@ -63,7 +63,10 @@ class OwnedJsonWorker:
             self.process.start()
         finally:
             child.close()
-        if self._receive(self.startup_timeout_s, 'startup').get('ready') != self.version:
+        ready = self._receive(self.startup_timeout_s, 'startup')
+        if ready.get('resource_error') in ('rehab_compute_resource_busy', 'rehab_compute_resource_unavailable'):
+            raise self.error_type(ready['resource_error'])
+        if ready.get('ready') != self.version:
             raise self._error('handshake_mismatch')
 
     def _release(self, reason):

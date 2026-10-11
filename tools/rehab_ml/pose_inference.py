@@ -29,7 +29,7 @@ def infer_baseline(source, output, *, split='test'):
     source, reference, reference_fingerprint = load_reference(source)
     sys.path.insert(0, str(ROOT/'rehab_codex_single_camera_v2_1'))
     from app.domain import Context
-    from mobile_rehab.rehab_v2.pose_worker import IsolatedPoseWorker, JPEG_CAPACITY
+    from mobile_rehab.rehab_v2.pose_worker import IsolatedPoseWorker, JPEG_CAPACITY, offline_pose_process
     weights = ROOT/'rehab_codex_single_camera_v2_1/assets/models/yolo11n-pose.pt'
     manifest = json.loads(weights.with_name('manifest.json').read_text(encoding='utf-8'))
     fingerprint = file_hash(weights)
@@ -40,7 +40,7 @@ def infer_baseline(source, output, *, split='test'):
     if any(row['frame_size'][0]*row['frame_size'][1] > 1920*1080 for row in selected):
         raise ValueError('owned_original_pose_decoding_pixel_limit_exceeded_no_implicit_rescaling')
     output = _new_output(output)
-    worker = IsolatedPoseWorker()
+    worker = IsolatedPoseWorker(target=offline_pose_process)
     rows = []
     try:
         for sample in selected:

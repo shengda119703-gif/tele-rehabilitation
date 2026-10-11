@@ -8,6 +8,8 @@
 
 ### 快速阅读
 
+最新后续增量基于`5b42cb0`补v2与主要离线重任务的合作式资源准入，见17.14。最新回归251／12／19项及实际所属原生审计见 [资源验收](validation/REHAB_COMPUTE_COORDINATION_2026-10-11.md)；旧章节的实验版本和历史数值不倒改为本轮重跑。
+
 | 你要弄清什么 | 从哪里读 |
 | --- | --- |
 | 整个后端有哪些功能、分别在哪个端运行 | 第 1–2 节的功能目录和三端对照 |
@@ -1009,7 +1011,7 @@ JSON 原子替换可降低半写文件风险，但没有跨文件事务，也不
 
 此前字段文档交付收取已经启动的会话CLI，`replay-2167d5a9` 的100项／82.646秒通过，命令耗时83.272秒、exit0，日志SHA256为 `e97c209a9307264c90005e2dbe4c28faeb701297fce4e865b7f17adaa40495e4`。100项是130项子集，本轮核对日志后随存储实现发布；另专项复验12项／12.689秒通过。不称重新启动的完整回归或算法准确率。历史字段核对保留在 [数据契约核对](validation/BACKEND_FIELD_CONTRACTS_2026-10-11.md)。
 
-此前关键点`verification-0bba991b`160／12／19项、VIDEO`verification-b2b7fc2e`177／12／19项与两原片7条CLI、双层损失`verification-9d1cdb62`200／12／19项保留各自历史，见17.10–17.12。最新`verification-b4bcb387`230／12／19项、1308保护通过，含30项多轮训练；专项`pose-training-audit-6c350f29`实际原YOLO两轮两步、选模／早停、所属取消及权限拒绝，见17.13与 [验收](validation/REHAB_POSE_TRAINING_2026-10-11.md)。此前227项工作区试验和各专项保留独立日志、不累加。没有真人微调或手机验证，工程计数不当准确率；会话CLI100项仍为历史，本轮未重跑。
+此前关键点`verification-0bba991b`160项、VIDEO`verification-b2b7fc2e`177项与两原片7条CLI、双层损失`verification-9d1cdb62`200项、多轮`verification-b4bcb387`230项保留各自历史，见17.10–17.13。最新`verification-b5e899f3`251／12／19项、1308保护通过，含21项资源准入测试；实际原生双向拒绝／工程优化／取消／退出审计`resource-audit-ccedd673`见17.14及 [验收](validation/REHAB_COMPUTE_COORDINATION_2026-10-11.md)。旧227项工作区试验及各专项不累加；没有真人微调或手机验证，工程计数不当准确率；会话CLI100项仍为历史，本轮未重跑。
 
 以上是有日期和范围的验证，本轮没有重跑全部产品／Android／Agent 回归。它们不能替代真人角度／器械精度、疾病预测、公网、手环、相机和红米实机验收，也不能互相累加成一个“总准确率”。原产品细节见 [本机同步验证](validation/GITHUB_SYNC_2026-10-11.md)。
 
@@ -1402,6 +1404,14 @@ TCN 感受野 `R = 1 + 2×(3−1)×(1+2+4+8) = 61` 步。20 Hz 名义采样下�
 内部子进程请求必须是专用忽略data/run根下的`request.json`，在OS锁前检查；失败状态也只写相同run。真实范围外命令返回1，原邻近文件hash不变。该工程边界不等于通用文件沙箱或全产品资源互斥。
 
 末次`pose-training-audit-6c350f29`30项及五条命令按预期通过；真实原YOLO两轮两步、早停和活子进程取消。灰色TEST图的覆盖／PCK均0、误差null；无真人收益、手机或临床结论。工作流／数值／源码和产物hash见 [工作流](development/POSE_FINETUNING_WORKFLOW.md)、[验收](validation/REHAB_POSE_TRAINING_2026-10-11.md) 与 [摘要](../reports/rehab_backend/pose_training_verification.json)。合法真人监督、显式resume、产品活动训练协调、压力／物理故障和康复深蹲本人计划仍待补。
+
+### 17.14 正式会话 → 共享准入；离线重任务 → 独占准入
+
+同checkout的v2宿主在SQL create前获取正式共享锁，运行／pause／rest保留，最终事实提交成功且在途实际结束后释放。默认原生pose child计算时另持共享锁，父进程消失不等于原生计算已经停止。实际pose／IRDS训练、masked smoke、YOLO回放、MP VIDEO及原参考YOLO child持独占锁，冲突立即明确拒绝，不等待或自动排队。路径不随输出根变化，文件存在／PID／状态JSON不是占用证据。
+
+finish取消请求不作为退出回执，未确认原生释放或最终SQL失败仍保留保护；晚结果仍按terminal epoch丢弃。幂等历史回执查找在准入之前，不会因为重任务正在运行而重复创建。实际进程测试确认双向拒绝、原YOLO工程更新／取消后重新创建、离线参考子进程跨图片持锁，原模型不变。
+
+实现、调用链、错误字段和复现见 [资源工作流](development/REHAB_COMPUTE_COORDINATION.md)。旧桌面／旧live／APK／其他checkout、全部预处理／评估／报告导出及v2报告准入延期尚未接入；不能称全产品协调、同硬件负载对照或真人准确率已完成。
 
 ## 18. 你下一轮可以怎样从算法入手
 

@@ -9,6 +9,7 @@ The host alone owns clocks, EMA, protocol state, durable facts and consent.
 from __future__ import annotations
 
 from dataclasses import asdict
+from contextlib import nullcontext
 import hashlib
 import json
 import math
@@ -19,6 +20,7 @@ from uuid import uuid4
 from ..core import CORE
 from .owned_worker import OwnedJsonWorker
 from app.domain import Context, FramePacket, PoseFrame, PosePerson, dumps, utc_now
+from app.rehab_v2.resources import ComputeLease, ResourceBusy, ResourceUnavailable, compute_contract
 
 VERSION = 'rehab-pose-process-1'
 JPEG_CAPACITY = 512*1024
@@ -49,10 +51,22 @@ def _reply(pipe, memory, value):
 
 
 def pose_process(pipe, memory_name):
+    return _pose_process(pipe, memory_name, offline_heavy=False)
+
+
+def offline_pose_process(pipe, memory_name):
+    """Exclusive lease in the actual research inference child, not its parent."""
+    return _pose_process(pipe, memory_name, offline_heavy=True)
+
+
+def _pose_process(pipe, memory_name, *, offline_heavy):
     """Trusted local entry point. Models are reused, tracker context is not."""
     memory = SharedMemory(name=memory_name)
     vision = None
+    heavy_lease = None
     try:
+        if offline_heavy:
+            heavy_lease = ComputeLease('heavy').acquire()
         _send(pipe, dict(ready=VERSION))
         while True:
             request = json.loads(pipe.recv_bytes(REQUEST_CAPACITY))
@@ -60,41 +74,52 @@ def pose_process(pipe, memory_name):
                 break
             ticket = request['ticket']
             try:
-                length = request['length']
-                if type(length) is not int or not 0 < length <= JPEG_CAPACITY:
-                    raise ValueError('invalid_jpeg_buffer_length')
-                encoded = bytes(memory.buf[:length])
-                if hashlib.sha256(encoded).hexdigest() != request['image_sha256']:
-                    raise ValueError('jpeg_buffer_fingerprint_mismatch')
-                import cv2
-                import numpy as np
-                from app.vision import VisionWorker
-                started = time.perf_counter()
-                image = cv2.imdecode(np.frombuffer(encoded, np.uint8), cv2.IMREAD_COLOR)
-                if image is None or min(image.shape[:2]) < 32 or image.shape[0]*image.shape[1] > 1920*1080:
-                    raise ValueError('invalid_decoded_frame')
-                decode_ms = 1000*(time.perf_counter()-started)
-                del encoded
-                if vision is None:
-                    vision = VisionWorker(start_thread=False)
-                # No child clock is used as a host age or an exposure time.
-                packet = FramePacket(Context(**request['context']), request['seq'],
-                                     request['source_time_s'], 0., utc_now(), image)
-                started = time.perf_counter()
-                pose = vision.infer(packet, backend='yolo', side=request['side'])
-                inference_ms = 1000*(time.perf_counter()-started)
-                del image
-                _reply(pipe, memory, dict(ticket=ticket, ok=True, pose=asdict(pose),
-                                         decode_ms=decode_ms, inference_ms=inference_ms))
+                # The native child keeps its own shared handle while actually
+                # computing, even if the session host crashes mid-inference.
+                with nullcontext() if offline_heavy else ComputeLease('formal'):
+                    length = request['length']
+                    if type(length) is not int or not 0 < length <= JPEG_CAPACITY:
+                        raise ValueError('invalid_jpeg_buffer_length')
+                    encoded = bytes(memory.buf[:length])
+                    if hashlib.sha256(encoded).hexdigest() != request['image_sha256']:
+                        raise ValueError('jpeg_buffer_fingerprint_mismatch')
+                    import cv2
+                    import numpy as np
+                    from app.vision import VisionWorker
+                    started = time.perf_counter()
+                    image = cv2.imdecode(np.frombuffer(encoded, np.uint8), cv2.IMREAD_COLOR)
+                    if image is None or min(image.shape[:2]) < 32 or image.shape[0]*image.shape[1] > 1920*1080:
+                        raise ValueError('invalid_decoded_frame')
+                    decode_ms = 1000*(time.perf_counter()-started)
+                    del encoded
+                    if vision is None:
+                        vision = VisionWorker(start_thread=False)
+                    # No child clock is used as a host age or an exposure time.
+                    packet = FramePacket(Context(**request['context']), request['seq'],
+                                         request['source_time_s'], 0., utc_now(), image)
+                    started = time.perf_counter()
+                    pose = vision.infer(packet, backend='yolo', side=request['side'])
+                    inference_ms = 1000*(time.perf_counter()-started)
+                    del image
+                    _reply(pipe, memory, dict(ticket=ticket, ok=True, pose=asdict(pose),
+                                             decode_ms=decode_ms, inference_ms=inference_ms))
+            except (ResourceBusy, ResourceUnavailable) as exc:
+                _reply(pipe, memory, dict(ticket=ticket, ok=False, resource_error=exc.code))
             except Exception as exc:
                 _reply(pipe, memory, dict(ticket=ticket, ok=False, error_type=type(exc).__name__))
+    except (ResourceBusy, ResourceUnavailable) as exc:
+        _send(pipe, dict(resource_error=exc.code))
     except (EOFError, BrokenPipeError, OSError):
         pass
     finally:
-        if vision is not None:
-            vision.close()
-        memory.close()  # Parent alone unlinks; Windows frees after all handles close.
-        pipe.close()
+        try:
+            if vision is not None:
+                vision.close()
+        finally:
+            if heavy_lease is not None:
+                heavy_lease.close()
+            memory.close()  # Parent alone unlinks; Windows frees after all handles close.
+            pipe.close()
 
 
 class IsolatedPoseWorker(OwnedJsonWorker):
@@ -115,6 +140,8 @@ class IsolatedPoseWorker(OwnedJsonWorker):
                     pose_response_bytes=RESPONSE_CAPACITY, shared_memory_bytes=MEMORY_CAPACITY,
                     startup_timeout_s=self.startup_timeout_s, cold_timeout_s=self.cold_timeout_s,
                     frame_timeout_s=self.frame_timeout_s, release_timeout_s=self.release_timeout_s,
+                    compute_execution_contract=compute_contract(),
+                    compute_role='offline_heavy' if self.target is offline_pose_process else 'formal',
                     no_camera_or_storage_in_child=True, child_clock_not_used_for_evidence_age=True)
 
     def infer(self, value, runtime):
@@ -158,6 +185,8 @@ class IsolatedPoseWorker(OwnedJsonWorker):
                 if result.get('ticket') != ticket:
                     raise PoseWorkerError('pose_worker_ticket_mismatch')
                 if result.get('ok') is not True:
+                    if result.get('resource_error') in (ResourceBusy.code, ResourceUnavailable.code):
+                        raise PoseWorkerError(result['resource_error'])
                     raise PoseWorkerError('pose_worker_inference_failed')
                 pose = dict(result['pose'])
                 pose['context'] = Context(**pose['context'])

@@ -20,6 +20,7 @@ if __package__ in (None, ''):
 
 from tools.rehab_ml.common import ROOT, canonical_hash, file_hash, read_json, write_json
 from tools.rehab_ml.pose_dataset import _json, _new_output, load_reference
+from tools.rehab_ml.resource_gate import heavy_compute
 
 BASE_SHA256 = '869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0'
 
@@ -98,6 +99,11 @@ def _tensor_digest(named):
 
 
 def run_child(request_file):
+    with heavy_compute():
+        return _run_child(request_file)
+
+
+def _run_child(request_file):
     request_file, request, _ = _json(request_file)
     source, reference, fingerprint = load_reference(request['reference'], training=True)
     if fingerprint != request['reference_sha256'] or reference['usage_context'] != 'TEST' or any(

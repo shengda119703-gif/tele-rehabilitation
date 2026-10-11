@@ -17,6 +17,7 @@ import yaml
 from .common import ROOT, canonical_hash, file_hash, git, paths, read_json, write_json
 from .data import load_prepared
 from .features import FEATURE_VERSION, full_clip_statistics
+from .resource_gate import heavy_compute
 
 
 def metrics(labels, probabilities):
@@ -225,6 +226,11 @@ def train_tcn(config, groups, arrays, run):
 
 
 def train(config_path):
+    with heavy_compute():
+        return _train(config_path)
+
+
+def _train(config_path):
     with Path(config_path).open(encoding='utf-8') as stream:
         config = yaml.safe_load(stream)
     if (config['input_domain'] != 'kinect_3d' or config['product_enabled']

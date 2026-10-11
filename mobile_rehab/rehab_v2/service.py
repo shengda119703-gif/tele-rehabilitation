@@ -20,6 +20,7 @@ from app.rehab_v2.rounds import TrainingRounds
 from app.rehab_v2.evidence import EvidenceAdapter
 from app.rehab_v2.sessions import SessionError, SessionRepository, identifier
 from app.rehab_v2.telemetry import SessionTelemetry, VERSION as DIAGNOSTICS_VERSION
+from app.rehab_v2.resources import ComputeLease, ResourceBusy, ResourceUnavailable, compute_contract
 from .pose_worker import IsolatedPoseWorker
 from .report_worker import IsolatedReportWorker
 from app.rehab_v2.reporting import build_report
@@ -55,7 +56,7 @@ class StoreLease:
 
 
 class Runtime:
-    def __init__(self, item):
+    def __init__(self, item, compute_lease):
         self.context_owner = item['owner']
         plan = item['frozen_plan']['plan']
         engine_type = TrainingRounds if plan.get('submode') == 'training' else ProtocolEngine
@@ -66,6 +67,8 @@ class Runtime:
         self.started = time.monotonic()
         self.control_epoch = item['control_epoch']
         self.terminal_epoch = item['terminal_epoch']
+        self.compute_lease = compute_lease
+        self.terminal_committed = False
         self.context = Context(1, 'rehab', item['source']['source_ref'], item['source']['source_kind'],
                                item['source']['usage_context'], item['session_id'], item['source_epoch'])
         self.telemetry = SessionTelemetry(item['source'].get('execution_trace_id'),
@@ -146,9 +149,22 @@ class SessionService:
             self.report_wake.wait(.2)
             self.report_wake.clear()
 
+    def _release_terminal_compute(self):
+        with self.guard:
+            # A cancellation request is not an exit receipt. Keep the host
+            # lease if the owned native process could not be released.
+            if self.inference_worker.quarantined:
+                return
+            for sid, runtime in self.runtimes.items():
+                if (runtime.terminal_committed and runtime.engine.run_state == 'ended'
+                        and (not self.inflight or self.inflight['sid'] != sid)):
+                    runtime.compute_lease.close()
+
     def _prune_terminal_runtimes(self):
+        self._release_terminal_compute()
         # Keep the one in-flight object alive even if its fact is finalized.
         ended = [sid for sid, runtime in self.runtimes.items() if runtime.engine.run_state == 'ended'
+                 and not runtime.compute_lease.held
                  and (not self.inflight or self.inflight['sid'] != sid)]
         for sid in ended[:-32]:
             del self.runtimes[sid]
@@ -213,6 +229,7 @@ class SessionService:
                               no_exposure_synchronization_claim=True,
                               execution_trace_id=uuid4().hex, diagnostics_version=DIAGNOSTICS_VERSION)
                 source['report_execution_contract'] = self._report_execution_contract()
+                source['compute_execution_contract'] = compute_contract()
                 source['storage_execution_contract'] = self.storage_boundary.contract
                 if not self.internal_replay and self.inference_provider is None:
                     source['inference_execution_contract'] = self.inference_worker.contract
@@ -222,8 +239,17 @@ class SessionService:
                     if (scope['source_kind'] != source['source_kind'] or scope['usage_context'] != source['usage_context']
                             or scope['participant_id'] != frozen['plan'].get('participant_id')):
                         raise SessionError('actual_input_does_not_match_plan_scope')
-                item = self.repository.create(owner, key, fingerprint, frozen, source)
-                self.runtimes[item['session_id']] = Runtime(item)
+                compute_lease = ComputeLease('formal')
+                try:
+                    compute_lease.acquire()
+                except (ResourceBusy, ResourceUnavailable) as error:
+                    raise SessionError(error.code, 503) from None
+                try:
+                    item = self.repository.create(owner, key, fingerprint, frozen, source)
+                    self.runtimes[item['session_id']] = Runtime(item, compute_lease)
+                except BaseException:
+                    compute_lease.close()
+                    raise
                 return item
         result = self._bounded(create)
         runtime = self.runtimes.get(result['session_id'])
@@ -344,6 +370,7 @@ class SessionService:
         finally:
             try:
                 self.inference_worker.close()
+                self._release_terminal_compute()
             except Exception as exc:
                 self.worker_failure = getattr(exc, 'code', type(exc).__name__)
 
@@ -442,6 +469,7 @@ class SessionService:
                         with runtime.telemetry.span('final_commit_ms'):
                             self.repository.finalize(value['owner'], value['sid'], runtime.engine.summary(), item['requested_end_reason'])
                         runtime.telemetry.event('commit_success')
+                        runtime.terminal_committed = True
                         runtime.terminal_epoch += 1
                         self.report_wake.set()
             finally:
@@ -449,6 +477,7 @@ class SessionService:
                     runtime.telemetry.event('background_failure', seq=value['seq'])
                 with self.guard:
                     self.inflight = None
+                    self._release_terminal_compute()
                 self.frames.task_done()
                 for key in self.latencies:
                     self.latencies[key] = self.latencies[key][-512:]
@@ -515,10 +544,12 @@ class SessionService:
                 with runtime.telemetry.span('final_commit_ms'):
                     receipt = self.repository.finalize(owner, sid, runtime.engine.summary(), item['requested_end_reason'])
                 runtime.telemetry.event('commit_success')
+                runtime.terminal_committed = True
                 if pending:
                     runtime.telemetry.event('unprocessed_at_finish', count=pending)
                 runtime.terminal_epoch += 1
             self.inference_worker.cancel_current(sid)  # Only after the immutable terminal fact exists.
+            self._release_terminal_compute()
             self.report_wake.set()
             return receipt
 
@@ -688,4 +719,7 @@ class SessionService:
             self.frames.task_done()
         self.storage.close()
         self.lease.close()
+        with self.guard:
+            for runtime in self.runtimes.values():
+                runtime.compute_lease.close()
         self.resources_released = True

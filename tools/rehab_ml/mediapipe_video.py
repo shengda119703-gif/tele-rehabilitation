@@ -20,6 +20,7 @@ if __package__ in (None, ''):
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from tools.rehab_ml.common import ROOT, file_hash, paths, read_json, write_json
 from tools.rehab_ml.pose_dataset import _new_output
+from tools.rehab_ml.resource_gate import heavy_compute
 
 VERSION = 'rehab-mediapipe-video-audit-1'
 MAX_FRAMES = 15000
@@ -111,6 +112,11 @@ def encode_pose(result, context, seq, stamp, size, fingerprint, elapsed, previou
 
 
 def run_child(request_path):
+    with heavy_compute():
+        return _run_child(request_path)
+
+
+def _run_child(request_path):
     """Bounded file-only inference; called by the existing landmark interpreter."""
     request = read_json(request_path)
     if request.get('analysis_consent') is not True:

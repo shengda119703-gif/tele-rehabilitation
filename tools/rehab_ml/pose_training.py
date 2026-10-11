@@ -25,6 +25,7 @@ from tools.rehab_ml.common import ROOT, canonical_hash, file_hash, git, paths, r
 from tools.rehab_ml.pose_dataset import (JOINTS, PREDICTION_VERSION, _json, _new_output,
                                          evaluate, load_reference)
 from tools.rehab_ml.pose_masked_smoke import BASE_SHA256, _tensor_digest, verified_weights
+from tools.rehab_ml.resource_gate import heavy_compute
 
 VERSION = 'rehab-pose-finetune-1'
 
@@ -291,7 +292,7 @@ def record_child_failure(request_file, error):
 
 def run_child(request_file):
     request_file = owned_child_request(request_file)
-    with TrainingLease():
+    with heavy_compute(), TrainingLease():
         return _run_locked_child(request_file)
 
 

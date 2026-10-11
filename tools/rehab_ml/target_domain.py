@@ -9,10 +9,16 @@ import time
 from uuid import uuid4
 
 from .common import ROOT, file_hash, paths, write_json
+from .resource_gate import heavy_compute
 
 
 def extract_pose(video, exercise, side):
     """Authorized local analysis only; not an implicit training consent grant."""
+    with heavy_compute():
+        return _extract_pose(video, exercise, side)
+
+
+def _extract_pose(video, exercise, side):
     sys.path.insert(0, str(ROOT / 'rehab_codex_single_camera_v2_1'))
     from app.camera_manager import CameraManager
     from app.domain import Context, clean_json
