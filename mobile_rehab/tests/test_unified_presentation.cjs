@@ -23,9 +23,10 @@ function page(){
   const c={document:{body:{dataset:{}},querySelector:query,querySelectorAll:s=>s.startsWith('[data-')?nodes.filter(n=>n.dataset[s.slice(6,-1).replace(/-([a-z])/g,(_,x)=>x.toUpperCase())]!==undefined):[],addEventListener(){}},
     window:{addEventListener(){},scrollTo(){}},location:{hash:'#home'},setTimeout:()=>0,clearTimeout(){},console,URLSearchParams,AbortController};
   vm.createContext(c);
+  vm.runInContext(fs.readFileSync(path.join(dir,'home-v36.js'),'utf8'),c);
   vm.runInContext(fs.readFileSync(path.join(dir,'unified.js'),'utf8').replace(/\nroute\(\);\s*$/,''),c);
   c.fixture={profile:{profile:{name:'TEST <img>',age:68,conditions:[],medicationRecords:[]}},dailyProduct:{schedules:[]},state:{events:[],chat:[]},history:{report:{rangeText:'TEST 本周',sections:[{title:'TEST 摘要',lines:['TEST 原始记录']}]}}};
-  const run=code=>vm.runInContext(code,c);run('ui.snapshot=fixture');
+  const run=code=>vm.runInContext(code,c);run("ui.snapshot=fixture;ui.homeConnection='ready'");
   return {run,c,get:query,get html(){return html;}};
 }
 
@@ -36,9 +37,10 @@ test('all current health metric keys have Chinese display labels without changin
     assert.equal(p.run('eventText(event)'),`${label} 12.3 unit`);
   }
 });
-test('home has one concise entry, keeps original routes and folds the unchanged weekly data',()=>{
+test('home V3.6 has an independent task and preserves existing plan, history and assistant entries',()=>{
   const p=page();p.run('home()');assert.match(p.html,/href="#assistant"/);assert.match(p.html,/href="#records"/);
-  assert.match(p.html,/<details class="weekly-preview"><summary>本周摘要/);assert.match(p.html,/TEST 原始记录/);
+  assert.match(p.html,/class="home-task"/);assert.equal((p.html.match(/class="home-mark"/g)||[]).length,7);
+  assert.equal(typeof p.get('#home-plan').onclick,'function');assert.equal(typeof p.get('#home-primary').onclick,'function');
   assert.match(p.html,/TEST &lt;img&gt;/);assert.doesNotMatch(p.html,/陪你一步一步|已连接电脑 · 本人资料同步保存/);
 });
 test('all rehab modes keep original destinations and source option values',()=>{
@@ -82,4 +84,22 @@ test('light and dark button, body and secondary-text tokens maintain readable co
     const tokens=Object.fromEntries([...theme[1].matchAll(/--([\w-]+):\s*(#[\da-f]+)/gi)].map(m=>[m[1],m[2]]));
     for(const [foreground,background] of [['ink','paper'],['muted','paper'],['on-accent','accent']])assert.ok(contrast(tokens[foreground],tokens[background])>=4.5,foreground+' / '+background);
   }
+});
+
+test('reconnect refreshes home without starting a newly recovered task',async()=>{
+  const p=page();p.run("ui.homeConnection='offline';home();load=async()=>{ui.homeConnection='ready';ui.snapshot=fixture;render()}");
+  await p.get('#home-primary').onclick();assert.equal(p.c.location.href,undefined);assert.equal(p.c.location.hash,'#home');
+});
+test('task click is cancelled if source, selected date, participant or generation changes during revalidation',async()=>{
+  for(const changed of ["ui.source='REPLAY_FILE'","ui.day='2099-01-01'","fixture.profile.ownerId='OTHER'","ui.generation++","ui.page='health'"]){
+    const p=page();p.run("home();load=async()=>{ui.generation++;"+changed+";ui.homeConnection='ready'}");
+    await p.get('#home-primary').onclick();assert.equal(p.c.location.href,undefined);assert.equal(p.c.location.hash,'#home',changed);
+  }
+});
+test('timeline keeps selected medication date and pairing resets home handoff state',()=>{
+  const p=page();p.c.fixture.profile.profile.medicationRecords=[{id:'TEST-med',name:'TEST 药物',status:'active'}];
+  p.c.fixture.dailyProduct.medSchedules={'TEST-med':{times:['08:00'],start:'2020-01-01'}};
+  p.run("ui.day='2026-10-10';home()");p.c.document.querySelectorAll('[data-home-target]')[0].onclick();p.run('route()');
+  assert.equal(p.run('ui.day'),'2026-10-10');assert.equal(p.run('ui.page'),'medication');assert.equal(p.run('ui.homeRouteDay'),null);
+  p.run("ui.homeRouteDay='2026-10-09';pair()");assert.equal(p.run('ui.snapshot'),null);assert.equal(p.run('ui.homeRouteDay'),null);assert.equal(p.c.document.body.dataset.page,'pair');
 });

@@ -26,6 +26,8 @@ const ui = {
   private: false,
   generation: 0,
   busy: false,
+  homeConnection: "loading",
+  homeRouteDay: null,
 };
 const names = {
   home: "首页",
@@ -143,16 +145,21 @@ async function act(fn, success = "已保存") {
 }
 async function load() {
   const generation = ++ui.generation;
+  ui.homeConnection = "loading";
+  if (ui.page === "home" && ui.snapshot) home();
   try {
     const result = await api("/unified?source=" + ui.source);
     if (generation !== ui.generation) return;
     ui.snapshot = result.snapshot;
+    ui.homeConnection = "ready";
     $("#nav").hidden = false;
     $("#profile").textContent = (profile().name || "我").slice(0, 1);
     render();
   } catch (e) {
     if (generation !== ui.generation) return;
     ui.snapshot = null;
+    ui.homeConnection = "offline";
+    if (!$("#pair-form") && ui.page === "home") { home(); return; }
     if (!$("#pair-form"))
       $("#content").innerHTML =
         `<h1>暂时无法读取</h1><p>${E(e.message)}</p>${button("重新连接", "retry", true)}`;
@@ -163,10 +170,12 @@ function nav() {
   if (!$("#nav").querySelector('a')) $("#nav").innerHTML = Object.entries(names)
     .map(
       ([key, title]) =>
-        `<a href="#${key}" ${ui.page === key || (ui.page === "assistant" && key === "home") ? 'aria-current="page"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${icons[key]}"/></svg>${title}</a>`,
+        `<a href="#${key}" ${ui.page === key || (ui.page === "assistant" && key === "home") ? 'aria-current="page"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${icons[key]}"/></svg><span class="nav-label">${title}</span></a>`,
     )
     .join("");
   $("#nav").querySelectorAll('a').forEach(a => {
+    const label = a.querySelector('.nav-label');
+    if (label) label.textContent = a.hash === '#family' && ui.page === 'home' ? '家人' : names[a.hash.slice(1)];
     if(a.hash === '#' + (['assistant','records'].includes(ui.page) ? 'home' : ui.page)) a.setAttribute('aria-current','page');
     else a.removeAttribute('aria-current');
   });
@@ -180,13 +189,17 @@ function route() {
   }
   const key = location.hash.slice(1) || "home";
   ui.page = Object.hasOwn(names, key) || ["assistant", "records"].includes(key) ? key : "home";
-  ui.day = today();
+  ui.day = ui.homeRouteDay || (ui.page === "home" ? ui.day : today());
+  ui.homeRouteDay = null;
   nav();
   if (ui.snapshot) render();
   else load();
   window.scrollTo(0, 0);
 }
 function pair() {
+  document.body.dataset.page = "pair";
+  ui.homeRouteDay = null;
+  ui.homeConnection = "loading";
   ui.generation++;
   ui.snapshot = null;
   ui.draft = "";
@@ -201,6 +214,7 @@ function pair() {
   };
 }
 function render() {
+  document.body.dataset.page = ui.page;
   nav();
   ({ home, rehab, health, medication, family, assistant, records })[ui.page]();
   window.ProductMotion?.decorate(ui.page);
@@ -233,33 +247,51 @@ function doses(day = ui.day) {
   }
   return rows.sort((a, b) => a.time.localeCompare(b.time));
 }
+function homeModel() {
+  return window.AnkangHomeV36.model(ui.homeConnection === "ready" ? snapshot() : {}, ui.source, ui.day, today(), ui.homeConnection);
+}
 function home() {
-  const items = [
-    ...schedules(today()).map((s) => ({
-      time: s.time,
-      title: s.name,
-      to: "rehab",
-    })),
-    ...doses(today()).map((d) => ({
-      time: d.time,
-      title:
-        d.med.name +
-        " · " +
-        { taken: "已服用", skipped: "已跳过", unrecorded: "待记录" }[d.status],
-      to: "medication",
-    })),
-  ].sort((a, b) => a.time.localeCompare(b.time));
-  $("#content").innerHTML =
-    `<section class="hero"><p class="eyebrow">${E(new Date().toLocaleDateString("zh-CN", { month: "long", day: "numeric", weekday: "long" }))}</p><h1>${E(profile().name)}，<br>今天怎么样？</h1>${link("记录身体情况", "#assistant", true)}</section><section class="today-panel"><div class="heading"><h2>今天的安排</h2><a href="#rehab">康复安排</a></div>${
-      items
-        .slice(0, 4)
-        .map(
-          (i) =>
-            `<div class="row"><time>${E(i.time)}</time><div><strong>${E(i.title)}</strong></div><a href="#${i.to}" aria-label="查看${E(i.title)}">查看</a></div>`,
-        )
-        .join("") ||
-      '<p class="empty">今天暂无安排。</p>'
-    }${items.length > 4 ? '<p class="muted">更多安排见康复、用药页。</p>' : ""}</section>${weeklyPreview()}`;
+  document.body.dataset.page = "home";
+  const m = homeModel();
+  $("#content").innerHTML = window.AnkangHomeV36.markup(m, ui.homeConnection === "ready" ? doses(ui.day) : [], today());
+  bind("home-primary", async () => {
+    if (ui.busy) return;
+    if (m.task.action === "retry") { await load(); return; }
+    const generation = ui.generation + 1, source = ui.source, day = ui.day, owner = snapshot().profile?.ownerId;
+    await load(); // Recheck bound person, source, plan revision and availability before acting.
+    if (ui.page !== "home" || ui.homeConnection !== "ready" || ui.generation !== generation || ui.source !== source || ui.day !== day || snapshot().profile?.ownerId !== owner) return;
+    const current = homeModel();
+    if (current.task.action === "plan" && current.plan) planDetail(current.plan);
+    else if (["train","assess","history"].includes(current.task.action)) location.href = "/capture?tab=" + ({train:"plan",assess:"assess",history:"history"})[current.task.action];
+    else { ui.homeRouteDay = ui.day; location.hash = "#rehab"; }
+  });
+  bind("home-plan", async () => {
+    if (ui.busy) return;
+    const generation = ui.generation + 1, source = ui.source, day = ui.day, owner = snapshot().profile?.ownerId;
+    await load();
+    if (ui.page !== "home" || ui.homeConnection !== "ready" || ui.generation !== generation || ui.source !== source || ui.day !== day || snapshot().profile?.ownerId !== owner) return;
+    const p = homeModel().plan;
+    if (p) planDetail(p);
+    else { ui.homeRouteDay = ui.day; location.hash = "#rehab"; }
+  });
+  bind("home-search", () => {
+    const dialog = modal("搜索入口", `<p>暂未提供全局搜索。可在现有动作库中搜索动作。</p><div class="home-search-links">${link("搜索康复动作", "/capture?tab=assess")}${link("我的计划", "#rehab")}${link("历史记录", "#records")}</div>`);
+    dialog.querySelectorAll('.home-search-links a').forEach(a => a.onclick = () => dialog.close());
+  });
+  bind("home-profile", () => $("#profile").click());
+  bind("home-refresh", load);
+  bind("home-context", () => {
+    modal("日期与记录来源", `${sourcePicker()}<label>查看日期<input id="home-date" type="date" value="${E(ui.day)}"></label>`);
+    bindSource();
+    const changeSource = $("#source").onchange;
+    $("#source").onchange = e => { $("#dialog").close(); changeSource(e); };
+    $("#home-date").onchange = e => {
+      if (!window.AnkangHomeV36.dateOf(e.target.value)) return;
+      ui.day = e.target.value; $("#dialog").close(); load();
+    };
+  });
+  document.querySelectorAll('[data-home-day]').forEach(b => b.onclick = () => { ui.day = b.dataset.homeDay; load(); });
+  document.querySelectorAll('[data-home-target]').forEach(b => b.onclick = () => { ui.homeRouteDay = ui.day; ui.rehabMode = "training"; location.hash = "#" + b.dataset.homeTarget; });
 }
 
 function weeklyPreview() {
