@@ -20,6 +20,8 @@
 
 ## 正式会话的后端接入
 
+连续输入工程验收：`cli.py benchmark-session-load`用原所属YOLO、隔离TEST库和160次持续JPEG请求，并行查询／6对暂停恢复／4个同操作finish，核对接收与处理审计、唯一贡献、反馈及独立重开。`verify_session_load.py`保存7项工具测试和三次预声明重复的全部日志／hash；不等每帧推理完才发下一帧，不宣称80 FPS模型、真人精度、手机或长期压力已验收。预算固定来自backend.yaml，失败非零。见[工作流](../../docs/development/REHAB_SESSION_LOAD.md)和[本机验收](../../docs/validation/REHAB_SESSION_LOAD_2026-10-11.md)。
+
 原 `mobile_rehab.server.create_app` 增加显式关键字 `rehab_v2=True`，默认关闭；该参数启用认证后的 `/api/rehab/v2/sessions` 生命周期。原 `/api/live` 和其删除仍是预览，不保存训练历史。新事实库为宿主数据目录的 `rehab-v2.sqlite3`，复用现有 `Storage` owning thread 和备份机制，和原病人库分开。
 
 创建需要本人身份、consent、创建幂等键、现有本人计划 ID/revision/entry_key 和明确机位；计划、剂量、节奏和原证据引用由宿主解析并冻结，客户端不能随意伪造处方。自动计划复用原继续资格；已有手动计划还需 `training_plan_confirmed=true`，计划要求陪同时需 `companion_confirmed=true`。实际输入必须匹配计划的 `LIVE_CAMERA/SELF_USE` scope，原录像计划不能改名使用。帧仅支持受限 JPEG，由原 YOLO 后端推理。任意关键点 JSON 输入被拒绝；确定性回放仅内部 `internal_replay=True` 并标记 TEST/SYNTHETIC。

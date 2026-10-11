@@ -8,17 +8,19 @@
 
 ## A. 实际完成情况
 
+本次增量以`bead4d3`为基准，新增持续JPEG／并发控制原YOLO工程验收，见B3.11。[最终专项](session_load_verification.json)三次预声明重复和7项工具测试退出0；[完整回归](regression.json)实际为`verification-6077fb98`364／12／19项，7项是364子集，1308保护不变。前段357项与B3.10属于历史采样阶段，不是本次重跑其独立实验；此次没有训练、私人原片分析、手机或临床准确性验证。
+
 | 工作 | 状态 | 实际证据 | 剩余限制 |
 | --- | --- | --- | --- |
 | P0 盘点与保护 | done | [开工清单](../rehab_backend_inventory.md)、[1308 文件基准](protected_files.json)、[末次 hash 核验](scope_verification.json) | 仅本轮范围；不代表其他会话或临床验收 |
 | P1 三动作后端协议 | done（工程定义） | `app/rehab_v2/protocols.py`、`engine.py`、`rounds.py`；15 项协议回放及几何契约测试 | 定义是二维投影和训练观察，不是解剖 ROM 金标准；实际机位仍由计划给出 |
-| P2 正式会话与幂等 | partial | 340项新后端回归，含18项只读时间比较／19项显式安排及原SQLite、资源、报告、反馈CAS与HTTP；三动作左右侧可用本人版本化安排 | 旧页面／APK未接入；原保存计划适配仅两动作；真人计时、物理故障和完整压力待做 |
+| P2 正式会话与幂等 | partial | 364项当前新后端回归，含时间比较／显式安排及原SQLite、资源、报告、反馈CAS与HTTP；三动作左右侧可用本人版本化安排 | 旧页面／APK未接入；原保存计划适配仅两动作；真人计时、物理故障和完整压力待做 |
 | P3 IRDS 下载与适配 | done | 198,985,485 字节骨架 ZIP、1974 字节 readme；CRC/MD5/SHA 校验；534 条/29 人，532 训练资格、2 隔离 | Kinect25 三维肩外展，不是手机 RGB、坐站或深蹲标签 |
 | P4 模型训练 | done（离线实验） | [实验包摘要](experiment_summary.json)，两次完整训练链结果；检查点、验证/测试预测和锁文件均存在于忽略目录 | TCN 测试 macro-F1 低于 logistic；只整次正误，不可作为相位/提示/诊断 |
 | P5 真人目标域验证 | partial | [此前回放](target_replay_summary.json)、[两原片YOLO／MP](mediapipe_video_verification.json)443／429帧配对；[本次缓存采样](sampling_sensitivity.json)九条件共18次 | 新协议均0确认次数；无专业真值，不计算计次准确率、不以模型或零次数一致证明正确 |
 | P6 姿态微调 | partial；真人训练缺资格 | 转换／独立评估、双层loss、[多轮复验](pose_training_verification.json)、[基础恢复](pose_resume_verification.json)、[多批次恢复](pose_resume_verification_multibatch.json)、[监督资格](pose_supervision_blocker.json) | train颜色增广／多轮／val选模／epoch恢复已实现；缺合法真人RGB／独立参考／同集原误差基线与真人候选对照，不自动上线 |
 | 候选后端接入 | offline / off | [冻结模型对照](model_comparison.json)，Kinect 匹配返回非权威候选，RGB 被拒绝 | 未在实际服务加载新权重，没有正式质量判断/提示接管 |
-| P7 回归与交付 | partial | [回归日志与hash](regression.json)、[本次采样专项](../../docs/validation/REHAB_SAMPLING_2026-10-11.md)、[此前时间／安排](../../docs/validation/REHAB_TIMING_COMPARISON_2026-10-11.md)、原生SQLite故障、[历史会话性能](session_performance.json)、[历史CPU微基准](performance.json) | TEST回归及两个授权缓存、ASGI非公网；尚缺真人参考、实机、全负载及物理故障 |
+| P7 回归与交付 | partial | [回归日志与hash](regression.json)、[连续输入三轮](session_load_verification.json)、[采样专项](../../docs/validation/REHAB_SAMPLING_2026-10-11.md)、原生SQLite故障、[历史单帧基准](session_performance.json) | 短时单活动会话ASGI非公网；尚缺真人参考、手机、网络、多客户端、长时／冷启动并发及物理故障 |
 | 禁改范围 | pass | 1308 个 protected 文件 SHA256 一致；唯一现有业务文件改动为 `mobile_rehab/server.py` 的 opt-in 康复入口 | 用户本来未提交的动作图片、脚本、CSV、任务书仍原样保留、不纳入本次提交 |
 
 ## B. 修改清单：问题、实现与验证
@@ -191,6 +193,14 @@
 
 私有RGB／关键点及逐帧轨迹不进Git、不进训练或正常历史，候选不启用。全条件见[sampling_sensitivity.json](sampling_sensitivity.json)，真实命令／源码／日志hash见[sampling_verification.json](sampling_verification.json)、[工作流](../../docs/development/REHAB_SAMPLING_SENSITIVITY.md)和[验收](../../docs/validation/REHAB_SAMPLING_2026-10-11.md)。仍缺独立参考、三动作有效目标域素材、真实模型降帧跟踪、曝光／网络、手机和完整压力；原时间API采样不变性为false。
 
+### B3.11 持续JPEG／并发控制与独立重开
+
+原`benchmark-sessions`等每帧结果后才继续，不覆盖持续负载。本次新增`session_load_audit.py`／CLI及`verify_session_load.py`／7项测试；每轮预声明1张冷启动白图＋160次目标80Hz请求，并发状态／诊断、6对暂停恢复、4个同操作finish和幂等／冲突／commit／null反馈。采用原认证API和默认所属YOLO，不注入视觉provider，不打开端口或正常库。SQL逐帧与HTTP接收集合、显式丢弃、冻结快照和唯一贡献对账；关闭后独立只读重开，连接显式关闭。
+
+实际最终`session-load-verification-d0c856cf`7项及3个原生HTTP命令退出0：接收58／67／63，处理25／30／28，丢弃33／37／35，分别覆盖23／27／25及旧epoch10／10／10。三轮最大保留槽1，finish时真实推理在途且送帧未结束；各轮31条件通过，无重复最终事实／贡献，反馈不补零或改视觉digest，所属进程／消费者释放。三轮finish p95 141.83／144.41／139.64毫秒、pause43.52／44.69／39.64，resume20.68／16.91／16.48，均低于提前200毫秒预算；每轮只有6／6／4控制样本，finish请求相关，不能证明稳定全天性能。
+
+冷原YOLO进程往返2.25–2.28秒与热结果年龄p95 88.48–92.68毫秒分开；状态压力p95不用大量冷等待查询稀释。CPU／原权重／imgsz640不变，候选TCN阶段null；周期RSS不是峰值。前期试跑保留，不替代最终源码核验。源码和日志hash、实际命令、31条件、完整回归及未测范围见[工作流](../../docs/development/REHAB_SESSION_LOAD.md)、[验收](../../docs/validation/REHAB_SESSION_LOAD_2026-10-11.md)和[三轮报告](session_load_verification.json)。本次不重跑IRDS或私人录像、不改UI／整个Android／生产规则／正常库，完整任务继续局部完成。
+
 ## C. 数据与训练事实
 
 ### C1. 实际下载、许可与映射
@@ -261,9 +271,9 @@ seed20261011；17/6/6人，310/131/91条。正/误分别 train269/41、val97/34�
 
 ### D1. 最新工具／存储／报告／推理回归及历史记录
 
-最新产品环境完整回归`verification-3ce388f3`为322／12／19项，保护1308文件一致；19项计划专项均包含其中，详见 [本轮验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)。此前`verification-a171e3d9`318项、`verification-3cd67228`303项及60项恢复／训练／数值与4项原子写子集保留 [续训验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)范围。此前`verification-a380a260`269项及`report-resource-audit-5d0a9f94`保留 [报告准入验收](../../docs/validation/REHAB_REPORT_COORDINATION_2026-10-11.md)；251／230及原多轮记录继续保留历史。各阶段不累加；工程通过不等于准确率，真实OS／受控SQL／无人原生工程／无标注真人分别说明。
+当前产品环境完整回归`verification-6077fb98`为364／12／19项，保护1308文件一致，7项负载工具算术测试包含其中；原模型持续输入三轮另外实跑，详见[当前验收](../../docs/validation/REHAB_SESSION_LOAD_2026-10-11.md)。历史`verification-3ce388f3`322项及19项计划专项保留[安排验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)。此前`verification-a171e3d9`318项、`verification-3cd67228`303项及60项恢复／训练／数值与4项原子写子集保留[续训验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)；269／251／230项保留[报告准入记录](../../docs/validation/REHAB_REPORT_COORDINATION_2026-10-11.md)。阶段不累加，工程通过不是准确率。
 
-历史时间／贡献`verification-3b62b733`为74／12／19项，会话CLI44项为74子集，见 [当时验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。[regression.json](regression.json)本次为`verification-6adfee5b`340／12／19项；18项时间／19项安排专项包含其中，旧322阶段另保留。[session_verification.json](session_verification.json)为此前100项，不称重跑。手机／HTTP既有Starlette/httpx warning保留，无依赖升级；本轮未跑全UI／Android／照护或实机验收。
+历史时间／贡献`verification-3b62b733`为74／12／19项，见[当时验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。此前`verification-6adfee5b`340项及时间／安排专项、`verification-5dda0d64`357项采样阶段分别保留；[regression.json](regression.json)现在为364项的新实跑。[session_verification.json](session_verification.json)仍为此前100项，不称重跑。既有Starlette/httpx warning保留，无依赖升级；未跑全UI／Android／照护或实机验收。
 
 确定性覆盖：C01肩腕缺测，C02短gap不累积保持，C03隐藏转折，C04站姿进入，C05坐站rearm，C06真膝角，C07左右/水平镜像/等比例分辨率及契约变化，C08乱序/epoch/年龄/慢推理污染，C09换人，C10组休息，C11提示TTL/当前纠正，C12因果特征与70前缀TCN未来扰动，C13缓存隔离，C14–16持久幂等，C17报告失败，C18真实退出恢复，C19未知感受，C21跨域拒绝，C22无标签零梯度，C23接收/丢帧/超时收尾边界。
 
@@ -290,6 +300,8 @@ C20禁改范围以独立文件保护命令核验，不混入74项计数。新增
 此历史实跑不是摄像头／网络／手机／真人运动／并发压力；关闭候选TCN，没有测新质量头。采样率只描述宿主接收／处理，trace尚非全产品跨任务分布式追踪。默认报告已为所属进程，可信本地callable仍无硬取消；本轮SQL容量／只读／锁／TEST损坏副本与明确备份恢复已验证，不能扩大为物理磁盘满／介质损坏／断电或自动修库。OS创建硬截止、用户负载压力仍未完成。之前照护库异常不属于本轮已修复事项。整个任务继续局部完成。
 
 ### D4. 关闭与历史比较
+
+持续输入性能增量见B3.11与[三轮核验](session_load_verification.json)。此前单生产者／CPU微基准只说明当时负载；本次也仍是短时进程内ASGI工程压力，不补足网络、手机、真人、长时或完整物理故障。
 
 正式前端和旧live未更改，也未重启原服务。使用默认 `create_app(..., rehab_v2=False)` 即不安装新入口、不初始化v2库；已有新事实库保留，不删除。候选默认无生产加载；ShadowSequence research_mode默认false，Kinect模型不得接YOLO/MediaPipe。`backend.yaml`是实验/开关声明，不会单凭改YAML自动上线；实际宿主入口参数才是启用条件。
 
