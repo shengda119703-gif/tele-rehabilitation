@@ -34,7 +34,7 @@
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py verify-sessions --database-mode isolated
 ```
 
-2026-10-11 最新完整 `verify_all` 为`verification-9d1cdb62`，运行200项新后端、12项旧康复、19项旧手机测试及1308文件保护核验；23项双层损失、17项VIDEO、30项关键点工具、12项原生存储和18项报告专测包含其中。[本轮双层损失验收](../../docs/validation/REHAB_POSE_MASKED_LOSS_2026-10-11.md)、此前 [177项VIDEO验收](../../docs/validation/REHAB_MEDIAPIPE_VIDEO_2026-10-11.md)与 [160项工具验收](../../docs/validation/REHAB_POSE_TOOLS_2026-10-11.md)保留各自实际命令、日志与边界。此前会话CLI100项、[存储验收](../../docs/validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md)、118／88项 [报告隔离验收](../../docs/validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)、100／70项 [推理／诊断验收](../../docs/validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md) 和时间／贡献验证保留历史范围，不累加；本轮未另重跑会话CLI。这些是隔离工程测试，不是临床准确率或手机实机验收。
+2026-10-11 最新完整`verify_all`为`verification-b4bcb387`，运行230项新后端、12项旧康复、19项旧手机测试及1308文件保护核验；30项训练、23项双层损失、17项VIDEO、30项关键点工具、12项原生存储和18项报告专测包含其中。[本轮多轮训练验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)、此前200项双层损失、177项VIDEO和160项工具保留各自实际命令、日志与边界。此前会话CLI100项、[存储验收](../../docs/validation/REHAB_V2_NATIVE_STORAGE_2026-10-11.md)、118／88项 [报告隔离验收](../../docs/validation/REHAB_V2_REPORT_ISOLATION_2026-10-11.md)、100／70项 [推理／诊断验收](../../docs/validation/REHAB_V2_ISOLATION_TELEMETRY_2026-10-11.md) 和时间／贡献验证保留历史范围，不累加；本轮未另重跑会话CLI。这些是隔离工程测试，不是临床准确率或手机实机验收。
 
 `RehabStorageBoundary`只适配v2的原Storage owning thread，不增加连接或写入器。实际SQLite结果码分为capacity／readonly／busy／corrupt／io／unavailable；初始化后的锁等待250ms不等于整个HTTP硬截止。错误返回`commit_state=not_confirmed_by_this_error`；恢复存储后先查询权威提交，再以原键重试。损坏文件保留，禁止自动删库或重建。运行态`last_storage_fault`是最后观察记录，不是当前健康探针。真实只读、外部写锁、SQLite容量上限和TEST文件头损坏已测，未占满物理硬盘或验证介质损坏／断电；已知一致备份只恢复备份内已有事实。
 
@@ -58,7 +58,7 @@ IRDS 整次正误标签只训练 Kinect 三维肩外展质量候选。坐站、�
 
 `extract-pose --video ... --exercise ... --side ... --analysis-consent yes` 使用原采集进程和真实 YOLO，保存私人骨架与新旧协议结果，不授予训练权限，也不把规则自身输出当真值。视频路径、私人骨架不上传 Git。
 
-`build-pose-dataset --reference ...` 已实现独立二维COCO17参考核验，以及masked／完整YOLO标签转换；`infer-pose-reference`复用原所属YOLO进程，`evaluate-pose`核对逐帧身份并输出误差、有效覆盖、PCK和分层证据。旧`--dataset`资格检查保留；`train-pose`仍以非零退出明确拒绝缺资格训练，没有完整多轮／增广／选模微调器或自动上线。需要核实RGB权限、独立关节／可见性标注与专业动作参考；缺标关节不能写成负例，部分标注必须保留坐标／objectness分别的mask。具体输入、公式、命令和30项工具验证见 [工作流](../../docs/development/POSE_REFERENCE_WORKFLOW.md)。双层损失实例及原生工程烟测见下一节。
+`build-pose-dataset --reference ...` 已实现独立二维COCO17参考核验，以及masked／完整YOLO标签转换；`infer-pose-reference`复用原所属YOLO进程，`evaluate-pose`核对逐帧身份并输出误差、有效覆盖、PCK和分层证据。旧`--dataset`资格检查保留；`train-pose --config`已有条件式多轮训练，仍以非零退出拒绝缺资格输入，不自动上线。本机真人RGB权限、独立关节／可见性标注与专业动作参考仍缺；缺标关节不能写成负例，部分标注必须保留坐标／objectness分别的mask。具体输入、公式、命令和此前30项工具验证见 [工作流](../../docs/development/POSE_REFERENCE_WORKFLOW.md)。双层损失和多轮训练分别见下两节。
 
 ## 部分关节标注的双层损失
 
@@ -70,7 +70,19 @@ IRDS 整次正误标签只训练 Kinect 三维肩外展质量候选。坐站、�
 
 核验脚本在忽略目录新建三split的TEST图／独立标签，运行23项测试和`smoke-pose-masked --reference ... --output-dir ...`；原YOLO所属进程实际前向／TAL／反向／SGD一步／另存TEST检查点／严格重载。只train进入优化，不用验证／测试图训练；原模型hash不变，缺training权限或非TEST参考拒绝。子进程默认120秒等待，只终止准确所属对象并确认释放；OS创建和读取不声称硬截止。
 
-这是工程损失接线检查，不是真人微调或准确率提升；TEST权重不接产品／APK。完整多轮／增广／选模训练及合法真人RGB／独立标注／同集候选比较仍缺。公式与边界见 [双层损失工作流](../../docs/development/POSE_DUAL_MASKED_LOSS.md)，实际命令、失败记录、源码／产物hash见 [验收](../../docs/validation/REHAB_POSE_MASKED_LOSS_2026-10-11.md)。
+这是工程损失接线检查，不是真人微调或准确率提升；TEST权重不接产品／APK。多轮训练已实现如下，但合法真人RGB／独立标注／同集候选比较仍缺。公式与边界见 [双层损失工作流](../../docs/development/POSE_DUAL_MASKED_LOSS.md)，历史实际命令、失败记录、源码／产物hash见 [验收](../../docs/validation/REHAB_POSE_MASKED_LOSS_2026-10-11.md)。
+
+## 条件式多轮姿态训练
+
+`train-pose --config ...`采用严格JSON模板和独立参考资格检查；先评原模型val，只train图进行亮度／对比度增广、原YOLO双层masked loss与AdamW更新，每轮val按全部定位参考PCK优先、覆盖次优选best并早停。best冻结／严格重载后才评test，不使用test选参数。last／best、优化器、RNG、逐样本变换、模型卡和出处均另存忽略目录；不覆盖生产模型。
+
+```powershell
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_pose_training.py
+```
+
+工程验证实际跑原YOLO两轮两步、早停、权限拒绝和取消；30项训练专测包括真实子进程范围外请求、邻近文件hash不变。请求路径和文件名在获取OS锁前检查，失败记录也遵守同一边界。OS容量1只管理离线pose训练；尚未与全产品正式活动训练调度互斥。`cancel-pose-training --run-dir ...`只提出请求，不声称进程已退出；原生验证持有准确子进程句柄并确认终止，取消后last保留而result不存在。
+
+参数、监督资格、公式和命令见 [多轮工作流](../../docs/development/POSE_FINETUNING_WORKFLOW.md)、[本机验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)。灰色TEST图无真人，PCK／覆盖0、误差null；本机真人微调仍缺独立监督，`product_enabled=false`。自动resume、完整压力、手机和物理故障未验收。
 
 ## 手机姿态输入的离线对照
 

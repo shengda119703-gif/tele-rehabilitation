@@ -20,10 +20,12 @@
   "available_pose_tools": [
     "build-pose-dataset --reference",
     "infer-pose-reference",
-    "evaluate-pose"
+    "evaluate-pose",
+    "train-pose --config",
+    "cancel-pose-training --run-dir"
   ],
-  "pose_tool_scope": "consented_independent_rgb_reference_conversion_and_offline_evaluation_not_training",
+  "pose_tool_scope": "conversion_evaluation_and_conditional_offline_training_not_proof_of_qualified_human_data",
   "next_required": "Verified dataset eligibility/access or consented independently annotated target video",
   "requested_command": "train-pose",
-  "implemented": "reference_conversion_and_evaluation_available_pose_training_refused"
+  "implemented": "conditional_multi_epoch_trainer_ready_human_training_still_blocked_missing_supervision"
 }

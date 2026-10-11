@@ -1,0 +1,22 @@
+{
+  "schema_version": "rehab-pose-finetune-1",
+  "mode": "research",
+  "reference": "",
+  "output_dir": "",
+  "seed": 20261011,
+  "device": "cpu",
+  "image_size": 640,
+  "batch_size": 8,
+  "max_epochs": 50,
+  "patience": 10,
+  "threads": 2,
+  "learning_rate": 0.0001,
+  "weight_decay": 0.0001,
+  "clip_norm": 10.0,
+  "freeze_first_layers": 0,
+  "brightness": 0.1,
+  "contrast": 0.1,
+  "confidence_min": 0.5,
+  "pck_threshold": 0.05,
+  "timeout_s": 7200.0
+}
