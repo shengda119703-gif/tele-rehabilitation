@@ -91,7 +91,8 @@ def main():
         ('reject_training_permission', ['tools/rehab_ml/cli.py', 'train-pose', '--config', rejected_config_path], 1)]
     summary = dict(run_id=root.name, evidence_scope='synthetic_multi_epoch_engineering_not_human_accuracy',
         commands=[], human_training_performed=False, product_enabled=False, clinical_accuracy=None,
-        implementation_sha256={p: file_hash(ROOT/p) for p in ('tools/rehab_ml/pose_training.py',
+        implementation_sha256={p: file_hash(ROOT/p) for p in ('tools/rehab_ml/pose_training.py', 'tools/rehab_ml/pose_resume.py',
+            'tools/rehab_ml/pose_cpu_gradients.py', 'tools/rehab_ml/pose_dataset.py', 'tools/rehab_ml/common.py',
             'tools/rehab_ml/pose_masked_loss.py', 'tools/rehab_ml/cli.py', 'tools/rehab_ml/verify_pose_training.py',
             'tests/rehab_backend/test_pose_training.py')})
     try:

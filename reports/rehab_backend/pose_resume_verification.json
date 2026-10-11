@@ -1,0 +1,254 @@
+{
+  "run_id": "pose-resume-audit-46708662",
+  "scope": "synthetic_native_epoch_resume_not_human_accuracy",
+  "commands": [
+    {
+      "name": "unit",
+      "arguments": [
+        "-m",
+        "unittest",
+        "test_pose_resume",
+        "test_pose_training",
+        "test_pose_cpu_gradients",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "elapsed_s": 8.137224899999637,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\unit.txt",
+      "log_sha256": "4e57d39448b0efe5258ac9a4ed74a5bce8d1feb0f0dfcf599a5f4f3df49620d8",
+      "tail": "unchanged (test_pose_cpu_gradients.CPUGradientTests.test_optimizer_invalid_later_gradient_leaves_all_state_unchanged) ... ok\ntest_optimizer_matches_adamw_equations_not_native_rounding_contract (test_pose_cpu_gradients.CPUGradientTests.test_optimizer_matches_adamw_equations_not_native_rounding_contract) ... ok\ntest_optimizer_none_gradient_and_unsupported_option (test_pose_cpu_gradients.CPUGradientTests.test_optimizer_none_gradient_and_unsupported_option) ... ok\ntest_policy_rejects_non_float32_and_nonzero_padding (test_pose_cpu_gradients.CPUGradientTests.test_policy_rejects_non_float32_and_nonzero_padding) ... ok\ntest_repeated_batches_release_inputs_and_keep_hooks_bounded (test_pose_cpu_gradients.CPUGradientTests.test_repeated_batches_release_inputs_and_keep_hooks_bounded) ... ok\ntest_shared_forward_without_backward_refused_not_stale_reuse (test_pose_cpu_gradients.CPUGradientTests.test_shared_forward_without_backward_refused_not_stale_reuse) ... ok\ntest_wrong_spatial_or_channel_shapes_refused (test_pose_cpu_gradients.CPUGradientTests.test_wrong_spatial_or_channel_shapes_refused) ... ok\n\n----------------------------------------------------------------------\nRan 60 tests in 6.012s\n\nOK\n"
+    },
+    {
+      "name": "uninterrupted",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "train-pose",
+        "--config",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\config.json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "elapsed_s": 9.100490500000888,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\uninterrupted.txt",
+      "log_sha256": "944a9332237b88bd7dfaa9c459b6564ca51129daa5294402543bb4b0fdc45df8",
+      "tail": "{\"ok\": true, \"command\": \"train-pose\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-resume-audit-46708662\\\\uninterrupted\\\\result.json\", \"result_sha256\": \"7d035ec0002713890fafe2a418d10e7a70c010ca1498474a25c962ee4a023fec\", \"epochs_completed\": 3, \"optimizer_steps\": 3, \"human_training_performed\": false, \"product_enabled\": false, \"clinical_accuracy\": null, \"owned_exit_confirmed\": true}}\n"
+    },
+    {
+      "name": "native_boundary_cancel",
+      "arguments": [
+        "tools/rehab_ml/verify_pose_resume.py",
+        "--boundary-child",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\cancelled-source\\request.json"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "elapsed_s": 5.346342699998786,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\native_boundary_cancel.txt",
+      "log_sha256": "c4cfe4a12e1ae4c506ad4fcc2250028cf2c9c741b3d6ebe4f1e2fd9e49e93a8b",
+      "tail": "rch\\backends\\mkldnn\\__init__.py:89: UserWarning: TF32 acceleration on top of oneDNN is available for Intel GPUs. The current Torch version does not have Intel GPU Support. (Triggered internally at C:\\actions-runner\\_work\\pytorch\\pytorch\\pytorch\\aten\\src\\ATen\\Context.cpp:219.)\n  torch._C._set_onednn_allow_tf32(_allow_tf32)\nTraceback (most recent call last):\n  File \"E:\\game\\health-care-software-main\\tools\\rehab_ml\\verify_pose_resume.py\", line 291, in <module>\n    boundary_child(arguments.boundary_child)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\game\\health-care-software-main\\tools\\rehab_ml\\verify_pose_resume.py\", line 35, in boundary_child\n    run_child(request)\n    ~~~~~~~~~^^^^^^^^^\n  File \"E:\\game\\health-care-software-main\\tools\\rehab_ml\\pose_training.py\", line 321, in run_child\n    return _run_locked_child(request_file)\n  File \"E:\\game\\health-care-software-main\\tools\\rehab_ml\\pose_training.py\", line 416, in _run_locked_child\n    check()\n    ~~~~~^^\n  File \"E:\\game\\health-care-software-main\\tools\\rehab_ml\\pose_training.py\", line 360, in check\n    raise InterruptedError('offline_pose_training_cancel_requested')\nInterruptedError: offline_pose_training_cancel_requested\n"
+    },
+    {
+      "name": "resume",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "train-pose",
+        "--config",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\resume-config.json",
+        "--resume-run",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\cancelled-source"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "elapsed_s": 7.947530100000222,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\resume.txt",
+      "log_sha256": "8b24ee7564999138d24264678f103317143a7bb5e7545f6769276ff0f2f7786f",
+      "tail": "{\"ok\": true, \"command\": \"train-pose\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-resume-audit-46708662\\\\resumed\\\\result.json\", \"result_sha256\": \"806f62032903698d564c08a2d7740b050e82c323d070587f67c7b0ae1baafcfb\", \"epochs_completed\": 3, \"optimizer_steps\": 3, \"human_training_performed\": false, \"product_enabled\": false, \"clinical_accuracy\": null, \"owned_exit_confirmed\": true}}\n"
+    },
+    {
+      "name": "reject_completed_test",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "train-pose",
+        "--config",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\reject-config.json",
+        "--resume-run",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\uninterrupted"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "elapsed_s": 0.21023760000025504,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\reject_completed_test.txt",
+      "log_sha256": "024b3ee261a5dd283f815eec5cb07193e3d7a886725578fa7122f6af85810135",
+      "tail": "{\"ok\": false, \"command\": \"train-pose\", \"error_type\": \"ValueError\", \"error\": \"resume_forbidden_after_test_or_completed_run\"}\n"
+    },
+    {
+      "name": "native_mid_epoch_crash",
+      "arguments": [
+        "tools/rehab_ml/verify_pose_resume.py",
+        "--crash-driver",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\crash-config.json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "elapsed_s": 5.585760899999514,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\native_mid_epoch_crash.txt",
+      "log_sha256": "31f4d349bf96a7261a58753d911c9341d6e68734b95f571115a845cdee88f6cf",
+      "tail": "{\"source\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-resume-audit-46708662\\\\crashed-source\", \"actual_owned_exit_code\": 27, \"owned_exit_confirmed\": true}\n"
+    },
+    {
+      "name": "resume_after_native_crash",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "train-pose",
+        "--config",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\crash-resume-config.json",
+        "--resume-run",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\crashed-source"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "elapsed_s": 8.134342299999844,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-resume-audit-46708662\\resume_after_native_crash.txt",
+      "log_sha256": "62b71c9222009cfd73e6f676f9a299dc6febd0b48d181fc75af6d52822728724",
+      "tail": "{\"ok\": true, \"command\": \"train-pose\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-resume-audit-46708662\\\\crash-resumed\\\\result.json\", \"result_sha256\": \"2102cb92dc8c802f7ddf20c6a17e5fdc587593564a4efa3b053e515573118425\", \"epochs_completed\": 3, \"optimizer_steps\": 3, \"human_training_performed\": false, \"product_enabled\": false, \"clinical_accuracy\": null, \"owned_exit_confirmed\": true}}\n"
+    }
+  ],
+  "audit_case": "singlebatch_cpu2_128_batch2_train1",
+  "human_training_performed": false,
+  "clinical_accuracy": null,
+  "product_enabled": false,
+  "implementation_sha256": {
+    "tools/rehab_ml/pose_training.py": "ca96de97d530ab7e24573ba6576e129d1b7db8607b9e3c1e7d9db4fa6a669634",
+    "tools/rehab_ml/pose_resume.py": "908219fe1c505f30f40ef37b4815955bc598af54043d4cfcc4837f6911569199",
+    "tools/rehab_ml/pose_masked_loss.py": "7458e07f952c7e363053f2cdb9c0388e272ca1b3084d5851bb8ed578e8c76bf1",
+    "tools/rehab_ml/pose_dataset.py": "d1ab0a1f9685cd7cbe69980c3903171e42c35718a901b3b525252fed539edd17",
+    "tools/rehab_ml/pose_cpu_gradients.py": "393b47b39b086d3a2b274ec91348ce26f43bdb23b4db96d52f920f3d07f58aca",
+    "tools/rehab_ml/common.py": "bd29e88735e99b85b8a8bd7a3e0531a241ea2eb8e07a6667d92cae647d988277",
+    "tools/rehab_ml/cli.py": "fd924600a0a6efda875540db895e39ee8ce8fe6f3e7ea8dbc7fa9cc889655cea",
+    "tests/rehab_backend/test_pose_resume.py": "ad5b7ed5a1d990974280bdece6a889e89734b301e528c255db7f208408f7cf26",
+    "tests/rehab_backend/test_pose_cpu_gradients.py": "024e2985df55ae531cfbb71ecc96a754e9875665ae7c5362b78a9dbebccf98d7",
+    "tools/rehab_ml/verify_pose_resume.py": "5351a9df401324b50194318d0775555a730975638fef1ad1eccf99bb87d79b05"
+  },
+  "native": {
+    "source_manifest": {
+      "version": "rehab-pose-resume-1",
+      "checkpoint": "resume-a.pt",
+      "sha256": "40c90680d3b3615b4a6bb7bfc54784255461807be3de6864f950d63c364a0f37",
+      "epoch": 1,
+      "optimizer_steps": 1
+    },
+    "source_file_count": 17,
+    "source_files_unchanged": true,
+    "actual_cancelled_child_exit_code": 1,
+    "cancellation": "controlled_request_after_actual_epoch_validation_not_external_crash",
+    "model_and_optimizer_bitwise_equal": true,
+    "full_tensor_digests": {
+      "model": "d8ad7f866c115e55759b4415dd0bc57442673d9a5922cfb0bde5b24e16e64e68",
+      "optimizer": "98550ccfc175b776c81057623ad81f24e8f8dd6d292cb67bef517f2bd578d786",
+      "groups": "a4da6fe9006565d9c85d30705900ee3f09af9c89914606d7b30f5a526b81443c"
+    },
+    "resumed_tensor_digests": {
+      "model": "d8ad7f866c115e55759b4415dd0bc57442673d9a5922cfb0bde5b24e16e64e68",
+      "optimizer": "98550ccfc175b776c81057623ad81f24e8f8dd6d292cb67bef517f2bd578d786",
+      "groups": "a4da6fe9006565d9c85d30705900ee3f09af9c89914606d7b30f5a526b81443c"
+    },
+    "resumed_order_losses_gradients_equal": true,
+    "total_epochs": 3,
+    "total_optimizer_steps": 3,
+    "current_attempt_steps": 2,
+    "steps_per_epoch": 1,
+    "best_epoch": 1,
+    "baseline_validation_inherited": true,
+    "training_numerical_environment": {
+      "python": "3.13.12 (tags/v3.13.12:1cbe481, Feb  3 2026, 18:22:25) [MSC v.1944 64 bit (AMD64)]",
+      "platform": "Windows-11-10.0.22631-SP0",
+      "torch": "2.9.1+cpu",
+      "device": "cpu",
+      "threads": 2,
+      "cpu_training_backend": "aten_no_mkldnn",
+      "autograd_multithreading": false,
+      "gradient_norm_accumulation": "float64_fixed_order_l2",
+      "criterion_lifetime": "epoch_local",
+      "optimizer_implementation": "cpu_adamw_fp64_intermediates_fp32_state_v2",
+      "cpu_conv_weight_gradient": "fp64_conv_weight_accumulation_v1",
+      "cpu_silu": "cpu_silu_fp64_intermediate_v1",
+      "numerical_environment": {
+        "MKL_CBWR": null,
+        "MKL_DYNAMIC": null,
+        "OMP_DYNAMIC": null,
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": null
+      },
+      "cuda": null,
+      "cudnn": null,
+      "cublas_workspace_config": ":4096:8"
+    },
+    "candidate_test_summary": {
+      "slots": 17,
+      "unannotated": 1,
+      "coordinate_reference_count": 15,
+      "covered_coordinate_count": 0,
+      "coordinate_coverage": 0.0,
+      "mean_euclidean_error_px": null,
+      "mean_bbox_diagonal_normalized_error": null,
+      "pck_all_coordinate_references": 0.0,
+      "pck_on_covered_coordinates": null,
+      "known_not_locatable_count": 1,
+      "predicted_present_on_not_locatable": 0,
+      "left_right_suspected_swaps": 0,
+      "left_right_assessable": 0
+    },
+    "state_difference": {
+      "model_changed_tensors": 0,
+      "model_max_abs": 0.0,
+      "optimizer_changed_tensors": 0,
+      "optimizer_max_abs": 0.0,
+      "diagnostic_not_acceptance_tolerance": true
+    }
+  },
+  "native_crash": {
+    "actual_owned_exit_code": 27,
+    "owned_exit_confirmed": true,
+    "injection": "after_actual_first_AdamW_step_of_epoch_two_before_commit",
+    "actual_step_before_exit": 2,
+    "source_manifest": {
+      "version": "rehab-pose-resume-1",
+      "checkpoint": "resume-a.pt",
+      "sha256": "d3fb88ada1bb19d41770a1198c1776e02c6d6e819f49e6df7fdf5461fab0c752",
+      "epoch": 1,
+      "optimizer_steps": 1
+    },
+    "source_status": {
+      "version": "rehab-pose-finetune-1",
+      "phase": "training",
+      "epoch": 2,
+      "optimizer_steps": 1,
+      "elapsed_s": 3.0249425999991217,
+      "product_enabled": false,
+      "human_training_performed": false
+    },
+    "terminal_receipt_sha256": "58d744341a2a01c64c4afcd57885b60b60d7dc57a17f4165232b808874bac7f6",
+    "previous_boundary_resumed": true,
+    "source_files_unchanged": true,
+    "total_epochs": 3,
+    "total_optimizer_steps": 3,
+    "current_attempt_steps": 2,
+    "tensor_digests": {
+      "model": "d8ad7f866c115e55759b4415dd0bc57442673d9a5922cfb0bde5b24e16e64e68",
+      "optimizer": "98550ccfc175b776c81057623ad81f24e8f8dd6d292cb67bef517f2bd578d786",
+      "groups": "a4da6fe9006565d9c85d30705900ee3f09af9c89914606d7b30f5a526b81443c"
+    },
+    "state_difference": {
+      "model_changed_tensors": 0,
+      "model_max_abs": 0.0,
+      "optimizer_changed_tensors": 0,
+      "optimizer_max_abs": 0.0,
+      "diagnostic_not_acceptance_tolerance": true
+    },
+    "model_and_optimizer_bitwise_equal": true,
+    "resumed_order_losses_gradients_equal": true
+  },
+  "original_weight_sha256": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0",
+  "passed": true
+}

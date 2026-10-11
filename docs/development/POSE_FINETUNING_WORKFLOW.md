@@ -90,6 +90,7 @@ best_key = (PCK_all, coverage)  # 按顺序比较；同分保留较早checkpoint
 | status.json／child.log／provenance.json | 阶段、epoch／step、实际命令、退出与日志hash；状态文件不单独证明进程存活 |
 | train-order.jsonl／history.json | 实际训练样本与颜色变换、五项loss／梯度、验证选模过程；私人资料不提交Git |
 | last.pt／best.pt | 原架构state_dict、优化器状态、Torch RNG、参考／配置hash；每份≤64MiB，原子替换本次自己的文件 |
+| resume-a.pt／resume-b.pt／resume-manifest.json | 已完成epoch验证的交替恢复包与原子提交指针；嵌入best、选模历史、全部RNG及实现／数值环境 |
 | baseline-val、val-epoch-*、baseline-test、candidate-test | 帧对齐预测、缺测覆盖、误差和分组参考评价 |
 | result.json／model-card.json | 最佳模型、真正轮数／步骤、原模型比较、域／split／来源／许可、禁止用途与未测范围 |
 | cancel.request／failure.json | 明确取消请求或失败；部分检查点保留，不制造成功结果 |
@@ -98,7 +99,9 @@ best_key = (PCK_all, coverage)  # 按顺序比较；同分保留较早checkpoint
 
 取消请求只写本次冻结run下的标志，即使外部原配置已删除也可请求；请求响应不声称退出。子进程在批次／阶段／持出图之间检查，原生计算不可立即合作中断时仍受父进程最大等待约束。超时或Ctrl+C只释放准确所属句柄，未确认退出不报成功；初始建进程、hash、文件系统与native调用本身不保证独立OS硬截止。
 
-最后检查点包含恢复材料，但本轮没有自动resume或接续失败实验；需后续核对配置、RNG、数据和split后另实现显式恢复。磁盘空间是保守预估，不是配额、物理磁盘满、断电或介质故障验收。新增互斥只覆盖v2与已接入的研究入口，不覆盖旧桌面／旧live／APK／其他checkout和全部报告作业，仍不能称全产品调度完成。
+现在可用`train-pose --config <新配置> --resume-run <所属中止run>`显式恢复最后已提交的epoch边界；没有后台自动重启或从半个batch恢复。源码、数据、配置／策略与数值环境绑定，已开始test或完成实验拒绝；无manifest的旧last不能直接续训。CPU离线训练另有明确高精度数值策略，详见 [恢复与数值工作流](POSE_RESUME_WORKFLOW.md)、[当前恢复验收](../validation/REHAB_POSE_RESUME_2026-10-11.md)。这些是对原多轮交付的后续增量，不将原阶段未验证的resume改称当时已经实现。
+
+磁盘空间是保守预估，不是配额、物理磁盘满、断电或介质故障验收。新增互斥只覆盖v2与已接入的研究入口，不覆盖旧桌面／旧live／APK／其他checkout和全部报告作业，仍不能称全产品调度完成。
 
 ## 6. 已验证与未完成
 

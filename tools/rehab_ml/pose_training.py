@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+from contextlib import nullcontext
 from io import BytesIO
 import math
 import os
@@ -179,15 +180,39 @@ def selection_score(summary):
 
 def _checkpoint(path, model, optimizer, metadata):
     import torch
+    return _checkpoint_payload(path, dict(metadata, state_dict=model.state_dict(), optimizer_state=optimizer.state_dict(),
+                                         torch_rng_state=torch.get_rng_state()))
+
+
+def _checkpoint_payload(path, payload):
+    import torch
     descriptor, temporary = tempfile.mkstemp(prefix=path.name+'.', suffix='.part', dir=path.parent)
     os.close(descriptor)
     # Partial failure remains recoverable; only our own last checkpoint is replaced.
-    torch.save(dict(metadata, state_dict=model.state_dict(), optimizer_state=optimizer.state_dict(),
-                    torch_rng_state=torch.get_rng_state()), temporary)
+    torch.save(payload, temporary)
     if Path(temporary).stat().st_size > 64*1024*1024:
         raise RuntimeError('checkpoint_byte_budget_exceeded')
+    with open(temporary, 'r+b') as stream:
+        stream.flush()
+        os.fsync(stream.fileno())
     os.replace(temporary, path)
     return file_hash(path)
+
+
+def clip_gradients(parameters, max_norm):
+    """Fixed-order float64 norm; model/gradient dtype and clipping rule stay put."""
+    import torch
+    norms = [torch.linalg.vector_norm(parameter.grad.detach().double(), 2) for parameter in parameters]
+    if not norms:
+        raise RuntimeError('gradient_parameters_required')
+    total = torch.linalg.vector_norm(torch.stack(norms), 2)
+    if not torch.isfinite(total):
+        raise RuntimeError('finite_gradient_norm_required')
+    coefficient = (max_norm/(total+1e-6)).clamp(max=1.)
+    with torch.no_grad():
+        for parameter in parameters:
+            parameter.grad.mul_(coefficient.to(dtype=parameter.grad.dtype))
+    return float(total)
 
 
 def infer_split(model, reference, source, output, split, config, checkpoint_sha, trained):
@@ -315,6 +340,12 @@ def _run_locked_child(request_file):
     torch.set_num_threads(config['threads'])
     torch.manual_seed(config['seed'])
     torch.use_deterministic_algorithms(True)
+    import numpy as np
+    np.random.seed(config['seed'])
+    random.seed(config['seed'])
+    from tools.rehab_ml.pose_resume import (VERSION as RESUME_VERSION, environment, implementation_hashes,
+        load_resume, restore_rng, rng_snapshot, save_boundary)
+    from tools.rehab_ml.pose_cpu_gradients import CPUAdamW, cpu_conv_gradients
     generator = random.Random(config['seed'])
     started = time.perf_counter()
     steps, epoch, history, best, best_epoch, bad_epochs = 0, 0, [], None, None, 0
@@ -332,12 +363,13 @@ def _run_locked_child(request_file):
         if time.perf_counter()-started >= config['timeout_s']:
             raise TimeoutError('offline_pose_training_time_budget_exceeded')
 
-    status('baseline_validation')
+    resume = request.get('resume')
+    status('resume_loading' if resume else 'baseline_validation')
     model = YOLO(str(verified_weights()), task='pose').model.to(config['device']).float()
     model.args = get_cfg()
     before = _tensor_digest(model.named_parameters())
-    baseline_val = infer_split(model, reference, source, output/'baseline-val', 'val', config, BASE_SHA256, False)
-    if config['mode'] == 'research' and selection_score(baseline_val['summary'])[0] >= 1.:
+    baseline_val = None if resume else infer_split(model, reference, source, output/'baseline-val', 'val', config, BASE_SHA256, False)
+    if not resume and config['mode'] == 'research' and selection_score(baseline_val['summary'])[0] >= 1.:
         raise ValueError('baseline_validation_does_not_demonstrate_configured_pose_problem')
     model.requires_grad_(True)
     freeze = config['freeze_first_layers']
@@ -350,21 +382,45 @@ def _run_locked_child(request_file):
         if '.dfl.' in name:
             parameter.requires_grad_(False)  # Original fixed distribution projection.
     criterion = MaskedPoseLoss(model)
-    optimizer = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],
-        lr=config['learning_rate'], weight_decay=config['weight_decay'])
+    optimizer_class = CPUAdamW if config['device'] == 'cpu' else torch.optim.AdamW
+    optimizer_options = {} if config['device'] == 'cpu' else dict(foreach=False, fused=False)
+    optimizer = optimizer_class([p for p in model.parameters() if p.requires_grad],
+        lr=config['learning_rate'], weight_decay=config['weight_decay'], **optimizer_options)
     train_rows = [r for r in reference['samples'] if r['split'] == 'train']
     initial_buffers = {n: t.detach().cpu().clone() for n, t in model.state_dict().items()
                        if any(n.startswith(f'model.{i}.') for i in range(freeze))}
     checkpoint_metadata = dict(version=VERSION, config_sha256=config_hash, reference_sha256=reference_hash,
         base_sha256=BASE_SHA256, fixture_only=config['mode'] == 'engineering_test', product_enabled=False)
+    start_epoch, start_steps = 0, 0
+    best_state = None
+    if resume:
+        saved = load_resume(resume, config, reference_hash, model, optimizer)
+        state = saved['resume_state']
+        start_epoch, start_steps = saved['epoch'], saved['optimizer_steps']
+        steps = start_steps
+        history = [dict(row, provenance_run=row.get('provenance_run', resume['source_run'])) for row in state['history']]
+        best, best_epoch, bad_epochs = tuple(state['best_score']), state['best_epoch'], state['bad_epochs']
+        best_state = state['best_state_dict']
+        baseline_val = dict(summary=state['baseline_validation_summary'])
+        before = state['initial_parameter_digest']
+        best_sha = _checkpoint_payload(output/'best.pt', dict(checkpoint_metadata,
+            epoch=best_epoch, optimizer_steps=history[best_epoch-1]['optimizer_steps'],
+            state_dict=best_state, inherited_from_resume_checkpoint=resume['checkpoint_sha256']))
+        write_json(output/'inherited-baseline-val.json', dict(source=resume, summary=baseline_val['summary'],
+                                                             rerun_in_current_attempt=False))
+        restore_rng(saved, generator, config['device'])  # After all initialization, before new work.
+    attempt_before = _tensor_digest(model.named_parameters())
     order_log = output/'train-order.jsonl'
     stop_reason = 'max_epochs'
-    for epoch in range(1, config['max_epochs']+1):
+    for epoch in range(start_epoch+1, config['max_epochs']+1):
         check()
         status('training')
         model.train()
         for layer in list(model.model)[:freeze]:
             layer.eval()  # Freeze BN buffers as well as trainable parameters.
+        # Epoch-local criterion: no uncheckpointed loss/assignment instance
+        # state is carried across a committed recovery boundary.
+        criterion = MaskedPoseLoss(model)
         ordered = list(train_rows)
         generator.shuffle(ordered)
         losses = []
@@ -373,12 +429,22 @@ def _run_locked_child(request_file):
             batch, transforms = training_batch(source, ordered[start:start+config['batch_size']], config, generator)
             batch = {k: t.to(config['device']) for k, t in batch.items()}
             optimizer.zero_grad(set_to_none=True)
-            loss, components = criterion(model(batch['img']), batch)
-            loss.sum().backward()
+            # Keep CPU optimizer math independent of oneDNN's warm/cold
+            # convolution caches. Original heldout inference remains unchanged.
+            backend = torch.backends.mkldnn.flags(enabled=False) if config['device'] == 'cpu' else nullcontext()
+            precision = cpu_conv_gradients(model) if config['device'] == 'cpu' else nullcontext()
+            with backend, precision:
+                loss, components = criterion(model(batch['img']), batch)
+                with torch.autograd.set_multithreading_enabled(False):
+                    loss.sum().backward()
             parameters = [p for p in model.parameters() if p.grad is not None]
             if not parameters or any(not torch.isfinite(p.grad).all() for p in parameters):
                 raise RuntimeError('finite_training_gradients_required_before_step')
-            norm = float(torch.nn.utils.clip_grad_norm_(parameters, config['clip_norm'], error_if_nonfinite=True))
+            gradient_digest = _tensor_digest((name, parameter.grad) for name, parameter in model.named_parameters()
+                                             if parameter.grad is not None)
+            norm = clip_gradients(parameters, config['clip_norm'])
+            clipped_digest = _tensor_digest((name, parameter.grad) for name, parameter in model.named_parameters()
+                                           if parameter.grad is not None)
             optimizer.step()
             steps += 1
             if any(not torch.isfinite(p).all() for p in model.parameters()):
@@ -388,6 +454,8 @@ def _run_locked_child(request_file):
                 import json
                 stream.write(json.dumps(dict(epoch=epoch, step=steps, transforms=transforms,
                     loss_components=losses[-1], gradient_norm_before_clip=norm,
+                    gradient_digest_before_clip=gradient_digest,
+                    gradient_digest_after_clip=clipped_digest,
                     assigned_supervision=criterion.last_mask_stats), allow_nan=False)+'\n')
             status('training')
         status('checkpoint')
@@ -400,17 +468,24 @@ def _run_locked_child(request_file):
         if improved:
             best, best_epoch, bad_epochs = score, epoch, 0
             best_sha = _checkpoint(output/'best.pt', model, optimizer, dict(checkpoint_metadata, epoch=epoch, optimizer_steps=steps))
+            best_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
         else:
             bad_epochs += 1
         history.append(dict(epoch=epoch, optimizer_steps=steps, batch_count=len(losses), validation_score=list(score),
             best_updated=improved, checkpoint_sha256=last_sha, validation_summary=validation['summary']))
         write_json(output/'history.json', history)
+        save_boundary(output, model, optimizer, dict(checkpoint_metadata, epoch=epoch, optimizer_steps=steps),
+            dict(version=RESUME_VERSION, implementation_sha256=implementation_hashes(), environment=environment(config),
+                 rng=rng_snapshot(generator, config['device']), history=history,
+                 best_score=list(best), best_epoch=best_epoch, bad_epochs=bad_epochs,
+                 best_state_dict=best_state, best_state_digest=_tensor_digest(best_state.items()),
+                 baseline_validation_summary=baseline_val['summary'], initial_parameter_digest=before))
         if bad_epochs >= config['patience']:
             stop_reason = 'validation_patience'
             break
     check()
     after = _tensor_digest(model.named_parameters())
-    if before == after or not steps:
+    if before == after or attempt_before == after or steps <= start_steps:
         raise RuntimeError('no_actual_optimizer_parameter_update')
     if any(not torch.equal(model.state_dict()[n].cpu(), t) for n, t in initial_buffers.items()):
         raise RuntimeError('frozen_layers_changed')
@@ -423,6 +498,8 @@ def _run_locked_child(request_file):
     if _tensor_digest(selected.state_dict().items()) != _tensor_digest(saved['state_dict'].items()):
         raise RuntimeError('selected_checkpoint_state_reload_mismatch')
     # Test is untouched until selection is frozen, and each model is evaluated once.
+    # Persistent fence precedes any test read, including crashes inside inference.
+    write_json(output/'test-started.json', dict(version=RESUME_VERSION, epoch=epoch, best_checkpoint_sha256=best_sha))
     status('test')
     baseline = YOLO(str(verified_weights()), task='pose').model.to(config['device']).float()
     baseline_test = infer_split(baseline, reference, source, output/'baseline-test', 'test', config, BASE_SHA256, False)
@@ -443,14 +520,20 @@ def _run_locked_child(request_file):
         candidate_test_summary=candidate_test['summary'], human_training_performed=config['mode'] == 'research',
         clinical_accuracy=None, anatomical_rom_accuracy=None, product_enabled=False,
         elapsed_s=time.perf_counter()-started)
+    result.update(resume_source=resume, resumed_from_epoch=start_epoch,
+                  current_attempt_optimizer_steps=steps-start_steps, current_attempt_order_log_only=True,
+                  baseline_validation_inherited=bool(resume), resume_contract=RESUME_VERSION,
+                  training_numerical_environment=environment(config))
     write_json(output/'result.json', result)
     write_json(output/'model-card.json', dict(version=VERSION, config=config, git_commit=git('rev-parse', 'HEAD'),
+        resume_contract=RESUME_VERSION, resume_source=resume, current_attempt_optimizer_steps=steps-start_steps,
         model_id='offline-yolo11n-pose-'+best_sha[:16], model_role='pose_estimation',
         artifact='best.pt', artifact_sha256=best_sha, input_domain='rgb_2d', input_schema_version='coco17-v1',
         coordinate_space='raw_image_pixels', inference_mode='independent_image_offline',
         protocol_versions=[], action_outcome_compatibility_not_verified=True,
         python=sys.version, torch=torch.__version__, ultralytics=contract['ultralytics'], device=config['device'],
         seed=config['seed'], trainable_role='offline_coco17_pose', source_dataset=reference['dataset_id'],
+        training_numerical_environment=environment(config),
         supported_exercises=sorted({r['exercise_id'] for r in reference['samples']}),
         supported_sides=sorted({r['side'] for r in reference['samples']}), supported_views=sorted({r['view'] for r in reference['samples']}),
         data_manifest_hash=reference_hash, license_evidence_refs=[dict(reference=reference['permissions']['evidence_ref'],
@@ -467,10 +550,15 @@ def _run_locked_child(request_file):
     return result
 
 
-def train_pose(config_file):
+def train_pose(config_file, *, resume_run=None):
     config_file, config, config_hash = configuration(config_file)
     source, reference, reference_hash = qualified_reference(config)
     verified_weights()
+    resume = None
+    if resume_run is not None:
+        from tools.rehab_ml.pose_resume import prepare_resume
+        with heavy_compute(), TrainingLease():
+            resume = prepare_resume(resume_run, config, reference_hash)
     python = ROOT/'rehab_codex_single_camera_v2_1/.venv/Scripts/python.exe'
     if not python.is_file():
         raise ValueError('existing_locked_pose_environment_required_no_install')
@@ -480,7 +568,7 @@ def train_pose(config_file):
         existing = existing.parent
     counts = {s: sum(r['split'] == s for r in reference['samples']) for s in ('train', 'val', 'test')}
     # Conservative initial estimate, not a physical full-disk/fault guarantee.
-    estimated = (256*1024*1024 + counts['val']*config['max_epochs']*16*1024
+    estimated = (512*1024*1024 + counts['val']*config['max_epochs']*16*1024
                  + counts['train']*config['max_epochs']*2048 + counts['test']*64*1024)
     if shutil.disk_usage(existing).free < estimated:
         raise ValueError('insufficient_space_for_bounded_pose_training_outputs')
@@ -489,8 +577,11 @@ def train_pose(config_file):
         max_checkpoint_bytes=64*1024*1024, threads=config['threads'], batch_size=config['batch_size'],
         max_epochs=config['max_epochs'], timeout_s=config['timeout_s'], no_physical_full_disk_test=True))
     write_json(output/'resolved-config.json', config)
-    write_json(output/'request.json', dict(version=VERSION, config=str(config_file), config_sha256=config_hash,
-        reference_sha256=reference_hash, output_dir=str(output), resolved_config_sha256=file_hash(output/'resolved-config.json')))
+    request = dict(version=VERSION, config=str(config_file), config_sha256=config_hash,
+        reference_sha256=reference_hash, output_dir=str(output), resolved_config_sha256=file_hash(output/'resolved-config.json'))
+    if resume is not None:
+        request['resume'] = resume
+    write_json(output/'request.json', request)
     for name in ('process-temp', 'ultralytics-config'):
         (output/name).mkdir()
     environment = dict(os.environ, TEMP=str(output/'process-temp'), TMP=str(output/'process-temp'),
@@ -518,10 +609,10 @@ def train_pose(config_file):
             if isinstance(error, subprocess.TimeoutExpired):
                 raise TimeoutError('owned_pose_training_timeout_no_success_claim') from error
             raise
+    from tools.rehab_ml.pose_resume import implementation_hashes
     provenance = dict(version=VERSION, arguments=arguments, exit_code=code, elapsed_s=time.perf_counter()-started,
         child_log_sha256=file_hash(output/'child.log'), owned_exit_confirmed=process.poll() is not None,
-        implementation_sha256={p: file_hash(ROOT/p) for p in ('tools/rehab_ml/pose_training.py',
-            'tools/rehab_ml/pose_masked_loss.py', 'tools/rehab_ml/pose_dataset.py')}, os_creation_hard_deadline_verified=False)
+        implementation_sha256=implementation_hashes(), os_creation_hard_deadline_verified=False)
     write_json(output/'provenance.json', provenance)
     if code or not provenance['owned_exit_confirmed'] or file_hash(config_file) != config_hash or file_hash(source) != reference_hash:
         raise RuntimeError('offline_pose_training_failed_no_success_claim')

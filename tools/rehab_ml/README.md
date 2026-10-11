@@ -82,7 +82,20 @@ IRDS 整次正误标签只训练 Kinect 三维肩外展质量候选。坐站、�
 
 工程验证实际跑原YOLO两轮两步、早停、权限拒绝和取消；30项训练专测包括真实子进程范围外请求、邻近文件hash不变。请求路径和文件名在获取OS锁前检查，失败记录也遵守同一边界。OS容量1只管理离线pose训练；尚未与全产品正式活动训练调度互斥。`cancel-pose-training --run-dir ...`只提出请求，不声称进程已退出；原生验证持有准确子进程句柄并确认终止，取消后last保留而result不存在。
 
-参数、监督资格、公式和命令见 [多轮工作流](../../docs/development/POSE_FINETUNING_WORKFLOW.md)、[本机验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)。灰色TEST图无真人，PCK／覆盖0、误差null；本机真人微调仍缺独立监督，`product_enabled=false`。自动resume、完整压力、手机和物理故障未验收。
+参数、监督资格、公式和命令见 [多轮工作流](../../docs/development/POSE_FINETUNING_WORKFLOW.md)、[原多轮验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)。灰色TEST图无真人，PCK／覆盖0、误差null；本机真人微调仍缺独立监督，`product_enabled=false`。当前恢复／重跑范围见下节，完整压力、手机和物理故障未验收。
+
+## 显式epoch续训与CPU数值策略
+
+`train-pose --config <新配置> --resume-run <已中止run>`只恢复已经完成val并原子提交的epoch边界，新输出不覆盖源实验。恢复模型、优化器、全RNG、best与patience，绑定数据／算法／实现和数值环境；已开始test或完成实验不能续训。异常陈旧状态还需实际父进程所属退出回执，锁文件或状态文件不证明已退出。
+
+CPU离线训练使用明确的SiLU／卷积梯度double中间精度与显式AdamW策略；参数／动量保持float32，原生产推理、CUDA训练策略、模型、APK均不切换。原策略不保证逐位相同的失败记录保留，不改成容差通过。
+
+```powershell
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_pose_resume.py
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_pose_resume.py --multibatch
+```
+
+实际命令／源码／日志SHA与末次结果见 [恢复工作流](../../docs/development/POSE_RESUME_WORKFLOW.md) 和 [本机验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)。两个工程案例分别每epoch1步／3步、2／4线程、128／160像素；不代表全部设备／参数、真人精度或物理故障。候选不自动部署。
 
 ## 手机姿态输入的离线对照
 

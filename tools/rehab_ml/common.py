@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import subprocess
 import tempfile
+import time
 from datetime import datetime, timezone
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -47,7 +48,17 @@ def write_json(path, value):
             stream.write('\n')
             stream.flush()
             os.fsync(stream.fileno())
-        os.replace(temporary, path)
+        # A Windows reader without FILE_SHARE_DELETE may briefly prevent
+        # atomic replacement. Retry only these sharing/access errors, with
+        # a fixed 70ms sleep budget; permanent errors still fail and clean up.
+        for attempt in range(4):
+            try:
+                os.replace(temporary, path)
+                break
+            except PermissionError as error:
+                if getattr(error, 'winerror', None) not in (5, 32, 33) or attempt == 3:
+                    raise
+                time.sleep(.01*(2**attempt))
     finally:
         if os.path.exists(temporary):
             os.unlink(temporary)

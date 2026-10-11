@@ -69,6 +69,7 @@ def parser():
     item.add_argument('--output-dir', type=Path, required=True)
     item = sub.add_parser('train-pose', help='Bounded offline multi-epoch pose training with reviewed permission-scoped reference; never auto-activate')
     item.add_argument('--config', type=Path, required=True)
+    item.add_argument('--resume-run', type=Path, help='Explicit failed/cancelled owned run with validated epoch boundary; new output required')
     item = sub.add_parser('cancel-pose-training', help='Request cooperative cancellation for an explicit offline run; not proof of exit')
     item.add_argument('--run-dir', type=Path, required=True)
     item = sub.add_parser('smoke-pose-masked', help='TEST-only original YOLO dual-mask backward, one engineering step and checkpoint reload; not fine-tuning')
@@ -129,7 +130,7 @@ def main(argv=None):
             value = smoke_masked_pose(args.reference, args.output_dir)
         elif args.command == 'train-pose':
             from tools.rehab_ml.pose_training import train_pose
-            value = train_pose(args.config)
+            value = train_pose(args.config, resume_run=args.resume_run)
         elif args.command == 'cancel-pose-training':
             from tools.rehab_ml.pose_training import request_cancel
             value = request_cancel(args.run_dir)

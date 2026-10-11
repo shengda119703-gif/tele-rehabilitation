@@ -1,5 +1,5 @@
 {
-  "run_id": "pose-training-audit-6c350f29",
+  "run_id": "pose-training-audit-f41930bc",
   "evidence_scope": "synthetic_multi_epoch_engineering_not_human_accuracy",
   "commands": [
     {
@@ -13,10 +13,10 @@
       "exit_code": 0,
       "expected_exit_code": 0,
       "passed": true,
-      "elapsed_s": 3.646798099998705,
-      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-6c350f29\\unit.txt",
-      "log_sha256": "d8f3c5a0db9f8e4ea9237248f11e86489047ec42abafd014490ccb82ac27be3e",
-      "tail": "_optimizer) ... ok\ntest_research_does_not_train_engineering_fixture (test_pose_training.PoseTrainingTests.test_research_does_not_train_engineering_fixture) ... ok\ntest_selection_uses_all_reference_pck_then_coverage (test_pose_training.PoseTrainingTests.test_selection_uses_all_reference_pck_then_coverage) ... ok\ntest_stride_and_patience (test_pose_training.PoseTrainingTests.test_stride_and_patience) ... ok\ntest_timeout_releases_only_owned_child_and_never_returns_success (test_pose_training.PoseTrainingTests.test_timeout_releases_only_owned_child_and_never_returns_success) ... ok\ntest_train_tensor_rejects_validation_and_test_rows (test_pose_training.PoseTrainingTests.test_train_tensor_rejects_validation_and_test_rows) ... ok\ntest_unknown_option_cannot_change_production_or_augmentation (test_pose_training.PoseTrainingTests.test_unknown_option_cannot_change_production_or_augmentation) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 1.615s\n\nOK\n"
+      "elapsed_s": 4.043503699998837,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-f41930bc\\unit.txt",
+      "log_sha256": "81e63fb12b72b3e4c345feeb4518a375cd66407a48660c6fc11c173a2dc0f364",
+      "tail": "_optimizer) ... ok\ntest_research_does_not_train_engineering_fixture (test_pose_training.PoseTrainingTests.test_research_does_not_train_engineering_fixture) ... ok\ntest_selection_uses_all_reference_pck_then_coverage (test_pose_training.PoseTrainingTests.test_selection_uses_all_reference_pck_then_coverage) ... ok\ntest_stride_and_patience (test_pose_training.PoseTrainingTests.test_stride_and_patience) ... ok\ntest_timeout_releases_only_owned_child_and_never_returns_success (test_pose_training.PoseTrainingTests.test_timeout_releases_only_owned_child_and_never_returns_success) ... ok\ntest_train_tensor_rejects_validation_and_test_rows (test_pose_training.PoseTrainingTests.test_train_tensor_rejects_validation_and_test_rows) ... ok\ntest_unknown_option_cannot_change_production_or_augmentation (test_pose_training.PoseTrainingTests.test_unknown_option_cannot_change_production_or_augmentation) ... ok\n\n----------------------------------------------------------------------\nRan 30 tests in 2.058s\n\nOK\n"
     },
     {
       "name": "native_multi_epoch",
@@ -24,15 +24,15 @@
         "tools/rehab_ml/cli.py",
         "train-pose",
         "--config",
-        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-6c350f29\\config.json"
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-f41930bc\\config.json"
       ],
       "exit_code": 0,
       "expected_exit_code": 0,
       "passed": true,
-      "elapsed_s": 7.638193800001318,
-      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-6c350f29\\native_multi_epoch.txt",
-      "log_sha256": "71e930ddef76410fa7d5ec7a6c28f1d264c87372d44611f4dbb90380c3c56e90",
-      "tail": "{\"ok\": true, \"command\": \"train-pose\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-training-audit-6c350f29\\\\training\\\\result.json\", \"result_sha256\": \"5b3028d7b43553a91c37b153d167db4891df3d8cf45ec66fe860f984c1607dd3\", \"epochs_completed\": 2, \"optimizer_steps\": 2, \"human_training_performed\": false, \"product_enabled\": false, \"clinical_accuracy\": null, \"owned_exit_confirmed\": true}}\n"
+      "elapsed_s": 8.202041700000336,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-f41930bc\\native_multi_epoch.txt",
+      "log_sha256": "f49f69e7d21343260c79e1e453b96c1c09f3436f770cd9ee4a2a077765553033",
+      "tail": "{\"ok\": true, \"command\": \"train-pose\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-training-audit-f41930bc\\\\training\\\\result.json\", \"result_sha256\": \"a2cbda3ba2de7432c9cfa4879b238049e38fb458f42e0111f4b4d93c7e3176b8\", \"epochs_completed\": 2, \"optimizer_steps\": 2, \"human_training_performed\": false, \"product_enabled\": false, \"clinical_accuracy\": null, \"owned_exit_confirmed\": true}}\n"
     },
     {
       "name": "native_early_stopping",
@@ -40,15 +40,15 @@
         "tools/rehab_ml/cli.py",
         "train-pose",
         "--config",
-        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-6c350f29\\early-stop-config.json"
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-f41930bc\\early-stop-config.json"
       ],
       "exit_code": 0,
       "expected_exit_code": 0,
       "passed": true,
-      "elapsed_s": 8.162641299997631,
-      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-6c350f29\\native_early_stopping.txt",
-      "log_sha256": "b6d5508a68c63233560955fadae96ad613bc9fdcdbdc53220fbc998ec8b21f5f",
-      "tail": "{\"ok\": true, \"command\": \"train-pose\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-training-audit-6c350f29\\\\early-stop-run\\\\result.json\", \"result_sha256\": \"b8db462af4c1ca8f37fb31ad56b980285c2489cf758f431d0e288ce240507534\", \"epochs_completed\": 2, \"optimizer_steps\": 2, \"human_training_performed\": false, \"product_enabled\": false, \"clinical_accuracy\": null, \"owned_exit_confirmed\": true}}\n"
+      "elapsed_s": 8.64688699999897,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-f41930bc\\native_early_stopping.txt",
+      "log_sha256": "ea31258c41e38ed9cf9b4802cbde9e76c1129fa2d8cf92a976d4ce9ee125fd52",
+      "tail": "{\"ok\": true, \"command\": \"train-pose\", \"result\": {\"path\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\pose-training-audit-f41930bc\\\\early-stop-run\\\\result.json\", \"result_sha256\": \"4b55587ab0f433fc9bab64301f40effed1e6e31331e638521510cb31f7d38f43\", \"epochs_completed\": 2, \"optimizer_steps\": 2, \"human_training_performed\": false, \"product_enabled\": false, \"clinical_accuracy\": null, \"owned_exit_confirmed\": true}}\n"
     },
     {
       "name": "reject_training_permission",
@@ -56,13 +56,13 @@
         "tools/rehab_ml/cli.py",
         "train-pose",
         "--config",
-        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-6c350f29\\not-authorized-config.json"
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-f41930bc\\not-authorized-config.json"
       ],
       "exit_code": 1,
       "expected_exit_code": 1,
       "passed": true,
-      "elapsed_s": 0.157179099998757,
-      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-6c350f29\\reject_training_permission.txt",
+      "elapsed_s": 0.15749569999934465,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-f41930bc\\reject_training_permission.txt",
       "log_sha256": "e55418ae11e9f1f61d68b02fa2d8ef758e89fc4553ef6d13a9c2bfb8035a0408",
       "tail": "{\"ok\": false, \"command\": \"train-pose\", \"error_type\": \"ValueError\", \"error\": \"explicit_verified_analysis_or_training_permission_required\"}\n"
     },
@@ -74,21 +74,21 @@
         "-B",
         "tools/rehab_ml/pose_training.py",
         "--child-request",
-        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-6c350f29\\cancel-run\\request.json"
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-f41930bc\\cancel-run\\request.json"
       ],
       "exit_code": 1,
       "expected_exit_code": 1,
       "passed": true,
-      "elapsed_s": 4.848548199999641,
-      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-6c350f29\\native_cancel.txt",
-      "log_sha256": "dc35313f1011b2d0e35481d9107db87dc90157bd013918537b475accc55ff6bc",
+      "elapsed_s": 4.910238299999037,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\pose-training-audit-f41930bc\\native_cancel.txt",
+      "log_sha256": "3eb8348193c42f0489f2537c57b7a568f0f5fbd50bf638331183945984a6bdc0",
       "live_handle_confirmed_before_request": true,
       "observed_phase": {
         "version": "rehab-pose-finetune-1",
         "phase": "validation",
         "epoch": 1,
         "optimizer_steps": 1,
-        "elapsed_s": 2.1552021999996214,
+        "elapsed_s": 2.496816499999113,
         "product_enabled": false,
         "human_training_performed": false
       },
@@ -98,7 +98,7 @@
         "terminal_state_not_inferred": true
       },
       "owned_exit_confirmed": true,
-      "checkpoint_retained_sha256": "593d72bde6320a2573dc0d7c292bbd59c41990b10f6f04e577e338dcf8e1cadc",
+      "checkpoint_retained_sha256": "02cc9d82f754edbbc8617eadee0f8b857d4df1975c408e5e398ea9ba25cc7240",
       "result_absent": true,
       "failure": {
         "status": "cancelled",
@@ -113,10 +113,14 @@
   "product_enabled": false,
   "clinical_accuracy": null,
   "implementation_sha256": {
-    "tools/rehab_ml/pose_training.py": "0621d34694e54e66f09b6b650fde531cbe837c24ce914ab9314f59a049b8d83d",
+    "tools/rehab_ml/pose_training.py": "ca96de97d530ab7e24573ba6576e129d1b7db8607b9e3c1e7d9db4fa6a669634",
+    "tools/rehab_ml/pose_resume.py": "908219fe1c505f30f40ef37b4815955bc598af54043d4cfcc4837f6911569199",
+    "tools/rehab_ml/pose_cpu_gradients.py": "393b47b39b086d3a2b274ec91348ce26f43bdb23b4db96d52f920f3d07f58aca",
+    "tools/rehab_ml/pose_dataset.py": "d1ab0a1f9685cd7cbe69980c3903171e42c35718a901b3b525252fed539edd17",
+    "tools/rehab_ml/common.py": "bd29e88735e99b85b8a8bd7a3e0531a241ea2eb8e07a6667d92cae647d988277",
     "tools/rehab_ml/pose_masked_loss.py": "7458e07f952c7e363053f2cdb9c0388e272ca1b3084d5851bb8ed578e8c76bf1",
-    "tools/rehab_ml/cli.py": "5813e372219deadff426ad3f60af0ed8c83d5d4c1ca6b03a6e1a913eea85d29a",
-    "tools/rehab_ml/verify_pose_training.py": "44ff31406d7ea055cb819f0ecb1145d3492939e788486f9ee218a9d34f678a6d",
+    "tools/rehab_ml/cli.py": "fd924600a0a6efda875540db895e39ee8ce8fe6f3e7ea8dbc7fa9cc889655cea",
+    "tools/rehab_ml/verify_pose_training.py": "aacfc4d03e55bef52ed16e918dea807eb598839643b759df76c35801bf6b80da",
     "tests/rehab_backend/test_pose_training.py": "dff0ed156295553d7622d33058f1933844a4c9752f2282ef027ed8df989a5941"
   },
   "native_result": {
@@ -124,7 +128,7 @@
     "mode": "engineering_test",
     "evidence_scope": "synthetic_multi_epoch_engineering_not_human_accuracy",
     "reference_sha256": "794c0b87d4a366696463840d28504c2e0e1137638e69aec0ec355201b7e7a2a4",
-    "config_sha256": "06a022c17641cd07122355f2d9706356ad0c3083581936fc07741b03d20c89c8",
+    "config_sha256": "1954766a2ae282621257e4155f477bf351e7963a5ea8c4d7e2d5dd9b16db00db",
     "contract": {
       "version": "rehab-coco17-dual-masked-loss-1",
       "ultralytics": "8.3.199",
@@ -145,10 +149,10 @@
       0.0,
       0.0
     ],
-    "best_checkpoint_sha256": "e8d055f90f5ba266d7ec11b7dcfce6579cda8d027d6797095c99cb8610995b34",
-    "last_checkpoint_sha256": "5bbda81631b2403d53f51d71f34da72aa8f35c2f98e4bdc0ea135ed79c5d6950",
+    "best_checkpoint_sha256": "b6851a66a3dbf5cc52911ba9a63fb6672a9ff7089497b0f2592daf0a8d57e913",
+    "last_checkpoint_sha256": "7181c8da3e0ae62f117ce171e854fe8900d2d76e96287f061382d3aeff591e28",
     "parameter_digest_before": "58f59b1a5a7dbf8b624ee7c23d2caced21cfa30a100bd6fcc28a76f4579e873e",
-    "parameter_digest_after_last_epoch": "91c041846e7dcdd015ed4fbfdb228cc6b1747985244a2491427150a652da89fc",
+    "parameter_digest_after_last_epoch": "927edd20006ed55e1d41f29ac18c6bff299e6a43fdae34339d149bd115625c8e",
     "selected_checkpoint_strictly_reloaded": true,
     "validation_test_used_for_optimization": false,
     "test_used_for_selection": false,
@@ -203,14 +207,44 @@
     "clinical_accuracy": null,
     "anatomical_rom_accuracy": null,
     "product_enabled": false,
-    "elapsed_s": 4.8410362000031455
+    "elapsed_s": 5.480150499999581,
+    "resume_source": null,
+    "resumed_from_epoch": 0,
+    "current_attempt_optimizer_steps": 2,
+    "current_attempt_order_log_only": true,
+    "baseline_validation_inherited": false,
+    "resume_contract": "rehab-pose-resume-1",
+    "training_numerical_environment": {
+      "python": "3.13.12 (tags/v3.13.12:1cbe481, Feb  3 2026, 18:22:25) [MSC v.1944 64 bit (AMD64)]",
+      "platform": "Windows-11-10.0.22631-SP0",
+      "torch": "2.9.1+cpu",
+      "device": "cpu",
+      "threads": 2,
+      "cpu_training_backend": "aten_no_mkldnn",
+      "autograd_multithreading": false,
+      "gradient_norm_accumulation": "float64_fixed_order_l2",
+      "criterion_lifetime": "epoch_local",
+      "optimizer_implementation": "cpu_adamw_fp64_intermediates_fp32_state_v2",
+      "cpu_conv_weight_gradient": "fp64_conv_weight_accumulation_v1",
+      "cpu_silu": "cpu_silu_fp64_intermediate_v1",
+      "numerical_environment": {
+        "MKL_CBWR": null,
+        "MKL_DYNAMIC": null,
+        "OMP_DYNAMIC": null,
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": null
+      },
+      "cuda": null,
+      "cudnn": null,
+      "cublas_workspace_config": ":4096:8"
+    }
   },
   "native_early_stopping": {
     "epochs_completed": 2,
     "best_epoch": 1,
     "stop_reason": "validation_patience",
     "optimizer_steps": 2,
-    "result_sha256": "b8db462af4c1ca8f37fb31ad56b980285c2489cf758f431d0e288ce240507534"
+    "result_sha256": "4b55587ab0f433fc9bab64301f40effed1e6e31331e638521510cb31f7d38f43"
   },
   "training_history": [
     {
@@ -222,7 +256,7 @@
         0.0
       ],
       "best_updated": true,
-      "checkpoint_sha256": "1ea56237957087ba734c9bc753f62bbe64ed4fe594790721a1eadb29c7608c81",
+      "checkpoint_sha256": "a5a4b734c4c0a9cbc720929337b2ed22655c7f1398f866a518078cb0c50a118a",
       "validation_summary": {
         "slots": 17,
         "unannotated": 1,
@@ -248,7 +282,7 @@
         0.0
       ],
       "best_updated": false,
-      "checkpoint_sha256": "5bbda81631b2403d53f51d71f34da72aa8f35c2f98e4bdc0ea135ed79c5d6950",
+      "checkpoint_sha256": "7181c8da3e0ae62f117ce171e854fe8900d2d76e96287f061382d3aeff591e28",
       "validation_summary": {
         "slots": 17,
         "unannotated": 1,
@@ -268,20 +302,20 @@
   ],
   "artifact_sha256": {
     "reference.json": "794c0b87d4a366696463840d28504c2e0e1137638e69aec0ec355201b7e7a2a4",
-    "config.json": "06a022c17641cd07122355f2d9706356ad0c3083581936fc07741b03d20c89c8",
-    "training/result.json": "5b3028d7b43553a91c37b153d167db4891df3d8cf45ec66fe860f984c1607dd3",
-    "training/history.json": "98c8d55064cbd0a165000b1cf06874eca44fa466a3a3befd2311391463a7460a",
-    "training/train-order.jsonl": "b73c44d05a4aad73417ba9374392c005898a704eaec9a290eaa2bdae2dfef94a",
-    "training/model-card.json": "c06a9e6384ae981c1787544152fcea9193b65f9679263757b2400acc5a9b6d29",
-    "training/resource-budget.json": "962b7a18c9101ec6522f766637f16682d3f4134ea4e7c329f65cdd2311d31732",
-    "training/provenance.json": "27b6364fefb388e86341e565183e5e7576294e205da9fbf6d47fd2d55b6901f3",
-    "training/child.log": "5f6c7a0f10d67e26eb04f26d0492be9d0dd797c0b6a60a735aa7e9e5a74e5e92",
-    "training/best.pt": "e8d055f90f5ba266d7ec11b7dcfce6579cda8d027d6797095c99cb8610995b34",
-    "training/last.pt": "5bbda81631b2403d53f51d71f34da72aa8f35c2f98e4bdc0ea135ed79c5d6950",
-    "early-stop-run/result.json": "b8db462af4c1ca8f37fb31ad56b980285c2489cf758f431d0e288ce240507534",
+    "config.json": "1954766a2ae282621257e4155f477bf351e7963a5ea8c4d7e2d5dd9b16db00db",
+    "training/result.json": "a2cbda3ba2de7432c9cfa4879b238049e38fb458f42e0111f4b4d93c7e3176b8",
+    "training/history.json": "42b8762f04882f4985cffc64cda8f087ffbd6b0d6f91b93b2d7e20a1d160a84a",
+    "training/train-order.jsonl": "d961be1f4fd1853ba9496f5fae06d1d7dffa347c955a661d022b8262010d9089",
+    "training/model-card.json": "fbeed144d921fcc757ec72e09f49c899a97d172972ab65cd78e8766f554ae625",
+    "training/resource-budget.json": "59fdd4c67a3e04fb354a19ca939ee68a8d4c1f030406de11e6a48f8cccba812e",
+    "training/provenance.json": "08ff97e450e083c6174871a17d85cab867452b6d0211e51e600f5e00d4245d68",
+    "training/child.log": "14456cbfa6f46eed1f900f08119ce5f0699de563d16d808c718e55c44370ab30",
+    "training/best.pt": "b6851a66a3dbf5cc52911ba9a63fb6672a9ff7089497b0f2592daf0a8d57e913",
+    "training/last.pt": "7181c8da3e0ae62f117ce171e854fe8900d2d76e96287f061382d3aeff591e28",
+    "early-stop-run/result.json": "4b55587ab0f433fc9bab64301f40effed1e6e31331e638521510cb31f7d38f43",
     "cancel-run/failure.json": "ebd0ef8ea49b1c3d71b8ddc9852fd5fba43dae502f4b597ff57d830f48450ca2",
-    "cancel-run/status.json": "1e83dd01cbbcbc376bb23f1016ae6a5b55074bc483c2926396d86b8af675a2d6",
-    "cancel-run/last.pt": "593d72bde6320a2573dc0d7c292bbd59c41990b10f6f04e577e338dcf8e1cadc"
+    "cancel-run/status.json": "2a12c8831f25c7ba06c9e0490bb92f3b32472bc13763d82bcd3626767fdeab28",
+    "cancel-run/last.pt": "02cc9d82f754edbbc8617eadee0f8b857d4df1975c408e5e398ea9ba25cc7240"
   },
   "passed": true
 }

@@ -5,7 +5,7 @@
 | 文档 | 内容 |
 | --- | --- |
 | [后端功能与技术实现阅读版](后端功能与技术实现梳理.md) | 全功能输入／方法／公式／输出／消费者；三端运行链、信息交接、误差传播和函数定位；25优化实验、26参数地图与调参验收 |
-| [后端阅读版本次参数核对](validation/BACKEND_PARAMETER_MAP_2026-10-11.md) | 12组源码参数、作用范围、当前续训未通过边界及文档／保护检查；只整理文档 |
+| [后端阅读版此前参数核对](validation/BACKEND_PARAMETER_MAP_2026-10-11.md) | 12组源码参数、作用范围、当时续训未通过边界及文档／保护检查；只整理文档，最新恢复另见本机验收 |
 | [后端阅读版此前可靠性核对](validation/BACKEND_OVERVIEW_RELIABILITY_2026-10-11.md) | cec4dcb基准、当时续训状态、文档／保护检查；不代替当前工作区状态 |
 | [后端阅读版此前数据流核对](validation/BACKEND_OVERVIEW_DATAFLOW_2026-10-11.md) | 11dc301源码基准、关键调用／资源边界、当时文档检查与保留范围 |
 | [后端阅读版此前源码核对](validation/BACKEND_OVERVIEW_RELEASE_2026-10-11.md) | ab5dda0阶段的训练器状态、文档检查及保护范围；不代替本次源码核对 |
@@ -14,6 +14,8 @@
 | [后端功能、算法与数据流梳理](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md) | 三端后端域、公式／状态、逐跳信息与代码；3.7–3.8为真实字段／统计口径，22–23为优化影响及验收 |
 | [部分标注的双层masked loss](development/POSE_DUAL_MASKED_LOSS.md) | 坐标／objectness分别监督、TAL标签身份、实际原YOLO梯度／更新／重载；不是正式微调 |
 | [条件式多轮姿态训练](development/POSE_FINETUNING_WORKFLOW.md) | 资格／增广／验证选模／早停／检查点／独立测试；不自动启用、不代表真人收益 |
+| [显式姿态续训与CPU数值契约](development/POSE_RESUME_WORKFLOW.md) | 交替epoch边界／来源／RNG／选模恢复；SiLU、权重梯度和AdamW精度策略、严格验收与限制 |
+| [姿态续训本机验收](validation/REHAB_POSE_RESUME_2026-10-11.md) | 基础及多批次原生取消／实际异常退出恢复、失败阶段、最终复验、回归／保护范围 |
 | [多轮姿态训练本机验收](validation/REHAB_POSE_TRAINING_2026-10-11.md) | 原YOLO两轮、实际早停／取消、缺权限拒绝、专项与全回归边界 |
 | [双层masked loss本机验收](validation/REHAB_POSE_MASKED_LOSS_2026-10-11.md) | 23项专项、TEST原生烟测、失败与重跑证据、完整回归和未测范围 |
 | [手机姿态输入VIDEO工作流](development/MEDIAPIPE_VIDEO_AUDIT.md) | 同模型Python近似、33点原语义、源时间／像素配对与模型差异；不修改APK |
