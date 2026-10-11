@@ -760,10 +760,16 @@ let recorder = null,
   recordTimer = null,
   recordCancelled = false,
   voiceStarting = false;
+function conversationSource(metadata) {
+  if (metadata?.provider === "deepseek" && metadata.status === "replied") return "DeepSeek 回复";
+  if (metadata?.provider === "local" && metadata.status === "unavailable" && metadata.reason === "not_configured") return "未配置 DeepSeek · 本地回复";
+  if (metadata?.provider === "local" && metadata.status === "failed") return "DeepSeek 本轮未完成 · 本地回复";
+  return "";
+}
 function assistant() {
   const chat = snapshot().state?.chat || [];
   $("#content").innerHTML =
-    `<div class="heading"><h1>康复管家</h1><a href="#home">返回首页</a></div><details class="assistant-capability"><summary>使用说明</summary><p>${snapshot().modelAvailable?"本地模块查询与页面导航可用；联网理解已配置。":"本地模块查询与页面导航可用；联网理解未配置。"}</p><p>上传资料不会自动带入对话。需要更正时，可说“撤回上一条记录”。</p></details><section class="conversation" aria-label="对话记录">${chat.map((m) => `<div class="bubble ${m.role === "elder" ? "mine" : ""}"><small>${m.role === "elder" ? "我" : "康复管家"}${m.time ? " · " + stamp(m.time) : ""}${m.persisted === false ? " · 本次不记录" : ""}${m.pending ? " · 待确认" : ""}</small>${E(m.text)}</div>`).join("") || '<section class="hero"><h2>今天有什么想记的？</h2><p class="muted">身体感受、用药情况，都可以在这里说。保存前请核对。</p></section>'}</section><form id="chat-form" class="composer"><label for="draft">发消息给康复管家</label><textarea id="draft" required maxlength="1900" placeholder="今天左肩有点酸">${E(ui.draft)}</textarea><div class="actions"><label><input id="private" type="checkbox" ${ui.private ? "checked" : ""}>本次不记录</label><div>${button("语音输入", "voice")} <button type="button" id="voice-cancel" hidden>取消录音</button> <button type="submit" class="primary">发送</button></div></div><p id="voice-state" class="muted" role="status"></p><input id="audio-file" type="file" accept="audio/*" hidden></form>`;
+    `<div class="heading"><h1>康复管家</h1><a href="#home">返回首页</a></div><details class="assistant-capability"><summary>使用说明</summary><p>${snapshot().conversationModelAvailable?"本地模块查询与页面导航可用；DeepSeek 对话已配置，每条回复标明实际来源。":"本地模块查询与页面导航可用；DeepSeek 对话尚未配置。"}</p><p>上传资料不会自动带入对话。需要更正时，可说“撤回上一条记录”。</p></details><section class="conversation" aria-label="对话记录">${chat.map((m) => `<div class="bubble ${m.role === "elder" ? "mine" : ""}"><small>${m.role === "elder" ? "我" : "康复管家"}${m.time ? " · " + stamp(m.time) : ""}${m.persisted === false ? " · 本次不记录" : ""}${m.pending ? " · 待确认" : ""}${m.role !== "elder" && conversationSource(m.conversation) ? " · " + E(conversationSource(m.conversation)) : ""}</small>${E(m.text)}</div>`).join("") || '<section class="hero"><h2>今天有什么想记的？</h2><p class="muted">身体感受、用药情况，都可以在这里说。保存前请核对。</p></section>'}</section><form id="chat-form" class="composer"><label for="draft">发消息给康复管家</label><textarea id="draft" required maxlength="1900" placeholder="今天左肩有点酸">${E(ui.draft)}</textarea><div class="actions"><label><input id="private" type="checkbox" ${ui.private ? "checked" : ""}>本次不记录</label><div>${button("语音输入", "voice")} <button type="button" id="voice-cancel" hidden>取消录音</button> <button type="submit" class="primary">发送</button></div></div><p id="voice-state" class="muted" role="status"></p><input id="audio-file" type="file" accept="audio/*" hidden></form>`;
   const pending=snapshot().carePending||[];
   if(pending.length){
     const section=document.createElement('section');section.setAttribute('aria-label','待核对管家操作');
@@ -797,17 +803,18 @@ function assistant() {
     }
     const text = ui.draft,
       priv = ui.private;
-    let destination;
+    let destination, turn;
     const source=ui.source,owner=snapshot().ownerId;
     const ok = await act(
-      async () => {const result=await post("chat", { text, private: priv });destination=result.turn?.agent?.navigation;},
-      "管家已回复",
+      async () => {const result=await post("chat", { text, private: priv });turn=result.turn;destination=turn?.agent?.navigation;},
+      "",
     );
     if (ok) {
       if(source!==ui.source||owner!==snapshot().ownerId)return;
       if (ui.draft === text) ui.draft = "";
       await load();
       if(source!==ui.source||owner!==snapshot().ownerId)return;
+      say(conversationSource(turn?.conversation) || "管家已回复");
       if(destination==='history')destination='records';
       if(destination==='fitness'){ui.rehabMode='fitness';destination='rehab';}
       if(destination&&(names[destination]||['assistant','records','settings','notifications'].includes(destination))){

@@ -949,7 +949,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             self.tasks.addItem('当前没有待办。用药和健康照护任务会依据已填写资料与记录生成。')
         concerns = s['twin']['personTwin'].get('activeConcerns',[])
         self.home_status.setText('；'.join(concerns) if concerns else '已有 '+str(len(state['events']))+' 条健康记录；暂未形成需关注的摘要。数据不足时不能判断整体健康状态。')
-        self.agent_status.setText('模块查询与页面调度可用；联网理解已配置。' if s.get('modelAvailable') else '模块查询、页面调度与基础健康对话可用；联网理解尚未配置。')
+        self.agent_status.setText('DeepSeek 对话已配置；每条回复会标明实际来源。' if s.get('conversationModelAvailable') else '本地模块查询与页面调度可用；DeepSeek 对话尚未配置。')
         self.care_controls.refresh(s.get('carePending',[]),s.get('carePendingUnavailable',False))
         self._render_conversation()
         twin = s['twin']['personTwin']

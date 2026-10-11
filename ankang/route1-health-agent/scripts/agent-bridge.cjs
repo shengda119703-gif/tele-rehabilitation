@@ -4,6 +4,7 @@ console.log = console.error;
 const { AgentRuntime } = require('../.bridge-build/runtime/index.js');
 const runtime = new AgentRuntime();
 const { createRehabModel, createProductAgentModel } = require('./rehab-model.cjs');
+const { createConversationModel } = require('./chat-model.cjs');
 const { ProductService } = require('../.bridge-build/product/ProductService.js');
 const { ProductLocalStore } = require('./product-local-store.cjs');
 const { HttpVisionProvider } = require('../.bridge-build/adapters/HttpVisionProvider.js');
@@ -23,7 +24,8 @@ const product = productRoot ? new ProductService(new ProductLocalStore(productRo
   }, owner => ({read:() => readFromPython(owner,{name:'care.read',arguments:{}}),
     execute:(action,idempotencyKey,expiresAt) => readFromPython(owner,{name:'care.execute',arguments:{action,idempotencyKey,expiresAt}})}),
     () => process.env.ANKANG_PRODUCT_DISABLE_MODEL === '1' ? undefined : createProductAgentModel(),
-    owner => ({read:call=>readFromPython(owner,call)})) : null;
+    owner => ({read:call=>readFromPython(owner,call)}),
+    () => process.env.ANKANG_PRODUCT_DISABLE_MODEL === '1' ? undefined : createConversationModel()) : null;
 const pending = new Map();
 let sequence = 0;
 const send = (value) => process.stdout.write(JSON.stringify(value) + '\n');
@@ -61,6 +63,7 @@ async function main() {
             profile: request.profile,
             now: new Date(request.now),
             rehabTools,
+            conversationModel:process.env.ANKANG_PRODUCT_DISABLE_MODEL==='1'?undefined:createConversationModel(),
           });
           result.rehabToolsAvailable = Boolean(rehabTools);
           break;

@@ -91,4 +91,4 @@ function createProductAgentModel({apiKey,fetchImpl=fetch}={}) {
     return (message.tool_calls??[]).map(call=>({name:call.function.name,arguments:JSON.parse(call.function.arguments)}));
   }};
 }
-module.exports = { createRehabModel, createProductAgentModel };
+module.exports = { createRehabModel, createProductAgentModel, localKey };

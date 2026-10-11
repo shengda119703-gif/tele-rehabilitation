@@ -212,6 +212,9 @@ export interface ChatMessage {
   text: string;
   time: string;
   persisted?: boolean;
+  conversation?: {provider:'deepseek'|'local';status:'replied'|'unavailable'|'failed';reason?:'network'|'not_configured'};
+  /** Trusted host context, never inferred by the language model. */
+  conversationContext?: string;
   /**
    * 该条回复下方需要渲染紧急联系行动条（呼叫 120 / 家属 / 社区医生）。
    * 评审反馈：说"立即寻求急救"的同一个界面里必须出现可按的电话按钮。

@@ -27,6 +27,7 @@ import type { HealthVisionProvider, ParsedHealthData } from '../adapters/ImageHe
 import type { RehabToolPort } from '../runtime/rehabTools';
 import { CareCoordinator, type CarePort } from '../care/CareCoordinator';
 import { ProductAgent, type AgentTool, type ProductAgentModel } from './ProductAgent';
+import type {ConversationModel} from '../runtime/conversation';
 
 export interface ProductLocalPort {
   read<T>(key: string): T | null;
@@ -57,7 +58,8 @@ export class ProductService {
   constructor(private port: ProductLocalPort, private rehab?: (owner: string) => RehabToolPort | undefined,
     private vision?: HealthVisionProvider, private extensions: ProductExtensions = {}, private careHost?: (owner:string)=>CarePort|undefined,
     private agentModel?: (owner:string)=>ProductAgentModel|undefined,
-    private rehabReads?: (owner:string)=>Pick<RehabToolPort,'read'>|undefined) {}
+    private rehabReads?: (owner:string)=>Pick<RehabToolPort,'read'>|undefined,
+    private conversationModel?: (owner:string)=>ConversationModel|undefined) {}
   private agent(owner:string):ProductAgent {
     const read=()=>this.runtime.readSnapshot(scopeKey(this.scope(owner)));
     const tool=(name:string,description:string,run:AgentTool['run'],available=true):AgentTool=>({name,description,mode:'read',available,run});
@@ -178,9 +180,11 @@ export class ProductService {
       await this.close(owner);return {applied:true};
     }
     if (e.type === 'chat.append') {
-      const m = p.message;
+      const m = p.message ? {...p.message} : null;
       if (!m || typeof m.id !== 'string' || !['elder','agent'].includes(m.role) || typeof m.text !== 'string' || typeof m.time !== 'string' || m.persisted === false || m.pending || ['private','no_record'].includes(parsePrivacyIntent(m.text))) return {applied:false,reason:'invalid-or-private-chat'};
       if (m.blocks !== undefined && (!Array.isArray(m.blocks) || m.blocks.some((b:any) => !b || !['main','receipt','privacy'].includes(b.kind) || typeof b.text !== 'string'))) return {applied:false,reason:'invalid-chat-blocks'};
+      // Remote chat cannot certify that this host sent it to the model.
+      delete m.conversation;delete m.conversationContext;
       const snapshot = await this.session(owner,now);
       if (!snapshot.chat.some(v => v.id === m.id)) {
         await this.persistence(owner).save('',{revision:snapshot.revision+1,health:{events:snapshot.events,familyEvents:snapshot.familyEvents,chat:[...snapshot.chat.filter(v => v.persisted !== false),m]}});
@@ -256,7 +260,7 @@ export class ProductService {
     if (!this.open.has(owner)) {
       const profile = {...this.profile(owner).profile, familySharing: this.family(owner).readState().familySharing};
       await this.runtime.openSession({sessionId: id, profile, now, persistence: this.persistence(owner),
-        rehabTools: this.rehab?.(owner), careTools:this.care(owner),productTools:this.agent(owner)});
+        rehabTools: this.rehab?.(owner), careTools:this.care(owner),productTools:this.agent(owner),conversationModel:this.conversationModel?.(owner)});
       this.open.add(owner);
       const history = this.port.read<CareTask[]>(this.key(owner, 'tasks')) ?? [];
       for (const task of this.runtime.readSnapshot(id).tasks) {
@@ -310,7 +314,8 @@ export class ProductService {
       trends: Object.fromEntries(Object.keys(METRICS).map(key => [key, metricTrend(history.records, key as MetricKey, state.today)])),
       capabilities: {...productCapabilities, imageRecognitionAvailable: Boolean(this.vision)},
       agentTools:this.agent(owner).catalogue(),carePending,carePendingUnavailable,
-      storage: 'persistent-local', modelAvailable: Boolean(this.agentModel?.(owner)||this.rehab?.(owner)), careAvailable:Boolean(this.care(owner))};
+      conversationModelAvailable:Boolean(this.conversationModel?.(owner)),
+      storage: 'persistent-local', modelAvailable: Boolean(this.conversationModel?.(owner)||this.agentModel?.(owner)||this.rehab?.(owner)), careAvailable:Boolean(this.care(owner))};
   }
   async request(operation: string, owner: string, input: Record<string, any>, now: Date): Promise<any> {
     if (!Number.isFinite(now.getTime())) throw new Error('Invalid clock');
@@ -407,7 +412,8 @@ export class ProductService {
     if (operation === 'chat') {
       if (typeof input.text !== 'string' || !input.text.trim() || input.text.length > 2000) throw new Error('请输入简短文字');
       await this.session(owner, now);
-      const turn = await this.runtime.processTurn(scopeKey(this.scope(owner)), {text: input.text, now});
+      const context=typeof input._conversationScope==='string'&&input._conversationScope.length<=100?input._conversationScope:'local';
+      const turn = await this.runtime.processTurn(scopeKey(this.scope(owner)), {text: input.text, now,conversationContext:context});
       const family = this.family(owner);
       family.shareFindingIds(turn.snapshot.sharedFindingIds);
       family.shareFamilyEventIds(turn.snapshot.sharedFamilyEventIds);

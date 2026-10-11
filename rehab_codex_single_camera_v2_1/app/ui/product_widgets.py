@@ -216,6 +216,18 @@ def empty_state(title,description):
     return item
 
 
+def conversation_source(metadata):
+    """Only trusted receipt enums describe the source; never display provider errors."""
+    if not isinstance(metadata,dict):return ''
+    if metadata.get('provider')=='deepseek' and metadata.get('status')=='replied':
+        return 'DeepSeek 回复'
+    if metadata.get('provider')=='local' and metadata.get('status')=='unavailable' and metadata.get('reason')=='not_configured':
+        return '未配置 DeepSeek · 本地回复'
+    if metadata.get('provider')=='local' and metadata.get('status')=='failed':
+        return 'DeepSeek 本轮未完成 · 本地回复'
+    return ''
+
+
 def conversation_html(messages,colors):
     """Native rich text, escaped data, explicit speaker labels even without color."""
     if not messages:
@@ -224,6 +236,8 @@ def conversation_html(messages,colors):
     for message in messages[-60:]:
         user=message['role']=='elder'
         name='我' if user else '安康 · 康复管家'
+        source=conversation_source(message.get('conversation')) if not user else ''
+        source_note=' · '+escape(source) if source else ''
         blocks=message.get('blocks') or []
         if not user and blocks:
             parts=[]
@@ -234,7 +248,7 @@ def conversation_html(messages,colors):
             content=''.join(parts)
         else:content=escape(message['text']).replace('\n','<br>')
         spacer='<td width="22%"></td>' if user else ''
-        result.append(f'<table width="100%" cellspacing="0" cellpadding="12"><tr>{spacer}<td bgcolor="{colors["soft"] if user else colors["surface"]}"><p style="color:{colors["secondary"]}"><b>{name}</b> · {escape(message["time"])}</p><p style="color:{colors["text"]}">{content}</p></td></tr></table><br>')
+        result.append(f'<table width="100%" cellspacing="0" cellpadding="12"><tr>{spacer}<td bgcolor="{colors["soft"] if user else colors["surface"]}"><p style="color:{colors["secondary"]}"><b>{name}</b> · {escape(message["time"])}{source_note}</p><p style="color:{colors["text"]}">{content}</p></td></tr></table><br>')
     return ''.join(result)
 
 

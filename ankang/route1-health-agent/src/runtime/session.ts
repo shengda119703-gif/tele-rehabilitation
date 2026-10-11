@@ -15,6 +15,7 @@ import type { DeliveryPort, DeliveryReceipt, PersistencePort, PersistenceReceipt
 import type { CareCoordinator } from '../care/CareCoordinator';
 import {canUseModuleTools} from './operationalIntent';
 import type { ProductAgent, AgentResult } from '../product/ProductAgent';
+import {conversationMessages,isOperationalConversation,localConversation,type ConversationModel} from './conversation';
 
 const copy = <T>(value: T): T => structuredClone(value);
 const emptyHealth = (): HealthRecordSnapshot => ({ events: [], familyEvents: [], chat: [] });
@@ -41,12 +42,14 @@ export interface OpenSessionOptions {
   rehabTools?: RehabToolPort;
   careTools?: Pick<CareCoordinator, 'replyToText'>;
   productTools?: Pick<ProductAgent,'replyToText'>;
+  conversationModel?: ConversationModel;
 }
 export interface TurnInput {
   text: string;
   now: Date;
   /** Optional optimistic concurrency check, performed when the turn starts. */
   expectedRevision?: number;
+  conversationContext?: string;
 }
 export interface SessionSnapshot extends HealthRecordSnapshot, ReturnType<typeof deriveHealthState> {
   sessionId: string;
@@ -175,6 +178,7 @@ class Session {
       let rehab: Awaited<ReturnType<typeof prepareRehabReply>> = null;
       let care: Awaited<ReturnType<CareCoordinator['replyToText']>> = null;
       let agent:AgentResult|null=null;
+      let conversation:ChatMessage['conversation'];
       if (this.options.careTools && privacyIntent === 'none' && !plan.safetyAction && !plan.correction &&
         !plan.medicationMissed && !plan.eventsToAppend.length && !plan.familyEventsToAppend.length &&
         !plan.sharingAuditEntries.length && !plan.shareFindingIds.length && !plan.shareFamilyEventIds.length) {
@@ -210,6 +214,32 @@ class Session {
         if (rehab) plan = rehab.plan;
       }
       let broadcastEvents: typeof draft.events = [];
+      if(!care&&!agent&&!rehab&&privacyIntent==='none'&&!plan.safetyAction&&!plan.correction&&!plan.medicationMissed&&
+        !plan.eventsToAppend.length&&!plan.familyEventsToAppend.length&&!plan.sharingAuditEntries.length&&
+        !plan.shareFindingIds.length&&!plan.shareFamilyEventIds.length&&!understanding.recallRequested&&!understanding.correction&&
+        understanding.claims.every(claim=>!claim.tags.length&&!claim.hasHealthValue&&!claim.outcome)){
+        if(isOperationalConversation(captured.text)){
+          const text='这项请求尚未执行。请在对应模块查看或操作；你也可以明确说“查看健康记录”“查看药物清单”或“打开康复页”。服药记录和训练改期需要先核对并确认。';
+          plan={...plan,replyText:text,replyBlocks:[{kind:'main',text}],toast:''};
+        }else{
+          const context=captured.conversationContext??'local';
+          let text=localConversation(captured.text);
+          if(this.options.conversationModel){
+            try{
+              text=await this.options.conversationModel.reply({messages:conversationMessages(draft.chat,captured.text,this.options.sessionId,context)});
+              this.check(generation);
+              if(typeof text!=='string'||!text.trim()||text.length>6000)throw new Error('Invalid conversation reply');
+              conversation={provider:'deepseek',status:'replied'};
+            }catch{
+              this.check(generation);
+              text='DeepSeek 这次没有正常返回，我暂时使用本地回复。'+localConversation(captured.text);
+              conversation={provider:'local',status:'failed',reason:'network'};
+            }
+          }else conversation={provider:'local',status:'unavailable',reason:'not_configured'};
+          elder.conversation=conversation;elder.conversationContext=context;
+          plan={...plan,replyText:text.trim(),replyBlocks:[{kind:'main',text:text.trim()}],toast:''};
+        }
+      }
       let shareFindingIds: string[] = [];
       let shareFamilyEventIds: string[] = [];
       applyTurnPlan(plan, {
@@ -246,6 +276,7 @@ class Session {
         persisted,
         safetyAction: plan.safetyAction,
         blocks: plan.replyBlocks,
+        ...(conversation?{conversation,conversationContext:captured.conversationContext??'local'}:{}),
       };
       draft.chat.push(elder, reply);
       Object.assign(draft, deriveHealthState(this.options.profile, draft.events, clock.today));
@@ -302,6 +333,7 @@ class Session {
         ...(rehab ? { rehab: { call: rehab.call, data: rehab.data } } : {}),
         ...(care ? { care } : {}),
         ...(agent ? { agent } : {}),
+        ...(conversation?{conversation}:{}),
       });
     });
   }
