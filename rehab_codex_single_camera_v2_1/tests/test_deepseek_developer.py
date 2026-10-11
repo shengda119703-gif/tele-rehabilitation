@@ -2,11 +2,46 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import json
+import pytest
 
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 from PySide6.QtWidgets import QApplication, QLineEdit
 from app.deepseek_config import config_path, load_key
 from app.ui.deepseek_developer import DeepSeekDeveloperDialog
+
+
+@pytest.mark.skipif(sys.platform != 'win32', reason='Windows desktop launcher regression')
+def test_redirected_pythonw_can_restart_bridge(tmp_path):
+    root = Path(__file__).resolve().parents[2]
+    pythonw = Path(sys.executable).with_name('pythonw.exe')
+    if not pythonw.exists():
+        pytest.skip('pythonw unavailable')
+    probe = tmp_path / 'reload.py'
+    result = tmp_path / 'result.json'
+    probe.write_text(
+        'import sys,json,traceback\nfrom pathlib import Path\n'
+        f'sys.path.insert(0,{str(root)!r})\n'
+        'from bridges.ankang.client import AgentBridge\n'
+        'out=[]\ntry:\n'
+        ' for i in range(3):\n'
+        f'  with AgentBridge(data_dir={str(tmp_path / "product")!r}) as b:\n'
+        "   assert isinstance(b.product('profile.list'),list)\n"
+        '  out.append("ok")\n'
+        'except Exception:\n out.append(traceback.format_exc())\n'
+        f'Path({str(result)!r}).write_text(json.dumps(out),encoding="utf-8")\n',
+        encoding='utf-8')
+    def quote(path):
+        return "'" + str(path).replace("'", "''") + "'"
+    command = (
+        f'$p=Start-Process -FilePath {quote(pythonw)} '
+        f'-ArgumentList {quote(chr(34) + str(probe) + chr(34))} -WindowStyle Hidden '
+        f'-RedirectStandardOutput {quote(tmp_path / "stdout.log")} '
+        f'-RedirectStandardError {quote(tmp_path / "stderr.log")} -PassThru; '
+        'if (-not $p.WaitForExit(20000)) { $p.Kill(); exit 1 }; exit $p.ExitCode')
+    subprocess.run(['powershell.exe', '-NoProfile', '-Command', command],
+                   check=True, capture_output=True, timeout=30)
+    assert json.loads(result.read_text(encoding='utf-8')) == ['ok', 'ok', 'ok']
 
 
 def test_dialog_persistence_masking_and_clear(tmp_path, monkeypatch, capsys):
