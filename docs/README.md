@@ -4,6 +4,8 @@
 
 | 文档 | 内容 |
 | --- | --- |
+| [康复v2真实HTTP丢响应与重启](development/REHAB_SOCKET_RECOVERY.md) | 原create_app／配对／签名cookie、TCP RST丢响应、原YOLO／报告、第二独立服务器恢复与SQL对账 |
+| [真实HTTP本机验收](validation/REHAB_SOCKET_RECOVERY_2026-10-11.md) | 3项专项＋预声明三轮×22条件、准确宿主／native退出、源与日志hash；不是手机、LAN或TLS验收 |
 | [康复v2原生宿主生命周期](development/REHAB_NATIVE_HOST_LIFETIME.md) | 实测宿主退出后native子进程残留；WindowsJob／启动门／准确句柄释放及非Windows边界 |
 | [原生生命周期本机验证](validation/REHAB_NATIVE_HOST_LIFETIME_2026-10-11.md) | 失败归档、7项专项＋三轮×三用例、原YOLO冷ticket与TEST native wait、日志／hash和未测范围 |
 | [康复v2异步退出恢复](development/REHAB_ASYNC_RECOVERY.md) | 202后、最终事务提交前、提交后未回应三窗口的准确所属进程退出、原恢复路径及不重复贡献 |
@@ -12,7 +14,7 @@
 | [异步结束本机验证](validation/REHAB_ASYNC_FINISH_2026-10-11.md) | 原阻塞失败、冷／热三轮、372／12／19回归、旧证据归档、日志／hash与未完成目标 |
 | [康复v2连续输入工程验收](development/REHAB_SESSION_LOAD.md) | 原YOLO、固定短时持续JPEG／并发控制、逐帧对账、独立重开和失败门槛；不修改生产算法或客户端 |
 | [连续输入本机记录](validation/REHAB_SESSION_LOAD_2026-10-11.md) | 三次预声明负载、源码／日志hash、冷热耗时与控制预算、完整回归及未测范围 |
-| [后端功能与技术实现阅读版](后端功能与技术实现梳理.md) | 04ab1ea源码基准；F01–F34逐功能输入／算法／公式／输出／存储／消费者；七条信息链、3.7连接键、函数与参数、准确性／可靠性优化；当前异步接收与最终事实分开 |
+| [后端功能与技术实现阅读版](后端功能与技术实现梳理.md) | F01–F34逐功能输入／算法／公式／输出／存储／消费者；七条信息链、连接键、函数与参数；异步接收／最终事实、所属进程与真实HTTP恢复分层 |
 | [当前后端阅读版核对](validation/BACKEND_OVERVIEW_ASYNC_HANDOFF_2026-10-11.md) | 本次只整理文档；源码连接键、异步结束／恢复路径与既有372／12／19及冷热工程证据核对，不新跑业务或训练 |
 | [后端阅读版当前证据核对](validation/BACKEND_OVERVIEW_SESSION_EVIDENCE_2026-10-11.md) | e8c62e3基准；仅文档刷新，已有364／12／19回归与三轮短时ASGI证据、未接客户端和未测条件分别说明 |
 | [后端功能编号与链路核对](validation/BACKEND_OVERVIEW_FUNCTION_MAP_2026-10-11.md) | 9821702源码基准；仅文档更新，已有／未接／候选算法区分，链接与280份既有文件保护检查，不重跑业务或训练 |

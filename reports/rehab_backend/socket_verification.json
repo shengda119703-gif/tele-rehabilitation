@@ -1,0 +1,263 @@
+{
+  "run_id": "socket-verification-9b308f4f",
+  "source_sha256": {
+    "tools/rehab_ml/socket_recovery_audit.py": "e23642079f4b4213e2baf368f88d2028874d7b55310c49345b00a68592fd855f",
+    "mobile_rehab/server.py": "33197735fccb58f7f90dc977482a67b7ad304f96cdbeb80f5f3c3b5efdc1ed0b",
+    "mobile_rehab/rehab_v2/api.py": "3560384d8df0fb8bd12aa4340a59357ec286ebf49b9f75f1e13862b8bac78356",
+    "mobile_rehab/rehab_v2/service.py": "61ec22ad6442daf247a1444cbab8378e9df5ae75f4929319bb56e1c8fac7f4c5",
+    "mobile_rehab/rehab_v2/owned_worker.py": "35426a8f6431242c1ca8a692d85fdad9ee2d889ba7ce987109a5d065f42c068a",
+    "mobile_rehab/rehab_v2/host_lifetime.py": "7608a375a94deb37f3ff306aeffe7071e7d45e396ec58266013b8e4e676b3ae8",
+    "mobile_rehab/rehab_v2/pose_worker.py": "7044dfce4b93c5e7142e922a6a23d156d6df1cc6eac385902fabc306eac82595",
+    "mobile_rehab/rehab_v2/report_worker.py": "f74b282b0908c8a5eeb77206ed5a553b4f66ae1f433eb7bc2aa198fe61916b70",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/sessions.py": "d9979d30eacbdd168e974791a265d0e05b28fbab27abd391310487c853ac287a",
+    "rehab_codex_single_camera_v2_1/app/storage.py": "02a6e35f2941148a30883b23aa01a34a767ef4f3fc733c487288d16fe7876549",
+    "rehab_codex_single_camera_v2_1/assets/models/yolo11n-pose.pt": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0",
+    "tools/rehab_ml/verify_socket_recovery.py": "02a141516ea29c8f097693066a385b3fd0f1e465ba6da3ebfe5179e2f775471e",
+    "tests/rehab_backend/test_socket_recovery.py": "1753ad78595adfa564e7fb9f904df52fe13cf7b2b6bd4fac810460cf22580c0f",
+    "tools/rehab_ml/native_parent_audit.py": "c664c64ae31387a0348abcbb0f65f53d70ccf19bce7281929182367fbcba7ebf",
+    "tools/rehab_ml/session_load_audit.py": "3b6288628567bcf435b38e72104df518edd3e4437ff0fcb8a8b42c59244a9c7c"
+  },
+  "repetitions_declared_before_running": 3,
+  "command_timeout_s": 90,
+  "commands": [
+    {
+      "name": "unit",
+      "arguments": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/rehab_backend",
+        "-p",
+        "test_socket_recovery.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "tests": 3,
+      "elapsed_s": 6.621552600000541,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-verification-9b308f4f\\unit.txt",
+      "log_sha256": "59e6a97f67833bba9154d30998771d2764e31145c982b97c993a9905d5da4f92"
+    },
+    {
+      "name": "repeat_1",
+      "arguments": [
+        "tools/rehab_ml/socket_recovery_audit.py",
+        "--publish"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 6.606240799999796,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-verification-9b308f4f\\repeat_1.txt",
+      "log_sha256": "7cc0b3e30f594a7e71282428f1a4cde0c4dbe336ef6b87587f195f93516e7a14"
+    },
+    {
+      "name": "repeat_2",
+      "arguments": [
+        "tools/rehab_ml/socket_recovery_audit.py",
+        "--publish"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 6.590038000000277,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-verification-9b308f4f\\repeat_2.txt",
+      "log_sha256": "97012c9845abe958b56e936ae481cb90e3f893637dabed21efc2d9f9dac1a511"
+    },
+    {
+      "name": "repeat_3",
+      "arguments": [
+        "tools/rehab_ml/socket_recovery_audit.py",
+        "--publish"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 6.44461500000034,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-verification-9b308f4f\\repeat_3.txt",
+      "log_sha256": "5a1bddcbefda9488e0ff9957757278ba5a98d120489abe33f09eadd21cb2f144"
+    }
+  ],
+  "attempts": [
+    {
+      "run_id": "socket-recovery-0a6947bc",
+      "raw_summary": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-recovery-0a6947bc\\summary.json",
+        "sha256": "bdd988c5a99900f660061e550241854833441063588d11fec76dbdaeb447eda0"
+      },
+      "passed": true,
+      "checks": {
+        "unauthenticated_denied": true,
+        "lost_create_retry_same_session": true,
+        "changed_create_payload_conflict": true,
+        "real_JPEG_processed_no_people_count": true,
+        "original_native_inference_stage_recorded": true,
+        "lost_finish_query_retry_alias_same_commit": true,
+        "changed_finish_payload_conflict": true,
+        "late_frame_rejected": true,
+        "null_feedback_once": true,
+        "plan_not_completed_by_empty_video": true,
+        "two_rows_only_one_final_before_crash": true,
+        "actual_pose_and_report_children_live": true,
+        "forced_host_and_children_exit_without_fallback": true,
+        "second_actual_server_recovered_interrupted": true,
+        "prior_visual_fact_immutable_across_server_restart": true,
+        "original_finish_retries_still_canonical": true,
+        "finalized_cannot_resume": true,
+        "feedback_null_and_revision_survive_restart": true,
+        "history_two_unique_finalized_rows": true,
+        "other_paired_owner_cannot_read_known_session": true,
+        "one_contribution_each_and_feedback_once_SQL": true,
+        "restarted_host_graceful_actual_release": true
+      },
+      "hosts": [
+        {
+          "actual_host_exit_confirmed": true,
+          "host_exit_code": 1,
+          "forced_requested": true,
+          "fallback_cleanup_required": false,
+          "captured_native_exits": [
+            true,
+            true
+          ],
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-recovery-0a6947bc\\TEST-server-0.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "actual_host_exit_confirmed": true,
+          "host_exit_code": 0,
+          "forced_requested": false,
+          "fallback_cleanup_required": false,
+          "captured_native_exits": [
+            true
+          ],
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-recovery-0a6947bc\\TEST-server-1.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "socket-recovery-23f2c71b",
+      "raw_summary": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-recovery-23f2c71b\\summary.json",
+        "sha256": "9e76100220db9b780f1ce7d373ee9ea357cee22fa35386c5402b63af45e77de8"
+      },
+      "passed": true,
+      "checks": {
+        "unauthenticated_denied": true,
+        "lost_create_retry_same_session": true,
+        "changed_create_payload_conflict": true,
+        "real_JPEG_processed_no_people_count": true,
+        "original_native_inference_stage_recorded": true,
+        "lost_finish_query_retry_alias_same_commit": true,
+        "changed_finish_payload_conflict": true,
+        "late_frame_rejected": true,
+        "null_feedback_once": true,
+        "plan_not_completed_by_empty_video": true,
+        "two_rows_only_one_final_before_crash": true,
+        "actual_pose_and_report_children_live": true,
+        "forced_host_and_children_exit_without_fallback": true,
+        "second_actual_server_recovered_interrupted": true,
+        "prior_visual_fact_immutable_across_server_restart": true,
+        "original_finish_retries_still_canonical": true,
+        "finalized_cannot_resume": true,
+        "feedback_null_and_revision_survive_restart": true,
+        "history_two_unique_finalized_rows": true,
+        "other_paired_owner_cannot_read_known_session": true,
+        "one_contribution_each_and_feedback_once_SQL": true,
+        "restarted_host_graceful_actual_release": true
+      },
+      "hosts": [
+        {
+          "actual_host_exit_confirmed": true,
+          "host_exit_code": 1,
+          "forced_requested": true,
+          "fallback_cleanup_required": false,
+          "captured_native_exits": [
+            true,
+            true
+          ],
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-recovery-23f2c71b\\TEST-server-0.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "actual_host_exit_confirmed": true,
+          "host_exit_code": 0,
+          "forced_requested": false,
+          "fallback_cleanup_required": false,
+          "captured_native_exits": [
+            true
+          ],
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-recovery-23f2c71b\\TEST-server-1.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "socket-recovery-9d6542af",
+      "raw_summary": {
+        "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-recovery-9d6542af\\summary.json",
+        "sha256": "d0210b4255ba158be82ebdc784dd57acecfa0c14a7d7513ac01e905405eab4a3"
+      },
+      "passed": true,
+      "checks": {
+        "unauthenticated_denied": true,
+        "lost_create_retry_same_session": true,
+        "changed_create_payload_conflict": true,
+        "real_JPEG_processed_no_people_count": true,
+        "original_native_inference_stage_recorded": true,
+        "lost_finish_query_retry_alias_same_commit": true,
+        "changed_finish_payload_conflict": true,
+        "late_frame_rejected": true,
+        "null_feedback_once": true,
+        "plan_not_completed_by_empty_video": true,
+        "two_rows_only_one_final_before_crash": true,
+        "actual_pose_and_report_children_live": true,
+        "forced_host_and_children_exit_without_fallback": true,
+        "second_actual_server_recovered_interrupted": true,
+        "prior_visual_fact_immutable_across_server_restart": true,
+        "original_finish_retries_still_canonical": true,
+        "finalized_cannot_resume": true,
+        "feedback_null_and_revision_survive_restart": true,
+        "history_two_unique_finalized_rows": true,
+        "other_paired_owner_cannot_read_known_session": true,
+        "one_contribution_each_and_feedback_once_SQL": true,
+        "restarted_host_graceful_actual_release": true
+      },
+      "hosts": [
+        {
+          "actual_host_exit_confirmed": true,
+          "host_exit_code": 1,
+          "forced_requested": true,
+          "fallback_cleanup_required": false,
+          "captured_native_exits": [
+            true,
+            true
+          ],
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-recovery-9d6542af\\TEST-server-0.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        },
+        {
+          "actual_host_exit_confirmed": true,
+          "host_exit_code": 0,
+          "forced_requested": false,
+          "fallback_cleanup_required": false,
+          "captured_native_exits": [
+            true
+          ],
+          "log": {
+            "path": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\socket-recovery-9d6542af\\TEST-server-1.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      ]
+    }
+  ],
+  "clinical_accuracy": null,
+  "source_unchanged": true,
+  "passed": true
+}
