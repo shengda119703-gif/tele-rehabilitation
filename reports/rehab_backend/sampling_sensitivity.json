@@ -1,0 +1,1413 @@
+{
+  "version": "rehab-sampling-sensitivity-1",
+  "run_id": "sampling-audit-836750a3",
+  "implementation_sha256": {
+    "tools/rehab_ml/sampling_audit.py": "e3c25b245851870ab96d0c129a3dabbf05b94504c2e6385c718af3eab02212fd",
+    "rehab_codex_single_camera_v2_1/app/domain.py": "ad6d18cb7cc6c009d9c94cf0f101ab1e4f87d81df7e5adc5175be53b038a6d34",
+    "rehab_codex_single_camera_v2_1/app/quality.py": "75633d242a805cfba9cc036154326af8148152357286534adc00c5c21be34ec6",
+    "rehab_codex_single_camera_v2_1/app/geometry.py": "c6eb2453b1b23e72b923d4bea6eca54dc7e8415f2ed100a0020d9186ef4fa733",
+    "rehab_codex_single_camera_v2_1/app/landmark_schemas.py": "f3dea9a2449fc894d11e7e508799da6ac74583a1d7e4be2f943f8a9b2b32e11b",
+    "rehab_codex_single_camera_v2_1/app/exercises.py": "8f45e9437a61ea217fcc15e2e36300b0c70ac955f43d9f273ff60773a2fe73c1",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/protocols.py": "0b2af3e37c9f6e69117a4d323bbdbae7babf33eed0c6327e9a32465fb5e2b040",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/engine.py": "e339dae493dc6bc03edb27a12cb650a568045dce22c13bc64704db0aa4869283",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/evidence.py": "6605d63ead318ae3fa9b285cad01fac5cc80bb8836f3cf2a18753a885c8faf01",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/timing.py": "2757e354ad1f5796681f590afe304064fe6a04382beb2a56d00c63cc870835b2",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/timing_comparison.py": "f40810aaff3833199e9ead172bb51c26d11be36cfc7e72fc549af267aaf839f4",
+    "rehab_codex_single_camera_v2_1/app/movement_timing.py": "ac11c2fb646be675f74badae7f9b73f056d627f5fef2c73552d6ec2388d28b57"
+  },
+  "profiles": [
+    {
+      "name": "reference",
+      "stride": 1,
+      "clock_offset_s": 0.0,
+      "jitter_s": 0.0,
+      "loss": null
+    },
+    {
+      "name": "sample_every_2",
+      "stride": 2,
+      "clock_offset_s": 0.0,
+      "jitter_s": 0.0,
+      "loss": null
+    },
+    {
+      "name": "sample_every_3",
+      "stride": 3,
+      "clock_offset_s": 0.0,
+      "jitter_s": 0.0,
+      "loss": null
+    },
+    {
+      "name": "sample_every_6",
+      "stride": 6,
+      "clock_offset_s": 0.0,
+      "jitter_s": 0.0,
+      "loss": null
+    },
+    {
+      "name": "clock_origin_plus_1000s",
+      "stride": 1,
+      "clock_offset_s": 1000.0,
+      "jitter_s": 0.0,
+      "loss": null
+    },
+    {
+      "name": "counterfactual_clock_jitter_12ms",
+      "stride": 1,
+      "clock_offset_s": 0.0,
+      "jitter_s": 0.012,
+      "loss": null
+    },
+    {
+      "name": "known_loss_every_20th",
+      "stride": 1,
+      "clock_offset_s": 0.0,
+      "jitter_s": 0.0,
+      "loss": "periodic"
+    },
+    {
+      "name": "known_loss_middle_10pct",
+      "stride": 1,
+      "clock_offset_s": 0.0,
+      "jitter_s": 0.0,
+      "loss": "middle"
+    },
+    {
+      "name": "known_loss_final_frame",
+      "stride": 1,
+      "clock_offset_s": 0.0,
+      "jitter_s": 0.0,
+      "loss": "final"
+    }
+  ],
+  "results": [
+    {
+      "video_sha256": "97a9fa1b9f06de6482c06c109f40bc4e6e1681f53dde6fd7f478b5ac59405e0d",
+      "model_manifest_id": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0",
+      "result_file_sha256": "b1ca2e7a59e1a13e91baad6119b0aef190c8fb1f2901f2f40748760e770cc99b",
+      "pose_file_sha256": "955a62d1b599843df89a0402822a9b034f2b6112f8a570c1b21242df70ad0a6f",
+      "exercise_id": "shoulder_abduction",
+      "side": "left",
+      "original_frames": 443,
+      "input_timing": {
+        "basis": "opencv_media_pts",
+        "skipped_leading_frames": 1,
+        "last_skipped_raw_time_s": -0.03447777777777778
+      },
+      "original_duration_s": 15.24137777777778,
+      "original_interval_s": {
+        "minimum": 0.03447777777777716,
+        "median": 0.03447777777777894,
+        "maximum": 0.034488888888889235
+      },
+      "historical_extraction_completed": 0,
+      "historical_extraction_observable": 434,
+      "current_reference_matches_historical_count": true,
+      "current_reference_matches_historical_coverage": true,
+      "explicit_target_not_supplied": true,
+      "profiles": [
+        {
+          "profile": "reference",
+          "retained_frames": 443,
+          "discarded_frames": 0,
+          "original_frames": 443,
+          "valid_primary_frames": 434,
+          "retained_frame_coverage": 0.9796839729119639,
+          "original_frame_retention_coverage": 0.9796839729119639,
+          "longest_explicit_missing_span_s": 0.2758555555555571,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "5:low_confidence": 9
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 9
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": false,
+          "sampling_semantics": "intentional_analysis_cadence",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 434,
+            "metric_absolute_disagreement_deg": {
+              "mean": 0.0,
+              "p95": 0.0,
+              "maximum": 0.0
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "sample_every_2",
+          "retained_frames": 222,
+          "discarded_frames": 221,
+          "original_frames": 443,
+          "valid_primary_frames": 217,
+          "retained_frame_coverage": 0.9774774774774775,
+          "original_frame_retention_coverage": 0.4898419864559819,
+          "longest_explicit_missing_span_s": 0.2758555555555571,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "5:low_confidence": 5
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 5
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": false,
+          "sampling_semantics": "intentional_analysis_cadence",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 217,
+            "metric_absolute_disagreement_deg": {
+              "mean": 0.9367549813890742,
+              "p95": 2.4559744352145074,
+              "maximum": 5.512963053421828
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "sample_every_3",
+          "retained_frames": 148,
+          "discarded_frames": 295,
+          "original_frames": 443,
+          "valid_primary_frames": 145,
+          "retained_frame_coverage": 0.9797297297297297,
+          "original_frame_retention_coverage": 0.327313769751693,
+          "longest_explicit_missing_span_s": 0.24137777777777814,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "5:low_confidence": 3
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 3
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": false,
+          "sampling_semantics": "intentional_analysis_cadence",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 145,
+            "metric_absolute_disagreement_deg": {
+              "mean": 1.6420245401816524,
+              "p95": 4.390886230522071,
+              "maximum": 5.51626476756833
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "sample_every_6",
+          "retained_frames": 74,
+          "discarded_frames": 369,
+          "original_frames": 443,
+          "valid_primary_frames": 73,
+          "retained_frame_coverage": 0.9864864864864865,
+          "original_frame_retention_coverage": 0.16478555304740405,
+          "longest_explicit_missing_span_s": 0.1379222222222225,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "5:low_confidence": 1
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 1
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": false,
+          "sampling_semantics": "intentional_analysis_cadence",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 73,
+            "metric_absolute_disagreement_deg": {
+              "mean": 3.4903749875752825,
+              "p95": 9.707292570994682,
+              "maximum": 10.863160280390723
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "clock_origin_plus_1000s",
+          "retained_frames": 443,
+          "discarded_frames": 0,
+          "original_frames": 443,
+          "valid_primary_frames": 434,
+          "retained_frame_coverage": 0.9796839729119639,
+          "original_frame_retention_coverage": 0.9796839729119639,
+          "longest_explicit_missing_span_s": 0.2758555555556086,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "5:low_confidence": 9
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 9
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": true,
+          "declared_known_loss": false,
+          "sampling_semantics": "intentional_analysis_cadence",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 434,
+            "metric_absolute_disagreement_deg": {
+              "mean": 1.7620567063819161e-12,
+              "p95": 6.433964472307707e-12,
+              "maximum": 9.2228447101661e-12
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "counterfactual_clock_jitter_12ms",
+          "retained_frames": 443,
+          "discarded_frames": 0,
+          "original_frames": 443,
+          "valid_primary_frames": 434,
+          "retained_frame_coverage": 0.9796839729119639,
+          "original_frame_retention_coverage": 0.9796839729119639,
+          "longest_explicit_missing_span_s": 0.28785555555555753,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "5:low_confidence": 9
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 9
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": true,
+          "declared_known_loss": false,
+          "sampling_semantics": "intentional_analysis_cadence",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 434,
+            "metric_absolute_disagreement_deg": {
+              "mean": 0.24211260875839535,
+              "p95": 0.8268474416721077,
+              "maximum": 1.5857687311510986
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "known_loss_every_20th",
+          "retained_frames": 421,
+          "discarded_frames": 22,
+          "original_frames": 443,
+          "valid_primary_frames": 413,
+          "retained_frame_coverage": 0.9809976247030879,
+          "original_frame_retention_coverage": 0.9322799097065463,
+          "longest_explicit_missing_span_s": 0.2758555555555571,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "5:low_confidence": 8
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 8
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": true,
+          "sampling_semantics": "known_missing_input",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 413,
+            "metric_absolute_disagreement_deg": {
+              "mean": 0.13740237545766718,
+              "p95": 0.5792232474340864,
+              "maximum": 4.071662561650598
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "known_loss_middle_10pct",
+          "retained_frames": 398,
+          "discarded_frames": 45,
+          "original_frames": 443,
+          "valid_primary_frames": 389,
+          "retained_frame_coverage": 0.9773869346733668,
+          "original_frame_retention_coverage": 0.8781038374717833,
+          "longest_explicit_missing_span_s": 1.5517222222222218,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "5:low_confidence": 9
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 9
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": true,
+          "sampling_semantics": "known_missing_input",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 389,
+            "metric_absolute_disagreement_deg": {
+              "mean": 0.060724911172199886,
+              "p95": 0.019225238885653084,
+              "maximum": 5.8679883086531675
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "known_loss_final_frame",
+          "retained_frames": 442,
+          "discarded_frames": 1,
+          "original_frames": 443,
+          "valid_primary_frames": 434,
+          "retained_frame_coverage": 0.9819004524886877,
+          "original_frame_retention_coverage": 0.9796839729119639,
+          "longest_explicit_missing_span_s": 0.2758555555555571,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "5:low_confidence": 8
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 8
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": true,
+          "sampling_semantics": "known_missing_input",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 434,
+            "metric_absolute_disagreement_deg": {
+              "mean": 0.0,
+              "p95": 0.0,
+              "maximum": 0.0
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        }
+      ],
+      "private_detail_sha256": "3d699d946c2ae75ef742ecbcfb1dee23db904afde06b3aa6297810d7b11cce01"
+    },
+    {
+      "video_sha256": "c384d08c0bc64d12939940e85b1f62b4ae29d470d27d0695054d786873779c95",
+      "model_manifest_id": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0",
+      "result_file_sha256": "28b67f23cc535ba756c914af1608d311b2655e2ed113ab368b3ee9f876d98f5e",
+      "pose_file_sha256": "d15e780b7ce041c5fba645f154b1c5bb97902b4f6500583890c3b86b3992b74b",
+      "exercise_id": "rehab_squat",
+      "side": "left",
+      "original_frames": 429,
+      "input_timing": {
+        "basis": "opencv_media_pts",
+        "skipped_leading_frames": 1,
+        "last_skipped_raw_time_s": -0.03333333333333333
+      },
+      "original_duration_s": 14.266666666666667,
+      "original_interval_s": {
+        "minimum": 0.033333333333333215,
+        "median": 0.033333333333333215,
+        "maximum": 0.03333333333333499
+      },
+      "historical_extraction_completed": 0,
+      "historical_extraction_observable": 48,
+      "current_reference_matches_historical_count": true,
+      "current_reference_matches_historical_coverage": true,
+      "explicit_target_not_supplied": true,
+      "profiles": [
+        {
+          "profile": "reference",
+          "retained_frames": 429,
+          "discarded_frames": 0,
+          "original_frames": 429,
+          "valid_primary_frames": 48,
+          "retained_frame_coverage": 0.11188811188811189,
+          "original_frame_retention_coverage": 0.11188811188811189,
+          "longest_explicit_missing_span_s": 2.266666666666667,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "13:low_confidence,15:low_confidence": 70,
+            "15:low_confidence": 302,
+            "13:out_of_frame,15:low_confidence": 1,
+            "11:low_confidence,13:low_confidence,15:low_confidence": 7,
+            "metric_not_provided": 1
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 381
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": false,
+          "sampling_semantics": "intentional_analysis_cadence",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 48,
+            "metric_absolute_disagreement_deg": {
+              "mean": 0.0,
+              "p95": 0.0,
+              "maximum": 0.0
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "sample_every_2",
+          "retained_frames": 215,
+          "discarded_frames": 214,
+          "original_frames": 429,
+          "valid_primary_frames": 27,
+          "retained_frame_coverage": 0.12558139534883722,
+          "original_frame_retention_coverage": 0.06293706293706294,
+          "longest_explicit_missing_span_s": 2.266666666666667,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "13:low_confidence,15:low_confidence": 36,
+            "15:low_confidence": 148,
+            "11:low_confidence,13:low_confidence,15:low_confidence": 3,
+            "metric_not_provided": 1
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 188
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": false,
+          "sampling_semantics": "intentional_analysis_cadence",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 27,
+            "metric_absolute_disagreement_deg": {
+              "mean": 1.4434904088481257,
+              "p95": 6.926090529389043,
+              "maximum": 8.644046441619906
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "sample_every_3",
+          "retained_frames": 143,
+          "discarded_frames": 286,
+          "original_frames": 429,
+          "valid_primary_frames": 13,
+          "retained_frame_coverage": 0.09090909090909091,
+          "original_frame_retention_coverage": 0.030303030303030304,
+          "longest_explicit_missing_span_s": 3.0,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "13:low_confidence,15:low_confidence": 23,
+            "15:low_confidence": 104,
+            "13:out_of_frame,15:low_confidence": 1,
+            "11:low_confidence,13:low_confidence,15:low_confidence": 2
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 130
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": false,
+          "sampling_semantics": "intentional_analysis_cadence",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 13,
+            "metric_absolute_disagreement_deg": {
+              "mean": 1.7729068337799254,
+              "p95": 11.409627249093518,
+              "maximum": 11.409627249093518
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "sample_every_6",
+          "retained_frames": 72,
+          "discarded_frames": 357,
+          "original_frames": 429,
+          "valid_primary_frames": 7,
+          "retained_frame_coverage": 0.09722222222222222,
+          "original_frame_retention_coverage": 0.016317016317016316,
+          "longest_explicit_missing_span_s": 3.8000000000000003,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "13:low_confidence,15:low_confidence": 13,
+            "15:low_confidence": 51,
+            "11:low_confidence,13:low_confidence,15:low_confidence": 1
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 65
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": false,
+          "sampling_semantics": "intentional_analysis_cadence",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 7,
+            "metric_absolute_disagreement_deg": {
+              "mean": 3.0747542700917387,
+              "p95": 17.330839693937904,
+              "maximum": 17.330839693937904
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "clock_origin_plus_1000s",
+          "retained_frames": 429,
+          "discarded_frames": 0,
+          "original_frames": 429,
+          "valid_primary_frames": 48,
+          "retained_frame_coverage": 0.11188811188811189,
+          "original_frame_retention_coverage": 0.11188811188811189,
+          "longest_explicit_missing_span_s": 2.2666666666666515,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "13:low_confidence,15:low_confidence": 70,
+            "15:low_confidence": 302,
+            "13:out_of_frame,15:low_confidence": 1,
+            "11:low_confidence,13:low_confidence,15:low_confidence": 7,
+            "metric_not_provided": 1
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 381
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": true,
+          "declared_known_loss": false,
+          "sampling_semantics": "intentional_analysis_cadence",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 48,
+            "metric_absolute_disagreement_deg": {
+              "mean": 2.2151169787321123e-12,
+              "p95": 1.4708234630234074e-11,
+              "maximum": 1.7536194718559273e-11
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "counterfactual_clock_jitter_12ms",
+          "retained_frames": 429,
+          "discarded_frames": 0,
+          "original_frames": 429,
+          "valid_primary_frames": 48,
+          "retained_frame_coverage": 0.11188811188811189,
+          "original_frame_retention_coverage": 0.11188811188811189,
+          "longest_explicit_missing_span_s": 2.272666666666667,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "13:low_confidence,15:low_confidence": 70,
+            "15:low_confidence": 302,
+            "13:out_of_frame,15:low_confidence": 1,
+            "11:low_confidence,13:low_confidence,15:low_confidence": 7,
+            "metric_not_provided": 1
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 381
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": true,
+          "declared_known_loss": false,
+          "sampling_semantics": "intentional_analysis_cadence",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 48,
+            "metric_absolute_disagreement_deg": {
+              "mean": 0.22808663261614667,
+              "p95": 1.084160305893434,
+              "maximum": 1.4727006898718429
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "known_loss_every_20th",
+          "retained_frames": 408,
+          "discarded_frames": 21,
+          "original_frames": 429,
+          "valid_primary_frames": 46,
+          "retained_frame_coverage": 0.11274509803921569,
+          "original_frame_retention_coverage": 0.10722610722610723,
+          "longest_explicit_missing_span_s": 2.266666666666667,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "13:low_confidence,15:low_confidence": 68,
+            "15:low_confidence": 286,
+            "13:out_of_frame,15:low_confidence": 1,
+            "11:low_confidence,13:low_confidence,15:low_confidence": 6,
+            "metric_not_provided": 1
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 362
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": true,
+          "sampling_semantics": "known_missing_input",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 46,
+            "metric_absolute_disagreement_deg": {
+              "mean": 0.27027372209513223,
+              "p95": 2.7225391327103523,
+              "maximum": 4.3382244024744665
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "known_loss_middle_10pct",
+          "retained_frames": 386,
+          "discarded_frames": 43,
+          "original_frames": 429,
+          "valid_primary_frames": 47,
+          "retained_frame_coverage": 0.12176165803108809,
+          "original_frame_retention_coverage": 0.10955710955710955,
+          "longest_explicit_missing_span_s": 2.266666666666667,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "13:low_confidence,15:low_confidence": 70,
+            "15:low_confidence": 260,
+            "13:out_of_frame,15:low_confidence": 1,
+            "11:low_confidence,13:low_confidence,15:low_confidence": 7,
+            "metric_not_provided": 1
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 339
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": true,
+          "sampling_semantics": "known_missing_input",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 47,
+            "metric_absolute_disagreement_deg": {
+              "mean": 0.002065068087205493,
+              "p95": 0.018033253543649153,
+              "maximum": 0.03217444110207168
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        },
+        {
+          "profile": "known_loss_final_frame",
+          "retained_frames": 428,
+          "discarded_frames": 1,
+          "original_frames": 429,
+          "valid_primary_frames": 48,
+          "retained_frame_coverage": 0.11214953271028037,
+          "original_frame_retention_coverage": 0.11188811188811189,
+          "longest_explicit_missing_span_s": 2.266666666666667,
+          "baseline_observed": false,
+          "first_ready_relative_s": null,
+          "completed": 0,
+          "attempted": 0,
+          "partial_or_unassessable": 0,
+          "invalid_primary_reasons": {
+            "13:low_confidence,15:low_confidence": 70,
+            "15:low_confidence": 302,
+            "13:out_of_frame,15:low_confidence": 1,
+            "11:low_confidence,13:low_confidence,15:low_confidence": 7
+          },
+          "diagnostics": {
+            "rejected": {},
+            "missing_frames": 380
+          },
+          "phase_transition_count": 1,
+          "timing": {
+            "outbound_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "endpoint_dwell_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "return_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            },
+            "target_hold_s": {
+              "complete_denominator": 0,
+              "valid_complete": 0,
+              "excluded_complete_reasons": {},
+              "median_s": null
+            }
+          },
+          "max_observed_live_target_hold_s": null,
+          "counterfactual_clock": false,
+          "declared_known_loss": true,
+          "sampling_semantics": "known_missing_input",
+          "comparison": {
+            "reference_profile": "reference",
+            "completed_delta": 0,
+            "baseline_observed_changed": false,
+            "shared_valid_source_frames": 48,
+            "metric_absolute_disagreement_deg": {
+              "mean": 0.0,
+              "p95": 0.0,
+              "maximum": 0.0
+            },
+            "interpretation": "same_model_sampling_disagreement_not_gold_standard_error",
+            "clinical_accuracy": null,
+            "count_accuracy": null,
+            "timing_accuracy": null
+          }
+        }
+      ],
+      "private_detail_sha256": "9fbf23b7052accaf3d386bdbeb958e90ae03a516780439cb8105dd9c33e11488"
+    }
+  ],
+  "primary_time_basis": "opencv_media_pts",
+  "source_pixels_redecoded": false,
+  "original_models_changed": false,
+  "training_performed": false,
+  "training_authorized": false,
+  "private_RGB_and_keypoints_published": false,
+  "independent_reference_available": false,
+  "clinical_accuracy": null,
+  "count_accuracy": null,
+  "timing_accuracy": null,
+  "population_sampling_invariance_validated": false,
+  "network_or_phone_tested": false,
+  "cached_filtered_metrics_used": false,
+  "protocol_parameters_tuned": false,
+  "inputs_unchanged": true,
+  "implementation_unchanged": true,
+  "profile_contract_sha256": "d6973c4ab635ef1e86ef8c4f1a490471981325096dccb850d72d3561e1a29284"
+}

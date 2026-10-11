@@ -1,0 +1,69 @@
+{
+  "run_id": "sampling-verification-882c2bd1",
+  "commands": [
+    {
+      "name": "unit",
+      "arguments": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/rehab_backend",
+        "-p",
+        "test_sampling_audit.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 1.9514156000004732,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\sampling-verification-882c2bd1\\unit.txt",
+      "log_sha256": "bf9c82ed9653a0ad3896ae982a8156422e2c95b5cd7d15f68651c7c11fb1aad7",
+      "tests": 17,
+      "tail": "tate_raw_input (test_sampling_audit.SamplingAuditTests.test_fresh_runs_are_exact_and_do_not_mutate_raw_input) ... ok\ntest_future_raw_pose_does_not_modify_existing_prefix (test_sampling_audit.SamplingAuditTests.test_future_raw_pose_does_not_modify_existing_prefix) ... ok\ntest_jitter_is_explicit_counterfactual_not_gold_or_network (test_sampling_audit.SamplingAuditTests.test_jitter_is_explicit_counterfactual_not_gold_or_network) ... ok\ntest_middle_loss_cannot_invent_continuous_hold_or_complete_time (test_sampling_audit.SamplingAuditTests.test_middle_loss_cannot_invent_continuous_hold_or_complete_time) ... ok\ntest_missing_required_joint_stays_invalid_even_after_valid_history (test_sampling_audit.SamplingAuditTests.test_missing_required_joint_stays_invalid_even_after_valid_history) ... ok\ntest_new_artifacts_are_ignored_and_public_statistics_exclude_private_trace (test_sampling_audit.SamplingAuditTests.test_new_artifacts_are_ignored_and_public_statistics_exclude_private_trace) ... ok\ntest_pending_eof_loss_is_flushed_without_adding_count_or_hold (test_sampling_audit.SamplingAuditTests.test_pending_eof_loss_is_flushed_without_adding_count_or_hold) ... ok\ntest_three_actions_raw_geometry_completes_under_reference_and_cadence (test_sampling_audit.SamplingAuditTests.test_three_actions_raw_geometry_completes_under_reference_and_cadence) ... ok\ntest_unknown_profile_and_nonmonotonic_counterfactual_are_not_accepted (test_sampling_audit.SamplingAuditTests.test_unknown_profile_and_nonmonotonic_counterfactual_are_not_accepted) ... ok\ntest_unordered_time_seq_or_changed_geometry_is_rejected (test_sampling_audit.SamplingAuditTests.test_unordered_time_seq_or_changed_geometry_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 17 tests in 1.803s\n\nOK\n"
+    },
+    {
+      "name": "authorized_cache_profiles",
+      "arguments": [
+        "-m",
+        "tools.rehab_ml.sampling_audit",
+        "--publish",
+        "--result",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\target-replay-97a9fa1b9f06-d3db6567\\result.json",
+        "--result",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\target-replay-c384d08c0bc6-555c85dd\\result.json"
+      ],
+      "exit_code": 0,
+      "elapsed_s": 1.1766927000007854,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\sampling-verification-882c2bd1\\authorized_cache_profiles.txt",
+      "log_sha256": "eeb7e827144182eb2527abe66edf83540c9bd8bc8ff2daac5eef16261790bce3",
+      "tests": null,
+      "tail": "{\"run_id\": \"sampling-audit-836750a3\", \"summary\": \"E:\\\\game\\\\health-care-software-main\\\\.runtime\\\\rehab_ml\\\\run\\\\sampling-audit-836750a3\\\\summary.json\", \"summary_sha256\": \"ebba6691a8770149b2b1b6a6892edfdd6d6569760cc20c9860ff7ddccdae9e2d\", \"videos\": 2, \"profile_runs\": 18, \"clinical_accuracy\": null, \"training_performed\": false}\n"
+    }
+  ],
+  "implementation_sha256": {
+    "tools/rehab_ml/sampling_audit.py": "e3c25b245851870ab96d0c129a3dabbf05b94504c2e6385c718af3eab02212fd",
+    "rehab_codex_single_camera_v2_1/app/domain.py": "ad6d18cb7cc6c009d9c94cf0f101ab1e4f87d81df7e5adc5175be53b038a6d34",
+    "rehab_codex_single_camera_v2_1/app/quality.py": "75633d242a805cfba9cc036154326af8148152357286534adc00c5c21be34ec6",
+    "rehab_codex_single_camera_v2_1/app/geometry.py": "c6eb2453b1b23e72b923d4bea6eca54dc7e8415f2ed100a0020d9186ef4fa733",
+    "rehab_codex_single_camera_v2_1/app/landmark_schemas.py": "f3dea9a2449fc894d11e7e508799da6ac74583a1d7e4be2f943f8a9b2b32e11b",
+    "rehab_codex_single_camera_v2_1/app/exercises.py": "8f45e9437a61ea217fcc15e2e36300b0c70ac955f43d9f273ff60773a2fe73c1",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/protocols.py": "0b2af3e37c9f6e69117a4d323bbdbae7babf33eed0c6327e9a32465fb5e2b040",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/engine.py": "e339dae493dc6bc03edb27a12cb650a568045dce22c13bc64704db0aa4869283",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/evidence.py": "6605d63ead318ae3fa9b285cad01fac5cc80bb8836f3cf2a18753a885c8faf01",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/timing.py": "2757e354ad1f5796681f590afe304064fe6a04382beb2a56d00c63cc870835b2",
+    "rehab_codex_single_camera_v2_1/app/rehab_v2/timing_comparison.py": "f40810aaff3833199e9ead172bb51c26d11be36cfc7e72fc549af267aaf839f4",
+    "rehab_codex_single_camera_v2_1/app/movement_timing.py": "ac11c2fb646be675f74badae7f9b73f056d627f5fef2c73552d6ec2388d28b57",
+    "tests/rehab_backend/test_sampling_audit.py": "ddbb271ed6d8ee7db692283f3ecec3ec346fd61a6e9736b924762233da56af27",
+    "tools/rehab_ml/verify_sampling_audit.py": "4e0f79c2c822afccf6061ba4c7846361b33f8e39c80fc4ccbb99833af2b741d3"
+  },
+  "human_data_used_only_for_sampling_analysis": true,
+  "training_performed": false,
+  "clinical_accuracy": null,
+  "frontend_modified": false,
+  "apk_modified": false,
+  "implementation_unchanged": true,
+  "passed": true,
+  "audit_run_id": "sampling-audit-836750a3",
+  "audit_summary_sha256": "ebba6691a8770149b2b1b6a6892edfdd6d6569760cc20c9860ff7ddccdae9e2d",
+  "verified_private_cache_inputs": 2,
+  "profile_runs": 18
+}

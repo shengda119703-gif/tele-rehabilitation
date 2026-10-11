@@ -107,6 +107,12 @@ CPU离线训练使用明确的SiLU／卷积梯度double中间精度与显式Adam
 
 `extract-mediapipe-video`处理本地授权视频，权重与本机APK build核对、参数参照原worker；不改原IMAGE组件／Android，不声称SDK相同或手机性能。`compare-video-pose`检查同录像、PTS、原像素hash和骨架语义再计算模型差异；无独立参考时不是误差或准确率。17项与两段原片真实7条CLI见 [VIDEO工作流](../../docs/development/MEDIAPIPE_VIDEO_AUDIT.md)，公开聚合证据见`reports/rehab_backend/mediapipe_video_verification.json`；原片和33点只在忽略目录。
 
+## 固定采样与已知丢帧分析
+
+`python -m tools.rehab_ml.sampling_audit --result <明确原提取result.json> [--publish]`只接受忽略run中已声明分析授权／未授权训练、COCO17原像素和媒体PTS的原YOLO缓存。九条件预声明；每个条件重新走原因果滤波和协议，完全不用已滤波指标、不推理或训练、不写正常记录。私有轨迹留忽略目录，`--publish`只更新聚合报告。
+
+本机专项实际命令、两缓存hash、17项TEST及18次真实缓存重放见 [采样工作流](../../docs/development/REHAB_SAMPLING_SENSITIVITY.md) 和 [验收](../../docs/validation/REHAB_SAMPLING_2026-10-11.md)。每6帧肩／深蹲相对原采样的p95差异9.707°／17.331°不是金标准误差；深蹲后者只有7共同有效帧。两片所有条件均无稳定准备基线、均0确认次，不能用同计数宣称稳健。人群采样、真实网络／曝光及手机性能未验证，生产参数不变。
+
 ## 骨架审核图
 
 图形导出复用本机 scientific-visualization skill 的帮助脚本。在其他机器重做此图，需要安装该skill并将 `REHAB_VISUAL_SKILL_ROOT` 设为对应根目录；未安装时明确拒绝，不影响数据训练或正式产品。已有PNG/SVG/原值JSON可直接查看。
