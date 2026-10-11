@@ -125,6 +125,14 @@ CPU离线训练使用明确的SiLU／卷积梯度double中间精度与显式Adam
 
 本机专项实际命令、两缓存hash、17项TEST及18次真实缓存重放见 [采样工作流](../../docs/development/REHAB_SAMPLING_SENSITIVITY.md) 和 [验收](../../docs/validation/REHAB_SAMPLING_2026-10-11.md)。每6帧肩／深蹲相对原采样的p95差异9.707°／17.331°不是金标准误差；深蹲后者只有7共同有效帧。两片所有条件均无稳定准备基线、均0确认次，不能用同计数宣称稳健。人群采样、真实网络／曝光及手机性能未验证，生产参数不变。
 
+## 原RGB到实际计次预测
+
+`replay-mobiphysio-temporal --receipt <固定已校验下载> --split val|test --side left|right --output-dir <新的专用run>`重新跑原YOLO所属进程、原adapter／协议，保留完整人／框／轨迹、真实PTS和逐帧阶段；从实际确认导出预测文件，不读人工表／不使用视频总分。不猜患侧、不用固定假track或补框复用旧特征缓存。
+
+`verify_temporal_replay.py --receipt ... --pending-bundle ...`实际跑两个split，再从保存原姿态重算指标／协议并对账采样、计次、事件和最终结果。初始准备和峰区起止不导出；未知边界null，已实现无事件[]，失败计数null。配置在推理前冻结；不自动选侧、放宽门、训练、启用权重或写正常历史。
+
+本轮10段1161采样帧均未成立准备基线，全部0确认次；保存重放一致不是人体精度成功。原C盘无空间的9项TEST失败保留，外盘重验不恢复默认容量。实际日志、SHA及数据链见[工作流](../../docs/development/REHAB_TEMPORAL_REPLAY.md)和[本机记录](../../docs/validation/REHAB_TEMPORAL_REPLAY_2026-10-12.md)。
+
 ## 骨架审核图
 
 图形导出复用本机 scientific-visualization skill 的帮助脚本。在其他机器重做此图，需要安装该skill并将 `REHAB_VISUAL_SKILL_ROOT` 设为对应根目录；未安装时明确拒绝，不影响数据训练或正式产品。已有PNG/SVG/原值JSON可直接查看。

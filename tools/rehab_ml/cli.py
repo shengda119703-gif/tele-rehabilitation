@@ -36,6 +36,12 @@ def parser():
     item.add_argument('--plan', type=Path, required=True)
     item = sub.add_parser('extract-mobiphysio-rgb', help='Original owned YOLO on the complete verified RGB cohort; predictions are not pose ground truth')
     item.add_argument('--receipt', type=Path, required=True)
+    item = sub.add_parser('replay-mobiphysio-temporal', help='Original RGB/YOLO/protocol execution with actual trace; no human-label prefill or product activation')
+    item.add_argument('--receipt', type=Path, required=True)
+    item.add_argument('--split', choices=['val', 'test'], required=True)
+    item.add_argument('--side', choices=['left', 'right'], required=True,
+                      help='Predeclared analyzed anatomical side, never an inferred affected side')
+    item.add_argument('--output-dir', type=Path, required=True)
     item = sub.add_parser('train-mobiphysio-quality', help='Train and compare video-level EAAQ regression on the frozen person split; no phase, pose fine-tuning or product activation')
     item.add_argument('--extraction', type=Path, required=True)
     item = sub.add_parser('prepare-annotations', help='Score-free independent human review forms for the verified fixed CC0 RGB cohort; no labels or training')
@@ -180,6 +186,12 @@ def main(argv=None):
             from tools.rehab_ml.temporal_evaluation import evaluate
             value = evaluate(args.reference, args.predictions, args.output_dir, split=args.split,
                              tolerance_s=args.event_tolerance_s)
+        elif args.command == 'replay-mobiphysio-temporal':
+            from tools.rehab_ml.temporal_replay import replay
+            value = replay(args.receipt, args.output_dir, split=args.split, side=args.side)
+            if value['status'] != 'completed':
+                print(json.dumps(dict(ok=False, command=args.command, result=value), ensure_ascii=False, allow_nan=False))
+                return 1
         elif args.command == 'visual-audit':
             from tools.rehab_ml.visual_audit import render
             value = render(args.output_dir)

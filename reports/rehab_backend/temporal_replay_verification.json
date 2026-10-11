@@ -1,0 +1,282 @@
+{
+  "scope": "actual_original_RGB_YOLO_protocol_and_TEST_export_contract",
+  "product_environment": "E:\\game\\health-care-software-main\\rehab_codex_single_camera_v2_1\\.venv\\Scripts\\python.exe",
+  "implementation": {
+    "mobile_rehab\\rehab_v2\\host_lifetime.py": "7608a375a94deb37f3ff306aeffe7071e7d45e396ec58266013b8e4e676b3ae8",
+    "mobile_rehab\\rehab_v2\\owned_worker.py": "35426a8f6431242c1ca8a692d85fdad9ee2d889ba7ce987109a5d065f42c068a",
+    "mobile_rehab\\rehab_v2\\pose_worker.py": "7044dfce4b93c5e7142e922a6a23d156d6df1cc6eac385902fabc306eac82595",
+    "rehab_codex_single_camera_v2_1\\app\\domain.py": "ad6d18cb7cc6c009d9c94cf0f101ab1e4f87d81df7e5adc5175be53b038a6d34",
+    "rehab_codex_single_camera_v2_1\\app\\exercises.py": "8f45e9437a61ea217fcc15e2e36300b0c70ac955f43d9f273ff60773a2fe73c1",
+    "rehab_codex_single_camera_v2_1\\app\\geometry.py": "c6eb2453b1b23e72b923d4bea6eca54dc7e8415f2ed100a0020d9186ef4fa733",
+    "rehab_codex_single_camera_v2_1\\app\\landmark_schemas.py": "f3dea9a2449fc894d11e7e508799da6ac74583a1d7e4be2f943f8a9b2b32e11b",
+    "rehab_codex_single_camera_v2_1\\app\\movement_timing.py": "ac11c2fb646be675f74badae7f9b73f056d627f5fef2c73552d6ec2388d28b57",
+    "rehab_codex_single_camera_v2_1\\app\\quality.py": "75633d242a805cfba9cc036154326af8148152357286534adc00c5c21be34ec6",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\__init__.py": "c141607c91db27f566fc4270a18db0568e946d9ad80ebd8b7865feae517b3798",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\compatibility.py": "8095945ac78e4fdac36ddddd034c55b94ece4b3e1a51a867bbaa309499b98c31",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\cues.py": "d426ad2e669a3cb010cccdcb7a1f1a4e9d364b9ba27420fed8e2551fcbd77433",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\engine.py": "e339dae493dc6bc03edb27a12cb650a568045dce22c13bc64704db0aa4869283",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\evidence.py": "6605d63ead318ae3fa9b285cad01fac5cc80bb8836f3cf2a18753a885c8faf01",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\plans.py": "a6c4f7f05fcd202afd90821f30b5b78331783d430da4566ae6666d4d9c05fb3b",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\progress.py": "5c4734a8ed64401edec4012cc3f8545cf1bc2815a9024431cb76145ab3d85dff",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\protocols.py": "0b2af3e37c9f6e69117a4d323bbdbae7babf33eed0c6327e9a32465fb5e2b040",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\reporting.py": "6e23d1a61ae00c8cdf50983c5fa9532c61511188e17cac257b21c89671bc7b1e",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\resources.py": "eb86c8a4c1ef99b77a8780d78ec527b51a2bb151bebb6d99c7ad850280692abe",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\rounds.py": "aed02630cbed7e6561f7890412ba3d0511cc2093ede7217505b07070dc2a0243",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\sessions.py": "d9979d30eacbdd168e974791a265d0e05b28fbab27abd391310487c853ac287a",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\storage_boundary.py": "d07f76cb0f8c42d498b4877088e35bacf233f46cae4946238ba05e8a6cfecfb6",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\telemetry.py": "1c6cf1359b0ca215ac01179b42e424f7d578206f95fd2fa5073d34f7fd0ea1f2",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\temporal.py": "eafb07851affbf2c744d96f6f736026ae8fccd38b4a2fd15cda35a6569899dda",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\timing.py": "2757e354ad1f5796681f590afe304064fe6a04382beb2a56d00c63cc870835b2",
+    "rehab_codex_single_camera_v2_1\\app\\rehab_v2\\timing_comparison.py": "f40810aaff3833199e9ead172bb51c26d11be36cfc7e72fc549af267aaf839f4",
+    "rehab_codex_single_camera_v2_1\\app\\vision.py": "ce88565e4f603b88d7c89f75a3175fe78d15e4bcf910a5d9b7f0a337feeac3b5",
+    "tools\\rehab_ml\\cli.py": "8105a056316dc19024a541781eb525cf62542976fccae56500daffb42a01ebb6",
+    "tools\\rehab_ml\\common.py": "bd29e88735e99b85b8a8bd7a3e0531a241ea2eb8e07a6667d92cae647d988277",
+    "tools\\rehab_ml\\mobiphysio_pose.py": "8356bfcfa245c7e1c9d8d5dfd2a02b27aca65b5db5f83088b2de4870ba9204f7",
+    "tools\\rehab_ml\\mobiphysio_rgb.py": "55fcd49777cafd5bffb45ab8b51b9bd9b8d6a743f6268e9030b97e58e4ce4764",
+    "tools\\rehab_ml\\professional_annotations.py": "1e85cfb5832526af076d338cd9469afa277b57bc6a2e22f160ec3ee3525ba4be",
+    "tools\\rehab_ml\\temporal_replay.py": "b4dc296a2fadd7ae0f7c0547e113a5b2c5aad250b9aeb88749da287d1852e057"
+  },
+  "verifier_sha256": "39ed3508f9c21cf6781d77f897340237b81a7772a571836058e19df7275bf952",
+  "commands": [
+    {
+      "name": "help",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "replay-mobiphysio-temporal",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 0.10545409999940603,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-replay-audit-ed5fca84\\help.txt",
+      "log_sha256": "ae4eefd34579ae78d107d5dd1a4693823b4d7e43b7b18cc47161ffe993385a46"
+    },
+    {
+      "name": "unit",
+      "arguments": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/rehab_backend",
+        "-p",
+        "test_temporal_replay.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 0.40531560000090394,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-replay-audit-ed5fca84\\unit.txt",
+      "log_sha256": "88e2fd773923ea4bc20183508f5b594141cf3bf5f422e3fc4b54f2a150fdc79c"
+    },
+    {
+      "name": "val",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "replay-mobiphysio-temporal",
+        "--receipt",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\mobiphysio\\3.0\\rgb-e01-front-fl-9ac33275\\download-a157e0e1.json",
+        "--split",
+        "val",
+        "--side",
+        "left",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-replay-audit-ed5fca84\\val"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 64.76329590000023,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-replay-audit-ed5fca84\\val.txt",
+      "log_sha256": "114d6d73a4c01d57719372469967ad41501576f78f5aed8f612a3afff81be487"
+    },
+    {
+      "name": "test",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "replay-mobiphysio-temporal",
+        "--receipt",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\data\\mobiphysio\\3.0\\rgb-e01-front-fl-9ac33275\\download-a157e0e1.json",
+        "--split",
+        "test",
+        "--side",
+        "left",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-replay-audit-ed5fca84\\test"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 76.24025250000159,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-replay-audit-ed5fca84\\test.txt",
+      "log_sha256": "31b277c1a5aa81733ab26e8d7454c11d5a270ac8c6a55c9ebfe8d6a72ef9e240"
+    }
+  ],
+  "audits": [
+    {
+      "split": "val",
+      "checked_videos": 5,
+      "samples": [
+        {
+          "sample_id": "mobi3-e01-P01",
+          "sampled_frames": 114,
+          "completed_count": 0,
+          "trace_sha256": "3ea5457b468f6f85aa1b6ca66d2325d7ae01820ed0a6a265cd5d04eb25718ebc",
+          "emitted_events": {
+            "preparation_confirmed_s": null,
+            "outbound_start_s": 0,
+            "endpoint_start_s": null,
+            "endpoint_end_s": null,
+            "return_start_s": 0,
+            "end_s": 0
+          }
+        },
+        {
+          "sample_id": "mobi3-e01-P02",
+          "sampled_frames": 18,
+          "completed_count": 0,
+          "trace_sha256": "90abef9697c800a98b4525adb97c05547d14556766913a113c629b17d3f5e599",
+          "emitted_events": {
+            "preparation_confirmed_s": null,
+            "outbound_start_s": 0,
+            "endpoint_start_s": null,
+            "endpoint_end_s": null,
+            "return_start_s": 0,
+            "end_s": 0
+          }
+        },
+        {
+          "sample_id": "mobi3-e01-P19",
+          "sampled_frames": 124,
+          "completed_count": 0,
+          "trace_sha256": "b00173b95dcde06b10b3f3da2663208b57c757be2a6be022e44e1525b2fd736c",
+          "emitted_events": {
+            "preparation_confirmed_s": null,
+            "outbound_start_s": 0,
+            "endpoint_start_s": null,
+            "endpoint_end_s": null,
+            "return_start_s": 0,
+            "end_s": 0
+          }
+        },
+        {
+          "sample_id": "mobi3-e01-P22",
+          "sampled_frames": 110,
+          "completed_count": 0,
+          "trace_sha256": "7d3a57432b8b9ccee76bc01426f0557fc8a4b876adbbfe6de341b11262a2d2fa",
+          "emitted_events": {
+            "preparation_confirmed_s": null,
+            "outbound_start_s": 0,
+            "endpoint_start_s": null,
+            "endpoint_end_s": null,
+            "return_start_s": 0,
+            "end_s": 0
+          }
+        },
+        {
+          "sample_id": "mobi3-e01-P23",
+          "sampled_frames": 100,
+          "completed_count": 0,
+          "trace_sha256": "3d3ecce82812561da5a748b3b04b4f9a2e71d03c1ebf6da1919d4fdb9abaa5f9",
+          "emitted_events": {
+            "preparation_confirmed_s": null,
+            "outbound_start_s": 0,
+            "endpoint_start_s": null,
+            "endpoint_end_s": null,
+            "return_start_s": 0,
+            "end_s": 0
+          }
+        }
+      ],
+      "saved_evidence_consistent": true,
+      "clinical_accuracy": null,
+      "no_human_forms_read": true
+    },
+    {
+      "split": "test",
+      "checked_videos": 5,
+      "samples": [
+        {
+          "sample_id": "mobi3-e01-P09",
+          "sampled_frames": 127,
+          "completed_count": 0,
+          "trace_sha256": "da9190c3f2451f63a0df47bd0a0ae3293496ef59823e8982d0f6ba154afe6e3b",
+          "emitted_events": {
+            "preparation_confirmed_s": null,
+            "outbound_start_s": 0,
+            "endpoint_start_s": null,
+            "endpoint_end_s": null,
+            "return_start_s": 0,
+            "end_s": 0
+          }
+        },
+        {
+          "sample_id": "mobi3-e01-P11",
+          "sampled_frames": 101,
+          "completed_count": 0,
+          "trace_sha256": "fc0c16772982e078bca29fdf11dc62797aa500c56eb7e020b92c27ea2d7efb1b",
+          "emitted_events": {
+            "preparation_confirmed_s": null,
+            "outbound_start_s": 0,
+            "endpoint_start_s": null,
+            "endpoint_end_s": null,
+            "return_start_s": 0,
+            "end_s": 0
+          }
+        },
+        {
+          "sample_id": "mobi3-e01-P12",
+          "sampled_frames": 160,
+          "completed_count": 0,
+          "trace_sha256": "855f0c46b2362c27b547fe60c22a3614ad150c6d98928852746aedafb8e86e9f",
+          "emitted_events": {
+            "preparation_confirmed_s": null,
+            "outbound_start_s": 0,
+            "endpoint_start_s": null,
+            "endpoint_end_s": null,
+            "return_start_s": 0,
+            "end_s": 0
+          }
+        },
+        {
+          "sample_id": "mobi3-e01-P16",
+          "sampled_frames": 198,
+          "completed_count": 0,
+          "trace_sha256": "f7ca8f6be9686b7871fd8f4b613188ea1a11de15ee3fff58971d26fbf62e7605",
+          "emitted_events": {
+            "preparation_confirmed_s": null,
+            "outbound_start_s": 0,
+            "endpoint_start_s": null,
+            "endpoint_end_s": null,
+            "return_start_s": 0,
+            "end_s": 0
+          }
+        },
+        {
+          "sample_id": "mobi3-e01-P24",
+          "sampled_frames": 109,
+          "completed_count": 0,
+          "trace_sha256": "3bb2c3ed9d61b3b3d24ab6ff62f7d734194137f894523fa95a33147ebcabf324",
+          "emitted_events": {
+            "preparation_confirmed_s": null,
+            "outbound_start_s": 0,
+            "endpoint_start_s": null,
+            "endpoint_end_s": null,
+            "return_start_s": 0,
+            "end_s": 0
+          }
+        }
+      ],
+      "saved_evidence_consistent": true,
+      "clinical_accuracy": null,
+      "no_human_forms_read": true
+    }
+  ],
+  "product_enabled": false,
+  "independent_accuracy_evaluation_performed": false,
+  "training_performed": false,
+  "original_annotation_bundle_unchanged": true,
+  "implementation_unchanged": true,
+  "verifier_unchanged": true,
+  "passed": true,
+  "artifact": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-replay-audit-ed5fca84\\summary.json",
+  "summary_sha256": "5cc9060237f45c762fe4010eaae6baa86bc719bf5be363dfe360b38bcb8e6104"
+}

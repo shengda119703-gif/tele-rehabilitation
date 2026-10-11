@@ -12,7 +12,7 @@
 | 逐任务比较 | `score_sample`／`match_events` | 已知可观察计数误差；按同种边界一对一匹配；未知、缺预测和无法评价分别保留 |
 | 汇总 | `aggregate`／`evaluate-annotations` | 全队列及标签／预测覆盖、每人结果、计数误差、边界召回／精确率、匹配时间误差与未支持指标 |
 
-参考和预测是不同文件及不同来源。预测manifest的origin必须为`declared_backend_export`，声明没有用参考生成预测，并给出实现／模型／配置SHA。**这是可核对的声明，不证明实际运行、人员盲法或专业资格**；目前还没有自动将正式会话trace转换为这一文件的适配器。不能把任意JSON结果称为已跑过真实后端。
+参考和预测是不同文件及不同来源。预测manifest的origin必须为`declared_backend_export`，声明没有用参考生成预测，并给出实现／模型／配置SHA。**这是可核对的声明，不证明实际运行、人员盲法或专业资格**。新增[原RGB实际回放](REHAB_TEMPORAL_REPLAY.md)可生成这一文件，并另存原YOLO／原协议trace与重放核对；还没有正式患者会话trace的通用适配器。不能把任意JSON结果称为已跑过真实后端。
 
 ## 预测文件契约
 

@@ -184,12 +184,14 @@
     "tests\\rehab_backend\\test_storage_faults.py": "b0ee227fbb827d24a7c4604c4db85dc8048c90d84217041c56d6e7fbc69d4dde",
     "tests\\rehab_backend\\test_telemetry.py": "7a3526b2c2492b2eaa6d81a457c79e9876ef8c68f0aab35f0509a9503c437ff9",
     "tests\\rehab_backend\\test_temporal_evaluation.py": "39c9fa33622aca342a4b332fb80ef4d1ed55c2ecef5fb1324de08d2ee0f24730",
+    "tests\\rehab_backend\\test_temporal_replay.py": "fd6f86417a8c3f63343619107bc83fa1731fc3415ff7f604ea941bc501e4f633",
+    "tests\\rehab_backend\\test_temporal_replay_audit.py": "b68ff1bb3ccff7fb799c590d2f0615a470923973917c9ff1f2936bbce4637966",
     "tests\\rehab_backend\\test_timing.py": "6195d9d4d39b1a0c42d43e340fc97583fabfcd74380d9e685df576bca45be211",
     "tests\\rehab_backend\\test_timing_comparison.py": "4da1f563fc062edb9148b5507ccdbc2a6a6952f3c78c1ec3d9c1ae41dc047a99",
     "tools\\rehab_ml\\__init__.py": "b4dbaac3eee1aa1249888b212ba6a26db8ab7ef13f63412e93216f71f906e6d3",
     "tools\\rehab_ml\\async_recovery.py": "b3f547eec284a50913817a2a434040356ba20c4d09091aa27c833870ed668627",
     "tools\\rehab_ml\\benchmark.py": "250dc0dd572f10a96d5101773800f9d2bbd05428f2672cd38fdb0d16c4a292f0",
-    "tools\\rehab_ml\\cli.py": "7ec1c32a7bc1b2cdbc9c23c8e0cd3cd94f830fcd22a097c330d0ed7df78ec7fc",
+    "tools\\rehab_ml\\cli.py": "8105a056316dc19024a541781eb525cf62542976fccae56500daffb42a01ebb6",
     "tools\\rehab_ml\\common.py": "bd29e88735e99b85b8a8bd7a3e0531a241ea2eb8e07a6667d92cae647d988277",
     "tools\\rehab_ml\\crash_probe.py": "99fee928a468772e0086800e0cf1eef8d9f37df9db3f340b6abe6fedeb05a375",
     "tools\\rehab_ml\\data.py": "19b4480ecb0d641cd0a898cc93e533e83ef6c3e6b6fd1f97fb8432ff4db514c5",
@@ -224,6 +226,7 @@
     "tools\\rehab_ml\\summarize_target.py": "c0108f0e8b9e704e3fdd735b23b95e1fedf9f69654c303ff550ecdd1480471be",
     "tools\\rehab_ml\\target_domain.py": "a5d515aa4e43af3a7329ba5555c276fdfa814de7afc1d6704e320e79c6919090",
     "tools\\rehab_ml\\temporal_evaluation.py": "a40a6e4c944289a8b2f6347974b05ec31f81786fce05d973814d9d95fc7d9c86",
+    "tools\\rehab_ml\\temporal_replay.py": "b4dc296a2fadd7ae0f7c0547e113a5b2c5aad250b9aeb88749da287d1852e057",
     "tools\\rehab_ml\\timing_http_probe.py": "bd9330a7a974a6c11fd7f9826ea49b3dd1f88dd3569f5c57dbbdd266c5f386ae",
     "tools\\rehab_ml\\training.py": "0e16051d3a3e9a5d50747675cc6418c5ddbb61d942329bcc679dcc079ca4ee6f",
     "tools\\rehab_ml\\verify_all.py": "ed79f257bed9907314bf313be9d9e0171dd4e5a182719e908b8d4d8f0bf30082",
@@ -245,6 +248,7 @@
     "tools\\rehab_ml\\verify_socket_recovery.py": "02a141516ea29c8f097693066a385b3fd0f1e465ba6da3ebfe5179e2f775471e",
     "tools\\rehab_ml\\verify_storage_recheck.py": "5d38f4632dbdf12e9b80a102af5eb603658712074931a93d5c28d0c0e765e652",
     "tools\\rehab_ml\\verify_temporal_evaluation.py": "15c4e13804652de8508478377568afecbf3ef52b734e7c24cf335825ebd17b53",
+    "tools\\rehab_ml\\verify_temporal_replay.py": "39ed3508f9c21cf6781d77f897340237b81a7772a571836058e19df7275bf952",
     "tools\\rehab_ml\\verify_timing_comparison.py": "c135f6f61452c2a299aab87763f0f25380af1b4001b55a47a587c22739211191",
     "tools\\rehab_ml\\verify_timing_http_probe.py": "ef181f260bc108d170529e9819f2ad8412f9bf68e21a8df3eadc5a191f845f7d",
     "tools\\rehab_ml\\visual_audit.py": "81ccdfe95bc697be39fd25ce1884595a2127a764baccd4c0202af2858a31353c"
@@ -252,8 +256,8 @@
   "whole_regression_passed": true,
   "source_failed_summary": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-e8c8c33f\\summary.json",
   "source_failed_summary_sha256": "bd8e7aacb6de52e386ad0a23a553580761aa7f56e7983ea3e99281e320e6e7ae",
-  "scratch_root": "D:\\RehabBackendVerification\\temporal-full-20261012-45ade789",
-  "actual_free_bytes_before": 16103366656,
+  "scratch_root": "D:\\RehabBackendVerification\\temporal-replay-full-20261012-a9309b72",
+  "actual_free_bytes_before": 16093261824,
   "disk_usage_mocked": false,
   "storage_threshold_changed": false,
   "raw_data_relocated": false,
@@ -276,10 +280,10 @@
         "-v"
       ],
       "exit_code": 0,
-      "elapsed_s": 207.67971189999844,
-      "log": "D:\\RehabBackendVerification\\temporal-full-20261012-45ade789\\new_backend.txt",
-      "log_sha256": "e75d211a181b2e61e0803ae149021cdfd9b297a0eec907f059ec9b33e4029cd3",
-      "tail": "be_missing_or_changed) ... ok\ntest_unsupported_algorithm_phase_count_semantics_or_bad_evidence_are_not_compared (test_timing_comparison.TimingComparisonTests.test_unsupported_algorithm_phase_count_semantics_or_bad_evidence_are_not_compared) ... ok\n\n----------------------------------------------------------------------\nRan 523 tests in 204.622s\n\nOK\n"
+      "elapsed_s": 212.45464199999878,
+      "log": "D:\\RehabBackendVerification\\temporal-replay-full-20261012-a9309b72\\new_backend.txt",
+      "log_sha256": "e7f9d9c3642b3b1bbfccaf8c1968509e406e86654b28ed54d2b836c0d97e5302",
+      "tail": "be_missing_or_changed) ... ok\ntest_unsupported_algorithm_phase_count_semantics_or_bad_evidence_are_not_compared (test_timing_comparison.TimingComparisonTests.test_unsupported_algorithm_phase_count_semantics_or_bad_evidence_are_not_compared) ... ok\n\n----------------------------------------------------------------------\nRan 545 tests in 209.476s\n\nOK\n"
     },
     {
       "name": "legacy_rehab",
@@ -294,8 +298,8 @@
         "-v"
       ],
       "exit_code": 0,
-      "elapsed_s": 0.23744299999998475,
-      "log": "D:\\RehabBackendVerification\\temporal-full-20261012-45ade789\\legacy_rehab.txt",
+      "elapsed_s": 0.23179829999935464,
+      "log": "D:\\RehabBackendVerification\\temporal-replay-full-20261012-a9309b72\\legacy_rehab.txt",
       "log_sha256": "271fe9a3b08696b5e6a4ac15168b69acd1de7ed093a803cf803873c2d3268a00",
       "tail": "and_finish_keeps_n) ... ok\ntest_partial_rise_is_retained (test_app_rehab.SitStandTests.test_partial_rise_is_retained) ... ok\ntest_standing_alone_does_not_count_or_rearm (test_app_rehab.SitStandTests.test_standing_alone_does_not_count_or_rearm) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.087s\n\nOK\n"
     },
@@ -309,13 +313,13 @@
         "-p",
         "no:cacheprovider",
         "--basetemp",
-        "D:\\RehabBackendVerification\\temporal-full-20261012-45ade789\\pytest-temporary"
+        "D:\\RehabBackendVerification\\temporal-replay-full-20261012-a9309b72\\pytest-temporary"
       ],
       "exit_code": 0,
-      "elapsed_s": 12.981067200000325,
-      "log": "D:\\RehabBackendVerification\\temporal-full-20261012-45ade789\\legacy_mobile.txt",
-      "log_sha256": "bb775742a409306780abbe3bead0840f5d8d9a02cfd94d5cf1d9ef719af2b82c",
-      "tail": "le_camera_v2_1\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n19 passed, 1 warning in 12.42s\n"
+      "elapsed_s": 12.518107900001269,
+      "log": "D:\\RehabBackendVerification\\temporal-replay-full-20261012-a9309b72\\legacy_mobile.txt",
+      "log_sha256": "8ade00d1c0af1205cb95e80ae1761ccacfc9edae4e82925bd30874978b4504b1",
+      "tail": "le_camera_v2_1\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n19 passed, 1 warning in 12.02s\n"
     },
     {
       "name": "scope",
@@ -326,17 +330,17 @@
         "reports/rehab_backend/protected_files.json"
       ],
       "exit_code": 0,
-      "elapsed_s": 5.17251159999978,
-      "log": "D:\\RehabBackendVerification\\temporal-full-20261012-45ade789\\scope.txt",
-      "log_sha256": "55c9ada38e13047c491ff2b3e4ca080f6af4f59050b209e3cafea9681a8e8bac",
-      "tail": "{\"ok\": true, \"command\": \"verify-scope\", \"result\": {\"ok\": true, \"checked\": 1308, \"changes\": [], \"baseline_sha256\": \"75f736e75795a334431f0d87664f720fede7093c62d3614f9969d0af35b3d742\", \"verified_at\": \"2026-10-11T17:18:45.726117+00:00\"}}\n"
+      "elapsed_s": 5.10597609999968,
+      "log": "D:\\RehabBackendVerification\\temporal-replay-full-20261012-a9309b72\\scope.txt",
+      "log_sha256": "137e402546a31309dba7852bb9542d9d1714ceb9cce3c73ae0f65bbf6de2b4fb",
+      "tail": "{\"ok\": true, \"command\": \"verify-scope\", \"result\": {\"ok\": true, \"checked\": 1308, \"changes\": [], \"baseline_sha256\": \"75f736e75795a334431f0d87664f720fede7093c62d3614f9969d0af35b3d742\", \"verified_at\": \"2026-10-11T17:37:51.002359+00:00\"}}\n"
     }
   ],
   "passed": true,
-  "actual_free_bytes_after": 16093261824,
+  "actual_free_bytes_after": 16085782528,
   "original_failure_evidence_unchanged": true,
   "original_failure_logs_unchanged": true,
   "implementation_unchanged": true,
-  "artifact": "D:\\RehabBackendVerification\\temporal-full-20261012-45ade789\\summary.json",
-  "summary_sha256": "150c4b9abba050f0c67b980f87550ef93d066fc33c2aab9365eda075bb6e38ae"
+  "artifact": "D:\\RehabBackendVerification\\temporal-replay-full-20261012-a9309b72\\summary.json",
+  "summary_sha256": "cf06e156c172f2eef441dd8cd04ccdbfc8e04b143abdc14bc8608fa1ccc96167"
 }
