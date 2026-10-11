@@ -1,9 +1,11 @@
 # 文档索引
 
-当前电脑／托管网页主线为 **0.20.0 安康双端整合**，既有独立 APK 为 **0.2.1**；康复 v2 后端为默认关闭的 opt-in 增量，并非已接入正式五页或 APK。先读 [当前交接](HANDOFF.md) 与 [全后端功能、算法及数据流](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md)。原双端设计见 [整合说明](plans/UNIFIED_PRODUCT_2026-10-06.md)，本机 0.20.0 核对见 [同步验证](validation/GITHUB_SYNC_2026-10-11.md)。以下规格和历史报告保留以供追溯，不能作为当前入口或本轮测试结果。
+当前电脑／托管网页主线为 **0.21.0 管家模块接入**，既有独立 APK 为 **0.2.1**；康复 v2 后端为默认关闭的 opt-in 增量，并非已接入正式五页或 APK。先读 [当前交接](HANDOFF.md)、[管家能力与自检指南](development/AGENT_MODULES_V0_21.md) 与 [全后端功能、算法及数据流](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md)。原双端设计见 [整合说明](plans/UNIFIED_PRODUCT_2026-10-06.md)，本机当前验收见 [管家验证](validation/ANKANG_AGENT_2026-10-11.md)。以下规格和历史报告保留以供追溯，不能作为当前入口或本轮测试结果。
 
 | 文档 | 内容 |
 | --- | --- |
+| [管家模块与自检](development/AGENT_MODULES_V0_21.md) | 本地查询、导航、双端确认、重开待办与后续扩展边界 |
+| [本轮管家验收与审计对齐](validation/ANKANG_AGENT_2026-10-11.md) | 本机实际回归／真实HTTP／浏览器／Qt截图、人物时间和导出修复、旧失败与未测范围 |
 | [康复v2异步退出恢复](development/REHAB_ASYNC_RECOVERY.md) | 202后、最终事务提交前、提交后未回应三窗口的准确所属进程退出、原恢复路径及不重复贡献 |
 | [三窗口本机验证](validation/REHAB_ASYNC_RECOVERY_2026-10-11.md) | 4项专项＋3轮×3窗口、32条件、原始日志／hash、开发失败与未测原生子进程范围 |
 | [康复v2异步结束](development/REHAB_ASYNC_FINISH.md) | 冷启动实测阻塞、SQL先冻结／HTTP202接收／后台最终保存、幂等和失败重试；不改客户端 |

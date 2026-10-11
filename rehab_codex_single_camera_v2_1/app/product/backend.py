@@ -110,7 +110,7 @@ class ProductBackend:
                             return tools(name, arguments)
                         raise ValueError('当前请求没有本人康复工具范围。')
                     if operation.startswith('daily.'):
-                        own = self.bridge.product('snapshot', owner, {}, tool_handler=tools)
+                        own = self.bridge.product('snapshot', owner, {}, tool_handler=host_tools)
                         if operation in ('daily.dose', 'daily.medSchedule'):
                             medicines = own['profile']['profile'].get('medicationRecords', [])
                             medicine = next((m for m in medicines if m['id'] == payload['medId']), None)

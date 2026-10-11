@@ -151,6 +151,11 @@ def install_product(app, data_dir, owner, small_json, backend=None):
         data=validate(operation,value)
         if operation == 'profile.save':
             return await asyncio.to_thread(product.edit_profile, uid, data)
+        if operation == 'chat' and backend is not None and hasattr(product, 'scope'):
+            source=request.query_params.get('source', 'LIVE_CAMERA')
+            if source not in ('LIVE_CAMERA', 'REPLAY_FILE'):
+                raise HTTPException(400, '请选择电脑实时或手机录像记录。')
+            return await asyncio.to_thread(product.call,uid,operation,data,source=source)
         return await asyncio.to_thread(product.call,uid,operation,data)
 
     @app.get('/api/product-backup')

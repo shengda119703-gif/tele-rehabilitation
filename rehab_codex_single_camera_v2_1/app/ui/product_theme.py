@@ -195,6 +195,15 @@ class ProductTheme:
                     if control:control.setIcon(calendar_arrow(direction,self.colors['text']))
         self.window.record_dialog.setPalette(p)
         self.window.record_dialog.setStyleSheet('QDialog { background:'+self.colors['window']+'; color:'+self.colors['text']+'; }'+shell_style(self.colors))
+        # Top-level dialogs do not inherit every palette role from the page.
+        # Keep their unstyled labels and disabled states under this theme owner.
+        care_dialog=self.window.care_controls.dialog
+        care_dialog.setPalette(p)
+        care_dialog.setFont(font)
+        for widget in care_dialog.findChildren(QWidget):
+            widget.setPalette(p)
+            widget.setFont(font)
+            if isinstance(widget,QTextEdit):widget.document().setDefaultFont(font)
         if self.window.snapshot:
             self.window._render_conversation()
             if hasattr(self.window,'product_theme'):self.window._experience_render()
@@ -260,7 +269,7 @@ def shell_style(c):
     chevron=(Path(__file__).resolve().parents[2]/'assets/ui'/('chevron-dark.svg' if QColor(c['text']).lightness()>128 else 'chevron.svg')).as_posix()
     return f'''
 QWidget {{ font-size:14px; font-family:'Microsoft YaHei UI'; }}
-QMainWindow#productWindow, QWidget#productRoot {{ background:{c['window']}; color:{c['text']}; font-family:'Microsoft YaHei UI'; font-size:14px; }}
+QMainWindow#productWindow, QWidget#productRoot, QDialog#assistantCareDialog {{ background:{c['window']}; color:{c['text']}; font-family:'Microsoft YaHei UI'; font-size:14px; }}
 QFrame#productSidebar {{ background:{c['window']}; border-right:1px solid {c['border']}; }}
 QLabel#productBrand {{ font-size:25px; font-weight:700; color:{c['text']}; }}
 QLabel#productBrandSub, QLabel#productMuted {{ color:{c['secondary']}; }}

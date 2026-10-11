@@ -99,6 +99,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         self.refresher = QTimer(self)
         self.refresher.timeout.connect(lambda: self._request('snapshot') if self.owner and not self.pending else None)
         self.refresher.start(45000)
+        self.legacy.source_kind.currentIndexChanged.connect(self._care_scope_changed)
+        self.legacy.usage.currentIndexChanged.connect(self._care_scope_changed)
         self._request('profile.list')
 
     def _build(self):
@@ -373,6 +375,14 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
 
 
     def navigate(self,key,*,refresh=True):
+        if key=='fitness':
+            if self._rehab_locked():
+                self._message('请先结束并保存当前康复任务，再进入健身。')
+                return False
+            if not self.navigate('rehab',refresh=refresh):return False
+            self.rehab_modes.setCurrentIndex(2)
+            self.title.setText('健身动作')
+            return True
         if key=='history' and hasattr(self,'home_sections'):
             if not self.navigate('home',refresh=refresh):return False
             self.home_sections.setCurrentIndex(self.home_history_index)
@@ -456,6 +466,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             self.dictation_status.clear();self.dictation_status.hide()
             self.record_receipt.setText('正在理解与处理记录，请稍候…')
         self.backend.submit(operation,selected,payload,scope if selected else None,token=token)
+        self.care_controls.set_busy(True)
         self._completion_controls()
         return True
 
@@ -468,6 +479,9 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
                 self.mutation_pending = False
             self.chat_send.setEnabled(self.pending == 0)
             if owner and owner != self.owner and operation != 'profile.save':
+                continue
+            if owner and operation!='profile.save' and isinstance(token,dict) and 'scope' in token and token['scope']!=dict(self.legacy._body_scope_key(),participant_id=self.owner):
+                self.refresh_needed=True
                 continue
             if operation=='ui.voice.transcribe':
                 self.storage_label.setText('已连接本机数据')
@@ -484,6 +498,10 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
                 self.pending_export = None
                 continue
             self.storage_label.setText('已连接本机数据')
+            if operation in ('care.confirm','care.cancel'):
+                self.care_controls.result(result)
+                self._request('snapshot')
+                continue
             if isinstance(result,dict) and result.get('fileExport'):
                 self.pending_export = None
                 self._message('已导出到所选本机文件。',severity='success')
@@ -560,6 +578,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
                 self._render()
                 if operation in ('chat','voice.input'):
                     if isinstance(result.get('turn'),dict):refresh_record_review(self,result['turn'])
+                    destination=result.get('turn',{}).get('agent',{}).get('navigation')
+                    if destination:self.navigate(destination,refresh=False)
                     for key,view in (('chat',self.chat_input),('dock',self.dock_input)):
                         sent=(token or {}).get('drafts',{}).get(key)
                         if sent is not None and view.toPlainText()==sent:view.clear()
@@ -589,6 +609,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         if self.closing and self.legacy._allow_close:
             self.close()
         self._completion_controls()
+        self.care_controls.set_busy(bool(self.pending))
         if getattr(self,'rehab_trend_anchor',None) and not self.legacy.busy:
             anchor,self.rehab_trend_anchor=self.rehab_trend_anchor,None
             for i,session in enumerate(self.legacy.sessions):
@@ -643,6 +664,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
 
     def _clear_views(self):
         self.parse_after_archive=None;self.pending_parse_attachment=False
+        self.care_controls.clear()
         self.photo_requested=False;self.photo_return_needed=False
         # No old-owner data remains visible while the new owner is loading or a read fails.
         for grid in (self.plan_table,self.metrics,self.attachments,self.medications,self.timeline,
@@ -672,6 +694,12 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         self._show_assistant_section('conversation')
         self.assistant_portal_status.setText('正在读取当前用户资料…')
         self.assistant_module_buttons['reference'].setDescription('等待当前用户的康复记录。')
+
+    def _care_scope_changed(self,*_):
+        # The legacy source switch can also change usage. Clear immediately, and
+        # let the regular poll coalesce both signals into a current-scope read.
+        self.care_controls.clear()
+        if self.owner and not self.closing:self.refresh_needed=True
 
     def _align_rehab(self,stored):
         owner = stored['ownerId']
@@ -921,7 +949,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             self.tasks.addItem('当前没有待办。用药和健康照护任务会依据已填写资料与记录生成。')
         concerns = s['twin']['personTwin'].get('activeConcerns',[])
         self.home_status.setText('；'.join(concerns) if concerns else '已有 '+str(len(state['events']))+' 条健康记录；暂未形成需关注的摘要。数据不足时不能判断整体健康状态。')
-        self.agent_status.setText('健康管理与康复记录查询可用。' if s.get('modelAvailable') else '基础健康对话与记录可用；康复记录查询尚未配置。')
+        self.agent_status.setText('模块查询与页面调度可用；联网理解已配置。' if s.get('modelAvailable') else '模块查询、页面调度与基础健康对话可用；联网理解尚未配置。')
+        self.care_controls.refresh(s.get('carePending',[]),s.get('carePendingUnavailable',False))
         self._render_conversation()
         twin = s['twin']['personTwin']
         self.twin_text.setText(' · '.join(title+'：'+STATUS_LABELS.get(twin[key],twin[key]) for key,title in [('activity','活动'),('mobility','行动'),('sleep','睡眠'),('nightActivity','夜间活动')])+'\n数据更新时间：'+display_time(s['twin'].get('dataUpdatedAt'))+'\n这是已有资料的状态摘要，不是诊断。')

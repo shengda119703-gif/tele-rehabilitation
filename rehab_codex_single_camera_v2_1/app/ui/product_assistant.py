@@ -7,6 +7,7 @@ from ..settings import ROOT
 from .product_theme import SPACING, METRICS
 from .product_widgets import label, button, core_card, visual, EntryButton
 from .product_record_review import record_review
+from .product_care_controls import CareControls
 
 
 # Explicit identities keep the old published controls independent of widget order.
@@ -100,6 +101,7 @@ def build_assistant(window):
     w.chat.setSizePolicy(QSizePolicy.Expanding,QSizePolicy.Ignored)
     w.chat.setAccessibleName('与康复管家的对话历史');w.chat.setMinimumHeight(METRICS['chat_minimum'])
     area.addWidget(w.chat,1)
+    w.care_controls=CareControls(w);area.addWidget(w.care_controls)
     quick=QHBoxLayout();quick.setSpacing(SPACING['sm'])
     for text in ('我的训练计划','最近的评估结果'):
         quick.addWidget(visual(button(text,lambda checked=False,t=text:w._send_chat(t)),appearance='ghost'))
