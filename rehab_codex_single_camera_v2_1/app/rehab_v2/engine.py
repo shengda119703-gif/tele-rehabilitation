@@ -7,6 +7,7 @@ from statistics import median
 
 from .protocols import validated_plan
 from .timing import TIMING_VERSION, snapshot as timing_snapshot
+from .timing_comparison import freeze_context
 from ..movement_timing import MovementTiming
 
 
@@ -179,6 +180,9 @@ class ProtocolEngine:
                                      max_gap_s=self.plan['max_gap_s'],
                                      target=self.plan['target_angle_deg'],
                                      goals=self.plan['timing_plan'], sit_to_stand=seated)
+        self.timing.comparison_context = freeze_context(self.plan, self.spec, self.baseline,
+                                                       self.signature, self.calibration_epoch,
+                                                       source_epoch=self.source_epoch)
         # Replay only the observed departure dwell and its preceding sample.
         # Ready time is not part of a repetition's movement time.
         start = self.holds.get('depart', stamp)

@@ -30,14 +30,17 @@
 
 显式 `timing_plan` 复用原 `movement_timing.py`，分别记录出程、峰区／站位停留、回程、最长连续目标保持及 `MET/NOT_MET/UNASSESSABLE/NOT_SET`。v2 封套版本 `rehab-observed-timing-2`，写明原算法版本、time_basis 和证据 seq/epoch。保持只用当前连续有效观测；缺测、暂停、丢帧、换人和长间隔不能补时间。肩／深蹲的峰区分段是完整往返后的回顾计算，不冒充实时相位。坐站在站起时计一次，后续回坐仅更新尚未终结草稿的时间字段；已确认计次和最终回执不允许重写。节奏是否达标不修改计次、组数或原完成政策。
 
+本次新增`rehab-timing-context-1`，每次动作开始冻结自己的起点、协议／域／时钟、六个工程时间参数、目标、timing_plan、支持和训练剂量，后续重新准备不解释旧次。独立`POST /api/rehab/v2/timing-comparisons`只读本人两条最终事实、核对视觉digest，输出四项时间的条件、分母／排除理由、中位数及同条件差值。具体session／commit／epoch／seq不混入语义条件；nominal时钟、旧缺context、混合条件或完整次缺时间不补成可比。部分保持不当完整时长，差值不当疗效。旧报告／计次／进度／UI／APK不改，完整字段／公式／接口见 [时间比较工作流](../../docs/development/REHAB_TIMING_COMPARISON.md)。
+
 结束请求冻结接收高水位，最多等待2秒保留的在途帧，然后原子保存逐次事实／快照／回执。派生报告异步生成，重启可对账，报告失败不回滚事实；未填感受为null/missing，追加反馈独立revision。默认最多一个正式活动会话、一个待处理帧槽、8个并发控制请求；20分钟、24,000帧上限。JPEG解码／原YOLO与默认派生报告各自使用一份所属spawn进程，共用准确所属生命周期；超时只终止准确对象并确认退出。报告单槽、2 MiB输入＋2 MiB响应、≤4 KiB通知，默认握手10秒／构建5秒，宿主核对原事实后按反馈CAS保存。可信本地callable测试钩子仍不能硬取消；关闭未确认保留存储／句柄并可重试。OS Process.start自身无硬截止，真实磁盘满／损坏尚未验收。
 
 ```powershell
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py verify-sessions --database-mode isolated
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_backend_plans.py
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_timing_comparison.py
 ```
 
-2026-10-11 最新完整`verify_all`为`verification-3ce388f3`，实际322项新后端、12项旧康复、19项旧手机测试通过及1308文件变化0；19项计划专项是322项子集，`backend-plan-audit-2851010b`另核对六份源码前后hash一致，见 [本轮安排验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)。此前318／303／269／251／230／200／177／160项属于各阶段，不相加；[续训验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)、[多轮训练验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)及其他历史记录保留各自实际命令／日志／边界。本轮未另重跑会话CLI、原生续训审计、真人原片或完整性能。这些是隔离工程测试，不是临床准确率或手机实机验收。
+2026-10-11 最新完整`verify_all`为`verification-6adfee5b`，实际340项新后端、12项旧康复、19项旧手机测试通过及1308文件变化0。时间专项`timing-comparison-audit-07d9c64b`18项和安排重验`backend-plan-audit-4a9181d2`19项是340项子集，两专项源码hash前后一致，见 [本次时间比较验收](../../docs/validation/REHAB_TIMING_COMPARISON_2026-10-11.md)。此前322／318／303／269／251／230／200／177／160各阶段不相加；[原安排验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)、[续训验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)及[多轮验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)保留原命令／日志／边界。本次未另跑会话CLI、原生续训审计、真人原片或完整性能；工程测试不等于临床准确率或手机实机验收。
 
 `RehabStorageBoundary`只适配v2的原Storage owning thread，不增加连接或写入器。实际SQLite结果码分为capacity／readonly／busy／corrupt／io／unavailable；初始化后的锁等待250ms不等于整个HTTP硬截止。错误返回`commit_state=not_confirmed_by_this_error`；恢复存储后先查询权威提交，再以原键重试。损坏文件保留，禁止自动删库或重建。运行态`last_storage_fault`是最后观察记录，不是当前健康探针。真实只读、外部写锁、SQLite容量上限和TEST文件头损坏已测，未占满物理硬盘或验证介质损坏／断电；已知一致备份只恢复备份内已有事实。
 

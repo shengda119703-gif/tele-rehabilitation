@@ -13,10 +13,10 @@
         "-v"
       ],
       "exit_code": 0,
-      "elapsed_s": 167.9580700000006,
-      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-3ce388f3\\new_backend.txt",
-      "log_sha256": "651117f4421b70db482969d44308441203018b15d3bb3b504ee15db85966ee4b",
-      "tail": ".. ok\ntest_stale_predicted_or_wrong_contract_do_not_hold (test_timing.TimingTests.test_stale_predicted_or_wrong_contract_do_not_hold) ... ok\ntest_standing_finish_preserves_count_without_inventing_return (test_timing.TimingTests.test_standing_finish_preserves_count_without_inventing_return) ... ok\n\n----------------------------------------------------------------------\nRan 322 tests in 165.046s\n\nOK\n"
+      "elapsed_s": 207.11799050000081,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-6adfee5b\\new_backend.txt",
+      "log_sha256": "2ad8e7efd34f2497cdccac7538025da2cbf371c44288674bb62220e6e817f3a3",
+      "tail": "ests.test_training_dose_is_a_condition_and_cannot_be_missing_or_changed) ... ok\ntest_unsupported_algorithm_phase_count_semantics_or_bad_evidence_are_not_compared (test_timing_comparison.TimingComparisonTests.test_unsupported_algorithm_phase_count_semantics_or_bad_evidence_are_not_compared) ... ok\n\n----------------------------------------------------------------------\nRan 340 tests in 204.267s\n\nOK\n"
     },
     {
       "name": "legacy_rehab",
@@ -31,8 +31,8 @@
         "-v"
       ],
       "exit_code": 0,
-      "elapsed_s": 0.24303920000056678,
-      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-3ce388f3\\legacy_rehab.txt",
+      "elapsed_s": 0.24528239999926882,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-6adfee5b\\legacy_rehab.txt",
       "log_sha256": "e4c361c646011848213770236330c2956752ec3a66d21aeeca515c17e9ca1c8c",
       "tail": "st_app_rehab.SitStandTests.test_count_at_standing_and_finish_keeps_n) ... ok\ntest_partial_rise_is_retained (test_app_rehab.SitStandTests.test_partial_rise_is_retained) ... ok\ntest_standing_alone_does_not_count_or_rearm (test_app_rehab.SitStandTests.test_standing_alone_does_not_count_or_rearm) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 0.091s\n\nOK\n"
     },
@@ -46,13 +46,13 @@
         "-p",
         "no:cacheprovider",
         "--basetemp",
-        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-3ce388f3\\pytest-temporary"
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-6adfee5b\\pytest-temporary"
       ],
       "exit_code": 0,
-      "elapsed_s": 13.39066240000102,
-      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-3ce388f3\\legacy_mobile.txt",
-      "log_sha256": "107d2cf69367a121883f348bf028546ddaef1851a7f3efaee84f89c104daa181",
-      "tail": "E:\\game\\health-care-software-main\\rehab_codex_single_camera_v2_1\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n19 passed, 1 warning in 12.83s\n"
+      "elapsed_s": 12.700009500000306,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-6adfee5b\\legacy_mobile.txt",
+      "log_sha256": "17131473fba53674d8323f094210d0106123ef81003184f0f5ed768f76e992e4",
+      "tail": "E:\\game\\health-care-software-main\\rehab_codex_single_camera_v2_1\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n19 passed, 1 warning in 12.18s\n"
     },
     {
       "name": "scope",
@@ -63,10 +63,10 @@
         "reports/rehab_backend/protected_files.json"
       ],
       "exit_code": 0,
-      "elapsed_s": 5.144526000000042,
-      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-3ce388f3\\scope.txt",
-      "log_sha256": "a3cadc9e0110ec764275b812f35eb697d1ede0f1711d7b694a06eba9370944ad",
-      "tail": "{\"ok\": true, \"command\": \"verify-scope\", \"result\": {\"ok\": true, \"checked\": 1308, \"changes\": [], \"baseline_sha256\": \"75f736e75795a334431f0d87664f720fede7093c62d3614f9969d0af35b3d742\", \"verified_at\": \"2026-10-11T05:02:40.599001+00:00\"}}\n"
+      "elapsed_s": 5.118783699999767,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\verification-6adfee5b\\scope.txt",
+      "log_sha256": "b3214f06cb09f5235674d0c70d40ce5bb037a27e65d7d95d3bb666f36a308e7a",
+      "tail": "{\"ok\": true, \"command\": \"verify-scope\", \"result\": {\"ok\": true, \"checked\": 1308, \"changes\": [], \"baseline_sha256\": \"75f736e75795a334431f0d87664f720fede7093c62d3614f9969d0af35b3d742\", \"verified_at\": \"2026-10-11T05:29:21.952972+00:00\"}}\n"
     }
   ],
   "product_environment": "E:\\game\\health-care-software-main\\rehab_codex_single_camera_v2_1\\.venv\\Scripts\\python.exe",

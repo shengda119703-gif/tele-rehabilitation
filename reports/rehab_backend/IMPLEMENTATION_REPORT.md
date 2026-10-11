@@ -1,10 +1,10 @@
 # 康复后端实施与真实训练：阶段记录与增量交付
 
-日期：2026-10-11（Asia/Shanghai）。第一阶段实施基准：`b6d22fc392915738401fe6e14d9cc32b877a5acc`，提交`1463929`；所属推理／诊断`129e5cb`，报告隔离`06366bd`，时间／贡献`23696de`，原生存储`a9e31cc`，关键点工具`bf698a3`，VIDEO对照`d0b21d2`，双层masked loss`d5c351f`，显式续训`1a4dd43`。本轮显式评估／安排绑定实施基准`ab6931d318959231b91200360a24b1412d40019d`，交付源码以本文件所在提交为准。任务依据：本机`docs/安康康复训练后端实施与训练任务书.md`。产品仍0.20.0、APK0.2.1，协议`rehab-protocol-2.0`，不是新客户端发布。
+日期：2026-10-11（Asia/Shanghai）。第一阶段实施基准：`b6d22fc392915738401fe6e14d9cc32b877a5acc`，提交`1463929`；所属推理／诊断`129e5cb`，报告隔离`06366bd`，时间／贡献`23696de`，原生存储`a9e31cc`，关键点工具`bf698a3`，VIDEO对照`d0b21d2`，双层masked loss`d5c351f`，显式续训`1a4dd43`，显式安排交付`fc8ba23`。本轮时间比较以`fc8ba232e82bf13582ae317bef4ef408d2d07337`为实施基准，源码以本文件所在提交为准。任务依据：本机`docs/安康康复训练后端实施与训练任务书.md`。产品仍0.20.0、APK0.2.1，协议`rehab-protocol-2.0`，不是新客户端发布。
 
 结论：P0–P4 的核心链路与一部分 P7 已实际完成。下载了真实获许可数据，训练了两个真实模型，也发现候选没有优于简单基线。正式会话为独立 opt-in 后端，尚未成为现有 UI/APK 的正式路径。P5 只有两段分析授权录像回放，缺独立参考标注；P6已有条件式多轮姿态训练器，但没有合格真人微调或产品影子上线。整个任务未完成，不能据此宣称真人准确度提高。
 
-已有增量接通唯一贡献、最终历史、原继续政策、冻结计划、显式时间、所属推理／报告、SQLite故障边界、关键点工具、同权重Python VIDEO、双层masked loss和条件式多轮优化。资源双锁／默认v2报告延期见B3.6，显式epoch恢复／CPU数值／原子写见B3.7。本轮接通三动作左右侧的显式评估、本人既有安排与质量参数冻结，见B3.8。最新完整 **322项新后端、12项旧康复、19项旧手机通过**，1308保护文件一致；19项计划专测是322项子集，不累计，见 [本轮验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)。此前318／303／269／251／230／200／177／160项保留各阶段历史；本次未重跑IRDS全训练、真人原片、原生续训审计、会话CLI或完整性能benchmark，没有真人微调或准确性改善结论。
+已有增量接通唯一贡献、最终历史、原继续政策、冻结计划、显式时间、所属推理／报告、SQLite故障边界、关键点工具、同权重Python VIDEO、双层masked loss和条件式多轮优化。资源双锁／报告延期见B3.6，显式恢复／CPU数值／原子写见B3.7，三动作显式安排及质量参数见B3.8；本次逐次时间条件冻结与只读比较见B3.9。最新完整 **340项新后端、12项旧康复、19项旧手机通过**，1308保护一致；18项时间／19项安排重验是340子集、不累计，见 [本次验收](../../docs/validation/REHAB_TIMING_COMPARISON_2026-10-11.md)。此前322／318／303／269／251／230／200／177／160保留历史；本次未重跑IRDS全训练、真人原片、原生续训审计、会话CLI或完整性能，没有真人精度／计时／改善结论。
 
 ## A. 实际完成情况
 
@@ -12,13 +12,13 @@
 | --- | --- | --- | --- |
 | P0 盘点与保护 | done | [开工清单](../rehab_backend_inventory.md)、[1308 文件基准](protected_files.json)、[末次 hash 核验](scope_verification.json) | 仅本轮范围；不代表其他会话或临床验收 |
 | P1 三动作后端协议 | done（工程定义） | `app/rehab_v2/protocols.py`、`engine.py`、`rounds.py`；15 项协议回放及几何契约测试 | 定义是二维投影和训练观察，不是解剖 ROM 金标准；实际机位仍由计划给出 |
-| P2 正式会话与幂等 | partial | 322项新后端回归，含19项显式评估／安排及原SQLite、资源、报告、反馈CAS与HTTP；三动作左右侧可用本人版本化安排 | 旧页面／APK未接入；原保存计划适配仍只有两动作，不用旧别名接深蹲；物理存储故障与完整压力待做 |
+| P2 正式会话与幂等 | partial | 340项新后端回归，含18项只读时间比较／19项显式安排及原SQLite、资源、报告、反馈CAS与HTTP；三动作左右侧可用本人版本化安排 | 旧页面／APK未接入；原保存计划适配仅两动作；真人计时、物理故障和完整压力待做 |
 | P3 IRDS 下载与适配 | done | 198,985,485 字节骨架 ZIP、1974 字节 readme；CRC/MD5/SHA 校验；534 条/29 人，532 训练资格、2 隔离 | Kinect25 三维肩外展，不是手机 RGB、坐站或深蹲标签 |
 | P4 模型训练 | done（离线实验） | [实验包摘要](experiment_summary.json)，两次完整训练链结果；检查点、验证/测试预测和锁文件均存在于忽略目录 | TCN 测试 macro-F1 低于 logistic；只整次正误，不可作为相位/提示/诊断 |
 | P5 真人目标域验证 | partial | [此前回放](target_replay_summary.json)、[上轮两原片YOLO／MP](mediapipe_video_verification.json)，443／429帧时间＋解码像素配对 | 新协议均0确认次数；无专业真值，不能计算计次准确率或以模型一致性证明正确 |
 | P6 姿态微调 | partial；真人训练缺资格 | 转换／独立评估、双层loss、[多轮复验](pose_training_verification.json)、[基础恢复](pose_resume_verification.json)、[多批次恢复](pose_resume_verification_multibatch.json)、[监督资格](pose_supervision_blocker.json) | train颜色增广／多轮／val选模／epoch恢复已实现；缺合法真人RGB／独立参考／同集原误差基线与真人候选对照，不自动上线 |
 | 候选后端接入 | offline / off | [冻结模型对照](model_comparison.json)，Kinect 匹配返回非权威候选，RGB 被拒绝 | 未在实际服务加载新权重，没有正式质量判断/提示接管 |
-| P7 回归与交付 | partial | [回归日志与hash](regression.json)、[本轮计划专项](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)、原生SQLite故障、[历史实际会话性能](session_performance.json)、[历史CPU微基准](performance.json) | 无人空图负载、ASGI而非公网；尚缺真人、实机、全负载及物理存储故障 |
+| P7 回归与交付 | partial | [回归日志与hash](regression.json)、[本次时间／安排专项](../../docs/validation/REHAB_TIMING_COMPARISON_2026-10-11.md)、原生SQLite故障、[历史会话性能](session_performance.json)、[历史CPU微基准](performance.json) | TEST输入、ASGI非公网；尚缺真人、实机、全负载及物理故障 |
 | 禁改范围 | pass | 1308 个 protected 文件 SHA256 一致；唯一现有业务文件改动为 `mobile_rehab/server.py` 的 opt-in 康复入口 | 用户本来未提交的动作图片、脚本、CSV、任务书仍原样保留、不纳入本次提交 |
 
 ## B. 修改清单：问题、实现与验证
@@ -173,6 +173,14 @@
 
 `backend-plan-audit-2851010b`实际19项、退出0、六份源码前后hash一致，44.441秒；`verification-3ce388f3`另完整322／12／19项、退出0和1308保护变化0。测试仅隔离几何／HTTP、实际原YOLO空图缺人拒绝，不是真人精度、手机或专业安排验收。早期15／17项与夹具失败保留，不累计。参数、信息链、SQL版本和复现见 [工作流](../../docs/development/REHAB_BACKEND_PLANS.md)、[本轮验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)与 [专项摘要](backend_plan_verification.json)。正式页面／APK仍未接入，不部署用户服务；全部任务书尚未完成。
 
+### B3.9 逐次时间条件与只读历史比较
+
+以`fc8ba23`为基准增加独立`timing_comparison.py`、验证工具及18项测试，原引擎只在每次开始时冻结`rehab-timing-context-1`；时间封套附该context，原算法、计次、目标、剂量和10字段报告不改。各次保存其实际baseline、protocol、schema／model／size／clock／预处理、六参数、目标／时间安排、支持及训练剂量。新准备不以最后基线覆盖旧次；source_ref来源名称和source_epoch证据世代分别保存。第一轮测试实际发现两者接线混淆，修复显式epoch传递后重验，不放宽证据门控。
+
+新增opt-in认证`POST /api/rehab/v2/timing-comparisons`，严格两ID，同原Storage owning thread只读事务、本人终结事实及canonical视觉digest核验。四项时间各自给尝试／完整／有效完整／排除原因／条件digest／中位数，满足单一同条件且完整次无缺失才给右减左差值。session／commit／epoch／seq身份不入意义契约；换目标／起点／模型／时钟／剂量等不可比。缺新context、nominal时间、部分保持、混合条件或完整次缺时间不补零或回写。坐站站起计次保留，未见回坐不发明回程；已见起身时间可独立比较。
+
+专项`timing-comparison-audit-07d9c64b`18项／35.146秒退出0、七份源码前后hash一致；安排在当前源码下重验`backend-plan-audit-4a9181d2`19项／42.884秒退出0、六份hash一致。只用TEST证据／数据库及实际宿主HTTP的TEST几何provider，不是人群时长误差。新API默认不注册、前端未连接，旧最终记录不迁移；反馈、报告失败、重启、重复读不改snapshot／回执／逐次表／唯一贡献。公式、字段和当前完整回归见 [工作流](../../docs/development/REHAB_TIMING_COMPARISON.md)、[本次验收](../../docs/validation/REHAB_TIMING_COMPARISON_2026-10-11.md)。临床可比、改善、显著性和采样不变性均未评估。
+
 ## C. 数据与训练事实
 
 ### C1. 实际下载、许可与映射
@@ -245,7 +253,7 @@ seed20261011；17/6/6人，310/131/91条。正/误分别 train269/41、val97/34�
 
 最新产品环境完整回归`verification-3ce388f3`为322／12／19项，保护1308文件一致；19项计划专项均包含其中，详见 [本轮验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)。此前`verification-a171e3d9`318项、`verification-3cd67228`303项及60项恢复／训练／数值与4项原子写子集保留 [续训验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)范围。此前`verification-a380a260`269项及`report-resource-audit-5d0a9f94`保留 [报告准入验收](../../docs/validation/REHAB_REPORT_COORDINATION_2026-10-11.md)；251／230及原多轮记录继续保留历史。各阶段不累加；工程通过不等于准确率，真实OS／受控SQL／无人原生工程／无标注真人分别说明。
 
-历史时间／贡献曾运行`verification-3b62b733`，74项新后端、12项旧康复、19项旧手机通过，会话CLI44项为74项子集；详见 [当时验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。[regression.json](regression.json)记录本轮322／12／19项；[session_verification.json](session_verification.json)保留此前100项，不称本轮重跑。历史49／61项不代替它们。手机与HTTP测试仍有既有Starlette/httpx弃用warning，未升级依赖。没有借用交接中324项计数，本轮未跑全UI／Android／照护回归。
+历史时间／贡献`verification-3b62b733`为74／12／19项，会话CLI44项为74子集，见 [当时验收](../../docs/validation/REHAB_V2_TIMING_PROGRESS_2026-10-11.md)。[regression.json](regression.json)本次为`verification-6adfee5b`340／12／19项；18项时间／19项安排专项包含其中，旧322阶段另保留。[session_verification.json](session_verification.json)为此前100项，不称重跑。手机／HTTP既有Starlette/httpx warning保留，无依赖升级；本轮未跑全UI／Android／照护或实机验收。
 
 确定性覆盖：C01肩腕缺测，C02短gap不累积保持，C03隐藏转折，C04站姿进入，C05坐站rearm，C06真膝角，C07左右/水平镜像/等比例分辨率及契约变化，C08乱序/epoch/年龄/慢推理污染，C09换人，C10组休息，C11提示TTL/当前纠正，C12因果特征与70前缀TCN未来扰动，C13缓存隔离，C14–16持久幂等，C17报告失败，C18真实退出恢复，C19未知感受，C21跨域拒绝，C22无标签零梯度，C23接收/丢帧/超时收尾边界。
 
@@ -277,17 +285,19 @@ C20禁改范围以独立文件保护命令核验，不混入74项计数。新增
 
 未改现有权重，可始终使用原YOLO及旧规则；本轮无ONNX导出、产品质量头、提示模型或APK替换。新v2数据、旧康复/健身session及Kinect整次标签有不同protocol/source/domain/reference，不能混拼纵向曲线。比较契约单独核对指标、单位、参考、来源情境、机位、侧、schema/model/time/preprocess；具体证据指纹始终另存。二维投影角能工程比较不表示解剖ROM可比。
 
+新时间契约独立核对逐次条件／阶段定义，非全产品统一历史。仅本人finalized／视觉digest一致事实可读，缺旧context不回填；混合条件／完整次缺时间／部分保持不生成完整时长差。相同未知支持只代表记录口径相同。描述性中位数差不是疗效，mapped接收时钟未变成曝光时间；详见B3.9。
+
 ## E. 后续依赖与下一阶段
 
 1. 首先补资格：REHAB24-6学术/非营利身份或其他正式RGB授权资料；MobiPhysio/SUMediPose官方访问和许可条款核验。未回答资格问题前不接受条款、不绕过受限访问，也不默认购买数据/GPU。
 2. 采集三动作目标域素材：规范准备→动作→回位，肩肘/髋膝踝依动作可见；另有遮挡、旁人、换人、站姿进入坐站、可接受扶手和异常动作。独立专业人员标注物理/可观察完成、相位、错误/许可变式、提示窗口并复核；需明确训练与分享授权。不能只给模型现有结果当标签。
 3. 再训练真实RGB域的质量/相位任务，比较旧EMA/规则、版本化规则、简单基线、因果候选四组；动作计数仍由观察规则确认。今后的模型改进先由新验证集/交叉验证确定，不用当前固定test反复调参。
 4. 独立参考转换、原模型预测与误差／覆盖、双层masked loss、多轮／train颜色增广／val选模、工程更新／重载及显式epoch恢复已完成；没有后台自动resume。真实姿态微调仍须合法真人2D关节／visibility、独立划分与原误差基线；专业标定投影及候选同集真人实验尚未完成，不用TEST工程更新／恢复代替。
-5. 后端继续完善：v2 时间结果的专门比较契约、完整故障/容量压力与任务硬隔离、时间/坐标契约更细的审核、医疗参考误差及不同来源的可比性验证。三动作版本化本人显式安排、唯一贡献和后端历史／进度已实现，但旧页面／APK未连接；不能用新增 API 通过代替跨端上线。客户端/前端仍不在本轮范围。
+5. 后端继续完善：完整故障/容量压力与任务硬隔离、曝光／接收时钟和坐标契约更细的审核、医疗参考误差及不同来源的可比性验证。专门时间条件冻结／只读比较、三动作版本化本人显式安排、唯一贡献和后端历史／进度已有实现；时间差仍非临床改善，采样不变性和真人计时未验证。旧页面／APK未连接，不能用新增 API 通过代替跨端上线。客户端/前端仍不在本轮范围。
 
 ### 实际复现入口
 
-历史IRDS训练配置是`configs/rehab_ml/baseline.yaml`和`tcn.yaml`，多轮姿态模板为`configs/rehab_ml/pose_finetune_template.json`，专项命令自动在新忽略run生成TEST配置。下列命令含历史复现入口，不表示本轮全部重跑；本轮实际为`verify_backend_plans.py`和`verify_all.py`，从仓库根执行：
+历史IRDS训练配置是`configs/rehab_ml/baseline.yaml`和`tcn.yaml`，多轮模板为`configs/rehab_ml/pose_finetune_template.json`。下列包含历史入口，不表示全部重跑；本次实际执行`verify_timing_comparison.py`、`verify_backend_plans.py`和`verify_all.py`，从仓库根执行：
 
 ```powershell
 & '.\.runtime\rehab_ml\venv\Scripts\python.exe' -X utf8 tools/rehab_ml/run_minimal.py
@@ -296,6 +306,7 @@ C20禁改范围以独立文件保护命令核验，不混入74项计数。新增
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_pose_resume.py --multibatch
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_resources.py
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_backend_plans.py
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_timing_comparison.py
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/verify_all.py
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py verify-sessions --database-mode isolated
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 tools/rehab_ml/cli.py benchmark-sessions --frames 12

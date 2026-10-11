@@ -656,6 +656,30 @@ class SessionService:
     def plans_list(self, owner, limit=20):
         return self._bounded(lambda: self.plans.list(owner, limit))
 
+    def compare_timing(self, owner, payload):
+        def compare():
+            if not isinstance(payload, dict) or set(payload) != {'left_session_id', 'right_session_id'}:
+                raise SessionError('invalid_timing_comparison_fields', 400)
+            left_id, right_id = (identifier(payload[key]) for key in ('left_session_id', 'right_session_id'))
+            if left_id == right_id:
+                raise SessionError('distinct_timing_sessions_required', 400)
+            def read(conn):
+                conn.execute('BEGIN')
+                return tuple(self.repository._row(conn, owner, sid) for sid in (left_id, right_id))
+            items = self.storage_boundary._call(read)
+            for item in items:
+                if item['persistence_state'] != 'finalized' or not item.get('canonical_commit'):
+                    raise SessionError('timing_comparison_requires_finalized_sessions')
+                if item['canonical_commit'].get('visual_snapshot_digest') != digest(item['snapshot']):
+                    raise SessionError('timing_comparison_fact_digest_mismatch')
+            from app.rehab_v2.timing_comparison import compare_timing
+            result = compare_timing(*items)
+            for name, item in zip(('left', 'right'), items):
+                result[name] = dict(session_id=item['session_id'], commit_id=item['canonical_commit']['commit_id'],
+                    visual_snapshot_digest=item['canonical_commit']['visual_snapshot_digest'])
+            return result
+        return self._bounded(compare)
+
     def commit(self, owner, sid):
         item = self.repository.get(owner, sid)
         return dict(session_id=sid, persistence_state=item['persistence_state'],

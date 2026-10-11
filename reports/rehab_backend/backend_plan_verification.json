@@ -1,5 +1,5 @@
 {
-  "run_id": "backend-plan-audit-2851010b",
+  "run_id": "backend-plan-audit-4a9181d2",
   "commands": [
     {
       "arguments": [
@@ -13,17 +13,17 @@
         "-v"
       ],
       "exit_code": 0,
-      "elapsed_s": 44.44073479999861,
-      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\backend-plan-audit-2851010b\\plans.txt",
-      "log_sha256": "ae0290911600a669db5b8e4b91f580438ceec97ee81be8d083c435ed475c5f08",
+      "elapsed_s": 42.884133600000496,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\backend-plan-audit-4a9181d2\\plans.txt",
+      "log_sha256": "8d06a274b53da222773ba842ecdf3283f25238737f047f9f4b8ca0a9db4ca984",
       "tests": 19,
-      "tail": "fall_back_to_old_success (test_backend_plans.BackendPlanTests.test_newer_failed_assessment_cannot_fall_back_to_old_success) ... ok\ntest_plan_snapshot_operation_and_revision_rollback_together (test_backend_plans.BackendPlanTests.test_plan_snapshot_operation_and_revision_rollback_together) ... ok\ntest_prior_discomfort_cannot_be_erased_by_new_plan_or_revision (test_backend_plans.BackendPlanTests.test_prior_discomfort_cannot_be_erased_by_new_plan_or_revision) ... ok\ntest_quality_limits_reject_unsupported_actions_and_invalid_values_without_plan_writes (test_backend_plans.BackendPlanTests.test_quality_limits_reject_unsupported_actions_and_invalid_values_without_plan_writes) ... ok\ntest_required_companion_cannot_be_overridden_and_needs_explicit_confirmation (test_backend_plans.BackendPlanTests.test_required_companion_cannot_be_overridden_and_needs_explicit_confirmation) ... ok\ntest_squat_shallow_rep_completes_plan_independent_of_target_then_feedback_blocks_repeat (test_backend_plans.BackendPlanTests.test_squat_shallow_rep_completes_plan_independent_of_target_then_feedback_blocks_repeat) ... ok\ntest_three_actions_bind_exact_projection_without_legacy_catalog_or_dose_generation (test_backend_plans.BackendPlanTests.test_three_actions_bind_exact_projection_without_legacy_catalog_or_dose_generation) ... ok\ntest_two_sets_recovery_pause_and_return_to_prepare_keep_explicit_dose (test_backend_plans.BackendPlanTests.test_two_sets_recovery_pause_and_return_to_prepare_keep_explicit_dose) ... ok\n\n----------------------------------------------------------------------\nRan 19 tests in 44.010s\n\nOK\n"
+      "tail": "fall_back_to_old_success (test_backend_plans.BackendPlanTests.test_newer_failed_assessment_cannot_fall_back_to_old_success) ... ok\ntest_plan_snapshot_operation_and_revision_rollback_together (test_backend_plans.BackendPlanTests.test_plan_snapshot_operation_and_revision_rollback_together) ... ok\ntest_prior_discomfort_cannot_be_erased_by_new_plan_or_revision (test_backend_plans.BackendPlanTests.test_prior_discomfort_cannot_be_erased_by_new_plan_or_revision) ... ok\ntest_quality_limits_reject_unsupported_actions_and_invalid_values_without_plan_writes (test_backend_plans.BackendPlanTests.test_quality_limits_reject_unsupported_actions_and_invalid_values_without_plan_writes) ... ok\ntest_required_companion_cannot_be_overridden_and_needs_explicit_confirmation (test_backend_plans.BackendPlanTests.test_required_companion_cannot_be_overridden_and_needs_explicit_confirmation) ... ok\ntest_squat_shallow_rep_completes_plan_independent_of_target_then_feedback_blocks_repeat (test_backend_plans.BackendPlanTests.test_squat_shallow_rep_completes_plan_independent_of_target_then_feedback_blocks_repeat) ... ok\ntest_three_actions_bind_exact_projection_without_legacy_catalog_or_dose_generation (test_backend_plans.BackendPlanTests.test_three_actions_bind_exact_projection_without_legacy_catalog_or_dose_generation) ... ok\ntest_two_sets_recovery_pause_and_return_to_prepare_keep_explicit_dose (test_backend_plans.BackendPlanTests.test_two_sets_recovery_pause_and_return_to_prepare_keep_explicit_dose) ... ok\n\n----------------------------------------------------------------------\nRan 19 tests in 42.584s\n\nOK\n"
     }
   ],
   "implementation_sha256": {
     "rehab_codex_single_camera_v2_1/app/rehab_v2/plans.py": "a6c4f7f05fcd202afd90821f30b5b78331783d430da4566ae6666d4d9c05fb3b",
-    "mobile_rehab/rehab_v2/service.py": "4b6b6d030b9d446844f13441ece7e81314a1a55fb77ed2718b04d076b0e8c64d",
-    "mobile_rehab/rehab_v2/api.py": "388c3dd5fc4aec5a9db42352d23f9b6207c8c0d6b0eaffb7983c3639d27e9f6f",
+    "mobile_rehab/rehab_v2/service.py": "652619e43a31a62fc09f8864e6ae3e47f1153a5d9358bd2d06eab69e43922f0e",
+    "mobile_rehab/rehab_v2/api.py": "094db18b741138cbcb8e11d3403e47de6a8f35a4f538faa4937cc4883e415aff",
     "mobile_rehab/server.py": "33197735fccb58f7f90dc977482a67b7ad304f96cdbeb80f5f3c3b5efdc1ed0b",
     "tests/rehab_backend/test_backend_plans.py": "d44eb60a6b77d6fa3c763ac9efcbcd3ce22cd9796cfcd0d3be1978144544a6c8",
     "tools/rehab_ml/verify_backend_plans.py": "e1e5c1ec33670e1557e28afa12110f0345f07951e3e567d9a827ba1277ccd4f7"

@@ -5,6 +5,7 @@ segmentation is retrospective after a complete observed cycle; live hold is
 causal and is broken by missing observations. Standing uses the v2 protocol's
 observed knee range, not the legacy personal knee/hip calibration.
 """
+from copy import deepcopy
 from ..movement_timing import TIMING_VERSION as ALGORITHM_VERSION
 
 TIMING_VERSION = 'rehab-observed-timing-2'
@@ -17,6 +18,7 @@ def snapshot(timer, completion, *, time_basis, cycle_complete=False, reason=None
                   live_hold_method='consecutive_current_observations',
                   phase_timing_mode='after_observed_cycle',
                   observed_sample_count=len(timer.samples),
+                  comparison_context=deepcopy(getattr(timer, 'comparison_context', None)),
                   evidence_refs=dict(first=getattr(timer, 'first_ref', None),
                                      latest=getattr(timer, 'latest_ref', None),
                                      standing=getattr(timer, 'standing_ref', None),

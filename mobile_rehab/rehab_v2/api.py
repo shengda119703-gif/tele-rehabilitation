@@ -54,6 +54,11 @@ def install_rehab_v2(app, database, owner, small_json, plan_resolver, *, plan_re
         payload = await small_json(request)
         return await asyncio.to_thread(service.create, uid, payload)
 
+    @app.post('/api/rehab/v2/timing-comparisons')
+    async def timing_comparison(request: Request):
+        uid, payload = owner(request), await small_json(request)
+        return await asyncio.to_thread(service.compare_timing, uid, payload)
+
     @app.post('/api/rehab/v2/sessions/{sid}/frames')
     async def frame(sid: str, request: Request):
         uid = owner(request)
