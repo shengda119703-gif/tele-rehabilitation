@@ -1,0 +1,102 @@
+{
+  "scope": "TEST_metric_contract_and_real_pending_reference_gate",
+  "bundle_sha256": "bb3a57bdd0717bb971309005c7b360b5f2f58c1e6a3d1b5e07acc419c8c8df45",
+  "product_environment": "E:\\game\\health-care-software-main\\rehab_codex_single_camera_v2_1\\.venv\\Scripts\\python.exe",
+  "implementation_sha256": {
+    "tools\\rehab_ml\\verify_temporal_evaluation.py": "15c4e13804652de8508478377568afecbf3ef52b734e7c24cf335825ebd17b53",
+    "tools\\rehab_ml\\temporal_evaluation.py": "a40a6e4c944289a8b2f6347974b05ec31f81786fce05d973814d9d95fc7d9c86",
+    "tools\\rehab_ml\\cli.py": "7ec1c32a7bc1b2cdbc9c23c8e0cd3cd94f830fcd22a097c330d0ed7df78ec7fc",
+    "tests\\rehab_backend\\test_temporal_evaluation.py": "39c9fa33622aca342a4b332fb80ef4d1ed55c2ecef5fb1324de08d2ee0f24730",
+    "tools\\rehab_ml\\verify_all.py": "ed79f257bed9907314bf313be9d9e0171dd4e5a182719e908b8d4d8f0bf30082",
+    "tools\\rehab_ml\\verify_storage_recheck.py": "5d38f4632dbdf12e9b80a102af5eb603658712074931a93d5c28d0c0e765e652"
+  },
+  "commands": [
+    {
+      "name": "help",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "evaluate-annotations",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 0.10096730000077514,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-evaluation-audit-8badfb07\\help.txt",
+      "log_sha256": "bd51d38a2461773df6a48a7b4bb861e79754e70167aa89cfd2c489914ea883a5"
+    },
+    {
+      "name": "storage-full-help",
+      "arguments": [
+        "tools/rehab_ml/verify_storage_recheck.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 0.094244300000355,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-evaluation-audit-8badfb07\\storage-full-help.txt",
+      "log_sha256": "496a9c6d41f21e78993857142ee847f093ad27af3992107eb1e9a158f5f7d45c"
+    },
+    {
+      "name": "unit",
+      "arguments": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/rehab_backend",
+        "-p",
+        "test_temporal_evaluation.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 0.48280309999972815,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-evaluation-audit-8badfb07\\unit.txt",
+      "log_sha256": "7e8d002751d06289d95358aef77fdbd9a9fcb27d788080b238360cb53d97d777"
+    },
+    {
+      "name": "pending-real-reference-refused",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "evaluate-annotations",
+        "--reference",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\professional-annotation-audit-3581f13f\\cohort\\bundle.json",
+        "--predictions",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-evaluation-audit-8badfb07\\no-invented-predictions.json",
+        "--split",
+        "test",
+        "--output-dir",
+        "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-evaluation-audit-8badfb07\\must-not-evaluate"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "elapsed_s": 4.981828699999824,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-evaluation-audit-8badfb07\\pending-real-reference-refused.txt",
+      "log_sha256": "9187e02c85e6b0b4539b4872a3a8824e43314b96b59348c07a22ef476bb0cded"
+    },
+    {
+      "name": "scope",
+      "arguments": [
+        "tools/rehab_ml/cli.py",
+        "verify-scope",
+        "--baseline",
+        "reports/rehab_backend/protected_files.json"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "elapsed_s": 5.117744899998797,
+      "log": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-evaluation-audit-8badfb07\\scope.txt",
+      "log_sha256": "7382de150a3cef8be02c17e474eb300efdae0b9bdbbb570673194aa672c3fa42"
+    }
+  ],
+  "product_enabled": false,
+  "actual_professional_labels": 0,
+  "actual_accuracy_evaluation_performed": false,
+  "passed": true,
+  "independent_reference_refusal_confirmed": true,
+  "evaluation_output_not_created": true,
+  "original_annotation_bundle_unchanged": true,
+  "implementation_unchanged": true,
+  "artifact": "E:\\game\\health-care-software-main\\.runtime\\rehab_ml\\run\\temporal-evaluation-audit-8badfb07\\summary.json",
+  "summary_sha256": "95045e5bda49e5ea9299db6bbf30c30fe0ca6e5f96375aad0168f9512656439c"
+}

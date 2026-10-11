@@ -6,7 +6,9 @@
 
 专业相位／完成／质量参考使用`prepare-annotations`、`validate-annotations`、`import-annotations`，均要求显式来源与新输出目录。已核验CC0录像只生成无评分／预测预填的双人独立JSONL及第三人复核表、真实PTS表，不复制原片；空监督拒绝导入，已审核部分可导入但待标／排除与固定全队列保留，不变成阴性。旧视频EAAQ研究范围不变，新参考不提供pose监督或启用模型。填写与独立复核要求见[专业标注工作流](../../docs/development/REHAB_PROFESSIONAL_ANNOTATION.md)。`verify_professional_annotations.py --receipt <明确下载回执>`实际核对完整24人队列、空监督拒绝及三种TEST篡改；不是人体准确性验收。
 
-默认磁盘不满足真实空间门时，`verify_storage_recheck.py --failed-summary <明确原失败summary> --output-dir <新的仓库外TEST目录>`仅在实际空间充足的目录重验pose工程模块／旧手机子集，保留原失败与阈值，不搬源数据或正常库。子集通过不替代完整回归或默认生产存储恢复；本轮实际结果见[验收](../../docs/validation/REHAB_PROFESSIONAL_ANNOTATION_2026-10-12.md)。
+`evaluate-annotations --reference <已专业复核导入的reference.json> --predictions <独立后端导出manifest> --split val|test --output-dir <新目录>`接可观察计数与逐边界评价。未知不当负例，失败预测不补0，按同种边界一对一最大匹配／最小时间误差；完整原队列、待标／排除及每人分母保留。预测出处只是声明，不证明真实执行；当前无真实专业GT、不接产品。见[计次／相位评价工作流](../../docs/development/REHAB_TEMPORAL_EVALUATION.md)。
+
+默认磁盘不满足真实空间门时，`verify_storage_recheck.py --failed-summary <明确原失败summary> --output-dir <新的仓库外TEST目录>`默认重验pose工程模块／旧手机subset；另增`--suite full`，复用verify_all全部四组，另存storage_full_regression.json，不覆盖原E盘失败或此前子集记录。新目录须实际空间充足，保持原阈值、源数据及正常库。外盘完整通过也不表示默认生产存储恢复；实际结果见[本轮验收](../../docs/validation/REHAB_TEMPORAL_EVALUATION_2026-10-12.md)。
 
 官方RGB候选核验使用`resolve-dataverse --dataset mobiphysio`，显式固定数字发布版，不取草稿。`fetch-dataverse-metadata --audit-run <明确run> --file-ids 13453294 13453292`仅下载已校验CC0的小说明／评分文件，拒绝MP4；`index-mobiphysio-scores --audit-run <明确run> --metadata-manifest <明确manifest>`核对两行表头、三治疗师／数值／视频清单，保留缺标和隔离，不下载视频或训练。实际本机README／CSV551744字节，肩外展380个整视频评分／24人；SUMedi完整审计超时且NC-SA资格未确认。见[方法与复现](../../docs/development/REHAB_DATAVERSE_METADATA.md)及[本机验收](../../docs/validation/REHAB_DATAVERSE_2026-10-11.md)，后者区分真实数据与30项TEST契约。原数据／评分／索引继续忽略，未作为模型上线、逐帧标注或产品历史。
 

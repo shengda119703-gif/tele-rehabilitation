@@ -14,18 +14,22 @@ sys.path.insert(0, str(ROOT))
 from tools.rehab_ml.common import file_hash, paths, write_json
 
 
-def main():
-    root = paths()['run'] / ('verification-'+uuid4().hex[:8])
-    root.mkdir()
-    summary = dict(commands=[], product_environment=sys.executable, clinical_accuracy=None)
-    cases = [
+def regression_cases(root):
+    """One case list for the default and explicit-volume complete regressions."""
+    return [
         ('new_backend', ['-m', 'unittest', 'discover', '-s', 'tests/rehab_backend', '-p', 'test_*.py', '-v']),
         ('legacy_rehab', ['-m', 'unittest', 'discover', '-s', 'rehab_codex_single_camera_v2_1/tests', '-p', 'test_app_rehab.py', '-v']),
         ('legacy_mobile', ['-m', 'pytest', 'mobile_rehab/tests/test_mobile.py', '-q', '-p', 'no:cacheprovider',
                            '--basetemp', str(root / 'pytest-temporary')]),
         ('scope', ['tools/rehab_ml/cli.py', 'verify-scope', '--baseline', 'reports/rehab_backend/protected_files.json']),
     ]
-    for name, arguments in cases:
+
+
+def main():
+    root = paths()['run'] / ('verification-'+uuid4().hex[:8])
+    root.mkdir()
+    summary = dict(commands=[], product_environment=sys.executable, clinical_accuracy=None)
+    for name, arguments in regression_cases(root):
         started = time.perf_counter()
         log = root / (name+'.txt')
         try:

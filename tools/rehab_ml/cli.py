@@ -45,6 +45,13 @@ def parser():
         item = sub.add_parser(name, help='Check independent temporal labels and professional resolution; never auto-activate')
         item.add_argument('--bundle', type=Path, required=True)
         item.add_argument('--output-dir', type=Path, required=True)
+    item = sub.add_parser('evaluate-annotations', help='Compare independently reviewed counts and boundary events; no invented labels, product activation or dose changes')
+    item.add_argument('--reference', type=Path, required=True)
+    item.add_argument('--predictions', type=Path, required=True)
+    item.add_argument('--split', choices=['val', 'test'], required=True)
+    item.add_argument('--event-tolerance-s', type=float, default=.25,
+                      help='Predeclare before independent test; recorded and hashed with evaluation policy')
+    item.add_argument('--output-dir', type=Path, required=True)
     for name in ('fetch', 'verify'):
         item = sub.add_parser(name, help=name.capitalize() + ' a licensed, pinned official dataset')
         item.add_argument('--dataset', choices=['intellirehabds'], required=True)
@@ -169,6 +176,10 @@ def main(argv=None):
             value = (build_bundle(args.receipt, args.output_dir) if args.command == 'prepare-annotations'
                      else validate_bundle(args.bundle, args.output_dir) if args.command == 'validate-annotations'
                      else import_reviewed(args.bundle, args.output_dir))
+        elif args.command == 'evaluate-annotations':
+            from tools.rehab_ml.temporal_evaluation import evaluate
+            value = evaluate(args.reference, args.predictions, args.output_dir, split=args.split,
+                             tolerance_s=args.event_tolerance_s)
         elif args.command == 'visual-audit':
             from tools.rehab_ml.visual_audit import render
             value = render(args.output_dir)

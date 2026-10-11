@@ -4,6 +4,8 @@
 
 | 文档 | 内容 |
 | --- | --- |
+| [计次／相位独立评价](development/REHAB_TEMPORAL_EVALUATION.md) | 已复核参考→声明式后端预测→一对一事件匹配／计数误差→逐人及全队列覆盖；未知不当负例，不接正式trace或启用模型 |
+| [计次评价与完整回归验收](validation/REHAB_TEMPORAL_EVALUATION_2026-10-12.md) | 33项专项、真实空监督拒绝；D盘完整523／12／19与1308保护通过，原E盘失败仍保留，未恢复默认容量 |
 | [独立专业标注与导入](development/REHAB_PROFESSIONAL_ANNOTATION.md) | 双人独立JSONL、第三人复核、逐边界／问题mask、真实PTS、部分导入及待标／排除分母；不预填预测或训练模型 |
 | [专业标注本机验收](validation/REHAB_PROFESSIONAL_ANNOTATION_2026-10-12.md) | 真实24段源／PTS、34项TEST、空监督拒绝、明确零次及三类篡改；实际标签仍待人工，不是微调或准确性提升 |
 | [HTTP时钟与断流证据](development/REHAB_HTTP_CLOCK_AUDIT.md) | 固定TEST证据时钟和实际接收时钟分开；逐帧探针、真实断流半次、不修改生产规则 |
