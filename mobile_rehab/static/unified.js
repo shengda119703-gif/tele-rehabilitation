@@ -147,6 +147,7 @@ async function load() {
   const generation = ++ui.generation;
   ui.homeConnection = "loading";
   if (ui.page === "home" && ui.snapshot) home();
+  if (ui.page === "rehab" && ui.snapshot && window.RehabV51) rehab();
   try {
     const result = await api("/unified?source=" + ui.source);
     if (generation !== ui.generation) return;
@@ -160,6 +161,7 @@ async function load() {
     ui.snapshot = null;
     ui.homeConnection = "offline";
     if (!$("#pair-form") && ui.page === "home") { home(); return; }
+    if (!$("#pair-form") && ui.page === "rehab" && window.RehabV51) { rehab(); return; }
     if (!$("#pair-form"))
       $("#content").innerHTML =
         `<h1>暂时无法读取</h1><p>${E(e.message)}</p>${button("重新连接", "retry", true)}`;
@@ -175,7 +177,7 @@ function nav() {
     .join("");
   $("#nav").querySelectorAll('a').forEach(a => {
     const label = a.querySelector('.nav-label');
-    if (label) label.textContent = a.hash === '#family' && ui.page === 'home' ? '家人' : names[a.hash.slice(1)];
+    if (label) label.textContent = a.hash === '#family' && ['home','rehab'].includes(ui.page) ? '家人' : names[a.hash.slice(1)];
     if(a.hash === '#' + (['assistant','records'].includes(ui.page) ? 'home' : ui.page)) a.setAttribute('aria-current','page');
     else a.removeAttribute('aria-current');
   });
@@ -191,6 +193,13 @@ function route() {
   ui.page = Object.hasOwn(names, key) || ["assistant", "records"].includes(key) ? key : "home";
   ui.day = ui.homeRouteDay || (ui.page === "home" ? ui.day : today());
   ui.homeRouteDay = null;
+  if (ui.page === 'rehab' && window.RehabV51) {
+    const params=new URLSearchParams(location.search), source=params.get('rehabSource'), day=params.get('rehabDay');
+    if (['LIVE_CAMERA','REPLAY_FILE'].includes(source) && window.AnkangHomeV36.dateOf(day)) {
+      ui.source=source; ui.day=day;
+      window.history.replaceState(null,'',location.pathname+'#rehab');
+    }
+  }
   nav();
   if (ui.snapshot) render();
   else load();
@@ -328,6 +337,7 @@ function rehabModes() {
 }
 function bindModes() {document.querySelectorAll('[data-rehab-mode]').forEach(b=>b.onclick=()=>{ui.rehabMode=b.dataset.rehabMode;rehab();});}
 function rehab() {
+  if (window.RehabV51) { renderRehabV51(); return; }
   if(ui.rehabMode!=="training") {
     const assessment=ui.rehabMode==="assessment";
     $("#content").innerHTML=`<div class="heading"><h1>康复</h1></div>${rehabModes()}<section class="tool-intro"><h2>${assessment?"身体评估":"健身动作"}</h2><p>${assessment?"选一个动作，拍摄后查看结果。":"选择动作，分析你的训练录像。"}</p>${link(assessment?"开始评估":"打开动作库",assessment?"/capture?tab=assess":"/capture?tab=fitness",true)}</section>`;
