@@ -17,12 +17,20 @@ function actionDetailV51(){
 }
 function feedbackScoresV51(box){
   for(const [key,label] of [['pain','疼痛'],['fatigue','疲劳']]){
-    const select=$('#'+key),field=select.closest('label');if(field.querySelector('.rv-score-scale'))continue;
-    field.classList.add('rv-score-field');select.classList.add('rv-score-select');
-    const group=document.createElement('div');group.className='rv-score-scale';group.setAttribute('role','group');group.setAttribute('aria-label',label+'程度 0至10');
-    const update=()=>group.querySelectorAll('button').forEach(b=>{const picked=select.value!==''&&select.value===b.dataset.score;b.classList.toggle('picked',picked);b.setAttribute('aria-pressed',String(picked));});
-    for(let i=0;i<=10;i++){const b=document.createElement('button');b.type='button';b.dataset.score=String(i);b.textContent=String(i);b.setAttribute('aria-label',label+i+' / 10');b.onclick=()=>{select.value=String(i);update();};group.append(b);}
-    field.append(group);select.onchange=update;select.addEventListener('invalid',()=>toast('请选择真实'+label+'程度'));update();
+    const select=$('#'+key),field=select.closest('label');if(field.querySelector('.rv-score-range'))continue;
+    field.classList.add('rv-score-field');select.classList.add('rv-score-select');select.setAttribute('aria-hidden','true');select.tabIndex=-1;
+    field.firstChild.textContent=label+'程度 ';
+    const output=document.createElement('output');output.className='rv-score-output';output.id='rv-'+key+'-value';
+    const range=document.createElement('input');range.type='range';range.className='rv-score-range';range.id='rv-'+key;range.min='0';range.max='10';range.step='1';range.setAttribute('aria-label',label+'程度');range.setAttribute('aria-describedby','rv-'+key+'-hint');
+    const initial=RehabV52.score(select.value);range.value=String(initial??0);
+    const update=()=>{const score=RehabV52.score(select.value);output.textContent=score===null?'未选择':score+' / 10';range.setAttribute('aria-valuetext',score===null?'未选择，请主动选择 0至10 分':score+' / 10');range.classList.toggle('unselected',score===null);range.style.setProperty('--rv-score',(score??0)*10+'%');};
+    const choose=()=>{select.value=range.value;update();};range.oninput=choose;range.onclick=choose;
+    range.onkeydown=e=>{if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End','PageUp','PageDown'].includes(e.key))choose();};
+    select.onchange=()=>{const score=RehabV52.score(select.value);range.value=String(score??0);update();};
+    select.addEventListener('invalid',e=>{e.preventDefault();toast('请选择真实'+label+'程度');range.focus();});
+    const marks=document.createElement('div');marks.className='rv-score-marks';marks.setAttribute('aria-hidden','true');marks.innerHTML='<span>0</span><span>5</span><span>10</span>';
+    const hint=document.createElement('p');hint.id='rv-'+key+'-hint';hint.className='rv-score-hint';hint.textContent='0 '+(key==='pain'?'无疼痛':'无疲劳')+' · 5 中等 · 10 很强';
+    field.append(output,range,marks,hint);update();
   }
 }
 function feedbackViewV51(box,entry){
@@ -34,7 +42,7 @@ function feedbackViewV51(box,entry){
   const keep=box.querySelectorAll('.tip')[1];Array.from(box.children).forEach(n=>{if(n.tagName!=='FORM'&&n!==keep)n.hidden=true;});
   const heading=document.createElement('h1');heading.className='rv-page-title';heading.textContent='训练反馈';box.before(heading);
   back.textContent='‹ 返回结果';back.onclick=()=>{heading.remove();siblings.forEach(([n,hidden])=>n.hidden=hidden);box.hidden=true;entry.hidden=false;if(title)title.hidden=false;back.onclick=originalBack;back.textContent=originalText;frameRehabV51('result');window.scrollTo(0,0);};
-  frameRehabV51('feedback');window.scrollTo(0,0);box.querySelector('.rv-score-scale button').focus();
+  frameRehabV51('feedback');window.scrollTo(0,0);box.querySelector('.rv-score-range').focus();
 }
 function planEntryV51(record,progress,index){
   const entry=record.items[index],isNext=entry.key===progress.next_key&&!progress.blocked;

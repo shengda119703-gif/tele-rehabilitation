@@ -1,0 +1,360 @@
+{
+  "baseline": "ba34b823cbf78b2d28d8a2ed2016aba100ce8384",
+  "frozen_tracked_files": 1374,
+  "changed_tracked_files": [
+    "mobile_rehab/static/index.html",
+    "mobile_rehab/static/rehab-v51-capture.js",
+    "mobile_rehab/static/rehab-v51.css",
+    "mobile_rehab/static/unified.html"
+  ],
+  "library_pixels_unchanged": {
+    "390": true,
+    "320": true
+  },
+  "screenshots": [
+    {
+      "path": "after/ai-action-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "3c210b407283a74ff368c847702bd975504f2c622886a3aec9d56bbb1a433adf"
+    },
+    {
+      "path": "after/ai-action-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "c02290de19698a3e7c071245b7748178acb332cb39a885d73c3fc695455a1bb6"
+    },
+    {
+      "path": "after/ai-assessment-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "3f3ee95438b6eee6a1668c66ac84378ba641a1deeaf794c6e6e7f2074e513122"
+    },
+    {
+      "path": "after/ai-assessment-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "b26456161a0e4128df806abe4d8e4be7689afc4856bbfa61a568e128a078ace5"
+    },
+    {
+      "path": "after/ai-training-angle-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "bc04c0d62a777e2aa3c45bcc8c348cd4fe51076f842317a27de0892c53151bee"
+    },
+    {
+      "path": "after/ai-training-angle-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "7b0fe8481848bd1c609bbb2fd1187d4fd38293a5df92b198a893d3941a4d05c6"
+    },
+    {
+      "path": "after/ai-training-overview-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "35c5fd5068e28548d0244269bdaff9f10835f591de153c0049bf84268be34ed7"
+    },
+    {
+      "path": "after/ai-training-overview-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "2bdf70e7d8d845ff4b48ba0fe0aaf0173791aedd4bdd040ef2fb3a88df42ffe9"
+    },
+    {
+      "path": "after/ai-unavailable-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "48589ea7c33ca4e1cd4b4e6de73c53d3e42cc8ed2680647f7d3c1b794522e3f8"
+    },
+    {
+      "path": "after/ai-unavailable-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "890f822afa5a75baa1b69c35d974aa40f89a5560a5ab1b912577b28b670716f4"
+    },
+    {
+      "path": "after/assessment-result-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "7d037cc252ee47d56edc04f6f544f5b7ba3d2f9ea21e5bb157b8135e630a6d95"
+    },
+    {
+      "path": "after/assessment-result-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "94634a1da5097f844a1c0adb8b41c880b0be5b88dd1cbccb6b6982854a56b48a"
+    },
+    {
+      "path": "after/detail-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "5013915ca2cfb503a72d44a0dc811e45d136f3b2874a36165632824a2441efc4"
+    },
+    {
+      "path": "after/detail-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "9a3ef5f388cf3636fd4c650155f51f4937b22562ef181b1a08053f1a56fc0bbb"
+    },
+    {
+      "path": "after/feedback-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "e1172aa7296a0b9063f1adef6217a450417f860dd631fb5e47380f5c9ae68821"
+    },
+    {
+      "path": "after/feedback-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "e0d1afa83a8d058030620b8a2902cd8b9832d73affa3b16705ea4405733b842b"
+    },
+    {
+      "path": "after/feedback-boundaries-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "0274e541957dea5605c3579326cd3095e169dea96096ec071ed249ef28f334ed"
+    },
+    {
+      "path": "after/feedback-boundaries-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "5646e1c85465a17e4b0ccfce831c01ea85071e07567c1e22824ca7d074689e40"
+    },
+    {
+      "path": "after/feedback-save-failed-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "cc2b84d34501aaec5a4c314c559da877057e9b5d7eeaa124bbefd2858550b391"
+    },
+    {
+      "path": "after/feedback-save-failed-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "05a857c7e324a0d64d56794891241b3f07c4a4e072dd5d520b5c0e44da16e1e5"
+    },
+    {
+      "path": "after/feedback-unselected-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "6cbb817529df83a451600a61a05a213b91a8d9b56d3a38f23f7b35761124b786"
+    },
+    {
+      "path": "after/library-protected-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "8ecb7cd721a0b9a8bbf398b202ddf755c62d08178b77edf6994b1db14be9ef49"
+    },
+    {
+      "path": "after/library-protected-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "217359e4d083deb577ec80a79f525117c4fe63f27947bc78da77f8a21fe8c7ea"
+    },
+    {
+      "path": "after/rehab-protected-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "2c48c38130b0096e82d926c2dc3e5b2959d0ee6c8558cf4cd06a2bc146b9f1cd"
+    },
+    {
+      "path": "after/rehab-protected-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "33e8e060ce19e3fd3bbf9e91ad496b3d1375feb31fd23def0a3a755eaf9c0280"
+    },
+    {
+      "path": "after/saved-fatigue10-plan-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "1884d68d5dd56dae3487371bb6f4cf923ef4631af0576bd916bf1ef10ff91538"
+    },
+    {
+      "path": "after/training-result-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "a60116333455635459a184bdeaf21e93561603fc02718b71597b4dbdd0ecb5e8"
+    },
+    {
+      "path": "after/training-result-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "8928a2453752e00f3d6cd81b32dc8419a33aea99bdb2c01ab91b2e964f0a2249"
+    },
+    {
+      "path": "before/assessment-result-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "6f1218f91cad7c0225075358e302a98f93ab7101eef7b4598c5c4d62a991eca7"
+    },
+    {
+      "path": "before/assessment-result-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "1464e3c13c9ff5674363055c24693df4a82f4e64eb656bc028623d4775b44126"
+    },
+    {
+      "path": "before/detail-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "9f3add637d4ba209174c559068294059462d116d8f6318b55f2dc1e95d87ad7e"
+    },
+    {
+      "path": "before/detail-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "ed63d46cf324a9bf2d64b116c6f50d15e14e14267579808d3035892cd0471dbf"
+    },
+    {
+      "path": "before/feedback-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "b99e59b57ea839db94c1f1b722508f5512dd8893dc9157b1ac198dec51fdc732"
+    },
+    {
+      "path": "before/feedback-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "a301fea5e292b2087eca58f214ecaac67d874bf5a98c6a786c808318432f41ad"
+    },
+    {
+      "path": "before/library-protected-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "8ecb7cd721a0b9a8bbf398b202ddf755c62d08178b77edf6994b1db14be9ef49"
+    },
+    {
+      "path": "before/library-protected-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "217359e4d083deb577ec80a79f525117c4fe63f27947bc78da77f8a21fe8c7ea"
+    },
+    {
+      "path": "before/training-result-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "format": "JPEG",
+      "sha256": "6e9727ffe79e211f9537c92e82833ecfc33c560797bf14723a35fa60ecbb3220"
+    },
+    {
+      "path": "before/training-result-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "format": "JPEG",
+      "sha256": "5f2dfb36bd987eac3476fc021824b1ca53a9397914742fc63b40ac0a4995a8ba"
+    }
+  ],
+  "rehab_baseline_caution": "Loading-only baseline screenshots are quarantined in evidence/loading and excluded from visual proof. Final loaded rehab screenshots are in after/.",
+  "stage": "Source freeze verification before adding delivery documentation and HANDOFF update"
+}

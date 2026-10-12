@@ -62,7 +62,7 @@ body[data-page="rehab"] progress::-webkit-progress-value,body[data-rehab-view] p
 .rv-page-top{display:flex;align-items:center;gap:12px;height:34px;margin-bottom:22px}body[data-rehab-view] .rv-page-top .back{height:44px;min-height:44px;width:29px;flex:0 0 29px;margin:0;display:grid;place-items:center;font-size:28px;font-weight:400}body[data-rehab-view] .rv-page-top h1{margin:0;font-size:21px;line-height:1.3}.rv-detail-foot{padding-top:12px}
 @media(max-height:750px){.rv-detail-name{margin:11px 0 14px}.rv-intro{min-height:110px;margin-bottom:10px!important}}
 
-body[data-rehab-view="feedback"] #rv-feedback{background:transparent;border:0;padding:0}body[data-rehab-view="feedback"] #rv-feedback>[hidden]{display:none!important}.rv-score-field{position:relative;display:block!important;margin:24px 0!important;font-weight:750;font-size:13px!important}.rv-score-select{position:absolute!important;opacity:0;width:1px!important;height:1px!important;min-height:1px!important;padding:0!important;clip-path:inset(50%)}.rv-score-scale{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:12px}.rv-score-scale button{height:44px;min-height:44px;min-width:44px;padding:0;background:white;border:1px solid #e4e9e2;border-radius:9px;font-size:13px;color:#171a17;box-shadow:none}.rv-score-scale button:before{display:none}.rv-score-scale button.picked{background:#dfff36;border-color:#bacc47;font-weight:800}.rv-result-quality{font-size:12px;color:#d5d9d0;line-height:1.65;margin:12px 0}
+body[data-rehab-view="feedback"] #rv-feedback{background:transparent;border:0;padding:0}body[data-rehab-view="feedback"] #rv-feedback>[hidden]{display:none!important}.rv-score-field{position:relative;display:block!important;margin:24px 0!important;font-weight:750;font-size:13px!important}.rv-score-select{position:absolute!important;opacity:0;width:1px!important;height:1px!important;min-height:1px!important;padding:0!important;clip-path:inset(50%)}.rv-result-quality{font-size:12px;color:#d5d9d0;line-height:1.65;margin:12px 0}
 
 body[data-page="rehab"][data-rehab-history] #nav{display:none!important}body[data-page="rehab"][data-rehab-history] #content{padding-bottom:25px}.rv-live-history .rv-page-top .back{background:none;border:0;color:#171a17;box-shadow:none;min-height:44px;font-size:28px;padding:0;width:29px;flex:0 0 29px}.rv-live-history .rv-page-top h1{font-size:21px}.rv-live-record{display:flex;flex-direction:column;align-items:start;gap:5px;width:100%;min-height:75px;margin:10px 0;padding:12px;background:white;border:1px solid #e4e9e2;border-radius:12px;color:#171a17;text-align:left}.rv-live-record strong{font-size:13px}.rv-live-record span,.rv-live-record small{font-size:11px;color:#68715f}.rv-live-record:before{display:none}
 
@@ -102,10 +102,28 @@ body[data-rehab-view="fitness"] .instruction p{font-size:16px}
 body[data-rehab-view="fitness"] .side button{min-height:44px;border-radius:10px;font-size:13px}
 body[data-rehab-view="fitness"] .side button.selected{background:var(--rv-lime);color:var(--rv-ink);box-shadow:none}
 body:is([data-rehab-view="guidance"],[data-rehab-view="fitness"]) .primary:hover{background:var(--rv-lime)}
-@media(max-width:355px){.rv-score-scale{grid-template-columns:repeat(5,minmax(0,1fr))}}
 body[data-rehab-view="guidance"] .live-stats{padding-bottom:6px}
 body[data-rehab-view="fitness"] .library-heading{margin:0 0 12px}
 body[data-rehab-view="fitness"] .library-heading h1{margin:0}
 body[data-rehab-view="fitness"] .entry-links{margin-bottom:12px}
 body[data-rehab-view="fitness"] .entry-links button{padding:10px 12px;border-radius:12px;min-height:44px;font-size:13px}
 body[data-rehab-view="plan"] #plan-content>.card:first-child .schedule-header p{color:#d5d9d0}
+
+/* V5.2 ranges and contextual assistant; existing home/library selectors stay untouched. */
+.rv-score-output{float:right;font-size:18px;font-weight:800;color:var(--rv-ink)}
+body[data-rehab-view="feedback"] .rv-score-range{display:block;width:100%;height:48px;min-height:48px;padding:0;margin:12px 0 0;border:0;appearance:none;background:transparent;cursor:pointer;touch-action:pan-y}
+.rv-score-range::-webkit-slider-runnable-track{height:8px;border-radius:6px;background:linear-gradient(to right,#dfff36 var(--rv-score),#e1e6dc var(--rv-score))}
+.rv-score-range::-webkit-slider-thumb{appearance:none;width:28px;height:28px;margin-top:-10px;border-radius:50%;border:2px solid #171a17;background:#dfff36}
+.rv-score-range::-moz-range-track{height:8px;border-radius:6px;background:#e1e6dc}.rv-score-range::-moz-range-progress{height:8px;background:#dfff36}.rv-score-range::-moz-range-thumb{width:25px;height:25px;border:2px solid #171a17;border-radius:50%;background:#dfff36}
+.rv-score-range.unselected::-webkit-slider-thumb{background:white}.rv-score-range.unselected::-moz-range-thumb{background:white}
+.rv-score-marks{display:flex;justify-content:space-between;font-size:11px;color:var(--rv-muted);font-weight:500;padding:0 4px}.rv-score-hint{font-size:12px;font-weight:400;color:var(--rv-muted);margin-top:8px}
+.rv-ai-anchor{display:flex!important;align-items:center;justify-content:space-between;gap:8px}
+body[data-rehab-view] .rv-ask-ai{flex:none;min-height:44px;min-width:50px;padding:6px 9px;border:0;border-radius:8px;background:transparent;color:var(--rv-ink);font-size:12px;font-weight:650;white-space:nowrap;box-shadow:none}
+body[data-rehab-view] .rv-ask-ai:before{display:none}body[data-rehab-view="result"] #job-content>.card:first-child .rv-ask-ai{color:#dfff36}
+body[data-rehab-view="ai"] .page-head{margin:0 0 12px}body[data-rehab-view="ai"] .page-head h1{margin:0}
+body[data-rehab-view="ai"] .rv-ai-notice{font-size:12px;color:var(--rv-muted);margin:0 0 12px}
+body[data-rehab-view="ai"] .rv-ai-past{margin:0 0 12px}body[data-rehab-view="ai"] .health-chat{margin-top:10px}
+body[data-rehab-view="ai"] .care-form textarea{width:100%;min-height:100px;border:1px solid var(--rv-line);border-radius:12px;padding:12px;font:inherit;font-size:14px}
+@media(forced-colors:active){.rv-score-range::-webkit-slider-thumb{background:Highlight;border-color:CanvasText}.rv-score-range::-webkit-slider-runnable-track{background:CanvasText}}
+body[data-rehab-view="ai"] .care-form .consent{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--rv-muted)}
+body[data-rehab-view="ai"] .care-form .consent input[type="checkbox"]{width:20px;min-width:20px;height:20px;flex:none;margin:0;padding:0}
