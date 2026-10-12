@@ -8,8 +8,8 @@
 | --- | --- | --- | --- |
 | Windows 正式产品 | `Start-Rehab.ps1` → 应用 `.venv` → `app.main` → ProductWindow／Runtime | 原宿主、SQLite、SceneController；独立 Qt practice 仍用原 writer | 0.20.0；原康复／计划库接本人已有安排，多组、休息、下一动作、暂停返回及每组原历史；完整三端流程仍待 |
 | 托管统一网页 | 正式首页 `mobile_rehab/static/unified.html`／`unified.js`；康复入口进入 `/capture?tab=plan` 等 | 当前共享宿主；统一白名单与原 SQLite | 保持五导航；全量 snapshot 的加载拆分待做 |
-| 保留的动作页面 | `/capture` → `index.html`、`app.js`、`extensions.js`；`practice-flow.js`／`practice-feedback.js`／`practice-observation.js`／`observation-presenter.js`／`manual-arrangements.js` | 原录像执行器／预览／同库独立practice与感受版本 | 原安排并行预览；托管可采用本人原人工计划库，独立B01无合格评估路径；正式视觉关联待接 |
-| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.8／code10：可选录入已有安排、原本地政策独立跟练；实际包资源及原CPU Worker流程重验，0 Python API；未真机安装 |
+| 保留的动作页面 | `/capture` → `index.html`、`app.js`、`extensions.js`；`practice-flow.js`／`practice-feedback.js`／`practice-observation.js`／`observation-presenter.js`／`manual-arrangements.js` | 原录像执行器／预览／同库独立practice与感受版本 | 原安排并行预览；本人原人工计划库B01；schema2多组／原休息／下一动作及独立历史已接；正式视觉关联待接 |
+| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.10／code12：原安排多组／休息、原自动政策下一动作、本地组记录及备份；实际资源和原CPU Worker兼容复查，0 Python API；未真机安装 |
 | 可选康复 v2 | `/api/rehab/v2/...`，默认关闭 | 独立 session／commit／反馈语义 | 未冒充旧 preview 或 practice；完整客户端适配仍待 |
 
 本轮不合入远端整包，不改变 WebView origin、签名、权限或模型。电脑 8765／1396、相机和已有窗口不启停。独立 QA 服务只用随机 loopback 端口。
@@ -32,7 +32,9 @@
 
 0.2.7新增入口为托管“我的训练→已有人工安排→使用已有安排”。只读取本人的原REPLAY_FILE／SELF_USE人工计划，不新增或改剂量；当前确认／支撑及必要陪同通过原作用域政策核对。自动资格与正式计划贡献不改。实际原库0评估／1人工计划→1独立跟练完成保存／刷新／历史；这是明确TEST安排及QA次数，不是专业授权或人体试验。当时APK本地B01和Qt未接，保留历史时点。
 
-0.2.8本地“康复→我的训练→录入已有安排／使用已有安排”使用原PhoneStore独立manualArrangements／practices。录入可选，原剂量明确输入且默认空；原键保存、未知回复刷新核对、返回不重复确认、原历史和备份通过。实际末次6eabf152为0原作业／0自动计划／1人工安排／1独立记录，自报3为QA输入，正式字段null；原自动Worker兼容966aff8d仍通过，0 Python请求。这是 c76e90e 发布时点的 64 内容不变证据；本轮仅更新 Qt，不重打 APK。多组、正式视觉关联和真机仍待。
+0.2.8本地“康复→我的训练→录入已有安排／使用已有安排”使用原PhoneStore独立manualArrangements／practices。录入可选，原剂量明确输入且默认空；原键保存、未知回复刷新核对、返回不重复确认、原历史和备份通过。实际末次6eabf152为0原作业／0自动计划／1人工安排／1独立记录，自报3为QA输入，正式字段null；原自动Worker兼容966aff8d仍通过，0 Python请求。这是 c76e90e 发布时点的64内容不变证据；d996f64只更新Qt时未重打APK，不能将当时边界当作当前状态。
+
+当前0.2.10托管与PHONE_LOCAL组序列各走原writer，休息、下一组、下一动作与原身份恢复已接；普通结束不填写完成量，各组自报只作独立导航。实际托管8／8完整、本地资源5／5完整，最终两尺寸审图；本地自动两动作资格来自明确TEST标量经原引擎，不是视觉观测。原始肩外展实际CPU Worker另行重验通过，短版0次负结果保留。正式视觉关联／权威分段、全模块outbox／租约、真机仍待。见[本轮验证](validation/FRONTEND_WEB_PHONE_SEQUENCE_2026-10-12.md)。
 
 ## 当前 Qt 已有安排路径
 
@@ -40,4 +42,4 @@
 
 `app/guided_practice.py` 的 `qt-local-1` 与 `qt-saved-arrangement-guided-1` 绑定原本人／输入种类／使用情境；不是托管或 PHONE_LOCAL 身份。Qt 直接走原 Runtime 命令和 Storage._call，不引入 HTTP／DOM 或第二个患者库。原历史与统一历史只读独立类型，不能当评估、自动确认或正式计划贡献。
 
-f3dc32e的单组基础继续兼容；当前Qt多组沿冻结原安排推进，各组独立原回执、同一旅程，原休息后由本人继续，下一动作重查支撑及陪同。实际两组肩外展＋一组坐位膝屈伸及历史五次通过。跨进程待结束／继续outbox、后补感受、统一音频／租约及正式视觉关联仍未完成；手机／托管多组尚未接。`ANKANG_REHAB_EXPERIENCE=legacy`在新进程恢复原计划库新开始入口，已有独立历史与结束仍可读，下一组新开始隐藏，不在运行中换provider。见[单组基础](validation/FRONTEND_QT_PRACTICE_2026-10-12.md)及[多组本机记录](validation/FRONTEND_QT_SEQUENCE_2026-10-12.md)。
+f3dc32e的单组基础继续兼容；当前Qt多组沿冻结原安排推进，各组独立原回执、同一旅程，原休息后由本人继续，下一动作重查支撑及陪同。实际两组肩外展＋一组坐位膝屈伸及历史五次通过。跨进程待结束／继续outbox、后补感受、统一音频／租约及正式视觉关联仍未完成；当前手机／托管多组已接，仍不能称完整三端目标完成。`ANKANG_REHAB_EXPERIENCE=legacy`在新进程恢复原计划库新开始入口，已有独立历史与结束仍可读，下一组新开始隐藏，不在运行中换provider。见[单组基础](validation/FRONTEND_QT_PRACTICE_2026-10-12.md)及[多组本机记录](validation/FRONTEND_QT_SEQUENCE_2026-10-12.md)。

@@ -190,6 +190,82 @@ async function allowedPractice(h,exercise='shoulder_abduction'){
  return{operation_id:crypto.randomUUID(),plan_id:plan.id,plan_revision:plan.revision,entry_key:plan.items[0].key};
 }
 const endPractice=(count=null)=>({operation_id:crypto.randomUUID(),count,elapsed_ms:1200,reason:'ended',feedback:{pain:null,fatigue:null}});
+const nextPractice=(companion=false)=>({operation_id:crypto.randomUUID(),manual_arrangement_confirmed:true,support_ready:true,companion_present:companion});
+const completedPractice=(h,a,count=null)=>post(h,'/api/practice/'+a.id+'/finish',{...endPractice(count),reason:'completed_set'});
+
+test('phone sequence keeps two original manual sets as separate facts and atomic links',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),original=plain(record),a=await post(h,'/api/practice',manualStart(record));
+ assert.equal(a.schema_version,2);assert.equal(a.sequence_policy,'phone-guided-sequence-1');
+ const one=await completedPractice(h,a,3);assert.equal(one.continuation.kind,'next_set');assert.equal(one.continuation.rest_remaining_ms,null);
+ const value=nextPractice(),two=await post(h,'/api/practice/'+a.id+'/continue',value);assert.equal(two.set_index,2);assert.equal(two.journey_id,a.id);assert.equal(two.finish_payload,null);
+ assert.equal(two.confirmed_count,null);assert.equal(two.formal_plan_contribution,null);assert.equal(two.predecessor_id,a.id);
+ assert.equal((await h.local.request('/api/practice/'+a.id)).successor_id,two.id);
+ const done=await completedPractice(h,two);assert.equal(done.self_reported_count,null);assert.equal(done.continuation,null);assert.equal(done.mode_segments[0].set_index,2);
+ const rows=await h.local.request('/api/practice');assert.equal(rows.length,2);assert.deepEqual(plain(rows.map(r=>r.self_reported_count)),[null,3]);assert.deepEqual(plain(h.local.store.value.manualArrangements[0]),original);
+ const b=h.c.PhoneStore.validateBackup(await h.local.backup());assert.equal(b.practices.length,2);assert.equal(h.local.store.value.jobs.length,0);assert.equal(h.local.store.value.plans.length,0);
+});
+
+test('phone continuation lost reply and concurrent replay keep one original child across reopen',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),a=await post(h,'/api/practice',manualStart(record));await completedPractice(h,a);
+ const value=nextPractice(),route='/api/practice/'+a.id+'/continue';const [one,two]=await Promise.all([post(h,route,value),post(h,route,value)]);assert.equal(one.id,two.id);
+ const reopened=await local(h.storage),same=await post(reopened,route,value);assert.equal(same.id,one.id);assert.equal(reopened.local.store.value.practices.length,2);
+ await assert.rejects(()=>post(h,route,{...value,support_ready:false}),e=>e.reason.code==='CONTINUE_KEY_CONFLICT');
+ await assert.rejects(()=>post(h,route,nextPractice()),e=>e.reason.code==='NO_NEXT_GROUP');
+});
+
+test('phone original rest authority rejects early writes and grants no exercise time',async()=>{
+ const h=await local(),{record}=await manualArrangement(h,{settings:{target_reps:7,target_sets:2,rest_between_sets_s:30,target_angle_deg:null,needs_companion:false}}),a=await post(h,'/api/practice',manualStart(record));
+ h.c.Date=class extends Date{constructor(...args){super(...(args.length?args:['2026-10-12T08:00:00Z']));}static now(){return Date.parse('2026-10-12T08:00:00Z');}};
+ const one=await completedPractice(h,a),value=nextPractice();assert.equal(one.continuation.rest_remaining_ms,30000);assert.equal(one.continuation.rest_time_basis,'owning_device_receipt_utc');
+ await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',value),e=>e.reason.code==='REST_PENDING');assert.equal(h.local.store.value.practices.length,1);
+ h.c.Date=class extends Date{constructor(...args){super(...(args.length?args:['2026-10-12T08:00:31Z']));}static now(){return Date.parse('2026-10-12T08:00:31Z');}};
+ assert.equal((await post(h,'/api/practice/'+a.id+'/continue',value)).set_index,2);assert.equal(h.local.store.value.practices[0].finish_payload.elapsed_ms,1200);
+});
+
+test('phone next automatic action uses the original proposal and never advances formal progress',async()=>{
+ const h=await local();await allowedPractice(h);h.local.store.change(v=>v.jobs.push({...plain(v.jobs[0]),id:crypto.randomUUID(),side:'right'}));
+ const {plan}=await post(h,'/api/plan',{general_activity_ok:true,standing_support_ok:true});assert.equal(plan.items.length,2);
+ const before=plain(plan),a=await post(h,'/api/practice',{operation_id:crypto.randomUUID(),plan_id:plan.id,plan_revision:plan.revision,entry_key:plan.items[0].key});
+ const one=await completedPractice(h,a,2);assert.equal(one.continuation.kind,'next_action');const two=await post(h,'/api/practice/'+a.id+'/continue',nextPractice());
+ assert.equal(two.plan_ref.entry_key,plan.items[1].key);assert.equal(two.side,plan.items[1].side);assert.equal(two.set_index,1);assert.equal(two.execution_allowed,true);
+ assert.deepEqual(plain(h.local.store.value.plans.at(-1)),before);assert.equal(h.local.planProgress(plan).completed,0);
+ h.local.store.change(v=>v.kv['profile:'+v.owner].profile.conditions=['活动限制']);assert.equal((await h.local.request('/api/practice/'+two.id)).execution_allowed,false);
+ assert.equal((await completedPractice(h,two)).state,'COMMITTED');
+});
+
+test('phone continuation commit failure does not split parent/child and can retry same key',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),a=await post(h,'/api/practice',manualStart(record));await completedPractice(h,a);
+ const value=nextPractice(),write=h.storage.setItem;h.storage.setItem=()=>{throw Error('TEST sequence quota');};
+ await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',value),/quota/);assert.equal(h.local.store.value.practices.length,1);assert.equal(h.local.store.value.practices[0].successor_id,null);
+ h.storage.setItem=write;assert.equal((await post(h,'/api/practice/'+a.id+'/continue',value)).id,value.operation_id);assert.equal(h.local.store.value.practices.length,2);
+});
+
+test('phone close preserves original completed facts, ordinary end has no automatic completion',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),a=await post(h,'/api/practice',manualStart(record)),one=await completedPractice(h,a,3),value={operation_id:crypto.randomUUID()};
+ const closed=await post(h,'/api/practice/'+a.id+'/close-journey',value);assert.equal(closed.journey_closed,true);assert.equal(closed.continuation,null);assert.deepEqual(closed.finish_payload,one.finish_payload);
+ assert.equal((await post(h,'/api/practice/'+a.id+'/close-journey',value)).id,a.id);await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',nextPractice()),e=>e.reason.code==='NO_NEXT_GROUP');
+ const b=await post(h,'/api/practice',manualStart(record)),ended=await post(h,'/api/practice/'+b.id+'/finish',endPractice());assert.equal(ended.continuation,null);assert.equal(ended.finish_payload.reason,'ended');assert.equal(ended.self_reported_count,null);
+});
+
+test('phone next group keeps definition, discomfort, owner and strict payload gates',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),a=await post(h,'/api/practice',manualStart(record));await completedPractice(h,a);
+ await assert.rejects(()=>post(h,'https://other.test/api/practice/'+a.id+'/continue',nextPractice()),e=>e.status===403);
+ await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',{...nextPractice(),set_index:2}),e=>e.status===400);
+ await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',{...nextPractice(),support_ready:'yes'}),e=>e.status===400);
+ h.c.PhoneMotion.catalog=async()=>({rehab:[],fitness:[],posture:[]});await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',nextPractice()),e=>e.reason.code==='MANUAL_DEFINITION_CHANGED');
+ await manualArrangement(h);await post(h,'/api/practice/'+a.id+'/feedback',practiceFeedback(0,{pain:1,fatigue:null,note:null}));await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',nextPractice()),e=>e.reason.code==='PRACTICE_STOP_RECORDED');
+ const other=await local();await assert.rejects(()=>other.local.request('/api/practice/'+a.id),e=>e.status===404);
+});
+
+test('phone backup checks sequence structure and links while old schema1 remains readable',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),a=await post(h,'/api/practice',manualStart(record));await completedPractice(h,a);
+ const two=await post(h,'/api/practice/'+a.id+'/continue',nextPractice());await completedPractice(h,two);const b=plain(await h.local.backup());
+ for(const mutate of [v=>v.practices[1].journey_id=crypto.randomUUID(),v=>v.practices[0].successor_id=null,v=>v.practices[1].set_index=1,v=>v.practices[1].arrangement_sequence[0].settings.target_sets=3,v=>v.practices[1].continue_payload.support_ready=false]){
+  const forged=plain(b);mutate(forged.data);assert.throws(()=>h.c.PhoneStore.validateBackup(forged),/练习记录|备份结构/);
+ }
+ h.local.store.change(v=>{v.practices.splice(1);const r=v.practices[0];r.schema_version=1;for(const k of ['journey_id','arrangement_sequence','sequence_index','sequence_policy','journey_closed','successor_id'])delete r[k];});
+ const old=await h.local.request('/api/practice/'+a.id);assert.equal(old.continuation,null);assert.equal(old.self_reported_count,null);assert.equal(h.c.PhoneStore.validateBackup(await h.local.backup()).practices.length,1);
+});
 
 test('actual PHONE_LOCAL practice route commits once, reopens, and never contributes to visual or plan dose',async()=>{
  const h=await local(),start=await allowedPractice(h),context=await h.local.request('/api/practice/context');

@@ -2,6 +2,18 @@
 
 ## 已接通
 
+### 托管与PHONE_LOCAL B02组序列（0.2.10，schema2）
+
+两端新增同形`POST /api/practice/{id}/continue`及`POST /api/practice/{id}/close-journey`。继续载荷精确为`operation_id` UUID、`manual_arrangement_confirmed`／`support_ready`／`companion_present`严格bool；关闭精确为operation_id。本人／provider／source由所属宿主取得，不接客户端覆盖。原create／finish／feedback载荷不变。
+
+托管原SQLite BEGIN IMMEDIATE；手机原Store.serial／一次change+commit同时写前组successor_id和后组。schema2新增journey_id、冻结arrangement_sequence、sequence_index、set_index、sequence_policy及关闭事实，分别为`hosted-guided-sequence-1`／`phone-guided-sequence-1`。各组自己的原id／结束载荷／自报总量，confirmed_count／formal_plan_contribution仍null。旧schema1可读，无continuation，不倒推旧组次。
+
+只有COMMITTED＋明确completed_set＋未关闭且无原后组才提供新候选。按原target_sets／原项次序导航；不以自报数量伪造正式完成。原本人、revision、原设置／定义、原停止事实和单活动记录重查。换动作支撑／陪同默认未确认，原已采用安排不重复录入。托管自动下一动作仍经过原validate_automatic_use，正式next_key没移时真实拒绝保留；本地仍经过原LocalEngine.propose与planProgress，不改这些函数。
+
+原休息保留null或原值，手机`owning_device_receipt_utc`／托管`owning_server_receipt_utc`；继续写操作核对REST_PENDING，页面短单调倒计时仅显示，不算运动、观察保持或跨主机时钟。下一动作不新增组间休息。
+
+同continue key＋同载荷先返回原后组，即使后来的执行资格变化；不同载荷或再创建明确冲突。未知创建／结束先查原身份，父组结束意图优先于已创建子组；隐藏迟到子组仅暂停。close不会改原finish／次数。共享小型草稿按本人／provider／origin／原组分键，自动入口从同计划原记录恢复实际后组；不是跨模块全局outbox。手机备份验证序列、组位置、前后关联及原来源，不从备份恢复视觉或正式贡献。
+
 ### Qt B02多组导航增量（schema2）
 
 只用原Runtime／SQLite writer，新增`practice_continue`（id为已提交前组，payload精确为operation_id UUID、arrangement_confirmed／support_ready／companion_present三个严格bool）及`practice_close_journey`（id为无已创建后组的已提交组，payload精确为operation_id）。原start／finish载荷不变。新记录冻结原validated items为arrangement_sequence、sequence_index和set_index；同journey_id，每组自己的id／finish_payload／自报范围，前后关联在同一原事务提交。不把多组累计写入旧计划贡献。
@@ -10,7 +22,7 @@
 
 组间rest_remaining_ms来自原记录ended_at与同一本机UTC，rest_seconds保留原值／null；不是跨主机单调时钟，也不是人体观测。客户端短倒计时只作显示，实际继续仍由所属writer核对REST_PENDING。下一动作不擅自添加上一项的组间休息。无时长仍显示准备好后由本人继续。
 
-前组successor_id保留原子关联；同operation_id／同continue_payload返回原后组，不同载荷或再建后组明确冲突。结束未知创建时先查其原id，查不到才关闭前组导航，查到则按实际后组结束；不借“结束”再创建一次。close_payload可原键重查，不能篡改原组finish或次数。schema1历史只读兼容，不反推之前的组／未来安排。Qt暂未实现跨进程待continue／finish载荷outbox与主动租约；手机／托管尚未启用这个增量。
+前组successor_id保留原子关联；同operation_id／同continue_payload返回原后组，不同载荷或再建后组明确冲突。结束未知创建时先查其原id，查不到才关闭前组导航，查到则按实际后组结束；不借“结束”再创建一次。close_payload可原键重查，不能篡改原组finish或次数。schema1历史只读兼容，不反推之前的组／未来安排。Qt暂未实现跨进程待continue／finish载荷outbox与主动租约；当前手机／托管的独立组序列契约见上节，不互换三端provider或资格。
 
 ### B01／B02／局部 B04：Qt单组基础（f3dc32e，保持兼容）
 

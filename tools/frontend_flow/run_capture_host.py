@@ -25,6 +25,8 @@ def main():
     parser.add_argument('--seed-from-native-run', type=Path)
     parser.add_argument('--unreadable-practice-finish-reply', action='store_true')
     parser.add_argument('--saved-manual-arrangement-fixture', action='store_true')
+    parser.add_argument('--manual-sequence-fixture', action='store_true')
+    parser.add_argument('--unreadable-practice-continue-reply', action='store_true')
     args = parser.parse_args()
     args.data.mkdir(parents=True, exist_ok=False)
     seed_owner = None
@@ -44,7 +46,7 @@ def main():
         with sqlite3.connect(f'file:{databases[0].as_posix()}?mode=ro', uri=True) as original, sqlite3.connect(target) as copied:
             original.backup(copied)
     app = create_app(args.data, pair_key='TEST-frontend-isolated-host')
-    if args.saved_manual_arrangement_fixture:
+    if args.saved_manual_arrangement_fixture or args.manual_sequence_fixture:
         if args.seed_from_native_run:
             raise ValueError('The no-assessment manual fixture must not reuse an assessment database')
         from uuid import uuid4
@@ -56,18 +58,25 @@ def main():
         settings = default_plan('shoulder_abduction')
         settings.update(side='left', target_reps=7, target_sets=2, target_angle_deg=None)
         scope = dict(participant_id=seed_owner, source_kind='REPLAY_FILE', usage_context='SELF_USE')
-        record = new_training_plan(scope, 'TEST 已有人工安排', [item_from_plan(settings)])
+        entries = [item_from_plan(settings)]
+        if args.manual_sequence_fixture:
+            settings.update(target_reps=3, rest_between_sets_s=3)
+            second = default_plan('knee_extension')
+            second.update(side='right', target_reps=2, target_sets=1, needs_companion=True)
+            entries = [item_from_plan(settings), item_from_plan(second)]
+        record = new_training_plan(scope, 'TEST 已有人工安排', entries)
         with closing(Storage(app.state.jobs.root / seed_owner / 'assessments.sqlite3')) as store:
             store.save_training_plan(record, expected_revision=0)
             if store.list_sessions():
                 raise ValueError('No measured assessment may be injected into this fixture')
-    if args.unreadable_upload_reply or args.unreadable_practice_finish_reply:
+    if args.unreadable_upload_reply or args.unreadable_practice_finish_reply or args.unreadable_practice_continue_reply:
         @app.middleware('http')
         async def response_fault(request, call_next):
             response = await call_next(request)
             upload_fault = args.unreadable_upload_reply and request.url.path == '/api/jobs'
             finish_fault = args.unreadable_practice_finish_reply and request.url.path.startswith('/api/practice/') and request.url.path.endswith('/finish')
-            if request.method == 'POST' and (upload_fault or finish_fault) and response.status_code == 200:
+            continue_fault = args.unreadable_practice_continue_reply and request.url.path.startswith('/api/practice/') and request.url.path.endswith('/continue')
+            if request.method == 'POST' and (upload_fault or finish_fault or continue_fault) and response.status_code == 200:
                 return Response(b'TEST intentionally unreadable receipt', media_type='text/plain')
             return response
     server = uvicorn.Server(uvicorn.Config(app, host='127.0.0.1', port=0, log_level='warning'))

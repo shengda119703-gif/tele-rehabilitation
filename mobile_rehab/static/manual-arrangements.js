@@ -13,9 +13,15 @@ async function mountManualArrangements(){
   if(state.manualArrangementEntry)mountManualArrangementEntry(area,current);
   area.querySelectorAll('[data-manual-entry]').forEach(button=>button.onclick=()=>{
    if(!current())return;const [n,k]=button.dataset.manualEntry.split(':').map(Number),r=records[n],entry=r.items[k],box=area.querySelector('#manual-confirm-area');
-   const original=practices.find(p=>{
-    if(p.plan_ref.id!==r.id||p.plan_ref.entry_key!==entry.key)return false;
+   const pending=practices.find(p=>{
+    if(p.plan_ref.id!==r.id||p.plan_ref.revision!==r.revision)return false;
+    try{const raw=typeof practiceRecordDraftKey==='function'?localStorage.getItem(practiceRecordDraftKey(p.context,p.id)):null;const d=JSON.parse(raw||localStorage.getItem(practiceDraftKey(p.context))||'null');return d?.start?.operation_id===p.id&&(d.nextPending||d.sequenceEndRequested);}catch{return false;}
+   });
+   const original=pending||practices.find(p=>{
+    if(p.plan_ref.id!==r.id||p.plan_ref.revision!==r.revision)return false;
     if(p.state==='PRACTICING')return true;
+    if(p.continuation&&!p.successor_id)return true;
+    if(p.plan_ref.entry_key!==entry.key)return false;
     try{const draft=JSON.parse(localStorage.getItem(practiceDraftKey(p.context))||'null');return draft?.start?.operation_id===p.id&&!draft.committed;}catch{return false;}
    });
    if(original){state.training={id:r.id,entry};state.selected=entry.exercise_id;state.side=entry.side;state.detail=true;void beginGuidedPractice(r,entry,original);return;}

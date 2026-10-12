@@ -8,6 +8,7 @@ from __future__ import annotations
 import copy
 import json
 import re
+from datetime import datetime
 
 from fastapi import HTTPException, Request
 from app.assessment import build_body_profile
@@ -195,6 +196,7 @@ def projection(conn, uid, item):
     """Query-time permission is not a rewrite of the saved grant/facts."""
     result = copy.deepcopy(item)
     result.update(execution_allowed=False, execution_reason=None)
+    result['continuation'] = continuation(conn, uid, item)
     if item['state'] != 'PRACTICING':
         return result
     previous = [json.loads(r[0]) for r in conn.execute('SELECT payload FROM guided_practices WHERE owner=?', (uid,))]
@@ -225,6 +227,118 @@ def projection(conn, uid, item):
         return result
     result['execution_allowed'] = True
     return result
+
+
+def next_decision(conn, uid, item, entry, confirmations):
+    """Recheck the original authority; navigation never changes formal progress."""
+    ref = item['plan_ref']; participant = item['context']['participant_id']
+    def denied(code, message):
+        return dict(allowed=False, code=code, category='EXECUTION_BLOCK',
+                    applies_to='GUIDED_PRACTICE', message=message)
+    row = conn.execute('SELECT payload FROM training_plans WHERE id=?', (ref['id'],)).fetchone()
+    plan = json.loads(row[0]) if row else None
+    if (not plan or plan.get('participant_id') != participant or plan.get('revision') != ref['revision']
+            or plan.get('status') != 'ACTIVE' or plan.get('source_kind') != 'REPLAY_FILE'
+            or plan.get('usage_context') != 'SELF_USE'):
+        return denied('ARRANGEMENT_CHANGED', '原安排已变化，可以保留已保存的练习。')
+    current = next((e for e in plan['items'] if e['key'] == entry['key']), None)
+    if current != entry:
+        return denied('ARRANGEMENT_SETTINGS_CHANGED', '原安排内容需要重新核对。')
+    previous = [json.loads(r[0]) for r in conn.execute('SELECT payload FROM guided_practices WHERE owner=?', (uid,))]
+    if any(related_stop(r, ref['id'], entry['exercise_id'], entry['side']) for r in previous):
+        return denied('PRACTICE_STOP_RECORDED', '本轮已记录不适，请先停止并核对安排。')
+    if item.get('guidance_policy') == MANUAL_POLICY:
+        return manual_decision(conn, uid, participant, plan, entry['key'], confirmations)
+    sessions = [json.loads(r[0]) for r in conn.execute('SELECT payload FROM sessions')]
+    row = conn.execute('SELECT payload FROM participants WHERE id=?', (participant,)).fetchone()
+    person = json.loads(row[0]) if row else None
+    try:
+        validate_automatic_use(plan, entry['key'],
+            build_body_profile(sessions, participant, 'REPLAY_FILE', 'SELF_USE'), sessions, person)
+    except ValueError as error:
+        return denied('ARRANGEMENT_NOT_ALLOWED', str(error))
+    return dict(allowed=True, code='SAVED_ARRANGEMENT_ALLOWED', category=None,
+                applies_to='GUIDED_PRACTICE', message=None, entry=copy.deepcopy(entry))
+
+
+def continuation(conn, uid, item):
+    if (item.get('schema_version', 1) < 2 or item['state'] != 'COMMITTED' or item.get('journey_closed')
+            or (item.get('finish_payload') or {}).get('reason') != 'completed_set'):
+        return None
+    if item.get('successor_id'):
+        return dict(kind='existing', successor_id=item['successor_id'], rest_remaining_ms=0)
+    index = item['sequence_index']; set_index = item['set_index'] + 1; kind = 'next_set'
+    if set_index > item['settings']['target_sets']:
+        index += 1; set_index = 1; kind = 'next_action'
+    if index >= len(item['arrangement_sequence']):
+        return None
+    entry = copy.deepcopy(item['arrangement_sequence'][index])
+    confirmations = item['start_payload'] if kind == 'next_set' else dict(manual_arrangement_confirmed=True)
+    checked = next_decision(conn, uid, item, entry, confirmations)
+    rest = item['settings']['rest_between_sets_s'] if kind == 'next_set' else None
+    elapsed = (datetime.fromisoformat(utc_now()) - datetime.fromisoformat(item['ended_at'])).total_seconds()
+    remaining = max(0, round((rest - elapsed) * 1000)) if rest is not None else None
+    return dict(kind=kind, successor_id=None, entry=entry, set_index=set_index, sequence_index=index,
+                decision={k: v for k, v in checked.items() if k != 'entry'},
+                rest_seconds=rest, rest_remaining_ms=remaining, rest_time_basis='owning_server_receipt_utc',
+                scope='guided_navigation_only')
+
+
+def continue_practice(conn, uid, identity, value):
+    exact(value, ('operation_id',) + MANUAL_FIELDS); key(value['operation_id'])
+    if any(type(value[k]) is not bool for k in MANUAL_FIELDS):
+        raise HTTPException(400, '请核对下一项的支撑和陪同情况')
+    conn.execute('BEGIN IMMEDIATE')
+    previous = read(conn, uid, identity)
+    found = conn.execute('SELECT payload FROM guided_practices WHERE owner=? AND id=?', (uid, value['operation_id'])).fetchone()
+    if found:
+        existing = json.loads(found[0])
+        if existing.get('predecessor_id') != identity or existing.get('continue_payload') != value:
+            raise HTTPException(409, dict(code='CONTINUE_KEY_CONFLICT', category='TECHNICAL',
+                                         message='继续编号已用于另一份内容。'))
+        return projection(conn, uid, existing)
+    following = continuation(conn, uid, previous)
+    if not following or following.get('successor_id'):
+        raise HTTPException(409, dict(code='NO_NEXT_GROUP', category='EXECUTION_BLOCK', message='本组没有待开始的下一项，请查看原记录。'))
+    if any(json.loads(r[0])['state'] == 'PRACTICING' for r in conn.execute('SELECT payload FROM guided_practices WHERE owner=?', (uid,))):
+        raise HTTPException(409, dict(code='ORIGINAL_PRACTICE_OPEN', category='TECHNICAL', message='请先返回并结束上次练习。'))
+    entry = following['entry']; checked = next_decision(conn, uid, previous, entry, value)
+    if not checked['allowed']:
+        raise HTTPException(409, {k: v for k, v in checked.items() if k != 'entry'})
+    if following['rest_remaining_ms']:
+        raise HTTPException(409, dict(code='REST_PENDING', category='MISSING_INPUT', message='按原安排休息后再继续。'))
+    item = copy.deepcopy(previous)
+    for name in ('ended_at', 'finish_payload', 'self_reported_count', 'count_scope', 'elapsed_source', 'mode_segments',
+                 'practice_feedback', 'close_payload', 'journey_closed_at', 'continuation'):
+        item.pop(name, None)
+    ref = dict(id=previous['plan_ref']['id'], revision=previous['plan_ref']['revision'], entry_key=entry['key'])
+    start = dict(operation_id=value['operation_id'], plan_id=ref['id'], plan_revision=ref['revision'], entry_key=entry['key'])
+    if previous.get('guidance_policy') == MANUAL_POLICY:
+        start.update({k: value[k] for k in MANUAL_FIELDS})
+        item.update(arrangement_ref=dict(**copy.deepcopy(ref), kind='MANUAL_SAVED'),
+                    execution_grant={k: v for k, v in checked.items() if k != 'entry'})
+    item.update(id=value['operation_id'], state='PRACTICING', start_payload=start, created_at=utc_now(), plan_ref=ref,
+                exercise_id=entry['exercise_id'], side=entry['side'], settings=copy.deepcopy(entry['settings']),
+                sequence_index=following['sequence_index'], set_index=following['set_index'], record_origin='GUIDED_PRACTICE',
+                finish_payload=None, predecessor_id=identity, continue_payload=copy.deepcopy(value), successor_id=None, journey_closed=False)
+    previous['successor_id'] = item['id']
+    conn.execute('UPDATE guided_practices SET payload=? WHERE owner=? AND id=?', (dumps(previous), uid, identity))
+    conn.execute('INSERT INTO guided_practices VALUES (?,?,?)', (uid, item['id'], dumps(item)))
+    return projection(conn, uid, item)
+
+
+def close_journey(conn, uid, identity, value):
+    exact(value, ('operation_id',)); key(value['operation_id'])
+    conn.execute('BEGIN IMMEDIATE'); item = read(conn, uid, identity)
+    if item.get('close_payload'):
+        if item['close_payload'] != value:
+            raise HTTPException(409, dict(code='CLOSE_KEY_CONFLICT', message='本次已结束，请查看原记录。'))
+        return projection(conn, uid, item)
+    if item['state'] != 'COMMITTED' or item.get('successor_id'):
+        raise HTTPException(409, dict(code='GROUP_STATE_CHANGED', message='请先核对当前组记录。'))
+    item.update(journey_closed=True, journey_closed_at=utc_now(), close_payload=copy.deepcopy(value))
+    conn.execute('UPDATE guided_practices SET payload=? WHERE owner=? AND id=?', (dumps(item), uid, identity))
+    return projection(conn, uid, item)
 
 
 def create(conn, uid, participant, value):
@@ -278,12 +392,15 @@ def create(conn, uid, participant, value):
     if any(p['state'] == 'PRACTICING' for p in previous):
         raise HTTPException(409, dict(code='ORIGINAL_PRACTICE_OPEN', category='TECHNICAL',
                                      applies_to='GUIDED_PRACTICE', message='上次练习尚未结束，请先返回原记录。'))
-    item = dict(schema_version=1, id=value['operation_id'], context=context(participant),
+    sequence = validate_training_plan(plan)['items']
+    item = dict(schema_version=2, id=value['operation_id'], journey_id=value['operation_id'], context=context(participant),
                 state='PRACTICING', start_payload=copy.deepcopy(value), created_at=utc_now(),
                 plan_ref=dict(id=plan['id'], revision=plan['revision'], entry_key=entry['key']),
                 exercise_id=entry['exercise_id'], side=entry['side'], settings=copy.deepcopy(entry['settings']),
                 record_origin='GUIDED_PRACTICE', visual_session_ref=None, confirmed_count=None,
-                formal_plan_contribution=None, finish_payload=None)
+                formal_plan_contribution=None, finish_payload=None,
+                arrangement_sequence=copy.deepcopy(sequence), sequence_index=next(n for n, e in enumerate(sequence) if e['key'] == entry['key']),
+                set_index=1, sequence_policy='hosted-guided-sequence-1', journey_closed=False, successor_id=None)
     if manual:
         item.update(guidance_policy=MANUAL_POLICY, formal_plan_ref=None, assessment_ref=None,
                     arrangement_ref=dict(**copy.deepcopy(item['plan_ref']), kind='MANUAL_SAVED'),
@@ -313,18 +430,38 @@ def finish(conn, uid, identity, value):
     # Ended facts may always be saved after a later eligibility change; that
     # does not grant any further execution or contribute to the formal plan.
     item.update(state='COMMITTED', ended_at=utc_now(), finish_payload=copy.deepcopy(value),
-                self_reported_count=value['count'], count_scope='set_total', set_index=1,
+                self_reported_count=value['count'], count_scope='set_total', set_index=item.get('set_index', 1),
                 elapsed_source='frontend_active_time_not_observed_hold',
                 record_origin='SELF_RECORDED' if value['count'] is not None else 'GUIDED_PRACTICE')
     item['mode_segments'] = [dict(mode='GUIDED', start=item['created_at'], end=item['ended_at'],
                                  reason='explicit_saved_manual_arrangement' if item.get('guidance_policy') == MANUAL_POLICY else 'allowed_saved_arrangement', time_basis='server_receipt_time',
-                                 source='GUIDED_PRACTICE', set_index=1)]
+                                 source='GUIDED_PRACTICE', set_index=item.get('set_index', 1))]
+    if value['reason'] != 'completed_set':
+        item['journey_closed'] = True
     conn.execute('UPDATE guided_practices SET payload=? WHERE owner=? AND id=?',
                  (dumps(item), uid, identity))
     return projection(conn, uid, item)
 
 
 def install_practice(app, owner, store_for, small_json, participant_for):
+    @app.post('/api/practice/{identity}/continue')
+    async def continue_group(identity: str, request: Request):
+        uid, value = owner(request), await small_json(request); key(identity)
+        def save():
+            with store_for(uid) as store:
+                return store._call(lambda c: continue_practice(c, uid, identity, value))
+        import asyncio
+        return await asyncio.to_thread(save)
+
+    @app.post('/api/practice/{identity}/close-journey')
+    async def end_journey(identity: str, request: Request):
+        uid, value = owner(request), await small_json(request); key(identity)
+        def save():
+            with store_for(uid) as store:
+                return store._call(lambda c: close_journey(c, uid, identity, value))
+        import asyncio
+        return await asyncio.to_thread(save)
+
     @app.get('/api/practice/{identity}/feedback')
     def get_feedback(identity: str, request: Request):
         uid = owner(request)
