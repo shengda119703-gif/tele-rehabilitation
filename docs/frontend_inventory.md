@@ -4,7 +4,9 @@
 
 ## 真实入口
 
-当前增量为0.2.12：原 `/capture` 的实时预览、已有安排旁路指导和已启用v2正式评估，统一经 `guidance-scheduler.js` 输出提示／语音；旧独立 speechSynthesis 调用已移入唯一 AudioPort。普通候选容量1、6秒间隔、同句10秒、缺测建议同旅程同动作一次；当前来源／世代／相位／期限失效会停止真实输出，不等待下一帧。APK沿原桥增加选用的已安装离线中文TTS与原生暂停／销毁停止；没有新增敏感权限、联网语音或自动下载。当前没有覆盖Qt音频、独立TS浏览器适配器及全程序全部音频模块；不能称U4全部完成。实际输入和失败分母见[指导验收](validation/FRONTEND_GUIDANCE_SCHEDULER_2026-10-12.md)。
+当前增量0.2.13：原托管正式测量结束区／历史详情接`formal-feedback.js`，原反馈版本／原幂等键，未提交时只留填写草稿，finalized后可后补；视觉事实和感受分开保存，不改原次数／贡献。原宿主只协调Storage冷初始化，不改writer／版本或未知库保护。PHONE_LOCAL仍没有托管正式能力，不使用Python。完整训练视觉关联仍待，详见[正式反馈验收](validation/FRONTEND_FORMAL_FEEDBACK_2026-10-12.md)。
+
+上一增量0.2.12：原 `/capture` 的实时预览、已有安排旁路指导和已启用v2正式评估，统一经 `guidance-scheduler.js` 输出提示／语音；旧独立 speechSynthesis 调用已移入唯一 AudioPort。普通候选容量1、6秒间隔、同句10秒、缺测建议同旅程同动作一次；当前来源／世代／相位／期限失效会停止真实输出，不等待下一帧。APK沿原桥增加选用的已安装离线中文TTS与原生暂停／销毁停止；没有新增敏感权限、联网语音或自动下载。当前没有覆盖Qt音频、独立TS浏览器适配器及全程序全部音频模块；不能称U4全部完成。实际输入和失败分母见[指导验收](validation/FRONTEND_GUIDANCE_SCHEDULER_2026-10-12.md)。
 
 0.2.11已接原托管动作详情条件性“实时测量并保存”，`formal-session.js`／`formal-measurement.js`接原v2创建、JPEG、控制、202及canonical commit。仅宿主已明确启用v2时出现；正常用户服务仍默认关闭。原历史位置分别读正式事实和本机待核对草稿，不套旧summary；legacy仍可读原事实及核对原操作。独立APK没有该托管能力，不访问Python。完整训练旁路视觉关联／分段和三端验收仍未完成。
 
@@ -13,14 +15,16 @@
 | Windows 正式产品 | `Start-Rehab.ps1` → 应用 `.venv` → `app.main` → ProductWindow／Runtime | 原宿主、SQLite、SceneController；独立 Qt practice 仍用原 writer | 0.20.0；原康复／计划库接本人已有安排，多组、休息、下一动作、暂停返回及每组原历史；完整三端流程仍待 |
 | 托管统一网页 | 正式首页 `mobile_rehab/static/unified.html`／`unified.js`；康复入口进入 `/capture?tab=plan` 等 | 当前共享宿主；统一白名单与原 SQLite | 保持五导航；全量 snapshot 的加载拆分待做 |
 | 保留的动作页面 | `/capture` → `index.html`、`app.js`、`extensions.js`；`practice-flow.js`／`practice-feedback.js`／`practice-observation.js`／`observation-presenter.js`／`manual-arrangements.js` | 原录像执行器／预览／同库独立practice与感受版本 | 原安排并行预览；本人原人工计划库B01；schema2多组／原休息／下一动作及独立历史已接；正式视觉关联待接 |
-| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore；GuidanceAudio沿原桥 | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.12／code14：原CPU Worker、旁路预览、原规则安排、暂停／丢回复刷新／反馈／历史备份重验；0 Python请求。新增离线TTS经原SDK编译、打包和桥接单测，未真机安装或验证实际声音 |
-| 可选康复 v2 | `/api/rehab/v2/...`，默认关闭；已启用宿主的原动作详情／历史位置 | 独立原 session／202／canonical commit，不与旧事实库互换 | 原肩外展录像实际创建／帧／暂停恢复／保存／历史通过，未建立基线、0次如实保存；正式训练关联／反馈UI及三重点动作仍待 |
+| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore；GuidanceAudio沿原桥 | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.13／code15：共享正式反馈脚本但能力不启用；原CPU Worker、原规则安排、暂停／丢回复刷新／本地反馈／历史备份重验，0 Python请求。原离线TTS仍未真机安装或验证实际声音 |
+| 可选康复 v2 | `/api/rehab/v2/...`，默认关闭；已启用宿主的原动作详情／结束／历史位置 | 独立原 session／202／canonical commit／feedback版本，不与旧事实库互换 | 原肩外展录像实际创建／帧／暂停恢复／保存／历史及独立后补感受通过，未建立基线、0次如实保存；正式训练关联及三重点动作仍待 |
 
 本轮不合入远端整包，不改变 WebView origin、签名、权限或模型。电脑 8765／1396、相机和已有窗口不启停。独立 QA 服务只用随机 loopback 端口。
 
 ## 保护范围与现状
 
-本增量相对8d9f481复查65个已跟踪保护文件，内容未变（文本仅允许CRLF差异），两尺寸原预览几何／字号未变；新增测量结果和原历史截图已审。它不覆盖用户约280张未跟踪动作图片，也不替代历史Qt原基线／3个授权控制模块的报告。当前证据见[正式测量增量](validation/FRONTEND_FORMAL_MEASUREMENT_2026-10-12.md)。
+0.2.13最后源码相对7365533复查65已跟踪保护内容及两尺寸原预览几何不变；实际结束区／感受冲突和历史截图已审。它不覆盖用户未跟踪动作图片或全产品视觉，见[正式反馈记录](validation/FRONTEND_FORMAL_FEEDBACK_2026-10-12.md)。
+
+0.2.11时点相对8d9f481复查65个已跟踪保护文件，内容未变（文本仅允许CRLF差异），两尺寸原预览几何／字号未变；新增测量结果和原历史截图已审。它不覆盖用户约280张未跟踪动作图片，也不替代历史Qt原基线／3个授权控制模块的报告，见[正式测量增量](validation/FRONTEND_FORMAL_MEASUREMENT_2026-10-12.md)。
 
 - 原 64 个保护文件中 61 个内容不变；3 个 Qt 控制模块是本任务明确授权的事件／状态／历史接线变化，非授权方法 AST 不变。新界面复用原 Qt 控件与原主题，无新 QSS／字体／图标。`verify_qt_visual_contract.py` 明确报告并非全部 64 个文件原样；没有重置原基线。文本只容许 CRLF 差别，不称原始 SHA 全相同。
 - Qt 浅色 1440×940／100% 的原首页、助手、康复前后 button-audit 与 observations 内容相同；首页和康复工作区截图 SHA 相同。新增跟练页在浅色 100%／暗色 150% 实际运行并审图；不是 Windows 原生窗口模态、高对比、多屏或手机真机验收。

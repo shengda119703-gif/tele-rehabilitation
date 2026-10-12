@@ -232,9 +232,16 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
     app.state.jobs = jobs
     app.state.pair_key = pair_key
 
+    # Independent page reads may reach one brand-new legacy database together.
+    # Serialize ONLY original writer initialization so one constructor cannot
+    # observe another constructor's schema with a stale user_version=0.
+    # Keep all migration/version checks inside the unchanged original Storage.
+    store_initialization_lock = threading.Lock()
+
     @contextmanager
     def store_for(uid):
-        store = Storage(shared.backend.data_dir / 'home_rehab.sqlite3' if shared else jobs.root / uid / 'assessments.sqlite3')
+        with store_initialization_lock:
+            store = Storage(shared.backend.data_dir / 'home_rehab.sqlite3' if shared else jobs.root / uid / 'assessments.sqlite3')
         try:
             yield store
         finally:

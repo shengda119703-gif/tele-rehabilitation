@@ -74,6 +74,10 @@ function renderFormalState(f){
   $('#formal-history').onclick=()=>showFormalRecord(a.draft.session_id);
   $('#formal-again').disabled=!automaticUploadReconciliation;$('#formal-again').onclick=()=>{if(!formalCurrent(f)||!formalCapability())return;formalFlow=null;formalMeasurementPage(true);};
  }
+ if(terminal&&item?.session_id===a.draft.session_id&&typeof mountFormalFeedback==='function'){
+  if(!f.feedback)f.feedback=mountFormalFeedback(item,f.area,f.capability,f.pageGeneration,()=>formalCurrent(f));
+  else if(committed&&!f.feedback.adapter.snapshot&&!f.feedback.busy)void reconcileFormalFeedback(f.feedback);
+ }
 }
 async function reconcileFormalPage(f){
  if(!formalCurrent(f)||!f.adapter||f.busy)return;
@@ -172,6 +176,7 @@ async function showFormalRecord(id){
   const p=item.frozen_plan.plan,s=item.snapshot,c=item.canonical_commit;
   if(c.completed_reps!==s.completed)throw Error('测量记录暂未能核对。');
   area.innerHTML='<h2>'+esc(label(p.exercise_id))+' · '+sideLabel(p.side)+'</h2><p class="caption">'+dateLabel(c.committed_at)+' · 测量结果已保存</p><div class="stat-grid"><div class="stat"><strong>'+s.completed+'<small> 次</small></strong><small>自动记录</small></div><div class="stat"><strong>'+esc(s.repetitions?.filter(r=>r.completion_status==='UNASSESSABLE').length??0)+'</strong><small>未完整测到的片段</small></div></div><p class="result-note">本次按实际可观察片段记录；未测到的部分没有补算。</p><p class="caption">'+(item.derived_report_state==='ready'?'详细报告已生成':'详细报告稍后补齐，已有测量结果可以查看。')+'</p><details><summary>测量说明</summary><p>'+esc(s.protocol.metric_version)+' · '+esc(s.measurement_contract.coordinate_space)+'</p><p>二维投影观察，不是疾病诊断。</p></details>';
+  if(typeof mountFormalFeedback==='function')mountFormalFeedback(item,area,capability,generation);
  }catch(e){if($('#formal-record')===area&&generation===formalPageGeneration&&owner===(state.uploadOwnerGeneration||0)){area.innerHTML='<p>'+esc(formalMessage(e))+'</p><button class="secondary" id="formal-record-retry">重试</button>';$('#formal-record-retry').onclick=()=>showFormalRecord(id);}}
 }
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseFormalMeasurement();});

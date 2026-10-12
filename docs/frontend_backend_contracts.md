@@ -2,6 +2,16 @@
 
 ## 已接通
 
+### 原v2正式记录反馈：0.2.13共享页面
+
+原测量结束区和历史详情消费原`GET /api/rehab/v2/sessions/{id}`的`feedback_revision`／`latest_feedback`，写入仍是原`POST .../{id}/feedback`，精确载荷为`idempotency_key`、`expected_revision`、`feedback:{pain,fatigue,reason,notes}`。pain／fatigue严格null或0–10整数；reason沿原枚举，notes沿原1000字限制。所属provider／owner／participant／LIVE_CAMERA:SELF_USE由当前真实能力和原session核对，不由用户填写新内部字段。
+
+原服务只在finalized后接受感受；未提交测量的填写先保留独立小草稿，不阻止视觉事实保存，不抢先POST。实际本地写入失败提供导出，不冒充可靠草稿。原同键操作查询先于revision校验，所以丢回复恢复用同key／同payload再POST，不增加虚构operation-query路由；ACK必须核对原session／self_report／版本／内容，迟到旧GET不回退ACK后的状态。
+
+`feedback_revision_conflict`先读最新；同值收敛并保留原被拒操作，不记为该操作ACK；实质冲突由用户明确选择，新的修改用新的键和当前revision。损坏旧草稿原字节保留，不默认覆盖；本人／来源变化停止旧队列补交。所有感受独立于canonical视觉提交、次数及正式计划贡献。这里只接已启用宿主的正式记录，不让PHONE_LOCAL获得托管API或正式资格。
+
+最小宿主接缝：原`store_for`只串行原Storage构造，避免几个独立页面请求对同一新库交错初始化。原writer／事务／版本／未知库保护不改，不声称解决跨进程持久outbox或迁移问题。真实HTTP／SQLite和两尺寸原模型流程及失败分母见[本机反馈记录](validation/FRONTEND_FORMAL_FEEDBACK_2026-10-12.md)。正式训练视觉关联与savedParts仍待。
+
 ### B03当前消费：共享动作页面指导协调（0.2.12）
 
 没有新增医学API或修改原cue策略。`guidance-scheduler.js`仅消费UI事件：绑定owner世代、journey/session、provider、source_context、动作／本人侧、frontend_generation；回调复核真实控制器。来源为FORMAL_CUE、LIVE_PREVIEW、GUIDED_SCRIPT、USER_OPERATION、EXECUTION_STOP、ENCOURAGEMENT；后两种优先级只接受显式事件，不从报错文字猜停练资格。生产当前已接前三种，不能声称全部专业停止事件已接齐。
@@ -29,7 +39,7 @@ Android原OfflineAndroid桥新增guidancePrepare／guidanceAvailable／guidanceS
 
 B03在原CueEvents.query已通过相位、epoch和原期限后，GET只读返回remaining_ttl_ms=min(原发出期限剩余,原source期限剩余)，不改算法或证据TTL；客户端再扣本次HTTP往返并核对证据，只播当前有效口令。全程序统一音频出口仍待，不能称本项替代U4。
 
-v2 plans／训练create／feedback现有接口虽保留，当前新UI仅正式评估；独立原安排practice仍不冒充v2合格plan。训练视觉关联、独立保存各部分及正式贡献规则保持未完成状态。主启动与正常用户服务仍v2默认关闭。
+0.2.11时点新UI仅正式评估；0.2.13正式反馈界面见前述。v2 plans／训练create尚未完整接线，独立原安排practice仍不冒充v2合格plan。训练视觉关联、独立保存各部分及正式贡献规则保持未完成状态。主启动与正常用户服务仍v2默认关闭。
 
 ### 托管与PHONE_LOCAL B02组序列（0.2.10，schema2）
 
