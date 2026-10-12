@@ -2,10 +2,11 @@
 // The original /live adapter is a PREVIEW, never a measured training commit.
 // Keep its identity and ephemeral count outside the saved practice/dose fields.
 function mountPracticeObservation(j,area,retained=null){
+ if(j.context.provider==='hosted-rehab-v2-guided-1'){
+  if(typeof mountFormalPracticeObservation==='function')mountFormalPracticeObservation(j,area,retained);
+  return;
+ }
  if(j.ended||typeof RehabObservation==='undefined')return;
- // Until the independent formal-camera association is connected, NEVER use
- // the legacy preview as if it were the formal visual record for this plan.
- if(j.context.provider==='hosted-rehab-v2-guided-1')return;
  const panel=retained||document.createElement('details');panel.id='practice-observation';
  if(!retained){panel.innerHTML='<summary>摄像头自动指导（选用）</summary>'+liveMarkup();}
  area.appendChild(panel);
@@ -55,8 +56,15 @@ function practiceObservationConsumer(j,area,panel){
  };
  return consumer;
 }
-function stopPracticeObservation(j){if(liveSession?.consumer?.journey===j)stopLive('practice_paused');}
+function stopPracticeObservation(j,reason='practice_paused'){
+ if(j.context.provider==='hosted-rehab-v2-guided-1'){
+  if(typeof stopFormalPracticeObservation==='function')stopFormalPracticeObservation(j,reason);
+  return;
+ }
+ if(liveSession?.consumer?.journey===j)stopLive(reason);
+}
 async function resumePracticeObservation(j,area){
+ if(j.context.provider==='hosted-rehab-v2-guided-1')return;
  if(!j.previewWanted||j.previewResumeRequest)return;
  // One explicit Continue intent may restore this journey's opted-in preview.
  // Wait for its original release/permission, never bypass an uncertain close.

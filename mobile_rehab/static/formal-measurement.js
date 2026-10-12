@@ -108,7 +108,7 @@ async function startFormalCamera(f){
  if(!formalCapability()||!formalCurrent(f)||f.busy||f.sampling||f.cameraRequest||f.adapter?.draft.end_requested)return;
  if(!$('#live-consent').checked||!$('#formal-view').checked){$('#live-status').textContent='请同意相机分析并确认拍摄方向。';return;}
  if(f.training&&(!$('#formal-plan-confirmed').checked||f.training.binding.settings.needs_companion&&!$('#formal-companion')?.checked)){$('#live-status').textContent=f.training.binding.settings.needs_companion?'请确认采用这份安排，且陪同者在场。':'请确认采用本人的这份训练安排。';return;}
- if(liveCameraRequest||liveCreateRequest||liveCloseRequest||liveClosingSession){$('#live-status').textContent='正在释放上次相机，请稍后再开始。';return;}
+ if(liveCameraRequest||liveCreateRequest||liveCloseRequest||liveClosingSession||liveSession||(typeof formalPracticeCameraBusy==='function'&&formalPracticeCameraBusy())){$('#live-status').textContent='正在释放上次相机，请稍后再开始。';return;}
  f.busy=true;const generation=++f.cameraGeneration;
  $('#live-start').disabled=true;$('#live-stop').disabled=false;$('#live-status').textContent='正在打开摄像头…';
  try{
@@ -144,24 +144,31 @@ async function startFormalCamera(f){
  finally{f.busy=false;if(formalCurrent(f)&&generation===f.cameraGeneration&&!f.adapter?.draft.end_requested){$('#live-start').disabled=false;$('#formal-pause').disabled=true;}}
 }
 async function formalFrames(f,generation){
- const current=()=>formalCurrent(f)&&f.sampling&&!document.hidden&&generation===f.cameraGeneration&&!f.adapter.draft.end_requested;
- const canvas=document.createElement('canvas');
- while(current()){
-  if(!f.video.videoWidth){await new Promise(r=>setTimeout(r,80));continue;}
-  const scale=Math.min(1,640/f.video.videoWidth);canvas.width=Math.round(f.video.videoWidth*scale);canvas.height=Math.round(f.video.videoHeight*scale);canvas.getContext('2d').drawImage(f.video,0,0,canvas.width,canvas.height);
-  const blob=await new Promise(r=>canvas.toBlob(r,'image/jpeg',.75));if(!current())return;if(!blob)throw Error('相机没有返回画面。');
-  await f.adapter.frame(blob);if(!current())return;
-  // Accepted != processed. Wait for original consumer, with no frame backlog.
-  for(let tries=0;tries<40&&current();tries++){
-   const readBegan=performance.now();await f.adapter.read();if(!current())return;renderFormalState(f);
-   const roundtrip=performance.now()-readBegan;
-   const item=f.adapter.snapshot,s=item.snapshot,cue=item.current_cue;
-   if(item.persistence_state==='finalized'||item.run_state==='finishing'){releaseFormalCamera(f);await reconcileFormalPage(f);return;}
-   if(f.training&&(s?.training?.stage==='RESTING'||s?.training?.plan_complete===true)){releaseFormalCamera(f);renderFormalState(f);return;}
+ const current=()=>formalCurrent(f)&&f.sampling&&!document.hidden&&generation===f.cameraGeneration;
+ return pumpFormalFrames(f.video,f.adapter,current,async(item,roundtrip)=>{
+   renderFormalState(f);const s=item.snapshot,cue=item.current_cue;
+   if(item.persistence_state==='finalized'||item.run_state==='finishing'){releaseFormalCamera(f);await reconcileFormalPage(f);return false;}
+   if(f.training&&(s?.training?.stage==='RESTING'||s?.training?.plan_complete===true)){releaseFormalCamera(f);renderFormalState(f);return false;}
    const usable=cue&&s&&cue.session_id===item.session_id&&cue.exercise_id===f.exercise&&cue.side===f.side&&cue.calibration_epoch===s.calibration_epoch&&cue.valid_phases?.includes(s.phase)&&cue.evidence_refs?.length&&Number.isFinite(cue.remaining_ttl_ms)&&cue.remaining_ttl_ms>roundtrip;
-   // Use backend remaining TTL; never subtract clocks from different processes.
    $('#live-cue').textContent=usable?cue.instruction:'按动作说明继续，部分画面暂未测到';
    if(f.guidance){if(!usable)RehabGuidance.app.clear(f.guidance,'按动作说明继续，部分画面暂未测到');else RehabGuidance.app.offer(f.guidance,{id:cue.cue_id,source:'FORMAL_CUE',text:cue.instruction,valid:true,remaining_ms:cue.remaining_ttl_ms-roundtrip,session_id:cue.session_id,exercise_id:cue.exercise_id,side:cue.side,epoch:s.calibration_epoch,phase:s.phase,evidence_refs:cue.evidence_refs,valid_phases:cue.valid_phases});}
+   return true;
+ });
+}
+// One original JPEG/processed-sequence pump for assessment, training and the
+// optional guided camera. No second model, evidence threshold or frame queue.
+async function pumpFormalFrames(video,adapter,current,onSnapshot){
+ const canvas=document.createElement('canvas');
+ while(current()){
+  if(!video.videoWidth||!video.videoHeight){await new Promise(r=>setTimeout(r,80));continue;}
+  const scale=Math.min(1,640/video.videoWidth);canvas.width=Math.round(video.videoWidth*scale);canvas.height=Math.round(video.videoHeight*scale);canvas.getContext('2d').drawImage(video,0,0,canvas.width,canvas.height);
+  const blob=await new Promise(r=>canvas.toBlob(r,'image/jpeg',.75));if(!current())return;if(!blob)throw Error('相机没有返回画面。');
+  await adapter.frame(blob);if(!current())return;
+  // Accepted != processed. Wait for original consumer, with no frame backlog.
+  for(let tries=0;tries<40&&current();tries++){
+   const readBegan=performance.now();await adapter.read();if(!current())return;
+   const roundtrip=performance.now()-readBegan;
+   const item=adapter.snapshot;if(await onSnapshot(item,roundtrip)===false||!current())return;
    if(item.processed_last_seq>=item.accepted_last_seq)break;await new Promise(r=>setTimeout(r,100));
   }
   await new Promise(r=>setTimeout(r,120));

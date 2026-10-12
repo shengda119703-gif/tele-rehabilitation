@@ -66,7 +66,8 @@ async function openFormalTraining(id,originalKey=null){
  const owner=state.uploadOwnerGeneration||0,generation=++formalPlansGeneration,pageNode=app.firstElementChild;
  const current=()=>app.firstElementChild===pageNode&&generation===formalPlansGeneration&&formalPlanCurrent(capability,owner);
  try{
-  let saved=RehabFormal.SessionAdapter.restore(localStorage,location.origin,capability,{submode:'training',plan_id:id,...(originalKey?{idempotency_key:originalKey}:{})});
+  let saved=originalKey?RehabFormal.SessionAdapter.restore(localStorage,location.origin,capability,{submode:'training',plan_id:id,idempotency_key:originalKey}):RehabFormal.SessionAdapter.drafts(localStorage,location.origin,capability).find(d=>d.create.submode==='training'&&d.create.plan_id===id&&!d.practice_binding)||null;
+  if(saved?.practice_binding){await openFormalGuidedTraining(id,saved.practice_binding.practice_id);return;}
   if(!originalKey&&saved?.save_state==='COMMITTED')saved=null;
   if(originalKey&&!saved)throw Error('原训练草稿暂未能读取，请返回核对。');
   let value;

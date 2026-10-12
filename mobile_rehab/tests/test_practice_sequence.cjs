@@ -35,6 +35,7 @@ test('an old owner cannot automatically submit a retained finish intent',async()
  const h=harness();h.c.state.uploadOwnerGeneration=1;h.j.finish={operation_id:crypto.randomUUID()};
  await h.run('submitPracticeFinish(j,area)');assert.equal(h.calls.length,0);
 });
+test('native pagehide events are normalized to a stable resource-stop reason',()=>{const h=harness();let reason;h.c.stopPracticeObservation=(j,value)=>reason=value;h.c.event={type:'pagehide'};h.run('pausePractice(event)');assert.equal(reason,'page_hidden');assert.equal(h.j.running,false);});
 test('end during in-flight creation ends actual child and never runs its clock',async()=>{
  const h=harness(),pending=deferred();let payload;h.transport(async(route,opts)=>{if(!opts)throw Object.assign(Error('TEST absent'),{status:404});const value=JSON.parse(opts.body);if(route.endsWith('/continue')){payload=value;return pending.promise;}if(route.endsWith('/finish'))return{...h.child(payload),state:'COMMITTED',finish_payload:value,execution_allowed:false};throw Error('TEST unexpected route');});
  const running=h.run('reconcilePracticeSequence(j,area,false)');await tick();h.nodes.get('#practice-sequence-end').onclick();assert.equal(h.j.sequenceEndRequested,true);
