@@ -2,6 +2,31 @@
 
 ## 已接通
 
+### B01／B02／局部 B04：Qt 本人原人工安排
+
+本轮接原 `ProductRehabWindow`／`Runtime`／`Storage._call`，不走网页 HTTP。独立 `guided_practices(owner,id,payload)` 仍在原 SQLite，owner 是 `qt-local-1:` 加原作用域摘要，不能读托管 owner 或 PHONE_LOCAL。context 包含原 participant_id／source_kind／usage_context、provider、policy_version；读取不存在的新表不会创建表，写入沿原事务和 commit。
+
+| 原命令 | 实际载荷与回执 |
+| --- | --- |
+| `practice_prepare` | scope、原 id／revision／entry_key、request_id；返回原安排／结构化 decision／当前未结束 record |
+| `practice_start` | scope／request_id；payload 精确为 operation_id UUID、plan_id、plan_revision、entry_key、arrangement_confirmed、support_ready、companion_present；后三者严格 bool |
+| `practice_get` | scope、id、request_id；查询原事实并重新核对当前执行资格，不重新授予旧 grant |
+| `practice_draft` | id／scope／request_id；payload 为原 operation_id、expected_revision、elapsed_ms、count；同键同载荷返回原草稿，版本冲突不覆盖 |
+| `practice_finish` | id／scope／request_id；payload 为独立 operation_id、count、elapsed_ms、reason、feedback（pain／fatigue）；原键同载荷只返回原事实 |
+| `practice_history` | scope／request_id；只读当前 Qt owner 的独立列表 |
+
+政策 `qt-saved-arrangement-guided-1` 从原保存库校验本人、ACTIVE revision、原动作定义和设置；采用／支撑与原安排或档案要求的陪同未确认返回 MISSING_INPUT。既有不适、同动作同侧换安排、原测量训练最新不适和原设置变化按真实原因阻止继续；已经发生的事实仍可结束。自动安排若调用政策仍须原 `validate_automatic_use`；本次新 Qt 入口只接原人工安排，原自动开始流程未替换。
+
+Runtime 原视觉任务／预览／相机测试尚在活动时不新开此 practice；等待资格与结束请求在原命令队列中。Qt 控制器立即暂停／结束本地节奏，不把查询返回或旧恢复意图当成新的开始。晚到开始回复在隐藏页只恢复 PAUSED；错误来源不清掉当前待核对操作。结束后不重新计时，用户输入冻结在不可变原载荷中。
+
+不属于当前本人的安排核对不返回名称或条目设置；独立 practice 错误只回到对应请求，不调用原场景的 operation_error 展示出口，避免无关旧工作区被错误覆盖。专项通过真实 Runtime `_view` 调用监测核对，不把独立 messages 队列当作场景 views 队列。
+
+count 留 null 或明确的 0–10000 整数；elapsed_ms 只记前台本组页面时间，不是有效保持；初次疼痛／疲劳留 null 或明确 0–10 整数。COMMITTED 仅由原 SQLite commit 后返回。正式关联／assessment／confirmed_count／formal_plan_contribution 均 null，自报范围 set_total、set_index=1；SQLite 回执时间模式段不是完整权威运动分段。草稿最多 100 个修改操作，达到边界明确拒绝而不删除；未实现跨进程待结束载荷 outbox 或多组。
+
+原 `training_plans`／`history` 可携带 `include_guided=True`，新增 decision／独立 practices，不重写原 available 或 sessions。原桌面 snapshot 单独给 UI `guided_practice` 只读投影，原 Agent 三个工具、家庭共享、身体档案与正式进度不变。本人记录不可套旧 ROM 报告或改善曲线；查看旧记录不替换仍未结束的当前跟练控制器。
+
+回退开关 `ANKANG_REHAB_EXPERIENCE=legacy` 只恢复原计划库的新开始路径和原 guided_available 展示，不删除新表，不禁用原历史／结束，不在运行中换执行器。Qt 尚无独立感受后补、视觉 session 关联、跨窗口主动租约及 v2 202 消费。具体证据见 [本机记录](validation/FRONTEND_QT_PRACTICE_2026-10-12.md)。
+
 ### B01 APK 本地分支：独立已有安排（0.2.8）
 
 原local-api明确声明manual_practice_arrangements=true及manual_arrangement_entry=true。同形`/api/...`请求由原本地桥处理，不请求Python／托管服务。原Store.serial通道提供`GET /api/practice/arrangements`和`POST /api/practice/arrangements`，写入同一原档案的独立manualArrangements数组，不塞入自动plans或job，也不生成评估引用。
@@ -68,14 +93,14 @@ APK 实现相同小型请求形状，写入归属不同：`provider=phone-local-
 
 本地 `practice.js` 在原 `Store.serial` 通道中接线，用原 `Store.change/commit` 将独立 `practices` 数组和事实原子写入同一档案；失败不会返回 COMMITTED。至多 250 份，不自动删除旧记录；只有当前本人可读。结束同键同载荷查询恢复，在资格后来变化时仍能保存已结束事实。null、self_count、页面时间与正式贡献保持分离，时间段为设备回执时间范围，不证明全段都在运动。原备份导出保留此类型，恢复校验来源、本人与计数性质；旧 version2 没此数组仍可读。没有新增患者事实库、模型或正式贡献。
 
-**边界：**自动安排分支不是“无合格评估”的普遍陪练授权。托管及APK独立手工分支见上节；资格未知路径、Qt同等B01、关联视觉session、多组分段仍待接。独立感受仅上述托管／APK类型已接。Qt未接独立记录，各端资格并非相同，不把同形请求说成同一医疗执行器。
+**边界：**自动安排分支不是“无合格评估”的普遍陪练授权。三端人工安排各自政策见上节；资格未知自主草稿、关联视觉 session、多组分段仍待。独立后补感受仅托管／APK 已接，Qt 初次结束感受不代表后补实现。各端资格和来源并非同一医疗执行器。
 
 ## 其余依赖
 
 | 接缝 | 状态 |
 | --- | --- |
 | B03 过期指导取消 | 预览已有 generation／有效性／语音限频／cancel；完整 cue ID／证据／epoch／TTL 调度适配待做 |
-| B04 新来源历史 | 托管／APK 的 `/capture` 分开显示原 job 与独立跟练，APK 原备份保留独立记录；统一首页、Qt、v2 历史投影待做 |
+| B04 新来源历史 | 托管／APK `/capture` 分开显示原 job 与独立跟练，APK 原备份保留类型；Qt 原康复历史及统一时间线只读独立类型已接。网页统一首页与 v2 完整历史投影仍待 |
 | B06 原因与真正阻止条件 | 新 practice 拒绝有固定码／对象；尚未全面覆盖原 API、空间、格式和全部业务 |
 
 v2、原视觉、独立练习、反馈和报告的回执不能相互替代。客户端不以 HTTP abort 宣称服务器回滚，也不因技术失败换 provider。

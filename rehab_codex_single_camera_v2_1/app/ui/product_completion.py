@@ -487,13 +487,15 @@ class ProductCompletion:
         actions=[]
         if entry[3] in ('康复','评估') and len(entry)>4:
             record=entry[4];sid=record.get('session_id') or record.get('id')
-            actions=[('查看原报告 / 测量条件 / 反馈',lambda:self._open_original_report(sid))]
+            actions=[('查看原跟练记录',lambda:self.legacy._open_practice_record(sid))] if record.get('record_type') == 'GUIDED_PRACTICE' else [('查看原报告 / 测量条件 / 反馈',lambda:self._open_original_report(sid))]
         self._detail('记录详情',[str(v) for v in entry[:3]],actions)
 
     def _history_report(self):
         r=self.timeline.currentRow()
         if 0<=r<len(self.filtered_entries) and self.filtered_entries[r][3] in ('康复','评估'):
             record=self.filtered_entries[r][4]
+            if record.get('record_type') == 'GUIDED_PRACTICE':
+                self.legacy._open_practice_record(record['id']);return
             self._open_original_report(record.get('session_id') or record.get('id'))
         elif self.history_filter.currentText() in ('康复','评估'):
             self._message('请先选择康复或评估记录，再打开对应报告。')
@@ -504,6 +506,8 @@ class ProductCompletion:
         if self.history_filter.currentText() in ('康复','评估') or 0<=r<len(self.filtered_entries) and self.filtered_entries[r][3] in ('康复','评估'):
             if not 0<=r<len(self.filtered_entries):self._message('请先选择康复记录作为趋势基准。');return
             record=self.filtered_entries[r][4]
+            if record.get('record_type') == 'GUIDED_PRACTICE':
+                self._message('本人记录不作为自动测量趋势基准。');return
             if self._rehab_action('history'):
                 self.rehab_trend_anchor=record.get('session_id') or record.get('id')
                 self._remember_return('history')
@@ -608,7 +612,7 @@ class ProductCompletion:
         self._visual_progress(progress)
         self.next_training.setText(('下一项：'+next_item['exercise_label']+' · '+self._plan_settings(next_item['settings'])+
             '\n计划累计完成 '+str(progress['completed'])+'/'+str(progress['total'])+' 项（非按日排期）。') if next_item else '当前计划全部完成，可查看反馈与报告。' if p else '今天暂无康复计划')
-        if p and not p.get('next_available') and p.get('availability_reason'):
+        if p and not (p.get('next_available') or p.get('guided_available')) and p.get('availability_reason'):
             self.next_training.setText(self.next_training.text()+'\n暂不能继续：'+p['availability_reason'])
         def item_state(item):
             value=next((v for v in progress.get('items',[]) if v['key']==item['key']),{})
@@ -662,7 +666,8 @@ class ProductCompletion:
             side={'left':'左侧','right':'右侧'}.get(next_item.get('side'),'双侧 / 不分侧')
             detail=side+' · '+self._plan_settings(next_item['settings'])
             detail+='\n'+plan['name']+' · 累计完成 '+str(progress['completed'])+'/'+str(progress['total'])+' 项'
-            if not plan.get('next_available',True):detail+='\n暂不能准备：'+str(plan.get('availability_reason') or '请在计划中核对适用条件。')
+            if plan.get('guided_available'):detail+='\n可按已有安排跟练，自动测量资格另行核对。'
+            elif not plan.get('next_available',True):detail+='\n暂不能准备：'+str(plan.get('availability_reason') or '请在计划中核对适用条件。')
             self.rehab_next_detail.setText(detail);primary.setText('准备训练')
         else:
             self.rehab_summary['今日恢复'].setText('当前计划已完成')
@@ -830,7 +835,7 @@ class ProductCompletion:
             if key=='rehabContinue':
                 plans=self._rehab_data('rehab.get_training_plan')
                 if plans and plans[0].get('progress',{}).get('next_key'):
-                    enabled=enabled and plans[0].get('next_available',True)
+                    enabled=enabled and (plans[0].get('next_available',True) or plans[0].get('guided_available',False))
                 enabled=enabled and not self._rehab_locked()
                 item.setToolTip('进入准备流程，核对条件后再开始；不会自动开启摄像头。')
             if key in ('rehabAssessmentDetail','rehabPlanDetail','rehabTrainingDetail'):

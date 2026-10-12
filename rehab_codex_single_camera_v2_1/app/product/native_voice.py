@@ -69,20 +69,24 @@ class NativeVoiceHost:
     def handle(self,name,args):
         if name=='voice.cancel':self.cancel();return {'cancelled':True}
         if name!='voice.recognize':raise RuntimeError('当前语音宿主尚不支持朗读')
-        import numpy as np
-        import sounddevice as sd
         frames=[];samples=None
         try:
             self._check_cancelled()
-            with sd.InputStream(samplerate=16000,channels=1,dtype='float32') as stream:
-                with self.lock:self.state['phase']='recording'
-                started=time.monotonic()
-                deadline=started+MAX_RECORD_SECONDS
-                while not self.finished.is_set() and time.monotonic()<deadline:
-                    chunk,overflow=stream.read(1024)
-                    if overflow:raise RuntimeError('麦克风输入中断，请重试')
-                    frames.append(chunk.copy())
-                    with self.lock:self.state.update(elapsed=time.monotonic()-started,level=min(1.0,float(np.sqrt(np.mean(chunk*chunk)))*12))
+            import numpy as np
+            import sounddevice as sd
+            self._check_cancelled()
+            try:
+                with sd.InputStream(samplerate=16000,channels=1,dtype='float32') as stream:
+                    with self.lock:self.state['phase']='recording'
+                    started=time.monotonic()
+                    deadline=started+MAX_RECORD_SECONDS
+                    while not self.finished.is_set() and time.monotonic()<deadline:
+                        chunk,overflow=stream.read(1024)
+                        if overflow:raise RuntimeError('麦克风输入中断，请重试')
+                        frames.append(chunk.copy())
+                        with self.lock:self.state.update(elapsed=time.monotonic()-started,level=min(1.0,float(np.sqrt(np.mean(chunk*chunk)))*12))
+            except sd.PortAudioError as error:
+                raise RuntimeError('无法打开麦克风，请检查系统麦克风权限、默认输入设备或是否被占用') from error
             self._check_cancelled()
             samples=np.concatenate(frames,axis=0).reshape(-1)[:16000*MAX_RECORD_SECONDS] if frames else np.array([],dtype=np.float32)
             if samples.size<4000 or not np.isfinite(samples).all() or float(np.sqrt(np.mean(samples*samples)))<.001:
@@ -96,8 +100,6 @@ class NativeVoiceHost:
                 self._check_cancelled()
                 self.state['phase']='submitting'
             return {'text':result}
-        except sd.PortAudioError as error:
-            raise RuntimeError('无法打开麦克风，请检查系统麦克风权限、默认输入设备或是否被占用') from error
         finally:
             frames.clear();samples=None
             with self.lock:self.state['phase']='idle' if self.state['available'] else 'unavailable'

@@ -951,6 +951,14 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         timeline += [(r.get('end_utc',''),'康复训练',r.get('exercise_label','')+' · '+str(r.get('summary',{}).get('completed','未记录'))+
             ' · '+self._feedback_text(r.get('training_feedback',{})),'康复',r) for r in training_records]
         timeline += [(r.get('end_utc',''),'康复评估',r.get('exercise_label','')+' · '+{'ASSESSED':'已评估','UNAVAILABLE':'数据不足'}.get(r.get('status'),'请查看测量条件'),'评估',r) for r in assessments]
+        for record in rehab.get('guided_practice', {}).get('records', []):
+            from ..exercises import exercise_spec
+            count = record.get('self_reported_count')
+            timeline.append((record.get('ended_at') or record['created_at'], '康复跟练 / 本人记录',
+                exercise_spec(record['exercise_id'])['label'] + ' · ' +
+                (str(count) + ' 次' if count is not None else '次数未填写') + ' · ' +
+                ('已保存' if record['state'] == 'COMMITTED' else '练习未结束'), '康复',
+                dict(record, record_type='GUIDED_PRACTICE')))
         self.timeline_entries = sorted(timeline,key=lambda r:r[0] or '',reverse=True)
         self._filter_timeline()
         rows(self.medication_history,[entry[:3] for entry in self.timeline_entries if entry[3]=='用药'])
