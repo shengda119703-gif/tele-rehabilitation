@@ -13,8 +13,13 @@ from fastapi import HTTPException, Request
 from app.assessment import build_body_profile
 from app.automatic_plans import feedback_block, validate_automatic_use
 from app.domain import dumps, utc_now
+from app.training_plans import _selected_item, validate_training_plan
+from app.assessment import session_value
 
 POLICY = 'saved-arrangement-guided-1'
+MANUAL_POLICY = 'explicit-saved-manual-practice-1'
+START_FIELDS = ('operation_id', 'plan_id', 'plan_revision', 'entry_key')
+MANUAL_FIELDS = ('manual_arrangement_confirmed', 'support_ready', 'companion_present')
 KEY = re.compile(r'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}')
 
 
@@ -55,6 +60,80 @@ def stopped(item):
                         or feedback_block({'training_feedback': end['feedback']})
                         or any(feedback_block({'training_feedback': r['values']})
                                for r in item.get('practice_feedback', {}).get('operations', []))))
+
+
+def related_stop(item, plan_id, exercise_id, side):
+    return stopped(item) and (item['plan_ref']['id'] == plan_id
+                             or (item['exercise_id'], item['side']) == (exercise_id, side))
+
+
+def manual_decision(conn, uid, participant, plan, entry_key, confirmations):
+    """Independent B01 grant; never makes a manual arrangement a qualified plan.
+
+    Dose/side come only from the original owned, validated manual library.
+    Confirmations are user intent/support facts, not medical clearance or vision.
+    Existing automatic-plan/assessment gates remain unchanged on that path.
+    """
+    scope = dict(participant_id=participant, source_kind='REPLAY_FILE', usage_context='SELF_USE')
+    needs_companion = False
+    def denied(code, message, category='EXECUTION_BLOCK'):
+        return dict(allowed=False, code=code, category=category,
+                    applies_to='GUIDED_PRACTICE', message=message, policy_version=MANUAL_POLICY,
+                    companion_required=needs_companion)
+    try:
+        canonical = validate_training_plan(plan)
+        if canonical['record_origin'] != 'manual':
+            return denied('MANUAL_ARRANGEMENT_REQUIRED', '请使用已保存的人工计划。')
+        entry = _selected_item(plan, entry_key, scope)
+        original = next(i for i in canonical['items'] if i['key'] == entry_key)
+        if entry['settings'] != original['settings']:
+            return denied('MANUAL_SETTINGS_CHANGED', '原安排内容需要重新核对。')
+    except (ValueError, KeyError, TypeError, StopIteration):
+        return denied('MANUAL_ARRANGEMENT_CHANGED', '原安排已变化，可以保留已发生的练习。')
+    row = conn.execute('SELECT payload FROM participants WHERE id=?', (participant,)).fetchone()
+    person = json.loads(row[0]) if row else {}
+    needs_companion = entry['settings']['needs_companion'] or person.get('support') == 'assisted'
+    table(conn)
+    previous = [json.loads(r[0]) for r in conn.execute('SELECT payload FROM guided_practices WHERE owner=?', (uid,))]
+    if any(p['exercise_id'] == entry['exercise_id'] and p['side'] == entry['side'] and stopped(p) for p in previous):
+        return denied('PRACTICE_STOP_RECORDED', '本项已记录不适，请先停止并核对安排。')
+    sessions = [json.loads(r[0]) for r in conn.execute('SELECT payload FROM sessions')]
+    relevant = [s for s in sessions if all(session_value(s, k) == v for k, v in scope.items())
+                and session_value(s, 'submode') == 'training'
+                and session_value(s, 'exercise_id') == entry['exercise_id']
+                and session_value(s, 'side') == entry['side']]
+    latest = max(relevant, key=lambda s: (s.get('end_utc') or '', s.get('id') or ''), default=None)
+    if latest and feedback_block(latest):
+        return denied('TRAINING_STOP_RECORDED', '最近训练记录了不适，请先核对安排。')
+    if confirmations.get('manual_arrangement_confirmed') is not True:
+        return denied('MANUAL_CONFIRMATION_REQUIRED', '请确认采用本人的这份已有安排。', 'MISSING_INPUT')
+    if confirmations.get('support_ready') is not True:
+        return denied('SUPPORT_CONFIRMATION_REQUIRED', '请按原安排准备好支撑。', 'MISSING_INPUT')
+    if needs_companion and confirmations.get('companion_present') is not True:
+        return denied('COMPANION_REQUIRED', '本项安排需要陪同者在场。', 'MISSING_INPUT')
+    return dict(allowed=True, code='EXPLICIT_MANUAL_PRACTICE_ALLOWED', category=None,
+                applies_to='GUIDED_PRACTICE', message=None, policy_version=MANUAL_POLICY,
+                companion_required=needs_companion,
+                formal_measurement_allowed=None, entry=copy.deepcopy(entry))
+
+
+def manual_arrangements(conn, uid, participant):
+    """Read the existing library, not another patient/plan database."""
+    rows = conn.execute('SELECT payload FROM training_plans ORDER BY rowid DESC')
+    result = []
+    for row in rows:
+        plan = json.loads(row[0])
+        if (plan.get('participant_id') != participant or plan.get('source_kind') != 'REPLAY_FILE'
+                or plan.get('usage_context') != 'SELF_USE' or plan.get('status') != 'ACTIVE'
+                or plan.get('record_origin', 'manual') != 'manual'):
+            continue
+        entries = []
+        for entry in plan.get('items', []):
+            decision = manual_decision(conn, uid, participant, plan, entry['key'], {})
+            entries.append(dict(**copy.deepcopy(entry), decision=decision))
+        result.append(dict(id=plan['id'], revision=plan['revision'], name=plan['name'],
+                           record_origin='manual_saved', items=entries))
+    return result
 
 
 def feedback_snapshot(item):
@@ -119,7 +198,7 @@ def projection(conn, uid, item):
     if item['state'] != 'PRACTICING':
         return result
     previous = [json.loads(r[0]) for r in conn.execute('SELECT payload FROM guided_practices WHERE owner=?', (uid,))]
-    if any(stopped(r) and r['plan_ref']['id'] == item['plan_ref']['id'] for r in previous):
+    if any(related_stop(r, item['plan_ref']['id'], item['exercise_id'], item['side']) for r in previous):
         result['execution_reason'] = '本轮已记录不适，请先停止并核对安排。'
         return result
     row = conn.execute('SELECT payload FROM training_plans WHERE id=?', (item['plan_ref']['id'],)).fetchone()
@@ -129,6 +208,11 @@ def projection(conn, uid, item):
             or plan.get('status') != 'ACTIVE' or plan.get('source_kind') != 'REPLAY_FILE'
             or plan.get('usage_context') != 'SELF_USE'):
         result['execution_reason'] = '原安排已变化；可以结束并保存已经发生的练习。'
+        return result
+    if item.get('guidance_policy') == MANUAL_POLICY:
+        decision = manual_decision(conn, uid, participant, plan, item['plan_ref']['entry_key'], item['start_payload'])
+        result.update(execution_allowed=decision['allowed'], execution_reason=decision['message'],
+                      execution_decision={k: v for k, v in decision.items() if k != 'entry'})
         return result
     sessions = [json.loads(r[0]) for r in conn.execute('SELECT payload FROM sessions')]
     row = conn.execute('SELECT payload FROM participants WHERE id=?', (participant,)).fetchone()
@@ -144,7 +228,10 @@ def projection(conn, uid, item):
 
 
 def create(conn, uid, participant, value):
-    exact(value, ('operation_id', 'plan_id', 'plan_revision', 'entry_key'))
+    manual = isinstance(value, dict) and any(k in value for k in MANUAL_FIELDS)
+    exact(value, START_FIELDS + (MANUAL_FIELDS if manual else ()))
+    if manual and any(type(value[k]) is not bool for k in MANUAL_FIELDS):
+        raise HTTPException(400, '请明确确认已有安排、支撑与陪同情况')
     key(value['operation_id'])
     if (not isinstance(value['plan_id'], str) or not isinstance(value['entry_key'], str)
             or type(value['plan_revision']) is not int or value['plan_revision'] < 1):
@@ -169,28 +256,38 @@ def create(conn, uid, participant, value):
     row = conn.execute('SELECT payload FROM participants WHERE id=?', (participant,)).fetchone()
     person = json.loads(row[0]) if row else None
     profile = build_body_profile(sessions, participant, 'REPLAY_FILE', 'SELF_USE')
-    # Deliberately reuse EVERY original gate. Camera READY is not one of these
-    # arrangement gates; nothing below fabricates a qualified assessment.
-    try:
-        validate_automatic_use(plan, value['entry_key'], profile, sessions, person)
-    except ValueError as error:
-        raise HTTPException(409, dict(code='ARRANGEMENT_NOT_ALLOWED', category='EXECUTION_BLOCK',
-                                     applies_to='GUIDED_PRACTICE', message=str(error)))
+    # Automatic arrangements retain EVERY original gate. Manual arrangements
+    # use the separate explicit B01 grant below, not a fabricated assessment.
+    decision = None
+    if manual:
+        decision = manual_decision(conn, uid, participant, plan, value['entry_key'], value)
+        if not decision['allowed']:
+            raise HTTPException(409, {k: v for k, v in decision.items() if k != 'entry'})
+    else:
+        try:
+            validate_automatic_use(plan, value['entry_key'], profile, sessions, person)
+        except ValueError as error:
+            raise HTTPException(409, dict(code='ARRANGEMENT_NOT_ALLOWED', category='EXECUTION_BLOCK',
+                                         applies_to='GUIDED_PRACTICE', message=str(error)))
     previous = [json.loads(r[0]) for r in conn.execute(
         'SELECT payload FROM guided_practices WHERE owner=?', (uid,))]
-    if any(p['plan_ref']['id'] == plan['id'] and stopped(p) for p in previous):
+    entry = next(i for i in plan['items'] if i['key'] == value['entry_key'])
+    if any(related_stop(p, plan['id'], entry['exercise_id'], entry['side']) for p in previous):
         raise HTTPException(409, dict(code='PRACTICE_STOP_RECORDED', category='EXECUTION_BLOCK',
                                      applies_to='GUIDED_PRACTICE', message='本轮已记录不适，请先停止并核对安排。'))
     if any(p['state'] == 'PRACTICING' for p in previous):
         raise HTTPException(409, dict(code='ORIGINAL_PRACTICE_OPEN', category='TECHNICAL',
                                      applies_to='GUIDED_PRACTICE', message='上次练习尚未结束，请先返回原记录。'))
-    entry = next(i for i in plan['items'] if i['key'] == value['entry_key'])
     item = dict(schema_version=1, id=value['operation_id'], context=context(participant),
                 state='PRACTICING', start_payload=copy.deepcopy(value), created_at=utc_now(),
                 plan_ref=dict(id=plan['id'], revision=plan['revision'], entry_key=entry['key']),
                 exercise_id=entry['exercise_id'], side=entry['side'], settings=copy.deepcopy(entry['settings']),
                 record_origin='GUIDED_PRACTICE', visual_session_ref=None, confirmed_count=None,
                 formal_plan_contribution=None, finish_payload=None)
+    if manual:
+        item.update(guidance_policy=MANUAL_POLICY, formal_plan_ref=None, assessment_ref=None,
+                    arrangement_ref=dict(**copy.deepcopy(item['plan_ref']), kind='MANUAL_SAVED'),
+                    execution_grant={k: v for k, v in decision.items() if k != 'entry'})
     conn.execute('INSERT INTO guided_practices VALUES (?,?,?)', (uid, item['id'], dumps(item)))
     return projection(conn, uid, item)
 
@@ -220,7 +317,7 @@ def finish(conn, uid, identity, value):
                 elapsed_source='frontend_active_time_not_observed_hold',
                 record_origin='SELF_RECORDED' if value['count'] is not None else 'GUIDED_PRACTICE')
     item['mode_segments'] = [dict(mode='GUIDED', start=item['created_at'], end=item['ended_at'],
-                                 reason='allowed_saved_arrangement', time_basis='server_receipt_time',
+                                 reason='explicit_saved_manual_arrangement' if item.get('guidance_policy') == MANUAL_POLICY else 'allowed_saved_arrangement', time_basis='server_receipt_time',
                                  source='GUIDED_PRACTICE', set_index=1)]
     conn.execute('UPDATE guided_practices SET payload=? WHERE owner=? AND id=?',
                  (dumps(item), uid, identity))
@@ -256,6 +353,12 @@ def install_practice(app, owner, store_for, small_json, participant_for):
     def get_context(request: Request):
         uid = owner(request)
         return context(participant_for(uid))
+
+    @app.get('/api/practice/arrangements')
+    def get_manual_arrangements(request: Request):
+        uid = owner(request)
+        with store_for(uid) as store:
+            return store._call(lambda c: manual_arrangements(c, uid, participant_for(uid)))
 
     @app.get('/api/practice')
     def list_practice(request: Request):

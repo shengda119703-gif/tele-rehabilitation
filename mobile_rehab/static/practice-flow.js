@@ -7,7 +7,7 @@ const practiceEqual=(a,b)=>JSON.stringify(practiceCanonical(a))===JSON.stringify
 const practiceDraftKey=c=>'ankang-practice-draft-1:'+JSON.stringify([location.origin,c.provider,c.source_context,c.participant_id]);
 const practiceRecordDraftKey=(c,id)=>practiceDraftKey(c)+':'+id;
 function persistPractice(j){
- try{const text=JSON.stringify({version:1,context:j.context,start:j.start,finish:j.finish||null,elapsed:j.elapsed,ended:j.ended,committed:j.receipt?.state==='COMMITTED',countDraft:j.countDraft||'',feedbackDraft:j.feedbackDraft||null,feedbackPending:j.feedbackPending||null,feedbackSuperseded:j.feedbackSuperseded||[],observationSegments:j.observationSegments||[]});localStorage.setItem(practiceRecordDraftKey(j.context,j.start.operation_id),text);j.draftSaved=true;try{localStorage.setItem(practiceDraftKey(j.context),text);}catch{/* The individually scoped draft remains recoverable from its history entry. */}}
+ try{const text=JSON.stringify({version:1,context:j.context,start:j.start,startRejected:j.startRejected===true,finish:j.finish||null,elapsed:j.elapsed,ended:j.ended,committed:j.receipt?.state==='COMMITTED',countDraft:j.countDraft||'',feedbackDraft:j.feedbackDraft||null,feedbackPending:j.feedbackPending||null,feedbackSuperseded:j.feedbackSuperseded||[],observationSegments:j.observationSegments||[]});localStorage.setItem(practiceRecordDraftKey(j.context,j.start.operation_id),text);j.draftSaved=true;try{localStorage.setItem(practiceDraftKey(j.context),text);}catch{/* The individually scoped draft remains recoverable from its history entry. */}}
  catch{j.draftSaved=false;}
 }
 function pausePractice(){
@@ -29,7 +29,7 @@ function startPracticeClock(j){
  },1000);
  if($('#practice-pause'))$('#practice-pause').textContent='暂停';
 }
-async function beginGuidedPractice(record,entry,resume=null){
+async function beginGuidedPractice(record,entry,resume=null,confirmations=null){
  pausePractice();const generation=++practiceGeneration,ownerGeneration=state.uploadOwnerGeneration||0;
  // The retained capture router is query-based. Entering from an assessment
  // result must not send a reload back to the assessment library: the existing
@@ -41,8 +41,8 @@ async function beginGuidedPractice(record,entry,resume=null){
   const context=await api('/practice/context');if(generation!==practiceGeneration||$('#practice-area')!==area||ownerGeneration!==(state.uploadOwnerGeneration||0))return;
   let saved;try{saved=JSON.parse((resume&&localStorage.getItem(practiceRecordDraftKey(context,resume.id)))||localStorage.getItem(practiceDraftKey(context))||'null');}catch{/* Keep the current page available when draft storage is unavailable. */}
   if(!saved&&practiceJourney&&practiceEqual(practiceJourney.context,context))saved={...practiceJourney,version:1};
-  const compatible=saved?.version===1&&practiceEqual(saved.context,context)&&typeof saved.start?.operation_id==='string'&&saved.start.plan_id===record.id&&saved.start.entry_key===entry.key&&(resume?saved.start.operation_id===resume.id:!saved.committed);
-  const j={context,ownerGeneration,start:resume?.start_payload||(compatible?saved.start:{operation_id:newUploadOperation(),plan_id:record.id,plan_revision:record.revision,entry_key:entry.key}),finish:resume?.finish_payload||(compatible?saved.finish:null),elapsed:compatible&&Number.isFinite(saved.elapsed)?Math.max(0,saved.elapsed):(resume?.finish_payload?.elapsed_ms||0),countDraft:compatible?saved.countDraft||'':'',ended:resume?.state==='COMMITTED'||compatible&&saved.ended===true,running:false,busy:false,receipt:null};
+  const compatible=saved?.version===1&&practiceEqual(saved.context,context)&&typeof saved.start?.operation_id==='string'&&saved.start.plan_id===record.id&&saved.start.entry_key===entry.key&&(resume?saved.start.operation_id===resume.id:!saved.committed&&!saved.startRejected);
+  const j={context,ownerGeneration,start:resume?.start_payload||(compatible?saved.start:{operation_id:newUploadOperation(),plan_id:record.id,plan_revision:record.revision,entry_key:entry.key,...(confirmations||{})}),finish:resume?.finish_payload||(compatible?saved.finish:null),elapsed:compatible&&Number.isFinite(saved.elapsed)?Math.max(0,saved.elapsed):(resume?.finish_payload?.elapsed_ms||0),countDraft:compatible?saved.countDraft||'':'',ended:resume?.state==='COMMITTED'||compatible&&saved.ended===true,running:false,busy:false,receipt:null};
   j.previewGeneration=0;
   if(compatible){j.feedbackDraft=saved.feedbackDraft||null;j.feedbackPending=saved.feedbackPending||null;j.feedbackSuperseded=saved.feedbackSuperseded||[];j.observationSegments=Array.isArray(saved.observationSegments)?saved.observationSegments:[];}
   practiceJourney=j;persistPractice(j);await reconcilePractice(j,area,true);
@@ -50,8 +50,9 @@ async function beginGuidedPractice(record,entry,resume=null){
 }
 async function reconcilePractice(j,area,mayCreate=false){
  if(j.busy)return;j.busy=true;
+ let creating=false;
  try{
-  let receipt;try{receipt=await api('/practice/'+j.start.operation_id);}catch(e){if(e.status!==404||!mayCreate)throw e;receipt=await api('/practice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(j.start)});}
+  let receipt;try{receipt=await api('/practice/'+j.start.operation_id);}catch(e){if(e.status!==404||!mayCreate)throw e;creating=true;receipt=await api('/practice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(j.start)});}
   if(!currentPractice(j,area))return;
   if(j.receipt?.state==='COMMITTED'&&receipt.state!=='COMMITTED')return;
   if(receipt.id!==j.start.operation_id||!practiceEqual(receipt.context,j.context))throw Error('练习记录的归属不一致，请返回核对。');
@@ -62,6 +63,7 @@ async function reconcilePractice(j,area,mayCreate=false){
   if(j.ended&&receipt.state!=='COMMITTED'&&j.finish)await submitPracticeFinish(j,area);
   else if(!j.ended){startPracticeClock(j);if(typeof resumePracticeObservation==='function')void resumePracticeObservation(j,area);}
  }catch(e){
+  if(creating&&!j.receipt&&e.status===409&&['MISSING_INPUT','EXECUTION_BLOCK'].includes(e.reason?.category)){j.startRejected=true;persistPractice(j);}
   if(currentPractice(j,area)&&$('#practice-count')&&j.receipt){
    // A failed lookup is local to reconciliation. Keep the existing form,
    // media node and input; it grants no new execution or successful save.

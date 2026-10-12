@@ -11,6 +11,35 @@
   "ready_soft_wait_integration_complete": false,
   "ready_soft_wait_preview_adapters_connected": true,
   "formal_parallel_measurement_complete": false,
+  "manual_saved_arrangement_browser_flow": {
+    "runtime": "hosted original HTTP API and SQLite; existing owned manual library",
+    "attempts": 3,
+    "completed_flow_runs": 2,
+    "failed_runs_preserved": 1,
+    "latest_successful_run": "actual-manual-practice-20261012-f67219e0",
+    "qualified_assessment_rows": 0,
+    "original_manual_plan_rows": 1,
+    "independent_practice_rows": 1,
+    "self_reported_count": 3,
+    "count_is_qa_input_not_performed_motion": true,
+    "confirmed_count": null,
+    "formal_plan_contribution": null,
+    "original_arrangement_unchanged": true,
+    "explicit_confirmation_initially_unchecked": true,
+    "return_does_not_repeat_original_confirmation": true,
+    "finish_reply_fault_reload_recovers_same_identity": true,
+    "history_reads_original": true,
+    "phone_local_manual_arrangement_connected": false,
+    "qt_manual_arrangement_connected": false,
+    "physical_phone_tested": false
+  },
+  "current_automatic_arrangement_compatibility": {
+    "hosted_run": "actual-auto-manual-compat-20261012-477fb04d",
+    "actual_apk_assets_run": "actual-phone-manual-compat-20261012-358da890",
+    "both_completed": true,
+    "phone_python_api_wire_requests": 0,
+    "physical_phone_tested": false
+  },
   "guided_preview_browser_flow": {
     "hosted_attempts": 4,
     "hosted_completed_flow_runs": 4,
@@ -130,18 +159,22 @@
     "whole_product_visual_acceptance": false
   },
   "automated_regression": {
-    "javascript_passed": 159,
-    "python_passed": 148,
+    "javascript_passed": 164,
+    "python_passed": 155,
     "python_subtests_passed": 2,
+    "python_warnings": 3,
     "counts_are_not_clinical_accuracy": true
   },
   "apk": {
-    "version": "0.2.6",
-    "version_code": 8,
+    "version": "0.2.7",
+    "version_code": 9,
     "build_verified": true,
     "installed_on_target_phone": false,
     "local_practice_contract_enabled": true,
-    "sha256": "CC25D87739E9F7B70D4B2D9B7F57007612397658F3215703CC624D6E02B8CDAF",
+    "sha256": "613B0A0B03D0028D8DA2BD8012E11C7368F7C2C33E5CF6A1B9C508CDDB9421BA",
+    "bytes": 28099896,
+    "manual_arrangement_local_capability_enabled": false,
+    "six_related_sources_match_actual_apk_zip": true,
     "four_changed_guidance_sources_match_actual_apk_zip": true,
     "original_signing_certificate_verified": true
   }

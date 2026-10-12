@@ -22,7 +22,7 @@ async function api(path, opts={}) {
     const res=await fetch('/api'+path,{...requestOpts,signal:controller.signal,headers:{'X-Rehab-Client':'mobile-v1',...opts.headers}});
     let body; try {body=await res.json();} catch(e){if(e.name==='AbortError')throw e;throw Error('电脑服务没有正常响应，请稍后重试');}
     if(!res.ok) {if(res.status===401 && path!=='/pair') {pairPage();} const error=Error(typeof body.detail==='string'?body.detail:body.detail?.message||'请求未完成，请稍后重试');error.status=res.status;error.reason=body.detail;throw error;}
-    if(path==='/catalog')state.practiceRecording=body.practice_recording===true;
+    if(path==='/catalog'){state.practiceRecording=body.practice_recording===true;state.manualPracticeArrangements=body.manual_practice_arrangements===true;}
     return body;
   }catch(e){if(e.name==='AbortError')throw Error('连接超时，请检查电脑服务后重试');if(e instanceof TypeError)throw Error('无法连接电脑，请检查 Wi-Fi 和网页服务');throw e;}
   finally{clearTimeout(timer);opts.signal?.removeEventListener('abort',cancel);}
@@ -247,12 +247,13 @@ function weekStrip(now=new Date()){
 function plan(){
   app.innerHTML=`<div class="page-head"><h1>我的训练</h1></div><p class="caption">手机录像训练 · 本轮进度按已保存记录累计，日期安排请回到安康康复页。</p><div class="schedule-tools"><button id="schedule-assess">康复动作库</button><button id="schedule-body">身体汇总</button><button id="schedule-history">训练记录</button></div><div id="plan-content"><p class="loading" role="status">正在读取训练安排…</p></div>`;
   $('#schedule-assess').onclick=()=>navigate('assess');$('#schedule-body').onclick=()=>navigate('body');$('#schedule-history').onclick=()=>{state.historyFilter='rehab';navigate('history');};
+  if(typeof mountManualArrangements==='function')void mountManualArrangements();
   const area=$('#plan-content'),ownerGeneration=state.uploadOwnerGeneration||0;
   api('/plan').then(data=>{
     if(state.tab!=='plan'||$('#plan-content')!==area||ownerGeneration!==(state.uploadOwnerGeneration||0))return;
     const {proposal,progress}=data, record=data.plan, items=proposal.candidates.slice(0,4);
     area.innerHTML='';
-    if(record){
+    if(record&&!(state.manualPracticeArrangements&&automaticUploadReconciliation&&record.record_origin==='manual')){
       const next=record.items.find(i=>i.key===progress.next_key);
       area.innerHTML=`<div class="card"><div class="schedule-header"><h2>${progress.next_key?'本轮安排':'本轮完成'}</h2><p>${progress.completed} / ${progress.total} 项</p></div>${next?`<h1>${esc(label(next.exercise_id))}</h1><p class="caption">${sideLabel(next.side)} · ${next.settings.target_reps} 次 × ${next.settings.target_sets} 组</p>`:''}<progress class="schedule-progress" max="${Math.max(1,progress.total)}" value="${progress.completed}" aria-label="本轮训练完成项数"></progress>${progress.blocked?`<p class="warning">${esc(progress.blocked)}</p><button id="training-records" class="secondary">补充训练感受</button>`:progress.next_key?'<button class="primary file-actions" id="train-next">开始训练</button>':'<p class="tip">本轮训练已完成。</p>'}</div><div class="card"><h2>训练清单</h2>${record.items.map((i,n)=>`<div class="plan-item"><strong>${esc(label(i.exercise_id))}</strong><p class="caption">${sideLabel(i.side)} · ${i.settings.target_reps} 次 × ${i.settings.target_sets} 组 <span class="${progress.items[n].done?'plan-done':''}">· ${progress.items[n].done?'已完成':'待完成'}</span></p></div>`).join('')}</div>`;
       if($('#train-next'))$('#train-next').onclick=()=>{const entry=record.items.find(i=>i.key===progress.next_key);state.training={id:record.id,entry};state.selected=entry.exercise_id;state.side=entry.side;state.joint=selected().joint;state.tab='assess';state.detail=true;syncNavigation();clearFile();if(state.practiceRecording&&automaticUploadReconciliation&&typeof beginGuidedPractice==='function')void beginGuidedPractice(record,entry);else assessment();window.scrollTo(0,0);};

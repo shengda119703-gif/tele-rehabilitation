@@ -2,6 +2,16 @@
 
 ## 已接通
 
+### B01托管独立分支：本人原人工计划（0.2.7）
+
+`GET /api/catalog`明确声明manual_practice_arrangements=true，仅托管实现；APK不声明，前端不会请求不存在的托管能力。`GET /api/practice/arrangements`只读当前本人、REPLAY_FILE／SELF_USE、ACTIVE的原training_plans手工记录，返回原id／revision／name／items和当前独立decision。没有新计划库、处方生成或数据库迁移。
+
+`POST /api/practice`保留自动安排原四字段；仅手工分支增加三个严格bool：manual_arrangement_confirmed、support_ready、companion_present。原动作／侧别／settings从保存库读取、校验当前定义及revision；不会接受客户端剂量或伪评估。适用政策explicit-saved-manual-practice-1返回GUIDED_PRACTICE允许／稳定code／category／message／companion_required，formal_measurement_allowed=null；未知正式资格不是ALLOWED。需要陪同取原安排和档案assisted，未确认不执行；当前本人明确采用自己的安排不宣称专业人员已授权。
+
+事实仍写原guided_practices，同原事务／原键／查询／结束／后补感受／历史。`plan_ref`兼容指向真实手工库记录，不称合格正式计划；`arrangement_ref.kind=MANUAL_SAVED`，formal_plan_ref／assessment_ref=null。未关联视觉时visual_session_ref／confirmed_count／formal_plan_contribution保持null，模式段原因明确独立手工安排，不补观察。停止反馈按原pain>0／fatigue≥5／discomfort含义保留，同相关动作换安排或改反馈0不清除；原自动处方规则和视觉执行器未改。结束不因后来资格变化而拒绝保留事实。
+
+只有原GET404之后的实际POST明确MISSING_INPUT／EXECUTION_BLOCK拒绝才记录startRejected；不明回复继续对原键查询，不修改在途有效载荷。APK本地手工分支、Qt、完整多组与专业方案录入仍待，不把这个托管入口当成全端B01完成。
+
 ### 任务书5／6：跟练并行接现有预览（没有新增正式测量契约）
 
 复用原 `POST /api/live`（exercise／side／consent）、`POST /api/live/{id}/frame`（原JPEG限额与源时间语义）及 `DELETE /api/live/{id}`。托管仍是原独立worker、LIVE_CAMERA；APK原local-api／PhoneMotion CPU Worker，PHONE_LOCAL，不请求Python。原跟练绑定保持不变，预览是明确不同的读／指导子来源，不用LIVE_CAMERA冒充REPLAY_FILE自动计划的训练事实。
@@ -46,7 +56,7 @@ APK 实现相同小型请求形状，写入归属不同：`provider=phone-local-
 
 本地 `practice.js` 在原 `Store.serial` 通道中接线，用原 `Store.change/commit` 将独立 `practices` 数组和事实原子写入同一档案；失败不会返回 COMMITTED。至多 250 份，不自动删除旧记录；只有当前本人可读。结束同键同载荷查询恢复，在资格后来变化时仍能保存已结束事实。null、self_count、页面时间与正式贡献保持分离，时间段为设备回执时间范围，不证明全段都在运动。原备份导出保留此类型，恢复校验来源、本人与计数性质；旧 version2 没此数组仍可读。没有新增患者事实库、模型或正式贡献。
 
-**边界：**这不是“无合格评估”的普遍陪练授权。独立人工计划、资格未知路径、三端同等B01、关联视觉session、多组分段仍待接；独立感受仅上述托管／APK类型已接。Qt未接独立记录，各端资格并非相同，不把同形请求说成同一医疗执行器。
+**边界：**自动安排分支不是“无合格评估”的普遍陪练授权。托管独立手工分支见上节；APK手工分支、资格未知路径、三端同等B01、关联视觉session、多组分段仍待接。独立感受仅上述托管／APK类型已接。Qt未接独立记录，各端资格并非相同，不把同形请求说成同一医疗执行器。
 
 ## 其余依赖
 

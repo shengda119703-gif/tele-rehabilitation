@@ -24,6 +24,7 @@ def main():
     parser.add_argument('--unreadable-upload-reply', action='store_true')
     parser.add_argument('--seed-from-native-run', type=Path)
     parser.add_argument('--unreadable-practice-finish-reply', action='store_true')
+    parser.add_argument('--saved-manual-arrangement-fixture', action='store_true')
     args = parser.parse_args()
     args.data.mkdir(parents=True, exist_ok=False)
     seed_owner = None
@@ -43,6 +44,23 @@ def main():
         with sqlite3.connect(f'file:{databases[0].as_posix()}?mode=ro', uri=True) as original, sqlite3.connect(target) as copied:
             original.backup(copied)
     app = create_app(args.data, pair_key='TEST-frontend-isolated-host')
+    if args.saved_manual_arrangement_fixture:
+        if args.seed_from_native_run:
+            raise ValueError('The no-assessment manual fixture must not reuse an assessment database')
+        from uuid import uuid4
+        from contextlib import closing
+        from app.storage import Storage
+        from app.settings import default_plan
+        from app.training_plans import item_from_plan, new_training_plan
+        seed_owner = uuid4().hex
+        settings = default_plan('shoulder_abduction')
+        settings.update(side='left', target_reps=7, target_sets=2, target_angle_deg=None)
+        scope = dict(participant_id=seed_owner, source_kind='REPLAY_FILE', usage_context='SELF_USE')
+        record = new_training_plan(scope, 'TEST 已有人工安排', [item_from_plan(settings)])
+        with closing(Storage(app.state.jobs.root / seed_owner / 'assessments.sqlite3')) as store:
+            store.save_training_plan(record, expected_revision=0)
+            if store.list_sessions():
+                raise ValueError('No measured assessment may be injected into this fixture')
     if args.unreadable_upload_reply or args.unreadable_practice_finish_reply:
         @app.middleware('http')
         async def response_fault(request, call_next):

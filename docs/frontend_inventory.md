@@ -8,8 +8,8 @@
 | --- | --- | --- | --- |
 | Windows 正式产品 | `Start-Rehab.ps1` → 应用 `.venv` → `app.main` → ProductWindow／Runtime | 原宿主、SQLite、SceneController | 0.20.0；未改 Qt 控件、样式或执行器，完整流程接线待做 |
 | 托管统一网页 | 正式首页 `mobile_rehab/static/unified.html`／`unified.js`；康复入口进入 `/capture?tab=plan` 等 | 当前共享宿主；统一白名单与原 SQLite | 保持五导航；全量 snapshot 的加载拆分待做 |
-| 保留的动作页面 | `/capture` → `index.html`、`app.js`、`extensions.js`；`practice-flow.js`／`practice-feedback.js`／`practice-observation.js`／`observation-presenter.js` | 原录像执行器／预览／同库独立practice与感受版本 | 原安排跟练中可选用旁路预览，6秒／缺测宽容不改变原引擎；正式视觉关联待接 |
-| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.6／code8：原开始／并行预览／暂停／结束／感受／刷新／历史实际验证，原备份保留类型；未真机安装 |
+| 保留的动作页面 | `/capture` → `index.html`、`app.js`、`extensions.js`；`practice-flow.js`／`practice-feedback.js`／`practice-observation.js`／`observation-presenter.js`／`manual-arrangements.js` | 原录像执行器／预览／同库独立practice与感受版本 | 原安排并行预览；托管可采用本人原人工计划库，独立B01无合格评估路径；正式视觉关联待接 |
+| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.7／code9：当前资源原本地完整流程重验；本地未声明人工计划能力，不请求托管新接口；未真机安装 |
 | 可选康复 v2 | `/api/rehab/v2/...`，默认关闭 | 独立 session／commit／反馈语义 | 未冒充旧 preview 或 practice；完整客户端适配仍待 |
 
 本轮不合入远端整包，不改变 WebView origin、签名、权限或模型。电脑 8765／1396、相机和已有窗口不启停。独立 QA 服务只用随机 loopback 端口。
@@ -27,4 +27,6 @@
 
 独立感受接口新增当前revision与同键回执，原finish不变。每旅程小型恢复草稿独立存留，旧单指针兼容；这不是全模块outbox。历史打开已提交练习保持history query，评估／训练继续保持plan query。旧医疗执行器、Qt及v2尚未适配。
 
-0.2.6实际预录相机路径：末次托管198／手机236个真实预览响应，手机稳定指导／缺测降级／恢复出现，托管未稳定接上。既有主要按钮文档位置、核对时video节点／媒体流保持；无普通缺测弹窗或相机自动重启。当前可选相机仍需本次隐私同意，不把6秒预算当授权或资格替代。预览次数仅内存、客户端转换仅草稿元数据，不称权威视觉保存。源码与APK同份资源，原型和原规则未换；物理Android、三端完整覆盖仍待。
+0.2.6实际预录相机路径：末次托管200／手机235个真实预览响应，手机稳定指导出现，此前手机完整稳定指导／缺测降级／恢复原轨迹保留，托管未稳定接上。既有主要按钮文档位置、核对时video节点／媒体流保持；无普通缺测弹窗或相机自动重启。当前可选相机仍需本次隐私同意，不把6秒预算当授权或资格替代。预览次数仅内存、客户端转换仅草稿元数据，不称权威视觉保存。原型和原规则未换；物理Android、三端完整覆盖仍待。
+
+0.2.7新增入口为托管“我的训练→已有人工安排→使用已有安排”。只读取本人的原REPLAY_FILE／SELF_USE人工计划，不新增或改剂量；当前确认／支撑及必要陪同通过原作用域政策核对。自动资格与正式计划贡献不改。实际原库0评估／1人工计划→1独立跟练完成保存／刷新／历史；这是明确TEST安排及QA次数，不是专业授权或人体试验。手机新资源兼容流程仍0 Python请求；APK本地B01和Qt仍待接。

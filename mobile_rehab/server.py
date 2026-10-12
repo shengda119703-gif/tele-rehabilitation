@@ -432,6 +432,7 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
     def get_catalog(request: Request):
         owner(request)
         return dict(exercises=catalog(), max_bytes=MAX_BYTES, max_seconds=120, practice_recording=True,
+                    manual_practice_arrangements=True,
                     shared=bool(shared), fitness=fitness_catalog(),
                     posture=posture_catalog(),
                     network_camera=dict(connected=False, supported=True, message='在设备页测试已配置的 RTSP 摄像头。'))
