@@ -46,11 +46,14 @@ async function main(){
   if(persisted.backup.data.practices.length!==1)throw Error('Original backup dropped independent practice facts');
   await page.locator('#practice-back').click();await page.locator('#schedule-history').click();await page.locator('[data-practice]').click();await page.locator('#practice-save').filter({hasText:'练习记录已保存在本机'}).waitFor();
   await page.screenshot({path:path.join(out,'phone-practice-saved.png'),fullPage:true});
+  let feedbackResult=null;
+  if(process.argv.includes('--feedback'))feedbackResult=await require('./verify_feedback_flow.cjs').verifyFeedbackFlow(page,(route,opts)=>page.evaluate(async({route,opts})=>PhoneLocal.request('/api'+route,opts?{method:opts.method,headers:{'Content-Type':'application/json'},body:JSON.stringify(opts.body)}:{}),{route,opts}),base,out);
   await page.goto(base+'/capture?tab=plan&experience=legacy');await page.locator('#train-next').click();await page.locator('#gallery-file').waitFor({state:'attached'});
   const afterHash=crypto.createHash('sha256').update(await fs.readFile(video)).digest('hex');
   if(afterHash!==inputHash||wireApis.length||errors.length)throw Error('Input changed, Python API used, or browser exception: '+JSON.stringify({wireApis,errors}));
   const result={kind:'actual-phone-assets-local-worker-and-practice-flow',input_sha256:inputHash,source:'PHONE_LOCAL:SELF_USE',actual_worker:true,actual_store:true,original_jobs:persisted.jobs,visual_count:job.result.summary.completed,visual_coverage:job.result.local_report.validRatio,practice_records:1,practice_count_source:'QA-entered set total; not a performed exercise',self_reported_count:10,confirmed_count:null,formal_plan_progress:0,null_feedback_preserved:true,native_pause_handler_tested:true,refresh_after_committed_reply_fault:true,history_and_backup_preserved:true,legacy_path_works:true,wire_api_requests:wireApis.length,browser_errors:errors,physical_phone_tested:false,physical_camera_used:false};
   await fs.writeFile(path.join(out,'result.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));
+  if(feedbackResult)console.log(JSON.stringify(feedbackResult));
  }catch(e){
   await fs.writeFile(path.join(out,'failure.json'),JSON.stringify({kind:'failed-phone-flow-qa',message:e.message,wireApis,browser_errors:errors,physical_phone_tested:false},null,2));
   if(page&&!page.isClosed()){

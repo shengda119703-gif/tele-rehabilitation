@@ -2,6 +2,18 @@
 
 ## 已接通
 
+### 任务书10.5：独立感受后补（不是 B03 指导契约）
+
+| 请求 | 字段与语义 |
+| --- | --- |
+| `GET /api/practice/{id}/feedback` | 本人原记录的practice_id／context／revision／values／saved_at；首次revision=0，未填pain／fatigue／note为null |
+| `POST /api/practice/{id}/feedback` | 精确字段operation_id UUID、expected_revision非负整数、values（pain／fatigue各null或0–10整数，note为null或非空≤500字）；至少一个明确填写 |
+| `GET /api/practice/{id}/feedback/operations/{operation}` | 原操作真实COMMITTED、原载荷／expected_revision／提交revision／时间，不以最新编辑冒充旧回执 |
+
+托管原SQLite及APK原Store只有原练习COMMITTED后接收，未提交返回PRACTICE_NOT_COMMITTED；反馈不阻止结束。最多100次编辑，满时507不删原件。同键同值先回原回执，改载荷FEEDBACK_KEY_CONFLICT；旧版本FEEDBACK_REVISION_CONFLICT、不写入。内容和回执同一原事务提交，失败无成功回执。原finish_payload.feedback、各来源次数／正式贡献不修改；原备份保留并校验来源与编辑链。历史明确不适不能通过后改0清掉，沿用原pain>0／fatigue≥5含义，已打开旅程复核执行资格。
+
+客户端先存原键／值，丢回复先查询；实质冲突读最新并保留填写，明确选择才以新revision新键提交；同值按真实快照收敛。稍后填写不写空值，原历史可补填／修改，已填直接读回。草稿按本人／来源／旅程保存，兼容旧单指针；不换provider。不是全模块outbox或Qt／v2正式反馈实现。
+
 ### B05：查询原上传
 
 原 `POST /api/jobs` 可以携带 UUID `X-Rehab-Upload-Operation`。托管服务在接收视频前，将该操作及动作／侧别／模式／计划绑定保存到原 job.json；保存失败不制造内存回执。`GET /api/uploads/{operation}` 只能查询本人原 job。原键再次 POST 返回 409，不做第二份分析。APK 原本地 route 也在原 Store 串行写入中保存和查询此字段。
@@ -28,7 +40,7 @@ APK 实现相同小型请求形状，写入归属不同：`provider=phone-local-
 
 本地 `practice.js` 在原 `Store.serial` 通道中接线，用原 `Store.change/commit` 将独立 `practices` 数组和事实原子写入同一档案；失败不会返回 COMMITTED。至多 250 份，不自动删除旧记录；只有当前本人可读。结束同键同载荷查询恢复，在资格后来变化时仍能保存已结束事实。null、self_count、页面时间与正式贡献保持分离，时间段为设备回执时间范围，不证明全段都在运动。原备份导出保留此类型，恢复校验来源、本人与计数性质；旧 version2 没此数组仍可读。没有新增患者事实库、模型或正式贡献。
 
-**边界：**这不是对“无合格评估”的普遍陪练授权。独立人工计划、资格未知时的允许路径、三端同等 B01、关联实际视觉 session、多组模式片段、独立反馈后补仍待接。Qt 尚未接独立记录；各端现有资格规则并非完全相同，不把相同请求形状说成相同医疗执行器。
+**边界：**这不是“无合格评估”的普遍陪练授权。独立人工计划、资格未知路径、三端同等B01、关联视觉session、多组分段仍待接；独立感受仅上述托管／APK类型已接。Qt未接独立记录，各端资格并非相同，不把同形请求说成同一医疗执行器。
 
 ## 其余依赖
 

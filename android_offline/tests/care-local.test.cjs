@@ -259,3 +259,46 @@ test('practice backup validates ownership and source instead of reviving visual 
   const forged=plain(b);mutate(forged.data.practices[0]);assert.throws(()=>h.c.PhoneStore.validateBackup(forged),/练习记录/);
  }
 });
+
+const practiceFeedback=(revision=0,values={note:'TEST 后补'})=>({operation_id:crypto.randomUUID(),expected_revision:revision,values:{pain:null,fatigue:null,note:null,...values}});
+test('local feedback follows committed practice, survives reopen and never mutates finish or formal progress',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start),path='/api/practice/'+a.id;
+ const payload=practiceFeedback();await assert.rejects(()=>post(h,path+'/feedback',payload),e=>e.reason?.code==='PRACTICE_NOT_COMMITTED');
+ const original=plain(await post(h,path+'/finish',endPractice(10))),r=plain(await post(h,path+'/feedback',payload));
+ assert.equal(r.status,'COMMITTED');assert.equal(r.revision,1);assert.equal(r.values.pain,null);assert.equal(r.values.fatigue,null);
+ const reopened=await local(h.storage);assert.deepEqual(plain(await reopened.local.request(path+'/feedback/operations/'+payload.operation_id)),r);
+ assert.deepEqual(plain(await post(reopened,path+'/feedback',payload)),r);
+ const saved=plain(await reopened.local.request(path));for(const k of ['finish_payload','self_reported_count','confirmed_count','mode_segments','formal_plan_contribution'])assert.deepEqual(saved[k],original[k]);
+ assert.equal(saved.practice_feedback.operations.length,1);assert.equal((await h.local.request('/api/plan')).progress.completed,0);
+ const backup=await reopened.local.backup();assert.equal(h.c.PhoneStore.validateBackup(backup).practices[0].practice_feedback.revision,1);
+});
+test('local feedback conflict reads latest revision but keeps original immutable operation receipt',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start),path='/api/practice/'+a.id;await post(h,path+'/finish',endPractice());
+ const first=practiceFeedback(),r=plain(await post(h,path+'/feedback',first)),second=practiceFeedback(0,{fatigue:2});
+ await assert.rejects(()=>post(h,path+'/feedback',second),e=>e.reason?.code==='FEEDBACK_REVISION_CONFLICT');
+ assert.deepEqual(plain((await h.local.request(path+'/feedback')).values),first.values);
+ await assert.rejects(()=>h.local.request(path+'/feedback/operations/'+second.operation_id),e=>e.status===404);
+ const next={...second,operation_id:crypto.randomUUID(),expected_revision:1};assert.equal((await post(h,path+'/feedback',next)).revision,2);
+ assert.deepEqual(plain(await post(h,path+'/feedback',first)),r);assert.equal((await h.local.request(path+'/feedback')).revision,2);
+ await assert.rejects(()=>post(h,path+'/feedback',{...first,values:next.values}),e=>e.reason?.code==='FEEDBACK_KEY_CONFLICT');
+});
+test('local feedback storage failure acknowledges nothing and same key saves after quota recovers',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start),path='/api/practice/'+a.id;await post(h,path+'/finish',endPractice());
+ const p=practiceFeedback(),save=h.storage.setItem;h.storage.setItem=()=>{throw Error('TEST feedback quota')};await assert.rejects(()=>post(h,path+'/feedback',p),/quota/);
+ assert.equal((await h.local.request(path+'/feedback')).revision,0);await assert.rejects(()=>h.local.request(path+'/feedback/operations/'+p.operation_id),e=>e.status===404);
+ h.storage.setItem=save;assert.equal((await post(h,path+'/feedback',p)).status,'COMMITTED');
+});
+test('later local discomfort stops further execution even after editing to zero but facts still save',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start),path='/api/practice/'+a.id;await post(h,path+'/finish',endPractice());
+ const b=await post(h,'/api/practice',{...start,operation_id:crypto.randomUUID()});
+ await post(h,path+'/feedback',practiceFeedback(0,{pain:1}));await post(h,path+'/feedback',practiceFeedback(1,{pain:0}));
+ assert.equal((await h.local.request('/api/practice/'+b.id)).execution_allowed,false);await post(h,'/api/practice/'+b.id+'/finish',endPractice());
+ await assert.rejects(()=>post(h,'/api/practice',{...start,operation_id:crypto.randomUUID()}),e=>e.reason?.code==='PRACTICE_STOP_RECORDED');
+});
+test('feedback rejects malformed values, foreign owners and forged backup revisions',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start),path='/api/practice/'+a.id;await post(h,path+'/finish',endPractice());
+ for(const p of [practiceFeedback(0,{}),practiceFeedback(0,{pain:false}),practiceFeedback(0,{note:' '}),practiceFeedback(0,{fatigue:11}),practiceFeedback(0,{note:'x'.repeat(501)}),{...practiceFeedback(),owner:'foreign'}])await assert.rejects(()=>post(h,path+'/feedback',p),e=>e.status===400);
+ const other=await local();await assert.rejects(()=>post(other,path+'/feedback',practiceFeedback()),e=>e.status===404);
+ await post(h,path+'/feedback',practiceFeedback());const backup=await h.local.backup();
+ for(const mutate of [f=>f.revision=2,f=>f.values.pain=0,f=>f.operations[0].expected_revision=2,f=>f.operations[0].values.note=null]){const b=plain(backup);mutate(b.data.practices[0].practice_feedback);assert.throws(()=>h.c.PhoneStore.validateBackup(b),/练习记录/);}
+});

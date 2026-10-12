@@ -58,6 +58,28 @@
     "physical_android_lifecycle_tested": false,
     "actual_multi_set_exercise_tested": false
   },
+  "independent_feedback_browser_flow": {
+    "hosted_attempts": 5,
+    "hosted_successful_runs": 1,
+    "hosted_failed_runs_preserved": 4,
+    "phone_assets_attempts": 3,
+    "phone_assets_successful_runs": 1,
+    "phone_assets_failed_runs_preserved": 2,
+    "hosted_success_run": "actual-hosted-feedback-20261012-0166a9cd",
+    "phone_success_run": "actual-phone-feedback-20261012-06d1d950",
+    "practice_records_per_successful_run": 1,
+    "feedback_edits_per_successful_run": 3,
+    "feedback_values_are_qa_inputs_not_patient_observations": true,
+    "finish_payload_nulls_unchanged": true,
+    "feedback_pain_null_preserved": true,
+    "formal_plan_contributions": 0,
+    "lost_reply_reconciles_same_operation": true,
+    "revision_conflict_requires_explicit_choice": true,
+    "per_practice_draft_retained": true,
+    "all_modules_durable_outbox_complete": false,
+    "original_button_document_geometry_unchanged": true,
+    "physical_phone_tested": false
+  },
   "preview_limits": {
     "normal_voice_min_interval_ms": 6000,
     "same_cue_min_interval_ms": 10000,
@@ -74,18 +96,18 @@
     "whole_product_visual_acceptance": false
   },
   "automated_regression": {
-    "javascript_passed": 138,
-    "python_passed": 144,
+    "javascript_passed": 149,
+    "python_passed": 148,
     "python_subtests_passed": 2,
     "counts_are_not_clinical_accuracy": true
   },
   "apk": {
-    "version": "0.2.4",
-    "version_code": 6,
+    "version": "0.2.5",
+    "version_code": 7,
     "build_verified": true,
     "installed_on_target_phone": false,
     "local_practice_contract_enabled": true,
-    "sha256": "9EFB353EE63E7AD5E5CB0FBBE65F282AC61F82529E7620062BEBAAAA8EE75302",
+    "sha256": "4D81826B2847F6629D506140A6961824156350B72321572F6E2CE1DDC751A85B",
     "original_signing_certificate_verified": true
   }
 }

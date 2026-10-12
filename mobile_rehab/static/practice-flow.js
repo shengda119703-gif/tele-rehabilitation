@@ -5,8 +5,9 @@ let practiceJourney=null,practiceGeneration=0,practiceClock;
 const practiceCanonical=v=>Array.isArray(v)?v.map(practiceCanonical):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,practiceCanonical(v[k])])):v;
 const practiceEqual=(a,b)=>JSON.stringify(practiceCanonical(a))===JSON.stringify(practiceCanonical(b));
 const practiceDraftKey=c=>'ankang-practice-draft-1:'+JSON.stringify([location.origin,c.provider,c.source_context,c.participant_id]);
+const practiceRecordDraftKey=(c,id)=>practiceDraftKey(c)+':'+id;
 function persistPractice(j){
- try{localStorage.setItem(practiceDraftKey(j.context),JSON.stringify({version:1,context:j.context,start:j.start,finish:j.finish||null,elapsed:j.elapsed,ended:j.ended,committed:j.receipt?.state==='COMMITTED',countDraft:j.countDraft||''}));j.draftSaved=true;}
+ try{const text=JSON.stringify({version:1,context:j.context,start:j.start,finish:j.finish||null,elapsed:j.elapsed,ended:j.ended,committed:j.receipt?.state==='COMMITTED',countDraft:j.countDraft||'',feedbackDraft:j.feedbackDraft||null,feedbackPending:j.feedbackPending||null,feedbackSuperseded:j.feedbackSuperseded||[]});localStorage.setItem(practiceRecordDraftKey(j.context,j.start.operation_id),text);j.draftSaved=true;try{localStorage.setItem(practiceDraftKey(j.context),text);}catch{/* The individually scoped draft remains recoverable from its history entry. */}}
  catch{j.draftSaved=false;}
 }
 function pausePractice(){
@@ -32,15 +33,16 @@ async function beginGuidedPractice(record,entry,resume=null){
  // The retained capture router is query-based. Entering from an assessment
  // result must not send a reload back to the assessment library: the existing
  // plan entry is where the owner-bound original practice draft is reconciled.
- const returnUrl=new URL(location.href,location.origin);returnUrl.searchParams.set('tab','plan');window.history.replaceState(null,'',returnUrl.href);
+ const returnUrl=new URL(location.href,location.origin);returnUrl.searchParams.set('tab',resume?.state==='COMMITTED'?'history':'plan');window.history.replaceState(null,'',returnUrl.href);
  app.innerHTML='<div class="page-head"><h1>'+esc(label(entry.exercise_id))+'</h1></div><div class="card" id="practice-area"><p role="status">正在核对本项安排…</p></div>';
  const area=$('#practice-area');
  try{
   const context=await api('/practice/context');if(generation!==practiceGeneration||$('#practice-area')!==area||ownerGeneration!==(state.uploadOwnerGeneration||0))return;
-  let saved;try{saved=JSON.parse(localStorage.getItem(practiceDraftKey(context))||'null');}catch{/* Keep the current page available when draft storage is unavailable. */}
+  let saved;try{saved=JSON.parse((resume&&localStorage.getItem(practiceRecordDraftKey(context,resume.id)))||localStorage.getItem(practiceDraftKey(context))||'null');}catch{/* Keep the current page available when draft storage is unavailable. */}
   if(!saved&&practiceJourney&&practiceEqual(practiceJourney.context,context))saved={...practiceJourney,version:1};
   const compatible=saved?.version===1&&practiceEqual(saved.context,context)&&typeof saved.start?.operation_id==='string'&&saved.start.plan_id===record.id&&saved.start.entry_key===entry.key&&(resume?saved.start.operation_id===resume.id:!saved.committed);
   const j={context,ownerGeneration,start:resume?.start_payload||(compatible?saved.start:{operation_id:newUploadOperation(),plan_id:record.id,plan_revision:record.revision,entry_key:entry.key}),finish:resume?.finish_payload||(compatible?saved.finish:null),elapsed:compatible&&Number.isFinite(saved.elapsed)?Math.max(0,saved.elapsed):(resume?.finish_payload?.elapsed_ms||0),countDraft:compatible?saved.countDraft||'':'',ended:resume?.state==='COMMITTED'||compatible&&saved.ended===true,running:false,busy:false,receipt:null};
+  if(compatible){j.feedbackDraft=saved.feedbackDraft||null;j.feedbackPending=saved.feedbackPending||null;j.feedbackSuperseded=saved.feedbackSuperseded||[];}
   practiceJourney=j;persistPractice(j);await reconcilePractice(j,area,true);
  }catch(e){if($('#practice-area')===area&&ownerGeneration===(state.uploadOwnerGeneration||0)){area.innerHTML='<p>'+esc(e.message)+'</p><button class="secondary" id="practice-back">返回训练安排</button>';$('#practice-back').onclick=()=>navigate('plan');}}
 }
@@ -75,6 +77,7 @@ function drawPractice(j,area){
   pausePractice();j.ended=true;j.finish={operation_id:newUploadOperation(),count,elapsed_ms:Math.min(86400000,Math.round(j.elapsed)),reason:'ended',feedback:{pain:null,fatigue:null}};
   persistPractice(j);drawPractice(j,area);void submitPracticeFinish(j,area);
  };
+ if(j.ended&&typeof mountPracticeFeedback==='function')mountPracticeFeedback(j,area);
 }
 async function submitPracticeFinish(j,area){
  if(j.finishRequest)return;j.finishRequest=true;

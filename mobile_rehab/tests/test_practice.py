@@ -131,3 +131,84 @@ def test_resume_rechecks_current_arrangement_but_does_not_block_saving_ended_fac
     assert client.post('/api/practice', json=start).json()['execution_allowed'] is False
     saved = client.post('/api/practice/' + start['operation_id'] + '/finish', json=end_payload()).json()
     assert saved['state'] == 'COMMITTED' and saved['confirmed_count'] is None
+
+
+def feedback_payload(revision=0, **values):
+    return dict(operation_id=str(uuid4()), expected_revision=revision,
+                values=dict(pain=values.get('pain'), fatigue=values.get('fatigue'), note=values.get('note')))
+
+
+def test_feedback_can_follow_committed_practice_with_nulls_and_one_durable_receipt(client):
+    start = arrangement(client)
+    identity = start['operation_id']
+    path = '/api/practice/' + identity
+    client.post('/api/practice', json=start)
+    payload = feedback_payload(note='TEST 结束后补填')
+    assert client.post(path + '/feedback', json=payload).status_code == 409
+    end = end_payload(10)
+    original = client.post(path + '/finish', json=end).json()
+    empty = client.get(path + '/feedback').json()
+    assert empty['revision'] == 0 and empty['values'] == dict(pain=None, fatigue=None, note=None)
+    saved = client.post(path + '/feedback', json=payload)
+    assert saved.status_code == 200, saved.text
+    assert saved.json()['status'] == 'COMMITTED'
+    assert saved.json()['values'] == payload['values']
+    assert client.get(path + '/feedback/operations/' + payload['operation_id']).json() == saved.json()
+    assert client.post(path + '/feedback', json=payload).json() == saved.json()
+    record = client.get(path).json()
+    for field in ('finish_payload', 'self_reported_count', 'confirmed_count', 'mode_segments', 'formal_plan_contribution'):
+        assert record[field] == original[field]
+    assert len(record['practice_feedback']['operations']) == 1
+    assert client.get('/api/plan').json()['progress']['completed'] == 0
+
+
+def test_feedback_revision_conflict_never_overwrites_and_original_receipt_remains_queryable(client):
+    start = arrangement(client)
+    path = '/api/practice/' + start['operation_id']
+    client.post('/api/practice', json=start)
+    client.post(path + '/finish', json=end_payload())
+    first = feedback_payload(note='TEST first')
+    receipt = client.post(path + '/feedback', json=first).json()
+    stale = feedback_payload(fatigue=3)
+    rejected = client.post(path + '/feedback', json=stale)
+    assert rejected.status_code == 409
+    assert rejected.json()['detail']['code'] == 'FEEDBACK_REVISION_CONFLICT'
+    assert client.get(path + '/feedback').json()['values'] == first['values']
+    assert client.get(path + '/feedback/operations/' + stale['operation_id']).status_code == 404
+    latest = dict(stale, operation_id=str(uuid4()), expected_revision=1)
+    assert client.post(path + '/feedback', json=latest).json()['revision'] == 2
+    assert client.post(path + '/feedback', json=first).json() == receipt
+    assert client.get(path + '/feedback').json()['revision'] == 2
+    assert client.post(path + '/feedback', json=dict(first, values=latest['values'])).json()['detail']['code'] == 'FEEDBACK_KEY_CONFLICT'
+
+
+def test_feedback_does_not_cross_owner_or_accept_empty_invalid_or_scope_overriding_data(client):
+    start = arrangement(client)
+    path = '/api/practice/' + start['operation_id']
+    client.post('/api/practice', json=start)
+    client.post(path + '/finish', json=end_payload())
+    for payload in (feedback_payload(), feedback_payload(pain=True), feedback_payload(pain=-1),
+                    feedback_payload(fatigue=11), feedback_payload(note=' '), feedback_payload(note='x'*501),
+                    dict(feedback_payload(note='TEST'), owner='another'),
+                    dict(feedback_payload(note='TEST'), expected_revision=True)):
+        assert client.post(path + '/feedback', json=payload).status_code == 400
+    with TestClient(client.app, headers=HEADERS) as other:
+        other.post('/api/pair', json={'code': 'TEST-only'})
+        assert other.get(path + '/feedback').status_code == 404
+        assert other.post(path + '/feedback', json=feedback_payload(note='TEST')).status_code == 404
+    assert client.get(path + '/feedback').json()['revision'] == 0
+
+
+def test_explicit_later_discomfort_survives_edits_and_stops_new_or_open_practice_not_fact_saving(client):
+    start = arrangement(client)
+    path = '/api/practice/' + start['operation_id']
+    client.post('/api/practice', json=start)
+    client.post(path + '/finish', json=end_payload())
+    another = dict(start, operation_id=str(uuid4()))
+    assert client.post('/api/practice', json=another).json()['execution_allowed'] is True
+    assert client.post(path + '/feedback', json=feedback_payload(pain=1)).status_code == 200
+    assert client.post(path + '/feedback', json=feedback_payload(1, pain=0)).status_code == 200
+    assert client.get('/api/practice/' + another['operation_id']).json()['execution_allowed'] is False
+    assert client.post('/api/practice/' + another['operation_id'] + '/finish', json=end_payload()).status_code == 200
+    rejected = client.post('/api/practice', json=dict(start, operation_id=str(uuid4())))
+    assert rejected.json()['detail']['code'] == 'PRACTICE_STOP_RECORDED'

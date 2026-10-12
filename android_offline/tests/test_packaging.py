@@ -28,6 +28,7 @@ class PackagingTest(unittest.TestCase):
             capture = archive.read('assets/capture.html').decode('utf-8')
             self.assertLess(capture.index('/local/practice.js'), capture.index('/local/local-api.js'))
             self.assertIn('/static/practice-flow.js', capture)
+            self.assertLess(capture.index('/static/practice-feedback.js'), capture.index('/static/practice-flow.js'))
             locked = json.loads(archive.read('assets/ui-lock.json'))
             for name, digest in locked.items():
                 self.assertEqual(hashlib.sha256(archive.read('assets/static/'+name)).hexdigest(), digest)

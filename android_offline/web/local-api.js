@@ -91,6 +91,9 @@ async function request(path,opts={}){
    const parts=route.split('/');
    if(parts.length===3&&method==='GET')return practice.get(parts[2]);
    if(parts.length===4&&parts[3]==='finish'&&method==='POST')return practice.finish(parts[2],payload);
+   if(parts.length===4&&parts[3]==='feedback'&&method==='GET')return practice.feedback(parts[2]);
+   if(parts.length===4&&parts[3]==='feedback'&&method==='POST')return practice.saveFeedback(parts[2],payload);
+   if(parts.length===6&&parts[3]==='feedback'&&parts[4]==='operations'&&method==='GET')return practice.feedbackOperation(parts[2],parts[5]);
    failure('请使用明确的练习记录操作',405);
   }
   if(route.startsWith('/product/care.')||route.startsWith('/unified/care.')){

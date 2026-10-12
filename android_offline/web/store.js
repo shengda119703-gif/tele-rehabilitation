@@ -60,12 +60,22 @@ function validatePractices(records,owner){
   if(!p||!uuid.test(p.id)||!uuid.test(p.entry_key)||!Number.isInteger(p.revision)||p.revision<1||!s||s.operation_id!==r.id||s.plan_id!==p.id||s.entry_key!==p.entry_key||s.plan_revision!==p.revision)bad();
   if(typeof r.exercise_id!=='string'||!['left','right'].includes(r.side)||!Number.isFinite(Date.parse(r.created_at))||!r.settings||!Number.isInteger(r.settings.target_reps)||r.settings.target_reps<1)bad();
   if(r.visual_session_ref!==null||r.confirmed_count!==null||r.formal_plan_contribution!==null)bad();
-  if(r.state==='PRACTICING'){open++;if(r.finish_payload!==null||r.record_origin!=='GUIDED_PRACTICE')bad();continue;}
+  if(r.state==='PRACTICING'){open++;if(r.finish_payload!==null||r.record_origin!=='GUIDED_PRACTICE'||r.practice_feedback!==undefined)bad();continue;}
   const f=r.finish_payload;
   if(!f||!uuid.test(f.operation_id)||!optional(f.count,10000)||!integer(f.elapsed_ms,86400000)||!['ended','completed_set','discomfort'].includes(f.reason)||!f.feedback||!optional(f.feedback.pain,10)||!optional(f.feedback.fatigue,10))bad();
   if(r.self_reported_count!==f.count||r.count_scope!=='set_total'||r.set_index!==1||r.elapsed_source!=='frontend_active_time_not_observed_hold'||r.record_origin!==(f.count===null?'GUIDED_PRACTICE':'SELF_RECORDED')||!Number.isFinite(Date.parse(r.ended_at)))bad();
   if(!Array.isArray(r.mode_segments)||r.mode_segments.length!==1)bad();const segment=r.mode_segments[0];
   if(segment.mode!=='GUIDED'||segment.source!=='GUIDED_PRACTICE'||segment.time_basis!=='device_receipt_time'||segment.start!==r.created_at||segment.end!==r.ended_at||segment.set_index!==1)bad();
+  if(r.practice_feedback!==undefined){
+   const f=r.practice_feedback,keys=new Set(),same=(a,b)=>canonical(a)===canonical(b);
+   if(!Number.isInteger(f.revision)||f.revision<1||!Array.isArray(f.operations)||f.operations.length!==f.revision||f.revision>100)bad();
+   for(let index=0;index<f.operations.length;index++){
+    const o=f.operations[index],v=o.values;
+    if(!uuid.test(o.operation_id)||keys.has(o.operation_id)||o.expected_revision!==index||o.revision!==index+1||!Number.isFinite(Date.parse(o.saved_at)))bad();keys.add(o.operation_id);
+    if(!v||!same(Object.keys(v).sort(),['fatigue','note','pain'])||!optional(v.pain,10)||!optional(v.fatigue,10)||v.note!==null&&(typeof v.note!=='string'||!v.note.trim()||v.note.length>500)||Object.values(v).every(n=>n===null))bad();
+   }
+   const last=f.operations.at(-1);if(!same(f.values,last.values)||f.saved_at!==last.saved_at)bad();
+  }
  }
  if(open>1)bad();
 }

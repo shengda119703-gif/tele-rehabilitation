@@ -1,5 +1,13 @@
 # 当前交接：安康双端整合
 
+## 2026-10-12 前端流程任务书：感受后补与原键恢复
+
+继续 `codex/frontend-flow-optimization`，上一增量 `87327e0` 已推并核对一致。本轮补10.5／F24：托管原SQLite和APK原Store提供独立practice感受查询／提交／原操作回执，绑定本人／来源／UUID／expected_revision。先保存练习，疼痛／疲劳／备注后补，null不补0；原finish载荷／次数／贡献不改。丢回复先查原键，实质revision冲突由用户明确选择，不自动覆盖；历史不适不因后改0自动撤销，执行阻止不妨碍保存已发生事实。
+
+原结束区／历史入口复用care-form及button样式，无CSS／图标改动；每旅程小型草稿独立保留，旧单指针兼容。修复历史刷新跳回训练、读取未完成按钮提前可点和忙碌／待核对文案。成功托管 `actual-hosted-feedback-20261012-0166a9cd`、实际APK资源／原CPU Worker／Store `actual-phone-feedback-20261012-06d1d950`：返回保留感受、提交丢回复刷新、真实冲突／明确采用最新通过；各练习1条／反馈3次明确QA编辑／正式贡献0，不是人体感受。手机0 Python API请求。此前托管4次／手机2次失败保留，含生产问题及QA过早断言／空节点／滚动坐标问题。
+
+最终JS149、Python手机145＋包装3／2 subtests通过，64保护内容／原预览几何通过，已审看两尺寸结束页和APK资源页。APK0.2.5／code7原签名，SHA `4D81826B2847F6629D506140A6961824156350B72321572F6E2CE1DDC751A85B`；红米未安装，未启停用户服务／相机／旧窗口。桌面仍0.20.0／五导航，发布后沿原脚本／已验证pythonw刷新桌面原链接。任务未完成：Qt、独立明确安排政策、并行测量6秒降级／分段、多组／租约、全模块outbox／v2 202及三重点动作／真机继续做。
+
 ## 2026-10-12 前端流程任务书：APK 本地跟练与刷新恢复
 
 继续 `codex/frontend-flow-optimization`，不改图标／CSS／字体／原模型、剂量、计次和正式贡献。APK `practice.js` 通过原 `local-api.js`／`Store.serial/change/commit` 保存独立 `practices`；本人 PHONE_LOCAL 政策由当前原自动提案与反馈门核对，不找 Python，不冒充合格评估或视觉 READY。同键创建／结束、后来资格变化仍可保存、空次数／感受不补 0；原备份保留并验证来源。原 onPause 接页面暂停，长 dt 不补时。
