@@ -6,12 +6,14 @@ let owner=store.value.owner;
 const metrics=[['steps','活动步数','步'],['walkSpeed','步行速度','m/s'],['sleepHours','睡眠时长','小时'],['nightWakes','夜间醒来','次'],['restingHr','静息心率','bpm'],['weight','体重','kg'],['spo2','血氧','%'],['systolic','收缩压','mmHg'],['diastolic','舒张压','mmHg'],['bloodGlucose','血糖','mmol/L']];
 const categories=['体检报告','就诊记录','检验检查','影像资料','病历资料','其他资料'];
 const profile=()=>store.read('profile:'+owner)?.profile;
+let practice;
 const domain=new AnkangDomain.ProductService({read:k=>store.read(k),write:(k,v)=>store.write(k,v),remove:k=>store.remove(k),profiles:()=>store.profiles(),attachments:{list:s=>PS.attachments(owner).list(s),put:(s,a)=>PS.attachments(owner).put(s,a),clear:s=>PS.attachments(owner).clear(s),setTrash:(s,id,at)=>PS.attachments(owner).setTrash(s,id,at)}},undefined,undefined,{},participant=>PS.createCarePort(store,participant,careRehabFacts));
 const ready=store.serial(async()=>{
  await PhoneLin.initialize(store,nativeFetch);
  owner=store.value.owner;
  await store.migrate(domain);
  if(!profile())await domain.request('profile.save',owner,{profile:{name:'本机用户',age:0,conditions:[],medications:[],mobility:'unknown',usesCane:false,nightVision:'unknown',cognition:'unknown',familySharing:'denied'}},now());
+ practice=PhonePractice.createPort(store,owner,practiceArrangement);
  // Interrupted jobs are explicitly failed, not silently counted as successful.
  store.change(v=>v.jobs.forEach(j=>{if(['queued','analyzing','uploading'].includes(j.state)){j.state='failed';j.message='上次分析被中断，原录像保留，请重新分析。';}}));
 });
@@ -40,6 +42,16 @@ async function careRehabFacts(value){
 async function proposal(){const c=await PM.catalog(),records=store.value.jobs.filter(j=>j.state==='done'&&j.result.local_report).map(j=>({id:j.id,exercise:j.exercise,side:j.side,created:new Date(j.created_at).getTime(),kind:j.mode||'assessment',report:j.result.local_report,feedback:j.feedback}));
  const p=LocalEngine.propose(records,c,Date.now(),{restrictions:(profile().conditions||[]).join('；')});
  return{candidates:p.items.map(i=>{const s=c.rehab.find(s=>s.id===i.exercise);return{...i,exercise_id:i.exercise,label:s.label,settings:{target_reps:i.reps,target_sets:1,target_angle_deg:i.target,rest_between_sets_s:30},instruction:s.instructions.move+'；'+s.instructions.return,rationale:'按最近本人评估中的可见次数和舒适活动幅度安排。',source:typeof i.source==='string'?{title:i.source,section:''}:i.source};}),excluded:p.excluded.map(reason=>({label:'待补充',reason}))};}
+async function practiceArrangement(ref){
+ const p=store.value.plans.at(-1),entry=p?.items.find(i=>i.key===ref.entry_key);
+ if(!p||p.id!==ref.id||p.revision!==ref.revision||p.measurement_version!==LocalEngine.VERSION||!entry)return{allowed:false,reason:'原安排已变化；可以结束并保存已经发生的练习。'};
+ const progress=planProgress(p);if(progress.blocked)return{allowed:false,reason:progress.blocked};
+ // Reuse the ACTUAL current local proposal: assessment age/coverage/observed
+ // repetitions, restrictions and discomfort gates remain untouched.
+ const current=(await proposal()).candidates.find(i=>i.exercise_id===entry.exercise_id&&i.side===entry.side&&i.assessment===entry.assessment_id);
+ if(!current||['target_reps','target_sets','target_angle_deg','rest_between_sets_s'].some(k=>current.settings[k]!==entry.settings[k]))return{allowed:false,reason:'本项安排暂不可继续，请核对现有评估与安排。'};
+ return{allowed:true,entry};
+}
 async function body(){const c=await PM.catalog(),records=store.value.jobs.filter(j=>j.state==='done').map(j=>({id:j.id,exercise:j.exercise,label:[...c.rehab,...c.fitness,...c.posture].find(s=>s.id===j.exercise)?.label||j.exercise,side:j.side,mode:j.mode,created_at:j.created_at,summary:j.result.summary,feedback:j.feedback})),latest=[...new Map(records.filter(j=>j.mode!=='training').map(j=>[j.exercise+':'+j.side,j])).values()];return{total:records.length,training_count:records.filter(j=>j.mode==='training').length,records,latest,next_step:{title:store.value.plans.length?'按本轮计划继续训练':'完成评估，查看本轮训练建议'},note:'手机本地二维测量汇总，仅反映本次可见活动，不作疾病诊断。'};}
 async function snapshot(){const s=await domain.request('snapshot',owner,{},now()),c=await PM.catalog(),p=store.value.plans.at(-1),progress=p?planProgress(p):null;
  const scope={participant_id:owner,source_kind:'PHONE_LOCAL',usage_context:'SELF_USE'};
@@ -71,6 +83,16 @@ async function request(path,opts={}){
   if(route==='/pair')return{ok:true,local:true};
   if(route==='/unified')return{snapshot:await snapshot(),source:'PHONE_LOCAL',shared:true,local:true};
   if(route==='/product')return{needs_profile:false,snapshot:await snapshot(),metrics,categories,assistant:'local',external_model:false};
+  if(route==='/practice'||route.startsWith('/practice/')){
+   if(u.origin!==location.origin||q.toString())failure('请使用当前手机本地档案',403);
+   if(route==='/practice/context'&&method==='GET')return practice.context();
+   if(route==='/practice'&&method==='GET')return practice.list();
+   if(route==='/practice'&&method==='POST')return practice.start(payload);
+   const parts=route.split('/');
+   if(parts.length===3&&method==='GET')return practice.get(parts[2]);
+   if(parts.length===4&&parts[3]==='finish'&&method==='POST')return practice.finish(parts[2],payload);
+   failure('请使用明确的练习记录操作',405);
+  }
   if(route.startsWith('/product/care.')||route.startsWith('/unified/care.')){
    if(u.origin!==location.origin)failure('请使用当前手机本地档案',403);
    const operation=route.slice(9);
@@ -95,7 +117,7 @@ async function request(path,opts={}){
    }
    return PS.applyDaily(store,operation,payload,profile());
   }
-  if(route==='/catalog'){const c=await PM.catalog();return{shared:true,exercises:c.rehab.map(s=>({...s,available:true,backend:'phone-mediapipe'})),fitness:c.fitness.map(s=>({...s,available:true})),posture:c.posture};}
+  if(route==='/catalog'){const c=await PM.catalog();return{shared:true,practice_recording:true,exercises:c.rehab.map(s=>({...s,available:true,backend:'phone-mediapipe'})),fitness:c.fitness.map(s=>({...s,available:true})),posture:c.posture};}
   if(route==='/plan'){
    const proposed=await proposal();if(method==='POST'){
     if(!payload.general_activity_ok)failure('请确认目前适合进行基础活动');if(!proposed.candidates.length)failure('暂无可用评估，请先完成一次动作评估');if(proposed.candidates.some(i=>i.standing)&&!payload.standing_support_ok)failure('请为站立项目准备稳固支撑');
@@ -104,18 +126,26 @@ async function request(path,opts={}){
    const p=store.value.plans.at(-1);return{proposal:proposed,plan:p||null,progress:planProgress(p)};
   }
   if(route==='/jobs'&&method==='POST'){
+   const operation=new Headers(opts.headers||{}).get('X-Rehab-Upload-Operation')||'';
+   if(operation&&!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(operation))failure('上传编号无效');
+   if(operation&&store.value.jobs.some(j=>j.upload_operation===operation))failure('这次上传已有接收记录，请按原上传编号核对。',409);
    if(q.get('consent')!=='yes')failure('请确认本次分析');if(PM.active)failure('已有本地分析正在进行',409);if(!(opts.body instanceof Blob)||opts.body.size>256*1048576)failure('请选择 256 MB 以内的录像');
    const s=await PM.spec(q.get('exercise')),side=q.get('side');if(!['left','right'].includes(side))failure('请选择测试侧');
    const mode=q.get('mode')||'assessment',p=store.value.plans.find(x=>x.id===q.get('plan_id')),entry=p?.items.find(i=>i.key===q.get('entry_key'));
    if(mode==='training'&&(!entry||entry.exercise_id!==s.id||entry.side!==side))failure('本轮计划已变化，请重新选择动作');
    if(store.value.jobs.length>=250)failure('记录空间已满，请先导出备份');
    const id=crypto.randomUUID(),job={id,exercise:s.id,side,mode,state:'analyzing',created_at:now().toISOString(),message:'正在加载手机模型',video_available:true,plan_id:p?.id||null,entry_key:entry?.key||null};
+   if(operation)job.upload_operation=operation;
    await PS.files.put('video:'+id,{kind:'video',ownerId:owner,blob:opts.body});
    try{store.change(v=>v.jobs.push(job));}catch(e){await PS.files.remove('video:'+id);throw e;}
    let calibration=null;const headers=new Headers(opts.headers||{}),raw=headers.get('X-Fitness-Calibration');if(raw)calibration=JSON.parse(raw);
    setTimeout(()=>PM.analyze(store,job,opts.body,calibration).catch(e=>{store.change(v=>{const j=v.jobs.find(x=>x.id===id);j.state='failed';j.message=e.message;});}),0);return{id};
   }
   if(route==='/jobs')return store.value.jobs.map(j=>publicJob(j,q.get('brief')==='true')).reverse();
+  if(route.startsWith('/uploads/')&&method==='GET'){
+   const operation=route.slice(9);if(!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(operation))failure('上传编号无效');
+   const job=store.value.jobs.find(j=>j.upload_operation===operation);if(!job)failure('尚未找到这次上传的接收记录。',404);return publicJob(job);
+  }
   if(route.startsWith('/jobs/')){
    const parts=route.split('/'),j=findJob(parts[2]);
    if(parts[3]==='video'){
@@ -152,7 +182,7 @@ async function request(path,opts={}){
   failure('此功能尚未接入手机本地版',404);
  });
 }
-root.fetch=async function(input,opts={}){const path=typeof input==='string'?input:input.url,u=new URL(path,location.origin);if(u.origin!==location.origin||!u.pathname.startsWith('/api/'))return nativeFetch(input,opts);try{const result=await request(u.href,opts);return result instanceof Response?result:new Response(JSON.stringify(result),{headers:{'Content-Type':'application/json'}});}catch(e){if(e.name==='AbortError')throw e;return new Response(JSON.stringify({detail:e.message}),{status:e.status||400,headers:{'Content-Type':'application/json'}});}};
+root.fetch=async function(input,opts={}){const path=typeof input==='string'?input:input.url,u=new URL(path,location.origin);if(u.origin!==location.origin||!u.pathname.startsWith('/api/'))return nativeFetch(input,opts);try{const result=await request(u.href,opts);return result instanceof Response?result:new Response(JSON.stringify(result),{headers:{'Content-Type':'application/json'}});}catch(e){if(e.name==='AbortError')throw e;return new Response(JSON.stringify({detail:e.reason||e.message}),{status:e.status||400,headers:{'Content-Type':'application/json'}});}};
 // Preserve the existing upload form/progress handler without sending a video off-device.
 root.XMLHttpRequest=class{
  constructor(){this.upload={};this.headers={};this.status=0;this.responseText='';this.readyState=0;this.controller=new AbortController();}
@@ -162,9 +192,21 @@ root.XMLHttpRequest=class{
  send(body){const u=new URL(this.url,location.origin);if(!u.pathname.startsWith('/api/'))throw Error('不允许向未配置地址发送资料');this.upload.onprogress?.({lengthComputable:true,loaded:body.size,total:body.size});root.fetch(u.href,{method:this.method,body,headers:this.headers,signal:this.controller.signal}).then(async r=>{this.status=r.status;this.responseText=await r.text();this.readyState=4;if(!this.controller.signal.aborted)this.onload?.();}).catch(()=>{if(!this.controller.signal.aborted)this.onerror?.();});}
 };
 // Media elements cannot use JavaScript fetch interceptors. Resolve their local blobs.
-async function resolveMedia(node){if(!(node instanceof Element))return;const nodes=[node,...node.querySelectorAll('video[src^="/api/jobs/"]')];for(const video of nodes){if(video.tagName!=='VIDEO'||!video.getAttribute('src')?.startsWith('/api/jobs/'))continue;const id=video.getAttribute('src').split('/')[3],file=await PS.files.get('video:'+id);if(file&&video.isConnected){const url=URL.createObjectURL(file.blob);video.src=url;video.addEventListener('emptied',()=>URL.revokeObjectURL(url),{once:true});}}}
+const localMedia=new Map();
+function releaseLocalMedia(){for(const [video,url] of localMedia)if(!video.isConnected){video.pause();video.removeAttribute('src');video.load();URL.revokeObjectURL(url);localMedia.delete(video);}}
+async function resolveMedia(node){
+ if(!(node instanceof Element))return;
+ const nodes=[node,...node.querySelectorAll('video[data-local-video-src],video[src^="/api/jobs/"]')];
+ for(const video of nodes){
+  const source=video.getAttribute('data-local-video-src')||video.getAttribute('src');
+  if(video.tagName!=='VIDEO'||!source?.startsWith('/api/jobs/'))continue;
+  const id=source.split('/')[3],file=await PS.files.get('video:'+id);
+  if(!file||file.ownerId!==owner||!video.isConnected||(video.getAttribute('data-local-video-src')||video.getAttribute('src'))!==source)continue;
+  const url=URL.createObjectURL(file.blob);video.removeAttribute('data-local-video-src');localMedia.set(video,url);video.src=url;
+ }
+}
 document.addEventListener('DOMContentLoaded',()=>{
- new MutationObserver(list=>list.forEach(m=>m.addedNodes.forEach(resolveMedia))).observe(document.body,{childList:true,subtree:true});
+ new MutationObserver(list=>{releaseLocalMedia();list.forEach(m=>m.addedNodes.forEach(resolveMedia));}).observe(document.body,{childList:true,subtree:true});
  if(typeof ui!=='undefined'){ui.source='REPLAY_FILE';ready.then(()=>{if(typeof load==='function')load();});}
  if(root.OfflineAndroid)root.print=()=>OfflineAndroid.printPage();
 });
@@ -202,7 +244,7 @@ async function cloudBackup(){try{
 }catch(e){alert(e.message);}}
 async function cloudRestore(){try{const b=await PhoneCloud.request('/v1/backup');if(confirm('恢复本人云端备份？当前文字记录和计划将保留恢复前副本。录像与资料原件不包含在此备份中。'))await restore(JSON.stringify(b.document));}catch(e){alert(e.message);}}
 document.addEventListener('click',async e=>{const a=e.target.closest?.('a[href^="/api/"]');if(!a)return;e.preventDefault();try{const r=await root.fetch(a.href);if(!r.ok)throw Error((await r.json()).detail);const blob=await r.blob();if(root.OfflineAndroid){if(blob.type.includes('json'))OfflineAndroid.saveJson(await blob.text());else{const bytes=new Uint8Array(await blob.arrayBuffer());let text='';for(let i=0;i<bytes.length;i+=8192)text+=String.fromCharCode(...bytes.subarray(i,i+8192));OfflineAndroid.saveDocument(decodeURIComponent(r.headers.get('X-File-Name')||'健康资料'),btoa(text),blob.type);}}else{const u=URL.createObjectURL(blob),link=document.createElement('a');link.href=u;link.download='健康记录';link.click();setTimeout(()=>URL.revokeObjectURL(u),1000);}}catch(err){alert(err.message);}});
-root.offlinePause=()=>{speechPending=false;PM.pause();if(typeof stopLive==='function')stopLive();};
+root.offlinePause=()=>{speechPending=false;if(typeof pausePractice==='function')pausePractice();PM.pause();if(typeof stopLive==='function')stopLive();};
 root.offlineBack=()=>{const d=document.querySelector('dialog[open]');if(d){d.close();return true;}if(PM.active){if(confirm('结束本次分析？原录像保留。'))PM.pause();return true;}if(location.pathname==='/capture'){location.href='/';return true;}if(location.hash&&location.hash!=='#home'){location.hash='#home';return true;}return false;};
 root.PhoneLocal={store,domain,ready,request,snapshot,proposal,body,planProgress,backup,restore,exportBackup,cloudBackup,cloudRestore,cloudRefresh,speechResult,selectProfile:key=>PhoneLin.select(store,key),get cloudState(){return cloudState;}};
 })(globalThis);

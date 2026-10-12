@@ -6,6 +6,7 @@ import sys
 import tempfile
 import unittest
 import zipfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parents[1] / 'tools' / 'normalize_apk.py'
@@ -13,13 +14,20 @@ SCRIPT = Path(__file__).resolve().parents[1] / 'tools' / 'normalize_apk.py'
 class PackagingTest(unittest.TestCase):
     def test_release_lin_assets_keep_official_ui_and_exclude_private_qa_files(self):
         root = SCRIPT.parents[2]
-        apk = root/'android_offline/dist/tele-rehabilitation-mobile-0.2.1.apk'
-        self.assertTrue(apk.is_file(), 'Build 0.2.1 before running release QA')
+        version = ET.parse(root/'android_offline/AndroidManifest.xml').getroot().attrib['{http://schemas.android.com/apk/res/android}versionName']
+        apk = root/f'android_offline/dist/tele-rehabilitation-mobile-{version}.apk'
+        self.assertTrue(apk.is_file(), f'Build {version} before running release QA')
         with zipfile.ZipFile(apk) as archive:
             names = archive.namelist()
             self.assertFalse(any('\\' in n or '..' in n.split('/') for n in names))
             self.assertFalse(any(n.endswith(('.mp4', '.sqlite3', '.db', '.jks', '.dpapi')) or
                                  n.endswith(('smoke.js', 'lin-smoke.js')) for n in names))
+            for name in ('practice.js', 'local-api.js', 'store.js'):
+                self.assertEqual(archive.read('assets/local/'+name),
+                                 (root/'android_offline/web'/name).read_bytes())
+            capture = archive.read('assets/capture.html').decode('utf-8')
+            self.assertLess(capture.index('/local/practice.js'), capture.index('/local/local-api.js'))
+            self.assertIn('/static/practice-flow.js', capture)
             locked = json.loads(archive.read('assets/ui-lock.json'))
             for name, digest in locked.items():
                 self.assertEqual(hashlib.sha256(archive.read('assets/static/'+name)).hexdigest(), digest)

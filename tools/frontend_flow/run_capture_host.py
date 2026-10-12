@@ -1,0 +1,65 @@
+"""Isolated real hosted adapter for flow QA; never starts the user's service."""
+import argparse
+import json
+import os
+from pathlib import Path
+import socket
+import sqlite3
+import re
+import sys
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / 'rehab_codex_single_camera_v2_1'))
+os.environ['PYTHONPATH'] = os.pathsep.join([str(ROOT), str(ROOT / 'rehab_codex_single_camera_v2_1'), os.environ.get('PYTHONPATH', '')])
+
+import uvicorn
+from fastapi.responses import Response
+from mobile_rehab.server import create_app
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--data', type=Path, required=True)
+    parser.add_argument('--unreadable-upload-reply', action='store_true')
+    parser.add_argument('--seed-from-native-run', type=Path)
+    parser.add_argument('--unreadable-practice-finish-reply', action='store_true')
+    args = parser.parse_args()
+    args.data.mkdir(parents=True, exist_ok=False)
+    seed_owner = None
+    if args.seed_from_native_run:
+        source = args.seed_from_native_run.resolve()
+        if not source.is_relative_to(Path('D:/RehabFrontendFlowVerification').resolve()):
+            raise ValueError('Only an isolated native-flow QA receipt can seed this QA host')
+        receipt = json.loads((source / 'result.json').read_text(encoding='utf-8'))
+        if receipt.get('kind') != 'actual-hosted-browser-flow' or receipt.get('job_state') != 'done' or receipt.get('saved_session') is not True:
+            raise ValueError('A successful actual native-flow receipt is required')
+        databases = list((source / 'host-data/jobs').glob('*/assessments.sqlite3'))
+        if len(databases) != 1 or not re.fullmatch('[a-f0-9]{32}', databases[0].parent.name):
+            raise ValueError('Expected exactly one isolated owned assessment database')
+        seed_owner = databases[0].parent.name
+        target = args.data / 'jobs' / seed_owner / 'assessments.sqlite3'
+        target.parent.mkdir(parents=True)
+        with sqlite3.connect(f'file:{databases[0].as_posix()}?mode=ro', uri=True) as original, sqlite3.connect(target) as copied:
+            original.backup(copied)
+    app = create_app(args.data, pair_key='TEST-frontend-isolated-host')
+    if args.unreadable_upload_reply or args.unreadable_practice_finish_reply:
+        @app.middleware('http')
+        async def response_fault(request, call_next):
+            response = await call_next(request)
+            upload_fault = args.unreadable_upload_reply and request.url.path == '/api/jobs'
+            finish_fault = args.unreadable_practice_finish_reply and request.url.path.startswith('/api/practice/') and request.url.path.endswith('/finish')
+            if request.method == 'POST' and (upload_fault or finish_fault) and response.status_code == 200:
+                return Response(b'TEST intentionally unreadable receipt', media_type='text/plain')
+            return response
+    server = uvicorn.Server(uvicorn.Config(app, host='127.0.0.1', port=0, log_level='warning'))
+    app.state.shutdown = lambda: setattr(server, 'should_exit', True)
+    with socket.socket() as sock:
+        sock.bind(('127.0.0.1', 0))
+        sock.listen(128)
+        print(json.dumps({'port': sock.getsockname()[1], 'isolated': True, 'seed_owner': seed_owner}), flush=True)
+        server.run(sockets=[sock])
+
+
+if __name__ == '__main__':
+    main()

@@ -1,5 +1,23 @@
 'use strict';
-let liveSession=null;
+let liveSession=null, liveCameraRequest=null, liveCreateRequest=null, liveCloseRequest=null;
+let liveClosingSession=null, liveGeneration=0, liveFacing='user';
+const LIVE_UI_POLICY=Object.freeze({version:'rehab-smooth-ui-1',normalVoiceIntervalMs:6000,sameCueIntervalMs:10000});
+function currentLive(session){return !session.cancelled&&liveSession===session&&session.generation===liveGeneration&&$('#live-video')===session.video;}
+function stoppedLiveControls(session){
+  if(liveSession||$('#live-video')!==session.video)return;
+  const pending=!!(liveCameraRequest||liveCreateRequest||liveCloseRequest);
+  $('#live-start').disabled=pending||!!session.closeFailed;
+  $('#live-stop').disabled=pending||!session.closeFailed;
+  $('#live-stop').textContent=session.closeFailed?'再次结束':'停止';
+}
+async function closeLivePreview(session){
+  if(!session.id||session.remoteClosed||liveCloseRequest)return;
+  liveClosingSession=session;session.closeFailed=false;
+  const request=api('/live/'+session.id,{method:'DELETE',timeoutMs:10000});liveCloseRequest=request;
+  try{await request;session.remoteClosed=true;if(liveClosingSession===session)liveClosingSession=null;}
+  catch(error){session.closeFailed=true;if(!liveSession&&$('#live-video')===session.video)$('#live-status').textContent='摄像头已关闭，自动指导结束状态待确认。';}
+  finally{if(liveCloseRequest===request)liveCloseRequest=null;stoppedLiveControls(session);}
+}
 function mountAssessmentExtras(){
   const button=document.createElement('button');button.className='secondary feature-entry';button.textContent='实时跟练';button.onclick=livePage;$('#guide').append(button);
 }
@@ -52,53 +70,75 @@ function mountDeviceExtras(){
   app.insertAdjacentHTML('beforeend','<div class="card"><h2>在另一台设备继续</h2><p class="tip">手机和电脑浏览器可使用同一份网页档案。不会自动合并桌面软件里的患者资料。</p><button class="primary" id="create-link">生成我的档案连接码</button><div id="link-result"></div><details><summary>接入另一台设备的档案</summary><form class="care-form" id="link-form"><label for="link-code">另一设备生成的档案连接码</label><input id="link-code" required maxlength="100" autocomplete="off"><button class="secondary">接入该档案</button></form></details><button class="secondary" id="device-body">查看身体汇总与随访</button><button class="secondary" id="device-care">查看他人分享的报告</button></div>');
   $('#device-body').onclick=()=>navigate('body');$('#device-care').onclick=()=>navigate('care');
   $('#create-link').onclick=async()=>{try{const data=await api('/account/link-code',{method:'POST'});$('#link-result').innerHTML='<p class="tip">10分钟内在另一设备的“设备连接”中输入。仅给自己的设备使用。</p><p class="access-code">'+esc(data.code)+'</p>';}catch(e){toast(e.message);}};
-  $('#link-form').onsubmit=async e=>{e.preventDefault();if(!confirm('切换到该设备的档案？当前档案不会合并或删除。建议先保留当前档案连接码，以便返回。'))return;try{await api('/account/link',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('#link-code').value.trim(),confirm_switch:true})});state.jobs=[];if(typeof resetHealth==='function')resetHealth();navigate('body');}catch(err){toast(err.message);}};
+  $('#link-form').onsubmit=async e=>{e.preventDefault();if(!confirm('切换到该设备的档案？当前档案不会合并或删除。建议先保留当前档案连接码，以便返回。'))return;try{await api('/account/link',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('#link-code').value.trim(),confirm_switch:true})});invalidateUploadScope();state.jobs=[];if(typeof resetHealth==='function')resetHealth();navigate('body');}catch(err){toast(err.message);}};
 }
 function livePage(){
   clearFile();const ex=selected();
   app.innerHTML=`<button class="back" id="live-back">‹ 返回评估</button><div class="page-head"><h1>${esc(ex.label)} · 实时指导</h1><p>${esc(ex.instructions.camera)}</p></div><div class="card"><div class="live-preview mirrored"><video id="live-video" autoplay playsinline muted></video><canvas id="live-overlay"></canvas></div><div class="live-cue" id="live-cue" aria-live="polite">摆好手机，点击开始</div><div class="live-stats"><span id="live-count">0 次</span><span id="live-angle">—</span></div><p class="caption live-status" id="live-status"></p><label class="consent">镜头 <select id="live-facing"><option value="user">前置摄像头</option><option value="environment">后置摄像头</option></select></label><label class="consent"><input id="live-voice" type="checkbox">语音提示</label><label class="consent"><input id="live-consent" type="checkbox">同意将实时画面传到电脑分析，不保存画面。</label><div class="live-controls"><button class="primary" id="live-start">开始指导</button><button class="danger" id="live-stop" disabled>停止</button></div><p class="tip">这是实时练习指导，结束后不保存为评估依据。需要报告时请录制上传；疼痛、头晕或不适时停止。</p></div>`;
+  $('#live-count').textContent='—';$('#live-facing').value=liveFacing;
   $('#live-back').textContent=state.training?'返回本次训练':'返回动作详情';
   $('#live-back').onclick=()=>{stopLive();assessment();};$('#live-start').onclick=startLive;$('#live-stop').onclick=()=>stopLive();
   if(!window.isSecureContext||!navigator.mediaDevices?.getUserMedia){$('#live-start').disabled=true;$('#live-status').textContent='当前 HTTP 地址不能调用实时相机。请使用可信 HTTPS 地址，或返回录制上传。';}
 }
 async function startLive(){
+  if(liveSession)return;
+  if(liveCameraRequest||liveCreateRequest||liveCloseRequest||liveClosingSession){toast('正在确认上次连接，请稍候。');return;}
   if(!$('#live-consent').checked){toast('请先同意本次实时分析');return;}
-  const session={cancelled:false,stream:null,id:null,lastVoice:'',lastSpoken:0,request:null};liveSession=session;$('#live-start').disabled=true;$('#live-stop').disabled=false;
+  const session={cancelled:false,stream:null,id:null,lastVoice:'',lastSpoken:-Infinity,voiceTimes:new Map(),request:null,
+    generation:++liveGeneration,video:$('#live-video'),exercise:state.selected,side:state.side};
+  liveSession=session;$('#live-start').disabled=true;$('#live-stop').disabled=false;$('#live-stop').textContent='停止';
   $('#live-status').textContent='正在打开摄像头…';
   try{
     const facing=$('#live-facing').value;
-    session.stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:facing},width:{ideal:640},height:{ideal:480}}});
-    if(session.cancelled){session.stream.getTracks().forEach(t=>t.stop());return;}
-    const video=$('#live-video');video.srcObject=session.stream;await video.play();$('.live-preview').classList.toggle('mirrored',facing==='user');
-    const data=await api('/live',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({exercise:state.selected,side:state.side,consent:true})});session.id=data.id;
-    if(session.cancelled){await api('/live/'+session.id,{method:'DELETE'});return;}
+    const request=navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:facing},width:{ideal:640},height:{ideal:480}}});liveCameraRequest=request;
+    try{session.stream=await request;}catch(error){
+      if(error.name!=='OverconstrainedError'||!currentLive(session))throw error;
+      const relaxed=navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:facing}}});liveCameraRequest=relaxed;
+      session.stream=await relaxed;
+    }finally{liveCameraRequest=null;}
+    if(!currentLive(session)){session.stream.getTracks().forEach(t=>t.stop());stoppedLiveControls(session);return;}
+    liveFacing=facing;const video=session.video;video.srcObject=session.stream;await video.play();
+    if(!currentLive(session))return;
+    $('.live-preview').classList.toggle('mirrored',facing==='user');
+    const creation=api('/live',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({exercise:session.exercise,side:session.side,consent:true})});liveCreateRequest=creation;
+    let data;try{data=await creation;}finally{if(liveCreateRequest===creation)liveCreateRequest=null;}
+    session.id=data.id;
+    if(!currentLive(session)){await closeLivePreview(session);stoppedLiveControls(session);return;}
     $('#live-facing').disabled=true;$('#live-status').textContent='正在启动分析…';
     const canvas=document.createElement('canvas');session.canvas=canvas;
     await liveLoop(session);
-  }catch(e){if(!session.cancelled){toast(e.name==='NotAllowedError'?'请允许浏览器使用摄像头':e.message);stopLive();}}
+  }catch(e){if(currentLive(session)){toast(({NotAllowedError:'未获得相机授权，可返回选择原视频。',NotFoundError:'未找到可用摄像头，可返回选择原视频。',NotReadableError:'摄像头正在被其他程序使用。',OverconstrainedError:'当前摄像头不支持请求的规格。'})[e.name]||e.message);stopLive();}}
+  finally{stoppedLiveControls(session);}
 }
 async function liveLoop(session){
-  while(!session.cancelled){
-    const video=$('#live-video');if(!video||document.hidden){stopLive();return;}
+  while(currentLive(session)){
+    const video=session.video;if(document.hidden){stopLive();return;}
+    if(!video.videoWidth||!video.videoHeight){await new Promise(resolve=>setTimeout(resolve,80));continue;}
     const scale=Math.min(1,640/video.videoWidth),canvas=session.canvas;
     canvas.width=Math.round(video.videoWidth*scale);canvas.height=Math.round(video.videoHeight*scale);
     canvas.getContext('2d').drawImage(video,0,0,canvas.width,canvas.height);
     const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.75));
-    if(session.cancelled)return;if(!blob)throw Error('摄像头没有返回画面');
+    if(!currentLive(session))return;if(!blob)throw Error('摄像头没有返回画面');
     session.request=new AbortController();const timeout=setTimeout(()=>session.request.abort(),30000);
     let data;try{data=await api('/live/'+session.id+'/frame',{method:'POST',headers:{'Content-Type':'image/jpeg'},body:blob,signal:session.request.signal});}finally{clearTimeout(timeout);}
-    if(session.cancelled)return;
-    $('#live-count').textContent=(data.summary.completed??0)+' 次';$('#live-angle').textContent=data.valid?number(data.summary.metrics?.[data.summary.primary_metric]?.value,'°'):'—';
+    if(!currentLive(session))return;
+    if(Number.isInteger(data.summary.completed)&&data.summary.completed>=0)$('#live-count').textContent=data.summary.completed+' 次';
+    $('#live-angle').textContent=data.valid?number(data.summary.metrics?.[data.summary.primary_metric]?.value,'°'):'—';
     const cue=data.cue.instruction;$('#live-cue').textContent=cue;$('#live-status').textContent=data.valid?'正在指导 · '+Math.round(data.inference_ms)+' ms':(data.cue.status||'正在识别');
     const overlay=$('#live-overlay');overlay.width=canvas.width;overlay.height=canvas.height;const ctx=overlay.getContext('2d');ctx.clearRect(0,0,overlay.width,overlay.height);ctx.fillStyle='#b6ffb3';for(const [x,y]of data.points){ctx.beginPath();ctx.arc(x*overlay.width,y*overlay.height,4,0,Math.PI*2);ctx.fill();}
-    if($('#live-voice').checked&&'speechSynthesis'in window&&cue!==session.lastVoice&&Date.now()-session.lastSpoken>3500){speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(cue);utterance.lang='zh-CN';speechSynthesis.speak(utterance);session.lastVoice=cue;session.lastSpoken=Date.now();}
+    const voiceNow=performance.now(),lastCueTime=session.voiceTimes.get(cue)??-Infinity;
+    if(!data.valid&&'speechSynthesis'in window)speechSynthesis.cancel();
+    if(data.valid&&cue&&$('#live-voice').checked&&'speechSynthesis'in window&&cue!==session.lastVoice&&voiceNow-session.lastSpoken>=LIVE_UI_POLICY.normalVoiceIntervalMs&&voiceNow-lastCueTime>=LIVE_UI_POLICY.sameCueIntervalMs){speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(cue);utterance.lang='zh-CN';speechSynthesis.speak(utterance);session.lastVoice=cue;session.lastSpoken=voiceNow;session.voiceTimes.set(cue,voiceNow);}
     await new Promise(resolve=>setTimeout(resolve,80));
   }
 }
 function stopLive(){
-  const session=liveSession;if(!session)return;liveSession=null;session.cancelled=true;session.request?.abort();session.stream?.getTracks().forEach(t=>t.stop());
-  if('speechSynthesis'in window)speechSynthesis.cancel();if(session.id)fetch('/api/live/'+session.id,{method:'DELETE',headers:{'X-Rehab-Client':'mobile-v1'},keepalive:true}).catch(()=>{});
-  if($('#live-start')){$('#live-start').disabled=false;$('#live-stop').disabled=true;$('#live-facing').disabled=false;$('#live-status').textContent='已停止，摄像头已关闭';$('#live-cue').textContent='本次指导已结束';const canvas=$('#live-overlay');canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);}
+  const session=liveSession;if(!session){if(liveClosingSession&&!liveCloseRequest)void closeLivePreview(liveClosingSession);return;}
+  liveSession=null;++liveGeneration;session.cancelled=true;session.request?.abort();session.stream?.getTracks().forEach(t=>t.stop());
+  session.video.pause();session.video.srcObject=null;
+  if('speechSynthesis'in window)speechSynthesis.cancel();
+  if($('#live-video')===session.video){$('#live-facing').disabled=false;$('#live-status').textContent='摄像头已关闭';$('#live-cue').textContent='本次自动指导已停止';const canvas=$('#live-overlay');canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);}
+  void closeLivePreview(session);stoppedLiveControls(session);
 }
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stopLive();});
 window.addEventListener('pagehide',stopLive);

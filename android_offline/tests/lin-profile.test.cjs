@@ -8,7 +8,7 @@ function context(storage=memory()){
   location:{origin:'https://appassets.androidplatform.net',href:'/'},document:{addEventListener(){}},Element:class{},MutationObserver:class{},XMLHttpRequest:class{},alert:()=>{},confirm:()=>true};
  c.fetch=async url=>new Response(asset(new URL(url,c.location.origin).pathname.slice(1)),{headers:{'Content-Type':'application/json'}});
  vm.createContext(c);
- for(const name of ['product.js','store.js','lin-profile.js','engine.js'])vm.runInContext(fs.readFileSync('android_offline/build/assets/local/'+name,'utf8'),c);
+ for(const name of ['product.js','store.js','lin-profile.js','engine.js','practice.js'])vm.runInContext(fs.readFileSync('android_offline/build/assets/local/'+name,'utf8'),c);
  const files=new Map();c.PhoneStore.files.get=async id=>files.get(id);c.PhoneStore.files.all=async()=>[...files.values()];c.PhoneStore.files.put=async(id,v)=>files.set(id,v);c.PhoneStore.files.remove=async id=>files.delete(id);
  c.PhoneMotion={active:false,errors:new Map(),catalog:async()=>JSON.parse(asset('catalog.json')),pause(){}};
  return{c,storage,files};

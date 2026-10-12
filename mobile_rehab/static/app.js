@@ -3,8 +3,9 @@ const $ = (s) => document.querySelector(s);
 const app = $('#app');
 const state = {tab:'plan', catalog:[], joint:'all', selected:'shoulder_abduction', side:'left', jobs:[], file:null, url:null, job:null, upload:null, training:null, detail:false, search:'', viewFilter:'all', fitnessGroup:'all'};
 const requestedTab=new URLSearchParams(location.search).get('tab');
+const automaticUploadReconciliation=new URLSearchParams(location.search).get('experience')!=='legacy';
 if(['assess','plan','history','fitness','archive','more'].includes(requestedTab))state.tab=requestedTab;
-let pollTimer, toastTimer;
+let pollTimer, toastTimer, jobReadGeneration=0;
 const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = (v, unit='') => Number.isFinite(v) ? `${Math.round(v*10)/10}${unit}` : '未测得';
 const selected = () => state.catalog.find(x => x.id === state.selected);
@@ -20,23 +21,32 @@ async function api(path, opts={}) {
   try{
     const res=await fetch('/api'+path,{...requestOpts,signal:controller.signal,headers:{'X-Rehab-Client':'mobile-v1',...opts.headers}});
     let body; try {body=await res.json();} catch(e){if(e.name==='AbortError')throw e;throw Error('电脑服务没有正常响应，请稍后重试');}
-    if(!res.ok) {if(res.status===401 && path!=='/pair') {pairPage();} const error=Error(typeof body.detail==='string'?body.detail:'请求未完成，请稍后重试');error.status=res.status;throw error;}
+    if(!res.ok) {if(res.status===401 && path!=='/pair') {pairPage();} const error=Error(typeof body.detail==='string'?body.detail:body.detail?.message||'请求未完成，请稍后重试');error.status=res.status;error.reason=body.detail;throw error;}
+    if(path==='/catalog')state.practiceRecording=body.practice_recording===true;
     return body;
   }catch(e){if(e.name==='AbortError')throw Error('连接超时，请检查电脑服务后重试');if(e instanceof TypeError)throw Error('无法连接电脑，请检查 Wi-Fi 和网页服务');throw e;}
   finally{clearTimeout(timer);opts.signal?.removeEventListener('abort',cancel);}
 }
 function pairPage(){
+  invalidateUploadScope();
   state.job=null;
   if(typeof resetHealth==='function')resetHealth();
   clearTimeout(pollTimer); $('.bottom-nav').hidden=true; $('#connection').textContent='等待连接';
   app.innerHTML=`<section class="pair"><span class="tag">连接电脑</span><h1>手机康复评估</h1><p>手机和电脑连接同一 Wi-Fi，输入电脑启动窗口中的连接码。</p><form id="pair-form"><label class="caption" for="pair-code">电脑连接码</label><input id="pair-code" name="code" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="输入连接码" required maxlength="32"><button class="primary">连接</button></form><p class="tip">视频保存在这台电脑上。请在可信 Wi-Fi 下使用。</p></section>`;
   $('#pair-form').onsubmit=async e=>{e.preventDefault();const b=e.currentTarget.querySelector('button');b.disabled=true;try{await api('/pair',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('#pair-code').value.trim()})});await init();}catch(e){toast(e.message);b.disabled=false;}};
 }
-function clearFile(){if(state.url)URL.revokeObjectURL(state.url);state.file=null;state.url=null;state.barCalibration=null;}
+function clearFile(){if(state.url&&state.uploadRecovery?.url!==state.url)URL.revokeObjectURL(state.url);state.file=null;state.url=null;state.barCalibration=null;state.fileConsent=false;state.uploadUncertain=false;}
+function invalidateUploadScope(){if(typeof invalidatePracticeScope==='function')invalidatePracticeScope();state.uploadOwnerGeneration=(state.uploadOwnerGeneration||0)+1;state.upload?.abort();clearFile();}
+function newUploadOperation(){
+  if(globalThis.crypto?.randomUUID)return crypto.randomUUID();
+  if(!globalThis.crypto?.getRandomValues)throw Error('当前浏览器无法生成可靠上传编号，请换用手机应用或受支持的浏览器。');
+  const bytes=crypto.getRandomValues(new Uint8Array(16));bytes[6]=(bytes[6]&15)|64;bytes[8]=(bytes[8]&63)|128;
+  const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');return [hex.slice(0,8),hex.slice(8,12),hex.slice(12,16),hex.slice(16,20),hex.slice(20)].join('-');
+}
 function navigate(tab){
-  if(state.upload){toast('正在上传，请先完成或取消上传');return;}
+  if(typeof pausePractice==='function')pausePractice();
   if(typeof stopLive==='function')stopLive();
-  clearTimeout(pollTimer);state.tab=tab;state.job=null;state.training=null;state.detail=false;state.search='';state.viewFilter='all';clearFile();
+  ++jobReadGeneration;clearTimeout(pollTimer);state.tab=tab;state.job=null;state.training=null;state.detail=false;state.search='';state.viewFilter='all';clearFile();
   if(tab==='assess'&&!selected()){state.selected='shoulder_abduction';state.joint='shoulder';}
   syncNavigation();
   render();window.scrollTo({top:0,behavior:'instant'});
@@ -64,8 +74,8 @@ function actionLibrary(mode){
   else $('#fitness-demo').onclick=showBarDemo;
   bindRows();
 }
-function backToLibrary(mode){if(state.upload)return;clearFile();state.detail=false;mode==='fitness'?fitnessPage():assessment();window.scrollTo(0,0);}
-function render(){if(state.tab==='assess')assessment();else if(state.tab==='history')history();else if(state.tab==='plan')plan();else if(state.tab==='fitness')fitnessPage();else if(state.tab==='posture')posturePage();else if(state.tab==='body')bodyPage();else if(state.tab==='care')carePage();else if(['more','health','medication','assistant','archive','family'].includes(state.tab))healthPage();else devices();}
+function backToLibrary(mode){clearFile();state.detail=false;mode==='fitness'?fitnessPage():assessment();window.scrollTo(0,0);}
+function render(){if(state.tab==='assess')assessment();else if(state.tab==='history')renderHistory();else if(state.tab==='plan')plan();else if(state.tab==='fitness')fitnessPage();else if(state.tab==='posture')posturePage();else if(state.tab==='body')bodyPage();else if(state.tab==='care')carePage();else if(['more','health','medication','assistant','archive','family'].includes(state.tab))healthPage();else devices();}
 function assessment(){
   if(!state.detail&&!state.training){actionLibrary('assessment');return;}
   const ex=selected(), i=ex.instructions;
@@ -96,47 +106,101 @@ function fileArea(){
   document.querySelectorAll('.steps span').forEach((s,i)=>s.classList.toggle('current',i===1));
   $('#file-area').innerHTML=`<div class="selected-file"><strong>${esc(state.file.name)}</strong><p class="caption">${(state.file.size/1024/1024).toFixed(1)} MB · ${esc(label(state.selected))} · ${sideLabel(state.side)}</p><video controls playsinline preload="metadata" src="${state.url}"></video></div><label class="consent"><input id="consent" type="checkbox"><span>同意将视频上传到电脑分析并保存，可随时删除原视频。</span></label><button id="upload-btn" class="primary">上传并分析</button><p id="upload-status" class="status-text" aria-live="polite"></p><progress id="upload-progress" class="progress" max="100" value="0" hidden></progress><button id="cancel-upload" class="secondary" hidden>取消上传</button>`;
   $('#upload-btn').onclick=upload;
+  $('#consent').checked=!!state.fileConsent;$('#consent').onchange=e=>{state.fileConsent=e.target.checked;};
+  const pending=state.uploadRecovery;
+  if(pending&&pending.ownerGeneration===(state.uploadOwnerGeneration||0)&&pending.file===state.file&&pending.exercise===state.selected&&pending.side===state.side){pending.area=$('#file-area');transferControls(pending);}
+  else if(state.upload){$('#upload-btn').disabled=true;$('#upload-status').textContent='另一段视频正在上传，可先查看其他页面。';}
   if(state.training)$('#upload-btn').textContent='上传并分析';
   if(state.tab==='fitness')$('#upload-btn').textContent='上传并分析';
-  const video=$('#file-area video');video.onloadedmetadata=()=>{if(Number.isFinite(video.duration)&&video.duration>120){toast('这段视频超过 2 分钟，请截取一项动作后再上传');$('#upload-btn').disabled=true;}};
+  const video=$('#file-area video'),area=$('#file-area');video.onloadedmetadata=()=>{if($('#file-area')===area&&Number.isFinite(video.duration)&&video.duration>120){toast('这段视频超过 2 分钟，请截取一项动作后再上传');$('#upload-btn').disabled=true;}};
   if(state.tab==='fitness')mountBarCalibration();
 }
+function currentTransfer(attempt){return state.uploadRecovery===attempt&&attempt.ownerGeneration===(state.uploadOwnerGeneration||0)&&state.file===attempt.file&&state.selected===attempt.exercise&&state.side===attempt.side&&$('#file-area')===attempt.area;}
+function transferControls(attempt){
+  if(!currentTransfer(attempt))return;
+  const waiting=['UPLOADING','UNCERTAIN','RECONCILING'].includes(attempt.status);
+  $('#upload-btn').disabled=waiting;$('#consent').disabled=waiting;
+  $('#upload-progress').hidden=attempt.status!=='UPLOADING';
+  $('#upload-progress').value=attempt.progress||0;
+  $('#upload-status').textContent=attempt.message||'';
+  const button=$('#cancel-upload');button.hidden=!waiting;button.disabled=attempt.status==='RECONCILING';
+  button.textContent=attempt.status==='UPLOADING'?'取消上传':'核对接收状态';
+  button.onclick=()=>attempt.status==='UPLOADING'?attempt.xhr.abort():reconcileUpload(attempt);
+}
+function restoreUpload(){
+  const attempt=state.uploadRecovery;if(!attempt||attempt.ownerGeneration!==(state.uploadOwnerGeneration||0))return;
+  if(attempt.status==='RECEIVED'){showJob(attempt.jobId);return;}
+  clearFile();state.tab=attempt.tab;state.training=attempt.training;state.selected=attempt.exercise;state.side=attempt.side;state.detail=true;
+  state.file=attempt.file;state.url=attempt.url;state.fileConsent=true;state.barCalibration=attempt.calibration;
+  syncNavigation();render();window.scrollTo(0,0);
+}
+function uploadReceived(attempt,id){
+  if(state.uploadRecovery!==attempt||attempt.ownerGeneration!==(state.uploadOwnerGeneration||0))return;
+  attempt.jobId=id;attempt.status='RECEIVED';state.uploadUncertain=false;
+  const visible=currentTransfer(attempt);
+  if(visible){state.uploadRecovery=null;clearFile();showJob(id);}
+  else{URL.revokeObjectURL(attempt.url);attempt.file=null;attempt.url=null;}
+}
+async function reconcileUpload(attempt){
+  if(state.uploadRecovery!==attempt||attempt.status==='RECONCILING'||attempt.ownerGeneration!==(state.uploadOwnerGeneration||0))return;
+  attempt.status='RECONCILING';attempt.message='正在核对原上传记录…';transferControls(attempt);
+  try{
+    const receipt=await api('/uploads/'+attempt.operationId,{timeoutMs:10000});
+    if(state.uploadRecovery!==attempt||attempt.ownerGeneration!==(state.uploadOwnerGeneration||0))return;
+    if(receipt.upload_operation!==attempt.operationId||receipt.exercise!==attempt.exercise||receipt.side!==attempt.side||receipt.mode!==attempt.mode||(attempt.training&&(receipt.plan_id!==attempt.training.id||receipt.entry_key!==attempt.training.entry.key))||typeof receipt.id!=='string'||!receipt.id)throw Error('接收记录与当前视频设置不一致，请查看记录。');
+    if(receipt.state==='failed'&&!receipt.video_available){attempt.status='FAILED';attempt.message='原上传未完成，可重用这段视频。';state.uploadUncertain=false;transferControls(attempt);return;}
+    if(receipt.video_available){uploadReceived(attempt,receipt.id);return;}
+    attempt.status='UNCERTAIN';attempt.message='原上传仍待确认，可稍后再次核对。';transferControls(attempt);
+  }catch(error){
+    if(state.uploadRecovery!==attempt||attempt.ownerGeneration!==(state.uploadOwnerGeneration||0))return;
+    attempt.status='UNCERTAIN';attempt.message=error.status===404?'尚未找到接收回执，原视频仍在当前页面。':error.status===401?'连接授权已变化，请先重新连接。':'接收状态待核对，原视频仍在当前页面。';transferControls(attempt);
+  }
+}
 function upload(){
+  if(state.upload)return;
+  if(state.uploadRecovery?.file===state.file&&['UNCERTAIN','RECONCILING'].includes(state.uploadRecovery.status)){void reconcileUpload(state.uploadRecovery);return;}
   if(!$('#consent').checked){toast('请先勾选本次录像分析授权');return;}
+  state.fileConsent=true;
   let calibration=null;
   if(state.tab==='fitness'){try{calibration=readBarCalibration();}catch(e){toast(e.message);return;}}
-  const xhr=new XMLHttpRequest();state.upload=xhr;
-  // Freeze all selectors while the upload metadata is bound to this video.
-  document.querySelectorAll('#app button, #app input, #app select').forEach(b=>b.disabled=true);
-  $('#cancel-upload').hidden=false;$('#cancel-upload').disabled=false;$('#cancel-upload').onclick=()=>xhr.abort();
-  $('#upload-progress').hidden=false;$('#upload-status').textContent='正在上传，请保持页面开启…';
+  let operationId;try{operationId=newUploadOperation();}catch(error){toast(error.message);return;}
+  const xhr=new XMLHttpRequest(),mode=state.tab==='posture'?'posture':state.tab==='fitness'?'fitness':state.training?'training':'assessment';
+  const previous=state.uploadRecovery;if(previous?.url&&previous.url!==state.url)URL.revokeObjectURL(previous.url);
+  const attempt={operationId,ownerGeneration:state.uploadOwnerGeneration||0,autoReconcile:automaticUploadReconciliation,file:state.file,url:state.url,exercise:state.selected,side:state.side,tab:state.tab,training:state.training,calibration,mode,area:$('#file-area'),xhr,status:'UPLOADING',progress:0,message:'正在上传，可先查看其他页面。'};
+  state.uploadRecovery=attempt;state.upload=xhr;transferControls(attempt);
   const binding=state.tab==='posture'?'&mode=posture':state.tab==='fitness'?'&mode=fitness':state.training?`&mode=training&plan_id=${state.training.id}&entry_key=${encodeURIComponent(state.training.entry.key)}`:'';
   xhr.open('POST',`/api/jobs?exercise=${encodeURIComponent(state.selected)}&side=${state.side}&consent=yes${binding}`);
   xhr.setRequestHeader('Content-Type',state.file.type||'application/octet-stream');xhr.setRequestHeader('X-Rehab-Client','mobile-v1');xhr.timeout=180000;
+  xhr.setRequestHeader('X-Rehab-Upload-Operation',attempt.operationId);
   if(calibration)xhr.setRequestHeader('X-Fitness-Calibration',JSON.stringify(calibration));
-  xhr.upload.onprogress=e=>{if(e.lengthComputable){$('#upload-progress').value=e.loaded/e.total*100;$('#upload-status').textContent=e.loaded===e.total?'上传完成，等待电脑接收确认…':`正在上传 ${Math.round(e.loaded/e.total*100)}%`;}};
-  const reset=(message)=>{state.upload=null;render();toast(message);};
-  xhr.onerror=()=>reset('连接中断，请确认手机和电脑仍在同一 Wi-Fi');xhr.ontimeout=()=>reset('上传超时，请尝试更短的视频');xhr.onabort=()=>reset('已取消上传');
-  xhr.onload=()=>{state.upload=null;let data;try{data=JSON.parse(xhr.responseText);}catch{reset('电脑响应异常，请重试');return;}if(xhr.status>=300){reset(data.detail||'上传未完成');return;}clearFile();showJob(data.id);};
-  xhr.send(state.file);
+  xhr.upload.onprogress=e=>{if(attempt.status==='UPLOADING'&&e.lengthComputable){attempt.progress=e.loaded/e.total*100;attempt.message=e.loaded===e.total?'上传已发送，等待接收确认…':`正在上传 ${Math.round(attempt.progress)}%`;transferControls(attempt);}};
+  const reset=(message,uncertain=false)=>{if(state.upload!==xhr)return;state.upload=null;attempt.status=uncertain?'UNCERTAIN':'FAILED';attempt.message=message;state.uploadUncertain=uncertain&&state.file===attempt.file;transferControls(attempt);if(uncertain&&attempt.autoReconcile&&attempt.ownerGeneration===(state.uploadOwnerGeneration||0))void reconcileUpload(attempt);};
+  xhr.onerror=()=>reset('连接中断，正在核对原上传记录。',true);
+  xhr.ontimeout=()=>reset('等待超时，正在核对原上传记录；不用重新录制。',true);
+  xhr.onabort=()=>reset('本机上传已停止，正在核对接收状态。',true);
+  xhr.onload=()=>{if(state.upload!==xhr)return;let data;try{data=JSON.parse(xhr.responseText);}catch{reset('正在核对原上传记录。',true);return;}if(xhr.status>=300){reset(typeof data.detail==='string'?data.detail:'上传未完成',xhr.status===409||xhr.status>=500);return;}if(typeof data.id!=='string'||!data.id){reset('正在核对原上传记录。',true);return;}state.upload=null;uploadReceived(attempt,data.id);};
+  xhr.send(attempt.file);
 }
-async function refreshJobs(){state.jobs=await api('/jobs?brief=true');}
-function history(){
+async function refreshJobs(){const ownerGeneration=state.uploadOwnerGeneration||0,rows=await api('/jobs?brief=true');if(ownerGeneration!==(state.uploadOwnerGeneration||0))return null;state.jobs=rows;return rows;}
+function renderHistory(){
   const filter=state.historyFilter||'all';
   app.innerHTML=`<div class="page-head"><h1>我的活动记录</h1></div><div class="chips">${[['all','全部'],['rehab','康复'],['fitness','健身']].map(([key,name])=>`<button class="chip ${key===filter?'selected':''}" data-history-filter="${key}">${name}</button>`).join('')}</div><div id="records"><p class="loading">读取中…</p></div>`;
-  document.querySelectorAll('[data-history-filter]').forEach(b=>b.onclick=()=>{state.historyFilter=b.dataset.historyFilter;history();});
-  refreshJobs().then(()=>{
-    if(state.tab!=='history'||(state.historyFilter||'all')!==filter)return;
+  const recovery=state.uploadRecovery,records=$('#records');
+  if(filter!=='fitness'&&typeof mountPracticeHistory==='function')void mountPracticeHistory();
+  if(recovery&&recovery.ownerGeneration===(state.uploadOwnerGeneration||0)){app.insertAdjacentHTML('beforeend',`<div class="card"><p class="status-text">${recovery.status==='RECEIVED'?'本次视频已有接收回执。':recovery.status==='UPLOADING'?'视频仍在上传，可先查看记录。':'本次视频仍在当前页面，可返回核对。'}</p><button class="secondary" id="resume-upload">${recovery.status==='RECEIVED'?'查看本次录像':'返回原视频'}</button></div>`);$('#resume-upload').onclick=restoreUpload;}
+  document.querySelectorAll('[data-history-filter]').forEach(b=>b.onclick=()=>{state.historyFilter=b.dataset.historyFilter;renderHistory();});
+  refreshJobs().then(receivedRows=>{
+    if(!receivedRows||state.tab!=='history'||$('#records')!==records||(state.historyFilter||'all')!==filter)return;
     const rows=state.jobs.filter(j=>filter==='all'||(filter==='fitness'?j.mode==='fitness':j.mode!=='fitness'));
     $('#records').innerHTML=rows.length?rows.map(j=>`<button class="record" data-job="${j.id}"><span><strong>${esc(label(j.exercise))} · ${sideLabel(j.side)}</strong><small>${dateLabel(j.created_at)} · ${j.mode==='fitness'?'健身分析':j.mode==='training'?'康复训练':'康复评估'}</small></span><span class="badge">${statusLabel(j.state)} ›</span></button>`).join(''):`<div class="card empty"><div class="status-orb">◷</div><h3>还没有${filter==='fitness'?'健身':filter==='rehab'?'康复':''}记录</h3><p>上传一次动作录像后，结果会保存在这里。<br>记录仅在当前浏览器账号下显示。</p><button class="primary" id="start-assess">${filter==='fitness'?'去分析健身动作':'去做一次评估'}</button></div>`;
     document.querySelectorAll('[data-job]').forEach(b=>b.onclick=()=>showJob(b.dataset.job));
     if($('#start-assess'))$('#start-assess').onclick=()=>navigate(filter==='fitness'?'fitness':'assess');
-  }).catch(e=>toast(e.message));
+  }).catch(e=>{if(state.tab==='history'&&$('#records')===records){records.innerHTML='<div class="card"><p>记录暂时无法读取</p><button class="secondary" id="retry-history">重试</button></div>';$('#retry-history').onclick=renderHistory;toast(e.message);}});
 }
 async function showJob(id,retry=0){
-  clearTimeout(pollTimer);state.job=id;
-  try{const j=await api('/jobs/'+id);if(state.job!==id)return;renderJob(j);if(['queued','analyzing','uploading'].includes(j.state))pollTimer=setTimeout(()=>showJob(id),2000);}catch(e){
-    if(state.job!==id)return;
+  const generation=++jobReadGeneration,ownerGeneration=state.uploadOwnerGeneration||0;clearTimeout(pollTimer);state.job=id;
+  try{const j=await api('/jobs/'+id);if(state.job!==id||generation!==jobReadGeneration||ownerGeneration!==(state.uploadOwnerGeneration||0))return;renderJob(j);if(['queued','analyzing','uploading'].includes(j.state))pollTimer=setTimeout(()=>showJob(id),2000);}catch(e){
+    if(state.job!==id||generation!==jobReadGeneration||ownerGeneration!==(state.uploadOwnerGeneration||0))return;
     if(e.status===503&&retry<5){if(!$('#job-content'))app.innerHTML='<div class="card center"><h2>正在保存结果</h2><p>保存完成后会自动显示。</p></div>';pollTimer=setTimeout(()=>{if(state.job===id)showJob(id,retry+1);},1000);return;}
     toast(e.message);app.innerHTML=`<div class="card empty"><h2>${e.status===503?'结果暂时无法读取':'暂时没有连上电脑'}</h2><p>${e.status===503?'请稍后重试，已保存的记录不会清除。':'检查 Wi-Fi 与电脑服务，已上传的任务不会因关闭网页而停止。'}</p><button class="primary" id="retry">重试</button></div>`;$('#retry').onclick=()=>showJob(id);
   }
@@ -166,7 +230,7 @@ function renderJob(j){
     }
   }
   if(j.video_available&&!['uploading','queued','analyzing'].includes(j.state)){
-    const box=document.createElement('section');box.className='card';box.innerHTML=`<h3>回看本次录像</h3><video class="report-video" controls playsinline preload="metadata" src="/api/jobs/${j.id}/video"></video><button class="danger" id="delete-video">删除原始录像，保留评估结果</button>`;area.appendChild(box);
+    const box=document.createElement('section');box.className='card';box.innerHTML=`<h3>回看本次录像</h3><video class="report-video" controls playsinline preload="metadata" ${typeof PhoneLocal==='undefined'?'src':'data-local-video-src'}="/api/jobs/${j.id}/video"></video><button class="danger" id="delete-video">删除原始录像，保留评估结果</button>`;area.appendChild(box);
     $('#delete-video').onclick=async()=>{if(!confirm('删除电脑上的本次原始录像？评估结果会保留，录像删除后无法恢复。'))return;try{await api('/jobs/'+j.id+'/video',{method:'DELETE'});await showJob(j.id);toast('已删除原始录像，评估结果保留');}catch(e){toast(e.message);}};
   }
 }
@@ -183,14 +247,15 @@ function weekStrip(now=new Date()){
 function plan(){
   app.innerHTML=`<div class="page-head"><h1>我的训练</h1></div><p class="caption">手机录像训练 · 本轮进度按已保存记录累计，日期安排请回到安康康复页。</p><div class="schedule-tools"><button id="schedule-assess">康复动作库</button><button id="schedule-body">身体汇总</button><button id="schedule-history">训练记录</button></div><div id="plan-content"><p class="loading" role="status">正在读取训练安排…</p></div>`;
   $('#schedule-assess').onclick=()=>navigate('assess');$('#schedule-body').onclick=()=>navigate('body');$('#schedule-history').onclick=()=>{state.historyFilter='rehab';navigate('history');};
+  const area=$('#plan-content'),ownerGeneration=state.uploadOwnerGeneration||0;
   api('/plan').then(data=>{
-    if(state.tab!=='plan')return;
-    const {proposal,progress}=data, record=data.plan, items=proposal.candidates.slice(0,4), area=$('#plan-content');
+    if(state.tab!=='plan'||$('#plan-content')!==area||ownerGeneration!==(state.uploadOwnerGeneration||0))return;
+    const {proposal,progress}=data, record=data.plan, items=proposal.candidates.slice(0,4);
     area.innerHTML='';
     if(record){
       const next=record.items.find(i=>i.key===progress.next_key);
       area.innerHTML=`<div class="card"><div class="schedule-header"><h2>${progress.next_key?'本轮安排':'本轮完成'}</h2><p>${progress.completed} / ${progress.total} 项</p></div>${next?`<h1>${esc(label(next.exercise_id))}</h1><p class="caption">${sideLabel(next.side)} · ${next.settings.target_reps} 次 × ${next.settings.target_sets} 组</p>`:''}<progress class="schedule-progress" max="${Math.max(1,progress.total)}" value="${progress.completed}" aria-label="本轮训练完成项数"></progress>${progress.blocked?`<p class="warning">${esc(progress.blocked)}</p><button id="training-records" class="secondary">补充训练感受</button>`:progress.next_key?'<button class="primary file-actions" id="train-next">开始训练</button>':'<p class="tip">本轮训练已完成。</p>'}</div><div class="card"><h2>训练清单</h2>${record.items.map((i,n)=>`<div class="plan-item"><strong>${esc(label(i.exercise_id))}</strong><p class="caption">${sideLabel(i.side)} · ${i.settings.target_reps} 次 × ${i.settings.target_sets} 组 <span class="${progress.items[n].done?'plan-done':''}">· ${progress.items[n].done?'已完成':'待完成'}</span></p></div>`).join('')}</div>`;
-      if($('#train-next'))$('#train-next').onclick=()=>{const entry=record.items.find(i=>i.key===progress.next_key);state.training={id:record.id,entry};state.selected=entry.exercise_id;state.side=entry.side;state.joint=selected().joint;state.tab='assess';state.detail=true;syncNavigation();clearFile();assessment();window.scrollTo(0,0);};
+      if($('#train-next'))$('#train-next').onclick=()=>{const entry=record.items.find(i=>i.key===progress.next_key);state.training={id:record.id,entry};state.selected=entry.exercise_id;state.side=entry.side;state.joint=selected().joint;state.tab='assess';state.detail=true;syncNavigation();clearFile();if(state.practiceRecording&&automaticUploadReconciliation&&typeof beginGuidedPractice==='function')void beginGuidedPractice(record,entry);else assessment();window.scrollTo(0,0);};
       if($('#training-records'))$('#training-records').onclick=()=>navigate('history');
     }
     if(!record || progress.blocked || !progress.next_key){
@@ -199,7 +264,7 @@ function plan(){
     if(proposal.excluded.length)area.insertAdjacentHTML('beforeend',`<div class="card"><details><summary>待补充评估 · ${proposal.excluded.length} 项</summary>${proposal.excluded.map(x=>`<p class="tip">${esc(x.label)}：${esc(x.reason)}</p>`).join('')}</details></div>`);
     if($('#plan-assess'))$('#plan-assess').onclick=()=>navigate('assess');
     if($('#plan-form'))$('#plan-form').onsubmit=async e=>{e.preventDefault();const b=e.currentTarget.querySelector('button');b.disabled=true;try{await api('/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({general_activity_ok:$('#activity-ok').checked,standing_support_ok:$('#support-ok').checked,companion_present:false})});plan();}catch(e){toast(e.message);b.disabled=false;}};
-  }).catch(e=>{if($('#plan-content'))$('#plan-content').innerHTML='<div class="card empty"><h3>暂时没有读取到训练安排</h3><button class="secondary" id="reload-plan">重试</button></div>';if($('#reload-plan'))$('#reload-plan').onclick=plan;toast(e.message);});
+  }).catch(e=>{if(state.tab!=='plan'||$('#plan-content')!==area||ownerGeneration!==(state.uploadOwnerGeneration||0))return;area.innerHTML='<div class="card empty"><h3>暂时没有读取到训练安排</h3><button class="secondary" id="reload-plan">重试</button></div>';$('#reload-plan').onclick=plan;toast(e.message);});
 }
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>navigate(b.dataset.tab));
 window.addEventListener('beforeunload',e=>{if(state.upload){e.preventDefault();e.returnValue='';}});

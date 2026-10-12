@@ -47,6 +47,28 @@ function attachments(owner){return{
 const DATE=/^\d{4}-\d{2}-\d{2}$/,TIME=/^(?:[01]\d|2[0-3]):[0-5]\d$/;
 function day(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function validDate(value){if(typeof value!=='string'||!DATE.test(value))return false;const time=Date.parse(value+'T12:00:00');return Number.isFinite(time)&&new Date(time).toISOString().slice(0,10)===value;}
+function validatePractices(records,owner){
+ if(records===undefined)return;
+ const uuid=/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/,bad=()=>{throw Error('独立练习记录结构或来源无效');};
+ const integer=(n,max)=>Number.isInteger(n)&&n>=0&&n<=max,optional=(n,max)=>n===null||integer(n,max);
+ if(!Array.isArray(records)||records.length>250)bad();
+ const ids=new Set();let open=0;
+ for(const r of records){
+  if(!r||r.schema_version!==1||!uuid.test(r.id)||ids.has(r.id)||!['PRACTICING','COMMITTED'].includes(r.state))bad();ids.add(r.id);
+  if(r.context?.participant_id!==owner||r.context.provider!=='phone-local-1'||r.context.source_context!=='PHONE_LOCAL:SELF_USE'||r.context.policy_version!=='phone-saved-arrangement-guided-1')bad();
+  const p=r.plan_ref,s=r.start_payload;
+  if(!p||!uuid.test(p.id)||!uuid.test(p.entry_key)||!Number.isInteger(p.revision)||p.revision<1||!s||s.operation_id!==r.id||s.plan_id!==p.id||s.entry_key!==p.entry_key||s.plan_revision!==p.revision)bad();
+  if(typeof r.exercise_id!=='string'||!['left','right'].includes(r.side)||!Number.isFinite(Date.parse(r.created_at))||!r.settings||!Number.isInteger(r.settings.target_reps)||r.settings.target_reps<1)bad();
+  if(r.visual_session_ref!==null||r.confirmed_count!==null||r.formal_plan_contribution!==null)bad();
+  if(r.state==='PRACTICING'){open++;if(r.finish_payload!==null||r.record_origin!=='GUIDED_PRACTICE')bad();continue;}
+  const f=r.finish_payload;
+  if(!f||!uuid.test(f.operation_id)||!optional(f.count,10000)||!integer(f.elapsed_ms,86400000)||!['ended','completed_set','discomfort'].includes(f.reason)||!f.feedback||!optional(f.feedback.pain,10)||!optional(f.feedback.fatigue,10))bad();
+  if(r.self_reported_count!==f.count||r.count_scope!=='set_total'||r.set_index!==1||r.elapsed_source!=='frontend_active_time_not_observed_hold'||r.record_origin!==(f.count===null?'GUIDED_PRACTICE':'SELF_RECORDED')||!Number.isFinite(Date.parse(r.ended_at)))bad();
+  if(!Array.isArray(r.mode_segments)||r.mode_segments.length!==1)bad();const segment=r.mode_segments[0];
+  if(segment.mode!=='GUIDED'||segment.source!=='GUIDED_PRACTICE'||segment.time_basis!=='device_receipt_time'||segment.start!==r.created_at||segment.end!==r.ended_at||segment.set_index!==1)bad();
+ }
+ if(open>1)bad();
+}
 function validateBackup(b){
  const bad=()=>{throw Error('备份结构或测量版本无效');};
  if(b?.kind!=='ankang-phone-backup'||b.version!==2||!b.data||JSON.stringify(b).length>12*1048576)bad();
@@ -61,6 +83,7 @@ function validateBackup(b){
  for(const key of Object.keys(v.kv))if(!/^(profile|health|tasks|audit|notifications|family|healthkit-revision|sync-consent|sync-summary):/.test(key)||![v.owner,...members].some(id=>key.endsWith(':'+id))||key.includes('__proto__'))bad();
  for(const j of v.jobs){if(!uuid.test(j.id)||!['assessment','training','fitness','posture'].includes(j.mode)||!['done','failed'].includes(j.state)||!['left','right'].includes(j.side)||!Number.isFinite(Date.parse(j.created_at)))bad();if(j.state==='done'&&(j.measurement_version!=='android-local-projection-1'||j.result?.local_report?.contract!=='android-local-projection-1'||!j.result.summary))bad();}
  const ids=new Set(v.jobs.map(j=>j.id));if(ids.size!==v.jobs.length)bad();
+ validatePractices(v.practices,v.owner);
  for(const plan of v.plans){if(!uuid.test(plan.id)||!Number.isInteger(plan.revision)||!Array.isArray(plan.items)||plan.items.length>53)bad();for(const i of plan.items)if(!uuid.test(i.key)||!['left','right'].includes(i.side)||!Number.isInteger(i.settings?.target_reps)||i.settings.target_reps<1||i.settings.target_reps>5||!ids.has(i.assessment_id))bad();}
  // Permissions are server-authoritative and never revived from a stale backup.
  if(!fixture)v.daily.grants={};return v;
@@ -145,6 +168,6 @@ function backupData(value){
  for(const key of Object.keys(data.kv))if(key.startsWith('care:'))delete data.kv[key];
  return data;
 }
-root.PhoneStore={Store,files,attachments,applyDaily,createCarePort,backupData,day,validDate,validateBackup,KEY,LIN_KEY,ACTIVE_KEY,selectedKey};
+root.PhoneStore={Store,files,attachments,applyDaily,createCarePort,backupData,day,validDate,validateBackup,validatePractices,KEY,LIN_KEY,ACTIVE_KEY,selectedKey};
 if(typeof module!=='undefined')module.exports=root.PhoneStore;
 })(globalThis);
