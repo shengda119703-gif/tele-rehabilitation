@@ -33,6 +33,8 @@ class PackagingTest(unittest.TestCase):
             self.assertLess(capture.index('/local/practice.js'), capture.index('/local/local-api.js'))
             self.assertIn('/static/practice-flow.js', capture)
             self.assertIn('/static/formal-feedback.js', capture)
+            self.assertIn('/static/formal-training.js', capture)
+            self.assertLess(capture.index('/static/formal-measurement.js'), capture.index('/static/formal-training.js'))
             self.assertLess(capture.index('/static/formal-feedback.js'), capture.index('/static/formal-measurement.js'))
             self.assertLess(capture.index('/static/practice-feedback.js'), capture.index('/static/practice-flow.js'))
             locked = json.loads(archive.read('assets/ui-lock.json'))

@@ -28,6 +28,7 @@ def main():
     parser.add_argument('--manual-sequence-fixture', action='store_true')
     parser.add_argument('--unreadable-practice-continue-reply', action='store_true')
     parser.add_argument('--formal-measurement', action='store_true')
+    parser.add_argument('--formal-training-contract-fixture', action='store_true')
     args = parser.parse_args()
     args.data.mkdir(parents=True, exist_ok=False)
     seed_owner = None
@@ -47,6 +48,14 @@ def main():
         with sqlite3.connect(f'file:{databases[0].as_posix()}?mode=ro', uri=True) as original, sqlite3.connect(target) as copied:
             original.backup(copied)
     app = create_app(args.data, pair_key='TEST-frontend-isolated-host', rehab_v2=args.formal_measurement)
+    training_fixture = None
+    if args.formal_training_contract_fixture:
+        if not args.formal_measurement or args.seed_from_native_run or args.saved_manual_arrangement_fixture or args.manual_sequence_fixture:
+            raise ValueError('TEST formal training contract fixture requires its own isolated v2 host')
+        from formal_training_fixture import seed
+        seed_owner, plan_id, assessment_id = seed(app.state.rehab_v2, args.data)
+        training_fixture = dict(plan_id=plan_id, assessment_id=assessment_id,
+            geometric_contract_fixture=True, human_assessment=False, provider_reset_before_browser=True)
     if args.saved_manual_arrangement_fixture or args.manual_sequence_fixture:
         if args.seed_from_native_run:
             raise ValueError('The no-assessment manual fixture must not reuse an assessment database')
@@ -85,7 +94,8 @@ def main():
     with socket.socket() as sock:
         sock.bind(('127.0.0.1', 0))
         sock.listen(128)
-        print(json.dumps({'port': sock.getsockname()[1], 'isolated': True, 'seed_owner': seed_owner}), flush=True)
+        print(json.dumps({'port': sock.getsockname()[1], 'isolated': True, 'seed_owner': seed_owner,
+                          'training_fixture': training_fixture}), flush=True)
         server.run(sockets=[sock])
 
 

@@ -45,6 +45,8 @@ function newUploadOperation(){
   const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');return [hex.slice(0,8),hex.slice(8,12),hex.slice(12,16),hex.slice(16,20),hex.slice(20)].join('-');
 }
 function navigate(tab){
+  if(typeof invalidateFormalPlanReads==='function')invalidateFormalPlanReads();
+  if(typeof clearFormalTrainingLink==='function')clearFormalTrainingLink();
   if(typeof RehabGuidance!=='undefined')RehabGuidance.app.cancelAll();
   if(typeof pauseFormalMeasurement==='function')pauseFormalMeasurement();
   if(typeof pausePractice==='function')pausePractice();
@@ -251,8 +253,11 @@ function weekStrip(now=new Date()){
 function plan(){
   app.innerHTML=`<div class="page-head"><h1>我的训练</h1></div><p class="caption">手机录像训练 · 本轮进度按已保存记录累计，日期安排请回到安康康复页。</p><div class="schedule-tools"><button id="schedule-assess">康复动作库</button><button id="schedule-body">身体汇总</button><button id="schedule-history">训练记录</button></div><div id="plan-content"><p class="loading" role="status">正在读取训练安排…</p></div>`;
   $('#schedule-assess').onclick=()=>navigate('assess');$('#schedule-body').onclick=()=>navigate('body');$('#schedule-history').onclick=()=>{state.historyFilter='rehab';navigate('history');};
-  if(typeof mountManualArrangements==='function')void mountManualArrangements();
+  // Restoring an original formal draft can synchronously leave this page.
+  // Capture its actual region before mounting that independent subscriber.
   const area=$('#plan-content'),ownerGeneration=state.uploadOwnerGeneration||0;
+  if(typeof mountManualArrangements==='function')void mountManualArrangements();
+  if(typeof mountFormalPlans==='function')mountFormalPlans();
   api('/plan').then(data=>{
     if(state.tab!=='plan'||$('#plan-content')!==area||ownerGeneration!==(state.uploadOwnerGeneration||0))return;
     const {proposal,progress}=data, record=data.plan, items=proposal.candidates.slice(0,4);

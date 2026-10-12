@@ -2,6 +2,16 @@
 
 ## 已接通
 
+### 原v2正式训练计划：0.2.14共享页面
+
+原 `GET /api/rehab/v2/plans` 与 `GET .../plans/{id}` 分别读取计划清单和进度；支持条件来自原 `entry_support`、`actual_input_required`、`progress.input_compatible/blocked/next_key`，只消费同本人LIVE_CAMERA:SELF_USE、schema1、rehab-explicit-plan-1、原ACTIVE计划。不拿旧 `/api/plan` 候选改写成v2计划；旧／人工／正式三个区域独立读取。
+
+原 `POST /api/rehab/v2/sessions` 训练载荷只有 `idempotency_key,consent,submode:'training',plan_id,expected_plan_revision,entry_key,view,training_plan_confirmed`，确需陪同时才加 `companion_confirmed:true`。客户端恢复binding保存原动作／侧别／机位／完整设置，用于核对服务冻结内容，不作为新增请求字段或事实写入。创建、帧、控制、结束、commit、反馈沿原SessionAdapter和writer；同原键恢复按训练计划／条目筛选，不借用评估草稿或新计划版本结束旧训练。
+
+原RESTING和plan_complete控制原休息／继续按钮，UI不倒计时制造组完成。返回计划时读原进度；上次感受确实阻止继续时提供原历史补填，普通结束和canonical结果保存不要求先填。原program_progress有一条固定中文原因，本轮仅精确映射显示文字；允许执行仍依完整结构化进度，不解析模糊错误推断医疗资格。
+
+没有新增生产后端契约或放宽合格评估。真实未合格肩片仍409 `committed_observable_v2_assessment_required`，正式计划清单为空。正训练入口用隔离TEST几何合同评估形成原计划，之后撤掉几何provider、真实预录相机帧走原YOLO；不是人体评估合格证据。PHONE_LOCAL不会消费该能力。B02正式计划与独立practice关联、权威分段及savedParts仍未接，不能称“视觉准备失败后正式训练全过程已陪练化”。详见[训练验证](validation/FRONTEND_FORMAL_TRAINING_2026-10-12.md)。
+
 ### 原v2正式记录反馈：0.2.13共享页面
 
 原测量结束区和历史详情消费原`GET /api/rehab/v2/sessions/{id}`的`feedback_revision`／`latest_feedback`，写入仍是原`POST .../{id}/feedback`，精确载荷为`idempotency_key`、`expected_revision`、`feedback:{pain,fatigue,reason,notes}`。pain／fatigue严格null或0–10整数；reason沿原枚举，notes沿原1000字限制。所属provider／owner／participant／LIVE_CAMERA:SELF_USE由当前真实能力和原session核对，不由用户填写新内部字段。
