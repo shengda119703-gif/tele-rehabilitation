@@ -1,0 +1,8 @@
+{
+  "branch": "feat/mobile-rehab-v51",
+  "head": "eb1954e32a5d47b9756524e094495ba3af392dba",
+  "worktree_clean": true,
+  "verified_backup": "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/backups/tele-rehabilitation-v51-20261012-162341",
+  "snapshot_tracked_sha256_match": 1327,
+  "changes_scope": "library naming/layout, feedback hit areas, plan copy and secondary page polish only"
+}
