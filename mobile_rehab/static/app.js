@@ -37,7 +37,7 @@ function pairPage(){
   $('#pair-form').onsubmit=async e=>{e.preventDefault();const b=e.currentTarget.querySelector('button');b.disabled=true;try{await api('/pair',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('#pair-code').value.trim()})});await init();}catch(e){toast(e.message);b.disabled=false;}};
 }
 function clearFile(){if(state.url&&state.uploadRecovery?.url!==state.url)URL.revokeObjectURL(state.url);state.file=null;state.url=null;state.barCalibration=null;state.fileConsent=false;state.uploadUncertain=false;}
-function invalidateUploadScope(){if(typeof invalidateFormalMeasurement==='function')invalidateFormalMeasurement();if(typeof invalidatePracticeScope==='function')invalidatePracticeScope();state.uploadOwnerGeneration=(state.uploadOwnerGeneration||0)+1;state.formalMeasurement=null;state.upload?.abort();clearFile();}
+function invalidateUploadScope(){if(typeof RehabGuidance!=='undefined')RehabGuidance.app.cancelAll();if(typeof invalidateFormalMeasurement==='function')invalidateFormalMeasurement();if(typeof invalidatePracticeScope==='function')invalidatePracticeScope();state.uploadOwnerGeneration=(state.uploadOwnerGeneration||0)+1;state.formalMeasurement=null;state.upload?.abort();clearFile();}
 function newUploadOperation(){
   if(globalThis.crypto?.randomUUID)return crypto.randomUUID();
   if(!globalThis.crypto?.getRandomValues)throw Error('当前浏览器无法生成可靠上传编号，请换用手机应用或受支持的浏览器。');
@@ -45,6 +45,7 @@ function newUploadOperation(){
   const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');return [hex.slice(0,8),hex.slice(8,12),hex.slice(12,16),hex.slice(16,20),hex.slice(20)].join('-');
 }
 function navigate(tab){
+  if(typeof RehabGuidance!=='undefined')RehabGuidance.app.cancelAll();
   if(typeof pauseFormalMeasurement==='function')pauseFormalMeasurement();
   if(typeof pausePractice==='function')pausePractice();
   if(typeof stopLive==='function')stopLive();

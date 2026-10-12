@@ -26,7 +26,7 @@ function practiceObservationConsumer(j,area,panel){
   $('#live-cue').textContent=view.cue;$('#live-angle').textContent=view.angle===null?'—':number(view.angle,'°');
   if(view.count!==null){j.previewCount=view.count;$('#live-count').textContent='预览识别 '+view.count+' 次 · 未保存';}
   $('#live-status').textContent=view.mode==='AUTO_ASSISTED'?'实时指导中 · 测量预览不计入计划':'按安排继续练习';
-  if(!view.voice&&'speechSynthesis'in window)speechSynthesis.cancel();
+  if(liveSession?.consumer?.journey===j)presentLiveGuidance(liveSession,view);
   return view;
  };
  const consumer={journey:j,isCurrent,

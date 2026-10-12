@@ -15,7 +15,7 @@ function formalMessage(error){
 }
 function releaseFormalCamera(f){
  f.sampling=false;++f.cameraGeneration;f.stream?.getTracks().forEach(t=>t.stop());f.stream=null;
- if(f.video){f.video.pause();f.video.srcObject=null;}if('speechSynthesis'in window)speechSynthesis.cancel();
+ if(f.video){f.video.pause();f.video.srcObject=null;}if(f.guidance){RehabGuidance.app.close(f.guidance);f.guidance=null;}
 }
 function pauseFormalMeasurement(){
  const f=formalFlow;if(!f)return;releaseFormalCamera(f);
@@ -108,7 +108,10 @@ async function startFormalCamera(f){
   await f.adapter.create();
   if(!formalCurrent(f)||generation!==f.cameraGeneration){if(formalScopeCurrent(f))await(f.adapter.draft.end_requested?f.adapter.finish():f.adapter.pause());return;}
   await f.adapter.resume();if(!formalCurrent(f)||generation!==f.cameraGeneration||f.adapter.draft.end_requested){releaseFormalCamera(f);renderFormalState(f);return;}
-  f.busy=false;f.sampling=true;renderFormalState(f);await formalFrames(f,generation);
+  f.busy=false;f.sampling=true;
+  if(typeof RehabGuidance!=='undefined')f.guidance=RehabGuidance.app.open({owner_scope:f.capability.owner_scope,journey_id:f.adapter.draft.session_id,provider:f.capability.provider,source_context:f.capability.source_context,exercise_id:f.exercise,side:f.side,frontend_generation:generation},{isCurrent:()=>formalCurrent(f)&&f.sampling&&generation===f.cameraGeneration&&!f.adapter.draft.end_requested,voiceEnabled:()=>$('#live-voice')?.checked===true,render:text=>{if(formalCurrent(f))$('#live-cue').textContent=text;}});
+  $('#live-voice').onchange=()=>{if(!$('#live-voice').checked&&f.guidance)RehabGuidance.app.clear(f.guidance);};
+  renderFormalState(f);await formalFrames(f,generation);
  }catch(e){releaseFormalCamera(f);if(formalCurrent(f)){const cameraMessage={NotAllowedError:'未获得相机授权，可返回选择原视频。',NotFoundError:'未找到可用摄像头。',NotReadableError:'摄像头正在被其他程序使用。'}[e.name];$('#live-status').textContent=cameraMessage||formalMessage(e);$('#live-start').disabled=!!f.adapter?.draft.end_requested;$('#formal-pause').disabled=true;
   if(f.adapter?.draft.session_id&&!f.adapter.draft.pending&&!f.adapter.draft.end_requested&&formalScopeCurrent(f))void f.adapter.pause().catch(()=>{});
  }}
@@ -116,7 +119,7 @@ async function startFormalCamera(f){
 }
 async function formalFrames(f,generation){
  const current=()=>formalCurrent(f)&&f.sampling&&!document.hidden&&generation===f.cameraGeneration&&!f.adapter.draft.end_requested;
- const canvas=document.createElement('canvas');let spoken=new Set(),nextVoice=0;
+ const canvas=document.createElement('canvas');
  while(current()){
   if(!f.video.videoWidth){await new Promise(r=>setTimeout(r,80));continue;}
   const scale=Math.min(1,640/f.video.videoWidth);canvas.width=Math.round(f.video.videoWidth*scale);canvas.height=Math.round(f.video.videoHeight*scale);canvas.getContext('2d').drawImage(f.video,0,0,canvas.width,canvas.height);
@@ -131,8 +134,7 @@ async function formalFrames(f,generation){
    const usable=cue&&s&&cue.session_id===item.session_id&&cue.exercise_id===f.exercise&&cue.side===f.side&&cue.calibration_epoch===s.calibration_epoch&&cue.valid_phases?.includes(s.phase)&&cue.evidence_refs?.length&&Number.isFinite(cue.remaining_ttl_ms)&&cue.remaining_ttl_ms>roundtrip;
    // Use backend remaining TTL; never subtract clocks from different processes.
    $('#live-cue').textContent=usable?cue.instruction:'按动作说明继续，部分画面暂未测到';
-   if(!usable&&'speechSynthesis'in window)speechSynthesis.cancel();
-   if(usable&&$('#live-voice').checked&&!spoken.has(cue.cue_id)&&performance.now()>=nextVoice&&'speechSynthesis'in window){speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(cue.instruction);utterance.lang='zh-CN';speechSynthesis.speak(utterance);spoken.add(cue.cue_id);nextVoice=performance.now()+6000;}
+   if(f.guidance){if(!usable)RehabGuidance.app.clear(f.guidance,'按动作说明继续，部分画面暂未测到');else RehabGuidance.app.offer(f.guidance,{id:cue.cue_id,source:'FORMAL_CUE',text:cue.instruction,valid:true,remaining_ms:cue.remaining_ttl_ms-roundtrip,session_id:cue.session_id,exercise_id:cue.exercise_id,side:cue.side,epoch:s.calibration_epoch,phase:s.phase,evidence_refs:cue.evidence_refs,valid_phases:cue.valid_phases});}
    if(item.processed_last_seq>=item.accepted_last_seq)break;await new Promise(r=>setTimeout(r,100));
   }
   await new Promise(r=>setTimeout(r,120));

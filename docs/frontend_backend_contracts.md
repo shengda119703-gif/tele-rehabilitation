@@ -2,6 +2,16 @@
 
 ## 已接通
 
+### B03当前消费：共享动作页面指导协调（0.2.12）
+
+没有新增医学API或修改原cue策略。`guidance-scheduler.js`仅消费UI事件：绑定owner世代、journey/session、provider、source_context、动作／本人侧、frontend_generation；回调复核真实控制器。来源为FORMAL_CUE、LIVE_PREVIEW、GUIDED_SCRIPT、USER_OPERATION、EXECUTION_STOP、ENCOURAGEMENT；后两种优先级只接受显式事件，不从报错文字猜停练资格。生产当前已接前三种，不能声称全部专业停止事件已接齐。
+
+正式源必须携带原cue_id、session_id、exercise_id、side、calibration_epoch、evidence_refs、valid_phases和可信remaining_ttl_ms；原GET全部往返扣除后由本地单调期限管理。当前指令取消／相位改变／超期立即清候选并调用AudioPort.cancel；既不跨时钟相减，也不延长原证据。预览没有正式TTL和canonical测量，采用独立保守UI租约；同一已收到观察的剩余租约只递减，不用250ms展示tick伪造新观测。
+
+普通候选容量1、间隔6000ms、同句10000ms；通知issue在同绑定的进程内一次，去重集合有界。暂停／结束／离页／本人切换不持久化音频队列；恢复只接受新当前事件。原视觉／练习／反馈保存状态不由此修改。完整模式段、视觉关联、savedParts权威收敛、Qt与其他模块音频仍待。
+
+Android原OfflineAndroid桥新增guidancePrepare／guidanceAvailable／guidanceSpeak(id,text≤500)／guidanceCancel；回调仅匹配当前id，文字不是权威测量。原MainActivity同一个前台状态与取消世代控制GuidanceAudio；仅安装好的离线中文Voice，QUEUE_FLUSH，不保留初始化前文本；onPause stop、onDestroy stop/shutdown，不增加麦克风权限或网络音频。AndroidManifest新增TTS服务可见性query不是敏感权限。原PHONE_LOCAL记录、Store和云端白名单不变；没有真机语音证据。
+
 ### 可选托管v2正式评估／只读B03、B04（0.2.11增量）
 
 `GET /api/catalog`仅已启用宿主返回formal_measurement（provider=hosted-rehab-v2-1、原owner_scope／participant_id、LIVE_CAMERA:SELF_USE、原protocols）；默认null，不是执行资格或开关。客户端不会将PHONE_LOCAL映射成它。

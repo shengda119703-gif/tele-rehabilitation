@@ -50,6 +50,8 @@ public final class MainActivity extends Activity {
     private CloudTransport cloud;
     private final ExecutorService network = Executors.newFixedThreadPool(2);
     private SpeechRecognizer speech;
+    private GuidanceAudio guidanceAudio;
+    private final java.util.concurrent.atomic.AtomicInteger guidanceGeneration=new java.util.concurrent.atomic.AtomicInteger();
     private static final int IMPORT_BACKUP=44, SPEECH_PERMISSION=45;
 
     @Override public void onCreate(Bundle state) {
@@ -59,6 +61,7 @@ public final class MainActivity extends Activity {
         getWindow().setNavigationBarColor(Color.WHITE);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         web = new WebView(this);
+        guidanceAudio=new GuidanceAudio(this,id->{if(!isDestroyed())web.evaluateJavascript("window.RehabGuidance && RehabGuidance.nativeResult("+JSONObject.quote(id)+")",null);});
         FrameLayout container = new FrameLayout(this);
         container.setBackgroundColor(Color.WHITE);
         container.addView(web, new FrameLayout.LayoutParams(-1, -1));
@@ -222,6 +225,13 @@ public final class MainActivity extends Activity {
         @JavascriptInterface public boolean speechAvailable(){return android.os.Build.VERSION.SDK_INT>=31&&SpeechRecognizer.isOnDeviceRecognitionAvailable(MainActivity.this);}
         @JavascriptInterface public void speechStart(){runOnUiThread(()->{if(!speechAvailable()){speechResult("","手机未安装本地语音识别服务，可使用键盘语音输入");return;}if(checkSelfPermission(Manifest.permission.RECORD_AUDIO)!=PackageManager.PERMISSION_GRANTED)requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},SPEECH_PERMISSION);else startSpeech();});}
         @JavascriptInterface public void speechCancel(){runOnUiThread(()->{endSpeech();speechResult("","已取消，原草稿保留");});}
+        @JavascriptInterface public boolean guidanceAvailable(){return guidanceAudio.available();}
+        @JavascriptInterface public void guidancePrepare(){runOnUiThread(()->guidanceAudio.prepare());}
+        @JavascriptInterface public void guidanceSpeak(String id,String text){
+            if(id==null||!id.matches("[0-9]{1,16}")||text==null||text.trim().isEmpty()||text.length()>500)return;
+            final int generation=guidanceGeneration.get();runOnUiThread(()->{if(generation==guidanceGeneration.get()&&!isDestroyed())guidanceAudio.speak(id,text);});
+        }
+        @JavascriptInterface public void guidanceCancel(){guidanceGeneration.incrementAndGet();runOnUiThread(()->guidanceAudio.stop());}
         @JavascriptInterface public void printPage(){runOnUiThread(()->{android.print.PrintManager manager=(android.print.PrintManager)getSystemService(PRINT_SERVICE);manager.print("安康康复报告",web.createPrintDocumentAdapter("安康康复报告"),null);});}
     }
     private void connectionDialog(){
@@ -257,7 +267,7 @@ public final class MainActivity extends Activity {
     @Override public void onBackPressed() {
         web.evaluateJavascript("window.offlineBack && window.offlineBack()", value -> { if (!"true".equals(value)) new AlertDialog.Builder(this).setMessage("退出康复随行？").setPositiveButton("退出", (d,w) -> finish()).setNegativeButton("继续使用", null).show(); });
     }
-    @Override protected void onPause() { endSpeech();web.evaluateJavascript("window.offlinePause && window.offlinePause()", null); web.onPause(); super.onPause(); }
-    @Override protected void onResume() { super.onResume(); if (web != null) web.onResume(); }
-    @Override protected void onDestroy() { network.shutdownNow();endSpeech();cancelPicker(); if (cameraRequest != null) cameraRequest.deny(); web.removeJavascriptInterface("OfflineAndroid"); web.destroy(); super.onDestroy(); }
+    @Override protected void onPause() { guidanceGeneration.incrementAndGet();guidanceAudio.pause();endSpeech();web.evaluateJavascript("window.offlinePause && window.offlinePause()", null); web.onPause(); super.onPause(); }
+    @Override protected void onResume() { super.onResume(); if (web != null) {guidanceAudio.resume();web.onResume();} }
+    @Override protected void onDestroy() { guidanceGeneration.incrementAndGet();guidanceAudio.destroy();network.shutdownNow();endSpeech();cancelPicker(); if (cameraRequest != null) cameraRequest.deny(); web.removeJavascriptInterface("OfflineAndroid"); web.destroy(); super.onDestroy(); }
 }

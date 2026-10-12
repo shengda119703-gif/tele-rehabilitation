@@ -17,7 +17,7 @@ async function main(){
   page.on('response',r=>{if(r.url().includes('/api/rehab/v2'))responses.push({status:r.status(),path:new URL(r.url()).pathname});});
   await page.goto(base+'/capture?tab=assess');await page.locator('#pair-code').fill('TEST-frontend-isolated-host');await page.locator('#pair-form button').click();
   await page.locator('[data-action="shoulder_abduction"]').click();await page.locator('#formal-entry').click();await page.locator('#live-start').click();
-  assert.equal(requests.filter(r=>r.method==='POST').length,0);await page.locator('#live-consent').check();await page.locator('#formal-view').check();
+  assert.equal(requests.filter(r=>r.method==='POST').length,0);await page.locator('#live-consent').check();await page.locator('#formal-view').check();await page.locator('#live-voice').check();
   // Fault only the reply AFTER the actual original operation returned.
   await page.evaluate(()=>{window.__formalReadTrace=[];window.__loseCreate=true;window.__loseFinish=true;const original=api;window.api=async(route,opts)=>{const data=await original(route,opts);if(route.startsWith('/rehab/v2/sessions'))window.__formalReadTrace.push({route,method:opts?.method||'GET',processed:data.processed_count,run_state:data.run_state,observation:data.observation_state,completed:data.snapshot?.completed});if(route==='/rehab/v2/sessions'&&opts?.method==='POST'&&window.__loseCreate){window.__loseCreate=false;throw Error('TEST unreadable original create reply');}if(route.endsWith('/finish')&&window.__loseFinish){window.__loseFinish=false;throw Error('TEST unreadable original finish reply');}return data;};});
   await page.locator('#live-start').click();await page.locator('#live-status').filter({hasText:'TEST unreadable original create reply'}).waitFor();
@@ -27,6 +27,7 @@ async function main(){
   await page.waitForTimeout(4000);await page.screenshot({path:path.join(out,'PRIVATE-measuring.png'),fullPage:true});
   const id=await page.evaluate(()=>formalFlow.adapter.draft.session_id);await page.locator('#formal-pause').click();await page.waitForFunction(()=>formalFlow.adapter.snapshot.run_state==='paused',null,{timeout:30000});
   assert.equal(await page.evaluate(()=>document.querySelector('#live-video').srcObject),null);
+  assert.equal(await page.evaluate(()=>RehabGuidance.app.snapshot().active),false);assert.equal(await page.evaluate(()=>RehabGuidance.app.snapshot().pending),0);
   await page.locator('#formal-back').click();await page.locator('#formal-entry').click();await page.locator('#live-status').filter({hasText:'测量已暂停'}).waitFor();assert.equal(await page.evaluate(()=>formalFlow.adapter.draft.session_id),id);
   assert.equal(await page.evaluate(()=>document.querySelector('#live-video').srcObject),null);await page.locator('#live-consent').check();await page.locator('#formal-view').check();await page.locator('#live-start').click();
   await page.waitForFunction(()=>formalFlow.sampling&&formalFlow.adapter.snapshot.control_epoch>=2,null,{timeout:30000});

@@ -4,14 +4,16 @@
 
 ## 真实入口
 
-当前增量为0.2.11：原托管动作详情新增条件性“实时测量并保存”，`formal-session.js`／`formal-measurement.js`接原v2创建、JPEG、控制、202及canonical commit。仅宿主已明确启用v2时出现；正常用户服务仍默认关闭。原历史位置分别读正式事实和本机待核对草稿，不套旧summary；legacy仍可读原事实及核对原操作。独立APK没有该托管能力，不访问Python；本轮只重打共享资源并验证原本地组流程。完整训练旁路视觉关联／分段和三端验收仍未完成。
+当前增量为0.2.12：原 `/capture` 的实时预览、已有安排旁路指导和已启用v2正式评估，统一经 `guidance-scheduler.js` 输出提示／语音；旧独立 speechSynthesis 调用已移入唯一 AudioPort。普通候选容量1、6秒间隔、同句10秒、缺测建议同旅程同动作一次；当前来源／世代／相位／期限失效会停止真实输出，不等待下一帧。APK沿原桥增加选用的已安装离线中文TTS与原生暂停／销毁停止；没有新增敏感权限、联网语音或自动下载。当前没有覆盖Qt音频、独立TS浏览器适配器及全程序全部音频模块；不能称U4全部完成。实际输入和失败分母见[指导验收](validation/FRONTEND_GUIDANCE_SCHEDULER_2026-10-12.md)。
+
+0.2.11已接原托管动作详情条件性“实时测量并保存”，`formal-session.js`／`formal-measurement.js`接原v2创建、JPEG、控制、202及canonical commit。仅宿主已明确启用v2时出现；正常用户服务仍默认关闭。原历史位置分别读正式事实和本机待核对草稿，不套旧summary；legacy仍可读原事实及核对原操作。独立APK没有该托管能力，不访问Python。完整训练旁路视觉关联／分段和三端验收仍未完成。
 
 | 端 | 入口与源代码 | 执行与保存 | 本轮范围 |
 | --- | --- | --- | --- |
 | Windows 正式产品 | `Start-Rehab.ps1` → 应用 `.venv` → `app.main` → ProductWindow／Runtime | 原宿主、SQLite、SceneController；独立 Qt practice 仍用原 writer | 0.20.0；原康复／计划库接本人已有安排，多组、休息、下一动作、暂停返回及每组原历史；完整三端流程仍待 |
 | 托管统一网页 | 正式首页 `mobile_rehab/static/unified.html`／`unified.js`；康复入口进入 `/capture?tab=plan` 等 | 当前共享宿主；统一白名单与原 SQLite | 保持五导航；全量 snapshot 的加载拆分待做 |
 | 保留的动作页面 | `/capture` → `index.html`、`app.js`、`extensions.js`；`practice-flow.js`／`practice-feedback.js`／`practice-observation.js`／`observation-presenter.js`／`manual-arrangements.js` | 原录像执行器／预览／同库独立practice与感受版本 | 原安排并行预览；本人原人工计划库B01；schema2多组／原休息／下一动作及独立历史已接；正式视觉关联待接 |
-| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.11／code13：保留原本地组序列，托管formal能力不存在；实际包资源、历史／备份及0 Python请求复查，未真机安装；原CPU Worker证据仍按0.2.10时点读取 |
+| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore；GuidanceAudio沿原桥 | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.12／code14：原CPU Worker、旁路预览、原规则安排、暂停／丢回复刷新／反馈／历史备份重验；0 Python请求。新增离线TTS经原SDK编译、打包和桥接单测，未真机安装或验证实际声音 |
 | 可选康复 v2 | `/api/rehab/v2/...`，默认关闭；已启用宿主的原动作详情／历史位置 | 独立原 session／202／canonical commit，不与旧事实库互换 | 原肩外展录像实际创建／帧／暂停恢复／保存／历史通过，未建立基线、0次如实保存；正式训练关联／反馈UI及三重点动作仍待 |
 
 本轮不合入远端整包，不改变 WebView origin、签名、权限或模型。电脑 8765／1396、相机和已有窗口不启停。独立 QA 服务只用随机 loopback 端口。

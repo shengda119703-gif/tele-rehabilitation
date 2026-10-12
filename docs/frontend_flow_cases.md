@@ -2,6 +2,20 @@
 
 “局部”不等于三端验收。实际浏览器采用桌面 Edge headless 的手机尺寸，不能替代真机。测试夹具和 QA 输入不是临床真值。
 
+## 0.2.12当前指导增量的证据
+
+`test_guidance_scheduler.cjs`16个案例属于最终JS230的子集：原音频出口、最新单候选、6／10秒、源和证据／期限、优先级、取消后迟到回调、同旅程通知、浏览器定时器receiver、共享producer不再各自speak；不使用这些TEST文本证明人体动作。原`test_live_lifecycle.cjs`实际调用生产协调器，覆盖媒体及过期回复；`test_packaging.py`检查包内共享源码和DEX桥接方法。原APK SDK编译不是物理语音验收。
+
+| 用例 | 本增量新增证据 | 仍缺 |
+| --- | --- | --- |
+| F05／F08／F09／F10 | 原托管／包资源模型处理黑JPEG准备与短／长缺测，练习不中断；同问题一次通知、当前提示失效即取消 | 三重点动作和完整正式模式段；坐站／深蹲真实输入 |
+| F14／F15／F16 | 生产协调器单出口，过期timer不等帧；旧onend／native回调被拒；真实浏览器暂停／继续后声音候选清空；原offlinePause调用核对 | Android真实声音／熄屏、Qt实际音频取消 |
+| F19／F20／F21／F24 | 原正式评估手机04为20帧／电脑02为21帧，均0次／无基线，202和原commit不混；原独立练习／感受丢回复及实质冲突恢复仍通过 | 训练正式关联和跨进程outbox |
+| F29／F30／F35 | 当前scope关闭候选，包资源实际CPU Worker及原本地库0 Python请求；一次在途帧／一条待播 | 目标手机p95、长时压力、跨窗口租约 |
+| F36 | 相对c6fada6的65已跟踪保护内容／原两尺寸预览几何通过；本机实际截图审看 | 所有主题、高DPI与状态文字全程按钮稳定 |
+
+三类验证命令各4次／2完整／1早期失败／1进程中断无最终结果，不删除分母；首次浏览器发现定时器illegal invocation，生产修复后重跑通过。03未计通过，确认句柄和匹配进程不存在后才发起最终04。托管稳定自动指导为否；本地旁路后续出现稳定指导。语音调用／取消在真实BrowserAudioPort核对，声音是否可听未验。具体原始日志及未完成项目见[指导验收](validation/FRONTEND_GUIDANCE_SCHEDULER_2026-10-12.md)，不把U4局部接通当作完整任务完成。
+
 ## 0.2.11当前正式测量增量的证据
 
 `test_formal_session.cjs`是生产adapter的可控传输边界；`test_formal_ui.cjs`及`test_product_ui.cjs`新增项核对legacy读取、PHONE_LOCAL排除、切本人／迟到catalog／401。`test_formal_capability.py`使用真实HTTP只读能力，`test_formal_projection.py`为TEST envelope的只读TTL／history模式单元核对，不是人体观测。实际`verify_formal_measurement.cjs`从原动作详情接原HTTP、SQLite、YOLO和预录相机，私有结果／失败留隔离目录，详见[测量验收](validation/FRONTEND_FORMAL_MEASUREMENT_2026-10-12.md)。
