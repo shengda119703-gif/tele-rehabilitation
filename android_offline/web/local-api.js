@@ -13,7 +13,7 @@ const ready=store.serial(async()=>{
  owner=store.value.owner;
  await store.migrate(domain);
  if(!profile())await domain.request('profile.save',owner,{profile:{name:'本机用户',age:0,conditions:[],medications:[],mobility:'unknown',usesCane:false,nightVision:'unknown',cognition:'unknown',familySharing:'denied'}},now());
- practice=PhonePractice.createPort(store,owner,practiceArrangement);
+ practice=PhonePractice.createPort(store,owner,practiceArrangement,()=>PM.catalog());
  // Interrupted jobs are explicitly failed, not silently counted as successful.
  store.change(v=>v.jobs.forEach(j=>{if(['queued','analyzing','uploading'].includes(j.state)){j.state='failed';j.message='上次分析被中断，原录像保留，请重新分析。';}}));
 });
@@ -86,6 +86,8 @@ async function request(path,opts={}){
   if(route==='/practice'||route.startsWith('/practice/')){
    if(u.origin!==location.origin||q.toString())failure('请使用当前手机本地档案',403);
    if(route==='/practice/context'&&method==='GET')return practice.context();
+   if(route==='/practice/arrangements'&&method==='GET')return practice.arrangements();
+   if(route==='/practice/arrangements'&&method==='POST')return practice.saveArrangement(payload);
    if(route==='/practice'&&method==='GET')return practice.list();
    if(route==='/practice'&&method==='POST')return practice.start(payload);
    const parts=route.split('/');
@@ -120,7 +122,7 @@ async function request(path,opts={}){
    }
    return PS.applyDaily(store,operation,payload,profile());
   }
-  if(route==='/catalog'){const c=await PM.catalog();return{shared:true,practice_recording:true,exercises:c.rehab.map(s=>({...s,available:true,backend:'phone-mediapipe'})),fitness:c.fitness.map(s=>({...s,available:true})),posture:c.posture};}
+  if(route==='/catalog'){const c=await PM.catalog();return{shared:true,practice_recording:true,manual_practice_arrangements:true,manual_arrangement_entry:true,exercises:c.rehab.map(s=>({...s,available:true,backend:'phone-mediapipe'})),fitness:c.fitness.map(s=>({...s,available:true})),posture:c.posture};}
   if(route==='/plan'){
    const proposed=await proposal();if(method==='POST'){
     if(!payload.general_activity_ok)failure('请确认目前适合进行基础活动');if(!proposed.candidates.length)failure('暂无可用评估，请先完成一次动作评估');if(proposed.candidates.some(i=>i.standing)&&!payload.standing_support_ok)failure('请为站立项目准备稳固支撑');

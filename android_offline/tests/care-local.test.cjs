@@ -260,6 +260,77 @@ test('practice backup validates ownership and source instead of reviving visual 
  }
 });
 
+async function manualArrangement(h,changes={}){
+ const catalog=JSON.parse(fs.readFileSync(path.join(__dirname,'../build/assets/catalog.json'),'utf8'));h.c.PhoneMotion.catalog=async()=>catalog;
+ const payload={operation_id:crypto.randomUUID(),name:'TEST 本人已有安排',exercise_id:'shoulder_abduction',side:'left',settings:{target_reps:7,target_sets:2,rest_between_sets_s:null,target_angle_deg:null,needs_companion:false},...changes};
+ const record=await post(h,'/api/practice/arrangements',payload);return{record,payload};
+}
+const manualStart=r=>({operation_id:crypto.randomUUID(),plan_id:r.id,plan_revision:r.revision,entry_key:r.items[0].key,manual_arrangement_confirmed:true,support_ready:true,companion_present:false});
+
+test('real local manual input has a durable owned receipt without an assessment or automatic plan',async()=>{
+ const h=await local(),{record,payload}=await manualArrangement(h);
+ assert.equal((await h.local.request('/api/catalog')).manual_arrangement_entry,true);
+ assert.deepEqual(await post(h,'/api/practice/arrangements',payload),record);
+ assert.equal((await h.local.request('/api/practice/arrangements'))[0].id,record.id);
+ assert.equal(h.local.store.value.jobs.length,0);assert.equal(h.local.store.value.plans.length,0);
+ const start=manualStart(record),a=await post(h,'/api/practice',start);
+ assert.equal(a.execution_allowed,true);assert.equal(a.formal_plan_ref,null);assert.equal(a.assessment_ref,null);assert.equal(a.guidance_policy,'phone-explicit-manual-practice-1');
+ assert.equal(a.arrangement_ref.kind,'MANUAL_SAVED');assert.deepEqual(plain(a.settings),payload.settings);
+ const end=endPractice(3),saved=await post(h,'/api/practice/'+a.id+'/finish',end);assert.equal(saved.self_reported_count,3);assert.equal(saved.confirmed_count,null);assert.equal(saved.formal_plan_contribution,null);
+ const reopened=await local(h.storage);assert.deepEqual(await reopened.local.request('/api/practice/'+a.id),saved);assert.equal(reopened.local.store.value.manualArrangements.length,1);
+ const backup=h.c.PhoneStore.validateBackup(await h.local.backup());assert.equal(backup.manualArrangements[0].id,record.id);assert.equal(backup.practices[0].id,a.id);
+});
+
+test('manual support and companion are explicit, and manual flags do not grant automatic eligibility',async()=>{
+ const h=await local(),{record}=await manualArrangement(h,{settings:{target_reps:7,target_sets:2,rest_between_sets_s:30,target_angle_deg:null,needs_companion:true}}),start=manualStart(record);
+ for(const field of ['manual_arrangement_confirmed','support_ready','companion_present']){await assert.rejects(()=>post(h,'/api/practice',{...start,companion_present:true,[field]:false}),e=>e.status===409&&e.reason.category==='MISSING_INPUT');await assert.rejects(()=>post(h,'/api/practice',{...start,[field]:1}),e=>e.status===400);}
+ const plainStart={operation_id:start.operation_id,plan_id:start.plan_id,plan_revision:start.plan_revision,entry_key:start.entry_key};await assert.rejects(()=>post(h,'/api/practice',plainStart),e=>e.status===409);
+ const auto=await allowedPractice(h);await assert.rejects(()=>post(h,'/api/practice',{...auto,manual_arrangement_confirmed:true,support_ready:true,companion_present:true}),e=>e.status===409);
+ assert.equal(h.local.store.value.practices,undefined);assert.equal((await post(h,'/api/practice',{...start,companion_present:true})).execution_allowed,true);
+});
+
+test('manual create, practice start and finish preserve original Store quota failures and same-key retry',async()=>{
+ const h=await local(),catalog=JSON.parse(fs.readFileSync(path.join(__dirname,'../build/assets/catalog.json'),'utf8'));h.c.PhoneMotion.catalog=async()=>catalog;
+ const payload={operation_id:crypto.randomUUID(),name:'TEST 同键安排',exercise_id:'shoulder_abduction',side:'left',settings:{target_reps:7,target_sets:2,rest_between_sets_s:null,target_angle_deg:null,needs_companion:false}},save=h.storage.setItem;
+ h.storage.setItem=()=>{throw Error('TEST original Store quota')};await assert.rejects(()=>post(h,'/api/practice/arrangements',payload),/quota/);assert.equal(h.local.store.value.manualArrangements,undefined);
+ h.storage.setItem=save;const r=await post(h,'/api/practice/arrangements',payload),start=manualStart(r);
+ h.storage.setItem=()=>{throw Error('TEST original Store quota')};await assert.rejects(()=>post(h,'/api/practice',start),/quota/);assert.equal(h.local.store.value.practices,undefined);
+ h.storage.setItem=save;const a=await post(h,'/api/practice',start),end=endPractice();h.storage.setItem=()=>{throw Error('TEST original Store quota')};await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/finish',end),/quota/);
+ assert.equal((await h.local.request('/api/practice/'+a.id)).state,'PRACTICING');h.storage.setItem=save;assert.equal((await post(h,'/api/practice/'+a.id+'/finish',end)).state,'COMMITTED');
+});
+
+test('explicit local stop is immutable across manual arrangements and later zero feedback',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),a=await post(h,'/api/practice',manualStart(record));await post(h,'/api/practice/'+a.id+'/finish',endPractice());
+ await post(h,'/api/practice/'+a.id+'/feedback',{operation_id:crypto.randomUUID(),expected_revision:0,values:{pain:1,fatigue:null,note:null}});
+ await post(h,'/api/practice/'+a.id+'/feedback',{operation_id:crypto.randomUUID(),expected_revision:1,values:{pain:0,fatigue:null,note:null}});
+ const other=await manualArrangement(h);await assert.rejects(()=>post(h,'/api/practice',manualStart(other.record)),e=>e.reason.code==='PRACTICE_STOP_RECORDED');
+ const auto=await allowedPractice(h);await assert.rejects(()=>post(h,'/api/practice',auto),e=>e.reason.code==='PRACTICE_STOP_RECORDED');assert.equal(h.local.store.value.practices.length,1);
+});
+
+test('local manual input refuses foreign scope, dose rewrites, unsupported action and changed receipt',async()=>{
+ const h=await local(),{record,payload}=await manualArrangement(h);
+ await assert.rejects(()=>post(h,'https://other.test/api/practice/arrangements',payload),e=>e.status===403);await assert.rejects(()=>post(h,'/api/practice/arrangements',{...payload,owner:h.owner}),e=>e.status===400);
+ await assert.rejects(()=>post(h,'/api/practice/arrangements',{...payload,name:'改动'}),e=>e.status===409);await assert.rejects(()=>post(h,'/api/practice/arrangements',{...payload,operation_id:crypto.randomUUID(),exercise_id:'fitness_squat'}));
+ await assert.rejects(()=>post(h,'/api/practice',{...manualStart(record),settings:{target_reps:100}}),e=>e.status===400);
+ const other=await local();assert.deepEqual(plain(await other.local.request('/api/practice/arrangements')),[]);await assert.rejects(()=>post(other,'/api/practice',manualStart(record)),e=>e.status===409);
+ for(const mutate of [b=>b.data.manualArrangements[0].context.participant_id=crypto.randomUUID(),b=>b.data.manualArrangements[0].items[0].settings.target_reps=8,b=>b.data.manualArrangements[0].assessment_ref='fake']){const b=plain(await h.local.backup());mutate(b);assert.throws(()=>h.c.PhoneStore.validateBackup(b),/人工安排/);}
+ const a=await post(h,'/api/practice',manualStart(record)),backup=plain(await h.local.backup());backup.data.practices[0].settings.target_reps=8;assert.throws(()=>h.c.PhoneStore.validateBackup(backup),/备份结构/);
+ h.local.store.change(v=>v.practices[0].settings.target_reps=8);const rejected=await h.local.request('/api/practice/'+a.id);assert.equal(rejected.execution_allowed,false);assert.equal(rejected.execution_decision.code,'MANUAL_SNAPSHOT_CHANGED');
+});
+
+test('changed manual definition blocks further execution but does not block preserving already-ended facts',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),start=manualStart(record),a=await post(h,'/api/practice',start);
+ h.c.PhoneMotion.catalog=async()=>({rehab:[],fitness:[],posture:[]});assert.equal((await h.local.request('/api/practice/'+a.id)).execution_allowed,false);
+ assert.equal((await post(h,'/api/practice/'+a.id+'/finish',endPractice())).state,'COMMITTED');
+ const b=await h.local.backup();for(const mutate of [r=>delete r.guidance_policy,r=>r.formal_plan_ref='fake',r=>r.execution_grant.formal_measurement_allowed=true,r=>r.start_payload.support_ready=false]){const forged=plain(b);mutate(forged.data.practices[0]);assert.throws(()=>h.c.PhoneStore.validateBackup(forged),/练习记录/);}
+});
+
+test('recent local measured discomfort still blocks manual practice without requiring an assessment',async()=>{
+ const h=await local(),{record}=await manualArrangement(h);
+ h.local.store.change(v=>v.jobs.push({id:crypto.randomUUID(),exercise:'shoulder_abduction',side:'left',mode:'training',state:'done',created_at:new Date().toISOString(),measurement_version:h.c.LocalEngine.VERSION,result:{summary:{plan_completed:false},local_report:{validRatio:.9,contract:h.c.LocalEngine.VERSION}},feedback:{pain:null,fatigue:5}}));
+ await assert.rejects(()=>post(h,'/api/practice',manualStart(record)),e=>e.reason.code==='TRAINING_STOP_RECORDED');assert.equal(h.local.store.value.practices,undefined);
+});
+
 const practiceFeedback=(revision=0,values={note:'TEST 后补'})=>({operation_id:crypto.randomUUID(),expected_revision:revision,values:{pain:null,fatigue:null,note:null,...values}});
 test('local feedback follows committed practice, survives reopen and never mutates finish or formal progress',async()=>{
  const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start),path='/api/practice/'+a.id;

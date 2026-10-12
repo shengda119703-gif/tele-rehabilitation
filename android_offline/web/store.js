@@ -47,6 +47,23 @@ function attachments(owner){return{
 const DATE=/^\d{4}-\d{2}-\d{2}$/,TIME=/^(?:[01]\d|2[0-3]):[0-5]\d$/;
 function day(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function validDate(value){if(typeof value!=='string'||!DATE.test(value))return false;const time=Date.parse(value+'T12:00:00');return Number.isFinite(time)&&new Date(time).toISOString().slice(0,10)===value;}
+// Independent saved arrangements use the ORIGINAL Store, not visual plans.
+// Numeric limits mirror original training_plans.prescription_settings syntax;
+// they are storage bounds, not a new dose recommendation or clinical rule.
+function validateManualArrangements(records,owner){
+ if(records===undefined)return;
+ const uuid=/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/,bad=()=>{throw Error('已有人工安排结构或来源无效');},ids=new Set();
+ const keys=(v,k)=>v&&typeof v==='object'&&!Array.isArray(v)&&canonical(Object.keys(v).sort())===canonical(k.sort());
+ if(!Array.isArray(records)||records.length>250)bad();
+ for(const r of records){
+  if(!r||r.schema_version!==1||!uuid.test(r.id)||ids.has(r.id)||r.revision!==1||r.record_origin!=='manual_saved'||r.measurement_version!==null||r.assessment_ref!==null||!Number.isFinite(Date.parse(r.created_at))||typeof r.name!=='string'||!r.name.trim()||r.name.length>80)bad();ids.add(r.id);
+  if(r.context?.participant_id!==owner||r.context.provider!=='phone-local-1'||r.context.source_context!=='PHONE_LOCAL:SELF_USE')bad();
+  if(!Array.isArray(r.items)||r.items.length!==1)bad();const e=r.items[0],s=e.settings,p=r.original_payload;
+  if(!uuid.test(e.key)||e.key!==r.id||typeof e.exercise_id!=='string'||!e.exercise_id||!['left','right'].includes(e.side)||typeof e.measurement_contract!=='string'||!e.measurement_contract)bad();
+  if(!keys(s,['target_reps','target_sets','rest_between_sets_s','target_angle_deg','needs_companion'])||!Number.isInteger(s.target_reps)||s.target_reps<1||s.target_reps>999||!Number.isInteger(s.target_sets)||s.target_sets<1||s.target_sets>20||s.rest_between_sets_s!==null&&(!Number.isFinite(s.rest_between_sets_s)||s.rest_between_sets_s<0||s.rest_between_sets_s>1800)||s.target_angle_deg!==null||typeof s.needs_companion!=='boolean')bad();
+  if(!keys(p,['operation_id','name','exercise_id','side','settings'])||p.operation_id!==r.id||p.name!==r.name||p.exercise_id!==e.exercise_id||p.side!==e.side||canonical(p.settings)!==canonical(s))bad();
+ }
+}
 function validatePractices(records,owner){
  if(records===undefined)return;
  const uuid=/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/,bad=()=>{throw Error('独立练习记录结构或来源无效');};
@@ -60,6 +77,11 @@ function validatePractices(records,owner){
   if(!p||!uuid.test(p.id)||!uuid.test(p.entry_key)||!Number.isInteger(p.revision)||p.revision<1||!s||s.operation_id!==r.id||s.plan_id!==p.id||s.entry_key!==p.entry_key||s.plan_revision!==p.revision)bad();
   if(typeof r.exercise_id!=='string'||!['left','right'].includes(r.side)||!Number.isFinite(Date.parse(r.created_at))||!r.settings||!Number.isInteger(r.settings.target_reps)||r.settings.target_reps<1)bad();
   if(r.visual_session_ref!==null||r.confirmed_count!==null||r.formal_plan_contribution!==null)bad();
+  if(r.guidance_policy!==undefined||r.arrangement_ref!==undefined||s.manual_arrangement_confirmed!==undefined){
+   if(r.guidance_policy!=='phone-explicit-manual-practice-1'||r.formal_plan_ref!==null||r.assessment_ref!==null||canonical(r.arrangement_ref)!==canonical({...p,kind:'MANUAL_SAVED'})||s.manual_arrangement_confirmed!==true||s.support_ready!==true||typeof s.companion_present!=='boolean'||r.settings.needs_companion&&!s.companion_present)bad();
+   if(canonical(Object.keys(s).sort())!==canonical(['operation_id','plan_id','plan_revision','entry_key','manual_arrangement_confirmed','support_ready','companion_present'].sort())||r.execution_grant?.policy_version!==r.guidance_policy||r.execution_grant.allowed!==true)bad();
+   if(r.execution_grant.formal_measurement_allowed!==null||r.execution_grant.companion_required!==r.settings.needs_companion)bad();
+  }
   if(r.state==='PRACTICING'){open++;if(r.finish_payload!==null||r.record_origin!=='GUIDED_PRACTICE'||r.practice_feedback!==undefined)bad();continue;}
   const f=r.finish_payload;
   if(!f||!uuid.test(f.operation_id)||!optional(f.count,10000)||!integer(f.elapsed_ms,86400000)||!['ended','completed_set','discomfort'].includes(f.reason)||!f.feedback||!optional(f.feedback.pain,10)||!optional(f.feedback.fatigue,10))bad();
@@ -94,6 +116,11 @@ function validateBackup(b){
  for(const j of v.jobs){if(!uuid.test(j.id)||!['assessment','training','fitness','posture'].includes(j.mode)||!['done','failed'].includes(j.state)||!['left','right'].includes(j.side)||!Number.isFinite(Date.parse(j.created_at)))bad();if(j.state==='done'&&(j.measurement_version!=='android-local-projection-1'||j.result?.local_report?.contract!=='android-local-projection-1'||!j.result.summary))bad();}
  const ids=new Set(v.jobs.map(j=>j.id));if(ids.size!==v.jobs.length)bad();
  validatePractices(v.practices,v.owner);
+ validateManualArrangements(v.manualArrangements,v.owner);
+ for(const r of v.practices||[])if(r.guidance_policy==='phone-explicit-manual-practice-1'){
+  const original=(v.manualArrangements||[]).find(a=>a.id===r.arrangement_ref.id&&a.revision===r.arrangement_ref.revision)?.items.find(e=>e.key===r.arrangement_ref.entry_key);
+  if(original&&(original.exercise_id!==r.exercise_id||original.side!==r.side||canonical(original.settings)!==canonical(r.settings)))bad();
+ }
  for(const plan of v.plans){if(!uuid.test(plan.id)||!Number.isInteger(plan.revision)||!Array.isArray(plan.items)||plan.items.length>53)bad();for(const i of plan.items)if(!uuid.test(i.key)||!['left','right'].includes(i.side)||!Number.isInteger(i.settings?.target_reps)||i.settings.target_reps<1||i.settings.target_reps>5||!ids.has(i.assessment_id))bad();}
  // Permissions are server-authoritative and never revived from a stale backup.
  if(!fixture)v.daily.grants={};return v;
@@ -178,6 +205,6 @@ function backupData(value){
  for(const key of Object.keys(data.kv))if(key.startsWith('care:'))delete data.kv[key];
  return data;
 }
-root.PhoneStore={Store,files,attachments,applyDaily,createCarePort,backupData,day,validDate,validateBackup,validatePractices,KEY,LIN_KEY,ACTIVE_KEY,selectedKey};
+root.PhoneStore={Store,files,attachments,applyDaily,createCarePort,backupData,day,validDate,validateBackup,validatePractices,validateManualArrangements,KEY,LIN_KEY,ACTIVE_KEY,selectedKey};
 if(typeof module!=='undefined')module.exports=root.PhoneStore;
 })(globalThis);

@@ -2,15 +2,27 @@
 
 ## 已接通
 
+### B01 APK 本地分支：独立已有安排（0.2.8）
+
+原local-api明确声明manual_practice_arrangements=true及manual_arrangement_entry=true。同形`/api/...`请求由原本地桥处理，不请求Python／托管服务。原Store.serial通道提供`GET /api/practice/arrangements`和`POST /api/practice/arrangements`，写入同一原档案的独立manualArrangements数组，不塞入自动plans或job，也不生成评估引用。
+
+录入精确载荷为operation_id UUID、name（1–80字）、exercise_id、side、settings；settings精确为target_reps（1–999整数）、target_sets（1–20整数）、rest_between_sets_s（null或0–1800有限数）、target_angle_deg=null、needs_companion严格bool。数值范围仅沿用原training_plans存储输入边界，不是推荐剂量；本页面不填默认次数或组数，只照已有安排填写。动作必须来自当前原康复catalog，正式测量契约仅作为原定义指纹，不等于合格测量依据。独立记录revision=1、record_origin=manual_saved、measurement_version／assessment_ref=null；原键同载荷先查原记录，改载荷MANUAL_KEY_CONFLICT，至多250份、满时507，不删除原件。
+
+开始复用原POST /api/practice的四个引用字段，加manual_arrangement_confirmed／support_ready／companion_present三个严格bool。实际政策phone-explicit-manual-practice-1核对原本人、当前revision、动作契约及原设置；采用／支撑／必要陪同未确认返回稳定MISSING_INPUT，不将相机READY或合格评估作为本独立分支门槛。原practice、原最近训练反馈中明确不适阻止相关执行，同动作／侧别换安排或自动计划、后编辑0不能消掉停止事实。原定义或保存快照变化停止继续执行，已有事实仍可结束保存；不伪造专业授权。
+
+独立practices保留guidance_policy、arrangement_ref.kind=MANUAL_SAVED及当时execution_grant；formal_plan_ref／assessment_ref／visual_session_ref／confirmed_count／正式贡献null。兼容plan_ref只引用本地真实人工记录，不代表合格自动计划。提交仍用原Store.change/commit；失败无COMMITTED回执，备份在原validateBackup中验证来源、确认、原载荷与设置快照。原自动propose／planProgress／剂量与测量版本不改。
+
+客户端小型录入草稿按原本人／provider／source_context分键，先保留原操作和载荷，未知回复锁定原内容并查询原id，刷新“核对原保存”不创建第二份。晚到读取不覆盖本轮已填输入，真实拒绝才允许修改；成功只清本操作草稿。仍不是完整跨模块outbox、专业方案编辑器、多组或Qt接线。
+
 ### B01托管独立分支：本人原人工计划（0.2.7）
 
-`GET /api/catalog`明确声明manual_practice_arrangements=true，仅托管实现；APK不声明，前端不会请求不存在的托管能力。`GET /api/practice/arrangements`只读当前本人、REPLAY_FILE／SELF_USE、ACTIVE的原training_plans手工记录，返回原id／revision／name／items和当前独立decision。没有新计划库、处方生成或数据库迁移。
+`GET /api/catalog`明确声明manual_practice_arrangements=true。0.2.7增量只有托管实现；0.2.8本地独立政策见上节，两端不互换存储或资格。托管未声明manual_arrangement_entry，前端不显示本地录入表单。`GET /api/practice/arrangements`只读当前本人、REPLAY_FILE／SELF_USE、ACTIVE的原training_plans手工记录，返回原id／revision／name／items和当前独立decision。没有新计划库、处方生成或数据库迁移。
 
 `POST /api/practice`保留自动安排原四字段；仅手工分支增加三个严格bool：manual_arrangement_confirmed、support_ready、companion_present。原动作／侧别／settings从保存库读取、校验当前定义及revision；不会接受客户端剂量或伪评估。适用政策explicit-saved-manual-practice-1返回GUIDED_PRACTICE允许／稳定code／category／message／companion_required，formal_measurement_allowed=null；未知正式资格不是ALLOWED。需要陪同取原安排和档案assisted，未确认不执行；当前本人明确采用自己的安排不宣称专业人员已授权。
 
 事实仍写原guided_practices，同原事务／原键／查询／结束／后补感受／历史。`plan_ref`兼容指向真实手工库记录，不称合格正式计划；`arrangement_ref.kind=MANUAL_SAVED`，formal_plan_ref／assessment_ref=null。未关联视觉时visual_session_ref／confirmed_count／formal_plan_contribution保持null，模式段原因明确独立手工安排，不补观察。停止反馈按原pain>0／fatigue≥5／discomfort含义保留，同相关动作换安排或改反馈0不清除；原自动处方规则和视觉执行器未改。结束不因后来资格变化而拒绝保留事实。
 
-只有原GET404之后的实际POST明确MISSING_INPUT／EXECUTION_BLOCK拒绝才记录startRejected；不明回复继续对原键查询，不修改在途有效载荷。APK本地手工分支、Qt、完整多组与专业方案录入仍待，不把这个托管入口当成全端B01完成。
+只有原GET404之后的实际POST明确MISSING_INPUT／EXECUTION_BLOCK拒绝才记录startRejected；不明回复继续对原键查询，不修改在途有效载荷。APK本地手工分支已在0.2.8接入；Qt、完整多组与专业方案编辑仍待，不把两个浏览器入口当成三端B01完成。
 
 ### 任务书5／6：跟练并行接现有预览（没有新增正式测量契约）
 
@@ -56,7 +68,7 @@ APK 实现相同小型请求形状，写入归属不同：`provider=phone-local-
 
 本地 `practice.js` 在原 `Store.serial` 通道中接线，用原 `Store.change/commit` 将独立 `practices` 数组和事实原子写入同一档案；失败不会返回 COMMITTED。至多 250 份，不自动删除旧记录；只有当前本人可读。结束同键同载荷查询恢复，在资格后来变化时仍能保存已结束事实。null、self_count、页面时间与正式贡献保持分离，时间段为设备回执时间范围，不证明全段都在运动。原备份导出保留此类型，恢复校验来源、本人与计数性质；旧 version2 没此数组仍可读。没有新增患者事实库、模型或正式贡献。
 
-**边界：**自动安排分支不是“无合格评估”的普遍陪练授权。托管独立手工分支见上节；APK手工分支、资格未知路径、三端同等B01、关联视觉session、多组分段仍待接。独立感受仅上述托管／APK类型已接。Qt未接独立记录，各端资格并非相同，不把同形请求说成同一医疗执行器。
+**边界：**自动安排分支不是“无合格评估”的普遍陪练授权。托管及APK独立手工分支见上节；资格未知路径、Qt同等B01、关联视觉session、多组分段仍待接。独立感受仅上述托管／APK类型已接。Qt未接独立记录，各端资格并非相同，不把同形请求说成同一医疗执行器。
 
 ## 其余依赖
 

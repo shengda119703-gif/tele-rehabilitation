@@ -22,7 +22,7 @@ async function api(path, opts={}) {
     const res=await fetch('/api'+path,{...requestOpts,signal:controller.signal,headers:{'X-Rehab-Client':'mobile-v1',...opts.headers}});
     let body; try {body=await res.json();} catch(e){if(e.name==='AbortError')throw e;throw Error('电脑服务没有正常响应，请稍后重试');}
     if(!res.ok) {if(res.status===401 && path!=='/pair') {pairPage();} const error=Error(typeof body.detail==='string'?body.detail:body.detail?.message||'请求未完成，请稍后重试');error.status=res.status;error.reason=body.detail;throw error;}
-    if(path==='/catalog'){state.practiceRecording=body.practice_recording===true;state.manualPracticeArrangements=body.manual_practice_arrangements===true;}
+    if(path==='/catalog'){state.practiceRecording=body.practice_recording===true;state.manualPracticeArrangements=body.manual_practice_arrangements===true;state.manualArrangementEntry=body.manual_arrangement_entry===true;}
     return body;
   }catch(e){if(e.name==='AbortError')throw Error('连接超时，请检查电脑服务后重试');if(e instanceof TypeError)throw Error('无法连接电脑，请检查 Wi-Fi 和网页服务');throw e;}
   finally{clearTimeout(timer);opts.signal?.removeEventListener('abort',cancel);}
