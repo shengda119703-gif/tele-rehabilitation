@@ -42,6 +42,7 @@ def main():
     parser.add_argument('--theme', choices=['light', 'dark', 'high-contrast'], default='light')
     parser.add_argument('--width', type=int, default=1440)
     parser.add_argument('--height', type=int, default=940)
+    parser.add_argument('--multi', action='store_true', help='Additional actual two-set/rest/next-action flow')
     args = parser.parse_args()
     out = args.output_root/('actual-qt-practice-' + uuid4().hex[:8])
     out.mkdir(parents=True, exist_ok=False)
@@ -59,7 +60,7 @@ def main():
     snapshots = []
     result = dict(output=str(out), provider='qt-local-1', explicit_qa_input=True,
                   physical_device=False, camera_opened=False, clinical_accuracy_test=False,
-                  theme=args.theme, scale=os.environ.get('QT_SCALE_FACTOR'), passed=False)
+                  theme=args.theme, scale=os.environ.get('QT_SCALE_FACTOR'), multi=args.multi, passed=False)
 
     def wait(condition, limit=12):
         deadline = time.monotonic() + limit
@@ -72,11 +73,12 @@ def main():
 
     def click(button):
         app.processEvents(); assert button.isEnabled(), button.text()
+        action = button.text()
         at = time.monotonic()
         if isinstance(button, QCheckBox): QTest.mouseClick(button, Qt.LeftButton, pos=QPoint(9, button.height()//2))
         else: QTest.mouseClick(button, Qt.LeftButton)
         app.processEvents()
-        snapshots.append(dict(action=button.text(), dispatch_return_ms=(time.monotonic()-at)*1000))
+        snapshots.append(dict(action=action, dispatch_return_ms=(time.monotonic()-at)*1000))
 
     def capture(name, widget=None):
         app.processEvents()
@@ -93,8 +95,16 @@ def main():
         try:
             settings = default_plan('shoulder_abduction')
             settings.update(target_reps=3, target_sets=2, rest_between_sets_s=None, side='left')
+            entries = [item_from_plan(settings)]
+            if args.multi:
+                settings['rest_between_sets_s'] = 3  # Explicit QA arrangement, not a recommended dose.
+                entries = [item_from_plan(settings)]
+                next_settings = default_plan('knee_extension')
+                next_settings.update(target_reps=2, target_sets=1, rest_between_sets_s=None,
+                                     needs_companion=True, side='right')
+                entries.append(item_from_plan(next_settings))
             saved = store.save_training_plan(new_training_plan(scope, 'TEST 本人已有安排',
-                                [item_from_plan(settings)]), expected_revision=0)
+                                entries), expected_revision=0)
             assert store.list_sessions() == []
         finally: store.close()
         w.navigate('rehab'); wait(lambda: not w.pending)
@@ -153,28 +163,80 @@ def main():
         assert d.record['self_reported_count'] == 3 and d.record['confirmed_count'] is None
         assert d.record['formal_plan_contribution'] is None
         capture('06-saved', d)
+        expected_count = 1
+        last_id = original_id
+        if args.multi:
+            click(d.pause); wait(lambda: d.stage == 'REST' and not d.pending)
+            rest_elapsed = d.elapsed_ms
+            capture('09-original-rest', d)
+            wait(lambda: d.primary.isEnabled(), limit=6)
+            assert d.elapsed_ms == rest_elapsed
+            lost_next = []
+            def receive_next(message):
+                if not lost_next and message.get('kind') == 'practice_result' and message.get('command') == 'practice_continue':
+                    lost_next.append(message); return
+                original_receive(message)
+            w.legacy._handle_message = receive_next
+            click(d.primary); wait(lambda: bool(lost_next))
+            next_key = d.continue_payload['operation_id']
+            click(d.back); assert d.stage == 'REST' and not d.isVisible()
+            w._continue_training(); wait(lambda: w.legacy.plan_library_dialog is not None and not w.legacy.busy)
+            click(w.legacy.plan_library_dialog.use); wait(lambda: d.isVisible())
+            assert w.legacy.practice_dialog is d and d.continue_payload['operation_id'] == next_key
+            d.pending['started'] -= 21; d._tick()
+            w.legacy._handle_message = original_receive
+            d._recheck(); wait(lambda: not d.pending)
+            assert d.record['continuation']['successor_id'] == next_key and d.stage == 'REST'
+            click(d.primary); wait(lambda: d.stage == 'EXERCISING' and not d.pending)
+            assert d.record['id'] == next_key and d.record['journey_id'] == original_id
+            assert d.record['set_index'] == 2 and d.count.value() == -1
+            click(d.end); d.count.setValue(2); d.reason.setCurrentIndex(d.reason.findData('completed_set'))
+            click(d.primary); wait(lambda: d.stage == 'SUMMARY' and not d.pending)
+            click(d.pause); wait(lambda: d.stage == 'REST' and not d.pending)
+            assert d.support.isVisible() and not d.support.isChecked()
+            assert d.companion.isVisible() and not d.companion.isChecked() and not d.primary.isEnabled()
+            capture('10-next-action-support', d)
+            click(d.support); click(d.companion); wait(lambda: d.primary.isEnabled())
+            click(d.primary); wait(lambda: d.stage == 'EXERCISING' and not d.pending)
+            assert d.record['exercise_id'] == 'knee_extension' and d.record['side'] == 'right'
+            assert d.record['journey_id'] == original_id and d.record['set_index'] == 1 and d.count.value() == -1
+            click(d.end); d.reason.setCurrentIndex(d.reason.findData('completed_set'))
+            click(d.primary); wait(lambda: d.stage == 'SUMMARY' and not d.pending)
+            assert d.record['self_reported_count'] is None and d.record['continuation'] is None
+            assert not d.pause.isVisible()
+            capture('11-complete-sequence', d)
+            expected_count = 3; last_id = d.record['id']
+            result.update(continue_reply_loss_reconciled=True, rest_not_credited_as_exercise=True,
+                          next_action_support_and_companion_explicit=True, same_journey_across_groups=True)
         click(d.primary)
         w.legacy._history(); wait(lambda: not w.legacy.busy)
-        assert w.legacy.sessions == [] and len(w.legacy.practice_history) == 1
+        assert w.legacy.sessions == [] and len(w.legacy.practice_history) == expected_count
         w.legacy.table.selectRow(0); w.legacy._open_report()
         wait(lambda: w.legacy.practice_dialog is not d)
         d = w.legacy.practice_dialog
-        assert d.stage == 'SUMMARY' and d.record['id'] == original_id
+        assert d.stage == 'SUMMARY' and d.record['id'] == last_id
         capture('07-original-history-record', d); d.hide()
         w.navigate('history'); wait(lambda: not w.pending)
         w._request('snapshot'); wait(lambda: not w.pending)
-        assert len([e for e in w.filtered_entries if len(e)>4 and e[4].get('record_type') == 'GUIDED_PRACTICE']) == 1
+        assert len([e for e in w.filtered_entries if len(e)>4 and e[4].get('record_type') == 'GUIDED_PRACTICE']) == expected_count
         capture('08-unified-history')
         store = Storage(data/'home_rehab.sqlite3')
         try:
             entries = execute(store, 'practice_history', scope, {})
-            assert len(entries) == 1 and not store.list_sessions()
+            assert len(entries) == expected_count and not store.list_sessions()
+            assert len({r['journey_id'] for r in entries}) == 1
+            assert all(r['state'] == 'COMMITTED' and r['confirmed_count'] is None and r['formal_plan_contribution'] is None for r in entries)
+            if args.multi:
+                assert [r['self_reported_count'] for r in reversed(entries)] == [3, 2, None]
+                assert [r['set_index'] for r in reversed(entries)] == [1, 2, 1]
             assert store.get_training_plan(saved['id'])['revision'] == saved['revision']
             result.update(passed=True, record_id=original_id, practice_count=len(entries),
                           measured_sessions=len(store.list_sessions()), self_reported_qa_count=3,
                           confirmed_count=entries[0]['confirmed_count'], formal_contribution=entries[0]['formal_plan_contribution'],
                           lost_reply_reconciled=True, keyboard_start=True, dispatches=snapshots,
                           runtime_camera_worker_present=runtime.camera.worker is not None)
+            result['group_qa_counts'] = [r['self_reported_count'] for r in reversed(entries)]
+            result['group_indexes'] = [r.get('set_index', 1) for r in reversed(entries)]
         finally: store.close()
     except Exception as error:
         result['error'] = repr(error); capture('failed-current-state')

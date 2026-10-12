@@ -955,7 +955,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             from ..exercises import exercise_spec
             count = record.get('self_reported_count')
             timeline.append((record.get('ended_at') or record['created_at'], '康复跟练 / 本人记录',
-                exercise_spec(record['exercise_id'])['label'] + ' · ' +
+                exercise_spec(record['exercise_id'])['label'] + f" · 第{record.get('set_index', 1)}组 · " +
                 (str(count) + ' 次' if count is not None else '次数未填写') + ' · ' +
                 ('已保存' if record['state'] == 'COMMITTED' else '练习未结束'), '康复',
                 dict(record, record_type='GUIDED_PRACTICE')))

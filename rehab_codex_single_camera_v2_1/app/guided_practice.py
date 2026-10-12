@@ -9,6 +9,7 @@ from __future__ import annotations
 import copy
 import json
 import os
+from datetime import datetime
 from uuid import UUID
 
 from .assessment import build_body_profile, session_value
@@ -149,7 +150,56 @@ def project(conn, scope, item):
         checked = decision(conn, scope, ref['id'], ref['revision'], ref['entry_key'], item['start_payload'])
         result.update(execution_allowed=checked['allowed'],
                       execution_decision={k: v for k, v in checked.items() if k != 'entry'})
+    result['continuation'] = continuation(conn, scope, item)
     return result
+
+
+def continuation(conn, scope, item):
+    """Navigation permission is not measured or formal plan progress.
+
+    Each committed group remains immutable. Only explicit group completion can
+    offer a successor, derived from the original frozen saved arrangement.
+    """
+    if (item.get('schema_version', 1) < 2 or item['state'] != 'COMMITTED'
+            or item.get('journey_closed') or (item.get('finish_payload') or {}).get('reason') != 'completed_set'):
+        return None
+    if item.get('successor_id'):
+        return dict(kind='existing', successor_id=item['successor_id'], rest_remaining_ms=0)
+    index = item['sequence_index']; sequence = item['arrangement_sequence']
+    set_index = item['set_index'] + 1
+    kind = 'next_set'
+    if set_index > item['settings']['target_sets']:
+        index += 1; set_index = 1; kind = 'next_action'
+    if index >= len(sequence):
+        return None
+    entry = copy.deepcopy(sequence[index]); ref = item['plan_ref']
+    confirmations = item['start_payload'] if kind == 'next_set' else dict(arrangement_confirmed=True)
+    checked = decision(conn, scope, ref['id'], ref['revision'], entry['key'], confirmations)
+    rest = item['settings']['rest_between_sets_s'] if kind == 'next_set' else None
+    # Receipt wall time is from this owning local host; never compare server and
+    # client monotonic clocks or claim resting is observed movement/holding.
+    elapsed = (datetime.fromisoformat(utc_now()) - datetime.fromisoformat(item['ended_at'])).total_seconds()
+    remaining = max(0, round((rest - elapsed) * 1000)) if rest is not None else None
+    return dict(kind=kind, successor_id=None, entry=entry, sequence_index=index,
+                set_index=set_index, decision=checked, rest_seconds=rest, rest_remaining_ms=remaining,
+                rest_time_basis='owning_host_receipt_utc', scope='guided_navigation_only')
+
+
+def _new_record(scope, value, checked, sequence, sequence_index, set_index, journey_id=None):
+    entry = checked['entry']
+    return dict(schema_version=2, id=value['operation_id'], journey_id=journey_id or value['operation_id'],
+                context=context(scope), state='PRACTICING', start_payload=copy.deepcopy(value),
+                created_at=utc_now(), plan_ref=dict(id=value['plan_id'], revision=value['plan_revision'],
+                                                   entry_key=value['entry_key']),
+                arrangement_ref=dict(id=value['plan_id'], revision=value['plan_revision'],
+                                     entry_key=value['entry_key'], kind=checked['record_origin']),
+                exercise_id=entry['exercise_id'], side=entry['side'], settings=copy.deepcopy(entry['settings']),
+                execution_grant={k: v for k, v in checked.items() if k != 'entry'},
+                arrangement_sequence=copy.deepcopy(sequence), sequence_index=sequence_index, set_index=set_index,
+                sequence_policy='qt-guided-sequence-1', journey_closed=False, successor_id=None,
+                record_origin='GUIDED_PRACTICE', visual_session_ref=None, confirmed_count=None,
+                formal_plan_ref=None, assessment_ref=None, formal_plan_contribution=None,
+                draft=dict(revision=0, elapsed_ms=0, count=None, operations=[]), finish_payload=None)
 
 
 def prepare(conn, scope, plan_id, revision, entry_key):
@@ -159,11 +209,16 @@ def prepare(conn, scope, plan_id, revision, entry_key):
     if plan and scope_key(plan) != scope_key(scope):
         plan = None
     entry = next((i for i in (plan or {}).get('items', []) if i['key'] == entry_key), None)
+    past = records(conn, scope)
+    active = next((r for r in past if r['state'] == 'PRACTICING'), None)
+    if active is None:
+        active = next((r for r in past if r['plan_ref']['id'] == plan_id
+                       and r['plan_ref']['revision'] == revision and not r.get('successor_id')
+                       and continuation(conn, scope, r) is not None), None)
     return dict(context=context(scope), plan_ref=dict(id=plan_id, revision=revision, entry_key=entry_key),
                 entry=copy.deepcopy(entry) if checked['category'] in (None, 'MISSING_INPUT') else None,
                 name=(plan or {}).get('name'), decision=checked,
-                open_record=next((project(conn, scope, r) for r in records(conn, scope)
-                                  if r['state'] == 'PRACTICING'), None))
+                open_record=project(conn, scope, active) if active else None)
 
 
 def create(conn, scope, value):
@@ -185,18 +240,10 @@ def create(conn, scope, value):
         raise PracticeError(checked['code'], checked['message'], checked['category'])
     if any(r['state'] == 'PRACTICING' for r in previous):
         raise PracticeError('ORIGINAL_PRACTICE_OPEN', '请先返回并结束上次练习。')
-    entry = checked['entry']
-    item = dict(schema_version=1, id=value['operation_id'], journey_id=value['operation_id'],
-                context=context(scope), state='PRACTICING', start_payload=copy.deepcopy(value),
-                created_at=utc_now(), plan_ref=dict(id=value['plan_id'], revision=value['plan_revision'],
-                                                   entry_key=value['entry_key']),
-                arrangement_ref=dict(id=value['plan_id'], revision=value['plan_revision'],
-                                     entry_key=value['entry_key'], kind=checked['record_origin']),
-                exercise_id=entry['exercise_id'], side=entry['side'], settings=copy.deepcopy(entry['settings']),
-                execution_grant={k: v for k, v in checked.items() if k != 'entry'},
-                record_origin='GUIDED_PRACTICE', visual_session_ref=None, confirmed_count=None,
-                formal_plan_ref=None, assessment_ref=None, formal_plan_contribution=None,
-                draft=dict(revision=0, elapsed_ms=0, count=None, operations=[]), finish_payload=None)
+    plan = json.loads(conn.execute('SELECT payload FROM training_plans WHERE id=?', (value['plan_id'],)).fetchone()[0])
+    sequence = validate_training_plan(plan)['items']
+    index = next(i for i, entry in enumerate(sequence) if entry['key'] == value['entry_key'])
+    item = _new_record(scope, value, checked, sequence, index, 1)
     conn.execute('INSERT INTO guided_practices VALUES (?,?,?)', (owner(scope), item['id'], dumps(item)))
     return project(conn, scope, item)
 
@@ -204,6 +251,56 @@ def create(conn, scope, value):
 def _write(conn, scope, item):
     conn.execute('UPDATE guided_practices SET payload=? WHERE owner=? AND id=?',
                  (dumps(item), owner(scope), item['id']))
+
+
+def continue_practice(conn, scope, record_id, value):
+    exact(value, ('operation_id', 'arrangement_confirmed', 'support_ready', 'companion_present'))
+    identity(value['operation_id'])
+    if any(type(value[k]) is not bool for k in ('arrangement_confirmed', 'support_ready', 'companion_present')):
+        raise PracticeError('CONFIRMATION_REQUIRED', '请核对下一项的支撑和陪同情况。', 'MISSING_INPUT')
+    conn.execute('BEGIN IMMEDIATE')
+    previous = read(conn, scope, record_id)
+    existing = next((r for r in records(conn, scope) if r['id'] == value['operation_id']), None)
+    if existing:
+        if existing.get('predecessor_id') != record_id or existing.get('continue_payload') != value:
+            raise PracticeError('CONTINUE_KEY_CONFLICT', '继续编号已用于另一份内容。')
+        return project(conn, scope, existing)
+    following = continuation(conn, scope, previous)
+    if not following or following.get('successor_id'):
+        raise PracticeError('NO_NEXT_GROUP', '本组没有待开始的下一项，请查看原记录。')
+    if any(r['state'] == 'PRACTICING' for r in records(conn, scope)):
+        raise PracticeError('ORIGINAL_PRACTICE_OPEN', '请先返回并结束上次练习。')
+    ref = previous['plan_ref']; entry = following['entry']
+    checked = decision(conn, scope, ref['id'], ref['revision'], entry['key'], value)
+    if not checked['allowed']:
+        raise PracticeError(checked['code'], checked['message'], checked['category'])
+    if checked['entry'] != entry:
+        raise PracticeError('ARRANGEMENT_SETTINGS_CHANGED', '原安排内容已变化，请重新核对。')
+    if following['rest_remaining_ms']:
+        raise PracticeError('REST_PENDING', '按原安排休息后再继续。', 'MISSING_INPUT')
+    payload = dict(value, plan_id=ref['id'], plan_revision=ref['revision'], entry_key=entry['key'])
+    item = _new_record(scope, payload, checked, previous['arrangement_sequence'],
+                       following['sequence_index'], following['set_index'], previous['journey_id'])
+    item.update(predecessor_id=record_id, continue_payload=copy.deepcopy(value))
+    previous['successor_id'] = item['id']
+    _write(conn, scope, previous)
+    conn.execute('INSERT INTO guided_practices VALUES (?,?,?)', (owner(scope), item['id'], dumps(item)))
+    return project(conn, scope, item)
+
+
+def close_journey(conn, scope, record_id, value):
+    exact(value, ('operation_id',)); identity(value['operation_id'])
+    conn.execute('BEGIN IMMEDIATE')
+    item = read(conn, scope, record_id)
+    if item.get('close_payload'):
+        if item['close_payload'] != value:
+            raise PracticeError('CLOSE_KEY_CONFLICT', '本次已结束，请查看原记录。')
+        return project(conn, scope, item)
+    if item['state'] != 'COMMITTED' or item.get('successor_id'):
+        raise PracticeError('GROUP_STATE_CHANGED', '请先核对当前组记录。')
+    item.update(journey_closed=True, journey_closed_at=utc_now(), close_payload=copy.deepcopy(value))
+    _write(conn, scope, item)
+    return project(conn, scope, item)
 
 
 def _count(value):
@@ -256,12 +353,13 @@ def finish(conn, scope, record_id, value):
     if value['elapsed_ms'] < item['draft']['elapsed_ms']:
         raise PracticeError('ELAPSED_BEFORE_DRAFT', '结束时间早于已保存草稿，请核对原记录。')
     item.update(state='COMMITTED', ended_at=utc_now(), finish_payload=copy.deepcopy(value),
-                self_reported_count=value['count'], count_scope='set_total', set_index=1,
+                self_reported_count=value['count'], count_scope='set_total', set_index=item.get('set_index', 1),
                 elapsed_source='frontend_active_time_not_observed_hold',
                 record_origin='SELF_RECORDED' if value['count'] is not None else 'GUIDED_PRACTICE')
+    if value['reason'] != 'completed_set': item['journey_closed'] = True
     item['mode_segments'] = [dict(mode='GUIDED', start=item['created_at'], end=item['ended_at'],
                                  reason='allowed_saved_arrangement', time_basis='sqlite_receipt_time',
-                                 source='GUIDED_PRACTICE', set_index=1)]
+                                 source='GUIDED_PRACTICE', set_index=item.get('set_index', 1))]
     _write(conn, scope, item)
     return project(conn, scope, item)
 
@@ -280,6 +378,10 @@ def execute(store, command, scope, args):
             return save_draft(conn, scope, args['id'], args['payload'])
         if command == 'practice_finish':
             return finish(conn, scope, args['id'], args['payload'])
+        if command == 'practice_continue':
+            return continue_practice(conn, scope, args['id'], args['payload'])
+        if command == 'practice_close_journey':
+            return close_journey(conn, scope, args['id'], args['payload'])
         if command == 'practice_history':
             return [project(conn, scope, r) for r in records(conn, scope)]
         raise PracticeError('UNKNOWN_COMMAND', '不支持的练习操作。')

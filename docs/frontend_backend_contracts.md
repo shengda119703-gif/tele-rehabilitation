@@ -2,7 +2,17 @@
 
 ## 已接通
 
-### B01／B02／局部 B04：Qt 本人原人工安排
+### Qt B02多组导航增量（schema2）
+
+只用原Runtime／SQLite writer，新增`practice_continue`（id为已提交前组，payload精确为operation_id UUID、arrangement_confirmed／support_ready／companion_present三个严格bool）及`practice_close_journey`（id为无已创建后组的已提交组，payload精确为operation_id）。原start／finish载荷不变。新记录冻结原validated items为arrangement_sequence、sequence_index和set_index；同journey_id，每组自己的id／finish_payload／自报范围，前后关联在同一原事务提交。不把多组累计写入旧计划贡献。
+
+只在已提交前组明确reason=completed_set时投影continuation；按原target_sets及原项顺序算候选位置，不按次数阈值推断身体完成。当前原政策重查，支撑／必要陪同在新动作复核；原安排revision或设置改变、已有停止、另一个open练习都阻止新执行，已提交各组不回滚。普通ended／discomfort和已结束导航不提供新开始，null次数不补0。
+
+组间rest_remaining_ms来自原记录ended_at与同一本机UTC，rest_seconds保留原值／null；不是跨主机单调时钟，也不是人体观测。客户端短倒计时只作显示，实际继续仍由所属writer核对REST_PENDING。下一动作不擅自添加上一项的组间休息。无时长仍显示准备好后由本人继续。
+
+前组successor_id保留原子关联；同operation_id／同continue_payload返回原后组，不同载荷或再建后组明确冲突。结束未知创建时先查其原id，查不到才关闭前组导航，查到则按实际后组结束；不借“结束”再创建一次。close_payload可原键重查，不能篡改原组finish或次数。schema1历史只读兼容，不反推之前的组／未来安排。Qt暂未实现跨进程待continue／finish载荷outbox与主动租约；手机／托管尚未启用这个增量。
+
+### B01／B02／局部 B04：Qt单组基础（f3dc32e，保持兼容）
 
 本轮接原 `ProductRehabWindow`／`Runtime`／`Storage._call`，不走网页 HTTP。独立 `guided_practices(owner,id,payload)` 仍在原 SQLite，owner 是 `qt-local-1:` 加原作用域摘要，不能读托管 owner 或 PHONE_LOCAL。context 包含原 participant_id／source_kind／usage_context、provider、policy_version；读取不存在的新表不会创建表，写入沿原事务和 commit。
 

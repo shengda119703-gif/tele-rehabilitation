@@ -8,7 +8,7 @@ from uuid import uuid4
 import pytest
 from PySide6.QtWidgets import QApplication
 
-from app.guided_practice import execute
+from app.guided_practice import execute, PracticeError
 from app.storage import Storage
 from app.training_plans import new_training_plan
 from app.ui.guided_practice import GuidedPracticeDialog, PracticePlanLibraryDialog
@@ -201,3 +201,128 @@ def test_original_library_layout_and_unknown_decision_are_not_grants(native):
         library.set_busy(True); assert not library.use.isEnabled()
     finally:
         library.set_busy(False); library.reject(); library.deleteLater(); app.processEvents()
+
+
+def configure_sequence(d, store):
+    plan = store.get_training_plan(d.prepared['plan_ref']['id'])
+    plan['items'] = [item(target_reps=3, target_sets=2, rest_between_sets_s=0),
+                     item('knee_extension', 'right', target_reps=2, target_sets=1, needs_companion=True)]
+    plan = store.save_training_plan(plan, expected_revision=plan['revision'])
+    d.prepared = execute(store, 'practice_prepare', SCOPE,
+                        dict(id=plan['id'], revision=plan['revision'], entry_key=plan['items'][0]['key']))
+    d._render()
+
+
+def finish_group(d, store, runtime, count=3):
+    d.end.click(); d.count.setValue(count)
+    d.reason.setCurrentIndex(d.reason.findData('completed_set'))
+    d.primary.click(); reply(d, store, runtime)
+    assert d.stage == 'SUMMARY'
+
+
+def test_native_two_groups_then_next_action_rest_keeps_journey_and_requires_new_support(native):
+    _, d, store, runtime, _ = native
+    configure_sequence(d, store); begin(d, store, runtime)
+    original = d.record['journey_id']; finish_group(d, store, runtime)
+    assert d.pause.isVisible() and d.pause.text() == '继续下一组'
+    d.pause.click(); reply(d, store, runtime)
+    assert d.stage == 'REST' and d.elapsed_ms >= 0 and d.primary.isEnabled()
+    d.primary.click(); reply(d, store, runtime)
+    assert d.stage == 'EXERCISING' and d.record['set_index'] == 2
+    assert d.record['journey_id'] == original and d.count.value() == -1 and d.elapsed_ms == 0
+    finish_group(d, store, runtime, 2); d.pause.click(); reply(d, store, runtime)
+    assert d.stage == 'REST' and not d.support.isChecked() and d.support.isVisible()
+    assert d.companion.isVisible() and not d.primary.isEnabled()
+    d.support.setChecked(True); d.companion.setChecked(True); d._render()
+    d.primary.click(); reply(d, store, runtime)
+    assert d.record['exercise_id'] == 'knee_extension' and d.record['set_index'] == 1
+    assert d.record['journey_id'] == original and d.count.value() == -1
+    finish_group(d, store, runtime, -1)
+    assert d.record['continuation'] is None and not d.pause.isVisible()
+    history = execute(store, 'practice_history', SCOPE, {})
+    assert len(history) == 3 and all(r['formal_plan_contribution'] is None for r in history)
+
+
+def test_lost_next_group_reply_rechecks_one_original_creation_not_new_set(native):
+    _, d, store, runtime, _ = native
+    configure_sequence(d, store); begin(d, store, runtime); finish_group(d, store, runtime)
+    d.pause.click(); reply(d, store, runtime); d.primary.click()
+    name, args = runtime.calls[-1]; created = execute(store, name, SCOPE, args)
+    original = copy.deepcopy(d.continue_payload)
+    d.pending['started'] -= 21; d._tick()
+    d._recheck(); reply(d, store, runtime)
+    assert d.stage == 'REST' and d.record['continuation']['successor_id'] == created['id']
+    assert d.primary.isEnabled()
+    d.primary.click(); reply(d, store, runtime)
+    assert d.stage == 'EXERCISING' and d.record['id'] == original['operation_id']
+    assert len(execute(store, 'practice_history', SCOPE, {})) == 2 and d.elapsed_ms == 0
+
+
+def test_end_while_next_creation_in_flight_never_runs_late_group(native):
+    _, d, store, runtime, _ = native
+    configure_sequence(d, store); begin(d, store, runtime); finish_group(d, store, runtime)
+    d.pause.click(); reply(d, store, runtime); d.primary.click()
+    name, args = runtime.calls[-1]; created = execute(store, name, SCOPE, args)
+    d.end.click(); assert d.stage == 'SUMMARY' and d.last_tick is None
+    d.receive(dict(kind='practice_result', command=name, request_id=args['request_id'], scope=SCOPE, result=created))
+    assert d.stage == 'WRAP_UP' and d.last_tick is None and d.elapsed_ms == 0
+    assert d.finish_payload['reason'] == 'ended' and d.finish_payload['count'] is None
+    reply(d, store, runtime)
+    assert d.stage == 'SUMMARY' and not d.sequence_end_requested
+    assert d.record['state'] == 'COMMITTED' and d.record['continuation'] is None
+    assert len(execute(store, 'practice_history', SCOPE, {})) == 2
+
+
+def test_end_during_rest_policy_query_closes_only_original_saved_group(native):
+    _, d, store, runtime, _ = native
+    configure_sequence(d, store); begin(d, store, runtime); finish_group(d, store, runtime)
+    ending = copy.deepcopy(d.record['finish_payload'])
+    d.pause.click(); assert d.pending and d.stage == 'REST'
+    d.end.click(); assert d.stage == 'SUMMARY'
+    reply(d, store, runtime); assert runtime.calls[-1][0] == 'practice_close_journey'
+    reply(d, store, runtime)
+    assert d.record['journey_closed'] and d.record['finish_payload'] == ending
+    assert not d.pause.isVisible() and len(execute(store, 'practice_history', SCOPE, {})) == 1
+
+
+def test_hidden_continue_reply_restores_next_group_paused_without_clock_credit(native):
+    _, d, store, runtime, app = native
+    configure_sequence(d, store); begin(d, store, runtime); finish_group(d, store, runtime)
+    d.pause.click(); reply(d, store, runtime); d.primary.click()
+    d.back.click(); app.processEvents(); reply(d, store, runtime)
+    assert d.stage == 'PAUSED' and not d.isVisible() and d.elapsed_ms == 0 and d.last_tick is None
+    assert d.record['set_index'] == 2 and d.count.value() == -1
+
+
+def test_end_after_unknown_continue_queries_original_id_before_closing_not_recreating(native):
+    _, d, store, runtime, _ = native
+    configure_sequence(d, store); begin(d, store, runtime); finish_group(d, store, runtime)
+    d.pause.click(); reply(d, store, runtime); d.primary.click()
+    identity = d.continue_payload['operation_id']
+    # Explicit TEST transport drops the operation before the owning writer.
+    d.pending['started'] -= 21; d._tick(); d.end.click()
+    name, args = runtime.calls[-1]
+    assert name == 'practice_get' and args['id'] == identity
+    with pytest.raises(PracticeError) as error: execute(store, name, SCOPE, args)
+    assert error.value.code == 'NOT_FOUND'
+    d.receive(dict(kind='error', command=name, request_id=args['request_id'],
+                   code=error.value.code, category=error.value.category, text=str(error.value)))
+    assert runtime.calls[-1][0] == 'practice_close_journey'
+    reply(d, store, runtime)
+    assert d.record['journey_closed'] and len(execute(store, 'practice_history', SCOPE, {})) == 1
+
+
+def test_failed_ending_successor_lookup_is_bounded_and_keeps_original_identity(native):
+    _, d, store, runtime, _ = native
+    configure_sequence(d, store); begin(d, store, runtime); finish_group(d, store, runtime)
+    d.pause.click(); reply(d, store, runtime); d.primary.click()
+    original = copy.deepcopy(d.continue_payload)
+    d.pending['started'] -= 21; d._tick(); d.end.click()
+    name, args = runtime.calls[-1]; before = len(runtime.calls)
+    assert name == 'practice_get'
+    d.receive(dict(kind='error', command=name, request_id=args['request_id'], code='TEST_BUSY',
+                   category='TECHNICAL', text='TEST 读取暂忙'))
+    assert len(runtime.calls) == before and d.pending is None and d.sequence_end_requested
+    assert d.continue_payload == original and d.stage == 'SUMMARY' and d.primary.isEnabled()
+    d.primary.click()
+    assert runtime.calls[-1][0] == 'practice_get' and runtime.calls[-1][1]['id'] == original['operation_id']

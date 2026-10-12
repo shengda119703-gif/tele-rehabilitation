@@ -62,6 +62,12 @@ class GuidedPracticeDialog(QDialog):
         self.start_payload = copy.deepcopy(record['start_payload']) if record else None
         self.finish_payload = copy.deepcopy(record.get('finish_payload')) if record else None
         self.draft_payload = None
+        self.continue_payload = None
+        self.close_payload = None
+        self.sequence_end_requested = False
+        self.end_lookup = False
+        self.successor_read_only = False
+        self.rest_checked_at = time.monotonic()
         self.elapsed_ms = (record or {}).get('draft', {}).get('elapsed_ms', 0)
         self.last_tick = None
         self.setWindowTitle('跟练')
@@ -122,22 +128,47 @@ class GuidedPracticeDialog(QDialog):
             return False
         if message['kind'] == 'practice_result' and message.get('scope') != self.scope:
             return False
+        if message.get('command') != self.pending['command']:
+            return False
         command = self.pending['command']; self.pending = None
         if message['kind'] == 'error':
             self.notice.setText(message['text'])
+            if self.sequence_end_requested and (command == 'practice_continue' or self.end_lookup):
+                self.end_lookup = False
+                if message.get('code') == 'NOT_FOUND' or message.get('category') in ('MISSING_INPUT', 'EXECUTION_BLOCK'):
+                    self._close_sequence()
+                elif command == 'practice_continue':
+                    self._lookup_ending_successor()
+                # A failed lookup remains a user-retryable original operation;
+                # do not recursively enqueue permanent errors or lost reads.
+                self._render(); return True
+            if command == 'practice_continue' and message.get('category') in ('MISSING_INPUT', 'EXECUTION_BLOCK'):
+                self.continue_payload = None  # Authoritative rejection, not an unknown write outcome.
             if command in ('practice_start', 'practice_get') and self.stage in ('SETUP', 'EXERCISING', 'PAUSED'):
                 self.stage = 'PAUSED' if self.record else 'SETUP'
                 self.last_tick = None
                 self.resume_requested = False
             self._render(); return True
-        item = message['result']; self.record = copy.deepcopy(item)
+        item = message['result']
+        if command == 'practice_continue' or self.end_lookup:
+            self.end_lookup = False
+            self._adopt_successor(item, ending=self.sequence_end_requested)
+            self._render(); return True
+        self.record = copy.deepcopy(item)
+        self.rest_checked_at = time.monotonic()
         if self.draft_payload and any(op['operation_id'] == self.draft_payload['operation_id']
                                       for op in item['draft']['operations']):
             self.draft_payload = None
         if item['state'] == 'COMMITTED':
-            self.stage = 'SUMMARY'; self.finish_payload = copy.deepcopy(item['finish_payload'])
+            if self.stage != 'REST' or command == 'practice_close_journey': self.stage = 'SUMMARY'
+            self.finish_payload = copy.deepcopy(item['finish_payload'])
+            if command == 'practice_close_journey': self.sequence_end_requested = False
             self.notice.setText('练习记录已保存。')
             self.window.practice_saved_id = item['id']
+            if self.sequence_end_requested and command != 'practice_close_journey':
+                if item.get('journey_closed'): self.sequence_end_requested = False
+                else:
+                    self._close_sequence(); self._render(); return True
         elif (command == 'practice_start' and self.stage == 'SETUP') or (
                 command == 'practice_get' and self.stage == 'PAUSED' and getattr(self, 'resume_requested', False)):
             self.resume_requested = False
@@ -154,6 +185,55 @@ class GuidedPracticeDialog(QDialog):
             self._request('practice_finish', id=item['id'], payload=self.finish_payload)
         self._render(); return True
 
+    def _adopt_successor(self, item, ending=False):
+        self.record = copy.deepcopy(item)
+        self.start_payload = copy.deepcopy(item['start_payload'])
+        self.finish_payload = copy.deepcopy(item.get('finish_payload'))
+        self.draft_payload = None; self.close_payload = None; self.continue_payload = None
+        self.elapsed_ms = item.get('draft', {}).get('elapsed_ms', 0)
+        self.count.setValue(item.get('draft', {}).get('count') if item.get('draft', {}).get('count') is not None else -1)
+        self.reason.setCurrentIndex(self.reason.findData('ended'))
+        for spin in self.scores.values(): spin.setValue(-1)
+        self.notice.clear(); self.resume_requested = False
+        if ending:
+            self.stage = 'WRAP_UP' if item['state'] == 'PRACTICING' else 'SUMMARY'
+            self.last_tick = None
+            if item['state'] == 'PRACTICING':
+                self.finish_payload = dict(operation_id=str(uuid4()), count=None, elapsed_ms=int(self.elapsed_ms),
+                                           reason='ended', feedback=dict(pain=None, fatigue=None))
+                self._request('practice_finish', id=item['id'], payload=self.finish_payload)
+            else: self._close_sequence()
+        else:
+            self.stage = ('SUMMARY' if item['state'] == 'COMMITTED' else
+                          'EXERCISING' if item.get('execution_allowed') and self.isVisible() and not self.successor_read_only else 'PAUSED')
+            self.last_tick = time.monotonic() if self.stage == 'EXERCISING' else None
+        self.successor_read_only = False
+
+    def _next(self):
+        if self.pending or not self._bound() or self.stage != 'SUMMARY': return
+        following = self.record.get('continuation')
+        if not following: return
+        if following.get('successor_id'):
+            self.end_lookup = True
+            self.successor_read_only = True
+            self._request('practice_get', id=following['successor_id'])
+            return
+        self.stage = 'REST'; self.rest_checked_at = time.monotonic(); self.notice.clear()
+        if following['kind'] == 'next_action':
+            self.support.setChecked(False); self.companion.setChecked(False)
+        self._request('practice_get', id=self.record['id'])
+
+    def _close_sequence(self):
+        self.stage = 'SUMMARY'; self.last_tick = None
+        if not self.close_payload: self.close_payload = dict(operation_id=str(uuid4()))
+        self._request('practice_close_journey', id=self.record['id'], payload=self.close_payload)
+
+    def _lookup_ending_successor(self):
+        if self.continue_payload:
+            self.end_lookup = True
+            self._request('practice_get', id=self.continue_payload['operation_id'])
+        else: self._close_sequence()
+
     def _primary(self):
         if self.pending or not self._bound(): return
         if self.stage == 'SETUP':
@@ -169,8 +249,21 @@ class GuidedPracticeDialog(QDialog):
                                            reason=self.reason.currentData(), feedback={k: s.value() if s.value() >= 0 else None
                                                                                      for k, s in self.scores.items()})
             self._request('practice_finish', id=self.record['id'], payload=self.finish_payload)
+        elif self.stage == 'REST':
+            following = self.record.get('continuation')
+            if not following: self.stage = 'SUMMARY'; self._render(); return
+            if following.get('successor_id') and not self.continue_payload:
+                self.end_lookup = True; self.successor_read_only = True
+                self._request('practice_get', id=following['successor_id']); return
+            if not self.continue_payload:
+                same = following['kind'] == 'next_set'
+                self.continue_payload = dict(operation_id=str(uuid4()), arrangement_confirmed=True,
+                    support_ready=self.start_payload['support_ready'] if same else self.support.isChecked(),
+                    companion_present=self.start_payload['companion_present'] if same else self.companion.isChecked())
+            self._request('practice_continue', id=self.record['id'], payload=self.continue_payload)
         elif self.stage == 'SUMMARY':
-            self.hide()
+            if self.sequence_end_requested: self._lookup_ending_successor()
+            else: self.hide()
         elif self.record:
             if self.draft_payload:
                 self._request('practice_draft', id=self.record['id'], payload=self.draft_payload)
@@ -184,6 +277,7 @@ class GuidedPracticeDialog(QDialog):
     def _pause_or_resume(self):
         if self.stage == 'EXERCISING': self._pause()
         elif self.stage == 'PAUSED': self._primary()
+        elif self.stage == 'SUMMARY': self._next()
 
     def _pause(self):
         self._tick(); self.stage = 'PAUSED'; self.last_tick = None
@@ -197,6 +291,11 @@ class GuidedPracticeDialog(QDialog):
             self._request('practice_draft', id=self.record['id'], payload=self.draft_payload)
 
     def _end(self):
+        if self.stage == 'REST':
+            self.sequence_end_requested = True; self.stage = 'SUMMARY'; self.last_tick = None
+            self.notice.setText('本组记录已保存，正在结束本次跟练。')
+            if not self.pending: self._lookup_ending_successor()
+            self._render(); return
         if self.stage not in ('EXERCISING', 'PAUSED'): return
         self._tick(); self.stage = 'WRAP_UP'; self.last_tick = None; self.resume_requested = False
         self._render(); self.count.setFocus()
@@ -220,7 +319,7 @@ class GuidedPracticeDialog(QDialog):
         self._render()
 
     def _recheck(self):
-        if self.stage == 'EXERCISING' and self.record and not self.pending:
+        if self.stage in ('EXERCISING', 'REST') and self.record and not self.pending:
             self._request('practice_get', id=self.record['id'])
 
     def _render(self):
@@ -229,22 +328,44 @@ class GuidedPracticeDialog(QDialog):
         if not entry: self.primary.setEnabled(False); self.notice.setText(decision.get('message') or '请核对原安排。'); return
         eid, settings = entry['exercise_id'], entry['settings']
         self.title.setText(exercise_spec(eid)['label'] + ' · ' + ('本人左侧' if entry['side'] == 'left' else '本人右侧'))
-        self.arrangement.setText(f"已有安排 {settings['target_reps']} 次 × {settings['target_sets']} 组 · 本页记录本组")
+        self.arrangement.setText(f"已有安排 {settings['target_reps']} 次 × {settings['target_sets']} 组 · 第 {entry.get('set_index', 1)} 组")
         setup = self.stage == 'SETUP'
+        following = (self.record or {}).get('continuation') or {}
+        rest = self.stage == 'REST'
+        next_action = rest and following.get('kind') == 'next_action'
+        if next_action: decision = following.get('decision') or {}
         for check in (self.confirm, self.support): check.setVisible(setup); check.setEnabled(not self.pending and not self.start_payload)
-        self.companion.setVisible(setup and decision.get('companion_required', False)); self.companion.setEnabled(not self.pending and not self.start_payload)
+        if next_action:
+            self.support.setVisible(True); self.support.setEnabled(not self.pending and not self.continue_payload)
+        self.companion.setVisible((setup or next_action) and decision.get('companion_required', False))
+        self.companion.setEnabled(not self.pending and (not self.continue_payload if next_action else not self.start_payload))
         wrap = self.stage == 'WRAP_UP'
         for widget in (self.count, self.reason, *self.scores.values()):
             widget.setVisible(wrap); self.form.labelForField(widget).setVisible(wrap)
             widget.setEnabled(not self.pending and not self.finish_payload)
-        self.pause.setVisible(self.stage in ('EXERCISING', 'PAUSED')); self.pause.setText('继续' if self.stage == 'PAUSED' else '暂停')
+        from ..guided_practice import flow_enabled
+        offer_next = bool(self.stage == 'SUMMARY' and following and flow_enabled() and not self.sequence_end_requested)
+        self.pause.setVisible(self.stage in ('EXERCISING', 'PAUSED') or offer_next)
+        self.pause.setText(('查看下一组记录' if following.get('successor_id') else
+                            '下一动作' if following.get('kind') == 'next_action' else '继续下一组') if offer_next
+                           else '继续' if self.stage == 'PAUSED' else '暂停')
         self.pause.setEnabled(not self.pending and self._bound())
-        self.end.setVisible(self.stage in ('EXERCISING', 'PAUSED')); self.end.setEnabled(self._bound())
-        self.primary.setVisible(self.stage in ('SETUP', 'WRAP_UP', 'SUMMARY'))
-        self.primary.setText('开始跟练' if setup else '保存记录' if wrap else '返回康复')
+        self.end.setVisible(self.stage in ('EXERCISING', 'PAUSED', 'REST')); self.end.setEnabled(self._bound())
+        self.primary.setVisible(self.stage in ('SETUP', 'WRAP_UP', 'SUMMARY', 'REST'))
+        self.primary.setText('开始跟练' if setup else '保存记录' if wrap else
+                             ('核对下一组' if following.get('successor_id') else
+                              '开始下一动作' if next_action else '开始下一组') if rest else
+                             '核对结束' if self.sequence_end_requested else '返回康复')
         eligible_setup = decision.get('category') == 'MISSING_INPUT' and self.confirm.isChecked() and self.support.isChecked()
         if decision.get('companion_required'): eligible_setup = eligible_setup and self.companion.isChecked()
         self.primary.setEnabled(not self.pending and self._bound() and (not setup or eligible_setup))
+        remaining = following.get('rest_remaining_ms')
+        remaining = max(0, remaining - (time.monotonic() - self.rest_checked_at)*1000) if remaining is not None else None
+        if rest:
+            ready = bool((following.get('entry') and not remaining) or following.get('successor_id'))
+            if next_action:
+                ready = ready and self.support.isChecked() and (not decision.get('companion_required') or self.companion.isChecked())
+            self.primary.setEnabled(not self.pending and self._bound() and ready)
         self.back.setEnabled(True)
         self.back.setVisible(self.stage != 'SUMMARY')
         info = exercise_instructions(eid)
@@ -254,8 +375,22 @@ class GuidedPracticeDialog(QDialog):
             self.status.setText(f'正在跟练 · {int(self.elapsed_ms / 1000)} 秒')
         elif self.stage == 'SUMMARY':
             value = self.record.get('self_reported_count')
-            self.instruction.setText('本组记录已保存')
+            final_group = (self.record.get('schema_version', 1) >= 2 and
+                           self.record.get('sequence_index') == len(self.record.get('arrangement_sequence', [])) - 1 and
+                           self.record.get('set_index') == settings['target_sets'] and
+                           (self.record.get('finish_payload') or {}).get('reason') == 'completed_set')
+            self.instruction.setText('本次跟练已结束' if final_group else '本组记录已保存')
             self.status.setText(('本人记录 ' + str(value) + ' 次' if value is not None else '次数未填写') + ' · 无自动测量结果')
+        elif rest:
+            upcoming = following.get('entry')
+            self.instruction.setText('下一组已有记录，核对原记录后继续。' if following.get('successor_id') else
+                                    ('下一项：' + exercise_spec(upcoming['exercise_id'])['label'] +
+                                     ' · ' + ('本人左侧' if upcoming['side'] == 'left' else '本人右侧')) if next_action
+                                     else f"休息一下，接下来第 {following.get('set_index')} 组")
+            checked = following.get('decision') or {}
+            self.status.setText(checked.get('message') if checked.get('category') not in (None, 'MISSING_INPUT') else
+                                f'按原安排休息 · 还剩 {int((remaining + 999) / 1000)} 秒' if remaining else
+                                '按原安排准备好后继续，不会自动开始。')
         else:
             self.instruction.setText(info['start'] if setup else '填写本组完成情况' if wrap else '练习已暂停')
             self.status.setText('按已有安排练习，完成后记录本组次数。' if setup else

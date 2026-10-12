@@ -2,7 +2,9 @@
 
 “局部”不等于三端验收。实际浏览器采用桌面 Edge headless 的手机尺寸，不能替代真机。测试夹具和 QA 输入不是临床真值。
 
-当前 Qt 增量：`test_qt_guided_practice.py` 用原 writer／Runtime 验证独立政策、本人／来源、原设置、原键、草稿和已有停止事实；`test_qt_guided_practice_ui.py` 12 项验证原入口控件、暂停返回、原保存、晚到回复与结束优先、隐藏开始不续练、原历史不替换当前控制器和 legacy。`test_native_voice.py` 增补无需音频组件的取消检查，不代表麦克风／ASR 实测。专项均是原完整回归子集，不重复相加。
+当前 Qt 增量：`test_qt_guided_practice.py` 用原 writer／Runtime 验证独立政策、本人／来源、原设置、原键、草稿和已有停止事实；`test_qt_practice_sequence.py` 8项增加真实writer的多组／下一动作、原休息、继续原键、停止／归档、取消休息及来源控制。`test_qt_guided_practice_ui.py` 当前19项包含原入口、暂停返回、原保存、晚到回复与结束优先、隐藏开始不续练、原历史和legacy，以及多组／休息／换动作确认、继续丢回复、在途创建／查询时结束、未知结束先查原身份、失败结束查询有界。`test_native_voice.py` 的无需音频组件取消不代表麦克风／ASR实测。最终core1080、UI488、原集成228，专项为全套子集，不重复相加。
+
+多组实际`verify_qt_practice.py --multi`五次完整通过，最终75a7c11f／9a78f2bb：每run同1旅程、3独立提交组、0测量session，QA次数3／2／null。原休息不计练习，换动作只核对本项支撑／必要陪同，结束和继续丢回复均原键核对；原康复及统一历史可见各组。实际光暗截图已审，未改原设计；不作为真机／身体动作准确性验证。下段单组10次为f3dc32e时点的独立证据，不与多组次数相加。
 
 `verify_qt_practice.py` 共 10 尝试／7 完整通过／3 失败保留；最新浅色 3624a552 和暗色 150% cd7fd2d5 调用真实 ProductWindow／Runtime／原 SQLite，0 评估／1 原安排→1 独立提交，暂停／返回／结束回复丢失／原历史及统一历史通过。QA 自报 3、confirmed／正式贡献 null。原首页／工作区截图和按钮审计同基线，61 个保护文件不变／3 个授权 Qt 控制模块变化。不把 offscreen Qt 当作原生 Windows 模态、物理手机、相机或人体准确性。
 
@@ -50,7 +52,7 @@
 | F32 | 上传不锁导航；跟练返回保留输入通过真实 browser | 全模块非阻塞与迟到写回 |
 | F33 | 后端拒绝另一 open journey；同事实结束幂等 | 同 ID 两窗口主动租约／接管 |
 | F34 | 独立表不覆盖旧 schema | v2／跨条件可比性 UI |
-| F35 | preview单帧在途；跟练原资格查询期间实际video DOM／流不重建；两端完整停止后无新帧 | 慢推理压力、多组、长时、实际设备p95 |
+| F35 | preview单帧在途；跟练原资格查询期间实际video DOM／流不重建；Qt原入口两组肩外展→原休息→下一动作→三组原回执／历史通过；休息不计练习，下一组丢回复不重复创建 | 手机／托管多组、慢推理压力、长时、实际设备p95 |
 | F36 | 网页原两尺寸几何不变；Qt 61 内容原样／3 授权控制变化，首页／工作区 SHA 及按钮审计相同，新增页浅色／暗色 150% 审图 | 全页面、高对比／多屏／原生模态及真机 |
 
 本轮专用证据：`android_offline/tests/care-local.test.cjs` 的7个独立 practice 案例、`test_product_ui.cjs` 的 History API 保留；`verify_phone_practice.cjs` 当前成功 run `actual-phone-practice-20261012-cf10b538`，`verify_practice_flow.cjs` 当前成功 run `actual-practice-20261012-4f0d91b7`。前者是实际 APK 页面／算法／本地存储，不是物理 Android；其 10 次为 QA 本人输入字段，不是观测数。

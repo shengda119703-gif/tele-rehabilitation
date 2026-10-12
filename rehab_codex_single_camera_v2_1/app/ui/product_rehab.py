@@ -73,7 +73,8 @@ class ProductRehabWindow(MainWindow):
                              entry_key=entry, request_id=request)
 
     def _resume_training_preparation(self):
-        if self.practice_dialog and self.practice_dialog.scope == self._body_scope_key() and self.practice_dialog.stage != 'SUMMARY':
+        if self.practice_dialog and self.practice_dialog.scope == self._body_scope_key() and (
+                self.practice_dialog.stage != 'SUMMARY' or self.practice_dialog.sequence_end_requested):
             self.practice_dialog.show(); self.practice_dialog.raise_()
             return
         super()._resume_training_preparation()
@@ -83,7 +84,9 @@ class ProductRehabWindow(MainWindow):
         if self.plan_library_dialog:
             self.plan_library_dialog.set_busy(False)
             self.plan_library_dialog.accept()
-        if self.practice_dialog and self.practice_dialog.record and self.practice_dialog.record['state'] == 'PRACTICING':
+        if self.practice_dialog and self.practice_dialog.record and (
+                self.practice_dialog.record['state'] == 'PRACTICING' or self.practice_dialog.stage == 'REST'
+                or self.practice_dialog.continue_payload or self.practice_dialog.sequence_end_requested):
             if self.practice_dialog.scope == self._body_scope_key():
                 self.practice_dialog.show(); self.practice_dialog.raise_()
                 return
@@ -180,7 +183,7 @@ class ProductRehabWindow(MainWindow):
             for row, record in enumerate(self.practice_history, start=len(self.sessions)):
                 count = record.get('self_reported_count')
                 values = [record['created_at'].replace('T', ' ')[:19] + ' UTC',
-                          exercise_spec(record['exercise_id'])['label'] + ' · 跟练记录',
+                          exercise_spec(record['exercise_id'])['label'] + f" · 第{record.get('set_index', 1)}组跟练",
                           '本人记录 / 本机', '本人记录 ' + str(count) if count is not None else '未填写',
                           '无自动测量', '已保存' if record['state'] == 'COMMITTED' else '练习未结束']
                 for column, value in enumerate(values): self.table.setItem(row, column, QTableWidgetItem(value))

@@ -337,7 +337,7 @@ class Runtime:
         c, store = self.controller, self.store
         if name.startswith('practice_'):
             from .guided_practice import execute, PracticeError
-            if name in ('practice_prepare', 'practice_start') and (
+            if name in ('practice_prepare', 'practice_start', 'practice_continue') and (
                     c.session is not None or c.pending is not None or
                     c.state in ('CONNECTING', 'PREVIEW', 'ONLINE', 'SAVE_FAILED') or
                     getattr(self, 'camera_test', False)):

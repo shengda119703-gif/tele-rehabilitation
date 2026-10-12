@@ -6,7 +6,7 @@
 
 | 端 | 入口与源代码 | 执行与保存 | 本轮范围 |
 | --- | --- | --- | --- |
-| Windows 正式产品 | `Start-Rehab.ps1` → 应用 `.venv` → `app.main` → ProductWindow／Runtime | 原宿主、SQLite、SceneController；独立 Qt practice 仍用原 writer | 0.20.0；原康复／计划库接本人已有人工安排的单组跟练、暂停返回、结束及原历史；完整三端流程仍待 |
+| Windows 正式产品 | `Start-Rehab.ps1` → 应用 `.venv` → `app.main` → ProductWindow／Runtime | 原宿主、SQLite、SceneController；独立 Qt practice 仍用原 writer | 0.20.0；原康复／计划库接本人已有安排，多组、休息、下一动作、暂停返回及每组原历史；完整三端流程仍待 |
 | 托管统一网页 | 正式首页 `mobile_rehab/static/unified.html`／`unified.js`；康复入口进入 `/capture?tab=plan` 等 | 当前共享宿主；统一白名单与原 SQLite | 保持五导航；全量 snapshot 的加载拆分待做 |
 | 保留的动作页面 | `/capture` → `index.html`、`app.js`、`extensions.js`；`practice-flow.js`／`practice-feedback.js`／`practice-observation.js`／`observation-presenter.js`／`manual-arrangements.js` | 原录像执行器／预览／同库独立practice与感受版本 | 原安排并行预览；托管可采用本人原人工计划库，独立B01无合格评估路径；正式视觉关联待接 |
 | 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.8／code10：可选录入已有安排、原本地政策独立跟练；实际包资源及原CPU Worker流程重验，0 Python API；未真机安装 |
@@ -40,4 +40,4 @@
 
 `app/guided_practice.py` 的 `qt-local-1` 与 `qt-saved-arrangement-guided-1` 绑定原本人／输入种类／使用情境；不是托管或 PHONE_LOCAL 身份。Qt 直接走原 Runtime 命令和 Storage._call，不引入 HTTP／DOM 或第二个患者库。原历史与统一历史只读独立类型，不能当评估、自动确认或正式计划贡献。
 
-当前仅本组，暂停草稿可持久化；结束原键回复丢失可恢复。跨进程待结束载荷 outbox、多组、后补感受、统一音频／租约及正式视觉关联尚未完成。`ANKANG_REHAB_EXPERIENCE=legacy` 在启动新进程时恢复原计划库新开始入口；独立历史与已有记录继续可读／结束，不在运行中更换 provider。详见 [Qt 验证记录](validation/FRONTEND_QT_PRACTICE_2026-10-12.md)。
+f3dc32e的单组基础继续兼容；当前Qt多组沿冻结原安排推进，各组独立原回执、同一旅程，原休息后由本人继续，下一动作重查支撑及陪同。实际两组肩外展＋一组坐位膝屈伸及历史五次通过。跨进程待结束／继续outbox、后补感受、统一音频／租约及正式视觉关联仍未完成；手机／托管多组尚未接。`ANKANG_REHAB_EXPERIENCE=legacy`在新进程恢复原计划库新开始入口，已有独立历史与结束仍可读，下一组新开始隐藏，不在运行中换provider。见[单组基础](validation/FRONTEND_QT_PRACTICE_2026-10-12.md)及[多组本机记录](validation/FRONTEND_QT_SEQUENCE_2026-10-12.md)。
