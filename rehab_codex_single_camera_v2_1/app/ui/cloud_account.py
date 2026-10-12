@@ -47,7 +47,10 @@ class CloudAccountDialog(QDialog):
         action('注册', self.register)
         action('退出账号', lambda: self.run(self.client.logout, '已退出；本机记录和待上传队列保留'))
         layout.addLayout(row)
-        self.confirm = QCheckBox('当前本机档案「' + name + '」属于这个云账号')
+        self.can_upload = bool(local_id)
+        self.confirm = QCheckBox('当前本机档案「' + name + '」属于这个云账号' if self.can_upload else
+                                 '上传本机结果前，请在“我的档案”中选择或新建本人档案')
+        self.confirm.setEnabled(self.can_upload)
         layout.addWidget(self.confirm)
         row = QHBoxLayout()
         action('上传本人已保存结果', self.upload, row)
@@ -102,7 +105,7 @@ class CloudAccountDialog(QDialog):
         self.run(work, '注册并登录成功：' + username)
 
     def upload(self):
-        if not self.confirm.isChecked():
+        if not self.can_upload or not self.confirm.isChecked():
             self.status.setText('请确认本机档案归属，再上传结果。')
             return
         def work():
@@ -144,7 +147,7 @@ class CloudAccountDialog(QDialog):
             self.status.setText(str(exc) if isinstance(exc, (CloudError, ValueError)) else '操作未完成，本机记录保留，请重试。')
         for button in self.actions:
             button.setEnabled(True)
-        self.confirm.setEnabled(True)
+        self.confirm.setEnabled(self.can_upload)
         self.username.setEnabled(True)
         self.password.setEnabled(True)
 

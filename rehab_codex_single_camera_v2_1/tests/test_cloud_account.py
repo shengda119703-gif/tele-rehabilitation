@@ -134,3 +134,20 @@ def test_tokens_encrypted_at_rest(tmp_path):
     assert vault.read() == value
     vault.clear()
     assert not vault.path.exists()
+
+
+def test_first_use_cloud_login_available_without_local_upload_binding(tmp_path):
+    from PySide6.QtWidgets import QApplication, QPushButton
+    from app.ui.cloud_account import CloudAccountDialog
+    app = QApplication.instance() or QApplication([])
+    dialog = CloudAccountDialog(tmp_path, None, '', lambda: [], client=CloudAccount(tmp_path, vault=MemoryVault()))
+    try:
+        assert not dialog.confirm.isEnabled()
+        assert any(b.text() == '登录' and b.isEnabled() for b in dialog.findChildren(QPushButton))
+        dialog.confirm.setChecked(True)
+        dialog.upload()
+        assert dialog.future is None
+        assert '确认' in dialog.status.text()
+    finally:
+        dialog.close()
+        app.processEvents()

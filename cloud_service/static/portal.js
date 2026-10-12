@@ -18,7 +18,11 @@
     metric('最大投影角', summary.motion_range?.max_deg, '°');
     const entries = Array.isArray(summary.metrics) ? summary.metrics : Object.values(summary.metrics || {});
     for (const item of entries) {
-      metric(item.label || '角度', item.value ?? item.max, item.unit);
+      // Desktop scalar metadata is not an angle. Only named metrics are displayed.
+      if (!item || typeof item !== 'object' || typeof item.label !== 'string') continue;
+      const hasValue = typeof item.value === 'number';
+      metric(item.label + (hasValue ? '' : '最大值'), hasValue ? item.value : item.max,
+             item.unit === 'deg' ? '°' : item.unit);
     }
     const bar = result.barbell?.summary;
     if (bar) { metric('器械峰值速度', bar.peak_velocity_m_s, 'm/s'); metric('器械峰值功率', bar.peak_power_w, 'W'); }
