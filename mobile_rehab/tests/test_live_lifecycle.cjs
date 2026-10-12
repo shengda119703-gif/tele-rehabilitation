@@ -80,3 +80,22 @@ test('one in-flight frame, immediate stop, and a late result cannot overwrite th
  response.resolve(frame(true,99,'迟到口令'));await running;await settle();assert.equal(h.elements.get('#live-count').textContent,'6 次');
  assert.equal(h.voices.filter(v=>v.text).length,0);assert.equal(s.request.signal.aborted,true);assert.equal(s.stream.track.stops,1);
 });
+test('practice consumer is connected only after permission and receives actual preview results',async()=>{
+ const h=harness(),permission=deferred(),events=[];h.camera(()=>permission.promise);
+ const consumer={isCurrent:()=>true,connected:s=>events.push(['connected',s.exercise,s.side]),receive:d=>{events.push(['data',d.summary.completed]);return{cue:'按安排练习',voice:false};},stopped:r=>events.push(['stopped',r]),error:()=>{}};
+ const running=h.context.startLive(consumer);await settle();assert.equal(events.length,0);
+ permission.resolve(h.stream());await running;assert.deepEqual(events,[['connected','shoulder_abduction','left']]);
+ h.endpoint(async route=>{if(route.endsWith('/frame')){setImmediate(()=>h.context.stopLive('practice_paused'));return frame(true,6);}return{};});
+ await h.originalLoop(h.run('liveSession'));assert(events.some(e=>e[0]==='data'&&e[1]===6));assert.equal(h.voices.filter(v=>v.text).length,0);assert.deepEqual(events.at(-1),['stopped','practice_paused']);
+});
+test('a blocked or stale practice never requests media and late permission is released',async()=>{
+ const h=harness();let allowed=false;
+ const consumer={isCurrent:()=>allowed,connected:()=>{},receive:()=>{},stopped:()=>{},error:()=>{}};
+ await h.context.startLive(consumer);assert.equal(h.cameraCalls.length,0);
+ allowed=true;const permission=deferred(),stream=h.stream();h.camera(()=>permission.promise);const pending=h.context.startLive(consumer);allowed=false;permission.resolve(stream);await pending;assert.equal(stream.track.stops,1);assert.equal(h.calls.length,0);h.context.stopLive();
+});
+test('practice denial stays local to preview without resetting or stopping the permitted practice',async()=>{
+ const h=harness(),events=[];h.camera(async()=>{throw Object.assign(Error('denied'),{name:'NotAllowedError'});});
+ await h.context.startLive({isCurrent:()=>true,connected:()=>{},receive:()=>{},stopped:r=>events.push(r),error:m=>events.push(m)});
+ assert.equal(h.cameraCalls.length,1);assert.equal(h.notices.length,0);assert.equal(events[0],'preview_error');assert.match(events[1],/授权/);assert.equal(h.calls.length,0);
+});

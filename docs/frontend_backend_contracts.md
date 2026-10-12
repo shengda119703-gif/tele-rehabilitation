@@ -2,6 +2,12 @@
 
 ## 已接通
 
+### 任务书5／6：跟练并行接现有预览（没有新增正式测量契约）
+
+复用原 `POST /api/live`（exercise／side／consent）、`POST /api/live/{id}/frame`（原JPEG限额与源时间语义）及 `DELETE /api/live/{id}`。托管仍是原独立worker、LIVE_CAMERA；APK原local-api／PhoneMotion CPU Worker，PHONE_LOCAL，不请求Python。原跟练绑定保持不变，预览是明确不同的读／指导子来源，不用LIVE_CAMERA冒充REPLAY_FILE自动计划的训练事实。
+
+稳定显示仅接受当前返回的原相位、有效主值与有限客户端接收间隔，准备预算不改READY。暂停／结束取消本地采集并对原preview发DELETE，其回执不是practice／session／commit保存。每帧不重建页面，原练习资格查询也不重挂video。当前次数仅标预览／未保存，历史仍只读真实独立practice；客户端转换元数据有来源／世代／相对页面时间，仅写小型草稿，不是视觉有效时间或已提交权威模式段。v2正式测量、B02关联多段、持久测量收尾和统一B03仍待，不能靠删除live宣称完成。
+
 ### 任务书10.5：独立感受后补（不是 B03 指导契约）
 
 | 请求 | 字段与语义 |

@@ -18,7 +18,8 @@ async function main(){
  }catch(e){res.writeHead(404);res.end(String(e));}});
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
  try{
-  browser=await chromium.launch({channel:'msedge',headless:true});const context=await browser.newContext({viewport:{width:390,height:844}});page=await context.newPage();
+  const preview=process.argv.find(a=>a.startsWith('--preview='))?.slice(10);
+  browser=await chromium.launch({channel:'msedge',headless:true,args:preview?['--use-fake-ui-for-media-stream','--use-fake-device-for-media-stream','--use-file-for-fake-video-capture='+path.resolve(preview)]:[]});const context=await browser.newContext({viewport:{width:390,height:844}});page=await context.newPage();
   page.on('pageerror',e=>errors.push(e.message));
   await context.addInitScript(()=>localStorage.setItem('ankang-phone-active-1','ankang-phone-product-2'));
   const base='http://127.0.0.1:'+server.address().port;
@@ -33,6 +34,7 @@ async function main(){
   if(!proposal.candidates.length)throw Error('Actual local replay is not eligible. Preserve its facts; do not fabricate a grant.');
   await page.locator('#view-plan').click();await page.locator('#activity-ok').check();await page.locator('#support-ok').check();await page.locator('#plan-form button').click();
   await page.locator('#train-next').click();await page.locator('#practice-pause').waitFor();await page.locator('#practice-count').fill('10');
+  if(preview)await require('./verify_practice_observation.cjs').verifyPracticeObservation(page,out);
   // Native onPause calls the real same handler; no background catch-up.
   await page.evaluate(()=>offlinePause());await page.locator('#practice-pause').filter({hasText:'继续'}).waitFor();
   await page.locator('#practice-back').click();await page.locator('#train-next').click();

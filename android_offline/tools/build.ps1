@@ -61,7 +61,7 @@ try {
     if (-not (Test-Path $apkKeystore)) {
         Invoke-ApkTool (Join-Path $JdkRoot 'bin/keytool.exe') @('-genkeypair','-keystore',$apkKeystore,'-alias','offline-demo','-keyalg','RSA','-keysize','3072','-validity','10000','-dname','CN=Tele Rehabilitation Local Demo','-storepass:env','REHAB_APK_SIGNING_PASSWORD','-keypass:env','REHAB_APK_SIGNING_PASSWORD')
     }
-    $apkFinal = Join-Path $apkOutput 'tele-rehabilitation-mobile-0.2.5.apk'
+    $apkFinal = Join-Path $apkOutput 'tele-rehabilitation-mobile-0.2.6.apk'
     Invoke-ApkTool (Join-Path $apkTools 'apksigner.bat') @('sign','--ks',$apkKeystore,'--ks-key-alias','offline-demo','--ks-pass','env:REHAB_APK_SIGNING_PASSWORD','--key-pass','env:REHAB_APK_SIGNING_PASSWORD','--out',$apkFinal,$apkAligned)
     Invoke-ApkTool (Join-Path $apkTools 'apksigner.bat') @('verify','--verbose','--print-certs',$apkFinal)
     Get-FileHash -LiteralPath $apkFinal -Algorithm SHA256

@@ -11,7 +11,8 @@ async function main(){
  try{
   const ready=await new Promise((resolve,reject)=>{let buffer='';const timeout=setTimeout(()=>reject(Error('Host start timed out')),30000);host.stdout.on('data',v=>{buffer+=v;try{const ready=JSON.parse(buffer.split('\n')[0]);clearTimeout(timeout);resolve(ready);}catch{}});host.once('exit',()=>{clearTimeout(timeout);reject(Error('QA host exited: '+log));});});
   const base='http://127.0.0.1:'+ready.port;
-  browser=await chromium.launch({channel:'msedge',headless:true});const context=await browser.newContext({viewport:{width:390,height:844}});
+  const preview=process.argv.find(a=>a.startsWith('--preview='))?.slice(10);
+  browser=await chromium.launch({channel:'msedge',headless:true,args:preview?['--use-fake-ui-for-media-stream','--use-fake-device-for-media-stream','--use-file-for-fake-video-capture='+path.resolve(preview)]:[]});const context=await browser.newContext({viewport:{width:390,height:844}});
   const cookie=ready.seed_owner+'.'+crypto.createHmac('sha256','TEST-frontend-isolated-host').update(ready.seed_owner).digest('hex');
   await context.addCookies([{name:'rehab_device',value:cookie,url:base,httpOnly:true,sameSite:'Strict'}]);
   const before=await (await context.request.get(base+'/api/plan')).json();
@@ -20,6 +21,7 @@ async function main(){
   if(!planReply.ok())throw Error('The original plan gate rejected the QA confirmation: '+await planReply.text());
   page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base+'/capture?tab=plan');await page.locator('#train-next').click();await page.locator('#practice-pause').waitFor();
+  if(preview)await require('./verify_practice_observation.cjs').verifyPracticeObservation(page,out);
   await page.locator('#practice-count').fill('10');await page.locator('#practice-pause').click();
   await page.locator('#practice-back').click();await page.locator('#train-next').click();await page.locator('#practice-count').waitFor();
   if(await page.locator('#practice-count').inputValue()!=='10')throw Error('Explicit count draft lost on navigation');
