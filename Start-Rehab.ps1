@@ -1,4 +1,4 @@
-param([string]$PythonPath = '')
+param([string]$PythonPath = '', [string]$DataDir = '')
 $ErrorActionPreference = 'Stop'
 $taskRoot = Join-Path $PSScriptRoot 'rehab_codex_single_camera_v2_1'
 $taskPython = if ($PythonPath) { $PythonPath } else { Join-Path $taskRoot '.venv\Scripts\pythonw.exe' }
@@ -14,4 +14,6 @@ if (-not (Test-Path -LiteralPath (Join-Path $taskAgentRoot 'node_modules\typescr
 if ($LASTEXITCODE -ne 0) { throw 'Ankang product bridge build failed; application was not started.' }
 $taskRuntimeDir = Join-Path $taskRoot '.runtime'
 New-Item -ItemType Directory -Path $taskRuntimeDir -Force | Out-Null
-Start-Process -FilePath $taskPython -ArgumentList @('-m','app.main') -WorkingDirectory $taskRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $taskRuntimeDir 'app-stdout.log') -RedirectStandardError (Join-Path $taskRuntimeDir 'app-stderr.log')
+$taskArguments = @('-m','app.main')
+if ($DataDir) { $taskResolvedData = (Resolve-Path -LiteralPath $DataDir).Path; $taskArguments += @('--data-dir',('"' + $taskResolvedData + '"')) }
+Start-Process -FilePath $taskPython -ArgumentList $taskArguments -WorkingDirectory $taskRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $taskRuntimeDir 'app-stdout.log') -RedirectStandardError (Join-Path $taskRuntimeDir 'app-stderr.log')

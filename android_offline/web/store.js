@@ -2,11 +2,13 @@
 'use strict';
 const KEY='ankang-phone-product-2',OLD='rehab-offline-state-1';
 const LIN_KEY='ankang-phone-test-lin-1',ACTIVE_KEY='ankang-phone-active-1';
-function selectedKey(storage=localStorage){const selected=storage.getItem(ACTIVE_KEY);if([KEY,LIN_KEY].includes(selected))return selected;return storage.getItem(KEY)||storage.getItem(OLD)?KEY:LIN_KEY;}
+const CLOUD_PREFIX='ankang-phone-cloud-1:';
+function cloudKey(key){return typeof key==='string'&&new RegExp('^'+CLOUD_PREFIX+'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$').test(key);}
+function selectedKey(storage=localStorage){const selected=storage.getItem(ACTIVE_KEY);if([KEY,LIN_KEY].includes(selected)||cloudKey(selected))return selected;return storage.getItem(KEY)||storage.getItem(OLD)?KEY:LIN_KEY;}
 const clone=v=>structuredClone(v),now=()=>new Date().toISOString();
 function blank(){return{version:2,owner:crypto.randomUUID(),kv:{},jobs:[],plans:[],daily:{schedules:[],medSchedules:{},doses:{},doseAudit:[],grants:{}},migration:null};}
 class Store{
- constructor(storage=localStorage,key=KEY){if(![KEY,LIN_KEY].includes(key))throw Error('档案位置无效');this.key=key;this.storage=storage;const raw=storage.getItem(key);this.value=raw?JSON.parse(raw):blank();if(this.value.version!==2||!this.value.owner||!Array.isArray(this.value.jobs)||!this.value.kv)throw Error('本地档案格式不正确，原数据没有覆盖');this.tail=Promise.resolve();}
+ constructor(storage=localStorage,key=KEY){if(![KEY,LIN_KEY].includes(key)&&!cloudKey(key))throw Error('档案位置无效');this.key=key;this.storage=storage;const raw=storage.getItem(key);this.value=raw?JSON.parse(raw):blank();if(!raw&&cloudKey(key))this.value.owner=key.slice(CLOUD_PREFIX.length);if(this.value.version!==2||!this.value.owner||!Array.isArray(this.value.jobs)||!this.value.kv||cloudKey(key)&&this.value.owner!==key.slice(CLOUD_PREFIX.length))throw Error('本地档案格式不正确，原数据没有覆盖');this.tail=Promise.resolve();}
  commit(value){const text=JSON.stringify(value);if(text.length>12*1024*1024)throw Error('记录空间已满，请先导出备份');this.storage.setItem(this.key,text);this.value=value;}
  change(fn){const next=clone(this.value),result=fn(next);this.commit(next);return result;}
  read(key){return clone(this.value.kv[key]??null);}
@@ -223,10 +225,10 @@ function createCarePort(store,owner,rehabFacts=async v=>({plans:v.plans,history:
  };
 }
 function backupData(value){
- const data=clone(value);delete data.careReceipts;
+ const data=clone(value);delete data.careReceipts;delete data.cloudIdentity;delete data.cloudOutbox;
  for(const key of Object.keys(data.kv))if(key.startsWith('care:'))delete data.kv[key];
  return data;
 }
-root.PhoneStore={Store,files,attachments,applyDaily,createCarePort,backupData,day,validDate,validateBackup,validatePractices,validateManualArrangements,KEY,LIN_KEY,ACTIVE_KEY,selectedKey};
+root.PhoneStore={Store,files,attachments,applyDaily,createCarePort,backupData,day,validDate,validateBackup,validatePractices,validateManualArrangements,KEY,LIN_KEY,ACTIVE_KEY,CLOUD_PREFIX,cloudKey,selectedKey};
 if(typeof module!=='undefined')module.exports=root.PhoneStore;
 })(globalThis);

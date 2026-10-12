@@ -22,15 +22,17 @@ class PackagingTest(unittest.TestCase):
             self.assertFalse(any('\\' in n or '..' in n.split('/') for n in names))
             self.assertFalse(any(n.endswith(('.mp4', '.sqlite3', '.db', '.jks', '.dpapi')) or
                                  n.endswith(('smoke.js', 'lin-smoke.js')) for n in names))
-            for name in ('practice.js', 'local-api.js', 'store.js'):
+            for name in ('practice.js', 'local-api.js', 'store.js', 'account.js'):
                 self.assertEqual(archive.read('assets/local/'+name),
                                  (root/'android_offline/web'/name).read_bytes())
             capture = archive.read('assets/capture.html').decode('utf-8')
             self.assertLess(capture.index('/static/guidance-scheduler.js'), capture.index('/static/app.js'))
             self.assertIn('/static/guidance-scheduler.js', capture)
-            for method in (b'guidanceSpeak', b'guidanceCancel', b'guidancePrepare'):
+            for method in (b'guidanceSpeak', b'guidanceCancel', b'guidancePrepare',
+                           b'accountIdentity', b'accountLogin', b'accountRequest', b'AccountTransport'):
                 self.assertIn(method, archive.read('classes.dex'))
             self.assertLess(capture.index('/local/practice.js'), capture.index('/local/local-api.js'))
+            self.assertLess(capture.index('/local/account.js'), capture.index('/local/local-api.js'))
             self.assertIn('/static/practice-flow.js', capture)
             self.assertIn('/static/formal-feedback.js', capture)
             self.assertIn('/static/formal-training.js', capture)

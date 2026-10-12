@@ -8,4 +8,7 @@
 .cloud-patient { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); padding: 16px 0; gap: 16px; }
 .cloud-error { color: var(--danger); min-height: 1.65em; }
 .cloud-record { border-bottom: 1px solid var(--line); padding: 12px 0; }
+.cloud-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; }
+.cloud-metrics dd { margin: 4px 0; font-weight: 600; }
+.cloud-record pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 @media (max-width: 480px) { .cloud-form { margin-top: 12px; } }

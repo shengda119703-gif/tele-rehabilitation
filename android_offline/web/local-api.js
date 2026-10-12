@@ -12,7 +12,7 @@ const ready=store.serial(async()=>{
  await PhoneLin.initialize(store,nativeFetch);
  owner=store.value.owner;
  await store.migrate(domain);
- if(!profile())await domain.request('profile.save',owner,{profile:{name:'本机用户',age:0,conditions:[],medications:[],mobility:'unknown',usesCane:false,nightVision:'unknown',cognition:'unknown',familySharing:'denied'}},now());
+ if(!profile())await domain.request('profile.save',owner,{profile:{name:store.value.cloudIdentity?.username||'本机用户',age:0,conditions:[],medications:[],mobility:'unknown',usesCane:false,nightVision:'unknown',cognition:'unknown',familySharing:'denied'}},now());
  practice=PhonePractice.createPort(store,owner,practiceArrangement,()=>PM.catalog());
  // Interrupted jobs are explicitly failed, not silently counted as successful.
  store.change(v=>v.jobs.forEach(j=>{if(['queued','analyzing','uploading'].includes(j.state)){j.state='failed';j.message='上次分析被中断，原录像保留，请重新分析。';}}));
@@ -236,6 +236,9 @@ async function backup(){
 async function restore(text){try{
  const value=PS.validateBackup(JSON.parse(text));
  if(PM.active)throw Error('请先结束当前分析');
+ if(PS.cloudKey(store.key)&&value.owner!==store.value.owner)throw Error('此备份不是当前云账号档案，未覆盖');
+ delete value.cloudOutbox;delete value.cloudIdentity;
+ if(PS.cloudKey(store.key)){value.cloudIdentity=store.value.cloudIdentity;value.cloudOutbox=store.value.cloudOutbox;}
  // Preserve the previous state before any replacement; quota failure aborts restore.
  if((value.fixture?.schema==='test-lin-apk-v1')!==(store.key===PS.LIN_KEY))throw Error('请先切换到对应档案，再恢复备份');
  store.storage.setItem(store.key+':before-restore',JSON.stringify(store.value));

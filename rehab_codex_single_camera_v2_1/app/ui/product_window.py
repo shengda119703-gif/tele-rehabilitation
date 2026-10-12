@@ -148,6 +148,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         top.addWidget(self.user_select)
         self.account_button=button('我的档案',self._account)
         top.addWidget(self.account_button)
+        top.addWidget(button('云账号',self._cloud_account))
         top.addWidget(button('通知',lambda:self.navigate('notifications')))
         top.setContentsMargins(0,0,0,0)
         self.product_top=QWidget();self.product_top.setLayout(top);main.addWidget(self.product_top)
@@ -198,6 +199,26 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         self.pages.addWidget(scroll)
         self.page_widgets[key] = scroll
         return box
+
+    def _cloud_account(self):
+        if not self.owner or self.legacy.busy or self.legacy.state in ('CONNECTING','ONLINE','SAVE_FAILED'):
+            self._message('请先选择本人档案，并结束保存当前任务。')
+            return
+        from .cloud_account import CloudAccountDialog
+        from ..cloud_account import CloudError
+        current = next((p for p in self.profiles if p['ownerId'] == self.owner),None)
+        if not current or current.get('dataMode') == 'demo':
+            self._message('请先切换或新建个人档案；展示记录不自动上传。')
+            return
+        def snapshots():
+            store = getattr(self.legacy.runtime,'store',None)
+            return store.list_sessions() if store else []
+        try:
+            dialog = CloudAccountDialog(self.legacy.runtime.data_dir/'cloud-account',self.owner,
+                                        current['profile']['name'],snapshots,self)
+            dialog.exec()
+        except (ValueError,CloudError) as exc:
+            self._message(str(exc))
 
 
     def _assistant_page(self):

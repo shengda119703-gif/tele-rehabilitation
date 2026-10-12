@@ -5,6 +5,26 @@
   const logout = document.getElementById('logout');
   let account = null, generation = 0, csrf = '', authPending = false;
   const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function resultDetails(payload) {
+    if (payload.schema !== 'ankang-result-1' || !payload.result) return '';
+    const result = payload.result, summary = result.summary || {}, lines = [];
+    const metric = (label, value, unit = '') => {
+      if (typeof value === 'number' && Number.isFinite(value)) lines.push(`<div><dt>${escape(label)}</dt><dd>${escape(Number(value.toFixed(2)))} ${escape(unit)}</dd></div>`);
+    };
+    metric('完成次数', summary.completed, '次');
+    metric('本人记录次数', result.self_reported_count, '次');
+    metric('有效画面占比', typeof summary.valid_ratio === 'number' ? summary.valid_ratio * 100 : null, '%');
+    metric('观察时长', summary.observed_span_s, '秒');
+    metric('最大投影角', summary.motion_range?.max_deg, '°');
+    const entries = Array.isArray(summary.metrics) ? summary.metrics : Object.values(summary.metrics || {});
+    for (const item of entries) {
+      metric(item.label || '角度', item.value ?? item.max, item.unit);
+    }
+    const bar = result.barbell?.summary;
+    if (bar) { metric('器械峰值速度', bar.peak_velocity_m_s, 'm/s'); metric('器械峰值功率', bar.peak_power_w, 'W'); }
+    const source = ({REPLAY_FILE:'录像分析',LIVE_CAMERA:'实时分析',SELF_RECORDED:'本人记录',GUIDED_PRACTICE:'跟练记录'})[payload.source] || payload.source || '未记录来源';
+    return `<p>${escape(source)}${payload.measured_at ? ' · ' + escape(new Date(payload.measured_at).toLocaleString('zh-CN')) : ''}</p><dl class="cloud-metrics">${lines.join('')}</dl><details><summary>原始结果与来源</summary><pre>${escape(JSON.stringify(payload, null, 2))}</pre></details>`;
+  }
   async function api(path, method = 'GET', data) {
     const headers = {};
     if (method !== 'GET') { headers['Content-Type'] = 'application/json'; headers['X-CSRF-Token'] = csrf; }
@@ -66,10 +86,10 @@
     await showRecords(account.patient_id, own);
   }
   async function showRecords(ident, own) {
-    const result = await api(`/patients/${ident}/records`);
+    const result = await api(`/patients/${ident}/records?offset=0&limit=10`);
     if (own !== generation) return;
     const area = document.getElementById('records');
-    area.innerHTML = result.items.length ? result.items.map(r => `<article class="cloud-record"><strong>${escape(r.payload.title || '使用记录')}</strong><p>${escape(r.payload.text || '')}</p><time>${escape(new Date(r.received_at * 1000).toLocaleString('zh-CN'))}</time></article>`).join('') : '<p class="muted">还没有同步到云端的记录。</p>';
+    area.innerHTML = result.items.length ? result.items.map(r => `<article class="cloud-record"><strong>${escape(r.payload.title || '使用记录')}</strong><p>${escape(r.payload.text || '')}</p>${resultDetails(r.payload)}<time>上传时间：${escape(new Date(r.received_at * 1000).toLocaleString('zh-CN'))}</time></article>`).join('') : '<p class="muted">还没有同步到云端的记录。</p>';
   }
   async function showPatients(offset) {
     const own = ++generation; main.innerHTML = '<p role="status">正在读取患者…</p>';

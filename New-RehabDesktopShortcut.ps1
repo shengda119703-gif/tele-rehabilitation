@@ -1,4 +1,4 @@
-﻿param([string]$PythonPath = '')
+﻿param([string]$PythonPath = '', [string]$DataDir = '')
 $ErrorActionPreference = 'Stop'
 $taskLauncher = Join-Path $PSScriptRoot 'Start-Rehab.ps1'
 $taskPython = if ($PythonPath) { (Resolve-Path -LiteralPath $PythonPath).Path } else { Join-Path $PSScriptRoot 'rehab_codex_single_camera_v2_1\.venv\Scripts\pythonw.exe' }
@@ -9,6 +9,7 @@ $taskShell = New-Object -ComObject WScript.Shell
 $taskShortcut = $taskShell.CreateShortcut($taskShortcutPath)
 $taskShortcut.TargetPath = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
 $taskShortcut.Arguments = '-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "' + $taskLauncher + '" -PythonPath "' + $taskPython + '"'
+if ($DataDir) { $taskResolvedData = (Resolve-Path -LiteralPath $DataDir).Path; $taskShortcut.Arguments += ' -DataDir "' + $taskResolvedData + '"' }
 $taskShortcut.WorkingDirectory = $PSScriptRoot
 $taskVersion = & git -C $PSScriptRoot rev-parse --short HEAD
 $taskShortcut.Description = '安康居家康复助手 · 当前工作区 · ' + $taskVersion
