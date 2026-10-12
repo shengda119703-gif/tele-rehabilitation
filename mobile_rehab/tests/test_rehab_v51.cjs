@@ -33,6 +33,21 @@ test('live history cannot route to replay-only phone jobs',()=>{const p=page('re
 
 test('browser source/date context is stored in the URL without clinical data',()=>{const p=page();assert.equal(p.c.lastUrl,'/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab');assert.doesNotMatch(p.c.lastUrl,/TEST|pain|participant/);});
 
+test('library and assessment entry markers preserve their original capabilities and context',()=>{
+  const p=page('ready','LIVE_CAMERA'),urls=[...p.html.value.matchAll(/href="([^"]+)"/g)].map(m=>new URL(m[1],'http://localhost'));
+  const library=urls.find(u=>u.searchParams.get('entry')==='library'),assessment=urls.find(u=>u.searchParams.get('entry')==='assessment');
+  assert.equal(library.pathname,'/capture');assert.equal(library.searchParams.get('tab'),'assess');assert.equal(library.searchParams.get('rehabSource'),'LIVE_CAMERA');
+  assert.equal(assessment.pathname,'/capture');assert.equal(assessment.searchParams.get('tab'),'assess');assert.equal(assessment.searchParams.get('rehabSource'),'REPLAY_FILE');
+  for(const u of [library,assessment])assert.equal(u.searchParams.get('rehabDay'),'2026-10-12');
+});
+
+test('entry titles remain distinct through direct visits and in-page plan navigation',()=>{
+  const c={state:{},location:{search:''},URLSearchParams,window:{},livePage(){},render(){},syncNavigation(){},showJob(){},renderJob(){}};
+  vm.createContext(c);vm.runInContext(fs.readFileSync(path.join(__dirname,'../static/rehab-v51-capture.js'),'utf8'),c);
+  for(const [search,title] of [['?entry=library','康复动作库'],['?entry=assessment','活动度评估'],['?guide=1','实时指导'],['?entry=unknown','康复动作库']]){c.location.search=search;assert.equal(c.rehabLibraryTitleV51(),title);}
+  c.location.search='?entry=assessment';c.state.rehabEntry='library';assert.equal(c.rehabLibraryTitleV51(),'康复动作库');
+});
+
 test('numeric feedback keeps the submit lock, required values and existing revision payload',async()=>{
   const submit={disabled:false},score={disabled:false},nodes=new Map();
   const node=s=>{if(!nodes.has(s))nodes.set(s,{value:'',hidden:false,disabled:false,innerHTML:'',appendChild(){},insertBefore(){},querySelector:selector=>selector==='button.primary'?submit:score});return nodes.get(s);};

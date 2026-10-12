@@ -4,9 +4,13 @@ function returnRehabV51(){
   const q=new URLSearchParams(location.search),ctx=RehabV51.context(state.captureSource||q.get('rehabSource'),q.get('rehabDay'));
   location.assign('/'+(ctx?'?'+ctx:'')+'#rehab');
 }
+function rehabLibraryTitleV51(){
+  const q=new URLSearchParams(location.search);
+  return q.get('guide')==='1'?'实时指导':(state.rehabEntry||q.get('entry'))==='assessment'?'活动度评估':'康复动作库';
+}
 function actionDetailV51(){
   const ex=selected();
-  app.innerHTML=`<header class="rv-page-top"><button class="back" id="rv-library-back" aria-label="返回动作库">‹</button><h1>动作详情</h1></header>${RehabV51.picture(ex.id,true)}<div class="rv-detail-name"><h2>${esc(ex.label)}</h2><span>${esc(ex.instructions.view_label)}</span></div><section class="card rv-intro"><h2>动作介绍</h2><p>专业介绍待完善</p><details><summary>已有动作文字与测量范围</summary><p>${esc(ex.instructions.start)}</p><p>${esc(ex.instructions.move)}</p><p>${esc(ex.instructions.return)}</p><p>${esc(ex.instructions.camera)}</p><p>${esc(ex.instructions.boundary)}</p><p>${esc(ex.instructions.count)}</p></details></section><div class="rv-detail-foot"><button class="primary" id="rv-detail-start">${new URLSearchParams(location.search).get('guide')==='1'?'开始实时指导':'开始评估'}</button></div>`;
+  app.innerHTML=`<header class="rv-page-top"><button class="back" id="rv-library-back" aria-label="返回${esc(rehabLibraryTitleV51())}">‹</button><h1>动作详情</h1></header>${RehabV51.picture(ex.id,true)}<div class="rv-detail-name"><h2>${esc(ex.label)}</h2><span>${esc(ex.instructions.view_label)}</span></div><section class="card rv-intro"><h2>动作介绍</h2><p>专业介绍待完善</p><details><summary>已有动作文字与测量范围</summary><p>${esc(ex.instructions.start)}</p><p>${esc(ex.instructions.move)}</p><p>${esc(ex.instructions.return)}</p><p>${esc(ex.instructions.camera)}</p><p>${esc(ex.instructions.boundary)}</p><p>${esc(ex.instructions.count)}</p></details></section><div class="rv-detail-foot"><button class="primary" id="rv-detail-start">${new URLSearchParams(location.search).get('guide')==='1'?'开始实时指导':'开始评估'}</button></div>`;
   $('#rv-library-back').onclick=()=>backToLibrary('assessment');
   $('#rv-detail-start').onclick=()=>{state.preparing=true;if(new URLSearchParams(location.search).get('guide')==='1')livePage();else{state.captureSource='REPLAY_FILE';assessment();}window.scrollTo(0,0);};
   frameRehabV51('detail');
@@ -50,6 +54,7 @@ function frameRehabV51(view){
   if(!related){delete document.body.dataset.rehabView;$('.bottom-nav').hidden=false;return;}
   document.body.dataset.rehabView=view||(state.job?'result':state.training?'prepare':state.tab==='assess'?(state.detail?(state.preparing?'prepare':'detail'):'library'):state.tab);
   $('.bottom-nav').hidden=true;
+  if(document.body.dataset.rehabView==='library'){const title=app.querySelector('.library-heading h1');if(title)title.textContent=rehabLibraryTitleV51();}
   if(document.body.dataset.rehabView==='library'&&!app.querySelector('.rv-unverified')){const note=document.createElement('p');note.className='caption rv-unverified';note.textContent='配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。';app.querySelector('.library-toolbar')?.before(note);}
   const isFocused=['prepare','detail','result','guidance'].includes(document.body.dataset.rehabView);
   if(!app.querySelector('.back')&&!isFocused){const back=document.createElement('button');back.className='back rv-back';back.textContent='‹ 返回康复';back.onclick=returnRehabV51;app.prepend(back);}
