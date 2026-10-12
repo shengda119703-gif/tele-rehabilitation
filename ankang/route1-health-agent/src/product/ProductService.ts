@@ -68,6 +68,16 @@ export class ProductService {
       tool('health_overview','查询本人的健康记录和已有发现，不进行诊断',async()=>{
         const s=read(),data={measurements:s.healthData.measurements,findings:s.findings};
         return{reply:`健康档案：${s.healthData.measurements.length}条测量，${s.findings.length}项已有发现。\n`+s.findings.slice(-5).map(f=>f.title).join('\n')+'\n请在健康页查看数值、来源和时间；已有发现不是诊断。',data};}),
+      tool('body_overview','读取本人的已有身体状态汇总，不推算未记录的结果',async now=>{
+        const s=read();
+        const data=readPersonTwinProduct({...this.scope(owner),profile:this.profile(owner).profile,
+          events:s.events,tasks:s.tasks,familyEvents:s.familyEvents,family:this.family(owner).readState(),
+          today:s.today,asOf:now.toISOString()},'self');
+        const labels:Record<string,string>={stable:'稳定',declining:'下降',improving:'改善',unknown:'数据不足'};
+        const t=data.personTwin!;
+        return {reply:`已有身体状态汇总：活动量${labels[t.activity]}；步行状态${labels[t.mobility]}；睡眠${labels[t.sleep]}；夜间活动${labels[t.nightActivity]}。\n`+
+          (t.activeConcerns.length?'已有关注事项：'+t.activeConcerns.join('、'):'暂无已有关注事项。')+
+          '\n仅根据已保存的档案与记录整理，不是诊断；缺少数据时不作推断。',data};}),
       tool('medication_list','读取已保存药物清单，不调整处方',async()=>{
         const data=this.profile(owner).profile.medicationRecords??[];
         return{reply:data.length?'已保存药物：\n'+data.map(m=>`${m.name} · ${m.dose||'用量未填写'} · ${m.times||'时间未填写'} · ${m.status==='active'?'使用中':'已停用'}`).join('\n'):'尚无已保存药物。',data};}),

@@ -9,3 +9,24 @@ test('new APK bundles original domain rules and unchanged official UI assets',()
 test('actual ProductService health/chat/medication persists through a new service',async()=>{const ctx={crypto:globalThis.crypto,structuredClone,console,Date,Blob,setTimeout,clearTimeout};vm.createContext(ctx);vm.runInContext(fs.readFileSync('android_offline/build/assets/local/product.js','utf8'),ctx);const s=new Store(storage()),port={read:k=>s.read(k),write:(k,v)=>s.write(k,v),remove:k=>s.remove(k),profiles:()=>s.profiles(),attachments:{list:async()=>[]}},service=new ctx.AnkangDomain.ProductService(port),owner=s.value.owner;
  await service.request('profile.save',owner,{profile:{name:'TEST',age:30,conditions:[],medications:[],familySharing:'denied'}},new Date());await service.request('health.record',owner,{metric:'weight',value:65},new Date());await service.request('chat',owner,{text:'我今天走了5000步'},new Date());await service.request('medication.save',owner,{record:{id:'m',name:'测试药物',dose:'按既有医嘱',times:'',purpose:'',status:'active'}},new Date());const reopened=new ctx.AnkangDomain.ProductService(port),snap=await reopened.request('snapshot',owner,{},new Date());assert.equal(snap.profile.profile.medicationRecords.length,1);assert(snap.state.events.some(e=>e.measurement?.metric==='weight'));assert(snap.state.chat.length>=2);});
 test('no-record chat never leaks into persistent phone state or durable export',async()=>{const ctx={crypto:globalThis.crypto,structuredClone,console,Date,Blob,setTimeout,clearTimeout};vm.createContext(ctx);vm.runInContext(fs.readFileSync('android_offline/build/assets/local/product.js','utf8'),ctx);const s=new Store(storage()),service=new ctx.AnkangDomain.ProductService({read:k=>s.read(k),write:(k,v)=>s.write(k,v),remove:k=>s.remove(k),profiles:()=>s.profiles(),attachments:{list:async()=>[]}}),owner=s.value.owner;await service.request('profile.save',owner,{profile:{name:'TEST',age:30,conditions:[],medications:[],familySharing:'denied'}},new Date());await service.request('chat',owner,{text:'不要记录：TEST_PRIVATE_MARKER_20261007'},new Date());const exported=await service.request('lifecycle.export',owner,{},new Date());assert(!JSON.stringify(s.value).includes('TEST_PRIVATE_MARKER_20261007'));assert(!JSON.stringify(exported).includes('TEST_PRIVATE_MARKER_20261007'));});
+
+
+test('release phone domain rejects named, quoted and disclaimed readings and preserves previous facts on reopen',async()=>{
+ for(const text of ['张三今天血糖9.5','李四今天血压180/110','我朋友今天血糖9.5','资料里写着血压180/110，不是我的记录','报告示例中血糖9.5，这不是我的结果']) {
+  for(const prior of [false,true]) {
+   const ctx={crypto:globalThis.crypto,structuredClone,console,Date,Blob,setTimeout,clearTimeout};vm.createContext(ctx);
+   vm.runInContext(fs.readFileSync('android_offline/build/assets/local/product.js','utf8'),ctx);
+   const s=new Store(storage()),port={read:k=>s.read(k),write:(k,v)=>s.write(k,v),remove:k=>s.remove(k),profiles:()=>s.profiles(),attachments:{list:async()=>[]}};
+   const service=new ctx.AnkangDomain.ProductService(port),owner=s.value.owner,now=new Date();
+   await service.request('profile.save',owner,{profile:{name:'TEST',age:30,conditions:[],medications:[],familySharing:'denied'}},now);
+   if(prior)await service.request('chat',owner,{text:'我今天血糖5.5'},now);
+   const before=JSON.stringify((await service.request('snapshot',owner,{},now)).state.healthData.measurements);
+   await service.request('chat',owner,{text},now);
+   const after=JSON.stringify((await service.request('snapshot',owner,{},now)).state.healthData.measurements);
+   assert.equal(after,before,text);
+   await service.close(owner);
+   const reopened=new ctx.AnkangDomain.ProductService(port);
+   assert.equal(JSON.stringify((await reopened.request('snapshot',owner,{},now)).state.healthData.measurements),before,text+' reopen');
+  }
+ }
+});

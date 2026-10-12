@@ -61,3 +61,13 @@ test('model cannot turn a query into an unsolicited navigation',async()=>{
   const f=fixture({select:async()=>[{name:'open_module',arguments:{module:'health'}}]});
   await assert.rejects(f.agent.replyToText('我想了解保存的文档',now,()=>{}));assert.deepEqual(f.invoked,[]);
 });
+
+
+test('common status and rehabilitation aliases invoke the existing read adapters',async()=>{
+  for(const [text,name] of [['查看家庭权限','family_status'],['查看连接状态','extension_status'],['查看康复记录','rehab_history'],['查看身体汇总','body_overview']]) {
+    const invoked:string[]=[];
+    const agent=new ProductAgent([{name,description:name,available:true,mode:'read',run:async()=>{invoked.push(name);return {reply:'TEST existing read'};}}]);
+    const result=await agent.replyToText(text,now,()=>{});
+    assert.deepEqual(invoked,[name]);assert.equal(result?.steps[0].status,'succeeded');
+  }
+});
