@@ -1,12 +1,12 @@
 # 云账号第一阶段接口
 
-版本0.1.0，schema1；本文件与`cloud_service/app.py`、同目录`openapi-v1.json`对应。真实公网源为`https://139.224.216.18`。只描述当前已实现接口，不代表C0–C6的全部契约。
+当前服务0.1.2，schema1，API形状沿用0.1.0；本文件与`cloud_service/app.py`对应，同目录`openapi-v1.json`保留0.1.0接口快照，实时版本取`/api/cloud/v1/openapi.json`。真实公网源为`https://139.224.216.18`。只描述当前已实现接口，不代表C0–C6的全部契约。
 
 ## 认证与数据边界
 
 网页登录默认`client_kind=WEB`，响应写host-only、Secure、HttpOnly、SameSite=Strict会话Cookie；`auth/me`返回本会话CSRF令牌。写请求使用`Content-Type: application/json`、同源`Origin`、`X-CSRF-Token`。密码不写入URL。网页令牌不能改作Bearer。
 
-原生登录`client_kind=APK`或`DESKTOP`，响应返回15分钟`access_token`和最多30天`refresh_token`。无浏览器Origin的原生注册/登录/刷新需`X-Ankang-Client: native`；这个声明只允许匿名认证请求，不赋予任何账号权限。登录后受保护请求用`Authorization: Bearer ...`。刷新原子轮换，旧访问/刷新令牌立即失效；不要在收到未知回复时创建新身份或上传到另一账号。实际APK/Qt的安全存储和恢复适配尚未接入。
+原生登录`client_kind=APK`或`DESKTOP`，响应返回15分钟`access_token`和最多30天`refresh_token`。无浏览器Origin的原生注册/登录/刷新需`X-Ankang-Client: native`；这个声明只允许匿名认证请求，不赋予任何账号权限。登录后受保护请求用`Authorization: Bearer ...`。刷新原子轮换，旧访问/刷新令牌立即失效；不要在收到未知回复时创建新身份或上传到另一账号。APK0.3.0的AndroidKeyStore与桌面0.21.0的DPAPI／独立队列适配已接，真机验证仍待，见[端连接说明](CLIENT_CONNECTION.md)。
 
 账号、患者UUID、会话来源由服务器确定。普通注册只创建自己的空白档案，不能带role/team_id/actor_id；共用医生只读明确授权患者。`record-events`只允许患者本人写入，共用医生不能冒充患者代录。`source_kind`是客户端声明，服务器固定标记`attribution_state=DECLARED`，不声称专业核验。
 
