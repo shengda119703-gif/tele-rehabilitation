@@ -134,6 +134,15 @@ function uploadHarness(){
   return Object.assign(h,{requests,queries,shown,revoked});
 }
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
+test('scope switch clears formal capability and a late catalog cannot restore the old owner',async()=>{
+ const h=harness();let resolve;h.c.fetch=()=>new Promise(r=>resolve=r);h.run("state.formalMeasurement={provider:'hosted-rehab-v2-1',owner_scope:'TEST-old'}");const pending=h.run("api('/catalog')");h.run('invalidateUploadScope()');assert.equal(h.run('state.formalMeasurement'),null);resolve({ok:true,json:async()=>({formal_measurement:{provider:'hosted-rehab-v2-1',owner_scope:'TEST-old'},practice_recording:true})});await pending;assert.equal(h.run('state.formalMeasurement'),null);
+});
+test('a late initial catalog cannot replace the page after a scope switch',async()=>{
+ const h=harness();let resolve;h.c.fetch=()=>new Promise(r=>resolve=r);h.c.location.hash='';const pending=h.run('init()');h.run('invalidateUploadScope()');h.get('#app').innerHTML='TEST current-owner page';resolve({ok:true,json:async()=>({exercises:h.c.fixture,fitness:[],posture:[]})});await pending;assert.equal(h.html,'TEST current-owner page');
+});
+test('an old authorization failure cannot reopen pairing over the new owner page',async()=>{
+ const h=harness();let resolve,pairings=0;h.c.fetch=()=>new Promise(r=>resolve=r);h.c.pairPage=()=>pairings++;const pending=h.run("api('/catalog')");h.run('invalidateUploadScope()');resolve({ok:false,status:401,json:async()=>({detail:'TEST old authorization'})});await assert.rejects(pending);assert.equal(pairings,0);
+});
 test('upload intent binds one UUID, original file, side and explicit consent across double clicks',()=>{
   const h=uploadHarness();h.run('upload();upload()');assert.equal(h.requests.length,1);
   assert.equal(h.requests[0].file,h.c.originalFile);assert.match(h.requests[0].headers['X-Rehab-Upload-Operation'],/^[a-f0-9-]{36}$/);

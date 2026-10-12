@@ -4,17 +4,21 @@
 
 ## 真实入口
 
+当前增量为0.2.11：原托管动作详情新增条件性“实时测量并保存”，`formal-session.js`／`formal-measurement.js`接原v2创建、JPEG、控制、202及canonical commit。仅宿主已明确启用v2时出现；正常用户服务仍默认关闭。原历史位置分别读正式事实和本机待核对草稿，不套旧summary；legacy仍可读原事实及核对原操作。独立APK没有该托管能力，不访问Python；本轮只重打共享资源并验证原本地组流程。完整训练旁路视觉关联／分段和三端验收仍未完成。
+
 | 端 | 入口与源代码 | 执行与保存 | 本轮范围 |
 | --- | --- | --- | --- |
 | Windows 正式产品 | `Start-Rehab.ps1` → 应用 `.venv` → `app.main` → ProductWindow／Runtime | 原宿主、SQLite、SceneController；独立 Qt practice 仍用原 writer | 0.20.0；原康复／计划库接本人已有安排，多组、休息、下一动作、暂停返回及每组原历史；完整三端流程仍待 |
 | 托管统一网页 | 正式首页 `mobile_rehab/static/unified.html`／`unified.js`；康复入口进入 `/capture?tab=plan` 等 | 当前共享宿主；统一白名单与原 SQLite | 保持五导航；全量 snapshot 的加载拆分待做 |
 | 保留的动作页面 | `/capture` → `index.html`、`app.js`、`extensions.js`；`practice-flow.js`／`practice-feedback.js`／`practice-observation.js`／`observation-presenter.js`／`manual-arrangements.js` | 原录像执行器／预览／同库独立practice与感受版本 | 原安排并行预览；本人原人工计划库B01；schema2多组／原休息／下一动作及独立历史已接；正式视觉关联待接 |
-| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.10／code12：原安排多组／休息、原自动政策下一动作、本地组记录及备份；实际资源和原CPU Worker兼容复查，0 Python API；未真机安装 |
-| 可选康复 v2 | `/api/rehab/v2/...`，默认关闭 | 独立 session／commit／反馈语义 | 未冒充旧 preview 或 practice；完整客户端适配仍待 |
+| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.11／code13：保留原本地组序列，托管formal能力不存在；实际包资源、历史／备份及0 Python请求复查，未真机安装；原CPU Worker证据仍按0.2.10时点读取 |
+| 可选康复 v2 | `/api/rehab/v2/...`，默认关闭；已启用宿主的原动作详情／历史位置 | 独立原 session／202／canonical commit，不与旧事实库互换 | 原肩外展录像实际创建／帧／暂停恢复／保存／历史通过，未建立基线、0次如实保存；正式训练关联／反馈UI及三重点动作仍待 |
 
 本轮不合入远端整包，不改变 WebView origin、签名、权限或模型。电脑 8765／1396、相机和已有窗口不启停。独立 QA 服务只用随机 loopback 端口。
 
 ## 保护范围与现状
+
+本增量相对8d9f481复查65个已跟踪保护文件，内容未变（文本仅允许CRLF差异），两尺寸原预览几何／字号未变；新增测量结果和原历史截图已审。它不覆盖用户约280张未跟踪动作图片，也不替代历史Qt原基线／3个授权控制模块的报告。当前证据见[正式测量增量](validation/FRONTEND_FORMAL_MEASUREMENT_2026-10-12.md)。
 
 - 原 64 个保护文件中 61 个内容不变；3 个 Qt 控制模块是本任务明确授权的事件／状态／历史接线变化，非授权方法 AST 不变。新界面复用原 Qt 控件与原主题，无新 QSS／字体／图标。`verify_qt_visual_contract.py` 明确报告并非全部 64 个文件原样；没有重置原基线。文本只容许 CRLF 差别，不称原始 SHA 全相同。
 - Qt 浅色 1440×940／100% 的原首页、助手、康复前后 button-audit 与 observations 内容相同；首页和康复工作区截图 SHA 相同。新增跟练页在浅色 100%／暗色 150% 实际运行并审图；不是 Windows 原生窗口模态、高对比、多屏或手机真机验收。

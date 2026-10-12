@@ -27,6 +27,7 @@ def main():
     parser.add_argument('--saved-manual-arrangement-fixture', action='store_true')
     parser.add_argument('--manual-sequence-fixture', action='store_true')
     parser.add_argument('--unreadable-practice-continue-reply', action='store_true')
+    parser.add_argument('--formal-measurement', action='store_true')
     args = parser.parse_args()
     args.data.mkdir(parents=True, exist_ok=False)
     seed_owner = None
@@ -45,7 +46,7 @@ def main():
         target.parent.mkdir(parents=True)
         with sqlite3.connect(f'file:{databases[0].as_posix()}?mode=ro', uri=True) as original, sqlite3.connect(target) as copied:
             original.backup(copied)
-    app = create_app(args.data, pair_key='TEST-frontend-isolated-host')
+    app = create_app(args.data, pair_key='TEST-frontend-isolated-host', rehab_v2=args.formal_measurement)
     if args.saved_manual_arrangement_fixture or args.manual_sequence_fixture:
         if args.seed_from_native_run:
             raise ValueError('The no-assessment manual fixture must not reuse an assessment database')

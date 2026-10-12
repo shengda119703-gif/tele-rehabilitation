@@ -15,14 +15,15 @@ const dateLabel = (v) => new Date(v).toLocaleString('zh-CN', {month:'numeric',da
 const statusLabel = (s) => ({uploading:'上传中',queued:'等待分析',analyzing:'分析中',done:'已完成',failed:'需重试'}[s] || s);
 function toast(text) { $('#toast').textContent=text; $('#toast').hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(()=>$('#toast').hidden=true,6000); }
 async function api(path, opts={}) {
+  const ownerGeneration=state.uploadOwnerGeneration||0;
   const {timeoutMs=60000,...requestOpts}=opts, controller=new AbortController();
   const timer=setTimeout(()=>controller.abort(),timeoutMs);
   const cancel=()=>controller.abort();if(opts.signal?.aborted)cancel();else opts.signal?.addEventListener('abort',cancel,{once:true});
   try{
     const res=await fetch('/api'+path,{...requestOpts,signal:controller.signal,headers:{'X-Rehab-Client':'mobile-v1',...opts.headers}});
     let body; try {body=await res.json();} catch(e){if(e.name==='AbortError')throw e;throw Error('电脑服务没有正常响应，请稍后重试');}
-    if(!res.ok) {if(res.status===401 && path!=='/pair') {pairPage();} const error=Error(typeof body.detail==='string'?body.detail:body.detail?.message||'请求未完成，请稍后重试');error.status=res.status;error.reason=body.detail;throw error;}
-    if(path==='/catalog'){state.practiceRecording=body.practice_recording===true;state.manualPracticeArrangements=body.manual_practice_arrangements===true;state.manualArrangementEntry=body.manual_arrangement_entry===true;}
+    if(!res.ok) {if(res.status===401 && path!=='/pair'&&ownerGeneration===(state.uploadOwnerGeneration||0)) {pairPage();} const error=Error(typeof body.detail==='string'?body.detail:body.detail?.message||'请求未完成，请稍后重试');error.status=res.status;error.reason=body.detail;throw error;}
+    if(path==='/catalog'&&ownerGeneration===(state.uploadOwnerGeneration||0)){state.practiceRecording=body.practice_recording===true;state.manualPracticeArrangements=body.manual_practice_arrangements===true;state.manualArrangementEntry=body.manual_arrangement_entry===true;state.formalMeasurement=body.formal_measurement||null;}
     return body;
   }catch(e){if(e.name==='AbortError')throw Error('连接超时，请检查电脑服务后重试');if(e instanceof TypeError)throw Error('无法连接电脑，请检查 Wi-Fi 和网页服务');throw e;}
   finally{clearTimeout(timer);opts.signal?.removeEventListener('abort',cancel);}
@@ -36,7 +37,7 @@ function pairPage(){
   $('#pair-form').onsubmit=async e=>{e.preventDefault();const b=e.currentTarget.querySelector('button');b.disabled=true;try{await api('/pair',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('#pair-code').value.trim()})});await init();}catch(e){toast(e.message);b.disabled=false;}};
 }
 function clearFile(){if(state.url&&state.uploadRecovery?.url!==state.url)URL.revokeObjectURL(state.url);state.file=null;state.url=null;state.barCalibration=null;state.fileConsent=false;state.uploadUncertain=false;}
-function invalidateUploadScope(){if(typeof invalidatePracticeScope==='function')invalidatePracticeScope();state.uploadOwnerGeneration=(state.uploadOwnerGeneration||0)+1;state.upload?.abort();clearFile();}
+function invalidateUploadScope(){if(typeof invalidateFormalMeasurement==='function')invalidateFormalMeasurement();if(typeof invalidatePracticeScope==='function')invalidatePracticeScope();state.uploadOwnerGeneration=(state.uploadOwnerGeneration||0)+1;state.formalMeasurement=null;state.upload?.abort();clearFile();}
 function newUploadOperation(){
   if(globalThis.crypto?.randomUUID)return crypto.randomUUID();
   if(!globalThis.crypto?.getRandomValues)throw Error('当前浏览器无法生成可靠上传编号，请换用手机应用或受支持的浏览器。');
@@ -44,6 +45,7 @@ function newUploadOperation(){
   const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');return [hex.slice(0,8),hex.slice(8,12),hex.slice(12,16),hex.slice(16,20),hex.slice(20)].join('-');
 }
 function navigate(tab){
+  if(typeof pauseFormalMeasurement==='function')pauseFormalMeasurement();
   if(typeof pausePractice==='function')pausePractice();
   if(typeof stopLive==='function')stopLive();
   ++jobReadGeneration;clearTimeout(pollTimer);state.tab=tab;state.job=null;state.training=null;state.detail=false;state.search='';state.viewFilter='all';clearFile();
@@ -187,6 +189,7 @@ function renderHistory(){
   app.innerHTML=`<div class="page-head"><h1>我的活动记录</h1></div><div class="chips">${[['all','全部'],['rehab','康复'],['fitness','健身']].map(([key,name])=>`<button class="chip ${key===filter?'selected':''}" data-history-filter="${key}">${name}</button>`).join('')}</div><div id="records"><p class="loading">读取中…</p></div>`;
   const recovery=state.uploadRecovery,records=$('#records');
   if(filter!=='fitness'&&typeof mountPracticeHistory==='function')void mountPracticeHistory();
+  if(filter!=='fitness'&&typeof mountFormalHistory==='function')void mountFormalHistory();
   if(recovery&&recovery.ownerGeneration===(state.uploadOwnerGeneration||0)){app.insertAdjacentHTML('beforeend',`<div class="card"><p class="status-text">${recovery.status==='RECEIVED'?'本次视频已有接收回执。':recovery.status==='UPLOADING'?'视频仍在上传，可先查看记录。':'本次视频仍在当前页面，可返回核对。'}</p><button class="secondary" id="resume-upload">${recovery.status==='RECEIVED'?'查看本次录像':'返回原视频'}</button></div>`);$('#resume-upload').onclick=restoreUpload;}
   document.querySelectorAll('[data-history-filter]').forEach(b=>b.onclick=()=>{state.historyFilter=b.dataset.historyFilter;renderHistory();});
   refreshJobs().then(receivedRows=>{
@@ -239,7 +242,7 @@ function devices(){
   $('#device-assess').onclick=()=>navigate('assess');
   mountDeviceExtras();
 }
-async function init(){if(location.hash.startsWith('#care=')){state.shareCode=decodeURIComponent(location.hash.slice(6));window.history.replaceState(null,'',location.pathname);carePage();return;}let data;try{data=await api('/catalog');}catch(e){pairPage();return;}if(data.shared){document.body.classList.add('shared-product');document.title='安康 · 康复动作';$('.brand').textContent='返回安康';$('.brand').setAttribute('aria-label','返回安康首页');$('.bottom-nav').innerHTML=['首页','康复','健康','用药','家庭'].map((n,i)=>'<a '+(i===1?'aria-current="page"':'')+' href="/#'+['home','rehab','health','medication','family'][i]+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+["M3 10 12 3l9 7v11h-6v-7H9v7H3Z", "M8 3h8v4H8z M7 5H4v16h16V5h-3 M8 12h8 M8 16h5", "M12 20S2 14 2 8a5 5 0 0 1 10-2 5 5 0 0 1 10 2c0 6-10 12-10 12Z", "M5 19a5 5 0 0 1 0-7l7-7a5 5 0 0 1 7 7l-7 7a5 5 0 0 1-7 0 M8 9l7 7", "M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M1 21v-3a7 7 0 0 1 14 0v3 M17 4a4 4 0 0 1 0 8 M19 15a6 6 0 0 1 4 6"][i]+'"/></svg>'+n+'</a>').join('');}state.catalog=data.exercises;state.fitnessCatalog=data.fitness||[];state.postureCatalog=data.posture||[];$('.bottom-nav').hidden=false;$('#connection').textContent='已连接';syncNavigation();try{render();}catch(e){console.error('页面未能加载',e);toast('页面未能加载，请刷新重试');}}
+async function init(){const ownerGeneration=state.uploadOwnerGeneration||0;if(location.hash.startsWith('#care=')){state.shareCode=decodeURIComponent(location.hash.slice(6));window.history.replaceState(null,'',location.pathname);carePage();return;}let data;try{data=await api('/catalog');}catch(e){if(ownerGeneration===(state.uploadOwnerGeneration||0))pairPage();return;}if(ownerGeneration!==(state.uploadOwnerGeneration||0))return;if(data.shared){document.body.classList.add('shared-product');document.title='安康 · 康复动作';$('.brand').textContent='返回安康';$('.brand').setAttribute('aria-label','返回安康首页');$('.bottom-nav').innerHTML=['首页','康复','健康','用药','家庭'].map((n,i)=>'<a '+(i===1?'aria-current="page"':'')+' href="/#'+['home','rehab','health','medication','family'][i]+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+["M3 10 12 3l9 7v11h-6v-7H9v7H3Z", "M8 3h8v4H8z M7 5H4v16h16V5h-3 M8 12h8 M8 16h5", "M12 20S2 14 2 8a5 5 0 0 1 10-2 5 5 0 0 1 10 2c0 6-10 12-10 12Z", "M5 19a5 5 0 0 1 0-7l7-7a5 5 0 0 1 7 7l-7 7a5 5 0 0 1-7 0 M8 9l7 7", "M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M1 21v-3a7 7 0 0 1 14 0v3 M17 4a4 4 0 0 1 0 8 M19 15a6 6 0 0 1 4 6"][i]+'"/></svg>'+n+'</a>').join('');}state.catalog=data.exercises;state.fitnessCatalog=data.fitness||[];state.postureCatalog=data.posture||[];$('.bottom-nav').hidden=false;$('#connection').textContent='已连接';syncNavigation();try{render();}catch(e){console.error('页面未能加载',e);toast('页面未能加载，请刷新重试');}}
 function weekStrip(now=new Date()){
   const monday=new Date(now.getFullYear(),now.getMonth(),now.getDate());monday.setDate(monday.getDate()-(monday.getDay()+6)%7);
   return `<div class="week-strip" aria-label="本周日期">${['一','二','三','四','五','六','日'].map((name,i)=>{const day=new Date(monday);day.setDate(day.getDate()+i);const today=day.toDateString()===now.toDateString(),iso=`${day.getFullYear()}-${String(day.getMonth()+1).padStart(2,'0')}-${String(day.getDate()).padStart(2,'0')}`;return `<div class="week-day ${today?'today':''}" ${today?'aria-current="date"':''}><strong>${today?'今':name}</strong><time datetime="${iso}">${day.getDate()}</time></div>`;}).join('')}</div>`;

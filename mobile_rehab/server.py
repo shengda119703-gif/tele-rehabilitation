@@ -430,9 +430,18 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
 
     @app.get('/api/catalog')
     def get_catalog(request: Request):
-        owner(request)
+        uid = owner(request)
+        formal = None
+        if rehab_v2:
+            from app.rehab_v2.protocols import PROTOCOLS
+            # Read-only capability, not an eligibility grant or feature toggle.
+            formal = dict(provider='hosted-rehab-v2-1', owner_scope=uid,
+                participant_id=shared.owner if shared else uid,
+                source_context='LIVE_CAMERA:SELF_USE',
+                protocols=[dict(exercise_id=eid, view=p['view']) for eid, p in PROTOCOLS.items()])
         return dict(exercises=catalog(), max_bytes=MAX_BYTES, max_seconds=120, practice_recording=True,
                     manual_practice_arrangements=True,
+                    formal_measurement=formal,
                     shared=bool(shared), fitness=fitness_catalog(),
                     posture=posture_catalog(),
                     network_camera=dict(connected=False, supported=True, message='在设备页测试已配置的 RTSP 摄像头。'))

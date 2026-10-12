@@ -20,6 +20,7 @@ async function closeLivePreview(session){
 }
 function mountAssessmentExtras(){
   const button=document.createElement('button');button.className='secondary feature-entry';button.textContent='实时跟练';button.onclick=livePage;$('#guide').append(button);
+  if(typeof mountFormalEntry==='function')mountFormalEntry();
 }
 function posturePage(){
   if(!state.postureCatalog?.length){toast('请刷新页面加载体态评估');return;}
@@ -70,7 +71,7 @@ function mountDeviceExtras(){
   app.insertAdjacentHTML('beforeend','<div class="card"><h2>在另一台设备继续</h2><p class="tip">手机和电脑浏览器可使用同一份网页档案。不会自动合并桌面软件里的患者资料。</p><button class="primary" id="create-link">生成我的档案连接码</button><div id="link-result"></div><details><summary>接入另一台设备的档案</summary><form class="care-form" id="link-form"><label for="link-code">另一设备生成的档案连接码</label><input id="link-code" required maxlength="100" autocomplete="off"><button class="secondary">接入该档案</button></form></details><button class="secondary" id="device-body">查看身体汇总与随访</button><button class="secondary" id="device-care">查看他人分享的报告</button></div>');
   $('#device-body').onclick=()=>navigate('body');$('#device-care').onclick=()=>navigate('care');
   $('#create-link').onclick=async()=>{try{const data=await api('/account/link-code',{method:'POST'});$('#link-result').innerHTML='<p class="tip">10分钟内在另一设备的“设备连接”中输入。仅给自己的设备使用。</p><p class="access-code">'+esc(data.code)+'</p>';}catch(e){toast(e.message);}};
-  $('#link-form').onsubmit=async e=>{e.preventDefault();if(!confirm('切换到该设备的档案？当前档案不会合并或删除。建议先保留当前档案连接码，以便返回。'))return;try{await api('/account/link',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('#link-code').value.trim(),confirm_switch:true})});invalidateUploadScope();state.jobs=[];if(typeof resetHealth==='function')resetHealth();navigate('body');}catch(err){toast(err.message);}};
+  $('#link-form').onsubmit=async e=>{e.preventDefault();if(!confirm('切换到该设备的档案？当前档案不会合并或删除。建议先保留当前档案连接码，以便返回。'))return;try{await api('/account/link',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('#link-code').value.trim(),confirm_switch:true})});invalidateUploadScope();state.jobs=[];if(typeof resetHealth==='function')resetHealth();void api('/catalog').catch(()=>{});navigate('body');}catch(err){toast(err.message);}};
 }
 function liveMarkup(){
   return `<div class="card"><div class="live-preview mirrored"><video id="live-video" autoplay playsinline muted></video><canvas id="live-overlay"></canvas></div><div class="live-cue" id="live-cue" aria-live="polite">摆好手机，点击开始</div><div class="live-stats"><span id="live-count">0 次</span><span id="live-angle">—</span></div><p class="caption live-status" id="live-status"></p><label class="consent">镜头 <select id="live-facing"><option value="user">前置摄像头</option><option value="environment">后置摄像头</option></select></label><label class="consent"><input id="live-voice" type="checkbox">语音提示</label><label class="consent"><input id="live-consent" type="checkbox">同意将实时画面传到电脑分析，不保存画面。</label><div class="live-controls"><button class="primary" id="live-start">开始指导</button><button class="danger" id="live-stop" disabled>停止</button></div><p class="tip">这是实时练习指导，结束后不保存为评估依据。需要报告时请录制上传；疼痛、头晕或不适时停止。</p></div>`;

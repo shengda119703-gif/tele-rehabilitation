@@ -2,6 +2,22 @@
 
 “局部”不等于三端验收。实际浏览器采用桌面 Edge headless 的手机尺寸，不能替代真机。测试夹具和 QA 输入不是临床真值。
 
+## 0.2.11当前正式测量增量的证据
+
+`test_formal_session.cjs`是生产adapter的可控传输边界；`test_formal_ui.cjs`及`test_product_ui.cjs`新增项核对legacy读取、PHONE_LOCAL排除、切本人／迟到catalog／401。`test_formal_capability.py`使用真实HTTP只读能力，`test_formal_projection.py`为TEST envelope的只读TTL／history模式单元核对，不是人体观测。实际`verify_formal_measurement.cjs`从原动作详情接原HTTP、SQLite、YOLO和预录相机，私有结果／失败留隔离目录，详见[测量验收](validation/FRONTEND_FORMAL_MEASUREMENT_2026-10-12.md)。
+
+| 用例 | 新增已证明的范围 | 仍未证明 |
+| --- | --- | --- |
+| F03／F04 | 无同意不创建；实际权限Promise保持、离开后迟到原预录流释放，无第二事实 | Redmi权限／忽略权限时完整允许陪练 |
+| F15／F16 | 原暂停状态重读；返回原session、相机关闭、显式继续；控制串行／结束优先 | 真机熄屏／Qt／长时资源 |
+| F19／F20／F21 | 原user_stopped、202非保存；创建／结束回复真实已成功后丢失，刷新原键canonical与snapshot核对，原历史一份事实 | 已有安排正式训练的唯一贡献UI全链 |
+| F22／F23 | 草稿写失败为MEMORY_ONLY但可据原服务器commit确认；明确导出和未知保存，不伪造COMMITTED | 物理双存储同时满的完整UI验收 |
+| F29／F32 | 原scope绑定、旧排队请求停止；同动作多草稿按原键选，迟到catalog／401隔离 | 跨进程全局outbox／真实多账号长时切换 |
+| F30／F31 | 未启用真实v2=404／cap null；APK实际原组序列、备份及0 Python请求，托管新入口不存在 | Redmi安装／正式本地视觉保存关联 |
+| F34／F36 | 原历史位置分别读事实与草稿；legacy仍读正式事实；65已跟踪保护内容／两尺寸原几何不变，实际截图审看 | 完整三端历史比较、所有主题／高DPI |
+
+这些是原F01–F36的局部追加，不替换下方全任务未完成项。新增实际测量为肩外展评估，原结果0次／无基线；没有造合格评估、坐站／深蹲或临床精度成功。正式训练旁路、权威模式分段及U4统一提示仍需继续。
+
 当前0.2.10托管／本地组序列：`test_practice_sequence.py` 8个原HTTP／SQLite案例，`care-local.test.cjs` 新8个原本地路由／Store案例，共享`test_practice_sequence.cjs` 10个控制器边界案例。包含前后组原子关联、原休息、原键／并发／重开、停止／定义／本人、写失败不产生半个关联、取消导航／普通结束、备份链校验、旧schema1及自动入口恢复后项。返回和刷新保持PAUSED，用户明确继续后才计页面时间。专项均为全套子集，最终JS189、Python163／2subtests，不能累计为另一个分母。
 
 实际托管8／8完整、本地包资源5／5完整，末次各390×844／1440×940；托管每次3组1旅程0评估，本地每次4组2旅程，后者2份明确TEST标量评估经原引擎构造资格，不是相机观测。UI完整流程含丢继续／结束回复后刷新、同组返回保持输入且不自动续练、新动作支撑／陪同、原历史和本地备份。原始肩外展CPU Worker另行兼容3尝试／2完整／1短版无资格负结果；不改原规则做出成功。见[双端组序列验证](validation/FRONTEND_WEB_PHONE_SEQUENCE_2026-10-12.md)。完整全目标继续。

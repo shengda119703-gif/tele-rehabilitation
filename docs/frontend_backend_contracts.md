@@ -2,6 +2,25 @@
 
 ## 已接通
 
+### 可选托管v2正式评估／只读B03、B04（0.2.11增量）
+
+`GET /api/catalog`仅已启用宿主返回formal_measurement（provider=hosted-rehab-v2-1、原owner_scope／participant_id、LIVE_CAMERA:SELF_USE、原protocols）；默认null，不是执行资格或开关。客户端不会将PHONE_LOCAL映射成它。
+
+| 原接口 | 当前客户端消费 |
+| --- | --- |
+| POST `/api/rehab/v2/sessions` | 评估精确载荷idempotency_key、consent=true、submode=assessment、exercise_id、side、view；未知回复原键同载荷重POST，由原create lookup收敛 |
+| POST `/{sid}/frames` | 原image/jpeg、X-Rehab-Event-Id、X-Rehab-Seq；保比例最大宽640，单请求在途，等原processed追上accepted；不缓存离线JPEG或添加可信曝光字段 |
+| POST `/{sid}/pause`、`/resume` | 原idempotency_key／expected_revision；串行控制，收到回执再读原状态；原409明确拒绝后新意图用新键，不能改旧载荷 |
+| POST `/{sid}/finish` | 原reason=user_stopped；立即停客户端资源，202不是COMMITTED；原结束键持久保留 |
+| GET `/{sid}`、`/commit` | owner／来源／动作侧机位／revision核对，原canonical ID／digest／计次须与最终snapshot一致；报告状态不阻止查看已提交事实 |
+| GET `/api/rehab/v2/sessions` | 原所属history，补只读submode=原frozen plan模式；旧schema不写回；原记录页不混旧job和独立practice |
+
+控制adapter保留同作用域多条小型草稿，不把它们称为事实存储。所有请求发送前复核原owner世代／binding；切本人、服务器或授权后禁止自动发送旧操作，保留原payload。legacy不允许新相机测量，已有正式记录／原键保存仍可查看和核对。
+
+B03在原CueEvents.query已通过相位、epoch和原期限后，GET只读返回remaining_ttl_ms=min(原发出期限剩余,原source期限剩余)，不改算法或证据TTL；客户端再扣本次HTTP往返并核对证据，只播当前有效口令。全程序统一音频出口仍待，不能称本项替代U4。
+
+v2 plans／训练create／feedback现有接口虽保留，当前新UI仅正式评估；独立原安排practice仍不冒充v2合格plan。训练视觉关联、独立保存各部分及正式贡献规则保持未完成状态。主启动与正常用户服务仍v2默认关闭。
+
 ### 托管与PHONE_LOCAL B02组序列（0.2.10，schema2）
 
 两端新增同形`POST /api/practice/{id}/continue`及`POST /api/practice/{id}/close-journey`。继续载荷精确为`operation_id` UUID、`manual_arrangement_confirmed`／`support_ready`／`companion_present`严格bool；关闭精确为operation_id。本人／provider／source由所属宿主取得，不接客户端覆盖。原create／finish／feedback载荷不变。
