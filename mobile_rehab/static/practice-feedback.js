@@ -1,7 +1,7 @@
 'use strict';
 // Independent, revisioned feedback. Never rewrites the immutable finish payload
 // or visual facts; null input stays null, and retry queries its original key.
-const practiceFeedbackPath=j=>'/practice/'+j.start.operation_id+'/feedback';
+const practiceFeedbackPath=j=>practiceBase(j)+'/'+j.start.operation_id+'/feedback';
 const practiceFeedbackValues=d=>({pain:d.pain===''?null:Number(d.pain),fatigue:d.fatigue===''?null:Number(d.fatigue),note:d.note.trim()||null});
 const practiceFeedbackDraft=v=>({pain:v.pain===null?'':String(v.pain),fatigue:v.fatigue===null?'':String(v.fatigue),note:v.note||''});
 function currentPracticeFeedback(j,area,panel){return currentPractice(j,area)&&$('#practice-feedback')===panel;}

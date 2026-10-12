@@ -232,9 +232,16 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
     app.state.jobs = jobs
     app.state.pair_key = pair_key
 
+    # Independent page reads may reach one brand-new legacy database together.
+    # Serialize ONLY original writer initialization so one constructor cannot
+    # observe another constructor's schema with a stale user_version=0.
+    # Keep all migration/version checks inside the unchanged original Storage.
+    store_initialization_lock = threading.Lock()
+
     @contextmanager
     def store_for(uid):
-        store = Storage(shared.backend.data_dir / 'home_rehab.sqlite3' if shared else jobs.root / uid / 'assessments.sqlite3')
+        with store_initialization_lock:
+            store = Storage(shared.backend.data_dir / 'home_rehab.sqlite3' if shared else jobs.root / uid / 'assessments.sqlite3')
         try:
             yield store
         finally:
@@ -438,6 +445,8 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
             formal = dict(provider='hosted-rehab-v2-1', owner_scope=uid,
                 participant_id=shared.owner if shared else uid,
                 source_context='LIVE_CAMERA:SELF_USE',
+                guided_practice=dict(provider='hosted-rehab-v2-guided-1',
+                    policy_version='formal-arrangement-guided-1', base_path='/rehab/v2/practice'),
                 protocols=[dict(exercise_id=eid, view=p['view']) for eid, p in PROTOCOLS.items()])
         return dict(exercises=catalog(), max_bytes=MAX_BYTES, max_seconds=120, practice_recording=True,
                     manual_practice_arrangements=True,

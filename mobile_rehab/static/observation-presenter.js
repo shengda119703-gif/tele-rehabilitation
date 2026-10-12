@@ -36,7 +36,7 @@ class ObservationPresenter{
   const angle=gap!==null&&gap<POLICY.gapSilentMs?this.angle:null;
   const issue=this.state==='LOST'?'visual_gap':this.state==='WEAK'&&gap>=POLICY.gapNoticeMs?'visual_gap':this.lastValid===null&&now-this.started>=POLICY.readySoftWaitMs?'ready_soft_wait':null;
   const activeNotice=issue!==null&&!this.notices.has(issue);if(issue)this.notices.add(issue);
-  return{state:this.state,mode:this.mode,count:this.count,angle,cue,activeNotice,voice:this.mode==='AUTO_ASSISTED'&&this.state==='TRACKING'&&angle!==null};
+  return{state:this.state,mode:this.mode,count:this.count,angle,cue,activeNotice,issue,guidanceRemainingMs:gap===null?0:Math.max(0,POLICY.gapSilentMs-gap),voice:this.mode==='AUTO_ASSISTED'&&this.state==='TRACKING'&&angle!==null};
  }
 }
 root.RehabObservation={POLICY,ObservationPresenter};

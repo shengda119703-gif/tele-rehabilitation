@@ -109,6 +109,19 @@ test('plan candidate explanations are folded and real consent fields remain',asy
   const html=h.get('#plan-content').innerHTML;assert.match(html,/<details><summary>动作安排与依据/);assert.doesNotMatch(html,/<details open/);
   assert.match(html,/id="activity-ok"/);assert.match(html,/id="support-ok"/);assert.match(html,/使用这份计划/);
 });
+
+test('restoring an original formal page detaches both late legacy plan outcomes',async t=>{
+  for(const failed of [false,true])await t.test(failed?'failed read':'successful read',async()=>{
+    const h=harness();let resolve,reject;const messages=[];
+    h.c.api=()=>new Promise((ok,no)=>{resolve=ok;reject=no;});h.c.toast=x=>messages.push(x);
+    h.run("mountFormalPlans=()=>{app.innerHTML='<section id=\"formal-area\">TEST original restored page</section>';};state.tab='plan';plan()");
+    assert.equal(h.get('#plan-content'),null);
+    if(failed)reject(Error('TEST late legacy read'));
+    else resolve({proposal:{candidates:[],excluded:[]},plan:null,progress:{}});
+    await new Promise(done=>setImmediate(done));
+    assert.match(h.html,/TEST original restored page/);assert.equal(h.get('#reload-plan'),null);assert.deepEqual(messages,[]);
+  });
+});
 test('network mounting no longer removes phone card',()=>{
   const script=fs.readFileSync(path.join(staticDir,'extensions.js'),'utf8');assert.doesNotMatch(script,/layout > \.card/);
 });

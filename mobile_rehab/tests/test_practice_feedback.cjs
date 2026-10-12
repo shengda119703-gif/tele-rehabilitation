@@ -6,7 +6,7 @@ function harness(){
  const area={},j={context:{provider:'TEST-owned',participant_id:'TEST-person'},start:{operation_id:crypto.randomUUID()},receipt:{state:'COMMITTED'},draftSaved:true};
  let active=true,revision=0,values={pain:null,fatigue:null,note:null},lost=false,failRead=false;const ops=new Map(),writes=[],drafts=[];
  const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b),snapshot=()=>({practice_id:j.start.operation_id,context:j.context,revision,values,saved_at:revision?'TEST-time':null});
- const c={document:{createElement:()=>panel},$:(id)=>id==='#practice-feedback'?panel:nodes.get(id),esc:String,toast:()=>{},newUploadOperation:()=>crypto.randomUUID(),practiceEqual:equal,currentPractice:()=>active,persistPractice:v=>drafts.push(plain(v)),pausePractice(){},navigate(){},console};
+ const c={document:{createElement:()=>panel},$:(id)=>id==='#practice-feedback'?panel:nodes.get(id),esc:String,toast:()=>{},newUploadOperation:()=>crypto.randomUUID(),practiceBase:j=>j.context.provider==='hosted-rehab-v2-guided-1'?'/rehab/v2/practice':'/practice',practiceEqual:equal,currentPractice:()=>active,persistPractice:v=>drafts.push(plain(v)),pausePractice(){},navigate(){},console};
  c.api=async(route,opts)=>{
   if(failRead)throw Error('TEST disconnected');
   if(route.includes('/operations/')){const r=ops.get(route.split('/').at(-1));if(!r)throw Object.assign(Error('TEST missing'),{status:404});return plain(r);}

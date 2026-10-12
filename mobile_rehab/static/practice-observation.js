@@ -3,6 +3,9 @@
 // Keep its identity and ephemeral count outside the saved practice/dose fields.
 function mountPracticeObservation(j,area,retained=null){
  if(j.ended||typeof RehabObservation==='undefined')return;
+ // Until the independent formal-camera association is connected, NEVER use
+ // the legacy preview as if it were the formal visual record for this plan.
+ if(j.context.provider==='hosted-rehab-v2-guided-1')return;
  const panel=retained||document.createElement('details');panel.id='practice-observation';
  if(!retained){panel.innerHTML='<summary>摄像头自动指导（选用）</summary>'+liveMarkup();}
  area.appendChild(panel);
@@ -26,7 +29,7 @@ function practiceObservationConsumer(j,area,panel){
   $('#live-cue').textContent=view.cue;$('#live-angle').textContent=view.angle===null?'—':number(view.angle,'°');
   if(view.count!==null){j.previewCount=view.count;$('#live-count').textContent='预览识别 '+view.count+' 次 · 未保存';}
   $('#live-status').textContent=view.mode==='AUTO_ASSISTED'?'实时指导中 · 测量预览不计入计划':'按安排继续练习';
-  if(!view.voice&&'speechSynthesis'in window)speechSynthesis.cancel();
+  if(liveSession?.consumer?.journey===j)presentLiveGuidance(liveSession,view);
   return view;
  };
  const consumer={journey:j,isCurrent,

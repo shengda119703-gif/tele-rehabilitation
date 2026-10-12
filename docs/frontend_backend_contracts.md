@@ -2,6 +2,59 @@
 
 ## 已接通
 
+以下旧版本段落按原验证时点读取；当前0.2.15的B02关联／saved_parts API已接，前端并行测量和统一保存展示仍待。
+
+### B01/B02：原正式安排的独立跟练（0.2.15）
+
+仅已启用v2的catalog增加`formal_measurement.guided_practice:{provider:'hosted-rehab-v2-guided-1',policy_version:'formal-arrangement-guided-1',base_path:'/rehab/v2/practice'}`。能力不是资格；PHONE_LOCAL与正常未启用服务均不声明。原训练卡片沿用按钮、采用确认和practice页面，独立历史沿用原记录位置，不把新源写成旧测量summary。
+
+| 真实接口 | 载荷／回执 |
+| --- | --- |
+| GET `/api/rehab/v2/practice/context` | 原认证owner_scope／可信participant_id；provider与policy，source_context=GUIDED_PRACTICE:SELF_USE，arrangement_source_context=LIVE_CAMERA:SELF_USE |
+| POST `/api/rehab/v2/practice` | operation_id UUID，plan_id，plan_revision，entry_key，manual_arrangement_confirmed／support_ready／companion_present三个显式bool；拒绝客户端剂量和未知字段 |
+| GET `/api/rehab/v2/practice`、`/{id}` | 所属原schema2独立组记录；plan_ref／冻结settings／journey／组位置；当前execution_decision独立于已保存execution_grant |
+| POST `/{id}/finish` | operation_id UUID，count=null或本组自报整数，elapsed_ms仅页面活动时间，reason=ended/completed_set/discomfort，feedback:{pain,fatigue}保持null；普通结束不是完成目标 |
+| POST `/{id}/continue` | operation_id与原三个确认bool；原记录原子关联predecessor／successor；原服务UTC核对休息；仅推进独立guided_navigation_only，不改变正式next_key |
+| POST `/{id}/close-journey` | operation_id；同一原组结束回执，不删除已有事实 |
+| GET/POST `/{id}/feedback`、GET `/{id}/feedback/operations/{operation}` | 原独立感受契约：operation_id、expected_revision、values:{pain,fatigue,note}；COMMITTED后可补，真实冲突明确处理，同键载荷不可变 |
+| POST `/{id}/visual-link` | operation_id UUID、session_id；同owner／原计划版本／动作侧别／完整settings／来源验证；关联范围journey_not_self_reported_set_total，source_epoch来自原session |
+
+原`rehab-v2.sqlite3`同一个Storage writer，增加`rehab_v2_practice_meta(version=1)`、`rehab_v2_guided_practices`、`rehab_v2_practice_links`；初始化前一致性备份，未知版本拒绝，没有新患者数据库或全局迁移。原BackendPlans._assessment／原protocol与digest／原plan_progress／eligibility_session／feedback_block在当前事务内核对，原正式测量资格与处方不变。初始条目沿原next_key，后续只按本人明确完成的独立冻结组序列导航；当前正式反馈阻止仍保留，历史独立不适不因后来填0或换同动作新计划清除。
+
+保存来源不是LIVE_CAMERA观察事实。记录的confirmed_count／formal_plan_contribution始终null，用户总量不与视觉量相加。visual-link提交只确认关联本身；GET saved_parts分别取practice_records、visual_facts、feedback各自权威回执，visual canonical不会替独立practice或感受确认保存。一个视觉session仅关联一个旅程；原source_epoch／快照／canonical不修改。前端旁路相机调用、权威模式事件和统一savedParts展示还未接；目前mode_segments=[]，不将server收据起止冒充无间断有效运动或观察。关联真实原引擎的验证范围见[本机记录](validation/FRONTEND_FORMAL_GUIDED_2026-10-12.md)。
+
+`experience=legacy`不出现新开始按钮，原历史／原ID的保存核对保持，不删除原草稿或事实。正常用户服务仍v2默认关闭，本轮未启停用户服务或部署入口。
+
+### 原v2正式训练计划：0.2.14共享页面
+
+原 `GET /api/rehab/v2/plans` 与 `GET .../plans/{id}` 分别读取计划清单和进度；支持条件来自原 `entry_support`、`actual_input_required`、`progress.input_compatible/blocked/next_key`，只消费同本人LIVE_CAMERA:SELF_USE、schema1、rehab-explicit-plan-1、原ACTIVE计划。不拿旧 `/api/plan` 候选改写成v2计划；旧／人工／正式三个区域独立读取。
+
+原 `POST /api/rehab/v2/sessions` 训练载荷只有 `idempotency_key,consent,submode:'training',plan_id,expected_plan_revision,entry_key,view,training_plan_confirmed`，确需陪同时才加 `companion_confirmed:true`。客户端恢复binding保存原动作／侧别／机位／完整设置，用于核对服务冻结内容，不作为新增请求字段或事实写入。创建、帧、控制、结束、commit、反馈沿原SessionAdapter和writer；同原键恢复按训练计划／条目筛选，不借用评估草稿或新计划版本结束旧训练。
+
+原RESTING和plan_complete控制原休息／继续按钮，UI不倒计时制造组完成。返回计划时读原进度；上次感受确实阻止继续时提供原历史补填，普通结束和canonical结果保存不要求先填。原program_progress有一条固定中文原因，本轮仅精确映射显示文字；允许执行仍依完整结构化进度，不解析模糊错误推断医疗资格。
+
+没有新增生产后端契约或放宽合格评估。真实未合格肩片仍409 `committed_observable_v2_assessment_required`，正式计划清单为空。正训练入口用隔离TEST几何合同评估形成原计划，之后撤掉几何provider、真实预录相机帧走原YOLO；不是人体评估合格证据。PHONE_LOCAL不会消费该能力。B02正式计划与独立practice关联、权威分段及savedParts仍未接，不能称“视觉准备失败后正式训练全过程已陪练化”。详见[训练验证](validation/FRONTEND_FORMAL_TRAINING_2026-10-12.md)。
+
+### 原v2正式记录反馈：0.2.13共享页面
+
+原测量结束区和历史详情消费原`GET /api/rehab/v2/sessions/{id}`的`feedback_revision`／`latest_feedback`，写入仍是原`POST .../{id}/feedback`，精确载荷为`idempotency_key`、`expected_revision`、`feedback:{pain,fatigue,reason,notes}`。pain／fatigue严格null或0–10整数；reason沿原枚举，notes沿原1000字限制。所属provider／owner／participant／LIVE_CAMERA:SELF_USE由当前真实能力和原session核对，不由用户填写新内部字段。
+
+原服务只在finalized后接受感受；未提交测量的填写先保留独立小草稿，不阻止视觉事实保存，不抢先POST。实际本地写入失败提供导出，不冒充可靠草稿。原同键操作查询先于revision校验，所以丢回复恢复用同key／同payload再POST，不增加虚构operation-query路由；ACK必须核对原session／self_report／版本／内容，迟到旧GET不回退ACK后的状态。
+
+`feedback_revision_conflict`先读最新；同值收敛并保留原被拒操作，不记为该操作ACK；实质冲突由用户明确选择，新的修改用新的键和当前revision。损坏旧草稿原字节保留，不默认覆盖；本人／来源变化停止旧队列补交。所有感受独立于canonical视觉提交、次数及正式计划贡献。这里只接已启用宿主的正式记录，不让PHONE_LOCAL获得托管API或正式资格。
+
+最小宿主接缝：原`store_for`只串行原Storage构造，避免几个独立页面请求对同一新库交错初始化。原writer／事务／版本／未知库保护不改，不声称解决跨进程持久outbox或迁移问题。真实HTTP／SQLite和两尺寸原模型流程及失败分母见[本机反馈记录](validation/FRONTEND_FORMAL_FEEDBACK_2026-10-12.md)。正式训练视觉关联与savedParts仍待。
+
+### B03当前消费：共享动作页面指导协调（0.2.12）
+
+没有新增医学API或修改原cue策略。`guidance-scheduler.js`仅消费UI事件：绑定owner世代、journey/session、provider、source_context、动作／本人侧、frontend_generation；回调复核真实控制器。来源为FORMAL_CUE、LIVE_PREVIEW、GUIDED_SCRIPT、USER_OPERATION、EXECUTION_STOP、ENCOURAGEMENT；后两种优先级只接受显式事件，不从报错文字猜停练资格。生产当前已接前三种，不能声称全部专业停止事件已接齐。
+
+正式源必须携带原cue_id、session_id、exercise_id、side、calibration_epoch、evidence_refs、valid_phases和可信remaining_ttl_ms；原GET全部往返扣除后由本地单调期限管理。当前指令取消／相位改变／超期立即清候选并调用AudioPort.cancel；既不跨时钟相减，也不延长原证据。预览没有正式TTL和canonical测量，采用独立保守UI租约；同一已收到观察的剩余租约只递减，不用250ms展示tick伪造新观测。
+
+普通候选容量1、间隔6000ms、同句10000ms；通知issue在同绑定的进程内一次，去重集合有界。暂停／结束／离页／本人切换不持久化音频队列；恢复只接受新当前事件。原视觉／练习／反馈保存状态不由此修改。完整模式段、视觉关联、savedParts权威收敛、Qt与其他模块音频仍待。
+
+Android原OfflineAndroid桥新增guidancePrepare／guidanceAvailable／guidanceSpeak(id,text≤500)／guidanceCancel；回调仅匹配当前id，文字不是权威测量。原MainActivity同一个前台状态与取消世代控制GuidanceAudio；仅安装好的离线中文Voice，QUEUE_FLUSH，不保留初始化前文本；onPause stop、onDestroy stop/shutdown，不增加麦克风权限或网络音频。AndroidManifest新增TTS服务可见性query不是敏感权限。原PHONE_LOCAL记录、Store和云端白名单不变；没有真机语音证据。
+
 ### 可选托管v2正式评估／只读B03、B04（0.2.11增量）
 
 `GET /api/catalog`仅已启用宿主返回formal_measurement（provider=hosted-rehab-v2-1、原owner_scope／participant_id、LIVE_CAMERA:SELF_USE、原protocols）；默认null，不是执行资格或开关。客户端不会将PHONE_LOCAL映射成它。
@@ -19,7 +72,7 @@
 
 B03在原CueEvents.query已通过相位、epoch和原期限后，GET只读返回remaining_ttl_ms=min(原发出期限剩余,原source期限剩余)，不改算法或证据TTL；客户端再扣本次HTTP往返并核对证据，只播当前有效口令。全程序统一音频出口仍待，不能称本项替代U4。
 
-v2 plans／训练create／feedback现有接口虽保留，当前新UI仅正式评估；独立原安排practice仍不冒充v2合格plan。训练视觉关联、独立保存各部分及正式贡献规则保持未完成状态。主启动与正常用户服务仍v2默认关闭。
+0.2.11时点新UI仅正式评估；0.2.13正式反馈界面见前述。v2 plans／训练create尚未完整接线，独立原安排practice仍不冒充v2合格plan。训练视觉关联、独立保存各部分及正式贡献规则保持未完成状态。主启动与正常用户服务仍v2默认关闭。
 
 ### 托管与PHONE_LOCAL B02组序列（0.2.10，schema2）
 

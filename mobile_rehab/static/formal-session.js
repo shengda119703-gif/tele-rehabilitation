@@ -5,11 +5,11 @@ const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const scopeKey=(origin,scope)=>'ankang-formal-session-1:'+JSON.stringify([origin,scope.provider,scope.owner_scope,scope.participant_id,scope.source_context]);
 function failure(message){return Error(message);}
 class SessionAdapter{
- constructor({scope,origin,request,storage,key,create,draft=null,isScopeCurrent=()=>true}){
+ constructor({scope,origin,request,storage,key,create,draft=null,binding=null,isScopeCurrent=()=>true}){
   if(scope?.provider!=='hosted-rehab-v2-1'||scope.source_context!=='LIVE_CAMERA:SELF_USE'||!scope.owner_scope||!scope.participant_id)throw failure('当前环境不支持正式实时测量。');
   this.scope=copy(scope);this.origin=origin;this.request=request;this.storage=storage;this.key=key;this.isScopeCurrent=isScopeCurrent;
   this.storageKey=scopeKey(origin,scope);this.tail=Promise.resolve();this.snapshot=null;this.frameBusy=false;
-  this.draft=draft?copy(draft):{version:1,scope:this.scope,origin,create:copy(create),session_id:null,revision:0,seq:-1,pending:null,end_requested:false,save_state:'LOCAL_DRAFT',commit:null};
+  this.draft=draft?copy(draft):{version:1,scope:this.scope,origin,create:copy(create),binding:binding?copy(binding):null,session_id:null,revision:0,seq:-1,pending:null,end_requested:false,save_state:'LOCAL_DRAFT',commit:null};
   if(this.draft.version!==1||this.draft.origin!==origin||!same(this.draft.scope,this.scope)||!this.draft.create?.idempotency_key)throw failure('测量草稿的归属不一致。');
   this.persist();
  }
@@ -34,6 +34,11 @@ class SessionAdapter{
   if(this.draft.session_id&&item.session_id!==this.draft.session_id)throw failure('测量记录的编号不一致。');
   if(this.draft.create.submode==='assessment'&&(p.exercise_id!==this.draft.create.exercise_id||p.side!==this.draft.create.side||p.view!==this.draft.create.view))throw failure('测量动作或机位不一致。');
   if(this.draft.create.submode==='training'&&(item.frozen_plan.plan_id!==this.draft.create.plan_id||item.frozen_plan.plan_revision!==this.draft.create.expected_plan_revision||item.frozen_plan.entry_key!==this.draft.create.entry_key))throw failure('测量安排已变化。');
+  if(this.draft.create.submode==='training'){
+   if(p.view!==this.draft.create.view)throw failure('测量机位不一致。');
+   const b=this.draft.binding;
+   if(b&&(p.exercise_id!==b.exercise_id||p.side!==b.side||p.view!==b.view||Object.entries(b.settings||{}).some(([k,v])=>!same(p[k],v))))throw failure('测量动作或原安排内容不一致。');
+  }
   if(!Number.isInteger(item.revision)||item.revision<0)throw failure('测量状态暂未能核对。');
   if(item.revision<this.draft.revision)return this.snapshot;
   if(this.snapshot&&item.revision===this.draft.revision&&item.processed_last_seq<this.snapshot.processed_last_seq&&item.persistence_state!=='finalized')return this.snapshot;
@@ -108,7 +113,11 @@ class SessionAdapter{
  }
  export(){return JSON.stringify({kind:'ankang-formal-recovery-1',...copy(this.draft)},null,2);}
  static drafts(storage,origin,scope){try{const value=JSON.parse(storage.getItem(scopeKey(origin,scope))||'null');const rows=value?.version===2?Object.values(value.records).reverse():value?.version===1?[value]:[];return rows.filter(d=>d?.version===1&&d.origin===origin&&same(d.scope,scope));}catch{return [];}}
- static restore(storage,origin,scope,action=null){return this.drafts(storage,origin,scope).find(d=>!action||d.create.exercise_id===action.exercise_id&&d.create.side===action.side&&(!action.idempotency_key||d.create.idempotency_key===action.idempotency_key))||null;}
+ static restore(storage,origin,scope,action=null){return this.drafts(storage,origin,scope).find(d=>{
+  if(!action)return true;if(action.idempotency_key&&d.create.idempotency_key!==action.idempotency_key)return false;
+  if(action.submode==='training')return d.create.submode==='training'&&(!action.plan_id||d.create.plan_id===action.plan_id)&&(!action.entry_key||d.create.entry_key===action.entry_key)&&(!action.expected_plan_revision||d.create.expected_plan_revision===action.expected_plan_revision);
+  return d.create.submode==='assessment'&&d.create.exercise_id===action.exercise_id&&d.create.side===action.side;
+ })||null;}
 }
 root.RehabFormal={SessionAdapter,scopeKey};
 })(globalThis);

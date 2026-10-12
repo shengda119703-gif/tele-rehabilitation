@@ -37,7 +37,7 @@ function pairPage(){
   $('#pair-form').onsubmit=async e=>{e.preventDefault();const b=e.currentTarget.querySelector('button');b.disabled=true;try{await api('/pair',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('#pair-code').value.trim()})});await init();}catch(e){toast(e.message);b.disabled=false;}};
 }
 function clearFile(){if(state.url&&state.uploadRecovery?.url!==state.url)URL.revokeObjectURL(state.url);state.file=null;state.url=null;state.barCalibration=null;state.fileConsent=false;state.uploadUncertain=false;}
-function invalidateUploadScope(){if(typeof invalidateFormalMeasurement==='function')invalidateFormalMeasurement();if(typeof invalidatePracticeScope==='function')invalidatePracticeScope();state.uploadOwnerGeneration=(state.uploadOwnerGeneration||0)+1;state.formalMeasurement=null;state.upload?.abort();clearFile();}
+function invalidateUploadScope(){if(typeof RehabGuidance!=='undefined')RehabGuidance.app.cancelAll();if(typeof invalidateFormalMeasurement==='function')invalidateFormalMeasurement();if(typeof invalidatePracticeScope==='function')invalidatePracticeScope();state.uploadOwnerGeneration=(state.uploadOwnerGeneration||0)+1;state.formalMeasurement=null;state.upload?.abort();clearFile();}
 function newUploadOperation(){
   if(globalThis.crypto?.randomUUID)return crypto.randomUUID();
   if(!globalThis.crypto?.getRandomValues)throw Error('当前浏览器无法生成可靠上传编号，请换用手机应用或受支持的浏览器。');
@@ -45,6 +45,9 @@ function newUploadOperation(){
   const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');return [hex.slice(0,8),hex.slice(8,12),hex.slice(12,16),hex.slice(16,20),hex.slice(20)].join('-');
 }
 function navigate(tab){
+  if(typeof invalidateFormalPlanReads==='function')invalidateFormalPlanReads();
+  if(typeof clearFormalTrainingLink==='function')clearFormalTrainingLink();
+  if(typeof RehabGuidance!=='undefined')RehabGuidance.app.cancelAll();
   if(typeof pauseFormalMeasurement==='function')pauseFormalMeasurement();
   if(typeof pausePractice==='function')pausePractice();
   if(typeof stopLive==='function')stopLive();
@@ -189,6 +192,7 @@ function renderHistory(){
   app.innerHTML=`<div class="page-head"><h1>我的活动记录</h1></div><div class="chips">${[['all','全部'],['rehab','康复'],['fitness','健身']].map(([key,name])=>`<button class="chip ${key===filter?'selected':''}" data-history-filter="${key}">${name}</button>`).join('')}</div><div id="records"><p class="loading">读取中…</p></div>`;
   const recovery=state.uploadRecovery,records=$('#records');
   if(filter!=='fitness'&&typeof mountPracticeHistory==='function')void mountPracticeHistory();
+  if(filter!=='fitness'&&state.formalMeasurement?.guided_practice?.policy_version==='formal-arrangement-guided-1')void mountPracticeHistory('/rehab/v2/practice');
   if(filter!=='fitness'&&typeof mountFormalHistory==='function')void mountFormalHistory();
   if(recovery&&recovery.ownerGeneration===(state.uploadOwnerGeneration||0)){app.insertAdjacentHTML('beforeend',`<div class="card"><p class="status-text">${recovery.status==='RECEIVED'?'本次视频已有接收回执。':recovery.status==='UPLOADING'?'视频仍在上传，可先查看记录。':'本次视频仍在当前页面，可返回核对。'}</p><button class="secondary" id="resume-upload">${recovery.status==='RECEIVED'?'查看本次录像':'返回原视频'}</button></div>`);$('#resume-upload').onclick=restoreUpload;}
   document.querySelectorAll('[data-history-filter]').forEach(b=>b.onclick=()=>{state.historyFilter=b.dataset.historyFilter;renderHistory();});
@@ -250,8 +254,11 @@ function weekStrip(now=new Date()){
 function plan(){
   app.innerHTML=`<div class="page-head"><h1>我的训练</h1></div><p class="caption">手机录像训练 · 本轮进度按已保存记录累计，日期安排请回到安康康复页。</p><div class="schedule-tools"><button id="schedule-assess">康复动作库</button><button id="schedule-body">身体汇总</button><button id="schedule-history">训练记录</button></div><div id="plan-content"><p class="loading" role="status">正在读取训练安排…</p></div>`;
   $('#schedule-assess').onclick=()=>navigate('assess');$('#schedule-body').onclick=()=>navigate('body');$('#schedule-history').onclick=()=>{state.historyFilter='rehab';navigate('history');};
-  if(typeof mountManualArrangements==='function')void mountManualArrangements();
+  // Restoring an original formal draft can synchronously leave this page.
+  // Capture its actual region before mounting that independent subscriber.
   const area=$('#plan-content'),ownerGeneration=state.uploadOwnerGeneration||0;
+  if(typeof mountManualArrangements==='function')void mountManualArrangements();
+  if(typeof mountFormalPlans==='function')mountFormalPlans();
   api('/plan').then(data=>{
     if(state.tab!=='plan'||$('#plan-content')!==area||ownerGeneration!==(state.uploadOwnerGeneration||0))return;
     const {proposal,progress}=data, record=data.plan, items=proposal.candidates.slice(0,4);

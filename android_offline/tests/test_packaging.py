@@ -26,8 +26,16 @@ class PackagingTest(unittest.TestCase):
                 self.assertEqual(archive.read('assets/local/'+name),
                                  (root/'android_offline/web'/name).read_bytes())
             capture = archive.read('assets/capture.html').decode('utf-8')
+            self.assertLess(capture.index('/static/guidance-scheduler.js'), capture.index('/static/app.js'))
+            self.assertIn('/static/guidance-scheduler.js', capture)
+            for method in (b'guidanceSpeak', b'guidanceCancel', b'guidancePrepare'):
+                self.assertIn(method, archive.read('classes.dex'))
             self.assertLess(capture.index('/local/practice.js'), capture.index('/local/local-api.js'))
             self.assertIn('/static/practice-flow.js', capture)
+            self.assertIn('/static/formal-feedback.js', capture)
+            self.assertIn('/static/formal-training.js', capture)
+            self.assertLess(capture.index('/static/formal-measurement.js'), capture.index('/static/formal-training.js'))
+            self.assertLess(capture.index('/static/formal-feedback.js'), capture.index('/static/formal-measurement.js'))
             self.assertLess(capture.index('/static/practice-feedback.js'), capture.index('/static/practice-flow.js'))
             locked = json.loads(archive.read('assets/ui-lock.json'))
             for name, digest in locked.items():

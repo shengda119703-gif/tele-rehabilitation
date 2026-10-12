@@ -16,7 +16,7 @@ function harness(){
   $:selector=>elements.get(selector)||node(),toast:text=>notices.push(text),number:(v,u)=>v+u,
   api:async(route,opts)=>{calls.push({route,opts});return endpoint(route,opts);},speechSynthesis:{cancel(){voices.push({cancel:true});},speak(utterance){voices.push({text:utterance.text});}},SpeechSynthesisUtterance:class{constructor(text){this.text=text;}},
  };
- vm.createContext(context);vm.runInContext(source,context);
+ vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(__dirname,'../static/guidance-scheduler.js'),'utf8'),context);vm.runInContext(source,context);
  const originalLoop=context.liveLoop;context.liveLoop=async()=>{};
  return{context,elements,calls,cameraCalls,voices,notices,stream,node,originalLoop,run:s=>vm.runInContext(s,context),camera:fn=>{camera=fn;},endpoint:fn=>{endpoint=fn;},clock:t=>{clock=t;}};
 }
@@ -69,9 +69,10 @@ test('missing values preserve known count, clear angle, and cannot trigger visua
  assert.equal(h.elements.get('#live-count').textContent,'6 次');assert.equal(h.elements.get('#live-angle').textContent,'—');assert.equal(h.voices.filter(v=>v.text).length,0);
 });
 test('normal voice has a six-second interval and repeated cue has a ten-second interval',async()=>{
- const h=harness();await h.context.startLive();const s=h.run('liveSession'),sequence=[[0,'A'],[1000,'B'],[6000,'B'],[9000,'A'],[12000,'A']];let index=0;
- h.endpoint(async route=>{if(!route.endsWith('/frame'))return{};if(index===sequence.length){h.context.stopLive();return frame();}const[t,cue]=sequence[index++];h.clock(t);return frame(true,6,cue);});
- await h.originalLoop(s);await settle();assert.deepEqual(h.voices.filter(v=>v.text).map(v=>v.text),['A','B','A']);
+ const h=harness();await h.context.startLive();const s=h.run('liveSession'),sequence=[[0,'A'],[1000,'B'],[6000,'B'],[9000,'A'],[12000,'A']];
+ // These are RECEIVED frame times, not a five-second artificial HTTP RTT.
+ for(const[t,cue]of sequence){h.clock(t);h.context.RehabGuidance.app.pump();s.guidanceFrame={data:frame(true,6,cue),receivedAt:t,roundtrip:0};h.context.presentLiveGuidance(s);}
+ h.context.stopLive();await settle();assert.deepEqual(h.voices.filter(v=>v.text).map(v=>v.text),['A','B','A']);
 });
 test('one in-flight frame, immediate stop, and a late result cannot overwrite the stopped UI',async()=>{
  const h=harness();await h.context.startLive();const s=h.run('liveSession'),response=deferred();let frames=0;

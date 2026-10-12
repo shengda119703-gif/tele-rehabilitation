@@ -1,7 +1,6 @@
 'use strict';
 let liveSession=null, liveCameraRequest=null, liveCreateRequest=null, liveCloseRequest=null;
 let liveClosingSession=null, liveGeneration=0, liveFacing='user';
-const LIVE_UI_POLICY=Object.freeze({version:'rehab-smooth-ui-1',normalVoiceIntervalMs:6000,sameCueIntervalMs:10000});
 function currentLive(session){return !session.cancelled&&liveSession===session&&session.generation===liveGeneration&&$('#live-video')===session.video&&(!session.consumer||session.consumer.isCurrent());}
 function stoppedLiveControls(session){
   if(liveSession||$('#live-video')!==session.video)return;
@@ -90,9 +89,11 @@ async function startLive(consumer=null){
   if(liveSession)return;
   if(liveCameraRequest||liveCreateRequest||liveCloseRequest||liveClosingSession){toast('正在确认上次连接，请稍候。');return;}
   if(!$('#live-consent').checked){toast('请先同意本次实时分析');return;}
-  const session={cancelled:false,stream:null,id:null,lastVoice:'',lastSpoken:-Infinity,voiceTimes:new Map(),request:null,
+  const session={cancelled:false,stream:null,id:null,request:null,
     generation:++liveGeneration,video:$('#live-video'),exercise:state.selected,side:state.side,consumer};
   liveSession=session;$('#live-start').disabled=true;$('#live-stop').disabled=false;$('#live-stop').textContent='停止';
+  if(typeof RehabGuidance!=='undefined')session.guidance=RehabGuidance.app.open({owner_scope:String(state.uploadOwnerGeneration||0),journey_id:consumer?.journey?.receipt?.journey_id||consumer?.journey?.start?.operation_id||'preview-'+session.generation,provider:consumer?.journey?.context?.provider||((typeof PhoneLocal!=='undefined')?'phone-local-1':'hosted-live-preview-1'),source_context:typeof PhoneLocal!=='undefined'?'PHONE_LOCAL:SELF_USE':'LIVE_CAMERA:SELF_USE',exercise_id:session.exercise,side:session.side,frontend_generation:session.generation},{isCurrent:()=>currentLive(session),voiceEnabled:()=>$('#live-voice')?.checked===true,render:text=>{if(currentLive(session))$('#live-cue').textContent=text;}});
+  $('#live-voice').onchange=()=>{if(!$('#live-voice').checked&&session.guidance)RehabGuidance.app.clear(session.guidance);};
   $('#live-status').textContent='正在打开摄像头…';
   try{
     const facing=$('#live-facing').value;
@@ -127,26 +128,34 @@ async function liveLoop(session){
     const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.75));
     if(!currentLive(session))return;if(!blob)throw Error('摄像头没有返回画面');
     session.request=new AbortController();const timeout=setTimeout(()=>session.request.abort(),30000);
-    let data;try{data=await api('/live/'+session.id+'/frame',{method:'POST',headers:{'Content-Type':'image/jpeg'},body:blob,signal:session.request.signal});}finally{clearTimeout(timeout);}
+    const requestBegan=performance.now();let data;try{data=await api('/live/'+session.id+'/frame',{method:'POST',headers:{'Content-Type':'image/jpeg'},body:blob,signal:session.request.signal});}finally{clearTimeout(timeout);}
     if(!currentLive(session))return;
+    session.guidanceFrame={data,receivedAt:performance.now(),roundtrip:performance.now()-requestBegan};
     const shown=session.consumer?.receive(data);
     if(!shown){if(Number.isInteger(data.summary.completed)&&data.summary.completed>=0)$('#live-count').textContent=data.summary.completed+' 次';
       $('#live-angle').textContent=data.valid?number(data.summary.metrics?.[data.summary.primary_metric]?.value,'°'):'—';}
     const cue=shown?shown.cue:data.cue.instruction;
     if(!shown){$('#live-cue').textContent=cue;$('#live-status').textContent=data.valid?'正在指导 · '+Math.round(data.inference_ms)+' ms':(data.cue.status||'正在识别');}
     const overlay=$('#live-overlay');overlay.width=canvas.width;overlay.height=canvas.height;const ctx=overlay.getContext('2d');ctx.clearRect(0,0,overlay.width,overlay.height);ctx.fillStyle='#b6ffb3';for(const [x,y]of(data.valid?data.points:[])){ctx.beginPath();ctx.arc(x*overlay.width,y*overlay.height,4,0,Math.PI*2);ctx.fill();}
-    const voiceNow=performance.now(),lastCueTime=session.voiceTimes.get(cue)??-Infinity;
-    const voiceAllowed=shown?shown.voice:data.valid;
-    if(!voiceAllowed&&'speechSynthesis'in window)speechSynthesis.cancel();
-    if(voiceAllowed&&cue&&$('#live-voice').checked&&'speechSynthesis'in window&&cue!==session.lastVoice&&voiceNow-session.lastSpoken>=LIVE_UI_POLICY.normalVoiceIntervalMs&&voiceNow-lastCueTime>=LIVE_UI_POLICY.sameCueIntervalMs){speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(cue);utterance.lang='zh-CN';speechSynthesis.speak(utterance);session.lastVoice=cue;session.lastSpoken=voiceNow;session.voiceTimes.set(cue,voiceNow);}
+    presentLiveGuidance(session,shown);
     await new Promise(resolve=>setTimeout(resolve,80));
   }
+}
+function presentLiveGuidance(session,shown=null){
+  if(!currentLive(session)||!session.guidance)return;
+  const frame=session.guidanceFrame,data=frame?.data,cue=shown?shown.cue:data?.cue?.instruction;
+  const usable=shown?shown.voice:data?.valid===true;
+  const notice=shown?.issue!==null&&shown?.issue!==undefined;
+  if(!usable&&!notice){RehabGuidance.app.clear(session.guidance,cue||'按动作说明继续练习');return;}
+  const remaining=notice?1500:shown?shown.guidanceRemainingMs:1500-(performance.now()-(frame?.receivedAt||0))-(frame?.roundtrip||0);
+  const phase=notice?'guided':data?.summary?.phase||data?.cue?.status||null,issue=notice?shown.issue:null;
+  RehabGuidance.app.offer(session.guidance,{id:(notice?'notice:'+issue:'preview:'+phase+':'+cue),source:notice?'GUIDED_SCRIPT':'LIVE_PREVIEW',text:cue||'',valid:true,remaining_ms:remaining,epoch:data?.summary?.calibration_epoch??null,phase,notice:!!notice,issue});
 }
 function stopLive(reason='preview_stopped'){
   const session=liveSession;if(!session){if(liveClosingSession&&!liveCloseRequest)void closeLivePreview(liveClosingSession);return;}
   liveSession=null;++liveGeneration;session.cancelled=true;session.request?.abort();session.stream?.getTracks().forEach(t=>t.stop());
   session.video.pause();session.video.srcObject=null;
-  if('speechSynthesis'in window)speechSynthesis.cancel();
+  if(session.guidance)RehabGuidance.app.close(session.guidance);
   if($('#live-video')===session.video){$('#live-facing').disabled=false;$('#live-status').textContent='摄像头已关闭';$('#live-cue').textContent='本次自动指导已停止';const canvas=$('#live-overlay');canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);}
   session.consumer?.stopped(typeof reason==='string'?reason:'preview_stopped');
   void closeLivePreview(session);stoppedLiveControls(session);
