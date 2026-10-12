@@ -31,8 +31,36 @@ function formalTrainingBinding(value,entry){
  return {plan_name:value.plan.name,exercise_id:entry.exercise_id,side:entry.side,view:spec.view,settings:JSON.parse(JSON.stringify(entry.settings))};
 }
 async function readFormalPlan(id,capability){return formalPlanView(await api('/rehab/v2/plans/'+encodeURIComponent(id)),id,capability);}
-function clearFormalTrainingLink(){const u=new URL(location.href);u.searchParams.delete('formal_plan');u.searchParams.delete('formal_operation');window.history.replaceState(null,'',u.href);}
+function clearFormalTrainingLink(){const u=new URL(location.href);u.searchParams.delete('formal_plan');u.searchParams.delete('formal_operation');u.searchParams.delete('formal_practice');window.history.replaceState(null,'',u.href);}
 function invalidateFormalPlanReads(){++formalPlansGeneration;}
+function formalGuidedCapability(){const c=formalReadCapability(),g=c?.guided_practice;return g?.provider==='hosted-rehab-v2-guided-1'&&g.policy_version==='formal-arrangement-guided-1'&&g.base_path==='/rehab/v2/practice'?c:null;}
+async function openFormalGuidedTraining(id,originalId=null,card=null){
+ const capability=formalGuidedCapability();if(!capability||!originalId&&!formalCapability())return;
+ const owner=state.uploadOwnerGeneration||0,generation=++formalPlansGeneration,pageNode=app.firstElementChild;
+ const current=()=>app.firstElementChild===pageNode&&generation===formalPlansGeneration&&formalPlanCurrent(capability,owner);
+ try{
+  const base=capability.guided_practice.base_path,context=await api(base+'/context');if(!current())return;
+  if(context.provider!=='hosted-rehab-v2-guided-1'||context.owner_scope!==capability.owner_scope||context.participant_id!==capability.participant_id||context.arrangement_source_context!==capability.source_context||context.source_context!=='GUIDED_PRACTICE:SELF_USE')throw Error('跟练的归属暂未能核对。');
+  const rows=originalId?[await api(base+'/'+encodeURIComponent(originalId))]:await api(base);if(!current())return;
+  const existing=originalId?rows[0]:rows.find(r=>r.plan_ref.id===id&&practiceEqual(r.context,context)&&r.state==='PRACTICING')||rows.find(r=>r.plan_ref.id===id&&practiceEqual(r.context,context)&&r.continuation&&!r.successor_id);
+  if(existing){
+   if(existing.plan_ref.id!==id||!practiceEqual(existing.context,context))throw Error('原跟练的归属不一致。');
+   state.tab='plan';state.training={id,entry:{key:existing.plan_ref.entry_key}};state.selected=existing.exercise_id;state.side=existing.side;syncNavigation();
+   await beginGuidedPractice({id,revision:existing.plan_ref.revision},{key:existing.plan_ref.entry_key,exercise_id:existing.exercise_id},existing,null,base);return;
+  }
+  const value=await readFormalPlan(id,capability);if(!current())return;
+  if(!formalPlanAllowed(value))throw Error(formalPlanReason(value));
+  const entry=formalPlanEntry(value),box=document.createElement('div');box.id='formal-guided-confirm';box.className='care-form';
+  document.querySelector('#formal-guided-confirm')?.remove();(card||document.querySelector('#formal-plans')).appendChild(box);
+  box.innerHTML='<form><h3>'+esc(label(entry.exercise_id))+' · '+formalSideLabel(entry.side)+'</h3><p class="caption">'+entry.settings.target_reps+' 次 × '+entry.settings.target_sets+' 组</p><label class="consent"><input id="formal-guided-adopt" type="checkbox" required><span>采用本人的这份安排，支撑已准备好，目前没有疼痛、头晕等不适。</span></label>'+(entry.settings.needs_companion?'<label class="consent"><input id="formal-guided-companion" type="checkbox" required><span>陪同者已到场</span></label>':'')+'<button class="primary">开始跟练</button></form>';
+  box.querySelector('form').onsubmit=async event=>{
+   event.preventDefault();if(!current()||!box.isConnected)return;const b=event.currentTarget.querySelector('button');if(b.disabled)return;b.disabled=true;
+   const adopted=box.querySelector('#formal-guided-adopt').checked,confirmations={manual_arrangement_confirmed:adopted,support_ready:adopted,companion_present:box.querySelector('#formal-guided-companion')?.checked===true};
+   state.tab='plan';state.training={id,entry};state.selected=entry.exercise_id;state.side=entry.side;syncNavigation();
+   await beginGuidedPractice(value.plan,entry,null,confirmations,base);
+  };
+ }catch(error){if(current())toast(formalMessage(error));}
+}
 async function openFormalTraining(id,originalKey=null){
  const capability=originalKey?formalReadCapability():formalCapability();if(!capability)return;
  const owner=state.uploadOwnerGeneration||0,generation=++formalPlansGeneration,pageNode=app.firstElementChild;
@@ -79,10 +107,14 @@ function mountFormalPlans(){
   try{const value=await readFormalPlan(id,capability);if(!current()||!card.isConnected)return;const p=value.plan,g=value.progress,e=formalPlanEntry(value);
    card.innerHTML='<strong>'+esc(p.name)+'</strong><p class="caption">'+g.completed+' / '+g.total+' 项 · 实时测量记录</p><details><summary>训练清单</summary>'+p.items.map(i=>'<p>'+esc(label(i.exercise_id))+' · '+formalSideLabel(i.side)+' · '+i.settings.target_reps+' 次 × '+i.settings.target_sets+' 组</p>').join('')+'</details>'+(e?'<p>'+esc(label(e.exercise_id))+' · '+formalSideLabel(e.side)+'</p>':'')+(formalPlanAllowed(value)&&formalCapability()?'<button class="primary" data-formal-train>开始实时训练</button>':'<p class="caption">'+esc(formalPlanReason(value))+'</p>');
    const b=card.querySelector('[data-formal-train]');if(b)b.onclick=()=>openFormalTraining(id);
+   if(formalGuidedCapability()&&formalCapability()){
+    const guided=document.createElement('button');guided.className='secondary';guided.dataset.formalGuided=id;guided.textContent='使用已有安排跟练';guided.onclick=()=>openFormalGuidedTraining(id,null,card);card.appendChild(guided);
+   }
    const previous=g.blocked&&g.items.slice().reverse().find(i=>typeof i.session_id==='string'&&i.session_id);
    if(previous){const back=document.createElement('button');back.className='secondary';back.textContent='查看上一项记录';back.onclick=()=>showFormalRecord(previous.session_id);card.appendChild(back);}
   }catch(e){if(current()&&card.isConnected){card.innerHTML='<p>本轮进度暂未能读取</p><button class="secondary">重试</button>';card.querySelector('button').onclick=()=>load(card,id);}}
  }
  const u=new URL(location.href),id=u.searchParams.get('formal_plan'),key=u.searchParams.get('formal_operation');
+ const practice=u.searchParams.get('formal_practice');if(id&&practice&&formalGuidedCapability()){void openFormalGuidedTraining(id,practice);return;}
  if(id&&key){const saved=RehabFormal.SessionAdapter.restore(localStorage,location.origin,capability,{submode:'training',plan_id:id,idempotency_key:key});if(saved)void openFormalTraining(id,key);else clearFormalTrainingLink();}
 }

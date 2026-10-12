@@ -192,6 +192,7 @@ function renderHistory(){
   app.innerHTML=`<div class="page-head"><h1>我的活动记录</h1></div><div class="chips">${[['all','全部'],['rehab','康复'],['fitness','健身']].map(([key,name])=>`<button class="chip ${key===filter?'selected':''}" data-history-filter="${key}">${name}</button>`).join('')}</div><div id="records"><p class="loading">读取中…</p></div>`;
   const recovery=state.uploadRecovery,records=$('#records');
   if(filter!=='fitness'&&typeof mountPracticeHistory==='function')void mountPracticeHistory();
+  if(filter!=='fitness'&&state.formalMeasurement?.guided_practice?.policy_version==='formal-arrangement-guided-1')void mountPracticeHistory('/rehab/v2/practice');
   if(filter!=='fitness'&&typeof mountFormalHistory==='function')void mountFormalHistory();
   if(recovery&&recovery.ownerGeneration===(state.uploadOwnerGeneration||0)){app.insertAdjacentHTML('beforeend',`<div class="card"><p class="status-text">${recovery.status==='RECEIVED'?'本次视频已有接收回执。':recovery.status==='UPLOADING'?'视频仍在上传，可先查看记录。':'本次视频仍在当前页面，可返回核对。'}</p><button class="secondary" id="resume-upload">${recovery.status==='RECEIVED'?'查看本次录像':'返回原视频'}</button></div>`);$('#resume-upload').onclick=restoreUpload;}
   document.querySelectorAll('[data-history-filter]').forEach(b=>b.onclick=()=>{state.historyFilter=b.dataset.historyFilter;renderHistory();});

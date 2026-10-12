@@ -2,6 +2,29 @@
 
 ## 已接通
 
+以下旧版本段落按原验证时点读取；当前0.2.15的B02关联／saved_parts API已接，前端并行测量和统一保存展示仍待。
+
+### B01/B02：原正式安排的独立跟练（0.2.15）
+
+仅已启用v2的catalog增加`formal_measurement.guided_practice:{provider:'hosted-rehab-v2-guided-1',policy_version:'formal-arrangement-guided-1',base_path:'/rehab/v2/practice'}`。能力不是资格；PHONE_LOCAL与正常未启用服务均不声明。原训练卡片沿用按钮、采用确认和practice页面，独立历史沿用原记录位置，不把新源写成旧测量summary。
+
+| 真实接口 | 载荷／回执 |
+| --- | --- |
+| GET `/api/rehab/v2/practice/context` | 原认证owner_scope／可信participant_id；provider与policy，source_context=GUIDED_PRACTICE:SELF_USE，arrangement_source_context=LIVE_CAMERA:SELF_USE |
+| POST `/api/rehab/v2/practice` | operation_id UUID，plan_id，plan_revision，entry_key，manual_arrangement_confirmed／support_ready／companion_present三个显式bool；拒绝客户端剂量和未知字段 |
+| GET `/api/rehab/v2/practice`、`/{id}` | 所属原schema2独立组记录；plan_ref／冻结settings／journey／组位置；当前execution_decision独立于已保存execution_grant |
+| POST `/{id}/finish` | operation_id UUID，count=null或本组自报整数，elapsed_ms仅页面活动时间，reason=ended/completed_set/discomfort，feedback:{pain,fatigue}保持null；普通结束不是完成目标 |
+| POST `/{id}/continue` | operation_id与原三个确认bool；原记录原子关联predecessor／successor；原服务UTC核对休息；仅推进独立guided_navigation_only，不改变正式next_key |
+| POST `/{id}/close-journey` | operation_id；同一原组结束回执，不删除已有事实 |
+| GET/POST `/{id}/feedback`、GET `/{id}/feedback/operations/{operation}` | 原独立感受契约：operation_id、expected_revision、values:{pain,fatigue,note}；COMMITTED后可补，真实冲突明确处理，同键载荷不可变 |
+| POST `/{id}/visual-link` | operation_id UUID、session_id；同owner／原计划版本／动作侧别／完整settings／来源验证；关联范围journey_not_self_reported_set_total，source_epoch来自原session |
+
+原`rehab-v2.sqlite3`同一个Storage writer，增加`rehab_v2_practice_meta(version=1)`、`rehab_v2_guided_practices`、`rehab_v2_practice_links`；初始化前一致性备份，未知版本拒绝，没有新患者数据库或全局迁移。原BackendPlans._assessment／原protocol与digest／原plan_progress／eligibility_session／feedback_block在当前事务内核对，原正式测量资格与处方不变。初始条目沿原next_key，后续只按本人明确完成的独立冻结组序列导航；当前正式反馈阻止仍保留，历史独立不适不因后来填0或换同动作新计划清除。
+
+保存来源不是LIVE_CAMERA观察事实。记录的confirmed_count／formal_plan_contribution始终null，用户总量不与视觉量相加。visual-link提交只确认关联本身；GET saved_parts分别取practice_records、visual_facts、feedback各自权威回执，visual canonical不会替独立practice或感受确认保存。一个视觉session仅关联一个旅程；原source_epoch／快照／canonical不修改。前端旁路相机调用、权威模式事件和统一savedParts展示还未接；目前mode_segments=[]，不将server收据起止冒充无间断有效运动或观察。关联真实原引擎的验证范围见[本机记录](validation/FRONTEND_FORMAL_GUIDED_2026-10-12.md)。
+
+`experience=legacy`不出现新开始按钮，原历史／原ID的保存核对保持，不删除原草稿或事实。正常用户服务仍v2默认关闭，本轮未启停用户服务或部署入口。
+
 ### 原v2正式训练计划：0.2.14共享页面
 
 原 `GET /api/rehab/v2/plans` 与 `GET .../plans/{id}` 分别读取计划清单和进度；支持条件来自原 `entry_support`、`actual_input_required`、`progress.input_compatible/blocked/next_key`，只消费同本人LIVE_CAMERA:SELF_USE、schema1、rehab-explicit-plan-1、原ACTIVE计划。不拿旧 `/api/plan` 候选改写成v2计划；旧／人工／正式三个区域独立读取。

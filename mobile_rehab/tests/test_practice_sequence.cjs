@@ -24,6 +24,17 @@ test('lost continue queries the original immutable child key without a second cr
  await h.run('reconcilePracticeSequence(j,area,true)');assert.equal(posts,1);assert.equal(h.run('practiceJourney.start.operation_id'),original.operation_id);assert.equal(h.run('practiceJourney.running'),false);
  assert.equal(h.j.nextPending,null); // Consumed only after matching the original receipt.
 });
+test('late absence lookup after owner change cannot create a practice for the new owner',async()=>{
+ const h=harness();let reject;h.j.receipt=null;h.j.ended=false;
+ h.transport(()=>new Promise((resolve,fail)=>reject=fail));
+ const pending=h.run('reconcilePractice(j,area,true)');await tick();h.c.state.uploadOwnerGeneration=1;
+ reject(Object.assign(Error('TEST old lookup absent'),{status:404}));await pending;
+ assert.equal(h.calls.length,1);assert.equal(h.calls[0].payload,null);assert.equal(h.j.busy,false);
+});
+test('an old owner cannot automatically submit a retained finish intent',async()=>{
+ const h=harness();h.c.state.uploadOwnerGeneration=1;h.j.finish={operation_id:crypto.randomUUID()};
+ await h.run('submitPracticeFinish(j,area)');assert.equal(h.calls.length,0);
+});
 test('end during in-flight creation ends actual child and never runs its clock',async()=>{
  const h=harness(),pending=deferred();let payload;h.transport(async(route,opts)=>{if(!opts)throw Object.assign(Error('TEST absent'),{status:404});const value=JSON.parse(opts.body);if(route.endsWith('/continue')){payload=value;return pending.promise;}if(route.endsWith('/finish'))return{...h.child(payload),state:'COMMITTED',finish_payload:value,execution_allowed:false};throw Error('TEST unexpected route');});
  const running=h.run('reconcilePracticeSequence(j,area,false)');await tick();h.nodes.get('#practice-sequence-end').onclick();assert.equal(h.j.sequenceEndRequested,true);

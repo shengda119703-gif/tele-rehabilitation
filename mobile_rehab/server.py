@@ -445,6 +445,8 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
             formal = dict(provider='hosted-rehab-v2-1', owner_scope=uid,
                 participant_id=shared.owner if shared else uid,
                 source_context='LIVE_CAMERA:SELF_USE',
+                guided_practice=dict(provider='hosted-rehab-v2-guided-1',
+                    policy_version='formal-arrangement-guided-1', base_path='/rehab/v2/practice'),
                 protocols=[dict(exercise_id=eid, view=p['view']) for eid, p in PROTOCOLS.items()])
         return dict(exercises=catalog(), max_bytes=MAX_BYTES, max_seconds=120, practice_recording=True,
                     manual_practice_arrangements=True,

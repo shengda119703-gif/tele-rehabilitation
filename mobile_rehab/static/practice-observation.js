@@ -3,6 +3,9 @@
 // Keep its identity and ephemeral count outside the saved practice/dose fields.
 function mountPracticeObservation(j,area,retained=null){
  if(j.ended||typeof RehabObservation==='undefined')return;
+ // Until the independent formal-camera association is connected, NEVER use
+ // the legacy preview as if it were the formal visual record for this plan.
+ if(j.context.provider==='hosted-rehab-v2-guided-1')return;
  const panel=retained||document.createElement('details');panel.id='practice-observation';
  if(!retained){panel.innerHTML='<summary>摄像头自动指导（选用）</summary>'+liveMarkup();}
  area.appendChild(panel);

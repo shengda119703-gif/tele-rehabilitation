@@ -4,6 +4,10 @@
 
 ## 真实入口
 
+以下各版本段落和旧验证表按该版本时点读取；当前共享资源版本以首段0.2.15为准。
+
+当前增量0.2.15：原正式计划卡片增加沿用旧按钮的“使用已有安排跟练”。已启用v2宿主声明`hosted-rehab-v2-guided-1`，在原`rehab-v2.sqlite3`／Storage writer上保存独立schema2组记录；不把LIVE_CAMERA计划的上下文改成旧REPLAY_FILE计划。实际保存来源为GUIDED_PRACTICE:SELF_USE，安排来源另存LIVE_CAMERA:SELF_USE。创建／结束／反馈／下一组和只读历史已接；刷新保持原组且暂停，不自动申请相机。B02视觉关联和独立saved_parts已有真实API，前端的相机并行、权威模式事件和统一保存汇总仍未接。正常用户服务v2仍默认关闭；PHONE_LOCAL不声明新托管能力。桌面仍0.20.0，APK当前0.2.15／code17，未真机安装，旧版本段落按原时点读取。见[本轮验证](validation/FRONTEND_FORMAL_GUIDED_2026-10-12.md)。
+
 最新增量0.2.14：原 `/capture?tab=plan` 独立读取原v2正式计划／进度，明确采用后进入原实时训练，原剂量／版本／条目与历史绑定不改；创建或结束丢回复按原键核对，刷新恢复同一训练且不开相机。旧安排、人工安排和正式计划独立加载；修复恢复页面时旧安排迟到响应访问已离开DOM。PHONE_LOCAL只共享脚本，不获得托管计划能力。实际两尺寸、负资格检查和最后包资源验证见[正式训练记录](validation/FRONTEND_FORMAL_TRAINING_2026-10-12.md)。以下0.2.13及更早段落与表格保留各自时点；当前正式计划入口已接，正式并行视觉关联／权威分段／savedParts仍未完成。桌面仍0.20.0，APK当前0.2.14／code16，未真机安装。
 
 当前增量0.2.13：原托管正式测量结束区／历史详情接`formal-feedback.js`，原反馈版本／原幂等键，未提交时只留填写草稿，finalized后可后补；视觉事实和感受分开保存，不改原次数／贡献。原宿主只协调Storage冷初始化，不改writer／版本或未知库保护。PHONE_LOCAL仍没有托管正式能力，不使用Python。完整训练视觉关联仍待，详见[正式反馈验收](validation/FRONTEND_FORMAL_FEEDBACK_2026-10-12.md)。
@@ -17,7 +21,7 @@
 | Windows 正式产品 | `Start-Rehab.ps1` → 应用 `.venv` → `app.main` → ProductWindow／Runtime | 原宿主、SQLite、SceneController；独立 Qt practice 仍用原 writer | 0.20.0；原康复／计划库接本人已有安排，多组、休息、下一动作、暂停返回及每组原历史；完整三端流程仍待 |
 | 托管统一网页 | 正式首页 `mobile_rehab/static/unified.html`／`unified.js`；康复入口进入 `/capture?tab=plan` 等 | 当前共享宿主；统一白名单与原 SQLite | 保持五导航；全量 snapshot 的加载拆分待做 |
 | 保留的动作页面 | `/capture` → `index.html`、`app.js`、`extensions.js`；`practice-flow.js`／`practice-feedback.js`／`practice-observation.js`／`observation-presenter.js`／`manual-arrangements.js` | 原录像执行器／预览／同库独立practice与感受版本 | 原安排并行预览；本人原人工计划库B01；schema2多组／原休息／下一动作及独立历史已接；正式视觉关联待接 |
-| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore；GuidanceAudio沿原桥 | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.13／code15：共享正式反馈脚本但能力不启用；原CPU Worker、原规则安排、暂停／丢回复刷新／本地反馈／历史备份重验，0 Python请求。原离线TTS仍未真机安装或验证实际声音 |
+| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore；GuidanceAudio沿原桥 | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.15／code17：共享正式跟练脚本，但不声明新托管能力；最后包原CPU Worker、暂停／丢回复刷新／本地反馈／历史备份重验，0 Python请求；未红米安装或验证实际声音 |
 | 可选康复 v2 | `/api/rehab/v2/...`，默认关闭；已启用宿主的原动作详情／结束／历史位置 | 独立原 session／202／canonical commit／feedback版本，不与旧事实库互换 | 原肩外展录像实际创建／帧／暂停恢复／保存／历史及独立后补感受通过，未建立基线、0次如实保存；正式训练关联及三重点动作仍待 |
 
 本轮不合入远端整包，不改变 WebView origin、签名、权限或模型。电脑 8765／1396、相机和已有窗口不启停。独立 QA 服务只用随机 loopback 端口。

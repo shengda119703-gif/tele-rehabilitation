@@ -4,8 +4,16 @@
 let practiceJourney=null,practiceGeneration=0,practiceClock;
 const practiceCanonical=v=>Array.isArray(v)?v.map(practiceCanonical):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,practiceCanonical(v[k])])):v;
 const practiceEqual=(a,b)=>JSON.stringify(practiceCanonical(a))===JSON.stringify(practiceCanonical(b));
+const practiceSideLabel=side=>side==='both'?'双侧':sideLabel(side);
+// Routing comes from a validated runtime binding, not from a lost request or
+// a guess that two authorities have equivalent plans/records.
+const practiceBase=j=>j.context.provider==='hosted-rehab-v2-guided-1'?'/rehab/v2/practice':'/practice';
 const practiceDraftKey=c=>'ankang-practice-draft-1:'+JSON.stringify([location.origin,c.provider,c.source_context,c.participant_id]);
 const practiceRecordDraftKey=(c,id)=>practiceDraftKey(c)+':'+id;
+function updateFormalPracticeLink(j){
+ if(j.context.provider!=='hosted-rehab-v2-guided-1')return;
+ const u=new URL(location.href);u.searchParams.set('formal_plan',j.start.plan_id);u.searchParams.set('formal_practice',j.start.operation_id);u.searchParams.delete('formal_operation');window.history.replaceState(null,'',u.href);
+}
 function persistPractice(j){
  try{const text=JSON.stringify({version:1,context:j.context,start:j.start,startRejected:j.startRejected===true,finish:j.finish||null,elapsed:j.elapsed,ended:j.ended,committed:j.receipt?.state==='COMMITTED',countDraft:j.countDraft||'',feedbackDraft:j.feedbackDraft||null,feedbackPending:j.feedbackPending||null,feedbackSuperseded:j.feedbackSuperseded||[],observationSegments:j.observationSegments||[],sequenceStage:j.sequenceStage||null,nextPending:j.nextPending||null,closePending:j.closePending||null,sequenceEndRequested:j.sequenceEndRequested===true});localStorage.setItem(practiceRecordDraftKey(j.context,j.start.operation_id),text);j.draftSaved=true;try{localStorage.setItem(practiceDraftKey(j.context),text);}catch{/* The individually scoped draft remains recoverable from its history entry. */}}
  catch{j.draftSaved=false;}
@@ -36,7 +44,7 @@ function originalPracticeSequence(rows,record,context){
  const pending=owned.find(r=>{try{const d=JSON.parse(localStorage.getItem(practiceRecordDraftKey(context,r.id))||'null');return d?.start?.operation_id===r.id&&practiceEqual(d.context,context)&&(d.nextPending||d.sequenceEndRequested);}catch{return false;}});
  return pending||owned.find(r=>r.state==='PRACTICING')||owned.find(r=>r.schema_version>=2&&r.continuation&&!r.successor_id)||null;
 }
-async function beginGuidedPractice(record,entry,resume=null,confirmations=null){
+async function beginGuidedPractice(record,entry,resume=null,confirmations=null,runtimePath='/practice'){
  pausePractice();const generation=++practiceGeneration,ownerGeneration=state.uploadOwnerGeneration||0;
  // The retained capture router is query-based. Entering from an assessment
  // result must not send a reload back to the assessment library: the existing
@@ -45,9 +53,12 @@ async function beginGuidedPractice(record,entry,resume=null,confirmations=null){
  app.innerHTML='<div class="page-head"><h1>'+esc(label(entry.exercise_id))+'</h1></div><div class="card" id="practice-area"><p role="status">正在核对本项安排…</p></div>';
  const area=$('#practice-area');
  try{
-  const context=await api('/practice/context');if(generation!==practiceGeneration||$('#practice-area')!==area||ownerGeneration!==(state.uploadOwnerGeneration||0))return;
+  const context=await api(runtimePath+'/context');if(generation!==practiceGeneration||$('#practice-area')!==area||ownerGeneration!==(state.uploadOwnerGeneration||0))return;
+  if(runtimePath==='/rehab/v2/practice'){
+   const cap=formalReadCapability();if(context.provider!=='hosted-rehab-v2-guided-1'||context.policy_version!=='formal-arrangement-guided-1'||context.owner_scope!==cap?.owner_scope||context.participant_id!==cap.participant_id||context.source_context!=='GUIDED_PRACTICE:SELF_USE'||context.arrangement_source_context!==cap.source_context)throw Error('本次跟练的归属暂未能核对。');
+  }else if(context.provider==='hosted-rehab-v2-guided-1')throw Error('本次跟练的运行环境不一致。');
   if(!resume&&!confirmations){
-   const rows=await api('/practice');if(generation!==practiceGeneration||$('#practice-area')!==area||ownerGeneration!==(state.uploadOwnerGeneration||0))return;
+   const rows=await api(runtimePath);if(generation!==practiceGeneration||$('#practice-area')!==area||ownerGeneration!==(state.uploadOwnerGeneration||0))return;
    if(!Array.isArray(rows))throw Error('练习记录暂未能核对，请返回后重试。');
    resume=originalPracticeSequence(rows,record,context);
    if(resume)entry={key:resume.plan_ref.entry_key,exercise_id:resume.exercise_id};
@@ -59,14 +70,14 @@ async function beginGuidedPractice(record,entry,resume=null,confirmations=null){
   j.previewGeneration=0;
   j.initialRestorePaused=!!resume||compatible;
   if(compatible){j.feedbackDraft=saved.feedbackDraft||null;j.feedbackPending=saved.feedbackPending||null;j.feedbackSuperseded=saved.feedbackSuperseded||[];j.observationSegments=Array.isArray(saved.observationSegments)?saved.observationSegments:[];j.sequenceStage=saved.sequenceStage;j.nextPending=saved.nextPending||null;j.closePending=saved.closePending||null;j.sequenceEndRequested=saved.sequenceEndRequested===true;}
-  practiceJourney=j;persistPractice(j);await reconcilePractice(j,area,true);
+  practiceJourney=j;persistPractice(j);updateFormalPracticeLink(j);await reconcilePractice(j,area,true);
  }catch(e){if($('#practice-area')===area&&ownerGeneration===(state.uploadOwnerGeneration||0)){area.innerHTML='<p>'+esc(e.message)+'</p><button class="secondary" id="practice-back">返回训练安排</button>';$('#practice-back').onclick=()=>navigate('plan');}}
 }
 async function reconcilePractice(j,area,mayCreate=false){
  if(j.busy)return;j.busy=true;
  let creating=false;
  try{
-  let receipt;try{receipt=await api('/practice/'+j.start.operation_id);}catch(e){if(e.status!==404||!mayCreate)throw e;creating=true;receipt=await api('/practice',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(j.start)});}
+  let receipt;try{receipt=await api(practiceBase(j)+'/'+j.start.operation_id);}catch(e){if(e.status!==404||!mayCreate)throw e;if(!currentPractice(j,area))return;creating=true;receipt=await api(practiceBase(j),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(j.start)});}
   if(!currentPractice(j,area))return;
   if(j.receipt?.state==='COMMITTED'&&receipt.state!=='COMMITTED')return;
   if(receipt.id!==j.start.operation_id||!practiceEqual(receipt.context,j.context))throw Error('练习记录的归属不一致，请返回核对。');
@@ -101,7 +112,7 @@ function drawPractice(j,area){
   $('#practice-save').textContent=r.execution_allowed===true?(j.draftSaved?'已进入跟练，草稿已保留':'已进入跟练；本机草稿未写入，结束时将向原服务保存'):(r.execution_reason||'安排暂不可继续；可以结束并保存本次记录。');
   return;
  }
- area.innerHTML=`<div class="section-head"><h2>${esc(label(r.exercise_id))} · ${sideLabel(r.side)}</h2></div><p class="caption">本组安排 ${r.settings.target_reps} 次 · 按原安排练习</p>${!j.ended?['start','move','return'].map((k,n)=>`<div class="instruction"><span class="number">${n+1}</span><p>${esc(i[k])}</p></div>`).join(''):''}<p id="practice-time" class="caption">${Math.floor(j.elapsed/1000)} 秒 · 跟练页面时间</p><p id="practice-save" role="status">${done?savedLabel:j.ended?'本次已结束，正在确认保存':j.draftSaved?'已进入跟练，草稿已保留':'已进入跟练；本机草稿未写入，结束时将向原服务保存'}</p>${!j.ended?'<label class="consent">本组总次数（选填）<input id="practice-count" type="number" min="0" max="10000" step="1" placeholder="本人记录"></label><div class="live-controls"><button class="primary" id="practice-pause">继续</button><button class="danger" id="practice-end">结束本组</button></div>':`<p class="result-note">${done&&r.self_reported_count!==null?'本组 '+esc(r.self_reported_count)+' 次 · 本人记录':'本次未填写执行次数。'}${done?' 未计入自动确认或正式计划进度。':''}</p><button class="secondary" id="practice-reconcile">${done?'查看原保存记录':'核对保存状态'}</button>`}<button class="secondary file-actions" id="practice-back">返回训练安排</button><p class="tip">有疼痛、头晕或不适时立即停止。跟练时间不是有效保持时间。</p>`;
+ area.innerHTML=`<div class="section-head"><h2>${esc(label(r.exercise_id))} · ${practiceSideLabel(r.side)}</h2></div><p class="caption">本组安排 ${r.settings.target_reps} 次 · 按原安排练习</p>${!j.ended?['start','move','return'].map((k,n)=>`<div class="instruction"><span class="number">${n+1}</span><p>${esc(i[k])}</p></div>`).join(''):''}<p id="practice-time" class="caption">${Math.floor(j.elapsed/1000)} 秒 · 跟练页面时间</p><p id="practice-save" role="status">${done?savedLabel:j.ended?'本次已结束，正在确认保存':j.draftSaved?'已进入跟练，草稿已保留':'已进入跟练；本机草稿未写入，结束时将向原服务保存'}</p>${!j.ended?'<label class="consent">本组总次数（选填）<input id="practice-count" type="number" min="0" max="10000" step="1" placeholder="本人记录"></label><div class="live-controls"><button class="primary" id="practice-pause">继续</button><button class="danger" id="practice-end">结束本组</button></div>':`<p class="result-note">${done&&r.self_reported_count!==null?'本组 '+esc(r.self_reported_count)+' 次 · 本人记录':'本次未填写执行次数。'}${done?' 未计入自动确认或正式计划进度。':''}</p><button class="secondary" id="practice-reconcile">${done?'查看原保存记录':'核对保存状态'}</button>`}<button class="secondary file-actions" id="practice-back">返回训练安排</button><p class="tip">有疼痛、头晕或不适时立即停止。跟练时间不是有效保持时间。</p>`;
  $('#practice-back').onclick=()=>{pausePractice();navigate('plan');};
   if($('#practice-count')){$('#practice-count').value=j.countDraft||'';$('#practice-count').oninput=e=>{j.countDraft=e.target.value;persistPractice(j);};}
  if($('#practice-reconcile'))$('#practice-reconcile').onclick=()=>reconcilePractice(j,area);
@@ -122,23 +133,25 @@ function drawPractice(j,area){
  if(j.ended&&typeof mountPracticeFeedback==='function')mountPracticeFeedback(j,area);
 }
 async function submitPracticeFinish(j,area){
- if(j.finishRequest)return;j.finishRequest=true;
+ if(j.finishRequest||j.ownerGeneration!==(state.uploadOwnerGeneration||0))return;j.finishRequest=true;
  try{
-  const r=await api('/practice/'+j.start.operation_id+'/finish',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(j.finish)});
+  const r=await api(practiceBase(j)+'/'+j.start.operation_id+'/finish',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(j.finish)});
   if(!currentPractice(j,area))return;
   if(r.state!=='COMMITTED'||r.id!==j.start.operation_id||!practiceEqual(r.finish_payload,j.finish))throw Error('结束回执尚未确认，请核对原记录。');
   j.receipt=r;persistPractice(j);drawPractice(j,area);
  }catch(e){if(currentPractice(j,area))$('#practice-save').textContent='本次已结束，保存待核对。'+(j.draftSaved?'草稿已保留。':'记录仍在当前页面。');}
  finally{j.finishRequest=false;}
 }
-async function mountPracticeHistory(){
+async function mountPracticeHistory(runtimePath='/practice'){
  if(!state.practiceRecording)return;const area=document.createElement('section');area.className='card';area.id='practice-records';app.appendChild(area);
+ if(runtimePath==='/rehab/v2/practice')area.id='formal-practice-records';
+ const current=()=>document.querySelector('#'+area.id)===area&&ownerGeneration===(state.uploadOwnerGeneration||0);
  area.innerHTML='<p role="status">正在读取跟练记录…</p>';const ownerGeneration=state.uploadOwnerGeneration||0;
- try{const rows=await api('/practice');if($('#practice-records')!==area||ownerGeneration!==(state.uploadOwnerGeneration||0))return;
+ try{const rows=await api(runtimePath);if(!current())return;
   const empty=$('#records')?.querySelector?.('.empty');if(rows.length&&empty){const title=empty.querySelector('h3'),text=empty.querySelector('p');if(title)title.textContent='暂无录像分析记录';if(text)text.textContent='跟练记录在下方查看。';}
-  area.innerHTML='<h2>跟练记录</h2>'+rows.map(r=>`<button class="record" data-practice="${esc(r.id)}"><span><strong>${esc(label(r.exercise_id))} · ${sideLabel(r.side)}${r.schema_version>=2?' · 第'+esc(r.set_index)+'组':''}</strong><small>${dateLabel(r.ended_at||r.created_at)} · ${r.state==='COMMITTED'?(r.self_reported_count===null?'未填写次数':esc(r.self_reported_count)+' 次 · 本人记录'):'尚未结束'}</small></span><span class="badge">${r.state==='COMMITTED'?'已保存':'继续'} ›</span></button>`).join('');
-  area.querySelectorAll('[data-practice]').forEach(b=>b.onclick=()=>{const r=rows.find(x=>x.id===b.dataset.practice);state.tab='assess';state.training={id:r.plan_ref.id,entry:{key:r.plan_ref.entry_key}};state.selected=r.exercise_id;state.side=r.side;beginGuidedPractice({id:r.plan_ref.id,revision:r.plan_ref.revision},{key:r.plan_ref.entry_key,exercise_id:r.exercise_id},r);});
- }catch(e){if($('#practice-records')===area){area.innerHTML='<p>跟练记录暂时未能读取</p><button class="secondary" id="practice-history-retry">重试</button>';$('#practice-history-retry').onclick=()=>{area.remove();mountPracticeHistory();};}}
+  area.innerHTML='<h2>'+(runtimePath==='/rehab/v2/practice'?'实时安排跟练记录':'跟练记录')+'</h2>'+rows.map(r=>`<button class="record" data-practice="${esc(r.id)}"><span><strong>${esc(label(r.exercise_id))} · ${sideLabel(r.side)}${r.schema_version>=2?' · 第'+esc(r.set_index)+'组':''}</strong><small>${dateLabel(r.ended_at||r.created_at)} · ${r.state==='COMMITTED'?(r.self_reported_count===null?'未填写次数':esc(r.self_reported_count)+' 次 · 本人记录'):'尚未结束'}</small></span><span class="badge">${r.state==='COMMITTED'?'已保存':'继续'} ›</span></button>`).join('');
+  area.querySelectorAll('[data-practice]').forEach(b=>b.onclick=()=>{const r=rows.find(x=>x.id===b.dataset.practice);state.tab='assess';state.training={id:r.plan_ref.id,entry:{key:r.plan_ref.entry_key}};state.selected=r.exercise_id;state.side=r.side;beginGuidedPractice({id:r.plan_ref.id,revision:r.plan_ref.revision},{key:r.plan_ref.entry_key,exercise_id:r.exercise_id},r,null,runtimePath);});
+ }catch(e){if(current()){area.innerHTML='<p>跟练记录暂时未能读取</p><button class="secondary">重试</button>';area.querySelector('button').onclick=()=>{area.remove();mountPracticeHistory(runtimePath);};}}
 }
 // A separate navigation clock never contributes practice/holding time. The
 // owning storage still checks rest and eligibility when a successor is written.
@@ -147,7 +160,7 @@ async function openPracticeRest(j,area){
  if(!currentPractice(j,area)||j.sequenceBusy)return;
  const epoch=j.sequenceReadEpoch=(j.sequenceReadEpoch||0)+1;
  pausePractice();j.sequenceStage='REST';persistPractice(j);drawPracticeRest(j,area);
- try{const r=await api('/practice/'+j.start.operation_id);if(!currentPractice(j,area)||j.sequenceReadEpoch!==epoch||j.sequenceEndRequested)return;if(r.id!==j.start.operation_id||!practiceEqual(r.context,j.context))throw Error('原记录归属不一致');j.receipt=r;j.restReceiptAt=performance.now();persistPractice(j);drawPracticeRest(j,area);}
+ try{const r=await api(practiceBase(j)+'/'+j.start.operation_id);if(!currentPractice(j,area)||j.sequenceReadEpoch!==epoch||j.sequenceEndRequested)return;if(r.id!==j.start.operation_id||!practiceEqual(r.context,j.context))throw Error('原记录归属不一致');j.receipt=r;j.restReceiptAt=performance.now();persistPractice(j);drawPracticeRest(j,area);}
  catch{if(currentPractice(j,area))$('#practice-sequence-status').textContent='原记录暂未能核对，可以稍后再试。';}
 }
 function drawPracticeRest(j,area){
@@ -179,7 +192,7 @@ function acceptPracticeSuccessor(j,area,r,ending,readOnly){
  const n={context:j.context,ownerGeneration:j.ownerGeneration,start:r.start_payload,receipt:r,finish:r.finish_payload,elapsed:r.finish_payload?.elapsed_ms||0,countDraft:'',ended:r.state==='COMMITTED',running:false,busy:false,previewGeneration:0};
  practiceJourney=n;++practiceGeneration;state.selected=r.exercise_id;state.side=r.side;state.training={id:r.plan_ref.id,entry:{key:r.plan_ref.entry_key}};
  if(ending&&r.state!=='COMMITTED'){n.ended=true;n.finish={operation_id:newUploadOperation(),count:null,elapsed_ms:0,reason:'ended',feedback:{pain:null,fatigue:null}};}
- persistPractice(n);drawPractice(n,area);
+ persistPractice(n);updateFormalPracticeLink(n);drawPractice(n,area);
  if(ending&&r.state==='COMMITTED'){n.sequenceEndRequested=true;n.sequenceStage='REST';persistPractice(n);drawPracticeRest(n,area);void reconcilePracticeSequence(n,area,false);}
  else if(ending&&r.state!=='COMMITTED')void submitPracticeFinish(n,area);
  else if(!readOnly&&!n.ended)startPracticeClock(n);
@@ -195,20 +208,20 @@ async function reconcilePracticeSequence(j,area,queryOnly=false){
   }
   const identity=j.nextPending?.operation_id||f?.successor_id;let r;
   if(identity){
-   try{r=await api('/practice/'+identity);}catch(error){if(error.status!==404)throw error;}
+   try{r=await api(practiceBase(j)+'/'+identity);}catch(error){if(error.status!==404)throw error;}
    if(!currentPractice(j,area))return;
    if(!r&&!j.sequenceEndRequested&&!queryOnly){
-    r=await api('/practice/'+j.start.operation_id+'/continue',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(j.nextPending)});
+    r=await api(practiceBase(j)+'/'+j.start.operation_id+'/continue',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(j.nextPending)});
    }
    if(!currentPractice(j,area))return;
    if(r){acceptPracticeSuccessor(j,area,r,j.sequenceEndRequested,queryOnly);return;}
   }
   if(j.sequenceEndRequested){
    j.closePending??={operation_id:newUploadOperation()};persistPractice(j);
-   r=await api('/practice/'+j.start.operation_id);
+   r=await api(practiceBase(j)+'/'+j.start.operation_id);
    if(!currentPractice(j,area))return;
    if(r.id!==j.start.operation_id||!practiceEqual(r.context,j.context))throw Error('原记录归属不一致');
-   if(!r.journey_closed)r=await api('/practice/'+j.start.operation_id+'/close-journey',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(j.closePending)});
+   if(!r.journey_closed)r=await api(practiceBase(j)+'/'+j.start.operation_id+'/close-journey',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(j.closePending)});
    if(!currentPractice(j,area))return;
    if(r.id!==j.start.operation_id||!practiceEqual(r.context,j.context)||!practiceEqual(r.close_payload,j.closePending)||r.journey_closed!==true)throw Error('结束回执尚未确认');
    j.receipt=r;j.sequenceStage=null;j.nextPending=null;j.sequenceEndRequested=false;persistPractice(j);
