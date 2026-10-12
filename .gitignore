@@ -17,6 +17,9 @@
 backups/
 **/*.log
 **/*.sqlite3*
+**/*.pem
+**/*.key
+**/*.env
 **/qa-output/
 # Incoming whole-project archives contain environments and local participant data.
 /*.zip

@@ -1,0 +1,11 @@
+/* Necessary cloud forms only. Existing patient assets/tokens are unchanged. */
+.cloud-form { max-width: 440px; margin: 24px auto; }
+.cloud-form label { display: block; margin: 16px 0; }
+.cloud-form input { width: 100%; }
+.cloud-form button.primary { width: 100%; margin-top: 12px; }
+.cloud-toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+.cloud-patients { display: grid; gap: 12px; }
+.cloud-patient { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); padding: 16px 0; gap: 16px; }
+.cloud-error { color: var(--danger); min-height: 1.65em; }
+.cloud-record { border-bottom: 1px solid var(--line); padding: 12px 0; }
+@media (max-width: 480px) { .cloud-form { margin-top: 12px; } }
