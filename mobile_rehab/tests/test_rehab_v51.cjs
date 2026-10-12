@@ -32,3 +32,19 @@ test('a late job response cannot change the presentation of a page already left'
 test('live history cannot route to replay-only phone jobs',()=>{const p=page('ready','LIVE_CAMERA');assert.match(p.html.value,/id="rehab-live-history"/);assert.match(p.html.value,/电脑实时记录/);assert.doesNotMatch(p.html.value,/tab=history/);assert.match(p.html.value,/tab=assess&rehabSource=REPLAY_FILE/);});
 
 test('browser source/date context is stored in the URL without clinical data',()=>{const p=page();assert.equal(p.c.lastUrl,'/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab');assert.doesNotMatch(p.c.lastUrl,/TEST|pain|participant/);});
+
+test('numeric feedback keeps the submit lock, required values and existing revision payload',async()=>{
+  const submit={disabled:false},score={disabled:false},nodes=new Map();
+  const node=s=>{if(!nodes.has(s))nodes.set(s,{value:'',hidden:false,disabled:false,innerHTML:'',appendChild(){},insertBefore(){},querySelector:selector=>selector==='button.primary'?submit:score});return nodes.get(s);};
+  const c={document:{querySelector:node,querySelectorAll:()=>[],createElement:()=>node('box'),addEventListener(){}},window:{RehabV51:V,addEventListener(){},scrollTo(){}},location:{search:'',hash:''},URLSearchParams,setTimeout:()=>0,clearTimeout(){},console,AbortController};
+  vm.createContext(c);vm.runInContext(fs.readFileSync(path.join(__dirname,'../static/app.js'),'utf8'),c);
+  vm.runInContext("state.shared=true;state.catalog=[{id:'shoulder_flexion',label:'TEST',instructions:{boundary:'TEST'}}]",c);
+  c.renderJob({id:'TEST-job',mode:'training',state:'done',exercise:'shoulder_flexion',side:'left',created_at:'2026-10-12',feedback:{revision:4},result:{summary:{completed:5,plan_completed:true,motion_range:{min_deg:0,max_deg:90}},quality:{observed_goals_met:5,needs_adjustment:0,unassessable:0}}});
+  let resolve,calls=[];c.api=(url,opts)=>{calls.push({url,body:JSON.parse(opts.body)});return new Promise(r=>resolve=r);};c.navigate=tab=>c.destination=tab;
+  const event={preventDefault(){},currentTarget:node('#feedback-form')};
+  await node('#feedback-form').onsubmit(event);assert.equal(calls.length,0);
+  node('#pain').value='0';node('#fatigue').value='3';const pending=node('#feedback-form').onsubmit(event);
+  assert.equal(submit.disabled,true);assert.equal(score.disabled,false);await node('#feedback-form').onsubmit(event);assert.equal(calls.length,1);
+  assert.deepEqual(calls[0],{url:'/jobs/TEST-job/feedback',body:{pain:0,fatigue:3,reason:'completed',revision:4}});
+  resolve({});await pending;assert.equal(submit.disabled,false);assert.equal(c.destination,'plan');
+});
