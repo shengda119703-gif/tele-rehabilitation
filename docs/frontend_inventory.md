@@ -4,7 +4,9 @@
 
 ## 真实入口
 
-以下各版本段落和旧验证表按该版本时点读取；当前共享资源版本以首段0.2.15为准。
+以下各版本段落和旧验证表按该版本时点读取；当前共享资源版本以首段0.2.16为准。
+
+当前增量0.2.16／code18：已启用 v2 宿主的原正式安排跟练页接可选正式相机。跟练不等相机；原资格／剂量／SessionAdapter／JPEG 帧泵不改算法，原 visual-link 将视觉关联同一旅程，独立练习和视觉各自核对保存。六秒软等待、暂停／刷新不开相机、丢关联与结束回复、服务自行终结释放流已接并实际验证。默认用户服务仍未启用或重启 v2；PHONE_LOCAL 只有共享代码和原本地能力，不声明托管正式能力。桌面仍0.20.0，原快捷方式只更新 Git 描述；未红米安装。见[本次验证](validation/FRONTEND_FORMAL_PRACTICE_CAMERA_2026-10-13.md)。客户端展示模式元数据不冒充服务器权威模式段；完整任务书仍未完成。
 
 当前增量0.2.15：原正式计划卡片增加沿用旧按钮的“使用已有安排跟练”。已启用v2宿主声明`hosted-rehab-v2-guided-1`，在原`rehab-v2.sqlite3`／Storage writer上保存独立schema2组记录；不把LIVE_CAMERA计划的上下文改成旧REPLAY_FILE计划。实际保存来源为GUIDED_PRACTICE:SELF_USE，安排来源另存LIVE_CAMERA:SELF_USE。创建／结束／反馈／下一组和只读历史已接；刷新保持原组且暂停，不自动申请相机。B02视觉关联和独立saved_parts已有真实API，前端的相机并行、权威模式事件和统一保存汇总仍未接。正常用户服务v2仍默认关闭；PHONE_LOCAL不声明新托管能力。桌面仍0.20.0，APK当前0.2.15／code17，未真机安装，旧版本段落按原时点读取。见[本轮验证](validation/FRONTEND_FORMAL_GUIDED_2026-10-12.md)。
 
@@ -21,7 +23,7 @@
 | Windows 正式产品 | `Start-Rehab.ps1` → 应用 `.venv` → `app.main` → ProductWindow／Runtime | 原宿主、SQLite、SceneController；独立 Qt practice 仍用原 writer | 0.20.0；原康复／计划库接本人已有安排，多组、休息、下一动作、暂停返回及每组原历史；完整三端流程仍待 |
 | 托管统一网页 | 正式首页 `mobile_rehab/static/unified.html`／`unified.js`；康复入口进入 `/capture?tab=plan` 等 | 当前共享宿主；统一白名单与原 SQLite | 保持五导航；全量 snapshot 的加载拆分待做 |
 | 保留的动作页面 | `/capture` → `index.html`、`app.js`、`extensions.js`；`practice-flow.js`／`practice-feedback.js`／`practice-observation.js`／`observation-presenter.js`／`manual-arrangements.js` | 原录像执行器／预览／同库独立practice与感受版本 | 原安排并行预览；本人原人工计划库B01；schema2多组／原休息／下一动作及独立历史已接；正式视觉关联待接 |
-| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore；GuidanceAudio沿原桥 | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.15／code17：共享正式跟练脚本，但不声明新托管能力；最后包原CPU Worker、暂停／丢回复刷新／本地反馈／历史备份重验，0 Python请求；未红米安装或验证实际声音 |
+| 独立 Android | 打包源是 `mobile_rehab/static/`，不是旧 `android_offline/web/index.html`；本地 `local-api.js`、PhoneMotion／Worker／PhoneStore；GuidanceAudio沿原桥 | PHONE_LOCAL 原本地库和媒体存储；无需 Python 服务 | APK0.2.16／code18：共享正式相机旁路脚本，但不声明托管能力；最后包原CPU Worker、暂停／丢回复刷新／本地反馈／历史备份重验，0 Python请求；未红米安装或验证实际声音 |
 | 可选康复 v2 | `/api/rehab/v2/...`，默认关闭；已启用宿主的原动作详情／结束／历史位置 | 独立原 session／202／canonical commit／feedback版本，不与旧事实库互换 | 原肩外展录像实际创建／帧／暂停恢复／保存／历史及独立后补感受通过，未建立基线、0次如实保存；正式训练关联及三重点动作仍待 |
 
 本轮不合入远端整包，不改变 WebView origin、签名、权限或模型。电脑 8765／1396、相机和已有窗口不启停。独立 QA 服务只用随机 loopback 端口。

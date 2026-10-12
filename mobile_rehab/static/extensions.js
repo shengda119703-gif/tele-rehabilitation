@@ -87,7 +87,7 @@ async function startLive(consumer=null){
   if(typeof consumer?.isCurrent!=='function')consumer=null;
   if(consumer&&!consumer.isCurrent())return;
   if(liveSession)return;
-  if(liveCameraRequest||liveCreateRequest||liveCloseRequest||liveClosingSession){toast('正在确认上次连接，请稍候。');return;}
+  if(liveCameraRequest||liveCreateRequest||liveCloseRequest||liveClosingSession||(typeof formalPracticeCameraBusy==='function'&&formalPracticeCameraBusy())||(typeof formalFlow!=='undefined'&&(formalFlow?.cameraRequest||formalFlow?.stream))){toast('正在确认上次连接，请稍候。');return;}
   if(!$('#live-consent').checked){toast('请先同意本次实时分析');return;}
   const session={cancelled:false,stream:null,id:null,request:null,
     generation:++liveGeneration,video:$('#live-video'),exercise:state.selected,side:state.side,consumer};

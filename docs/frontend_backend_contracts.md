@@ -2,7 +2,15 @@
 
 ## 已接通
 
-以下旧版本段落按原验证时点读取；当前0.2.15的B02关联／saved_parts API已接，前端并行测量和统一保存展示仍待。
+以下旧版本段落按原验证时点读取。当前共享0.2.16已调用原 B02 关联／saved_parts，实现正式跟练相机旁路与练习／视觉保存汇总；没有扩大原接口或改写原医疗资格。
+
+### 2026-10-13：B02 真实消费与控制归属
+
+`formal-practice-camera.js` 从原跟练页调用 `/sessions`、`/{id}/pause|resume|finish|commit` 和 `/practice/{id}/visual-link`。创建请求仍只有原 plan／revision／entry／view／确认，不发送客户端剂量。关联键在请求前保留，同键同载荷回执校验本人、practice、journey、session、scope 与“不重写测量/贡献”。本地存的关联回执也必须核对，不作为绕过关联的执行许可。
+
+原 SessionAdapter 草稿增加**客户端** `practice_binding:{practice_id,journey_id,set_index}`，不作为服务器创建字段。独立训练入口忽略这些相机草稿；精确原键恢复转回原跟练。最小 `formalVisual` 与原不可变控制草稿保存于原本人／来源下，不存逐帧 JPEG。恢复只 pause／finish 原身份，不自动请求相机。控制队列独立于帧泵；结束意图先持久化，途中暂停核对结束后再处理结束，旧 GET 不回退独立 COMMITTED。
+
+`saved_parts.practice_records` 和 `visual_facts` 分别来自独立记录与原视觉 canonical；感受仍用原独立版本表单。局部状态行不能把一类提交确认成另一类已保存。`observationSegments` 只保留客户端展示变化（FORMAL_VISUAL_UI、原 session／source_epoch／calibration_epoch、前端世代、所属组、非有效保持时间基础）；没有权威模式事件接口时，服务器 `mode_segments` 继续为空。不能用这份 UI 元数据生成有效运动时间、视觉次数或正式计划进度。Qt／PHONE_LOCAL 的正式视觉关联和跨进程 outbox 尚未因本次托管接线实现。
 
 ### B01/B02：原正式安排的独立跟练（0.2.15）
 
