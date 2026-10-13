@@ -12,6 +12,39 @@ from pathlib import Path
 SCRIPT = Path(__file__).resolve().parents[1] / 'tools' / 'normalize_apk.py'
 
 class PackagingTest(unittest.TestCase):
+    def test_motion_service_is_private_and_does_not_request_silent_background_location(self):
+        root = SCRIPT.parents[2]
+        manifest = ET.parse(root/'android_offline/AndroidManifest.xml').getroot()
+        ns = '{http://schemas.android.com/apk/res/android}'
+        permissions = {v.attrib[ns+'name'] for v in manifest.findall('uses-permission')}
+        for name in ('ACTIVITY_RECOGNITION', 'ACCESS_FINE_LOCATION', 'BLUETOOTH_SCAN',
+                     'BLUETOOTH_CONNECT', 'FOREGROUND_SERVICE_HEALTH',
+                     'FOREGROUND_SERVICE_LOCATION', 'FOREGROUND_SERVICE_CONNECTED_DEVICE'):
+            self.assertIn('android.permission.'+name, permissions)
+        self.assertNotIn('android.permission.ACCESS_BACKGROUND_LOCATION', permissions)
+        self.assertNotIn('android.permission.RECEIVE_BOOT_COMPLETED', permissions)
+        self.assertNotIn('android.permission.BODY_SENSORS', permissions)
+        service = manifest.find('application/service')
+        self.assertEqual(service.attrib[ns+'name'], '.MotionService')
+        self.assertEqual(service.attrib[ns+'exported'], 'false')
+        self.assertEqual(set(service.attrib[ns+'foregroundServiceType'].split('|')),
+                         {'health', 'location', 'connectedDevice'})
+
+    def test_release_contains_sensor_reader_but_no_sensor_history_or_test_harness(self):
+        root = SCRIPT.parents[2]
+        version = ET.parse(root/'android_offline/AndroidManifest.xml').getroot().attrib[
+            '{http://schemas.android.com/apk/res/android}versionName']
+        with zipfile.ZipFile(root/f'android_offline/dist/tele-rehabilitation-mobile-{version}.apk') as archive:
+            dex = archive.read('classes.dex')
+            for name in (b'MotionService', b'MotionPanel', b'MotionDb', b'pace_s_km',
+                         b'motionBind', b'motionRead', b'motionSettings'):
+                self.assertIn(name, dex)
+            self.assertNotIn(b'MotionSmoke', dex)
+            self.assertFalse(any(n.endswith(('.db', '.sqlite3')) for n in archive.namelist()))
+            local = archive.read('assets/local/local-api.js').decode('utf-8')
+            self.assertIn('!PhoneLin.isLin(store)', local)
+            self.assertIn("route==='/device-motion'", local)
+
     def test_automatic_tracking_is_bundled_and_manual_markers_are_removed(self):
         root = SCRIPT.parents[2]
         manifest = ET.parse(root/'android_offline/AndroidManifest.xml').getroot()

@@ -49,6 +49,7 @@ public final class MainActivity extends Activity {
     private byte[] exportBytes;
     private CloudTransport cloud;
     private DeepSeekTransport deepSeek;
+    private MotionPanel motionPanel;
     private final ExecutorService network = Executors.newFixedThreadPool(2);
     private SpeechRecognizer speech;
     private GuidanceAudio guidanceAudio;
@@ -59,6 +60,7 @@ public final class MainActivity extends Activity {
         super.onCreate(state);
         cloud=new CloudTransport(this);
         deepSeek=new DeepSeekTransport(this);
+        motionPanel=new MotionPanel(this);
         getWindow().setStatusBarColor(Color.WHITE);
         getWindow().setNavigationBarColor(Color.WHITE);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
@@ -166,6 +168,7 @@ public final class MainActivity extends Activity {
     @Override public void onRequestPermissionsResult(int code, String[] permissions, int[] results) {
         super.onRequestPermissionsResult(code, permissions, results);
         if (code==SPEECH_PERMISSION){if(results.length>0&&results[0]==PackageManager.PERMISSION_GRANTED)startSpeech();else speechResult("","未授权麦克风，原草稿保留");return;}
+        if (code==MotionPanel.PERMISSION){motionPanel.permissionsReturned();return;}
         if (code != CAMERA_PERMISSION) return;
         boolean granted = results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED;
         if (cameraRequest != null) { if (granted) cameraRequest.grant(new String[]{PermissionRequest.RESOURCE_VIDEO_CAPTURE}); else cameraRequest.deny(); cameraRequest = null; }
@@ -226,8 +229,12 @@ public final class MainActivity extends Activity {
             network.execute(()->{int status;String json;try{CloudTransport.Reply reply=cloud.request(path,method,body);status=reply.status;json=reply.body;}catch(Exception e){status=503;json="{\"detail\":\"云端暂时无法连接，本机记录保留\"}";}
                 final int code=status;final String value=json;runOnUiThread(()->{if(!isDestroyed())web.evaluateJavascript("PhoneCloud.reply("+JSONObject.quote(id)+","+code+","+JSONObject.quote(value)+")",null);});});
         }
-        @JavascriptInterface public void settings(){runOnUiThread(()->new AlertDialog.Builder(MainActivity.this).setTitle("手机与云端").setItems(new String[]{"连接云端","暂停云端连接","导出本机备份","恢复本机备份","备份到云端","恢复云端备份","打开 TEST 林女士档案","返回个人档案","DeepSeek 智能服务"},(d,which)->{
-            if(which==8)deepSeekDialog();
+        @JavascriptInterface public void motionBind(String owner,boolean personal){motionPanel.bind(owner,personal);if(personal)runOnUiThread(()->{if(getIntent().getBooleanExtra("motion_panel",false)){getIntent().removeExtra("motion_panel");motionPanel.open();}});}
+        @JavascriptInterface public String motionRead(String owner){return motionPanel.read(owner);}
+        @JavascriptInterface public void motionSettings(){runOnUiThread(()->motionPanel.open());}
+        @JavascriptInterface public void settings(){runOnUiThread(()->new AlertDialog.Builder(MainActivity.this).setTitle("手机与云端").setItems(new String[]{"连接云端","暂停云端连接","导出本机备份","恢复本机备份","备份到云端","恢复云端备份","打开 TEST 林女士档案","返回个人档案","DeepSeek 智能服务","运动与心率"},(d,which)->{
+            if(which==9)motionPanel.open();
+            else if(which==8)deepSeekDialog();
             else if(which==0)web.evaluateJavascript("PhoneLocal.store.key===PhoneStore.LIN_KEY",v->{if("true".equals(v))notice("请先返回个人档案，再连接云端");else connectionDialog();});
             else if(which==1){cloud.disconnect();notice("已暂停云端连接，本机功能可继续使用");}
             else if(which==2)web.evaluateJavascript("PhoneLocal.exportBackup()",null);
@@ -282,7 +289,7 @@ public final class MainActivity extends Activity {
     }
     private void endSpeech(){if(speech!=null){speech.cancel();speech.destroy();speech=null;}}
     private void speechResult(String text,String error){web.evaluateJavascript("PhoneLocal.speechResult("+JSONObject.quote(text)+","+JSONObject.quote(error)+")",null);}
-    private void saveDocumentBytes(byte[] bytes, String type, String name) {
+    void saveDocumentBytes(byte[] bytes, String type, String name) {
         runOnUiThread(() -> {
             if (exportBytes != null) { notice("请先完成上一次保存"); return; }
             exportBytes = bytes;
@@ -294,7 +301,8 @@ public final class MainActivity extends Activity {
     @Override public void onBackPressed() {
         web.evaluateJavascript("window.offlineBack && window.offlineBack()", value -> { if (!"true".equals(value)) new AlertDialog.Builder(this).setMessage("退出康复随行？").setPositiveButton("退出", (d,w) -> finish()).setNegativeButton("继续使用", null).show(); });
     }
-    @Override protected void onPause() { guidanceGeneration.incrementAndGet();guidanceAudio.pause();endSpeech();web.evaluateJavascript("window.offlinePause && window.offlinePause()", null); web.onPause(); super.onPause(); }
+    @Override protected void onNewIntent(Intent intent){super.onNewIntent(intent);setIntent(intent);if(intent.getBooleanExtra("motion_panel",false)){getIntent().removeExtra("motion_panel");motionPanel.open();}}
+    @Override protected void onPause() { motionPanel.pause();guidanceGeneration.incrementAndGet();guidanceAudio.pause();endSpeech();web.evaluateJavascript("window.offlinePause && window.offlinePause()", null); web.onPause(); super.onPause(); }
     @Override protected void onResume() { super.onResume(); if (web != null) {guidanceAudio.resume();web.onResume();} }
-    @Override protected void onDestroy() { guidanceGeneration.incrementAndGet();guidanceAudio.destroy();network.shutdownNow();endSpeech();cancelPicker(); if (cameraRequest != null) cameraRequest.deny(); web.removeJavascriptInterface("OfflineAndroid"); web.destroy(); super.onDestroy(); }
+    @Override protected void onDestroy() { motionPanel.close();guidanceGeneration.incrementAndGet();guidanceAudio.destroy();network.shutdownNow();endSpeech();cancelPicker(); if (cameraRequest != null) cameraRequest.deny(); web.removeJavascriptInterface("OfflineAndroid"); web.destroy(); super.onDestroy(); }
 }
