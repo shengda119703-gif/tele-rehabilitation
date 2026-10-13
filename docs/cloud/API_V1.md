@@ -1,6 +1,8 @@
 # 云账号第一阶段接口
 
-当前服务0.1.2，schema1，API形状沿用0.1.0；本文件与`cloud_service/app.py`对应，同目录`openapi-v1.json`保留0.1.0接口快照，实时版本取`/api/cloud/v1/openapi.json`。真实公网源为`https://139.224.216.18`。只描述当前已实现接口，不代表C0–C6的全部契约。
+当前服务0.1.3，schema1，原账号／结果API形状保持兼容；本文件与`cloud_service/app.py`对应，同目录`openapi-v1.json`保留0.1.0接口快照，实时版本取`/api/cloud/v1/openapi.json`。真实公网源为`https://139.224.216.18`。只描述当前已实现接口，不代表C0–C6的全部契约。
+
+0.1.3增加受WEB患者会话保护的完整应用根入口和`/capture`，账号／云记录移到`/account`，医生仍`/care`；能力接口新增`public_user_web=true`和`browser_analysis=LOCAL_CPU`。这不是服务器模型执行或完整增量同步：`server_models`、`incremental_sync`、`plans`与`calls`保持false。公开资源仅来自构建清单，具体见[公网用户网页](PUBLIC_USER_WEB.md)。
 
 ## 认证与数据边界
 
