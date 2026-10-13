@@ -1,14 +1,14 @@
 # 当前交接：安康居家康复助手
 
-更新日期：2026-10-13。工作台基于 main `e2e256e`，选择性复用 `codex/unified-cloud-service` 的账号、授权、数据库与医生网页，新增患者记录同步、医患文字聊天及医生计划发布／患者采用。公网服务未部署，生产数据库未修改。
+更新日期：2026-10-14。工作台选择性复用 `codex/unified-cloud-service` 的账号、授权、数据库与医生网页，支持患者记录同步、医患文字聊天及医生计划发布／患者采用。本轮增补基于 main `c34bca6`：报告原件授权、目标资料复用、起始与进阶候选审核、分阶段日历及停用、工作时间内待回复队列、真实注册用户与每用户模型用量估算。公网服务未部署，生产数据库未修改。
 
 ## 当前版本与入口
 
 | 项目 | main 当前情况 |
 | --- | --- |
-| 电脑 | 0.24.0；`启动康复助手.cmd` → `Start-Rehab.ps1` → `app.main` → `ProductWindow`；右上“工作台” |
-| 独立 Android | 0.4.0／versionCode 40；由 `android_offline/` 构建，档案和计算在手机本地 |
-| 现有医生平台源码 | 云服务0.2.0／schema2；原 `/care` 扩展为工作台，公网仍需另行授权更新 |
+| 电脑 | 0.25.0；`启动康复助手.cmd` → `Start-Rehab.ps1` → `app.main` → `ProductWindow`；右上“工作台” |
+| 独立 Android | 0.5.0／versionCode 50；由 `android_offline/` 构建，档案和计算在手机本地；本轮只有 QA 签名安装包 |
+| 现有医生平台源码 | 云服务0.3.0／schema3；原 `/care` 扩展为工作台，公网仍需另行授权更新 |
 | 电脑配对网页 | 电脑“我的档案 → 连接我的手机”；同一可信局域网，电脑保持开启 |
 | 页面 | 首页、康复、健康、用药、家庭；`/capture` 保留录像、动作、分析和报告入口 |
 | 康复 v2 | 源码存在，默认关闭；不能当作正式页面或 APK 已接通 |
@@ -33,6 +33,8 @@
 `codex/frontend-flow-optimization` 的前端／跟练增量和 `codex/unified-cloud-service` 的其他成果继续保留。工作台只整合账号、授权、存储、网页与相关适配；没有整包合并旧云分支的 OCR／Agent。分支会继续变化，下一次整合前重新读取 SHA 与差异。
 
 ## 验收与后续
+
+最新增补的范围、费用口径、隔离验证和执行限制见[医患协作增补验收](validation/BETA_COLLABORATION_2026-10-13.md)。正式工作台不生成演示用户。每用户费用为供应商用量乘配置价格的估算，未配置模型不收费，未知回执不记为零。绑定云账号后桌面与手机使用服务端问答入口；旧未绑定个人模型配置不计入此看板。原服务器需另行更新，源码合入不等于公网已可用。
 
 本次工作台验收见[隔离测试、界面截图与构建结果](validation/WORKBENCH_2026-10-13.md)。此前发布证据见[健康归属修复](validation/HEALTH_ATTRIBUTION_FIX_2026-10-12.md)、[DeepSeek 三端范围](development/ANKANG_DELIVERY_SCOPE.md)和[安卓验收](validation/ANDROID_DEEPSEEK_2026-10-11.md)。这些是当时记录；完整旧黑箱失败及环境限制保留在[原诊断](validation/COMPREHENSIVE_BLACKBOX_2026-10-12.md)，本次专项通过不表示旧问题全部解决。
 

@@ -1,6 +1,6 @@
 # 医患协作增补：实现与验收
 
-本轮使用隔离 SQLite 数据库与虚构账号；未部署公网服务器、未修改生产数据库、未访问真实患者记录。工作分支为 `codex/rehab-beta-collaboration-20261013`，基于 main `c34bca6`。此记录不表示已合入 main。
+本轮使用隔离 SQLite 数据库与虚构账号；未部署公网服务器、未修改生产数据库、未访问真实患者记录。工作分支为 `codex/rehab-beta-collaboration-20261013`，基于 main `c34bca6`。合入情况以 PR #6 状态为准。
 
 ## 实现范围
 
@@ -27,9 +27,11 @@
 - Qt 明暗主题 740×780 功能窗口截图已生成，无横向滚动溢出；截图只用于界面布局检查，不代表真实服务器连接。
 - Android 0.5.0 QA 签名 APK 构建通过，SHA256 `7CEF0AD69945AC695DD019073E09F52A0C747E27992E24BA848CF7DC679CE938`；没有安装设备或进行实机训练验收。
 
-## 仍需完成的交付检查
+## 持续集成与专项界面验收
 
-新增费用、工作日历、候选审核和分阶段编排界面的专项浏览器验收；PostgreSQL CI；代码审查与提交上传。以上完成前不把本轮称为最终交付或公网可用。
+GitHub PR #6 提交 `ecf896a` 的 CI 完成：云端 76 项通过（包括4项 PostgreSQL 专属检查），网页运输与展示8项通过。新增 `tools/cloud/verify_beta_browser.cjs` 专项浏览器脚本通过工作日历保存、真实账号用量界面、原件与候选展示、候选审核不会激活方案、分阶段编辑入口，页面脚本错误为空。全部账号及文件明确标为 TEST，无人体操作。完整结果在 `.runtime/beta-browser-final-05/beta-screens-02/result.json`。
+
+截图：[原件与候选界面](beta-20261013/doctor-candidate-report-TEST.png)、[阶段编辑界面](beta-20261013/doctor-phase-editor-TEST.png)。这些均为隔离验收数据，正式发布包不含测试数据库或种子数据。
 
 ## 功能边界
 
