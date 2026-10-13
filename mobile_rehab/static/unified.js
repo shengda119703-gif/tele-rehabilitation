@@ -371,7 +371,9 @@ function rehab() {
           )),
     );
 }
+let modalGeneration=0;
 function modal(title, body) {
+  ++modalGeneration;
   const d = $("#dialog");
   d.innerHTML = `<div class="heading"><h2 id="dialog-title">${E(title)}</h2><button id="close-dialog" class="quiet" aria-label="关闭">关闭</button></div>${body}`;
   bind("close-dialog", () => d.close());
@@ -426,7 +428,7 @@ function health() {
     .slice()
     .sort((a, b) => String(b.timestamp).localeCompare(String(a.timestamp)));
   $("#content").innerHTML =
-    `<div class="heading"><h1>健康档案</h1>${button("编辑资料", "edit-profile")}</div><p class="muted">${E(profile().name)}${profile().age ? " · " + E(profile().age) + " 岁" : ""}<br>${E((profile().conditions || []).join("、") || "健康情况未填写")}</p><div class="actions">${button("上传资料", "upload", true)}${link("记录身体感受", "#assistant")}</div><div class="heading"><h2>资料与图片</h2></div>${(snapshot().attachments || []).map((a) => `<div class="row"><div><strong>${E(a.name)}</strong><p><small>${E(a.category)} · ${stamp(a.date)}</small></p></div><button data-archive="${E(a.id)}">查看</button></div>`).join("") || '<p class="empty">暂无资料。</p>'}<div class="heading"><h2>最近记录</h2></div><div class="timeline">${
+    `<div class="heading"><h1>健康档案</h1>${button("编辑资料", "edit-profile")}</div><p class="muted">${E(profile().name)}${profile().age ? " · " + E(profile().age) + " 岁" : ""}<br>${E((profile().conditions || []).join("、") || "健康情况未填写")}</p><div class="actions">${button("上传资料", "upload", true)}${link("手动记录指标", "/capture?tab=health")}${link("记录身体感受", "#assistant")}</div><div class="heading"><h2>资料与图片</h2></div>${(snapshot().attachments || []).map((a) => `<div class="row"><div><strong>${E(a.name)}</strong><p><small>${E(a.category)} · ${stamp(a.date)}</small></p></div><button data-archive="${E(a.id)}">查看</button></div>`).join("") || '<p class="empty">暂无资料。</p>'}<div class="heading"><h2>最近记录</h2></div><div class="timeline">${
       events
         .slice(0, 20)
         .map(
@@ -529,28 +531,16 @@ function upload() {
 function archiveDetail(a) {
   modal(
     a.name,
-    `<p class="muted">${E(a.category)}</p><div class="actions">${link("下载原件", "/api/product-archive/" + encodeURIComponent(a.id))}${/image\/(jpeg|png)/.test(a.mediaType) ? button("识别图片文字", "ocr", true) : ""}${button("移入回收站", "trash")}</div><div id="ocr-result"></div>`,
+    `<p class="muted">${E(a.category)}</p><div class="actions">${link("下载原件", "/api/product-archive/" + encodeURIComponent(a.id))}${button("手动记录指标", "manual-health", true)}${button("移入回收站", "trash")}</div><p class="muted">报告原件仅作资料保存，不识字、不自动提取指标。请核对后手动填写。</p>`,
   );
   bind("trash", () =>
     confirmAction("移入回收站？", "资料可以在回收站恢复。", () =>
       api("/product-archive/" + a.id + "/trash", { confirm: true }),
     ),
   );
-  bind("ocr", async () => {
-    let result;
-    if (
-      await act(async () => {
-        result = await api("/product-ocr/" + a.id, {});
-      }, "识别完成，请核对文字")
-    ) {
-      $("#ocr-result").innerHTML =
-        `<label>识别文字，可修改<textarea id="ocr-text" rows="7">${E(result.text)}</textarea></label><p class="muted">请核对姓名、日期和数值。文字不会自动保存为身体记录。</p>${button("带入管家对话", "ocr-chat", true)}`;
-      bind("ocr-chat", () => {
-        ui.draft = $("#ocr-text").value.slice(0, 1800);
-        $("#dialog").close();
-        location.hash = "#assistant";
-      });
-    }
+  bind("manual-health", () => {
+    $("#dialog").close();
+    location.href = "/capture?tab=health";
   });
 }
 function medication() {
@@ -775,30 +765,18 @@ function conversationSource(metadata) {
 function assistant() {
   const chat = snapshot().state?.chat || [];
   $("#content").innerHTML =
-    `<div class="heading"><h1>康复管家</h1><a href="#home">返回首页</a></div><details class="assistant-capability"><summary>使用说明</summary><p>${snapshot().conversationModelAvailable?"本地模块查询与页面导航可用；DeepSeek 对话已配置，每条回复标明实际来源。":"本地模块查询与页面导航可用；DeepSeek 对话尚未配置。"}</p><p>上传资料不会自动带入对话。需要更正时，可说“撤回上一条记录”。</p></details><section class="conversation" aria-label="对话记录">${chat.map((m) => `<div class="bubble ${m.role === "elder" ? "mine" : ""}"><small>${m.role === "elder" ? "我" : "康复管家"}${m.time ? " · " + stamp(m.time) : ""}${m.persisted === false ? " · 本次不记录" : ""}${m.pending ? " · 待确认" : ""}${m.role !== "elder" && conversationSource(m.conversation) ? " · " + E(conversationSource(m.conversation)) : ""}</small>${E(m.text)}</div>`).join("") || '<section class="hero"><h2>今天有什么想记的？</h2><p class="muted">身体感受、用药情况，都可以在这里说。保存前请核对。</p></section>'}</section><form id="chat-form" class="composer"><label for="draft">发消息给康复管家</label><textarea id="draft" required maxlength="1900" placeholder="今天左肩有点酸">${E(ui.draft)}</textarea><div class="actions"><label><input id="private" type="checkbox" ${ui.private ? "checked" : ""}>本次不记录</label><div>${button("语音输入", "voice")} <button type="button" id="voice-cancel" hidden>取消录音</button> <button type="submit" class="primary">发送</button></div></div><p id="voice-state" class="muted" role="status"></p><input id="audio-file" type="file" accept="audio/*" hidden></form>`;
-  const pending=snapshot().carePending||[];
-  if(pending.length){
-    const section=document.createElement('section');section.setAttribute('aria-label','待核对管家操作');
-    section.innerHTML='<h2>待核对操作</h2>'+pending.map((w,i)=>`<p>${E(w.steps[0]?.label||'操作')} · ${E(w.status==='awaiting_confirmation'?'待确认':'执行结果待核对')}</p><button type="button" id="care-review-${i}">核对操作与结果</button>`).join('');
-    $('#chat-form').before(section);
+    `<div class="heading"><h1>康复管家</h1><a href="#home">返回首页</a></div><details class="assistant-capability"><summary>使用说明</summary><p>${snapshot().conversationModelAvailable?"康复问答、结果解说与本地候选计划；DeepSeek 已配置。":"康复问答、结果解说与本地候选计划；当前使用本地资料。"}</p><p>对话不录入健康信息或修改模块。共用动作库含63张评估卡和122张训练卡；候选计划先使用已整理的起始模板。</p></details><section class="conversation" aria-label="对话记录">${chat.map((m) => `<div class="bubble ${m.role === "elder" ? "mine" : ""}"><small>${m.role === "elder" ? "我" : "康复管家"}${m.time ? " · " + stamp(m.time) : ""}${m.persisted === false ? " · 本次不记录" : ""}${m.pending ? " · 待确认" : ""}${m.role !== "elder" && conversationSource(m.conversation) ? " · " + E(conversationSource(m.conversation)) : ""}</small>${E(m.text)}</div>`).join("") || '<section class="hero"><h2>有什么康复问题？</h2><p class="muted">可以询问动作做法或解释已有康复结果。</p></section>'}</section>${button("本地候选计划", "local-plan")}<form id="chat-form" class="composer"><label for="draft">发消息给康复管家</label><textarea id="draft" required maxlength="1900" placeholder="坐姿踝内翻与外翻方向观察怎么做？">${E(ui.draft)}</textarea><div class="actions"><label><input id="private" type="checkbox" ${ui.private ? "checked" : ""}>本次不记录</label><div>${button("语音输入", "voice")} <button type="button" id="voice-cancel" hidden>取消录音</button> <button type="submit" class="primary">发送</button></div></div><p id="voice-state" class="muted" role="status"></p><input id="audio-file" type="file" accept="audio/*" hidden></form>`;
+  bind('local-plan',()=>{
+    modal('本地候选计划','<p>本地规则筛选，不调用付费模型。先支持肩、髋、膝、踝的起始模板；核对条件及当次试做后再采用。</p><form id="local-plan-form"><label>目标<input id="plan-goal" required maxlength="200"></label><label>身体部位<input id="plan-region" required maxlength="40"></label><label>器材（逗号分隔）<input id="plan-equipment" maxlength="200" placeholder="稳固椅、硬床、滑布、垫、稳定桌面"></label><label>限制（逗号分隔，无则留空）<input id="plan-restrictions" maxlength="200"></label><label>当前任务等级<select id="plan-level"><option value="0">L0</option><option value="1">L1</option><option value="2">L2</option><option value="3">L3</option></select></label><label><input id="plan-confirmed" type="checkbox" required>已核对适用条件、器材与限制</label><button type="submit">生成候选计划</button></form><p id="plan-result" role="status" style="white-space:pre-wrap"></p>');
     const owner=snapshot().ownerId,source=ui.source;
-    const invoke=async(w,operation)=>{
-      if(owner!==snapshot().ownerId||source!==ui.source)return;
-      let receipt;
-      const ok=await act(async()=>{receipt=await api('/unified/'+operation+'?source='+source,{id:w.id,confirmationToken:w.confirmationToken,confirmed:true});},'');
-      if(owner!==snapshot().ownerId||source!==ui.source)return;
-      if(ok){
-        $('#dialog').close();await load();
-        if(owner!==snapshot().ownerId||source!==ui.source)return;
-        modal('操作结果',`<p>${E(receipt.reply||'请核对实际记录。')}</p>`);
-      }
+    $('#local-plan-form').onsubmit=async e=>{e.preventDefault();if(owner!==snapshot().ownerId||source!==ui.source)return;
+      const split=id=>$(id).value.replaceAll('，',',').split(',').map(v=>v.trim()).filter(Boolean);
+      try{const operation=window.PhoneLocal?'/product/rehab.plan.draft':'/unified/rehab.plan.draft?source='+encodeURIComponent(source);
+        const result=await api(operation,{goal:$('#plan-goal').value.trim(),region:$('#plan-region').value.trim(),equipment:split('#plan-equipment'),restrictions:split('#plan-restrictions'),level:Number($('#plan-level').value),screeningConfirmed:$('#plan-confirmed').checked});
+        if(owner===snapshot().ownerId&&source===ui.source&&$('#plan-result'))$('#plan-result').textContent=result.note+'\n'+(result.items||[]).map(item=>`${item.id}｜${item.name}\n候选版本：${item.variant}\n器材原文：${item.equipment}\n开始条件：${item.startConditions}\n试做与候选剂量原文：${item.sourceDose}\n停止或调整条件：${item.stopConditions}`).join('\n');
+      }catch(error){if($('#plan-result'))$('#plan-result').textContent=error.message;}
     };
-    pending.forEach((w,i)=>bind('care-review-'+i,()=>{
-      modal('核对管家操作',`<p>${E(w.reply)}</p><ul>${w.steps.map(s=>`<li>${E(s.label)}：${E({pending:'尚未执行',succeeded:'已保存',failed:'失败',executing:'待核对回执'}[s.status]||s.status)}</li>`).join('')}</ul><p>确认有效期至 ${E(stamp(w.expiresAt))}</p><button type="button" class="primary" id="care-confirm">${w.status==='awaiting_confirmation'?'核对后确认执行':'核对后重试未完成步骤'}</button> ${w.status==='awaiting_confirmation'?'<button type="button" id="care-cancel">取消操作</button>':''}`);
-      bind('care-confirm',()=>invoke(w,'care.confirm'));bind('care-cancel',()=>invoke(w,'care.cancel'));
-    }));
-  }
-  if(snapshot().carePendingUnavailable){const note=document.createElement('p');note.textContent='暂时无法读取待确认操作，请刷新后核对。';$('#chat-form').before(note);}
+  });
   $("#draft").oninput = (e) => (ui.draft = e.target.value);
   $("#private").onchange = (e) => (ui.private = e.target.checked);
   $("#chat-form").onsubmit = async (e) => {
@@ -933,6 +911,58 @@ $("#refresh").onclick = () => {
   }
   load();
 };
+// Paired pages use the desktop's bound account and durable queue.
+// PhoneAccount owns the independent public browser / APK workbench.
+function mountPairedWorkbench() {
+  if (window.PhoneAccount || typeof document.createElement !== 'function' || $("#paired-workbench")) return;
+  const entry=document.createElement('button');entry.id='paired-workbench';entry.className='quiet';entry.textContent='工作台';entry.onclick=pairedWorkbench;
+  $("#profile").before(entry);
+}
+async function pairedWorkbench() {
+  if (ui.busy || voiceStarting || recorder?.state==='recording') {say('请先完成当前操作。');return;}
+  const request=(action,body={})=>api('/unified/workbench.'+action,body,{timeout:30000});
+  let identity;
+  try{identity=await request('identity');}catch(e){say(e.message);return;}
+  if(!identity.connected){modal('工作台','<p>请先在电脑“工作台”登录本人云账号，并确认这份电脑档案的归属，再用配对网页读取医生消息与方案。</p>');return;}
+  const dialog=modal('工作台 · '+identity.username,`<p>共用当前电脑绑定的本人档案。消息和待采用方案保留在电脑，重新连接后可重试。</p><div class="actions"><button id="paired-sync" ${identity.upload_enabled?'':'disabled'}>同步已保存资料</button><button id="paired-messages">医生对话</button><button id="paired-retry">重试待发送</button><button id="paired-plans">查看康复方案</button></div><p id="paired-status" role="status"></p><div id="paired-detail"></div>`);
+  const own=modalGeneration,active=()=>dialog.open&&own===modalGeneration;
+  let requestPending=false;
+  async function perform(fn,success=''){
+    if(requestPending||!active())return;requestPending=true;
+    dialog.querySelectorAll('button:not(#close-dialog)').forEach(b=>b.disabled=true);
+    try{await fn();if(active())$("#paired-status").textContent=success;}
+    catch(e){if(active())$("#paired-status").textContent=e.message;}
+    finally{requestPending=false;if(active()){dialog.querySelectorAll('button:not(#close-dialog)').forEach(b=>b.disabled=false);$("#paired-sync").disabled=!identity.upload_enabled;}}
+  }
+  async function messages(before=null){
+    const value=await request('messages',before?{before}:{});if(!active())return;
+    const area=$("#paired-detail");area.innerHTML=`<h3>医生对话 · ${E(value.unread_count||0)} 条未读</h3>${value.has_older?'<button id="paired-older">更早的对话</button>':''}<div class="timeline">${value.items.map(item=>`<article><strong>${item.author_role==='DOCTOR_ADMIN'?'医生':'本人'}</strong><small>${E(stamp(item.created_at*1000))}</small><p style="white-space:pre-wrap">${E(item.text)}</p></article>`).join('')||'<p>还没有对话记录。</p>'}</div><form id="paired-send-form"><label>发送给医生<textarea name="text" rows="3" maxlength="1000" required></textarea></label><button type="submit" class="primary">发送消息</button></form>`;
+    if(value.items.length&&value.next_cursor>value.read_cursor)await request('read',{cursor:value.next_cursor});
+    bind('paired-older',()=>perform(()=>messages(value.previous_cursor)));
+    let pendingSend=null;
+    $("#paired-send-form").onsubmit=event=>{
+      event.preventDefault();const text=event.currentTarget.elements.text.value.trim();if(!text)return;
+      if(pendingSend&&pendingSend.text!==text){$("#paired-status").textContent='上一条消息仍待核对，请先重试原消息，再发送新内容。';return;}
+      pendingSend??={operation_id:crypto.randomUUID(),text};
+      perform(async()=>{await request('send',pendingSend);pendingSend=null;await messages();},'已发送；若回执丢失，点击“重试待发送”核对原消息。');
+    };
+  }
+  async function showProfessionalPlans(){
+    const value=await request('plans');if(!active())return;
+    $("#paired-detail").innerHTML=`<h3>康复方案</h3><p>采用前按这份电脑档案的已保存评估核对；不满足训练条件时会提示原因。</p>${value.items.map(plan=>`<article class="journal"><h3>${E(plan.title)}${plan.id===value.current_plan_id?' · 当前采用':''}</h3><p>${E(plan.summary)}</p><ol>${plan.items.map(item=>`<li><strong>${E(item.name)} · ${item.side==='left'?'左侧':'右侧'}</strong><p>${E(item.settings.target_reps)} 次 × ${E(item.settings.target_sets)} 组；角度 ${item.settings.target_angle_deg===null?'未指定':E(item.settings.target_angle_deg)+'°'}</p><p>${E(item.caution)}</p></li>`).join('')}</ol><button data-paired-adopt="${E(plan.id)}">核对并采用</button></article>`).join('')||'<p>医生尚未发布方案。</p>'}`;
+    dialog.querySelectorAll('[data-paired-adopt]').forEach(button=>button.onclick=()=>{
+      const plan=value.items.find(item=>item.id===button.dataset.pairedAdopt);
+      if(!confirm('核对并采用“'+plan.title+'”？程序会检查本人电脑档案的已保存评估；条件不足时保留现有计划。'))return;
+      perform(async()=>{await request('adopt',{plan_id:plan.id,expected_version:plan.version,expected_current_revision:value.current_revision});await showProfessionalPlans();},'方案已核对并采用。请回康复页查看当前计划。');
+    });
+  }
+  bind('paired-sync',()=>perform(()=>request('sync'),'已同步保存的资料，请在工作台核对。'));
+  bind('paired-messages',()=>perform(()=>messages()));
+  bind('paired-retry',()=>perform(async()=>{await request('retry');await messages();},'已重试待发送操作，请核对对话和方案状态。'));
+  bind('paired-plans',()=>perform(showProfessionalPlans));
+}
+mountPairedWorkbench();
+
 document.addEventListener("visibilitychange", () => {
   if (
     !document.hidden &&

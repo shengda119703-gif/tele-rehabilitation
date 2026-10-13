@@ -36,7 +36,7 @@ function planProgress(p,value=store.value){const items=p?.items||[],statuses=ite
 async function careRehabFacts(value){
  // Reuse saved plans and the existing progress/feedback gates. No new dose or
  // clinical threshold is introduced by the coordination adapter.
- const p=value.plans.at(-1),progress=p?planProgress(p,value):null;
+ const p=value.plans.filter(p=>p.status!=='PENDING_DOCTOR').at(-1),progress=p?planProgress(p,value):null;
  const plans=p?[{...p,progress,next_available:!!(progress.next_key&&!progress.blocked),availability_reason:progress.blocked||(progress.next_key?'':'这一轮已完成')}]:[];
  const history=value.jobs.filter(j=>j.mode==='training'&&j.state==='done').reverse().map(j=>({exercise_id:j.exercise,side:j.side,end_utc:j.created_at,plan_id:j.plan_id,entry_key:j.entry_key,summary:j.result?.summary,feedback:j.feedback}));
  return{plans,history};
@@ -61,7 +61,7 @@ async function practiceArrangement(ref){
  return{allowed:true,entry};
 }
 async function body(){const c=await PM.catalog(),records=store.value.jobs.filter(j=>j.state==='done').map(j=>({id:j.id,exercise:j.exercise,label:[...c.rehab,...c.fitness,...c.posture].find(s=>s.id===j.exercise)?.label||j.exercise,side:j.side,mode:j.mode,created_at:j.created_at,summary:j.result.summary,feedback:j.feedback})),latest=[...new Map(records.filter(j=>j.mode!=='training').map(j=>[j.exercise+':'+j.side,j])).values()];return{total:records.length,training_count:records.filter(j=>j.mode==='training').length,records,latest,next_step:{title:store.value.plans.length?'按本轮计划继续训练':'完成评估，查看本轮训练建议'},note:'手机本地二维测量汇总，仅反映本次可见活动，不作疾病诊断。'};}
-async function snapshot(){const s=await domain.request('snapshot',owner,{},now()),c=await PM.catalog(),p=store.value.plans.at(-1),progress=p?planProgress(p):null;
+async function snapshot(){const s=await domain.request('snapshot',owner,{},now()),c=await PM.catalog(),p=store.value.plans.filter(p=>p.status!=='PENDING_DOCTOR').at(-1),progress=p?planProgress(p):null;
  const scope={participant_id:owner,source_kind:'PHONE_LOCAL',usage_context:'SELF_USE'};
  const jobs=store.value.jobs.filter(j=>j.state==='done');
  const plan=p?{...p,progress,items:p.items.map(i=>({...i,exercise_label:c.rehab.find(s=>s.id===i.exercise_id)?.label||i.exercise_id}))}:null;
@@ -125,7 +125,7 @@ async function request(path,opts={}){
    if(operation==='profile.save'){const old=profile();if(!p.profile||typeof p.profile.name!=='string'||p.profile.name.length>40||!Number.isInteger(p.profile.age)||p.profile.age<0||p.profile.age>130||!Array.isArray(p.profile.conditions)||p.profile.conditions.length>20)failure('请核对称呼、年龄和健康情况');p.profile={...old,...p.profile,medications:old.medications,medicationRecords:old.medicationRecords,familySharing:old.familySharing};}
    if(operation==='chat'&&p.private===true)p.text='不要记录：'+p.text;
    if(operation==='chat')p._conversationScope='PHONE_LOCAL:'+(PhoneLin.isLin(store)?'TEST':'SELF_USE');
-   if(!['profile.save','chat','health.record','medication.save','medication.status','task.status','notification.plan','notification.ack'].includes(operation))failure('未开放此操作',404);
+   if(!['profile.save','chat','health.record','medication.save','medication.status','task.status','notification.plan','notification.ack','rehab.plan.draft'].includes(operation))failure('未开放此操作',404);
    return domain.request(operation,owner,p,now());
   }
   if(route.startsWith('/unified/daily.')){
@@ -143,7 +143,7 @@ async function request(path,opts={}){
     if(!payload.general_activity_ok)failure('请确认目前适合进行基础活动');if(!proposed.candidates.length)failure('暂无可用评估，请先完成一次动作评估');if(proposed.candidates.some(i=>i.standing)&&!payload.standing_support_ok)failure('请为站立项目准备稳固支撑');
     const p={id:crypto.randomUUID(),revision:1,name:'本轮康复训练',created_at:now().toISOString(),items:proposed.candidates.map(i=>({key:crypto.randomUUID(),exercise_id:i.exercise,side:i.side,settings:i.settings,assessment_id:i.assessment,source:i.source})),measurement_version:LocalEngine.VERSION};store.change(v=>v.plans.push(p));
    }
-   const p=store.value.plans.at(-1);return{proposal:proposed,plan:p||null,progress:planProgress(p)};
+   const p=store.value.plans.filter(p=>p.status!=='PENDING_DOCTOR').at(-1);return{proposal:proposed,plan:p||null,progress:planProgress(p)};
   }
   if(route==='/jobs'&&method==='POST'){
    const operation=new Headers(opts.headers||{}).get('X-Rehab-Upload-Operation')||'';
@@ -153,6 +153,8 @@ async function request(path,opts={}){
    const s=await PM.spec(q.get('exercise')),side=q.get('side');if(!['left','right'].includes(side))failure('请选择测试侧');
    const mode=q.get('mode')||'assessment',p=store.value.plans.find(x=>x.id===q.get('plan_id')),entry=p?.items.find(i=>i.key===q.get('entry_key'));
    if(mode==='training'&&(!entry||entry.exercise_id!==s.id||entry.side!==side))failure('本轮计划已变化，请重新选择动作');
+   if(mode==='training'&&p.status==='PENDING_DOCTOR')failure('医生方案尚未确认，不能开始训练',409);
+   if(mode==='training'&&p.cloud_plan_id)await root.PhoneAccount.validateTrainingStart(store,p);
    if(store.value.jobs.length>=250)failure('记录空间已满，请先导出备份');
    const id=crypto.randomUUID(),job={id,exercise:s.id,side,mode,state:'analyzing',created_at:now().toISOString(),message:'正在加载手机模型',video_available:true,plan_id:p?.id||null,entry_key:entry?.key||null};
    if(operation)job.upload_operation=operation;
@@ -191,8 +193,6 @@ async function request(path,opts={}){
   }
   if(route==='/product-trash')return domain.request('archive.trash.list',owner,{},now());
   if(route==='/product-backup')return backup();
-  if(route==='/product-ocr')return{available:true,local:true,engine:'tesseract.js@6.0.1'};
-  if(route.startsWith('/product-ocr/')){const a=await domain.request('archive.read',owner,{id:route.split('/')[2]},now());return PhoneOCR.recognize(new Blob([new Uint8Array(a.bytes)],{type:a.mediaType}));}
   if(route==='/product-voice'&&method==='GET')return{available:!!root.OfflineAndroid?.speechAvailable(),local:true,detail:'本地语音服务，识别文字需本人核对。'};
   if(route==='/product-voice')failure('使用语音输入按钮调用手机本地识别；录音文件转写未接入',503);
   if(route==='/cameras'||route==='/care/shares')return[];
@@ -249,6 +249,7 @@ async function backup(){
 async function restore(text){try{
  const value=PS.validateBackup(JSON.parse(text));
  if(PM.active)throw Error('请先结束当前分析');
+ if(PS.cloudKey(store.key)&&value.owner!==store.value.owner)throw Error('备份不属于当前云账号档案，未覆盖');
  // Preserve the previous state before any replacement; quota failure aborts restore.
  if((value.fixture?.schema==='test-lin-apk-v1')!==(store.key===PS.LIN_KEY))throw Error('请先切换到对应档案，再恢复备份');
  store.storage.setItem(store.key+':before-restore',JSON.stringify(store.value));

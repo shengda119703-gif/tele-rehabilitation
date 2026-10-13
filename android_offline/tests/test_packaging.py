@@ -12,6 +12,26 @@ from pathlib import Path
 SCRIPT = Path(__file__).resolve().parents[1] / 'tools' / 'normalize_apk.py'
 
 class PackagingTest(unittest.TestCase):
+    def test_workbench_and_motion_coexist_without_retired_ocr_loader(self):
+        root = SCRIPT.parents[2]
+        source = (root/'android_offline/src/cn/tele/rehabilitation/offline/MainActivity.java').read_text(encoding='utf-8')
+        self.assertIn('"运动与心率","工作台"', source)
+        self.assertIn('if(which==10){web.evaluateJavascript("PhoneAccount.open()",null);return;}', source)
+        self.assertIn('if(which==9)motionPanel.open();', source)
+        version = ET.parse(root/'android_offline/AndroidManifest.xml').getroot().attrib[
+            '{http://schemas.android.com/apk/res/android}versionName']
+        with zipfile.ZipFile(root/f'android_offline/dist/tele-rehabilitation-mobile-{version}.apk') as archive:
+            for page in ('index.html', 'capture.html'):
+                html = archive.read('assets/'+page).decode('utf-8')
+                for adapter in ('practice.js', 'account.js'):
+                    self.assertLess(html.index('/local/'+adapter), html.index('/local/local-api.js'))
+                self.assertNotIn('/local/ocr.js', html)
+                self.assertNotIn('/ocr/tesseract.min.js', html)
+            self.assertEqual(archive.read('assets/local/account.js'), (root/'android_offline/web/account.js').read_bytes())
+            self.assertFalse(any(name.startswith('assets/ocr/') for name in archive.namelist()))
+            for method in (b'accountRequest', b'accountLogin', b'motionRead', b'motionBind'):
+                self.assertIn(method, archive.read('classes.dex'))
+
     def test_motion_service_is_private_and_does_not_request_silent_background_location(self):
         root = SCRIPT.parents[2]
         manifest = ET.parse(root/'android_offline/AndroidManifest.xml').getroot()

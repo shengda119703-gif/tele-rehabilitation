@@ -1,0 +1,23 @@
+{
+  "scope": "ISOLATED_LOOPBACK",
+  "synthetic": true,
+  "saved_assessment_training_current_local_plan": true,
+  "read_cursor_and_escaped_text": true,
+  "other_tab_cannot_overwrite_pending_send": true,
+  "committed_reply_loss_same_id_after_logout_reload": true,
+  "delayed_other_tab_ack_preserves_new_pending_operation": true,
+  "draft_reply_loss_same_id_after_reload": true,
+  "draft_hidden_from_patient": true,
+  "stale_draft_rejection_retains_input_without_locking_future_edits": true,
+  "structured_plan_edit_publish": true,
+  "read_cursor_survives_reload": true,
+  "mobile_no_horizontal_overflow": true,
+  "actual_patient_history_escaped": true,
+  "patient_second_tab_poll_and_read_preserve_pending_message_and_acceptance": true,
+  "patient_offline_outbox_survives_reload_and_retries_once": true,
+  "patient_new_reply_unread_persists_until_read": true,
+  "patient_without_local_assessment_cannot_adopt": true,
+  "revocation_clears_loaded_private_view": true,
+  "browser_errors": [],
+  "passed": true
+}

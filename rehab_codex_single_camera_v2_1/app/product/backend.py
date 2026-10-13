@@ -74,6 +74,51 @@ class ProductBackend:
                     continue
                 try:
                     payload = dict(payload)
+                    if operation.startswith('workbench.'):
+                        from ..cloud_account import CloudAccount, CloudError
+                        from ..storage import Storage
+                        client = CloudAccount(self.data_dir / 'cloud-account')
+                        session = client.session()
+                        with client.db() as db:
+                            binding = db.execute('SELECT patient_id FROM bindings WHERE local_id=?', (owner,)).fetchone()
+                        connected = bool(session and binding and binding[0] == session['patient_id'])
+                        if operation == 'workbench.identity':
+                            result = {'connected': connected, 'username': session['username'] if connected else '', 'upload_enabled': client.consent(owner) if connected else False}
+                        elif not connected:
+                            raise CloudError('请先在电脑工作台登录，并确认当前本人档案与云账号绑定')
+                        elif operation == 'workbench.messages':
+                            result = client.messages(payload.get('before', 0))
+                        elif operation == 'workbench.send':
+                            result = client.send(payload['operation_id'], payload['text'])
+                        elif operation == 'workbench.read':
+                            result = client.mark_read(payload['cursor'])
+                        elif operation == 'workbench.plans':
+                            result = client.plans()
+                        elif operation == 'workbench.current':
+                            result = client.current()
+                        elif operation == 'workbench.retry':
+                            result = client.sync_messages()
+                        elif operation in ('workbench.sync', 'workbench.adopt'):
+                            if not (self.data_dir / 'home_rehab.sqlite3').is_file():
+                                raise CloudError('请先在本机保存本人康复记录')
+                            if operation == 'workbench.sync':
+                                if self.bridge is None:
+                                    self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150)
+                                client.queue_product(owner, self.bridge.product('snapshot', owner, {}))
+                                with self._workbench_store(readonly=True) as store:
+                                    client.queue_rehab(owner, store)
+                                result = client.sync()
+                            else:
+                                choices = client.plans()
+                                plan = next((p for p in choices['items'] if p['id'] == payload['plan_id'] and p['version'] == payload['expected_version']), None)
+                                if not plan:
+                                    raise CloudError('医生方案已变化，请刷新后再采用')
+                                with self._workbench_store() as store:
+                                    result = client.adopt(plan, payload['expected_current_revision'], owner, scope, store)
+                        else:
+                            raise ValueError('未开放此工作台操作')
+                        self._deliver((operation, owner, token, result, None))
+                        continue
                     if operation == 'chat':
                         # Always overwrite browser/user supplied context with this
                         # host's trusted request source and usage scope.
@@ -92,7 +137,7 @@ class ProductBackend:
                     local_file = payload.pop('_local_file', None)
                     export_path = payload.pop('_local_export_path', None)
                     if local_file:
-                        limit = 2*1024*1024 if operation == 'device.import' else 10*1024*1024 if operation == 'image.parse' else 20*1024*1024
+                        limit = 2*1024*1024 if operation == 'device.import' else 20*1024*1024
                         with Path(local_file).open('rb') as stream:
                             data = stream.read(limit+1)
                         if len(data) > limit:
@@ -184,3 +229,15 @@ class ProductBackend:
         if self.bridge:
             self.bridge.terminate()
         self.thread.join(timeout=2)
+
+    def _workbench_store(self, readonly=False):
+        from contextlib import contextmanager
+        from ..storage import Storage
+        @contextmanager
+        def opened():
+            store = Storage(self.data_dir / 'home_rehab.sqlite3', readonly=readonly)
+            try:
+                yield store
+            finally:
+                store.close()
+        return opened()

@@ -5,11 +5,15 @@
 ## 打开产品
 
 - **电脑：** 双击桌面“安康康复（最新版本）”，或仓库的 `启动康复助手.cmd`。
-- **独立手机：** 使用 `android_offline/` 构建的 **0.3.2 / code32** APK，保留本地评估、训练、跟练和健康记录；并入伙伴的 DeepSeek 配置、普通聊天、康复只读查询及健康归属修复。电脑合并版本为 **0.23.2**。
+- **独立手机：** 当前融合版本 **0.4.1 / code41**，电脑 **0.24.1**；保留本地评估、训练、跟练、自动健身轨迹和手机运动／BLE心率，并入完整康复资料和医患工作台。构建与本轮验证见当前交接。
 - **手机：** 电脑右上角“我的档案” → “连接我的手机”。手机连接同一可信 Wi-Fi，在浏览器打开显示的地址，输入连接码。电脑需保持开启；停止连接即撤销本次连接码。
 - 首次使用先建立本人档案。问卷可跳过；没有有效动作评估时先安排评估，不从问卷编造动作能力或处方。
 
 浏览器连接电脑的入口需要局域网服务；独立 APK 的个人流程在本地运行。可选文字备份与家庭服务见 [手机主端说明](docs/plans/PHONE_LOCAL_2026-10-07.md)。局域网 HTTP 下浏览器可能限制直接录音/实时摄像头，可使用拍摄上传、键盘语音或录音文件；异地云端未验收。
+
+报告图片可上传、留存和下载原件；报告识字与自动提取已退役，指标需核对原件后手动录入。训练动作识别继续保留。
+
+**工作台：** 患者授权同步已保存的康复评估、训练和计划，与医生文字沟通；医生在原管理网页查看获准资料、确认发布方案。患者采用前经过原有评估与动作支持校验。复用现有云端账号与数据库，源码合并不会自动更新公网服务器。详见[工作台说明](docs/workbench/README.md)及[隔离验收](docs/validation/WORKBENCH_2026-10-13.md)。
 
 ## 五个页面做什么
 
@@ -28,7 +32,7 @@
 Windows x64、Python 3.13、Node.js 22+。在仓库根目录执行：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\Setup-Rehab.ps1 -IncludeOCR
+powershell -NoProfile -ExecutionPolicy Bypass -File .\Setup-Rehab.ps1
 ```
 
 `-IncludeVoice` 安装可选本地语音；`-IncludeLandmarks` 准备腕、踝、手指等可选关键点环境。环境、模型、个人数据和日志均不上传 Git。安装不会自动开启摄像头。
@@ -39,8 +43,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Setup-Rehab.ps1 -IncludeOC
 rehab_codex_single_camera_v2_1/  原生电脑端、测量 Runtime、原业务 UI、测试
 mobile_rehab/                   统一手机界面、录像分析和电脑托管连接
 android_offline/                独立手机本地宿主、算法与包装
-ankang/route1-health-agent/     安康 Agent 与健康业务服务
+ankang/route1-health-agent/     康复问答、本地候选清单与健康业务服务
 bridges/ankang/                 Python / Node 本机桥接
+cloud_service/                 现有云账号、医生网页与医患协作 API
+public_web/                    手机本地计算网页的云账号适配
 docs/                          当前交接、架构、历史和验收
 tools/                         检索、验证及兼容独立手机服务工具
 deploy/mobile/                 独立手机服务部署材料（独立数据，非默认双端入口）
@@ -51,9 +57,11 @@ deploy/mobile/                 独立手机服务部署材料（独立数据，�
 - `archive/pre-unified-mobile-20261006`：整理前 main（`4a4a0b8`），含独立 APK 和原手机交付。
 - `archive/pre-unified-desktop-20261006`：整理前桌面产品（`f54935b`）。
 
-归档不删除队友提交历史。保留手机拍摄/上传、分析、结果、体态、健身、资料、OCR、语音、回收站等可复用能力。兼容独立手机服务使用独立数据目录，工具集中在 `tools/mobile-standalone/`；日常使用请从电脑配对入口进入，避免产生两份档案。
+归档不删除队友提交历史。保留手机拍摄/上传、分析、结果、体态、健身、资料、手动指标录入、语音、回收站等可复用能力。兼容独立手机服务使用独立数据目录，工具集中在 `tools/mobile-standalone/`；日常使用请从电脑配对入口进入，避免产生两份档案。
 
 ## 开发与验收
+
+当前状态统一见[当前交接](docs/HANDOFF.md)，历史阶段见[历史文档索引](docs/history/DOCUMENT_INDEX_2026-10-13.md)。以下有日期的验收属于当时执行结果。工作台选择性整合云分支，前端和云端的其他增量继续保留在原分支。
 
 后端阅读入口：[功能、技术实现与信息传递梳理](docs/后端功能与技术实现梳理.md)。按F01–F34说明康复、健身、体态／居家、健康／管家、用药／家庭及可靠保存；七条信息链、公式、连接键、函数和参数帮助从错误结果定位算法层。先看第0、2、3节，再查第19、24、26节的评价与实现位置。
 
@@ -61,6 +69,8 @@ deploy/mobile/                 独立手机服务部署材料（独立数据，�
 
 此前康复后端独立增量：在v2正式／离线重任务准入上增加默认报告延期、持久待办和同宿主所属抢占。见 [双锁实现与范围](docs/development/REHAB_COMPUTE_COORDINATION.md) 和 [269／12／19项回归与报告验收](docs/validation/REHAB_REPORT_COORDINATION_2026-10-11.md)。57项资源／报告专项为269项子集；旧251项留在原验收。旧前端／Android／正式权重不改，v2默认关闭；旧桌面、非v2报告和跨端调度尚未覆盖，不等于用户端或全产品协调已更新。
 
-当前电脑版本 **0.23.0**。管家已接通12种模块查询、页面导航，以及桌面／配对网页的服药记录和训练改期确认入口；常用明确查询无模型也可使用。输入先核对人物和肯否，模型计划再经过工具与参数校验；健康、药物、资料、家庭权限、通知、连接状态和康复事实分别取自原服务。健身进入已有健身模式，记录、设置与通知也可直接导航。
+当前电脑源码版本 **0.24.1**。康复 AI 保留问答、解说与本地候选清单，已接入共用动作资料；聊天不能直接录入健康信息、改训练安排或采用计划。医患聊天独立进入工作台，医生方案由患者核对并通过训练规则后采用。原手动页面继续使用，旧 Agent 与报告 OCR 保存在退役分支。
 
-先读 [管家能力与自检指南](docs/development/AGENT_MODULES_V0_21.md)、[本轮验证与审计对齐](docs/validation/ANKANG_AGENT_2026-10-11.md) 和 [当前交接](docs/HANDOFF.md)。普通聊天已完整接入DeepSeek，支持有限多轮上下文，每条回复显示实际来源；本机隔离TEST后台四次真实联网请求通过，见[对话验收](docs/validation/DEEPSEEK_CONVERSATION_2026-10-11.md)。独立安卓已重打包为0.3.0，详见[三端交付范围](docs/development/ANKANG_DELIVERY_SCOPE.md)和[安卓验收](docs/validation/ANDROID_DEEPSEEK_2026-10-11.md)；全模块任意写入、持续后台任务及通用多轮规划尚未实现。原 [调度设计](docs/plans/ANKANG_CARE_COORDINATION_2026-10-10.md) 与 [医学依据](docs/plans/ANKANG_MEDICAL_EVIDENCE_2026-10-10.md) 保留；工程测试不等同于临床效果或真人动作准确率验收。
+当前入口与范围见 [当前交接](docs/HANDOFF.md)。2026-10-11 的 [管家验收](docs/validation/ANKANG_AGENT_2026-10-11.md)、[对话验收](docs/validation/DEEPSEEK_CONVERSATION_2026-10-11.md)、[三端交付范围](docs/development/ANKANG_DELIVERY_SCOPE.md) 和 [安卓验收](docs/validation/ANDROID_DEEPSEEK_2026-10-11.md) 记录当时版本；其中旧 Agent 模块操作已退役。原 [调度设计](docs/plans/ANKANG_CARE_COORDINATION_2026-10-10.md) 与 [医学依据](docs/plans/ANKANG_MEDICAL_EVIDENCE_2026-10-10.md) 作为历史资料保留；工程测试不等同于临床效果或真人动作准确率验收。
+
+康复助手现仅提供动作库问答、已有结果解说和本地候选计划。共用动作库含63张评估卡、122张训练卡；本地计划先筛选5个已整理起始版本，展示原文条件和候选剂量，核对和试做后才决定采用。见[共用资料与更新方式](docs/rehab-library/README.md)。旧Agent与OCR统一保存在远端 `archive/retired-features`。

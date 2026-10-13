@@ -269,7 +269,7 @@ test('restore entry exists only for an empty health profile and states recovery 
   const h=harness();h.c.healthFixture={needs_profile:true};h.run("api=async()=>healthFixture;state.tab='more';healthPage()");await new Promise(resolve=>setImmediate(resolve));
   assert.match(h.html,/id="restore-form"/);assert.match(h.html,/不包含评估训练录像/);assert.match(h.html,/不恢复家庭授权/);
 });
-test('archive offers reversible trash and local OCR without automatic medical interpretation',async()=>{
-  const h=harness();h.c.healthFixture=healthFixture();h.run("api=async(path)=>path==='/product-trash'?[]:path==='/product-ocr'?{available:false}:healthFixture;state.tab='archive';healthPage()");await new Promise(resolve=>setImmediate(resolve));
-  assert.match(h.html,/回收站/);assert.match(h.html,/移入回收站后可恢复/);assert.match(h.html,/不自动填写指标/);
+test('archive keeps upload and reversible trash; health entry is manual',async()=>{
+  const h=harness();h.c.healthFixture=healthFixture();h.run("api=async(path)=>path==='/product-trash'?[]:healthFixture;state.tab='archive';healthPage()");await new Promise(resolve=>setImmediate(resolve));
+  assert.match(h.html,/回收站/);assert.match(h.html,/移入回收站后可恢复/);assert.match(h.html,/手动记录指标/);assert.match(h.html,/不识字、不自动提取/);assert.doesNotMatch(h.html,/document-ocr|ocr-result/);h.c.document.querySelector('#archive-manual-health').onclick();assert.equal(h.run('state.tab'),'health');
 });

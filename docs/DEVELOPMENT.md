@@ -1,6 +1,6 @@
 # 开发与验证
 
-所有源码在 `rehab_codex_single_camera_v2_1/`。保留这个目录名称以兼容现有环境和数据；它不是应用版本号。版本由 `app/__init__.py` 定义，侧栏复用同一值。
+正式桌面源码在 `rehab_codex_single_camera_v2_1/`，云端与医生工作台在 `cloud_service/`，手机适配在 `android_offline/` 与 `mobile_rehab/`。保留桌面目录名称以兼容现有环境和数据；它不是应用版本号。桌面版本由 `app/__init__.py` 定义，侧栏复用同一值。医患协作接口与隔离测试见[工作台说明](workbench/README.md)。
 
 ## 安装与启动
 
@@ -13,6 +13,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\Setup-Rehab.ps1 -IncludeLa
 ```
 
 省略 `-IncludeLandmarks` 只准备主环境；腕、踝和手指任务还需要可选环境。普通启动不联网安装依赖、不下载模型、不自动采集。启动使用根目录 `启动康复助手.cmd` 或 `Start-Rehab.ps1`。
+
+移动代码目录时，可以用 `Start-Rehab.ps1 -PythonPath <已验证的pythonw.exe> -DataDir <原资料目录>` 保留原数据位置；`New-RehabDesktopShortcut.ps1` 接受同样的两个参数。这里只设置入口，创建快捷方式不会启动软件或迁移数据库。
 
 主依赖固定在 `requirements.lock.txt`。可选环境使用 `requirements.landmarks.lock.txt`，先下载 wheel、核对官方 PyPI SHA256，再从本地文件安装；两套环境不混装 OpenCV。模型分别由两个准备脚本校验来源清单与 hash。
 

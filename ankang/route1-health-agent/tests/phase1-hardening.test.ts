@@ -10,7 +10,6 @@ import { collectFamilyNotifications } from '../src/engine/escalate';
 import { extractHealthValues } from '../src/engine/extract';
 import { canShareWithFamily, parsePrivacyIntent } from '../src/engine/privacy';
 import { buildWeeklyReport } from '../src/engine/report';
-import { demoImageHealthParser } from '../src/adapters/DemoImageHealthParser';
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
@@ -276,16 +275,6 @@ async function main(): Promise<void> {
   const context = buildAgentContext(profile, eventsFrom(demoRecords, seedObservations), TODAY, []);
   assert(context.personTwin.asOf === TODAY, 'Person Twin should use the runtime demo date');
 
-  const photo = await demoImageHealthParser.parse(new Blob(['demo']), {
-    userId: 'demo-elder-route1',
-    capturedAt: `${TODAY}T09:00:00`,
-    kind: 'bloodPressure',
-  });
-  assert(photo.measurements.length === 2, 'demo photo parser should produce the selected blood pressure sample');
-  assert(
-    photo.measurements.every((measurement) => measurement.confidence === 0.6),
-    'demo photo values must expose demo confidence',
-  );
 
   const report = buildWeeklyReport(
     demoRecords,

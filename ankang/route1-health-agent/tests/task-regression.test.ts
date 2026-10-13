@@ -1,5 +1,4 @@
 import { createTaskFromFinding } from '../src/engine/tasks';
-import { demoImageHealthParser } from '../src/adapters/DemoImageHealthParser';
 import type { Finding } from '../src/types';
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -56,17 +55,7 @@ async function main(): Promise<void> {
     'elder safety task description must be elder-directed, not the family carePath',
   );
 
-  const parsed = await demoImageHealthParser.parse(new Blob(['demo']), {
-    userId: 'demo-elder-route1',
-    capturedAt: '2026-09-07T09:00:00.000Z',
-    kind: 'bloodPressure',
-  });
-  assert(
-    parsed.measurements.every((measurement) => measurement.visibility === undefined),
-    'the image parser must remain privacy-neutral and let the caller assign visibility',
-  );
-
-  console.log('PASS: contact_family task path and photo privacy regression coverage');
+  console.log('PASS: contact_family task regression coverage');
 }
 
 void main();

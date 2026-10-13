@@ -3,6 +3,8 @@ import html
 import json
 import mimetypes
 import queue
+import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 
@@ -73,7 +75,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         self.nav_buttons = {}
         self.pending = 0
         self.pending_export = None
-        self.pending_image = None
         self.interface_buttons = {}
         self.extension_status = {}
         self.timeline_entries = []
@@ -150,6 +151,9 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         top.addWidget(self.user_select)
         self.account_button=button('我的档案',self._account)
         top.addWidget(self.account_button)
+        self.workbench_button = button('工作台', self._workbench)
+        self.workbench_button.setAccessibleName('工作台：云账号、医生对话和方案')
+        top.addWidget(self.workbench_button)
         top.addWidget(button('通知',lambda:self.navigate('notifications')))
         top.setContentsMargins(0,0,0,0)
         self.product_top=QWidget();self.product_top.setLayout(top);main.addWidget(self.product_top)
@@ -275,15 +279,9 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         row = QHBoxLayout()
         row.addWidget(button('添加资料 / 图片 / 视频',self._add_attachment,True))
         row.addWidget(button('导出所选附件',self._export_attachment))
-        row.addWidget(button('识别健康图片',self._parse_image))
+        row.addWidget(button('手动记录指标',self._open_manual_health))
         row.addStretch();layout.addLayout(row)
-        self.image_status = label('图片识别先产生候选结果，经本人确认才写入健康记录。','productMuted')
-        layout.addWidget(self.image_status)
-        self.image_candidates = table(['识别项目','候选值','单位'])
-        layout.addWidget(self.image_candidates)
-        self.image_confirm = button('确认识别结果并记录',self._confirm_image)
-        self.image_confirm.setEnabled(False)
-        layout.addWidget(self.image_confirm)
+        layout.addWidget(label('报告原件仅作资料保存，不识字、不自动提取指标。请核对原件后手动填写。','productMuted'))
         tabs.addTab(archive,'健康档案与附件')
         self._devices_tab(tabs)
         box.addStretch()
@@ -466,7 +464,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             self.dictation_status.clear();self.dictation_status.hide()
             self.record_receipt.setText('正在理解与处理记录，请稍候…')
         self.backend.submit(operation,selected,payload,scope if selected else None,token=token)
-        self.care_controls.set_busy(True)
         self._completion_controls()
         return True
 
@@ -488,8 +485,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
                 self._dictation_result(result,error)
                 continue
             if error:
-                if operation=='archive.save':self.parse_after_archive=None
-                if operation=='archive.read':self.pending_parse_attachment=False
                 if operation == 'extensions.status':self._manual_extension_refresh=False
                 self.storage_label.setText('本机操作未完成')
                 self._message(error,severity='info' if '语音已取消' in error else 'danger')
@@ -498,9 +493,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
                 self.pending_export = None
                 continue
             self.storage_label.setText('已连接本机数据')
-            if operation in ('care.confirm','care.cancel'):
-                self.care_controls.result(result)
-                self._request('snapshot')
+            if operation=='rehab.plan.draft':
+                self._show_local_plan(result)
                 continue
             if isinstance(result,dict) and result.get('fileExport'):
                 self.pending_export = None
@@ -522,7 +516,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             if operation == 'profile.save':
                 if self.owner != owner:
                     self._clear_views()
-                    self.image_confirm.setEnabled(False)
                 self.owner = owner
                 stored = result['profile']
                 self.profiles = [p for p in self.profiles if p['ownerId'] != owner]+[stored]
@@ -540,24 +533,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             if operation == 'emergency.contacts':
                 QMessageBox.information(self,'需要帮助',f"急救电话：{result['emergency']}\n家属：{result['familyName'] or '未填写'}\n电话：{result['familyPhone'] or '未填写'}\n社区医生：{result['communityDoctorPhone'] or '未填写'}\n\n请使用电话联系；软件没有自动拨号或发送求助。")
                 continue
-            if operation == 'image.parse':
-                self.pending_image = result
-                values = [(METRIC_LABELS.get(m['metric'],(m['metric'],''))[0],m['value'],m['unit']) for m in result['measurements']]
-                values += [(m['name'],m['value'],m['unit']) for m in result['labResults']]
-                rows(self.image_candidates,values)
-                self.image_candidates.setEditTriggers(QAbstractItemView.DoubleClicked|QAbstractItemView.EditKeyPressed)
-                for row in range(self.image_candidates.rowCount()):
-                    for column in (0,2):self.image_candidates.item(row,column).setFlags(self.image_candidates.item(row,column).flags() & ~Qt.ItemIsEditable)
-                self.image_confirm.setEnabled(bool(values))
-                self.image_status.setText('识别结果尚未保存。对照原图核对；双击候选数值可更正，确认后才记录。')
-                if self.navigate('health'):
-                    self.health_tabs.setCurrentIndex(2)
-                continue
             if operation == 'archive.read':
-                if getattr(self,'pending_parse_attachment',False):
-                    self.pending_parse_attachment=False
-                    self._request('image.parse',{'bytes':result['bytes'],'mediaType':result['mediaType'],'kind':'report','consent':True})
-                    continue
                 self._write_file(self.pending_export,bytes(result['bytes']))
                 self.pending_export = None
                 continue
@@ -584,10 +560,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
                         sent=(token or {}).get('drafts',{}).get(key)
                         if sent is not None and view.toPlainText()==sent:view.clear()
                     if operation=='voice.input' and self.active_page=='assistant':self._show_assistant_section('conversation')
-                if operation in ('image.confirm','lifecycle.clear'):
-                    self.pending_image = None
-                    self.image_confirm.setEnabled(False)
-                    rows(self.image_candidates,[])
                 if operation not in ('snapshot','extensions.status'):
                     self._message('管家已回复。' if operation in ('chat','voice.input') else '操作已完成，已刷新本机资料。',severity='success')
                 if operation=='profile.save' and (getattr(self,'initial_answers',None) or {}).get('owner')==owner:
@@ -597,9 +569,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
                 # and the unsent conversation available. Archive entry is explicit.
                 if operation in ('archive.save','media.import') and self.active_page != 'assistant' and self.navigate('health',refresh=False):
                     self.health_tabs.setCurrentIndex(2)
-                if operation=='archive.save' and getattr(self,'parse_after_archive',None):
-                    payload=self.parse_after_archive;self.parse_after_archive=None
-                    self._request('image.parse',payload)
         if not self.owner and self.profiles and not self.pending and not self.legacy.busy and not self.closing:
             self._select_owner(self.profiles[0]['ownerId'])
         if getattr(self,'onboarding_needed',False) and not self.pending and not self.legacy.busy and not self.closing:
@@ -609,7 +578,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         if self.closing and self.legacy._allow_close:
             self.close()
         self._completion_controls()
-        self.care_controls.set_busy(bool(self.pending))
         if getattr(self,'rehab_trend_anchor',None) and not self.legacy.busy:
             anchor,self.rehab_trend_anchor=self.rehab_trend_anchor,None
             for i,session in enumerate(self.legacy.sessions):
@@ -621,6 +589,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             self.refresh_needed = False
             self._request('snapshot')
         self._refresh_rehab_after_save()
+        self._schedule_workbench_sync()
 
     def _refresh_users(self):
         self.user_select.blockSignals(True)
@@ -629,6 +598,81 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             self.user_select.addItem(p['profile']['name'],p['ownerId'])
         self.user_select.setCurrentIndex(self.user_select.findData(self.owner))
         self.user_select.blockSignals(False)
+
+    def _workbench(self):
+        if self.pending or self.legacy.busy or self.legacy._camera_testing or self.legacy.state in ('CONNECTING', 'PREVIEW', 'ONLINE', 'SAVE_FAILED'):
+            self._message('请先结束并保存当前任务，再打开工作台。')
+            return
+        from .cloud_account import CloudAccountDialog
+        from ..cloud_account import CloudError
+        current = next((p for p in self.profiles if p['ownerId'] == self.owner), None)
+        local_id = self.owner if current and current.get('dataMode') == 'personal' else None
+        scope = dict(self.legacy._body_scope_key(), participant_id=self.owner)
+        def snapshots():
+            store = getattr(self.legacy.runtime, 'store', None)
+            return store.list_sessions() if store else []
+        def product_snapshot():
+            return self.backend.call('snapshot', local_id, {}, scope)
+        try:
+            dialog = CloudAccountDialog(self.legacy.runtime.data_dir / 'cloud-account', local_id,
+                current['profile']['name'] if local_id else '', snapshots, self, product_snapshot=product_snapshot,
+                rehab_store=getattr(self.legacy.runtime, 'store', None), scope=scope)
+            dialog.exec()
+            dialog.deleteLater()
+            self._request('snapshot')
+        except (ValueError, CloudError) as exc:
+            self._message(str(exc))
+
+    def _schedule_workbench_sync(self):
+        previous = getattr(self, '_workbench_sync_future', None)
+        if previous and previous.done():
+            try:
+                unread = previous.result()
+                if getattr(self, '_workbench_sync_owner', None) == self.owner and unread is not None:
+                    self.workbench_button.setText('工作台' + (f'（{unread}）' if unread else ''))
+            except Exception:
+                pass
+            self._workbench_sync_future = None
+        if self.closing or not self.owner or time.monotonic() - getattr(self, '_workbench_last_sync', 0) < 20:
+            return
+        if getattr(self, '_workbench_sync_future', None) and not self._workbench_sync_future.done():
+            return
+        self._workbench_last_sync = time.monotonic()
+        from ..cloud_account import CloudAccount, CloudError
+        directory = self.legacy.runtime.data_dir / 'cloud-account'
+        if not (directory / 'cloud-outbox-v1.sqlite3').exists():
+            return
+        try:
+            client = CloudAccount(directory)
+            session = client.session()
+            with client.db() as db:
+                binding = db.execute('SELECT patient_id FROM bindings WHERE local_id=?', (self.owner,)).fetchone()
+            if not session or not binding or binding[0] != session['patient_id']:
+                return
+        except CloudError:
+            return
+        owner = self.owner
+        scope = dict(self.legacy._body_scope_key(), participant_id=owner)
+        store = getattr(self.legacy.runtime, 'store', None)
+        if not store:
+            return
+        if not hasattr(self, '_workbench_sync_pool'):
+            self._workbench_sync_pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='workbench-sync')
+        def work():
+            try:
+                if client.consent(owner):
+                    client.queue_product(owner, self.backend.call('snapshot', owner, {}, scope))
+                    client.queue_rehab(owner, store)
+                    client.sync()
+                try:
+                    messages = client.sync_messages()
+                    return messages.get('unread_count', 0)
+                except CloudError:
+                    return 0
+            except (CloudError, ValueError, RuntimeError):
+                return None  # Persisted queue remains pending until a later retry.
+        self._workbench_sync_owner = owner
+        self._workbench_sync_future = self._workbench_sync_pool.submit(work)
 
     def _user_changed(self):
         selected = self.user_select.currentData()
@@ -651,11 +695,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         if self.notice.text()=='请先等待操作完成，并结束保存当前任务，再切换用户。':
             self._message('')
         self._clear_views()
-        self.pending_image = None
         for dialog in (getattr(self,'last_detail',None),self.legacy.silver_dialog):
             if dialog:dialog.close()
-        self.image_confirm.setEnabled(False)
-        rows(self.image_candidates,[])
         self._align_rehab(stored)
         self.chat.clear()
         self.family_summary.clear()
@@ -663,12 +704,10 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         self._request('snapshot')
 
     def _clear_views(self):
-        self.parse_after_archive=None;self.pending_parse_attachment=False
-        self.care_controls.clear()
         self.photo_requested=False;self.photo_return_needed=False
         # No old-owner data remains visible while the new owner is loading or a read fails.
         for grid in (self.plan_table,self.metrics,self.attachments,self.medications,self.timeline,
-                     self.trends,self.notifications,self.image_candidates,self.health_timeline,self.medication_history):
+                     self.trends,self.notifications,self.health_timeline,self.medication_history):
             rows(grid,[])
         for view in (self.chat,self.family_summary,self.report,self.audit_view,self.dock_chat):
             view.clear();view.setProperty('renderedConversation',None)
@@ -698,7 +737,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
     def _care_scope_changed(self,*_):
         # The legacy source switch can also change usage. Clear immediately, and
         # let the regular poll coalesce both signals into a current-scope read.
-        self.care_controls.clear()
         if self.owner and not self.closing:self.refresh_needed=True
 
     def _align_rehab(self,stored):
@@ -850,31 +888,42 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         else:
             self._message('请先选择要导出的附件。')
 
-    def _parse_image(self):
-        if not self.snapshot.get('capabilities',{}).get('imageRecognitionAvailable'):
-            self._message('尚未配置既有图片识别代理服务。可先添加图片附件或手动记录指标。')
-            return
-        entries=self.snapshot.get('attachments',[]);r=self.attachments.currentRow()
-        if 0<=r<len(entries) and entries[r]['mediaType'].startswith('image/'):
-            if QMessageBox.question(self,'识别已选图片','把这份资料发送到已配置的识别服务？核对确认后才保存识别结果。')==QMessageBox.Yes:
-                self.pending_parse_attachment=True
-                self._request('archive.read',{'id':entries[r]['id']})
-            return
-        filename,_ = QFileDialog.getOpenFileName(self,'选择健康图片','','图片 (*.png *.jpg *.jpeg *.webp)')
-        if filename and QMessageBox.question(self,'识别图片','先保存原图，再发送到已配置的图片识别服务；识别后还需你核对确认。是否继续？') == QMessageBox.Yes:
-            path = Path(filename)
-            media=mimetypes.guess_type(path.name)[0]
-            self.parse_after_archive={'_local_file':str(path),'mediaType':media,'kind':'report','consent':True}
-            self._request('archive.save',{'_local_file':str(path),'name':path.stem,'fileName':path.name,'mediaType':media,'category':'影像资料','visibility':'private'})
+    def _local_plan_dialog(self):
+        dialog=QDialog(self);dialog.setWindowTitle('本地候选计划');layout=QVBoxLayout(dialog)
+        layout.addWidget(label('本地筛选候选动作，不调用付费模型。先支持肩、髋、膝、踝的起始模板；条件和试做须逐项核对。'))
+        fields={}
+        for key,title in (('goal','训练目标'),('region','身体部位'),('equipment','可用器材（逗号分隔）'),('restrictions','已知限制（逗号分隔，无则留空）')):
+            layout.addWidget(label(title));fields[key]=QLineEdit();layout.addWidget(fields[key])
+        fields['equipment'].setPlaceholderText('例如：稳固椅、硬床、滑布、垫、稳定桌面')
+        layout.addWidget(label('当前任务等级（不是肌力分级）'))
+        level=QComboBox();level.addItems(['L0','L1','L2','L3']);layout.addWidget(level)
+        confirmed=QCheckBox('已核对当前限制、器材与适用条件');layout.addWidget(confirmed)
+        def generate():
+            payload={k:v.text().strip() for k,v in fields.items()}
+            payload.update(equipment=[v.strip() for v in payload['equipment'].replace('，',',').split(',') if v.strip()],
+                restrictions=[v.strip() for v in payload['restrictions'].replace('，',',').split(',') if v.strip()],
+                level=level.currentIndex(),screeningConfirmed=confirmed.isChecked())
+            if not payload['goal'] or not payload['region'] or not confirmed.isChecked():
+                QMessageBox.information(dialog,'请补充信息','请填写目标、部位，并核对适用条件。');return
+            dialog.accept();self._request('rehab.plan.draft',payload)
+        layout.addWidget(button('生成候选计划',generate,True));dialog.exec()
 
-    def _confirm_image(self):
-        import math
-        try:
-            values=[float(self.image_candidates.item(r,1).text()) for r in range(self.image_candidates.rowCount())]
-            if not values or not all(math.isfinite(v) for v in values):raise ValueError()
-        except (ValueError,TypeError):
-            self._message('请核对候选数值，填写有效数字后再确认。');return
-        self._request('image.confirm',{'confirmed':True,'values':values})
+    def _show_local_plan(self, result):
+        dialog=QDialog(self);dialog.setWindowTitle('本地候选计划 · 待核对');dialog.resize(700,600)
+        layout=QVBoxLayout(dialog);view=QTextBrowser();view.setObjectName('local-plan-preview')
+        parts=[result['note']]
+        for item in result.get('items',[]):
+            parts.extend(['',f"{item['id']}｜{item['name']}",f"候选版本：{item['variant']}",
+                f"器材原文：{item['equipment']}",f"开始条件：{item['startConditions']}",
+                f"试做与候选剂量原文：{item['sourceDose']}",f"停止或调整条件：{item['stopConditions']}"])
+        view.setPlainText('\n'.join(parts));layout.addWidget(view)
+        layout.addWidget(button('关闭',dialog.accept));dialog.exec()
+
+    def _open_manual_health(self):
+        if self.navigate('health'):
+            self.health_tabs.setCurrentIndex(0)
+            self.health_status_sections.setCurrentIndex(1)
+            self.metric_value.setFocus()
 
     def _backup(self):
         if self.pending:
@@ -949,8 +998,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             self.tasks.addItem('当前没有待办。用药和健康照护任务会依据已填写资料与记录生成。')
         concerns = s['twin']['personTwin'].get('activeConcerns',[])
         self.home_status.setText('；'.join(concerns) if concerns else '已有 '+str(len(state['events']))+' 条健康记录；暂未形成需关注的摘要。数据不足时不能判断整体健康状态。')
-        self.agent_status.setText('DeepSeek 对话已配置；每条回复会标明实际来源。' if s.get('conversationModelAvailable') else '本地模块查询与页面调度可用；DeepSeek 对话尚未配置。')
-        self.care_controls.refresh(s.get('carePending',[]),s.get('carePendingUnavailable',False))
+        self.agent_status.setText('DeepSeek 对话已配置；每条回复会标明实际来源。' if s.get('conversationModelAvailable') else '本地动作资料可用；DeepSeek 尚未配置。助手仅问答、解说与候选计划。')
         self._render_conversation()
         twin = s['twin']['personTwin']
         self.twin_text.setText(' · '.join(title+'：'+STATUS_LABELS.get(twin[key],twin[key]) for key,title in [('activity','活动'),('mobility','行动'),('sleep','睡眠'),('nightActivity','夜间活动')])+'\n数据更新时间：'+display_time(s['twin'].get('dataUpdatedAt'))+'\n这是已有资料的状态摘要，不是诊断。')
@@ -962,8 +1010,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             latest[m['metric']] = m
         rows(self.metrics,[(METRIC_LABELS[k][0],str(m['value'])+' '+m['unit'],display_time(m['timestamp']),self._source_label(m['source'])) for k,m in latest.items()])
         rows(self.attachments,[(a['name'],a['category'],a['mediaType'],display_time(a['date']),'仅本人' if a['visibility']=='private' else '可共享') for a in s['attachments']],keys=[a['id'] for a in s['attachments']])
-        if not self.pending_image:
-            self.image_status.setText('既有识别代理已配置，上传前需要本人许可。' if s['capabilities']['imageRecognitionAvailable'] else '图片 / 视频附件可保存。图片识别代理尚未配置，不会生成假识别结果。')
         rows(self.medications,[(m['name'],m.get('dose') or '未填写',m.get('purpose') or '未填写',m.get('times') or '未填写',STATUS_LABELS[m['status']]) for m in medications],keys=[m['id'] for m in medications])
         self.medication_today.setText('；'.join(STATUS_LABELS[t['status']]+' · '+t['title'].removeprefix('💊 ').strip() for t in med_tasks) or '尚无今日用药核对任务。')
         family = s['family']
@@ -1042,6 +1088,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         self.backend.voice.cancel()
         if self.legacy._allow_close:
             for host in getattr(self, 'phone_hosts', {}).values(): host.close()
+            if hasattr(self, '_workbench_sync_pool'):
+                self._workbench_sync_pool.shutdown(wait=False, cancel_futures=True)
             self.backend.close()
             self.poller.stop()
             self.refresher.stop()

@@ -24,7 +24,7 @@ for name in ['app.js','index.html','style.css']:
 # Formal UI is copied unchanged. Only non-visual loaders are inserted in HTML.
 static = ROOT / 'mobile_rehab/static'
 shutil.copytree(static, OUTPUT / 'static', dirs_exist_ok=True)
-adapters = ''.join('<script src="' + path + '"></script>' for path in ['/local/engine.js','/local/product.js','/local/model-policy.js','/local/deepseek.js','/local/store.js','/local/motion.js','/local/lin-profile.js','/local/practice.js','/ocr/tesseract.min.js','/local/ocr.js','/local/cloud.js','/local/local-api.js'])
+adapters = ''.join('<script src="' + path + '"></script>' for path in ['/local/engine.js','/local/product.js','/local/model-policy.js','/local/deepseek.js','/local/store.js','/local/motion.js','/local/lin-profile.js','/local/practice.js','/local/cloud.js','/local/account.js','/local/local-api.js'])
 for source, target in [('unified.html', 'index.html'), ('index.html', 'capture.html')]:
     html = (static / source).read_text(encoding='utf-8').replace('<head>', '<head>' + adapters)
     (OUTPUT / target).write_text(html, encoding='utf-8')
@@ -35,19 +35,12 @@ if not (vendor / 'vision_bundle.cjs').exists():
     raise SystemExit('Run npm ci in android_offline first')
 shutil.copytree(vendor / 'wasm', OUTPUT / 'vendor/wasm', dirs_exist_ok=True)
 shutil.copy2(vendor / 'vision_bundle.cjs', OUTPUT / 'vendor/vision_bundle.js')
-ocr = OUTPUT / 'ocr'
-ocr.mkdir(exist_ok=True)
-for name in ['tesseract.min.js', 'worker.min.js', 'tesseract.min.js.LICENSE.txt', 'worker.min.js.LICENSE.txt']:
-    shutil.copy2(PROJECT / 'node_modules/tesseract.js/dist' / name, ocr / name)
-for name in ['tesseract-core-lstm.wasm.js', 'tesseract-core-simd-lstm.wasm.js', 'LICENSE']:
-    shutil.copy2(PROJECT / 'node_modules/tesseract.js-core' / name, ocr / name)
-ocr_weights = {'chi_sim': 'a5fcb6f0db1e1d6d8522f39db4e848f05984669172e584e8d76b6b3141e1f730', 'eng': '7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2'}
-for language, digest in ocr_weights.items():
-    model = PROJECT / '.runtime/ocr-data' / (language + '.traineddata')
-    if hashlib.sha256(model.read_bytes()).hexdigest() != digest:
-        raise SystemExit('OCR checksum mismatch: ' + language)
-    shutil.copy2(model, ocr / model.name)
-(ocr / 'manifest.json').write_text(json.dumps({'engine':'tesseract.js@6.0.1','models':ocr_weights,'source':'https://github.com/tesseract-ocr/tessdata_fast','license':'Apache-2.0'}), encoding='utf-8')
+# Remove stale generated OCR files from previous builds, not source or user data.
+retired_ocr = OUTPUT / 'ocr'
+if not OUTPUT.resolve().is_relative_to(PROJECT.resolve()) or not retired_ocr.resolve().is_relative_to(OUTPUT.resolve()):
+    raise SystemExit('Generated OCR cleanup path escaped the Android assets directory')
+shutil.rmtree(retired_ocr, ignore_errors=True)
+(OUTPUT / 'local/ocr.js').unlink(missing_ok=True)
 data = dict(version='android-local-projection-1', rehab=[dict(
     id=eid, **exercise_spec(eid), joint_label=JOINT_LABELS[exercise_spec(eid)['joint']],
     instructions=exercise_instructions(eid)) for eid in EXERCISE_IDS],

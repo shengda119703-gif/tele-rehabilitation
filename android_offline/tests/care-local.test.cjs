@@ -111,43 +111,46 @@ async function setupLocal(h){
 }
 const post=(h,route,p)=>h.local.request(route,{method:'POST',body:JSON.stringify(p)});
 
-test('owner-bound local route prepares, confirms compound actions and reopens without duplicate writes',async()=>{
- const h=await local();await setupLocal(h);const schedule=h.local.store.value.daily.schedules[0];
- const w=await post(h,'/api/product/care.prepare',{requestId:'local:compound',intents:[{kind:'record_dose',medId:'test-med',date:h.today,time:'08:00',status:'taken'},{kind:'reschedule_rehab',scheduleId:schedule.id,date:h.today,time:'16:00'}]});
- assert.equal(w.status,'awaiting_confirmation');assert.equal(h.local.store.value.daily.doseAudit.length,0);assert.equal(h.local.store.value.daily.schedules[0].time,'14:00');
- const done=await post(h,'/api/unified/care.confirm',{id:w.id,confirmationToken:w.confirmationToken,confirmed:true});assert.equal(done.status,'succeeded');assert.equal(h.local.store.value.daily.doseAudit.length,1);assert.equal(h.local.store.value.daily.schedules[0].time,'16:00');
- const reopened=await local(h.storage);const again=await post(reopened,'/api/product/care.confirm',{id:w.id,confirmationToken:w.confirmationToken,confirmed:true});assert.equal(again.status,'succeeded');assert.equal(reopened.local.store.value.daily.doseAudit.length,1);
- const status=await post(h,'/api/product/care.status',{id:w.id});assert.equal(status.confirmationToken,undefined);
- const b=await h.local.backup();assert.equal(b.data.careReceipts,undefined);assert(!JSON.stringify(b).includes(w.confirmationToken));assert(!Object.keys(b.data.kv).some(k=>k.startsWith('care:')));
+test('retired Agent routes cannot mutate daily facts; manual pages still persist and reopen',async()=>{
+ const h=await local();await setupLocal(h);const schedule=h.local.store.value.daily.schedules[0],before=plain(h.local.store.value.daily);
+ for(const operation of ['care.prepare','care.confirm','care.cancel','care.status','care.overview','care.next'])await assert.rejects(()=>post(h,'/api/product/'+operation,{}),/Agent 代操作已下架/);
+ assert.deepEqual(plain(h.local.store.value.daily),before);
+ await post(h,'/api/unified/daily.dose',{medId:'test-med',date:h.today,time:'08:00',status:'taken'});
+ await post(h,'/api/unified/daily.schedule',{...schedule,time:'16:00'});
+ const reopened=await local(h.storage);assert.equal(reopened.local.store.value.daily.doseAudit.length,1);assert.equal(reopened.local.store.value.daily.schedules[0].time,'16:00');
+ assert.equal(reopened.local.store.value.careReceipts,undefined);assert(!Object.keys(reopened.local.store.value.kv).some(k=>k.startsWith('care:')));
 });
 
-test('phone care routing rejects owner/scope overrides, unsafe methods and foreign origins',async()=>{
- const h=await local();await setupLocal(h);
- await assert.rejects(()=>post(h,'/api/product/care.overview',{ownerId:crypto.randomUUID()}),/字段/);
- await assert.rejects(()=>post(h,'/api/unified/care.prepare',{requestId:'forged',scope:{participant_id:crypto.randomUUID()},intents:[]}),/字段/);
+test('retired care routing rejects unsafe methods and foreign origins without owner writes',async()=>{
+ const h=await local();await setupLocal(h);const before=plain(h.local.store.value.daily);
+ await assert.rejects(()=>post(h,'/api/product/care.overview',{ownerId:crypto.randomUUID()}),/Agent 代操作已下架/);
+ await assert.rejects(()=>post(h,'/api/unified/care.prepare',{requestId:'forged',scope:{participant_id:crypto.randomUUID()},intents:[]}),/Agent 代操作已下架/);
  await assert.rejects(()=>h.local.request('/api/product/care.prepare'),/明确的照护/);
  await assert.rejects(()=>post(h,'https://other.test/api/product/care.overview',{}),/本地档案/);
  await assert.rejects(()=>h.local.request('/api/product/care.overview?ownerId=another'),/查询参数/);
- const overview=await h.local.request('/api/product/care.overview');assert.equal(overview.scope.participant_id,h.owner);assert.equal(overview.doses[0].status,'unrecorded');assert.equal(h.local.store.value.daily.doseAudit.length,0);
+ await assert.rejects(()=>h.local.request('/api/product/care.overview'),/Agent 代操作已下架/);
+ assert.deepEqual(plain(h.local.store.value.daily),before);
 });
 
-test('source chat carries care workflow and retains original next-training feedback gates',async()=>{
- const h=await local();await setupLocal(h);
- const response=await post(h,'/api/product/chat',{text:'记录今天08:00的合成测试药已服用'});
- assert.equal(response.turn.care.workflow.status,'awaiting_confirmation');assert.equal(h.local.store.value.daily.doseAudit.length,0);assert.match(response.turn.reply.text,/尚未执行/);
- let next=await h.local.request('/api/product/care.next');assert.equal(next.available,true);
- const p=h.local.store.value.plans[0];h.local.store.change(v=>v.jobs.push({id:crypto.randomUUID(),exercise:'test-exercise',side:'left',mode:'training',state:'done',created_at:new Date().toISOString(),measurement_version:'android-local-projection-1',plan_id:p.id,entry_key:p.items[0].key,result:{summary:{plan_completed:true},local_report:{validRatio:.9,contract:'android-local-projection-1'}}}));
- next=await h.local.request('/api/product/care.next');assert.equal(next.available,false);assert.match(next.reason,/训练感受/);
- h.local.store.change(v=>v.jobs[0].feedback={pain:1,fatigue:0});next=await h.local.request('/api/product/care.next');assert.equal(next.available,false);assert.match(next.reason,/不适/);
+test('rehabilitation chat stays read-only for daily operations and preserves manual training feedback gates',async()=>{
+ const h=await local();await setupLocal(h);const before=plain(h.local.store.value.daily);
+ const response=await post(h,'/api/product/chat',{text:'帮我把训练改到晚上八点'});
+ assert.equal(response.turn.care,undefined);assert.deepEqual(plain(h.local.store.value.daily),before);
+ const p=h.local.store.value.plans[0];assert.equal(h.local.planProgress(p).blocked,'');
+ h.local.store.change(v=>v.jobs.push({id:crypto.randomUUID(),exercise:'test-exercise',side:'left',mode:'training',state:'done',created_at:new Date().toISOString(),measurement_version:'android-local-projection-1',plan_id:p.id,entry_key:p.items[0].key,result:{summary:{plan_completed:true},local_report:{validRatio:.9,contract:'android-local-projection-1'}}}));
+ assert.match(h.local.planProgress(p).blocked,/训练感受/);
+ h.local.store.change(v=>v.jobs[0].feedback={pain:1,fatigue:0});assert.match(h.local.planProgress(p).blocked,/不适/);
+ assert.equal(h.local.planProgress(p).completed,0);
 });
 
-test('original lifecycle clear removes local care approvals/receipts while retaining daily facts',async()=>{
+test('original lifecycle clear removes retained legacy approvals while retaining manual daily facts',async()=>{
  const h=await local();await setupLocal(h);h.c.PhoneStore.files.all=async()=>[];
- const w=await post(h,'/api/product/care.prepare',{requestId:'clear:test',intents:[{kind:'record_dose',medId:'test-med',date:h.today,time:'08:00',status:'taken'}]});
- await post(h,'/api/product/care.confirm',{id:w.id,confirmationToken:w.confirmationToken,confirmed:true});const daily=plain(h.local.store.value.daily);
+ await post(h,'/api/unified/daily.dose',{medId:'test-med',date:h.today,time:'08:00',status:'taken'});
+ h.local.store.write('care:personal:'+h.owner,{workflows:[{confirmationToken:'TEST_LEGACY_TOKEN'}]});
+ h.local.store.change(v=>v.careReceipts=[{idempotencyKey:'TEST-legacy'}]);const daily=plain(h.local.store.value.daily);
  await h.local.domain.request('lifecycle.clear',h.owner,{confirmOwner:h.owner},new Date());
  assert.equal(h.local.store.value.careReceipts,undefined);assert(!Object.keys(h.local.store.value.kv).some(k=>k.startsWith('care:')));assert.deepEqual(plain(h.local.store.value.daily),daily);
- await assert.rejects(()=>post(h,'/api/product/care.status',{id:w.id}),/照护任务/);
+ await assert.rejects(()=>post(h,'/api/product/care.status',{id:'TEST-legacy'}),/Agent 代操作已下架/);
 });
 
 test('actual local upload route queries its durable operation after lost reply and refuses duplicate writes',async()=>{

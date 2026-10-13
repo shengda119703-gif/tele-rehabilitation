@@ -390,8 +390,6 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
         install_unified(app, owner, shared, small_json)
     from .voice import install_voice
     install_voice(app, data_dir, owner)
-    from .ocr import install_ocr
-    install_ocr(app, data_dir, owner)
 
     @app.middleware('http')
     async def protect(request, call_next):
