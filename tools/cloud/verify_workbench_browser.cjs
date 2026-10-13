@@ -64,8 +64,8 @@ async function main(){
   await d.getByRole('button',{name:'编辑草稿',exact:true}).click();
   const staleDraft=await dctx.newPage();staleDraft.on('pageerror',e=>errors.push(e.message));await staleDraft.goto(origin+'/care');await staleDraft.locator(`[data-patient="${ident}"]`).click();await staleDraft.getByRole('button',{name:'编辑草稿',exact:true}).click();await staleDraft.getByLabel('目标次数',{exact:true}).fill('5');await staleDraft.getByRole('button',{name:'保存草稿',exact:true}).click();await staleDraft.getByRole('button',{name:'编辑草稿',exact:true}).waitFor();
   await d.getByLabel('目标次数',{exact:true}).fill('4');await d.getByRole('button',{name:'保存草稿',exact:true}).click();await d.getByText('服务器未保存这次修改，请保留当前填写内容，核对提示后重新打开最新方案。',{exact:true}).waitFor();
-  assert.equal(await d.getByLabel('目标次数',{exact:true}).inputValue(),'4');await d.waitForFunction(()=>!document.getElementById('new-plan').disabled);assert.equal(await d.getByRole('button',{name:'重试待保存草稿',exact:true}).count(),0);result.stale_draft_rejection_retains_input_without_locking_future_edits=true;
-  await staleDraft.close();await d.getByRole('button',{name:'编辑草稿',exact:true}).click();await d.getByLabel('目标次数',{exact:true}).fill('4');await d.getByRole('button',{name:'保存草稿',exact:true}).click();
+  assert.equal(await d.getByLabel('目标次数',{exact:true}).inputValue(),'4');await d.waitForFunction(()=>!document.getElementById('new-plan').disabled&&[...document.querySelectorAll('#plans .cloud-plan-items p')].some(p=>p.textContent.startsWith('5 次')));assert.equal(await d.getByRole('button',{name:'重试待保存草稿',exact:true}).count(),0);result.stale_draft_rejection_retains_input_without_locking_future_edits=true;
+  await staleDraft.close();await d.getByRole('button',{name:'编辑草稿',exact:true}).click();await d.waitForFunction(()=>document.querySelector('#plan-form [name="target_reps"]')?.value==='5');await d.getByLabel('目标次数',{exact:true}).fill('4');await d.getByRole('button',{name:'保存草稿',exact:true}).click();await d.locator('#plan-form').waitFor({state:'detached'});
   await d.getByRole('button',{name:'核对并发布',exact:true}).waitFor();d.once('dialog',dialog=>dialog.accept());await d.getByRole('button',{name:'核对并发布',exact:true}).click();await d.getByRole('button',{name:'以此创建新版本',exact:true}).waitFor();
   plans=await api(pctx,`/patients/${ident}/plans`);assert.equal(plans.items.length,1);assert.equal(plans.items[0].status,'PUBLISHED');assert.equal(plans.items[0].items[0].settings.target_reps,4);result.structured_plan_edit_publish=true;
   await p.reload();await p.getByRole('heading',{name:'TEST 医生方案',exact:true}).waitFor();assert.equal(await p.getByRole('button',{name:/采用/}).count(),0);
@@ -133,4 +133,4 @@ async function main(){
  }catch(e){result.passed=false;result.error=e.message;result.browser_errors=errors;await fs.writeFile(path.join(output,'result.json'),JSON.stringify(result,null,2));await d.screenshot({path:path.join(output,'failure-doctor.png'),fullPage:true});await p.screenshot({path:path.join(output,'failure-patient.png'),fullPage:true});throw e;}
  finally{for(const page of[p,d])if(await page.locator('#logout').isVisible())await page.getByRole('button',{name:'退出登录',exact:true}).click().catch(()=>{});await browser.close();}
 }
-main().catch(e=>{console.error(e.message);process.exitCode=1;});
+main().catch(e=>{console.error(e.stack||e.message);process.exitCode=1;});
