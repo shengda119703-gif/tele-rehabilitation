@@ -14,20 +14,39 @@ test('chat never changes health, consent or care even when text asks to record/c
  assert.equal(after.careAvailable,false);assert.deepEqual(after.agentTools,[]);assert.deepEqual(after.carePending,[]);assert.equal(hostWrites,0);assert.equal(modelCalls,0);
  await assert.rejects(call('care.confirm',{confirmed:true}),/下架/);
 });
-test('partial card is never retrievable; grounded Q&A uses one model call and private turns use none',async()=>{
- assert.equal(catalogue.length,24);assert.equal(catalogue.filter(c=>c.complete).length,23);assert.equal(searchCards('E-LOW-010 怎么做').length,0);
+test('full library and short names are searchable; grounded Q&A uses one model call and private turns use none',async()=>{
+ assert.equal(catalogue.length,185);assert.equal(catalogue.filter(c=>c.complete).length,185);
+ assert.equal(catalogue.filter(c=>c.kind==='assessment').length,63);assert.equal(catalogue.filter(c=>c.kind==='training').length,122);
+ assert.equal(new Set(catalogue.map(c=>c.id)).size,185);assert.equal(searchCards('e-low-010 怎么做')[0].id,'E-LOW-010');
+ assert.ok(searchCards('我想了解肩外旋怎么做').some(c=>c.id==='T-AXU-023'));
+ assert.ok(searchCards('肩外旋有哪些注意事项').some(c=>c.id==='T-AXU-023'));
+ for(const c of catalogue){assert.ok(c.startConditions&&c.stopConditions&&c.sourceDose&&c.equipment);assert.doesNotMatch(c.content,/^## /m);}
  let calls=0;const model={reply:async({messages})=>{calls++;assert.match(messages[0].content,/E-LOW-009/);return '按资料小幅移动，出现不适停止。';}};
  const result=await rehabAnswer('E-LOW-009 怎么做',false,'TEST',model);assert.match(result.text,/E-LOW-009/);assert.equal(calls,1);
  await rehabAnswer('E-LOW-009 怎么做',true,'TEST',model);assert.equal(calls,1);
  const fallback=await rehabAnswer('E-LOW-009 怎么做',false,'TEST',{reply:async()=>{throw Error('TEST offline');}});assert.match(fallback.text,/依据动作库/);
 });
-test('local plan filters structured training cards, never adopts, and refuses incomplete library',()=>{
- const input={goal:'TEST goal',region:'TEST region',equipment:['TEST chair'],restrictions:[],level:1,screeningConfirmed:true};
- assert.equal(localPlan(input).status,'needs_library');
- const c={id:'T-TEST-001',name:'TEST ONLY',kind:'training',complete:true,dose:{reps:2,sets:1,restSeconds:30},eligibility:{regions:['TEST region'],equipment:['TEST chair'],restrictions:['TEST blocked'],level:1}};
- const a=localPlan(input,[c]);assert.equal(a.status,'draft');assert.equal(a.adopted,false);assert.equal(a.items.length,1);
- assert.deepEqual(localPlan(input,[c]),a);assert.equal(localPlan({...input,equipment:[]},[c]).items.length,0);
- assert.equal(localPlan({...input,restrictions:['TEST blocked']},[c]).items.length,0);
+test('local plan retains exact source ranges and conditions, never adopts or interprets medical restrictions',()=>{
+ const input={goal:'TEST goal',region:'踝',equipment:['稳固椅'],restrictions:[],level:0,screeningConfirmed:true};
+ const c=catalogue.find(c=>c.id==='T-LOW-046');
+ const a=localPlan(input);assert.equal(a.status,'draft');assert.equal(a.adopted,false);assert.equal(a.reviewRequired,true);assert.equal(a.items.length,1);
+ assert.equal(a.items[0].sourceDose,c.sourceDose);assert.equal(a.items[0].startConditions,c.startConditions);assert.equal(a.items[0].stopConditions,c.stopConditions);
+ assert.match(a.items[0].sourceDose,/首轮每个允许方向3次/);assert.match(a.items[0].sourceDose,/1—3组×5—10次/);assert.equal(a.items[0].dose,undefined);
+ assert.deepEqual(localPlan(input),a);assert.equal(localPlan({...input,equipment:[]}).status,'no_match');
+ assert.equal(localPlan({...input,restrictions:['禁止踝活动']}).status,'needs_review');
  assert.equal(localPlan(input,[{...c,complete:false}]).items.length,0);
+ assert.equal(localPlan({...input,level:3}).items[0].sourceDose,a.items[0].sourceDose);
+ assert.equal(localPlan({...input,region:'髋',equipment:['硬床']}).items.length,0);
+ assert.ok(localPlan({...input,region:'髋',equipment:['硬床','滑布']}).items.some(c=>c.id==='T-LOW-002'));
+ assert.equal(localPlan({...input,region:'肩',equipment:['稳定桌面']}).items[0].id,'T-AXU-022');
  assert.throws(()=>localPlan({...input,screeningConfirmed:false}));
+});
+
+test('general explanations use source sections; existing plans use owner-scoped local records',async()=>{
+ assert.match((await rehabAnswer('L0和L2等级是什么意思',true,'TEST')).text,/不是临床肌力分级/);
+ let calls=0;const result=await rehabAnswer('我的训练计划',false,'TEST',{reply:async()=>{throw Error('Personal records must stay local');}},
+ {read:async({name})=>{calls++;return {tool:name,read_only:true,status:'found',scope:{participant_id:'TEST',source_kind:'TEST',usage_context:'TEST'},records:[{id:'TEST record'}]};}});
+ assert.equal(calls,1);assert.match(result.text,/TEST record/);
+ const missing=await rehabAnswer('不存在的动作编号T-FAKE-001',false,'TEST',{reply:async()=>{throw Error('Must not call');}});
+ assert.match(missing.text,/没有对应资料/);
 });

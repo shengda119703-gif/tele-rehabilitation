@@ -256,7 +256,7 @@ export class ProductService {
       audits: this.port.read<unknown[]>(this.key(owner, 'audit')) ?? [],
       trends: Object.fromEntries(Object.keys(METRICS).map(key => [key, metricTrend(history.records, key as MetricKey, state.today)])),
       capabilities: {...productCapabilities, imageRecognitionAvailable: false, healthInput: 'manual'},
-      agentTools:[],carePending:[],carePendingUnavailable:false,assistantMode:'rehab-only',library:{version:'2026-10-13-partial',complete:false,cards:catalogue.length,usable:catalogue.filter(c=>c.complete).length},
+      agentTools:[],carePending:[],carePendingUnavailable:false,assistantMode:'rehab-only',library:{version:'2026-10-13-full',complete:true,cards:catalogue.length,usable:catalogue.filter(c=>c.complete).length,assessment:catalogue.filter(c=>c.kind==='assessment').length,training:catalogue.filter(c=>c.kind==='training').length},
       conversationModelAvailable:Boolean(this.conversationModel?.(owner)),
       storage: 'persistent-local', modelAvailable: Boolean(this.conversationModel?.(owner)), careAvailable:false};
   }

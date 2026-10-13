@@ -37,24 +37,26 @@ def pair(client):
     assert client.post('/api/pair', json={'code': 'test-code'}).status_code == 200
 
 
-def test_chat_preserves_selected_source_and_pending_controls_are_self_only(shared):
+def test_chat_reads_selected_source_and_never_prepares_business_writes(shared):
     backend,adapter,app,c=shared;pair(c)
     assert c.post('/api/product/chat?source=OTHER',json={'text':'查看资料'}).status_code==400
-    replay=c.post('/api/product/chat?source=REPLAY_FILE',json={'text':'今天有什么安排？'})
+    replay=c.post('/api/product/chat?source=REPLAY_FILE',json={'text':'查看我的训练计划'})
     assert replay.status_code==200
-    assert replay.json()['turn']['care']['data']['scope']['source_kind']=='REPLAY_FILE'
+    assert 'care' not in replay.json()['turn']
+    assert '没有找到' in replay.json()['turn']['reply']['text']
     day=date.today().isoformat()
     c.post('/api/product/medication.save',json={'record':dict(id='TEST-pending',name='TEST 待确认药',dose='既有说明',status='active')})
     assert c.post('/api/unified/daily.medSchedule',json=dict(medId='TEST-pending',times=['08:00'],start=day,end='')).status_code==200
-    w=c.post('/api/product/chat?source=LIVE_CAMERA',json={'text':'记录今天08:00的TEST 待确认药已服用'}).json()['turn']['care']['workflow']
+    before=backend.daily.snapshot(adapter.owner,adapter.scope())
+    reply=c.post('/api/product/chat?source=LIVE_CAMERA',json={'text':'记录今天08:00的TEST 待确认药已服用'}).json()['turn']
+    assert 'care' not in reply
     pending=c.get('/api/unified').json()['snapshot']['carePending']
-    assert pending[0]['id']==w['id'] and pending[0]['confirmationToken']==w['confirmationToken']
+    assert pending==[]
     assert not c.get('/api/unified?source=REPLAY_FILE').json()['snapshot']['carePending']
     assert 'carePending' not in backend.call('family.summary',adapter.owner)
     assert c.post('/api/unified/daily.dose',json=dict(medId='TEST-pending',date=day,time='08:00',status='skipped')).status_code==200
-    # A change in the underlying record invalidates the old proposal at confirmation.
-    done=c.post('/api/unified/care.confirm',json=dict(id=w['id'],confirmationToken=w['confirmationToken'],confirmed=True)).json()
-    assert done['status']=='failed'
+    assert not before['doses']
+    assert c.post('/api/unified/care.confirm',json={'id':'TEST','confirmed':True}).status_code==404
     assert c.get('/api/unified').json()['snapshot']['dailyProduct']['doses']['TEST-pending|'+day+'|08:00']['status']=='skipped'
 
 
@@ -174,114 +176,17 @@ def test_stop_revokes_phone_without_stopping_desktop(shared):
     assert backend.call('snapshot','owner-a')['profile']['ownerId']=='owner-a'
 
 
-def prepare_care_dose(backend, adapter, client, request_id='TEST-care-api'):
-    pair(client)
-    med=dict(id='care-med',name='TEST 药物',dose='按已有说明',purpose='',times='',status='active')
-    assert client.post('/api/product/medication.save',json={'record':med}).status_code==200
-    day=date.today().isoformat()
-    assert client.post('/api/unified/daily.medSchedule',json=dict(medId=med['id'],times=['08:00'],start=day,end='')).status_code==200
-    response=client.post('/api/unified/care.prepare',json={'requestId':request_id,'intents':[
-        dict(kind='record_dose',medId=med['id'],date=day,time='08:00',status='taken')]})
-    assert response.status_code==200,response.text
-    return response.json()
 
-
-def test_care_api_has_explicit_confirmation_owner_source_and_replay_guards(shared):
+def test_retired_care_routes_closed_and_library_plan_is_owner_local(shared):
     backend,adapter,app,c=shared
     assert c.post('/api/unified/care.prepare',json={}).status_code==401
-    w=prepare_care_dose(backend,adapter,c)
-    assert w['status']=='awaiting_confirmation'
-    assert not backend.daily.snapshot(adapter.owner,adapter.scope())['doses']
-    for operation,payload in [('care.overview',{'owner':'owner-b'}),('care.prepare',[]),('care.execute',{})]:
-        assert c.post('/api/unified/'+operation,json=payload).status_code in (400,404)
-    confirm=dict(id=w['id'],confirmationToken=w['confirmationToken'],confirmed=True)
-    assert c.post('/api/unified/care.confirm',json=dict(confirm,confirmed=False)).status_code==400
-    assert c.post('/api/unified/care.confirm',json=dict(confirm,confirmationToken='forged')).status_code==400
-    assert c.post('/api/unified/care.confirm?source=REPLAY_FILE',json=confirm).status_code==400
-    with pytest.raises(RuntimeError):backend.call('care.confirm','owner-b',confirm,dict(adapter.scope(),participant_id='owner-b'))
-    for _ in range(2):
-        r=c.post('/api/unified/care.confirm',json=confirm)
-        assert r.status_code==200,r.text
-        assert r.json()['status']=='succeeded'
-    assert len(backend.daily.snapshot(adapter.owner,adapter.scope())['doseAudit'])==1
-    public=c.post('/api/unified/care.status',json={'id':w['id']}).json()
-    assert 'confirmationToken' not in public
-
-
-def test_care_chat_queries_proposes_without_writing_and_respects_privacy(shared):
-    backend,adapter,app,c=shared
-    prepare_care_dose(backend,adapter,c)
-    query=c.post('/api/product/chat',json={'text':'今天有什么安排？'})
-    assert query.status_code==200,query.text
-    assert query.json()['turn']['care']['data']['doses'][0]['status']=='unrecorded'
-    proposal=c.post('/api/product/chat',json={'text':'记录今天08:00的TEST 药物已服用'})
-    assert proposal.status_code==200,proposal.text
-    assert proposal.json()['turn']['care']['workflow']['status']=='awaiting_confirmation'
-    assert not backend.daily.snapshot(adapter.owner,adapter.scope())['doses']
-    private=c.post('/api/product/chat',json={'text':'记录今天08:00的TEST 药物已服用','private':True})
-    assert private.status_code==200,private.text
-    assert private.json()['turn'].get('care') is None
-
-
-def test_care_clear_invalidates_old_ids_and_export_contains_only_audit(shared):
-    backend,adapter,app,c=shared
-    w=prepare_care_dose(backend,adapter,c)
-    backup=backend.call('lifecycle.export',adapter.owner,{},adapter.scope())
-    assert backup['careAudit'][0]['id']==w['id']
-    audit=json.dumps(backup['careAudit'])
-    assert 'confirmationToken' not in audit and 'requestSignature' not in audit and 'expected' not in audit
-    exported=json.dumps(backup)
-    assert 'carePending' not in backup['snapshot']
-    assert 'carePendingUnavailable' not in backup['snapshot']
-    assert 'confirmationToken' not in exported and 'requestSignature' not in exported and '"expected"' not in exported
-    assert w['confirmationToken'] not in exported
-    backend.call('lifecycle.clear',adapter.owner,{'confirmOwner':adapter.owner},adapter.scope())
-    assert c.post('/api/unified/care.status',json={'id':w['id']}).status_code==400
-    assert c.post('/api/unified/care.confirm',json=dict(id=w['id'],confirmationToken=w['confirmationToken'],confirmed=True)).status_code==400
-
-
-def test_care_pending_confirmation_survives_service_restart(shared):
-    backend,adapter,app,c=shared
-    w=prepare_care_dose(backend,adapter,c)
-    backend.close()
-    restarted=ProductBackend(backend.data_dir)
-    try:
-        done=restarted.call('care.confirm',adapter.owner,dict(id=w['id'],confirmationToken=w['confirmationToken'],confirmed=True),adapter.scope())
-        assert done['status']=='succeeded'
-        again=restarted.call('care.confirm',adapter.owner,dict(id=w['id'],confirmationToken=w['confirmationToken'],confirmed=True),adapter.scope())
-        assert again['status']=='succeeded'
-        assert len(restarted.daily.snapshot(adapter.owner,adapter.scope())['doseAudit'])==1
-    finally:restarted.close()
-
-
-def test_care_real_bridge_compound_request_writes_dose_and_only_reschedules_saved_plan(shared):
-    from app.storage import Storage
-    from app.settings import default_plan
-    from app.training_plans import item_from_plan, new_training_plan
-    backend,adapter,app,c=shared
-    w=prepare_care_dose(backend,adapter,c)
-    store=Storage(backend.data_dir/'home_rehab.sqlite3')
-    try:
-        plan=store.save_training_plan(new_training_plan(adapter.scope(),'TEST 已有计划',[item_from_plan(default_plan('shoulder_abduction'))]),expected_revision=0)
-    finally:store.close()
-    scheduled=c.post('/api/unified/daily.schedule',json=dict(id='TEST-care-schedule',date=date.today().isoformat(),time='14:00',kind='training',name=plan['name'],planId=plan['id'],revision=plan['revision']))
-    assert scheduled.status_code==200,scheduled.text
-    intents=[dict(kind='record_dose',medId='care-med',date=date.today().isoformat(),time='08:00',status='taken'),
-             dict(kind='reschedule_rehab',scheduleId='TEST-care-schedule',date=date.today().isoformat(),time='16:00')]
-    proposed=c.post('/api/unified/care.prepare',json=dict(requestId='TEST-compound-real-bridge',intents=intents))
-    assert proposed.status_code==200,proposed.text
-    workflow=proposed.json()
-    assert len(workflow['steps'])==2
-    confirm=dict(id=workflow['id'],confirmationToken=workflow['confirmationToken'],confirmed=True)
-    for _ in range(2):
-        result=c.post('/api/unified/care.confirm',json=confirm)
-        assert result.status_code==200,result.text
-        assert result.json()['status']=='succeeded'
-    saved=backend.daily.snapshot(adapter.owner,adapter.scope())
-    assert len(saved['doseAudit'])==1
-    assert saved['schedules'][0]['time']=='16:00'
-    assert saved['schedules'][0]['planId']==plan['id'] and saved['schedules'][0]['revision']==plan['revision']
-    # A conflicting older proposal cannot overwrite the occurrence committed by this workflow.
-    old=c.post('/api/unified/care.confirm',json=dict(id=w['id'],confirmationToken=w['confirmationToken'],confirmed=True))
-    assert old.status_code==200 and old.json()['status']=='failed'
-    assert len(backend.daily.snapshot(adapter.owner,adapter.scope())['doseAudit'])==1
+    pair(c)
+    for operation in ('care.prepare','care.confirm','care.overview','care.execute','care.status'):
+        assert c.post('/api/unified/'+operation,json={}).status_code==404
+    before=backend.call('snapshot',adapter.owner)
+    result=c.post('/api/unified/rehab.plan.draft',json=dict(goal='TEST',region='\u8e1d',equipment=['\u7a33\u56fa\u6905'],restrictions=[],level=0,screeningConfirmed=True))
+    assert result.status_code==200,result.text
+    assert result.json()['items'][0]['id']=='T-LOW-046'
+    assert result.json()['adopted'] is False
+    assert backend.call('snapshot',adapter.owner)['state']['events']==before['state']['events']
+    assert backend.call('snapshot','owner-b')['library']['cards']==185
