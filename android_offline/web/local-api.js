@@ -149,8 +149,6 @@ async function request(path,opts={}){
   }
   if(route==='/product-trash')return domain.request('archive.trash.list',owner,{},now());
   if(route==='/product-backup')return backup();
-  if(route==='/product-ocr')return{available:true,local:true,engine:'tesseract.js@6.0.1'};
-  if(route.startsWith('/product-ocr/')){const a=await domain.request('archive.read',owner,{id:route.split('/')[2]},now());return PhoneOCR.recognize(new Blob([new Uint8Array(a.bytes)],{type:a.mediaType}));}
   if(route==='/product-voice'&&method==='GET')return{available:!!root.OfflineAndroid?.speechAvailable(),local:true,detail:'本地语音服务，识别文字需本人核对。'};
   if(route==='/product-voice')failure('使用语音输入按钮调用手机本地识别；录音文件转写未接入',503);
   if(route==='/cameras'||route==='/care/shares')return[];

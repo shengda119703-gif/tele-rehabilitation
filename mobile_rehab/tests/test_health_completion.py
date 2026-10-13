@@ -133,47 +133,25 @@ def test_actual_chinese_synthetic_recording_http_roundtrip(tmp_path):
         assert '肩' in response.json()['text'] and response.json()['automatic_send'] is False
 
 
-def test_actual_local_ocr_http_and_no_health_write(client):
-    from mobile_rehab.core import ROOT
-    image=ROOT/'.runtime/mobile/validation/ocr-synthetic-test.png'
-    if not image.is_file() or not client.app.state.document_ocr.status()['available']:
-        pytest.skip('Optional local synthetic OCR validation input absent')
-    result=client.post('/api/product-archive?consent=yes&name=TEST&category=体检报告',content=image.read_bytes(),headers={'Content-Type':'image/png'})
-    ident=result.json()['attachments'][0]['id']
-    response=client.post('/api/product-ocr/'+ident)
-    assert response.status_code==200,response.text
-    assert '120' in response.json()['text'] and '体重' in response.json()['text']
-    assert response.json()['automatic_record'] is False
-    assert not client.get('/api/product').json()['snapshot']['state']['healthData']['measurements']
-    assert not list(client.app.state.document_ocr.root.glob('ocr-*'))
+def test_report_upload_download_and_manual_input_without_ocr(client):
+    raw=b'TEST report original bytes'
+    before=client.get('/api/product').json()['snapshot']['state']['events']
+    uploaded=client.post('/api/product-archive?consent=yes&name=TEST&category=体检报告',content=raw,headers={'Content-Type':'image/png'})
+    assert uploaded.status_code==200,uploaded.text
+    ident=uploaded.json()['attachments'][0]['id']
+    assert client.get('/api/product-archive/'+ident).content==raw
+    assert client.get('/api/product').json()['snapshot']['state']['events']==before
+    assert client.get('/api/product-ocr').status_code==404
+    assert client.post('/api/product-ocr/'+ident).status_code==404
+    post(client,'health.record',{'metric':'weight','value':63,'visibility':'private'})
+    snap=client.get('/api/product').json()['snapshot']
+    assert snap['history']['measurements'][-1]['source']=='manual'
+    assert snap['history']['measurements'][-1]['value']==63
+    assert snap['capabilities']['imageRecognitionAvailable'] is False
     with TestClient(client.app,headers=HEADERS) as other:
         other.post('/api/pair',json={'code':'TEST'});profile(other,'OTHER')
-        assert other.post('/api/product-ocr/'+ident).status_code!=200
-
-
-def test_ocr_unsupported_file_never_runs_inference(client,monkeypatch):
-    result=client.post('/api/product-archive?consent=yes&name=TEST&category=其他资料',content=b'FILE',headers={'Content-Type':'text/plain'})
-    ident=result.json()['attachments'][0]['id']
-    def forbidden(*args):raise AssertionError('OCR must not execute')
-    monkeypatch.setattr(client.app.state.document_ocr,'read',forbidden)
-    assert client.post('/api/product-ocr/'+ident).status_code==400
-
-
-def test_ocr_invalid_image_busy_unavailable(client,monkeypatch):
-    from mobile_rehab import ocr
-    handler=client.app.state.document_ocr
-    monkeypatch.setattr(handler,'status',lambda:dict(available=True))
-    monkeypatch.setattr(ocr.subprocess,'run',lambda args,**kwargs:subprocess.CompletedProcess(args,1,b'',b'BAD'))
-    from fastapi import HTTPException
-    with pytest.raises(HTTPException) as error:handler.read(b'BAD IMAGE')
-    assert error.value.status_code==400
-    assert not list(handler.root.glob('ocr-*'))
-    with handler.lock:
-        with pytest.raises(HTTPException) as error:handler.read(b'TEST')
-        assert error.value.status_code==429
-    monkeypatch.setattr(handler,'status',lambda:dict(available=False))
-    with pytest.raises(HTTPException) as error:handler.read(b'TEST')
-    assert error.value.status_code==503
+        assert other.get('/api/product-archive/'+ident).status_code!=200
+        assert not other.get('/api/product').json()['snapshot']['history']['measurements']
 
 
 def test_chinese_chat_limit_counts_characters_and_stays_bounded(client):

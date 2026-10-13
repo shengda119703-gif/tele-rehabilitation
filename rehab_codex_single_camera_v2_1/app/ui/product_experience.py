@@ -193,7 +193,7 @@ class ProductExperience:
         self.health_archive_intro = visual(label('我的健康档案'), typography='section'); area.insertWidget(0, self.health_archive_intro)
         row = QHBoxLayout()
         visual(self._action(row, 'healthUpload', '上传健康资料', self._add_attachment, kind='A', target='archive.save'), appearance='primary')
-        self._action(row, 'healthPhoto', '识别健康图片', self._parse_image, kind='D', target='image.parse')
+        self._action(row, 'healthManual', '手动记录指标', self._open_manual_health, target='健康/状态与指标')
         self._action(row, 'healthCamera', '拍照', self._photo_capture, kind='D', target='原 CameraManager 画面测试 → archive.save')
         self._action(row, 'healthRecord', '记录身体情况', lambda: self.navigate('assistant'), target='管家表达与记录确认')
         row.addStretch(); area.insertLayout(1, row)

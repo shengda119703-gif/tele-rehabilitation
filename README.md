@@ -11,6 +11,8 @@
 
 浏览器连接电脑的入口需要局域网服务；独立 APK 的个人流程在本地运行。可选文字备份与家庭服务见 [手机主端说明](docs/plans/PHONE_LOCAL_2026-10-07.md)。局域网 HTTP 下浏览器可能限制直接录音/实时摄像头，可使用拍摄上传、键盘语音或录音文件；异地云端未验收。
 
+报告图片可上传、留存和下载原件；报告识字与自动提取已退役，指标需核对原件后手动录入。训练动作识别继续保留。
+
 ## 五个页面做什么
 
 | 页面 | 主要操作 |
@@ -28,7 +30,7 @@
 Windows x64、Python 3.13、Node.js 22+。在仓库根目录执行：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\Setup-Rehab.ps1 -IncludeOCR
+powershell -NoProfile -ExecutionPolicy Bypass -File .\Setup-Rehab.ps1
 ```
 
 `-IncludeVoice` 安装可选本地语音；`-IncludeLandmarks` 准备腕、踝、手指等可选关键点环境。环境、模型、个人数据和日志均不上传 Git。安装不会自动开启摄像头。
@@ -51,7 +53,7 @@ deploy/mobile/                 独立手机服务部署材料（独立数据，�
 - `archive/pre-unified-mobile-20261006`：整理前 main（`4a4a0b8`），含独立 APK 和原手机交付。
 - `archive/pre-unified-desktop-20261006`：整理前桌面产品（`f54935b`）。
 
-归档不删除队友提交历史。保留手机拍摄/上传、分析、结果、体态、健身、资料、OCR、语音、回收站等可复用能力。兼容独立手机服务使用独立数据目录，工具集中在 `tools/mobile-standalone/`；日常使用请从电脑配对入口进入，避免产生两份档案。
+归档不删除队友提交历史。保留手机拍摄/上传、分析、结果、体态、健身、资料、手动指标录入、语音、回收站等可复用能力。兼容独立手机服务使用独立数据目录，工具集中在 `tools/mobile-standalone/`；日常使用请从电脑配对入口进入，避免产生两份档案。
 
 ## 开发与验收
 

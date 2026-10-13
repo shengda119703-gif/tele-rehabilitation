@@ -7,28 +7,28 @@ const {ProductService} = require('../.bridge-build/product/ProductService.js');
 const {ProductLocalStore} = require('../scripts/product-local-store.cjs');
 const profile = name => ({name, age:65, conditions:[], medications:[], familyContact:'家属',familyPhone:'',
   mobility:'unknown', usesCane:false, nightVision:'unknown', cognition:'unknown', familySharing:'denied'});
-test('photo corrections keep original validation, explicit confirmation and private provenance', async t => {
-  const root=fs.mkdtempSync(path.join(os.tmpdir(),'ankang-photo-review-'));
+test('report originals stay private; retired image operations cannot create health facts', async t => {
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'ankang-manual-report-'));
   t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
-  const vision={name:'TEST-vision',analyzeImage:async()=>({kind:'weight',confidence:.95,measurements:[{metric:'weight',value:62,unit:'kg',confidence:.9}],labResults:[]})};
-  const service=new ProductService(new ProductLocalStore(root),undefined,vision);
-  const now=new Date('2026-10-05T09:00:00+08:00');
+  let providerCalls=0;
+  const vision={analyzeImage:async()=>{providerCalls++;throw Error('Retired provider invoked');}};
+  const store=new ProductLocalStore(root),service=new ProductService(store,undefined,vision);
+  const now=new Date('2026-10-13T09:00:00+08:00');
   const call=(op,owner,input={})=>service.request(op,owner,input,now);
   for(const owner of ['self','other'])await call('profile.save',owner,{profile:profile('TEST '+owner)});
-  await call('image.parse','self',{bytes:[1],mediaType:'image/png',consent:true});
-  await assert.rejects(call('image.confirm','other',{confirmed:true,values:[63]}));
-  await assert.rejects(call('image.confirm','self',{confirmed:true,values:[Infinity]}));
-  await assert.rejects(call('image.confirm','self',{confirmed:true,values:[999]}));
-  assert.equal((await call('snapshot','self')).state.events.length,0);
-  await call('image.confirm','self',{confirmed:true,values:[63]});
-  const measurement=(await call('snapshot','self')).history.measurements[0];
-  assert.equal(measurement.value,63);
-  assert.equal(measurement.source,'photo');
-  assert.equal(measurement.visibility,'private');
-  assert.equal(measurement.confidence,.9);
-  assert.equal(measurement.metadata.originalPhotoValue,62);
-  await assert.rejects(call('image.confirm','self',{confirmed:true,values:[64]}));
+  await call('archive.save','self',{name:'TEST 报告',fileName:'report.png',mediaType:'image/png',bytes:[1,2,3],category:'体检报告',visibility:'private'});
+  let snap=await call('snapshot','self');assert.equal(snap.state.events.length,0);
+  const id=snap.attachments[0].id;assert.deepEqual((await call('archive.read','self',{id})).bytes,[1,2,3]);
+  await assert.rejects(call('archive.read','other',{id}));
+  for(const op of ['image.parse','image.confirm'])await assert.rejects(call(op,'self',{bytes:[1],mediaType:'image/png',consent:true,confirmed:true}),/手动录入/);
+  assert.equal(providerCalls,0);assert.equal((await call('snapshot','self')).state.events.length,0);
+  await call('health.record','self',{metric:'weight',value:63,visibility:'private'});
+  const reopened=new ProductService(store);snap=await reopened.request('snapshot','self',{},now);
+  const m=snap.history.measurements[0];assert.equal(m.value,63);assert.equal(m.unit,'kg');assert.equal(m.source,'manual');assert.equal(m.visibility,'private');
+  assert.equal(snap.capabilities.imageRecognitionAvailable,false);assert.equal(snap.capabilities.healthInput,'manual');
+  assert.equal((await call('snapshot','other')).history.measurements.length,0);
 });
+
 test('temporary file sharing errors recover without losing the backup', t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'ankang-file-sharing-'));
   t.after(() => fs.rmSync(root, {recursive:true, force:true}));
@@ -135,25 +135,17 @@ test('family consent, private attachments, notification honesty and clear isolat
   assert.ok((await call('snapshot','b')).profile);
 });
 
-test('image candidates require consent and confirmation; corrupt data fails closed', async t => {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(),'ankang-image-test-'));
+test('manual health validates input and corrupt stored data fails closed', async t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(),'ankang-manual-test-'));
   t.after(() => fs.rmSync(root,{recursive:true,force:true}));
-  const port = new ProductLocalStore(root);
-  const vision = {name:'TEST protocol fixture',analyzeImage:async () => ({kind:'weight',
-    measurements:[{metric:'weight',value:63,unit:'kg',confidence:0.99}],labResults:[],confidence:0.99})};
-  const service = new ProductService(port,undefined,vision);
-  const call = (op,input={}) => service.request(op,'a',input,new Date('2026-10-02T12:00:00+08:00'));
-  await call('profile.save',{profile:profile('TEST 图片用户')});
+  const port = new ProductLocalStore(root),service = new ProductService(port);
+  const call = (op,input={}) => service.request(op,'a',input,new Date('2026-10-13T12:00:00+08:00'));
+  await call('profile.save',{profile:profile('TEST 手动用户')});
   await assert.rejects(call('health.record',{metric:'__proto__',value:1}));
   await assert.rejects(call('health.record',{metric:'weight',value:NaN}));
-  await assert.rejects(call('image.parse',{bytes:[1],mediaType:'image/png'}));
-  const parsed = await call('image.parse',{bytes:[1],mediaType:'image/png',consent:true});
-  assert.equal(parsed.measurements.length,1);
-  assert.equal((await call('snapshot')).state.events.length,0);
-  await assert.rejects(call('image.confirm',{confirmed:false}));
-  await call('image.confirm',{confirmed:true});
+  await assert.rejects(call('image.parse',{bytes:[1],mediaType:'image/png',consent:true}),/手动录入/);
+  await call('health.record',{metric:'weight',value:63});
   assert.equal((await call('snapshot')).history.measurements.length,1);
-  await assert.rejects(call('image.confirm',{confirmed:true}));
   const recordDir = path.join(root,'profiles');
   const file = fs.readdirSync(recordDir).find(n => n.endsWith('.json'));
   fs.writeFileSync(path.join(recordDir,file),'{broken');

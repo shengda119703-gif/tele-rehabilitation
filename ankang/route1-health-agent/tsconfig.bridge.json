@@ -17,7 +17,6 @@
   "files": [
     "src/runtime/index.ts",
     "src/product/ProductService.ts",
-    "src/adapters/HttpVisionProvider.ts",
     "src/adapters/BrowserVoiceAdapter.ts",
     "src/adapters/HostVoicePort.ts",
     "src/sync/BrowserSyncAdapter.ts",

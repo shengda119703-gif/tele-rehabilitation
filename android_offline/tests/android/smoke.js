@@ -16,9 +16,8 @@ window.__qa={status:'running'};
   const p=PhoneLocal.store.value.daily;if(!Object.values(p.doses).some(x=>x.status==='taken')||!p.doseAudit.length)throw Error('Dose persistence failed');
   location.hash='#health';await wait(()=>document.querySelector('#upload'));document.querySelector('#upload').click();const uf=document.querySelector('#upload-form');uf.elements.name.value='TEST 文本资料';const textFile=new File(['TEST ONLY'],'test.txt',{type:'text/plain'}),dt=new DataTransfer();dt.items.add(textFile);document.querySelector('#file').files=dt.files;document.querySelector('#file').dispatchEvent(new Event('change'));uf.requestSubmit();await wait(()=>!document.querySelector('dialog[open]'));
   const s=await PhoneLocal.snapshot();if(!s.attachments.some(a=>a.name==='TEST 文本资料'))throw Error('Attachment failed');location.hash='#home';
-  const canvas=new OffscreenCanvas(1000,220),ctx=canvas.getContext('2d');ctx.fillStyle='white';ctx.fillRect(0,0,1000,220);ctx.fillStyle='black';ctx.font='60px sans-serif';ctx.fillText('TEST 65.0 kg',50,140);const ocr=await PhoneOCR.recognize(await canvas.convertToBlob({type:'image/png'}));if(!ocr.text.includes('65.0'))throw Error('Actual OCR failed: '+JSON.stringify(ocr));
   const backup=await PhoneLocal.backup();PhoneStore.validateBackup(backup);
-  window.__qa={status:'passed',phase,events:s.state.events.length,attachments:s.attachments.length,doses:Object.values(p.doses).length,ocr};
+  window.__qa={status:'passed',phase,events:s.state.events.length,attachments:s.attachments.length,doses:Object.values(p.doses).length};
  }else{
   await wait(()=>state.catalog.length===53);
   const make=name=>new File([Uint8Array.from(atob(QaFixtures.video(name)),c=>c.charCodeAt(0))],name+'.mp4',{type:'video/mp4'});

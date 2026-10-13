@@ -13,10 +13,10 @@ from ..domain import SOURCES, CONTEXTS
 STABLE_ACTION_IDS = dict(zip(
     ('首页','AI 康复管家','康复','健康','用药','家庭','记录','我需要帮助','新建用户','通知','设置',
      '我的训练计划','最近的评估结果','记录用药情况','发送','记录数值','记录身体感受 / 更正记录',
-     '添加资料 / 图片 / 视频','导出所选附件','识别健康图片','确认识别结果并记录','编辑联系人',
+     '添加资料 / 图片 / 视频','导出所选附件','手动记录指标','编辑联系人',
      '生成本机邀请码','确认绑定','授权家庭共享','撤销共享','解绑','刷新家属摘要',
      '查看原康复历史与评估趋势','导出健康报告','核对可共享通知并建立台账','确认所选通知'),
-    (0,1,2,3,4,5,6,7,8,9,10,199,200,201,202,77,75,69,70,71,72,37,40,41,42,43,44,45,32,31,27,28)))
+    (0,1,2,3,4,5,6,7,8,9,10,199,200,201,202,77,75,69,70,71,37,40,41,42,43,44,45,32,31,27,28)))
 
 MODULE_NAV_ACTIONS={'rehabWorkspaceBack','healthMetricsEntry','healthMetricsBack','medTodayActions','medTodayActionsBack'}
 RECOVERY_NAV_ACTIONS={'recoveryAssessment','recoveryHistory','recoveryPlans','recoveryAsk','contextReturn','rehabCreatePlan'}
@@ -817,9 +817,6 @@ class ProductCompletion:
             if key=='voiceFinish':
                 enabled=dictating and phase in ('opening','recording') and not finishing
                 item.setToolTip('结束录音，将识别文字填入草稿。' if enabled else '仅在录音期间可以结束录音。')
-            if item.property('actionTarget')=='image.parse':
-                enabled=enabled and bool(self.snapshot.get('capabilities',{}).get('imageRecognitionAvailable'))
-                item.setToolTip('将图片发送至已配置服务，上传前须确认。' if enabled else '图片识别服务尚未配置；附件存档仍可用。')
             if key in ('healthkitImport','healthkitDiagnostics'):enabled=enabled and bool(self.extension_status.get('healthkit'))
             if key=='devicePull':enabled=enabled and bool(self.extension_status.get('devices'))
             if str(key).startswith('sync'):enabled=enabled and bool(self.extension_status.get('syncAvailable'))
@@ -851,7 +848,6 @@ class ProductCompletion:
             if key=='contextReturn':
                 enabled=enabled and not self._rehab_locked()
                 item.setToolTip('先结束并保存当前任务后返回。' if not enabled else '返回来源页面，保留筛选和所选记录。')
-            if item is self.image_confirm:enabled=enabled and bool(self.pending_image and self.image_candidates.rowCount())
             item.setEnabled(enabled)
         self.user_select.setEnabled(not busy and not self.legacy.busy and not self.legacy._camera_testing and self.legacy.state not in ('CONNECTING','PREVIEW','ONLINE','SAVE_FAILED'))
         if busy:
@@ -890,12 +886,12 @@ class ProductCompletion:
         route={'首页','AI 康复管家','康复','健康','用药','家庭','记录','通知','设置','记录身体感受 / 更正记录','查看原康复历史与评估趋势'}
         operations={'我需要帮助':'emergency.contacts','新建用户':'profile.save','发送':'chat','我的训练计划':'chat',
             '最近的评估结果':'chat','记录用药情况':'ui.chat.draft','记录数值':'health.record','添加资料 / 图片 / 视频':'archive.save',
-            '导出所选附件':'archive.read','识别健康图片':'image.parse','确认识别结果并记录':'image.confirm',
+            '导出所选附件':'archive.read','手动记录指标':'health.record',
             '编辑联系人':'profile.save','生成本机邀请码':'family.invite','确认绑定':'family.bind',
             '授权家庭共享':'family.grant','撤销共享':'family.revoke','解绑':'family.unbind','刷新家属摘要':'family.summary',
             '导出健康报告':'ui.file.write','核对可共享通知并建立台账':'notification.plan','确认所选通知':'notification.ack'}
         interface_routes={'globalAssistant','silverRehab','silverFamily','cameraSettings','settingsDevices','familySettings','notificationSettings','deviceConnect'}
-        interface_operations={'assistantAttachment':'archive.save','assistantImage':'image.parse','voiceInput':'ui.voice.transcribe','voiceOutput':'voice.output',
+        interface_operations={'assistantAttachment':'archive.save','assistantManualHealth':'health.record','voiceInput':'ui.voice.transcribe','voiceOutput':'voice.output',
             'voiceCancel':'voice.cancel','deviceRefresh':'extensions.status','deviceImport':'device.import','devicePull':'device.pull',
             'healthkitImport':'healthkit.import','healthkitDiagnostics':'healthkit.diagnostics','syncStart':'sync.start',
             'syncStatus':'sync.status','syncPoll':'sync.poll','syncPublish':'sync.publish','syncClose':'sync.close',
@@ -910,7 +906,7 @@ class ProductCompletion:
                 item.setProperty('actionTarget',interface_operations.get(key,key));continue
             text=item.text()
             if text in route or text in operations:
-                item.setProperty('actionId','product-'+str(STABLE_ACTION_IDS.get(text,index)));item.setProperty('actionKind','B' if text in route else 'D' if text in ('授权家庭共享','撤销共享','解绑','确认绑定','核对可共享通知并建立台账','确认识别结果并记录','识别健康图片') else 'A')
+                item.setProperty('actionId','product-'+str(STABLE_ACTION_IDS.get(text,index)));item.setProperty('actionKind','B' if text in route else 'D' if text in ('授权家庭共享','撤销共享','解绑','确认绑定','核对可共享通知并建立台账') else 'A')
                 item.setProperty('actionTarget',operations.get(text,text))
 
     def button_audit(self):

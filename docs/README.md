@@ -12,6 +12,7 @@
 | main 最近发布证据 | [健康归属修复验收](validation/HEALTH_ATTRIBUTION_FIX_2026-10-12.md) |
 | 后端功能与信息链 | [后端阅读版](后端功能与技术实现梳理.md)；[扩展技术索引](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md) |
 | 手机本地宿主和兼容边界 | [手机主端说明](plans/PHONE_LOCAL_2026-10-07.md) |
+| 报告上传与手动指标 | [本轮实现](validation/REPORT_MANUAL_ENTRY_2026-10-13.md)；[识字退役归档](archive/report-ocr-20261013/README.md) |
 | 本轮清理及恢复 | [清理记录](validation/DOCS_LEGACY_CLEANUP_2026-10-13.md)；[退役文件索引](archive/android-legacy-ui-20261013/README.md) |
 | 以前的阶段规格、测试和实验 | [完整历史索引](history/DOCUMENT_INDEX_2026-10-13.md)；[整理前交接](history/HANDOFF_SNAPSHOT_2026-10-13.md) |
 

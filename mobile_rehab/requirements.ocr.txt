@@ -1,3 +1,0 @@
-# Local document OCR, bundled PP-OCR ONNX models. No external vision API.
-rapidocr==3.9.2
-onnxruntime==1.30.0

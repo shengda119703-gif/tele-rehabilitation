@@ -19,11 +19,8 @@ import { readPersonTwinProduct } from '../personTwin/readPersonTwinProduct';
 import { familyStatus } from '../engine/dashboardStatus';
 import { parsePrivacyIntent } from '../engine/privacy';
 import { buildMedicationCareView } from '../engine/medicationCare';
-import { appendHealthEvents, measurementToEvent, labResultToEvent, type HealthEvent } from '../pipeline/events';
+import { appendHealthEvents, measurementToEvent, type HealthEvent } from '../pipeline/events';
 import { METRICS, type CareTask, type ElderProfile, type MetricKey, type MedicationRecord } from '../types';
-import { RealImageHealthParser } from '../adapters/RealImageHealthParser';
-import { buildParsedHealthData } from '../adapters/imageNormalizer';
-import type { HealthVisionProvider, ParsedHealthData } from '../adapters/ImageHealthParser';
 import type { RehabToolPort } from '../runtime/rehabTools';
 import { CareCoordinator, type CarePort } from '../care/CareCoordinator';
 import { ProductAgent, type AgentTool, type ProductAgentModel } from './ProductAgent';
@@ -41,8 +38,8 @@ export const productCapabilities = {
     'medication', 'today-medication', 'care-tasks', 'emergency-contacts', 'sos-contact-info',
     'local-family-binding', 'sharing', 'family-facts', 'privacy', 'consent', 'correction',
     'archive', 'attachments', 'notification-ledger', 'family-summary', 'reports', 'trends',
-    'timeline', 'local-lifecycle', 'image-input', 'image-confirmation'],
-  optional: ['image-recognition-proxy', 'voice', 'cross-device-sync', 'healthkit', 'external-notification', 'device-input'],
+    'timeline', 'local-lifecycle'],
+  optional: ['voice', 'cross-device-sync', 'healthkit', 'external-notification', 'device-input'],
   retainedDisabled: ['home-twin', 'route2-spatial-modeling', '3dgs'],
   specialHardware: 'existing generic device and HealthKit bridges; no independent proprietary driver in upstream',
   video: 'archive-attachment; rehabilitation-camera-and-replay; no Ankang video-health-parser',
@@ -54,9 +51,8 @@ export class ProductService {
   private open = new Set<string>();
   private families = new Map<string, FamilyService>();
   private notifications = new Map<string, NotificationService>();
-  private pendingImages = new Map<string, ParsedHealthData>();
   constructor(private port: ProductLocalPort, private rehab?: (owner: string) => RehabToolPort | undefined,
-    private vision?: HealthVisionProvider, private extensions: ProductExtensions = {}, private careHost?: (owner:string)=>CarePort|undefined,
+    _retiredVision?: unknown, private extensions: ProductExtensions = {}, private careHost?: (owner:string)=>CarePort|undefined,
     private agentModel?: (owner:string)=>ProductAgentModel|undefined,
     private rehabReads?: (owner:string)=>Pick<RehabToolPort,'read'>|undefined,
     private conversationModel?: (owner:string)=>ConversationModel|undefined) {}
@@ -322,7 +318,7 @@ export class ProductService {
       taskHistory: this.port.read<CareTask[]>(this.key(owner, 'tasks')) ?? [],
       audits: this.port.read<unknown[]>(this.key(owner, 'audit')) ?? [],
       trends: Object.fromEntries(Object.keys(METRICS).map(key => [key, metricTrend(history.records, key as MetricKey, state.today)])),
-      capabilities: {...productCapabilities, imageRecognitionAvailable: Boolean(this.vision)},
+      capabilities: {...productCapabilities, imageRecognitionAvailable: false, healthInput: 'manual'},
       agentTools:this.agent(owner).catalogue(),carePending,carePendingUnavailable,
       conversationModelAvailable:Boolean(this.conversationModel?.(owner)),
       storage: 'persistent-local', modelAvailable: Boolean(this.conversationModel?.(owner)||this.agentModel?.(owner)||this.rehab?.(owner)), careAvailable:Boolean(this.care(owner))};
@@ -487,32 +483,8 @@ export class ProductService {
       const archive = new ArchiveService(this.scope(owner), this.port.attachments, () => this.family(owner).readState());
       const entry = await archive.read(input.id);
       return {...entry, bytes: Array.from(entry.bytes)};
-    } else if (operation === 'image.parse') {
-      if (!this.vision) throw new Error('尚未配置图片识别服务；可先保存图片附件或手动记录数值');
-      if (input.consent !== true) throw new Error('请先确认将此图片发送到已配置的识别服务');
-      const blob = new Blob([new Uint8Array(input.bytes)], {type: input.mediaType});
-      const parsed = await new RealImageHealthParser(this.vision).parse(blob, {capturedAt: now.toISOString(), kind: input.kind});
-      this.pendingImages.set(owner, parsed);
-      return parsed;
-    } else if (operation === 'image.confirm') {
-      let parsed = this.pendingImages.get(owner);
-      if (!parsed || input.confirmed !== true) throw new Error('没有待确认的图片识别结果');
-      if (input.values !== undefined) {
-        const all = [...parsed.measurements, ...parsed.labResults];
-        if (!Array.isArray(input.values) || input.values.length !== all.length || input.values.some((v:unknown) => typeof v !== 'number' || !Number.isFinite(v))) throw new Error('请填写每项有效数值，或取消识别确认');
-        // Reuse the original OCR normalizer and thresholds. This is explicit user
-        // correction, not a change to medical interpretation or confidence rules.
-        const reviewed = buildParsedHealthData({
-          kind: parsed.parseMeta?.detectedKind ?? 'report',
-          confidence: parsed.parseMeta?.overallConfidence ?? 1,
-          measurements: parsed.measurements.map((m,i) => ({metric:m.metric,value:input.values[i],unit:m.unit,confidence:m.confidence ?? 1})),
-          labResults: parsed.labResults.map((m,i) => ({name:m.name,value:input.values[parsed!.measurements.length+i],unit:m.unit,confidence:m.confidence ?? 1,referenceRange:m.referenceRange})),
-        }, {capturedAt:all[0]?.timestamp}, parsed.parseMeta?.provider ?? 'reviewed-photo');
-        parsed = {...parsed, measurements:reviewed.measurements.map((m,i) => ({...m,id:parsed!.measurements[i].id,visibility:'private',metadata:{...parsed!.measurements[i].metadata,reviewedByUser:true,originalPhotoValue:parsed!.measurements[i].value}})),
-          labResults:reviewed.labResults.map((m,i) => ({...m,id:parsed!.labResults[i].id,visibility:'private'}))};
-      }
-      await this.append(owner, [...parsed.measurements.map(measurementToEvent), ...parsed.labResults.map(labResultToEvent)], now);
-      this.pendingImages.delete(owner);
+    } else if (operation === 'image.parse' || operation === 'image.confirm') {
+      throw new Error('报告图片识字已取消，请在健康页面手动录入指标；附件原件仍可保存和查看');
     } else if (operation === 'notification.plan') {
       const state = await this.session(owner, now);
       await this.notification(owner).dispatch(state.findings, this.extensions.delivery ?? (async () => [{channel:'browser_push', status:'unavailable',
@@ -548,7 +520,6 @@ export class ProductService {
       for (const kind of ['health','tasks','audit','notifications','family','healthkit-revision','sync-consent','sync-summary']) this.port.remove(this.key(owner, kind));
       this.families.get(owner)?.close(); this.families.delete(owner);
       this.notifications.get(owner)?.close(); this.notifications.delete(owner);
-      this.pendingImages.delete(owner);
       this.port.remove('care:'+scopeKey(this.scope(owner)));
       this.careCoordinators.delete(owner);
       // Profile/medications and the authoritative rehabilitation database are retained.
