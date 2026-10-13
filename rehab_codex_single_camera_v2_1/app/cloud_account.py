@@ -93,7 +93,7 @@ class TokenVault:
 
 def transport(path, method='GET', body=None, token=None):
     # No arbitrary URL/redirect: bearer credentials only go to this exact host.
-    if not re.fullmatch(r'/auth/(register|password/login|refresh|me|logout)|/patients/[a-f0-9-]{36}(?:/(?:record-events|records(?:/latest)?(?:\?offset=\d+&limit=\d+)?|doctor-access|messages(?:/read|\?after=\d+&limit=50&latest=true|\?before=\d+&limit=50)?|plans(?:\?offset=\d+&limit=5|/current|/[a-f0-9-]{36}/accept)?))?', path):
+    if not re.fullmatch(r'/auth/(register|password/login|refresh|me|logout)|/patients/[a-f0-9-]{36}(?:/(?:rehab-workflow(?:/profile)?|rehab-candidates|ai/(?:usage|requests)|reports|record-events|records(?:/latest)?(?:\?offset=\d+&limit=\d+)?|doctor-access|messages(?:/read|\?after=\d+&limit=50&latest=true|\?before=\d+&limit=50)?|plans(?:\?offset=\d+&limit=5|/current|/[a-f0-9-]{36}/accept)?))?', path):
         raise CloudError('云接口地址无效')
     headers = {'Content-Type': 'application/json', 'X-Ankang-Client': 'native'}
     if token:
@@ -104,7 +104,7 @@ def transport(path, method='GET', body=None, token=None):
             return None
     try:
         with urllib.request.build_opener(NoRedirect()).open(
-                urllib.request.Request(ORIGIN + BASE + path, data=data, method=method, headers=headers), timeout=12) as reply:
+                urllib.request.Request(ORIGIN + BASE + path, data=data, method=method, headers=headers), timeout=35 if path.endswith('/ai/requests') else 12) as reply:
             raw = reply.read(512 * 1024 + 1)
             if len(raw) > 512 * 1024:
                 raise CloudError('云回复过大，请稍后重试')
@@ -146,6 +146,7 @@ class CloudAccount:
             db.execute('CREATE TABLE IF NOT EXISTS message_outbox(patient_id TEXT, operation_id TEXT, text TEXT, resource_id TEXT, PRIMARY KEY(patient_id,operation_id))')
             db.execute('CREATE TABLE IF NOT EXISTS message_cache(patient_id TEXT, sequence INTEGER, document TEXT, PRIMARY KEY(patient_id,sequence))')
             db.execute('CREATE TABLE IF NOT EXISTS plan_acceptance(patient_id TEXT, cloud_id TEXT, cloud_version INTEGER, local_id TEXT, document TEXT, receipt TEXT, PRIMARY KEY(patient_id,cloud_id,cloud_version))')
+            db.execute('CREATE TABLE IF NOT EXISTS ai_pending(patient_id TEXT PRIMARY KEY, operation_id TEXT NOT NULL, text TEXT NOT NULL)')
             db.execute('PRAGMA user_version=2')
 
     @contextmanager
@@ -352,6 +353,68 @@ class CloudAccount:
     def current(self):
         return self.patient_call('/plans/current')
 
+    def validate_doctor_start(self, record):
+        publication = record.get('doctor_publication')
+        if not publication:
+            return
+        session = self.me()
+        with self.db() as db:
+            binding = db.execute('SELECT patient_id FROM bindings WHERE local_id=?', (record['participant_id'],)).fetchone()
+        if not binding or binding[0] != session['patient_id']:
+            raise CloudError('医生方案不属于当前本人云账号，请重新核对工作台')
+        plan = self.current().get('plan')
+        if (not plan or plan['id'] != publication['id'] or plan['version'] != publication['version']
+                or plan.get('execution_status') in {'STOPPED', 'REST_DAY', 'MANUAL_ONLY'}
+                or plan.get('execution_date') != publication.get('execution_date')):
+            raise CloudError('医生方案已停用、更新或今天安排已变化，请打开工作台核对后再训练')
+        from .training_plans import item_from_plan
+        expected = [item_from_plan({**i['settings'], 'exercise_id': i['exercise_id'], 'side': i['side']}) for i in plan['items']]
+        if record['items'] != expected:
+            raise CloudError('本机项目与医生发布内容不一致，请重新核对；不会忽略负重或阶段设置')
+
+    def ai_usage(self):
+        return self.patient_call('/ai/usage')
+
+    def workflow(self):
+        return self.patient_call('/rehab-workflow')
+
+    def save_workflow_profile(self, document):
+        return self.patient_call('/rehab-workflow/profile', 'PUT', document)
+
+    def candidate(self, kind):
+        return self.patient_call('/rehab-candidates', 'POST', {'operation_id': str(uuid4()), 'kind': kind})
+
+    def ai_question(self, text, operation_id):
+        return self.patient_call('/ai/requests', 'POST', {'text': text, 'operation_id': str(UUID(operation_id))})
+
+    def ask_ai(self, text=None):
+        with self.lock:
+            patient = self.me()['patient_id']
+            with self.db() as db:
+                pending = db.execute('SELECT operation_id,text FROM ai_pending WHERE patient_id=?', (patient,)).fetchone()
+                if pending is None:
+                    if not isinstance(text, str) or not 1 <= len(text.strip()) <= 12000:
+                        raise CloudError('暂无待重试提问，请先填写问题')
+                    operation = str(uuid4())
+                    text = text.strip()
+                    db.execute('INSERT INTO ai_pending VALUES (?,?,?)', (patient, operation, text))
+                else:
+                    if text is not None and text.strip() != pending['text']:
+                        raise CloudError('原提问回执仍待核对，请先点击“重试原提问”，避免重复付费调用')
+                    operation, text = pending['operation_id'], pending['text']
+            result = self.ai_question(text, operation)
+            if result.get('state') in {'SUCCEEDED', 'UNMETERED', 'UNKNOWN'}:
+                with self.db() as db:
+                    db.execute('DELETE FROM ai_pending WHERE patient_id=? AND operation_id=?', (patient, operation))
+            return result
+
+    def share_report(self, filename, data, mime, operation_id):
+        import base64
+        if len(data) > 2 * 1024 * 1024:
+            raise CloudError('请选择不超过2MB的原件')
+        return self.patient_call('/reports', 'POST', {'operation_id': str(UUID(operation_id)),
+            'filename': filename, 'mime': mime, 'data': base64.b64encode(data).decode(), 'shared': True})
+
     def accept(self, plan, revision, operation_id, local_validation):
         return self.patient_call('/plans/' + str(UUID(plan['id'])) + '/accept', 'POST',
             {'operation_id': str(UUID(operation_id)), 'expected_version': plan['version'], 'expected_current_revision': revision, 'local_validation': local_validation})
@@ -436,7 +499,7 @@ class CloudAccount:
         if scope.get('participant_id') != local_id or scope.get('source_kind') not in ('LIVE_CAMERA', 'REPLAY_FILE') or scope.get('usage_context') != 'SELF_USE':
             raise CloudError('请选择本人真实摄像头或录像范围，展示数据不能采用医生方案')
         patient = self.bind(local_id)
-        if plan.get('status') != 'PUBLISHED' or not plan.get('items'):
+        if plan.get('status') != 'PUBLISHED' or not plan.get('items') or plan.get('execution_status') in {'STOPPED', 'REST_DAY', 'MANUAL_ONLY'}:
             raise CloudError('只能采用医生已发布的方案')
         items = []
         for item in plan['items']:
@@ -444,8 +507,9 @@ class CloudAccount:
             if item['measurement_contract'] != spec['measurement_contract']:
                 raise CloudError('医生方案测量定义与本机不一致，请联系医生重新制定')
             items.append(item_from_plan({**item['settings'], 'exercise_id': item['exercise_id'], 'side': item['side']}))
+        acceptance_key = plan['id'] + (':' + plan['execution_date'] if plan.get('execution_date') else '')
         with self.db() as db:
-            old = db.execute('SELECT * FROM plan_acceptance WHERE patient_id=? AND cloud_id=? AND cloud_version=?', (patient, plan['id'], plan['version'])).fetchone()
+            old = db.execute('SELECT * FROM plan_acceptance WHERE patient_id=? AND cloud_id=? AND cloud_version=?', (patient, acceptance_key, plan['version'])).fetchone()
         def references(record):
             sessions = [s for s in store.list_sessions() if all(session_value(s, k) == v for k, v in scope.items())]
             body = build_body_profile(sessions, **scope)
@@ -461,11 +525,13 @@ class CloudAccount:
         if not old:
             record = new_training_plan(scope, plan['title'][:80], items)
             record['doctor_publication'] = {'id': plan['id'], 'version': plan['version']}
+            if plan.get('execution_date'):
+                record['doctor_publication']['execution_date'] = plan['execution_date']
             validation = {'local_plan_id': record['id'], 'local_revision': 1, 'scope': scope, 'validation_policy': 'existing-local-assessment-1', 'assessment_references': references(record), 'validated_at': utc_now()}
             document = {'operation_id': str(uuid4()), 'expected_version': plan['version'], 'expected_current_revision': current_revision, 'local_validation': validation}
             intent = {'body': document, 'pending_record': record}
             with self.db() as db:
-                db.execute('INSERT INTO plan_acceptance VALUES (?,?,?,?,?,NULL)', (patient, plan['id'], plan['version'], record['id'], json.dumps(intent, ensure_ascii=False)))
+                db.execute('INSERT INTO plan_acceptance VALUES (?,?,?,?,?,NULL)', (patient, acceptance_key, plan['version'], record['id'], json.dumps(intent, ensure_ascii=False)))
         else:
             intent = json.loads(old['document'])
             document = intent['body']
@@ -481,14 +547,14 @@ class CloudAccount:
         except CloudError as exc:
             if exc.status in (403, 404, 409, 412, 422):
                 with self.db() as db:
-                    db.execute('DELETE FROM plan_acceptance WHERE patient_id=? AND cloud_id=? AND cloud_version=?', (patient, plan['id'], plan['version']))
+                    db.execute('DELETE FROM plan_acceptance WHERE patient_id=? AND cloud_id=? AND cloud_version=?', (patient, acceptance_key, plan['version']))
             raise
         if receipt.get('status') != 'COMMITTED':
             raise CloudError('方案仍待确认，云端未提交；本机不会开始该方案')
         with self.db() as db:
-            db.execute('UPDATE plan_acceptance SET receipt=? WHERE patient_id=? AND cloud_id=? AND cloud_version=?', (json.dumps(receipt, ensure_ascii=False), patient, plan['id'], plan['version']))
+            db.execute('UPDATE plan_acceptance SET receipt=? WHERE patient_id=? AND cloud_id=? AND cloud_version=?', (json.dumps(receipt, ensure_ascii=False), patient, acceptance_key, plan['version']))
         active = self.current()
-        if not active.get('plan') or active['plan']['id'] != plan['id'] or active['current_revision'] != receipt['current_revision']:
+        if not active.get('plan') or active['plan']['id'] != plan['id'] or active['current_revision'] != receipt['current_revision'] or active['plan'].get('execution_status') in {'STOPPED', 'REST_DAY', 'MANUAL_ONLY'} or active['plan'].get('execution_date') != plan.get('execution_date'):
             return {**receipt, 'local_status': 'SUPERSEDED'}
         try:
             references(record)

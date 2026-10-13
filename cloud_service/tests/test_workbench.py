@@ -95,7 +95,7 @@ def test_additive_schema_1_migration_preserves_accounts_and_history(setup):
     db.migrate()
     db.migrate()
     with db.engine.connect() as conn:
-        assert conn.scalar(select(schema.c.version)) == 2
+        assert conn.scalar(select(schema.c.version)) == 3
         assert list(conn.execute(select(accounts.c.id)).scalars()) == identifiers
         assert dict(conn.execute(select(records)).mappings().first()) == original
         assert conn.scalar(select(func.count()).select_from(messages)) == 0

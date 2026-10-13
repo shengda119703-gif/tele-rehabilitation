@@ -29,7 +29,7 @@ async function environment(){
   else if(action==='messages')response={items:cloud.messages.slice(-50),read_cursor:cloud.read,unread_count:cloud.messages.filter(m=>m.author_role==='DOCTOR_ADMIN'&&m.sequence>cloud.read).length};
   else if(action==='read'){cloud.read=Math.max(cloud.read,body.cursor);response={status:'COMMITTED',read_cursor:cloud.read,unread_count:cloud.messages.filter(m=>m.author_role==='DOCTOR_ADMIN'&&m.sequence>cloud.read).length};}
   else if(action==='accept'){cloud.acceptCalls++;response=cloud.operations.get(body.operation_id);if(response)response={...response,idempotent:true};else{if(body.expected_current_revision!==cloud.revision){const e=Error('TEST stale current revision');e.status=412;throw e;}assert(body.local_validation.assessment_references.length);cloud.current=body.plan_id;cloud.revision++;response={status:'COMMITTED',resource_id:body.plan_id,current_revision:cloud.revision,idempotent:false};cloud.operations.set(body.operation_id,response);}}
-  else if(action==='current')response={plan:cloud.current?{id:cloud.current}:null,current_revision:cloud.revision};
+  else if(action==='current')response={plan:cloud.current?(cloud.currentDocument||{id:cloud.current}):null,current_revision:cloud.revision};
   else throw Error('Unexpected TEST operation: '+action);
   if(cloud.afterReply){const work=cloud.afterReply;cloud.afterReply=null;work();}
   if(cloud.lose===action){cloud.lose='';throw Error('TEST committed, reply lost');}return structuredClone(response);
@@ -102,6 +102,20 @@ test('actual training POST rechecks latest own assessment, age and recent traini
 test('unsupported actions/settings and unbound account fail before any plan write',async()=>{
  for(const mode of ['id','settings','contract','binding']){const h=await environment(),plan=published();if(mode==='id')plan.items[0].exercise_id='TEST-unsupported';if(mode==='settings')plan.items[0].settings.timing_plan={hold_min_s:3};if(mode==='contract')plan.items[0].measurement_contract='TEST-other-contract';if(mode==='binding')h.store.change(v=>delete v.cloudBinding);
   await assert.rejects(()=>h.account.adopt(h.store,plan,0));assert.equal(h.store.value.plans.length,0);assert.equal(h.cloud.acceptCalls,0);
+ }
+});
+
+test('actual phone start refuses stopped, changed, rest-day and offline professional plans',async()=>{
+ for(const mode of ['stopped','changed','rest','offline']){
+  const h=await environment(),plan=published();await h.account.adopt(h.store,plan,0);const local=h.store.value.plans[0];
+  h.cloud.currentDocument=plain(plan);
+  await h.account.validateTrainingStart(h.store,local);
+  if(mode==='stopped')h.cloud.currentDocument.execution_status='STOPPED';
+  if(mode==='changed')h.cloud.currentDocument.items[0].settings.target_reps=3;
+  if(mode==='rest')h.cloud.currentDocument.execution_status='REST_DAY';
+  if(mode==='offline')h.cloud.offline=true;
+  await assert.rejects(()=>h.c.PhoneLocal.request(trainingRoute(local),{method:'POST',body:new Blob(['TEST'])}));
+  assert.equal(h.videos,0);
  }
 });
 

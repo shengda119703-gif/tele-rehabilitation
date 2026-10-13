@@ -348,6 +348,8 @@ class SceneController:
                     if (saved or {}).get('doctor_publication'):
                         # Recheck at the actual capture start, after any time spent in preview.
                         prepare_training_plan(saved, supplied.get('entry_key'), profile)
+                        from .cloud_account import CloudAccount
+                        CloudAccount(self.storage.path.parent / 'cloud-account').validate_doctor_start(saved)
                     if (saved or {}).get('record_origin') == 'assessment_rules':
                         from .automatic_plans import validate_automatic_use
                         if guided:

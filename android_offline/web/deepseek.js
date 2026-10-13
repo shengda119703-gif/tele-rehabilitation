@@ -1,7 +1,8 @@
 (function(root){
 'use strict';
 const pending=new Map();let sequence=0;
-function configured(){return !!root.OfflineAndroid?.deepSeekConfigured?.();}
+function cloudConfigured(){try{return !!root.PhoneAccount?.scope(root.PhoneLocal?.store);}catch{return false;}}
+function configured(){return cloudConfigured()||!!root.OfflineAndroid?.deepSeekConfigured?.();}
 function request(body){
  if(!configured())return Promise.reject(Error('DeepSeek 尚未配置'));
  return new Promise((resolve,reject)=>{
@@ -16,6 +17,7 @@ function reply(id,ok,body){
  try{item.resolve(JSON.parse(body));}catch{item.reject(Error('DeepSeek 返回格式无效'));}
 }
 function conversationModel(){
+ if(cloudConfigured())return {async reply({messages}){if(!Array.isArray(messages)||!messages.length||messages.some(m=>!['user','assistant'].includes(m.role)||typeof m.content!=='string')||messages.reduce((n,m)=>n+m.content.length,0)>12000)throw Error('问答内容无效');const r=await root.PhoneAccount.askAI(root.PhoneLocal.store,messages.map(m=>m.role+'：'+m.content).join('\n'));if(!['SUCCEEDED','UNMETERED'].includes(r.state)||!r.answer)throw Error('云端问答结果待核对');return r.answer;}};
  if(!configured())return undefined;
  return {async reply({messages}){
   if(!Array.isArray(messages)||!messages.length||messages.length>16||messages.at(-1).role!=='user'||messages.some(m=>!['user','assistant'].includes(m.role)||typeof m.content!=='string'||!m.content.trim())||messages.reduce((n,m)=>n+m.content.length,0)>12000)throw Error('对话上下文无效');

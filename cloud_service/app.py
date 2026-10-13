@@ -77,12 +77,14 @@ class LimitedBody:
         if scope["type"] != "http" or scope["method"] not in {"POST", "PATCH", "PUT"}:
             return await self.app(scope, receive, send)
         body = bytearray()
+        import re
+        maximum = 3 * 1024 * 1024 if re.fullmatch(r"/api/cloud/v1/patients/[a-f0-9-]{36}/reports", scope.get("path", "")) else 262144
         while True:
             message = await receive()
             if message["type"] == "http.disconnect":
                 return
             body.extend(message.get("body", b""))
-            if len(body) > 262144:
+            if len(body) > maximum:
                 return await JSONResponse({"code": "PAYLOAD_TOO_LARGE", "message": "提交内容过大"},
                     status_code=413, headers={"Cache-Control": "no-store"})(scope, receive, send)
             if not message.get("more_body", False):
@@ -99,7 +101,7 @@ class LimitedBody:
         return await self.app(scope, replay, send)
 
 
-def create_app(settings: Settings, database=None, *, web_assets=None):
+def create_app(settings: Settings, database=None, *, web_assets=None, ai_config=None, ai_dispatch=None):
     db = database or Database(settings.database_url)
     app = FastAPI(title="安康工作台", version=__version__, docs_url=None, redoc_url=None,
                   openapi_url=BASE + "/openapi.json")
@@ -137,6 +139,8 @@ def create_app(settings: Settings, database=None, *, web_assets=None):
                 return JSONResponse({"code": "UNSUPPORTED_MEDIA_TYPE", "message": "请使用正确的提交格式"}, status_code=415)
         response = await next_call(request)
         policy = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
+        if request.url.path.endswith('/original'):
+            policy = "sandbox; default-src 'none'; frame-ancestors 'none'; base-uri 'none'"
         if app.state.public_web and request.url.path in {"/", "/capture"}:
             policy = "default-src 'self'; script-src 'self' blob: 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
         response.headers.update({
@@ -214,6 +218,8 @@ def create_app(settings: Settings, database=None, *, web_assets=None):
                 for name in ("llm", "asr", "tts", "ocr", "sms", "push")},
             "plans": True, "text_messages": True, "workbench": True,
             "voice_messages": False, "calls": False, "incremental_sync": False,
+            "text_ai_gateway": {"configured": app.state.text_ai_configured, "usage_accounted": True,
+                                "provider_connection": "NOT_VERIFIED", "medical_files_sent": False},
             "public_user_web": app.state.public_web, "browser_analysis": "LOCAL_CPU" if app.state.public_web else None}
 
     @app.post(BASE + "/auth/register", status_code=201)
@@ -397,6 +403,9 @@ def create_app(settings: Settings, database=None, *, web_assets=None):
             actor, _ = caller(request, connection, write=True)
             patient_scope(connection, actor, ident, write=True)
             validate_dossier(document, actor, ident)
+            from .real_data import synthetic
+            if settings.environment == "production" and synthetic(value.payload):
+                raise DomainError(422, "TEST_DATA_FORBIDDEN", "正式工作台不接收虚构或同步验收资料，请使用隔离测试环境")
             connection.execute(select(patients.c.id).where(patients.c.id == ident).with_for_update()).first()
             prior = connection.execute(select(records).where(records.c.submitted_by == actor["id"],
                 records.c.operation_id == str(value.operation_id))).mappings().first()
@@ -426,13 +435,27 @@ def create_app(settings: Settings, database=None, *, web_assets=None):
         with db.transaction() as connection:
             actor, _ = caller(request, connection)
             patient_scope(connection, actor, ident)
+            from .real_data import real_record_condition
+            condition = records.c.patient_id == ident
+            if settings.environment == "production":
+                condition = and_(condition, real_record_condition(records))
             rows = connection.execute(select(records.c.id, records.c.source_kind, records.c.attribution_state, records.c.payload,
-                records.c.received_at).where(records.c.patient_id == ident).order_by(records.c.received_at.desc(),
+                records.c.received_at).where(condition).order_by(records.c.received_at.desc(),
                 records.c.id).offset(offset).limit(limit)).mappings()
             return {"items": [dict(row) for row in rows], "offset": offset, "limit": limit}
 
     from .workbench import install_workbench
     install_workbench(app, db, caller, patient_scope, BASE)
+    from .ai_usage import install_ai_usage
+    install_ai_usage(app, db, caller, patient_scope, BASE, ai_config, ai_dispatch)
+    from .care_queue import install_queue
+    install_queue(app, db, caller, patient_scope, BASE)
+    from .reports import install_reports
+    install_reports(app, db, caller, patient_scope, BASE)
+    from .plan_programmes import install_programmes
+    install_programmes(app, db, caller, patient_scope, BASE)
+    from .rehab_workflow import install_workflow
+    install_workflow(app, db, caller, patient_scope, BASE)
 
     # Models are public browser assets only; never import a server execution API.
     shared = ROOT / "mobile_rehab" / "static"

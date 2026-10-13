@@ -6,7 +6,8 @@ from uuid import uuid4
 
 from PySide6.QtCore import QTimer, Qt
 from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel,
-    QLineEdit, QPushButton, QCheckBox, QTextBrowser, QPlainTextEdit, QComboBox, QMessageBox)
+    QLineEdit, QPushButton, QCheckBox, QTextBrowser, QPlainTextEdit, QComboBox, QMessageBox, QFileDialog, QInputDialog,
+    QScrollArea, QWidget)
 
 from ..cloud_account import CloudAccount, CloudError, desktop_record, ORIGIN
 
@@ -31,7 +32,14 @@ class CloudAccountDialog(QDialog):
         self.client = client or CloudAccount(directory)
         self.pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='cloud-account')
         self.future = None
-        layout = QVBoxLayout(self)
+        outer = QVBoxLayout(self)
+        scroll = QScrollArea(self)
+        scroll.setWidgetResizable(True)
+        scroll.setAccessibleName('工作台功能与内容')
+        contents = QWidget()
+        scroll.setWidget(contents)
+        outer.addWidget(scroll)
+        layout = QVBoxLayout(contents)
         layout.addWidget(QLabel('统一云服务  ·  ' + ORIGIN))
         self.status = QLabel('登录本人云账号后，可分享档案、与医生文字沟通、查看医生方案。')
         self.status.setWordWrap(True)
@@ -87,6 +95,7 @@ class CloudAccountDialog(QDialog):
         self.records = QTextBrowser()
         self.records.setOpenExternalLinks(False)
         self.records.setAccessibleName('工作台内容')
+        self.records.setMinimumHeight(180)
         layout.addWidget(self.records, 1)
         self.message_input = QPlainTextEdit()
         self.message_input.setPlaceholderText('给医生的文字（最多 4000 字）；主动点击发送后才提交。')
@@ -95,6 +104,7 @@ class CloudAccountDialog(QDialog):
         layout.addWidget(self.message_input)
         row = QHBoxLayout()
         action('发送给医生', self.send_message, row)
+        action('分享报告原件', self.share_report, row)
         self.plan_select = QComboBox()
         self.plan_select.setAccessibleName('选择医生发布方案')
         row.addWidget(self.plan_select, 1)
@@ -103,6 +113,16 @@ class CloudAccountDialog(QDialog):
         note = QLabel('采用前核对本机最新本人评估；通过后加入本地计划库。开始训练仍需原来的机位与准备确认。')
         note.setWordWrap(True)
         layout.addWidget(note)
+        row = QHBoxLayout()
+        action('云端康复问答', self.ask_ai, row)
+        action('重试原提问', lambda: self.run(self.client.ask_ai, '已核对原提问回执', 'ai'), row)
+        action('我的 API 用量', lambda: self.run(self.client.ai_usage, '已读取真实模型用量', 'ai_usage'), row)
+        layout.addLayout(row)
+        row = QHBoxLayout()
+        action('目标、器材与评估流程', lambda: self.run(self.client.workflow, '已读取本人资料，可复用或修改', 'workflow'), row)
+        action('提交起始候选', lambda: self.run(lambda: self.client.candidate('STARTER'), '候选已提交医生核对，不改变当前方案', 'candidate'), row)
+        action('请求进阶核对', lambda: self.run(lambda: self.client.candidate('PROGRESSION'), '进阶候选已提交，不自动增加负重', 'candidate'), row)
+        layout.addLayout(row)
         self.timer = QTimer(self)
         self.timer.setInterval(80)
         self.timer.timeout.connect(self.poll)
@@ -138,6 +158,63 @@ class CloudAccountDialog(QDialog):
         self.password.setEnabled(False)
         self.upload_consent.setEnabled(False)
         self.future = self.pool.submit(work)
+
+    def ask_ai(self):
+        question, ok = QInputDialog.getMultiLineText(self, '云端康复问答', '仅发送你填写的文字；问题会计入本人云账号额度。不会上传报告图片、自动修改方案。')
+        if ok and question.strip():
+            self.run(lambda: self.client.ask_ai(question), '已读取模型回执', 'ai')
+
+    def share_report(self):
+        from pathlib import Path
+        filename, _ = QFileDialog.getOpenFileName(self, '选择分享给医生的报告原件', '', '报告原件 (*.pdf *.png *.jpg *.jpeg)')
+        if not filename:
+            return
+        path = Path(filename)
+        if path.stat().st_size > 2 * 1024 * 1024:
+            self.status.setText('请选择不超过2MB的报告原件。')
+            return
+        if QMessageBox.question(self, '分享报告原件', '将「' + path.name + '」上传并授权医生查看？需要同时开启医生授权。原件不做识字或模型分析。') != QMessageBox.Yes:
+            return
+        mime = {'.pdf': 'application/pdf', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg'}[path.suffix.lower()]
+        operation = str(uuid4())
+        self.run(lambda: self.client.share_report(path.name, path.read_bytes(), mime, operation), '原件已上传，请确认医生授权已开启', 'report')
+
+    def workflow_profile(self, state):
+        profile = state.get('profile') or {}
+        dialog = QDialog(self)
+        dialog.setWindowTitle('本人目标、器材与限制')
+        dialog.setProperty('visualScope', 'core')
+        form = QFormLayout(dialog)
+        goal = QLineEdit(profile.get('goal', ''))
+        goal.setMaxLength(500)
+        region, level = QComboBox(), QComboBox()
+        region.addItems(['肩', '肘', '腕', '髋', '膝', '踝', '颈', '躯干', '一般活动'])
+        region.setCurrentText(profile.get('region', '肩'))
+        level.addItems(['L0', 'L1', 'L2', 'L3'])
+        level.setCurrentIndex(profile.get('level', 0))
+        equipment = QPlainTextEdit('\n'.join(profile.get('equipment', [])))
+        restrictions = QPlainTextEdit('\n'.join(profile.get('restrictions', [])))
+        confirmation = QCheckBox('已阅读适用与停止条件；疑问先联系医生')
+        confirmation.setChecked(profile.get('screening_confirmed', False))
+        form.addRow('康复目标', goal)
+        form.addRow('部位', region)
+        form.addRow('自填能力（不是测量肌力，需医生核对）', level)
+        form.addRow('现有器材（每行一项，保留动作库原名称）', equipment)
+        form.addRow('当前限制（每行一项）', restrictions)
+        form.addRow(confirmation)
+        note = QLabel('流程：问答了解 → 手动选择原康复评估 → 保存并同步结果 → 提交候选 → 医生核对并发布 → 本人采用。填写的限制由医生判断，不让模型判定可以训练。')
+        note.setWordWrap(True)
+        form.addRow(note)
+        save, cancel = QPushButton('保存供下次复用'), QPushButton('关闭')
+        save.clicked.connect(dialog.accept)
+        cancel.clicked.connect(dialog.reject)
+        form.addRow(save, cancel)
+        dialog.resize(580, 640)
+        if dialog.exec() == QDialog.Accepted:
+            document = {'expected_version': state['profile_version'], 'goal': goal.text(), 'region': region.currentText(),
+                'level': level.currentIndex(), 'equipment': [v.strip() for v in equipment.toPlainText().splitlines() if v.strip()],
+                'restrictions': [v.strip() for v in restrictions.toPlainText().splitlines() if v.strip()], 'screening_confirmed': confirmation.isChecked()}
+            self.run(lambda: self.client.save_workflow_profile(document), '资料已保存。请到原康复页面手动评估，再同步真实结果', 'workflow_saved')
 
     def login(self):
         username, password = self.username.text(), self.password.text()
@@ -254,7 +331,24 @@ class CloudAccountDialog(QDialog):
             if isinstance(value, dict) and 'uploaded' in value:
                 message = f"本次上传 {value['uploaded']} 条；展示或未结束记录不上传。"
             self.status.setText(message)
-            if self.mode in ('messages', 'sent'):
+            if self.mode in ('workflow', 'workflow_saved'):
+                self.records.setPlainText('\n'.join(value['steps']) + '\n\n' + value['assessment_note'] + '\n\n可选评估：\n' + '\n'.join(a['name'] + '：' + a['description'] for a in value['suggested_assessments']))
+                if self.mode == 'workflow':
+                    QTimer.singleShot(0, lambda: self.workflow_profile(value))
+            elif self.mode == 'candidate':
+                self.records.setPlainText(value['document']['note'] + '\n\n' + '\n'.join(c['id']+' '+c['name']+'\n源剂量范围：'+c['sourceDose']+'\n开始条件：'+c['startConditions']+'\n停止条件：'+c['stopConditions'] for c in value['document']['cards']))
+            elif self.mode == 'ai':
+                state = value.get('state')
+                self.records.setPlainText(value.get('answer') or '请求状态：' + str(state) + '。费用和结果需核对，请查看 API 用量。原提问不会自动重复付费调用。')
+                if state in ('UNKNOWN', 'UNMETERED'):
+                    self.status.setText('模型用量尚待核对，费用没有记成零元。')
+            elif self.mode == 'ai_usage':
+                usage = value['usage']
+                money = '；'.join(currency + ' ' + amount for currency, amount in usage['estimated_cost_by_currency'].items()) or '未计价'
+                self.records.setPlainText(f"{value['period']}：{usage['calls']} 次请求\n输入 {usage['prompt_tokens']} / 输出 {usage['completion_tokens']} token\n费用估算：{money}（非账单）\n待核对：{usage['uncertain_calls']} 次；未计价：{usage['unpriced_calls']} 次\n剩余额度：{value['remaining_tokens']} token\n" + '\n\n'.join(r.get('answer') or r['state'] for r in value['items']))
+            elif self.mode == 'report':
+                self.records.setPlainText('原件：' + value['item']['filename'] + '\n上传已保存。原件不会自动改变康复计划。')
+            elif self.mode in ('messages', 'sent'):
                 self.records.setHtml(''.join('<p><b>' + ('医生' if m['author_role'] == 'DOCTOR_ADMIN' else '我') + '：</b>' + html.escape(m['text']).replace('\n', '<br>') + '</p>' for m in value['items']) or '<p>暂无文字消息；医生授权开启后可发送。</p>')
                 if self.mode == 'sent':
                     self.message_input.clear()

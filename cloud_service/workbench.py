@@ -101,6 +101,7 @@ class PlanItem(Input):
 
 
 class PlanInput(Input):
+    programme: dict | None = None
     operation_id: UUID = Field(strict=False)
     title: str = Field(min_length=1, max_length=80)
     summary: str = Field(default="", max_length=8000)
@@ -302,8 +303,11 @@ def validate_adoption(plan, local):
 
 
 def operation_digest(kind, ident, resource, value):
+    body = value.model_dump(mode="json")
+    if body.get("programme", "ABSENT") is None:
+        del body["programme"]  # Preserve receipts from pre-programme clients.
     return digest(json.dumps({"kind": kind, "patient_id": ident, "resource_id": resource,
-        "body": value.model_dump(mode="json")}, sort_keys=True, ensure_ascii=False, separators=(",", ":")))
+        "body": body}, sort_keys=True, ensure_ascii=False, separators=(",", ":")))
 
 
 def prior_operation(connection, actor, ident, kind, resource, value):
@@ -413,6 +417,9 @@ def install_workbench(app, db, caller, patient_scope, base):
         with db.transaction() as connection:
             authorized(connection, request, ident)
             rows = latest_records(connection, ident)
+            if app.state.settings.environment == "production":
+                from .real_data import synthetic
+                rows = [r for r in rows if not synthetic(r["payload"])]
             return {"items": rows[offset:offset + limit], "total": len(rows), "offset": offset, "limit": limit}
 
     @app.get(base + "/patients/{ident}/rehab-summary")
@@ -420,6 +427,9 @@ def install_workbench(app, db, caller, patient_scope, base):
         with db.transaction() as connection:
             authorized(connection, request, ident)
             rows = latest_records(connection, ident)
+            if app.state.settings.environment == "production":
+                from .real_data import synthetic
+                rows = [r for r in rows if not synthetic(r["payload"])]
             return {kind: [r for r in rows if r["payload"].get("kind") == kind]
                 for kind in ("profile", "assessment", "training", "rehab_plan")}
 
@@ -435,6 +445,8 @@ def install_workbench(app, db, caller, patient_scope, base):
             item = {"id": str(uuid4()), "patient_id": ident, "sequence": sequence,
                 "author_id": actor["id"], "author_role": actor["role"], "text": clean_text, "created_at": int(time.time())}
             connection.execute(messages.insert().values(**item))
+            from .care_queue import opened
+            opened(connection, item)
             return commit_operation(connection, actor, ident, "message.send", value, fingerprint,
                 {"resource_id": item["id"], "item": item})
 
@@ -450,7 +462,8 @@ def install_workbench(app, db, caller, patient_scope, base):
             rows = connection.execute(select(plans).where(condition).order_by(plans.c.updated_at.desc(),
                 plans.c.id).offset(offset).limit(limit)).mappings()
             active = current(connection, ident)
-            return {"items": [dict(row) for row in rows],
+            from .plan_programmes import enrich
+            return {"items": [enrich(connection, row, execution=actor["role"] == "PATIENT") for row in rows],
                 "total": connection.scalar(select(func.count()).select_from(plans).where(condition)),
                 "current_plan_id": active["plan_id"] if active else None,
                 "current_revision": active["revision"] if active else 0, "offset": offset, "limit": limit}
@@ -460,7 +473,8 @@ def install_workbench(app, db, caller, patient_scope, base):
         with db.transaction() as connection:
             authorized(connection, request, ident)
             active = current(connection, ident)
-            return {"plan": get_plan(connection, ident, active["plan_id"]) if active else None,
+            from .plan_programmes import enrich
+            return {"plan": enrich(connection, get_plan(connection, ident, active["plan_id"]), execution=True) if active else None,
                 "current_revision": active["revision"] if active else 0,
                 "accepted_at": active["accepted_at"] if active else None,
                 "local_validation": active["local_validation"] if active else None}
@@ -468,6 +482,8 @@ def install_workbench(app, db, caller, patient_scope, base):
     @app.post(base + "/patients/{ident}/plans", status_code=201)
     def create_plan(ident: str, value: PlanInput, request: Request):
         document = plan_document(value)
+        from .plan_programmes import validate_programme, save_programme, enrich
+        programme = validate_programme(value.programme)
         with db.transaction() as connection:
             actor = authorized(connection, request, ident, write=True, doctor=True)
             prior, fingerprint = prior_operation(connection, actor, ident, "plan.create", None, value)
@@ -482,12 +498,16 @@ def install_workbench(app, db, caller, patient_scope, base):
                 "parent_plan_id": value.parent_plan_id, **document, "status": "DRAFT", "version": 1,
                 "publication_sequence": None, "created_at": now, "updated_at": now, "published_at": None}
             connection.execute(plans.insert().values(**plan))
+            save_programme(connection, plan["id"], programme)
+            plan = enrich(connection, plan)
             return commit_operation(connection, actor, ident, "plan.create", value, fingerprint,
                 {"resource_id": plan["id"], "plan": plan})
 
     @app.put(base + "/patients/{ident}/plans/{plan_id}")
     def edit_plan(ident: str, plan_id: str, value: PlanUpdate, request: Request):
         document = plan_document(value)
+        from .plan_programmes import validate_programme, save_programme, programmes, enrich
+        programme = validate_programme(value.programme)
         with db.transaction() as connection:
             actor = authorized(connection, request, ident, write=True, doctor=True)
             prior, fingerprint = prior_operation(connection, actor, ident, "plan.edit", plan_id, value)
@@ -502,7 +522,11 @@ def install_workbench(app, db, caller, patient_scope, base):
                 raise DomainError(422, "PLAN_PARENT_IMMUTABLE", "方案来源不能在编辑时改变")
             changes = {**document, "version": plan["version"] + 1, "updated_at": int(time.time())}
             connection.execute(update(plans).where(plans.c.id == plan_id).values(**changes))
+            from sqlalchemy import delete
+            connection.execute(delete(programmes).where(programmes.c.plan_id == plan_id))
+            save_programme(connection, plan_id, programme)
             plan.update(changes)
+            plan = enrich(connection, plan)
             return commit_operation(connection, actor, ident, "plan.edit", value, fingerprint,
                 {"resource_id": plan_id, "plan": plan})
 
@@ -524,6 +548,8 @@ def install_workbench(app, db, caller, patient_scope, base):
                 "publication_sequence": sequence, "published_at": now, "updated_at": now}
             connection.execute(update(plans).where(plans.c.id == plan_id).values(**changes))
             plan.update(changes)
+            from .plan_programmes import enrich
+            plan = enrich(connection, plan)
             return commit_operation(connection, actor, ident, "plan.publish", value, fingerprint,
                 {"resource_id": plan_id, "plan": plan})
 
@@ -537,6 +563,10 @@ def install_workbench(app, db, caller, patient_scope, base):
             if prior:
                 return prior
             plan = get_plan(connection, ident, plan_id, lock=True)
+            from .plan_programmes import enrich
+            plan = enrich(connection, plan, execution=True)
+            if plan.get("execution_status") in {"STOPPED", "REST_DAY", "MANUAL_ONLY"}:
+                raise DomainError(409, "PLAN_NOT_EXECUTABLE", "方案已停用、当前为休息日或需人工执行，请先联系医生核对")
             if plan["status"] != "PUBLISHED":
                 raise DomainError(404, "RESOURCE_NOT_FOUND", "找不到可采用的方案")
             if plan["version"] != value.expected_version:

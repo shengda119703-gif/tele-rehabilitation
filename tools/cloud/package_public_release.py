@@ -14,8 +14,8 @@ from cloud_service import __version__
 
 def main():
     manifest = json.loads((ROOT / "public_web/build/web-manifest.json").read_text(encoding="utf-8"))
-    files = subprocess.check_output(["git", "ls-files", "-z", "--", "cloud_service", "deploy/cloud", "mobile_rehab/static", "tools/cloud/seed_sync_dossiers.py"], cwd=ROOT).decode().split("\0")
-    files = [name for name in files if name]
+    files = subprocess.check_output(["git", "ls-files", "-z", "--", "cloud_service", "deploy/cloud", "mobile_rehab/static"], cwd=ROOT).decode().split("\0")
+    files = [name for name in files if name and not name.startswith("cloud_service/tests/")]
     files += ["public_web/build/" + item["file"] for item in manifest["assets"].values()]
     files += ["public_web/build/" + name for name in ("index.html", "capture.html", "web-manifest.json")]
     for name in files:
@@ -23,7 +23,7 @@ def main():
         if p.suffix in {".pem", ".sqlite3", ".mp4", ".apk", ".env", ".jks"} or ".runtime" in p.parts or "node_modules" in p.parts:
             raise SystemExit("Forbidden release input")
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
-    build = {"service": "ankang-cloud", "version": __version__, "schema": 2, "git_commit": commit,
+    build = {"service": "ankang-cloud", "version": __version__, "schema": 3, "git_commit": commit,
              "browser_version": manifest["version"], "browser_execution": manifest["execution_location"], "deployment_performed": False}
     archive = ROOT / (".runtime/cloud-" + __version__ + ".tar")
     archive.parent.mkdir(parents=True, exist_ok=True)

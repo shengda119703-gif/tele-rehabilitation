@@ -104,19 +104,24 @@ class Database:
     def migrate(self):
         # Register additive feature tables even when migration runs via manage.py.
         from . import workbench  # noqa: F401
+        from . import ai_usage  # noqa: F401
+        from . import care_queue  # noqa: F401
+        from . import reports  # noqa: F401
+        from . import plan_programmes  # noqa: F401
+        from . import rehab_workflow  # noqa: F401
         with self.engine.begin() as connection:
             if self.engine.dialect.name == "postgresql":
                 connection.exec_driver_sql("SELECT pg_advisory_xact_lock(74321001)")
             version = connection.scalar(select(schema.c.version)) if inspect(connection).has_table(schema.name) else None
-            if version not in {None, 1, 2}:
+            if version not in {None, 1, 2, 3}:
                 raise RuntimeError("Unsupported cloud schema version")
             metadata.create_all(connection)
             if version is None:
-                connection.execute(schema.insert().values(version=2))
-            elif version == 1:
-                connection.execute(update(schema).where(schema.c.version == 1).values(version=2))
+                connection.execute(schema.insert().values(version=3))
+            elif version in {1, 2}:
+                connection.execute(update(schema).where(schema.c.version == version).values(version=3))
 
     def ready(self):
         with self.engine.connect() as connection:
-            return connection.scalar(select(schema.c.version)) == 2 and bool(connection.scalar(
+            return connection.scalar(select(schema.c.version)) == 3 and bool(connection.scalar(
                 select(accounts.c.id).where(accounts.c.role == "DOCTOR_ADMIN", accounts.c.active.is_(True))))

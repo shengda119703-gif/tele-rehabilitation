@@ -20,7 +20,7 @@ async function api(path,method='GET',body){
  const headers={};
  if(body!==undefined)headers['Content-Type']='application/json';
  if(method!=='GET')headers['X-CSRF-Token']=csrf;
- const response=await nativeFetch('/api/cloud/v1'+path,{method,headers,credentials:'same-origin',cache:'no-store',redirect:'error',signal:AbortSignal.timeout(20000),body:body===undefined?undefined:JSON.stringify(body)});
+ const response=await nativeFetch('/api/cloud/v1'+path,{method,headers,credentials:'same-origin',cache:'no-store',redirect:'error',signal:AbortSignal.timeout(path.endsWith('/ai/requests')?35000:20000),body:body===undefined?undefined:JSON.stringify(body)});
  const value=await response.json();
  if(!response.ok){if(response.status===401)invalidate();throw Object.assign(Error(value.message||'暂时无法连接，请稍后重试'),{status:response.status,code:value.code});}
  assertScope();
@@ -40,6 +40,13 @@ async function request(action,value,body={}){
  if(action==='records')return api(patient+'/records?offset=0&limit=10');
  if(action==='append')return api(patient+'/record-events','POST',body.document);
  if(action==='profile')return api(patient);
+ if(action==='aiUsage')return api(patient+'/ai/usage');
+ if(action==='aiAsk')return api(patient+'/ai/requests','POST',{operation_id:body.operation_id,text:body.text});
+ if(action==='reports')return api(patient+'/reports');
+ if(action==='workflow')return api(patient+'/rehab-workflow');
+ if(action==='workflowProfile')return api(patient+'/rehab-workflow/profile','PUT',body);
+ if(action==='candidate')return api(patient+'/rehab-candidates','POST',{operation_id:body.operation_id,kind:body.kind});
+ if(action==='shareReport')return api(patient+'/reports','POST',body);
  if(action==='messages'){
   const query=new URLSearchParams();
   const integer=(name,value,maximum)=>{if(!Number.isInteger(value)||value<0||value>maximum)throw Error('对话查询范围无效');query.set(name,String(value));};
