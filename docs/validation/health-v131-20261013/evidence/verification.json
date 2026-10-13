@@ -1,0 +1,353 @@
+{
+  "baseline": "f49fcdc01020951942793c3d5730f15c79009ada",
+  "protected_files_equal": 496,
+  "screenshot_count": 43,
+  "screenshots": [
+    {
+      "file": "screenshots/ai-disconnected-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "ce7ed65f7412e2f22f51ef890b2590604b92fe511c05e556343afd68b74caade"
+    },
+    {
+      "file": "screenshots/ai-return-reading-state-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "ad9ec2fc998b9141baa86ea5f4ffb7e577629bcf4d03e9551c58df4f0d7b98eb"
+    },
+    {
+      "file": "screenshots/all-metrics-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "50bd8d4abcf0bc183de8ced9df1850ee81dca4d34750163763e686bf1ecdc474"
+    },
+    {
+      "file": "screenshots/all-metrics-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "f12ba2e1ebd3ebbd27aa98cddf9b2871b98e3f725f190115323afde8ae2ebffd"
+    },
+    {
+      "file": "screenshots/all-metrics-empty-filter-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "a293c4cb36977ace46159712d7b64e6e04f5da3a4717fa3f5a5c7f9816e576b6"
+    },
+    {
+      "file": "screenshots/archive-detail-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "3823d3fc891fe21fabd9fb527c1d41a80747b0b56f5d6bd791f0f0b1a036e3a3"
+    },
+    {
+      "file": "screenshots/archive-trash-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "55bd6be928e6b575fb0b9c31bddfd517f1ab73b9b1431b2b9cab8594dfd2268e"
+    },
+    {
+      "file": "screenshots/archive-upload-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "3bcae1760f09538ee410756b54f5be630106662c7cc57342163e30bce4bfa089"
+    },
+    {
+      "file": "screenshots/archives-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "299d8deaf51048cdd7994f8e98cbf2be925c937f77cc3fdaf0dd6edde9903f28"
+    },
+    {
+      "file": "screenshots/archives-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "d0a090326b6cf715d4d3c8da7b875f7537a0fc6886151076b2121959a6614fcd"
+    },
+    {
+      "file": "screenshots/before-health-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "01c04202cdba1a08756eb6c464310058d54e4350e6e9acc95b5d285e8323f32f"
+    },
+    {
+      "file": "screenshots/before-health-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "ac614dae4afde96bd7dcaf227c96c0792b1e506018216b3841375ee12630e2ab"
+    },
+    {
+      "file": "screenshots/context-ai-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "021312b86f9907426d855ebdc506efea14c4d408f6db9e6253e48e91ce078605"
+    },
+    {
+      "file": "screenshots/context-ai-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "ccd2488a8ee2294124b5df33fd0d69dbb963dfc9745aac0909e729cda3cbe77a"
+    },
+    {
+      "file": "screenshots/empty-trend-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "e704e54be9275ed0b21ba0a6f9f3c735a7adef26aac668b234cc5bbcb5bd1d52"
+    },
+    {
+      "file": "screenshots/health-disconnected-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "a66c8cfc985cd07b058200690197631ecfb3f0a417b46fbb53b5eb42fd7567e9"
+    },
+    {
+      "file": "screenshots/health-disconnected-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "7167e9ca424887fec9e0f684abd3d2b3a074e615cf49bf8a32c6cf25e61d80b6"
+    },
+    {
+      "file": "screenshots/health-home-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "f68e9533126448f800df6b3f9b21636a0021b790640f7b1a8dfddd31b2f5d38a"
+    },
+    {
+      "file": "screenshots/health-home-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "4806eae169934b3df8e79c1903d8af16139a1558971e601f8483368ad59476d4"
+    },
+    {
+      "file": "screenshots/health-missing-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "8edeb300bff9559397917518cd286ca5417133d613db71c1e4f41a845caa5c86"
+    },
+    {
+      "file": "screenshots/health-missing-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "033ac2a191b0ee83cf580fb5cda24ca09ac1c0b66fb25d25be5da01d682f2d49"
+    },
+    {
+      "file": "screenshots/local-search-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "a82c7d8bb870dc04a3e3f1215aea912070bf38bec8953a7e30a6467373de6aca"
+    },
+    {
+      "file": "screenshots/metric-detail-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "7c86a6800de0f85d2edc2fab62c4cb01848e1ea2315d9b0b2cf7fe50b840a02c"
+    },
+    {
+      "file": "screenshots/metric-detail-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "4efc38099f57062c1dc7336891076a4a88706b504cc9295844b6ecc27b953fa0"
+    },
+    {
+      "file": "screenshots/metric-raw-history-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "cab69edee400bdec897aff9d3bde3382d38e3ccab0c8ed495369bd4be4b2f322"
+    },
+    {
+      "file": "screenshots/metric-saved-zero-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "6487fd6edf00b2a38d375e64cd6eff31b0ea86f53d0e56a2559c041725a056ec"
+    },
+    {
+      "file": "screenshots/profile-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "d494f5cbe518b6ffdbdc3ab7d6ddc8662ca03184d07b941d5b77b1a4db2701e0"
+    },
+    {
+      "file": "screenshots/profile-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "9ae62b8eeb04c77ea94259a662c9b22a82213078940a02e26eb8e56dce4ee4e9"
+    },
+    {
+      "file": "screenshots/profile-edit-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "a40c3c783e5f8047b9556b355772f81b6d1070ddbbe8b88d07519f58eabec1f6"
+    },
+    {
+      "file": "screenshots/record-required-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "15d3f4ac660283ea144ca1aa0631124b4e7354ae654616a49222d499724f5c6b"
+    },
+    {
+      "file": "screenshots/record-save-failed-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "4f2c102e4a559be952c86974e7290b6639ae33ff235b6842ecc916055e07db4a"
+    },
+    {
+      "file": "screenshots/record-zero-draft-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "f45585eec59edf76385b5a895f8b9e73ddff1a5fb405658fcc8f756aa3b9505f"
+    },
+    {
+      "file": "screenshots/regression-home-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "03c0120a30ea4bbb13eea47edc7f26c628e330862e5c578b1cd47fc1e1587bd0"
+    },
+    {
+      "file": "screenshots/regression-home-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "fc3bb9236aa822a8316dfe229fb994c569dd28ba148e3b7f54901dd9a597535b"
+    },
+    {
+      "file": "screenshots/regression-rehab-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "87c4e65795cde8da8f52ad99ca64ea5a0e0a9a7d0c3c3f76b82c64b0fbf88929"
+    },
+    {
+      "file": "screenshots/regression-rehab-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "183cc5346f1a3fa1c9a6d1dd5dbf2cee4921dbb00edbbb23591a4518e0a583dd"
+    },
+    {
+      "file": "screenshots/rehab-summary-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "adee2895578f81ca7659bdb534dcbcf540c08b893f6af75b9e2dd8eddbae2780"
+    },
+    {
+      "file": "screenshots/rehab-summary-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "b5748d6351931c9b8cb11a7485b4eba69ad639ed1fd8ff425aa2158aabdde410"
+    },
+    {
+      "file": "screenshots/single-record-trend-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "0ddde50a372548a718cc7f232ebdeafde84e8cb16a2c4c9c2612ae710e7e07ca"
+    },
+    {
+      "file": "screenshots/unpaired-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "195d77473cb4dc89af165179485bf91fbe789318dbdea45413d3bfbfa00328cf"
+    },
+    {
+      "file": "screenshots/unpaired-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "a611eb887b726c18c5b0f647387d869dc4977f9a3ebe9cce8bbe56324d1ad478"
+    },
+    {
+      "file": "screenshots/weekly-report-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "sha256": "f3662019ef6a7df8a4dbb4793623cb0f7cb606a8427d300247f056ed70bd198e"
+    },
+    {
+      "file": "screenshots/weekly-report-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "sha256": "134f1a750c8c7a460937f05e9b635da99713ee108a80f38f1633fb4616084d9b"
+    }
+  ],
+  "before_images": "Reused actual phase 4.3 audit images from the identical f49fcdc source, not newly rendered here.",
+  "pushed": false
+}

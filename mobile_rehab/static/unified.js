@@ -146,6 +146,7 @@ async function act(fn, success = "已保存") {
 async function load() {
   const generation = ++ui.generation;
   ui.homeConnection = "loading";
+  if (ui.page === "health" && !ui.snapshot && window.HealthV131) window.HealthV131.loading();
   if (ui.page === "home" && ui.snapshot) home();
   if (ui.page === "rehab" && ui.snapshot && window.RehabV51) rehab();
   try {
@@ -162,6 +163,7 @@ async function load() {
     ui.homeConnection = "offline";
     if (!$("#pair-form") && ui.page === "home") { home(); return; }
     if (!$("#pair-form") && ui.page === "rehab" && window.RehabV51) { rehab(); return; }
+    if (!$("#pair-form") && ui.page === "health" && window.HealthV131) { window.HealthV131.failure(e.message); return; }
     if (!$("#pair-form"))
       $("#content").innerHTML =
         `<h1>暂时无法读取</h1><p>${E(e.message)}</p>${button("重新连接", "retry", true)}`;
@@ -190,7 +192,7 @@ function route() {
     return;
   }
   const key = location.hash.slice(1) || "home";
-  ui.page = Object.hasOwn(names, key) || ["assistant", "records"].includes(key) ? key : "home";
+  ui.page = key.startsWith("health/") ? "health" : Object.hasOwn(names, key) || ["assistant", "records"].includes(key) ? key : "home";
   ui.day = ui.homeRouteDay || (ui.page === "home" ? ui.day : today());
   ui.homeRouteDay = null;
   if (ui.page === 'rehab' && window.RehabV51) {
@@ -206,6 +208,7 @@ function route() {
   window.scrollTo(0, 0);
 }
 function pair() {
+  window.HealthV131?.reset();
   document.body.dataset.page = "pair";
   ui.homeRouteDay = null;
   ui.homeConnection = "loading";
@@ -440,6 +443,7 @@ function schedule(p) {
   };
 }
 function health() {
+  if (window.HealthV131) { window.HealthV131.render(); return; }
   const events = (snapshot().state?.events || [])
     .slice()
     .sort((a, b) => String(b.timestamp).localeCompare(String(a.timestamp)));
