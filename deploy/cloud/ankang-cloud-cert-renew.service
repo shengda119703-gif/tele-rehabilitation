@@ -1,0 +1,6 @@
+[Unit]
+Description=Renew Ankang cloud short-lived IP TLS certificate
+[Service]
+Type=oneshot
+TimeoutStartSec=300
+ExecStart=/opt/ankang-cloud/certbot/bin/certbot renew --quiet --deploy-hook "/usr/bin/systemctl reload nginx"

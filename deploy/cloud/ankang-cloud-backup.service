@@ -1,0 +1,8 @@
+[Unit]
+Description=Encrypted Ankang cloud database backup
+After=postgresql.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/ankang-cloud-backup
+UMask=0077

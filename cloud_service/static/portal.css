@@ -1,0 +1,47 @@
+/* Necessary cloud forms only. Existing patient assets/tokens are unchanged. */
+.cloud-portal > header { max-width: 1060px; margin: auto; padding: 24px 28px 8px; justify-content: space-between; }
+.cloud-portal > header .brand { position: static; display: inline; }
+.cloud-portal > header .brand span { display: inline; margin-left: 16px; }
+.cloud-portal > main { max-width: 1000px; margin: auto; padding: 32px 28px 64px; }
+.cloud-portal::before { display: none; }
+.cloud-form { max-width: 440px; margin: 24px auto; }
+.cloud-form label { display: block; margin: 16px 0; }
+.cloud-form input { width: 100%; }
+.cloud-form button.primary { width: 100%; margin-top: 12px; }
+.cloud-toolbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+.cloud-patients { display: grid; gap: 12px; }
+.cloud-patient { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); padding: 16px 0; gap: 16px; }
+.cloud-error { color: var(--danger); min-height: 1.65em; }
+.cloud-record { border-bottom: 1px solid var(--line); padding: 12px 0; }
+.cloud-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; }
+.cloud-metrics dd { margin: 4px 0; font-weight: 600; }
+.cloud-record pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.cloud-dossier-section { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.cloud-dossier-section dd { overflow-wrap: anywhere; }
+.cloud-section-title { display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.cloud-section-title h2, .cloud-section-title h3 { margin: 12px 0; }
+.cloud-badge { font-size: .88em; color: var(--muted); background: var(--soft); border-radius: 8px; padding: 3px 9px; margin-left: 8px; }
+.cloud-plan { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px; margin: 16px 0; }
+.cloud-plan-items { padding-left: 24px; }
+.cloud-plan-items > li { padding: 8px 0; }
+.cloud-preserve, .cloud-chat p { white-space: pre-wrap; overflow-wrap: anywhere; }
+.cloud-chat { border-left: 3px solid var(--line); margin: 12px 0; padding: 12px 16px; background: var(--surface); border-radius: 0 10px 10px 0; }
+.cloud-chat.doctor { border-color: var(--good); }
+.cloud-chat time { display: block; font-size: .85em; color: var(--muted); }
+.cloud-chat p { margin: 8px 0; }
+.cloud-data-list { padding-left: 20px; }
+.cloud-data-list li { margin: 6px 0; }
+.cloud-metrics .cloud-metrics { display: block; padding-left: 8px; border-left: 1px solid var(--line); }
+.cloud-metrics .cloud-metrics dt { font-size: .88em; }
+.cloud-metrics .cloud-metrics dd { font-weight: 400; }
+.cloud-plan-editor { padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.cloud-plan-editor label, #message-form > label { display: block; margin: 12px 0; }
+.cloud-plan-editor input, .cloud-plan-editor select, .cloud-plan-editor textarea, #message-form textarea { width: 100%; min-width: 0; }
+.cloud-plan-item { min-width: 0; border: 1px solid var(--line); border-radius: 10px; margin: 20px 0; padding: 16px; }
+.cloud-item-grid { display: grid; gap: 4px 16px; grid-template-columns: repeat(2,minmax(0,1fr)); }
+.cloud-item-grid label.cloud-check { display: flex; gap: 10px; align-items: center; }
+.cloud-item-grid .cloud-check input { width: auto; }
+.cloud-plan-editor legend { padding: 0 8px; font-weight: 600; }
+.cloud-record dl, .cloud-record dd { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 480px) { .cloud-form { margin-top: 12px; } }
+@media (max-width: 600px) { .cloud-item-grid { grid-template-columns: 1fr; } .cloud-plan-editor { padding: 12px; } .cloud-section-title { align-items: flex-start; } }

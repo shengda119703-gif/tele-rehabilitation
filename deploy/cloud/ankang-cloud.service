@@ -1,0 +1,26 @@
+[Unit]
+Description=Ankang unified cloud business service (no models)
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ankang-cloud
+Group=ankang-cloud
+WorkingDirectory=/opt/ankang-cloud/current
+EnvironmentFile=/etc/ankang-cloud/service.env
+ExecStart=/opt/ankang-cloud/venv/bin/python -m uvicorn cloud_service.app:from_env --factory --host 127.0.0.1 --port 8780 --workers 1 --proxy-headers --forwarded-allow-ips=127.0.0.1 --no-access-log --limit-concurrency 40 --timeout-keep-alive 5
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+UMask=0077
+MemoryMax=400M
+CPUQuota=100%
+TasksMax=64
+
+[Install]
+WantedBy=multi-user.target
