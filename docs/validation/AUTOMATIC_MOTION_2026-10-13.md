@@ -37,6 +37,8 @@
 
 `android_offline/dist/tele-rehabilitation-mobile-0.3.3.apk`，versionCode33，28141117字节，SHA256 `7FB33DD3A82051648F7991C0DF881CFB6FDAF8E2FEABF2DCAF8C42459D5315F9`。原包名与v3证书保持：证书SHA256 `607edd7dc1df261e52fa2fe35ea6391e1ce77cbcebc315fea80dd815bac1a5d8`。包内自动库／Worker／加载器逐字节匹配，原UI锁校验仍启用；无私有原片／数据库／签名密钥。
 
+只对新共享资产`mobile_rehab/static/automatic-motion.js`固定LF，避免Windows换工作树后自动改CRLF使原包指纹与源码不一致；原其他文件行尾策略保持。
+
 原0.3.2包SHA `C92610BEDB54DBF161ED41E0F6BE9E1B7DE7E9CFDCDB866F1FC3D907745E4BDF`保留。新包复制到用户原目录并核对SHA；不删除旧包，不自动安装到红米。
 
 ## 已审查与未实测
