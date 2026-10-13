@@ -112,7 +112,7 @@ test('family consent, private attachments, notification honesty and clear isolat
   assert.equal(summary.canViewSharedDetail,true);
   assert.equal(summary.history.measurements.length,1);
   assert.equal(summary.attachments.length,0);
-  await call('chat','a',{text:'我刚才在卫生间摔了一跤，现在胸口有点疼'});
+  await call('health.record','a',{metric:'spo2',value:85,visibility:'family_ok'});
   const planned = await call('notification.plan','a');
   assert.ok(planned.notifications.length>0);
   assert.ok(planned.notifications.every(n => n.phase==='unavailable'));
@@ -182,7 +182,7 @@ function syntheticProductPort() {
   };
 }
 
-test('care backup excludes pending credentials and preconditions while the self view keeps confirmation usable',async()=>{
+test('retired care cannot create pending operations or write through a host',async()=>{
   const owner='TEST-care-backup',now=new Date('2026-10-11T09:00:00+08:00');
   const facts={scope:{participant_id:owner,source_kind:'SYNTHETIC',usage_context:'TEST'},
     medications:[{id:'TEST-med',name:'TEST 药物',dose:'既有说明',purpose:'',times:'',status:'active'}],
@@ -192,16 +192,9 @@ test('care backup excludes pending credentials and preconditions while the self 
   const service=new ProductService(syntheticProductPort(),undefined,undefined,{},()=>host);
   const call=(operation,input={})=>service.request(operation,owner,input,now);
   await call('profile.save',{profile:profile('TEST 照护备份')});
-  const workflow=await call('care.prepare',{requestId:'TEST-care-export',intents:[
-    {kind:'record_dose',medId:'TEST-med',date:'2026-10-11',time:'08:00',status:'taken'}]});
-  assert.equal((await call('snapshot')).carePending[0].confirmationToken,workflow.confirmationToken);
-  const exported=await call('lifecycle.export'),encoded=JSON.stringify(exported);
-  assert.equal(exported.careAudit[0].id,workflow.id);
-  assert.equal(Object.hasOwn(exported.snapshot,'carePending'),false);
-  assert.equal(Object.hasOwn(exported.snapshot,'carePendingUnavailable'),false);
-  for(const key of ['confirmationToken','requestSignature','expected'])assert.equal(encoded.includes('"'+key+'"'),false,key);
-  assert.equal(encoded.includes(workflow.confirmationToken),false);
-  assert.equal((await call('snapshot')).carePending[0].confirmationToken,workflow.confirmationToken);
+  await assert.rejects(call('care.prepare',{requestId:'TEST',intents:[]}),/已下架/);
+  assert.deepEqual((await call('snapshot')).carePending,[]);
+  assert.equal((await call('lifecycle.export')).careAudit.length,0);
   assert.equal(writes,0);
 });
 
@@ -236,10 +229,9 @@ test('module rehab reads reject malformed or another owner receipts before expos
       scope:{participant_id:owner,source_kind:'SYNTHETIC',usage_context:'TEST'},records:[{id:'TEST_UNTRUSTED'}]})};
     const service=new ProductService(syntheticProductPort(),undefined,undefined,{},undefined,undefined,()=>host);
     await service.request('profile.save',owner,{profile:profile('TEST 康复回执')},now);
-    const result=await service.request('chat',owner,{text},now),step=result.turn.agent.steps[0];
-    assert.equal(step.name,name);
-    assert.equal(step.status,'failed',text);
-    assert.equal(step.data,undefined);
+    const result=await service.request('chat',owner,{text},now);
+    assert.equal(result.turn.agent,undefined);
+    assert.match(result.turn.reply.text,/读取失败/);
     assert.equal(result.turn.reply.text.includes('TEST_UNTRUSTED'),false);
   }
 });
@@ -252,9 +244,8 @@ test('module rehab reads keep valid host source and usage context facts',async()
   const service=new ProductService(syntheticProductPort(),undefined,undefined,{},undefined,undefined,()=>host);
   await service.request('profile.save',owner,{profile:profile('TEST 康复来源')},now);
   for(const text of queries){
-    const result=await service.request('chat',owner,{text},now),step=result.turn.agent.steps[0];
-    assert.equal(step.status,'succeeded');
-    assert.deepEqual(step.data.scope,{participant_id:owner,source_kind:'REPLAY_FILE',usage_context:'SELF_USE'});
-    assert.deepEqual(step.data.records,[]);
+    const result=await service.request('chat',owner,{text},now);
+    assert.equal(result.turn.agent,undefined);
+    assert.match(result.turn.reply.text,/没有找到/);
   }
 });

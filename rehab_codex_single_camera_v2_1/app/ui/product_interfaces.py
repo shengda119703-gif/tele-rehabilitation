@@ -39,7 +39,7 @@ class ProductInterfaces:
         self.dock_chat.setOpenExternalLinks(False)
         area.addWidget(self.dock_chat)
         self.dock_input = QPlainTextEdit()
-        self.dock_input.setPlaceholderText('查询已保存记录，或记录今天的感受')
+        self.dock_input.setPlaceholderText('询问动作做法，或解释已有康复结果')
         self.dock_input.setMaximumHeight(100)
         area.addWidget(self.dock_input)
         self.dock_private = QCheckBox('本轮不记录')

@@ -6,8 +6,6 @@ from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
 from ..settings import ROOT
 from .product_theme import SPACING, METRICS
 from .product_widgets import label, button, core_card, visual, EntryButton
-from .product_record_review import record_review
-from .product_care_controls import CareControls
 
 
 # Explicit identities keep the old published controls independent of widget order.
@@ -41,14 +39,14 @@ def build_assistant(window):
         return area,None
 
     portal,_=page('overview')
-    portal.addWidget(visual(label('把今天的感受，说清楚、记下来。'),typography='display'))
-    portal.addWidget(visual(label('对话会形成可查看的理解与记录结果；需要澄清的内容会继续向你确认。'),typography='secondary'))
+    portal.addWidget(visual(label('康复问答、结果解说与候选计划。'),typography='display'))
+    portal.addWidget(visual(label('问答依据动作库；候选计划由本地规则准备，对话不修改其他模块。'),typography='secondary'))
     portal.addSpacing(20)
     w.assistant_portal_status=visual(label('选择一个模块开始。'),typography='secondary')
     portal.addWidget(w.assistant_portal_status)
     grid=QGridLayout();grid.setSpacing(SPACING['lg'])
     w.assistant_module_buttons={}
-    definitions=[('Conversation','开始对话','记录今天的感受，或继续已有对话。','conversation','assistant'),
+    definitions=[('Conversation','开始对话','询问动作做法，或解释已有康复结果。','conversation','assistant'),
         ('Voice','语音交流','点击查看语音输入和朗读的接入状态。','voice','microphone'),
         ('Materials','资料与图片','上传健康资料、图片或视频。','materials','health'),
         ('Records','我的康复记录','查看康复记录与管家参考资料。','reference','report')]
@@ -101,18 +99,15 @@ def build_assistant(window):
     w.chat.setSizePolicy(QSizePolicy.Expanding,QSizePolicy.Ignored)
     w.chat.setAccessibleName('与康复管家的对话历史');w.chat.setMinimumHeight(METRICS['chat_minimum'])
     area.addWidget(w.chat,1)
-    w.care_controls=CareControls(w);area.addWidget(w.care_controls)
     quick=QHBoxLayout();quick.setSpacing(SPACING['sm'])
     for text in ('我的训练计划','最近的评估结果'):
         quick.addWidget(visual(button(text,lambda checked=False,t=text:w._send_chat(t)),appearance='ghost'))
-    medication=visual(button('记录用药情况',w._prepare_medication_draft),appearance='ghost')
-    medication.setToolTip('先填写用药情况，检查后发送；已有草稿会保留。')
-    quick.addWidget(medication)
+    quick.addWidget(button('本地候选计划',w._local_plan_dialog))
     quick.addStretch();area.addLayout(quick)
     composer=QFrame();composer.setObjectName('assistantComposer')
     compose=QVBoxLayout(composer);compose.setContentsMargins(16,12,16,12);compose.setSpacing(8)
     w.chat_input=QPlainTextEdit();w.chat_input.setObjectName('assistantEditor')
-    w.chat_input.setPlaceholderText('说说今天的状态，或查询已经保存的康复记录。')
+    w.chat_input.setPlaceholderText('询问具体动作做法，或解释已有康复结果。')
     w.chat_input.setAccessibleName('给康复管家发送消息')
     w.chat_input.setMinimumHeight(METRICS['input_minimum']);w.chat_input.setMaximumHeight(METRICS['input_maximum'])
     compose.addWidget(w.chat_input)
@@ -204,7 +199,7 @@ def refresh_summary(window):
         w.assistant_portal_status.setText('请选择用户，或等待当前用户资料读取完成。')
         w.assistant_module_buttons['reference'].setDescription('等待当前用户的康复记录。')
     else:
-        w.assistant_portal_status.setText('本地模块查询与页面导航可用 · '+('DeepSeek 对话已配置；每条回复标明实际来源。' if s.get('conversationModelAvailable') else 'DeepSeek 对话尚未配置。'))
+        w.assistant_portal_status.setText('康复问答、解说与本地候选计划 · '+('DeepSeek 对话已配置；每条回复标明实际来源。' if s.get('conversationModelAvailable') else 'DeepSeek 对话尚未配置。'))
         plans=len(w._rehab_data('rehab.get_training_plan'))
         training=len(w._rehab_data('rehab.get_training_history'))
         w.assistant_module_buttons['reference'].setDescription(f'当前范围：{plans} 项计划、{training} 条训练记录。')
@@ -213,12 +208,4 @@ def refresh_summary(window):
 
 
 def refresh_record_review(window,turn):
-    title,content=record_review(turn)
-    changed=window.record_review.property('receiptSource')!=content
-    window.record_review.setProperty('receiptSource',content)
-    window.record_receipt.setText(title);window.record_receipt.show()
-    window.record_review.setHtml(content)
-    window.record_disclosure.show()
-    if changed:
-        from .product_motion import reveal_receipt
-        reveal_receipt(window.record_receipt)
+    window.record_receipt.hide();window.record_disclosure.hide()

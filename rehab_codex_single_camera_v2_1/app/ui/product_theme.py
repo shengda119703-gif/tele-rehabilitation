@@ -197,13 +197,6 @@ class ProductTheme:
         self.window.record_dialog.setStyleSheet('QDialog { background:'+self.colors['window']+'; color:'+self.colors['text']+'; }'+shell_style(self.colors))
         # Top-level dialogs do not inherit every palette role from the page.
         # Keep their unstyled labels and disabled states under this theme owner.
-        care_dialog=self.window.care_controls.dialog
-        care_dialog.setPalette(p)
-        care_dialog.setFont(font)
-        for widget in care_dialog.findChildren(QWidget):
-            widget.setPalette(p)
-            widget.setFont(font)
-            if isinstance(widget,QTextEdit):widget.document().setDefaultFont(font)
         if self.window.snapshot:
             self.window._render_conversation()
             if hasattr(self.window,'product_theme'):self.window._experience_render()

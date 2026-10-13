@@ -17,7 +17,7 @@ METRICS = [('steps','活动步数','步'),('walkSpeed','步行速度','m/s'),('s
            ('nightWakes','夜间醒来','次'),('restingHr','静息心率','bpm'),('weight','体重','kg'),
            ('spo2','血氧','%'),('systolic','收缩压','mmHg'),('diastolic','舒张压','mmHg'),('bloodGlucose','血糖','mmol/L')]
 ALLOWED = {'profile.save','health.record','chat','medication.save','medication.status','task.status',
-           'notification.plan','notification.ack'}
+           'notification.plan','notification.ack','rehab.plan.draft'}
 CATEGORIES = ['体检报告','就诊记录','检验检查','影像资料','病历资料','其他资料']
 
 
@@ -88,6 +88,10 @@ def validate(operation, value):
         if not isinstance(v, str) or len(v)>length or (required and not v.strip()):
             raise HTTPException(400, '请核对填写内容')
         return v.strip()
+    if operation == 'rehab.plan.draft':
+        if set(value)-{'goal','region','equipment','restrictions','level','screeningConfirmed'}:
+            raise HTTPException(400,'候选计划包含不支持的字段')
+        return value
     if operation == 'profile.save':
         p = value.get('profile')
         if not isinstance(p,dict): raise HTTPException(400,'请填写健康档案')

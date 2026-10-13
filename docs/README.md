@@ -17,3 +17,6 @@
 | 以前的阶段规格、测试和实验 | [完整历史索引](history/DOCUMENT_INDEX_2026-10-13.md)；[整理前交接](history/HANDOFF_SNAPSHOT_2026-10-13.md) |
 
 验收资料按日期和源码基准阅读，不累加不同阶段的测试数，不将工程测试当真人或临床效果验证。历史记录不作为当前安装、部署或功能完成的承诺。
+
+- [共用康复动作资料](rehab-library/README.md)
+- [下架功能统一归档](archive/RETIRED_FEATURES.md)

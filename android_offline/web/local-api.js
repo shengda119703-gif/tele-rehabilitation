@@ -91,7 +91,7 @@ async function request(path,opts={}){
    if(operation==='profile.save'){const old=profile();if(!p.profile||typeof p.profile.name!=='string'||p.profile.name.length>40||!Number.isInteger(p.profile.age)||p.profile.age<0||p.profile.age>130||!Array.isArray(p.profile.conditions)||p.profile.conditions.length>20)failure('请核对称呼、年龄和健康情况');p.profile={...old,...p.profile,medications:old.medications,medicationRecords:old.medicationRecords,familySharing:old.familySharing};}
    if(operation==='chat'&&p.private===true)p.text='不要记录：'+p.text;
    if(operation==='chat')p._conversationScope='PHONE_LOCAL:'+(PhoneLin.isLin(store)?'TEST':'SELF_USE');
-   if(!['profile.save','chat','health.record','medication.save','medication.status','task.status','notification.plan','notification.ack'].includes(operation))failure('未开放此操作',404);
+   if(!['profile.save','chat','health.record','medication.save','medication.status','task.status','notification.plan','notification.ack','rehab.plan.draft'].includes(operation))failure('未开放此操作',404);
    return domain.request(operation,owner,p,now());
   }
   if(route.startsWith('/unified/daily.')){
