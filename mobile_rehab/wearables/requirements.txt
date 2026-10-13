@@ -1,0 +1,3 @@
+# Optional server-side token encryption, not bundled into Android UI.
+cryptography==50.0.2
+tzdata==2026.5

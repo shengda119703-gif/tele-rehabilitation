@@ -1,5 +1,17 @@
 # 当前交接：安康双端整合
 
+## 2026-10-13 穿戴后台一期：wearable-history-1（不改UI）
+
+基于707336a，在codex/wearable-health-integration新增独立mobile_rehab/wearables。用户设备小米手环7，App暂按Mi Fitness，不解绑、不重置。实现小米云步数/历史心率/睡眠/运动四主类与可选体重/血氧的读取合同、OAuth/加密token/actual scope/刷新/有限验签通知；华为仅已核对的CN云日步数、OAuth及官方tokeninfo。默认provider关闭，未提供审批、密钥或HTTPS时不发送厂商请求。
+
+独立SQLite schema1不迁移原健康/康复库。owner沿原配对认证，拒绝JSON患者归属覆盖；复授权保留逻辑来源，撤销generation立即停任务/lease。无ID云窗口全页完整后原子切换并写job checkpoint；不把空响应猜成删除。首7/后3来源自然日、有限重试/worker租约恢复、幂等batch/receipt、稳定ID版本与墓碑、Python本地outbox参考底座、多来源保守择一均有隔离测试。training-context只读已导入心率样本，不插值，不改训练计数/完成/处方剂量。
+
+最终本机Python253通过（69新增+184原回归）、1原弃用警告；原Apple bridge场景+10 adapter测试通过。可选依赖cryptography50.0.2、tzdata2026.5已安装且pip check通过，无模型下载。测试全在私有D:/RehabFrontendFlowVerification，不回填用户历史；完整分母、失败过程与W01—W44 TEST/REAL边界见[本轮验证](validation/WEARABLE_BACKEND_2026-10-13.md)、[逐项验收](wearables/acceptance_report.md)。
+
+**未完成整份手表任务书**：华为另外3主类/地区迁移，Android两厂商本地SDK/Health Connect读取，APK原生outbox和外部授权回传，原页面入口/健康卡片接线、团队账户/权限、正式session自动关联、华为通知/常驻dispatcher、长期调度/删除对账及真机三端验收仍待。外部审批和工程未做分别列于[限制清单](wearables/known_limitations.md)，配置/备份/回退见[接入清单](wearables/vendor_access_checklist.md)。后台API存在不等于APK已能点按钮连表。
+
+桌面仍0.23.2、APK仍0.3.2/code32，原包hash不变，本轮不重打APK。不改86份原UI文件，保留279份用户未跟踪文件及指南README修改，只推本轮分支不改main；未启停用户服务/相机或关闭旧窗口。提交后按原脚本/已验证.venv pythonw更新桌面“安康康复（最新版本）”Git描述，原导航仍首页→康复管家，本轮没有新增手表页面。当前打开的服务不会自动加载后台新接口，后续正式配置后由用户重开服务。
+
 ## 2026-10-13 伙伴 main 合并：电脑 0.23.2 / APK 0.3.2
 
 将伙伴 ty060211 在 main 的 7 个提交（dbee11a → 48e94e5）并入 `codex/frontend-flow-optimization`，以本地 5599e9b 为第一父节点。保留当前前端流程、正式跟练可选相机、独立感受／保存核对、原本地执行器、来源与数据保护；加入伙伴的模块查询／导航、双端照护确认、DeepSeek 普通多轮对话、安卓加密配置、Windows 桥接重启修复和健康聊天归属修复。没有合并另一个云端分支，未替换原模型、处方规则或个人数据库。伙伴旧验收保留在下方，不能当作本轮结果。

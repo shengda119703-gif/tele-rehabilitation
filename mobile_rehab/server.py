@@ -222,6 +222,8 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
             yield
         finally:
             watcher.cancel()
+            if getattr(app.state, 'wearables', None) is not None:
+                await asyncio.to_thread(app.state.wearables.close)
             if hasattr(app.state, 'rehab_v2'):
                 await asyncio.to_thread(app.state.rehab_v2.close)
             await asyncio.to_thread(app.state.live.close)
@@ -280,6 +282,9 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
                 or shared and uid != hashlib.sha256(shared.owner.encode()).hexdigest()[:32]):
             raise HTTPException(401, '请先输入电脑上显示的连接码')
         return uid
+
+    from .wearables.api import install_wearables
+    install_wearables(app, data_dir, owner)
 
     from .care import install_care
     install_care(app, data_dir, jobs, owner, sign, small_json)
@@ -395,7 +400,9 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
         allowed_hosts = os.environ.get('REHAB_ALLOWED_HOSTS', '').split(',')
         if allowed_hosts != [''] and request.url.hostname not in allowed_hosts:
             return JSONResponse({'detail':'访问地址不正确'}, status_code=400)
-        if request.method not in ('GET', 'HEAD') and request.headers.get('x-rehab-client') != 'mobile-v1':
+        vendor_notification = (request.method == 'POST' and request.url.path in (
+            '/callbacks/xiaomi/healthkit/notifications', '/callbacks/huawei/healthkit/notifications'))
+        if request.method not in ('GET', 'HEAD') and not vendor_notification and request.headers.get('x-rehab-client') != 'mobile-v1':
             return JSONResponse({'detail': '请从本机康复网页操作'}, status_code=403)
         response = await call_next(request)
         response.headers.update({'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer',
