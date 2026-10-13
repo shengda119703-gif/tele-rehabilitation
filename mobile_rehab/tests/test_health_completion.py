@@ -162,8 +162,10 @@ def test_chinese_chat_limit_counts_characters_and_stays_bounded(client):
 
 def test_local_plan_api_does_not_need_model_or_change_health(client):
     before=client.get('/api/product').json()['snapshot']
-    result=client.post('/api/product/rehab.plan.draft',json=dict(goal='TEST',region='踝',equipment=[],restrictions=[],level=0,screeningConfirmed=True))
+    result=client.post('/api/product/rehab.plan.draft',json=dict(goal='TEST',region='踝',equipment=['稳固椅'],restrictions=[],level=0,screeningConfirmed=True))
     assert result.status_code==200
-    assert result.json()['status']=='needs_library' and result.json()['adopted'] is False
+    assert result.json()['status']=='draft' and result.json()['adopted'] is False
+    assert result.json()['items'][0]['id']=='T-LOW-046'
+    assert '1—3组×5—10次' in result.json()['items'][0]['sourceDose']
     assert client.get('/api/product').json()['snapshot']['state']['events']==before['state']['events']
     assert client.post('/api/product/rehab.plan.draft',json=dict(goal='TEST')).status_code==400

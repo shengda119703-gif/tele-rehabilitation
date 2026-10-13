@@ -65,4 +65,4 @@ deploy/mobile/                 独立手机服务部署材料（独立数据，�
 
 先读 [管家能力与自检指南](docs/development/AGENT_MODULES_V0_21.md)、[本轮验证与审计对齐](docs/validation/ANKANG_AGENT_2026-10-11.md) 和 [当前交接](docs/HANDOFF.md)。普通聊天已完整接入DeepSeek，支持有限多轮上下文，每条回复显示实际来源；本机隔离TEST后台四次真实联网请求通过，见[对话验收](docs/validation/DEEPSEEK_CONVERSATION_2026-10-11.md)。独立安卓 main 源码版本为0.3.1；此前0.3.0的验收范围见[三端交付范围](docs/development/ANKANG_DELIVERY_SCOPE.md)和[安卓验收](docs/validation/ANDROID_DEEPSEEK_2026-10-11.md)；全模块任意写入、持续后台任务及通用多轮规划尚未实现。原 [调度设计](docs/plans/ANKANG_CARE_COORDINATION_2026-10-10.md) 与 [医学依据](docs/plans/ANKANG_MEDICAL_EVIDENCE_2026-10-10.md) 保留；工程测试不等同于临床效果或真人动作准确率验收。
 
-康复助手现仅提供动作库问答、已有结果解说和本地候选计划。动作库为队友待补齐的部分版本，当前23张完整评估卡可查；缺训练卡时不生成剂量。见[共用资料与更新方式](docs/rehab-library/README.md)。旧Agent与OCR统一保存在远端 `archive/retired-features`。
+康复助手现仅提供动作库问答、已有结果解说和本地候选计划。共用动作库含63张评估卡、122张训练卡；本地计划先筛选5个已整理起始版本，展示原文条件和候选剂量，核对和试做后才决定采用。见[共用资料与更新方式](docs/rehab-library/README.md)。旧Agent与OCR统一保存在远端 `archive/retired-features`。

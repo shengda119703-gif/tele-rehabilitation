@@ -489,7 +489,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
                 continue
             self.storage_label.setText('已连接本机数据')
             if operation=='rehab.plan.draft':
-                QMessageBox.information(self,'本地候选计划',result['note']+'\n'+'\n'.join(f"{item['name']}：{item['dose']['reps']}次 × {item['dose']['sets']}组，休息{item['dose']['restSeconds']}秒" for item in result.get('items',[])))
+                self._show_local_plan(result)
                 continue
             if isinstance(result,dict) and result.get('fileExport'):
                 self.pending_export = None
@@ -809,10 +809,11 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
 
     def _local_plan_dialog(self):
         dialog=QDialog(self);dialog.setWindowTitle('本地候选计划');layout=QVBoxLayout(dialog)
-        layout.addWidget(label('由本地规则筛选，不调用付费模型。当前库缺完整训练卡，可能暂不能生成计划。'))
+        layout.addWidget(label('本地筛选候选动作，不调用付费模型。先支持肩、髋、膝、踝的起始模板；条件和试做须逐项核对。'))
         fields={}
         for key,title in (('goal','训练目标'),('region','身体部位'),('equipment','可用器材（逗号分隔）'),('restrictions','已知限制（逗号分隔，无则留空）')):
             layout.addWidget(label(title));fields[key]=QLineEdit();layout.addWidget(fields[key])
+        fields['equipment'].setPlaceholderText('例如：稳固椅、硬床、滑布、垫、稳定桌面')
         layout.addWidget(label('当前任务等级（不是肌力分级）'))
         level=QComboBox();level.addItems(['L0','L1','L2','L3']);layout.addWidget(level)
         confirmed=QCheckBox('已核对当前限制、器材与适用条件');layout.addWidget(confirmed)
@@ -825,6 +826,17 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
                 QMessageBox.information(dialog,'请补充信息','请填写目标、部位，并核对适用条件。');return
             dialog.accept();self._request('rehab.plan.draft',payload)
         layout.addWidget(button('生成候选计划',generate,True));dialog.exec()
+
+    def _show_local_plan(self, result):
+        dialog=QDialog(self);dialog.setWindowTitle('本地候选计划 · 待核对');dialog.resize(700,600)
+        layout=QVBoxLayout(dialog);view=QTextBrowser();view.setObjectName('local-plan-preview')
+        parts=[result['note']]
+        for item in result.get('items',[]):
+            parts.extend(['',f"{item['id']}｜{item['name']}",f"候选版本：{item['variant']}",
+                f"器材原文：{item['equipment']}",f"开始条件：{item['startConditions']}",
+                f"试做与候选剂量原文：{item['sourceDose']}",f"停止或调整条件：{item['stopConditions']}"])
+        view.setPlainText('\n'.join(parts));layout.addWidget(view)
+        layout.addWidget(button('关闭',dialog.accept));dialog.exec()
 
     def _open_manual_health(self):
         if self.navigate('health'):
