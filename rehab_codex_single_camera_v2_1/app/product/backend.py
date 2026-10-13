@@ -92,7 +92,7 @@ class ProductBackend:
                     local_file = payload.pop('_local_file', None)
                     export_path = payload.pop('_local_export_path', None)
                     if local_file:
-                        limit = 2*1024*1024 if operation == 'device.import' else 10*1024*1024 if operation == 'image.parse' else 20*1024*1024
+                        limit = 2*1024*1024 if operation == 'device.import' else 20*1024*1024
                         with Path(local_file).open('rb') as stream:
                             data = stream.read(limit+1)
                         if len(data) > limit:

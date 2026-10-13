@@ -426,7 +426,7 @@ function health() {
     .slice()
     .sort((a, b) => String(b.timestamp).localeCompare(String(a.timestamp)));
   $("#content").innerHTML =
-    `<div class="heading"><h1>健康档案</h1>${button("编辑资料", "edit-profile")}</div><p class="muted">${E(profile().name)}${profile().age ? " · " + E(profile().age) + " 岁" : ""}<br>${E((profile().conditions || []).join("、") || "健康情况未填写")}</p><div class="actions">${button("上传资料", "upload", true)}${link("记录身体感受", "#assistant")}</div><div class="heading"><h2>资料与图片</h2></div>${(snapshot().attachments || []).map((a) => `<div class="row"><div><strong>${E(a.name)}</strong><p><small>${E(a.category)} · ${stamp(a.date)}</small></p></div><button data-archive="${E(a.id)}">查看</button></div>`).join("") || '<p class="empty">暂无资料。</p>'}<div class="heading"><h2>最近记录</h2></div><div class="timeline">${
+    `<div class="heading"><h1>健康档案</h1>${button("编辑资料", "edit-profile")}</div><p class="muted">${E(profile().name)}${profile().age ? " · " + E(profile().age) + " 岁" : ""}<br>${E((profile().conditions || []).join("、") || "健康情况未填写")}</p><div class="actions">${button("上传资料", "upload", true)}${link("手动记录指标", "/capture?tab=health")}${link("记录身体感受", "#assistant")}</div><div class="heading"><h2>资料与图片</h2></div>${(snapshot().attachments || []).map((a) => `<div class="row"><div><strong>${E(a.name)}</strong><p><small>${E(a.category)} · ${stamp(a.date)}</small></p></div><button data-archive="${E(a.id)}">查看</button></div>`).join("") || '<p class="empty">暂无资料。</p>'}<div class="heading"><h2>最近记录</h2></div><div class="timeline">${
       events
         .slice(0, 20)
         .map(
@@ -529,28 +529,16 @@ function upload() {
 function archiveDetail(a) {
   modal(
     a.name,
-    `<p class="muted">${E(a.category)}</p><div class="actions">${link("下载原件", "/api/product-archive/" + encodeURIComponent(a.id))}${/image\/(jpeg|png)/.test(a.mediaType) ? button("识别图片文字", "ocr", true) : ""}${button("移入回收站", "trash")}</div><div id="ocr-result"></div>`,
+    `<p class="muted">${E(a.category)}</p><div class="actions">${link("下载原件", "/api/product-archive/" + encodeURIComponent(a.id))}${button("手动记录指标", "manual-health", true)}${button("移入回收站", "trash")}</div><p class="muted">报告原件仅作资料保存，不识字、不自动提取指标。请核对后手动填写。</p>`,
   );
   bind("trash", () =>
     confirmAction("移入回收站？", "资料可以在回收站恢复。", () =>
       api("/product-archive/" + a.id + "/trash", { confirm: true }),
     ),
   );
-  bind("ocr", async () => {
-    let result;
-    if (
-      await act(async () => {
-        result = await api("/product-ocr/" + a.id, {});
-      }, "识别完成，请核对文字")
-    ) {
-      $("#ocr-result").innerHTML =
-        `<label>识别文字，可修改<textarea id="ocr-text" rows="7">${E(result.text)}</textarea></label><p class="muted">请核对姓名、日期和数值。文字不会自动保存为身体记录。</p>${button("带入管家对话", "ocr-chat", true)}`;
-      bind("ocr-chat", () => {
-        ui.draft = $("#ocr-text").value.slice(0, 1800);
-        $("#dialog").close();
-        location.hash = "#assistant";
-      });
-    }
+  bind("manual-health", () => {
+    $("#dialog").close();
+    location.href = "/capture?tab=health";
   });
 }
 function medication() {

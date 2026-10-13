@@ -7,7 +7,6 @@
     "test": "node --test tests/*.test.cjs"
   },
   "dependencies": {
-    "@mediapipe/tasks-vision": "0.10.32",
-    "tesseract.js": "6.0.1"
+    "@mediapipe/tasks-vision": "0.10.32"
   }
 }

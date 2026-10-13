@@ -1,7 +1,6 @@
 param(
     [switch]$IncludeLandmarks,
     [switch]$IncludeVoice,
-    [switch]$IncludeOCR,
     [string]$IndexUrl = 'https://pypi.org/simple'
 )
 $ErrorActionPreference = 'Stop'
@@ -16,10 +15,6 @@ if ($IncludeVoice) {
 $taskProductPython = Join-Path $taskAppRoot '.venv\Scripts\python.exe'
 & $taskProductPython -m pip install --index-url $IndexUrl -r (Join-Path $PSScriptRoot 'mobile_rehab/requirements.txt')
 if ($LASTEXITCODE -ne 0) { throw 'Phone connection dependencies could not be installed.' }
-if ($IncludeOCR) {
-    & $taskProductPython -m pip install --index-url $IndexUrl -r (Join-Path $PSScriptRoot 'mobile_rehab/requirements.ocr.txt')
-    if ($LASTEXITCODE -ne 0) { throw 'Optional document OCR installation failed.' }
-}
 $taskAgentRoot = Join-Path $PSScriptRoot 'ankang\route1-health-agent'
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) { throw 'Node.js 22+ is required for the Ankang product services.' }
 Push-Location -LiteralPath $taskAgentRoot
