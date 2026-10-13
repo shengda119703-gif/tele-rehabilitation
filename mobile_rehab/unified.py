@@ -44,6 +44,12 @@ DAILY_FIELDS = {
     'daily.familyGrant': {'member', 'categories'}, 'daily.familyUnbind': {'member'},
 }
 PLAN_FIELDS = {'rehab.plan.draft': {'goal','region','equipment','restrictions','level','screeningConfirmed'}}
+WORKBENCH_FIELDS = {
+    'workbench.identity': set(), 'workbench.sync': set(), 'workbench.retry': set(),
+    'workbench.messages': {'before'}, 'workbench.send': {'operation_id', 'text'},
+    'workbench.read': {'cursor'}, 'workbench.plans': set(), 'workbench.current': set(),
+    'workbench.adopt': {'plan_id', 'expected_version', 'expected_current_revision'},
+}
 
 
 def install_unified(app, owner, shared, small_json):
@@ -58,7 +64,7 @@ def install_unified(app, owner, shared, small_json):
     @app.post('/api/unified/{operation}')
     async def operation(operation: str, request: Request, source: str = 'LIVE_CAMERA'):
         uid = owner(request)
-        fields = {**DAILY_FIELDS, **PLAN_FIELDS}
+        fields = {**DAILY_FIELDS, **PLAN_FIELDS, **WORKBENCH_FIELDS}
         if source not in ('LIVE_CAMERA', 'REPLAY_FILE') or operation not in fields:
             raise HTTPException(404, '未开放此操作。')
         payload = await small_json(request)

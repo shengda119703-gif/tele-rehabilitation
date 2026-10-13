@@ -218,10 +218,12 @@ class Storage:
                     and (include_archived or value['status'] == 'ACTIVE')]
         return self._call(collect)
 
-    def save_training_plan(self, value, *, expected_revision):
+    def save_training_plan(self, value, *, expected_revision, status='ACTIVE'):
         from .assessment_batches import scope_key
         from .training_plans import validate_training_plan
         item = validate_training_plan(copy.deepcopy(value))
+        if status not in ('ACTIVE', 'PENDING_DOCTOR'):
+            raise ValueError('训练方案保存状态无效')
         if type(expected_revision) is not int or expected_revision < 0:
             raise ValueError('计划版本无效，请重新打开计划库')
         def save(c):
@@ -230,12 +232,14 @@ class Storage:
             if (row[0] if row else 0) != expected_revision:
                 raise ValueError('计划已更新，请重新打开；本次草稿尚未保存')
             previous = json.loads(row[1]) if row else {}
+            if previous.get('status') == 'PENDING_DOCTOR' and status == 'ACTIVE':
+                raise ValueError('医生方案尚未确认，不能从普通编辑入口激活')
             if previous and scope_key(previous) != scope_key(item):
                 raise ValueError('计划不属于当前用户与来源，不能改变所属范围')
             if previous.get('status') == 'ARCHIVED':
                 raise ValueError('请先恢复已归档计划，再进行编辑')
             at = utc_now()
-            item.update(revision=expected_revision+1, status='ACTIVE',
+            item.update(revision=expected_revision+1, status=status,
                         created_utc=previous.get('created_utc') or at, updated_utc=at)
             c.execute('INSERT OR REPLACE INTO training_plans VALUES (?,?,?,?,?)',
                       (item['id'], item['participant_id'], item['revision'], item['status'], dumps(item)))
@@ -243,6 +247,24 @@ class Storage:
                       (at, 'save_training_plan', dumps({'id': item['id'], 'revision': item['revision']})))
             return item
         return self._call(save)
+
+    def activate_pending_training_plan(self, plan_id, scope, *, expected_revision):
+        from .assessment_batches import scope_key
+        def activate(c):
+            c.execute('BEGIN IMMEDIATE')
+            row = c.execute('SELECT payload FROM training_plans WHERE id=?', (plan_id,)).fetchone()
+            value = json.loads(row[0]) if row else None
+            if not value or scope_key(value) != scope_key(scope) or value['revision'] != expected_revision:
+                raise ValueError('待确认医生方案已变化，请重新核对')
+            if value['status'] == 'ACTIVE':
+                return value
+            if value['status'] != 'PENDING_DOCTOR':
+                raise ValueError('此方案不是待确认医生方案')
+            value.update(status='ACTIVE', updated_utc=utc_now())
+            c.execute('UPDATE training_plans SET status=?,payload=? WHERE id=?', ('ACTIVE', dumps(value), plan_id))
+            c.execute('INSERT INTO audit(at_utc,action,payload) VALUES (?,?,?)', (utc_now(), 'activate_doctor_plan', dumps({'id': plan_id, 'revision': expected_revision})))
+            return value
+        return self._call(activate)
 
     def set_training_plan_archived(self, plan_id, scope, archived, *, expected_revision):
         from .assessment_batches import scope_key
@@ -255,6 +277,8 @@ class Storage:
             previous = json.loads(row[0]) if row else None
             if previous is None or scope_key(previous) != key:
                 raise ValueError('计划不存在或不属于当前用户与来源')
+            if previous.get('status') == 'PENDING_DOCTOR':
+                raise ValueError('医生方案尚未确认，不能从归档入口恢复或激活')
             if previous['revision'] != expected_revision:
                 raise ValueError('计划已更新，请重新打开后操作')
             status = 'ARCHIVED' if archived else 'ACTIVE'

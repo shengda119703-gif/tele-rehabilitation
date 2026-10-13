@@ -91,6 +91,11 @@ def validate_training_plan(value):
         seen.add(row['key'])
         items.append(row)
     result = dict(scope, id=pid, name=name.strip(), items=items, schema_version=1, record_origin='manual')
+    if value.get('doctor_publication'):
+        publication = value['doctor_publication']
+        if not isinstance(publication, dict) or set(publication) != {'id', 'version'} or not isinstance(publication['id'], str) or not re.fullmatch(r'[a-f0-9-]{36}', publication['id']) or type(publication['version']) is not int or publication['version'] < 1:
+            raise ValueError('医生方案发布引用无效')
+        result['doctor_publication'] = copy.deepcopy(publication)
     if value.get('record_origin') == 'assessment_rules':
         from .automatic_plans import validate_metadata
         result.update(record_origin='assessment_rules', automatic=copy.deepcopy(value.get('automatic')))
@@ -131,6 +136,11 @@ def prepare_training_plan(record, entry_key, profile):
     reference = build_training_reference(profile, entry['exercise_id'], entry['side'])
     if reference.get('status') != 'ASSESSED' or not reference.get('session_id'):
         raise ValueError('此项目当前没有有效评估，请先评估或补测，再使用计划')
+    if record.get('doctor_publication'):
+        from datetime import datetime, timezone
+        end = reference.get('end_utc')
+        if not end or not 0 <= (datetime.now(timezone.utc) - datetime.fromisoformat(end.replace('Z', '+00:00'))).total_seconds() <= 7 * 86400:
+            raise ValueError('医生方案的本人评估已过期，请补测后重新核对')
     if (reference.get('conditions') or {}).get('measurement_contract') != entry['measurement_contract']:
         raise ValueError('评估与当前测量定义不一致，请重新评估后再使用计划')
     plan = default_plan(entry['exercise_id'])

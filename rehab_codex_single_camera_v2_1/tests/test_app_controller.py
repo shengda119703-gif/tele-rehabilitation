@@ -129,6 +129,29 @@ class ControllerTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '有效评估'):
             self.c.start()
 
+    def test_doctor_plan_actual_start_rechecks_age_after_preview_preparation(self):
+        """Generated SYNTHETIC/TEST frames and simulated publication; no person or camera."""
+        from datetime import datetime, timedelta, timezone
+        from uuid import uuid4
+        from app.training_plans import new_training_plan, item_from_plan, prepare_training_plan
+        reference = self._assessment_reference()
+        scope = dict(participant_id='participant-local', source_kind='SYNTHETIC', usage_context='TEST')
+        record = new_training_plan(scope, 'TEST fictitious doctor publication', [item_from_plan(self.setup['plan'])])
+        record['doctor_publication'] = {'id': str(uuid4()), 'version': 2}
+        saved = self.store.save_training_plan(record, expected_revision=0)
+        body = build_body_profile(self.store.list_sessions(), **scope)
+        prepared = prepare_training_plan(saved, saved['items'][0]['key'], body)
+        self.setup['plan'].update(prepared)
+        self._training_preview(prepared['assessment_reference'])
+        old = self.store.get_session(reference['session_id'])
+        old['start_utc'] = (datetime.now(timezone.utc)-timedelta(days=8, minutes=1)).isoformat()
+        old['end_utc'] = (datetime.now(timezone.utc)-timedelta(days=8)).isoformat()
+        self.store.save_session(old)
+        with self.assertRaisesRegex(ValueError, '过期'):
+            self.c.start()
+        self.assertEqual(self.c.state, 'PREVIEW')
+        self.assertIsNone(self.c.session)
+
     def test_training_pause_checkpoint_and_source_time_barrier(self):
         self._training_preview(self._assessment_reference())
         self.c.start()

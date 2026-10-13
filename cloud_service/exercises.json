@@ -1,0 +1,536 @@
+{
+  "schema": "ankang-existing-exercises-1",
+  "source": "app/exercises.py",
+  "items": [
+    {
+      "action_id": "shoulder_abduction",
+      "exercise_id": "shoulder_abduction",
+      "name": "肩外展",
+      "measurement_contract": "shoulder-screen-vertical-1",
+      "description": "正面机位，测试侧肩、肘入镜；保持摄像头和身体稳定，在舒适范围向侧方抬臂，再回到垂臂姿势。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "sit_to_stand",
+      "exercise_id": "sit_to_stand",
+      "name": "居家坐站",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "侧面机位，尽量让测试侧髋、膝、踝入镜；开始时先舒适坐稳，系统会在清楚画面中自动建立本轮起点。达到站位记一次，回坐后才可再计。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "shoulder_flexion",
+      "exercise_id": "shoulder_flexion",
+      "name": "肩前屈",
+      "measurement_contract": "shoulder-screen-vertical-1",
+      "description": "侧面机位，测试侧肩、肘入镜；保持摄像头和身体稳定，在舒适范围向前抬臂，再回到垂臂姿势。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "elbow_flexion",
+      "exercise_id": "elbow_flexion",
+      "name": "肘屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "侧面机位，测试侧肩、肘、腕入镜；上臂保持舒适位置，缓慢屈肘，再回到起始伸肘姿势。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "knee_extension",
+      "exercise_id": "knee_extension",
+      "name": "坐位膝屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "侧面机位，坐稳并让测试侧髋、膝、踝入镜；保持坐位，缓慢伸膝再屈膝回位。伸展时屈曲投影角减小。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "hip_abduction",
+      "exercise_id": "hip_abduction",
+      "name": "髋外展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "正面机位，双髋与测试侧膝入镜；按已确认的支撑与陪同安排，在舒适范围向侧方移腿并回位。仅记录骨盆参考二维投影，不是临床ROM。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "shoulder_adduction",
+      "exercise_id": "shoulder_adduction",
+      "name": "肩内收回位",
+      "measurement_contract": "shoulder-adduction-screen-reference-3",
+      "description": "正面，测试侧肩、肘清楚可见；从舒适侧抬臂姿势向身体收回，再返回起始位置。仅测抬臂平面内内收，不测横向内收。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "elbow_extension",
+      "exercise_id": "elbow_extension",
+      "name": "肘伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "侧面，肩、肘、腕入镜；开始时保持舒适屈肘姿势，缓慢伸肘后回位。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "knee_flexion",
+      "exercise_id": "knee_flexion",
+      "name": "膝屈曲",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "侧面，髋、膝、踝入镜；使用稳定坐位或支撑姿势，开始时保持舒适起点，缓慢屈膝后回位。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "shoulder_extension",
+      "exercise_id": "shoulder_extension",
+      "name": "肩后伸",
+      "measurement_contract": "shoulder-screen-vertical-1",
+      "description": "侧面，测试侧肩、肘入镜；保持摄像头和身体稳定，向身体后方小幅移臂。开始时保持舒适起点，再按所选动作方向小幅移动；系统会在清楚画面中自动建立本轮起点和方向。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "hip_flexion",
+      "exercise_id": "hip_flexion",
+      "name": "髋屈曲",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "侧面，肩、髋、膝入镜；使用已确认的稳定支撑，向身体前方小幅移腿。开始时保持舒适起点，再按所选动作方向小幅移动；系统会在清楚画面中自动建立本轮起点和方向。角度参考肩—髋躯干线与大腿线；骨盆/躯干转动会影响结果，不能分离为纯髋关节ROM。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "hip_extension",
+      "exercise_id": "hip_extension",
+      "name": "髋后伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "侧面，肩、髋、膝入镜；使用已确认的稳定支撑，向身体后方小幅移腿。开始时保持舒适起点，再按所选动作方向小幅移动；系统会在清楚画面中自动建立本轮起点和方向。角度参考肩—髋躯干线与大腿线；骨盆/躯干转动会影响结果，不能分离为纯髋关节ROM。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "hip_adduction",
+      "exercise_id": "hip_adduction",
+      "name": "髋内收",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "正面，双髋与测试侧膝入镜；从舒适外展位置向身体中线收腿，避免另一条腿遮挡。开始时保持舒适起点，再按所选动作方向小幅移动；系统会在清楚画面中自动建立本轮起点和方向。",
+      "experimental": false,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "wrist_flexion",
+      "exercise_id": "wrist_flexion",
+      "name": "腕屈曲",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "从手的侧缘拍摄，向掌侧弯腕；让测试侧肘、腕、整只手尽量清楚入镜。开始时保持舒适起点，再小幅完成所选动作；系统自动建立本轮方向。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "wrist_extension",
+      "exercise_id": "wrist_extension",
+      "name": "腕伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "从手的侧缘拍摄，向手背侧弯腕；让测试侧肘、腕、整只手尽量清楚入镜。开始时保持舒适起点，再小幅完成所选动作；系统自动建立本轮方向。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "wrist_radial_deviation",
+      "exercise_id": "wrist_radial_deviation",
+      "name": "腕桡偏",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "手背或手掌正对镜头，向拇指侧偏腕；让测试侧肘、腕、整只手尽量清楚入镜。开始时保持舒适起点，再小幅完成所选动作；系统自动建立本轮方向。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "wrist_ulnar_deviation",
+      "exercise_id": "wrist_ulnar_deviation",
+      "name": "腕尺偏",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "手背或手掌正对镜头，向小指侧偏腕；让测试侧肘、腕、整只手尽量清楚入镜。开始时保持舒适起点，再小幅完成所选动作；系统自动建立本轮方向。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "ankle_dorsiflexion",
+      "exercise_id": "ankle_dorsiflexion",
+      "name": "踝背屈",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "侧面稳定坐位，小腿、踝、足跟、足尖尽量可见；向小腿方向抬脚尖，不以踮脚站立代替。开始时保持舒适起点，再小幅完成所选动作。仅测小腿—足部投影变化。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "ankle_plantarflexion",
+      "exercise_id": "ankle_plantarflexion",
+      "name": "踝跖屈",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "侧面稳定坐位，小腿、踝、足跟、足尖尽量可见；向远离小腿方向下压脚尖，不以踮脚站立代替。开始时保持舒适起点，再小幅完成所选动作。仅测小腿—足部投影变化。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "thumb_mcp_flexion",
+      "exercise_id": "thumb_mcp_flexion",
+      "name": "拇指掌指关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "thumb_mcp_extension",
+      "exercise_id": "thumb_mcp_extension",
+      "name": "拇指掌指关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "thumb_ip_flexion",
+      "exercise_id": "thumb_ip_flexion",
+      "name": "拇指指间关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "thumb_ip_extension",
+      "exercise_id": "thumb_ip_extension",
+      "name": "拇指指间关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "index_mcp_flexion",
+      "exercise_id": "index_mcp_flexion",
+      "name": "食指掌指关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。掌指角的近端参考使用腕—掌指连线，不是骨性关节测量。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "index_mcp_extension",
+      "exercise_id": "index_mcp_extension",
+      "name": "食指掌指关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "index_pip_flexion",
+      "exercise_id": "index_pip_flexion",
+      "name": "食指近端指间关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "index_pip_extension",
+      "exercise_id": "index_pip_extension",
+      "name": "食指近端指间关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "index_dip_flexion",
+      "exercise_id": "index_dip_flexion",
+      "name": "食指远端指间关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "index_dip_extension",
+      "exercise_id": "index_dip_extension",
+      "name": "食指远端指间关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "middle_mcp_flexion",
+      "exercise_id": "middle_mcp_flexion",
+      "name": "中指掌指关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。掌指角的近端参考使用腕—掌指连线，不是骨性关节测量。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "middle_mcp_extension",
+      "exercise_id": "middle_mcp_extension",
+      "name": "中指掌指关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "middle_pip_flexion",
+      "exercise_id": "middle_pip_flexion",
+      "name": "中指近端指间关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "middle_pip_extension",
+      "exercise_id": "middle_pip_extension",
+      "name": "中指近端指间关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "middle_dip_flexion",
+      "exercise_id": "middle_dip_flexion",
+      "name": "中指远端指间关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "middle_dip_extension",
+      "exercise_id": "middle_dip_extension",
+      "name": "中指远端指间关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "ring_mcp_flexion",
+      "exercise_id": "ring_mcp_flexion",
+      "name": "无名指掌指关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。掌指角的近端参考使用腕—掌指连线，不是骨性关节测量。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "ring_mcp_extension",
+      "exercise_id": "ring_mcp_extension",
+      "name": "无名指掌指关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "ring_pip_flexion",
+      "exercise_id": "ring_pip_flexion",
+      "name": "无名指近端指间关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "ring_pip_extension",
+      "exercise_id": "ring_pip_extension",
+      "name": "无名指近端指间关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "ring_dip_flexion",
+      "exercise_id": "ring_dip_flexion",
+      "name": "无名指远端指间关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "ring_dip_extension",
+      "exercise_id": "ring_dip_extension",
+      "name": "无名指远端指间关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "pinky_mcp_flexion",
+      "exercise_id": "pinky_mcp_flexion",
+      "name": "小指掌指关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。掌指角的近端参考使用腕—掌指连线，不是骨性关节测量。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "pinky_mcp_extension",
+      "exercise_id": "pinky_mcp_extension",
+      "name": "小指掌指关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "pinky_pip_flexion",
+      "exercise_id": "pinky_pip_flexion",
+      "name": "小指近端指间关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "pinky_pip_extension",
+      "exercise_id": "pinky_pip_extension",
+      "name": "小指近端指间关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "pinky_dip_flexion",
+      "exercise_id": "pinky_dip_flexion",
+      "name": "小指远端指间关节屈伸",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手近景，所测手指从侧面展开在成像平面内，其余手指尽量不遮挡。开始时保持舒适起点，然后缓慢弯曲、回位。手部模型不提供逐点置信度，遮挡和离开测量平面可能无法自动发现；仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "pinky_dip_extension",
+      "exercise_id": "pinky_dip_extension",
+      "name": "小指远端指间关节伸展",
+      "measurement_contract": "joint-projection-0.3",
+      "description": "单只测试手侧面近景；开始时保持舒适屈曲起点，缓慢伸展所测关节，再屈回起点。不要求完全伸直，不测超伸；其余手指尽量不遮挡。手部点没有逐点置信度，离面运动可能无法自动发现，仅作实验性观察。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "neck_lateral_flexion",
+      "exercise_id": "neck_lateral_flexion",
+      "name": "头颈侧屈观察",
+      "measurement_contract": "whole-segment-projection-1",
+      "description": "坐稳并正对镜头，双眼与双肩清楚可见；向所选左/右侧小幅侧屈头部，不转头、不耸肩。记录双眼线相对双肩线的变化，不是颈椎各节段角。开始时保持舒适起点，再按提示小幅试做；系统在清楚画面中自动建立本轮起点和方向。疼痛、头晕或不适立即停止。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "neck_flexion",
+      "exercise_id": "neck_flexion",
+      "name": "头颈前屈观察",
+      "measurement_contract": "head-pitch-screen-reference-2",
+      "description": "坐稳并从测试侧拍摄，同侧眼、耳和肩清楚可见；按已确认安排小幅低头。记录耳—眼线相对固定画面的变化，不是颈椎关节角。开始时保持舒适起点，再按提示小幅试做；系统在清楚画面中自动建立本轮起点和方向。疼痛、头晕或不适立即停止。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "neck_extension",
+      "exercise_id": "neck_extension",
+      "name": "头颈后伸观察",
+      "measurement_contract": "head-pitch-screen-reference-2",
+      "description": "坐稳并从测试侧拍摄，同侧眼、耳和肩清楚可见；仅在已获准的舒适范围小幅抬头，不追求后仰极限。记录耳—眼线相对固定画面的变化。开始时保持舒适起点，再按提示小幅试做；系统在清楚画面中自动建立本轮起点和方向。疼痛、头晕或不适立即停止。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "trunk_lateral_flexion",
+      "exercise_id": "trunk_lateral_flexion",
+      "name": "躯干侧屈观察",
+      "measurement_contract": "whole-segment-projection-1",
+      "description": "稳定坐位正对镜头，双肩、双髋完整入镜；按已确认安排向所选左/右侧小幅侧屈。记录肩髋中线相对骨盆参考线的变化，不分离脊柱各节段。开始时保持舒适起点，再按提示小幅试做；系统在清楚画面中自动建立本轮起点和方向。疼痛、头晕或不适立即停止。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "trunk_flexion",
+      "exercise_id": "trunk_flexion",
+      "name": "躯干前屈观察",
+      "measurement_contract": "whole-segment-projection-1",
+      "description": "稳定坐位从测试侧拍摄，同侧肩、髋完整入镜；按已确认安排小幅前倾后回位。记录肩髋连线相对起点的变化，不能区分腰椎活动与髋部转动。开始时保持舒适起点，再按提示小幅试做；系统在清楚画面中自动建立本轮起点和方向。疼痛、头晕或不适立即停止。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    },
+    {
+      "action_id": "trunk_extension",
+      "exercise_id": "trunk_extension",
+      "name": "躯干后伸观察",
+      "measurement_contract": "whole-segment-projection-1",
+      "description": "稳定坐位从测试侧拍摄，同侧肩、髋完整入镜；仅在已确认安排内小幅后移躯干，再回到起点，不追求后仰极限。不能分离胸腰椎、骨盆和髋部贡献。开始时保持舒适起点，再按提示小幅试做；系统在清楚画面中自动建立本轮起点和方向。疼痛、头晕或不适立即停止。",
+      "experimental": true,
+      "measurement_type": "2d_projection",
+      "clinical_rom": false
+    }
+  ]
+}

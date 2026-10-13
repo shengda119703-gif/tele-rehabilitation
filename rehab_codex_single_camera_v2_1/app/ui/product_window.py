@@ -3,6 +3,8 @@ import html
 import json
 import mimetypes
 import queue
+import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 
@@ -149,6 +151,9 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         top.addWidget(self.user_select)
         self.account_button=button('我的档案',self._account)
         top.addWidget(self.account_button)
+        self.workbench_button = button('工作台', self._workbench)
+        self.workbench_button.setAccessibleName('工作台：云账号、医生对话和方案')
+        top.addWidget(self.workbench_button)
         top.addWidget(button('通知',lambda:self.navigate('notifications')))
         top.setContentsMargins(0,0,0,0)
         self.product_top=QWidget();self.product_top.setLayout(top);main.addWidget(self.product_top)
@@ -584,6 +589,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             self.refresh_needed = False
             self._request('snapshot')
         self._refresh_rehab_after_save()
+        self._schedule_workbench_sync()
 
     def _refresh_users(self):
         self.user_select.blockSignals(True)
@@ -592,6 +598,81 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             self.user_select.addItem(p['profile']['name'],p['ownerId'])
         self.user_select.setCurrentIndex(self.user_select.findData(self.owner))
         self.user_select.blockSignals(False)
+
+    def _workbench(self):
+        if self.pending or self.legacy.busy or self.legacy._camera_testing or self.legacy.state in ('CONNECTING', 'PREVIEW', 'ONLINE', 'SAVE_FAILED'):
+            self._message('请先结束并保存当前任务，再打开工作台。')
+            return
+        from .cloud_account import CloudAccountDialog
+        from ..cloud_account import CloudError
+        current = next((p for p in self.profiles if p['ownerId'] == self.owner), None)
+        local_id = self.owner if current and current.get('dataMode') == 'personal' else None
+        scope = dict(self.legacy._body_scope_key(), participant_id=self.owner)
+        def snapshots():
+            store = getattr(self.legacy.runtime, 'store', None)
+            return store.list_sessions() if store else []
+        def product_snapshot():
+            return self.backend.call('snapshot', local_id, {}, scope)
+        try:
+            dialog = CloudAccountDialog(self.legacy.runtime.data_dir / 'cloud-account', local_id,
+                current['profile']['name'] if local_id else '', snapshots, self, product_snapshot=product_snapshot,
+                rehab_store=getattr(self.legacy.runtime, 'store', None), scope=scope)
+            dialog.exec()
+            dialog.deleteLater()
+            self._request('snapshot')
+        except (ValueError, CloudError) as exc:
+            self._message(str(exc))
+
+    def _schedule_workbench_sync(self):
+        previous = getattr(self, '_workbench_sync_future', None)
+        if previous and previous.done():
+            try:
+                unread = previous.result()
+                if getattr(self, '_workbench_sync_owner', None) == self.owner and unread is not None:
+                    self.workbench_button.setText('工作台' + (f'（{unread}）' if unread else ''))
+            except Exception:
+                pass
+            self._workbench_sync_future = None
+        if self.closing or not self.owner or time.monotonic() - getattr(self, '_workbench_last_sync', 0) < 20:
+            return
+        if getattr(self, '_workbench_sync_future', None) and not self._workbench_sync_future.done():
+            return
+        self._workbench_last_sync = time.monotonic()
+        from ..cloud_account import CloudAccount, CloudError
+        directory = self.legacy.runtime.data_dir / 'cloud-account'
+        if not (directory / 'cloud-outbox-v1.sqlite3').exists():
+            return
+        try:
+            client = CloudAccount(directory)
+            session = client.session()
+            with client.db() as db:
+                binding = db.execute('SELECT patient_id FROM bindings WHERE local_id=?', (self.owner,)).fetchone()
+            if not session or not binding or binding[0] != session['patient_id']:
+                return
+        except CloudError:
+            return
+        owner = self.owner
+        scope = dict(self.legacy._body_scope_key(), participant_id=owner)
+        store = getattr(self.legacy.runtime, 'store', None)
+        if not store:
+            return
+        if not hasattr(self, '_workbench_sync_pool'):
+            self._workbench_sync_pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='workbench-sync')
+        def work():
+            try:
+                if client.consent(owner):
+                    client.queue_product(owner, self.backend.call('snapshot', owner, {}, scope))
+                    client.queue_rehab(owner, store)
+                    client.sync()
+                try:
+                    messages = client.sync_messages()
+                    return messages.get('unread_count', 0)
+                except CloudError:
+                    return 0
+            except (CloudError, ValueError, RuntimeError):
+                return None  # Persisted queue remains pending until a later retry.
+        self._workbench_sync_owner = owner
+        self._workbench_sync_future = self._workbench_sync_pool.submit(work)
 
     def _user_changed(self):
         selected = self.user_select.currentData()
@@ -999,6 +1080,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         self.backend.voice.cancel()
         if self.legacy._allow_close:
             for host in getattr(self, 'phone_hosts', {}).values(): host.close()
+            if hasattr(self, '_workbench_sync_pool'):
+                self._workbench_sync_pool.shutdown(wait=False, cancel_futures=True)
             self.backend.close()
             self.poller.stop()
             self.refresher.stop()

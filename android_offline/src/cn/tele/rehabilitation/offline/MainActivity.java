@@ -48,6 +48,7 @@ public final class MainActivity extends Activity {
     private boolean capturePending;
     private byte[] exportBytes;
     private CloudTransport cloud;
+    private AccountTransport account;
     private DeepSeekTransport deepSeek;
     private final ExecutorService network = Executors.newFixedThreadPool(2);
     private SpeechRecognizer speech;
@@ -56,6 +57,7 @@ public final class MainActivity extends Activity {
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
         cloud=new CloudTransport(this);
+        account=new AccountTransport(this);
         deepSeek=new DeepSeekTransport(this);
         getWindow().setStatusBarColor(Color.WHITE);
         getWindow().setNavigationBarColor(Color.WHITE);
@@ -207,6 +209,13 @@ public final class MainActivity extends Activity {
             } catch (Exception e) { runOnUiThread(() -> notice("资料读取失败")); }
         }
         @JavascriptInterface public boolean cloudConfigured(){return cloud.configured();}
+        @JavascriptInterface public String accountIdentity(){try{return account.identity().toString();}catch(Exception e){return "null";}}
+        @JavascriptInterface public void accountLogin(){runOnUiThread(()->web.evaluateJavascript("Boolean(window.PhoneMotion && PhoneMotion.active)",value->{if("true".equals(value)){notice("请先结束当前分析");return;}accountDialog();}));}
+        @JavascriptInterface public void accountRequest(String id,String action,String body){
+            if(id==null||!id.matches("[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}:[0-9]{1,10}")||action==null||!java.util.Arrays.asList("identity","records","append","grant","logout","messages","send","read","plans","current","accept").contains(action)||body==null||body.length()>40000)return;
+            network.execute(()->{int status;String json;try{AccountTransport.Reply reply=account.request(action,body);status=reply.status;json=reply.body;}catch(Exception e){status=503;try{json=new JSONObject().put("message",e instanceof java.io.IOException?"暂时无法连接云端，本机记录保留":e.getMessage()).toString();}catch(Exception ignored){json="{\"message\":\"操作未完成，请重试\"}";}}
+                final int code=status;final String result=json;runOnUiThread(()->{if(!isDestroyed())web.evaluateJavascript("PhoneAccount.reply("+JSONObject.quote(id)+","+code+","+JSONObject.quote(result)+")",null);});});
+        }
         @JavascriptInterface public boolean deepSeekConfigured(){return deepSeek.configured();}
         @JavascriptInterface public void deepSeekSettings(){runOnUiThread(()->deepSeekDialog());}
         @JavascriptInterface public void deepSeekRequest(String id,String body){
@@ -223,7 +232,8 @@ public final class MainActivity extends Activity {
             network.execute(()->{int status;String json;try{CloudTransport.Reply reply=cloud.request(path,method,body);status=reply.status;json=reply.body;}catch(Exception e){status=503;json="{\"detail\":\"云端暂时无法连接，本机记录保留\"}";}
                 final int code=status;final String value=json;runOnUiThread(()->{if(!isDestroyed())web.evaluateJavascript("PhoneCloud.reply("+JSONObject.quote(id)+","+code+","+JSONObject.quote(value)+")",null);});});
         }
-        @JavascriptInterface public void settings(){runOnUiThread(()->new AlertDialog.Builder(MainActivity.this).setTitle("手机与云端").setItems(new String[]{"连接云端","暂停云端连接","导出本机备份","恢复本机备份","备份到云端","恢复云端备份","打开 TEST 林女士档案","返回个人档案","DeepSeek 智能服务"},(d,which)->{
+        @JavascriptInterface public void settings(){runOnUiThread(()->new AlertDialog.Builder(MainActivity.this).setTitle("手机与云端").setItems(new String[]{"连接云端","暂停云端连接","导出本机备份","恢复本机备份","备份到云端","恢复云端备份","打开 TEST 林女士档案","返回个人档案","DeepSeek 智能服务","工作台"},(d,which)->{
+            if(which==9){web.evaluateJavascript("PhoneAccount.open()",null);return;}
             if(which==8)deepSeekDialog();
             else if(which==0)web.evaluateJavascript("PhoneLocal.store.key===PhoneStore.LIN_KEY",v->{if("true".equals(v))notice("请先返回个人档案，再连接云端");else connectionDialog();});
             else if(which==1){cloud.disconnect();notice("已暂停云端连接，本机功能可继续使用");}
@@ -236,6 +246,18 @@ public final class MainActivity extends Activity {
         @JavascriptInterface public void speechStart(){runOnUiThread(()->{if(!speechAvailable()){speechResult("","手机未安装本地语音识别服务，可使用键盘语音输入");return;}if(checkSelfPermission(Manifest.permission.RECORD_AUDIO)!=PackageManager.PERMISSION_GRANTED)requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO},SPEECH_PERMISSION);else startSpeech();});}
         @JavascriptInterface public void speechCancel(){runOnUiThread(()->{endSpeech();speechResult("","已取消，原草稿保留");});}
         @JavascriptInterface public void printPage(){runOnUiThread(()->{android.print.PrintManager manager=(android.print.PrintManager)getSystemService(PRINT_SERVICE);manager.print("安康康复报告",web.createPrintDocumentAdapter("安康康复报告"),null);});}
+    }
+    private void accountDialog(){
+        LinearLayout fields=new LinearLayout(this);fields.setOrientation(LinearLayout.VERTICAL);fields.setPadding(40,12,40,12);
+        EditText username=new EditText(this);username.setHint("账号");username.setSingleLine(true);fields.addView(username);
+        EditText password=new EditText(this);password.setHint("密码");password.setSingleLine(true);password.setInputType(android.text.InputType.TYPE_CLASS_TEXT|android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);fields.addView(password);
+        android.widget.CheckBox register=new android.widget.CheckBox(this);register.setText("创建新账号");fields.addView(register);
+        android.widget.TextView status=new android.widget.TextView(this);status.setText("登录本人云账号，康复分析仍在手机上完成。");fields.addView(status);
+        AlertDialog dialog=new AlertDialog.Builder(this).setTitle("工作台 · 本人账号").setView(fields).setPositiveButton("登录 / 注册",null).setNegativeButton("取消",null).create();
+        dialog.setOnShowListener(d->dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v->{
+            final String name=username.getText().toString(),secret=password.getText().toString();final boolean create=register.isChecked();password.setText("");dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(false);dialog.setCancelable(false);status.setText("正在连接…");
+            network.execute(()->{try{final String identity=account.login(name,secret,create).toString();runOnUiThread(()->{if(isDestroyed())return;dialog.dismiss();web.evaluateJavascript("PhoneAccount.activate("+identity+").catch(e=>alert(e.message))",null);});}catch(Exception e){runOnUiThread(()->{if(isDestroyed())return;status.setText(e instanceof java.io.IOException?"连接未完成，请重试":e.getMessage());dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(true);dialog.setCancelable(true);});}});
+        }));dialog.show();
     }
     private void deepSeekDialog(){
         LinearLayout fields=new LinearLayout(this);fields.setOrientation(LinearLayout.VERTICAL);fields.setPadding(40,0,40,0);
