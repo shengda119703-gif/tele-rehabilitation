@@ -1,6 +1,8 @@
 # 云账号第一阶段接口
 
-当前服务0.1.3，schema1，原账号／结果API形状保持兼容；本文件与`cloud_service/app.py`对应，同目录`openapi-v1.json`保留0.1.0接口快照，实时版本取`/api/cloud/v1/openapi.json`。真实公网源为`https://139.224.216.18`。只描述当前已实现接口，不代表C0–C6的全部契约。
+当前服务0.1.4，schema1，原账号／结果API形状保持兼容；本文件与`cloud_service/app.py`对应，同目录`openapi-v1.json`保留0.1.0接口快照，实时版本取`/api/cloud/v1/openapi.json`。真实公网源为`https://139.224.216.18`。只描述当前已实现接口，不代表C0–C6的全部契约。
+
+0.1.4在现有追加记录内支持`ankang-sync-acceptance-1`只读验收档案，必须是本人IMPORT、11个栏目、明确的验收来源/无证据/不可执行标记。缺失或归属错误返回422，真实分析结果格式不变。分栏目展示不意味着用药、计划或家庭业务表双向同步；见[五账号资料](SYNC_ACCEPTANCE_DOSSIERS.md)。
 
 0.1.3增加受WEB患者会话保护的完整应用根入口和`/capture`，账号／云记录移到`/account`，医生仍`/care`；能力接口新增`public_user_web=true`和`browser_analysis=LOCAL_CPU`。这不是服务器模型执行或完整增量同步：`server_models`、`incremental_sync`、`plans`与`calls`保持false。公开资源仅来自构建清单，具体见[公网用户网页](PUBLIC_USER_WEB.md)。
 
@@ -37,7 +39,7 @@
 | POST `/patients/{ident}/record-events` | 患者本人；见下一节 | 201，COMMITTED/resource_id/idempotent |
 | GET `/patients/{ident}/records` | 本人或当前授权医生；offset/limit | 分页云记录，含来源声明；不是增量游标 |
 
-网页`portal.js`调用注册、登录、me、改密、退出、本人档案/共享、医生列表/详情及records。记录追加已可用并经过浏览器API验收，但原产品的本地上传/outbox适配尚未完成；不要把网页空档案当作旧数据丢失。
+网页`portal.js`调用注册、登录、me、改密、退出、本人档案/共享、医生列表/详情及records。原结果的明确上传/outbox适配已在本云工作树APK、Qt和公网浏览器接入；完整业务整库同步仍待。不要把新账号未自动合并旧本机资料当作数据丢失。
 
 ## 记录追加契约
 

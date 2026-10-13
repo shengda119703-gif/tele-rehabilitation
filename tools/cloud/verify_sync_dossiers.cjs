@@ -19,7 +19,7 @@ async function main(){
  const doctorPassword=(await fs.readFile(doctorFile,'utf8')).replace(/^\uFEFF/,'').trim();
  const out=path.resolve(output);await fs.mkdir(out,{recursive:false});
  const browser=await chromium.launch({channel:'msedge',headless:true});
- const errors=[],csp=[],results=[],identities=[],contexts=[],pages=[];let doctorPage;
+ const errors=[],csp=[],results=[],identities=[],contexts=[],pages=[],cleanupErrors=[];let doctorPage,report,webLogouts=0;
  const watch=p=>{p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error'&&/Content Security Policy|Refused to/i.test(m.text()))csp.push(m.text());});};
  const login=async(p,url,name,password)=>{await p.goto(ORIGIN+url);await p.locator('[name="username"]').fill(name);await p.locator('[name="password"]').fill(password);await p.locator('#account-form button').click();await p.locator('#logout').waitFor({state:'visible'});};
  try{
@@ -48,7 +48,7 @@ async function main(){
     try{
      assert.equal(signed.patient_id,me.patient_id);
      const read=await api('/patients/'+me.patient_id+'/records?offset=0&limit=100','GET',undefined,signed.access_token);
-     assert.deepEqual(read.items,records.items);native.push(kind);
+     assert.deepEqual(read.items,records.items);native.push(kind+'_API');
     }finally{await api('/auth/logout','POST',{},signed.access_token);}
    }
    // Full user app opens the very same cloud record, without accepting it as
@@ -56,7 +56,7 @@ async function main(){
    await page.goto(ORIGIN+'/');await page.waitForFunction(()=>window.PhoneLocal?.store?.value?.cloudIdentity);
    await page.evaluate(()=>PhoneLocal.ready);
    const before=await page.evaluate(()=>({jobs:PhoneLocal.store.value.jobs.length,plans:PhoneLocal.store.value.plans.length}));
-   await page.getByRole('button',{name:'云账号',exact:true}).click();
+   await page.getByRole('button',{name:'云账号与结果上传',exact:true}).click();
    await page.getByRole('button',{name:'云记录',exact:true}).click();
    await page.getByText('云记录已读取（最近10条）',{exact:true}).waitFor();
    await page.locator('dialog section summary').filter({hasText:'完整身体与使用档案'}).click();
@@ -77,16 +77,28 @@ async function main(){
    assert.deepEqual(shared.items,identities[i].records);results[i].readers.push('DOCTOR_WEB');
    if(i===0){for(const key of ['assessment','rehab_plan'])await doctorPage.locator('[data-section="'+key+'"] > summary').click();await doctorPage.screenshot({path:path.join(out,'PRIVATE-doctor-dossier-desktop.png'),fullPage:true});}
    const other=identities[(i+1)%identities.length].patient_id;
-   const forbidden=await identities[i].page.evaluate(async id=>(await fetch('/api/cloud/v1/patients/'+id+'/records')).status,other);assert.equal(forbidden,404);results[i].other_patient_status=forbidden;
+   const forbidden=(await identities[i].page.request.get(BASE+'/patients/'+other+'/records')).status();assert.equal(forbidden,404);results[i].other_patient_status=forbidden;
    await doctorPage.getByRole('button',{name:'返回患者列表',exact:true}).click();await doctorPage.locator('.cloud-patient').first().waitFor();
   }
   assert.deepEqual(errors,[]);assert.deepEqual(csp,[]);
   const capabilities=await api('/capabilities');assert.equal(capabilities.version,'0.1.4');assert.equal(capabilities.incremental_sync,false);assert.equal(capabilities.plans,false);
-  const report={public_https:true,tls_bypass:false,patients:results,browser_errors:errors,csp_errors:csp,clinical_execution:false,full_incremental_sync:false,physical_apk_test:false};
-  await fs.writeFile(path.join(out,'result.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
+  report={public_https:true,tls_bypass:false,patients:results,browser_errors:errors,csp_errors:csp,clinical_execution:false,full_incremental_sync:false,physical_apk_test:false};
  }finally{
-  for(const page of pages)await page.evaluate(async()=>{const r=await fetch('/api/cloud/v1/auth/me');if(!r.ok)return;const me=await r.json();await fetch('/api/cloud/v1/auth/logout',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-Token':me.csrf_token},body:'{}'});}).catch(()=>{});
+  for(const page of pages){
+   try{
+    const meResponse=await page.request.get(BASE+'/auth/me');
+    if(meResponse.ok()){
+     const me=await meResponse.json();
+     const logout=await page.request.post(BASE+'/auth/logout',{headers:{'Origin':ORIGIN,'X-CSRF-Token':me.csrf_token},data:{}});
+     assert(logout.ok(),'Temporary WEB session logout failed');
+     assert.equal((await page.request.get(BASE+'/auth/me')).status(),401);webLogouts++;
+    }
+   }catch(e){cleanupErrors.push(e.message);}
+  }
   for(const c of contexts)await c.close();await browser.close();
  }
+ assert.deepEqual(cleanupErrors,[]);assert.equal(webLogouts,6);
+ report.temporary_web_sessions_revoked=webLogouts;
+ await fs.writeFile(path.join(out,'result.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
 }
 main().catch(e=>{console.error(e.message);process.exitCode=1;});
