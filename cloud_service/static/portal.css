@@ -11,4 +11,6 @@
 .cloud-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; }
 .cloud-metrics dd { margin: 4px 0; font-weight: 600; }
 .cloud-record pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.cloud-dossier-section { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.cloud-dossier-section dd { overflow-wrap: anywhere; }
 @media (max-width: 480px) { .cloud-form { margin-top: 12px; } }

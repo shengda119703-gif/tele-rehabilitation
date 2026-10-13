@@ -6,6 +6,7 @@
   let account = null, generation = 0, csrf = '', authPending = false;
   const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function resultDetails(payload) {
+    if (payload.schema === 'ankang-sync-acceptance-1') return dossierDetails(payload);
     if (payload.schema !== 'ankang-result-1' || !payload.result) return '';
     const result = payload.result, summary = result.summary || {}, lines = [];
     const metric = (label, value, unit = '') => {
@@ -28,6 +29,15 @@
     if (bar) { metric('器械峰值速度', bar.peak_velocity_m_s, 'm/s'); metric('器械峰值功率', bar.peak_power_w, 'W'); }
     const source = ({REPLAY_FILE:'录像分析',LIVE_CAMERA:'实时分析',SELF_RECORDED:'本人记录',GUIDED_PRACTICE:'跟练记录'})[payload.source] || payload.source || '未记录来源';
     return `<p>${escape(source)}${payload.measured_at ? ' · ' + escape(new Date(payload.measured_at).toLocaleString('zh-CN')) : ''}</p><dl class="cloud-metrics">${lines.join('')}</dl><details><summary>原始结果与来源</summary><pre>${escape(JSON.stringify(payload, null, 2))}</pre></details>`;
+  }
+  function dossierDetails(payload) {
+    const note = '<p role="note">同步验收资料：不是实测结果或医嘱，不启用服药提醒和自动训练。</p>';
+    if (payload.source !== 'SYNC_ACCEPTANCE' || payload.synthetic !== true || payload.read_only !== true || payload.clinical_use !== false || payload.execution_enabled !== false || !Array.isArray(payload.sections) || payload.sections.some(s=>!s || typeof s!=='object' || !Array.isArray(s.rows) || s.rows.some(r=>!r || typeof r!=='object'))) return '<p role="alert">档案来源需核对，未展示为正式数据。</p>';
+    const sections = payload.sections.slice(0, 11).map(s => {
+      const rows = Array.isArray(s.rows) ? s.rows.slice(0,25) : [];
+      return `<details class="cloud-dossier-section" data-section="${escape(s.key)}"><summary>${escape(s.title)}</summary><p>${escape(s.summary)}</p><dl class="cloud-metrics">${rows.map(r=>`<div><dt>${escape(r.label)}</dt><dd>${escape(r.value)}</dd></div>`).join('')}</dl></details>`;
+    }).join('');
+    return note + sections + `<details><summary>原始档案与来源</summary><pre>${escape(JSON.stringify(payload,null,2))}</pre></details>`;
   }
   async function api(path, method = 'GET', data) {
     const headers = {};

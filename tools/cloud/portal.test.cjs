@@ -12,3 +12,15 @@ test('record source and named metric labels remain escaped',()=>{
  assert(!html.includes('<script>'));assert(!html.includes('<img src=x>'));assert(html.includes('&lt;script&gt;'));
  assert.equal(context.renderResult({schema:'older-payload'}),'');
 });
+test('acceptance dossier is labeled, read-only and escapes every field',()=>{
+ const payload={schema:'ankang-sync-acceptance-1',source:'SYNC_ACCEPTANCE',synthetic:true,read_only:true,clinical_use:false,execution_enabled:false,
+  sections:[{key:'profile',title:'<script>身体档案',summary:'<img src=x>',rows:[{label:'<b>姓名',value:'<svg onload=bad>'}]}]};
+ const html=context.renderResult(payload);
+ assert(html.includes('不是实测结果或医嘱'));assert(html.includes('不启用服药提醒和自动训练'));
+ assert(html.includes('&lt;script&gt;'));assert(html.includes('&lt;svg onload=bad&gt;'));
+ assert(!html.includes('<script>'));assert(!html.includes('<img src=x>'));assert(!html.includes('<svg'));
+ for(const flag of ['synthetic','read_only','clinical_use','execution_enabled']){
+  const invalid={...payload,[flag]:!payload[flag]};const view=context.renderResult(invalid);
+  assert(view.includes('档案来源需核对'));assert(!view.includes('身体档案'));
+ }
+});

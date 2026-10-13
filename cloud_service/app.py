@@ -21,6 +21,7 @@ from . import __version__
 from .browser import install_public_web
 from .config import Settings
 from .database import Database, accounts, grants, patients, records, sessions
+from .dossier import validate_dossier
 from .security import (
     DomainError, audited, csrf, digest, password, password_hash,
     throttle, username, verify_password,
@@ -394,6 +395,7 @@ def create_app(settings: Settings, database=None, *, web_assets=None):
         with db.transaction() as connection:
             actor, _ = caller(request, connection, write=True)
             patient_scope(connection, actor, ident, write=True)
+            validate_dossier(document, actor, ident)
             connection.execute(select(patients.c.id).where(patients.c.id == ident).with_for_update()).first()
             prior = connection.execute(select(records).where(records.c.submitted_by == actor["id"],
                 records.c.operation_id == str(value.operation_id))).mappings().first()
