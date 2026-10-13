@@ -56,4 +56,3 @@
 - **Code Example Good:** role='alert'
 - **Code Example Bad:** Red border only
 - **Severity:** High
-
