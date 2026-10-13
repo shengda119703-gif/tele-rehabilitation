@@ -106,6 +106,7 @@ class AgentBridge:
 
     def product(self, operation, owner_id='', payload=None, *, tool_handler=None):
         return self._request('product', tool_handler=tool_handler, sessionId=owner_id,
+                             cloudConversation=bool(getattr(self, 'cloud_conversation', False)),
                              productOperation=operation, payload=payload or {},
                              **({'voiceStatus':self.voice_host.status()} if self.voice_host is not None else {}),
                              now=datetime.now().astimezone().isoformat())

@@ -93,8 +93,12 @@ def validate_training_plan(value):
     result = dict(scope, id=pid, name=name.strip(), items=items, schema_version=1, record_origin='manual')
     if value.get('doctor_publication'):
         publication = value['doctor_publication']
-        if not isinstance(publication, dict) or set(publication) != {'id', 'version'} or not isinstance(publication['id'], str) or not re.fullmatch(r'[a-f0-9-]{36}', publication['id']) or type(publication['version']) is not int or publication['version'] < 1:
+        if not isinstance(publication, dict) or set(publication) not in ({'id', 'version'}, {'id', 'version', 'execution_date'}) or not isinstance(publication['id'], str) or not re.fullmatch(r'[a-f0-9-]{36}', publication['id']) or type(publication['version']) is not int or publication['version'] < 1:
             raise ValueError('医生方案发布引用无效')
+        if 'execution_date' in publication:
+            from datetime import date
+            if date.fromisoformat(publication['execution_date']).isoformat() != publication['execution_date']:
+                raise ValueError('医生方案训练日期无效')
         result['doctor_publication'] = copy.deepcopy(publication)
     if value.get('record_origin') == 'assessment_rules':
         from .automatic_plans import validate_metadata

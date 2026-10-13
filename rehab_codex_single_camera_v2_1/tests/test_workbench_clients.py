@@ -268,6 +268,24 @@ def test_original_training_prepare_rechecks_age_and_latest_failed_assessment(env
         prepare_training_plan(plan, key, build_body_profile(store.list_sessions(), **SCOPE))
 
 
+def test_cloud_start_checks_stopped_plan_and_offline_status(environment):
+    account, http, vault, doctor, store, backend, directory = environment
+    patient = account.session()['patient_id']
+    cloud = publish(doctor, patient)
+    assert account.adopt(cloud, 0, OWNER, SCOPE, store)['local_status'] == 'ACTIVE'
+    saved = store.list_training_plans(SCOPE)[0]
+    account.validate_doctor_start(saved)
+    http.offline = True
+    with pytest.raises(CloudError, match='disconnected'):
+        account.validate_doctor_start(saved)
+    http.offline = False
+    response = doctor.post(BASE + '/patients/' + patient + '/plans/' + cloud['id'] + '/stop',
+        json={'expected_version': cloud['version'], 'reason': 'TEST fictitious stop, no person'})
+    assert response.is_success, response.text
+    with pytest.raises(CloudError, match='停用'):
+        account.validate_doctor_start(saved)
+
+
 def test_paired_product_backend_sync_and_adopt_use_bound_actual_store(environment, monkeypatch):
     account, http, vault, doctor, store, backend, directory = environment
     import app.cloud_account as cloud_module

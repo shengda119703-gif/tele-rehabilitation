@@ -53,13 +53,14 @@ public final class AccountTransport {
     }
     private void clear(){preferences.edit().remove("sealed").commit();session=null;}
     private Reply http(String path,String method,JSONObject data,String token) throws Exception {
-        if(!path.matches("/auth/(register|password/login|refresh|me|logout)|/patients/[a-f0-9-]{36}(/(record-events|records(/latest)?\\?offset=[0-9]+&limit=[0-9]+|doctor-access|messages(/read|\\?after=[0-9]+&limit=50&latest=true|\\?before=[0-9]+&limit=50)?|plans(/current|\\?offset=[0-9]+&limit=5|/[a-f0-9-]{36}/accept)?))?"))throw new Exception("云接口地址无效");
+        boolean betaPath=path.matches("/patients/[a-f0-9-]{36}/(ai/(usage|requests)|reports|rehab-workflow(/profile)?|rehab-candidates)");
+        if(!betaPath&&!path.matches("/auth/(register|password/login|refresh|me|logout)|/patients/[a-f0-9-]{36}(/(record-events|records(/latest)?\\?offset=[0-9]+&limit=[0-9]+|doctor-access|messages(/read|\\?after=[0-9]+&limit=50&latest=true|\\?before=[0-9]+&limit=50)?|plans(/current|\\?offset=[0-9]+&limit=5|/[a-f0-9-]{36}/accept)?))?"))throw new Exception("云接口地址无效");
         HttpsURLConnection connection=(HttpsURLConnection)new URL(ORIGIN+PREFIX+path).openConnection();
-        connection.setConnectTimeout(12000);connection.setReadTimeout(12000);connection.setInstanceFollowRedirects(false);connection.setRequestMethod(method);
+        connection.setConnectTimeout(12000);connection.setReadTimeout(path.endsWith("/ai/requests")?35000:12000);connection.setInstanceFollowRedirects(false);connection.setRequestMethod(method);
         connection.setRequestProperty("Content-Type","application/json");connection.setRequestProperty("X-Ankang-Client","native");
         if(token!=null)connection.setRequestProperty("Authorization","Bearer "+token);
         try{
-            if(data!=null){byte[] bytes=data.toString().getBytes(StandardCharsets.UTF_8);if(bytes.length>32768)throw new Exception("结果过大，本机原记录保留");connection.setDoOutput(true);try(java.io.OutputStream output=connection.getOutputStream()){output.write(bytes);}}
+            if(data!=null){byte[] bytes=data.toString().getBytes(StandardCharsets.UTF_8);if(bytes.length>(path.endsWith("/reports")?3*1024*1024:path.endsWith("/ai/requests")?65536:32768))throw new Exception("结果过大，本机原记录保留");connection.setDoOutput(true);try(java.io.OutputStream output=connection.getOutputStream()){output.write(bytes);}}
             int status=connection.getResponseCode();InputStream stream=status>=400?connection.getErrorStream():connection.getInputStream();
             try(InputStream in=stream;ByteArrayOutputStream out=new ByteArrayOutputStream()){
                 if(in==null)throw new Exception("云回复未完成");byte[] buffer=new byte[8192];int size;
@@ -99,6 +100,13 @@ public final class AccountTransport {
         }
         // Validate identity before operations; no patient/installation URL comes from JS.
         JSONObject me=success(authorized("/auth/me","GET",null));if(!patient.equals(me.getString("patient_id")))throw new Exception("账号身份已变化，请重新登录");
+        if(action.equals("aiUsage"))return authorized("/patients/"+patient+"/ai/usage","GET",null);
+        if(action.equals("workflow"))return authorized("/patients/"+patient+"/rehab-workflow","GET",null);
+        if(action.equals("workflowProfile")){JSONObject document=new JSONObject(data.toString());document.remove("patient_id");return authorized("/patients/"+patient+"/rehab-workflow/profile","PUT",document);}
+        if(action.equals("candidate"))return authorized("/patients/"+patient+"/rehab-candidates","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("kind",data.getString("kind")));
+        if(action.equals("aiAsk"))return authorized("/patients/"+patient+"/ai/requests","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("text",data.getString("text")));
+        if(action.equals("reports"))return authorized("/patients/"+patient+"/reports","GET",null);
+        if(action.equals("shareReport"))return authorized("/patients/"+patient+"/reports","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("filename",data.getString("filename")).put("mime",data.getString("mime")).put("data",data.getString("data")).put("shared",data.getBoolean("shared")));
         if(action.equals("records")){
             int offset=data.optInt("offset",0);if(offset<0)throw new Exception("查询范围无效");
             return authorized("/patients/"+patient+"/records/latest?offset="+offset+"&limit=30","GET",null);
