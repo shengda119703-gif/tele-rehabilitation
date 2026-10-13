@@ -1,0 +1,38 @@
+{
+  "cards": [
+    {
+      "art": {
+        "bottom": 713,
+        "right": 147,
+        "x": 99,
+        "y": 665
+      },
+      "copy": {
+        "bottom": 707.46875,
+        "right": 97,
+        "x": 26,
+        "y": 670.5234375
+      },
+      "overlap": false,
+      "title": "我的药物"
+    },
+    {
+      "art": {
+        "bottom": 713,
+        "right": 297,
+        "x": 249,
+        "y": 665
+      },
+      "copy": {
+        "bottom": 707.46875,
+        "right": 247,
+        "x": 176,
+        "y": 670.5234375
+      },
+      "overlap": false,
+      "title": "服药记录"
+    }
+  ],
+  "overflow": false,
+  "w": 320
+}

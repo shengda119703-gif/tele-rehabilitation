@@ -75,11 +75,13 @@ async function api(path, data, options = {}) {
     }
     if (!r.ok) {
       if (r.status === 401) pair();
-      throw Error(
+      const error = Error(
         typeof value.detail === "string"
           ? value.detail
           : "操作未完成，请检查填写内容。",
       );
+      error.status = r.status;
+      throw error;
     }
     return value;
   } catch (e) {
@@ -147,6 +149,7 @@ async function load() {
   const generation = ++ui.generation;
   ui.homeConnection = "loading";
   if (ui.page === "health" && !ui.snapshot && window.HealthV131) window.HealthV131.loading();
+  if (ui.page === "medication" && !ui.snapshot && window.MedicationV121) window.MedicationV121.loading();
   if (ui.page === "home" && ui.snapshot) home();
   if (ui.page === "rehab" && ui.snapshot && window.RehabV51) rehab();
   try {
@@ -164,6 +167,7 @@ async function load() {
     if (!$("#pair-form") && ui.page === "home") { home(); return; }
     if (!$("#pair-form") && ui.page === "rehab" && window.RehabV51) { rehab(); return; }
     if (!$("#pair-form") && ui.page === "health" && window.HealthV131) { window.HealthV131.failure(e.message); return; }
+    if (!$("#pair-form") && ui.page === "medication" && window.MedicationV121) { window.MedicationV121.failure(e.message); return; }
     if (!$("#pair-form"))
       $("#content").innerHTML =
         `<h1>暂时无法读取</h1><p>${E(e.message)}</p>${button("重新连接", "retry", true)}`;
@@ -187,12 +191,13 @@ function nav() {
 }
 function route() {
   if (voiceStarting || recorder?.state === "recording") {
-    location.hash = "#assistant";
+    location.hash = ui.page === "medication" && window.MedicationV121?.isAI() ? "#medication/ai" : "#assistant";
     say("请先结束或取消录音。");
     return;
   }
   const key = location.hash.slice(1) || "home";
-  ui.page = key.startsWith("health/") ? "health" : Object.hasOwn(names, key) || ["assistant", "records"].includes(key) ? key : "home";
+  ui.page = key.startsWith("health/") ? "health" : key.startsWith("medication/") ? "medication" : Object.hasOwn(names, key) || ["assistant", "records"].includes(key) ? key : "home";
+  if (ui.page === "medication" && ui.homeRouteDay) window.MedicationV121?.selectDay(ui.homeRouteDay);
   ui.day = ui.homeRouteDay || (ui.page === "home" ? ui.day : today());
   ui.homeRouteDay = null;
   if (ui.page === 'rehab' && window.RehabV51) {
@@ -209,6 +214,7 @@ function route() {
 }
 function pair() {
   window.HealthV131?.reset();
+  window.MedicationV121?.reset();
   document.body.dataset.page = "pair";
   ui.homeRouteDay = null;
   ui.homeConnection = "loading";
@@ -576,6 +582,7 @@ function archiveDetail(a) {
   });
 }
 function medication() {
+  if (window.MedicationV121) { window.MedicationV121.render(); return; }
   const rows = doses();
   $("#content").innerHTML =
     `<div class="heading"><h1>用药</h1><input class="date" id="day" type="date" value="${ui.day}" aria-label="查看用药日期"></div><details class="page-note"><summary>用药记录说明</summary><p>按已有医嘱安排。未记录不等于漏服。</p></details>${rows.map((r, i) => `<div class="row"><time>${E(r.time)}</time><div><strong>${E(r.med.name)}</strong><p>${E(r.med.dose || "剂量未填写")}</p><small class="${r.status === "taken" ? "status" : ""}">${{ taken: "已服用", skipped: "已跳过", unrecorded: "未记录" }[r.status]}</small></div><button data-dose="${i}" ${r.day > today() ? "disabled" : ""}>${r.status === "unrecorded" ? "记录" : "更正"}</button></div>`).join("") || '<p class="empty">当天暂无用药安排。</p>'}<div class="heading"><h2>我的药物</h2>${button("添加药物", "add-med")}</div>${(profile().medicationRecords || []).map((m) => `<div class="row"><div><strong>${E(m.name)}</strong><p><small>${E(m.dose)} · ${m.status === "active" ? "在用" : "已停用"}</small></p></div><button data-med="${E(m.id)}">管理</button></div>`).join("")}<details><summary>记录更正历史</summary>${
@@ -894,6 +901,7 @@ async function transcribe(file) {
         ? [before, r.text].filter(Boolean).join("\n")
         : ui.draft + "\n" + r.text;
     if (ui.page === "assistant") assistant();
+    else if (ui.page === "medication" && window.MedicationV121?.isAI()) window.MedicationV121.render();
     say("已填入草稿，核对后发送。");
   } catch (e) {
     say(e.message);
