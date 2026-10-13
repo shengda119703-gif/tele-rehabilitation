@@ -178,3 +178,91 @@ test('backup excludes no-record turns without changing the live conversation', a
   assert.equal(JSON.stringify(exported).includes('TEST_PRIVATE'), false);
   assert.ok((await call('snapshot')).state.chat.some(m => m.text.includes('TEST_PRIVATE')));
 });
+
+function syntheticProductPort() {
+  const values=new Map();
+  return {
+    read:key=>structuredClone(values.get(key)??null),
+    write:(key,value)=>values.set(key,structuredClone(value)),
+    remove:key=>values.delete(key),
+    profiles:()=>[...values.entries()].filter(([key])=>key.startsWith('profile:')).map(([,value])=>structuredClone(value)),
+    attachments:{list:async()=>[],clear:async()=>{}},
+  };
+}
+
+test('care backup excludes pending credentials and preconditions while the self view keeps confirmation usable',async()=>{
+  const owner='TEST-care-backup',now=new Date('2026-10-11T09:00:00+08:00');
+  const facts={scope:{participant_id:owner,source_kind:'SYNTHETIC',usage_context:'TEST'},
+    medications:[{id:'TEST-med',name:'TEST 药物',dose:'既有说明',purpose:'',times:'',status:'active'}],
+    daily:{medSchedules:{'TEST-med':{times:['08:00'],start:'2026-10-01',end:''}},doses:{},schedules:[]},plans:[],history:[]};
+  let writes=0;
+  const host={read:async()=>structuredClone(facts),execute:async()=>{writes++;throw Error('TEST must not execute');}};
+  const service=new ProductService(syntheticProductPort(),undefined,undefined,{},()=>host);
+  const call=(operation,input={})=>service.request(operation,owner,input,now);
+  await call('profile.save',{profile:profile('TEST 照护备份')});
+  const workflow=await call('care.prepare',{requestId:'TEST-care-export',intents:[
+    {kind:'record_dose',medId:'TEST-med',date:'2026-10-11',time:'08:00',status:'taken'}]});
+  assert.equal((await call('snapshot')).carePending[0].confirmationToken,workflow.confirmationToken);
+  const exported=await call('lifecycle.export'),encoded=JSON.stringify(exported);
+  assert.equal(exported.careAudit[0].id,workflow.id);
+  assert.equal(Object.hasOwn(exported.snapshot,'carePending'),false);
+  assert.equal(Object.hasOwn(exported.snapshot,'carePendingUnavailable'),false);
+  for(const key of ['confirmationToken','requestSignature','expected'])assert.equal(encoded.includes('"'+key+'"'),false,key);
+  assert.equal(encoded.includes(workflow.confirmationToken),false);
+  assert.equal((await call('snapshot')).carePending[0].confirmationToken,workflow.confirmationToken);
+  assert.equal(writes,0);
+});
+
+test('backup redacts nested execution credentials without dropping ordinary business expected fields',async()=>{
+  const owner='TEST-backup-metadata',now=new Date('2026-10-11T09:00:00+08:00');
+  const service=new ProductService(syntheticProductPort());
+  await service.request('profile.save',owner,{profile:{...profile('TEST 备份字段'),metadata:{
+    expected:'TEST-business-value',confirmationToken:'TEST-nested-token',requestSignature:'TEST-nested-signature'}}},now);
+  const exported=await service.request('lifecycle.export',owner,{},now),encoded=JSON.stringify(exported);
+  assert.equal(exported.snapshot.profile.profile.metadata.expected,'TEST-business-value');
+  assert.equal(encoded.includes('TEST-nested-token'),false);
+  assert.equal(encoded.includes('TEST-nested-signature'),false);
+  assert.equal(encoded.includes('"confirmationToken"'),false);
+  assert.equal(encoded.includes('"requestSignature"'),false);
+});
+
+test('module rehab reads reject malformed or another owner receipts before exposing records',async()=>{
+  const owner='TEST-rehab-receipt',now=new Date('2026-10-11T09:00:00+08:00');
+  const queries=[['查看训练计划','rehab_plan'],['查看最近评估结果','rehab_assessments'],['查看训练记录','rehab_history']];
+  const invalid=[
+    value=>({...value,tool:'rehab.get_other'}),
+    value=>({...value,read_only:false}),
+    value=>({...value,status:'succeeded'}),
+    value=>({...value,records:{id:'TEST_UNTRUSTED'}}),
+    value=>({...value,scope:null}),
+    value=>({...value,scope:{...value.scope,participant_id:'OTHER'}}),
+    value=>({...value,scope:{...value.scope,source_kind:''}}),
+    value=>({...value,scope:{...value.scope,usage_context:undefined}}),
+  ];
+  for(const [text,name] of queries)for(const damage of invalid){
+    const host={read:async call=>damage({tool:call.name,read_only:true,status:'found',
+      scope:{participant_id:owner,source_kind:'SYNTHETIC',usage_context:'TEST'},records:[{id:'TEST_UNTRUSTED'}]})};
+    const service=new ProductService(syntheticProductPort(),undefined,undefined,{},undefined,undefined,()=>host);
+    await service.request('profile.save',owner,{profile:profile('TEST 康复回执')},now);
+    const result=await service.request('chat',owner,{text},now),step=result.turn.agent.steps[0];
+    assert.equal(step.name,name);
+    assert.equal(step.status,'failed',text);
+    assert.equal(step.data,undefined);
+    assert.equal(result.turn.reply.text.includes('TEST_UNTRUSTED'),false);
+  }
+});
+
+test('module rehab reads keep valid host source and usage context facts',async()=>{
+  const owner='TEST-rehab-valid',now=new Date('2026-10-11T09:00:00+08:00');
+  const queries=['查看训练计划','查看最近评估结果','查看训练记录'];
+  const host={read:async call=>({tool:call.name,read_only:true,status:'empty',
+    scope:{participant_id:owner,source_kind:'REPLAY_FILE',usage_context:'SELF_USE'},records:[]})};
+  const service=new ProductService(syntheticProductPort(),undefined,undefined,{},undefined,undefined,()=>host);
+  await service.request('profile.save',owner,{profile:profile('TEST 康复来源')},now);
+  for(const text of queries){
+    const result=await service.request('chat',owner,{text},now),step=result.turn.agent.steps[0];
+    assert.equal(step.status,'succeeded');
+    assert.deepEqual(step.data.scope,{participant_id:owner,source_kind:'REPLAY_FILE',usage_context:'SELF_USE'});
+    assert.deepEqual(step.data.records,[]);
+  }
+});

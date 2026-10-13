@@ -33,6 +33,11 @@ class AgentBridge:
             [node, str(script or ROUTE_ROOT / "scripts" / "agent-bridge.cjs"), *([str(Path(data_dir).resolve())] if data_dir else [])],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
+            # pythonw launched by Start-Process has redirected Windows log
+            # handles that cannot reliably be inherited on a second child.
+            # Keep protocol pipes explicit and do not inherit credential-bearing
+            # provider diagnostics into the desktop log.
+            stderr=subprocess.DEVNULL,
             text=True,
             encoding="utf-8",
             bufsize=1,
@@ -67,7 +72,7 @@ class AgentBridge:
                 self.terminate()
                 raise TimeoutError("Ankang bridge response timed out; session ended") from None
             if not line:
-                raise RuntimeError("Node bridge exited without a response; see stderr")
+                raise RuntimeError("Node bridge exited without a response")
             response = json.loads(line)
             if 'toolCall' in response:
                 call = response['toolCall']

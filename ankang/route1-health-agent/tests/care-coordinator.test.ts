@@ -27,6 +27,18 @@ function fixture() {
 }
 const intents = [{kind:'record_dose',medId:'m',date:'2026-10-10',time:'08:00',status:'taken'},
   {kind:'reschedule_rehab',scheduleId:'s',date:'2026-10-10',time:'16:00'}];
+
+test('care read queries do not map unknown people, negation or hypotheses to self',async()=>{
+  const f=fixture();let reads=0;
+  const c=new CareCoordinator('personal:TEST',f.storage,{...f.port,read:async()=>{reads++;return f.port.read();}});
+  for(const text of ['王五今天的安排有哪些','今天张三安排有哪些','我不查询今日安排','不要查看今日安排','假设查看今天的安排','他今天的训练下一步是什么']){
+    const reply=await c.replyToText(text,now,crypto.randomUUID());assert.equal(reply?.data,undefined,text);assert.equal(reply?.workflow,undefined,text);
+  }
+  assert.equal(reads,0);
+  assert.ok((await c.replyToText('今天有什么安排？',now,'TEST-self-read'))?.data);assert.equal(reads,1);
+  assert.equal(await c.replyToText('查看健康记录和今天的安排',now,'TEST-multi-read'),null);assert.equal(reads,1);
+  assert.equal(await c.replyToText('查看健康记录和药物清单和今天的安排',now,'TEST-three-reads'),null);assert.equal(reads,1);
+});
 test('compound care proposal performs no write; exact confirmation executes both and returns receipts',async()=>{
   const f=fixture(),c=f.coordinator(),w=await c.prepare({requestId:'TEST-request-1',intents},now);
   assert.equal(w.status,'awaiting_confirmation');assert.equal(f.executions,0);
@@ -138,4 +150,24 @@ test('concurrent confirmations serialize; invalid receipt never claims success',
   const bad=new CareCoordinator('personal:TEST',f.storage,{...f.port,execute:async()=>({status:'succeeded',idempotencyKey:'wrong',operation:'daily.dose'})});
   const p=await bad.prepare({requestId:'TEST-bad-receipt',intents:[{...intents[0],status:'skipped'}]},now);
   assert.equal((await bad.confirm(p.id,p.confirmationToken!,now)).status,'failed');
+});
+test('unknown subjects, conflicting periods and abnormal quantities never become self writes',async()=>{
+  const f=fixture(),c=f.coordinator();
+  for(const text of ['张三今天14:00的训练改到16:00','我朋友今天14:00的训练改到16:00',
+    '今天张三的训练改到16:00','请把张三今天的训练改到16:00',
+    '今天14:00的训练改到上午16:00','今天14:00的训练改到中午四点',
+    '记录今天08:00的测试药已服用两倍剂量','记录今天08:00的测试药已服用2片',
+    '记录今天08:00的测试药已服用，剂量加倍']) {
+    const w=await c.prepare({requestId:crypto.randomUUID(),text},now);
+    assert.equal(w.status,'needs_clarification',text);assert.equal(w.steps.length,0,text);
+  }
+  assert.equal(f.executions,0);
+});
+test('self pending controls survive restart, expire and never expose another source',async()=>{
+  const f=fixture(),c=f.coordinator(),w=await c.prepare({requestId:'TEST-pending',intents},now);
+  assert.equal((await f.coordinator().pending(now))[0].confirmationToken,w.confirmationToken);
+  f.facts.scope.usage_context='SELF_USE';assert.equal((await c.pending(now)).length,0);
+  f.facts.scope.usage_context='TEST';
+  assert.equal((await c.pending(new Date(now.getTime()+16*60000))).length,0);
+  assert.equal(c.status(w.id).status,'expired');
 });

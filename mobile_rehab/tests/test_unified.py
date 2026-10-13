@@ -37,6 +37,27 @@ def pair(client):
     assert client.post('/api/pair', json={'code': 'test-code'}).status_code == 200
 
 
+def test_chat_preserves_selected_source_and_pending_controls_are_self_only(shared):
+    backend,adapter,app,c=shared;pair(c)
+    assert c.post('/api/product/chat?source=OTHER',json={'text':'查看资料'}).status_code==400
+    replay=c.post('/api/product/chat?source=REPLAY_FILE',json={'text':'今天有什么安排？'})
+    assert replay.status_code==200
+    assert replay.json()['turn']['care']['data']['scope']['source_kind']=='REPLAY_FILE'
+    day=date.today().isoformat()
+    c.post('/api/product/medication.save',json={'record':dict(id='TEST-pending',name='TEST 待确认药',dose='既有说明',status='active')})
+    assert c.post('/api/unified/daily.medSchedule',json=dict(medId='TEST-pending',times=['08:00'],start=day,end='')).status_code==200
+    w=c.post('/api/product/chat?source=LIVE_CAMERA',json={'text':'记录今天08:00的TEST 待确认药已服用'}).json()['turn']['care']['workflow']
+    pending=c.get('/api/unified').json()['snapshot']['carePending']
+    assert pending[0]['id']==w['id'] and pending[0]['confirmationToken']==w['confirmationToken']
+    assert not c.get('/api/unified?source=REPLAY_FILE').json()['snapshot']['carePending']
+    assert 'carePending' not in backend.call('family.summary',adapter.owner)
+    assert c.post('/api/unified/daily.dose',json=dict(medId='TEST-pending',date=day,time='08:00',status='skipped')).status_code==200
+    # A change in the underlying record invalidates the old proposal at confirmation.
+    done=c.post('/api/unified/care.confirm',json=dict(id=w['id'],confirmationToken=w['confirmationToken'],confirmed=True)).json()
+    assert done['status']=='failed'
+    assert c.get('/api/unified').json()['snapshot']['dailyProduct']['doses']['TEST-pending|'+day+'|08:00']['status']=='skipped'
+
+
 def test_pairing_is_owner_bound_and_csrf_guarded(shared):
     backend, adapter, app, c = shared
     assert c.get('/api/unified').status_code == 401
@@ -209,6 +230,11 @@ def test_care_clear_invalidates_old_ids_and_export_contains_only_audit(shared):
     assert backup['careAudit'][0]['id']==w['id']
     audit=json.dumps(backup['careAudit'])
     assert 'confirmationToken' not in audit and 'requestSignature' not in audit and 'expected' not in audit
+    exported=json.dumps(backup)
+    assert 'carePending' not in backup['snapshot']
+    assert 'carePendingUnavailable' not in backup['snapshot']
+    assert 'confirmationToken' not in exported and 'requestSignature' not in exported and '"expected"' not in exported
+    assert w['confirmationToken'] not in exported
     backend.call('lifecycle.clear',adapter.owner,{'confirmOwner':adapter.owner},adapter.scope())
     assert c.post('/api/unified/care.status',json={'id':w['id']}).status_code==400
     assert c.post('/api/unified/care.confirm',json=dict(id=w['id'],confirmationToken=w['confirmationToken'],confirmed=True)).status_code==400

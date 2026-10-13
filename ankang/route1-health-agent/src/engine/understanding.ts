@@ -135,7 +135,22 @@ function subjectFromShareRecipient(clause: string): ElderSubject | null {
   return 'self';
 }
 
+/** A named/third-party speaker must never inherit the current owner's identity. */
+function hasUnresolvedPerson(clause: string): boolean {
+  if (/(?:朋友|同事|邻居|同学|患者|病人|别人|其他人|某人|有人)/.test(clause)) return true;
+  // Resolve an explicit name before temporal/measurement words (including names
+  // outside a surname list). Known first-person and kinship phrases are handled
+  // by the existing resolver; an unfamiliar prefix requires clarification.
+  const lead = clause.match(/^(.*?)(?=(?:今天|昨天|今日|刚才|现在|的)?(?:血压|血糖|血氧|心率|体重|高压|低压))/)?.[1];
+  if (!lead || /^(?:高压|低压|收缩压|舒张压)/.test(lead)) return false;
+  if (/^(?:他|她|他们|她们)/.test(lead)) return false;
+  if (/(?:老公|丈夫|爱人|老伴|爸|父亲|妈|母亲|儿子|女儿|哥哥|弟弟|姐姐|妹妹|爷爷|奶奶|外公|外婆|家里人)/.test(lead)) return false;
+  const remaining = lead.replace(/(?:我自己|本人|我的|我|今天|昨天|今日|刚才|现在|目前|早上|上午|晚上|刚刚|也想告诉你|告诉你|静息|安静|空腹|餐后|饭后|量出来|测出来|测了|量了|记录|看到|发现|觉得|刚|量|测|的|是|了|\s)/g, '');
+  return remaining.length > 0;
+}
+
 function subjectFromText(clause: string, priorSubjects: ElderSubject[]): ElderSubject {
+  if (hasUnresolvedPerson(clause)) return 'unknown';
   // 分享句式判定必须先于多主体冲突检查：
   // “告诉女儿妈妈摔倒了”里女儿是接收人，唯一的健康事实主体是妈妈。
   const shareRecipientSubject = subjectFromShareRecipient(clause);
@@ -567,6 +582,17 @@ export function understandElderInputWithOverrides(
   tagOverrides?: ReadonlyMap<string, SymptomTag[]>,
 ): StructuredElderInput {
   const trimmed = text.trim();
+  // Interpret quoted examples and ownership disclaimers before splitting clauses
+  // or selecting a correction target. They must neither add facts nor revoke
+  // the previous genuine record. Mixed reference/self statements are clarified.
+  const hasReferenceBoundary =
+    /(?:示例|举例|例子|例如|比如|引用|资料.{0,8}(?:写|说|显示)|报告示例|[“”「」"])/.test(trimmed) ||
+    (extractHealthValues(trimmed).length > 0 &&
+      /(?:不是|并非|不属于)(?:我|本人)(?:的|本人)?/.test(trimmed));
+  if (hasReferenceBoundary && (extractHealthValues(trimmed).length > 0 || parseElderInput(trimmed).tags.length > 0)) {
+    return { claims: [], recallRequested: false, correction: false,
+      clarificationQuestion: '这句话包含引用、示例或不是您本人的数据，我先不记录，也不修改已有记录。要记录您的情况，请单独说“我今天……”并给出自己的结果。' };
+  }
   const recallRequested = /(我之前说啥|我之前说什么|刚才说了什么|前面说了什么|你还记得我说|我忘了我说)/.test(trimmed);
   const correction = /(说错了|弄错了|不是我|不是我本人|刚才不对|刚刚说错了|前面说错了)/.test(trimmed);
   const correctionTargetMessageId = correction
@@ -872,7 +898,7 @@ export function understandElderInputWithOverrides(
     clarificationQuestion: ambiguousCoordinatedMeasurement
       ? '您这一句里有多个健康读数，但我还不能安全判断每个读数分别属于谁。我先不把这些数值记到任何人的健康档案，请分别告诉我“我是多少、家人是多少”。'
       : hasUnclearFamilyReference
-        ? '您说的“他/她”可能是在说您自己，也可能是在说家人。我先确认清楚是指谁，再决定要不要记录，这样不会把别人的情况记到您这里。'
+        ? '这句话里的人物归属还不明确。我先确认清楚是指谁，再决定要不要记录，这样不会把别人的情况记到您这里。'
         : (clarificationQuestion ?? undefined),
     correction,
     correctionTargetMessageId,

@@ -7,6 +7,7 @@ from ..settings import ROOT
 from .product_theme import SPACING, METRICS
 from .product_widgets import label, button, core_card, visual, EntryButton
 from .product_record_review import record_review
+from .product_care_controls import CareControls
 
 
 # Explicit identities keep the old published controls independent of widget order.
@@ -100,6 +101,7 @@ def build_assistant(window):
     w.chat.setSizePolicy(QSizePolicy.Expanding,QSizePolicy.Ignored)
     w.chat.setAccessibleName('与康复管家的对话历史');w.chat.setMinimumHeight(METRICS['chat_minimum'])
     area.addWidget(w.chat,1)
+    w.care_controls=CareControls(w);area.addWidget(w.care_controls)
     quick=QHBoxLayout();quick.setSpacing(SPACING['sm'])
     for text in ('我的训练计划','最近的评估结果'):
         quick.addWidget(visual(button(text,lambda checked=False,t=text:w._send_chat(t)),appearance='ghost'))
@@ -202,7 +204,7 @@ def refresh_summary(window):
         w.assistant_portal_status.setText('请选择用户，或等待当前用户资料读取完成。')
         w.assistant_module_buttons['reference'].setDescription('等待当前用户的康复记录。')
     else:
-        w.assistant_portal_status.setText('文字健康记录可用 · 康复记录查询'+('已配置' if s.get('modelAvailable') else '待配置'))
+        w.assistant_portal_status.setText('本地模块查询与页面导航可用 · '+('DeepSeek 对话已配置；每条回复标明实际来源。' if s.get('conversationModelAvailable') else 'DeepSeek 对话尚未配置。'))
         plans=len(w._rehab_data('rehab.get_training_plan'))
         training=len(w._rehab_data('rehab.get_training_history'))
         w.assistant_module_buttons['reference'].setDescription(f'当前范围：{plans} 项计划、{training} 条训练记录。')

@@ -90,7 +90,7 @@ async function api(path, data, options = {}) {
     clearTimeout(timer);
   }
 }
-const post = (operation, data) => api("/product/" + operation, data);
+const post = (operation, data) => api("/product/" + operation + (operation === "chat" ? "?source=" + ui.source : ""), data);
 const daily = (operation, data = {}) =>
   api("/unified/daily." + operation + "?source=" + ui.source, data);
 const snapshot = () => ui.snapshot || {},
@@ -167,7 +167,7 @@ function nav() {
     )
     .join("");
   $("#nav").querySelectorAll('a').forEach(a => {
-    if(a.hash === '#' + (['assistant','records'].includes(ui.page) ? 'home' : ui.page)) a.setAttribute('aria-current','page');
+    if(a.hash === '#' + (['assistant','records','settings','notifications'].includes(ui.page) ? 'home' : ui.page)) a.setAttribute('aria-current','page');
     else a.removeAttribute('aria-current');
   });
   window.ProductMotion?.selectNavigation();
@@ -178,8 +178,10 @@ function route() {
     say("请先结束或取消录音。");
     return;
   }
-  const key = location.hash.slice(1) || "home";
-  ui.page = Object.hasOwn(names, key) || ["assistant", "records"].includes(key) ? key : "home";
+  let key = location.hash.slice(1) || "home";
+  if (key === "history") key = "records";
+  if (key === "fitness") { ui.rehabMode = "fitness"; key = "rehab"; }
+  ui.page = Object.hasOwn(names, key) || ["assistant", "records", "settings", "notifications"].includes(key) ? key : "home";
   ui.day = today();
   nav();
   if (ui.snapshot) render();
@@ -191,6 +193,8 @@ function pair() {
   ui.snapshot = null;
   ui.draft = "";
   ui.private = false;
+  const oldDialog=$("#dialog");
+  if(oldDialog){oldDialog.close();oldDialog.replaceChildren();}
   $("#nav").hidden = true;
   $("#content").innerHTML =
     `<section class="pair"><h1>连接我的档案</h1><form id="pair-form"><label>电脑显示的连接码<input name="code" autocomplete="off" autocapitalize="none" required maxlength="32"></label><button type="submit" class="primary">连接本人档案</button></form><details><summary>在哪里找连接码？</summary><p>电脑“我的档案” → “连接我的手机”。</p><p>连接后使用同一份档案和记录。电脑保持开启，手机与电脑连接同一可信 Wi-Fi。</p></details></section>`;
@@ -202,7 +206,7 @@ function pair() {
 }
 function render() {
   nav();
-  ({ home, rehab, health, medication, family, assistant, records })[ui.page]();
+  ({ home, rehab, health, medication, family, assistant, records, settings, notifications })[ui.page]();
   window.ProductMotion?.decorate(ui.page);
 }
 function schedules(day = ui.day) {
@@ -271,6 +275,26 @@ function records() {
  const rehab=Object.entries(snapshot().rehabilitation_ui||{}).filter(([k])=>k!=="rehab.get_training_plan").flatMap(([,v])=>v.records||[]);
  $("#content").innerHTML=`<div class="heading"><h1>我的记录与周报</h1><a href="#home">返回首页</a></div><section class="weekly-report"><h2>本周健康周报</h2><p class="muted">${E(report.rangeText||"")}</p>${(report.sections||[]).map(s=>`<article><h3>${E(s.title)}</h3>${(s.lines||[]).map(x=>`<p>${E(x)}</p>`).join("")}</article>`).join("")}</section><details><summary>健康记录</summary>${entries.map(e=>`<article class="row"><div><small>${stamp(e.timestamp)}</small><p>${E(eventText(e))}</p></div></article>`).join("")||'<p class="empty">暂无记录。</p>'}</details><p>${link("查看逐次服药记录","#medication")}</p><details open><summary>康复评估与训练记录</summary>${sourcePicker()}${rehab.map(r=>`<article class="row"><div><strong>${E(r.exercise_label||r.exercise_id||"动作记录")}</strong><p>${stamp(r.end_utc||r.timestamp)} · ${E(r.side==='left'?'左侧':r.side==='right'?'右侧':'')}</p></div></article>`).join("")||'<p class="empty">当前来源尚无保存的康复记录。</p>'}${link("查看手机分析报告","/capture?tab=history")}</details>`;
  bindSource();
+}
+
+function settings() {
+  const mode = snapshot().profile?.dataMode;
+  $("#content").innerHTML = `<div class="heading"><h1>设置</h1><a href="#home">返回首页</a></div><section><h2>我的档案</h2><p>${E(profile().name || "称呼未填写")}${profile().age ? " · " + E(profile().age) + " 岁" : ""}</p><p class="muted">${mode === "demo" ? "演示档案" : mode === "personal" ? "个人档案" : "请在电脑核对档案类型"}</p>${button("编辑我的档案", "settings-profile")}</section><section><h2>查看记录的来源</h2>${sourcePicker()}<p class="muted">来源选择用于查看康复记录，不会启动摄像头或训练。</p></section><p>${link("查看通知记录", "#notifications")}</p>`;
+  bind("settings-profile", editProfile);
+  if (globalThis.OfflineAndroid?.deepSeekSettings) {
+    const section=document.createElement("section");
+    section.innerHTML=`<h2>智能服务</h2><p>${snapshot().conversationModelAvailable ? "DeepSeek 已配置；每条回复标明实际来源。" : "DeepSeek 尚未配置，本地功能仍可使用。"}</p>${button("配置 DeepSeek", "settings-deepseek")}`;
+    $("#content").append(section);
+    bind("settings-deepseek",()=>globalThis.OfflineAndroid.deepSeekSettings());
+  }
+  bindSource();
+}
+
+function notifications() {
+  const ledger = Array.isArray(snapshot().notifications) ? snapshot().notifications : [];
+  const phases = {pending:"待处理",accepted:"通道已受理",sent:"通道回报已发送",delivered:"通道回报已送达",failed:"通道失败",unavailable:"通道不可用"};
+  const channels = {in_app:"应用内",browser_push:"浏览器推送",webhook_push:"外部推送"};
+  $("#content").innerHTML = `<div class="heading"><h1>通知记录</h1><a href="#home">返回首页</a></div><p class="muted">以下为已有通知台账。受理、发送和送达是不同状态；查看此页不会发送新通知。</p>${ledger.slice().sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))).map(n=>`<article class="row"><div><strong>${E(n.title || "通知")}</strong><p>${E(n.message || "")}</p><small>${E(stamp(n.createdAt))} · ${E(phases[n.phase] || "状态待核对")}</small>${(Array.isArray(n.deliveries)?n.deliveries:[]).map(d=>`<p><small>${E(channels[d.channel] || d.channel || "通知通道")}：${E(phases[d.status] || "状态待核对")}${d.detail?" · "+E(d.detail):""}</small></p>`).join("")}</div></article>`).join("") || '<p class="empty">暂无通知台账。</p>'}`;
 }
 
 function eventText(e) {
@@ -742,10 +766,39 @@ let recorder = null,
   recordTimer = null,
   recordCancelled = false,
   voiceStarting = false;
+function conversationSource(metadata) {
+  if (metadata?.provider === "deepseek" && metadata.status === "replied") return "DeepSeek 回复";
+  if (metadata?.provider === "local" && metadata.status === "unavailable" && metadata.reason === "not_configured") return "未配置 DeepSeek · 本地回复";
+  if (metadata?.provider === "local" && metadata.status === "failed") return "DeepSeek 本轮未完成 · 本地回复";
+  return "";
+}
 function assistant() {
   const chat = snapshot().state?.chat || [];
   $("#content").innerHTML =
-    `<div class="heading"><h1>康复管家</h1><a href="#home">返回首页</a></div><details class="assistant-capability"><summary>使用说明</summary><p>${snapshot().modelAvailable?"康复记录查询已连接。":"可以记录身体情况；联网查询未配置。"}</p><p>上传资料不会自动带入对话。需要更正时，可说“撤回上一条记录”。</p></details><section class="conversation" aria-label="对话记录">${chat.map((m) => `<div class="bubble ${m.role === "elder" ? "mine" : ""}"><small>${m.role === "elder" ? "我" : "康复管家"}${m.time ? " · " + stamp(m.time) : ""}${m.persisted === false ? " · 本次不记录" : ""}${m.pending ? " · 待确认" : ""}</small>${E(m.text)}</div>`).join("") || '<section class="hero"><h2>今天有什么想记的？</h2><p class="muted">身体感受、用药情况，都可以在这里说。保存前请核对。</p></section>'}</section><form id="chat-form" class="composer"><label for="draft">发消息给康复管家</label><textarea id="draft" required maxlength="1900" placeholder="今天左肩有点酸">${E(ui.draft)}</textarea><div class="actions"><label><input id="private" type="checkbox" ${ui.private ? "checked" : ""}>本次不记录</label><div>${button("语音输入", "voice")} <button type="button" id="voice-cancel" hidden>取消录音</button> <button type="submit" class="primary">发送</button></div></div><p id="voice-state" class="muted" role="status"></p><input id="audio-file" type="file" accept="audio/*" hidden></form>`;
+    `<div class="heading"><h1>康复管家</h1><a href="#home">返回首页</a></div><details class="assistant-capability"><summary>使用说明</summary><p>${snapshot().conversationModelAvailable?"本地模块查询与页面导航可用；DeepSeek 对话已配置，每条回复标明实际来源。":"本地模块查询与页面导航可用；DeepSeek 对话尚未配置。"}</p><p>上传资料不会自动带入对话。需要更正时，可说“撤回上一条记录”。</p></details><section class="conversation" aria-label="对话记录">${chat.map((m) => `<div class="bubble ${m.role === "elder" ? "mine" : ""}"><small>${m.role === "elder" ? "我" : "康复管家"}${m.time ? " · " + stamp(m.time) : ""}${m.persisted === false ? " · 本次不记录" : ""}${m.pending ? " · 待确认" : ""}${m.role !== "elder" && conversationSource(m.conversation) ? " · " + E(conversationSource(m.conversation)) : ""}</small>${E(m.text)}</div>`).join("") || '<section class="hero"><h2>今天有什么想记的？</h2><p class="muted">身体感受、用药情况，都可以在这里说。保存前请核对。</p></section>'}</section><form id="chat-form" class="composer"><label for="draft">发消息给康复管家</label><textarea id="draft" required maxlength="1900" placeholder="今天左肩有点酸">${E(ui.draft)}</textarea><div class="actions"><label><input id="private" type="checkbox" ${ui.private ? "checked" : ""}>本次不记录</label><div>${button("语音输入", "voice")} <button type="button" id="voice-cancel" hidden>取消录音</button> <button type="submit" class="primary">发送</button></div></div><p id="voice-state" class="muted" role="status"></p><input id="audio-file" type="file" accept="audio/*" hidden></form>`;
+  const pending=snapshot().carePending||[];
+  if(pending.length){
+    const section=document.createElement('section');section.setAttribute('aria-label','待核对管家操作');
+    section.innerHTML='<h2>待核对操作</h2>'+pending.map((w,i)=>`<p>${E(w.steps[0]?.label||'操作')} · ${E(w.status==='awaiting_confirmation'?'待确认':'执行结果待核对')}</p><button type="button" id="care-review-${i}">核对操作与结果</button>`).join('');
+    $('#chat-form').before(section);
+    const owner=snapshot().ownerId,source=ui.source;
+    const invoke=async(w,operation)=>{
+      if(owner!==snapshot().ownerId||source!==ui.source)return;
+      let receipt;
+      const ok=await act(async()=>{receipt=await api('/unified/'+operation+'?source='+source,{id:w.id,confirmationToken:w.confirmationToken,confirmed:true});},'');
+      if(owner!==snapshot().ownerId||source!==ui.source)return;
+      if(ok){
+        $('#dialog').close();await load();
+        if(owner!==snapshot().ownerId||source!==ui.source)return;
+        modal('操作结果',`<p>${E(receipt.reply||'请核对实际记录。')}</p>`);
+      }
+    };
+    pending.forEach((w,i)=>bind('care-review-'+i,()=>{
+      modal('核对管家操作',`<p>${E(w.reply)}</p><ul>${w.steps.map(s=>`<li>${E(s.label)}：${E({pending:'尚未执行',succeeded:'已保存',failed:'失败',executing:'待核对回执'}[s.status]||s.status)}</li>`).join('')}</ul><p>确认有效期至 ${E(stamp(w.expiresAt))}</p><button type="button" class="primary" id="care-confirm">${w.status==='awaiting_confirmation'?'核对后确认执行':'核对后重试未完成步骤'}</button> ${w.status==='awaiting_confirmation'?'<button type="button" id="care-cancel">取消操作</button>':''}`);
+      bind('care-confirm',()=>invoke(w,'care.confirm'));bind('care-cancel',()=>invoke(w,'care.cancel'));
+    }));
+  }
+  if(snapshot().carePendingUnavailable){const note=document.createElement('p');note.textContent='暂时无法读取待确认操作，请刷新后核对。';$('#chat-form').before(note);}
   $("#draft").oninput = (e) => (ui.draft = e.target.value);
   $("#private").onchange = (e) => (ui.private = e.target.checked);
   $("#chat-form").onsubmit = async (e) => {
@@ -756,13 +809,24 @@ function assistant() {
     }
     const text = ui.draft,
       priv = ui.private;
+    let destination, turn;
+    const source=ui.source,owner=snapshot().ownerId;
     const ok = await act(
-      () => post("chat", { text, private: priv }),
-      "管家已回复",
+      async () => {const result=await post("chat", { text, private: priv });turn=result.turn;destination=turn?.agent?.navigation;},
+      "",
     );
     if (ok) {
+      if(source!==ui.source||owner!==snapshot().ownerId)return;
       if (ui.draft === text) ui.draft = "";
       await load();
+      if(source!==ui.source||owner!==snapshot().ownerId)return;
+      say(conversationSource(turn?.conversation) || "管家已回复");
+      if(destination==='history')destination='records';
+      if(destination==='fitness'){ui.rehabMode='fitness';destination='rehab';}
+      if(destination&&(names[destination]||['assistant','records','settings','notifications'].includes(destination))){
+        if(location.hash.slice(1)===destination)route();
+        else location.hash=destination;
+      }
     }
   };
   bind("voice-cancel", () => {

@@ -1,5 +1,5 @@
 """Read-only explanation of existing Agent Runtime receipts; never interprets input."""
-from .product_widgets import escape, display_time
+from .product_widgets import escape, display_time, conversation_source
 
 SUBJECTS={'self':'本人','spouse':'配偶','father':'父亲','mother':'母亲','family_other':'其他家人','unknown':'人物待确认'}
 CLAIM_STATES={'occurred':'已发生','negated':'否定','hypothetical':'假设','uncertain':'不确定','near_miss':'险些发生'}
@@ -26,7 +26,10 @@ def record_review(turn):
         title=f'已保存到本机 · 本人健康 {len(events)} 项 / 家人情况 {len(family)} 项'
     else:
         title='管家已回复 · 本轮没有新增健康事实'
+    source=conversation_source(turn.get('conversation'))
+    if source:title=source+' · '+title
     details=['<h3>管家如何理解这段表达</h3>']
+    if source:details.insert(0,'<p>本轮回复来源：'+escape(source)+'</p>')
     for claim in understanding.get('claims') or []:
         meaning=' · '.join((SUBJECTS.get(claim.get('subject'),'人物待确认'),
             CLAIM_STATES.get(claim.get('status'),'状态待确认'),TIME_SCOPES.get(claim.get('timeScope'),'时间待确认')))

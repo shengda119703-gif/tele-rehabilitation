@@ -145,6 +145,7 @@ function validateBackup(b){
  }
  for(const plan of v.plans){if(!uuid.test(plan.id)||!Number.isInteger(plan.revision)||!Array.isArray(plan.items)||plan.items.length>53)bad();for(const i of plan.items)if(!uuid.test(i.key)||!['left','right'].includes(i.side)||!Number.isInteger(i.settings?.target_reps)||i.settings.target_reps<1||i.settings.target_reps>5||!ids.has(i.assessment_id))bad();}
  // Permissions are server-authoritative and never revived from a stale backup.
+ for(const [key,value] of Object.entries(v.kv))if(key.startsWith('health:')&&Array.isArray(value?.health?.chat))for(const message of value.health.chat){delete message.conversation;delete message.conversationContext;}
  if(!fixture)v.daily.grants={};return v;
 }
 function applyDailyValue(v,operation,p,profile){

@@ -12,9 +12,33 @@ from pathlib import Path
 SCRIPT = Path(__file__).resolve().parents[1] / 'tools' / 'normalize_apk.py'
 
 class PackagingTest(unittest.TestCase):
+    def test_merged_release_metadata_and_both_local_adapters_stay_connected(self):
+        root = SCRIPT.parents[2]
+        manifest = ET.parse(root/'android_offline/AndroidManifest.xml').getroot()
+        namespace = '{http://schemas.android.com/apk/res/android}'
+        version = manifest.attrib[namespace+'versionName']
+        self.assertGreater(int(manifest.attrib[namespace+'versionCode']), 31)
+        package = json.loads((root/'android_offline/package.json').read_text(encoding='utf-8'))
+        lock = json.loads((root/'android_offline/package-lock.json').read_text(encoding='utf-8'))
+        self.assertEqual(package['version'], version)
+        self.assertEqual(lock['version'], version)
+        self.assertEqual(lock['packages']['']['version'], version)
+        with zipfile.ZipFile(root/f'android_offline/dist/tele-rehabilitation-mobile-{version}.apk') as archive:
+            for page in ('index.html', 'capture.html'):
+                html = archive.read('assets/'+page).decode('utf-8')
+                for adapter in ('product.js', 'model-policy.js', 'deepseek.js', 'practice.js'):
+                    self.assertLess(html.index('/local/'+adapter), html.index('/local/local-api.js'))
+            local = archive.read('assets/local/local-api.js').decode('utf-8')
+            self.assertIn('PhonePractice.createPort', local)
+            self.assertIn('PhoneDeepSeek?.conversationModel()', local)
+            self.assertIn('PhoneDeepSeek?.agentModel()', local)
+            for method in (b'deepSeekConfigured', b'deepSeekRequest', b'guidanceCancel'):
+                self.assertIn(method, archive.read('classes.dex'))
+
     def test_release_lin_assets_keep_official_ui_and_exclude_private_qa_files(self):
         root = SCRIPT.parents[2]
-        version = ET.parse(root/'android_offline/AndroidManifest.xml').getroot().attrib['{http://schemas.android.com/apk/res/android}versionName']
+        manifest = ET.parse(root/'android_offline/AndroidManifest.xml').getroot()
+        version = manifest.attrib['{http://schemas.android.com/apk/res/android}versionName']
         apk = root/f'android_offline/dist/tele-rehabilitation-mobile-{version}.apk'
         self.assertTrue(apk.is_file(), f'Build {version} before running release QA')
         with zipfile.ZipFile(apk) as archive:
@@ -22,7 +46,7 @@ class PackagingTest(unittest.TestCase):
             self.assertFalse(any('\\' in n or '..' in n.split('/') for n in names))
             self.assertFalse(any(n.endswith(('.mp4', '.sqlite3', '.db', '.jks', '.dpapi')) or
                                  n.endswith(('smoke.js', 'lin-smoke.js')) for n in names))
-            for name in ('practice.js', 'local-api.js', 'store.js'):
+            for name in ('practice.js', 'local-api.js', 'store.js', 'deepseek.js'):
                 self.assertEqual(archive.read('assets/local/'+name),
                                  (root/'android_offline/web'/name).read_bytes())
             capture = archive.read('assets/capture.html').decode('utf-8')
@@ -39,6 +63,8 @@ class PackagingTest(unittest.TestCase):
             self.assertLess(capture.index('/static/formal-training.js'), capture.index('/static/formal-practice-camera.js'))
             self.assertLess(capture.index('/static/formal-feedback.js'), capture.index('/static/formal-measurement.js'))
             self.assertLess(capture.index('/static/practice-feedback.js'), capture.index('/static/practice-flow.js'))
+            self.assertIn('assets/local/deepseek.js', names)
+            self.assertIn('assets/local/model-policy.js', names)
             locked = json.loads(archive.read('assets/ui-lock.json'))
             for name, digest in locked.items():
                 self.assertEqual(hashlib.sha256(archive.read('assets/static/'+name)).hexdigest(), digest)

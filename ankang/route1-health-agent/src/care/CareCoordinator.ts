@@ -3,6 +3,7 @@ import { createTurnQueue } from '../engine/turnQueue';
 import type { MedicationRecord } from '../types';
 import { parsePrivacyIntent } from '../engine/privacy';
 import { understandElderInput } from '../engine/understanding';
+import {canUseModuleTools} from '../runtime/operationalIntent';
 
 export interface CareFacts {
   scope: {participant_id:string;source_kind:string;usage_context:string};
@@ -69,7 +70,7 @@ export function actionEvidence(f:CareFacts,a:Pick<CareAction,'operation'|'payloa
 
 /** Finite local commands; ambiguous drug/day/time/arrangement is a clarification, not a guessed action. */
 export function isCareText(text:string):boolean {
-  return /今天.*(?:安排|任务|做什么)|今日安排|(?:康复|训练).*(?:下一步|下一项)|(?:下一步|下一项).*(?:康复|训练)|(?:训练|康复).*(?:改到|改为|挪到|调整到)|(?:药|服用).*(?:吃了|已服用|记一下)|(?:记录|登记|记下).*药/.test(text);
+  return /今天.*(?:安排|任务|做什么)|今日安排|(?:康复|训练).*(?:下一步|下一项)|(?:下一步|下一项).*(?:康复|训练)|(?:训练|康复).*(?:改到|改为|挪到|调整到)|(?:药|服用).*(?:吃了|已服用|记一下)|(?:^|[，,。；;]|然后|并且)(?:请)?(?:帮我)?(?:我|本人)?(?:的)?(?:记录|登记|记下).*药/.test(text);
 }
 function statedDay(text:string,now:Date):string|undefined {
   const days=new Set(text.match(/\d{4}-\d{2}-\d{2}/g)??[]);
@@ -83,7 +84,7 @@ function statedTime(text:string):string|undefined {
   if(clocks.length+times.length!==1)return;
   if(clocks.length){
     let [hour,minute]=clocks[0][1].split(':').map(Number);
-    if((hour===12&&/晚上/.test(text))||(hour===0&&/晚上|下午|中午/.test(text)))return;
+    if(!periodAgrees(text,hour))return;
     if(hour<3&&/中午/.test(text))hour+=12;
     if(hour<12&&/下午|晚上/.test(text))hour+=12;
     if(hour===12&&/凌晨/.test(text))hour=0;
@@ -95,12 +96,29 @@ function statedTime(text:string):string|undefined {
   const cn:Record<string,number>={零:0,一:1,二:2,两:2,三:3,四:4,五:5,六:6,七:7,八:8,九:9,十:10,十一:11,十二:12};
   let hour=/^\d+$/.test(m[1])?Number(m[1]):cn[m[1]];
   if(hour===undefined||hour>23)return;
+  if(!periodAgrees(text,hour))return;
   if((hour===12&&/晚上/.test(text))||(hour===0&&/晚上|下午|中午/.test(text)))return; // Midnight needs an explicit calendar date and 00:00.
   if(hour<3&&/中午/.test(text))hour+=12;
   if(hour<12&&/(下午|晚上)/.test(text))hour+=12;
   else if(hour<=12&&!/(上午|早上|凌晨|中午|下午|晚上)/.test(text))return;
   if(hour===12&&/(凌晨)/.test(text))hour=0;
   return `${String(hour).padStart(2,'0')}:${m[2]?'30':'00'}`;
+}
+function periodAgrees(text:string,hour:number):boolean {
+  const periods=[...new Set(text.match(/上午|早上|凌晨|中午|下午|晚上/g)??[])];
+  if(periods.length>1)return false;
+  const p=periods[0];
+  if(p==='上午'||p==='早上')return hour<12;
+  if(p==='凌晨')return hour<6||hour===12;
+  if(p==='中午')return [11,12,13,1].includes(hour);
+  if(p==='下午')return (hour>=1&&hour<=6)||(hour>=12&&hour<=18);
+  if(p==='晚上')return (hour>=6&&hour<=11)||(hour>=18&&hour<=23);
+  return true;
+}
+/** A complete supported command grammar, rather than treating an unrecognised subject as self. */
+function selfCommand(clause:string):boolean {
+  const text=clause.trim().replace(/^(?:请)?(?:帮我)?(?:我|本人)?(?:的)?(?:把|将|记录|登记|记下)?/, '');
+  return /^(?:今天|明天|\d{4}-\d{2}-\d{2})/.test(text);
 }
 function textIntents(text:string,f:CareFacts,now:Date):{intents:any[];clarification?:string} {
   // Symptom understanding does not classify every operational utterance. Guard direct API text too.
@@ -113,8 +131,15 @@ function textIntents(text:string,f:CareFacts,now:Date):{intents:any[];clarificat
   const clauses=text.split(/[，,。；;]|然后|并且/).filter(c=>c.trim());
   const intents:any[]=[];
   for(const clause of clauses){
+    if(!selfCommand(clause))return {intents:[],clarification:'请明确这是本人实际发生的记录或本人的训练安排；未识别的人名、关系或指代不会默认归到本人。'};
     if(/(?:训练|康复).*(?:改到|改为|挪到|调整到)/.test(clause)){
       const parts=clause.split(/改到|改为|挪到|调整到/);
+      const original=parts[0].trim().replace(/^(?:请)?(?:帮我)?(?:我|本人)?(?:的)?(?:把|将)?/,'');
+      const clock='(?:\\d{1,2}:\\d{2}|[零一二两三四五六七八九十\\d]{1,3}点(?:半)?)';
+      const period='(?:上午|早上|凌晨|中午|下午|晚上)?';
+      if(!new RegExp('^(?:今天|明天|\\d{4}-\\d{2}-\\d{2})(?:'+period+clock+')?(?:的)?(?:康复训练|训练|康复)(?:安排)?$').test(original)
+        ||parts.length!==2||!new RegExp('^(?:今天|明天|\\d{4}-\\d{2}-\\d{2})?'+period+clock+'$').test(parts[1].trim()))
+        return{intents:[],clarification:'训练改期中的人物、日期或时间描述需要核对，请明确本人的原安排与目标时间。'};
       const originalDay=statedDay(parts[0],now),originalTime=statedTime(parts[0]);
       const date=parts.length===2?statedDay(parts[1],now)??originalDay:undefined;
       const time=parts.length===2?statedTime(parts[1]):undefined;
@@ -126,6 +151,9 @@ function textIntents(text:string,f:CareFacts,now:Date):{intents:any[];clarificat
     }else if(/药|服用/.test(clause)){
       if(/没|未|不|忘|漏|如果|假如|可能|好像|妈妈|爸爸|家人|母亲|父亲/.test(clause))return{intents:[],clarification:'请核对这是本人哪一天、哪种药、哪个服药时间的记录，以及已服用、跳过还是未记录。'};
       const medicines=f.medications.filter(m=>clause.includes(m.name));
+      const residual=medicines.length===1?clause.replace(medicines[0].name,'已保存药物'):clause;
+      if(!/^(?:请)?(?:帮我)?(?:我|本人)?(?:的)?(?:记录|登记|记下)?(?:今天|\d{4}-\d{2}-\d{2})(?:的)?(?:上午|早上|凌晨|中午|下午|晚上)?(?:\d{1,2}:\d{2}|[零一二两三四五六七八九十\d]{1,3}点(?:半)?)(?:的)?已保存药物(?:吃了|已服用|已吃|服用了)$/.test(residual.trim()))
+        return{intents:[],clarification:'实际用量或描述与普通服药记录需要进一步核对，暂不生成“已服用”操作。请保留原话并核对药名、原安排和实际用量；本助手不会调整处方或忽略异常用量。'};
       const date=statedDay(clause,now)??statedDay(text,now),time=statedTime(clause);
       if(medicines.length!==1||!date||!time||!/(吃了|已服用|已吃|服用了)/.test(clause))return{intents:[],clarification:'请明确药名、日期、原安排中的服药时间和实际状态；例如“记录今天08:00的某药已服用”。'};
       intents.push({kind:'record_dose',medId:medicines[0].id,date,time,status:'taken'});
@@ -160,13 +188,19 @@ export class CareCoordinator {
     if(!isCareText(text))return null;
     // Family/negation/hypothesis inputs remain in the original understanding and safety paths.
     if(/妈妈|爸爸|家人|母亲|父亲|如果|假如|可能|好像|头晕|胸痛|不舒服|漏服|忘.*药/.test(text))return null;
+    // Combined reads belong to the module registry so an arrangement query does
+    // not swallow the other requested modules. Writes retain the care path.
+    if(/健康(?:记录|数据|概况)|药(?:物|品|单|清单)|用药(?:清单|安排)|资料|附件|家庭|家属|通知|设备|语音|同步|评估结果|训练计划|训练历史/.test(text)
+      &&!/(改到|改为|挪到|调整到|(?:^|[，,。；;]|然后|并且)(?:请)?(?:帮我)?(?:我|本人)?(?:的)?(?:记录|登记|记下).*药|吃了|已服用)/.test(text))return null;
     if(/今天.*(?:安排|任务|做什么)|今日安排/.test(text)&&!/(改到|改为|挪到|调整到|记录|登记|记下|吃了|已服用)/.test(text)){
+      if(!canUseModuleTools(text))return {reply:'请明确查询本人的已保存安排；否定、假设或未识别人物不会读取本人数据。'};
       const d=await this.overview(now);
       const items=[...d.doses.map(x=>`${x.time} ${x.name}：${({taken:'已服用',skipped:'已跳过',unrecorded:'未记录'} as any)[x.status]??'状态待核对'}`),
         ...d.schedules.map(x=>`${x.time} ${x.name}（仅为安排）`)];
       return {reply:(items.length?'今天的安排：\n'+items.join('\n'):'今天没有已保存的服药或康复安排。')+'\n'+d.note,data:d};
     }
     if(/(?:康复|训练).*(?:下一步|下一项)|(?:下一步|下一项).*(?:康复|训练)/.test(text)){
+      if(!canUseModuleTools(text))return {reply:'请明确查询本人的已有康复计划；否定、假设或未识别人物不会读取本人数据。'};
       const d=await this.nextStep(now);return{reply:d.available?'已保存计划的下一项目前通过原康复规则核对，请进入康复页核对后开始。':d.reason,data:d};
     }
     const workflow=await this.prepare({requestId,text},now);return{reply:workflow.reply,workflow};
@@ -216,6 +250,19 @@ export class CareCoordinator {
   audit(){return this.registry().workflows.map(w=>({id:w.id,requestId:w.requestId,scope:w.scope,status:w.status,
     createdAt:w.createdAt,expiresAt:w.expiresAt,approvedAt:w.approvedAt,
     steps:w.steps.map(s=>({operation:s.action.operation,label:s.action.label,status:s.status,receipt:s.receipt,error:s.error}))}));}
+  /** Only the trusted self view may receive confirmation credentials; family/export use audit(). */
+  pending(now:Date){return this.queue.enqueue(async()=>{
+    localDay(now);const r=this.registry();
+    if(!r.workflows.some(w=>['awaiting_confirmation','executing','partially_succeeded','failed'].includes(w.status)))return [];
+    const f=factsCheck(await this.host.read());let changed=false;
+    for(const w of r.workflows)if(w.status==='awaiting_confirmation'&&now.getTime()>Date.parse(w.expiresAt)){
+      w.status='expired';w.reply='确认已过期，请重新核对当前安排。';changed=true;
+    }
+    if(changed)this.save(r);
+    return r.workflows.filter(w=>canonical(w.scope)===canonical(f.scope)&&['awaiting_confirmation','executing','partially_succeeded','failed'].includes(w.status))
+      .map(w=>({id:w.id,status:w.status,confirmationToken:w.confirmationToken,expiresAt:w.expiresAt,reply:w.reply,
+        steps:w.steps.map(s=>({label:s.action.label,status:s.status,receipt:s.receipt,error:s.error}))}));
+  });}
   cancel(id:string,token:string){return this.queue.enqueue(async()=>{const r=this.registry(),w=this.workflow(r,id,token);
     const f=factsCheck(await this.host.read());if(canonical(f.scope)!==canonical(w.scope))throw Error('任务来源或使用情境已变化，请返回原来源核对');
     if(w.approvedAt||w.steps.some(s=>s.status!=='pending'))throw Error('已开始执行的任务不能撤销已发生的事实');w.status='cancelled';w.reply='已取消，未执行操作。';this.save(r);return clone(w);});}

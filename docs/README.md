@@ -1,9 +1,10 @@
 # 文档索引
 
-当前电脑／托管网页主线为 **0.20.0 安康双端整合**，既有独立 APK 为 **0.2.1**；康复 v2 后端为默认关闭的 opt-in 增量，并非已接入正式五页或 APK。先读 [当前交接](HANDOFF.md) 与 [全后端功能、算法及数据流](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md)。原双端设计见 [整合说明](plans/UNIFIED_PRODUCT_2026-10-06.md)，本机 0.20.0 核对见 [同步验证](validation/GITHUB_SYNC_2026-10-11.md)。以下规格和历史报告保留以供追溯，不能作为当前入口或本轮测试结果。
+当前合并版本为电脑 **0.23.2**、独立 APK **0.3.2 / code32**，保留前端跟练／感受／可选相机流程，并入伙伴的管家模块、DeepSeek 对话与健康归属修复。康复 v2 仍为默认关闭的 opt-in；托管正式流程与 PHONE_LOCAL 本地能力分别说明。先读 [当前交接](HANDOFF.md)、[管家能力与自检指南](development/AGENT_MODULES_V0_21.md) 与 [全后端功能、算法及数据流](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md)。原双端设计见 [整合说明](plans/UNIFIED_PRODUCT_2026-10-06.md)。以下旧规格和验收仅供追溯，不当作合并版本已验收结果。
 
 | 文档 | 内容 |
 | --- | --- |
+| [伙伴 main 合并验收](validation/PARTNER_MAIN_MERGE_2026-10-13.md) | 7个提交与当前前端融合、冲突取舍、实际回归／录像／HTTP、APK版本和未测范围 |
 | [原RGB到计次预测](development/REHAB_TEMPORAL_REPLAY.md) | 固定队列→原YOLO完整人／框／轨迹→原因果指标／协议→实际trace和预测→再次重放；不猜患侧，不补阶段 |
 | [原RGB回放本机记录](validation/REHAB_TEMPORAL_REPLAY_2026-10-12.md) | 10段1161采样帧保存重放一致，但均未成立准备、0计次；545／12／19完整回归与1308保护通过，真实负结果保留 |
 | [计次／相位独立评价](development/REHAB_TEMPORAL_EVALUATION.md) | 已复核参考→声明式后端预测→一对一事件匹配／计数误差→逐人及全队列覆盖；未知不当负例，不接正式trace或启用模型 |
@@ -19,6 +20,8 @@
 | [Dataverse本机核验](validation/REHAB_DATAVERSE_2026-10-11.md) | 实际3.0／551744字节／3008评分通过与异常隔离、SUMedi超时、源码／数据hash和回归保护 |
 | [康复v2真实HTTP丢响应与重启](development/REHAB_SOCKET_RECOVERY.md) | 原create_app／配对／签名cookie、TCP RST丢响应、原YOLO／报告、第二独立服务器恢复与SQL对账 |
 | [真实HTTP本机验收](validation/REHAB_SOCKET_RECOVERY_2026-10-11.md) | 3项专项＋预声明三轮×22条件、准确宿主／native退出、源与日志hash；不是手机、LAN或TLS验收 |
+| [管家模块与自检](development/AGENT_MODULES_V0_21.md) | 本地查询、导航、双端确认、重开待办与后续扩展边界 |
+| [本轮管家验收与审计对齐](validation/ANKANG_AGENT_2026-10-11.md) | 本机实际回归／真实HTTP／浏览器／Qt截图、人物时间和导出修复、旧失败与未测范围 |
 | [康复v2原生宿主生命周期](development/REHAB_NATIVE_HOST_LIFETIME.md) | 实测宿主退出后native子进程残留；WindowsJob／启动门／准确句柄释放及非Windows边界 |
 | [原生生命周期本机验证](validation/REHAB_NATIVE_HOST_LIFETIME_2026-10-11.md) | 失败归档、7项专项＋三轮×三用例、原YOLO冷ticket与TEST native wait、日志／hash和未测范围 |
 | [康复v2异步退出恢复](development/REHAB_ASYNC_RECOVERY.md) | 202后、最终事务提交前、提交后未回应三窗口的准确所属进程退出、原恢复路径及不重复贡献 |

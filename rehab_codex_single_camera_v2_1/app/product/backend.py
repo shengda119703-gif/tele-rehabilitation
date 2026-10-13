@@ -74,6 +74,10 @@ class ProductBackend:
                     continue
                 try:
                     payload = dict(payload)
+                    if operation == 'chat':
+                        # Always overwrite browser/user supplied context with this
+                        # host's trusted request source and usage scope.
+                        payload['_conversationScope'] = ':'.join(str((scope or {}).get(key, 'LOCAL')) for key in ('source_kind', 'usage_context'))
                     if operation == 'ui.voice.transcribe':
                         # Input-only operation: no Agent turn, health event or persistence.
                         result = self.voice.handle('voice.recognize', {})
@@ -110,7 +114,7 @@ class ProductBackend:
                             return tools(name, arguments)
                         raise ValueError('当前请求没有本人康复工具范围。')
                     if operation.startswith('daily.'):
-                        own = self.bridge.product('snapshot', owner, {}, tool_handler=tools)
+                        own = self.bridge.product('snapshot', owner, {}, tool_handler=host_tools)
                         if operation in ('daily.dose', 'daily.medSchedule'):
                             medicines = own['profile']['profile'].get('medicationRecords', [])
                             medicine = next((m for m in medicines if m['id'] == payload['medId']), None)
