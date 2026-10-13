@@ -1,6 +1,6 @@
 // Preloaded local blob URLs / model buffers keep worker loading independent of
 // native asset interceptors. No network requests or runtime model downloads.
-let pose, hands, mode, modelInfo,tracker,canvas;
+let pose, hands, mode, modelInfo,tracker,canvas,automatic;
 self.onmessage = async ({data}) => {
   const {id,type} = data;
   try {
@@ -8,7 +8,8 @@ self.onmessage = async ({data}) => {
       if(pose) pose.close(); if(hands) hands.close(); pose=hands=null;
       mode=data.mode;
       tracker=data.calibration?new LocalBarbell.Tracker(data.calibration):null;
-      canvas=tracker?new OffscreenCanvas(1,1):null;
+      automatic=data.automatic?new AutomaticMotion.Tracker(data.automatic):null;
+      canvas=tracker||automatic?new OffscreenCanvas(1,1):null;
       const files=await exports.FilesetResolver.isSimdSupported()?data.simd:data.noSimd;
       const common={runningMode:'VIDEO',baseOptions:{delegate:'CPU'},minTrackingConfidence:.5};
       if(mode!=='hand') pose=await exports.PoseLandmarker.createFromOptions(files,{...common,baseOptions:{delegate:'CPU',modelAssetBuffer:new Uint8Array(data.poseModel)},numPoses:1,minPoseDetectionConfidence:.5,minPosePresenceConfidence:.5});
@@ -23,10 +24,16 @@ self.onmessage = async ({data}) => {
         const h=hands?hands.detectForVideo(data.image,data.timestamp):null;
         result={pose:p?.landmarks?.[0]||null,hand:h?.landmarks?.[0]||null,handedness:h?.handedness?.[0]?.[0]||null};
         if(tracker){canvas.width=data.image.width;canvas.height=data.image.height;const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(data.image,0,0);result.barbell=tracker.frame(data.timestamp/1000,ctx.getImageData(0,0,canvas.width,canvas.height).data,canvas.width,canvas.height);}
+        if(automatic){try{canvas.width=data.image.width;canvas.height=data.image.height;const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(data.image,0,0);result.automatic=automatic.frame(data.timestamp/1000,ctx.getImageData(0,0,canvas.width,canvas.height),canvas.width,canvas.height,result.pose);}catch(e){automatic.missing(data.timestamp/1000,canvas.width,canvas.height);result.automatic_error='轨迹暂不可用，动作分析继续';}}
       } finally {data.image.close();}
       postMessage({id,ok:true,result}); return;
     }
-    if(type==='barbell-report'){postMessage({id,ok:true,report:tracker?.report()||null});return;}
+    if(type==='barbell-report'){
+      if(tracker){postMessage({id,ok:true,report:tracker.report()});return;}
+      try{postMessage({id,ok:true,report:automatic?.report()||null});}
+      catch(e){postMessage({id,ok:true,report:null,automatic_error:'轨迹暂不可用，动作分析已保留'});}
+      return;
+    }
     throw Error('Unknown worker request');
   } catch(error) {postMessage({id,ok:false,error:String(error?.message||error)});}
 };

@@ -68,12 +68,16 @@ test('fitness report keeps results prominent and puts measurement explanation in
   assert.match(c.app.innerHTML,/<details><summary>测量说明<\/summary>[\s\S]*测试限制/);
   assert.doesNotMatch(c.app.innerHTML,/<details open|不填入猜测值|可用观察时长占比/);
 });
-test('upload consent, calibration acknowledgement and safety information remain available',()=>{
+test('upload consent remains, equipment analysis has no manual markers or acknowledgement',()=>{
   const app=readFileSync(path.join(staticDir,'app.js'),'utf8');
   const barbell=readFileSync(path.join(staticDir,'barbell.js'),'utf8');
   assert.match(app,/id="consent"/);
   assert.match(app,/同意将视频上传到电脑分析并保存/);
-  assert.match(barbell,/id="bar-confirm"/);
-  assert.match(barbell,/<details><summary>拍摄要求<\/summary>/);
-  assert.match(barbell,/绳索、弹力带或他人助力/);
+  assert.doesNotMatch(barbell,/id="bar-confirm"|id="bar-frame"|id="bar-length"|onpointerdown|三个标记/);
+  assert.match(barbell,/轨迹自动分析，无需标点/);
+  assert.match(barbell,/function readBarCalibration\(\)\{return null;\}/);
+});
+test('automatic fallback report does not relabel wrist motion as measured barbell speed',()=>{
+  const html=context().barReport({automatic:true,measurement:{target_kind:'wrist',length_unit:'relative',speed_unit:'肩宽/s'},summary:{peak_relative_velocity:1.2,bounded_segments:2,tracked_ratio:.8},series:[],lifts:[],assumptions:['手腕运动轨迹，不代表器械。'],version:'automatic-motion-1'});
+  assert.match(html,/手腕轨迹/);assert.match(html,/肩宽\/s/);assert.doesNotMatch(html,/峰值外力|W\/kg|m\/s/);
 });

@@ -12,6 +12,21 @@ from pathlib import Path
 SCRIPT = Path(__file__).resolve().parents[1] / 'tools' / 'normalize_apk.py'
 
 class PackagingTest(unittest.TestCase):
+    def test_automatic_tracking_is_bundled_and_manual_markers_are_removed(self):
+        root = SCRIPT.parents[2]
+        manifest = ET.parse(root/'android_offline/AndroidManifest.xml').getroot()
+        version = manifest.attrib['{http://schemas.android.com/apk/res/android}versionName']
+        with zipfile.ZipFile(root/f'android_offline/dist/tele-rehabilitation-mobile-{version}.apk') as archive:
+            for source, target in [('mobile_rehab/static/automatic-motion.js', 'assets/static/automatic-motion.js'),
+                                   ('android_offline/web/motion.js', 'assets/local/motion.js'),
+                                   ('android_offline/web/worker.js', 'assets/local/worker.js')]:
+                self.assertEqual(archive.read(target), (root/source).read_bytes())
+            renderer = archive.read('assets/static/barbell.js').decode('utf-8')
+            self.assertIn('function readBarCalibration(){return null;}', renderer)
+            self.assertNotIn('id="bar-confirm"', renderer)
+            self.assertNotIn('id="bar-frame"', renderer)
+            self.assertIn('/static/automatic-motion.js', archive.read('assets/local/motion.js').decode('utf-8'))
+
     def test_merged_release_metadata_and_both_local_adapters_stay_connected(self):
         root = SCRIPT.parents[2]
         manifest = ET.parse(root/'android_offline/AndroidManifest.xml').getroot()
