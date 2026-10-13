@@ -43,6 +43,7 @@ export interface OpenSessionOptions {
   careTools?: Pick<CareCoordinator, 'replyToText'>;
   productTools?: Pick<ProductAgent,'replyToText'>;
   conversationModel?: ConversationModel;
+  rehabAssistant?:(text:string,privateTurn:boolean)=>Promise<{text:string;conversation:ChatMessage["conversation"]}>;
 }
 export interface TurnInput {
   text: string;
@@ -164,14 +165,14 @@ class Session {
           agentContext: draft.agentContext,
           familySharing: this.options.profile.familySharing,
           sharingAudit: draft.audit,
-          llmAdapter: this.options.replyAdapter ?? ruleBasedAdapter,
+          llmAdapter: this.options.rehabAssistant ? ruleBasedAdapter : this.options.replyAdapter ?? ruleBasedAdapter,
           today: clock.today,
           now: clock.label,
           receivedAt: clock.receivedAt,
           sourceMessageId,
           idSeed: this.idSeed,
         },
-        this.options.understandingLlm,
+        this.options.rehabAssistant ? null : this.options.understandingLlm,
       );
       this.check(generation);
       const privacyIntent = parsePrivacyIntent(captured.text);
@@ -179,14 +180,14 @@ class Session {
       let care: Awaited<ReturnType<CareCoordinator['replyToText']>> = null;
       let agent:AgentResult|null=null;
       let conversation:ChatMessage['conversation'];
-      if (this.options.careTools && privacyIntent === 'none' && !plan.safetyAction && !plan.correction &&
+      if (!this.options.rehabAssistant && this.options.careTools && privacyIntent === 'none' && !plan.safetyAction && !plan.correction &&
         !plan.medicationMissed && !plan.eventsToAppend.length && !plan.familyEventsToAppend.length &&
         !plan.sharingAuditEntries.length && !plan.shareFindingIds.length && !plan.shareFamilyEventIds.length) {
         care = await this.options.careTools.replyToText(captured.text, captured.now, sourceMessageId);
         this.check(generation);
         if (care) plan = { ...plan, replyText: care.reply, replyBlocks: [{kind:'main',text:care.reply}], toast:'' };
       }
-      if(!care&&this.options.productTools&&canUseModuleTools(captured.text)&&privacyIntent==='none'&&!plan.safetyAction&&!plan.correction&&
+      if(!this.options.rehabAssistant&&!care&&this.options.productTools&&canUseModuleTools(captured.text)&&privacyIntent==='none'&&!plan.safetyAction&&!plan.correction&&
         !plan.medicationMissed&&!plan.eventsToAppend.length&&!plan.familyEventsToAppend.length&&
         !plan.sharingAuditEntries.length&&!plan.shareFindingIds.length&&!plan.shareFamilyEventIds.length){
         agent=await this.options.productTools.replyToText(captured.text,captured.now,()=>this.check(generation));
@@ -195,7 +196,7 @@ class Session {
       }
       // Keep original safety/correction/sharing paths. Private turns never reach the model or host tool.
       if (
-        this.options.rehabTools &&
+        !this.options.rehabAssistant && this.options.rehabTools &&
         !care &&
         !agent &&
         canUseModuleTools(captured.text) &&
@@ -214,7 +215,7 @@ class Session {
         if (rehab) plan = rehab.plan;
       }
       let broadcastEvents: typeof draft.events = [];
-      if(!care&&!agent&&!rehab&&privacyIntent==='none'&&!plan.safetyAction&&!plan.correction&&!plan.medicationMissed&&
+      if(!this.options.rehabAssistant&&!care&&!agent&&!rehab&&privacyIntent==='none'&&!plan.safetyAction&&!plan.correction&&!plan.medicationMissed&&
         !plan.eventsToAppend.length&&!plan.familyEventsToAppend.length&&!plan.sharingAuditEntries.length&&
         !plan.shareFindingIds.length&&!plan.shareFamilyEventIds.length&&!understanding.recallRequested&&!understanding.correction&&
         understanding.claims.every(claim=>!claim.tags.length&&!claim.hasHealthValue&&!claim.outcome)){
@@ -239,6 +240,13 @@ class Session {
           elder.conversation=conversation;elder.conversationContext=context;
           plan={...plan,replyText:text.trim(),replyBlocks:[{kind:'main',text:text.trim()}],toast:''};
         }
+      }
+      if(this.options.rehabAssistant) {
+        const response=await this.options.rehabAssistant(captured.text,privacyIntent!=='none');
+        this.check(generation);conversation=response.conversation;
+        plan={recordIntent:'record',replyText:response.text,replyBlocks:[{kind:'main',text:response.text}],
+          safetyAction:false,correction:null,eventsToAppend:[],familyEventsToAppend:[],sharingAuditEntries:[],
+          shareFamilyEventIds:[],shareFindingIds:[],medicationMissed:false,toast:''};
       }
       let shareFindingIds: string[] = [];
       let shareFamilyEventIds: string[] = [];

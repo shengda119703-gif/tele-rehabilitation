@@ -763,30 +763,18 @@ function conversationSource(metadata) {
 function assistant() {
   const chat = snapshot().state?.chat || [];
   $("#content").innerHTML =
-    `<div class="heading"><h1>康复管家</h1><a href="#home">返回首页</a></div><details class="assistant-capability"><summary>使用说明</summary><p>${snapshot().conversationModelAvailable?"本地模块查询与页面导航可用；DeepSeek 对话已配置，每条回复标明实际来源。":"本地模块查询与页面导航可用；DeepSeek 对话尚未配置。"}</p><p>上传资料不会自动带入对话。需要更正时，可说“撤回上一条记录”。</p></details><section class="conversation" aria-label="对话记录">${chat.map((m) => `<div class="bubble ${m.role === "elder" ? "mine" : ""}"><small>${m.role === "elder" ? "我" : "康复管家"}${m.time ? " · " + stamp(m.time) : ""}${m.persisted === false ? " · 本次不记录" : ""}${m.pending ? " · 待确认" : ""}${m.role !== "elder" && conversationSource(m.conversation) ? " · " + E(conversationSource(m.conversation)) : ""}</small>${E(m.text)}</div>`).join("") || '<section class="hero"><h2>今天有什么想记的？</h2><p class="muted">身体感受、用药情况，都可以在这里说。保存前请核对。</p></section>'}</section><form id="chat-form" class="composer"><label for="draft">发消息给康复管家</label><textarea id="draft" required maxlength="1900" placeholder="今天左肩有点酸">${E(ui.draft)}</textarea><div class="actions"><label><input id="private" type="checkbox" ${ui.private ? "checked" : ""}>本次不记录</label><div>${button("语音输入", "voice")} <button type="button" id="voice-cancel" hidden>取消录音</button> <button type="submit" class="primary">发送</button></div></div><p id="voice-state" class="muted" role="status"></p><input id="audio-file" type="file" accept="audio/*" hidden></form>`;
-  const pending=snapshot().carePending||[];
-  if(pending.length){
-    const section=document.createElement('section');section.setAttribute('aria-label','待核对管家操作');
-    section.innerHTML='<h2>待核对操作</h2>'+pending.map((w,i)=>`<p>${E(w.steps[0]?.label||'操作')} · ${E(w.status==='awaiting_confirmation'?'待确认':'执行结果待核对')}</p><button type="button" id="care-review-${i}">核对操作与结果</button>`).join('');
-    $('#chat-form').before(section);
+    `<div class="heading"><h1>康复管家</h1><a href="#home">返回首页</a></div><details class="assistant-capability"><summary>使用说明</summary><p>${snapshot().conversationModelAvailable?"康复问答、结果解说与本地候选计划；DeepSeek 已配置。":"康复问答、结果解说与本地候选计划；当前使用本地资料。"}</p><p>对话不录入健康信息或修改模块。动作库为部分版本，训练卡待补齐。</p></details><section class="conversation" aria-label="对话记录">${chat.map((m) => `<div class="bubble ${m.role === "elder" ? "mine" : ""}"><small>${m.role === "elder" ? "我" : "康复管家"}${m.time ? " · " + stamp(m.time) : ""}${m.persisted === false ? " · 本次不记录" : ""}${m.pending ? " · 待确认" : ""}${m.role !== "elder" && conversationSource(m.conversation) ? " · " + E(conversationSource(m.conversation)) : ""}</small>${E(m.text)}</div>`).join("") || '<section class="hero"><h2>有什么康复问题？</h2><p class="muted">可以询问动作做法或解释已有康复结果。</p></section>'}</section>${button("本地候选计划", "local-plan")}<form id="chat-form" class="composer"><label for="draft">发消息给康复管家</label><textarea id="draft" required maxlength="1900" placeholder="坐姿踝内翻与外翻方向观察怎么做？">${E(ui.draft)}</textarea><div class="actions"><label><input id="private" type="checkbox" ${ui.private ? "checked" : ""}>本次不记录</label><div>${button("语音输入", "voice")} <button type="button" id="voice-cancel" hidden>取消录音</button> <button type="submit" class="primary">发送</button></div></div><p id="voice-state" class="muted" role="status"></p><input id="audio-file" type="file" accept="audio/*" hidden></form>`;
+  bind('local-plan',()=>{
+    modal('本地候选计划','<p>本地规则筛选，不调用付费模型。当前部分库缺完整训练卡。</p><form id="local-plan-form"><label>目标<input id="plan-goal" required maxlength="200"></label><label>身体部位<input id="plan-region" required maxlength="40"></label><label>器材（逗号分隔）<input id="plan-equipment" maxlength="200"></label><label>限制（逗号分隔，无则留空）<input id="plan-restrictions" maxlength="200"></label><label>当前任务等级<select id="plan-level"><option value="0">L0</option><option value="1">L1</option><option value="2">L2</option><option value="3">L3</option></select></label><label><input id="plan-confirmed" type="checkbox" required>已核对适用条件、器材与限制</label><button type="submit">生成候选计划</button></form><p id="plan-result" role="status"></p>');
     const owner=snapshot().ownerId,source=ui.source;
-    const invoke=async(w,operation)=>{
-      if(owner!==snapshot().ownerId||source!==ui.source)return;
-      let receipt;
-      const ok=await act(async()=>{receipt=await api('/unified/'+operation+'?source='+source,{id:w.id,confirmationToken:w.confirmationToken,confirmed:true});},'');
-      if(owner!==snapshot().ownerId||source!==ui.source)return;
-      if(ok){
-        $('#dialog').close();await load();
-        if(owner!==snapshot().ownerId||source!==ui.source)return;
-        modal('操作结果',`<p>${E(receipt.reply||'请核对实际记录。')}</p>`);
-      }
+    $('#local-plan-form').onsubmit=async e=>{e.preventDefault();if(owner!==snapshot().ownerId||source!==ui.source)return;
+      const split=id=>$(id).value.replaceAll('，',',').split(',').map(v=>v.trim()).filter(Boolean);
+      try{const operation=window.PhoneLocal?'/product/rehab.plan.draft':'/unified/rehab.plan.draft?source='+encodeURIComponent(source);
+        const result=await api(operation,{goal:$('#plan-goal').value.trim(),region:$('#plan-region').value.trim(),equipment:split('#plan-equipment'),restrictions:split('#plan-restrictions'),level:Number($('#plan-level').value),screeningConfirmed:$('#plan-confirmed').checked});
+        if(owner===snapshot().ownerId&&source===ui.source&&$('#plan-result'))$('#plan-result').textContent=result.note+'\n'+(result.items||[]).map(item=>`${item.name}：${item.dose.reps}次 × ${item.dose.sets}组，休息${item.dose.restSeconds}秒`).join('\n');
+      }catch(error){if($('#plan-result'))$('#plan-result').textContent=error.message;}
     };
-    pending.forEach((w,i)=>bind('care-review-'+i,()=>{
-      modal('核对管家操作',`<p>${E(w.reply)}</p><ul>${w.steps.map(s=>`<li>${E(s.label)}：${E({pending:'尚未执行',succeeded:'已保存',failed:'失败',executing:'待核对回执'}[s.status]||s.status)}</li>`).join('')}</ul><p>确认有效期至 ${E(stamp(w.expiresAt))}</p><button type="button" class="primary" id="care-confirm">${w.status==='awaiting_confirmation'?'核对后确认执行':'核对后重试未完成步骤'}</button> ${w.status==='awaiting_confirmation'?'<button type="button" id="care-cancel">取消操作</button>':''}`);
-      bind('care-confirm',()=>invoke(w,'care.confirm'));bind('care-cancel',()=>invoke(w,'care.cancel'));
-    }));
-  }
-  if(snapshot().carePendingUnavailable){const note=document.createElement('p');note.textContent='暂时无法读取待确认操作，请刷新后核对。';$('#chat-form').before(note);}
+  });
   $("#draft").oninput = (e) => (ui.draft = e.target.value);
   $("#private").onchange = (e) => (ui.private = e.target.checked);
   $("#chat-form").onsubmit = async (e) => {

@@ -1,3 +1,5 @@
+统一归档入口现为 `archive/retired-features`；同时保留旧Agent和OCR，见[统一恢复说明](../RETIRED_FEATURES.md)。
+
 # 报告识字与图片指标提取归档
 
 归档前 main：`2f52d6298df70d871a93f4848540202b1c182f62`。完整远端快照：`archive/pre-report-ocr-retirement-20261013`。

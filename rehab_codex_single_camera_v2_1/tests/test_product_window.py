@@ -254,10 +254,13 @@ def test_medication_history_filter_and_restored_silver_entrance(desktop, monkeyp
     w, app=desktop
     w._send_chat('今天漏服了药')
     wait(app, lambda:w.pending==0)
-    assert w.medication_history.rowCount()>0
+    assert w.medication_history.rowCount()==0  # Chat is now read-only.
+    w._request('medication.save',{'record':{'id':'TEST-med','name':'TEST 药物','dose':'TEST','status':'active'}})
+    wait(app,lambda:w.pending==0)
+    w._confirm_medication();wait(app,lambda:w.pending==0)
     w.history_filter.setCurrentText('用药')
     assert w.timeline.rowCount()==w.medication_history.rowCount()
-    assert any('漏服' in w.timeline.item(r,2).text() for r in range(w.timeline.rowCount()))
+    assert w.timeline.rowCount()>0
     w.history_filter.setCurrentText('评估')
     assert w.timeline.rowCount()==0
     calls=[]

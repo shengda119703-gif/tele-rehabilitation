@@ -42,7 +42,7 @@ test('webhook reuses NotificationService reservation, consent and accepted seman
  const {call}=await setup(t,{delivery:webhookFamilyDelivery({provider:'custom',token:'TEST',customUrl:'http://localhost:8788/test'})});
  await call('notification.plan');assert.equal(sends,0);
  const {code}=await call('family.invite');await call('family.bind',{code});await call('family.grant');
- await call('chat',{text:'我刚才摔了一跤，现在胸口疼'});
+ await call('health.record',{metric:'spo2',value:85,visibility:'family_ok'});
  const planned=await call('notification.plan');assert.ok(sends>0);assert.ok(planned.notifications.every(n=>n.phase==='accepted'));
  const count=sends;await call('notification.plan');assert.equal(sends,count);
  await call('family.revoke');await call('notification.plan');assert.equal(sends,count);
@@ -52,7 +52,7 @@ test('sync binding gate, owner gate, local-only events, monotonic acknowledgemen
  const {call}=await setup(t,{sync:()=>port});await call('sync.start');
  listener({type:'dispatch.acknowledge',payload:{ownerId:'a',dataMode:'personal',findingId:'x'}});assert.equal((await call('sync.poll')).outcomes[0].reason,'unbound-peer');
  const {code}=await call('family.invite');listener({type:'family.link',payload:{kind:'request',code,requestId:'req'}});await call('sync.poll');assert.equal(sent.at(-1).payload.kind,'accepted');
- await call('family.grant');await call('chat',{text:'我刚才摔了一跤，现在胸口疼'});const snapshot=await call('notification.plan');const record=snapshot.notifications[0];assert.ok(record);
+ await call('family.grant');await call('health.record',{metric:'spo2',value:85,visibility:'family_ok'});const snapshot=await call('notification.plan');const record=snapshot.notifications[0];assert.ok(record);
  listener({type:'events.append',payload:{ownerId:'a',dataMode:'personal',events:[]}});assert.equal((await call('sync.poll')).outcomes[0].reason,'local-only-data');
  listener({type:'dispatch.append',payload:{...record,ownerId:'b'}});assert.equal((await call('sync.poll')).outcomes[0].reason,'owner-mismatch');
  listener({type:'dispatch.acknowledge',payload:{ownerId:'a',dataMode:'personal',relationshipId:record.relationshipId,findingId:record.findingId}});await call('sync.poll');

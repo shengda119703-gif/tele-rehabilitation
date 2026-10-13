@@ -459,7 +459,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             self.dictation_status.clear();self.dictation_status.hide()
             self.record_receipt.setText('正在理解与处理记录，请稍候…')
         self.backend.submit(operation,selected,payload,scope if selected else None,token=token)
-        self.care_controls.set_busy(True)
         self._completion_controls()
         return True
 
@@ -489,9 +488,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
                 self.pending_export = None
                 continue
             self.storage_label.setText('已连接本机数据')
-            if operation in ('care.confirm','care.cancel'):
-                self.care_controls.result(result)
-                self._request('snapshot')
+            if operation=='rehab.plan.draft':
+                QMessageBox.information(self,'本地候选计划',result['note']+'\n'+'\n'.join(f"{item['name']}：{item['dose']['reps']}次 × {item['dose']['sets']}组，休息{item['dose']['restSeconds']}秒" for item in result.get('items',[])))
                 continue
             if isinstance(result,dict) and result.get('fileExport'):
                 self.pending_export = None
@@ -575,7 +573,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         if self.closing and self.legacy._allow_close:
             self.close()
         self._completion_controls()
-        self.care_controls.set_busy(bool(self.pending))
         if getattr(self,'rehab_trend_anchor',None) and not self.legacy.busy:
             anchor,self.rehab_trend_anchor=self.rehab_trend_anchor,None
             for i,session in enumerate(self.legacy.sessions):
@@ -626,7 +623,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         self._request('snapshot')
 
     def _clear_views(self):
-        self.care_controls.clear()
         self.photo_requested=False;self.photo_return_needed=False
         # No old-owner data remains visible while the new owner is loading or a read fails.
         for grid in (self.plan_table,self.metrics,self.attachments,self.medications,self.timeline,
@@ -660,7 +656,6 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
     def _care_scope_changed(self,*_):
         # The legacy source switch can also change usage. Clear immediately, and
         # let the regular poll coalesce both signals into a current-scope read.
-        self.care_controls.clear()
         if self.owner and not self.closing:self.refresh_needed=True
 
     def _align_rehab(self,stored):
@@ -812,6 +807,25 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         else:
             self._message('请先选择要导出的附件。')
 
+    def _local_plan_dialog(self):
+        dialog=QDialog(self);dialog.setWindowTitle('本地候选计划');layout=QVBoxLayout(dialog)
+        layout.addWidget(label('由本地规则筛选，不调用付费模型。当前库缺完整训练卡，可能暂不能生成计划。'))
+        fields={}
+        for key,title in (('goal','训练目标'),('region','身体部位'),('equipment','可用器材（逗号分隔）'),('restrictions','已知限制（逗号分隔，无则留空）')):
+            layout.addWidget(label(title));fields[key]=QLineEdit();layout.addWidget(fields[key])
+        layout.addWidget(label('当前任务等级（不是肌力分级）'))
+        level=QComboBox();level.addItems(['L0','L1','L2','L3']);layout.addWidget(level)
+        confirmed=QCheckBox('已核对当前限制、器材与适用条件');layout.addWidget(confirmed)
+        def generate():
+            payload={k:v.text().strip() for k,v in fields.items()}
+            payload.update(equipment=[v.strip() for v in payload['equipment'].replace('，',',').split(',') if v.strip()],
+                restrictions=[v.strip() for v in payload['restrictions'].replace('，',',').split(',') if v.strip()],
+                level=level.currentIndex(),screeningConfirmed=confirmed.isChecked())
+            if not payload['goal'] or not payload['region'] or not confirmed.isChecked():
+                QMessageBox.information(dialog,'请补充信息','请填写目标、部位，并核对适用条件。');return
+            dialog.accept();self._request('rehab.plan.draft',payload)
+        layout.addWidget(button('生成候选计划',generate,True));dialog.exec()
+
     def _open_manual_health(self):
         if self.navigate('health'):
             self.health_tabs.setCurrentIndex(0)
@@ -891,8 +905,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             self.tasks.addItem('当前没有待办。用药和健康照护任务会依据已填写资料与记录生成。')
         concerns = s['twin']['personTwin'].get('activeConcerns',[])
         self.home_status.setText('；'.join(concerns) if concerns else '已有 '+str(len(state['events']))+' 条健康记录；暂未形成需关注的摘要。数据不足时不能判断整体健康状态。')
-        self.agent_status.setText('DeepSeek 对话已配置；每条回复会标明实际来源。' if s.get('conversationModelAvailable') else '本地模块查询与页面调度可用；DeepSeek 对话尚未配置。')
-        self.care_controls.refresh(s.get('carePending',[]),s.get('carePendingUnavailable',False))
+        self.agent_status.setText('DeepSeek 对话已配置；每条回复会标明实际来源。' if s.get('conversationModelAvailable') else '本地动作资料可用；DeepSeek 尚未配置。助手仅问答、解说与候选计划。')
         self._render_conversation()
         twin = s['twin']['personTwin']
         self.twin_text.setText(' · '.join(title+'：'+STATUS_LABELS.get(twin[key],twin[key]) for key,title in [('activity','活动'),('mobility','行动'),('sleep','睡眠'),('nightActivity','夜间活动')])+'\n数据更新时间：'+display_time(s['twin'].get('dataUpdatedAt'))+'\n这是已有资料的状态摘要，不是诊断。')

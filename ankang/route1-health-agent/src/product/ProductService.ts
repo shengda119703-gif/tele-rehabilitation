@@ -22,8 +22,10 @@ import { buildMedicationCareView } from '../engine/medicationCare';
 import { appendHealthEvents, measurementToEvent, type HealthEvent } from '../pipeline/events';
 import { METRICS, type CareTask, type ElderProfile, type MetricKey, type MedicationRecord } from '../types';
 import type { RehabToolPort } from '../runtime/rehabTools';
-import { CareCoordinator, type CarePort } from '../care/CareCoordinator';
-import { ProductAgent, type AgentTool, type ProductAgentModel } from './ProductAgent';
+import type {CarePort} from '../care/CareCoordinator';
+import {rehabAnswer,localPlan} from '../rehab/assistant';
+import {catalogue} from '../rehab/catalogue';
+import type {ProductAgentModel} from './ProductAgent';
 import type {ConversationModel} from '../runtime/conversation';
 
 export interface ProductLocalPort {
@@ -52,73 +54,10 @@ export class ProductService {
   private families = new Map<string, FamilyService>();
   private notifications = new Map<string, NotificationService>();
   constructor(private port: ProductLocalPort, private rehab?: (owner: string) => RehabToolPort | undefined,
-    _retiredVision?: unknown, private extensions: ProductExtensions = {}, private careHost?: (owner:string)=>CarePort|undefined,
-    private agentModel?: (owner:string)=>ProductAgentModel|undefined,
+    _retiredVision?: unknown, private extensions: ProductExtensions = {}, _retiredCareHost?: (owner:string)=>CarePort|undefined,
+    _retiredAgentModel?: (owner:string)=>ProductAgentModel|undefined,
     private rehabReads?: (owner:string)=>Pick<RehabToolPort,'read'>|undefined,
     private conversationModel?: (owner:string)=>ConversationModel|undefined) {}
-  private agent(owner:string):ProductAgent {
-    const read=()=>this.runtime.readSnapshot(scopeKey(this.scope(owner)));
-    const tool=(name:string,description:string,run:AgentTool['run'],available=true):AgentTool=>({name,description,mode:'read',available,run});
-    const care=this.care(owner);
-    const tools:AgentTool[]=[
-      tool('health_overview','查询本人的健康记录和已有发现，不进行诊断',async()=>{
-        const s=read(),data={measurements:s.healthData.measurements,findings:s.findings};
-        return{reply:`健康档案：${s.healthData.measurements.length}条测量，${s.findings.length}项已有发现。\n`+s.findings.slice(-5).map(f=>f.title).join('\n')+'\n请在健康页查看数值、来源和时间；已有发现不是诊断。',data};}),
-      tool('body_overview','读取本人的已有身体状态汇总，不推算未记录的结果',async now=>{
-        const s=read();
-        const data=readPersonTwinProduct({...this.scope(owner),profile:this.profile(owner).profile,
-          events:s.events,tasks:s.tasks,familyEvents:s.familyEvents,family:this.family(owner).readState(),
-          today:s.today,asOf:now.toISOString()},'self');
-        const labels:Record<string,string>={stable:'稳定',declining:'下降',improving:'改善',unknown:'数据不足'};
-        const t=data.personTwin!;
-        return {reply:`已有身体状态汇总：活动量${labels[t.activity]}；步行状态${labels[t.mobility]}；睡眠${labels[t.sleep]}；夜间活动${labels[t.nightActivity]}。\n`+
-          (t.activeConcerns.length?'已有关注事项：'+t.activeConcerns.join('、'):'暂无已有关注事项。')+
-          '\n仅根据已保存的档案与记录整理，不是诊断；缺少数据时不作推断。',data};}),
-      tool('medication_list','读取已保存药物清单，不调整处方',async()=>{
-        const data=this.profile(owner).profile.medicationRecords??[];
-        return{reply:data.length?'已保存药物：\n'+data.map(m=>`${m.name} · ${m.dose||'用量未填写'} · ${m.times||'时间未填写'} · ${m.status==='active'?'使用中':'已停用'}`).join('\n'):'尚无已保存药物。',data};}),
-      tool('archive_list','列出本人资料、图片、视频附件元数据；不读取文件内容',async()=>{
-        const entries=await new ArchiveService(this.scope(owner),this.port.attachments,()=>this.family(owner).readState(),'self').list();
-        const data=entries.map(({bytes,...metadata}:any)=>metadata);
-        return{reply:data.length?'已保存资料：\n'+data.slice(-20).map((a:any)=>a.name??a.filename??a.title??a.id).join('\n'):'尚无已保存资料。',data};}),
-      tool('family_status','查询本人的家庭绑定、共享权限；不发送消息或修改授权',async()=>{
-        const f=this.family(owner).readState(),data={bound:f.familyLink?.status==='active',sharing:f.familySharing};
-        return{reply:`家庭绑定：${data.bound?'已绑定':'未绑定'}；持续共享：${data.sharing==='granted'?'已授权':'未授权'}。绑定与共享权限分别设置。`,data};}),
-      tool('notification_list','读取已有通知台账和真实通道回执，不发送新通知',async()=>{
-        const data=this.notification(owner).read('self');return{reply:data.length?'通知记录：\n'+data.slice(-10).map(n=>`${n.title} · ${({pending:'待处理',accepted:'已受理',sent:'通道回报已发送',delivered:'通道回报已送达',failed:'失败',unavailable:'通道不可用'} as Record<string,string>)[n.phase]??'状态待核对'}`).join('\n'):'暂无通知台账；没有发送新的通知。',data};}),
-      tool('extension_status','查询语音、设备、同步、HealthKit和外部通知的实际连接状态',async now=>{
-        const data=await this.request('extensions.status',owner,{},now);
-        return{reply:`语音：${data.voice.available?'可用':'未连接'}；设备适配器：${data.devices.length}个；HealthKit：${data.healthkit?'已配置':'未配置'}；同步：${data.syncAvailable?'已配置':'本机模式'}；通知通道：${data.notification?'已配置，送达需回执':'未配置'}。`,data};}),
-      tool('daily_overview','读取今天已保存的服药和训练安排，未记录不等于漏服',async now=>{
-        const data=await care!.overview(now);return{reply:'今日安排：\n'+[...data.doses.map(d=>`${d.time} ${d.name} · ${({taken:'已服用',skipped:'已跳过',unrecorded:'未记录'} as Record<string,string>)[d.status]??'状态待核对'}`),...data.schedules.map(s=>`${s.time} ${s.name}（仅为安排）`)].join('\n')+'\n'+data.note,data};},Boolean(care)),
-      tool('rehab_next','查询已有康复计划的下一项与原业务门禁',async now=>{
-        const data=await care!.nextStep(now);return{reply:data.available?'已有计划下一项通过原规则核对，请到康复页继续。':data.reason,data};},Boolean(care)),
-    ];
-    const rehab=this.rehabReads?.(owner)??this.rehab?.(owner);
-    for(const [name,hostName,description] of [['rehab_plan','rehab.get_training_plan','查询已保存康复计划'],['rehab_assessments','rehab.get_recent_assessments','查询最近康复评估'],['rehab_history','rehab.get_training_history','查询真实训练完成和反馈记录']])
-      tools.push(tool(name,description,async()=>{
-        const data=await rehab!.read({name:hostName as any,arguments:{}});
-        if(!data||data.tool!==hostName||data.read_only!==true||!['empty','found'].includes(data.status)||!Array.isArray(data.records)
-          ||!data.scope||!['participant_id','source_kind','usage_context'].every(k=>typeof (data.scope as any)[k]==='string'&&(data.scope as any)[k].trim())
-          ||data.scope.participant_id!==owner)throw Error('康复工具回执或本人来源标识无效，请在原页面核对。');
-        const source=({LIVE_CAMERA:'电脑实时',REPLAY_FILE:'录像分析',SYNTHETIC:'合成测试',PHONE_LOCAL:'手机本地'} as Record<string,string>)[data.scope.source_kind]??'其他来源，请在原页面核对';
-        const summaries=data.records.slice(0,10).map((record:any)=>{
-          const r=record&&typeof record==='object'?record:{};
-          return [r.name??r.exercise_label??'已保存记录',typeof r.revision==='number'?`计划版本${r.revision}`:'',r.created_at??r.createdAt??r.started_at??r.date??''].filter(v=>typeof v==='string'&&v).join(' · ');
-        });
-        return{reply:description+'：'+data.records.length+'条。\n来源：'+source+'\n'+(summaries.length?summaries.join('\n'):'当前来源没有相关记录。')+'\n具体指标、适用条件与反馈请在康复页核对。',data};
-      },Boolean(rehab)));
-    tools.push(tool('agent_capabilities','查看管家已接通的工具和限制',async()=>({reply:'管家可查询健康、药物、资料、家庭权限、通知、连接状态和康复记录；可打开各模块。服药记录与训练改期须单独确认。摄像头、训练开始、处方、分享、删除和导出在原页面操作。',data:tools.map(t=>({name:t.name,available:t.available,mode:t.mode}))})));
-    return new ProductAgent(tools,this.agentModel?.(owner));
-  }
-  private careCoordinators = new Map<string,CareCoordinator>();
-  private care(owner:string):CareCoordinator|undefined {
-    if(!this.careCoordinators.has(owner)) {
-      const host=this.careHost?.(owner);
-      if(host)this.careCoordinators.set(owner,new CareCoordinator(scopeKey(this.scope(owner)),this.port,host));
-    }
-    return this.careCoordinators.get(owner);
-  }
   private syncs = new Map<string, {port:SyncPort; inbox:unknown[]; unsubscribe:() => void}>();
   private sync(owner:string) {
     if (!this.syncs.has(owner)) {
@@ -266,7 +205,7 @@ export class ProductService {
     if (!this.open.has(owner)) {
       const profile = {...this.profile(owner).profile, familySharing: this.family(owner).readState().familySharing};
       await this.runtime.openSession({sessionId: id, profile, now, persistence: this.persistence(owner),
-        rehabTools: this.rehab?.(owner), careTools:this.care(owner),productTools:this.agent(owner),conversationModel:this.conversationModel?.(owner)});
+        rehabAssistant:(text,privateTurn)=>rehabAnswer(text,privateTurn,owner,this.conversationModel?.(owner),this.rehabReads?.(owner)??this.rehab?.(owner))});
       this.open.add(owner);
       const history = this.port.read<CareTask[]>(this.key(owner, 'tasks')) ?? [];
       for (const task of this.runtime.readSnapshot(id).tasks) {
@@ -311,17 +250,15 @@ export class ProductService {
     };
     const history = readHealthHistory(scope, profile.profile, state.events, state.familyEvents, state.findings,
       state.tasks, family, state.today);
-    let carePending:Awaited<ReturnType<CareCoordinator['pending']>>=[],carePendingUnavailable=false;
-    try{carePending=await this.care(owner)?.pending(now)??[];}catch{carePendingUnavailable=true;}
     return {ownerId: owner, profile, state, twin, family, projection, history, notifications,
       attachments: await archive.list(),
       taskHistory: this.port.read<CareTask[]>(this.key(owner, 'tasks')) ?? [],
       audits: this.port.read<unknown[]>(this.key(owner, 'audit')) ?? [],
       trends: Object.fromEntries(Object.keys(METRICS).map(key => [key, metricTrend(history.records, key as MetricKey, state.today)])),
       capabilities: {...productCapabilities, imageRecognitionAvailable: false, healthInput: 'manual'},
-      agentTools:this.agent(owner).catalogue(),carePending,carePendingUnavailable,
+      agentTools:[],carePending:[],carePendingUnavailable:false,assistantMode:'rehab-only',library:{version:'2026-10-13-partial',complete:false,cards:catalogue.length,usable:catalogue.filter(c=>c.complete).length},
       conversationModelAvailable:Boolean(this.conversationModel?.(owner)),
-      storage: 'persistent-local', modelAvailable: Boolean(this.conversationModel?.(owner)||this.agentModel?.(owner)||this.rehab?.(owner)), careAvailable:Boolean(this.care(owner))};
+      storage: 'persistent-local', modelAvailable: Boolean(this.conversationModel?.(owner)), careAvailable:false};
   }
   async request(operation: string, owner: string, input: Record<string, any>, now: Date): Promise<any> {
     if (!Number.isFinite(now.getTime())) throw new Error('Invalid clock');
@@ -343,26 +280,10 @@ export class ProductService {
       return this.snapshot(owner, now);
     }
     this.profile(owner);
-    if(operation==='agent.tools')return this.agent(owner).catalogue();
-    if(operation.startsWith('care.')) {
-      const coordinator=this.care(owner);if(!coordinator)throw Error('当前宿主尚未接入照护调度');
-      const fields:Record<string,string[]>={
-        'care.overview':[], 'care.next':[], 'care.prepare':['requestId','intents','text'],
-        'care.status':['id'], 'care.confirm':['id','confirmationToken','confirmed'],
-        'care.cancel':['id','confirmationToken','confirmed'],
-      };
-      if(!fields[operation]||!input||typeof input!=='object'||Array.isArray(input)||Object.keys(input).some(k=>!fields[operation].includes(k)))
-        throw Error('未知照护调度操作或字段');
-      if(operation==='care.overview')return coordinator.overview(now);
-      if(operation==='care.next')return coordinator.nextStep(now);
-      if(operation==='care.prepare')return coordinator.prepare(input,now);
-      if(typeof input.id!=='string')throw Error('请提供当前照护任务编号');
-      if(operation==='care.status')return coordinator.status(input.id);
-      if(input.confirmed!==true||typeof input.confirmationToken!=='string'||!input.confirmationToken)throw Error('请明确确认本次操作');
-      if(operation==='care.confirm')return coordinator.confirm(input.id,input.confirmationToken,now);
-      if(operation==='care.cancel')return coordinator.cancel(input.id,input.confirmationToken);
-      throw Error('未知照护调度操作');
-    }
+    if(operation==='agent.tools')return [];
+    if(operation==='rehab.catalogue')return catalogue;
+    if(operation==='rehab.plan.draft')return localPlan(input as any);
+    if(operation.startsWith('care.'))throw Error('Agent 代操作已下架，请在对应页面手动处理。');
     if (operation === 'extensions.status') return {voice:this.extensions.voice?.status() ?? {available:false,phase:'unavailable'},
       devices:Object.keys(this.extensions.devices ?? {}), healthkit:Boolean(this.extensions.healthkit),
       notification:Boolean(this.extensions.delivery), syncAvailable:Boolean(this.extensions.sync), syncSummary:this.port.read(this.key(owner,'sync-summary')), sync:this.syncs.get(owner)?.port.status() ?? {mode:'local-only', detail:'未连接外部通道',peerId:null}, externalAcceptance:'unverified'};
@@ -507,7 +428,7 @@ export class ProductService {
       const durableSnapshot = {...exportableSnapshot, state:{...snapshot.state,
         chat:snapshot.state.chat.filter(m => m.persisted !== false && !m.pending)}};
       const backup={version: 1, exportedAt: now.toISOString(), snapshot: durableSnapshot,
-        careAudit:this.care(owner)?.audit()??[],
+        careAudit:[],
         attachments: (await this.port.attachments.list(this.scope(owner))).map(a => ({...a, bytes:Array.from(a.bytes)}))};
       // Execution credentials never become backup content, including nested host receipts.
       return JSON.parse(JSON.stringify(backup,(key,value)=>['confirmationToken','requestSignature'].includes(key)?undefined:value));
@@ -521,7 +442,6 @@ export class ProductService {
       this.families.get(owner)?.close(); this.families.delete(owner);
       this.notifications.get(owner)?.close(); this.notifications.delete(owner);
       this.port.remove('care:'+scopeKey(this.scope(owner)));
-      this.careCoordinators.delete(owner);
       // Profile/medications and the authoritative rehabilitation database are retained.
     } else throw new Error('Unknown product operation');
     return this.snapshot(owner, now);

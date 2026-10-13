@@ -198,7 +198,7 @@ class ProductCompletion:
         self._action(detail_box,'medConfirm','本人确认今日用药已核对',self._confirm_medication,kind='A',target='task.status')
         self._action(detail_box,'medDose','标记某一剂已服用',reason='当前只支持每日核对，不支持逐药逐剂确认。')
         detail_box.addWidget(label('当前只支持每日核对，不支持逐药逐剂确认。'))
-        self._action(detail_box,'medMiss','记录漏服',lambda:self._send_chat('今天漏服了药'),kind='A',target='chat')
+        self._action(detail_box,'medMiss','记录未服用',lambda:self._record_dose('skipped'),kind='A',target='daily.dose')
         detail_box.addStretch();self.med_today_sections.addWidget(detail)
         area=tab('我的药物');self.medications=table(['药物','已有剂量','用途','时间 / 频次','状态']);area.addWidget(self.medications)
         self.medication_empty=label('暂无药物档案，请按已有医嘱添加。');area.addWidget(self.medication_empty)
@@ -213,7 +213,7 @@ class ProductCompletion:
         area=tab('漏服记录');self.missed_medications=table(['时间','事项','内容']);area.addWidget(self.missed_medications)
         self.med_missed_empty=label('暂无已记录的漏服信息。');area.addWidget(self.med_missed_empty)
         self._action(area,'medMissedDetail','查看详情',lambda:self._table_detail(self.missed_medications,'漏服记录'),target='漏服记录详情')
-        self._action(area,'medMissedAdd','记录漏服',lambda:self._send_chat('今天漏服了药'),kind='A',target='chat')
+        self._action(area,'medMissedAdd','记录未服用',lambda:self._record_dose('skipped'),kind='A',target='daily.dose')
         box.addStretch()
 
     def _settings_page(self):
