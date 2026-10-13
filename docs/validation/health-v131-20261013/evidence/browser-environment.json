@@ -1,0 +1,17 @@
+{
+  "browser": "Codex In-app Browser",
+  "tool_type": "iab",
+  "engine_verified": false,
+  "independent_chrome_available": false,
+  "screenshots_are_real_browser": true,
+  "viewport_sizes": [
+    [
+      390,
+      844
+    ],
+    [
+      320,
+      700
+    ]
+  ]
+}
