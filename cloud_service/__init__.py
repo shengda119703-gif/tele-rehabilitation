@@ -1,3 +1,3 @@
 """Independent cloud business service. No desktop or model imports."""
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"

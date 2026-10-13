@@ -9,6 +9,7 @@ const profile=()=>store.read('profile:'+owner)?.profile;
 let practice;
 const domain=new AnkangDomain.ProductService({read:k=>store.read(k),write:(k,v)=>store.write(k,v),remove:k=>store.remove(k),profiles:()=>store.profiles(),attachments:{list:s=>PS.attachments(owner).list(s),put:(s,a)=>PS.attachments(owner).put(s,a),clear:s=>PS.attachments(owner).clear(s),setTrash:(s,id,at)=>PS.attachments(owner).setTrash(s,id,at)}},undefined,undefined,{},participant=>PS.createCarePort(store,participant,careRehabFacts));
 const ready=store.serial(async()=>{
+ if(root.AnkangBrowserAccount)await root.AnkangBrowserAccount.ready;
  await PhoneLin.initialize(store,nativeFetch);
  owner=store.value.owner;
  await store.migrate(domain);
@@ -71,6 +72,7 @@ async function snapshot(){const s=await domain.request('snapshot',owner,{},now()
 async function jsonBody(opts){if(!opts.body)return{};if(typeof opts.body==='string')return JSON.parse(opts.body);if(opts.body instanceof Blob)return JSON.parse(await opts.body.text());throw Error('请求格式不正确');}
 function failure(message,status=400){const e=Error(message);e.status=status;throw e;}
 async function request(path,opts={}){
+ root.AnkangBrowserAccount?.assertScope();
  await ready;if(opts.signal?.aborted)throw new DOMException('已取消','AbortError');const u=new URL(path,location.origin),route=u.pathname.replace(/^\/api/,''),method=opts.method||'GET',q=u.searchParams;
  // Inference and live frames deliberately do not occupy the domain write queue.
  if(route.startsWith('/live/')){
@@ -256,5 +258,5 @@ async function cloudRestore(){try{const b=await PhoneCloud.request('/v1/backup')
 document.addEventListener('click',async e=>{const a=e.target.closest?.('a[href^="/api/"]');if(!a)return;e.preventDefault();try{const r=await root.fetch(a.href);if(!r.ok)throw Error((await r.json()).detail);const blob=await r.blob();if(root.OfflineAndroid){if(blob.type.includes('json'))OfflineAndroid.saveJson(await blob.text());else{const bytes=new Uint8Array(await blob.arrayBuffer());let text='';for(let i=0;i<bytes.length;i+=8192)text+=String.fromCharCode(...bytes.subarray(i,i+8192));OfflineAndroid.saveDocument(decodeURIComponent(r.headers.get('X-File-Name')||'健康资料'),btoa(text),blob.type);}}else{const u=URL.createObjectURL(blob),link=document.createElement('a');link.href=u;link.download='健康记录';link.click();setTimeout(()=>URL.revokeObjectURL(u),1000);}}catch(err){alert(err.message);}});
 root.offlinePause=()=>{speechPending=false;root.RehabGuidance?.app.cancelAll();if(typeof pausePractice==='function')pausePractice();PM.pause();if(typeof stopLive==='function')stopLive();};
 root.offlineBack=()=>{const d=document.querySelector('dialog[open]');if(d){d.close();return true;}if(PM.active){if(confirm('结束本次分析？原录像保留。'))PM.pause();return true;}if(location.pathname==='/capture'){location.href='/';return true;}if(location.hash&&location.hash!=='#home'){location.hash='#home';return true;}return false;};
-root.PhoneLocal={store,domain,ready,request,snapshot,proposal,body,planProgress,backup,restore,exportBackup,cloudBackup,cloudRestore,cloudRefresh,speechResult,selectProfile:key=>PhoneLin.select(store,key),get cloudState(){return cloudState;}};
+root.PhoneLocal={store,domain,ready,request,snapshot,proposal,body,planProgress,backup,restore,exportBackup,cloudBackup,cloudRestore,cloudRefresh,speechResult,selectProfile:key=>{if(root.AnkangBrowserAccount)return root.AnkangBrowserAccount.login();return PhoneLin.select(store,key);},get cloudState(){return cloudState;}};
 })(globalThis);

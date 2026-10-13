@@ -1,8 +1,9 @@
 (function(root){
 'use strict';
-const PS=root.PhoneStore,ORIGIN='https://139.224.216.18',UUID=/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
+const PS=root.PhoneStore,ORIGIN=root.AnkangBrowserAccount?.origin||'https://139.224.216.18',UUID=/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
 const pending=new Map();let sequence=0,uploading=null;
-function identity(){const text=root.OfflineAndroid?.accountIdentity?.();return text?JSON.parse(text):null;}
+function identity(){if(root.AnkangBrowserAccount)return root.AnkangBrowserAccount.identity();const text=root.OfflineAndroid?.accountIdentity?.();return text?JSON.parse(text):null;}
+function login(){return root.AnkangBrowserAccount?root.AnkangBrowserAccount.login():root.OfflineAndroid.accountLogin();}
 function validateIdentity(value){if(!value||value.origin!==ORIGIN||value.role!=='PATIENT'||!UUID.test(value.patient_id)||!UUID.test(value.account_id)||typeof value.username!=='string')throw Error('请重新登录云账号');return value;}
 async function activate(value){
  validateIdentity(value);const old=root.PhoneLocal?.store;
@@ -18,6 +19,7 @@ function scope(store){
  return value;
 }
 function request(action,value,body={}){
+ if(root.AnkangBrowserAccount){validateIdentity(value);return root.AnkangBrowserAccount.request(action,value,body);}
  validateIdentity(value);if(!root.OfflineAndroid?.accountRequest)return Promise.reject(Error('此功能需要新版 APK'));
  return new Promise((resolve,reject)=>{const id=String(++sequence),timer=setTimeout(()=>{pending.delete(id);reject(Error('云回复未收到，记录保留；可以重试'));},45000);
  pending.set(id,{resolve,reject,timer});
@@ -48,7 +50,7 @@ async function queue(store){
   for(const p of v.practices||[])if(p.state==='COMMITTED'&&p.context?.participant_id===v.owner)entries.push(['practice:'+p.id,{schema:'ankang-result-1',title:p.exercise_id,kind:'guided_practice',source:p.record_origin,measured_at:p.ended_at,result:structuredClone(p)}]);
   for(const [source_event_id,payload] of entries){
    if(out.items.some(i=>i.document.source_event_id===source_event_id))continue;
-   const document=JSON.parse(JSON.stringify({operation_id:crypto.randomUUID(),source_event_id,installation_id:out.installation_id,source_kind:payload.kind==='guided_practice'?'SELF_REPORT':'APK_LOCAL',payload}));
+   const document=JSON.parse(JSON.stringify({operation_id:crypto.randomUUID(),source_event_id,installation_id:out.installation_id,source_kind:payload.kind==='guided_practice'?'SELF_REPORT':root.AnkangBrowserAccount?'WEB_LOCAL':'APK_LOCAL',payload}));
    if(new TextEncoder().encode(JSON.stringify(document)).length>32768)throw Error('单项结果过大，原记录保留，请分项导出');
    if(out.items.length>=1000)throw Error('上传队列已满，请先导出记录');
    out.items.push({document,resource_id:null});
@@ -74,7 +76,7 @@ function publish(store,retryOnly=false){
 function safe(text){return String(text??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 async function open(){
  try{
-  const value=identity();if(!value){root.OfflineAndroid.accountLogin();return;}
+  const value=identity();if(!value){login();return;}
   validateIdentity(value);await root.PhoneLocal.ready;
   const dialog=document.createElement('dialog');dialog.innerHTML='<h2>云账号 · '+safe(value.username)+'</h2><p role="status">'+(PS.cloudKey(root.PhoneLocal.store.key)?'本人结果先保存在手机，上传后可在电脑和医生网页查看。':'当前为旧本机档案。请打开云账号档案，旧记录不自动合并。')+'</p><div class="actions"></div><section></section>';
   const status=dialog.querySelector('p'),actions=dialog.querySelector('.actions'),content=dialog.querySelector('section');
@@ -87,13 +89,13 @@ async function open(){
   add('云记录',async()=>{const records=await request('records',value);content.innerHTML=records.items.map(r=>'<details><summary>'+safe(r.payload.title||'分析记录')+'</summary><pre>'+safe(JSON.stringify(r.payload,null,2))+'</pre></details>').join('')||'<p>暂无云记录。</p>';return '云记录已读取（最近10条）';});
   add('授权医生',async()=>{await request('grant',value,{enabled:true});return '已授权医生查看';});
   add('撤销授权',async()=>{await request('grant',value,{enabled:false});return '医生授权已撤销';});
-  add('切换账号',()=>root.OfflineAndroid.accountLogin());
+  add('切换账号',()=>login());
   add('退出账号',async()=>{await request('logout',value);await root.PhoneLocal.store.tail;localStorage.setItem(PS.ACTIVE_KEY,PS.KEY);location.href='/';return '已退出';});
   add('关闭',()=>dialog.close());dialog.addEventListener('close',()=>dialog.remove());document.body.append(dialog);dialog.showModal();
  }catch(e){alert(e.message);}
 }
 if(root.document)document.addEventListener('DOMContentLoaded',()=>{
- const profile=document.querySelector('#profile');if(!profile||!root.OfflineAndroid?.accountLogin)return;
+ const profile=document.querySelector('#profile');if(!profile||!root.OfflineAndroid?.accountLogin&&!root.AnkangBrowserAccount)return;
  const button=document.createElement('button');button.className='quiet';button.textContent='云账号';button.setAttribute('aria-label','云账号与结果上传');button.onclick=open;profile.before(button);
 });
 root.PhoneAccount={ORIGIN,identity,validateIdentity,activate,scope,request,reply,jobPayload,queue,sync,publish,open};

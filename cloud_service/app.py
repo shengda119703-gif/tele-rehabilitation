@@ -18,6 +18,7 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from . import __version__
+from .browser import install_public_web
 from .config import Settings
 from .database import Database, accounts, grants, patients, records, sessions
 from .security import (
@@ -97,12 +98,13 @@ class LimitedBody:
         return await self.app(scope, replay, send)
 
 
-def create_app(settings: Settings, database=None):
+def create_app(settings: Settings, database=None, *, web_assets=None):
     db = database or Database(settings.database_url)
     app = FastAPI(title="安康统一云服务", version=__version__, docs_url=None, redoc_url=None,
                   openapi_url=BASE + "/openapi.json")
     app.state.database = db
     app.state.settings = settings
+    app.state.public_web = False
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=sorted({urlsplit(x).hostname for x in settings.origins}))
     app.add_middleware(LimitedBody)
 
@@ -133,10 +135,13 @@ def create_app(settings: Settings, database=None):
             if request.method != "DELETE" and request.headers.get("content-type", "").split(";")[0] != "application/json":
                 return JSONResponse({"code": "UNSUPPORTED_MEDIA_TYPE", "message": "请使用正确的提交格式"}, status_code=415)
         response = await next_call(request)
+        policy = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
+        if app.state.public_web and request.url.path in {"/", "/capture"}:
+            policy = "default-src 'self'; script-src 'self' blob: 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
         response.headers.update({
             "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff",
             "Referrer-Policy": "no-referrer", "X-Frame-Options": "DENY",
-            "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
+            "Content-Security-Policy": policy,
         })
         return response
 
@@ -206,7 +211,8 @@ def create_app(settings: Settings, database=None):
             "doctor_identity": "shared_admin", "mfa_required": False, "server_models": False,
             "providers": {name: {"enabled": False, "available": False, "execution_location": "DISABLED"}
                           for name in ("llm", "asr", "tts", "ocr", "sms", "push")},
-            "plans": False, "voice_messages": False, "calls": False, "incremental_sync": False}
+            "plans": False, "voice_messages": False, "calls": False, "incremental_sync": False,
+            "public_user_web": app.state.public_web, "browser_analysis": "LOCAL_CPU" if app.state.public_web else None}
 
     @app.post(BASE + "/auth/register", status_code=201)
     def register(value: Registration, request: Request):
@@ -419,20 +425,31 @@ def create_app(settings: Settings, database=None):
                 records.c.id).offset(offset).limit(limit)).mappings()
             return {"items": [dict(row) for row in rows], "offset": offset, "limit": limit}
 
-    # Only public static assets: no models, patient databases, uploads, or execution API.
+    # Models are public browser assets only; never import a server execution API.
     shared = ROOT / "mobile_rehab" / "static"
     def fixed_static(name):
         def static_file():
             return FileResponse(shared / name)
         return static_file
-    for name in ("unified.css", "unified-polish.css", "controls.css", "icon.svg"):
+    def browser_account(request):
+        with db.transaction() as connection:
+            actor, _ = caller(request, connection)
+            if actor["client_kind"] != "WEB":
+                raise DomainError(401, "AUTH_REQUIRED", "请在网页登录")
+            return public_account(connection, actor)
+
+    app.state.public_web = install_public_web(app, Path(web_assets) if web_assets is not None else ROOT / "public_web" / "build", browser_account)
+    for name in (() if app.state.public_web else ("unified.css", "unified-polish.css", "controls.css", "icon.svg")):
         app.add_api_route("/static/" + name, fixed_static(name), methods=["GET"], include_in_schema=False)
     app.mount("/cloud-static", StaticFiles(directory=ROOT / "cloud_service" / "static"), name="cloud-static")
 
-    @app.get("/", include_in_schema=False)
+    @app.get("/account", include_in_schema=False)
     @app.get("/care", include_in_schema=False)
     def portal():
         return FileResponse(ROOT / "cloud_service" / "static" / "index.html")
+
+    if not app.state.public_web:
+        app.add_api_route("/", portal, methods=["GET"], include_in_schema=False)
 
     return app
 

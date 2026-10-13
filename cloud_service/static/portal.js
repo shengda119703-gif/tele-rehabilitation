@@ -65,6 +65,9 @@
   async function showHome() {
     const own = ++generation; logout.hidden = false;
     if (account.role === 'DOCTOR_ADMIN') return showPatients(0);
+    if (location.pathname === '/account' && new URLSearchParams(location.search).get('next') === '/') {
+      location.replace('/'); return;
+    }
     if (location.pathname === '/care') {
       main.innerHTML = '<h1>医生工作台</h1><p>请使用医生账号登录。</p><p class="cloud-error" role="alert"></p>';
       return;
@@ -72,7 +75,7 @@
     main.innerHTML = '<p role="status">正在读取档案…</p>';
     const profile = await api(`/patients/${account.patient_id}`);
     if (own !== generation) return;
-    main.innerHTML = `<h1>${escape(profile.display_name)}</h1><p>账号：${escape(account.username)}</p>
+    main.innerHTML = `<h1>${escape(profile.display_name)}</h1><p>账号：${escape(account.username)}</p><p><a href="/">进入安康</a></p>
       <section><h2>医生共享</h2><p>${profile.doctor_access ? '医生工作台可以查看你的云端档案和记录。' : '你的云端档案目前仅本人可见。'}</p>
       <button id="grant" class="${profile.doctor_access ? '' : 'primary'}">${profile.doctor_access ? '停止共享' : '授权医生查看'}</button></section>
       <section><h2>云端记录</h2><div id="records"><p>正在读取…</p></div></section>
