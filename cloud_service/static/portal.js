@@ -61,7 +61,7 @@
     const response = await fetch(base + path, {method, headers, credentials: 'same-origin',
       body: data === undefined ? undefined : JSON.stringify(data), cache: 'no-store', signal: AbortSignal.timeout(20000)});
     const result = await response.json();
-    if (!response.ok) throw Object.assign(new Error(result.message || '暂时无法连接，请稍后再试'), {status: response.status});
+    if (!response.ok) throw Object.assign(new Error(result.message || '暂时无法连接，请稍后再试'), {status: response.status,code:result.code});
     return result;
   }
   function error(message) { const target = document.querySelector('.cloud-error'); if (target) target.textContent = message; }
@@ -254,17 +254,18 @@
     return{read,save:document=>locked(()=>{const prior=read();if(prior&&prior.document.operation_id!==document.document.operation_id)throw Error('另一个页面已有待保存草稿，请先重试原操作。');localStorage.setItem(key,JSON.stringify(document));}),
       remove:operation=>locked(()=>{if(read()?.document.operation_id===operation)localStorage.removeItem(key);}),actor};
   }
+  function planRejected(error){return error.status===422||error.code==='REVISION_MISMATCH'||error.code==='PLAN_IMMUTABLE'||error.code==='PLAN_NOT_PUBLISHED';}
   async function showPlans(ident,own,offset=0) {
     const result=await api(`/patients/${ident}/plans?offset=${offset}&limit=10`);
     if(own!==generation)return;
     const doctor=account.role==='DOCTOR_ADMIN',area=document.getElementById('plans');
     const queue=doctor?planQueue(ident):null,pending=queue?.read();
-    area.innerHTML=(pending?`<div class="cloud-plan"><strong>草稿保存回执待核对：${escape(pending.document.title)}</strong><p>原操作编号和内容已保留。请先重试，避免创建另一份草稿。</p><button id="retry-plan-save">重试待保存草稿</button></div>`:'')+(result.items.map(p=>planHtml(p,result.current_plan_id,doctor)).join('')||'<p class="muted">还没有康复方案。</p>')+`<div class="cloud-toolbar"><button id="plans-previous" ${offset===0?'disabled':''}>上一页方案</button><button id="plans-next" ${offset+10>=result.total?'disabled':''}>下一页方案</button></div>`;
+    area.innerHTML=(pending?`<div class="cloud-plan"><strong>草稿保存回执待核对：${escape(pending.document.title)}</strong><p>原操作编号和内容已保留。请先重试，避免创建另一份草稿。</p><details><summary>核对原草稿内容</summary><pre class="cloud-preserve">${escape(JSON.stringify(pending.document,null,2))}</pre></details><button id="retry-plan-save">重试待保存草稿</button><button id="discard-plan-save" hidden>取消这次未保存操作</button></div>`:'')+(result.items.map(p=>planHtml(p,result.current_plan_id,doctor)).join('')||'<p class="muted">还没有康复方案。</p>')+`<div class="cloud-toolbar"><button id="plans-previous" ${offset===0?'disabled':''}>上一页方案</button><button id="plans-next" ${offset+10>=result.total?'disabled':''}>下一页方案</button></div>`;
     if(doctor){document.getElementById('new-plan').disabled=Boolean(pending);area.querySelectorAll('[data-edit-plan],[data-publish-plan]').forEach(button=>button.disabled=Boolean(pending));}
     document.getElementById('retry-plan-save')?.addEventListener('click',async event=>{
       event.currentTarget.disabled=true;
       try{await api(pending.path,pending.method,pending.document);await queue.remove(pending.document.operation_id);if(own===generation){document.getElementById('plan-editor').replaceChildren();await showPlans(ident,own);}}
-      catch(e){failed(e,own);event.currentTarget.disabled=false;}
+      catch(e){failed(e,own);event.currentTarget.disabled=false;if(own===generation&&planRejected(e)){const discard=document.getElementById('discard-plan-save');discard.hidden=false;discard.onclick=async()=>{if(!confirm('服务器明确拒绝了这次保存。请先核对或复制上方草稿内容；取消后可重新打开最新方案编辑。'))return;await queue.remove(pending.document.operation_id);if(own===generation){document.getElementById('plan-editor').replaceChildren();await showPlans(ident,own);}};}}
     });
     document.getElementById('plans-previous').onclick=()=>showPlans(ident,own,Math.max(0,offset-10)).catch(e=>failed(e,own));
     document.getElementById('plans-next').onclick=()=>showPlans(ident,own,offset+10).catch(e=>failed(e,own));
@@ -310,8 +311,8 @@
       const queue=planQueue(ident),path=`/patients/${ident}/plans${editing?'/'+existing.id:''}`,method=editing?'PUT':'POST',savedDocument={operation_id:operation.id,...documentValue};
       try{await queue.save({schema:1,account_id:queue.actor,patient_id:ident,path,method,document:savedDocument});await api(path,method,savedDocument);await queue.remove(operation.id);if(own!==generation)return;area.replaceChildren();await showPlans(ident,own);}
       catch(e){
-        if(e.status===422)await queue.remove(operation.id);
-        if(own===generation){document.getElementById('plan-save-status').textContent=e.status===422?'草稿尚未保存，请按提示核对填写。':'未收到成功回执，原操作及草稿内容已保留。';failed(e,own);await showPlans(ident,own).catch(error=>failed(error,own));}
+        if(planRejected(e))await queue.remove(operation.id);
+        if(own===generation){document.getElementById('plan-save-status').textContent=planRejected(e)?'服务器未保存这次修改，请保留当前填写内容，核对提示后重新打开最新方案。':'未收到成功回执，原操作及草稿内容已保留。';failed(e,own);await showPlans(ident,own).catch(error=>failed(error,own));}
       }
       finally{buttons.forEach(b=>b.disabled=false);}
     };

@@ -40,7 +40,9 @@ test('workbench requests remain bound to current patient and require CSRF for wr
  await api.request('messages',f.identity,{before:0});assert(!f.calls.at(-1).url.includes('before='));assert(f.calls.at(-1).url.includes('latest=true'));
  await api.request('read',f.identity,{operation_id:'read-one',cursor:7});const read=f.calls.at(-1);assert.equal(read.options.method,'POST');assert.equal(JSON.parse(read.options.body).cursor,7);assert.equal(read.options.headers['X-CSRF-Token'],'memory-only');
  await api.request('send',f.identity,{operation_id:'send-one',text:'待发送原文'});assert.equal(JSON.parse(f.calls.at(-1).options.body).text,'待发送原文');
- await api.request('plans',f.identity);assert(f.calls.at(-1).url.endsWith('/plans?offset=0&limit=100'));
+ await api.request('plans',f.identity);assert(f.calls.at(-1).url.endsWith('/plans?offset=0&limit=5'));
+ await api.request('plans',f.identity,{offset:5});assert(f.calls.at(-1).url.endsWith('/plans?offset=5&limit=5'));
+ await assert.rejects(api.request('plans',f.identity,{offset:-1}));
  await api.request('current',f.identity);assert(f.calls.at(-1).url.endsWith('/plans/current'));
  await api.request('accept',f.identity,{plan_id:account,operation_id:'accept-one',expected_version:2,expected_current_revision:0,local_validation:{validation_policy:'existing-local-assessment-1'}});
  const accept=f.calls.at(-1);assert(accept.url.endsWith('/plans/'+account+'/accept'));assert(!Object.hasOwn(JSON.parse(accept.options.body),'plan_id'));assert.equal(JSON.parse(accept.options.body).local_validation.validation_policy,'existing-local-assessment-1');

@@ -342,9 +342,12 @@ class SceneController:
                 # Rebuild from saved evidence; never trust a UI-supplied measurement or goal.
                 plan['assessment_reference'] = copy.deepcopy(reference)
                 if plan.get('saved_plan_reference'):
-                    from .training_plans import validate_saved_binding
+                    from .training_plans import validate_saved_binding, prepare_training_plan
                     supplied = plan['saved_plan_reference']
                     saved = self.storage.get_training_plan(supplied.get('id'))
+                    if (saved or {}).get('doctor_publication'):
+                        # Recheck at the actual capture start, after any time spent in preview.
+                        prepare_training_plan(saved, supplied.get('entry_key'), profile)
                     if (saved or {}).get('record_origin') == 'assessment_rules':
                         from .automatic_plans import validate_automatic_use
                         if guided:

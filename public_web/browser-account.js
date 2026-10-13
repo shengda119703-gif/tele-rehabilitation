@@ -51,7 +51,11 @@ async function request(action,value,body={}){
  }
  if(action==='send')return api(patient+'/messages','POST',{operation_id:body.operation_id,text:body.text});
  if(action==='read')return api(patient+'/messages/read','POST',{operation_id:body.operation_id,cursor:body.cursor});
- if(action==='plans')return api(patient+'/plans?offset=0&limit=100');
+ if(action==='plans'){
+  const offset=body.offset??0;
+  if(!Number.isSafeInteger(offset)||offset<0)throw Error('方案查询范围无效');
+  return api(patient+'/plans?offset='+offset+'&limit=5');
+ }
  if(action==='current')return api(patient+'/plans/current');
  if(action==='accept'){
   if(!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(body.plan_id))throw Error('方案编号无效');
