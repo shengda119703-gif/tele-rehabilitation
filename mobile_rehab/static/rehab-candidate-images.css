@@ -1,0 +1,23 @@
+/* Scoped internal candidate surfaces; existing V5.2 geometry stays intact. */
+body[data-rehab-view="library"] .action-row>span.rv-candidate-thumb{position:relative;padding:0;background:#fff;display:grid;grid-template-rows:minmax(0,1fr) 22px}
+.rv-candidate-thumb img{width:100%;height:100%;min-height:0;object-fit:contain;display:block}
+body[data-rehab-view="library"] .rv-candidate-thumb small{display:block;margin:0;padding:3px 8px;text-align:left;background:#eef0e9;color:#434d3e}
+.rv-photo.rv-candidate-photo{display:grid;grid-template-rows:minmax(0,1fr) auto;background:#fff}
+.rv-photo.rv-candidate-photo img{height:100%;min-height:0;object-fit:contain;object-position:center}
+.rv-photo.rv-candidate-photo figcaption{position:static;background:#eef0e9;font-size:11px}
+.rv-candidate-materials{margin:0 0 16px;color:var(--rv-ink);font-size:12px}
+.rv-candidate-materials>details{border:1px solid var(--rv-line);border-radius:16px;padding:0 12px;background:#fff}
+.rv-candidate-materials summary{font-weight:700;cursor:pointer;min-height:44px}
+.rv-candidate-materials p{font-size:12px;line-height:1.65;overflow-wrap:anywhere}
+.rv-candidate-materials figure{margin:0 0 14px}
+.rv-candidate-materials figure button{display:block;width:100%;padding:0;border:0;background:#fff;border-radius:12px;overflow:hidden}
+.rv-candidate-materials img{display:block;width:100%;height:auto;object-fit:contain}
+.rv-candidate-materials figcaption{font-size:11px;line-height:1.6;padding:8px 0;overflow-wrap:anywhere}
+.rv-candidate-materials figcaption span{display:block;color:var(--rv-muted)}
+.rv-candidate-failed{font-size:11px;line-height:1.5;margin:6px;padding:6px}
+.rv-candidate-dialog{max-width:95vw;max-height:94dvh;width:900px;border:1px solid #dce0d4;border-radius:16px;padding:12px;overflow:auto}
+.rv-candidate-dialog::backdrop{background:#000a}
+.rv-candidate-dialog img{display:block;width:100%;max-height:77dvh;object-fit:contain}
+.rv-candidate-dialog button{min-height:44px;border:0;border-radius:10px;background:#dfff36;color:#171a17;padding:8px 16px}
+.rv-candidate-dialog p{font-size:12px;overflow-wrap:anywhere}
+.rv-candidate-thumb img[hidden],.rv-candidate-photo img[hidden],.rv-candidate-materials img[hidden],.rv-candidate-dialog img[hidden]{display:none}
