@@ -25,4 +25,4 @@ Voice/PeerJS 的浏览器 adapter 不等于 Windows 已完成语音或远程同�
 
 `npm run typecheck` 检查保留的全部 TypeScript；`npm test` 运行业务回归；`npm run test:product` 运行正式产品/扩展集成；`npm run test:healthkit` 验证外部桥接协议。Playwright 仍供原康复银发隔离手机联动的验证脚本使用。React/Vite 及其专用测试已移除。
 
-旧 UI、空间建模和演示源码可从 `codex/rehab-agent-stage1` 恢复。源头、分类及保留限制见[上游来源](../UPSTREAM.md)与[本轮清理审计](../../docs/validation/REPOSITORY_CLEANUP_2026-10-02.md)。
+旧 UI、空间建模和演示源码保留在 main 历史提交 `4b2d108a3003d84c89ac42da25580017d5b1de17`，原开发分支名已清理。源头、分类及保留限制见[上游来源](../UPSTREAM.md)、[原清理审计](../../docs/validation/REPOSITORY_CLEANUP_2026-10-02.md)与[当前分支和恢复方法](../../docs/BRANCHES.md)。
