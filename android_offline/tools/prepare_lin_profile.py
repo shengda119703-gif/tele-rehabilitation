@@ -104,15 +104,15 @@ def generate(data, backend, manifest):
 
 
 if __name__=='__main__':
-    qa=ROOT/'qa-output'
-    qa.mkdir(exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='apk-lin-seed-',dir=qa) as folder:
-        data=Path(folder)
-        claim_directory(data)
+    # Keep the disposable build SQLite outside synchronised source folders.
+    with tempfile.TemporaryDirectory(prefix='ankang-apk-lin-seed-') as folder:
+        scratch=Path(folder)
+        data=scratch/'qa-output'/'fixture'
+        claim_directory(data,workspace=scratch)
         clock=FixtureClock()
         backend=ProductBackend(data/'desktop',bridge_factory=lambda:clock.bridge(data))
         try:
-            manifest=seed(backend,data,clock)
+            manifest=seed(backend,data,clock,workspace=scratch)
             payload=generate(data,backend,manifest)
         finally:backend.close()
     output=ROOT/'android_offline/build/assets/lin-profile.json'

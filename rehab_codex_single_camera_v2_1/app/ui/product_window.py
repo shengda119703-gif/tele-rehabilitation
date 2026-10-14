@@ -151,8 +151,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         top.addWidget(self.user_select)
         self.account_button=button('我的档案',self._account)
         top.addWidget(self.account_button)
-        self.workbench_button = button('工作台', self._workbench)
-        self.workbench_button.setAccessibleName('工作台：云账号、医生对话和方案')
+        self.workbench_button = button('联系康复医师', self._workbench)
+        self.workbench_button.setAccessibleName('联系康复医师：一对一沟通、分享报告与查看医生方案')
         top.addWidget(self.workbench_button)
         top.addWidget(button('通知',lambda:self.navigate('notifications')))
         top.setContentsMargins(0,0,0,0)
@@ -601,7 +601,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
 
     def _workbench(self):
         if self.pending or self.legacy.busy or self.legacy._camera_testing or self.legacy.state in ('CONNECTING', 'PREVIEW', 'ONLINE', 'SAVE_FAILED'):
-            self._message('请先结束并保存当前任务，再打开工作台。')
+            self._message('请先结束并保存当前任务，再联系康复医师。')
             return
         from .cloud_account import CloudAccountDialog
         from ..cloud_account import CloudError
@@ -629,7 +629,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             try:
                 unread = previous.result()
                 if getattr(self, '_workbench_sync_owner', None) == self.owner and unread is not None:
-                    self.workbench_button.setText('工作台' + (f'（{unread}）' if unread else ''))
+                    self.workbench_button.setText('联系康复医师' + (f'（{unread}）' if unread else ''))
             except Exception:
                 pass
             self._workbench_sync_future = None

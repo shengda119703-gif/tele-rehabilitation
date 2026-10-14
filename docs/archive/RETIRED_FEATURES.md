@@ -12,3 +12,7 @@ git worktree add ../retired-features-history origin/archive/retired-features
 ```
 
 后续需要恢复哪部分，就从此快照及相应历史提交选择性整合、重新验证。归档分支不是当前可直接发布的新版本。
+
+2026-10-14 患者管理控制台界面下架：旧版保存于远端 `archive/patient-console-20261014`，提交 `4652ef22472f3e53aa282ac721051f553513c874`。这是界面恢复快照；医患聊天、同步队列、授权与计划核验继续使用。main 只保留新的“联系康复医师”患者入口和独立“医生工作台”，不并列保留旧控制台页面。
+
+同时下架依赖旧患者控制台的 `verify_qt_cloud.py`、`verify_workbench_native.py` 和直接操作公网 TEST 账号的 `cloud_service/tests/verify_public_portal.cjs`，均可从上述快照恢复。当前验收使用回环限定的 `verify_patient_qt.py`、`verify_patient_portal.cjs`、`verify_patient_contact.cjs` 与适配后的 `verify_workbench_browser.cjs`。

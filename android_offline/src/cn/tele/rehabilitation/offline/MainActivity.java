@@ -232,7 +232,7 @@ public final class MainActivity extends Activity {
             network.execute(()->{int status;String json;try{CloudTransport.Reply reply=cloud.request(path,method,body);status=reply.status;json=reply.body;}catch(Exception e){status=503;json="{\"detail\":\"云端暂时无法连接，本机记录保留\"}";}
                 final int code=status;final String value=json;runOnUiThread(()->{if(!isDestroyed())web.evaluateJavascript("PhoneCloud.reply("+JSONObject.quote(id)+","+code+","+JSONObject.quote(value)+")",null);});});
         }
-        @JavascriptInterface public void settings(){runOnUiThread(()->new AlertDialog.Builder(MainActivity.this).setTitle("手机与云端").setItems(new String[]{"连接云端","暂停云端连接","导出本机备份","恢复本机备份","备份到云端","恢复云端备份","打开 TEST 林女士档案","返回个人档案","DeepSeek 智能服务","工作台"},(d,which)->{
+        @JavascriptInterface public void settings(){runOnUiThread(()->new AlertDialog.Builder(MainActivity.this).setTitle("手机与云端").setItems(new String[]{"连接云端","暂停云端连接","导出本机备份","恢复本机备份","备份到云端","恢复云端备份","打开 TEST 林女士档案","返回个人档案","DeepSeek 智能服务","联系康复医师"},(d,which)->{
             if(which==9){web.evaluateJavascript("PhoneAccount.open()",null);return;}
             if(which==8)deepSeekDialog();
             else if(which==0)web.evaluateJavascript("PhoneLocal.store.key===PhoneStore.LIN_KEY",v->{if("true".equals(v))notice("请先返回个人档案，再连接云端");else connectionDialog();});
@@ -251,9 +251,9 @@ public final class MainActivity extends Activity {
         LinearLayout fields=new LinearLayout(this);fields.setOrientation(LinearLayout.VERTICAL);fields.setPadding(40,12,40,12);
         EditText username=new EditText(this);username.setHint("账号");username.setSingleLine(true);fields.addView(username);
         EditText password=new EditText(this);password.setHint("密码");password.setSingleLine(true);password.setInputType(android.text.InputType.TYPE_CLASS_TEXT|android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);fields.addView(password);
-        android.widget.CheckBox register=new android.widget.CheckBox(this);register.setText("创建新账号");fields.addView(register);
-        android.widget.TextView status=new android.widget.TextView(this);status.setText("登录本人云账号，康复分析仍在手机上完成。");fields.addView(status);
-        AlertDialog dialog=new AlertDialog.Builder(this).setTitle("工作台 · 本人账号").setView(fields).setPositiveButton("登录 / 注册",null).setNegativeButton("取消",null).create();
+        android.widget.CheckBox register=new android.widget.CheckBox(this);register.setText("首次使用：创建本人账号");fields.addView(register);
+        android.widget.TextView status=new android.widget.TextView(this);status.setText("首次开通用于保存聊天、对应本人报告。登录状态会保留，以后直接联系康复医师；康复分析仍在手机本地完成。");fields.addView(status);
+        AlertDialog dialog=new AlertDialog.Builder(this).setTitle("联系康复医师 · 首次开通").setView(fields).setPositiveButton("登录 / 注册",null).setNegativeButton("取消",null).create();
         dialog.setOnShowListener(d->dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v->{
             final String name=username.getText().toString(),secret=password.getText().toString();final boolean create=register.isChecked();password.setText("");dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(false);dialog.setCancelable(false);status.setText("正在连接…");
             network.execute(()->{try{final String identity=account.login(name,secret,create).toString();runOnUiThread(()->{if(isDestroyed())return;dialog.dismiss();web.evaluateJavascript("PhoneAccount.activate("+identity+").catch(e=>alert(e.message))",null);});}catch(Exception e){runOnUiThread(()->{if(isDestroyed())return;status.setText(e instanceof java.io.IOException?"连接未完成，请重试":e.getMessage());dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(true);dialog.setCancelable(true);});}});
