@@ -1,0 +1,195 @@
+{
+  "version": "1.0",
+  "date": "2026-10-14",
+  "batch": "第08批",
+  "scope": "061-s02、064-s01、065-s01、065-s02、066-s01",
+  "method": "built-in image_gen for 2 new frames; 3 byte-preserving copies of reviewed original photographs",
+  "images": [
+    {
+      "sequence": 61,
+      "id": "E-AXU-022",
+      "name": "已知轻负荷弯举功能任务",
+      "step": 2,
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/061_E-AXU-022_s02.png",
+      "sources": [
+        "E:/git冲突问题/rehab image/assess/061_E-AXU-022_已知轻负荷弯举功能任务.png"
+      ],
+      "reuse": true,
+      "prompt": null,
+      "generated_output": null,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已实际查看原图：人物站位躯干直立，右上臂靠近体侧，屈肘将同一小灰哑铃送近肩，肩不耸起、腕自然、握持和完整手可见，面部服装背景符合参考。",
+        "limitations": [
+          "本批仅包含s02；当前未发现独立s01，未把本终点登记为起点。",
+          "物体质量须按原计划记录，不能从照片判定。"
+        ]
+      },
+      "sha256": "EC4242B166D181C7847A3770039F719248441467FBCEFACBAF2FAD345B53C8F0",
+      "bytes": 1655789,
+      "width": 1122,
+      "height": 1402,
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/061_E-AXU-022_已知轻负荷弯举功能任务.png",
+          "sha256": "EC4242B166D181C7847A3770039F719248441467FBCEFACBAF2FAD345B53C8F0"
+        }
+      ]
+    },
+    {
+      "sequence": 64,
+      "id": "T-LOW-001",
+      "name": "股四头肌等长收缩",
+      "step": 1,
+      "final_path": "E:/git冲突问题/rehab image/train/steps/064_T-LOW-001_s01.png",
+      "sources": [
+        "E:/git冲突问题/rehab image/train/064_T-LOW-001_股四头肌等长收缩.png"
+      ],
+      "reuse": true,
+      "prompt": null,
+      "generated_output": null,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已实际查看原图：仰卧于灰色垫、测试腿舒适伸展，膝下薄折毛巾与膝后接触可辨，双臂放松、完整双脚可见，头后有低垫，体位和比例自然。",
+        "limitations": [
+          "静态照片不证明收缩强度；放松→收紧→短时保持→放松由排版文字说明。"
+        ]
+      },
+      "sha256": "4D96AB843FE8941EBC31E0BCF05D7A88B3EE13159C5A28903CBDD6E3E7A62DBD",
+      "bytes": 1572940,
+      "width": 1122,
+      "height": 1402,
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/train/064_T-LOW-001_股四头肌等长收缩.png",
+          "sha256": "4D96AB843FE8941EBC31E0BCF05D7A88B3EE13159C5A28903CBDD6E3E7A62DBD"
+        }
+      ]
+    },
+    {
+      "sequence": 65,
+      "id": "T-LOW-002",
+      "name": "滑跟屈膝",
+      "step": 2,
+      "final_path": "E:/git冲突问题/rehab image/train/steps/065_T-LOW-002_s02.png",
+      "sources": [
+        "E:/git冲突问题/rehab image/train/065_T-LOW-002_滑跟屈膝.png"
+      ],
+      "reuse": true,
+      "prompt": null,
+      "generated_output": null,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已实际查看原图：仰卧，近侧测试腿屈膝、脚跟连同脚底落在滑布上，脚跟未抬离垫面；另一腿舒适伸展，躯干安稳，双手放松、完整头脚可见。",
+        "limitations": [
+          "静态图仅示终点，滑动速度和回程由01→02→01及文字表达。"
+        ]
+      },
+      "sha256": "9EC540BC4B60FD840201BCAF4F2B793AFFC91FE1FC13C8A02E8CC0E351F8A51E",
+      "bytes": 1633868,
+      "width": 1122,
+      "height": 1402,
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/train/065_T-LOW-002_滑跟屈膝.png",
+          "sha256": "9EC540BC4B60FD840201BCAF4F2B793AFFC91FE1FC13C8A02E8CC0E351F8A51E"
+        }
+      ]
+    },
+    {
+      "sequence": 65,
+      "id": "T-LOW-002",
+      "name": "滑跟屈膝",
+      "step": 1,
+      "final_path": "E:/git冲突问题/rehab image/train/steps/065_T-LOW-002_s01.png",
+      "sources": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/train/065_T-LOW-002_滑跟屈膝.png"
+      ],
+      "reuse": false,
+      "prompt": "Use case: scientific-educational. Single photorealistic rehabilitation photograph, one pose only. Images 1–3 are IDENTITY and STYLE references: lock the same adult East Asian woman, exact face, natural body proportions, black ponytail, white short-sleeved T-shirt, dark gray trousers, soft studio light and pale gray-blue backdrop. Image 4 is the EDIT TARGET and camera/scene anchor for the heel-slide exercise. Preserve the woman's head and neck on the same low gray head cushion, supine torso, pelvis, resting hands, other leg, the long gray mat, camera viewpoint, framing, floor line, person scale and lighting. Change ONLY the near/test leg from bent to the STARTING position: straighten it comfortably alongside the other leg with both knees almost straight, the test heel resting down on the small thin folded gray sliding cloth. Move that SAME small cloth together with the heel away from her buttocks to beneath the EXTENDED test heel; no towel remains under the knee. The cloth is under the heel and clearly touching the mat. Both complete feet and toes, hip, knee and heel visible. The near leg remains separate and anatomically clear from the other leg. Ankles and toes relaxed naturally. No raised straight leg, no knee bending, no foot floating, no extra props, no straps, no weights. Keep the full original image canvas and crop; no text, arrows, numbers, watermark or panels. Intended as 065 T-LOW-002 step01.",
+      "generated_output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a138e5-347e-74a0-9647-d41ae402c6c8\\exec-ed799e37-c482-4239-ac3b-948727c0dfbd.png",
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已实际查看最终PNG，仰卧测试近侧腿舒适伸展，脚跟接触灰滑布，头垫、肩背骨盆落垫、手位和机位与原s02对应。双腿长度及膝踝连接自然，完整手脚可見，未出现抬腿或悬跟；独立审查通过。",
+        "limitations": [
+          "滑布褶边与s02略有生成差异，不影响接触辨认。"
+        ]
+      },
+      "sha256": "69C4D7E5BFAE042D8DE7A6BDEE2F885E8C1D994386966C2FB85F1F60284BF83B",
+      "bytes": 1577493,
+      "width": 1122,
+      "height": 1402,
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/train/065_T-LOW-002_滑跟屈膝.png",
+          "sha256": "9EC540BC4B60FD840201BCAF4F2B793AFFC91FE1FC13C8A02E8CC0E351F8A51E"
+        }
+      ]
+    },
+    {
+      "sequence": 66,
+      "id": "T-LOW-003",
+      "name": "坐姿伸膝：徒手至轻负荷",
+      "step": 1,
+      "final_path": "E:/git冲突问题/rehab image/train/steps/066_T-LOW-003_s01.png",
+      "sources": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/train/066_T-LOW-003_坐姿伸膝：徒手至轻负荷.png"
+      ],
+      "reuse": false,
+      "prompt": "Use case: scientific-educational. Create a single photorealistic pose edit. Images1–3 are IDENTITY and STYLE references locking the same adult East Asian woman, exact face and black ponytail, white short-sleeved T-shirt, dark charcoal trousers, pale gray-blue studio backdrop, soft light and normal human proportions. Image4 is the EDIT TARGET for seated knee extension. Preserve its right-facing side camera, entire canvas and crop, person size, seated torso perfectly upright, head neutral, pelvis, thighs supported horizontally by the stable gray chair seat, both hands resting naturally on thighs, chair appearance and floor contacts. Change ONLY the near/test lower leg: lower it from the extended forward endpoint to the PREPARATION pose, bending the test knee naturally to about a right angle so that the shin hangs down freely from the seat edge, beside the other shin. Test thigh stays in complete contact with the seat, hip unchanged. Both bare feet complete and visible, placed naturally at or lightly touching the floor with test leg free to move; test knee and shin clearly separated from the chair front leg, with no chair bar or obstacle blocking the shin's forward path. The other leg stays in its original resting position. Natural limb lengths, continuous knee and ankle anatomy, relaxed toes. No ankle weights, elastic bands, dumbbells or extra props. No backward leaning, no thigh lifting, no dangling disconnected feet. Single photographed starting pose only, no text, arrows, numbers, watermark or panels. Intended as 066 T-LOW-003 step01.",
+      "generated_output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a138e5-347e-74a0-9647-d41ae402c6c8\\exec-710242a9-7a9f-40ee-9795-795ff3410537.png",
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已实际查看最终PNG，近侧测试小腿自然下垂，大腿臀部受同一椅面支持，双足落地；小腿与椅架之间留有活动空隙。躯干直稳、双手自然放大腿、无负重，人物椅子背景机位与原终点对应；独立审查通过。",
+        "limitations": [
+          "仅示准备位，本批未另制作s02。"
+        ]
+      },
+      "sha256": "AE05722BD64469CCB3137D5863C475FE7013F0C65D135E062BE3FD6C0800EFAA",
+      "bytes": 1693655,
+      "width": 1122,
+      "height": 1402,
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/train/066_T-LOW-003_坐姿伸膝：徒手至轻负荷.png",
+          "sha256": "CEE296FB5D51ABFDFE67C484551F00222A314553D9DDFDD245B3FA7EF6D430A0"
+        }
+      ]
+    }
+  ]
+}

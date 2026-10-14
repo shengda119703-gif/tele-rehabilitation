@@ -1,0 +1,171 @@
+{
+  "batch": "第08批",
+  "scope": [
+    "063-s01",
+    "063-s02"
+  ],
+  "date": "2026-10-14",
+  "mode": "内置 image_gen；每张/每次修订独立调用",
+  "action_id": "E-AXU-030",
+  "action_title": "墙面手掌承重的腕背伸观察",
+  "version": "制作清单 v1.0 首轮单右手版本",
+  "plan": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "original_card": "E:/git冲突问题/安康_康复评估与分级训练动作库.md#e-axu-030",
+  "source_metadata": [
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77",
+      "bytes": 1435890
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094",
+      "bytes": 1486874
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE",
+      "bytes": 1392350
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/assess/063_E-AXU-030_墙面手掌承重的腕背伸观察.png",
+      "sha256": "CBBF2C7495973511A6D1E50E8463A7F51FC28FC429F20323C7A4AC5536B4E95A",
+      "bytes": 1699359
+    }
+  ],
+  "original_image_evaluation": {
+    "path": "E:/git冲突问题/rehab image/assess/063_E-AXU-030_墙面手掌承重的腕背伸观察.png",
+    "viewed": true,
+    "reused": false,
+    "reason": "原图是双手接墙，清单所选版本为单测试手；本轮改为右掌贴墙、左臂自然下垂的独立图组，旧图保留。"
+  },
+  "invariants": [
+    "同一参考女性、黑色马尾、白色短袖与深灰长裤",
+    "柔和棚拍、灰蓝墙面/背景/地面",
+    "整组同一机位，双足支持与右掌墙接触同一位置",
+    "单幅照片，无文字、编号、箭头与拼图"
+  ],
+  "selected": [
+    "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s01.png",
+    "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s02_v2.png"
+  ],
+  "sequence_reuse": "s01→s02_v2→复用s01；回退过程不另造图",
+  "images": [
+    {
+      "sequence": 63,
+      "id": "E-AXU-030",
+      "step": 1,
+      "target_pose": "面墙站稳，右测试掌舒适贴墙、手指向上、肘保留小弯曲，左臂自然垂放，完整双脚支持。",
+      "prompt": "Use case: scientific-educational. Produce ONE photorealistic rehabilitation instructional photograph for E-AXU-030 step 01, comfortable initial standing palm-to-wall wrist position. Input images 1–3 are solely the identity, clothes, photographic light and gray-blue studio COLOR references: the SAME adult East Asian woman, same facial shape, skin tone, body build, black low ponytail, plain white short-sleeve T-shirt, fitted dark charcoal gray long pants. Do not copy their arm exercises. A matte gray-blue vertical wall stands on the right, continuous matching studio floor and backdrop, soft even light with natural shadows. Full-body slightly oblique side camera from her RIGHT side: show her face in profile, right shoulder, right elbow, right wrist/hand in readable silhouette, wall contact, both entire shoes and floor, no cropping. She stands facing the wall, feet hip-width on level floor, both soles and heels supported, light gray trainers, upright relaxed torso. Only her RIGHT testing hand is lightly flat against the wall at comfortable lower-chest height, fingers naturally pointing UP, all five anatomically normal digits, palm heel visibly making contact with the opaque wall. Her LEFT arm hangs naturally beside her body, not touching the wall. Her right elbow is gently bent, slightly BELOW the wall-contact wrist, so the forearm slopes gently upward toward the wall. The right wrist has a modest comfortable extension angle (not an extreme right angle), shoulders relaxed. Choose a stand-off distance enabling this light-contact initial posture, not a push-up. Keep body proportions, upper-arm and forearm lengths and joint connections realistic. SINGLE unlabelled photograph, no arrows, numbers, text, overlays, collage, diagram, watermark, extra person, brace, band, table, chair, or weights. Leave modest space around full figure and retain large enough right hand detail.",
+      "sources": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_output": "C:/Users/Administrator/.codex/generated_images/01a138e6-77cb-71c2-a353-4075a6328b3b/exec-cbd68dcf-382f-4a61-b782-87b027fac355.png",
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s01.png",
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "method": "实际保存PNG经view_image完整查看；返回MIME需改传image/png后才正确显示，文件像素未编辑。",
+        "accepted": true,
+        "observation": "人物参考外观、服装和灰蓝色棚拍背景一致。全身与两鞋入镜，双脚站稳支持。仅右手贴墙，左手自然垂放且可见。右肘保留弯曲，前臂从肘向腕略上斜；掌根及指部轮廓与墙连续接触，腕背伸起点舒适，手腕、肘和前臂连接自然。",
+        "limitations": [
+          "斜侧面可见指部叠合轮廓与拇指，不能从此角度逐根核验全部隐藏指面。",
+          "单幅生成照片不能证明实际掌压、可承重结论或医疗评估有效性。"
+        ]
+      },
+      "revisions": [],
+      "sha256": "1995FB6EA275D6AF29F2582BBC76AFE5316F5B594744D95A0F565B4D595434A5",
+      "bytes": 1716474,
+      "width": 1122,
+      "height": 1402,
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        }
+      ]
+    },
+    {
+      "sequence": 63,
+      "id": "E-AXU-030",
+      "step": 2,
+      "target_pose": "右掌墙接触和双足站位固定，身体小幅靠墙，腕背伸变化更明确；右肘仍留可控弯曲。",
+      "prompt": "Precise anatomy correction of this ONE rehabilitation photograph. The input image is the edit target. Preserve EVERYTHING outside the woman's RIGHT test arm: exact face, head/neck, torso lean, white T-shirt, black ponytail, left arm/hand, gray pants, legs, both gray shoes at identical image positions, wall contact point and height, entire wall/floor, camera, crop, lighting and scale. Keep the RIGHT PALM and all fingers flat against the wall at exactly their current location, fingers upward. Fix only the RIGHT ELBOW / forearm arrangement: raise the RIGHT elbow modestly upward so the forearm approaches the unchanged wall-contact wrist on a nearly horizontal line, with only a slight upward incline. In this image the elbow is currently much too LOW, making the forearm rise steeply to the wrist. Lift that elbow into a natural position approximately 50–60 image pixels higher; keep the upper arm and forearm their natural original lengths and the elbow slightly flexed. The wrist/palm remain on wall. Raising the elbow this way creates visibly GREATER comfortable WRIST EXTENSION: the palm remains vertical and the forearm is now almost horizontal, making a natural rounded visible backward bend at the wrist. Continuous normal wrist anatomy, no severe forced angle, no detached or stretched elbow. Keep the same gently forward-leaning chest position and fixed feet; do not lean further or move shoulders. One single unchanged scene, no text, numbers, arrows, panels, watermark, extra digits, extra limb, band or equipment.",
+      "sources": [
+        "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s02.png"
+      ],
+      "base_step_source": "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s01.png",
+      "generated_output": "C:/Users/Administrator/.codex/generated_images/01a138e6-77cb-71c2-a353-4075a6328b3b/exec-18d3f870-efec-4183-a7a7-a59be3bada80.png",
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s02_v2.png",
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "method": "实际保存PNG经view_image完整查看；返回MIME需改传image/png后才正确显示，文件像素未编辑。",
+        "accepted": true,
+        "observation": "头胸位置较s01清楚向墙靠近，整体保持从踝起轻前倾而无腰部折叠。两鞋保持原站位、鞋底及足跟仍接地。右掌根与指部仍在原墙接触高度；右肘保持弯曲，前臂由s01上斜转为接近水平，腕背伸变化可辨，无手掌离墙或明显极端压腕。左手继续自然下垂，人物、机位、背景和全身比例一致。",
+        "limitations": [
+          "生成编辑造成右上臂/前臂轮廓与衣袖小幅差异，鞋与掌边缘也有少量生成差异；可用于体位方向对照，不可按像素差推精确腕角、位移或负荷。",
+          "侧面指部有遮挡；照片不能证明真实轻压力、疼痛耐受、腕骨稳定性或测试有效性。"
+        ]
+      },
+      "revisions": [
+        {
+          "version": 1,
+          "prompt": "Use case: scientific-educational, identity-preserve edit. This input photograph is the authoritative EDIT TARGET for E-AXU-030 step 02. Make ONE single photorealistic next-step image of this SAME woman and SAME setup. Preserve her exact face, black ponytail, white T-shirt, gray pants, gray trainers, anatomical proportions, wall and floor colors, lighting, camera, focal length, crop, scale, ground plane. MOST IMPORTANT fixed anchors: preserve both shoes at their EXACT original image positions and both soles/heels on floor; preserve the RIGHT hand palm and fingers at the EXACT same point and height against the wall. The entire right palm stays lightly in contact with wall, fingers up, no sliding up/down, no palm lifting. Modify ONLY her upper-body posture and corresponding right arm pose to show a SMALL comfortable controlled approach toward the wall: lean her chest/head gently toward the wall around the ankles, enough that the chest is visibly 5–8 cm closer, no waist collapse, no trunk rotation, no squat. Right elbow remains gently bent, comes slightly forward and upward so the forearm is LESS upward-sloping and closer to horizontal than before. With the palm staying vertical on the fixed wall, this causes a CLEAR but comfortable INCREASE in wrist EXTENSION compared with input. Natural continuous right elbow/forearm/wrist anatomy; do not lengthen or distort the arm, do not hyperextend wrist, no sharp forced angle or heavy palm-root pressure. Shoulders stay relaxed, left arm hangs naturally alongside torso and left hand remains visible. This is a mild palm-supported wrist posture change, not a wall push-up. Match original wall contact, foot support, shoe outlines and camera exactly; retain head-to-toe full figure. No arrows, text, labels, collage, watermark, extra hands, table, brace, straps, or equipment.",
+          "sources": [
+            "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s01.png"
+          ],
+          "generated_output": "C:/Users/Administrator/.codex/generated_images/01a138e6-77cb-71c2-a353-4075a6328b3b/exec-91c31b81-a41e-4a0e-81f7-8239d7d15e4b.png",
+          "path": "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s02.png",
+          "adopted": false,
+          "reuse": false,
+          "qa": {
+            "reviewed": true,
+            "accepted": false,
+            "observation": "身体向墙靠近、脚位及掌墙接触保持；但右肘更低，前臂向腕上斜程度增大，腕背伸增大未清楚表达。保留文件，已弃用。"
+          },
+          "sha256": "BDB6B7F950AABCB14C4E55A7053C9C2DCA6A00DC4E7B24E0FF78F575BCE02F96",
+          "bytes": 1629069
+        },
+        {
+          "version": 2,
+          "prompt": "Precise anatomy correction of this ONE rehabilitation photograph. The input image is the edit target. Preserve EVERYTHING outside the woman's RIGHT test arm: exact face, head/neck, torso lean, white T-shirt, black ponytail, left arm/hand, gray pants, legs, both gray shoes at identical image positions, wall contact point and height, entire wall/floor, camera, crop, lighting and scale. Keep the RIGHT PALM and all fingers flat against the wall at exactly their current location, fingers upward. Fix only the RIGHT ELBOW / forearm arrangement: raise the RIGHT elbow modestly upward so the forearm approaches the unchanged wall-contact wrist on a nearly horizontal line, with only a slight upward incline. In this image the elbow is currently much too LOW, making the forearm rise steeply to the wrist. Lift that elbow into a natural position approximately 50–60 image pixels higher; keep the upper arm and forearm their natural original lengths and the elbow slightly flexed. The wrist/palm remain on wall. Raising the elbow this way creates visibly GREATER comfortable WRIST EXTENSION: the palm remains vertical and the forearm is now almost horizontal, making a natural rounded visible backward bend at the wrist. Continuous normal wrist anatomy, no severe forced angle, no detached or stretched elbow. Keep the same gently forward-leaning chest position and fixed feet; do not lean further or move shoulders. One single unchanged scene, no text, numbers, arrows, panels, watermark, extra digits, extra limb, band or equipment.",
+          "sources": [
+            "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s02.png"
+          ],
+          "generated_output": "C:/Users/Administrator/.codex/generated_images/01a138e6-77cb-71c2-a353-4075a6328b3b/exec-18d3f870-efec-4183-a7a7-a59be3bada80.png",
+          "path": "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s02_v2.png",
+          "adopted": true,
+          "reuse": false,
+          "qa": {
+            "reviewed": true,
+            "accepted": true,
+            "observation": "定点抬高右肘并使前臂趋平，保留原右掌与双鞋支持和身体轻前倾；与s01腕姿变化可辨。"
+          },
+          "sha256": "FA6CB85366172186B1E50406E94E76A1589BAEDBF836BCB9405448C9163D18D2",
+          "bytes": 1632322
+        }
+      ],
+      "sha256": "FA6CB85366172186B1E50406E94E76A1589BAEDBF836BCB9405448C9163D18D2",
+      "bytes": 1632322,
+      "width": 1122,
+      "height": 1402,
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s02.png",
+          "sha256": "BDB6B7F950AABCB14C4E55A7053C9C2DCA6A00DC4E7B24E0FF78F575BCE02F96"
+        }
+      ]
+    }
+  ]
+}
