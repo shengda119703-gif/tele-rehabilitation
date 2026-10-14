@@ -148,6 +148,7 @@ async function act(fn, success = "已保存") {
 async function load() {
   const generation = ++ui.generation;
   ui.homeConnection = "loading";
+  if (ui.page === "family") window.FamilyV10?.beforeLoad();
   if (ui.page === "health" && !ui.snapshot && window.HealthV131) window.HealthV131.loading();
   if (ui.page === "medication" && !ui.snapshot && window.MedicationV121) window.MedicationV121.loading();
   if (ui.page === "home" && ui.snapshot) home();
@@ -157,6 +158,7 @@ async function load() {
     if (generation !== ui.generation) return;
     ui.snapshot = result.snapshot;
     ui.homeConnection = "ready";
+    if (ui.page === "family") ui.familyReadAt = Date.now()/1000;
     $("#nav").hidden = false;
     $("#profile").textContent = (profile().name || "我").slice(0, 1);
     render();
@@ -168,6 +170,7 @@ async function load() {
     if (!$("#pair-form") && ui.page === "rehab" && window.RehabV51) { rehab(); return; }
     if (!$("#pair-form") && ui.page === "health" && window.HealthV131) { window.HealthV131.failure(e.message); return; }
     if (!$("#pair-form") && ui.page === "medication" && window.MedicationV121) { window.MedicationV121.failure(e.message); return; }
+    if (!$("#pair-form") && ui.page === "family" && window.FamilyV10) { window.FamilyV10.failure(e.message); return; }
     if (!$("#pair-form"))
       $("#content").innerHTML =
         `<h1>暂时无法读取</h1><p>${E(e.message)}</p>${button("重新连接", "retry", true)}`;
@@ -191,12 +194,14 @@ function nav() {
 }
 function route() {
   if (voiceStarting || recorder?.state === "recording") {
+    if (ui.page === "family" && window.FamilyV10?.isAI()) { location.hash = "#family/ai"; say("请先结束或取消录音。"); return; }
     location.hash = ui.page === "medication" && window.MedicationV121?.isAI() ? "#medication/ai" : "#assistant";
     say("请先结束或取消录音。");
     return;
   }
   const key = location.hash.slice(1) || "home";
-  ui.page = key.startsWith("health/") ? "health" : key.startsWith("medication/") ? "medication" : Object.hasOwn(names, key) || ["assistant", "records"].includes(key) ? key : "home";
+  if (window.FamilyV10 && window.FamilyV10.reportCode(location.hash) !== null) { window.FamilyV10.routeGuest(); return; }
+  ui.page = key.startsWith("family/") ? "family" : key.startsWith("health/") ? "health" : key.startsWith("medication/") ? "medication" : Object.hasOwn(names, key) || ["assistant", "records"].includes(key) ? key : "home";
   if (ui.page === "medication" && ui.homeRouteDay) window.MedicationV121?.selectDay(ui.homeRouteDay);
   ui.day = ui.homeRouteDay || (ui.page === "home" ? ui.day : today());
   ui.homeRouteDay = null;
@@ -208,11 +213,13 @@ function route() {
     }
   }
   nav();
-  if (ui.snapshot) render();
+  if (ui.page === "family") load();
+  else if (ui.snapshot) render();
   else load();
   window.scrollTo(0, 0);
 }
 function pair() {
+  window.FamilyV10?.reset();
   window.HealthV131?.reset();
   window.MedicationV121?.reset();
   document.body.dataset.page = "pair";
@@ -701,6 +708,7 @@ const categoryNames = {
   medication: "用药记录",
 };
 function family() {
+  if (window.FamilyV10) { window.FamilyV10.render(); return; }
   $("#content").innerHTML =
     `<h1>家人的近况</h1><p class="muted">仅显示家人已授权的记录。</p>${
       (snapshot().familyMembers || [])
@@ -839,7 +847,7 @@ function assistant() {
     try {
       voiceStarting = true;
       stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      if (ui.page !== "assistant") {
+      if (ui.page !== "assistant" && !(ui.page === "family" && window.FamilyV10?.isAI())) {
         stream.getTracks().forEach((t) => t.stop());
         return;
       }
@@ -902,6 +910,7 @@ async function transcribe(file) {
         : ui.draft + "\n" + r.text;
     if (ui.page === "assistant") assistant();
     else if (ui.page === "medication" && window.MedicationV121?.isAI()) window.MedicationV121.render();
+    else if (ui.page === "family" && window.FamilyV10?.isAI()) window.FamilyV10.render();
     say("已填入草稿，核对后发送。");
   } catch (e) {
     say(e.message);
@@ -924,6 +933,7 @@ $("#refresh").onclick = () => {
   load();
 };
 document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && ui.page === "family" && window.FamilyV10 && window.FamilyV10.reportCode(location.hash) !== null) { window.FamilyV10.refreshGuest(); return; }
   if (
     !document.hidden &&
     ui.snapshot &&
