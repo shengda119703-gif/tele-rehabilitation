@@ -84,7 +84,7 @@ const MedicationV121 = (() => {
   }
   const button = (text, action, cls='btn primary') => `<button type="button" class="${cls}" data-med-action="${E(action)}">${text}</button>`;
   const head = (title, action='') => `<div class="backHeader"><button type="button" class="back" id="mv-back" aria-label="返回原页面">‹</button><h1>${E(title)}</h1>${action}</div>`;
-  const wrap = content => `<div class="shell"><div class="scroller" id="mv-scroller"><div class="page">${content}</div></div></div>`;
+  const wrap = (content, home = false) => `<div class="shell"><div class="scroller" id="mv-scroller"><div class="page${home?' medication-home':''}">${content}</div></div></div>`;
   function reset() {
     if ($('#dialog')?.querySelector('#mv-confirm')) $('#dialog').close();
     owner=null;day=today();incomingDay=null;selectedKey=null;currentHash='';epoch++;
@@ -123,13 +123,13 @@ const MedicationV121 = (() => {
     const count=rows.filter(r=>r.status==='taken'||r.status==='skipped').length;
     const medCount=medicines(snapshot()).filter(m=>m.status==='active').length;
     return `${top()}<div class="heading"><h1>${E(dayLabel(day))}用药</h1><div class="dateNav"><button type="button" id="mv-prev-day" aria-label="前一天">‹</button><strong>${zh(day)}</strong><input id="mv-day" aria-label="选择日期" type="date" value="${day}"><button type="button" id="mv-next-day" ${day>=today()?'disabled':''} aria-label="后一天">›</button></div></div>
-      <section class="hero dose-carousel" aria-label="选择服药安排并登记"><div class="heroTop"><span class="eyebrow">逐次登记 · ${E(dayLabel(day))}安排</span><span class="hero-count">已登记 <b>${count}/${rows.length}</b></span></div>
+      <section class="hero dose-carousel" aria-label="选择服药安排并登记"><div class="heroTop"><span class="eyebrow">逐次登记</span><span class="hero-count">已登记 <b>${count}/${rows.length}</b></span></div>
       ${r?`<div class="dose-swipe" id="mv-swipe" tabindex="0" role="group" aria-roledescription="可左右滑动的服药安排" aria-label="第${i+1}项，共${rows.length}项；${E(r.time)}，${E(r.med.name)}，${statusName(r.status)}"><div class="slideContent" id="mv-slide"><div class="selected-dose"><span class="slot-time">${E(r.time)}</span><span class="slot-index">${i+1} / ${rows.length}</span><span class="slot-state ${statusClass(r.status)}">${statusName(r.status)}</span></div><h2 class="slot-name">${E(r.med.name)}</h2><div class="slot-meta">${r.med.dose?'每次 '+E(r.med.dose):'剂量未填写'}</div></div></div>
       <div class="dose-control"><button type="button" class="side-btn" id="mv-prev" aria-label="上一项安排" ${i===0?'disabled':''}>‹</button><button type="button" class="bigpill" data-med-log="${i}" ${day>today()?'disabled':''}>${r.status==='unrecorded'?'登记本次':'查看 / 更正'}　›</button><button type="button" class="side-btn" id="mv-next" aria-label="下一项安排" ${i===rows.length-1?'disabled':''}>›</button></div>
-      <div class="dose-pagination" role="group" aria-label="选择当日服药安排">${rows.map((r,j)=>`<button type="button" class="dose-dot ${j===i?'current':r.status==='taken'?'recorded':r.status==='skipped'?'skipped':''}" data-med-select="${j}" aria-label="第${j+1}项 ${E(r.time)} ${statusName(r.status)}" aria-current="${i===j}"></button>`).join('')}</div><div class="swipe-hint">左右滑动选择安排 · 登记需单独确认</div>`:
+      <div class="dose-pagination" role="group" aria-label="选择当日服药安排">${rows.map((r,j)=>`<button type="button" class="dose-dot ${j===i?'current':r.status==='taken'?'recorded':r.status==='skipped'?'skipped':''}" data-med-select="${j}" aria-label="第${j+1}项 ${E(r.time)} ${statusName(r.status)}" aria-current="${i===j}"></button>`).join('')}</div><div class="swipe-hint">滑动切换日程 · 登记需确认</div>`:
       `<div class="dose-empty"><h2>${medicines(snapshot()).length?'当天没有服药安排':'还没有添加药物'}</h2><p>${medicines(snapshot()).length?'可查看其他日期或编辑药物安排':'先建立药物，再设置服用时间'}</p>${button(medicines(snapshot()).length?'查看我的药物 ›':'添加药物 ›','meds','bigpill')}</div>`}</section>
-      <div class="sectionRow"><h2>全部安排</h2><small>${rows.length?`${rows.length} 项 · 点击选择`:'未记录不代表漏服'}</small></div><div class="doseList">${rows.length?rows.map((r,j)=>`<div class="doseItem ${i===j?'focused':''}"><button type="button" class="selectDose" data-med-list-select="${j}" aria-label="选择 ${E(r.time)} ${E(r.med.name)}"><span class="timeCol">${E(r.time)}</span><span class="dosebody"><b>${E(r.med.name)}</b><span>${E(r.med.dose||'剂量未填写')}</span></span></button><button type="button" class="status ${r.status==='unrecorded'?'not':statusClass(r.status)}" data-med-log="${j}" ${day>today()?'disabled':''}>${r.status==='unrecorded'?'登记':statusName(r.status)+' ›'}</button></div>`).join(''):'<div class="empty" style="padding:20px 8px"><p>当天没有服药安排。<br>未记录不代表漏服。</p></div>'}</div>
-      <div class="sectionRow"><h2>用药管理</h2></div><div class="tools-grid">${tool('我的药物',`${medCount} 种在用 · 管理`,'meds','my-drugs',`${medCount} 种在用`)}${tool('服药记录','已登记与更正记录','history','dose-records','历史与更正')}</div><p class="notice">时间安排 · 不是服药提醒服务</p>`;
+      <div class="sectionRow"><h2>全部安排</h2><small>${rows.length?`${rows.length} 项`:'未记录不代表漏服'}</small></div><div class="doseList">${rows.length?rows.map((r,j)=>`<div class="doseItem ${i===j?'focused':''}"><button type="button" class="selectDose" data-med-list-select="${j}" aria-label="选择 ${E(r.time)} ${E(r.med.name)}"><span class="timeCol">${E(r.time)}</span><span class="dosebody"><b>${E(r.med.name)}</b><span>${E(r.med.dose||'剂量未填写')}</span></span></button><button type="button" class="status ${r.status==='unrecorded'?'not':statusClass(r.status)}" data-med-log="${j}" ${day>today()?'disabled':''}>${r.status==='unrecorded'?'登记':statusName(r.status)+' ›'}</button></div>`).join(''):'<div class="empty" style="padding:20px 8px"><p>当天没有服药安排。<br>未记录不代表漏服。</p></div>'}</div>
+      <div class="sectionRow"><h2>用药管理</h2></div><div class="tools-grid">${tool('我的药物',`${medCount} 种在用`,'meds','my-drugs',`${medCount} 种在用`)}${tool('服药记录','历史与更正','history','dose-records','历史与更正')}</div><p class="notice">仅日程，不提供提醒</p>`;
   }
   function drugRow(m) {
     const s=dailyData(snapshot()).medSchedules?.[m.id];
@@ -387,7 +387,7 @@ const MedicationV121 = (() => {
     if(page==='ai')ai();
     else {
       const views={home,meds:medList,detail:()=>detail(id),new:()=>medForm(),edit:()=>medForm(id),times:()=>timeForm(id),log:()=>logForm([id,...rest]),history:historyView,search:searchView};
-      $('#content').innerHTML=wrap((views[page]||home)());bind('mv-back',back);bindActions();
+      $('#content').innerHTML=wrap((views[page]||home)(),page==='home');bind('mv-back',back);bindActions();
       if(page==='home')bindHome();
       if(page==='detail')bind('mv-status',()=>confirmStatus(id));
       bindForms(page,id,[id,...rest]);

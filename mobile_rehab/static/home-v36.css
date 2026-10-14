@@ -36,7 +36,7 @@ body[data-page="home"] #content{max-width:520px;padding:16px 20px calc(92px + en
 .home-section-heading>span{font-size:12px;color:#686f64;font-weight:650}
 body[data-page="home"] .home-task{position:relative;isolation:isolate;overflow:hidden;border-radius:18px;background:#000;color:#fff;aspect-ratio:350/206;margin:0 0 12px;border:0;padding:0}
 body[data-page="home"] .home-streaks{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.home-streaks path{fill:none;stroke:#dfff36}.home-streaks .streak-main{stroke-width:10}.home-streaks .streak-glow{stroke-width:20;opacity:.24;filter:url(#home-streak-glow)}.home-streaks .streak-fine{stroke-width:1.3;opacity:.75}
+.home-streaks path{fill:none;stroke:#dfff36}
 body[data-page="home"] .home-athlete{position:absolute;z-index:1;height:100%;width:auto;max-width:none;left:17%;top:0;opacity:1;filter:none;mix-blend-mode:normal;pointer-events:none}
 body[data-page="home"] .home-task-copy{position:absolute;z-index:2;inset:0;padding:20px 14px;display:flex;flex-direction:column;align-items:start}
 body[data-page="home"] .home-task-label{color:#dfff36;font-size:11px;font-weight:750;margin:0;line-height:1.4}
