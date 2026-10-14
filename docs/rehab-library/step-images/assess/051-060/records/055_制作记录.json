@@ -1,0 +1,389 @@
+{
+  "sequence": 55,
+  "id": "E-AXU-028",
+  "name": "俯卧I/Y/T/W上肢控制观察",
+  "date": "2026-10-14",
+  "tool": "built-in image_gen__imagegen",
+  "source_plan": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "reference_paths": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "original_path": "E:/git冲突问题/rehab image/assess/055_E-AXU-028_俯卧I／Y／T／W上肢控制观察.png",
+  "original_review": {
+    "inspected": true,
+    "matching_route": "I轻抬",
+    "reuse": false,
+    "reason": "原图I路线与头胸腹支撑基本一致，但低斜侧机位遮住远侧手臂；本组需要统一斜上方机位并清楚显示双臂与离垫间隙，因此保留参考而未直接复用"
+  },
+  "frames": [
+    {
+      "frame": 1,
+      "route": "I",
+      "phase": "resting",
+      "attempts": [
+        {
+          "prompt": "Use case: identity-preserve. Asset type: one independent photoreal rehabilitation demonstration photograph, no collage. Input images 1-3 are identity/style/background references: preserve exactly the same adult East Asian woman, same face, black ponytail, white short-sleeve T-shirt and charcoal dark-gray trousers, realistic ordinary adult head/body/limb proportions, natural skin texture, soft studio lighting and the same muted cool gray-blue seamless background. Image 4 is the edit target and prone setup reference: same gray mat, small gray forehead pad, barefoot, lying prone head toward the left and feet toward the right. Reframe only as necessary to a fixed elevated three-quarter oblique overhead camera from the woman's left-front side, showing the complete body, both arms, both hands, forehead pad, mat and both feet with generous margins; sufficient camera elevation for the far-side arm to be fully visible. Keep this exact camera, zoom, mat position, body scale, lighting and background for all eight frames in the set. Use a slightly wider gray mat if necessary so both arms can rest on it in Y/T/W; not a bed or exercise table. The forehead touches the small gray pad, chest, abdomen and pelvis remain supported on the mat, legs relaxed straight and feet resting, neck neutral. Show only one woman and one pose; no text, letters, arrows, badges, watermarks, numbers, inset pictures or composite panels. No extra hands or limbs, no toy-like or shortened limbs, no exaggerated buttocks/chest or body curves. Changes must follow the single specified pose below.\nPOSE s01: I-route RESTING START. Both arms run straight along the sides of her torso toward her feet, elbows naturally extended, wrists neutral. Both hands and forearms visibly REST ON the mat next to the hips/thighs; arms are NOT overhead. Both shoulders relaxed. It must be visibly a resting-down start pose, NOT lifted like the edit target: hand/mat contact and gentle contact shadow should be clear, no air gap below hands. Both arms, including the far-side arm, must be visible. The face looks down and forehead contacts the pad. Chest and abdomen remain fully on the mat.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-4544e84c-8053-4247-9cc1-5b51478b8ceb.png",
+          "qa": {
+            "accepted": false,
+            "reason": "近侧I落垫姿势、额头胸腹支撑与人物风格一致，但摄影机仍较低，远侧手臂基本被躯干遮挡，未满足完整双臂可见及统一斜上方机位"
+          },
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/055_E-AXU-028_俯卧I／Y／T／W上肢控制观察.png"
+          ]
+        },
+        {
+          "prompt": "Use case: identity-preserve. The last image (image 4) is the exact photo to edit; first three images are only the woman identity and gray-blue style references. Correct ONE issue: substantially change the camera viewpoint to HIGH OBLIQUE OVERHEAD, like a photographer above the model looking steeply downward, around 65 degrees elevation above the floor. This must not stay a low side-on shot. Keep the same woman, white T-shirt, charcoal trousers, black ponytail, natural adult body proportions, cool gray-blue seamless background, soft studio light, gray mat and gray forehead pad. Keep her lying prone with head toward frame left and feet toward frame right, forehead on gray pad, chest abdomen pelvis legs resting on mat. Both arms remain along her torso toward her feet in I resting position, both hands and forearms lie flat on the mat beside her hips/thighs. At the NEW high camera viewpoint, BOTH arms and BOTH hands on opposite sides of the torso must be fully visible with no torso occlusion, along with the entire body and both feet. Use a wide gray mat that supports both hands. Keep a single realistic photograph, NO panels, letters, arrows or text. Camera viewpoint MUST visibly change so viewer sees the full back, both arms and both hands from above.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-a5873944-2670-4be8-bdbf-ac080444f114.png",
+          "qa": {
+            "accepted": false,
+            "reason": "斜上方机位修复成功，双臂与双手完整可见、I落垫姿势正确；当前垫面较窄，后续T/Y路线会超出垫面，需先统一加宽垫面以满足所有落垫起始帧"
+          },
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-4544e84c-8053-4247-9cc1-5b51478b8ceb.png"
+          ]
+        },
+        {
+          "prompt": "Use case: identity-preserve, precise-object-edit. Edit the last image (image 4) ONLY by replacing the narrow gray exercise mat with a MUCH WIDER broad rectangular gray floor exercise mat, extending the same mat laterally on both sides of the woman so that her fully outstretched T-pose arms could later REST ON THE MAT. Preserve absolutely the camera elevation and angle, woman position and body scale, entire body pose, both I arms resting along her sides, hands flat on the mat, same head/face/black ponytail, white shirt, charcoal trousers, barefoot, forehead gray support pad, chest abdomen pelvis supported, soft studio lighting and gray-blue background. The head stays left and feet right. The broad mat should fill more of the foreground/background under the woman's future lateral arm span; some mat corners may be outside the frame, but no body part may be cropped. Do not rotate or zoom the camera. Do not move or raise arms. Single photoreal frame with no text, arrows, collage or markings. The only visual change is the gray mat is now wide enough to underlie the full span of BOTH lateral arms.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-d27a66e6-6201-410a-af47-4cbe02b277cc.png",
+          "qa": {
+            "accepted": true,
+            "reason": "已view_image核对：统一斜上方机位、正常比例同一女性、灰蓝背景；双臂沿体侧、双手前臂落垫，额头软垫与胸腹骨盆支撑清楚；加宽垫面可供后续路线落垫"
+          },
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-a5873944-2670-4be8-bdbf-ac080444f114.png"
+          ]
+        }
+      ],
+      "adopted_path": "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s01.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-d27a66e6-6201-410a-af47-4cbe02b277cc.png",
+      "reuse": false,
+      "sha256": "BD5357FA2E0C7C760F5B27E3A93E2A07AFDF07A4454A0F72BCC297A1F4F39ED4",
+      "qa_status": "visual_checked_accepted",
+      "limitations": [
+        "俯卧时面部朝垫面，身份由可见侧脸、发型、服装与参考一致性核对"
+      ],
+      "prompt": "Use case: identity-preserve, precise-object-edit. Edit the last image (image 4) ONLY by replacing the narrow gray exercise mat with a MUCH WIDER broad rectangular gray floor exercise mat, extending the same mat laterally on both sides of the woman so that her fully outstretched T-pose arms could later REST ON THE MAT. Preserve absolutely the camera elevation and angle, woman position and body scale, entire body pose, both I arms resting along her sides, hands flat on the mat, same head/face/black ponytail, white shirt, charcoal trousers, barefoot, forehead gray support pad, chest abdomen pelvis supported, soft studio lighting and gray-blue background. The head stays left and feet right. The broad mat should fill more of the foreground/background under the woman's future lateral arm span; some mat corners may be outside the frame, but no body part may be cropped. Do not rotate or zoom the camera. Do not move or raise arms. Single photoreal frame with no text, arrows, collage or markings. The only visual change is the gray mat is now wide enough to underlie the full span of BOTH lateral arms.",
+      "width": 1536,
+      "height": 1024,
+      "inspected_with": "view_image(detail=original)",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/055_E-AXU-028_俯卧I／Y／T／W上肢控制观察.png"
+      ]
+    },
+    {
+      "frame": 2,
+      "route": "I",
+      "phase": "light_lift",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-d93158e4-0ce8-44f3-86cb-c7384ada8ba6.png",
+      "adopted_path": "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s02.png",
+      "reuse": false,
+      "sha256": "07E2A1DE1B82C0C26B75172E8D96ABCDD621EC59FE61557F0158DC8B1BF3C70A",
+      "prompt": "Use case: identity-preserve. Edit the last input image (image 4), which is the approved I REST frame. Inputs 1-3 lock the same adult East Asian woman identity, white short-sleeve shirt, charcoal trousers, black ponytail and muted cool gray-blue photographic style. Change ONLY her arm height: keep BOTH arms running straight along her torso toward her feet, and gently lift BOTH hands, forearms and arms a small visible distance OFF the gray mat, maintaining the I route and elbows naturally extended. Each hand and forearm must show a CLEAR SMALL AIR GAP and a separated soft shadow below, so this photograph is visibly different from the REST pose. Keep her forehead touching the same gray forehead pad, chest abdomen pelvis and legs ON the broad gray mat; do NOT lift her head, torso, chest or arch her low back. Preserve exactly the approved high oblique overhead camera, subject location and scale, mat geometry, full body framing, background, lighting, natural proportions and both bare feet. Both far and near arms must remain fully visible. No text, letters, arrows, labels, collage, extra limbs or equipment. One photoreal independent frame.",
+      "attempts": [
+        {
+          "prompt": "Use case: identity-preserve. Edit the last input image (image 4), which is the approved I REST frame. Inputs 1-3 lock the same adult East Asian woman identity, white short-sleeve shirt, charcoal trousers, black ponytail and muted cool gray-blue photographic style. Change ONLY her arm height: keep BOTH arms running straight along her torso toward her feet, and gently lift BOTH hands, forearms and arms a small visible distance OFF the gray mat, maintaining the I route and elbows naturally extended. Each hand and forearm must show a CLEAR SMALL AIR GAP and a separated soft shadow below, so this photograph is visibly different from the REST pose. Keep her forehead touching the same gray forehead pad, chest abdomen pelvis and legs ON the broad gray mat; do NOT lift her head, torso, chest or arch her low back. Preserve exactly the approved high oblique overhead camera, subject location and scale, mat geometry, full body framing, background, lighting, natural proportions and both bare feet. Both far and near arms must remain fully visible. No text, letters, arrows, labels, collage, extra limbs or equipment. One photoreal independent frame.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-d93158e4-0ce8-44f3-86cb-c7384ada8ba6.png",
+          "qa": {
+            "accepted": true,
+            "reason": "已view_image：双手双臂沿体侧轻抬、可见离垫间隙与分离阴影；头额软垫与胸腹骨盆支撑保持；机位尺度背景与s01一致"
+          },
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s01.png"
+          ]
+        }
+      ],
+      "qa_status": "visual_checked_accepted",
+      "limitations": [
+        "静态图仅展示姿势和离垫，不能证明肌肉激活或耐受"
+      ],
+      "width": 1536,
+      "height": 1024,
+      "inspected_with": "view_image(detail=original)",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s01.png"
+      ]
+    },
+    {
+      "frame": 3,
+      "route": "Y",
+      "phase": "resting",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-f207b344-0941-47d2-9ffd-8d9c267c846c.png",
+      "adopted_path": "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s03.png",
+      "reuse": false,
+      "sha256": "0CCECD2E8A44DA7330D17B11D3105F9C1E144E9C2BF4D978C01CBEBC8443F815",
+      "prompt": "Use case: identity-preserve. Edit the last input image (image 4), the approved prone I REST image. First three inputs are same woman identity/background references. Keep the exact same high oblique overhead camera, zoom, woman body position and scale, head left/feet right, broad gray mat geometry, gray forehead pad, soft studio lighting, gray-blue background, same face, black ponytail, white short sleeve T-shirt, charcoal trousers, natural adult proportions and bare feet. Change ONLY arm layout to Y-route REST START: BOTH arms extended from shoulders toward the area in FRONT OF HER HEAD and OUT TO EACH SIDE, forming a clear symmetrical Y relative to her torso. Arms are diagonally forward/outward, NOT alongside her hips and NOT straight lateral T. Elbows naturally extended, wrists neutral; BOTH hands, forearms and arms visibly REST ON THE broad gray mat with clear mat contact and no air gap. The complete fingers of both hands must remain in frame with margin. Forehead continues touching the gray pad; chest abdomen pelvis and legs remain on the mat, neck neutral. No lifting head or arching low back. One single photoreal frame with no letters, arrows, text, markings, collage, extra fingers/limbs or weights.",
+      "attempts": [
+        {
+          "prompt": "Use case: identity-preserve. Edit the last input image (image 4), the approved prone I REST image. First three inputs are same woman identity/background references. Keep the exact same high oblique overhead camera, zoom, woman body position and scale, head left/feet right, broad gray mat geometry, gray forehead pad, soft studio lighting, gray-blue background, same face, black ponytail, white short sleeve T-shirt, charcoal trousers, natural adult proportions and bare feet. Change ONLY arm layout to Y-route REST START: BOTH arms extended from shoulders toward the area in FRONT OF HER HEAD and OUT TO EACH SIDE, forming a clear symmetrical Y relative to her torso. Arms are diagonally forward/outward, NOT alongside her hips and NOT straight lateral T. Elbows naturally extended, wrists neutral; BOTH hands, forearms and arms visibly REST ON THE broad gray mat with clear mat contact and no air gap. The complete fingers of both hands must remain in frame with margin. Forehead continues touching the gray pad; chest abdomen pelvis and legs remain on the mat, neck neutral. No lifting head or arching low back. One single photoreal frame with no letters, arrows, text, markings, collage, extra fingers/limbs or weights.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-f207b344-0941-47d2-9ffd-8d9c267c846c.png",
+          "qa": {
+            "accepted": true,
+            "reason": "已view_image：双臂向头前外侧展开形成Y、双手前臂落垫；头额胸腹支撑保持，比例正常；机位、人物尺度、垫面与I组一致，双手未裁切"
+          },
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s01.png"
+          ]
+        }
+      ],
+      "qa_status": "visual_checked_accepted",
+      "limitations": [
+        "Y路线的投影角度受斜上方透视影响，本图不用于自动角度测量"
+      ],
+      "width": 1536,
+      "height": 1024,
+      "inspected_with": "view_image(detail=original)",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s01.png"
+      ]
+    },
+    {
+      "frame": 4,
+      "route": "Y",
+      "phase": "light_lift",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-8239d0f5-8379-4210-b1cc-2bd264ff7bab.png",
+      "adopted_path": "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s04.png",
+      "reuse": false,
+      "sha256": "F1F2073BA841DC4A83EF966150A7110F36F63D77E6CFEF29E6228A909B70AD4B",
+      "prompt": "Use case: identity-preserve. Edit the last input image (image 4), the approved prone Y REST frame. Inputs 1-3 are only woman identity/style references. Change ONLY BOTH arm heights, not their Y direction: gently lift BOTH arms, forearms and hands a small visible distance OFF the gray mat, maintaining the same forward-and-outward Y-route projected layout as the target, elbows naturally extended. Both wrists and hands show small clear air gaps and separated soft shadows under them, visibly different from the resting start. Forehead stays in contact with the same gray forehead pad; chest abdomen pelvis and legs stay ON the mat. Do not lift the chest, head or arch the lower back. Preserve exactly the target camera, woman pose apart from arm height, body scale and location, broad gray mat shape, background, natural adult proportions, same white shirt, charcoal trousers, black ponytail, face and bare feet. Both complete arms/hands/fingers and full body stay inside frame. One photoreal image, no text/arrows/labels/letters/numbers/collage/extra limbs/weights.",
+      "attempts": [
+        {
+          "prompt": "Use case: identity-preserve. Edit the last input image (image 4), the approved prone Y REST frame. Inputs 1-3 are only woman identity/style references. Change ONLY BOTH arm heights, not their Y direction: gently lift BOTH arms, forearms and hands a small visible distance OFF the gray mat, maintaining the same forward-and-outward Y-route projected layout as the target, elbows naturally extended. Both wrists and hands show small clear air gaps and separated soft shadows under them, visibly different from the resting start. Forehead stays in contact with the same gray forehead pad; chest abdomen pelvis and legs stay ON the mat. Do not lift the chest, head or arch the lower back. Preserve exactly the target camera, woman pose apart from arm height, body scale and location, broad gray mat shape, background, natural adult proportions, same white shirt, charcoal trousers, black ponytail, face and bare feet. Both complete arms/hands/fingers and full body stay inside frame. One photoreal image, no text/arrows/labels/letters/numbers/collage/extra limbs/weights.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-8239d0f5-8379-4210-b1cc-2bd264ff7bab.png",
+          "qa": {
+            "accepted": true,
+            "reason": "已view_image：Y前外路线保持，双臂手离垫与阴影可辨；额头软垫、胸腹骨盆支撑未改变，未抬头顶腰；机位尺度背景与s03一致"
+          },
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s03.png"
+          ]
+        }
+      ],
+      "qa_status": "visual_checked_accepted",
+      "limitations": [
+        "离垫幅度仅作轻抬示意，不以静态投影读取真实角度或高度"
+      ],
+      "width": 1536,
+      "height": 1024,
+      "inspected_with": "view_image(detail=original)",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s03.png"
+      ]
+    },
+    {
+      "frame": 5,
+      "route": "T",
+      "phase": "resting",
+      "attempts": [
+        {
+          "prompt": "Use case: identity-preserve. Edit the last input image (image 4), the approved prone I REST image. First three inputs are only same woman identity/style references. Change ONLY arm layout to T-route REST START: BOTH naturally straight arms extend out to opposite SIDES of her shoulders, transverse to the torso, forming a clear T, NOT diagonally forward like a Y and NOT toward the feet like an I. Both complete arms, forearms and hands REST ON the broad gray mat with clear contact and no air gap. Keep normal anatomical arm length and real adult body proportions; do NOT shorten arms to fit, do NOT crop either hand or any fingers. Preserve EXACTLY the same high oblique overhead camera, body position and scale, head at left, feet at right, broad mat shape, forehead pad, lighting and cool gray-blue background. Forehead remains on the pad, chest abdomen pelvis and legs remain supported on the mat, no head lift or lumbar arch. Both shoulders relaxed. One photoreal single frame, no text, arrows, letters, badges, labels, panels, collage, extra limbs or equipment.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-860f53cb-974b-4b6b-b288-004db4274424.png",
+          "qa": {
+            "accepted": false,
+            "reason": "T路线、正常双臂比例和头胸腹支撑正确；远侧手越过垫面上边缘落在背景地面上，不符合双手落垫起始帧，需仅延伸垫面"
+          },
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s01.png"
+          ]
+        },
+        {
+          "prompt": "Use case: identity-preserve, precise-object-edit. Edit image 4, the T REST target. Correct ONLY the gray exercise mat support area beneath the far/top arm: extend the SAME gray mat's upper/back edge farther upward until the complete far-side hand and forearm are RESTING ON THE GRAY MAT rather than on the blue-gray floor. Preserve the mat bottom/front edge, camera, zoom, body position and scale, exact T-arm posture, normal arm lengths, forehead pad, woman's identity and outfit, bare feet, lighting and cool gray-blue background. Do NOT move, shorten, bend or crop arms; do NOT lift hands. Both full hands must be lying flat on the broad gray mat. Forehead remains supported on the gray pad and chest abdomen pelvis legs on the mat. Single photoreal frame, no text, labels, arrows, collage or new objects. The only change is the upper/back gray mat extends under the far-side arm and hand.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-7a57e4b7-745f-4ef3-8d34-14ab528e0fba.png",
+          "qa": {
+            "accepted": true,
+            "reason": "已view_image：T两侧路线清楚，双手前臂均落垫，完整双手与双臂比例正常；额头胸腹支撑和机位尺度保持，仅垫后缘延伸修复接触"
+          },
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-860f53cb-974b-4b6b-b288-004db4274424.png"
+          ]
+        }
+      ],
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-7a57e4b7-745f-4ef3-8d34-14ab528e0fba.png",
+      "adopted_path": "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s05.png",
+      "reuse": false,
+      "sha256": "CD2A4F0642EAD226E3ECE09A2388DDA3E0095BB91FFFB87E4E0C3F83F28FBD05",
+      "qa_status": "visual_checked_accepted",
+      "limitations": [
+        "近侧指尖距画面下缘较近但全部在画面内；垫面后缘比I/Y组额外延伸以保证T落垫接触"
+      ],
+      "prompt": "Use case: identity-preserve, precise-object-edit. Edit image 4, the T REST target. Correct ONLY the gray exercise mat support area beneath the far/top arm: extend the SAME gray mat's upper/back edge farther upward until the complete far-side hand and forearm are RESTING ON THE GRAY MAT rather than on the blue-gray floor. Preserve the mat bottom/front edge, camera, zoom, body position and scale, exact T-arm posture, normal arm lengths, forehead pad, woman's identity and outfit, bare feet, lighting and cool gray-blue background. Do NOT move, shorten, bend or crop arms; do NOT lift hands. Both full hands must be lying flat on the broad gray mat. Forehead remains supported on the gray pad and chest abdomen pelvis legs on the mat. Single photoreal frame, no text, labels, arrows, collage or new objects. The only change is the upper/back gray mat extends under the far-side arm and hand.",
+      "width": 1536,
+      "height": 1024,
+      "inspected_with": "view_image(detail=original)",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s01.png"
+      ]
+    },
+    {
+      "frame": 6,
+      "route": "T",
+      "phase": "light_lift",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-f3ebfebf-5216-41c8-9485-8b6f15bc78ca.png",
+      "adopted_path": "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s06.png",
+      "reuse": false,
+      "sha256": "B37B9969962B101ACFEED51D525BCD595DE57D785C47BCD18FDBA86B91E30CE0",
+      "prompt": "Use case: identity-preserve. Edit the last input image (image 4), the approved prone T REST frame. First three images only lock the same woman's face/outfit/background style. Change ONLY both arm heights: gently lift BOTH straight lateral T-route arms, forearms and hands a small visible distance off the broad gray mat, preserving their transverse/lateral T layout, not changing them into Y diagonals or bent-elbow W. Both arms and full hands show clear small air gaps and separated soft shadows below; elbows naturally extended, wrists neutral. Forehead stays on the same gray pad, chest abdomen pelvis legs stay ON the mat, no head lifting, chest lifting or arching low back. Preserve exact camera angle, subject location/body scale, broad mat shape and edges, gray-blue background, lighting, same identity, black ponytail, white shirt, charcoal trousers, natural normal adult proportions and bare feet. Do not crop either hand/fingers. Single realistic photograph with no text, letters, arrows, labels, collage, extra limbs or weights.",
+      "attempts": [
+        {
+          "prompt": "Use case: identity-preserve. Edit the last input image (image 4), the approved prone T REST frame. First three images only lock the same woman's face/outfit/background style. Change ONLY both arm heights: gently lift BOTH straight lateral T-route arms, forearms and hands a small visible distance off the broad gray mat, preserving their transverse/lateral T layout, not changing them into Y diagonals or bent-elbow W. Both arms and full hands show clear small air gaps and separated soft shadows below; elbows naturally extended, wrists neutral. Forehead stays on the same gray pad, chest abdomen pelvis legs stay ON the mat, no head lifting, chest lifting or arching low back. Preserve exact camera angle, subject location/body scale, broad mat shape and edges, gray-blue background, lighting, same identity, black ponytail, white shirt, charcoal trousers, natural normal adult proportions and bare feet. Do not crop either hand/fingers. Single realistic photograph with no text, letters, arrows, labels, collage, extra limbs or weights.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-f3ebfebf-5216-41c8-9485-8b6f15bc78ca.png",
+          "qa": {
+            "accepted": true,
+            "reason": "已view_image：两侧T路线保持，双手和前臂离垫与分离阴影可见，完整双臂双手无裁切；头额胸腹骨盆仍支撑，机位尺度与s05一致"
+          },
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s05.png"
+          ]
+        }
+      ],
+      "qa_status": "visual_checked_accepted",
+      "limitations": [
+        "离垫与接触仅作姿势示意，不能量化肩胛角度或支撑压力"
+      ],
+      "width": 1536,
+      "height": 1024,
+      "inspected_with": "view_image(detail=original)",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s05.png"
+      ]
+    },
+    {
+      "frame": 7,
+      "route": "W",
+      "phase": "resting",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-723088d0-195d-4133-9fb4-f069d3624149.png",
+      "adopted_path": "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s07.png",
+      "reuse": false,
+      "sha256": "B44F32D72779471AB51F4B5B108F15E51B9AE8DD60B25CD170B080179415DB96",
+      "prompt": "Use case: identity-preserve. Edit the last input image (image 4), the approved prone T REST image. First three inputs lock the same woman identity and gray-blue photo style. Change ONLY BOTH arms to W-route REST START: BOTH elbows visibly BENT, BOTH upper arms open out to the sides, with elbows out beside the torso and a little nearer the hips than the shoulder line; each forearm turns from its elbow toward the head-side region, both hands point generally toward the head. Show a natural symmetrical bent-elbow W layout, distinct from straight-arm T, NOT folded hands behind the back, NOT a push-up. Both hands and forearms REST ON the broad gray mat with clear contact and NO air gap. No arbitrary exaggerated joint angles; ordinary comfortable bent-elbow pose and normal full-length arms. Preserve exact high oblique overhead camera, subject body position and scale, forehead on gray pad, chest abdomen pelvis legs supported on mat, head left and feet right, wide mat geometry, same identity, black ponytail, white short sleeves, charcoal trousers, bare feet, soft lighting and cool gray-blue background. Both arms, hands and all fingers fully visible. No head lift, chest lift, lumbar arch. Single photoreal photograph, no text, arrows, letters, labels, collage, extra limbs or weights.",
+      "attempts": [
+        {
+          "prompt": "Use case: identity-preserve. Edit the last input image (image 4), the approved prone T REST image. First three inputs lock the same woman identity and gray-blue photo style. Change ONLY BOTH arms to W-route REST START: BOTH elbows visibly BENT, BOTH upper arms open out to the sides, with elbows out beside the torso and a little nearer the hips than the shoulder line; each forearm turns from its elbow toward the head-side region, both hands point generally toward the head. Show a natural symmetrical bent-elbow W layout, distinct from straight-arm T, NOT folded hands behind the back, NOT a push-up. Both hands and forearms REST ON the broad gray mat with clear contact and NO air gap. No arbitrary exaggerated joint angles; ordinary comfortable bent-elbow pose and normal full-length arms. Preserve exact high oblique overhead camera, subject body position and scale, forehead on gray pad, chest abdomen pelvis legs supported on mat, head left and feet right, wide mat geometry, same identity, black ponytail, white short sleeves, charcoal trousers, bare feet, soft lighting and cool gray-blue background. Both arms, hands and all fingers fully visible. No head lift, chest lift, lumbar arch. Single photoreal photograph, no text, arrows, letters, labels, collage, extra limbs or weights.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-723088d0-195d-4133-9fb4-f069d3624149.png",
+          "qa": {
+            "accepted": true,
+            "reason": "已view_image：双肘弯曲外开、前臂朝头侧构成W，与直臂T区别清楚；双手前臂落垫，额头胸腹骨盆仍支撑；机位尺度背景与T组一致"
+          },
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s05.png"
+          ]
+        }
+      ],
+      "qa_status": "visual_checked_accepted",
+      "limitations": [
+        "俯卧朝垫面，无法显示完整正脸；身份按侧脸发型服装核对"
+      ],
+      "width": 1536,
+      "height": 1024,
+      "inspected_with": "view_image(detail=original)",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s05.png"
+      ]
+    },
+    {
+      "frame": 8,
+      "route": "W",
+      "phase": "light_lift",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-0c747a11-ee0d-41a3-a323-755865313565.png",
+      "adopted_path": "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s08.png",
+      "reuse": false,
+      "sha256": "CC309BCB96BF769FAF4996B2835560C76120AE2769EE2350618B9D471D946F8F",
+      "prompt": "Use case: identity-preserve. Edit the last input image (image 4), the approved prone W REST frame. Inputs 1-3 lock only same woman identity and gray-blue style. Change ONLY BOTH arms' height: gently lift both BENT-ELBOW W arms, forearms and hands off the broad gray mat a small clearly visible distance, keeping EXACTLY the same W arm directions, bent elbows and normal arm lengths. BOTH hands and forearms show a small air gap and soft separated shadows below; do NOT straighten elbows into T or move them into Y. Head and forehead MUST stay touching the same gray forehead pad, chest abdomen pelvis and legs MUST stay supported on the mat. No push-up, head/chest lifting, exaggerated shoulder shrug, lumbar arch or reaching backwards behind the body. Preserve exact approved high overhead-oblique camera, body position and scale, mat edges, lighting, cool gray-blue background, same black ponytail, face, white short-sleeve shirt, charcoal trousers, barefoot and natural adult proportions. Full arms, hands, fingers and body all inside frame. One photoreal single frame with no text, numbers, arrows, labels, panels, collage, extra limbs or equipment.",
+      "attempts": [
+        {
+          "prompt": "Use case: identity-preserve. Edit the last input image (image 4), the approved prone W REST frame. Inputs 1-3 lock only same woman identity and gray-blue style. Change ONLY BOTH arms' height: gently lift both BENT-ELBOW W arms, forearms and hands off the broad gray mat a small clearly visible distance, keeping EXACTLY the same W arm directions, bent elbows and normal arm lengths. BOTH hands and forearms show a small air gap and soft separated shadows below; do NOT straighten elbows into T or move them into Y. Head and forehead MUST stay touching the same gray forehead pad, chest abdomen pelvis and legs MUST stay supported on the mat. No push-up, head/chest lifting, exaggerated shoulder shrug, lumbar arch or reaching backwards behind the body. Preserve exact approved high overhead-oblique camera, body position and scale, mat edges, lighting, cool gray-blue background, same black ponytail, face, white short-sleeve shirt, charcoal trousers, barefoot and natural adult proportions. Full arms, hands, fingers and body all inside frame. One photoreal single frame with no text, numbers, arrows, labels, panels, collage, extra limbs or equipment.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-0231-7d72-865d-12d82dfa4683\\exec-0c747a11-ee0d-41a3-a323-755865313565.png",
+          "qa": {
+            "accepted": true,
+            "reason": "已view_image：保持W屈肘外开，双前臂和双手离垫间隙与阴影清楚；额头软垫、胸腹骨盆支撑保持；全身比例、机位尺度、背景与s07一致"
+          },
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s07.png"
+          ]
+        }
+      ],
+      "qa_status": "visual_checked_accepted",
+      "limitations": [
+        "静态姿势不证明肌肉激活、力量或临床耐受"
+      ],
+      "width": 1536,
+      "height": 1024,
+      "inspected_with": "view_image(detail=original)",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/steps/055_E-AXU-028_s07.png"
+      ]
+    }
+  ],
+  "completed_frames": 8,
+  "adopted_frames": 8,
+  "direct_original_reuse": 0,
+  "builtin_image_calls": 11,
+  "discarded_candidates": 3,
+  "pre_existing_assets_overwritten": false,
+  "qa_summary": "逐张实际view_image查看：同一女性摄影风格、白短袖深灰裤、黑马尾、灰蓝背景、正常头身四肢比例；I沿体侧，Y前外，T两侧，W屈肘外开；四条路线分别为落垫与轻抬两帧，头额软垫和胸腹骨盆支撑保持，双臂双手完整可见。",
+  "limitations": [
+    "T/W组灰垫后缘比I/Y组额外延伸，以保证远侧手落垫；人物、摄像机位和主体尺度保持一致。",
+    "s05近侧手指距画面下缘较近，但所有手指完整在画面内。",
+    "俯卧示范看不到完整正脸，身份按可见侧脸、黑马尾、服装与三张参考一致性核对。",
+    "QA范围是图片人物、比例、动作、接触与帧间差别，不宣称静态图片能测量力量或肌肉激活。"
+  ]
+}
