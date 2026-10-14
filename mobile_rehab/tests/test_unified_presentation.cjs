@@ -7,9 +7,10 @@ const vm=require('node:vm');
 const dir=path.resolve(__dirname,'../static');
 function page(){
   const fixed=new Map();let nodes=[];
-  const make=()=>({dataset:{},value:'',textContent:'',hidden:false,open:false,
+  const make=()=>{const classes=new Set();return {dataset:{},value:'',textContent:'',hidden:false,open:false,
     querySelector:()=>null,querySelectorAll:()=>[],setAttribute(){},removeAttribute(){},
-    showModal(){this.open=true;},close(){this.open=false;},replaceChildren(){this.innerHTML='';},classList:{toggle(){}}});
+    showModal(){this.open=true;},close(){this.open=false;},replaceChildren(){this.innerHTML='';},
+    classList:{toggle(){},add(x){classes.add(x);},remove(x){classes.delete(x);},contains(x){return classes.has(x);}}};};
   const content=make();let html='';
   Object.defineProperty(content,'innerHTML',{get:()=>html,set:v=>{
     html=v;nodes=[...v.matchAll(/<(?:button|input|select|textarea|form)\b([^>]*)>/g)].map(m=>{
@@ -132,4 +133,9 @@ test('assistant uses main reply provenance and local candidate gate, without pro
   const p=page();assert.equal(p.run("conversationSource({provider:'deepseek',status:'replied'})"),'DeepSeek 回复');
   assert.match(p.run("conversationSource({provider:'local',status:'unavailable',reason:'not_configured'})"),/本地回复/);
   p.run('assistant()');assert.match(p.html,/id="local-plan"/);assert.doesNotMatch(p.html,/记录身体感受/);
+});
+
+test('normal dialogs clear the latest clinician chat layout class',()=>{
+  const p=page(),d=p.get('#dialog');d.classList.add('paired-contact');p.run('editProfile()');
+  assert.equal(d.classList.contains('paired-contact'),false);assert.match(d.innerHTML,/id="profile-form"/);
 });

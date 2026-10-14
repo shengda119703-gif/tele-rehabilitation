@@ -444,6 +444,30 @@ dialog::backdrop {
 dialog .heading {
   margin-top: 0;
 }
+#dialog.paired-contact{width:min(680px,calc(100% - 24px));height:min(720px,92dvh);max-height:92dvh;padding:0;overflow:hidden}
+#dialog.paired-contact[open]{display:flex;flex-direction:column}
+#dialog.paired-contact .heading{display:flex;align-items:center;gap:8px;flex:none;padding:14px 18px;margin:0;border-bottom:1px solid var(--line)}
+#dialog.paired-contact .heading h2{flex:1;font-size:20px;margin:0}
+#dialog.paired-contact .heading button,#dialog.paired-contact .paired-more summary{min-height:44px;padding:8px 10px;width:auto}
+#dialog.paired-contact .paired-more{position:relative;margin:0;padding:0;border:0}
+#dialog.paired-contact .paired-more summary{display:flex;align-items:center;cursor:pointer;list-style:none}
+#dialog.paired-contact .paired-more summary::-webkit-details-marker{display:none}
+#dialog.paired-contact .paired-more>div{position:absolute;top:100%;right:0;z-index:2;min-width:160px;padding:6px;border:1px solid var(--line);border-radius:10px;background:var(--surface);box-shadow:0 8px 24px #0002}
+#dialog.paired-contact .paired-more>div button{display:block;width:100%;text-align:left;border:0;background:transparent}
+#dialog.paired-contact #paired-status{flex:none;margin:0;padding:8px 18px;font-size:13px;color:var(--muted)}
+#dialog.paired-contact #paired-status:empty{display:none}
+#dialog.paired-contact #paired-detail{flex:1;min-height:0;padding:14px 18px;overflow:auto;overflow-wrap:anywhere}
+#dialog.paired-contact .paired-empty{text-align:center;margin-top:25%;color:var(--muted)}
+#dialog.paired-contact .paired-message{width:fit-content;max-width:88%;padding:10px 14px;margin:12px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+#dialog.paired-contact .paired-message.mine{margin-left:auto;background:var(--soft)}
+#dialog.paired-contact .paired-message p{margin:6px 0;white-space:pre-wrap}
+#dialog.paired-contact .paired-message small{font-size:12px;color:var(--muted)}
+#dialog.paired-contact .paired-composer{display:flex;align-items:flex-end;gap:8px;flex:none;padding:12px 14px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+#dialog.paired-contact .paired-input-label{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#dialog.paired-contact .paired-composer textarea{flex:1;min-width:0;width:auto;min-height:44px;max-height:140px;margin:0;padding:10px;resize:none}
+#dialog.paired-contact .paired-composer button{flex:none;width:auto;min-height:44px;margin:0;padding:10px 14px}
+#dialog.paired-contact [hidden]{display:none!important}
+@media(max-width:600px){#dialog.paired-contact{width:calc(100% - 12px);height:94dvh;max-height:94dvh}#dialog.paired-contact .heading{padding:10px 12px}#dialog.paired-contact .heading h2{font-size:19px}#dialog.paired-contact #paired-detail{padding:12px}#dialog.paired-contact .paired-composer{gap:6px;padding-left:8px;padding-right:8px}#dialog.paired-contact .paired-composer button{padding:10px}}
 .skip {
   position: absolute;
   top: -100px;

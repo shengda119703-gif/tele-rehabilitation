@@ -46,7 +46,7 @@ def build():
         generated = html.replace("<head>", "<head>" + scripts, 1)
         (OUTPUT / output).write_text(generated, encoding="utf-8")
         pages[output] = hashlib.sha256((OUTPUT / output).read_bytes()).hexdigest()
-    manifest = {"schema": "ankang-public-web-1", "version": "0.5.1", "execution_location": "BROWSER_LOCAL_CPU",
+    manifest = {"schema": "ankang-public-web-1", "version": "0.5.2", "execution_location": "BROWSER_LOCAL_CPU",
                 "assets": assets, "pages": pages, "ui_source": "mobile_rehab/static", "fixture_data_included": False}
     (OUTPUT / "web-manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({"assets": len(assets), "pages": len(pages), "fixture_data_included": False,
