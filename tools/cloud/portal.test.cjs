@@ -1,7 +1,7 @@
 'use strict';
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const source=fs.readFileSync(path.join(__dirname,'../../cloud_service/static/portal.js'),'utf8'),context={actionNames:{shoulder_abduction:'肩外展'}};
-vm.runInNewContext(source.slice(source.indexOf('  const escape ='),source.indexOf('  async function api'))+'globalThis.renderResult=resultDetails;',context);
+vm.runInNewContext(source.slice(source.indexOf('  const escape ='),source.indexOf('  async function api'))+'globalThis.renderResult=resultDetails;globalThis.escapeValue=escape;',context);
 test('cloud presentation does not turn unnamed desktop metadata into angles',()=>{
  const html=context.renderResult({schema:'ankang-result-1',result:{summary:{completed:0,valid_ratio:0,metrics:{duration:{value:314.55},knee:{label:'膝关节二维夹角',max:null},hip:{label:'髋部二维夹角',max:179.54,unit:'deg'}}}}});
  const visible=html.split('<details>')[0];assert(visible.includes('髋部二维夹角最大值'));assert(visible.includes('179.54 °'));
@@ -29,4 +29,16 @@ test('saved workbench records display real zeros, missing values and client prov
  assert(html.includes('网页保存的本人资料'));assert(html.includes('客户端声明来源'));assert(html.includes('完成次数'));assert(html.includes('>0</dd>'));assert(html.includes('未记录'));assert(html.includes('&lt;script&gt;'));assert(!html.includes('<script>'));
  assert(html.includes('肩外展'));assert(!html.split('<details>')[0].includes('shoulder_abduction'));
  assert(context.renderResult({schema:'ankang-workbench-record-1',source:'IMPORT',result:{}}).includes('资料来源需核对'));
+});
+
+test('usage distinguishes no requests, unknown provider usage and partial pricing',async()=>{
+ const panel={innerHTML:''},view={generation:1,escape:context.escapeValue,document:{getElementById:()=>panel}};
+ const empty={calls:0,prompt_tokens:0,completion_tokens:0,uncertain_calls:0,unpriced_calls:0,estimated_cost_by_currency:{}};
+ let usage=empty;view.api=async()=>({period:'2026-10',enabled:false,usage});
+ vm.runInNewContext(source.slice(source.indexOf('  async function showPatientUsage('),source.indexOf('  async function showReports('))+'globalThis.show=showPatientUsage;',view);
+ await view.show('patient',1);assert(panel.innerHTML.includes('暂无用量'));assert(panel.innerHTML.includes('<dd>0</dd>'));
+ usage={...empty,calls:1,uncertain_calls:1,unpriced_calls:1};await view.show('patient',1);
+ assert(panel.innerHTML.includes('0（已确认部分）'));assert(panel.innerHTML.includes('<dd>待核对</dd>'));assert(!panel.innerHTML.includes('暂无用量'));
+ usage={...empty,calls:2,prompt_tokens:100,completion_tokens:50,unpriced_calls:1,estimated_cost_by_currency:{CNY:'0.0001'}};await view.show('patient',1);
+ assert(panel.innerHTML.includes('CNY 0.0001（已计价部分）'));assert(panel.innerHTML.includes('1 次请求尚未计价'));
 });

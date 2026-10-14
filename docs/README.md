@@ -1,6 +1,6 @@
 # 文档索引
 
-当前源码：电脑 **0.25.1**，独立 Android **0.5.1／code51**，云端 **0.3.1／schema3**。源码版本不等于本机已安装版本或公网部署；工作台为云分支的选择性整合。
+当前源码：电脑 **0.25.2**，独立 Android **0.5.2／code52**，云端 **0.3.2／schema3**。源码版本不等于本机已安装版本或公网部署；工作台为云分支的选择性整合。
 
 | 你要了解什么 | 文档 |
 | --- | --- |
@@ -8,7 +8,7 @@
 | 启动、相机、评估、训练和报告 | [使用指南](USER_GUIDE.md) |
 | 开发环境和运行方式 | [开发说明](DEVELOPMENT.md) |
 | 当前康复 AI 问答、解说与本地候选 | [共用康复动作资料](rehab-library/README.md) |
-| 患者联系医师、医生后台、资料分享和发布计划 | [工作台说明](workbench/README.md)；[双端入口验收](validation/PATIENT_DOCTOR_ENTRIES_2026-10-14.md) |
+| 患者联系医师、医生后台、资料分享和发布计划 | [工作台说明](workbench/README.md)；[简洁工作台验收](validation/SIMPLE_WORKBENCH_2026-10-14.md) |
 | DeepSeek 三端实际范围 | [三端交付范围](development/ANKANG_DELIVERY_SCOPE.md) |
 | main 最近发布证据 | [健康归属修复验收](validation/HEALTH_ATTRIBUTION_FIX_2026-10-12.md) |
 | 后端功能与信息链 | [后端阅读版](后端功能与技术实现梳理.md)；[扩展技术索引](BACKEND_ARCHITECTURE_AND_OPTIMIZATION.md) |
