@@ -1,0 +1,18 @@
+{
+  "baseline_head": "eb1954e32a5d47b9756524e094495ba3af392dba",
+  "tracked_count": 1327,
+  "changed": [
+    "mobile_rehab/static/app.js",
+    "mobile_rehab/static/index.html",
+    "mobile_rehab/static/rehab-v51-capture.js",
+    "mobile_rehab/static/rehab-v51-unified.js",
+    "mobile_rehab/static/rehab-v51.css",
+    "mobile_rehab/static/unified.html",
+    "mobile_rehab/tests/test_rehab_v51.cjs"
+  ],
+  "unchanged_count": 1320,
+  "home_v36_art_and_rehab_hero_week_detail_css_and_image_map": "preserved; approved screenshot pixels equal in both sizes",
+  "backend_algorithms_database_android_qt_secondary_controllers": "byte unchanged",
+  "runtime_frontend_matches": true,
+  "checks": "PASS"
+}

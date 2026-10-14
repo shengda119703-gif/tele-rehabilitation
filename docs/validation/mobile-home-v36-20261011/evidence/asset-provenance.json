@@ -1,0 +1,8 @@
+{
+  "source": "user handoff visual_refs/athlete_source.png",
+  "source_sha256": "562dd7cd6aeec112d1013f82602881cd4147da519290c5854501c7c0d8630617",
+  "asset": "mobile_rehab/static/assets/home-v36/athlete-cutout.png",
+  "asset_sha256": "0a20d37fc6c492f6887412740392bca6bde646b1c2d85d380309ebd55c34569c",
+  "method": "image_gen background extraction, decorative use only",
+  "prompt_summary": "Remove the background from the supplied photograph. Preserve the same woman, natural skin colors, face, hair, pose, outstretched arm, fingers, clothing and original lighting. Do not add text, scenery or effects. Produce a true transparent PNG."
+}

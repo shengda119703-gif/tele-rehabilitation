@@ -1,0 +1,27 @@
+{
+  "baseline_head": "e45361f7d69904a4bb122a5cd1581bbfca72b110",
+  "baseline_files": 1492,
+  "changed_existing_files": [
+    "mobile_rehab/static/unified.html",
+    "mobile_rehab/static/unified.js",
+    "docs/HANDOFF.md"
+  ],
+  "all_other_existing_files_byte_identical": true,
+  "protected_modules": [
+    "home-v36",
+    "rehab-v51/v52",
+    "health-v131",
+    "family",
+    "backend",
+    "algorithms",
+    "API",
+    "database"
+  ],
+  "runtime_business_source": "Q shares identical baseline business source; only medication adapter assets copied",
+  "approved_prototype_sha256": "d7cf9425434f636bafb0ff0d50f4fdb6d488d039b5dacdd1b81318e3c063e6ff",
+  "svg_sha256": {
+    "my-drugs.svg": "9981ae303a022ab2bed9168bd737a98d38b215f6677e2cb0a0d4e6ea458417de",
+    "dose-records.svg": "8644ccfce4c42fe17f7dd8b4119506bf176e12f7cbb0177cda30a5e112b16aed"
+  },
+  "unchanged_existing_files": 1489
+}

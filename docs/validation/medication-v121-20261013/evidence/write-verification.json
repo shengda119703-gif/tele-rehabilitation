@@ -1,0 +1,109 @@
+{
+  "test_only": true,
+  "actual_dose_records": [
+    {
+      "medId": "TEST-A",
+      "date": "2026-10-13",
+      "time": "08:00",
+      "status": "taken",
+      "medName": "TEST 药物 A",
+      "dose": "按既有医嘱",
+      "recordedAt": "2026-10-13T10:55:30.203018+00:00",
+      "previous": "unrecorded"
+    },
+    {
+      "medId": "TEST-A",
+      "date": "2026-10-12",
+      "time": "08:00",
+      "status": "taken",
+      "medName": "TEST 药物 A",
+      "dose": "按既有医嘱",
+      "recordedAt": "2026-10-13T10:55:30.205381+00:00",
+      "previous": "unrecorded"
+    },
+    {
+      "medId": "TEST-B",
+      "date": "2026-10-12",
+      "time": "12:30",
+      "status": "skipped",
+      "medName": "TEST 药物 B",
+      "dose": "",
+      "recordedAt": "2026-10-13T10:55:30.207042+00:00",
+      "previous": "unrecorded"
+    },
+    {
+      "medId": "TEST-B",
+      "date": "2026-10-13",
+      "time": "12:30",
+      "status": "taken",
+      "medName": "TEST 药物 B",
+      "dose": "",
+      "recordedAt": "2026-10-13T11:29:23.959822+00:00",
+      "previous": "unrecorded"
+    },
+    {
+      "medId": "TEST-B",
+      "date": "2026-10-13",
+      "time": "12:30",
+      "status": "unrecorded",
+      "medName": "TEST 药物 B",
+      "dose": "",
+      "recordedAt": "2026-10-13T11:31:33.346861+00:00",
+      "previous": "taken"
+    },
+    {
+      "medId": "TEST-A",
+      "date": "2026-10-12",
+      "time": "08:00",
+      "status": "skipped",
+      "medName": "TEST 药物 A（更新）",
+      "dose": "按更新后的既有医嘱（TEST）",
+      "recordedAt": "2026-10-13T11:33:40.750726+00:00",
+      "previous": "taken"
+    },
+    {
+      "medId": "TEST-A",
+      "date": "2026-10-12",
+      "time": "09:00",
+      "status": "skipped",
+      "medName": "TEST 药物 A（更新）",
+      "dose": "按更新后的既有医嘱（TEST）",
+      "recordedAt": "2026-10-13T11:35:01.935644+00:00",
+      "previous": "unrecorded"
+    },
+    {
+      "medId": "TEST-A",
+      "date": "2026-10-13",
+      "time": "09:00",
+      "status": "taken",
+      "medName": "TEST 药物 A（更新）",
+      "dose": "按更新后的既有医嘱（TEST）",
+      "recordedAt": "2026-10-13T11:44:43.117630+00:00",
+      "previous": "unrecorded"
+    }
+  ],
+  "reply_lost_then_verify_write_count": 1,
+  "double_click_taken_count": 1,
+  "double_click_12_time_schedule_count": 1,
+  "twelve_time_schedule": {
+    "medId": "med-1791891094199-d5njrd0rsmb",
+    "times": [
+      "01:00",
+      "02:00",
+      "03:00",
+      "04:00",
+      "05:00",
+      "06:00",
+      "07:00",
+      "08:00",
+      "09:00",
+      "10:00",
+      "11:00",
+      "12:00"
+    ],
+    "start": "2026-10-13",
+    "end": "2026-10-31",
+    "medName": "TEST 时段边界药物",
+    "dose": "按既有医嘱"
+  }
+}

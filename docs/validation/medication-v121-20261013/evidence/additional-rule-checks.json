@@ -1,0 +1,78 @@
+[
+  {
+    "name": "未配对禁止读取",
+    "passed": true,
+    "detail": "401"
+  },
+  {
+    "name": "药名必填",
+    "passed": true,
+    "detail": {
+      "detail": "请核对填写内容"
+    }
+  },
+  {
+    "name": "非法时间被拒绝",
+    "passed": true,
+    "detail": {
+      "detail": "请填写 HH:mm 时间，多个时间用逗号分隔，最多 12 次。"
+    }
+  },
+  {
+    "name": "结束早于开始被拒绝",
+    "passed": true,
+    "detail": {
+      "detail": "结束日期不能早于开始日期。"
+    }
+  },
+  {
+    "name": "去重排序时间",
+    "passed": true,
+    "detail": "08:00,20:00"
+  },
+  {
+    "name": "未来日期被拒绝",
+    "passed": true,
+    "detail": {
+      "detail": "未来用药不能预先标记为已服用。"
+    }
+  },
+  {
+    "name": "未安排时段被拒绝",
+    "passed": true,
+    "detail": {
+      "detail": "该次服药不在已保存的时间安排中。"
+    }
+  },
+  {
+    "name": "客户端不能切换归属",
+    "passed": true,
+    "detail": {
+      "detail": "操作包含不支持的字段。"
+    }
+  },
+  {
+    "name": "历史补记及重复请求",
+    "passed": true,
+    "detail": "同一occurrence只有一条当前值；重复保存产生两条审计，不是幂等回执"
+  },
+  {
+    "name": "停用/改时后已有记录可后端更正",
+    "passed": true,
+    "detail": {
+      "dailyReceipt": true
+    }
+  },
+  {
+    "name": "停用药不能保存新安排",
+    "passed": true,
+    "detail": {
+      "detail": "请选择当前在用药物；停用药物的过去记录仍可更正。"
+    }
+  },
+  {
+    "name": "跨用户隔离",
+    "passed": true,
+    "detail": "TEST-b 无 TEST-a 药品"
+  }
+]

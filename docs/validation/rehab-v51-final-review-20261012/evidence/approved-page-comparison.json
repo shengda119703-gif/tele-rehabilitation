@@ -1,0 +1,42 @@
+[
+  {
+    "page": "rehab-approved",
+    "width": 390,
+    "same_pixels": true,
+    "mean_rgb_difference": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "page": "rehab-approved",
+    "width": 320,
+    "same_pixels": true,
+    "mean_rgb_difference": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "page": "detail-approved",
+    "width": 390,
+    "same_pixels": true,
+    "mean_rgb_difference": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "page": "detail-approved",
+    "width": 320,
+    "same_pixels": true,
+    "mean_rgb_difference": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  }
+]

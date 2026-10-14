@@ -1,0 +1,55 @@
+{
+  "cards": [
+    {
+      "art": {
+        "bottom": 569,
+        "height": 48,
+        "left": 99,
+        "right": 147,
+        "top": 521,
+        "width": 48,
+        "x": 99,
+        "y": 521
+      },
+      "loaded": true,
+      "text": {
+        "bottom": 563.46875,
+        "height": 36.9453125,
+        "left": 26,
+        "right": 97,
+        "top": 526.5234375,
+        "width": 71,
+        "x": 26,
+        "y": 526.5234375
+      }
+    },
+    {
+      "art": {
+        "bottom": 569,
+        "height": 48,
+        "left": 249,
+        "right": 297,
+        "top": 521,
+        "width": 48,
+        "x": 249,
+        "y": 521
+      },
+      "loaded": true,
+      "text": {
+        "bottom": 563.46875,
+        "height": 36.9453125,
+        "left": 176,
+        "right": 247,
+        "top": 526.5234375,
+        "width": 71,
+        "x": 176,
+        "y": 526.5234375
+      }
+    }
+  ],
+  "documentWidth": 320,
+  "viewport": [
+    320,
+    700
+  ]
+}

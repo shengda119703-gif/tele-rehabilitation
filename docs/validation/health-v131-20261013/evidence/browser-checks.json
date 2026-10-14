@@ -1,0 +1,37 @@
+{
+  "metricOrder": [
+    "活动步数",
+    "静息心率",
+    "血氧",
+    "睡眠时长",
+    "步行速度",
+    "体重",
+    "收缩压",
+    "舒张压",
+    "血糖",
+    "夜间醒来"
+  ],
+  "largeMouseSwipe": "01→02 only",
+  "largeHorizontalWheel": "02→03 only",
+  "progressDrag": "03→10",
+  "keys": "End→10 Home→01",
+  "savedValues": [
+    {
+      "metric": "nightWakes",
+      "value": 0,
+      "source": "manual"
+    },
+    {
+      "metric": "weight",
+      "value": 62.25,
+      "source": "manual"
+    }
+  ],
+  "savedRefreshVerified": true,
+  "uploadDownloadBytesMatch": true,
+  "trashRestoreVerified": true,
+  "aiPrefillContainsMetricOnly": true,
+  "aiReturnExpandedAndScroll": 105,
+  "externalAiProfessionalAnswer": "not verified",
+  "physicalTouchScreen": "not available"
+}

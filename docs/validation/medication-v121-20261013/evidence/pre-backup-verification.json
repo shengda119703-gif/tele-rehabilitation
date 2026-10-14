@@ -1,0 +1,25 @@
+{
+  "created_at": "2026-10-13T18:50:28.192636+08:00",
+  "phase": "pre-integration",
+  "repository": "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/work/home-v36-integration/repository",
+  "branch": "feat/mobile-health-v131",
+  "head": "e45361f7d69904a4bb122a5cd1581bbfca72b110",
+  "working_tree_clean": true,
+  "backup": "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/backups/tele-rehabilitation-medication-v121-before-20261013-185028",
+  "bundle": "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/backups/tele-rehabilitation-medication-v121-before-20261013-185028/tele-rehabilitation-all.bundle",
+  "bundle_sha256": "c87fdfdeba5fd25d67c8181a95c66ba27d301d52126fa4a9f9bf4dc978287e9e",
+  "snapshot": "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/backups/tele-rehabilitation-medication-v121-before-20261013-185028/repository-snapshot",
+  "restore": "/Users/wangzhe/Documents/Codex/2026-10-10/ui-ux-tele-rehabilitation-github-https/backups/tele-rehabilitation-medication-v121-before-20261013-185028/verification",
+  "verified_tracked_files": 1492,
+  "git_metadata_preserved": true,
+  "checks": "PASS",
+  "snapshot_origin": "previous privacy-reviewed snapshot, full tracked content reverified against current repository",
+  "excluded_categories": [
+    "real health/user databases",
+    "tokens/keys/.env",
+    "models/runtime caches",
+    "rebuildable dependencies/builds"
+  ],
+  "uncommitted_source_files": [],
+  "pushed": false
+}

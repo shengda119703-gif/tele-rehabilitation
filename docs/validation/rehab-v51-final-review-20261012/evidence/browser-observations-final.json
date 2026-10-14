@@ -1,0 +1,1948 @@
+[
+  {
+    "stage": "before",
+    "name": "library",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复评估\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "categories": {
+        "direction": "column",
+        "height": 485,
+        "scrollWidth": 350,
+        "width": 350
+      },
+      "documentWidth": 390,
+      "images": [
+        {
+          "bottom": 1002.09375,
+          "height": 174,
+          "left": 39,
+          "right": 188,
+          "top": 828.09375,
+          "width": 149,
+          "x": 39,
+          "y": 828.09375
+        },
+        {
+          "bottom": 1002.09375,
+          "height": 174,
+          "left": 202,
+          "right": 351,
+          "top": 828.09375,
+          "width": 149,
+          "x": 202,
+          "y": 828.09375
+        },
+        {
+          "bottom": 1259.09375,
+          "height": 174,
+          "left": 39,
+          "right": 188,
+          "top": 1085.09375,
+          "width": 149,
+          "x": 39,
+          "y": 1085.09375
+        }
+      ],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "library",
+      "width": 390
+    }
+  },
+  {
+    "stage": "before",
+    "name": "library",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复评估\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "categories": {
+        "direction": "column",
+        "height": 485,
+        "scrollWidth": 290,
+        "width": 290
+      },
+      "documentWidth": 320,
+      "images": [
+        {
+          "bottom": 995.890625,
+          "height": 148,
+          "left": 30,
+          "right": 153,
+          "top": 847.890625,
+          "width": 123,
+          "x": 30,
+          "y": 847.890625
+        },
+        {
+          "bottom": 995.890625,
+          "height": 148,
+          "left": 167,
+          "right": 290,
+          "top": 847.890625,
+          "width": 123,
+          "x": 167,
+          "y": 847.890625
+        },
+        {
+          "bottom": 1226.890625,
+          "height": 148,
+          "left": 30,
+          "right": 153,
+          "top": 1078.890625,
+          "width": 123,
+          "x": 30,
+          "y": 1078.890625
+        }
+      ],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "library",
+      "width": 320
+    }
+  },
+  {
+    "stage": "before",
+    "name": "plan",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的计划\" [level=1]\n  - paragraph: 手机录像训练 · 本轮进度按已保存记录累计，日期安排请回到安康康复页。\n  - button \"康复动作库\"\n  - button \"身体汇总\"\n  - button \"训练记录\"\n  - heading \"本轮安排\" [level=2]\n  - paragraph: 2 / 4 项\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 左侧 · 5 次 × 1 组\n  - progressbar \"本轮训练完成项数\"\n  - button \"开始训练\"\n  - heading \"训练清单\" [level=2]\n  - paragraph: 配图未核验，不作为示教。\n  - button \"未核验视觉封面 肩外展 左侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 左侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩外展 右侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 右侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩前屈 左侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 左侧 · 5 次 × 1 组 · 待完成\n  - button \"未核验视觉封面 肩前屈 右侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 右侧 · 5 次 × 1 组 · 待完成",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 390,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "plan",
+      "width": 390
+    }
+  },
+  {
+    "stage": "before",
+    "name": "plan",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的计划\" [level=1]\n  - paragraph: 手机录像训练 · 本轮进度按已保存记录累计，日期安排请回到安康康复页。\n  - button \"康复动作库\"\n  - button \"身体汇总\"\n  - button \"训练记录\"\n  - heading \"本轮安排\" [level=2]\n  - paragraph: 2 / 4 项\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 左侧 · 5 次 × 1 组\n  - progressbar \"本轮训练完成项数\"\n  - button \"开始训练\"\n  - heading \"训练清单\" [level=2]\n  - paragraph: 配图未核验，不作为示教。\n  - button \"未核验视觉封面 肩外展 左侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 左侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩外展 右侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 右侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩前屈 左侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 左侧 · 5 次 × 1 组 · 待完成\n  - button \"未核验视觉封面 肩前屈 右侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 右侧 · 5 次 × 1 组 · 待完成",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "plan",
+      "width": 320
+    }
+  },
+  {
+    "stage": "before",
+    "name": "feedback",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛感\n  - combobox \"疼痛感 疼痛程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\" [selected]\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\"\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疼痛程度 0至10\":\n    - button \"疼痛0 / 10\" [active] [pressed]: \"0\"\n    - button \"疼痛1 / 10\": \"1\"\n    - button \"疼痛2 / 10\": \"2\"\n    - button \"疼痛3 / 10\": \"3\"\n    - button \"疼痛4 / 10\": \"4\"\n    - button \"疼痛5 / 10\": \"5\"\n    - button \"疼痛6 / 10\": \"6\"\n    - button \"疼痛7 / 10\": \"7\"\n    - button \"疼痛8 / 10\": \"8\"\n    - button \"疼痛9 / 10\": \"9\"\n    - button \"疼痛10 / 10\": \"10\"\n  - text: 疲劳感\n  - combobox \"疲劳感 疲劳程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\"\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\" [selected]\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疲劳程度 0至10\":\n    - button \"疲劳0 / 10\": \"0\"\n    - button \"疲劳1 / 10\": \"1\"\n    - button \"疲劳2 / 10\": \"2\"\n    - button \"疲劳3 / 10\" [pressed]: \"3\"\n    - button \"疲劳4 / 10\": \"4\"\n    - button \"疲劳5 / 10\": \"5\"\n    - button \"疲劳6 / 10\": \"6\"\n    - button \"疲劳7 / 10\": \"7\"\n    - button \"疲劳8 / 10\": \"8\"\n    - button \"疲劳9 / 10\": \"9\"\n    - button \"疲劳10 / 10\": \"10\"\n  - button \"保存反馈\"",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 390,
+      "images": [],
+      "scores": [
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 20,
+          "pressed": "true",
+          "right": 50,
+          "top": 215.984375,
+          "value": "0",
+          "width": 30,
+          "x": 20,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 52,
+          "pressed": "false",
+          "right": 82,
+          "top": 215.984375,
+          "value": "1",
+          "width": 30,
+          "x": 52,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 84,
+          "pressed": "false",
+          "right": 114,
+          "top": 215.984375,
+          "value": "2",
+          "width": 30,
+          "x": 84,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 116,
+          "pressed": "false",
+          "right": 146,
+          "top": 215.984375,
+          "value": "3",
+          "width": 30,
+          "x": 116,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 148,
+          "pressed": "false",
+          "right": 178,
+          "top": 215.984375,
+          "value": "4",
+          "width": 30,
+          "x": 148,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 180,
+          "pressed": "false",
+          "right": 210,
+          "top": 215.984375,
+          "value": "5",
+          "width": 30,
+          "x": 180,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 212,
+          "pressed": "false",
+          "right": 242,
+          "top": 215.984375,
+          "value": "6",
+          "width": 30,
+          "x": 212,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 244,
+          "pressed": "false",
+          "right": 274,
+          "top": 215.984375,
+          "value": "7",
+          "width": 30,
+          "x": 244,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 276,
+          "pressed": "false",
+          "right": 306,
+          "top": 215.984375,
+          "value": "8",
+          "width": 30,
+          "x": 276,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 308,
+          "pressed": "false",
+          "right": 338,
+          "top": 215.984375,
+          "value": "9",
+          "width": 30,
+          "x": 308,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 340,
+          "pressed": "false",
+          "right": 370,
+          "top": 215.984375,
+          "value": "10",
+          "width": 30,
+          "x": 340,
+          "y": 215.984375
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 20,
+          "pressed": "false",
+          "right": 50,
+          "top": 306.078125,
+          "value": "0",
+          "width": 30,
+          "x": 20,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 52,
+          "pressed": "false",
+          "right": 82,
+          "top": 306.078125,
+          "value": "1",
+          "width": 30,
+          "x": 52,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 84,
+          "pressed": "false",
+          "right": 114,
+          "top": 306.078125,
+          "value": "2",
+          "width": 30,
+          "x": 84,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 116,
+          "pressed": "true",
+          "right": 146,
+          "top": 306.078125,
+          "value": "3",
+          "width": 30,
+          "x": 116,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 148,
+          "pressed": "false",
+          "right": 178,
+          "top": 306.078125,
+          "value": "4",
+          "width": 30,
+          "x": 148,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 180,
+          "pressed": "false",
+          "right": 210,
+          "top": 306.078125,
+          "value": "5",
+          "width": 30,
+          "x": 180,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 212,
+          "pressed": "false",
+          "right": 242,
+          "top": 306.078125,
+          "value": "6",
+          "width": 30,
+          "x": 212,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 244,
+          "pressed": "false",
+          "right": 274,
+          "top": 306.078125,
+          "value": "7",
+          "width": 30,
+          "x": 244,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 276,
+          "pressed": "false",
+          "right": 306,
+          "top": 306.078125,
+          "value": "8",
+          "width": 30,
+          "x": 276,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 308,
+          "pressed": "false",
+          "right": 338,
+          "top": 306.078125,
+          "value": "9",
+          "width": 30,
+          "x": 308,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 340,
+          "pressed": "false",
+          "right": 370,
+          "top": 306.078125,
+          "value": "10",
+          "width": 30,
+          "x": 340,
+          "y": 306.078125
+        }
+      ],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "feedback",
+      "width": 390
+    }
+  },
+  {
+    "stage": "before",
+    "name": "feedback",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛感\n  - combobox \"疼痛感 疼痛程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\" [selected]\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\"\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疼痛程度 0至10\":\n    - button \"疼痛0 / 10\" [active] [pressed]: \"0\"\n    - button \"疼痛1 / 10\": \"1\"\n    - button \"疼痛2 / 10\": \"2\"\n    - button \"疼痛3 / 10\": \"3\"\n    - button \"疼痛4 / 10\": \"4\"\n    - button \"疼痛5 / 10\": \"5\"\n    - button \"疼痛6 / 10\": \"6\"\n    - button \"疼痛7 / 10\": \"7\"\n    - button \"疼痛8 / 10\": \"8\"\n    - button \"疼痛9 / 10\": \"9\"\n    - button \"疼痛10 / 10\": \"10\"\n  - text: 疲劳感\n  - combobox \"疲劳感 疲劳程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\"\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\" [selected]\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疲劳程度 0至10\":\n    - button \"疲劳0 / 10\": \"0\"\n    - button \"疲劳1 / 10\": \"1\"\n    - button \"疲劳2 / 10\": \"2\"\n    - button \"疲劳3 / 10\" [pressed]: \"3\"\n    - button \"疲劳4 / 10\": \"4\"\n    - button \"疲劳5 / 10\": \"5\"\n    - button \"疲劳6 / 10\": \"6\"\n    - button \"疲劳7 / 10\": \"7\"\n    - button \"疲劳8 / 10\": \"8\"\n    - button \"疲劳9 / 10\": \"9\"\n    - button \"疲劳10 / 10\": \"10\"\n  - button \"保存反馈\"",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 15,
+          "pressed": "true",
+          "right": 39.5390625,
+          "top": 215.984375,
+          "value": "0",
+          "width": 24.5390625,
+          "x": 15,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 41.5390625,
+          "pressed": "false",
+          "right": 66.0859375,
+          "top": 215.984375,
+          "value": "1",
+          "width": 24.546875,
+          "x": 41.5390625,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 68.0859375,
+          "pressed": "false",
+          "right": 92.6328125,
+          "top": 215.984375,
+          "value": "2",
+          "width": 24.546875,
+          "x": 68.0859375,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 94.6328125,
+          "pressed": "false",
+          "right": 119.1796875,
+          "top": 215.984375,
+          "value": "3",
+          "width": 24.546875,
+          "x": 94.6328125,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 121.1796875,
+          "pressed": "false",
+          "right": 145.7265625,
+          "top": 215.984375,
+          "value": "4",
+          "width": 24.546875,
+          "x": 121.1796875,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 147.7265625,
+          "pressed": "false",
+          "right": 172.265625,
+          "top": 215.984375,
+          "value": "5",
+          "width": 24.5390625,
+          "x": 147.7265625,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 174.265625,
+          "pressed": "false",
+          "right": 198.8125,
+          "top": 215.984375,
+          "value": "6",
+          "width": 24.546875,
+          "x": 174.265625,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 200.8125,
+          "pressed": "false",
+          "right": 225.359375,
+          "top": 215.984375,
+          "value": "7",
+          "width": 24.546875,
+          "x": 200.8125,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 227.359375,
+          "pressed": "false",
+          "right": 251.90625,
+          "top": 215.984375,
+          "value": "8",
+          "width": 24.546875,
+          "x": 227.359375,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 253.90625,
+          "pressed": "false",
+          "right": 278.453125,
+          "top": 215.984375,
+          "value": "9",
+          "width": 24.546875,
+          "x": 253.90625,
+          "y": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "height": 32,
+          "left": 280.453125,
+          "pressed": "false",
+          "right": 304.9921875,
+          "top": 215.984375,
+          "value": "10",
+          "width": 24.5390625,
+          "x": 280.453125,
+          "y": 215.984375
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 15,
+          "pressed": "false",
+          "right": 39.5390625,
+          "top": 306.078125,
+          "value": "0",
+          "width": 24.5390625,
+          "x": 15,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 41.5390625,
+          "pressed": "false",
+          "right": 66.0859375,
+          "top": 306.078125,
+          "value": "1",
+          "width": 24.546875,
+          "x": 41.5390625,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 68.0859375,
+          "pressed": "false",
+          "right": 92.6328125,
+          "top": 306.078125,
+          "value": "2",
+          "width": 24.546875,
+          "x": 68.0859375,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 94.6328125,
+          "pressed": "true",
+          "right": 119.1796875,
+          "top": 306.078125,
+          "value": "3",
+          "width": 24.546875,
+          "x": 94.6328125,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 121.1796875,
+          "pressed": "false",
+          "right": 145.7265625,
+          "top": 306.078125,
+          "value": "4",
+          "width": 24.546875,
+          "x": 121.1796875,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 147.7265625,
+          "pressed": "false",
+          "right": 172.265625,
+          "top": 306.078125,
+          "value": "5",
+          "width": 24.5390625,
+          "x": 147.7265625,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 174.265625,
+          "pressed": "false",
+          "right": 198.8125,
+          "top": 306.078125,
+          "value": "6",
+          "width": 24.546875,
+          "x": 174.265625,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 200.8125,
+          "pressed": "false",
+          "right": 225.359375,
+          "top": 306.078125,
+          "value": "7",
+          "width": 24.546875,
+          "x": 200.8125,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 227.359375,
+          "pressed": "false",
+          "right": 251.90625,
+          "top": 306.078125,
+          "value": "8",
+          "width": 24.546875,
+          "x": 227.359375,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 253.90625,
+          "pressed": "false",
+          "right": 278.453125,
+          "top": 306.078125,
+          "value": "9",
+          "width": 24.546875,
+          "x": 253.90625,
+          "y": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "height": 32,
+          "left": 280.453125,
+          "pressed": "false",
+          "right": 304.9921875,
+          "top": 306.078125,
+          "value": "10",
+          "width": 24.5390625,
+          "x": 280.453125,
+          "y": 306.078125
+        }
+      ],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "feedback",
+      "width": 320
+    }
+  },
+  {
+    "stage": "before",
+    "name": "guidance",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回动作详情\"\n  - heading \"肩外展 · 实时指导\" [level=1]\n  - paragraph: 正对镜头，测试侧肩、肘完整入镜。\n  - generic: 摆好手机，点击开始\n  - generic: 0 次\n  - generic: —\n  - paragraph\n  - text: 镜头\n  - combobox \"镜头\":\n    - option \"前置摄像头\" [selected]\n    - option \"后置摄像头\"\n  - checkbox \"语音提示\"\n  - text: 语音提示\n  - checkbox \"同意将实时画面传到电脑分析，不保存画面。\"\n  - text: 同意将实时画面传到电脑分析，不保存画面。\n  - button \"开始指导\"\n  - button \"停止\" [disabled]\n  - paragraph: 这是实时练习指导，结束后不保存为评估依据。需要报告时请录制上传；疼痛、头晕或不适时停止。",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 390,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "guidance",
+      "width": 390
+    }
+  },
+  {
+    "stage": "before",
+    "name": "guidance",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回动作详情\"\n  - heading \"肩外展 · 实时指导\" [level=1]\n  - paragraph: 正对镜头，测试侧肩、肘完整入镜。\n  - generic: 摆好手机，点击开始\n  - generic: 0 次\n  - generic: —\n  - paragraph\n  - text: 镜头\n  - combobox \"镜头\":\n    - option \"前置摄像头\" [selected]\n    - option \"后置摄像头\"\n  - checkbox \"语音提示\"\n  - text: 语音提示\n  - checkbox \"同意将实时画面传到电脑分析，不保存画面。\"\n  - text: 同意将实时画面传到电脑分析，不保存画面。\n  - button \"开始指导\"\n  - button \"停止\" [disabled]\n  - paragraph: 这是实时练习指导，结束后不保存为评估依据。需要报告时请录制上传；疼痛、头晕或不适时停止。",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "guidance",
+      "width": 320
+    }
+  },
+  {
+    "stage": "before",
+    "name": "fitness",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"健身动作库\" [level=1]\n  - generic: 8 个动作\n  - button \"示例报告 示例数据\":\n    - text: 示例报告\n    - generic: 示例数据\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - complementary \"动作分类\":\n    - button \"全部\" [pressed]\n    - button \"下肢\"\n    - button \"推\"\n    - button \"拉\"\n  - region \"动作列表\":\n    - button \"深蹲 下肢 · 侧面拍摄 查看\":\n      - strong: 深蹲\n      - generic: 下肢 · 侧面拍摄\n      - generic: 查看\n    - button \"硬拉 下肢 · 侧面拍摄 查看\":\n      - strong: 硬拉\n      - generic: 下肢 · 侧面拍摄\n      - generic: 查看\n    - button \"卧推 推 · 侧面拍摄 查看\":\n      - strong: 卧推\n      - generic: 推 · 侧面拍摄\n      - generic: 查看\n    - button \"俯身划船 拉 · 侧面拍摄 查看\":\n      - strong: 俯身划船\n      - generic: 拉 · 侧面拍摄\n      - generic: 查看\n    - button \"肩上推举 推 · 侧面拍摄 查看\":\n      - strong: 肩上推举\n      - generic: 推 · 侧面拍摄\n      - generic: 查看\n    - button \"二头弯举 拉 · 侧面拍摄 查看\":\n      - strong: 二头弯举\n      - generic: 拉 · 侧面拍摄\n      - generic: 查看\n    - button \"俯卧撑 推 · 侧面拍摄 查看\":\n      - strong: 俯卧撑\n      - generic: 推 · 侧面拍摄\n      - generic: 查看\n    - button \"分腿蹲 下肢 · 侧面拍摄 查看\":\n      - strong: 分腿蹲\n      - generic: 下肢 · 侧面拍摄\n      - generic: 查看",
+    "metrics": {
+      "categories": {
+        "direction": "column",
+        "height": 514,
+        "scrollWidth": 92,
+        "width": 92
+      },
+      "documentWidth": 390,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "fitness",
+      "width": 390
+    }
+  },
+  {
+    "stage": "before",
+    "name": "fitness",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"健身动作库\" [level=1]\n  - generic: 8 个动作\n  - button \"示例报告 示例数据\":\n    - text: 示例报告\n    - generic: 示例数据\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - complementary \"动作分类\":\n    - button \"全部\" [pressed]\n    - button \"下肢\"\n    - button \"推\"\n    - button \"拉\"\n  - region \"动作列表\":\n    - button \"深蹲 下肢 · 侧面拍摄\":\n      - strong: 深蹲\n      - generic: 下肢 · 侧面拍摄\n    - button \"硬拉 下肢 · 侧面拍摄\":\n      - strong: 硬拉\n      - generic: 下肢 · 侧面拍摄\n    - button \"卧推 推 · 侧面拍摄\":\n      - strong: 卧推\n      - generic: 推 · 侧面拍摄\n    - button \"俯身划船 拉 · 侧面拍摄\":\n      - strong: 俯身划船\n      - generic: 拉 · 侧面拍摄\n    - button \"肩上推举 推 · 侧面拍摄\":\n      - strong: 肩上推举\n      - generic: 推 · 侧面拍摄\n    - button \"二头弯举 拉 · 侧面拍摄\":\n      - strong: 二头弯举\n      - generic: 拉 · 侧面拍摄\n    - button \"俯卧撑 推 · 侧面拍摄\":\n      - strong: 俯卧撑\n      - generic: 推 · 侧面拍摄\n    - button \"分腿蹲 下肢 · 侧面拍摄\":\n      - strong: 分腿蹲\n      - generic: 下肢 · 侧面拍摄",
+    "metrics": {
+      "categories": {
+        "direction": "column",
+        "height": 370,
+        "scrollWidth": 80,
+        "width": 80
+      },
+      "documentWidth": 321,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "fitness",
+      "width": 320
+    }
+  },
+  {
+    "stage": "before",
+    "name": "rehab-approved",
+    "width": 390,
+    "height": 844,
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 1 天有记录\n    - generic \"星期一 有训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 本轮 2/4 项已完成\n  - region \"当前康复任务\":\n    - generic: 下一项 · 训练\n    - heading \"肩前屈\" [level=2]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"开始训练\":\n      - text: 开始训练\n      - generic: →\n    - generic: 03 / 04\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - link \"历史记录 录像分析记录\":\n      - /url: /capture?tab=history&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 录像分析记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\"\n    - option \"录像分析\" [selected]\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 390,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab",
+      "width": 390
+    }
+  },
+  {
+    "stage": "before",
+    "name": "rehab-approved",
+    "width": 320,
+    "height": 700,
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 1 天有记录\n    - generic \"星期一 有训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 本轮 2/4 项已完成\n  - region \"当前康复任务\":\n    - generic: 下一项 · 训练\n    - heading \"肩前屈\" [level=2]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"开始训练\":\n      - text: 开始训练\n      - generic: →\n    - generic: 03 / 04\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - link \"历史记录 录像分析记录\":\n      - /url: /capture?tab=history&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 录像分析记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\"\n    - option \"录像分析\" [selected]\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab",
+      "width": 320
+    }
+  },
+  {
+    "stage": "before",
+    "name": "detail-approved",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"返回动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍\" [level=2]\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 390,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "detail",
+      "width": 390
+    }
+  },
+  {
+    "stage": "before",
+    "name": "detail-approved",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"返回动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍\" [level=2]\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "detail",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "library",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复动作库\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "categories": {
+        "direction": "row",
+        "height": 44,
+        "scrollWidth": 525,
+        "width": 350
+      },
+      "documentWidth": 390,
+      "images": [
+        {
+          "bottom": 499.59375,
+          "height": 174,
+          "left": 21,
+          "right": 188,
+          "top": 325.59375,
+          "width": 167,
+          "x": 21,
+          "y": 325.59375
+        },
+        {
+          "bottom": 499.59375,
+          "height": 174,
+          "left": 202,
+          "right": 369,
+          "top": 325.59375,
+          "width": 167,
+          "x": 202,
+          "y": 325.59375
+        },
+        {
+          "bottom": 756.59375,
+          "height": 174,
+          "left": 21,
+          "right": 188,
+          "top": 582.59375,
+          "width": 167,
+          "x": 21,
+          "y": 582.59375
+        }
+      ],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "library",
+      "width": 390
+    }
+  },
+  {
+    "stage": "after",
+    "name": "library",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复动作库\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "categories": {
+        "direction": "row",
+        "height": 44,
+        "scrollWidth": 525,
+        "width": 290
+      },
+      "documentWidth": 320,
+      "images": [
+        {
+          "bottom": 493.390625,
+          "height": 148,
+          "left": 16,
+          "right": 153,
+          "top": 345.390625,
+          "width": 137,
+          "x": 16,
+          "y": 345.390625
+        },
+        {
+          "bottom": 493.390625,
+          "height": 148,
+          "left": 167,
+          "right": 304,
+          "top": 345.390625,
+          "width": 137,
+          "x": 167,
+          "y": 345.390625
+        },
+        {
+          "bottom": 724.390625,
+          "height": 148,
+          "left": 16,
+          "right": 153,
+          "top": 576.390625,
+          "width": 137,
+          "x": 16,
+          "y": 576.390625
+        }
+      ],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "library",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "library-category-scroll",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复动作库\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\"\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\" [pressed]\n  - region \"动作列表\":\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "categories": {
+        "direction": "row",
+        "height": 44,
+        "scrollWidth": 525,
+        "width": 290
+      },
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "library",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "library-search-empty",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复动作库\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\" [active]: 不存在\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\"\n    - option \"正面拍摄\" [selected]\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - status: 没有找到这个动作，试试其他名称或部位。",
+    "metrics": {
+      "categories": {
+        "direction": "row",
+        "height": 44,
+        "scrollWidth": 525,
+        "width": 290
+      },
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "library",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "assessment-entry",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"活动度评估\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "categories": {
+        "direction": "row",
+        "height": 44,
+        "scrollWidth": 525,
+        "width": 350
+      },
+      "documentWidth": 390,
+      "images": [
+        {
+          "bottom": 499.59375,
+          "height": 174,
+          "left": 21,
+          "right": 188,
+          "top": 325.59375,
+          "width": 167,
+          "x": 21,
+          "y": 325.59375
+        },
+        {
+          "bottom": 499.59375,
+          "height": 174,
+          "left": 202,
+          "right": 369,
+          "top": 325.59375,
+          "width": 167,
+          "x": 202,
+          "y": 325.59375
+        },
+        {
+          "bottom": 756.59375,
+          "height": 174,
+          "left": 21,
+          "right": 188,
+          "top": 582.59375,
+          "width": 167,
+          "x": 21,
+          "y": 582.59375
+        }
+      ],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=assessment",
+      "view": "library",
+      "width": 390
+    }
+  },
+  {
+    "stage": "after",
+    "name": "assessment-entry",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"活动度评估\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "categories": {
+        "direction": "row",
+        "height": 44,
+        "scrollWidth": 525,
+        "width": 290
+      },
+      "documentWidth": 320,
+      "images": [
+        {
+          "bottom": 493.390625,
+          "height": 148,
+          "left": 16,
+          "right": 153,
+          "top": 345.390625,
+          "width": 137,
+          "x": 16,
+          "y": 345.390625
+        },
+        {
+          "bottom": 493.390625,
+          "height": 148,
+          "left": 167,
+          "right": 304,
+          "top": 345.390625,
+          "width": 137,
+          "x": 167,
+          "y": 345.390625
+        },
+        {
+          "bottom": 724.390625,
+          "height": 148,
+          "left": 16,
+          "right": 153,
+          "top": 576.390625,
+          "width": 137,
+          "x": 16,
+          "y": 576.390625
+        }
+      ],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=assessment",
+      "view": "library",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "plan",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的计划\" [level=1]\n  - paragraph: 录像训练 · 已保存进度；日期安排在康复页。\n  - button \"康复动作库\"\n  - button \"身体汇总\"\n  - button \"训练记录\"\n  - heading \"本轮安排\" [level=2]\n  - paragraph: 2 / 4 项\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 左侧 · 5 次 × 1 组\n  - progressbar \"本轮训练完成项数\"\n  - button \"开始训练\"\n  - heading \"训练清单\" [level=2]\n  - paragraph: 配图未核验，不作为示教。\n  - button \"未核验视觉封面 肩外展 左侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 左侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩外展 右侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 右侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩前屈 左侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 左侧 · 5 次 × 1 组 · 待完成\n  - button \"未核验视觉封面 肩前屈 右侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 右侧 · 5 次 × 1 组 · 待完成",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 390,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "plan",
+      "width": 390
+    }
+  },
+  {
+    "stage": "after",
+    "name": "plan",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的计划\" [level=1]\n  - paragraph: 录像训练 · 已保存进度；日期安排在康复页。\n  - button \"康复动作库\"\n  - button \"身体汇总\"\n  - button \"训练记录\"\n  - heading \"本轮安排\" [level=2]\n  - paragraph: 2 / 4 项\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 左侧 · 5 次 × 1 组\n  - progressbar \"本轮训练完成项数\"\n  - button \"开始训练\"\n  - heading \"训练清单\" [level=2]\n  - paragraph: 配图未核验，不作为示教。\n  - button \"未核验视觉封面 肩外展 左侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 左侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩外展 右侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 右侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩前屈 左侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 左侧 · 5 次 × 1 组 · 待完成\n  - button \"未核验视觉封面 肩前屈 右侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 右侧 · 5 次 × 1 组 · 待完成",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "plan",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "training-prepare",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"返回训练计划\": ‹\n  - heading \"训练准备\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 本次训练 · 左侧\n  - heading \"本次目标\" [level=2]\n  - strong: 5 次\n  - text: 每组次数\n  - strong: 1 组\n  - text: 训练组数\n  - paragraph: 个人角度目标 90°\n  - paragraph: 感到疼痛、头晕或不适，请停止。\n  - heading \"记录本次训练\" [level=2]\n  - paragraph: 测试侧朝向镜头，测试侧肩、肘完整入镜。\n  - status: 电脑分析模型未就绪。\n  - generic \"本人测试侧\":\n    - paragraph: 测试侧：本人左侧，由本次计划确定\n  - button \"拍摄视频\"\n  - button \"选择已有视频\"\n  - generic \"怎么做 · 测量说明\"\n  - generic: 1 看动作\n  - generic: 2 记录训练\n  - generic: 3 填写感受\n  - button \"实时跟练\"",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "prepare",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "feedback",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛感\n  - combobox \"疼痛感 疼痛程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\" [selected]\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\"\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疼痛程度 0至10\":\n    - button \"疼痛0 / 10\" [pressed]: \"0\"\n    - button \"疼痛1 / 10\": \"1\"\n    - button \"疼痛2 / 10\": \"2\"\n    - button \"疼痛3 / 10\": \"3\"\n    - button \"疼痛4 / 10\": \"4\"\n    - button \"疼痛5 / 10\": \"5\"\n    - button \"疼痛6 / 10\": \"6\"\n    - button \"疼痛7 / 10\": \"7\"\n    - button \"疼痛8 / 10\": \"8\"\n    - button \"疼痛9 / 10\": \"9\"\n    - button \"疼痛10 / 10\": \"10\"\n  - text: 疲劳感\n  - combobox \"疲劳感 疲劳程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\"\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\" [selected]\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疲劳程度 0至10\":\n    - button \"疲劳0 / 10\": \"0\"\n    - button \"疲劳1 / 10\": \"1\"\n    - button \"疲劳2 / 10\": \"2\"\n    - button \"疲劳3 / 10\" [active] [pressed]: \"3\"\n    - button \"疲劳4 / 10\": \"4\"\n    - button \"疲劳5 / 10\": \"5\"\n    - button \"疲劳6 / 10\": \"6\"\n    - button \"疲劳7 / 10\": \"7\"\n    - button \"疲劳8 / 10\": \"8\"\n    - button \"疲劳9 / 10\": \"9\"\n    - button \"疲劳10 / 10\": \"10\"\n  - button \"保存反馈\"",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 390,
+      "images": [],
+      "scores": [
+        {
+          "bottom": 259.984375,
+          "height": 44,
+          "left": 20,
+          "pressed": "true",
+          "right": 71.6640625,
+          "top": 215.984375,
+          "value": "0",
+          "width": 51.6640625,
+          "x": 20,
+          "y": 215.984375
+        },
+        {
+          "bottom": 259.984375,
+          "height": 44,
+          "left": 79.6640625,
+          "pressed": "false",
+          "right": 131.328125,
+          "top": 215.984375,
+          "value": "1",
+          "width": 51.6640625,
+          "x": 79.6640625,
+          "y": 215.984375
+        },
+        {
+          "bottom": 259.984375,
+          "height": 44,
+          "left": 139.328125,
+          "pressed": "false",
+          "right": 191,
+          "top": 215.984375,
+          "value": "2",
+          "width": 51.671875,
+          "x": 139.328125,
+          "y": 215.984375
+        },
+        {
+          "bottom": 259.984375,
+          "height": 44,
+          "left": 199,
+          "pressed": "false",
+          "right": 250.6640625,
+          "top": 215.984375,
+          "value": "3",
+          "width": 51.6640625,
+          "x": 199,
+          "y": 215.984375
+        },
+        {
+          "bottom": 259.984375,
+          "height": 44,
+          "left": 258.6640625,
+          "pressed": "false",
+          "right": 310.328125,
+          "top": 215.984375,
+          "value": "4",
+          "width": 51.6640625,
+          "x": 258.6640625,
+          "y": 215.984375
+        },
+        {
+          "bottom": 259.984375,
+          "height": 44,
+          "left": 318.328125,
+          "pressed": "false",
+          "right": 370,
+          "top": 215.984375,
+          "value": "5",
+          "width": 51.671875,
+          "x": 318.328125,
+          "y": 215.984375
+        },
+        {
+          "bottom": 311.984375,
+          "height": 44,
+          "left": 20,
+          "pressed": "false",
+          "right": 71.6640625,
+          "top": 267.984375,
+          "value": "6",
+          "width": 51.6640625,
+          "x": 20,
+          "y": 267.984375
+        },
+        {
+          "bottom": 311.984375,
+          "height": 44,
+          "left": 79.6640625,
+          "pressed": "false",
+          "right": 131.328125,
+          "top": 267.984375,
+          "value": "7",
+          "width": 51.6640625,
+          "x": 79.6640625,
+          "y": 267.984375
+        },
+        {
+          "bottom": 311.984375,
+          "height": 44,
+          "left": 139.328125,
+          "pressed": "false",
+          "right": 191,
+          "top": 267.984375,
+          "value": "8",
+          "width": 51.671875,
+          "x": 139.328125,
+          "y": 267.984375
+        },
+        {
+          "bottom": 311.984375,
+          "height": 44,
+          "left": 199,
+          "pressed": "false",
+          "right": 250.6640625,
+          "top": 267.984375,
+          "value": "9",
+          "width": 51.6640625,
+          "x": 199,
+          "y": 267.984375
+        },
+        {
+          "bottom": 311.984375,
+          "height": 44,
+          "left": 258.6640625,
+          "pressed": "false",
+          "right": 310.328125,
+          "top": 267.984375,
+          "value": "10",
+          "width": 51.6640625,
+          "x": 258.6640625,
+          "y": 267.984375
+        },
+        {
+          "bottom": 414.078125,
+          "height": 44,
+          "left": 20,
+          "pressed": "false",
+          "right": 71.6640625,
+          "top": 370.078125,
+          "value": "0",
+          "width": 51.6640625,
+          "x": 20,
+          "y": 370.078125
+        },
+        {
+          "bottom": 414.078125,
+          "height": 44,
+          "left": 79.6640625,
+          "pressed": "false",
+          "right": 131.328125,
+          "top": 370.078125,
+          "value": "1",
+          "width": 51.6640625,
+          "x": 79.6640625,
+          "y": 370.078125
+        },
+        {
+          "bottom": 414.078125,
+          "height": 44,
+          "left": 139.328125,
+          "pressed": "false",
+          "right": 191,
+          "top": 370.078125,
+          "value": "2",
+          "width": 51.671875,
+          "x": 139.328125,
+          "y": 370.078125
+        },
+        {
+          "bottom": 414.078125,
+          "height": 44,
+          "left": 199,
+          "pressed": "true",
+          "right": 250.6640625,
+          "top": 370.078125,
+          "value": "3",
+          "width": 51.6640625,
+          "x": 199,
+          "y": 370.078125
+        },
+        {
+          "bottom": 414.078125,
+          "height": 44,
+          "left": 258.6640625,
+          "pressed": "false",
+          "right": 310.328125,
+          "top": 370.078125,
+          "value": "4",
+          "width": 51.6640625,
+          "x": 258.6640625,
+          "y": 370.078125
+        },
+        {
+          "bottom": 414.078125,
+          "height": 44,
+          "left": 318.328125,
+          "pressed": "false",
+          "right": 370,
+          "top": 370.078125,
+          "value": "5",
+          "width": 51.671875,
+          "x": 318.328125,
+          "y": 370.078125
+        },
+        {
+          "bottom": 466.078125,
+          "height": 44,
+          "left": 20,
+          "pressed": "false",
+          "right": 71.6640625,
+          "top": 422.078125,
+          "value": "6",
+          "width": 51.6640625,
+          "x": 20,
+          "y": 422.078125
+        },
+        {
+          "bottom": 466.078125,
+          "height": 44,
+          "left": 79.6640625,
+          "pressed": "false",
+          "right": 131.328125,
+          "top": 422.078125,
+          "value": "7",
+          "width": 51.6640625,
+          "x": 79.6640625,
+          "y": 422.078125
+        },
+        {
+          "bottom": 466.078125,
+          "height": 44,
+          "left": 139.328125,
+          "pressed": "false",
+          "right": 191,
+          "top": 422.078125,
+          "value": "8",
+          "width": 51.671875,
+          "x": 139.328125,
+          "y": 422.078125
+        },
+        {
+          "bottom": 466.078125,
+          "height": 44,
+          "left": 199,
+          "pressed": "false",
+          "right": 250.6640625,
+          "top": 422.078125,
+          "value": "9",
+          "width": 51.6640625,
+          "x": 199,
+          "y": 422.078125
+        },
+        {
+          "bottom": 466.078125,
+          "height": 44,
+          "left": 258.6640625,
+          "pressed": "false",
+          "right": 310.328125,
+          "top": 422.078125,
+          "value": "10",
+          "width": 51.6640625,
+          "x": 258.6640625,
+          "y": 422.078125
+        }
+      ],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "feedback",
+      "width": 390
+    }
+  },
+  {
+    "stage": "after",
+    "name": "feedback",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛感\n  - combobox \"疼痛感 疼痛程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\" [selected]\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\"\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疼痛程度 0至10\":\n    - button \"疼痛0 / 10\" [pressed]: \"0\"\n    - button \"疼痛1 / 10\": \"1\"\n    - button \"疼痛2 / 10\": \"2\"\n    - button \"疼痛3 / 10\": \"3\"\n    - button \"疼痛4 / 10\": \"4\"\n    - button \"疼痛5 / 10\": \"5\"\n    - button \"疼痛6 / 10\": \"6\"\n    - button \"疼痛7 / 10\": \"7\"\n    - button \"疼痛8 / 10\": \"8\"\n    - button \"疼痛9 / 10\": \"9\"\n    - button \"疼痛10 / 10\": \"10\"\n  - text: 疲劳感\n  - combobox \"疲劳感 疲劳程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\"\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\" [selected]\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疲劳程度 0至10\":\n    - button \"疲劳0 / 10\": \"0\"\n    - button \"疲劳1 / 10\": \"1\"\n    - button \"疲劳2 / 10\": \"2\"\n    - button \"疲劳3 / 10\" [active] [pressed]: \"3\"\n    - button \"疲劳4 / 10\": \"4\"\n    - button \"疲劳5 / 10\": \"5\"\n    - button \"疲劳6 / 10\": \"6\"\n    - button \"疲劳7 / 10\": \"7\"\n    - button \"疲劳8 / 10\": \"8\"\n    - button \"疲劳9 / 10\": \"9\"\n    - button \"疲劳10 / 10\": \"10\"\n  - button \"保存反馈\"",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [
+        {
+          "bottom": 259.984375,
+          "height": 44,
+          "left": 15,
+          "pressed": "true",
+          "right": 66.59375,
+          "top": 215.984375,
+          "value": "0",
+          "width": 51.59375,
+          "x": 15,
+          "y": 215.984375
+        },
+        {
+          "bottom": 259.984375,
+          "height": 44,
+          "left": 74.59375,
+          "pressed": "false",
+          "right": 126.1953125,
+          "top": 215.984375,
+          "value": "1",
+          "width": 51.6015625,
+          "x": 74.59375,
+          "y": 215.984375
+        },
+        {
+          "bottom": 259.984375,
+          "height": 44,
+          "left": 134.1953125,
+          "pressed": "false",
+          "right": 185.796875,
+          "top": 215.984375,
+          "value": "2",
+          "width": 51.6015625,
+          "x": 134.1953125,
+          "y": 215.984375
+        },
+        {
+          "bottom": 259.984375,
+          "height": 44,
+          "left": 193.796875,
+          "pressed": "false",
+          "right": 245.3984375,
+          "top": 215.984375,
+          "value": "3",
+          "width": 51.6015625,
+          "x": 193.796875,
+          "y": 215.984375
+        },
+        {
+          "bottom": 259.984375,
+          "height": 44,
+          "left": 253.3984375,
+          "pressed": "false",
+          "right": 304.9921875,
+          "top": 215.984375,
+          "value": "4",
+          "width": 51.59375,
+          "x": 253.3984375,
+          "y": 215.984375
+        },
+        {
+          "bottom": 311.984375,
+          "height": 44,
+          "left": 15,
+          "pressed": "false",
+          "right": 66.59375,
+          "top": 267.984375,
+          "value": "5",
+          "width": 51.59375,
+          "x": 15,
+          "y": 267.984375
+        },
+        {
+          "bottom": 311.984375,
+          "height": 44,
+          "left": 74.59375,
+          "pressed": "false",
+          "right": 126.1953125,
+          "top": 267.984375,
+          "value": "6",
+          "width": 51.6015625,
+          "x": 74.59375,
+          "y": 267.984375
+        },
+        {
+          "bottom": 311.984375,
+          "height": 44,
+          "left": 134.1953125,
+          "pressed": "false",
+          "right": 185.796875,
+          "top": 267.984375,
+          "value": "7",
+          "width": 51.6015625,
+          "x": 134.1953125,
+          "y": 267.984375
+        },
+        {
+          "bottom": 311.984375,
+          "height": 44,
+          "left": 193.796875,
+          "pressed": "false",
+          "right": 245.3984375,
+          "top": 267.984375,
+          "value": "8",
+          "width": 51.6015625,
+          "x": 193.796875,
+          "y": 267.984375
+        },
+        {
+          "bottom": 311.984375,
+          "height": 44,
+          "left": 253.3984375,
+          "pressed": "false",
+          "right": 304.9921875,
+          "top": 267.984375,
+          "value": "9",
+          "width": 51.59375,
+          "x": 253.3984375,
+          "y": 267.984375
+        },
+        {
+          "bottom": 363.984375,
+          "height": 44,
+          "left": 15,
+          "pressed": "false",
+          "right": 66.59375,
+          "top": 319.984375,
+          "value": "10",
+          "width": 51.59375,
+          "x": 15,
+          "y": 319.984375
+        },
+        {
+          "bottom": 466.078125,
+          "height": 44,
+          "left": 15,
+          "pressed": "false",
+          "right": 66.59375,
+          "top": 422.078125,
+          "value": "0",
+          "width": 51.59375,
+          "x": 15,
+          "y": 422.078125
+        },
+        {
+          "bottom": 466.078125,
+          "height": 44,
+          "left": 74.59375,
+          "pressed": "false",
+          "right": 126.1953125,
+          "top": 422.078125,
+          "value": "1",
+          "width": 51.6015625,
+          "x": 74.59375,
+          "y": 422.078125
+        },
+        {
+          "bottom": 466.078125,
+          "height": 44,
+          "left": 134.1953125,
+          "pressed": "false",
+          "right": 185.796875,
+          "top": 422.078125,
+          "value": "2",
+          "width": 51.6015625,
+          "x": 134.1953125,
+          "y": 422.078125
+        },
+        {
+          "bottom": 466.078125,
+          "height": 44,
+          "left": 193.796875,
+          "pressed": "true",
+          "right": 245.3984375,
+          "top": 422.078125,
+          "value": "3",
+          "width": 51.6015625,
+          "x": 193.796875,
+          "y": 422.078125
+        },
+        {
+          "bottom": 466.078125,
+          "height": 44,
+          "left": 253.3984375,
+          "pressed": "false",
+          "right": 304.9921875,
+          "top": 422.078125,
+          "value": "4",
+          "width": 51.59375,
+          "x": 253.3984375,
+          "y": 422.078125
+        },
+        {
+          "bottom": 518.078125,
+          "height": 44,
+          "left": 15,
+          "pressed": "false",
+          "right": 66.59375,
+          "top": 474.078125,
+          "value": "5",
+          "width": 51.59375,
+          "x": 15,
+          "y": 474.078125
+        },
+        {
+          "bottom": 518.078125,
+          "height": 44,
+          "left": 74.59375,
+          "pressed": "false",
+          "right": 126.1953125,
+          "top": 474.078125,
+          "value": "6",
+          "width": 51.6015625,
+          "x": 74.59375,
+          "y": 474.078125
+        },
+        {
+          "bottom": 518.078125,
+          "height": 44,
+          "left": 134.1953125,
+          "pressed": "false",
+          "right": 185.796875,
+          "top": 474.078125,
+          "value": "7",
+          "width": 51.6015625,
+          "x": 134.1953125,
+          "y": 474.078125
+        },
+        {
+          "bottom": 518.078125,
+          "height": 44,
+          "left": 193.796875,
+          "pressed": "false",
+          "right": 245.3984375,
+          "top": 474.078125,
+          "value": "8",
+          "width": 51.6015625,
+          "x": 193.796875,
+          "y": 474.078125
+        },
+        {
+          "bottom": 518.078125,
+          "height": 44,
+          "left": 253.3984375,
+          "pressed": "false",
+          "right": 304.9921875,
+          "top": 474.078125,
+          "value": "9",
+          "width": 51.59375,
+          "x": 253.3984375,
+          "y": 474.078125
+        },
+        {
+          "bottom": 570.078125,
+          "height": 44,
+          "left": 15,
+          "pressed": "false",
+          "right": 66.59375,
+          "top": 526.078125,
+          "value": "10",
+          "width": 51.59375,
+          "x": 15,
+          "y": 526.078125
+        }
+      ],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "feedback",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "feedback-return-plan",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的计划\" [level=1]\n  - paragraph: 录像训练 · 已保存进度；日期安排在康复页。\n  - button \"康复动作库\"\n  - button \"身体汇总\"\n  - button \"训练记录\"\n  - heading \"本轮安排\" [level=2]\n  - paragraph: 2 / 4 项\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 左侧 · 5 次 × 1 组\n  - progressbar \"本轮训练完成项数\"\n  - button \"开始训练\"\n  - heading \"训练清单\" [level=2]\n  - paragraph: 配图未核验，不作为示教。\n  - button \"未核验视觉封面 肩外展 左侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 左侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩外展 右侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 右侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩前屈 左侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 左侧 · 5 次 × 1 组 · 待完成\n  - button \"未核验视觉封面 肩前屈 右侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 右侧 · 5 次 × 1 组 · 待完成",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "plan",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "guidance",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回动作详情\"\n  - heading \"肩外展 · 实时指导\" [level=1]\n  - paragraph: 正对镜头，测试侧肩、肘完整入镜。\n  - generic: 摆好手机，点击开始\n  - generic: 0 次\n  - generic: —\n  - paragraph\n  - text: 镜头\n  - combobox \"镜头\":\n    - option \"前置摄像头\" [selected]\n    - option \"后置摄像头\"\n  - checkbox \"语音提示\"\n  - text: 语音提示\n  - checkbox \"同意将实时画面传到电脑分析，不保存画面。\"\n  - text: 同意将实时画面传到电脑分析，不保存画面。\n  - button \"开始指导\"\n  - button \"停止\" [disabled]\n  - paragraph: 这是实时练习指导，结束后不保存为评估依据。需要报告时请录制上传；疼痛、头晕或不适时停止。",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 390,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "guidance",
+      "width": 390
+    }
+  },
+  {
+    "stage": "after",
+    "name": "guidance",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回动作详情\"\n  - heading \"肩外展 · 实时指导\" [level=1]\n  - paragraph: 正对镜头，测试侧肩、肘完整入镜。\n  - generic: 摆好手机，点击开始\n  - generic: 0 次\n  - generic: —\n  - paragraph\n  - text: 镜头\n  - combobox \"镜头\":\n    - option \"前置摄像头\" [selected]\n    - option \"后置摄像头\"\n  - checkbox \"语音提示\"\n  - text: 语音提示\n  - checkbox \"同意将实时画面传到电脑分析，不保存画面。\"\n  - text: 同意将实时画面传到电脑分析，不保存画面。\n  - button \"开始指导\"\n  - button \"停止\" [disabled]\n  - paragraph: 这是实时练习指导，结束后不保存为评估依据。需要报告时请录制上传；疼痛、头晕或不适时停止。",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "guidance",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "guidance-consent-required",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回动作详情\"\n  - heading \"肩外展 · 实时指导\" [level=1]\n  - paragraph: 正对镜头，测试侧肩、肘完整入镜。\n  - generic: 摆好手机，点击开始\n  - generic: 0 次\n  - generic: —\n  - paragraph\n  - text: 镜头\n  - combobox \"镜头\":\n    - option \"前置摄像头\" [selected]\n    - option \"后置摄像头\"\n  - checkbox \"语音提示\"\n  - text: 语音提示\n  - checkbox \"同意将实时画面传到电脑分析，不保存画面。\"\n  - text: 同意将实时画面传到电脑分析，不保存画面。\n  - button \"开始指导\" [active]\n  - button \"停止\" [disabled]\n  - paragraph: 这是实时练习指导，结束后不保存为评估依据。需要报告时请录制上传；疼痛、头晕或不适时停止。",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "guidance",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "fitness",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"健身动作库\" [level=1]\n  - generic: 8 个动作\n  - button \"示例报告 示例数据\":\n    - text: 示例报告\n    - generic: 示例数据\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - complementary \"动作分类\":\n    - button \"全部\" [pressed]\n    - button \"下肢\"\n    - button \"推\"\n    - button \"拉\"\n  - region \"动作列表\":\n    - button \"深蹲 下肢 · 侧面拍摄 查看\":\n      - strong: 深蹲\n      - generic: 下肢 · 侧面拍摄\n      - generic: 查看\n    - button \"硬拉 下肢 · 侧面拍摄 查看\":\n      - strong: 硬拉\n      - generic: 下肢 · 侧面拍摄\n      - generic: 查看\n    - button \"卧推 推 · 侧面拍摄 查看\":\n      - strong: 卧推\n      - generic: 推 · 侧面拍摄\n      - generic: 查看\n    - button \"俯身划船 拉 · 侧面拍摄 查看\":\n      - strong: 俯身划船\n      - generic: 拉 · 侧面拍摄\n      - generic: 查看\n    - button \"肩上推举 推 · 侧面拍摄 查看\":\n      - strong: 肩上推举\n      - generic: 推 · 侧面拍摄\n      - generic: 查看\n    - button \"二头弯举 拉 · 侧面拍摄 查看\":\n      - strong: 二头弯举\n      - generic: 拉 · 侧面拍摄\n      - generic: 查看\n    - button \"俯卧撑 推 · 侧面拍摄 查看\":\n      - strong: 俯卧撑\n      - generic: 推 · 侧面拍摄\n      - generic: 查看\n    - button \"分腿蹲 下肢 · 侧面拍摄 查看\":\n      - strong: 分腿蹲\n      - generic: 下肢 · 侧面拍摄\n      - generic: 查看",
+    "metrics": {
+      "categories": {
+        "direction": "row",
+        "height": 44,
+        "scrollWidth": 350,
+        "width": 350
+      },
+      "documentWidth": 390,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "fitness",
+      "width": 390
+    }
+  },
+  {
+    "stage": "after",
+    "name": "fitness",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"健身动作库\" [level=1]\n  - generic: 8 个动作\n  - button \"示例报告 示例数据\":\n    - text: 示例报告\n    - generic: 示例数据\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - complementary \"动作分类\":\n    - button \"全部\" [pressed]\n    - button \"下肢\"\n    - button \"推\"\n    - button \"拉\"\n  - region \"动作列表\":\n    - button \"深蹲 下肢 · 侧面拍摄\":\n      - strong: 深蹲\n      - generic: 下肢 · 侧面拍摄\n    - button \"硬拉 下肢 · 侧面拍摄\":\n      - strong: 硬拉\n      - generic: 下肢 · 侧面拍摄\n    - button \"卧推 推 · 侧面拍摄\":\n      - strong: 卧推\n      - generic: 推 · 侧面拍摄\n    - button \"俯身划船 拉 · 侧面拍摄\":\n      - strong: 俯身划船\n      - generic: 拉 · 侧面拍摄\n    - button \"肩上推举 推 · 侧面拍摄\":\n      - strong: 肩上推举\n      - generic: 推 · 侧面拍摄\n    - button \"二头弯举 拉 · 侧面拍摄\":\n      - strong: 二头弯举\n      - generic: 拉 · 侧面拍摄\n    - button \"俯卧撑 推 · 侧面拍摄\":\n      - strong: 俯卧撑\n      - generic: 推 · 侧面拍摄\n    - button \"分腿蹲 下肢 · 侧面拍摄\":\n      - strong: 分腿蹲\n      - generic: 下肢 · 侧面拍摄",
+    "metrics": {
+      "categories": {
+        "direction": "row",
+        "height": 44,
+        "scrollWidth": 290,
+        "width": 290
+      },
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "fitness",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "fitness-prepare",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"返回动作库\"\n  - heading \"深蹲\" [level=1]\n  - paragraph: 下肢 · 侧面拍摄\n  - generic: 1 看动作\n  - generic: 2 拍摄\n  - generic: 3 分析回看\n  - heading \"怎么做\" [level=2]\n  - generic \"观察侧\":\n    - button \"本人左侧\" [pressed]\n    - button \"本人右侧\"\n  - generic: \"1\"\n  - paragraph: 站稳，停留 2 秒。\n  - generic: \"2\"\n  - paragraph: 按平时的幅度下蹲。\n  - generic: \"3\"\n  - paragraph: 站起后，再做下一次。\n  - generic \"拍摄与测量说明\"\n  - text: 观察膝髋角、躯干倾角和髋膝相对高度；不判断比赛深度、膝内扣或关节受力。 主指标：膝关节二维夹角。\n  - heading \"分析一组动作\" [level=2]\n  - paragraph: 侧面拍摄 · 建议 15–40 秒\n  - button \"拍摄视频\"\n  - button \"选择已有视频\"\n  - paragraph: 可选：选择视频后标定器械，查看速度和功率。",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 390,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "fitness",
+      "width": 390
+    }
+  },
+  {
+    "stage": "after",
+    "name": "fitness-prepare",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"返回动作库\"\n  - heading \"深蹲\" [level=1]\n  - paragraph: 下肢 · 侧面拍摄\n  - generic: 1 看动作\n  - generic: 2 拍摄\n  - generic: 3 分析回看\n  - heading \"怎么做\" [level=2]\n  - generic \"观察侧\":\n    - button \"本人左侧\" [pressed]\n    - button \"本人右侧\"\n  - generic: \"1\"\n  - paragraph: 站稳，停留 2 秒。\n  - generic: \"2\"\n  - paragraph: 按平时的幅度下蹲。\n  - generic: \"3\"\n  - paragraph: 站起后，再做下一次。\n  - generic \"拍摄与测量说明\"\n  - text: 观察膝髋角、躯干倾角和髋膝相对高度；不判断比赛深度、膝内扣或关节受力。 主指标：膝关节二维夹角。\n  - heading \"分析一组动作\" [level=2]\n  - paragraph: 侧面拍摄 · 建议 15–40 秒\n  - button \"拍摄视频\"\n  - button \"选择已有视频\"\n  - paragraph: 可选：选择视频后标定器械，查看速度和功率。",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "fitness",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "rehab-approved",
+    "width": 390,
+    "height": 844,
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 1 天有记录\n    - generic \"星期一 有训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 本轮 2/4 项已完成\n  - region \"当前康复任务\":\n    - generic: 下一项 · 训练\n    - heading \"肩前屈\" [level=2]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"开始训练\":\n      - text: 开始训练\n      - generic: →\n    - generic: 03 / 04\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=assessment\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - link \"历史记录 录像分析记录\":\n      - /url: /capture?tab=history&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 录像分析记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\"\n    - option \"录像分析\" [selected]\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 390,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab",
+      "width": 390
+    }
+  },
+  {
+    "stage": "after",
+    "name": "rehab-approved",
+    "width": 320,
+    "height": 700,
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 1 天有记录\n    - generic \"星期一 有训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 本轮 2/4 项已完成\n  - region \"当前康复任务\":\n    - generic: 下一项 · 训练\n    - heading \"肩前屈\" [level=2]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"开始训练\":\n      - text: 开始训练\n      - generic: →\n    - generic: 03 / 04\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=assessment\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - link \"历史记录 录像分析记录\":\n      - /url: /capture?tab=history&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 录像分析记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\"\n    - option \"录像分析\" [selected]\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "detail-approved",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"返回康复动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍\" [level=2]\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 390,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library",
+      "view": "detail",
+      "width": 390
+    }
+  },
+  {
+    "stage": "after",
+    "name": "detail-approved",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"返回康复动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍\" [level=2]\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "categories": null,
+      "documentWidth": 320,
+      "images": [],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library",
+      "view": "detail",
+      "width": 320
+    }
+  },
+  {
+    "stage": "after",
+    "name": "library-native-scroll",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复动作库\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "categories": {
+        "direction": "row",
+        "height": 44,
+        "scrollWidth": 525,
+        "width": 290
+      },
+      "documentWidth": 320,
+      "images": [
+        {
+          "bottom": 493.390625,
+          "height": 148,
+          "left": 16,
+          "right": 153,
+          "top": 345.390625,
+          "width": 137,
+          "x": 16,
+          "y": 345.390625
+        },
+        {
+          "bottom": 493.390625,
+          "height": 148,
+          "left": 167,
+          "right": 304,
+          "top": 345.390625,
+          "width": 137,
+          "x": 167,
+          "y": 345.390625
+        },
+        {
+          "bottom": 724.390625,
+          "height": 148,
+          "left": 16,
+          "right": 153,
+          "top": 576.390625,
+          "width": 137,
+          "x": 16,
+          "y": 576.390625
+        }
+      ],
+      "scores": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library",
+      "view": "library",
+      "width": 320
+    }
+  }
+]

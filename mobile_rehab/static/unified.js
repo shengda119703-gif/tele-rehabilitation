@@ -26,13 +26,15 @@ const ui = {
   private: false,
   generation: 0,
   busy: false,
+  homeConnection: "loading",
+  homeRouteDay: null,
 };
 const names = {
   home: "首页",
   rehab: "康复",
   health: "健康",
   medication: "用药",
-  family: "家庭",
+  family: "家人",
 };
 const icons = {
   home: "M3 10 12 3l9 7v11h-6v-7H9v7H3Z",
@@ -73,11 +75,13 @@ async function api(path, data, options = {}) {
     }
     if (!r.ok) {
       if (r.status === 401) pair();
-      throw Error(
+      const error = Error(
         typeof value.detail === "string"
           ? value.detail
           : "操作未完成，请检查填写内容。",
       );
+      error.status = r.status;
+      throw error;
     }
     return value;
   } catch (e) {
@@ -143,16 +147,30 @@ async function act(fn, success = "已保存") {
 }
 async function load() {
   const generation = ++ui.generation;
+  ui.homeConnection = "loading";
+  if (ui.page === "family") window.FamilyV10?.beforeLoad();
+  if (ui.page === "health" && !ui.snapshot && window.HealthV131) window.HealthV131.loading();
+  if (ui.page === "medication" && !ui.snapshot && window.MedicationV121) window.MedicationV121.loading();
+  if (ui.page === "home" && ui.snapshot) home();
+  if (ui.page === "rehab" && ui.snapshot && window.RehabV51) rehab();
   try {
     const result = await api("/unified?source=" + ui.source);
     if (generation !== ui.generation) return;
     ui.snapshot = result.snapshot;
+    ui.homeConnection = "ready";
+    if (ui.page === "family") ui.familyReadAt = Date.now()/1000;
     $("#nav").hidden = false;
     $("#profile").textContent = (profile().name || "我").slice(0, 1);
     render();
   } catch (e) {
     if (generation !== ui.generation) return;
     ui.snapshot = null;
+    ui.homeConnection = "offline";
+    if (!$("#pair-form") && ui.page === "home") { home(); return; }
+    if (!$("#pair-form") && ui.page === "rehab" && window.RehabV51) { rehab(); return; }
+    if (!$("#pair-form") && ui.page === "health" && window.HealthV131) { window.HealthV131.failure(e.message); return; }
+    if (!$("#pair-form") && ui.page === "medication" && window.MedicationV121) { window.MedicationV121.failure(e.message); return; }
+    if (!$("#pair-form") && ui.page === "family" && window.FamilyV10) { window.FamilyV10.failure(e.message); return; }
     if (!$("#pair-form"))
       $("#content").innerHTML =
         `<h1>暂时无法读取</h1><p>${E(e.message)}</p>${button("重新连接", "retry", true)}`;
@@ -163,10 +181,12 @@ function nav() {
   if (!$("#nav").querySelector('a')) $("#nav").innerHTML = Object.entries(names)
     .map(
       ([key, title]) =>
-        `<a href="#${key}" ${ui.page === key || (ui.page === "assistant" && key === "home") ? 'aria-current="page"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${icons[key]}"/></svg>${title}</a>`,
+        `<a href="#${key}" ${ui.page === key || (ui.page === "assistant" && key === "home") ? 'aria-current="page"' : ""}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${icons[key]}"/></svg><span class="nav-label">${title}</span></a>`,
     )
     .join("");
   $("#nav").querySelectorAll('a').forEach(a => {
+    const label = a.querySelector('.nav-label');
+    if (label) label.textContent = a.hash === '#family' && ['home','rehab'].includes(ui.page) ? '家人' : names[a.hash.slice(1)];
     if(a.hash === '#' + (['assistant','records','settings','notifications'].includes(ui.page) ? 'home' : ui.page)) a.setAttribute('aria-current','page');
     else a.removeAttribute('aria-current');
   });
@@ -174,21 +194,43 @@ function nav() {
 }
 function route() {
   if (voiceStarting || recorder?.state === "recording") {
-    location.hash = "#assistant";
+    if (ui.page === "family" && window.FamilyV10?.isAI()) { location.hash = "#family/ai"; say("请先结束或取消录音。"); return; }
+    location.hash = ui.page === "medication" && window.MedicationV121?.isAI() ? "#medication/ai" : "#assistant";
     say("请先结束或取消录音。");
     return;
   }
   let key = location.hash.slice(1) || "home";
+  if (window.FamilyV10 && window.FamilyV10.reportCode(location.hash) !== null) { window.FamilyV10.routeGuest(); return; }
   if (key === "history") key = "records";
-  if (key === "fitness") { ui.rehabMode = "fitness"; key = "rehab"; }
-  ui.page = Object.hasOwn(names, key) || ["assistant", "records", "settings", "notifications"].includes(key) ? key : "home";
-  ui.day = today();
+  if (key === "fitness") {
+    const context = window.RehabV51?.context(ui.source, ui.day);
+    location.href = "/capture?tab=fitness" + (context ? "&" + context : "");
+    return;
+  }
+  ui.page = key.startsWith("family/") ? "family" : key.startsWith("health/") ? "health" : key.startsWith("medication/") ? "medication" : Object.hasOwn(names, key) || ["assistant", "records", "settings", "notifications"].includes(key) ? key : "home";
+  if (ui.page === "medication" && ui.homeRouteDay) window.MedicationV121?.selectDay(ui.homeRouteDay);
+  ui.day = ui.homeRouteDay || (ui.page === "home" ? ui.day : today());
+  ui.homeRouteDay = null;
+  if (ui.page === 'rehab' && window.RehabV51) {
+    const params=new URLSearchParams(location.search), source=params.get('rehabSource'), day=params.get('rehabDay');
+    if (['LIVE_CAMERA','REPLAY_FILE'].includes(source) && window.AnkangHomeV36.dateOf(day)) {
+      ui.source=source; ui.day=day;
+      window.history.replaceState(null,'',location.pathname+'#rehab');
+    }
+  }
   nav();
-  if (ui.snapshot) render();
+  if (ui.page === "family") load();
+  else if (ui.snapshot) render();
   else load();
   window.scrollTo(0, 0);
 }
 function pair() {
+  window.FamilyV10?.reset();
+  window.HealthV131?.reset();
+  window.MedicationV121?.reset();
+  document.body.dataset.page = "pair";
+  ui.homeRouteDay = null;
+  ui.homeConnection = "loading";
   ui.generation++;
   ui.snapshot = null;
   ui.draft = "";
@@ -205,6 +247,7 @@ function pair() {
   };
 }
 function render() {
+  document.body.dataset.page = ui.page;
   nav();
   ({ home, rehab, health, medication, family, assistant, records, settings, notifications })[ui.page]();
   window.ProductMotion?.decorate(ui.page);
@@ -237,33 +280,51 @@ function doses(day = ui.day) {
   }
   return rows.sort((a, b) => a.time.localeCompare(b.time));
 }
+function homeModel() {
+  return window.AnkangHomeV36.model(ui.homeConnection === "ready" ? snapshot() : {}, ui.source, ui.day, today(), ui.homeConnection);
+}
 function home() {
-  const items = [
-    ...schedules(today()).map((s) => ({
-      time: s.time,
-      title: s.name,
-      to: "rehab",
-    })),
-    ...doses(today()).map((d) => ({
-      time: d.time,
-      title:
-        d.med.name +
-        " · " +
-        { taken: "已服用", skipped: "已跳过", unrecorded: "待记录" }[d.status],
-      to: "medication",
-    })),
-  ].sort((a, b) => a.time.localeCompare(b.time));
-  $("#content").innerHTML =
-    `<section class="hero"><p class="eyebrow">${E(new Date().toLocaleDateString("zh-CN", { month: "long", day: "numeric", weekday: "long" }))}</p><h1>${E(profile().name)}，<br>今天怎么样？</h1>${link("记录身体情况", "#assistant", true)}</section><section class="today-panel"><div class="heading"><h2>今天的安排</h2><a href="#rehab">康复安排</a></div>${
-      items
-        .slice(0, 4)
-        .map(
-          (i) =>
-            `<div class="row"><time>${E(i.time)}</time><div><strong>${E(i.title)}</strong></div><a href="#${i.to}" aria-label="查看${E(i.title)}">查看</a></div>`,
-        )
-        .join("") ||
-      '<p class="empty">今天暂无安排。</p>'
-    }${items.length > 4 ? '<p class="muted">更多安排见康复、用药页。</p>' : ""}</section>${weeklyPreview()}`;
+  document.body.dataset.page = "home";
+  const m = homeModel();
+  $("#content").innerHTML = window.AnkangHomeV36.markup(m, ui.homeConnection === "ready" ? doses(ui.day) : [], today());
+  bind("home-primary", async () => {
+    if (ui.busy) return;
+    if (m.task.action === "retry") { await load(); return; }
+    const generation = ui.generation + 1, source = ui.source, day = ui.day, owner = snapshot().profile?.ownerId;
+    await load(); // Recheck bound person, source, plan revision and availability before acting.
+    if (ui.page !== "home" || ui.homeConnection !== "ready" || ui.generation !== generation || ui.source !== source || ui.day !== day || snapshot().profile?.ownerId !== owner) return;
+    const current = homeModel();
+    if (current.task.action === "plan" && current.plan) planDetail(current.plan);
+    else if (["train","assess","history"].includes(current.task.action)) location.href = "/capture?tab=" + ({train:"plan",assess:"assess",history:"history"})[current.task.action];
+    else { ui.homeRouteDay = ui.day; location.hash = "#rehab"; }
+  });
+  bind("home-plan", async () => {
+    if (ui.busy) return;
+    const generation = ui.generation + 1, source = ui.source, day = ui.day, owner = snapshot().profile?.ownerId;
+    await load();
+    if (ui.page !== "home" || ui.homeConnection !== "ready" || ui.generation !== generation || ui.source !== source || ui.day !== day || snapshot().profile?.ownerId !== owner) return;
+    const p = homeModel().plan;
+    if (p) planDetail(p);
+    else { ui.homeRouteDay = ui.day; location.hash = "#rehab"; }
+  });
+  bind("home-search", () => {
+    const dialog = modal("搜索入口", `<p>暂未提供全局搜索。可在现有动作库中搜索动作。</p><div class="home-search-links">${link("搜索康复动作", "/capture?tab=assess")}${link("我的计划", "#rehab")}${link("历史记录", "#records")}</div>`);
+    dialog.querySelectorAll('.home-search-links a').forEach(a => a.onclick = () => dialog.close());
+  });
+  bind("home-profile", () => $("#profile").click());
+  bind("home-refresh", load);
+  bind("home-context", () => {
+    modal("日期与记录来源", `${sourcePicker()}<label>查看日期<input id="home-date" type="date" value="${E(ui.day)}"></label>`);
+    bindSource();
+    const changeSource = $("#source").onchange;
+    $("#source").onchange = e => { $("#dialog").close(); changeSource(e); };
+    $("#home-date").onchange = e => {
+      if (!window.AnkangHomeV36.dateOf(e.target.value)) return;
+      ui.day = e.target.value; $("#dialog").close(); load();
+    };
+  });
+  document.querySelectorAll('[data-home-day]').forEach(b => b.onclick = () => { ui.day = b.dataset.homeDay; load(); });
+  document.querySelectorAll('[data-home-target]').forEach(b => b.onclick = () => { ui.homeRouteDay = ui.day; ui.rehabMode = "training"; location.hash = "#" + b.dataset.homeTarget; });
 }
 
 function weeklyPreview() {
@@ -279,8 +340,9 @@ function records() {
 
 function settings() {
   const mode = snapshot().profile?.dataMode;
-  $("#content").innerHTML = `<div class="heading"><h1>设置</h1><a href="#home">返回首页</a></div><section><h2>我的档案</h2><p>${E(profile().name || "称呼未填写")}${profile().age ? " · " + E(profile().age) + " 岁" : ""}</p><p class="muted">${mode === "demo" ? "演示档案" : mode === "personal" ? "个人档案" : "请在电脑核对档案类型"}</p>${button("编辑我的档案", "settings-profile")}</section><section><h2>查看记录的来源</h2>${sourcePicker()}<p class="muted">来源选择用于查看康复记录，不会启动摄像头或训练。</p></section><p>${link("查看通知记录", "#notifications")}</p>`;
+  $("#content").innerHTML = `<div class="heading"><h1>设置</h1><a href="#home">返回首页</a></div><section><h2>我的档案</h2><p>${E(profile().name || "称呼未填写")}${profile().age ? " · " + E(profile().age) + " 岁" : ""}</p><p class="muted">${mode === "demo" ? "演示档案" : mode === "personal" ? "个人档案" : "请在电脑核对档案类型"}</p>${button("编辑我的档案", "settings-profile")}</section><p>${button("联系康复医师", "settings-clinician")}</p><section><h2>查看记录的来源</h2>${sourcePicker()}<p class="muted">来源选择用于查看康复记录，不会启动摄像头或训练。</p></section><p>${link("查看通知记录", "#notifications")}</p>`;
   bind("settings-profile", editProfile);
+  bind("settings-clinician", openClinicianContact);
   if (globalThis.OfflineAndroid?.deepSeekSettings) {
     const section=document.createElement("section");
     section.innerHTML=`<h2>智能服务</h2><p>${snapshot().conversationModelAvailable ? "DeepSeek 已配置；每条回复标明实际来源。" : "DeepSeek 尚未配置，本地功能仍可使用。"}</p>${button("配置 DeepSeek", "settings-deepseek")}`;
@@ -320,6 +382,7 @@ function rehabModes() {
 }
 function bindModes() {document.querySelectorAll('[data-rehab-mode]').forEach(b=>b.onclick=()=>{ui.rehabMode=b.dataset.rehabMode;rehab();});}
 function rehab() {
+  if (window.RehabV51) { renderRehabV51(); return; }
   if(ui.rehabMode!=="training") {
     const assessment=ui.rehabMode==="assessment";
     $("#content").innerHTML=`<div class="heading"><h1>康复</h1></div>${rehabModes()}<section class="tool-intro"><h2>${assessment?"身体评估":"健身动作"}</h2><p>${assessment?"选一个动作，拍摄后查看结果。":"选择动作，分析你的训练录像。"}</p>${link(assessment?"开始评估":"打开动作库",assessment?"/capture?tab=assess":"/capture?tab=fitness",true)}</section>`;
@@ -425,11 +488,12 @@ function schedule(p) {
   };
 }
 function health() {
+  if (window.HealthV131) { window.HealthV131.render(); return; }
   const events = (snapshot().state?.events || [])
     .slice()
     .sort((a, b) => String(b.timestamp).localeCompare(String(a.timestamp)));
   $("#content").innerHTML =
-    `<div class="heading"><h1>健康档案</h1>${button("编辑资料", "edit-profile")}</div><p class="muted">${E(profile().name)}${profile().age ? " · " + E(profile().age) + " 岁" : ""}<br>${E((profile().conditions || []).join("、") || "健康情况未填写")}</p><div class="actions">${button("上传资料", "upload", true)}${link("手动记录指标", "/capture?tab=health")}${link("记录身体感受", "#assistant")}</div><div class="heading"><h2>资料与图片</h2></div>${(snapshot().attachments || []).map((a) => `<div class="row"><div><strong>${E(a.name)}</strong><p><small>${E(a.category)} · ${stamp(a.date)}</small></p></div><button data-archive="${E(a.id)}">查看</button></div>`).join("") || '<p class="empty">暂无资料。</p>'}<div class="heading"><h2>最近记录</h2></div><div class="timeline">${
+    `<div class="heading"><h1>健康档案</h1>${button("编辑资料", "edit-profile")}</div><p class="muted">${E(profile().name)}${profile().age ? " · " + E(profile().age) + " 岁" : ""}<br>${E((profile().conditions || []).join("、") || "健康情况未填写")}</p><div class="actions">${button("上传资料", "upload", true)}${link("手动记录指标", "/capture?tab=health")}${link("问 AI", "#assistant")}</div><div class="heading"><h2>资料与图片</h2></div>${(snapshot().attachments || []).map((a) => `<div class="row"><div><strong>${E(a.name)}</strong><p><small>${E(a.category)} · ${stamp(a.date)}</small></p></div><button data-archive="${E(a.id)}">查看</button></div>`).join("") || '<p class="empty">暂无资料。</p>'}<div class="heading"><h2>最近记录</h2></div><div class="timeline">${
       events
         .slice(0, 20)
         .map(
@@ -452,13 +516,20 @@ function health() {
           )),
     );
 }
+function openClinicianContact() {
+  $("#dialog")?.close();
+  if (window.PhoneAccount?.open) return window.PhoneAccount.open();
+  return pairedClinicianContact();
+}
 function editProfile() {
   if (!ui.snapshot) return;
   const p = profile();
   modal(
     "我的档案",
-    `<form id="profile-form"><label>称呼<input name="name" maxlength="40" value="${E(p.name)}" required></label><label>年龄<input type="number" name="age" min="0" max="130" value="${Number(p.age) || 0}" required></label><label>已知健康情况，用逗号分隔<textarea name="conditions" maxlength="1000">${E((p.conditions || []).join("，"))}</textarea></label><button type="submit" class="primary">保存资料</button></form>`,
+    `<form id="profile-form"><label>称呼<input name="name" maxlength="40" value="${E(p.name)}" required></label><label>年龄<input type="number" name="age" min="0" max="130" value="${Number(p.age) || 0}" required></label><label>已知健康情况，用逗号分隔<textarea name="conditions" maxlength="1000">${E((p.conditions || []).join("，"))}</textarea></label><button type="submit" class="primary">保存资料</button></form><div class="actions"><a href="#settings" id="profile-settings">设置</a><a href="#notifications" id="profile-notifications">通知记录</a>${button("联系康复医师", "profile-clinician")}</div>`,
   );
+  bind("profile-clinician", openClinicianContact);
+  for (const id of ["profile-settings", "profile-notifications"]) bind(id, () => $("#dialog").close());
   $("#profile-form").onsubmit = async (e) => {
     e.preventDefault();
     const f = Object.fromEntries(new FormData(e.target));
@@ -545,6 +616,7 @@ function archiveDetail(a) {
   });
 }
 function medication() {
+  if (window.MedicationV121) { window.MedicationV121.render(); return; }
   const rows = doses();
   $("#content").innerHTML =
     `<div class="heading"><h1>用药</h1><input class="date" id="day" type="date" value="${ui.day}" aria-label="查看用药日期"></div><details class="page-note"><summary>用药记录说明</summary><p>按已有医嘱安排。未记录不等于漏服。</p></details>${rows.map((r, i) => `<div class="row"><time>${E(r.time)}</time><div><strong>${E(r.med.name)}</strong><p>${E(r.med.dose || "剂量未填写")}</p><small class="${r.status === "taken" ? "status" : ""}">${{ taken: "已服用", skipped: "已跳过", unrecorded: "未记录" }[r.status]}</small></div><button data-dose="${i}" ${r.day > today() ? "disabled" : ""}>${r.status === "unrecorded" ? "记录" : "更正"}</button></div>`).join("") || '<p class="empty">当天暂无用药安排。</p>'}<div class="heading"><h2>我的药物</h2>${button("添加药物", "add-med")}</div>${(profile().medicationRecords || []).map((m) => `<div class="row"><div><strong>${E(m.name)}</strong><p><small>${E(m.dose)} · ${m.status === "active" ? "在用" : "已停用"}</small></p></div><button data-med="${E(m.id)}">管理</button></div>`).join("")}<details><summary>记录更正历史</summary>${
@@ -663,6 +735,7 @@ const categoryNames = {
   medication: "用药记录",
 };
 function family() {
+  if (window.FamilyV10) { window.FamilyV10.render(); return; }
   $("#content").innerHTML =
     `<h1>家人的近况</h1><p class="muted">仅显示家人已授权的记录。</p>${
       (snapshot().familyMembers || [])
@@ -801,8 +874,7 @@ function assistant() {
       if(source!==ui.source||owner!==snapshot().ownerId)return;
       say(conversationSource(turn?.conversation) || "管家已回复");
       if(destination==='history')destination='records';
-      if(destination==='fitness'){ui.rehabMode='fitness';destination='rehab';}
-      if(destination&&(names[destination]||['assistant','records','settings','notifications'].includes(destination))){
+      if(destination&&(names[destination]||['assistant','records','settings','notifications','fitness'].includes(destination))){
         if(location.hash.slice(1)===destination)route();
         else location.hash=destination;
       }
@@ -829,7 +901,7 @@ function assistant() {
     try {
       voiceStarting = true;
       stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      if (ui.page !== "assistant") {
+      if (ui.page !== "assistant" && !(ui.page === "family" && window.FamilyV10?.isAI())) {
         stream.getTracks().forEach((t) => t.stop());
         return;
       }
@@ -891,6 +963,8 @@ async function transcribe(file) {
         ? [before, r.text].filter(Boolean).join("\n")
         : ui.draft + "\n" + r.text;
     if (ui.page === "assistant") assistant();
+    else if (ui.page === "medication" && window.MedicationV121?.isAI()) window.MedicationV121.render();
+    else if (ui.page === "family" && window.FamilyV10?.isAI()) window.FamilyV10.render();
     say("已填入草稿，核对后发送。");
   } catch (e) {
     say(e.message);
@@ -993,6 +1067,7 @@ async function pairedClinicianContact() {
 mountPairedClinicianContact();
 
 document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && ui.page === "family" && window.FamilyV10 && window.FamilyV10.reportCode(location.hash) !== null) { window.FamilyV10.refreshGuest(); return; }
   if (
     !document.hidden &&
     ui.snapshot &&

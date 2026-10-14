@@ -1,0 +1,112 @@
+[
+  {
+    "kind": "疼痛",
+    "value": 0,
+    "pressed": "true"
+  },
+  {
+    "kind": "疼痛",
+    "value": 1,
+    "pressed": "true"
+  },
+  {
+    "kind": "疼痛",
+    "value": 2,
+    "pressed": "true"
+  },
+  {
+    "kind": "疼痛",
+    "value": 3,
+    "pressed": "true"
+  },
+  {
+    "kind": "疼痛",
+    "value": 4,
+    "pressed": "true"
+  },
+  {
+    "kind": "疼痛",
+    "value": 5,
+    "pressed": "true"
+  },
+  {
+    "kind": "疼痛",
+    "value": 6,
+    "pressed": "true"
+  },
+  {
+    "kind": "疼痛",
+    "value": 7,
+    "pressed": "true"
+  },
+  {
+    "kind": "疼痛",
+    "value": 8,
+    "pressed": "true"
+  },
+  {
+    "kind": "疼痛",
+    "value": 9,
+    "pressed": "true"
+  },
+  {
+    "kind": "疼痛",
+    "value": 10,
+    "pressed": "true"
+  },
+  {
+    "kind": "疲劳",
+    "value": 0,
+    "pressed": "true"
+  },
+  {
+    "kind": "疲劳",
+    "value": 1,
+    "pressed": "true"
+  },
+  {
+    "kind": "疲劳",
+    "value": 2,
+    "pressed": "true"
+  },
+  {
+    "kind": "疲劳",
+    "value": 3,
+    "pressed": "true"
+  },
+  {
+    "kind": "疲劳",
+    "value": 4,
+    "pressed": "true"
+  },
+  {
+    "kind": "疲劳",
+    "value": 5,
+    "pressed": "true"
+  },
+  {
+    "kind": "疲劳",
+    "value": 6,
+    "pressed": "true"
+  },
+  {
+    "kind": "疲劳",
+    "value": 7,
+    "pressed": "true"
+  },
+  {
+    "kind": "疲劳",
+    "value": 8,
+    "pressed": "true"
+  },
+  {
+    "kind": "疲劳",
+    "value": 9,
+    "pressed": "true"
+  },
+  {
+    "kind": "疲劳",
+    "value": 10,
+    "pressed": "true"
+  }
+]

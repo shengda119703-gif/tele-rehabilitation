@@ -1,0 +1,825 @@
+[
+  {
+    "stage": "before",
+    "name": "training-result",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 训练录像分析\n  - heading \"肩外展\" [level=1]\n  - paragraph: 10/12 13:17\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"已达计划次数\" [level=2]\n  - strong: 5 次\n  - text: 完整动作\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 141°\n  - text: 视频角度变化\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph: 达到目标 5 次 · 需调整 0 次 · 未能判断 0 次。按本次目标和可见动作统计。\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 3°–144°\n    - text: 。记录到 5 次完整动作。\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。\n  - button \"记录疼痛与疲劳\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "training-result",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 训练录像分析\n  - heading \"肩外展\" [level=1]\n  - paragraph: 10/12 13:17\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"已达计划次数\" [level=2]\n  - strong: 5 次\n  - text: 完整动作\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 141°\n  - text: 视频角度变化\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph: 达到目标 5 次 · 需调整 0 次 · 未能判断 0 次。按本次目标和可见动作统计。\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 3°–144°\n    - text: 。记录到 5 次完整动作。\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。\n  - button \"记录疼痛与疲劳\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "feedback",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛感\n  - combobox \"疼痛感 疼痛程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\" [selected]\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\"\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疼痛程度 0至10\":\n    - button \"疼痛0 / 10\" [active] [pressed]: \"0\"\n    - button \"疼痛1 / 10\": \"1\"\n    - button \"疼痛2 / 10\": \"2\"\n    - button \"疼痛3 / 10\": \"3\"\n    - button \"疼痛4 / 10\": \"4\"\n    - button \"疼痛5 / 10\": \"5\"\n    - button \"疼痛6 / 10\": \"6\"\n    - button \"疼痛7 / 10\": \"7\"\n    - button \"疼痛8 / 10\": \"8\"\n    - button \"疼痛9 / 10\": \"9\"\n    - button \"疼痛10 / 10\": \"10\"\n  - text: 疲劳感\n  - combobox \"疲劳感 疲劳程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\"\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\" [selected]\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疲劳程度 0至10\":\n    - button \"疲劳0 / 10\": \"0\"\n    - button \"疲劳1 / 10\": \"1\"\n    - button \"疲劳2 / 10\": \"2\"\n    - button \"疲劳3 / 10\" [pressed]: \"3\"\n    - button \"疲劳4 / 10\": \"4\"\n    - button \"疲劳5 / 10\": \"5\"\n    - button \"疲劳6 / 10\": \"6\"\n    - button \"疲劳7 / 10\": \"7\"\n    - button \"疲劳8 / 10\": \"8\"\n    - button \"疲劳9 / 10\": \"9\"\n    - button \"疲劳10 / 10\": \"10\"\n  - button \"保存反馈\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "feedback",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛感\n  - combobox \"疼痛感 疼痛程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\" [selected]\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\"\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疼痛程度 0至10\":\n    - button \"疼痛0 / 10\" [active] [pressed]: \"0\"\n    - button \"疼痛1 / 10\": \"1\"\n    - button \"疼痛2 / 10\": \"2\"\n    - button \"疼痛3 / 10\": \"3\"\n    - button \"疼痛4 / 10\": \"4\"\n    - button \"疼痛5 / 10\": \"5\"\n    - button \"疼痛6 / 10\": \"6\"\n    - button \"疼痛7 / 10\": \"7\"\n    - button \"疼痛8 / 10\": \"8\"\n    - button \"疼痛9 / 10\": \"9\"\n    - button \"疼痛10 / 10\": \"10\"\n  - text: 疲劳感\n  - combobox \"疲劳感 疲劳程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\"\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\" [selected]\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疲劳程度 0至10\":\n    - button \"疲劳0 / 10\": \"0\"\n    - button \"疲劳1 / 10\": \"1\"\n    - button \"疲劳2 / 10\": \"2\"\n    - button \"疲劳3 / 10\" [pressed]: \"3\"\n    - button \"疲劳4 / 10\": \"4\"\n    - button \"疲劳5 / 10\": \"5\"\n    - button \"疲劳6 / 10\": \"6\"\n    - button \"疲劳7 / 10\": \"7\"\n    - button \"疲劳8 / 10\": \"8\"\n    - button \"疲劳9 / 10\": \"9\"\n    - button \"疲劳10 / 10\": \"10\"\n  - button \"保存反馈\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "assessment-result",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 视频评估\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 10/11 13:07\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"本次结果\" [level=2]\n  - strong: 5 次\n  - text: 完整动作\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 145°\n  - text: 视频角度变化\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 4°–149°\n    - text: 。记录到 5 次完整动作。\n  - button \"查看训练建议\"\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "assessment-result",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 视频评估\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 10/11 13:07\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"本次结果\" [level=2]\n  - strong: 5 次\n  - text: 完整动作\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 145°\n  - text: 视频角度变化\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 4°–149°\n    - text: 。记录到 5 次完整动作。\n  - button \"查看训练建议\"\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "detail",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"返回康复动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍\" [level=2]\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "detail",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"返回康复动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍\" [level=2]\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "training-result",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 训练录像分析\n  - heading \"肩外展\" [level=1]\n  - paragraph: 10/12 18:50\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"已达计划次数\" [level=2]\n  - strong: 5 次\n  - text: 完整动作\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 141°\n  - text: 视频角度变化\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph: 达到目标 5 次 · 需调整 0 次 · 未能判断 0 次。按本次目标和可见动作统计。\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 3°–144°\n    - text: 。记录到 5 次完整动作。\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。\n  - button \"记录疼痛与疲劳\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "training-result",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 训练录像分析\n  - heading \"肩外展\" [level=1]\n  - paragraph: 10/12 18:50\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"已达计划次数\" [level=2]\n  - strong: 5 次\n  - text: 完整动作\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 141°\n  - text: 视频角度变化\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph: 达到目标 5 次 · 需调整 0 次 · 未能判断 0 次。按本次目标和可见动作统计。\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 3°–144°\n    - text: 。记录到 5 次完整动作。\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。\n  - button \"记录疼痛与疲劳\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "feedback",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛感\n  - combobox \"疼痛感 疼痛程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\" [selected]\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\"\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疼痛程度 0至10\":\n    - button \"疼痛0 / 10\" [active] [pressed]: \"0\"\n    - button \"疼痛1 / 10\": \"1\"\n    - button \"疼痛2 / 10\": \"2\"\n    - button \"疼痛3 / 10\": \"3\"\n    - button \"疼痛4 / 10\": \"4\"\n    - button \"疼痛5 / 10\": \"5\"\n    - button \"疼痛6 / 10\": \"6\"\n    - button \"疼痛7 / 10\": \"7\"\n    - button \"疼痛8 / 10\": \"8\"\n    - button \"疼痛9 / 10\": \"9\"\n    - button \"疼痛10 / 10\": \"10\"\n  - text: 疲劳感\n  - combobox \"疲劳感 疲劳程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\"\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\" [selected]\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疲劳程度 0至10\":\n    - button \"疲劳0 / 10\": \"0\"\n    - button \"疲劳1 / 10\": \"1\"\n    - button \"疲劳2 / 10\": \"2\"\n    - button \"疲劳3 / 10\" [pressed]: \"3\"\n    - button \"疲劳4 / 10\": \"4\"\n    - button \"疲劳5 / 10\": \"5\"\n    - button \"疲劳6 / 10\": \"6\"\n    - button \"疲劳7 / 10\": \"7\"\n    - button \"疲劳8 / 10\": \"8\"\n    - button \"疲劳9 / 10\": \"9\"\n    - button \"疲劳10 / 10\": \"10\"\n  - button \"保存反馈\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "feedback",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛感\n  - combobox \"疼痛感 疼痛程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\" [selected]\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\"\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疼痛程度 0至10\":\n    - button \"疼痛0 / 10\" [active] [pressed]: \"0\"\n    - button \"疼痛1 / 10\": \"1\"\n    - button \"疼痛2 / 10\": \"2\"\n    - button \"疼痛3 / 10\": \"3\"\n    - button \"疼痛4 / 10\": \"4\"\n    - button \"疼痛5 / 10\": \"5\"\n    - button \"疼痛6 / 10\": \"6\"\n    - button \"疼痛7 / 10\": \"7\"\n    - button \"疼痛8 / 10\": \"8\"\n    - button \"疼痛9 / 10\": \"9\"\n    - button \"疼痛10 / 10\": \"10\"\n  - text: 疲劳感\n  - combobox \"疲劳感 疲劳程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\"\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\" [selected]\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疲劳程度 0至10\":\n    - button \"疲劳0 / 10\": \"0\"\n    - button \"疲劳1 / 10\": \"1\"\n    - button \"疲劳2 / 10\": \"2\"\n    - button \"疲劳3 / 10\" [pressed]: \"3\"\n    - button \"疲劳4 / 10\": \"4\"\n    - button \"疲劳5 / 10\": \"5\"\n    - button \"疲劳6 / 10\": \"6\"\n    - button \"疲劳7 / 10\": \"7\"\n    - button \"疲劳8 / 10\": \"8\"\n    - button \"疲劳9 / 10\": \"9\"\n    - button \"疲劳10 / 10\": \"10\"\n  - button \"保存反馈\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "assessment-result",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 视频评估\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 10/11 18:40\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"本次结果\" [level=2]\n  - strong: 5 次\n  - text: 完整动作\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 145°\n  - text: 视频角度变化\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 4°–149°\n    - text: 。记录到 5 次完整动作。\n  - button \"查看训练建议\"\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "assessment-result",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 视频评估\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 10/11 18:40\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"本次结果\" [level=2]\n  - strong: 5 次\n  - text: 完整动作\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 145°\n  - text: 视频角度变化\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 4°–149°\n    - text: 。记录到 5 次完整动作。\n  - button \"查看训练建议\"\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "rehab-protected",
+    "width": 390,
+    "height": 844,
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- banner:\n  - link \"安康\":\n    - /url: \"#home\"\n  - button \"刷新资料\": 刷新\n  - button \"我的档案\": 我\n- main:\n  - status: 正在连接电脑…",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/#rehab"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "rehab-protected",
+    "width": 320,
+    "height": 700,
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- banner:\n  - link \"安康\":\n    - /url: \"#home\"\n  - button \"刷新资料\": 刷新\n  - button \"我的档案\": 我\n- main:\n  - status: 正在连接电脑…",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/#rehab"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "library-protected",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复动作库\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "library-protected",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复动作库\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "detail",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"返回康复动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍\" [level=2]\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "before",
+    "name": "detail",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"返回康复动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍\" [level=2]\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "detail",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"返回康复动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍 问 AI：动作介绍\" [level=2]:\n    - text: 动作介绍\n    - button \"问 AI：动作介绍\": 问 AI\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "detail",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"返回康复动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍 问 AI：动作介绍\" [level=2]:\n    - text: 动作介绍\n    - button \"问 AI：动作介绍\": 问 AI\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "ai-action",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回原页面\"\n  - heading \"康复管家\" [level=1]\n  - paragraph: 仅预填问题，未附报告数值。辅助理解，不作为标准动作指导。\n  - button \"看评估结果\":\n    - strong: 看评估结果\n    - generic: ›\n  - button \"看训练安排\":\n    - strong: 看训练安排\n    - generic: ›\n  - generic \"已有对话\"\n  - generic: 确认要问的问题\n  - textbox \"确认要问的问题\": 肩外展动作需要注意什么？请解释一般注意事项，不代替专业动作指导。\n  - checkbox \"本次不记录\"\n  - generic: 本次不记录\n  - button \"发送\"\n  - paragraph: 本地规则助手。紧急不适请直接求助。\n  - status: 语音可使用手机键盘的语音输入。\n  - generic \"今日待办 · 1 项\"\n  - heading \"我的康复情况\" [level=2]\n  - button \"读取本人的评估与训练\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "ai-action",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回原页面\"\n  - heading \"康复管家\" [level=1]\n  - paragraph: 仅预填问题，未附报告数值。辅助理解，不作为标准动作指导。\n  - button \"看评估结果\":\n    - strong: 看评估结果\n    - generic: ›\n  - button \"看训练安排\":\n    - strong: 看训练安排\n    - generic: ›\n  - generic \"已有对话\"\n  - generic: 确认要问的问题\n  - textbox \"确认要问的问题\": 肩外展动作需要注意什么？请解释一般注意事项，不代替专业动作指导。\n  - checkbox \"本次不记录\"\n  - generic: 本次不记录\n  - button \"发送\"\n  - paragraph: 本地规则助手。紧急不适请直接求助。\n  - status: 语音可使用手机键盘的语音输入。\n  - generic \"今日待办 · 1 项\"\n  - heading \"我的康复情况\" [level=2]\n  - button \"读取本人的评估与训练\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "feedback",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛程度\n  - combobox\n  - status: 0 / 10\n  - slider \"疼痛程度\" [active]: \"0\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疼痛 · 5 中等 · 10 很强\n  - text: 疲劳程度\n  - combobox\n  - status: 3 / 10\n  - slider \"疲劳程度\": \"3\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疲劳 · 5 中等 · 10 很强\n  - button \"保存反馈\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [
+        {
+          "id": "rv-pain",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "0 / 10",
+          "value": "0"
+        },
+        {
+          "id": "rv-fatigue",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "3 / 10",
+          "value": "3"
+        }
+      ],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "feedback",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛程度\n  - combobox\n  - status: 0 / 10\n  - slider \"疼痛程度\" [active]: \"0\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疼痛 · 5 中等 · 10 很强\n  - text: 疲劳程度\n  - combobox\n  - status: 3 / 10\n  - slider \"疲劳程度\": \"3\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疲劳 · 5 中等 · 10 很强\n  - button \"保存反馈\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [
+        {
+          "id": "rv-pain",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "0 / 10",
+          "value": "0"
+        },
+        {
+          "id": "rv-fatigue",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "3 / 10",
+          "value": "3"
+        }
+      ],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "feedback-unselected",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛程度\n  - combobox\n  - status: 未选择\n  - slider \"疼痛程度\": \"0\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疼痛 · 5 中等 · 10 很强\n  - text: 疲劳程度\n  - combobox\n  - status: 未选择\n  - slider \"疲劳程度\" [active]: \"0\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疲劳 · 5 中等 · 10 很强\n  - button \"保存反馈\"\n- alert: 请选择真实疲劳程度",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [
+        {
+          "id": "rv-pain",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "未选择，请主动选择 0至10 分",
+          "value": "0"
+        },
+        {
+          "id": "rv-fatigue",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "未选择，请主动选择 0至10 分",
+          "value": "0"
+        }
+      ],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "feedback-boundaries",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛程度\n  - combobox\n  - status: 0 / 10\n  - slider \"疼痛程度\": \"0\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疼痛 · 5 中等 · 10 很强\n  - text: 疲劳程度\n  - combobox\n  - status: 10 / 10\n  - slider \"疲劳程度\" [active]: \"10\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疲劳 · 5 中等 · 10 很强\n  - button \"保存反馈\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [
+        {
+          "id": "rv-pain",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "0 / 10",
+          "value": "0"
+        },
+        {
+          "id": "rv-fatigue",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "10 / 10",
+          "value": "10"
+        }
+      ],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "feedback-boundaries",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛程度\n  - combobox\n  - status: 0 / 10\n  - slider \"疼痛程度\": \"0\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疼痛 · 5 中等 · 10 很强\n  - text: 疲劳程度\n  - combobox\n  - status: 10 / 10\n  - slider \"疲劳程度\" [active]: \"10\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疲劳 · 5 中等 · 10 很强\n  - button \"保存反馈\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [
+        {
+          "id": "rv-pain",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "0 / 10",
+          "value": "0"
+        },
+        {
+          "id": "rv-fatigue",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "10 / 10",
+          "value": "10"
+        }
+      ],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "saved-fatigue10-plan",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的计划\" [level=1]\n  - paragraph: 录像训练 · 已保存进度；日期安排在康复页。\n  - button \"康复动作库\"\n  - button \"身体汇总\"\n  - button \"训练记录\"\n  - heading \"本轮安排\" [level=2]\n  - paragraph: 2 / 4 项\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 左侧 · 5 次 × 1 组\n  - progressbar \"本轮训练完成项数\"\n  - paragraph: 已报告不适或明显疲劳，本次计划到此结束。先休息并处理原因，必要时联系专业人员。\n  - button \"补充训练感受\"\n  - heading \"训练清单\" [level=2]\n  - paragraph: 配图未核验，不作为示教。\n  - button \"未核验视觉封面 肩外展 左侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 左侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩外展 右侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 右侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩前屈 左侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 左侧 · 5 次 × 1 组 · 待完成\n  - button \"未核验视觉封面 肩前屈 右侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 右侧 · 5 次 × 1 组 · 待完成\n  - heading \"下一轮计划\" [level=2]\n  - generic: 4 项\n  - strong: 肩前屈 · 左侧\n  - generic: 5 次 × 1 组 · 休息 60 秒\n  - generic \"动作安排与依据\"\n  - text: 参考：NHS North Tees：Chair Exercises / Frontal Raise。次数及幅度按本人评估适配，不是疾病治疗处方。\n  - strong: 肩前屈 · 右侧\n  - generic: 5 次 × 1 组 · 休息 60 秒\n  - generic \"动作安排与依据\"\n  - text: 参考：NHS North Tees：Chair Exercises / Frontal Raise。次数及幅度按本人评估适配，不是疾病治疗处方。\n  - strong: 肘屈伸 · 左侧\n  - generic: 5 次 × 1 组 · 休息 60 秒\n  - generic \"动作安排与依据\"\n  - text: 参考：NHS North Tees：Bed Exercise / Elbow Flexion。次数及幅度按本人评估适配，不是疾病治疗处方。\n  - strong: 肘屈伸 · 右侧\n  - generic: 5 次 × 1 组 · 休息 60 秒\n  - generic \"动作安排与依据\"\n  - text: 参考：NHS North Tees：Bed Exercise / Elbow Flexion。次数及幅度按本人评估适配，不是疾病治疗处方。\n  - checkbox \"目前无疼痛、头晕等不适，无疾病、术后或医嘱活动限制，并已获准进行基础活动。不确定时先咨询专业人员。\"\n  - generic: 目前无疼痛、头晕等不适，无疾病、术后或医嘱活动限制，并已获准进行基础活动。不确定时先咨询专业人员。\n  - checkbox \"站立项目已准备稳固支撑，可安全完成。\"\n  - generic: 站立项目已准备稳固支撑，可安全完成。\n  - button \"使用这份计划\"\n  - generic \"待补充评估 · 1 项\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "ai-training-angle",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回原页面\"\n  - heading \"康复管家\" [level=1]\n  - paragraph: 仅预填问题，未附报告数值。辅助理解，不作为标准动作指导。\n  - button \"看评估结果\":\n    - strong: 看评估结果\n    - generic: ›\n  - button \"看训练安排\":\n    - strong: 看训练安排\n    - generic: ›\n  - generic \"已有对话\"\n  - generic: 确认要问的问题\n  - textbox \"确认要问的问题\": 肩外展的视频角度变化代表什么？与临床关节活动度有什么区别？\n  - checkbox \"本次不记录\"\n  - generic: 本次不记录\n  - button \"发送\"\n  - paragraph: 本地规则助手。紧急不适请直接求助。\n  - status: 语音可使用手机键盘的语音输入。\n  - generic \"今日待办 · 1 项\"\n  - heading \"我的康复情况\" [level=2]\n  - button \"读取本人的评估与训练\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "ai-training-angle",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回原页面\"\n  - heading \"康复管家\" [level=1]\n  - paragraph: 仅预填问题，未附报告数值。辅助理解，不作为标准动作指导。\n  - button \"看评估结果\":\n    - strong: 看评估结果\n    - generic: ›\n  - button \"看训练安排\":\n    - strong: 看训练安排\n    - generic: ›\n  - generic \"已有对话\"\n  - generic: 确认要问的问题\n  - textbox \"确认要问的问题\": 肩外展的视频角度变化代表什么？与临床关节活动度有什么区别？\n  - checkbox \"本次不记录\"\n  - generic: 本次不记录\n  - button \"发送\"\n  - paragraph: 本地规则助手。紧急不适请直接求助。\n  - status: 语音可使用手机键盘的语音输入。\n  - generic \"今日待办 · 1 项\"\n  - heading \"我的康复情况\" [level=2]\n  - button \"读取本人的评估与训练\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "training-result",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 训练录像分析\n  - heading \"肩外展\" [level=1]\n  - paragraph: 10/12 18:50\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"已达计划次数 问 AI：结果概览\" [level=2]:\n    - text: 已达计划次数\n    - button \"问 AI：结果概览\": 问 AI\n  - strong: 5 次\n  - text: 完整动作\n  - button \"问 AI：完整动作\": 问 AI\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 141°\n  - text: 视频角度变化\n  - button \"问 AI：视频角度变化\": 问 AI\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph: 达到目标 5 次 · 需调整 0 次 · 未能判断 0 次。按本次目标和可见动作统计。\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 3°–144°\n    - text: 。记录到 5 次完整动作。\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。\n  - button \"记录疼痛与疲劳\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "training-result",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 训练录像分析\n  - heading \"肩外展\" [level=1]\n  - paragraph: 10/12 18:50\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"已达计划次数 问 AI：结果概览\" [level=2]:\n    - text: 已达计划次数\n    - button \"问 AI：结果概览\": 问 AI\n  - strong: 5 次\n  - text: 完整动作\n  - button \"问 AI：完整动作\": 问 AI\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 141°\n  - text: 视频角度变化\n  - button \"问 AI：视频角度变化\": 问 AI\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph: 达到目标 5 次 · 需调整 0 次 · 未能判断 0 次。按本次目标和可见动作统计。\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 3°–144°\n    - text: 。记录到 5 次完整动作。\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。\n  - button \"记录疼痛与疲劳\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "ai-training-overview",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回原页面\"\n  - heading \"康复管家\" [level=1]\n  - paragraph: 仅预填问题，未附报告数值。辅助理解，不作为标准动作指导。\n  - button \"看评估结果\":\n    - strong: 看评估结果\n    - generic: ›\n  - button \"看训练安排\":\n    - strong: 看训练安排\n    - generic: ›\n  - generic \"已有对话\"\n  - generic: 确认要问的问题\n  - textbox \"确认要问的问题\": 如何理解本次肩外展训练的结果？请解释指标含义，不生成康复处方。\n  - checkbox \"本次不记录\" [checked] [active]\n  - generic: 本次不记录\n  - button \"发送\"\n  - paragraph: 本地规则助手。紧急不适请直接求助。\n  - status: 语音可使用手机键盘的语音输入。\n  - generic \"今日待办 · 1 项\"\n  - heading \"我的康复情况\" [level=2]\n  - button \"读取本人的评估与训练\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "ai-training-overview",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回原页面\"\n  - heading \"康复管家\" [level=1]\n  - paragraph: 仅预填问题，未附报告数值。辅助理解，不作为标准动作指导。\n  - button \"看评估结果\":\n    - strong: 看评估结果\n    - generic: ›\n  - button \"看训练安排\":\n    - strong: 看训练安排\n    - generic: ›\n  - generic \"已有对话\"\n  - generic: 确认要问的问题\n  - textbox \"确认要问的问题\": 如何理解本次肩外展训练的结果？请解释指标含义，不生成康复处方。\n  - checkbox \"本次不记录\" [checked] [active]\n  - generic: 本次不记录\n  - button \"发送\"\n  - paragraph: 本地规则助手。紧急不适请直接求助。\n  - status: 语音可使用手机键盘的语音输入。\n  - generic \"今日待办 · 1 项\"\n  - heading \"我的康复情况\" [level=2]\n  - button \"读取本人的评估与训练\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "assessment-result",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 视频评估\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 10/11 18:40\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"本次结果 问 AI：结果概览\" [level=2]:\n    - text: 本次结果\n    - button \"问 AI：结果概览\": 问 AI\n  - strong: 5 次\n  - text: 完整动作\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 145°\n  - text: 视频角度变化\n  - button \"问 AI：视频角度变化\": 问 AI\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 4°–149°\n    - text: 。记录到 5 次完整动作。\n  - button \"查看训练建议\"\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "assessment-result",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 视频评估\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 10/11 18:40\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"本次结果 问 AI：结果概览\" [level=2]:\n    - text: 本次结果\n    - button \"问 AI：结果概览\": 问 AI\n  - strong: 5 次\n  - text: 完整动作\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 145°\n  - text: 视频角度变化\n  - button \"问 AI：视频角度变化\": 问 AI\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 4°–149°\n    - text: 。记录到 5 次完整动作。\n  - button \"查看训练建议\"\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "ai-assessment",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回原页面\"\n  - heading \"康复管家\" [level=1]\n  - paragraph: 仅预填问题，未附报告数值。辅助理解，不作为标准动作指导。\n  - button \"看评估结果\":\n    - strong: 看评估结果\n    - generic: ›\n  - button \"看训练安排\":\n    - strong: 看训练安排\n    - generic: ›\n  - generic \"已有对话\"\n  - generic: 确认要问的问题\n  - textbox \"确认要问的问题\": 如何理解肩前屈活动度评估的指标？\n  - checkbox \"本次不记录\"\n  - generic: 本次不记录\n  - button \"发送\"\n  - paragraph: 本地规则助手。紧急不适请直接求助。\n  - status: 语音可使用手机键盘的语音输入。\n  - generic \"今日待办 · 1 项\"\n  - heading \"我的康复情况\" [level=2]\n  - button \"读取本人的评估与训练\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "ai-assessment",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回原页面\"\n  - heading \"康复管家\" [level=1]\n  - paragraph: 仅预填问题，未附报告数值。辅助理解，不作为标准动作指导。\n  - button \"看评估结果\":\n    - strong: 看评估结果\n    - generic: ›\n  - button \"看训练安排\":\n    - strong: 看训练安排\n    - generic: ›\n  - generic \"已有对话\"\n  - generic: 确认要问的问题\n  - textbox \"确认要问的问题\": 如何理解肩前屈活动度评估的指标？\n  - checkbox \"本次不记录\"\n  - generic: 本次不记录\n  - button \"发送\"\n  - paragraph: 本地规则助手。紧急不适请直接求助。\n  - status: 语音可使用手机键盘的语音输入。\n  - generic \"今日待办 · 1 项\"\n  - heading \"我的康复情况\" [level=2]\n  - button \"读取本人的评估与训练\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "rehab-protected",
+    "width": 390,
+    "height": 844,
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- banner:\n  - link \"安康\":\n    - /url: \"#home\"\n  - button \"刷新资料\": 刷新\n  - button \"我的档案\": 我\n- main:\n  - status: 正在连接电脑…",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/#rehab"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "rehab-protected",
+    "width": 320,
+    "height": 700,
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- banner:\n  - link \"安康\":\n    - /url: \"#home\"\n  - button \"刷新资料\": 刷新\n  - button \"我的档案\": 我\n- main:\n  - status: 正在连接电脑…",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/#rehab"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "library-protected",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复动作库\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "library-protected",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复动作库\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "detail",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"返回康复动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍 问 AI：动作介绍\" [level=2]:\n    - text: 动作介绍\n    - button \"问 AI：动作介绍\": 问 AI\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "detail",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"返回康复动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍 问 AI：动作介绍\" [level=2]:\n    - text: 动作介绍\n    - button \"问 AI：动作介绍\": 问 AI\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "ai-action",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回原页面\"\n  - heading \"康复管家\" [level=1]\n  - paragraph: 仅预填问题，未附报告数值。辅助理解，不作为标准动作指导。\n  - button \"看评估结果\":\n    - strong: 看评估结果\n    - generic: ›\n  - button \"看训练安排\":\n    - strong: 看训练安排\n    - generic: ›\n  - generic \"已有对话\"\n  - generic: 确认要问的问题\n  - textbox \"确认要问的问题\": 肩外展动作需要注意什么？请解释一般注意事项，不代替专业动作指导。\n  - checkbox \"本次不记录\"\n  - generic: 本次不记录\n  - button \"发送\"\n  - paragraph: 本地规则助手。紧急不适请直接求助。\n  - status: 语音可使用手机键盘的语音输入。\n  - generic \"今日待办 · 1 项\"\n  - heading \"我的康复情况\" [level=2]\n  - button \"读取本人的评估与训练\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "ai-action",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回原页面\"\n  - heading \"康复管家\" [level=1]\n  - paragraph: 仅预填问题，未附报告数值。辅助理解，不作为标准动作指导。\n  - button \"看评估结果\":\n    - strong: 看评估结果\n    - generic: ›\n  - button \"看训练安排\":\n    - strong: 看训练安排\n    - generic: ›\n  - generic \"已有对话\"\n  - generic: 确认要问的问题\n  - textbox \"确认要问的问题\": 肩外展动作需要注意什么？请解释一般注意事项，不代替专业动作指导。\n  - checkbox \"本次不记录\"\n  - generic: 本次不记录\n  - button \"发送\"\n  - paragraph: 本地规则助手。紧急不适请直接求助。\n  - status: 语音可使用手机键盘的语音输入。\n  - generic \"今日待办 · 1 项\"\n  - heading \"我的康复情况\" [level=2]\n  - button \"读取本人的评估与训练\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12&entry=library"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "ai-unavailable",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回原页面\"\n  - heading \"会话暂不可用\" [level=1]\n  - alert: 无法连接电脑，请检查 Wi-Fi 和网页服务\n  - button \"重试\"",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "ai-unavailable",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回原页面\"\n  - heading \"会话暂不可用\" [level=1]\n  - alert: 无法连接电脑，请检查 Wi-Fi 和网页服务\n  - button \"重试\"",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "feedback-save-failed",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛程度\n  - combobox\n  - status: 0 / 10\n  - slider \"疼痛程度\": \"0\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疼痛 · 5 中等 · 10 很强\n  - text: 疲劳程度\n  - combobox\n  - status: 3 / 10\n  - slider \"疲劳程度\": \"3\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疲劳 · 5 中等 · 10 很强\n  - button \"保存反馈\"\n- alert: 无法连接电脑，请检查 Wi-Fi 和网页服务",
+    "metrics": {
+      "documentWidth": 390,
+      "scrollY": 0,
+      "sliders": [
+        {
+          "id": "rv-pain",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "0 / 10",
+          "value": "0"
+        },
+        {
+          "id": "rv-fatigue",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "3 / 10",
+          "value": "3"
+        }
+      ],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "feedback-save-failed",
+    "width": 320,
+    "height": 700,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛程度\n  - combobox\n  - status: 0 / 10\n  - slider \"疼痛程度\": \"0\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疼痛 · 5 中等 · 10 很强\n  - text: 疲劳程度\n  - combobox\n  - status: 3 / 10\n  - slider \"疲劳程度\": \"3\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疲劳 · 5 中等 · 10 很强\n  - button \"保存反馈\"\n- alert: 无法连接电脑，请检查 Wi-Fi 和网页服务",
+    "metrics": {
+      "documentWidth": 320,
+      "scrollY": 0,
+      "sliders": [
+        {
+          "id": "rv-pain",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "0 / 10",
+          "value": "0"
+        },
+        {
+          "id": "rv-fatigue",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "3 / 10",
+          "value": "3"
+        }
+      ],
+      "url": "http://127.0.0.1:18886/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12"
+    }
+  },
+  {
+    "stage": "after",
+    "name": "feedback",
+    "width": 390,
+    "height": 844,
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛程度\n  - combobox\n  - status: 0 / 10\n  - slider \"疼痛程度\" [active]: \"0\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疼痛 · 5 中等 · 10 很强\n  - text: 疲劳程度\n  - combobox\n  - status: 3 / 10\n  - slider \"疲劳程度\": \"3\"\n  - generic: \"0\"\n  - generic: \"5\"\n  - generic: \"10\"\n  - paragraph: 0 无疲劳 · 5 中等 · 10 很强\n  - button \"保存反馈\"",
+    "metrics": {
+      "documentWidth": 390,
+      "sliders": [
+        {
+          "id": "rv-pain",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "0 / 10",
+          "value": "0"
+        },
+        {
+          "id": "rv-fatigue",
+          "max": "10",
+          "min": "0",
+          "step": "1",
+          "text": "3 / 10",
+          "value": "3"
+        }
+      ]
+    }
+  }
+]
