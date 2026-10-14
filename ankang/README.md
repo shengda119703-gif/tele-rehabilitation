@@ -6,4 +6,4 @@
 
 2026-10-02 在 `codex/product-ui-v1` 清理不参与正式运行的 React UI/hooks、浏览器 demo/验收、旧设计演示和独立 Home Twin/Route2/3DGS。Route2 的硬件中立 capture 契约已原样迁到 `app/product/capture_contracts.py`；空间架构文档在 [历史归档](../docs/archive/ankang-route2/README.md)。
 
-参见[清理与依赖审计](../docs/validation/REPOSITORY_CLEANUP_2026-10-02.md)和[原始来源](UPSTREAM.md)。完整原实现可从 `codex/rehab-agent-stage1`（`4b2d108a3003d84c89ac42da25580017d5b1de17`）恢复；本轮不改 main/stage1，不增加业务能力。
+参见[清理与依赖审计](../docs/validation/REPOSITORY_CLEANUP_2026-10-02.md)和[原始来源](UPSTREAM.md)。完整原实现保留在 main 历史提交 `4b2d108a3003d84c89ac42da25580017d5b1de17`；旧开发分支名已清理，恢复方法见[当前分支与归档规则](../docs/BRANCHES.md)。正式康复 AI 的当前问答、解释与本地候选计划范围以[当前交接](../docs/HANDOFF.md)为准。
