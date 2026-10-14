@@ -107,6 +107,12 @@ def main():
         assert not dialog.confirm.isChecked()
         assert not account.consent('TEST-local-owner')
         assert '授权' in dialog.status.text(), dialog.status.text()
+        assert dialog.contact_title.text() == '康复医师'
+        assert not dialog.chat_button.isVisible(), 'Chat must not show the previous three-page navigation'
+        assert dialog.more_button.isVisible()
+        assert [action.text() for action in dialog.more_menu.actions()] == ['医生方案', '资料授权']
+        assert dialog.authorization_button.isVisible(), 'First contact must ask for explicit permission'
+        assert not dialog.identity.isVisible(), 'Account controls belong in the secondary page'
         patient = account.session()['patient_id']
         original_question = QMessageBox.question
         QMessageBox.question = lambda *args, **kwargs: QMessageBox.Yes
@@ -118,6 +124,7 @@ def main():
         finally:
             QMessageBox.question = original_question
         assert dialog.doctor_access
+        assert not dialog.authorization_button.isVisible()
         dialog.confirm.setChecked(True)
         dialog.bind_profile()
         wait()
@@ -150,11 +157,15 @@ def main():
             screenshot(mode + '-chat')
             dialog.show_plans()
             wait()
+            assert dialog.chat_button.isVisible()
+            assert dialog.contact_title.text() == '医生方案'
             assert dialog.plan_list
             assert 'TEST' in dialog.plan_records.toPlainText()
             screenshot(mode + '-plans')
             dialog.show_settings()
             wait()
+            assert dialog.chat_button.isVisible()
+            assert dialog.contact_title.text() == '资料授权'
             screenshot(mode + '-sharing')
             dialog.show_chat()
             wait()
@@ -201,6 +212,7 @@ def main():
         result = dict(actual_qt=True, isolated_test_service=True, real_patient_data_used=False,
             account_separate_from_chat=True, saved_login_opens_chat=True,
             explicit_doctor_grant=True, binding_does_not_upload=True,
+            chat_is_only_primary_page=True, plans_and_consent_in_more_menu=True,
             durable_chat_and_offline_retry=True, retry_duplicates=0, offline_logout=True,
             physician_plan_page=True, patient_api_controls_removed=True,
             minimum_size=[520, 560], themes=['light', 'dark', 'high-contrast'],

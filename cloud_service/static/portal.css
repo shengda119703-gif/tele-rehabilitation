@@ -40,10 +40,27 @@
 .cloud-contact-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
 .cloud-contact-heading h1 { margin-bottom: 8px; }
 .cloud-contact-heading > .cloud-badge { flex-shrink: 0; white-space: nowrap; }
-.cloud-contact-tabs { position: static; display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 8px; margin: 20px 0; padding: 0; background: none; border: 0; box-shadow: none; }
-.cloud-contact-tabs button { flex: 0 1 auto; min-width: 0; border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
-.cloud-contact-tabs button[aria-pressed="true"] { border-color: var(--good); background: var(--surface); font-weight: 600; }
-.cloud-contact-tabs .cloud-badge { margin-left: 4px; }
+.cloud-patient-tabs { position: static; display: flex; gap: 6px; margin: 20px 0 28px; padding: 0 0 12px; border: 0; border-bottom: 1px solid var(--line); background: none; box-shadow: none; justify-content: flex-start; }
+.cloud-patient-tabs button { flex: 0 1 auto; min-width: 0; padding: 10px 16px; border-radius: 10px; }
+.cloud-patient-tabs button[aria-selected="true"] { background: var(--good); color: var(--surface); }
+.cloud-usage { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.cloud-usage > div { padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.cloud-usage dd { margin: 8px 0 0; font-size: 1.35rem; font-weight: 600; overflow-wrap: anywhere; }
+.cloud-empty { padding: 64px 16px; text-align: center; color: var(--muted); }
+.contact-more-wrap { position: relative; flex-shrink: 0; }
+.contact-menu { position: absolute; z-index: 3; right: 0; top: 100%; display: grid; gap: 6px; padding: 8px; min-width: 170px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 8px 24px #0001; }
+.contact-menu button { white-space: nowrap; text-align: left; }
+.cloud-chat-actions { display: flex; justify-content: flex-end; }
+.cloud-support-chat { border: 1px solid var(--line); border-radius: 16px; padding: 16px; background: var(--surface); }
+.cloud-support-chat #conversation { height: clamp(240px,48vh,520px); overflow-y: auto; overscroll-behavior: contain; padding: 8px; background: var(--soft); border-radius: 10px; }
+.cloud-support-chat .cloud-chat { width: fit-content; max-width: 84%; border: 1px solid var(--line); border-radius: 12px; margin: 12px 0; }
+.patient-portal .cloud-chat.patient, .doctor-portal .cloud-chat.doctor { margin-left: auto; background: var(--soft); }
+.cloud-support-chat #message-form { margin-top: 12px; }
+.cloud-support-chat #message-form > label { font-size: .85rem; color: var(--muted); }
+.cloud-support-chat #message-form textarea { display: block; margin-top: 6px; resize: vertical; }
+.cloud-support-chat > textarea { display: block; width: 100%; min-width: 0; resize: vertical; }
+.cloud-support-chat #message-form .cloud-toolbar { margin: 12px 0 0; }
+.local-connection-note { margin: 0; padding: 8px 16px; text-align: center; background: var(--soft); color: var(--muted); font-size: .82rem; }
 .cloud-consent { padding: 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
 .cloud-account-settings { border-top: 1px solid var(--line); padding-top: 20px; margin-top: 28px; }
 .cloud-account-settings label, #report-upload label { display: block; margin: 12px 0; }
@@ -59,4 +76,5 @@
 .cloud-plan-editor legend { padding: 0 8px; font-weight: 600; }
 .cloud-record dl, .cloud-record dd { min-width: 0; overflow-wrap: anywhere; }
 @media (max-width: 480px) { .cloud-form { margin-top: 12px; } }
+@media (max-width: 480px) { .cloud-portal > main { padding: 20px 12px 32px; } .cloud-portal > header { padding-left: 12px; padding-right: 12px; } .cloud-patient-tabs { gap: 2px; } .cloud-patient-tabs button { padding: 10px; font-size: .9rem; } .cloud-support-chat { padding: 10px; } .cloud-support-chat .cloud-chat { max-width: 92%; } .cloud-usage { gap: 10px; } .cloud-usage > div { padding: 12px; } }
 @media (max-width: 600px) { .cloud-item-grid { grid-template-columns: 1fr; } .cloud-plan-editor { padding: 12px; } .cloud-section-title { align-items: flex-start; } }

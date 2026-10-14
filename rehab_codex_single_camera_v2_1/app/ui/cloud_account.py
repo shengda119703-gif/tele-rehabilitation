@@ -8,7 +8,7 @@ from uuid import uuid4
 from PySide6.QtCore import QTimer, Qt
 from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel,
     QLineEdit, QPushButton, QCheckBox, QTextBrowser, QPlainTextEdit, QComboBox, QMessageBox, QFileDialog,
-    QScrollArea, QWidget, QStackedWidget)
+    QScrollArea, QWidget, QStackedWidget, QMenu)
 
 from ..cloud_account import CloudAccount, CloudError
 
@@ -39,10 +39,7 @@ class CloudAccountDialog(QDialog):
         self.pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix='cloud-account')
         self.future = None
         outer = QVBoxLayout(self)
-        title = QLabel('联系康复医师')
-        title.setObjectName('productTitle')
-        outer.addWidget(title)
-        self.status = QLabel('首次开通身份后，聊天记录会保留；以后可直接进入。')
+        self.status = QLabel('请登录本人账号')
         self.status.setWordWrap(True)
         self.status.setAccessibleName('医师沟通连接状态')
         outer.addWidget(self.status)
@@ -50,7 +47,7 @@ class CloudAccountDialog(QDialog):
         outer.addWidget(self.pages, 1)
         self.account_page = QWidget()
         login_layout = QVBoxLayout(self.account_page)
-        introduction = QLabel('与康复医师一对一沟通\n\n请登录本人账号，首次使用可注册。身份用于保存聊天、报告和医生方案。医生请进入独立的医生工作台。')
+        introduction = QLabel('联系康复医师\n\n请登录本人账号，首次使用可注册。')
         introduction.setWordWrap(True)
         login_layout.addStretch()
         login_layout.addWidget(introduction)
@@ -86,30 +83,40 @@ class CloudAccountDialog(QDialog):
         self.pages.addWidget(self.account_page)
         self.patient_page = QWidget()
         patient_layout = QVBoxLayout(self.patient_page)
-        self.identity = QLabel()
-        self.identity.setObjectName('productMuted')
-        self.identity.setWordWrap(True)
-        patient_layout.addWidget(self.identity)
         row = QHBoxLayout()
-        self.chat_button = action('与医师沟通', self.show_chat, row)
-        self.plans_button = action('医生方案', self.show_plans, row)
-        self.settings_button = action('资料授权', self.show_settings, row)
-        for navigation in (self.chat_button, self.plans_button, self.settings_button):
-            navigation.setCheckable(True)
-            navigation.setAutoExclusive(True)
+        self.contact_title = QLabel('康复医师')
+        self.contact_title.setObjectName('productTitle')
+        row.addWidget(self.contact_title)
+        row.addStretch()
+        self.chat_button = action('返回聊天', self.show_chat, row)
+        self.more_button = action('更多', lambda: None, row)
+        self.more_menu = QMenu(self.more_button)
+        self.plans_button = self.more_menu.addAction('医生方案', self.show_plans)
+        self.settings_button = self.more_menu.addAction('资料授权', self.show_settings)
+        self.patient_actions.extend((self.plans_button, self.settings_button))
+        self.more_button.setMenu(self.more_menu)
         patient_layout.addLayout(row)
         self.content_pages = QStackedWidget()
         patient_layout.addWidget(self.content_pages, 1)
         chat_page = QWidget()
         chat_layout = QVBoxLayout(chat_page)
+        row = QHBoxLayout()
+        self.history_button = action('更早消息', lambda: self.run(lambda: self.client.messages(self.oldest_message), '已读取更早消息', 'history'), row)
+        self.history_button.hide()
+        row.addStretch()
+        self.retry_button = action('重新连接', self.reconnect, row)
+        self.retry_button.hide()
+        chat_layout.addLayout(row)
         self.chat_records = QTextBrowser()
         self.chat_records.setOpenExternalLinks(False)
         self.chat_records.setAccessibleName('与康复医师的聊天历史')
         self.chat_records.setMinimumHeight(150)
         self.chat_records.setHtml('<p>正在读取聊天历史…</p>')
         chat_layout.addWidget(self.chat_records, 1)
+        self.authorization_button = action('同意医师查看并开始咨询', lambda: self.set_doctor_access(True), chat_layout)
+        self.authorization_button.hide()
         self.message_input = QPlainTextEdit()
-        self.message_input.setPlaceholderText('描述你遇到的问题，或告诉医师本次训练情况…')
+        self.message_input.setPlaceholderText('输入你想咨询的问题…')
         self.message_input.setAccessibleName('给康复医师的文字')
         self.message_input.setMaximumHeight(100)
         chat_layout.addWidget(self.message_input)
@@ -117,12 +124,6 @@ class CloudAccountDialog(QDialog):
         action('分享报告', self.share_report, row)
         row.addStretch()
         action('发送', self.send_message, row, primary=True)
-        chat_layout.addLayout(row)
-        row = QHBoxLayout()
-        action('更早消息', lambda: self.run(lambda: self.client.messages(self.oldest_message), '已读取更早消息', 'history'), row)
-        row.addStretch()
-        self.retry_button = action('重新连接', self.reconnect, row)
-        self.retry_button.hide()
         chat_layout.addLayout(row)
         self.content_pages.addWidget(chat_page)
         plans_page = QWidget()
@@ -151,6 +152,10 @@ class CloudAccountDialog(QDialog):
         settings = QWidget()
         self.settings_scroll.setWidget(settings)
         layout = QVBoxLayout(settings)
+        self.identity = QLabel()
+        self.identity.setObjectName('productMuted')
+        self.identity.setWordWrap(True)
+        layout.addWidget(self.identity)
         self.grant_status = QLabel('医生授权状态：正在核对')
         self.grant_status.setWordWrap(True)
         layout.addWidget(self.grant_status)
@@ -231,10 +236,11 @@ class CloudAccountDialog(QDialog):
         self.username.setEnabled(not busy)
         self.password.setEnabled(not busy)
         self.message_input.setEnabled(authenticated)
+        self.authorization_button.setVisible(authenticated and self.page_mode == 'messages' and self.doctor_access is False)
 
     def restore_identity(self, session):
         self.account_session = session
-        self.identity.setText('本人：' + session['username'] + '  ·  康复医师一对一沟通')
+        self.identity.setText('本人账号：' + session['username'])
         self.pages.setCurrentWidget(self.patient_page)
         self.content_pages.setCurrentIndex(0)
         self.page_mode = 'messages'
@@ -275,12 +281,9 @@ class CloudAccountDialog(QDialog):
         self.run(lambda: self.client.patient_call(''), '可选择分享范围，也可随时撤销医生授权', 'settings')
 
     def update_navigation(self):
-        for mode, button in (('messages', self.chat_button), ('plans', self.plans_button), ('settings', self.settings_button)):
-            selected = mode == self.page_mode
-            button.setChecked(selected)
-            button.setProperty('fluentAppearance', 'primary' if selected else 'secondary')
-            button.style().unpolish(button)
-            button.style().polish(button)
+        self.contact_title.setText({'messages': '康复医师', 'plans': '医生方案', 'settings': '资料授权'}[self.page_mode])
+        self.chat_button.setVisible(self.page_mode != 'messages')
+        self.authorization_button.setVisible(self.page_mode == 'messages' and self.doctor_access is False)
 
     def reconnect(self):
         if not self.account_session:
@@ -295,7 +298,7 @@ class CloudAccountDialog(QDialog):
             except CloudError:
                 patient = None
             return {'messages': messages, 'patient': patient}
-        self.run(work, '聊天已更新；发送的文字与分享资料不会自动改动训练方案', 'connected')
+        self.run(work, '已连接', 'connected')
 
     def set_doctor_access(self, enabled):
         prompt = ('同意康复医师查看你已分享的康复记录、报告，并与你沟通？' if enabled else
@@ -526,7 +529,7 @@ class CloudAccountDialog(QDialog):
                 self.refresh_tick += 1
                 if self.refresh_tick >= 150:
                     self.refresh_tick = 0
-                    self.run(self.client.sync_messages, '聊天已更新', 'auto_messages')
+                    self.run(self.client.sync_messages, '已连接', 'auto_messages')
             return
         future, self.future = self.future, None
         try:
@@ -562,7 +565,7 @@ class CloudAccountDialog(QDialog):
                         self.doctor_access = patient['doctor_access']
                         self.grant_status.setText('医生授权：已同意查看与沟通' if self.doctor_access else '医生授权：尚未同意，可在下方选择')
                 self.browsing_history = self.mode == 'history'
-                self.records.setHtml(''.join('<p><b>' + ('医生' if m['author_role'] == 'DOCTOR_ADMIN' else '我') + '：</b>' + html.escape(m['text']).replace('\n', '<br>') + '</p>' for m in value['items']) or '<p>暂无文字消息；医生授权开启后可发送。</p>')
+                self.records.setHtml(''.join('<p align="' + ('left' if m['author_role'] == 'DOCTOR_ADMIN' else 'right') + '"><b>' + ('康复医师' if m['author_role'] == 'DOCTOR_ADMIN' else '我') + '</b><br>' + html.escape(m['text']).replace('\n', '<br>') + '</p>' for m in value['items']) or '<p>暂无消息</p>')
                 with self.client.db() as db:
                     pending = db.execute('SELECT operation_id,text FROM message_outbox WHERE patient_id=? AND resource_id IS NULL ORDER BY rowid', (self.account_session['patient_id'],)).fetchall()
                 if not pending and self.pending_message:
@@ -577,13 +580,14 @@ class CloudAccountDialog(QDialog):
                     if not value.get('offline'):
                         cursor = value['items'][-1]['sequence']
                         self.pool.submit(self.client.mark_read, cursor)
+                self.history_button.setVisible(bool(value['items']) and self.oldest_message > 1)
                 if value.get('offline'):
                     self.status.setText('离线显示本机缓存消息；待发消息保留。')
                     self.retry_button.show()
                 else:
                     self.retry_button.hide()
                     if self.doctor_access is False:
-                        self.status.setText('首次咨询请到“资料授权”同意医生查看与沟通；你可自行选择分享范围。')
+                        self.status.setText('首次咨询需要你的授权')
                 if self.mode != 'history':
                     self.records.verticalScrollBar().setValue(self.records.verticalScrollBar().maximum())
             elif self.mode == 'plans':

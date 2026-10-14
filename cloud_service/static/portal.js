@@ -83,12 +83,17 @@
   function showAuth(register = false) {
     ++generation; account = null; csrf = ''; liveView = null; actionNames = Object.create(null); logout.hidden = true;
     const doctor = doctorEntry;
-    main.innerHTML = `<section class="cloud-form"><h1>${doctor ? '医生工作台' : '联系康复医师'}</h1><p>${doctor ? '登录医生账号，查看已授权患者、回复消息和核对 API 用量。' : '首次使用需要开通身份，以保存你的聊天和报告。登录状态会保留，之后可直接联系医师。'}</p><h2>${register ? '开通患者身份' : doctor ? '医生登录' : '患者登录'}</h2>
+    main.innerHTML = `${doctor?'':`<div class="cloud-contact-heading"><h1>康复医师</h1><button id="connect-account" class="quiet" aria-expanded="${register}" aria-controls="contact-auth">连接安康账号</button></div><section id="contact-welcome" class="cloud-support-chat" ${register?'hidden':''}><div class="cloud-empty"><p>连接安康账号后，即可查看对话并联系医师。</p></div><textarea rows="2" disabled aria-label="给医师留言" placeholder="请输入你想咨询的问题…"></textarea><div class="cloud-toolbar"><button disabled>发送</button><button disabled class="quiet">发送报告</button></div></section>`}<section id="contact-auth" class="cloud-form" ${!doctor&&!register?'hidden':''}>${doctor?'<h1>医生工作台</h1>':''}<h2>${register ? '开通患者身份' : doctor ? '医生登录' : '连接安康账号'}</h2>
       <form id="account-form"><label>账号<input name="username" autocomplete="username" maxlength="64" required></label>
       ${register ? '<label>姓名<input name="display_name" autocomplete="name" maxlength="80"></label>' : ''}
       <label>密码<input name="password" type="password" autocomplete="${register ? 'new-password' : 'current-password'}" maxlength="128" required></label>
       <p class="cloud-error" role="alert"></p><button class="primary" type="submit">${register ? '创建账号' : '登录'}</button></form>
-      <div class="cloud-toolbar">${doctor ? '<a href="/account">进入患者端</a>' : `<button id="switch-auth" class="quiet">${register ? '已有账号，去登录' : '首次使用，开通身份'}</button><a href="/care">进入医生工作台</a>`}</div></section>`;
+      <div class="cloud-toolbar">${doctor ? '<a href="/account">进入患者端</a>' : `<button id="switch-auth" class="quiet">${register ? '已有账号，去登录' : '首次使用，开通身份'}</button>`}</div></section>`;
+    document.getElementById('connect-account')?.addEventListener('click', event => {
+      const panel = document.getElementById('contact-auth'); panel.hidden = !panel.hidden;
+      document.getElementById('contact-welcome').hidden = !panel.hidden;
+      event.currentTarget.setAttribute('aria-expanded',String(!panel.hidden));
+    });
     document.getElementById('switch-auth')?.addEventListener('click', () => { if (!authPending) showAuth(!register); });
     document.getElementById('account-form').addEventListener('submit', async event => {
       event.preventDefault(); if (authPending) return; authPending = true; const own = generation;
@@ -123,12 +128,12 @@
     if (own !== generation) return;
     const ident = account.patient_id;
     liveView = {ident, own, doctor:false, chatCursor:0, doctorAccess:profile.doctor_access};
-    main.innerHTML = `<div class="cloud-contact-heading"><div><h1>联系康复医师</h1><p class="muted">${escape(profile.display_name)} · 和医师沟通问题、分享资料、查看方案</p></div><span class="cloud-badge">患者端</span></div>
-      ${!profile.doctor_access ? '<section class="cloud-consent"><h2>先确认医师可以与你沟通</h2><p>你同意后，平台医生可查看你已上传的康复资料、回复消息和发布方案。报告原件仍由你逐份选择分享。</p><button id="grant" class="primary">同意并联系医师</button></section>' : ''}
-      <nav class="cloud-contact-tabs" aria-label="医患沟通"><button data-contact-tab="chat" aria-pressed="true">与医师聊天 <span id="unread-count" class="cloud-badge"></span></button><button data-contact-tab="reports" aria-pressed="false">分享报告</button><button data-contact-tab="plans" aria-pressed="false">医生方案</button></nav>
-      <section id="contact-chat"><div class="cloud-section-title"><h2>与康复医师的对话</h2><button id="load-messages" class="quiet">刷新对话</button></div><div id="conversation"><p>正在读取对话…</p></div><form id="message-form"><label>给医师留言<textarea name="text" rows="3" maxlength="4000" required placeholder="说说你的问题、训练感受，或需要医师帮你核对的情况。"></textarea></label><div class="cloud-toolbar"><button class="primary" type="submit" ${profile.doctor_access ? '' : 'disabled'}>发送给医师</button><span id="message-status" role="status"></span></div></form><p class="muted">消息会保留；断网后可重试。聊天不会直接改变训练计划。</p></section>
-      <section id="contact-reports" hidden></section><section id="contact-plans" hidden><h2>医生给你的康复方案</h2><p>查看后请回到安康康复页面核对评估和训练条件，再确认采用。</p><div id="plans"></div></section>
-      <details class="cloud-account-settings"><summary>共享设置与账号</summary><p>${profile.doctor_access ? '医师沟通已开启。医生可以查看你已上传的康复资料。' : '医师沟通未开启；已有聊天记录仍可查看。'}</p>${profile.doctor_access ? '<button id="grant">停止医师共享</button>' : ''}<form id="password-form"><h3>修改密码</h3><label>原密码<input type="password" name="current_password" autocomplete="current-password" required maxlength="128"></label><label>新密码<input type="password" name="new_password" autocomplete="new-password" required maxlength="128"></label><button type="submit">保存新密码</button></form></details><p class="cloud-error" role="alert"></p>`;
+    main.innerHTML = `<div class="cloud-contact-heading"><div><h1>康复医师</h1><span id="unread-count" class="cloud-badge"></span></div><div class="contact-more-wrap"><button id="contact-more" class="quiet" aria-expanded="false" aria-controls="contact-menu">更多</button><div id="contact-menu" class="contact-menu" hidden><button data-contact-tab="plans">医生方案</button><button data-contact-tab="settings">资料授权与账号</button></div></div></div>
+      ${!profile.doctor_access ? '<section class="cloud-consent"><p>同意后，医师可以与你沟通并查看你已上传的资料。报告仍由你逐份选择分享。</p><button id="grant" class="primary">同意并联系医师</button></section>' : ''}
+      <button data-contact-tab="chat" id="contact-back" class="quiet" hidden>返回聊天</button>
+      <section id="contact-chat" class="cloud-support-chat"><div class="cloud-chat-actions"><button id="load-messages" class="quiet">刷新对话</button></div><div id="conversation"><p>正在读取对话…</p></div><form id="message-form"><label>给医师留言<textarea name="text" rows="2" maxlength="4000" required placeholder="请输入你想咨询的问题…"></textarea></label><div class="cloud-toolbar"><button class="primary" type="submit" ${profile.doctor_access ? '' : 'disabled'}>发送给医师</button><button type="button" data-contact-tab="reports" class="quiet">发送报告</button><span id="message-status" role="status"></span></div></form></section>
+      <section id="contact-reports" hidden></section><section id="contact-plans" hidden><h2>医生方案</h2><div id="plans"></div></section>
+      <section id="contact-settings" hidden><h2>资料授权与账号</h2><p>${escape(profile.display_name)} · ${profile.doctor_access ? '已允许医师查看上传资料' : '尚未开启医师共享'}</p>${profile.doctor_access ? '<button id="grant">停止医师共享</button>' : ''}<details class="cloud-account-settings"><summary>修改密码</summary><form id="password-form"><label>原密码<input type="password" name="current_password" autocomplete="current-password" required maxlength="128"></label><label>新密码<input type="password" name="new_password" autocomplete="new-password" required maxlength="128"></label><button type="submit">保存新密码</button></form></details></section><p class="cloud-error" role="alert"></p>`;
     document.getElementById('grant').onclick = async event => {
       const button = event.currentTarget; button.disabled = true;
       if (profile.doctor_access && !confirm('停止共享后，医生不能继续查看你的康复资料或与你发送新消息。已保存记录不会删除。')) { button.disabled = false; return; }
@@ -142,10 +147,16 @@
     };
     document.getElementById('load-messages').onclick = () => showMessages(ident, own).catch(e=>failed(e,own));
     bindMessageForm(ident, own);
+    document.getElementById('contact-more').onclick = event => {
+      const menu = document.getElementById('contact-menu'); menu.hidden = !menu.hidden;
+      event.currentTarget.setAttribute('aria-expanded', String(!menu.hidden));
+    };
     main.querySelectorAll('[data-contact-tab]').forEach(button => button.onclick = async () => {
       const tab = button.dataset.contactTab;
-      main.querySelectorAll('[data-contact-tab]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
-      for (const name of ['chat','reports','plans']) document.getElementById('contact-' + name).hidden = name !== tab;
+      for (const name of ['chat','reports','plans','settings']) document.getElementById('contact-' + name).hidden = name !== tab;
+      document.getElementById('contact-back').hidden = tab === 'chat';
+      document.getElementById('contact-menu').hidden = true;
+      document.getElementById('contact-more').setAttribute('aria-expanded','false');
       try { if (tab === 'reports') await showReports(document.getElementById('contact-reports'),ident,own,false); if (tab === 'plans') await showPlans(ident,own); if (tab === 'chat') await showMessages(ident,own); }
       catch(e) { failed(e,own); }
     });
@@ -163,27 +174,12 @@
     const own = ++generation; liveView = null; main.innerHTML = '<p role="status">正在读取患者…</p>';
     const result = await api(`/care/patients?offset=${offset}&limit=30&search=${encodeURIComponent(search)}`);
     if (own !== generation) return;
-    main.innerHTML = `<h1>工作台</h1><p>医生端 · 回复患者、查看已授权康复资料、发布方案和核对 API 用量。${result.total} 位已授权患者。</p><form id="patient-search" class="cloud-toolbar"><label>查找患者<input name="search" value="${escape(search)}" maxlength="80" autocomplete="off"></label><button type="submit">查找</button></form><div class="cloud-patients">${result.items.map(p => `<div class="cloud-patient"><div><strong>${escape(p.display_name)}</strong>${p.unread_count ? `<span class="cloud-badge">${escape(p.unread_count)} 条未读</span>` : ''}</div><button data-patient="${escape(p.id)}">打开沟通与档案</button></div>`).join('') || '<p>患者同意医师沟通后，会显示在这里。</p>'}</div>
+    main.innerHTML = `<div class="cloud-section-title"><h1>患者列表</h1><span class="muted">${result.total} 位患者</span></div><form id="patient-search" class="cloud-toolbar"><label>查找患者<input name="search" value="${escape(search)}" maxlength="80" autocomplete="off" placeholder="输入姓名"></label><button type="submit">查找</button></form><div class="cloud-patients">${result.items.map(p => `<div class="cloud-patient"><div><strong>${escape(p.display_name)}</strong>${p.unread_count ? `<span class="cloud-badge">${escape(p.unread_count)} 条未读</span>` : ''}</div><button data-patient="${escape(p.id)}">查看患者</button></div>`).join('') || '<div class="cloud-empty"><h2>暂无患者</h2><p>患者授权联系医师后，会显示在这里。</p></div>'}</div>
       <div class="cloud-toolbar"><button id="previous" ${offset === 0 ? 'disabled' : ''}>上一页</button><button id="next" ${offset + 30 >= result.total ? 'disabled' : ''}>下一页</button></div><p class="cloud-error" role="alert"></p>`;
     main.querySelectorAll('[data-patient]').forEach(button => button.onclick = () => openPatient(button.dataset.patient).catch(e => failed(e,generation)));
     document.getElementById('patient-search').onsubmit = event => {event.preventDefault();showPatients(0,new FormData(event.currentTarget).get('search')).catch(e=>failed(e,generation));};
     document.getElementById('previous').onclick = () => showPatients(Math.max(0, offset - 30),search).catch(e => failed(e,generation));
     document.getElementById('next').onclick = () => showPatients(offset + 30,search).catch(e => failed(e,generation));
-    const panel=document.createElement('section');panel.id='beta-dashboard';main.append(panel);
-    await showBetaDashboard(panel,own,search);
-  }
-  function usageHtml(usage){
-    const money=Object.entries(usage.estimated_cost_by_currency).map(([currency,value])=>`${escape(currency)} ${escape(value)}`).join('；')||'未计价';
-    return `${usage.calls} 次请求；输入 ${usage.prompt_tokens} / 输出 ${usage.completion_tokens} token；费用估算 ${money}${usage.unpriced_calls?`（${usage.unpriced_calls} 次未计价）`:''}${usage.uncertain_calls?`；${usage.uncertain_calls} 次用量待核对`:''}`;
-  }
-  async function showBetaDashboard(panel,own,search,offset=0){
-    const [result,queue,calendar]=await Promise.all([api('/care/beta-users?offset='+offset+'&limit=60&search='+encodeURIComponent(search)),api('/care/queue?limit=60'),api('/care/calendar')]);
-    if(own!==generation)return;
-    panel.innerHTML=`<h2>内测用户与 API 用量 · ${escape(result.period)}</h2><p>仅列出实际注册账号。共有 ${result.total} 位用户，本页最多显示60位。费用是模型回执用量按配置单价估算，不是账单；未配置统一模型时不会扣额度。</p>${result.items.map(p=>`<article><strong>${escape(p.display_name||p.username)}</strong><p>${usageHtml(p.usage)}</p><p>${p.doctor_access?'已授权查看康复资料':'未授权康复资料，工作台仅显示账号和用量'}</p></article>`).join('')||'<p>尚无注册用户。</p>'}<h2>待有效回复 · ${queue.total} 位</h2><p>按患者首条待回复消息计时；补充消息不重新计时。请在本人确实回答问题后标记有效回复。</p>${queue.items.map(p=>`<p><button data-queue-patient="${escape(p.patient_id)}">${escape(p.display_name)}</button> · ${{UNCONFIGURED:'工作日历未配置',OVERDUE:'已超时',WARNING:'即将到期',WAITING:'待回复'}[p.status]}${p.due_at?' · 截止 '+escape(new Date(p.due_at*1000).toLocaleString('zh-CN')):''}</p>`).join('')||'<p>当前没有待回复患者。</p>'}<details><summary>配置工作时段与假日（北京时间）</summary><p>填写每周工作时段；1是周一，7是周日，时段数值为从零点起的分钟。示例格式：{&quot;1&quot;:[[540,720],[840,1080]]}。现有待回复任务保留收到消息时的日历。</p><form id="calendar-form"><label>工作时段<textarea name="intervals" required rows="3">${escape(JSON.stringify(calendar.document?.intervals||{}))}</textarea></label><label>假日（YYYY-MM-DD，每行一天）<textarea name="holidays">${escape((calendar.document?.holidays||[]).join('\n'))}</textarea></label><button>保存工作日历</button><span role="status" id="calendar-status"></span></form></details>`;
-    panel.querySelectorAll('[data-queue-patient]').forEach(b=>b.onclick=()=>openPatient(b.dataset.queuePatient).catch(e=>failed(e,generation)));
-    panel.querySelectorAll('article').forEach((article,index)=>{const p=result.items[index];if(p?.pending_review_count){const b=document.createElement('button');b.textContent=p.pending_review_count+' 份候选待核对';b.onclick=()=>openPatient(p.id).catch(e=>failed(e,generation));article.append(b);}});
-    const pages=document.createElement('div');pages.className='cloud-toolbar';for(const [label,next,disabled] of [['上一页用户',Math.max(0,offset-60),offset===0],['下一页用户',offset+60,offset+60>=result.total]]){const b=document.createElement('button');b.textContent=label;b.disabled=disabled;b.onclick=()=>showBetaDashboard(panel,own,search,next).catch(e=>failed(e,own));pages.append(b);}panel.append(pages);
-    panel.querySelector('#calendar-form').onsubmit=async event=>{event.preventDefault();const f=event.currentTarget,b=f.querySelector('button');b.disabled=true;try{await api('/care/calendar','PUT',{expected_version:calendar.version,intervals:JSON.parse(f.elements.intervals.value),holidays:f.elements.holidays.value.split(/\s+/).filter(Boolean)});if(own===generation)await showBetaDashboard(panel,own,search);}catch(e){failed(e,own);b.disabled=false;}};
   }
   async function openPatient(ident) {
     const own = ++generation; main.innerHTML = '<p role="status">正在读取档案…</p>';
@@ -193,33 +189,43 @@
       const actions = await api('/care/actions?offset=0&limit=100');
       if (own !== generation) return;
       actionNames = Object.fromEntries(actions.items.map(item=>[item.exercise_id,item.name]));
-      liveView = {ident,own,doctor:true};
-      main.innerHTML = `<button id="back">返回患者列表</button><h1>工作台 · ${escape(profile.display_name)}</h1><p>资料由患者明确上传。请结合资料来源、评估与训练感受核对方案。</p>
-        <section><h2>与患者沟通 <span id="unread-count" class="cloud-badge"></span></h2><button id="load-messages">读取对话</button><div id="conversation"></div><form id="message-form"><label>发送给患者<textarea name="text" rows="3" maxlength="4000" required placeholder="填写需要核对的问题或反馈"></textarea></label><div class="cloud-toolbar"><button class="primary" type="submit">发送消息</button><span id="message-status" role="status"></span></div></form></section>
-        <section id="patient-usage"><h2>这位患者的 API 用量</h2><p>正在读取…</p></section>
-        <section><h2>已保存的资料与结果</h2><p class="muted">以下是各设备最新上传的个人资料、评估、训练和本机计划。没有上传的资料不会补造。</p><div id="rehab-summary"></div><details><summary>查看全部云端记录与历史版本</summary><div id="records"></div></details></section>
-        <section><div class="cloud-section-title"><h2>康复方案</h2><button id="new-plan">新建草稿</button></div><div id="plans"></div><div id="plan-editor"></div></section><p class="cloud-error" role="alert"></p>`;
+      liveView = {ident,own,doctor:true,tab:'info'};
+      main.innerHTML = `<button id="back" class="quiet">返回患者列表</button><h1>${escape(profile.display_name)}</h1>
+        <nav class="cloud-patient-tabs" role="tablist" aria-label="患者详情"><button id="tab-info" role="tab" data-patient-tab="info" aria-selected="true" aria-controls="patient-info">患者信息</button><button id="tab-chat" role="tab" data-patient-tab="chat" aria-selected="false" aria-controls="patient-chat" tabindex="-1">沟通 <span id="unread-count" class="cloud-badge"></span></button><button id="tab-usage" role="tab" data-patient-tab="usage" aria-selected="false" aria-controls="patient-usage" tabindex="-1">API 用量</button></nav>
+        <section id="patient-info" role="tabpanel" aria-labelledby="tab-info"><h2>患者信息</h2><div id="rehab-summary"></div><div id="patient-reports"></div><section><div class="cloud-section-title"><h2>康复计划</h2><button id="new-plan">制定计划</button></div><div id="plans"></div><div id="plan-editor"></div></section><details><summary>历史记录</summary><div id="records"></div></details></section>
+        <section id="patient-chat" class="cloud-support-chat" role="tabpanel" aria-labelledby="tab-chat" hidden><div class="cloud-chat-actions"><button id="load-messages" class="quiet">刷新对话</button></div><div id="conversation"></div><form id="message-form"><label>发送给患者<textarea name="text" rows="2" maxlength="4000" required placeholder="请输入回复…"></textarea></label><div class="cloud-toolbar"><button class="primary" type="submit">发送消息</button><span id="message-status" role="status"></span></div></form></section>
+        <section id="patient-usage" role="tabpanel" aria-labelledby="tab-usage" hidden><h2>API 用量</h2><p>正在读取…</p></section><p class="cloud-error" role="alert"></p>`;
       document.getElementById('back').onclick = () => showPatients(0).catch(e => error(e.message));
       document.getElementById('load-messages').onclick = () => showMessages(ident,own).catch(e=>failed(e,own));
       document.getElementById('new-plan').onclick = () => editPlan(ident,own).catch(e=>failed(e,own));
       bindMessageForm(ident,own);
-      const reportsPanel=document.createElement('section');main.append(reportsPanel);await showReports(reportsPanel,ident,own,true);
-      const workflowPanel=document.createElement('section');main.append(workflowPanel);await showWorkflow(workflowPanel,ident,own,true);
-      await Promise.all([showRecords(ident, own),showSavedSummary(ident,own),showPlans(ident,own),showMessages(ident,own),showPatientUsage(ident,own)]);
+      const tabs = [...main.querySelectorAll('[data-patient-tab]')];
+      for (const button of tabs) {
+        button.onclick = async () => {
+          if (own !== generation) return;
+          const tab = button.dataset.patientTab; liveView.tab = tab;
+          for (const item of tabs) { const selected = item === button; item.setAttribute('aria-selected',String(selected)); item.tabIndex = selected ? 0 : -1; }
+          for (const name of ['info','chat','usage']) document.getElementById('patient-' + name).hidden = name !== tab;
+          try { if (tab === 'chat') await showMessages(ident,own); if (tab === 'usage') await showPatientUsage(ident,own); }
+          catch (e) { failed(e,own); }
+        };
+        button.onkeydown = event => {
+          const index = tabs.indexOf(button);
+          const next = event.key === 'ArrowRight' ? (index+1)%tabs.length : event.key === 'ArrowLeft' ? (index+tabs.length-1)%tabs.length : event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length-1 : null;
+          if (next !== null) { event.preventDefault(); tabs[next].focus(); tabs[next].click(); }
+        };
+      }
+      await Promise.all([showRecords(ident, own),showSavedSummary(ident,own),showPlans(ident,own),showReports(document.getElementById('patient-reports'),ident,own,true),messageStatus(ident,own)]);
     } catch(e) { if (own === generation) {liveView=null;main.innerHTML = `<h1>无法打开档案</h1><p>${escape(e.message)}</p><button id="back">返回患者列表</button>`;document.getElementById('back').onclick=()=>showPatients(0).catch(e=>error(e.message));} }
   }
   async function showPatientUsage(ident,own) {
     const result = await api(`/patients/${ident}/ai/usage`);
     if (own !== generation) return;
-    document.getElementById('patient-usage').innerHTML = `<h2>这位患者的 API 用量 · ${escape(result.period)}</h2><p>${usageHtml(result.usage)}</p><p class="muted">按供应商回执和配置单价估算；未收到用量的请求需核对，不计为免费。</p>`;
-  }
-  async function showWorkflow(panel,ident,own,doctor){
-    const [state,list]=await Promise.all([api(`/patients/${ident}/rehab-workflow`),api(`/patients/${ident}/rehab-candidates`)]);if(own!==generation)return;
-    const p=state.profile||{};
-    panel.innerHTML=`<h2>问答 → 评估 → 候选 → 医生方案</h2><ol>${state.steps.map(s=>`<li>${escape(s)}</li>`).join('')}</ol><p>${escape(state.assessment_note)}</p><p>${state.current_plan?'当前已采用：'+escape(state.current_plan.title)+'；先核对医生安排':'尚未采用医生方案'}</p>${doctor?`<h3>本人填写的目标与器材</h3>${readableFields(p)}`:`<form id="workflow-profile"><label>康复目标<input name="goal" maxlength="500" value="${escape(p.goal||'')}" required></label><label>部位<select name="region">${['肩','肘','腕','髋','膝','踝','颈','躯干','一般活动'].map(r=>`<option ${p.region===r?'selected':''}>${r}</option>`).join('')}</select></label><label>自填能力分级（需医生核对，不是肌力测量）<select name="level">${[0,1,2,3].map(n=>`<option value="${n}" ${p.level===n?'selected':''}>L${n}</option>`).join('')}</select></label><label>现有器材（每行一项，保留动作库原名称）<textarea name="equipment">${escape((p.equipment||[]).join('\n'))}</textarea></label><label>当前限制（每行一项；有任何限制需医生先核对）<textarea name="restrictions">${escape((p.restrictions||[]).join('\n'))}</textarea></label><label><input name="screening_confirmed" type="checkbox" ${p.screening_confirmed?'checked':''}>已阅读适用与停止条件，有疑问先联系医生</label><button>保存并复用这些资料</button></form><button id="starter-candidate">提交起始候选供医生核对</button><button id="progression-candidate">请求进阶核对</button>`}<h3>可选的现有本地评估</h3><p>本人手动到安康康复页面选择动作并开始；此处不会启动摄像头或补造评估。</p>${state.suggested_assessments.map(a=>`<p><strong>${escape(a.name)}</strong>：${escape(a.description)}</p>`).join('')||'<p>当前部位暂无已核验的自动评估映射，请医生安排。</p>'}<h3>已保存评估 · ${state.assessment_records.length} 份</h3>${state.assessment_records.slice(0,5).map(r=>resultDetails(r.payload)).join('')||'<p>没有上传本人评估。</p>'}<h3>候选核对</h3>${list.items.map(c=>`<article><h4>${c.document.kind==='PROGRESSION'?'进阶核对':'起始候选'} · ${escape(c.state)}</h4><p>${escape(c.document.note)}</p>${c.document.cards.map(card=>`<details><summary>${escape(card.id)} · ${escape(card.name)}</summary><p>起始条件：${escape(card.startConditions)}</p><p>源剂量范围：${escape(card.sourceDose)}</p><p>停止条件：${escape(card.stopConditions)}</p></details>`).join('')}${doctor&&c.state==='PENDING_REVIEW'?`<button data-review="${c.id}" data-decision="REVIEWED">已核对，另建方案草稿</button><button data-review="${c.id}" data-decision="REJECTED">不采用此候选</button>`:''}</article>`).join('')||'<p>尚无候选请求。规则筛选不调用付费模型，不直接修改当前方案。</p>'}`;
-    if(!doctor){const f=panel.querySelector('#workflow-profile');f.onsubmit=async e=>{e.preventDefault();const b=f.querySelector('button');b.disabled=true;try{await api(`/patients/${ident}/rehab-workflow/profile`,'PUT',{expected_version:state.profile_version,goal:f.elements.goal.value,region:f.elements.region.value,level:Number(f.elements.level.value),equipment:f.elements.equipment.value.split('\n').map(x=>x.trim()).filter(Boolean),restrictions:f.elements.restrictions.value.split('\n').map(x=>x.trim()).filter(Boolean),screening_confirmed:f.elements.screening_confirmed.checked});if(own===generation)await showWorkflow(panel,ident,own,false);}catch(e){failed(e,own);b.disabled=false;}};
-      for(const [id,kind] of [['starter-candidate','STARTER'],['progression-candidate','PROGRESSION']])panel.querySelector('#'+id).onclick=async e=>{const b=e.currentTarget;b.disabled=true;try{await api(`/patients/${ident}/rehab-candidates`,'POST',{operation_id:crypto.randomUUID(),kind});if(own===generation)await showWorkflow(panel,ident,own,false);}catch(e){failed(e,own);b.disabled=false;}};
-    }else for(const b of panel.querySelectorAll('[data-review]'))b.onclick=async()=>{b.disabled=true;try{await api(`/patients/${ident}/rehab-candidates/${b.dataset.review}/review`,'POST',{decision:b.dataset.decision});if(own!==generation)return;await showWorkflow(panel,ident,own,true);if(b.dataset.decision==='REVIEWED'){const candidate=list.items.find(c=>c.id===b.dataset.review);await editPlan(ident,own);const f=document.getElementById('plan-form');f.elements.summary.value=candidate.document.cards.map(c=>c.id+' '+c.name+'；源剂量范围：'+c.sourceDose+'；开始：'+c.startConditions+'；停止：'+c.stopConditions).join('\n')+'\n来源：已核对候选 '+candidate.id+'。以上为资料参考，具体动作和个人剂量由医生另行填写。';}}catch(e){failed(e,own);b.disabled=false;}};
+    const usage = result.usage;
+    const prices = Object.entries(usage.estimated_cost_by_currency).map(([currency,value])=>`${escape(currency)} ${escape(value)}`).join('；');
+    const tokens = value => escape(value) + (usage.uncertain_calls ? '（已确认部分）' : '');
+    const money = prices ? prices + (usage.unpriced_calls ? '（已计价部分）' : '') : usage.uncertain_calls ? '待核对' : usage.calls ? '未计价' : '暂无用量';
+    document.getElementById('patient-usage').innerHTML = `<h2>API 用量 · ${escape(result.period)}</h2><dl class="cloud-usage"><div><dt>AI 请求</dt><dd>${escape(usage.calls)} 次</dd></div><div><dt>输入 token</dt><dd>${tokens(usage.prompt_tokens)}</dd></div><div><dt>输出 token</dt><dd>${tokens(usage.completion_tokens)}</dd></div><div><dt>费用估算</dt><dd>${money}</dd></div></dl>${usage.uncertain_calls?`<p>${escape(usage.uncertain_calls)} 次请求的用量待核对</p>`:''}${usage.unpriced_calls?`<p>${escape(usage.unpriced_calls)} 次请求尚未计价</p>`:''}<p class="muted">${result.enabled?'费用按模型回执和配置单价估算。':'尚未连接统一 AI 服务。'}${usage.calls?' 估算不等于供应商账单。':''}</p>`;
   }
   async function showReports(panel,ident,own,doctor){
     const result=await api(`/patients/${ident}/reports`);if(own!==generation)return;
@@ -242,11 +248,18 @@
     return result;
   }
   function messageHtml(item) {
-    return `<article class="cloud-chat ${item.author_role==='DOCTOR_ADMIN'?'doctor':'patient'}" data-sequence="${escape(item.sequence)}"><strong>${item.author_role==='DOCTOR_ADMIN'?'医生':'患者本人'}</strong><time>${escape(new Date(item.created_at*1000).toLocaleString('zh-CN'))}</time><p>${escape(item.text)}</p>${account.role==='DOCTOR_ADMIN'&&item.author_role==='DOCTOR_ADMIN'?`<button data-effective="${escape(item.id)}">标记为本人有效回复</button>`:''}</article>`;
+    const author = item.author_role === account.role ? '我' : item.author_role === 'DOCTOR_ADMIN' ? '康复医师' : '患者';
+    return `<article class="cloud-chat ${item.author_role==='DOCTOR_ADMIN'?'doctor':'patient'}" data-sequence="${escape(item.sequence)}"><strong>${author}</strong><time>${escape(new Date(item.created_at*1000).toLocaleString('zh-CN'))}</time><p>${escape(item.text)}</p></article>`;
+  }
+  function chatVisible() {
+    const id = liveView?.doctor ? 'patient-chat' : 'contact-chat';
+    const area = document.getElementById(id);
+    return Boolean(area && !area.hidden);
   }
   async function showMessages(ident,own,before=null) {
+    if (own !== generation || !chatVisible()) return;
     const result=await api(`/patients/${ident}/messages?limit=50&${before===null?'latest=true':'before='+before}`);
-    if(own!==generation)return;
+    if(own!==generation || !chatVisible())return;
     const area=document.getElementById('conversation');
     if(before===null)area.innerHTML='<div id="message-history"></div><div id="chat-items"></div>';
     const target=document.getElementById('chat-items');
@@ -254,7 +267,6 @@
     if(before===null)target.innerHTML=html||'<p class="muted">还没有对话记录。</p>';
     else target.insertAdjacentHTML('afterbegin',html);
     if(before===null && !liveView?.doctor)area.scrollTop=area.scrollHeight;
-    target.querySelectorAll('[data-effective]').forEach(b=>b.onclick=async()=>{b.disabled=true;try{await api(`/patients/${ident}/messages/${b.dataset.effective}/effective-response`,'POST',{});if(own===generation)b.textContent='已标记有效回复';}catch(e){failed(e,own);b.disabled=false;}});
     document.getElementById('message-history').innerHTML=result.has_older?'<button id="older-messages">读取更早的对话</button>':'';
     document.getElementById('older-messages')?.addEventListener('click',()=>showMessages(ident,own,result.previous_cursor).catch(e=>failed(e,own)));
     // Only messages actually rendered in this view advance the server cursor.
@@ -406,7 +418,7 @@
   async function checkVisibleView(){
     const view=liveView;if(document.hidden)return;
     if(!view){if(account){try{const latest=await api('/auth/me');if(latest.account_id!==account.account_id){account=latest;csrf=latest.csrf_token;await showHome();}}catch(e){if(e.status===401)showAuth();}}return;}
-    try{const identity=await api('/auth/me');if(view.own!==generation)return;if(identity.account_id!==account.account_id){account=identity;csrf=identity.csrf_token;await showHome();return;}const profile=await api(`/patients/${view.ident}`);if(view.own!==generation)return;if(!view.doctor && profile.doctor_access!==view.doctorAccess){await showHome();return;}const latest=await messageStatus(view.ident,view.own);if(view.own===generation && latest && latest.next_cursor>(view.chatCursor||0) && !document.getElementById('contact-chat')?.hidden)await showMessages(view.ident,view.own);}
+    try{const identity=await api('/auth/me');if(view.own!==generation)return;if(identity.account_id!==account.account_id){account=identity;csrf=identity.csrf_token;await showHome();return;}const profile=await api(`/patients/${view.ident}`);if(view.own!==generation)return;if(!view.doctor && profile.doctor_access!==view.doctorAccess){await showHome();return;}const latest=await messageStatus(view.ident,view.own);if(view.own===generation && latest && latest.next_cursor>(view.chatCursor||0) && chatVisible())await showMessages(view.ident,view.own);}
     catch(e){failed(e,view.own);}
   }
   addEventListener('focus',checkVisibleView);
