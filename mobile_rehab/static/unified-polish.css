@@ -133,3 +133,151 @@ label {line-height:1.55;}
  #nav a[aria-current] {color:HighlightText;forced-color-adjust:none;}
  button.primary,.button.primary {background:ButtonFace;color:ButtonText;border-color:ButtonText;}
 }
+
+/* APK brand continuity for the assistant and patient/doctor communication.
+   Presentation only: page/action IDs, authorization and persistence stay intact. */
+html:has(>body[data-page="assistant"]),html:has(>body.cloud-portal) {color-scheme:light;background:#f8f9f6;}
+body[data-page="assistant"],body.cloud-portal {min-height:100dvh;}
+body[data-page="assistant"],body.cloud-portal,
+body #patient-contact,#dialog.paired-contact,body[data-page="assistant"] #dialog {
+  color-scheme:light;
+  --paper:#f8f9f6;--surface:#fff;--ink:#171a17;--muted:#626b5f;
+  --line:#dfe4da;--soft:#eef1e9;--accent:#dfff36;--on-accent:#171a17;
+  --control-accent:#dfff36;--control-soft:#eef1e9;--good:#506818;--danger:#a3372c;
+  color:var(--ink);background:var(--paper);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",Arial,sans-serif;
+}
+body[data-page="assistant"]::before {display:none;}
+body[data-page="assistant"]>header {
+  position:static;max-width:600px;min-height:76px;margin:0 auto;
+  padding:18px 20px 10px;justify-content:space-between;
+}
+body[data-page="assistant"] .brand {position:static;display:block;font-size:27px;line-height:1.4;}
+body[data-page="assistant"] .brand span {display:none;}
+body[data-page="assistant"] #content {
+  display:flex;flex-direction:column;max-width:600px;min-height:calc(100dvh - 76px);
+  margin:0 auto;padding:14px 20px calc(94px + env(safe-area-inset-bottom));
+}
+body[data-page="assistant"] #content>.heading {margin:0 0 18px;}
+body[data-page="assistant"] .heading h1 {font-size:28px;font-weight:800;}
+body[data-page="assistant"] .heading>a {font-size:14px;color:var(--muted);}
+body[data-page="assistant"] .assistant-capability {
+  flex:none;margin:0 0 18px;padding:0 16px;border:1px solid var(--line);
+  border-radius:15px;background:var(--surface);
+}
+body[data-page="assistant"] .assistant-capability summary {min-height:46px;padding:10px 0;font-size:14px;}
+body[data-page="assistant"] .assistant-capability p {font-size:14px;line-height:1.7;color:var(--muted);}
+body[data-page="assistant"] .conversation {flex:1;width:100%;max-width:none;min-height:148px;margin:0 0 16px;}
+body[data-page="assistant"] .conversation>.hero {
+  background:#171a17;color:#fff;border-radius:22px;border-top:3px solid #dfff36;padding:25px 22px;
+}
+body[data-page="assistant"] .conversation>.hero h2 {font-size:22px;margin-bottom:10px;color:#fff;}
+body[data-page="assistant"] .conversation>.hero p {font-size:15px;margin:0;color:#d1d8cb;line-height:1.7;}
+body[data-page="assistant"] .bubble {
+  max-width:94%;padding:16px 18px;background:var(--surface);border:1px solid var(--line);
+  border-radius:18px 18px 18px 5px;font-size:16px;line-height:1.75;
+}
+body[data-page="assistant"] .bubble.mine {background:#eef5d3;border-color:#d9e6ae;border-radius:18px 18px 5px 18px;}
+body[data-page="assistant"] .bubble small {font-size:12px;color:var(--muted);line-height:1.6;}
+body[data-page="assistant"] #local-plan {
+  align-self:flex-start;flex:none;margin:0 0 12px;padding:10px 16px;min-height:44px;
+  border:1px solid var(--line);border-radius:13px;background:var(--surface);font-size:14px;font-weight:650;
+}
+body[data-page="assistant"] .composer {
+  position:relative;bottom:auto;flex:none;margin:0;padding:16px;border-radius:22px;
+  background:var(--surface);border:1px solid var(--line);box-shadow:0 3px 14px #171a1708;
+}
+body[data-page="assistant"] .composer:focus-within {border-color:#7d900d;box-shadow:0 0 0 2px #dfff3650;}
+body[data-page="assistant"] .composer>label {font-size:13px;}
+body[data-page="assistant"] .composer textarea {min-height:76px;max-height:200px;background:transparent;color:var(--ink);font-size:16px;line-height:1.6;}
+body[data-page="assistant"] .composer textarea::placeholder {color:#71786c;opacity:1;}
+body[data-page="assistant"] .composer .actions {display:flex;flex-direction:row;align-items:center;flex-wrap:wrap;gap:10px;}
+body[data-page="assistant"] .composer .actions>label {font-size:13px;}
+body[data-page="assistant"] .composer .actions>div {width:auto;margin-left:auto;gap:8px;}
+body[data-page="assistant"] .composer button {min-height:44px;padding:9px 13px;border-radius:12px;font-size:14px;}
+body[data-page="assistant"] .composer[data-charged=false] button[type=submit]:not(:disabled) {background:var(--soft);color:var(--muted);}
+body[data-page="assistant"] #voice-state:empty {display:none;}
+body[data-page="assistant"] #nav {
+  position:fixed;inset:auto 0 0;left:50%;transform:translateX(-50%);width:100%;max-width:600px;
+  height:calc(72px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  padding:3px 12px calc(11px + env(safe-area-inset-bottom));gap:0;
+  border:0;border-top:1px solid var(--line);border-radius:0;background:#fff;box-shadow:none;
+}
+body[data-page="assistant"] #nav a {
+  display:flex;align-items:center;justify-content:center;position:relative;min-height:56px;
+  max-width:none;width:auto;padding:0;font-size:13px;font-weight:650;color:var(--muted);background:none;gap:0;
+}
+body[data-page="assistant"] #nav a[aria-current] {color:var(--ink);font-weight:800;}
+body[data-page="assistant"] #nav a[aria-current]::before {
+  content:"";position:absolute;height:3px;width:17px;border-radius:5px;background:#dfff36;
+  bottom:8px;left:50%;transform:translateX(-50%);
+}
+body[data-page="assistant"] #nav svg,body[data-page="assistant"] #nav .nav-thumb {display:none;}
+
+/* Use the same light surfaces inside every host, including system dark mode. */
+body[data-page="assistant"] #dialog {
+  background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:24px;
+  box-shadow:0 18px 60px #171a1729;
+}
+body[data-page="assistant"] #dialog label {display:block;margin:14px 0;font-size:15px;}
+body[data-page="assistant"] #dialog label:has(input[type=checkbox]) {display:flex;align-items:center;gap:10px;}
+body[data-page="assistant"] #dialog input[type=checkbox] {width:20px;min-height:20px;flex:none;}
+body[data-page="assistant"] #dialog :is(input:not([type=checkbox]),select,textarea),
+body #patient-contact textarea,#dialog.paired-contact textarea,.cloud-portal :is(input:not([type=checkbox]),select,textarea) {
+  background:#f4f6f0;color:#171a17;border:1px solid #dfe4da;border-radius:12px;padding:11px 12px;
+}
+body[data-page="assistant"] :is(input[type=checkbox],input[type=radio]),
+body #patient-contact input[type=checkbox],#dialog.paired-contact input[type=checkbox],.cloud-portal input[type=checkbox] {accent-color:#506818;}
+body[data-page="assistant"] :is(button.primary,.button.primary),body[data-page="assistant"] #local-plan-form>button,
+body #patient-contact button.primary,#dialog.paired-contact button.primary,.cloud-portal :is(button.primary,.button.primary) {
+  background:#dfff36;color:#171a17;border-color:#dfff36;box-shadow:none;font-weight:750;
+}
+body[data-page="assistant"] :is(button.primary,.button.primary):not(:disabled):hover,body[data-page="assistant"] #local-plan-form>button:not(:disabled):hover,
+body #patient-contact button.primary:not(:disabled):hover,#dialog.paired-contact button.primary:not(:disabled):hover,
+.cloud-portal :is(button.primary,.button.primary):not(:disabled):hover {background:#e9ff84;border-color:#e9ff84;}
+body[data-page="assistant"] :focus-visible,body #patient-contact :focus-visible,#dialog.paired-contact :focus-visible,.cloud-portal :focus-visible {outline:3px solid #7d900d;outline-offset:3px;}
+body #patient-contact,#dialog.paired-contact {background:#f8f9f6;border:1px solid #dfe4da;border-radius:24px;box-shadow:0 18px 60px #171a1729;}
+body #patient-contact .contact-heading,#dialog.paired-contact .heading {background:#171a17;color:#fff;padding:16px 18px;border-bottom:0;}
+body #patient-contact .contact-heading h2,#dialog.paired-contact .heading h2 {color:#fff;font-size:20px;font-weight:750;}
+body #patient-contact .contact-heading :is(button,summary),#dialog.paired-contact .heading :is(button,summary) {color:#fff;border-color:transparent;background:transparent;border-radius:11px;}
+body #patient-contact .contact-heading :is(button,summary):hover,#dialog.paired-contact .heading :is(button,summary):hover {background:#ffffff18;}
+body #patient-contact .contact-more summary::before,#dialog.paired-contact .paired-more summary::before {border-color:#dfff36;}
+body #patient-contact .contact-more>div,#dialog.paired-contact .paired-more>div {background:#fff;border-color:#dfe4da;border-radius:14px;}
+body #patient-contact .contact-more>div button,#dialog.paired-contact .paired-more>div button {color:#171a17;background:#fff;}
+body #patient-contact .contact-more>div button:hover,#dialog.paired-contact .paired-more>div button:hover {background:#eef1e9;}
+body #patient-contact .contact-status,#dialog.paired-contact #paired-status {background:#eef1e9;color:#626b5f;}
+body #patient-contact .contact-message,#dialog.paired-contact .paired-message {background:#fff;border-color:#dfe4da;border-radius:17px 17px 17px 5px;line-height:1.7;}
+body #patient-contact .contact-message.mine,#dialog.paired-contact .paired-message.mine {background:#eef5d3;border-color:#d9e6ae;border-radius:17px 17px 5px 17px;}
+body #patient-contact .contact-composer,#dialog.paired-contact .paired-composer {background:#fff;border-top-color:#dfe4da;}
+body #patient-contact .contact-composer button,#dialog.paired-contact .paired-composer button {border-radius:12px;box-shadow:none;}
+
+/* Existing cloud patient entry and doctor workbench share the APK palette. */
+.cloud-portal>header {border-bottom:1px solid var(--line);padding-bottom:18px;}
+.cloud-portal>header .brand {font-weight:800;color:#171a17;}
+.cloud-portal>header .brand span {color:#626b5f;}
+.cloud-portal .cloud-form {background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px;}
+.cloud-portal .cloud-form h1 {font-size:28px;}
+.cloud-portal .cloud-form h2 {font-size:20px;}
+.cloud-portal .cloud-support-chat {padding:18px;background:#fff;border-radius:22px;}
+.cloud-portal .cloud-support-chat #conversation {background:#f8f9f6;border-radius:16px;}
+.cloud-portal .cloud-support-chat .cloud-chat {background:#fff;border-radius:17px 17px 17px 5px;border-color:#dfe4da;}
+.cloud-portal.patient-portal .cloud-chat.patient,.cloud-portal.doctor-portal .cloud-chat.doctor {background:#eef5d3;border-color:#d9e6ae;border-radius:17px 17px 5px 17px;}
+.cloud-portal .cloud-patient-tabs button[aria-selected=true] {background:#dfff36;color:#171a17;border-color:#dfff36;font-weight:750;}
+.cloud-portal .cloud-patient:hover {background:#f0f3e9;}
+.cloud-portal button:disabled,body #patient-contact button:disabled,#dialog.paired-contact button:disabled {cursor:not-allowed;}
+@media(max-width:340px) {
+  body[data-page="assistant"]>header {padding-left:15px;padding-right:15px;}
+  body[data-page="assistant"] #content {padding-left:15px;padding-right:15px;}
+  body[data-page="assistant"] .heading h1 {font-size:25px;}
+  body[data-page="assistant"] .composer {padding:13px;}
+  body[data-page="assistant"] .composer button {padding-left:10px;padding-right:10px;}
+  .cloud-portal .cloud-form {padding:18px;}
+}
+@media(forced-colors:active) {
+  body[data-page="assistant"] :is(button.primary,.button.primary),body[data-page="assistant"] #local-plan-form>button,body #patient-contact button.primary,
+  #dialog.paired-contact button.primary,.cloud-portal :is(button.primary,.button.primary),
+  .cloud-portal .cloud-patient-tabs button[aria-selected=true] {
+    background:ButtonFace;color:ButtonText;border-color:ButtonText;forced-color-adjust:auto;
+  }
+  body[data-page="assistant"] :focus-visible,body #patient-contact :focus-visible,#dialog.paired-contact :focus-visible,.cloud-portal :focus-visible {outline-color:Highlight;}
+}
