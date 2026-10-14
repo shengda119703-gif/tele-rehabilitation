@@ -912,19 +912,19 @@ $("#refresh").onclick = () => {
   load();
 };
 // Paired pages use the desktop's bound account and durable queue.
-// PhoneAccount owns the independent public browser / APK workbench.
-function mountPairedWorkbench() {
-  if (window.PhoneAccount || typeof document.createElement !== 'function' || $("#paired-workbench")) return;
-  const entry=document.createElement('button');entry.id='paired-workbench';entry.className='quiet';entry.textContent='工作台';entry.onclick=pairedWorkbench;
+// PhoneAccount owns the independent public browser / APK patient conversation.
+function mountPairedClinicianContact() {
+  if (window.PhoneAccount || typeof document.createElement !== 'function' || $("#paired-contact-clinician")) return;
+  const entry=document.createElement('button');entry.id='paired-contact-clinician';entry.className='quiet';entry.textContent='联系康复医师';entry.onclick=pairedClinicianContact;
   $("#profile").before(entry);
 }
-async function pairedWorkbench() {
+async function pairedClinicianContact() {
   if (ui.busy || voiceStarting || recorder?.state==='recording') {say('请先完成当前操作。');return;}
   const request=(action,body={})=>api('/unified/workbench.'+action,body,{timeout:30000});
   let identity;
   try{identity=await request('identity');}catch(e){say(e.message);return;}
-  if(!identity.connected){modal('工作台','<p>请先在电脑“工作台”登录本人云账号，并确认这份电脑档案的归属，再用配对网页读取医生消息与方案。</p>');return;}
-  const dialog=modal('工作台 · '+identity.username,`<p>共用当前电脑绑定的本人档案。消息和待采用方案保留在电脑，重新连接后可重试。</p><div class="actions"><button id="paired-sync" ${identity.upload_enabled?'':'disabled'}>同步已保存资料</button><button id="paired-messages">医生对话</button><button id="paired-retry">重试待发送</button><button id="paired-plans">查看康复方案</button></div><p id="paired-status" role="status"></p><div id="paired-detail"></div>`);
+  if(!identity.connected){modal('联系康复医师','<p>请先在电脑“联系康复医师”完成首次身份开通，确认本人档案和医师授权。之后这个配对网页可直接进入聊天，使用电脑保存的消息与方案。</p>');return;}
+  const dialog=modal('联系康复医师',`<p>安康 · ${E(identity.username)} · 共用当前电脑绑定的本人档案。</p><div class="actions"><button id="paired-messages">医师对话</button><button id="paired-plans" class="quiet">医生方案</button><button id="paired-report" class="quiet">分享报告</button></div><p id="paired-status" role="status"></p><div id="paired-detail"></div><details><summary>资料同步设置</summary><p>授权和自动同步选择可在电脑“联系康复医师 → 资料与授权”调整。</p><div class="actions"><button id="paired-sync" ${identity.upload_enabled?'':'disabled'}>同步已保存资料</button><button id="paired-retry" class="quiet">重试待发送消息</button></div></details>`);
   const own=modalGeneration,active=()=>dialog.open&&own===modalGeneration;
   let requestPending=false;
   async function perform(fn,success=''){
@@ -936,7 +936,7 @@ async function pairedWorkbench() {
   }
   async function messages(before=null){
     const value=await request('messages',before?{before}:{});if(!active())return;
-    const area=$("#paired-detail");area.innerHTML=`<h3>医生对话 · ${E(value.unread_count||0)} 条未读</h3>${value.has_older?'<button id="paired-older">更早的对话</button>':''}<div class="timeline">${value.items.map(item=>`<article><strong>${item.author_role==='DOCTOR_ADMIN'?'医生':'本人'}</strong><small>${E(stamp(item.created_at*1000))}</small><p style="white-space:pre-wrap">${E(item.text)}</p></article>`).join('')||'<p>还没有对话记录。</p>'}</div><form id="paired-send-form"><label>发送给医生<textarea name="text" rows="3" maxlength="1000" required></textarea></label><button type="submit" class="primary">发送消息</button></form>`;
+    const area=$("#paired-detail");area.innerHTML=`<h3>医师对话 · ${E(value.unread_count||0)} 条未读</h3>${value.has_older?'<button id="paired-older">更早的对话</button>':''}<div class="timeline">${value.items.map(item=>`<article><strong>${item.author_role==='DOCTOR_ADMIN'?'康复医师':'我'}</strong><small>${E(stamp(item.created_at*1000))}</small><p style="white-space:pre-wrap">${E(item.text)}</p></article>`).join('')||'<p>还没有对话记录。</p>'}</div><form id="paired-send-form"><label>给康复医师留言<textarea name="text" rows="3" maxlength="1000" required></textarea></label><button type="submit" class="primary">发送给医师</button></form>`;
     if(value.items.length&&value.next_cursor>value.read_cursor)await request('read',{cursor:value.next_cursor});
     bind('paired-older',()=>perform(()=>messages(value.previous_cursor)));
     let pendingSend=null;
@@ -956,12 +956,14 @@ async function pairedWorkbench() {
       perform(async()=>{await request('adopt',{plan_id:plan.id,expected_version:plan.version,expected_current_revision:value.current_revision});await showProfessionalPlans();},'方案已核对并采用。请回康复页查看当前计划。');
     });
   }
-  bind('paired-sync',()=>perform(()=>request('sync'),'已同步保存的资料，请在工作台核对。'));
+  bind('paired-sync',()=>perform(()=>request('sync'),'本人已保存资料已同步。'));
   bind('paired-messages',()=>perform(()=>messages()));
   bind('paired-retry',()=>perform(async()=>{await request('retry');await messages();},'已重试待发送操作，请核对对话和方案状态。'));
   bind('paired-plans',()=>perform(showProfessionalPlans));
+  bind('paired-report',()=>{if(active())$("#paired-status").textContent='报告原件请在电脑“联系康复医师 → 分享报告”选择上传；此配对页不会自动分享本机文件。';});
+  await perform(()=>messages());
 }
-mountPairedWorkbench();
+mountPairedClinicianContact();
 
 document.addEventListener("visibilitychange", () => {
   if (

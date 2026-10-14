@@ -1,6 +1,6 @@
 # 安康工作台
 
-患者在原安康软件中使用“工作台”；医生在原管理网页 `/care` 查看授权患者。复用云分支 `codex/unified-cloud-service` 的账号、会话、医生授权和数据库，新增源码基于 main `e2e256e`。公网服务是否更新须另外核对，合入代码不会自动部署。
+患者在原安康软件中打开“联系康复医师”，已保存身份时直接进入聊天；医生在原管理网页 `/care` 使用独立“医生工作台”，查看授权患者、回复和每用户 API 用量。`/account` 是患者联系入口。复用云分支 `codex/unified-cloud-service` 的账号、会话、医生授权和数据库。公网服务未部署，合入代码不会自动更新服务器。
 
 ## 使用流程
 
@@ -36,7 +36,7 @@ flowchart LR
 | 电脑账号、队列、记录同步、方案本地核验 | `rehab_codex_single_camera_v2_1/app/cloud_account.py`、`app/ui/cloud_account.py` |
 | 电脑自动同步、配对网页固定本人宿主 | `app/ui/product_window.py`、`app/product/backend.py`、`mobile_rehab/unified.py` |
 | 手机账号与加密原生传输 | `android_offline/src/cn/tele/rehabilitation/offline/AccountTransport.java`、`MainActivity.java` |
-| 手机与公共网页版队列、消息、方案采用 | `android_offline/web/account.js`、`store.js`、`local-api.js`；`public_web/browser-account.js` |
+| 手机与公共网页版联系入口、队列、消息、方案采用 | `android_offline/web/patient-contact.js`、`contact.css`、`account.js`、`store.js`、`local-api.js`；`public_web/browser-account.js` |
 
 共用资料库的 185 张评估和训练卡仍供问答查询；医生可执行计划必须映射到实际 53 个软件动作。未支持的卡片不能仅凭名称变成可执行项目。
 
@@ -62,6 +62,6 @@ flowchart LR
 
 本机浏览器 QA 用 `tools/cloud/serve_browser_qa.py .runtime/<新目录> --port 14910`，只监听 `127.0.0.1`，显式使用独立测试 SQLite 和虚构医生账号。端到端脚本 `tools/cloud/verify_workbench_browser.cjs` 仅允许回环地址。云测试 `cloud_service/tests/test_postgres.py` 只允许专用数据库名 `ankang_cloud_qa`；CI 创建临时 PostgreSQL 服务，与现有公网数据库无连接。
 
-云 schema 从 1 增补到 2，新表保存消息、读游标、草稿／发布、当前采用指针、幂等操作和上传修订指针，保留原账号、授权及上传历史。`Database.migrate()` 只在显式迁移时执行，应用启动不擅自升级数据库。以后经授权更新现有服务器时，应先做原有加密备份，在隔离库验证恢复和迁移，再为既有运行账号授予新增表权限；不重复运行新服务器初始化、账号重建或数据种子脚本。旧加密备份恢复检查继续接受 schema 1 和 2。
+当前云 schema 为 3，保留原账号、授权及上传历史，增补消息、读游标、草稿／发布、当前采用指针、幂等操作、上传修订、报告分享及模型回执计费。`Database.migrate()` 只在显式迁移时执行，应用启动不擅自升级数据库。以后经授权更新现有服务器时，应先做原有加密备份，在隔离库验证恢复和迁移，再为既有运行账号授予新增表权限；不重复运行新服务器初始化、账号重建或数据种子脚本。旧加密备份恢复检查继续接受旧 schema。
 
-本轮的实际测试、截图、构建结果与限制见[验收记录](../validation/WORKBENCH_2026-10-13.md)。开源借鉴的取舍与许可证见[参考记录](OPEN_SOURCE_REFERENCES.md)。
+最新患者／医生入口、测试与截图见[入口验收](../validation/PATIENT_DOCTOR_ENTRIES_2026-10-14.md)，核心协作原始记录见[工作台验收](../validation/WORKBENCH_2026-10-13.md)。开源借鉴的取舍与许可证见[参考记录](OPEN_SOURCE_REFERENCES.md)。

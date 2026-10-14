@@ -169,7 +169,8 @@ def test_unsupported_stale_wrong_scope_and_new_failed_assessment_block_adoption(
     store.save_session(old)
     with pytest.raises((CloudError, ValueError), match='过期'):
         account.adopt(plan, 0, OWNER, SCOPE, store)
-    failed = {**old, 'id': 'TEST-latest-failed', 'end_utc': datetime.now(timezone.utc).isoformat(), 'start_utc': datetime.now(timezone.utc).isoformat(), 'summary': {'valid_ratio': 0, 'valid_sample_count': 0}}
+    failed_at = datetime.now(timezone.utc)
+    failed = {**old, 'id': 'TEST-latest-failed', 'end_utc': failed_at.isoformat(), 'start_utc': (failed_at-timedelta(seconds=1)).isoformat(), 'summary': {'valid_ratio': 0, 'valid_sample_count': 0}}
     store.save_session(failed)
     with pytest.raises(ValueError, match='有效评估'):
         account.adopt(plan, 0, OWNER, SCOPE, store)
@@ -262,7 +263,8 @@ def test_original_training_prepare_rechecks_age_and_latest_failed_assessment(env
     with pytest.raises(ValueError, match='过期'):
         prepare_training_plan(plan, key, build_body_profile(store.list_sessions(), **SCOPE))
     old = store.get_session('TEST-assessment')
-    failed = {**old, 'id': 'TEST-new-failed', 'start_utc': datetime.now(timezone.utc).isoformat(), 'end_utc': datetime.now(timezone.utc).isoformat(), 'summary': {'valid_ratio': 0, 'valid_sample_count': 0}}
+    failed_at = datetime.now(timezone.utc)
+    failed = {**old, 'id': 'TEST-new-failed', 'start_utc': (failed_at-timedelta(seconds=1)).isoformat(), 'end_utc': failed_at.isoformat(), 'summary': {'valid_ratio': 0, 'valid_sample_count': 0}}
     store.save_session(failed)
     with pytest.raises(ValueError, match='有效评估'):
         prepare_training_plan(plan, key, build_body_profile(store.list_sessions(), **SCOPE))
