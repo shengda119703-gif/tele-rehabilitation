@@ -22,6 +22,7 @@ from .browser import install_public_web
 from .config import Settings
 from .database import Database, accounts, grants, patients, records, sessions
 from .dossier import validate_dossier
+from .downloads import install_downloads
 from .security import (
     DomainError, audited, csrf, digest, password, password_hash,
     throttle, username, verify_password,
@@ -99,7 +100,7 @@ class LimitedBody:
         return await self.app(scope, replay, send)
 
 
-def create_app(settings: Settings, database=None, *, web_assets=None):
+def create_app(settings: Settings, database=None, *, web_assets=None, download_assets=None):
     db = database or Database(settings.database_url)
     app = FastAPI(title="安康统一云服务", version=__version__, docs_url=None, redoc_url=None,
                   openapi_url=BASE + "/openapi.json")
@@ -444,6 +445,8 @@ def create_app(settings: Settings, database=None, *, web_assets=None):
     for name in (() if app.state.public_web else ("unified.css", "unified-polish.css", "controls.css", "icon.svg")):
         app.add_api_route("/static/" + name, fixed_static(name), methods=["GET"], include_in_schema=False)
     app.mount("/cloud-static", StaticFiles(directory=ROOT / "cloud_service" / "static"), name="cloud-static")
+    install_downloads(app, Path(download_assets) if download_assets is not None else ROOT / "cloud_service" / "static",
+                      ROOT / "cloud_service" / "static")
 
     @app.get("/account", include_in_schema=False)
     @app.get("/care", include_in_schema=False)

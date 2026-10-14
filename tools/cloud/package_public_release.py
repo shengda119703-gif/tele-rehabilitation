@@ -20,9 +20,10 @@ def main():
         if p.suffix in {".pem", ".sqlite3", ".mp4", ".apk", ".env", ".jks"} or ".runtime" in p.parts or "node_modules" in p.parts:
             raise SystemExit("Forbidden release input")
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
-    build = {"service": "ankang-cloud", "version": "0.1.4", "schema": 1, "git_commit": commit,
-             "browser_version": manifest["version"], "browser_execution": manifest["execution_location"], "apk_unchanged": "0.3.1"}
-    archive = ROOT / ".runtime/cloud-0.1.4.tar"
+    build = {"service": "ankang-cloud", "version": "0.1.5", "schema": 1, "git_commit": commit,
+             "browser_version": manifest["version"], "browser_execution": manifest["execution_location"],
+             "default_apk": "0.4.1", "retained_cloud_apk": "0.3.1"}
+    archive = ROOT / ".runtime/cloud-0.1.5.tar"
     with tarfile.open(archive, "w") as output:
         for name in sorted(set(files)):
             output.add(ROOT / name, arcname=name, recursive=False)

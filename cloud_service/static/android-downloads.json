@@ -1,0 +1,22 @@
+{
+  "schema": "ankang-android-downloads-1",
+  "default": "0.4.1",
+  "published_on": "2026-10-14",
+  "support_wechat": "AK2452409",
+  "releases": [
+    {
+      "version": "0.4.1",
+      "file": "ankang-0.4.1.apk",
+      "bytes": 21652734,
+      "sha256": "482A9509290F9E0914D81A04CD0243DAB909BA82BA1EFF81A53AF98C31961D50",
+      "description": "最新手机功能版。新版医患工作台需服务更新。"
+    },
+    {
+      "version": "0.3.1",
+      "file": "ankang-0.3.1.apk",
+      "bytes": 28124579,
+      "sha256": "DAE4918F8078A9D80ED7596808FE94122D6491D54DB4892C0AC0155B06923B08",
+      "description": "现有公网云账号兼容版；较高版本不能直接降级安装。"
+    }
+  ]
+}

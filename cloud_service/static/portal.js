@@ -57,7 +57,7 @@
       ${register ? '<label>姓名<input name="display_name" autocomplete="name" maxlength="80"></label>' : ''}
       <label>密码<input name="password" type="password" autocomplete="${register ? 'new-password' : 'current-password'}" maxlength="128" required></label>
       <p class="cloud-error" role="alert"></p><button class="primary" type="submit">${register ? '创建账号' : '登录'}</button></form>
-      <div class="cloud-toolbar">${doctor ? '<a href="/">患者入口</a>' : `<button id="switch-auth" class="quiet">${register ? '已有账号，去登录' : '没有账号，去注册'}</button><a href="/care">医生入口</a>`}</div></section>`;
+      <div class="cloud-toolbar">${doctor ? '<a href="/">患者入口</a>' : `<button id="switch-auth" class="quiet">${register ? '已有账号，去登录' : '没有账号，去注册'}</button><a href="/care">医生入口</a>`}<a href="/download">下载App</a></div></section>`;
     document.getElementById('switch-auth')?.addEventListener('click', () => { if (!authPending) showAuth(!register); });
     document.getElementById('account-form').addEventListener('submit', async event => {
       event.preventDefault(); if (authPending) return; authPending = true; const own = generation;
