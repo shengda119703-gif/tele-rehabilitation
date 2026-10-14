@@ -1,0 +1,58 @@
+## UI Pro Max Search Results
+**Domain:** ux | **Query:** touch target carousel keyboard error feedback
+**Source:** ux-guidelines.csv | **Found:** 5 results
+
+### Result 1
+- **Category:** Touch
+- **Issue:** Touch Target Size
+- **Platform:** Mobile
+- **Description:** Small buttons are hard to tap accurately
+- **Do:** Minimum 44x44px touch targets
+- **Don't:** Tiny clickable areas
+- **Code Example Good:** min-h-[44px] min-w-[44px]
+- **Code Example Bad:** w-6 h-6 buttons
+- **Severity:** High
+
+### Result 2
+- **Category:** Touch
+- **Issue:** Haptic Feedback
+- **Platform:** Mobile
+- **Description:** Tactile feedback improves interaction feel
+- **Do:** Use for confirmations and important actions
+- **Don't:** Overuse vibration feedback
+- **Code Example Good:** navigator.vibrate(10)
+- **Code Example Bad:** Vibrate on every tap
+- **Severity:** Low
+
+### Result 3
+- **Category:** Feedback
+- **Issue:** Error Recovery
+- **Platform:** All
+- **Description:** Help users recover from errors
+- **Do:** Provide clear next steps
+- **Don't:** Error without recovery path
+- **Code Example Good:** Try again button + help link
+- **Code Example Bad:** Error message only
+- **Severity:** Medium
+
+### Result 4
+- **Category:** Interaction
+- **Issue:** Error Feedback
+- **Platform:** All
+- **Description:** Users need to know when something fails
+- **Do:** Show clear error messages near problem
+- **Don't:** Silent failures with no feedback
+- **Code Example Good:** Red border + error message
+- **Code Example Bad:** No indication of error
+- **Severity:** High
+
+### Result 5
+- **Category:** Accessibility
+- **Issue:** Error Messages
+- **Platform:** All
+- **Description:** Error messages must be announced
+- **Do:** Use aria-live or role=alert for errors
+- **Don't:** Visual-only error indication
+- **Code Example Good:** role='alert'
+- **Code Example Bad:** Red border only
+- **Severity:** High

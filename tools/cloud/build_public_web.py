@@ -31,9 +31,10 @@ def build():
     copy(SOURCE / "local" / "product.js", "local/product.js")
     copy(SOURCE / "local" / "model-policy.js", "local/model-policy.js")
     copy(SOURCE / "catalog.json", "catalog.json")
-    for file in (ROOT / "mobile_rehab" / "static").iterdir():
-        if file.is_file() and file.suffix in {".js", ".css", ".svg"}:
-            copy(file, "static/" + file.name)
+    static = ROOT / "mobile_rehab" / "static"
+    for file in static.rglob("*"):
+        if file.is_file() and file.suffix in {".js", ".css", ".svg", ".png", ".jpg", ".jpeg", ".webp"}:
+            copy(file, "static/" + file.relative_to(static).as_posix())
     copy(ROOT / "public_web" / "browser-account.js", "web/browser-account.js")
     adapters = ["/local/engine.js", "/local/product.js", "/local/store.js", "/web/browser-account.js",
                 "/local/motion.js", "/local/lin-profile.js", "/local/practice.js", "/local/model-policy.js",

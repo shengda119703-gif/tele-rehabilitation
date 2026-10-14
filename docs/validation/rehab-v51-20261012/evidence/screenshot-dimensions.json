@@ -1,0 +1,390 @@
+{
+  "checks": "PASS",
+  "validated": 48,
+  "items": [
+    {
+      "file": "action-library-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "action-library-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "action-detail-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "action-detail-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "assessment-prepare-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "assessment-prepare-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "search-empty-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "rehab-replay-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "rehab-replay-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "plan-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "plan-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "plan-detail-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "plan-detail-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "training-prepare-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "training-prepare-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "history-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "history-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "training-result-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "training-result-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "training-feedback-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "training-feedback-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "feedback-saved-return-plan-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "extras-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "fitness-library-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "posture-prepare-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "computer-devices-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "live-guidance-not-started-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "upload-consent-required-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "analysis-failed-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "analysis-failed-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "body-summary-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "home-v36-comparison-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "home-v36-comparison-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "feature-rail-scrolled-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "rehab-live-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "rehab-live-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "live-plan-modal-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "rehab-empty-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "rehab-empty-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "plan-empty-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "history-empty-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "rehab-offline-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "rehab-offline-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "schedule-form-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "live-history-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    },
+    {
+      "file": "live-record-summary-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "rehab-empty-replay-390.jpg",
+      "size": [
+        390,
+        844
+      ],
+      "document_width": 390
+    },
+    {
+      "file": "rehab-empty-replay-320.jpg",
+      "size": [
+        320,
+        700
+      ],
+      "document_width": 320
+    }
+  ]
+}

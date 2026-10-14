@@ -1,0 +1,8 @@
+[
+  {
+    "level": "error",
+    "message": "TypeError: window.history.pushState is not a function\n    at openAI (http://127.0.0.1:18886/static/rehab-v52.js?v=20261012-1:54:20)\n    at button.onclick (http://127.0.0.1:18886/static/rehab-v52.js?v=20261012-1:61:231)",
+    "timestamp": "2026-10-12T11:42:33.820Z",
+    "url": "http://127.0.0.1:18886/static/rehab-v52.js?v=20261012-1"
+  }
+]

@@ -135,9 +135,9 @@ test('medication editing binds actual record and task, saves through domain endp
   h.all('[data-health-task]')[0].onclick();await new Promise(resolve=>setImmediate(resolve));
   assert.equal(h.c.calls[1][0],'/product/task.status');assert.equal(JSON.parse(h.c.calls[1][1].body).id,'t1');
 });
-test('chat escapes text, exposes local/private state and reset clears draft',async()=>{
+test('chat escapes text, preserves private state and accurately describes the formal assistant',async()=>{
   const h=harness();h.c.healthFixture=healthFixture();h.run("api=async()=>healthFixture;state.tab='assistant';healthDraft='私密草稿';healthPage()");await new Promise(resolve=>setImmediate(resolve));
-  assert.match(h.html,/&lt;script&gt;TEST&lt;\/script&gt;/);assert.doesNotMatch(h.html,/<script>/);assert.match(h.html,/本次不记录/);assert.match(h.html,/本地规则助手/);
+  assert.match(h.html,/&lt;script&gt;TEST&lt;\/script&gt;/);assert.doesNotMatch(h.html,/<script>/);assert.match(h.html,/本次不记录/);assert.match(h.html,/不替代专业评估/);assert.doesNotMatch(h.html,/可以记录今天的感受|本地规则助手/);
   h.run('resetHealth()');assert.equal(h.run('healthDraft'),'');assert.equal(h.run('healthData'),null);
 });
 test('shared summary and contacts escape content, never permit javascript telephone targets',()=>{

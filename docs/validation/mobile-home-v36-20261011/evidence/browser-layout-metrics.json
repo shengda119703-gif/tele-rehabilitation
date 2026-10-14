@@ -1,0 +1,59 @@
+{
+  "width320": {
+    "button": {
+      "bottom": 433.0234375,
+      "height": 44,
+      "left": 27,
+      "right": 132.71875,
+      "top": 389.0234375,
+      "width": 105.71875,
+      "x": 27,
+      "y": 389.0234375
+    },
+    "height": 844,
+    "hero": {
+      "bottom": 450.0234375,
+      "height": 170.6796875,
+      "left": 15,
+      "right": 305,
+      "top": 279.34375,
+      "width": 290,
+      "x": 15,
+      "y": 279.34375
+    },
+    "nav": "首页\n康复\n健康\n用药\n家人",
+    "scrollWidth": 320,
+    "tracks": 7,
+    "width": 320
+  },
+  "width390": {
+    "background": "rgb(0, 0, 0)",
+    "height": 844,
+    "hero": {
+      "bottom": 486.34375,
+      "height": 206,
+      "left": 20,
+      "right": 370,
+      "top": 280.34375,
+      "width": 350,
+      "x": 20,
+      "y": 280.34375
+    },
+    "layers": {
+      "buttons": 1,
+      "images": 1,
+      "svg": 1
+    },
+    "navTop": 772,
+    "otherBottom": 743.9375,
+    "portrait": {
+      "blend": "normal",
+      "filter": "none",
+      "naturalWidth": 1672
+    },
+    "scrollWidth": 390,
+    "scrollY": 0,
+    "sevenBars": 7,
+    "width": 390
+  }
+}

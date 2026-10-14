@@ -9,7 +9,7 @@ function page(){
   const fixed=new Map();let nodes=[];
   const make=()=>({dataset:{},value:'',textContent:'',hidden:false,open:false,
     querySelector:()=>null,querySelectorAll:()=>[],setAttribute(){},removeAttribute(){},
-    showModal(){this.open=true;},close(){this.open=false;},classList:{toggle(){}}});
+    showModal(){this.open=true;},close(){this.open=false;},replaceChildren(){this.innerHTML='';},classList:{toggle(){}}});
   const content=make();let html='';
   Object.defineProperty(content,'innerHTML',{get:()=>html,set:v=>{
     html=v;nodes=[...v.matchAll(/<(?:button|input|select|textarea|form)\b([^>]*)>/g)].map(m=>{
@@ -23,9 +23,10 @@ function page(){
   const c={document:{body:{dataset:{}},querySelector:query,querySelectorAll:s=>s.startsWith('[data-')?nodes.filter(n=>n.dataset[s.slice(6,-1).replace(/-([a-z])/g,(_,x)=>x.toUpperCase())]!==undefined):[],addEventListener(){}},
     window:{addEventListener(){},scrollTo(){}},location:{hash:'#home'},setTimeout:()=>0,clearTimeout(){},console,URLSearchParams,AbortController};
   vm.createContext(c);
+  vm.runInContext(fs.readFileSync(path.join(dir,'home-v36.js'),'utf8'),c);
   vm.runInContext(fs.readFileSync(path.join(dir,'unified.js'),'utf8').replace(/\nroute\(\);\s*$/,''),c);
   c.fixture={profile:{profile:{name:'TEST <img>',age:68,conditions:[],medicationRecords:[]}},dailyProduct:{schedules:[]},state:{events:[],chat:[]},history:{report:{rangeText:'TEST 本周',sections:[{title:'TEST 摘要',lines:['TEST 原始记录']}]}}};
-  const run=code=>vm.runInContext(code,c);run('ui.snapshot=fixture');
+  const run=code=>vm.runInContext(code,c);run("ui.snapshot=fixture;ui.homeConnection='ready'");
   return {run,c,get:query,get html(){return html;}};
 }
 
@@ -36,9 +37,10 @@ test('all current health metric keys have Chinese display labels without changin
     assert.equal(p.run('eventText(event)'),`${label} 12.3 unit`);
   }
 });
-test('home has one concise entry, keeps original routes and folds the unchanged weekly data',()=>{
+test('home V3.6 has an independent task and preserves existing plan, history and assistant entries',()=>{
   const p=page();p.run('home()');assert.match(p.html,/href="#assistant"/);assert.match(p.html,/href="#records"/);
-  assert.match(p.html,/<details class="weekly-preview"><summary>本周摘要/);assert.match(p.html,/TEST 原始记录/);
+  assert.match(p.html,/class="home-task"/);assert.equal((p.html.match(/class="home-mark"/g)||[]).length,7);
+  assert.equal(typeof p.get('#home-plan').onclick,'function');assert.equal(typeof p.get('#home-primary').onclick,'function');
   assert.match(p.html,/TEST &lt;img&gt;/);assert.doesNotMatch(p.html,/陪你一步一步|已连接电脑 · 本人资料同步保存/);
 });
 test('all rehab modes keep original destinations and source option values',()=>{
@@ -82,4 +84,52 @@ test('light and dark button, body and secondary-text tokens maintain readable co
     const tokens=Object.fromEntries([...theme[1].matchAll(/--([\w-]+):\s*(#[\da-f]+)/gi)].map(m=>[m[1],m[2]]));
     for(const [foreground,background] of [['ink','paper'],['muted','paper'],['on-accent','accent']])assert.ok(contrast(tokens[foreground],tokens[background])>=4.5,foreground+' / '+background);
   }
+});
+
+test('reconnect refreshes home without starting a newly recovered task',async()=>{
+  const p=page();p.run("ui.homeConnection='offline';home();load=async()=>{ui.homeConnection='ready';ui.snapshot=fixture;render()}");
+  await p.get('#home-primary').onclick();assert.equal(p.c.location.href,undefined);assert.equal(p.c.location.hash,'#home');
+});
+test('task click is cancelled if source, selected date, participant or generation changes during revalidation',async()=>{
+  for(const changed of ["ui.source='REPLAY_FILE'","ui.day='2099-01-01'","fixture.profile.ownerId='OTHER'","ui.generation++","ui.page='health'"]){
+    const p=page();p.run("home();load=async()=>{ui.generation++;"+changed+";ui.homeConnection='ready'}");
+    await p.get('#home-primary').onclick();assert.equal(p.c.location.href,undefined);assert.equal(p.c.location.hash,'#home',changed);
+  }
+});
+test('timeline keeps selected medication date and pairing resets home handoff state',()=>{
+  const p=page();p.c.fixture.profile.profile.medicationRecords=[{id:'TEST-med',name:'TEST 药物',status:'active'}];
+  p.c.fixture.dailyProduct.medSchedules={'TEST-med':{times:['08:00'],start:'2020-01-01'}};
+  p.run("ui.day='2026-10-10';home()");p.c.document.querySelectorAll('[data-home-target]')[0].onclick();p.run('route()');
+  assert.equal(p.run('ui.day'),'2026-10-10');assert.equal(p.run('ui.page'),'medication');assert.equal(p.run('ui.homeRouteDay'),null);
+  p.run("ui.homeRouteDay='2026-10-09';pair()");assert.equal(p.run('ui.snapshot'),null);assert.equal(p.run('ui.homeRouteDay'),null);assert.equal(p.c.document.body.dataset.page,'pair');
+});
+
+test('latest main routes coexist with approved subpages and capability report links',()=>{
+  for(const [hash,pageName] of [['#history','records'],['#settings','settings'],['#notifications','notifications']]) {
+    const p=page();p.c.location.hash=hash;p.run('route()');assert.equal(p.run('ui.page'),pageName);
+  }
+  for(const [hash,adapter,pageName] of [['#health/detail/steps','HealthV131','health'],['#medication/history','MedicationV121','medication'],['#family/members','FamilyV10','family']]) {
+    const p=page();p.c.window[adapter]={reportCode:()=>null};p.c.location.hash=hash;
+    p.run(`${pageName}=()=>{};load=()=>{};route()`);assert.equal(p.run('ui.page'),pageName);
+  }
+  const p=page();let guest=false;p.c.window.FamilyV10={reportCode:()=> 'TEST-CAPABILITY',routeGuest(){guest=true;}};
+  p.c.location.hash='#care=TEST-CAPABILITY';p.run('route()');assert.equal(guest,true);assert.equal(p.run('ui.page'),'home');
+});
+test('fitness alias reaches the real capture flow instead of being swallowed by the rehab home adapter',()=>{
+  const p=page();p.c.location.hash='#fitness';p.c.window.RehabV51={context:(source,day)=>`rehabSource=${source}&rehabDay=${day}`};
+  p.run("ui.source='REPLAY_FILE';ui.day='2026-10-14';route()");
+  assert.equal(p.c.location.href,'/capture?tab=fitness&rehabSource=REPLAY_FILE&rehabDay=2026-10-14');
+});
+test('profile menu retains clinician, settings and notifications without adding a sixth bottom column',()=>{
+  const p=page();let calls=0;p.c.window.PhoneAccount={open(){calls++;}};p.run('editProfile()');
+  const html=p.get('#dialog').innerHTML;
+  assert.match(html,/id="profile-clinician"/);assert.match(html,/href="#settings"/);assert.match(html,/href="#notifications"/);
+  p.get('#profile-clinician').onclick();assert.equal(calls,1);assert.equal(p.get('#dialog').open,false);
+  p.run('settings()');assert.equal(typeof p.get('#settings-clinician').onclick,'function');
+  assert.match(p.html,/查看通知记录/);assert.equal(p.run('Object.keys(names).length'),5);
+});
+test('assistant uses main reply provenance and local candidate gate, without promising chat health writes',()=>{
+  const p=page();assert.equal(p.run("conversationSource({provider:'deepseek',status:'replied'})"),'DeepSeek 回复');
+  assert.match(p.run("conversationSource({provider:'local',status:'unavailable',reason:'not_configured'})"),/本地回复/);
+  p.run('assistant()');assert.match(p.html,/id="local-plan"/);assert.doesNotMatch(p.html,/记录身体感受/);
 });

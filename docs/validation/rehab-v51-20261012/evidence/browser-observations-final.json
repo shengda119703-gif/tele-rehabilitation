@@ -1,0 +1,1536 @@
+[
+  {
+    "name": "action-library",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复评估\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "library",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "action-library",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复评估\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - button \"未核验视觉封面 肩前屈 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩前屈\n      - generic: 肩部 · 侧面拍摄\n    - button \"未核验视觉封面 肩外展 肩部 · 正面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩外展\n      - generic: 肩部 · 正面拍摄\n    - button \"未核验视觉封面 肩后伸 肩部 · 侧面拍摄\":\n      - img \"未核验视觉封面\"\n      - strong: 肩后伸\n      - generic: 肩部 · 侧面拍摄\n    - button \"居家坐站 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 居家坐站\n      - generic: 膝部 · 侧面拍摄\n    - button \"肘屈伸 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘屈伸\n      - generic: 肘部 · 侧面拍摄\n    - button \"坐位膝屈伸 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 坐位膝屈伸\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋外展 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋外展\n      - generic: 髋部 · 正面拍摄\n    - button \"肩内收回位 肩部 · 正面拍摄\":\n      - generic: —\n      - strong: 肩内收回位\n      - generic: 肩部 · 正面拍摄\n    - button \"肘伸展 肘部 · 侧面拍摄\":\n      - generic: —\n      - strong: 肘伸展\n      - generic: 肘部 · 侧面拍摄\n    - button \"膝屈曲 膝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 膝屈曲\n      - generic: 膝部 · 侧面拍摄\n    - button \"髋屈曲 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋屈曲\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋后伸 髋部 · 侧面拍摄\":\n      - generic: —\n      - strong: 髋后伸\n      - generic: 髋部 · 侧面拍摄\n    - button \"髋内收 髋部 · 正面拍摄\":\n      - generic: —\n      - strong: 髋内收\n      - generic: 髋部 · 正面拍摄\n    - button \"腕屈曲 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕屈曲\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕伸展 腕部 · 侧面拍摄\":\n      - generic: —\n      - strong: 腕伸展\n      - generic: 腕部 · 侧面拍摄\n    - button \"腕桡偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕桡偏\n      - generic: 腕部 · 正面拍摄\n    - button \"腕尺偏 腕部 · 正面拍摄\":\n      - generic: —\n      - strong: 腕尺偏\n      - generic: 腕部 · 正面拍摄\n    - button \"踝背屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝背屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"踝跖屈 踝部 · 侧面拍摄\":\n      - generic: —\n      - strong: 踝跖屈\n      - generic: 踝部 · 侧面拍摄\n    - button \"拇指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"拇指指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 拇指指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"食指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 食指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"中指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 中指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"无名指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 无名指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指掌指关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指掌指关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指近端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指近端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节屈伸 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节屈伸\n      - generic: 手指 · 侧面拍摄\n    - button \"小指远端指间关节伸展 手指 · 侧面拍摄\":\n      - generic: —\n      - strong: 小指远端指间关节伸展\n      - generic: 手指 · 侧面拍摄\n    - button \"头颈侧屈观察 头颈 · 正面拍摄\":\n      - generic: —\n      - strong: 头颈侧屈观察\n      - generic: 头颈 · 正面拍摄\n    - button \"头颈前屈观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈前屈观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"头颈后伸观察 头颈 · 侧面拍摄\":\n      - generic: —\n      - strong: 头颈后伸观察\n      - generic: 头颈 · 侧面拍摄\n    - button \"躯干侧屈观察 躯干 · 正面拍摄\":\n      - generic: —\n      - strong: 躯干侧屈观察\n      - generic: 躯干 · 正面拍摄\n    - button \"躯干前屈观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干前屈观察\n      - generic: 躯干 · 侧面拍摄\n    - button \"躯干后伸观察 躯干 · 侧面拍摄\":\n      - generic: —\n      - strong: 躯干后伸观察\n      - generic: 躯干 · 侧面拍摄",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "library",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "action-detail",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"返回动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍\" [level=2]\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "detail",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "action-detail",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"返回动作库\": ‹\n  - heading \"动作详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=2]\n  - generic: 正面拍摄\n  - heading \"动作介绍\" [level=2]\n  - paragraph: 专业介绍待完善\n  - generic \"已有动作文字与测量范围\"\n  - button \"开始评估\"",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "detail",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "assessment-prepare",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"返回动作详情\": ‹\n  - heading \"评估准备\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=1]\n  - paragraph: 肩部 · 正面拍摄\n  - heading \"手机录像分析\" [level=2]\n  - paragraph: 正对镜头，测试侧肩、肘完整入镜。\n  - status: 电脑分析模型未就绪。\n  - generic \"本人测试侧\":\n    - button \"本人左侧\" [pressed]\n    - button \"本人右侧\"\n  - button \"拍摄视频\"\n  - button \"选择已有视频\"\n  - generic \"怎么做 · 测量说明\"\n  - generic: 1 准备\n  - generic: 2 拍摄上传\n  - generic: 3 结果与感受\n  - button \"实时跟练\"",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 560.1875,
+          "disabled": false,
+          "text": "拍摄视频",
+          "top": 512.1875
+        },
+        {
+          "bottom": 617.1875,
+          "disabled": false,
+          "text": "选择已有视频",
+          "top": 570.1875
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "prepare",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "assessment-prepare",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"返回动作详情\": ‹\n  - heading \"评估准备\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=1]\n  - paragraph: 肩部 · 正面拍摄\n  - heading \"手机录像分析\" [level=2]\n  - paragraph: 正对镜头，测试侧肩、肘完整入镜。\n  - status: 电脑分析模型未就绪。\n  - generic \"本人测试侧\":\n    - button \"本人左侧\" [pressed]\n    - button \"本人右侧\"\n  - button \"拍摄视频\"\n  - button \"选择已有视频\"\n  - generic \"怎么做 · 测量说明\"\n  - generic: 1 准备\n  - generic: 2 拍摄上传\n  - generic: 3 结果与感受\n  - button \"实时跟练\"",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 510.1875,
+          "disabled": false,
+          "text": "拍摄视频",
+          "top": 462.1875
+        },
+        {
+          "bottom": 567.1875,
+          "disabled": false,
+          "text": "选择已有视频",
+          "top": 520.1875
+        }
+      ],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "prepare",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "search-empty",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"康复评估\" [level=1]\n  - generic: 53 个动作\n  - button \"站姿体态 正面 / 侧面\":\n    - text: 站姿体态\n    - generic: 正面 / 侧面\n  - button \"身体汇总 评估与训练\":\n    - text: 身体汇总\n    - generic: 评估与训练\n  - paragraph: 配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。\n  - generic: 搜索动作\n  - searchbox \"搜索动作\" [active]: 不存在的动作\n  - generic: 拍摄机位\n  - combobox \"拍摄机位\":\n    - option \"全部机位\" [selected]\n    - option \"正面拍摄\"\n    - option \"侧面拍摄\"\n  - complementary \"身体部位\":\n    - button \"全部\" [pressed]\n    - button \"肩部\"\n    - button \"膝部\"\n    - button \"肘部\"\n    - button \"髋部\"\n    - button \"腕部\"\n    - button \"踝部\"\n    - button \"手指\"\n    - button \"头颈\"\n    - button \"躯干\"\n  - region \"动作列表\":\n    - status: 没有找到这个动作，试试其他名称或部位。",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "library",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "rehab-replay",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 1 天有记录\n    - generic \"星期一 有训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 本轮 2/4 项已完成\n  - region \"当前康复任务\":\n    - generic: 下一项 · 训练\n    - heading \"肩前屈\" [level=2]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"开始训练\":\n      - text: 开始训练\n      - generic: →\n    - generic: 03 / 04\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - link \"历史记录 录像分析记录\":\n      - /url: /capture?tab=history&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 录像分析记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\"\n    - option \"录像分析\" [selected]\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 326.5,
+          "disabled": false,
+          "text": "开始训练 →",
+          "top": 282.5
+        }
+      ],
+      "documentWidth": 320,
+      "hero": [
+        {
+          "height": 170,
+          "width": 290
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18884/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "rehab-replay",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 1 天有记录\n    - generic \"星期一 有训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 本轮 2/4 项已完成\n  - region \"当前康复任务\":\n    - generic: 下一项 · 训练\n    - heading \"肩前屈\" [level=2]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"开始训练\":\n      - text: 开始训练\n      - generic: →\n    - generic: 03 / 04\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - link \"历史记录 录像分析记录\":\n      - /url: /capture?tab=history&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 录像分析记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\"\n    - option \"录像分析\" [selected]\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 385.5,
+          "disabled": false,
+          "text": "开始训练 →",
+          "top": 341.5
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [
+        {
+          "height": 205,
+          "width": 350
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18884/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "plan",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的计划\" [level=1]\n  - paragraph: 手机录像训练 · 本轮进度按已保存记录累计，日期安排请回到安康康复页。\n  - button \"康复动作库\"\n  - button \"身体汇总\"\n  - button \"训练记录\"\n  - heading \"本轮安排\" [level=2]\n  - paragraph: 2 / 4 项\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 左侧 · 5 次 × 1 组\n  - progressbar \"本轮训练完成项数\"\n  - button \"开始训练\"\n  - heading \"训练清单\" [level=2]\n  - paragraph: 配图未核验，不作为示教。\n  - button \"未核验视觉封面 肩外展 左侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 左侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩外展 右侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 右侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩前屈 左侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 左侧 · 5 次 × 1 组 · 待完成\n  - button \"未核验视觉封面 肩前屈 右侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 右侧 · 5 次 × 1 组 · 待完成",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "plan",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "plan",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的计划\" [level=1]\n  - paragraph: 手机录像训练 · 本轮进度按已保存记录累计，日期安排请回到安康康复页。\n  - button \"康复动作库\"\n  - button \"身体汇总\"\n  - button \"训练记录\"\n  - heading \"本轮安排\" [level=2]\n  - paragraph: 2 / 4 项\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 左侧 · 5 次 × 1 组\n  - progressbar \"本轮训练完成项数\"\n  - button \"开始训练\"\n  - heading \"训练清单\" [level=2]\n  - paragraph: 配图未核验，不作为示教。\n  - button \"未核验视觉封面 肩外展 左侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 左侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩外展 右侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 右侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩前屈 左侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 左侧 · 5 次 × 1 组 · 待完成\n  - button \"未核验视觉封面 肩前屈 右侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 右侧 · 5 次 × 1 组 · 待完成",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "plan",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "plan-detail",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"返回我的计划\": ‹\n  - heading \"计划详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩前屈\" [level=2]\n  - generic: 本人左侧\n  - heading \"本次目标\" [level=2]\n  - paragraph: 5次 × 1组\n  - paragraph: 个人角度目标 90°\n  - paragraph: 版本 1 · 来自已保存计划\n  - paragraph: 下一项\n  - button \"开始训练\"",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 628.78125,
+          "disabled": false,
+          "text": "开始训练",
+          "top": 580.78125
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "detail",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "plan-detail",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"返回我的计划\": ‹\n  - heading \"计划详情\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩前屈\" [level=2]\n  - generic: 本人左侧\n  - heading \"本次目标\" [level=2]\n  - paragraph: 5次 × 1组\n  - paragraph: 个人角度目标 90°\n  - paragraph: 版本 1 · 来自已保存计划\n  - paragraph: 下一项\n  - button \"开始训练\"",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 570.78125,
+          "disabled": false,
+          "text": "开始训练",
+          "top": 522.78125
+        }
+      ],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "detail",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "training-prepare",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"返回训练计划\": ‹\n  - heading \"训练准备\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 本次训练 · 左侧\n  - heading \"本次目标\" [level=2]\n  - strong: 5 次\n  - text: 每组次数\n  - strong: 1 组\n  - text: 训练组数\n  - paragraph: 个人角度目标 90°\n  - paragraph: 感到疼痛、头晕或不适，请停止。\n  - heading \"记录本次训练\" [level=2]\n  - paragraph: 测试侧朝向镜头，测试侧肩、肘完整入镜。\n  - status: 电脑分析模型未就绪。\n  - generic \"本人测试侧\":\n    - paragraph: 测试侧：本人左侧，由本次计划确定\n  - button \"拍摄视频\"\n  - button \"选择已有视频\"\n  - generic \"怎么做 · 测量说明\"\n  - generic: 1 看动作\n  - generic: 2 记录训练\n  - generic: 3 填写感受\n  - button \"实时跟练\"",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 681.375,
+          "disabled": false,
+          "text": "拍摄视频",
+          "top": 633.375
+        },
+        {
+          "bottom": 738.375,
+          "disabled": false,
+          "text": "选择已有视频",
+          "top": 691.375
+        }
+      ],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "prepare",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "training-prepare",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"返回训练计划\": ‹\n  - heading \"训练准备\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 本次训练 · 左侧\n  - heading \"本次目标\" [level=2]\n  - strong: 5 次\n  - text: 每组次数\n  - strong: 1 组\n  - text: 训练组数\n  - paragraph: 个人角度目标 90°\n  - paragraph: 感到疼痛、头晕或不适，请停止。\n  - heading \"记录本次训练\" [level=2]\n  - paragraph: 测试侧朝向镜头，测试侧肩、肘完整入镜。\n  - status: 电脑分析模型未就绪。\n  - generic \"本人测试侧\":\n    - paragraph: 测试侧：本人左侧，由本次计划确定\n  - button \"拍摄视频\"\n  - button \"选择已有视频\"\n  - generic \"怎么做 · 测量说明\"\n  - generic: 1 看动作\n  - generic: 2 记录训练\n  - generic: 3 填写感受\n  - button \"实时跟练\"",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 731.375,
+          "disabled": false,
+          "text": "拍摄视频",
+          "top": 683.375
+        },
+        {
+          "bottom": 788.375,
+          "disabled": false,
+          "text": "选择已有视频",
+          "top": 741.375
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "prepare",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "history",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的活动记录\" [level=1]\n  - button \"全部\"\n  - button \"康复\"\n  - button \"健身\"\n  - button \"肩外展 · 右侧 10/12 13:17 · 康复训练 已完成 ›\":\n    - strong: 肩外展 · 右侧\n    - generic: 10/12 13:17 · 康复训练\n    - generic: 已完成 ›\n  - button \"肩外展 · 左侧 10/12 13:09 · 康复训练 已完成 ›\":\n    - strong: 肩外展 · 左侧\n    - generic: 10/12 13:09 · 康复训练\n    - generic: 已完成 ›\n  - button \"肩前屈 · 右侧 10/11 13:07 · 康复评估 已完成 ›\":\n    - strong: 肩前屈 · 右侧\n    - generic: 10/11 13:07 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩前屈 · 左侧 10/11 13:06 · 康复评估 已完成 ›\":\n    - strong: 肩前屈 · 左侧\n    - generic: 10/11 13:06 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩外展 · 右侧 10/11 13:05 · 康复评估 已完成 ›\":\n    - strong: 肩外展 · 右侧\n    - generic: 10/11 13:05 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩外展 · 左侧 10/11 13:04 · 康复评估 已完成 ›\":\n    - strong: 肩外展 · 左侧\n    - generic: 10/11 13:04 · 康复评估\n    - generic: 已完成 ›\n  - button \"正面体态 · 左侧 10/9 12:54 · 体态分析 已完成 ›\":\n    - strong: 正面体态 · 左侧\n    - generic: 10/9 12:54 · 体态分析\n    - generic: 已完成 ›\n  - button \"侧面体态 · 左侧 10/9 12:54 · 体态分析 已完成 ›\":\n    - strong: 侧面体态 · 左侧\n    - generic: 10/9 12:54 · 体态分析\n    - generic: 已完成 ›\n  - button \"腕伸展 · 左侧 10/7 12:52 · 康复评估 已完成 ›\":\n    - strong: 腕伸展 · 左侧\n    - generic: 10/7 12:52 · 康复评估\n    - generic: 已完成 ›\n  - button \"头颈前屈观察 · 左侧 10/7 12:51 · 康复评估 已完成 ›\":\n    - strong: 头颈前屈观察 · 左侧\n    - generic: 10/7 12:51 · 康复评估\n    - generic: 已完成 ›\n  - button \"踝背屈 · 右侧 10/7 12:50 · 康复评估 已完成 ›\":\n    - strong: 踝背屈 · 右侧\n    - generic: 10/7 12:50 · 康复评估\n    - generic: 已完成 ›\n  - button \"踝背屈 · 左侧 10/7 12:49 · 康复评估 已完成 ›\":\n    - strong: 踝背屈 · 左侧\n    - generic: 10/7 12:49 · 康复评估\n    - generic: 已完成 ›\n  - button \"髋屈曲 · 右侧 10/7 12:48 · 康复评估 已完成 ›\":\n    - strong: 髋屈曲 · 右侧\n    - generic: 10/7 12:48 · 康复评估\n    - generic: 已完成 ›\n  - button \"髋屈曲 · 左侧 10/7 12:47 · 康复评估 已完成 ›\":\n    - strong: 髋屈曲 · 左侧\n    - generic: 10/7 12:47 · 康复评估\n    - generic: 已完成 ›\n  - button \"坐位膝屈伸 · 右侧 10/7 12:46 · 康复评估 已完成 ›\":\n    - strong: 坐位膝屈伸 · 右侧\n    - generic: 10/7 12:46 · 康复评估\n    - generic: 已完成 ›\n  - button \"坐位膝屈伸 · 左侧 10/7 12:45 · 康复评估 已完成 ›\":\n    - strong: 坐位膝屈伸 · 左侧\n    - generic: 10/7 12:45 · 康复评估\n    - generic: 已完成 ›\n  - button \"肘屈伸 · 右侧 10/7 12:44 · 康复评估 已完成 ›\":\n    - strong: 肘屈伸 · 右侧\n    - generic: 10/7 12:44 · 康复评估\n    - generic: 已完成 ›\n  - button \"肘屈伸 · 左侧 10/7 12:43 · 康复评估 已完成 ›\":\n    - strong: 肘屈伸 · 左侧\n    - generic: 10/7 12:43 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩前屈 · 右侧 10/7 12:42 · 康复评估 已完成 ›\":\n    - strong: 肩前屈 · 右侧\n    - generic: 10/7 12:42 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩前屈 · 左侧 10/7 12:41 · 康复评估 已完成 ›\":\n    - strong: 肩前屈 · 左侧\n    - generic: 10/7 12:41 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩外展 · 右侧 10/7 12:40 · 康复评估 已完成 ›\":\n    - strong: 肩外展 · 右侧\n    - generic: 10/7 12:40 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩外展 · 左侧 10/7 12:39 · 康复评估 已完成 ›\":\n    - strong: 肩外展 · 左侧\n    - generic: 10/7 12:39 · 康复评估\n    - generic: 已完成 ›",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "history",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "history",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的活动记录\" [level=1]\n  - button \"全部\"\n  - button \"康复\"\n  - button \"健身\"\n  - button \"肩外展 · 右侧 10/12 13:17 · 康复训练 已完成 ›\":\n    - strong: 肩外展 · 右侧\n    - generic: 10/12 13:17 · 康复训练\n    - generic: 已完成 ›\n  - button \"肩外展 · 左侧 10/12 13:09 · 康复训练 已完成 ›\":\n    - strong: 肩外展 · 左侧\n    - generic: 10/12 13:09 · 康复训练\n    - generic: 已完成 ›\n  - button \"肩前屈 · 右侧 10/11 13:07 · 康复评估 已完成 ›\":\n    - strong: 肩前屈 · 右侧\n    - generic: 10/11 13:07 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩前屈 · 左侧 10/11 13:06 · 康复评估 已完成 ›\":\n    - strong: 肩前屈 · 左侧\n    - generic: 10/11 13:06 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩外展 · 右侧 10/11 13:05 · 康复评估 已完成 ›\":\n    - strong: 肩外展 · 右侧\n    - generic: 10/11 13:05 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩外展 · 左侧 10/11 13:04 · 康复评估 已完成 ›\":\n    - strong: 肩外展 · 左侧\n    - generic: 10/11 13:04 · 康复评估\n    - generic: 已完成 ›\n  - button \"正面体态 · 左侧 10/9 12:54 · 体态分析 已完成 ›\":\n    - strong: 正面体态 · 左侧\n    - generic: 10/9 12:54 · 体态分析\n    - generic: 已完成 ›\n  - button \"侧面体态 · 左侧 10/9 12:54 · 体态分析 已完成 ›\":\n    - strong: 侧面体态 · 左侧\n    - generic: 10/9 12:54 · 体态分析\n    - generic: 已完成 ›\n  - button \"腕伸展 · 左侧 10/7 12:52 · 康复评估 已完成 ›\":\n    - strong: 腕伸展 · 左侧\n    - generic: 10/7 12:52 · 康复评估\n    - generic: 已完成 ›\n  - button \"头颈前屈观察 · 左侧 10/7 12:51 · 康复评估 已完成 ›\":\n    - strong: 头颈前屈观察 · 左侧\n    - generic: 10/7 12:51 · 康复评估\n    - generic: 已完成 ›\n  - button \"踝背屈 · 右侧 10/7 12:50 · 康复评估 已完成 ›\":\n    - strong: 踝背屈 · 右侧\n    - generic: 10/7 12:50 · 康复评估\n    - generic: 已完成 ›\n  - button \"踝背屈 · 左侧 10/7 12:49 · 康复评估 已完成 ›\":\n    - strong: 踝背屈 · 左侧\n    - generic: 10/7 12:49 · 康复评估\n    - generic: 已完成 ›\n  - button \"髋屈曲 · 右侧 10/7 12:48 · 康复评估 已完成 ›\":\n    - strong: 髋屈曲 · 右侧\n    - generic: 10/7 12:48 · 康复评估\n    - generic: 已完成 ›\n  - button \"髋屈曲 · 左侧 10/7 12:47 · 康复评估 已完成 ›\":\n    - strong: 髋屈曲 · 左侧\n    - generic: 10/7 12:47 · 康复评估\n    - generic: 已完成 ›\n  - button \"坐位膝屈伸 · 右侧 10/7 12:46 · 康复评估 已完成 ›\":\n    - strong: 坐位膝屈伸 · 右侧\n    - generic: 10/7 12:46 · 康复评估\n    - generic: 已完成 ›\n  - button \"坐位膝屈伸 · 左侧 10/7 12:45 · 康复评估 已完成 ›\":\n    - strong: 坐位膝屈伸 · 左侧\n    - generic: 10/7 12:45 · 康复评估\n    - generic: 已完成 ›\n  - button \"肘屈伸 · 右侧 10/7 12:44 · 康复评估 已完成 ›\":\n    - strong: 肘屈伸 · 右侧\n    - generic: 10/7 12:44 · 康复评估\n    - generic: 已完成 ›\n  - button \"肘屈伸 · 左侧 10/7 12:43 · 康复评估 已完成 ›\":\n    - strong: 肘屈伸 · 左侧\n    - generic: 10/7 12:43 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩前屈 · 右侧 10/7 12:42 · 康复评估 已完成 ›\":\n    - strong: 肩前屈 · 右侧\n    - generic: 10/7 12:42 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩前屈 · 左侧 10/7 12:41 · 康复评估 已完成 ›\":\n    - strong: 肩前屈 · 左侧\n    - generic: 10/7 12:41 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩外展 · 右侧 10/7 12:40 · 康复评估 已完成 ›\":\n    - strong: 肩外展 · 右侧\n    - generic: 10/7 12:40 · 康复评估\n    - generic: 已完成 ›\n  - button \"肩外展 · 左侧 10/7 12:39 · 康复评估 已完成 ›\":\n    - strong: 肩外展 · 左侧\n    - generic: 10/7 12:39 · 康复评估\n    - generic: 已完成 ›",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "history",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "training-result",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 训练录像分析\n  - heading \"肩外展\" [level=1]\n  - paragraph: 10/12 13:17\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"已达计划次数\" [level=2]\n  - strong: 5 次\n  - text: 完整动作\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 141°\n  - text: 视频角度变化\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph: 达到目标 5 次 · 需调整 0 次 · 未能判断 0 次。按本次目标和可见动作统计。\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 3°–144°\n    - text: 。记录到 5 次完整动作。\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。\n  - button \"记录疼痛与疲劳\"",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 803.8828125,
+          "disabled": false,
+          "text": "记录疼痛与疲劳",
+          "top": 755.8828125
+        },
+        {
+          "bottom": 0,
+          "disabled": false,
+          "text": "保存感受，查看下一步",
+          "top": 0
+        }
+      ],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "result",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "training-result",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回历史记录\"\n  - generic: 右侧 · 训练录像分析\n  - heading \"肩外展\" [level=1]\n  - paragraph: 10/12 13:17\n  - paragraph: 分析结果已保存\n  - generic: 评估结果\n  - heading \"已达计划次数\" [level=2]\n  - strong: 5 次\n  - text: 完整动作\n  - strong: 96%\n  - text: 有效画面占比\n  - strong: 141°\n  - text: 视频角度变化\n  - strong: 30.5s\n  - text: 本次分析时长\n  - paragraph: 达到目标 5 次 · 需调整 0 次 · 未能判断 0 次。按本次目标和可见动作统计。\n  - paragraph:\n    - text: 本次观察到的肩部相对画面竖直线二维投影抬举角为\n    - strong: 3°–144°\n    - text: 。记录到 5 次完整动作。\n  - generic \"测量说明\"\n  - text: 记录上臂相对固定画面竖直方向的二维变化；身体倾斜或摄像头移动会影响结果，不分离肩胛与盂肱关节。 根据上传录像分析，不是实时监测。\n  - button \"记录疼痛与疲劳\"",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 775.3828125,
+          "disabled": false,
+          "text": "记录疼痛与疲劳",
+          "top": 727.3828125
+        },
+        {
+          "bottom": 0,
+          "disabled": false,
+          "text": "保存感受，查看下一步",
+          "top": 0
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "result",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "training-feedback",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛感\n  - combobox \"疼痛感 疼痛程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\" [selected]\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\"\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疼痛程度 0至10\":\n    - button \"疼痛0 / 10\" [pressed]: \"0\"\n    - button \"疼痛1 / 10\": \"1\"\n    - button \"疼痛2 / 10\": \"2\"\n    - button \"疼痛3 / 10\": \"3\"\n    - button \"疼痛4 / 10\": \"4\"\n    - button \"疼痛5 / 10\": \"5\"\n    - button \"疼痛6 / 10\": \"6\"\n    - button \"疼痛7 / 10\": \"7\"\n    - button \"疼痛8 / 10\": \"8\"\n    - button \"疼痛9 / 10\": \"9\"\n    - button \"疼痛10 / 10\": \"10\"\n  - text: 疲劳感\n  - combobox \"疲劳感 疲劳程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\"\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\" [selected]\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疲劳程度 0至10\":\n    - button \"疲劳0 / 10\": \"0\"\n    - button \"疲劳1 / 10\": \"1\"\n    - button \"疲劳2 / 10\": \"2\"\n    - button \"疲劳3 / 10\" [active] [pressed]: \"3\"\n    - button \"疲劳4 / 10\": \"4\"\n    - button \"疲劳5 / 10\": \"5\"\n    - button \"疲劳6 / 10\": \"6\"\n    - button \"疲劳7 / 10\": \"7\"\n    - button \"疲劳8 / 10\": \"8\"\n    - button \"疲劳9 / 10\": \"9\"\n    - button \"疲劳10 / 10\": \"10\"\n  - button \"保存反馈\"",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 0,
+          "disabled": false,
+          "text": "记录疼痛与疲劳",
+          "top": 0
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "0",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "1",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "2",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "3",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "4",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "5",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "6",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "7",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "8",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "9",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "10",
+          "top": 215.984375
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "0",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "1",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "2",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "3",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "4",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "5",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "6",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "7",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "8",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "9",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "10",
+          "top": 306.078125
+        },
+        {
+          "bottom": 410.078125,
+          "disabled": false,
+          "text": "保存反馈",
+          "top": 362.078125
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "feedback",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "training-feedback",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"‹ 返回结果\"\n  - heading \"训练反馈\" [level=1]\n  - paragraph: 请选择真实感受，保存后才能继续下一项。0 表示没有，10 表示非常强烈。\n  - text: 疼痛感\n  - combobox \"疼痛感 疼痛程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\" [selected]\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\"\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疼痛程度 0至10\":\n    - button \"疼痛0 / 10\" [pressed]: \"0\"\n    - button \"疼痛1 / 10\": \"1\"\n    - button \"疼痛2 / 10\": \"2\"\n    - button \"疼痛3 / 10\": \"3\"\n    - button \"疼痛4 / 10\": \"4\"\n    - button \"疼痛5 / 10\": \"5\"\n    - button \"疼痛6 / 10\": \"6\"\n    - button \"疼痛7 / 10\": \"7\"\n    - button \"疼痛8 / 10\": \"8\"\n    - button \"疼痛9 / 10\": \"9\"\n    - button \"疼痛10 / 10\": \"10\"\n  - text: 疲劳感\n  - combobox \"疲劳感 疲劳程度 0至10\":\n    - option \"请选择\"\n    - option \"0 / 10\"\n    - option \"1 / 10\"\n    - option \"2 / 10\"\n    - option \"3 / 10\" [selected]\n    - option \"4 / 10\"\n    - option \"5 / 10\"\n    - option \"6 / 10\"\n    - option \"7 / 10\"\n    - option \"8 / 10\"\n    - option \"9 / 10\"\n    - option \"10 / 10\"\n  - group \"疲劳程度 0至10\":\n    - button \"疲劳0 / 10\": \"0\"\n    - button \"疲劳1 / 10\": \"1\"\n    - button \"疲劳2 / 10\": \"2\"\n    - button \"疲劳3 / 10\" [active] [pressed]: \"3\"\n    - button \"疲劳4 / 10\": \"4\"\n    - button \"疲劳5 / 10\": \"5\"\n    - button \"疲劳6 / 10\": \"6\"\n    - button \"疲劳7 / 10\": \"7\"\n    - button \"疲劳8 / 10\": \"8\"\n    - button \"疲劳9 / 10\": \"9\"\n    - button \"疲劳10 / 10\": \"10\"\n  - button \"保存反馈\"",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 0,
+          "disabled": false,
+          "text": "记录疼痛与疲劳",
+          "top": 0
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "0",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "1",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "2",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "3",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "4",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "5",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "6",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "7",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "8",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "9",
+          "top": 215.984375
+        },
+        {
+          "bottom": 247.984375,
+          "disabled": false,
+          "text": "10",
+          "top": 215.984375
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "0",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "1",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "2",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "3",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "4",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "5",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "6",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "7",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "8",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "9",
+          "top": 306.078125
+        },
+        {
+          "bottom": 338.078125,
+          "disabled": false,
+          "text": "10",
+          "top": 306.078125
+        },
+        {
+          "bottom": 410.078125,
+          "disabled": false,
+          "text": "保存反馈",
+          "top": 362.078125
+        }
+      ],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "feedback",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "feedback-saved-return-plan",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的计划\" [level=1]\n  - paragraph: 手机录像训练 · 本轮进度按已保存记录累计，日期安排请回到安康康复页。\n  - button \"康复动作库\"\n  - button \"身体汇总\"\n  - button \"训练记录\"\n  - heading \"本轮安排\" [level=2]\n  - paragraph: 2 / 4 项\n  - heading \"肩前屈\" [level=1]\n  - paragraph: 左侧 · 5 次 × 1 组\n  - progressbar \"本轮训练完成项数\"\n  - button \"开始训练\"\n  - heading \"训练清单\" [level=2]\n  - paragraph: 配图未核验，不作为示教。\n  - button \"未核验视觉封面 肩外展 左侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 左侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩外展 右侧 · 5 次 × 1 组 · 已完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩外展\n    - paragraph: 右侧 · 5 次 × 1 组 · 已完成\n  - button \"未核验视觉封面 肩前屈 左侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 左侧 · 5 次 × 1 组 · 待完成\n  - button \"未核验视觉封面 肩前屈 右侧 · 5 次 × 1 组 · 待完成\":\n    - img \"未核验视觉封面\"\n    - strong: 肩前屈\n    - paragraph: 右侧 · 5 次 × 1 组 · 待完成",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "plan",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "extras",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"健身 · 体态\" [level=1]\n  - button \"健身录像 独立健身分析 →\":\n    - strong: 健身录像\n    - generic: 独立健身分析 →\n  - button \"体态分析 正面与侧面站姿 →\":\n    - strong: 体态分析\n    - generic: 正面与侧面站姿 →\n  - paragraph: 辅助记录，不作为康复计划完成依据。",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "extras",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "fitness-library",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"健身动作库\" [level=1]\n  - generic: 8 个动作\n  - button \"示例报告 示例数据\":\n    - text: 示例报告\n    - generic: 示例数据\n  - generic: 搜索动作\n  - searchbox \"搜索动作\"\n  - complementary \"动作分类\":\n    - button \"全部\" [pressed]\n    - button \"下肢\"\n    - button \"推\"\n    - button \"拉\"\n  - region \"动作列表\":\n    - button \"深蹲 下肢 · 侧面拍摄 查看\":\n      - strong: 深蹲\n      - generic: 下肢 · 侧面拍摄\n      - generic: 查看\n    - button \"硬拉 下肢 · 侧面拍摄 查看\":\n      - strong: 硬拉\n      - generic: 下肢 · 侧面拍摄\n      - generic: 查看\n    - button \"卧推 推 · 侧面拍摄 查看\":\n      - strong: 卧推\n      - generic: 推 · 侧面拍摄\n      - generic: 查看\n    - button \"俯身划船 拉 · 侧面拍摄 查看\":\n      - strong: 俯身划船\n      - generic: 拉 · 侧面拍摄\n      - generic: 查看\n    - button \"肩上推举 推 · 侧面拍摄 查看\":\n      - strong: 肩上推举\n      - generic: 推 · 侧面拍摄\n      - generic: 查看\n    - button \"二头弯举 拉 · 侧面拍摄 查看\":\n      - strong: 二头弯举\n      - generic: 拉 · 侧面拍摄\n      - generic: 查看\n    - button \"俯卧撑 推 · 侧面拍摄 查看\":\n      - strong: 俯卧撑\n      - generic: 推 · 侧面拍摄\n      - generic: 查看\n    - button \"分腿蹲 下肢 · 侧面拍摄 查看\":\n      - strong: 分腿蹲\n      - generic: 下肢 · 侧面拍摄\n      - generic: 查看",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "fitness",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "posture-prepare",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"站姿体态评估\" [level=1]\n  - paragraph: 自然站立，分别录制正面和侧面。\n  - button \"正面体态\"\n  - button \"侧面体态\"\n  - generic: 01 摆好机位\n  - generic: 02 拍摄上传\n  - generic: 03 查看结果\n  - heading \"正面体态\" [level=2]\n  - text: 靠近镜头的一侧\n  - combobox \"靠近镜头的一侧\":\n    - option \"本人左侧\" [selected]\n    - option \"本人右侧\"\n  - generic: \"1\"\n  - paragraph: 手机放平，镜头与身体正对。\n  - generic: \"2\"\n  - paragraph: 自然站立，双肩、髋、膝和脚踝入镜。\n  - generic: \"3\"\n  - paragraph: 保持平时站姿，录制 5–10 秒。\n  - button \"拍摄视频\"\n  - button \"选择视频\"\n  - generic \"测量范围\"\n  - text: 观察肩线、髋线、躯干与耳肩位置。不诊断骨盆前倾、圆肩或脊柱侧弯。",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 740.6796875,
+          "disabled": false,
+          "text": "拍摄视频",
+          "top": 692.6796875
+        },
+        {
+          "bottom": 797.6796875,
+          "disabled": false,
+          "text": "选择视频",
+          "top": 750.6796875
+        }
+      ],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "posture",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "computer-devices",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的设备\" [level=1]\n  - heading \"电脑端训练\" [level=2]\n  - paragraph: 正式实时评估与训练在电脑康复页开始。手机可查看计划、安排日期；手机录像分析单独保存。\n  - heading \"手机相机\" [level=2]\n  - generic: 录像上传\n  - paragraph: 拍摄后返回网页，上传分析。\n  - button \"选择评估动作\"\n  - heading \"分析电脑\" [level=2]\n  - generic: 已连接\n  - paragraph: 127.0.0.1:18884\n  - generic \"连接说明\"\n  - text: 保持电脑服务开启，上传期间不要锁屏。上传成功后，可离开网页等待分析结果。\n  - heading \"网络摄像头\" [level=2]\n  - paragraph: 尚未配置摄像头\n  - paragraph: 已支持 RTSP 测试画面、定时录制和分析。购买摄像头后，在电脑端添加地址即可使用；地址与密码不会发到手机页面。\n  - heading \"在另一台设备继续\" [level=2]\n  - paragraph: 手机和电脑浏览器可使用同一份网页档案。不会自动合并桌面软件里的患者资料。\n  - button \"生成我的档案连接码\"\n  - generic \"接入另一台设备的档案\"\n  - button \"查看身体汇总与随访\"\n  - button \"查看他人分享的报告\"",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=more&tool=computer&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "device",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "live-guidance-not-started",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回动作详情\"\n  - heading \"肩外展 · 实时指导\" [level=1]\n  - paragraph: 正对镜头，测试侧肩、肘完整入镜。\n  - generic: 摆好手机，点击开始\n  - generic: 0 次\n  - generic: —\n  - paragraph\n  - text: 镜头\n  - combobox \"镜头\":\n    - option \"前置摄像头\" [selected]\n    - option \"后置摄像头\"\n  - checkbox \"语音提示\"\n  - text: 语音提示\n  - checkbox \"同意将实时画面传到电脑分析，不保存画面。\"\n  - text: 同意将实时画面传到电脑分析，不保存画面。\n  - button \"开始指导\"\n  - button \"停止\" [disabled]\n  - paragraph: 这是实时练习指导，结束后不保存为评估依据。需要报告时请录制上传；疼痛、头晕或不适时停止。",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "guidance",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "upload-consent-required",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回动作详情\"\n  - heading \"评估准备\" [level=1]\n  - figure \"视觉示例 · 未核验，不作为示教\":\n    - img \"待审核视觉封面\"\n    - generic: 视觉示例 · 未核验，不作为示教\n  - heading \"肩外展\" [level=1]\n  - paragraph: 肩部 · 正面拍摄\n  - heading \"手机录像分析\" [level=2]\n  - paragraph: 正对镜头，测试侧肩、肘完整入镜。\n  - generic \"本人测试侧\":\n    - button \"本人左侧\" [pressed]\n    - button \"本人右侧\"\n  - button \"拍摄视频\"\n  - button \"选择已有视频\"\n  - strong: TEST-blank.webm\n  - paragraph: 0.0 MB · 肩外展 · 左侧\n  - checkbox \"同意将视频上传到电脑分析并保存，可随时删除原视频。\"\n  - generic: 同意将视频上传到电脑分析并保存，可随时删除原视频。\n  - button \"上传并分析\" [active]\n  - paragraph\n  - generic \"怎么做 · 测量说明\"\n  - generic: 1 准备\n  - generic: 2 拍摄上传\n  - generic: 3 结果与感受\n  - button \"实时跟练\"\n- alert: 请先勾选本次录像分析授权",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 577.6875,
+          "disabled": false,
+          "text": "拍摄视频",
+          "top": 529.6875
+        },
+        {
+          "bottom": 634.6875,
+          "disabled": false,
+          "text": "选择已有视频",
+          "top": 587.6875
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "prepare",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "analysis-failed",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回动作详情\"\n  - generic: 左侧 · 视频评估\n  - heading \"肩外展\" [level=1]\n  - paragraph: 10/12 14:03\n  - heading \"需重试\" [level=2]\n  - status: 分析未能完成。请检查电脑端模型和运行日志后重试；未生成测试结论。\n  - button \"重新选择录像\"\n  - heading \"回看本次录像\" [level=3]\n  - button \"删除本次原始录像\"",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "result",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "analysis-failed",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"‹ 返回动作详情\"\n  - generic: 左侧 · 视频评估\n  - heading \"肩外展\" [level=1]\n  - paragraph: 10/12 14:03\n  - heading \"需重试\" [level=2]\n  - status: 分析未能完成。请检查电脑端模型和运行日志后重试；未生成测试结论。\n  - button \"重新选择录像\"\n  - heading \"回看本次录像\" [level=3]\n  - button \"删除本次原始录像\"",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "result",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "body-summary",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"身体与训练汇总\" [level=1]\n  - paragraph: 24 次记录 · 2 次康复训练\n  - heading \"查看下一项安排，不自动增加训练量\" [level=2]\n  - button \"前往训练中心\"\n  - heading \"最近评估\" [level=2]\n  - table:\n    - rowgroup:\n      - row \"项目 结果\":\n        - columnheader \"项目\"\n        - columnheader \"结果\"\n    - rowgroup:\n      - row \"肩前屈 右侧 · 10/11 13:07 5 次 · 幅度 145°\":\n        - cell \"肩前屈 右侧 · 10/11 13:07\":\n          - text: 肩前屈\n          - text: 右侧 · 10/11 13:07\n        - cell \"5 次 · 幅度 145°\"\n      - row \"肩前屈 左侧 · 10/11 13:06 5 次 · 幅度 117°\":\n        - cell \"肩前屈 左侧 · 10/11 13:06\":\n          - text: 肩前屈\n          - text: 左侧 · 10/11 13:06\n        - cell \"5 次 · 幅度 117°\"\n      - row \"肩外展 右侧 · 10/11 13:05 5 次 · 幅度 141°\":\n        - cell \"肩外展 右侧 · 10/11 13:05\":\n          - text: 肩外展\n          - text: 右侧 · 10/11 13:05\n        - cell \"5 次 · 幅度 141°\"\n      - row \"肩外展 左侧 · 10/11 13:04 5 次 · 幅度 107°\":\n        - cell \"肩外展 左侧 · 10/11 13:04\":\n          - text: 肩外展\n          - text: 左侧 · 10/11 13:04\n        - cell \"5 次 · 幅度 107°\"\n      - row \"正面体态 左侧 · 10/9 12:54 双肩连线倾角 2.3° 双髋连线倾角 1.4° 躯干偏离竖直 1.9°\":\n        - cell \"正面体态 左侧 · 10/9 12:54\":\n          - text: 正面体态\n          - text: 左侧 · 10/9 12:54\n        - cell \"双肩连线倾角 2.3° 双髋连线倾角 1.4° 躯干偏离竖直 1.9°\":\n          - text: 双肩连线倾角 2.3°\n          - text: 双髋连线倾角 1.4°\n          - text: 躯干偏离竖直 1.9°\n      - row \"侧面体态 左侧 · 10/9 12:54 躯干偏离竖直 1.9° 耳肩水平偏移 10.7% 膝部侧面夹角 177.3°\":\n        - cell \"侧面体态 左侧 · 10/9 12:54\":\n          - text: 侧面体态\n          - text: 左侧 · 10/9 12:54\n        - cell \"躯干偏离竖直 1.9° 耳肩水平偏移 10.7% 膝部侧面夹角 177.3°\":\n          - text: 躯干偏离竖直 1.9°\n          - text: 耳肩水平偏移 10.7%\n          - text: 膝部侧面夹角 177.3°\n      - row \"腕伸展 左侧 · 10/7 12:52 5 次 · 幅度 43°\":\n        - cell \"腕伸展 左侧 · 10/7 12:52\":\n          - text: 腕伸展\n          - text: 左侧 · 10/7 12:52\n        - cell \"5 次 · 幅度 43°\"\n      - row \"头颈前屈观察 左侧 · 10/7 12:51 5 次 · 幅度 29°\":\n        - cell \"头颈前屈观察 左侧 · 10/7 12:51\":\n          - text: 头颈前屈观察\n          - text: 左侧 · 10/7 12:51\n        - cell \"5 次 · 幅度 29°\"\n      - row \"踝背屈 右侧 · 10/7 12:50 5 次 · 幅度 21°\":\n        - cell \"踝背屈 右侧 · 10/7 12:50\":\n          - text: 踝背屈\n          - text: 右侧 · 10/7 12:50\n        - cell \"5 次 · 幅度 21°\"\n      - row \"踝背屈 左侧 · 10/7 12:49 5 次 · 幅度 18°\":\n        - cell \"踝背屈 左侧 · 10/7 12:49\":\n          - text: 踝背屈\n          - text: 左侧 · 10/7 12:49\n        - cell \"5 次 · 幅度 18°\"\n      - row \"髋屈曲 右侧 · 10/7 12:48 5 次 · 幅度 71°\":\n        - cell \"髋屈曲 右侧 · 10/7 12:48\":\n          - text: 髋屈曲\n          - text: 右侧 · 10/7 12:48\n        - cell \"5 次 · 幅度 71°\"\n      - row \"髋屈曲 左侧 · 10/7 12:47 5 次 · 幅度 67°\":\n        - cell \"髋屈曲 左侧 · 10/7 12:47\":\n          - text: 髋屈曲\n          - text: 左侧 · 10/7 12:47\n        - cell \"5 次 · 幅度 67°\"\n      - row \"坐位膝屈伸 右侧 · 10/7 12:46 5 次 · 幅度 90°\":\n        - cell \"坐位膝屈伸 右侧 · 10/7 12:46\":\n          - text: 坐位膝屈伸\n          - text: 右侧 · 10/7 12:46\n        - cell \"5 次 · 幅度 90°\"\n      - row \"坐位膝屈伸 左侧 · 10/7 12:45 5 次 · 幅度 83°\":\n        - cell \"坐位膝屈伸 左侧 · 10/7 12:45\":\n          - text: 坐位膝屈伸\n          - text: 左侧 · 10/7 12:45\n        - cell \"5 次 · 幅度 83°\"\n      - row \"肘屈伸 右侧 · 10/7 12:44 5 次 · 幅度 132°\":\n        - cell \"肘屈伸 右侧 · 10/7 12:44\":\n          - text: 肘屈伸\n          - text: 右侧 · 10/7 12:44\n        - cell \"5 次 · 幅度 132°\"\n      - row \"肘屈伸 左侧 · 10/7 12:43 5 次 · 幅度 125°\":\n        - cell \"肘屈伸 左侧 · 10/7 12:43\":\n          - text: 肘屈伸\n          - text: 左侧 · 10/7 12:43\n        - cell \"5 次 · 幅度 125°\"\n  - paragraph: 体态、健身与康复分开保存；不同机位的角度不直接比较。\n  - button \"打印 / 存为 PDF\"\n  - heading \"报告与随访\" [level=2]\n  - paragraph: 将本次摘要分享给家人或康复师，不分享原始录像。\n  - button \"生成7天分享链接\"\n  - heading \"近期训练\" [level=2]\n  - button \"肩外展 10/12 13:17 · 疼痛 0 / 疲劳 3 查看 ›\":\n    - text: 肩外展\n    - generic: 10/12 13:17 · 疼痛 0 / 疲劳 3\n    - generic: 查看 ›\n  - button \"肩外展 10/12 13:09 · 疼痛 0 / 疲劳 2 查看 ›\":\n    - text: 肩外展\n    - generic: 10/12 13:09 · 疼痛 0 / 疲劳 2\n    - generic: 查看 ›",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18884/capture?tab=assess&tool=body&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "body",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "home-v36-comparison",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - button \"搜索动作、计划、记录\":\n    - generic: 搜索动作、计划、记录\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - generic: 10月\n  - generic: \"2026\"\n  - generic \"本地自然周日期\":\n    - button \"2026-10-12 星期一 有训练记录\":\n      - generic: 一\n      - time: \"12\"\n    - button \"2026-10-13 星期二\":\n      - generic: 二\n      - time: \"13\"\n    - button \"2026-10-14 星期三\":\n      - generic: 三\n      - time: \"14\"\n    - button \"2026-10-15 星期四\":\n      - generic: 四\n      - time: \"15\"\n    - button \"2026-10-16 星期五\":\n      - generic: 五\n      - time: \"16\"\n    - button \"2026-10-17 星期六\":\n      - generic: 六\n      - time: \"17\"\n    - button \"2026-10-18 星期日\":\n      - generic: 日\n      - time: \"18\"\n  - region \"本周已保存训练记录\":\n    - heading \"本周训练\" [level=2]\n    - paragraph: 1 天有记录\n    - generic \"星期一 有已保存训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日安排\" [level=2]\n  - generic: 3 项安排\n  - region \"当前主要康复任务\":\n    - paragraph: 下一项 · 训练\n    - heading \"肩前屈\" [level=1]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"开始训练\":\n      - text: 开始训练\n      - generic: →\n    - generic: 03 / 04\n  - region \"常用功能\":\n    - button \"我的计划\":\n      - strong: 我的计划\n      - generic: →\n    - link \"历史报告\":\n      - /url: \"#records\"\n      - strong: 历史报告\n      - generic: →\n  - heading \"今日其他安排\" [level=2]\n  - generic: 2 项\n  - button \"08:00 苯磺酸氨氯地平片 已服用\":\n    - time: 08:00\n    - strong: 苯磺酸氨氯地平片\n    - generic: 已服用\n    - generic: ›\n  - button \"19:30 碳酸钙 D3 片 待记录\":\n    - time: 19:30\n    - strong: 碳酸钙 D3 片\n    - generic: 待记录\n    - generic: ›\n  - button \"TEST 林女士\"\n  - button \"手机录像 · 10-12\"\n  - button \"刷新\"\n- navigation \"主导航\":\n  - link \"首页\" [active]:\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [
+        {
+          "height": 206,
+          "width": 350
+        }
+      ],
+      "navVisible": true,
+      "page": "home",
+      "url": "http://127.0.0.1:18884/#home",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "home-v36-comparison",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - button \"搜索动作、计划、记录\":\n    - generic: 搜索动作、计划、记录\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - generic: 10月\n  - generic: \"2026\"\n  - generic \"本地自然周日期\":\n    - button \"2026-10-12 星期一 有训练记录\":\n      - generic: 一\n      - time: \"12\"\n    - button \"2026-10-13 星期二\":\n      - generic: 二\n      - time: \"13\"\n    - button \"2026-10-14 星期三\":\n      - generic: 三\n      - time: \"14\"\n    - button \"2026-10-15 星期四\":\n      - generic: 四\n      - time: \"15\"\n    - button \"2026-10-16 星期五\":\n      - generic: 五\n      - time: \"16\"\n    - button \"2026-10-17 星期六\":\n      - generic: 六\n      - time: \"17\"\n    - button \"2026-10-18 星期日\":\n      - generic: 日\n      - time: \"18\"\n  - region \"本周已保存训练记录\":\n    - heading \"本周训练\" [level=2]\n    - paragraph: 1 天有记录\n    - generic \"星期一 有已保存训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日安排\" [level=2]\n  - generic: 3 项安排\n  - region \"当前主要康复任务\":\n    - paragraph: 下一项 · 训练\n    - heading \"肩前屈\" [level=1]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"开始训练\":\n      - text: 开始训练\n      - generic: →\n    - generic: 03 / 04\n  - region \"常用功能\":\n    - button \"我的计划\":\n      - strong: 我的计划\n      - generic: →\n    - link \"历史报告\":\n      - /url: \"#records\"\n      - strong: 历史报告\n      - generic: →\n  - heading \"今日其他安排\" [level=2]\n  - generic: 2 项\n  - button \"08:00 苯磺酸氨氯地平片 已服用\":\n    - time: 08:00\n    - strong: 苯磺酸氨氯地平片\n    - generic: 已服用\n    - generic: ›\n  - button \"19:30 碳酸钙 D3 片 待记录\":\n    - time: 19:30\n    - strong: 碳酸钙 D3 片\n    - generic: 待记录\n    - generic: ›\n  - button \"TEST 林女士\"\n  - button \"手机录像 · 10-12\"\n  - button \"刷新\"\n- navigation \"主导航\":\n  - link \"首页\" [active]:\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 320,
+      "hero": [
+        {
+          "height": 170.6796875,
+          "width": 290
+        }
+      ],
+      "navVisible": true,
+      "page": "home",
+      "url": "http://127.0.0.1:18884/#home",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "feature-rail-scrolled",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 1 天有记录\n    - generic \"星期一 有训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 本轮 2/4 项已完成\n  - region \"当前康复任务\":\n    - generic: 下一项 · 训练\n    - heading \"肩前屈\" [level=2]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"开始训练\":\n      - text: 开始训练\n      - generic: →\n    - generic: 03 / 04\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\" [active]:\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - link \"历史记录 录像分析记录\":\n      - /url: /capture?tab=history&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 录像分析记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\"\n    - option \"录像分析\" [selected]\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 385.5,
+          "disabled": false,
+          "text": "开始训练 →",
+          "top": 341.5
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [
+        {
+          "height": 205,
+          "width": 350
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18884/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "rehab-live",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 1 天有记录\n    - generic \"星期一 有训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 本轮 2/4 项已完成\n  - region \"当前康复任务\":\n    - generic: 电脑实时 · 查看\n    - heading \"肩前屈\" [level=2]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"查看电脑计划\":\n      - text: 查看电脑计划\n      - generic: →\n    - generic: 03 / 04\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - button \"历史记录 电脑实时记录\":\n      - strong: 历史记录\n      - generic: 电脑实时记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\" [selected]\n    - option \"录像分析\"\n  - button \"刷新\"\n  - status: 在电脑端开始；手机可查看计划、安排日期。\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 385.5,
+          "disabled": false,
+          "text": "查看电脑计划 →",
+          "top": 341.5
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [
+        {
+          "height": 205,
+          "width": 350
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18884/?rehabSource=LIVE_CAMERA&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "rehab-live",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 1 天有记录\n    - generic \"星期一 有训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 本轮 2/4 项已完成\n  - region \"当前康复任务\":\n    - generic: 电脑实时 · 查看\n    - heading \"肩前屈\" [level=2]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"查看电脑计划\":\n      - text: 查看电脑计划\n      - generic: →\n    - generic: 03 / 04\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - button \"历史记录 电脑实时记录\":\n      - strong: 历史记录\n      - generic: 电脑实时记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\" [selected]\n    - option \"录像分析\"\n  - button \"刷新\"\n  - status: 在电脑端开始；手机可查看计划、安排日期。\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 326.5,
+          "disabled": false,
+          "text": "查看电脑计划 →",
+          "top": 282.5
+        }
+      ],
+      "documentWidth": 320,
+      "hero": [
+        {
+          "height": 170,
+          "width": 290
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18884/?rehabSource=LIVE_CAMERA&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "live-plan-modal",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 1 天有记录\n    - generic \"星期一 有训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 本轮 2/4 项已完成\n  - region \"当前康复任务\":\n    - generic: 电脑实时 · 查看\n    - heading \"肩前屈\" [level=2]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"查看电脑计划\":\n      - text: 查看电脑计划\n      - generic: →\n    - generic: 03 / 04\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 关节活动范围\":\n      - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 关节活动范围\n      - generic: ↗\n    - link \"历史记录 训练与评估\":\n      - /url: /capture?tab=history&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 训练与评估\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\" [selected]\n    - option \"录像分析\"\n  - button \"刷新\"\n  - status: 在电脑端开始；手机可查看计划、安排日期。\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人\n- dialog \"自动安排 · 基础活动\":\n  - heading \"自动安排 · 基础活动\" [level=2]\n  - button \"关闭\" [active]\n  - paragraph: 版本 1 · 电脑实时\n  - generic: \"1\"\n  - strong: 肩外展\n  - paragraph: 左侧 · 5 次 × 1 组\n  - text: 可准备；仍需确认本次计划与机位\n  - generic: \"2\"\n  - strong: 肩外展\n  - paragraph: 右侧 · 5 次 × 1 组\n  - text: 可准备；仍需确认本次计划与机位\n  - generic: \"3\"\n  - strong: 肩前屈\n  - paragraph: 左侧 · 5 次 × 1 组\n  - text: 可准备；仍需确认本次计划与机位\n  - generic: \"4\"\n  - strong: 肩前屈\n  - paragraph: 右侧 · 5 次 × 1 组\n  - text: 可准备；仍需确认本次计划与机位\n  - button \"安排日期\"",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 326.5,
+          "disabled": false,
+          "text": "查看电脑计划 →",
+          "top": 282.5
+        }
+      ],
+      "documentWidth": 320,
+      "hero": [
+        {
+          "height": 170,
+          "width": 290
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18884/#rehab",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "rehab-empty",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 0 天有记录\n    - generic \"星期一 暂无记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 从一次评估开始\n  - region \"当前康复任务\":\n    - generic: 电脑实时评估\n    - heading \"先做一次评估\" [level=2]\n    - paragraph: 正式评估在电脑端开始\n    - button \"查看电脑方式\":\n      - text: 查看电脑方式\n      - generic: →\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - button \"历史记录 电脑实时记录\":\n      - strong: 历史记录\n      - generic: 电脑实时记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\" [selected]\n    - option \"录像分析\"\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 326.5,
+          "disabled": false,
+          "text": "查看电脑方式 →",
+          "top": 282.5
+        }
+      ],
+      "documentWidth": 320,
+      "hero": [
+        {
+          "height": 170,
+          "width": 290
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18885/?rehabSource=LIVE_CAMERA&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "rehab-empty",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 0 天有记录\n    - generic \"星期一 暂无记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 从一次评估开始\n  - region \"当前康复任务\":\n    - generic: 电脑实时评估\n    - heading \"先做一次评估\" [level=2]\n    - paragraph: 正式评估在电脑端开始\n    - button \"查看电脑方式\":\n      - text: 查看电脑方式\n      - generic: →\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - button \"历史记录 电脑实时记录\":\n      - strong: 历史记录\n      - generic: 电脑实时记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\" [selected]\n    - option \"录像分析\"\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 385.5,
+          "disabled": false,
+          "text": "查看电脑方式 →",
+          "top": 341.5
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [
+        {
+          "height": 205,
+          "width": 350
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18885/?rehabSource=LIVE_CAMERA&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "plan-empty",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的计划\" [level=1]\n  - paragraph: 手机录像训练 · 本轮进度按已保存记录累计，日期安排请回到安康康复页。\n  - button \"康复动作库\"\n  - button \"身体汇总\"\n  - button \"训练记录\"\n  - heading \"从一次评估开始\" [level=2]\n  - paragraph: 完成动作评估后，自动生成本轮训练建议。\n  - button \"开始评估\"",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18885/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "plan",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "history-empty",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- main:\n  - button \"‹ 返回康复\"\n  - heading \"我的活动记录\" [level=1]\n  - button \"全部\"\n  - button \"康复\"\n  - button \"健身\"\n  - heading \"还没有康复记录\" [level=3]\n  - paragraph:\n    - text: 上传一次动作录像后，结果会保存在这里。\n    - text: 记录仅在当前浏览器账号下显示。\n  - button \"去做一次评估\"",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "url": "http://127.0.0.1:18885/capture?tab=plan&rehabSource=REPLAY_FILE&rehabDay=2026-10-12",
+      "view": "history",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "rehab-offline",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 尚未读取\n    - generic \"星期一 尚未读取\":\n      - generic: 一\n    - generic \"星期二 尚未读取\":\n      - generic: 二\n    - generic \"星期三 尚未读取\":\n      - generic: 三\n    - generic \"星期四 尚未读取\":\n      - generic: 四\n    - generic \"星期五 尚未读取\":\n      - generic: 五\n    - generic \"星期六 尚未读取\":\n      - generic: 六\n    - generic \"星期日 尚未读取\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 任务暂未读取\n  - region \"当前康复任务\":\n    - generic: 连接中断\n    - heading \"暂时无法读取\" [level=2]\n    - paragraph: 确认电脑开启、同一 Wi-Fi\n    - button \"重新连接\":\n      - text: 重新连接\n      - generic: →\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - link \"历史记录 录像分析记录\":\n      - /url: /capture?tab=history&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 录像分析记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": 我的档案\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\"\n    - option \"录像分析\" [selected]\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 385.5,
+          "disabled": false,
+          "text": "重新连接 →",
+          "top": 341.5
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [
+        {
+          "height": 205,
+          "width": 350
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18885/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "rehab-offline",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 尚未读取\n    - generic \"星期一 尚未读取\":\n      - generic: 一\n    - generic \"星期二 尚未读取\":\n      - generic: 二\n    - generic \"星期三 尚未读取\":\n      - generic: 三\n    - generic \"星期四 尚未读取\":\n      - generic: 四\n    - generic \"星期五 尚未读取\":\n      - generic: 五\n    - generic \"星期六 尚未读取\":\n      - generic: 六\n    - generic \"星期日 尚未读取\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 任务暂未读取\n  - region \"当前康复任务\":\n    - generic: 连接中断\n    - heading \"暂时无法读取\" [level=2]\n    - paragraph: 确认电脑开启、同一 Wi-Fi\n    - button \"重新连接\":\n      - text: 重新连接\n      - generic: →\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - link \"历史记录 录像分析记录\":\n      - /url: /capture?tab=history&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 录像分析记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": 我的档案\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\"\n    - option \"录像分析\" [selected]\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 326.5,
+          "disabled": false,
+          "text": "重新连接 →",
+          "top": 282.5
+        }
+      ],
+      "documentWidth": 320,
+      "hero": [
+        {
+          "height": 170,
+          "width": 290
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18885/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "schedule-form",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 1 天有记录\n    - generic \"星期一 有训练记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 本轮 2/4 项已完成\n  - region \"当前康复任务\":\n    - generic: 电脑实时 · 查看\n    - heading \"肩前屈\" [level=2]\n    - paragraph: 09:00 · 本人左侧 · 5次×1组\n    - button \"查看电脑计划\":\n      - text: 查看电脑计划\n      - generic: →\n    - generic: 03 / 04\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 关节活动范围\":\n      - /url: /capture?tab=assess&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 关节活动范围\n      - generic: ↗\n    - link \"历史记录 训练与评估\":\n      - /url: /capture?tab=history&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 训练与评估\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=LIVE_CAMERA&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\" [selected]\n    - option \"录像分析\"\n  - button \"刷新\"\n  - status: 在电脑端开始；手机可查看计划、安排日期。\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人\n- dialog \"安排训练日期\":\n  - heading \"安排训练日期\" [level=2]\n  - button \"关闭\"\n  - paragraph: 自动安排 · 基础活动\n  - text: 日期\n  - textbox \"日期\": 2026-10-12\n  - text: 时间\n  - textbox \"时间\": 09:00\n  - button \"保存安排\"",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 385.5,
+          "disabled": false,
+          "text": "查看电脑计划 →",
+          "top": 341.5
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [
+        {
+          "height": 205,
+          "width": 350
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18884/#rehab",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "live-history",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - button \"返回康复\": ‹\n  - heading \"历史记录\" [level=1]\n  - paragraph: 电脑实时 · 已保存摘要；完整报告请在电脑端查看。\n  - button \"肩外展 · 本人右侧 10月12日 13:17 · 康复训练 已结束 ›\":\n    - strong: 肩外展 · 本人右侧\n    - generic: 10月12日 13:17 · 康复训练\n    - generic: 已结束 ›\n  - button \"肩外展 · 本人左侧 10月12日 13:09 · 康复训练 已结束 ›\":\n    - strong: 肩外展 · 本人左侧\n    - generic: 10月12日 13:09 · 康复训练\n    - generic: 已结束 ›\n  - button \"肩前屈 · 本人右侧 10月11日 13:07 · 康复评估 有评估依据 ›\":\n    - strong: 肩前屈 · 本人右侧\n    - generic: 10月11日 13:07 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩前屈 · 本人左侧 10月11日 13:06 · 康复评估 有评估依据 ›\":\n    - strong: 肩前屈 · 本人左侧\n    - generic: 10月11日 13:06 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩外展 · 本人右侧 10月11日 13:05 · 康复评估 有评估依据 ›\":\n    - strong: 肩外展 · 本人右侧\n    - generic: 10月11日 13:05 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩外展 · 本人左侧 10月11日 13:04 · 康复评估 有评估依据 ›\":\n    - strong: 肩外展 · 本人左侧\n    - generic: 10月11日 13:04 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"腕伸展 · 本人左侧 10月7日 12:52 · 康复评估 有评估依据 ›\":\n    - strong: 腕伸展 · 本人左侧\n    - generic: 10月7日 12:52 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"头颈前屈观察 · 本人左侧 10月7日 12:51 · 康复评估 有评估依据 ›\":\n    - strong: 头颈前屈观察 · 本人左侧\n    - generic: 10月7日 12:51 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"踝背屈 · 本人右侧 10月7日 12:50 · 康复评估 有评估依据 ›\":\n    - strong: 踝背屈 · 本人右侧\n    - generic: 10月7日 12:50 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"踝背屈 · 本人左侧 10月7日 12:49 · 康复评估 有评估依据 ›\":\n    - strong: 踝背屈 · 本人左侧\n    - generic: 10月7日 12:49 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"髋屈曲 · 本人右侧 10月7日 12:48 · 康复评估 有评估依据 ›\":\n    - strong: 髋屈曲 · 本人右侧\n    - generic: 10月7日 12:48 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"髋屈曲 · 本人左侧 10月7日 12:47 · 康复评估 有评估依据 ›\":\n    - strong: 髋屈曲 · 本人左侧\n    - generic: 10月7日 12:47 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"坐位膝屈伸 · 本人右侧 10月7日 12:46 · 康复评估 有评估依据 ›\":\n    - strong: 坐位膝屈伸 · 本人右侧\n    - generic: 10月7日 12:46 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"坐位膝屈伸 · 本人左侧 10月7日 12:45 · 康复评估 有评估依据 ›\":\n    - strong: 坐位膝屈伸 · 本人左侧\n    - generic: 10月7日 12:45 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肘屈伸 · 本人右侧 10月7日 12:44 · 康复评估 有评估依据 ›\":\n    - strong: 肘屈伸 · 本人右侧\n    - generic: 10月7日 12:44 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肘屈伸 · 本人左侧 10月7日 12:43 · 康复评估 有评估依据 ›\":\n    - strong: 肘屈伸 · 本人左侧\n    - generic: 10月7日 12:43 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩前屈 · 本人右侧 10月7日 12:42 · 康复评估 有评估依据 ›\":\n    - strong: 肩前屈 · 本人右侧\n    - generic: 10月7日 12:42 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩前屈 · 本人左侧 10月7日 12:41 · 康复评估 有评估依据 ›\":\n    - strong: 肩前屈 · 本人左侧\n    - generic: 10月7日 12:41 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩外展 · 本人右侧 10月7日 12:40 · 康复评估 有评估依据 ›\":\n    - strong: 肩外展 · 本人右侧\n    - generic: 10月7日 12:40 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩外展 · 本人左侧 10月7日 12:39 · 康复评估 有评估依据 ›\":\n    - strong: 肩外展 · 本人左侧\n    - generic: 10月7日 12:39 · 康复评估\n    - generic: 有评估依据 ›",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 320,
+      "hero": [],
+      "navVisible": false,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18884/?rehabSource=LIVE_CAMERA&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  },
+  {
+    "name": "live-record-summary",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - button \"返回康复\": ‹\n  - heading \"历史记录\" [level=1]\n  - paragraph: 电脑实时 · 已保存摘要；完整报告请在电脑端查看。\n  - button \"肩外展 · 本人右侧 10月12日 13:17 · 康复训练 已结束 ›\":\n    - strong: 肩外展 · 本人右侧\n    - generic: 10月12日 13:17 · 康复训练\n    - generic: 已结束 ›\n  - button \"肩外展 · 本人左侧 10月12日 13:09 · 康复训练 已结束 ›\":\n    - strong: 肩外展 · 本人左侧\n    - generic: 10月12日 13:09 · 康复训练\n    - generic: 已结束 ›\n  - button \"肩前屈 · 本人右侧 10月11日 13:07 · 康复评估 有评估依据 ›\":\n    - strong: 肩前屈 · 本人右侧\n    - generic: 10月11日 13:07 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩前屈 · 本人左侧 10月11日 13:06 · 康复评估 有评估依据 ›\":\n    - strong: 肩前屈 · 本人左侧\n    - generic: 10月11日 13:06 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩外展 · 本人右侧 10月11日 13:05 · 康复评估 有评估依据 ›\":\n    - strong: 肩外展 · 本人右侧\n    - generic: 10月11日 13:05 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩外展 · 本人左侧 10月11日 13:04 · 康复评估 有评估依据 ›\":\n    - strong: 肩外展 · 本人左侧\n    - generic: 10月11日 13:04 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"腕伸展 · 本人左侧 10月7日 12:52 · 康复评估 有评估依据 ›\":\n    - strong: 腕伸展 · 本人左侧\n    - generic: 10月7日 12:52 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"头颈前屈观察 · 本人左侧 10月7日 12:51 · 康复评估 有评估依据 ›\":\n    - strong: 头颈前屈观察 · 本人左侧\n    - generic: 10月7日 12:51 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"踝背屈 · 本人右侧 10月7日 12:50 · 康复评估 有评估依据 ›\":\n    - strong: 踝背屈 · 本人右侧\n    - generic: 10月7日 12:50 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"踝背屈 · 本人左侧 10月7日 12:49 · 康复评估 有评估依据 ›\":\n    - strong: 踝背屈 · 本人左侧\n    - generic: 10月7日 12:49 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"髋屈曲 · 本人右侧 10月7日 12:48 · 康复评估 有评估依据 ›\":\n    - strong: 髋屈曲 · 本人右侧\n    - generic: 10月7日 12:48 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"髋屈曲 · 本人左侧 10月7日 12:47 · 康复评估 有评估依据 ›\":\n    - strong: 髋屈曲 · 本人左侧\n    - generic: 10月7日 12:47 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"坐位膝屈伸 · 本人右侧 10月7日 12:46 · 康复评估 有评估依据 ›\":\n    - strong: 坐位膝屈伸 · 本人右侧\n    - generic: 10月7日 12:46 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"坐位膝屈伸 · 本人左侧 10月7日 12:45 · 康复评估 有评估依据 ›\":\n    - strong: 坐位膝屈伸 · 本人左侧\n    - generic: 10月7日 12:45 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肘屈伸 · 本人右侧 10月7日 12:44 · 康复评估 有评估依据 ›\":\n    - strong: 肘屈伸 · 本人右侧\n    - generic: 10月7日 12:44 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肘屈伸 · 本人左侧 10月7日 12:43 · 康复评估 有评估依据 ›\":\n    - strong: 肘屈伸 · 本人左侧\n    - generic: 10月7日 12:43 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩前屈 · 本人右侧 10月7日 12:42 · 康复评估 有评估依据 ›\":\n    - strong: 肩前屈 · 本人右侧\n    - generic: 10月7日 12:42 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩前屈 · 本人左侧 10月7日 12:41 · 康复评估 有评估依据 ›\":\n    - strong: 肩前屈 · 本人左侧\n    - generic: 10月7日 12:41 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩外展 · 本人右侧 10月7日 12:40 · 康复评估 有评估依据 ›\":\n    - strong: 肩外展 · 本人右侧\n    - generic: 10月7日 12:40 · 康复评估\n    - generic: 有评估依据 ›\n  - button \"肩外展 · 本人左侧 10月7日 12:39 · 康复评估 有评估依据 ›\":\n    - strong: 肩外展 · 本人左侧\n    - generic: 10月7日 12:39 · 康复评估\n    - generic: 有评估依据 ›\n- dialog \"已保存记录摘要\":\n  - heading \"已保存记录摘要\" [level=2]\n  - button \"关闭\" [active]\n  - paragraph: 肩外展 · 本人右侧\n  - paragraph: 10月12日 13:17 · 电脑实时\n  - paragraph: 完整动作：5 次\n  - paragraph: 计划次数：已达标\n  - paragraph: 疼痛 0 / 10 · 疲劳 3 / 10\n  - paragraph: 只读摘要，完整报告及原始附件请在电脑端查看。",
+    "metrics": {
+      "actions": [],
+      "documentWidth": 390,
+      "hero": [],
+      "navVisible": false,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18884/?rehabSource=LIVE_CAMERA&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "rehab-empty-replay",
+    "dimensions": {
+      "width": 390,
+      "height": 844
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 0 天有记录\n    - generic \"星期一 暂无记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 从一次评估开始\n  - region \"当前康复任务\":\n    - generic: 首次评估\n    - heading \"先做一次评估\" [level=2]\n    - paragraph: 手机录像评估\n    - button \"开始评估\":\n      - text: 开始评估\n      - generic: →\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - link \"历史记录 录像分析记录\":\n      - /url: /capture?tab=history&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 录像分析记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\"\n    - option \"录像分析\" [selected]\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 385.5,
+          "disabled": false,
+          "text": "开始评估 →",
+          "top": 341.5
+        }
+      ],
+      "documentWidth": 390,
+      "hero": [
+        {
+          "height": 205,
+          "width": 350
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18885/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "name": "rehab-empty-replay",
+    "dimensions": {
+      "width": 320,
+      "height": 700
+    },
+    "dom": "- link \"跳到正文\":\n  - /url: \"#content\"\n- main:\n  - link \"搜索动作\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - text: 搜索动作\n  - link \"AI 康复管家\":\n    - /url: \"#assistant\"\n    - text: AI\n  - region \"本周已保存训练记录\":\n    - strong: 本周训练\n    - generic: 0 天有记录\n    - generic \"星期一 暂无记录\":\n      - generic: 一\n    - generic \"星期二 暂无记录\":\n      - generic: 二\n    - generic \"星期三 暂无记录\":\n      - generic: 三\n    - generic \"星期四 暂无记录\":\n      - generic: 四\n    - generic \"星期五 暂无记录\":\n      - generic: 五\n    - generic \"星期六 暂无记录\":\n      - generic: 六\n    - generic \"星期日 暂无记录\":\n      - generic: 日\n  - heading \"今日康复\" [level=1]\n  - generic: 从一次评估开始\n  - region \"当前康复任务\":\n    - generic: 首次评估\n    - heading \"先做一次评估\" [level=2]\n    - paragraph: 手机录像评估\n    - button \"开始评估\":\n      - text: 开始评估\n      - generic: →\n  - button \"我的计划 →\":\n    - strong: 我的计划\n    - generic: →\n  - link \"动作库 →\":\n    - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n    - strong: 动作库\n    - generic: →\n  - heading \"其他功能\" [level=2]\n  - region \"其他功能，横向滑动浏览\":\n    - link \"活动度评估 手机录像分析\":\n      - /url: /capture?tab=assess&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 活动度评估\n      - generic: 手机录像分析\n      - generic: ↗\n    - link \"历史记录 录像分析记录\":\n      - /url: /capture?tab=history&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 历史记录\n      - generic: 录像分析记录\n      - generic: ↗\n    - link \"实时指导 不计正式进度\":\n      - /url: /capture?tab=assess&guide=1&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 实时指导\n      - generic: 不计正式进度\n      - generic: ↗\n    - link \"电脑端训练 查看设备能力\":\n      - /url: /capture?tab=more&tool=computer&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 电脑端训练\n      - generic: 查看设备能力\n      - generic: ↗\n    - link \"健身 · 体态 辅助功能\":\n      - /url: /capture?tab=assess&tool=extras&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 健身 · 体态\n      - generic: 辅助功能\n      - generic: ↗\n    - link \"身体汇总 报告与随访\":\n      - /url: /capture?tab=assess&tool=body&rehabSource=REPLAY_FILE&rehabDay=2026-10-12\n      - strong: 身体汇总\n      - generic: 报告与随访\n      - generic: ↗\n  - generic \"当前档案\": TEST 林女士\n  - text: 记录来源\n  - combobox \"记录来源\":\n    - option \"电脑实时\"\n    - option \"录像分析\" [selected]\n  - button \"刷新\"\n  - generic \"日期安排与全部计划\"\n- navigation \"主导航\":\n  - link \"首页\":\n    - /url: \"#home\"\n    - generic: 首页\n  - link \"康复\":\n    - /url: \"#rehab\"\n    - generic: 康复\n  - link \"健康\":\n    - /url: \"#health\"\n    - generic: 健康\n  - link \"用药\":\n    - /url: \"#medication\"\n    - generic: 用药\n  - link \"家人\":\n    - /url: \"#family\"\n    - generic: 家人",
+    "metrics": {
+      "actions": [
+        {
+          "bottom": 326.5,
+          "disabled": false,
+          "text": "开始评估 →",
+          "top": 282.5
+        }
+      ],
+      "documentWidth": 320,
+      "hero": [
+        {
+          "height": 170,
+          "width": 290
+        }
+      ],
+      "navVisible": true,
+      "page": "rehab",
+      "url": "http://127.0.0.1:18885/?rehabSource=REPLAY_FILE&rehabDay=2026-10-12#rehab",
+      "viewport": {
+        "height": 700,
+        "width": 320
+      }
+    }
+  }
+]
