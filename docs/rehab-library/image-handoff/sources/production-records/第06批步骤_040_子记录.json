@@ -1,0 +1,154 @@
+{
+  "batch": "第06批",
+  "date": "2026-10-14",
+  "action_id": "E-AXU-007",
+  "action_number": "040",
+  "tool_mode": "built-in image_gen",
+  "skill": "C:/Users/Administrator/.codex/skills/.system/imagegen/SKILL.md",
+  "specification": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md#action-040",
+  "identity_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "final_paths": {
+    "s01": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s01_v2.png",
+    "s02": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s02.png",
+    "s03": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s03.png"
+  },
+  "entries": [
+    {
+      "step": "s01",
+      "target_pose": "正面中立坐稳，双脚踩地，两手自然沿椅边下垂。",
+      "prompt": "Use case: identity-preserve. Asset type: rehabilitation demonstration photograph 040_E-AXU-007_s01 neutral seated pose revision. Image 1 is the EDIT TARGET, the accepted left-side-bending sitting photograph; Image 2 is supporting reference of this same woman's neutral upper trunk and face. Return ONLY image1's upper trunk, head, shoulders and arms from its lateral bend to upright neutral sitting, using image2's neutral trunk/head arrangement. Keep image1's exact portrait 1024x1536 canvas, camera, background, woman identity, hair, white shirt, gray pants, BARE feet, gray chair and metal legs. CRITICAL LOWER-HALF LOCK: keep everything below image1's waist, approximately y=760, at exactly its current pixel positions and proportions. Both hips and thighs, knees pointing forward, shins, feet, toes, seat, chair legs, floor baseline, lighting/shadows and framing must not shift, resize or change. Both buttocks stay evenly in contact with the level seat. The only pose change: straighten the upper trunk to neutral, head centered above pelvis, shoulders level, chest facing camera, both arms relaxed straight downward naturally along the sides of chair, both hands the same height below seat-edge level and visible, without gripping. No twisting, lean, new shoes, new props, text, arrows, collage, body crop or camera/frame movement. One single photo.",
+      "references": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s02.png",
+          "role": "edit target, retain chair/feet/lower body"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s01.png",
+          "role": "supporting neutral upper-body identity reference"
+        }
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-27a4-7801-bde9-7a29cf244da7/exec-ece87dbc-ef39-41f4-bf67-c896d04bf04b.png",
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s01_v2.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s01_v2.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "C7531CDE28CEE8ED24FFAAD9DD62F0D6AB1EF677656FE0558928D4F1341C44A0",
+      "bytes": 1636012,
+      "reused": false,
+      "review": {
+        "status": "passed",
+        "actual_view_image_review": true,
+        "identity_clothing_background": "同一女性脸型、黑色马尾、白T、深灰裤；灰蓝背景、柔和棚拍光线；本组赤足一致。",
+        "anatomy_visibility": "头、双手、双足、椅腿及支撑接触完整；肢体比例与关节连续。",
+        "pelvis_support": "两侧臀部均接触水平椅面，骨盆留在中间；双膝朝前、双脚稳定接地。",
+        "equipment_camera": "同一不转动无扶手灰色椅、银色腿、正面机位；最终s01_v2与s02/s03的座面、椅脚和足底基准经目视对齐。",
+        "pose": "上身中立、肩平、头居中，双手自然下垂；胸口无转动。"
+      }
+    },
+    {
+      "step": "s02",
+      "target_pose": "人物自身左侧屈（画面右），左手沿椅边自然下移，骨盆留椅面。",
+      "prompt": "Use case: identity-preserve. Asset type: single photographic rehab assessment step 040_E-AXU-007_s02. Image 1 is the EDIT TARGET, the frontal seated neutral baseline. Keep exactly the same woman, face, ponytail, white T-shirt, charcoal pants, BARE feet, gray upholstered stationary armless chair, silver legs, soft light, gray-blue seamless background, camera position, focal length, framing, scale and 1024x1536 portrait canvas. Change ONLY the upper-body posture from neutral to a gentle SEATED LATERAL SIDE-BEND toward the woman's own LEFT, which is the RIGHT SIDE OF THE IMAGE. Her upper trunk and head shift and tilt about 15 degrees toward image right with left shoulder (image right shoulder) lowering, and her own LEFT relaxed arm and hand slide naturally lower downward along the outside edge of the chair on IMAGE RIGHT. Her own right arm, image left, hangs relaxed and becomes slightly higher. It must look like a modest comfortable lateral curve through upper trunk, not a rigid entire body lean or just neck tilt. Both buttocks and both sitting bones stay firmly on the level chair seat, pelvis level and centered exactly where it is; no lifting either hip. The chair, hips, both thighs, forward-facing knees, lower legs, both bare feet and their exact floor contacts stay unchanged from input. No chest, pelvis, head or chair rotation: she remains facing camera. No forward bend, back arch, one hip raise, arms raised, crossing legs, changing chair, cropped body, text, arrows or collage. Preserve complete head, hands, feet and seat contact regions. Output ONE photograph only.",
+      "references": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s01.png",
+          "role": "edit target"
+        }
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-27a4-7801-bde9-7a29cf244da7/exec-2061efaa-1309-4518-aeb6-54d182f1163e.png",
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s02.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s02.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "3349EBE4629902D488B50F276F5C2E5B6B0CD13049C7DB7521254BE8FB447DDC",
+      "bytes": 1640429,
+      "reused": false,
+      "review": {
+        "status": "passed",
+        "actual_view_image_review": true,
+        "identity_clothing_background": "同一女性脸型、黑色马尾、白T、深灰裤；灰蓝背景、柔和棚拍光线；本组赤足一致。",
+        "anatomy_visibility": "头、双手、双足、椅腿及支撑接触完整；肢体比例与关节连续。",
+        "pelvis_support": "两侧臀部均接触水平椅面，骨盆留在中间；双膝朝前、双脚稳定接地。",
+        "equipment_camera": "同一不转动无扶手灰色椅、银色腿、正面机位；最终s01_v2与s02/s03的座面、椅脚和足底基准经目视对齐。",
+        "pose": "左侧屈方向明确；左肩/左手下降、上身在正面侧弯，胸口未转；两臀均有椅面支持。"
+      }
+    },
+    {
+      "step": "s03",
+      "target_pose": "人物自身右侧屈（画面左），右手沿椅边自然下移，双脚仍踩地。",
+      "prompt": "Use case: identity-preserve. Asset type: single photographic rehab assessment step 040_E-AXU-007_s03. Image 1 is the EDIT TARGET, the neutral frontal seated baseline. Keep exactly the same woman, face, ponytail, white T-shirt, charcoal pants, BARE feet, gray upholstered stationary armless chair, silver legs, light, gray-blue backdrop, camera position, focal length, framing and scale, and exact 1024x1536 portrait canvas. Change ONLY the torso, shoulders, neck/head and arms to a gentle SEATED LATERAL SIDE-BEND toward the woman's own RIGHT, which is the LEFT SIDE OF THE IMAGE. Her upper trunk and head shift and tilt about 15 degrees toward IMAGE LEFT with right shoulder (image left shoulder) lowering. Her own RIGHT relaxed hand slides naturally lower downward along the chair's outside edge on IMAGE LEFT, whilst her own left arm (image right) hangs relaxed and is slightly higher. Make a modest comfortable side-curve through the upper trunk, no rotation and no simple neck-only tilt. Both buttocks and both sitting bones remain firmly contacting the same level seat; pelvis level and stays centered. The entire lower half must keep the original positions: unchanged level hips, thighs, forward-facing knees, shins, both feet and exact floor support. Preserve seat at original baseline height and chair legs at exactly same pixel locations; do not move, resize, shorten or reframe the person/chair. Chest, head and pelvis face directly toward the camera. No forward bend, backward arch, raised hip, crossed legs, arm raising, chair change, clothing change, shoes, anatomical deformity, cropping, text, arrows or collage. Complete head, both hands, both feet, chair legs and hip-seat contacts all visible. Output ONE photograph only.",
+      "references": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s01.png",
+          "role": "edit target"
+        }
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-27a4-7801-bde9-7a29cf244da7/exec-f52c7dea-dee4-4eea-bb49-89bd38bc9f45.png",
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s03.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s03.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "48FD0D6F7435277D073370B767B3BB3AFB546290ED082B40300CFBA07FBD19CD",
+      "bytes": 1666956,
+      "reused": false,
+      "review": {
+        "status": "passed",
+        "actual_view_image_review": true,
+        "identity_clothing_background": "同一女性脸型、黑色马尾、白T、深灰裤；灰蓝背景、柔和棚拍光线；本组赤足一致。",
+        "anatomy_visibility": "头、双手、双足、椅腿及支撑接触完整；肢体比例与关节连续。",
+        "pelvis_support": "两侧臀部均接触水平椅面，骨盆留在中间；双膝朝前、双脚稳定接地。",
+        "equipment_camera": "同一不转动无扶手灰色椅、银色腿、正面机位；最终s01_v2与s02/s03的座面、椅脚和足底基准经目视对齐。",
+        "pose": "右侧屈方向明确，与s02相反；右肩/右手下降，胸口未转；两臀保持椅面支持。"
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "step": "s01",
+      "attempt": 1,
+      "status": "superseded",
+      "prompt": "Use case: scientific-educational. Asset type: one standalone rehabilitation assessment demonstration photograph, 040_E-AXU-007_s01, neutral seated starting position. Input images 1,2,3 are reference images only for the EXACT same adult Chinese woman, facial identity, age, skin, body proportions, black ponytail, plain white short-sleeve T-shirt and charcoal dark gray long pants, photography and gray-blue background. Generate ONE single full-body photograph, portrait format (prefer 1024 x 1536), no collage. Scene: seamless gray-blue studio backdrop and floor, soft studio light and natural grounding shadows. Camera: direct straight-on frontal view, camera level near abdomen, natural portrait lens without perspective distortion; she and chair face directly forward, centered with generous border, complete head, both hands, both bare feet, all support contacts and chair legs inside frame. Pose: the woman sits upright neutrally and steadily near the front of a stable stationary armless chair with a simple gray padded seat and slender metal frame, no wheels, no swivel. Both sitting bones and both sides of buttocks remain firmly contacting the level seat. Hips and knees around 90 degrees; thighs level; knees pointing forward, feet hip width, both soles and heels flat on the floor, relaxed toes. Both arms hang naturally alongside the sides of the chair, elbows nearly straight and fingers relaxed, each hand visible below seat-edge level; hands neither grip nor rest atop seat. Chest and pelvis face the camera, shoulders level, spine neutral, head balanced upright, eyes forward. Keep natural reference body proportions. No leaning, bending, twisting, slouching, shrugging, raised arms, crossed arms, new objects, text, numbers, arrows, watermark, anatomical overlays. The chair seat remains visible at both sides of hips so the buttock-seat contacts are understandable.",
+      "references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-27a4-7801-bde9-7a29cf244da7/exec-047e5c0c-070c-4313-8dcc-826cd06980a7.png",
+      "saved_path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s01.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s01.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "8EBF54CD63C6F260B30F22DCD457FC73F2653C615F5F0DDDCB163F407B9AF992",
+      "bytes": 1725736,
+      "actual_view_image_review": true,
+      "reason": "姿势正确；但后续侧屈图组的座面/足底比此基准约上移30像素。为统一构图，用s02仅回中立生成s01_v2。保留初次文件，不覆盖。"
+    },
+    {
+      "step": "s02",
+      "attempt": 1,
+      "status": "selected",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-27a4-7801-bde9-7a29cf244da7/exec-2061efaa-1309-4518-aeb6-54d182f1163e.png",
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s02.png"
+    },
+    {
+      "step": "s03",
+      "attempt": 1,
+      "status": "selected",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-27a4-7801-bde9-7a29cf244da7/exec-f52c7dea-dee4-4eea-bb49-89bd38bc9f45.png",
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s03.png"
+    },
+    {
+      "step": "s01",
+      "attempt": 2,
+      "status": "selected",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-27a4-7801-bde9-7a29cf244da7/exec-ece87dbc-ef39-41f4-bf67-c896d04bf04b.png",
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/040_E-AXU-007_s01_v2.png"
+    }
+  ],
+  "failed_generation_calls": [],
+  "review_status": "3 final steps passed actual visual inspection; first neutral image retained as superseded."
+}

@@ -1,0 +1,218 @@
+{
+  "images": [
+    {
+      "sequence": 48,
+      "id": "E-AXU-012",
+      "name": "肩主动前举/后伸活动筛查",
+      "step": 1,
+      "filename": "048_E-AXU-012_s01.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/048_E-AXU-012_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-9315e20a-929c-4a6e-a057-4d3c37dd9792.png",
+      "prompt": "Use case: identity-preserve. Edit target: image 1 (048 E-AXU-012 base, side-profile woman facing image RIGHT, current shoulder-height forward arm). Images 2, 3, 4 are strict identity/clothing/gray-blue photographic style references.\nCreate step01 of the same shoulder active flexion/extension screening sequence. CHANGE ONLY THE NEAR-CAMERA TESTING ARM: move the arm that is currently extended forward down so it rests naturally vertically beside her hip, elbow comfortably straight, wrist neutral and fingers relaxed. The hand reaches beside the same-side thigh. The other arm remains relaxed downward in precisely its current placement. Two real arms only; no duplicate forearm, no ghost of the former arm, no hand remaining in front.\nKeep absolutely fixed: same woman face, ponytail, expression, upright chest, shoulder location without shrug, head angle and gaze facing imageRIGHT, torso and hips, legs and their implied foot placement, camera position, side profile, crop from full head through upper legs, subject scale and pixel composition. Do not shift/resize/rotate the person, do not extend the crop to feet. Preserve white fitted short sleeve T-shirt, charcoal pants, original normal human proportions, identical softly mottled gray-blue backdrop, natural photo detail and light. Same 1122x1402 portrait dimensions.\nThe resulting single still is an upright neutral standing start position with both arms down; the near arm must be entirely visible from shoulder to fingers. No props, text, arrows, labels, watermark, numbers, montage or split panels.",
+      "target_pose": "朝右侧面直立，近镜头测试臂自然下垂肘伸展，另一臂自然下垂，完整肩肘腕手可见。",
+      "visual_review": {
+        "status": "accepted",
+        "pose": "测试臂下垂符合起始位，两臂无重复；原基准脸、躯干位置、裁切与近似人物尺度保持，测试肩放松。",
+        "group_consistency": "由s02基准编辑，保留相机、身体位置、朝右方向、背景和构图；仅测试臂与随动作必然改变的袖形发生变化。",
+        "framing": "上身至大腿构图沿用s02。"
+      },
+      "reused": false,
+      "reuse_source": null,
+      "status": "completed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1617251,
+      "sha256": "768BE1D76477D8FF0370161B0160ACD0593ED0A448C755D1723C7F2E0E3A84FA"
+    },
+    {
+      "sequence": 48,
+      "id": "E-AXU-012",
+      "name": "肩主动前举/后伸活动筛查",
+      "step": 2,
+      "filename": "048_E-AXU-012_s02.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/048_E-AXU-012_s02.png",
+      "source_path": "E:/git冲突问题/rehab image/assess/048_E-AXU-012_肩主动前举／后伸活动筛查.png",
+      "prompt": "复用已存在的048_E-AXU-012_肩主动前举／后伸活动筛查.png，不重新生成；侧面朝右、近镜头测试臂肩高前举符合步骤02，作为本组固定构图编辑基准。",
+      "target_pose": "侧面向右站直，近镜头测试臂自然直肘前举约肩高，另一臂自然下垂，肩肘腕手完整入镜。",
+      "visual_review": {
+        "status": "accepted",
+        "pose": "前举方向为imageRIGHT；躯干未明显后仰，肩未耸起，另一臂下垂，完整测试手臂可见。",
+        "group_consistency": "本帧作为048固定机位、人物尺度、上身至大腿构图基准；起点及后伸由此编辑，仅变测试臂。",
+        "framing": "沿用源图上身至大腿构图，未包含双鞋。"
+      },
+      "reused": true,
+      "reuse_source": "E:/git冲突问题/rehab image/assess/048_E-AXU-012_肩主动前举／后伸活动筛查.png",
+      "status": "completed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1668831,
+      "sha256": "11EDB7D1629D9B1D8BD14A59F75D34BBC8E9A1B78C93653A210D87AA98801901"
+    },
+    {
+      "sequence": 48,
+      "id": "E-AXU-012",
+      "name": "肩主动前举/后伸活动筛查",
+      "step": 3,
+      "filename": "048_E-AXU-012_s03.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/048_E-AXU-012_s03.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-901574b0-8fa4-4584-a436-8c64d3ab91ca.png",
+      "prompt": "Use case: identity-preserve. Image1 is the exact edit target and fixed composition base for 048 E-AXU-012. Images2-4 are the same woman's identity/clothes/gray-blue photographic style references.\nCreate step03 of shoulder active forward elevation/backward extension screening. CHANGE ONLY THE NEAR-CAMERA TESTING ARM (the currently forward raised arm in image1). Put this arm in SMALL BACKWARD SHOULDER EXTENSION: shoulder remains at the exact same coordinates, elbow comfortably straight, the whole arm points DOWN AND SLIGHTLY BEHIND HER, about 20 to 25 degrees backward from vertical. Since she faces image RIGHT, behind is image LEFT. The testing hand should lie to imageLEFT of her same-side hip at upper-thigh height, visibly away from her body; the wrist neutral, fingers relaxed, palm facing naturally toward her body. The hand stays well inside the frame. Do NOT point the arm horizontally backward, do NOT exceed 30 degrees extension, and do NOT bend the elbow into a hand-on-back pose. The other arm stays precisely as in target, hanging naturally in front-side silhouette.\nKeep all other aspects unchanged and fixed: the same woman face, expression, ponytail, head gaze to imageRIGHT; upright torso, neutral spine, hip and leg pose, body position and size, exact side-view camera and crop full head through upper legs, white T-shirt, charcoal pants, normal proportions, identical soft mottled gray-blue studio backdrop and lighting. Only moving the testing arm and the minimum required sleeve shape; no body lean forward or twisting, no shrug, no reframe, no change of crop to show feet. Same 1122x1402 portrait dimensions.\nSingle coherent still, exactly two arms. No ghost of the old arm, no extra hand, props, text, labels, arrows, number, sequence panels, watermark or montage.",
+      "target_pose": "同一近镜头测试臂从身侧小幅向imageLEFT后伸约20-30度，肘自然伸直、躯干直立不前倾，另一臂下垂。",
+      "visual_review": {
+        "status": "accepted",
+        "pose": "测试臂后伸约25度，手在同侧髋后方；完整手臂可见，未出现身体前倾、背后屈肘或横向大幅后举。",
+        "group_consistency": "048三帧固定朝右侧面构图和人物位置，脸与躯干/腿及非测试臂保持一致；仅同一测试臂方向和必要袖形变化。",
+        "framing": "沿用s02上身至大腿构图。"
+      },
+      "reused": false,
+      "reuse_source": null,
+      "status": "completed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1648874,
+      "sha256": "86C63A267292E59C516C192E4C5922E0C231C1BADBADB796ADBF567DAA0D71AA"
+    },
+    {
+      "sequence": 49,
+      "id": "E-AXU-013",
+      "name": "肩主动外展/回收内收筛查",
+      "step": 1,
+      "filename": "049_E-AXU-013_s01.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/049_E-AXU-013_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-d2f0b184-4ad3-410f-8491-54f070279c5c.png",
+      "prompt": "Use case: scientific-educational. Asset: step01 for E-AXU-013 unilateral shoulder abduction/return screening, one photographic pose.\nImages1-3 are strict identity, white fitted short sleeve T-shirt, charcoal full length trousers, black low ponytail, softly mottled gray-blue backdrop and natural studio photography references. Preserve the exact same woman and normal adult body proportions. Plain white sports shoes.\nPose: stand still facing directly FORWARD to camera, chest, pelvis and face square to camera, no torso twist. Both feet hip width with whole soles planted, knees naturally straight. Both arms hang naturally beside thighs with comfortably straight elbows, neutral wrists and relaxed fingers. TEST ARM is her anatomical RIGHT ARM on image LEFT. Opposite arm on image RIGHT remains down through this group. Shoulders relaxed, neutral head, calm expression.\nCamera/composition: front view, fixed chest level camera, portrait1122x1402. Head to both shoes and hands fully visible. Slightly distant view so subsequent shoulder-height right-arm lateral abduction toward imageLEFT fits completely from shoulder to fingertips WITHOUT resizing/reframing. Place person slightly right of center with plentiful free space to imageLEFT, safe margins. Normal anatomy, realistic shoes and hands.\nScene: same soft mottled gray-blue studio background and matching floor hue, soft even light and natural textures, no furniture/equipment/helper.\nConstraints: one woman, two arms, single posture. No text/arrows/labels/numbers/watermarks/diagrams/panels/montage/ghost poses.",
+      "target_pose": "正面自然站稳，胸与骨盆朝前，两臂自然下垂；同一右测试臂在画面左侧，用于后续侧方外展。",
+      "visual_review": {
+        "status": "accepted",
+        "pose": "正面站位无扭转、完整肩肘腕手与双足入镜，右臂自然下垂；外展方向画面左侧预留足够空间。",
+        "group_consistency": "049基准帧，固定正面机位、位置及全身尺度，后续仅右测试臂外展。"
+      },
+      "reused": false,
+      "reuse_source": null,
+      "status": "completed",
+      "width": 1121,
+      "height": 1403,
+      "bytes": 1632515,
+      "sha256": "3BC1133B63735E65A19BEFF6DEE1574945C5B806EBDC460B66293C3588DC2081"
+    },
+    {
+      "sequence": 49,
+      "id": "E-AXU-013",
+      "name": "肩主动外展/回收内收筛查",
+      "step": 2,
+      "filename": "049_E-AXU-013_s02.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/049_E-AXU-013_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-f0a9c71b-e651-4680-8343-4287f1a0dcc8.png",
+      "prompt": "Use case: identity-preserve. Image1 is exact edit target and fixed front camera composition for049 E-AXU-013. Images2-4 strict identity/style/clothing references.\nCreate step02 of unilateral shoulder abduction. CHANGE ONLY HER ANATOMICAL RIGHT ARM, on imageLEFT: lift that entire right arm laterally OUT TO HER RIGHT SIDE (toward imageLEFT) to approximately90degree shoulder abduction, about shoulder height. The arm lies in the body's frontal plane and points sideways, not forward toward camera and not across chest. Elbow naturally nearly straight, wrist neutral, fingers relaxed/straight, hand orientation comfortable with palm facing downward or slightly forward. Whole shoulder-elbow-wrist-fingertips remains inside image, using existing left negative space. The other LEFT ARM on imageRIGHT stays exactly as image1, naturally hanging beside thigh.\nKeep fixed: exact same woman face/expression/ponytail and neutral head, camera front-on, chest/pelvis squarely forward, posture without trunk lean/twist, both feet/legs/shoes at precisely same coordinates, person position and scale, full-body framing and all pixel composition. Shoulder not shrugged, no overhead raise. Only moving the right arm and minimum associated sleeve changes; do not widen crop, resize person, move head or alter stance.\nSame exact white fitted short sleeve T-shirt, charcoal trousers, plain white shoes, normal adult proportions, photoreal soft studio lighting and mottled gray-blue background/floor.1122x1402 portrait.\nSingle coherent pose of one woman, exactly two arms, no remnant hanging right hand, no duplicate limbs. No text/arrows/labels/numbers/watermark/props/helper/panels/montage.",
+      "target_pose": "同一右测试臂从自然下垂向画面左侧外展至约肩高，另一臂仍垂下，胸与骨盆朝前，不越中线。",
+      "visual_review": {
+        "status": "accepted",
+        "pose": "侧方外展约肩高、完整肩肘腕手可见，未越中线、未过头，躯干朝前无扭转；另一臂下垂。",
+        "group_consistency": "049两帧同正面机位、脸/躯干/站位和鞋位置保持，人物尺度一致，仅测试右臂及必要袖形变化。"
+      },
+      "reused": false,
+      "reuse_source": null,
+      "status": "completed",
+      "width": 1121,
+      "height": 1403,
+      "bytes": 1576110,
+      "sha256": "FC11067F4851C960754234D72A1D89DFEBAAF30F7E3D6E8BC28D1DD69EBBDFE0"
+    },
+    {
+      "sequence": 50,
+      "id": "E-AXU-014",
+      "name": "肘靠身的肩主动内旋/外旋筛查",
+      "step": 1,
+      "filename": "050_E-AXU-014_s01.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/050_E-AXU-014_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-dc7af854-1e1c-45cf-a56e-ac50989d7aca.png",
+      "prompt": "Use case: scientific-educational. REVISED CAMERA for step01 E-AXU-014 active shoulder rotation with elbow at side. The three images are strict identity/clothing/photographic-style/backdrop references for the EXACT SAME woman: face, black low ponytail, white short sleeve fitted T-shirt, charcoal trousers, normal adult proportions and gray-blue natural studio photograph.\nCamera is CRITICALLY a HIGH FRONT-ABOVE CAMERA, looking steeply DOWN about50degrees toward her chest and waist. Front direction nearly square to the body, only a very small oblique offset to her anatomical RIGHT. It must clearly show the TOP of her head, shoulders and the horizontal plane of the forearm, NOT a near-eye-level photograph. Use perspective with natural proportions, no fisheye. Crop head through upper thighs, both shoulders and entire test arm visible, abundant side margin for later outward rotation. Portrait1122x1402. The woman's torso faces directly FORWARD, not sideways; head naturally looks straight ahead horizontally, not tilted upward to the camera. Keep same gray-blue background and soft realistic photo light.\nPose: testing her anatomical RIGHT ARM, imageLEFT. Its upper arm hangs vertically down firmly beside her right ribs. RIGHT ELBOW tucked against her side at waist height, comfortably bent90degrees. The forearm extends STRAIGHT FORWARD from the elbow, HORIZONTAL in the physical world, in the neutral midpoint of rotation. Because this camera is high and nearly frontal, that forward forearm must project TOWARD THE BOTTOM OF THE IMAGE, visibly extending into open space IN FRONT of the belly, NOT sideways across the belly. The hand is farther forward than her torso, thumb pointing up, wrist neutral, relaxed fingers. Upper arm remains down, elbow touching side. The other LEFT arm on imageRIGHT hangs naturally beside thigh, no assisting contact.\nKey geometry: right elbow beside waist is fixed anchor; midpoint forearm goes forward/toward viewer and down image, external rotation later goes outward toward imageLEFT, internal rotation later lies across belly toward imageRIGHT. The three directions must be readable in this high front-above projection. Do not show internal rotation already in midpoint.\nAvoid shoulder abduction, elevated elbow, forearm upward lift, forearm palm-flip instead of shoulder rotation, trunk twist, extra limbs, props, text, labels, arrows, watermark, numbers, split panels, montage or motion ghosts. One woman one still pose.",
+      "target_pose": "固定高前上方俯视，测试右肘约90度弯且靠身；前臂在肘高的物理水平面向前，手位身体前方，中间位。",
+      "visual_review": {
+        "status": "accepted",
+        "method": "完整生成结果及保存文件view_image审查，工具dataURL MIME修正为image/png显示，未修改图片像素。",
+        "pose": "肘约90度邻体侧，前臂向前投影朝画面下方；手处身体前方而非先横置腹前。",
+        "group_consistency": "050最终三帧同一高前上方机位、人物尺度、脸/躯干/非测试臂与裁切固定；同一测试臂前臂在水平面朝前/朝外/朝腹方向改变，肘点近似固定，上臂保持靠体侧；掌面保持本组舒适朝上状态，未以旋前旋后替代肩旋转。",
+        "correction": "首轮浅俯角使前伸与内转投影接近，整组重做高俯角后方向更易读；废弃原生成PNG保留原默认路径。",
+        "framing": "完整测试肩肘腕手；头至上腿构图，未包含双鞋。"
+      },
+      "reused": false,
+      "reuse_source": null,
+      "correction_prompts": [
+        "Use case: scientific-educational. REVISED CAMERA for step01 E-AXU-014 active shoulder rotation with elbow at side. The three images are strict identity/clothing/photographic-style/backdrop references for the EXACT SAME woman: face, black low ponytail, white short sleeve fitted T-shirt, charcoal trousers, normal adult proportions and gray-blue natural studio photograph.\nCamera is CRITICALLY a HIGH FRONT-ABOVE CAMERA, looking steeply DOWN about50degrees toward her chest and waist. Front direction nearly square to the body, only a very small oblique offset to her anatomical RIGHT. It must clearly show the TOP of her head, shoulders and the horizontal plane of the forearm, NOT a near-eye-level photograph. Use perspective with natural proportions, no fisheye. Crop head through upper thighs, both shoulders and entire test arm visible, abundant side margin for later outward rotation. Portrait1122x1402. The woman's torso faces directly FORWARD, not sideways; head naturally looks straight ahead horizontally, not tilted upward to the camera. Keep same gray-blue background and soft realistic photo light.\nPose: testing her anatomical RIGHT ARM, imageLEFT. Its upper arm hangs vertically down firmly beside her right ribs. RIGHT ELBOW tucked against her side at waist height, comfortably bent90degrees. The forearm extends STRAIGHT FORWARD from the elbow, HORIZONTAL in the physical world, in the neutral midpoint of rotation. Because this camera is high and nearly frontal, that forward forearm must project TOWARD THE BOTTOM OF THE IMAGE, visibly extending into open space IN FRONT of the belly, NOT sideways across the belly. The hand is farther forward than her torso, thumb pointing up, wrist neutral, relaxed fingers. Upper arm remains down, elbow touching side. The other LEFT arm on imageRIGHT hangs naturally beside thigh, no assisting contact.\nKey geometry: right elbow beside waist is fixed anchor; midpoint forearm goes forward/toward viewer and down image, external rotation later goes outward toward imageLEFT, internal rotation later lies across belly toward imageRIGHT. The three directions must be readable in this high front-above projection. Do not show internal rotation already in midpoint.\nAvoid shoulder abduction, elevated elbow, forearm upward lift, forearm palm-flip instead of shoulder rotation, trunk twist, extra limbs, props, text, labels, arrows, watermark, numbers, split panels, montage or motion ghosts. One woman one still pose."
+      ],
+      "discarded_source_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-5ac5a127-da7c-4de8-9163-ef5a0343890a.png"
+      ],
+      "status": "completed",
+      "width": 1121,
+      "height": 1403,
+      "bytes": 1718099,
+      "sha256": "0DC66FC28F6EE46B9555DAD618FF2E5F09544BDCA5B6AFEFA3D217E332D64544"
+    },
+    {
+      "sequence": 50,
+      "id": "E-AXU-014",
+      "name": "肘靠身的肩主动内旋/外旋筛查",
+      "step": 2,
+      "filename": "050_E-AXU-014_s02.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/050_E-AXU-014_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-f944f7ca-7bf4-41c6-bad9-1b3067c8aee7.png",
+      "prompt": "Use case: identity-preserve. Image1 is exact edit target050 E-AXU-014 HIGH FRONT-ABOVE midpoint. Images2-4 strict identity/clothing/backdrop references.\nMake step02 EXTERNAL SHOULDER ROTATION. Change ONLY the anatomical RIGHT testing arm direction below the shoulder. Keep upper arm vertically alongside her right ribs and RIGHT ELBOW at EXACT SAME fixed side anchor, bent about90degrees. Sweep the horizontal forearm outward toward her RIGHT SIDE, away from the body's midline. The hand should now move clearly toward IMAGE LEFT outside the torso silhouette, while remaining at SAME physical elbow-level height. Forearm extends sideways outward, not up or down. Palm orientation remains the same comfortable mostly-up orientation as image1, wrist neutral, fingers relaxed; do NOT use palm-flipping/pronation/supination as the demonstrated movement. It is a horizontal shoulder external rotation around the fixed elbow anchor.\nDO NOT lift elbow out to the side or change elbow coordinate, do not abduct upper arm, do not raise hand overhead or touch torso. Only move the forearm/hand through the horizontal plane and necessary sleeve deformation. Keep exactly the same person, face, head/gaze/expression/ponytail, chest and body stance, opposite arm dangling unchanged, white T-shirt/charcoal trousers, anatomical proportions, body position and scale.\nCRITICALLY preserve the steep elevated FRONT-ABOVE camera of image1, its crop/perspective/composition, softly mottled gray-blue background and photo light. No turning body or moving camera.1122x1402 portrait. One woman two arms single coherent still, no residual old hand or ghost arm, text/arrows/labels/numbers/watermark/props/panels/montage.",
+      "target_pose": "同一高前上方机位，测试右肘原位约90度靠身；前臂水平向右体侧外转，手到画面左侧身体外，不侧抬上臂。",
+      "visual_review": {
+        "status": "accepted",
+        "method": "完整生成结果及保存文件view_image审查，工具dataURL MIME修正为image/png显示，未修改图片像素。",
+        "pose": "肘仍靠身，前臂向外转开投影朝画面左下，手完整留于体外；无肩外展侧举或仅翻掌。",
+        "group_consistency": "050最终三帧同一高前上方机位、人物尺度、脸/躯干/非测试臂与裁切固定；同一测试臂前臂在水平面朝前/朝外/朝腹方向改变，肘点近似固定，上臂保持靠体侧；掌面保持本组舒适朝上状态，未以旋前旋后替代肩旋转。",
+        "correction": "首轮浅俯角使前伸与内转投影接近，整组重做高俯角后方向更易读；废弃原生成PNG保留原默认路径。",
+        "framing": "完整测试肩肘腕手；头至上腿构图，未包含双鞋。"
+      },
+      "reused": false,
+      "reuse_source": null,
+      "correction_prompts": [
+        "Use case: identity-preserve. Image1 is exact edit target050 E-AXU-014 HIGH FRONT-ABOVE midpoint. Images2-4 strict identity/clothing/backdrop references.\nMake step02 EXTERNAL SHOULDER ROTATION. Change ONLY the anatomical RIGHT testing arm direction below the shoulder. Keep upper arm vertically alongside her right ribs and RIGHT ELBOW at EXACT SAME fixed side anchor, bent about90degrees. Sweep the horizontal forearm outward toward her RIGHT SIDE, away from the body's midline. The hand should now move clearly toward IMAGE LEFT outside the torso silhouette, while remaining at SAME physical elbow-level height. Forearm extends sideways outward, not up or down. Palm orientation remains the same comfortable mostly-up orientation as image1, wrist neutral, fingers relaxed; do NOT use palm-flipping/pronation/supination as the demonstrated movement. It is a horizontal shoulder external rotation around the fixed elbow anchor.\nDO NOT lift elbow out to the side or change elbow coordinate, do not abduct upper arm, do not raise hand overhead or touch torso. Only move the forearm/hand through the horizontal plane and necessary sleeve deformation. Keep exactly the same person, face, head/gaze/expression/ponytail, chest and body stance, opposite arm dangling unchanged, white T-shirt/charcoal trousers, anatomical proportions, body position and scale.\nCRITICALLY preserve the steep elevated FRONT-ABOVE camera of image1, its crop/perspective/composition, softly mottled gray-blue background and photo light. No turning body or moving camera.1122x1402 portrait. One woman two arms single coherent still, no residual old hand or ghost arm, text/arrows/labels/numbers/watermark/props/panels/montage."
+      ],
+      "discarded_source_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-468a1231-a089-4eb1-9742-9cb1a04f36a6.png"
+      ],
+      "status": "completed",
+      "width": 1121,
+      "height": 1403,
+      "bytes": 1676042,
+      "sha256": "F6B93B5E8AF993948975BBE7BC0CB18748776AF1E6915BFCF9BA9126B0EB7B94"
+    },
+    {
+      "sequence": 50,
+      "id": "E-AXU-014",
+      "name": "肘靠身的肩主动内旋/外旋筛查",
+      "step": 3,
+      "filename": "050_E-AXU-014_s03.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/050_E-AXU-014_s03.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-32a7365d-9a9f-422e-ba81-fe16a160d8e7.png",
+      "prompt": "Use case: identity-preserve. Image1 is exact fixed HIGH FRONT-ABOVE camera midpoint base for050 E-AXU-014. Images2-4 same strict woman face/clothes/gray-blue realistic studio references.\nCreate step03 INTERNAL SHOULDER ROTATION. Change ONLY anatomical RIGHT testing forearm/hand direction via shoulder rotation. Keep upper arm vertical beside the right torso, shoulder at same spot, RIGHT ELBOW at EXACT same side anchor against ribs, elbow flexion90degrees. Move the horizontal forearm INWARD across the front of the lower belly toward body's midline. The right hand should now be just in front of her navel/lower abdomen near imageCENTER (not projecting toward camera/bottom image as the midpoint does). Forearm lies horizontally across the belly at the existing elbow-level physical height; right wrist neutral, relaxed fingers, same comfortable palm-up orientation as image1. Do NOT flip palm down/up as the action, do NOT move upper arm away from torso or lift the elbow. The hand need not touch fabric; tiny gap allowed. Opposite LEFT arm at imageRIGHT stays naturally hanging in exactly the same position, no pulling/pushing/assistance.\nThe high camera must make clear that the midpoint goes forward/out toward viewer while this frame goes inward/across toward abdomen. Preserve camera steep elevated front-above angle and exact crop, perspective, body size/position, head/face/expression/gaze/ponytail, torso and pelvis/leg stance, white T-shirt/charcoal trousers, natural normal proportions and identical mottled gray-blue studio backdrop/light. Only test forearm sweep and minimal sleeve change; no trunk twist/lean, no repositioning.\n1122x1402 portrait. One woman two arms one single coherent pose, no ghost of original hand, extra limbs, props, arrows, text, labels, numbers, watermark, montage or panels.",
+      "target_pose": "同一高前上方机位，测试右肘原位约90度靠身；前臂水平向腹部内转，手到腹前中央，另一手不推拉。",
+      "visual_review": {
+        "status": "accepted",
+        "method": "完整生成结果及保存文件view_image审查，工具dataURL MIME修正为image/png显示，未修改图片像素。",
+        "pose": "肘仍靠身，前臂向内横置腹前，手投影位于腹前中央；无另一手辅助，和前伸起点方向明确不同。",
+        "group_consistency": "050最终三帧同一高前上方机位、人物尺度、脸/躯干/非测试臂与裁切固定；同一测试臂前臂在水平面朝前/朝外/朝腹方向改变，肘点近似固定，上臂保持靠体侧；掌面保持本组舒适朝上状态，未以旋前旋后替代肩旋转。",
+        "correction": "首轮浅俯角使前伸与内转投影接近，整组重做高俯角后方向更易读；废弃原生成PNG保留原默认路径。",
+        "framing": "完整测试肩肘腕手；头至上腿构图，未包含双鞋。"
+      },
+      "reused": false,
+      "reuse_source": null,
+      "correction_prompts": [
+        "Use case: identity-preserve. Image1 is exact fixed HIGH FRONT-ABOVE camera midpoint base for050 E-AXU-014. Images2-4 same strict woman face/clothes/gray-blue realistic studio references.\nCreate step03 INTERNAL SHOULDER ROTATION. Change ONLY anatomical RIGHT testing forearm/hand direction via shoulder rotation. Keep upper arm vertical beside the right torso, shoulder at same spot, RIGHT ELBOW at EXACT same side anchor against ribs, elbow flexion90degrees. Move the horizontal forearm INWARD across the front of the lower belly toward body's midline. The right hand should now be just in front of her navel/lower abdomen near imageCENTER (not projecting toward camera/bottom image as the midpoint does). Forearm lies horizontally across the belly at the existing elbow-level physical height; right wrist neutral, relaxed fingers, same comfortable palm-up orientation as image1. Do NOT flip palm down/up as the action, do NOT move upper arm away from torso or lift the elbow. The hand need not touch fabric; tiny gap allowed. Opposite LEFT arm at imageRIGHT stays naturally hanging in exactly the same position, no pulling/pushing/assistance.\nThe high camera must make clear that the midpoint goes forward/out toward viewer while this frame goes inward/across toward abdomen. Preserve camera steep elevated front-above angle and exact crop, perspective, body size/position, head/face/expression/gaze/ponytail, torso and pelvis/leg stance, white T-shirt/charcoal trousers, natural normal proportions and identical mottled gray-blue studio backdrop/light. Only test forearm sweep and minimal sleeve change; no trunk twist/lean, no repositioning.\n1122x1402 portrait. One woman two arms one single coherent pose, no ghost of original hand, extra limbs, props, arrows, text, labels, numbers, watermark, montage or panels."
+      ],
+      "discarded_source_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-f7386c0d-c367-4959-b0da-02275f6946aa.png"
+      ],
+      "status": "completed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1687309,
+      "sha256": "9785DC4D4E39CAA4E8B9AF65D2FC7235B73D8750BC7BD63E28FB3C2B623EC448"
+    }
+  ]
+}

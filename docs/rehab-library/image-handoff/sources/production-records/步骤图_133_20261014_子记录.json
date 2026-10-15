@@ -1,0 +1,148 @@
+{
+  "record_version": "1.1",
+  "production_date": "2026-10-14",
+  "action_number": "133",
+  "action_id": "T-AXU-015",
+  "action_name": "死虫式：脚跟滑动到对侧伸展",
+  "selected_variant": "单侧脚跟滑动基础版",
+  "tool_mode": "built-in image_gen",
+  "reference_document": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "style_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "group_invariants": [
+    "同一女性、白色短袖、深灰色长裤、黑马尾、裸足",
+    "灰蓝背景、柔和棚光、同一灰色矩形垫",
+    "1536×1024横图；斜侧方机位在人物解剖右侧，头朝画面左，近侧腿为右腿",
+    "两图机位、垫子位置、人物尺度和照明一致",
+    "无文字、编号、箭头、拼图及水印"
+  ],
+  "sequence": "s01→s02→复用s01；重置后换脚，不新增换边图。",
+  "records": [
+    {
+      "sequence": 133,
+      "action_id": "T-AXU-015",
+      "step": "s01",
+      "version": "v2",
+      "selected_final": true,
+      "final_path": "E:/git冲突问题/rehab image/train/steps/133_T-AXU-015_s01_v2.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-1957-7331-ae7d-84f512d35a67/exec-1c637a7a-b7b9-4f32-8b02-1b8cff3f606f.png",
+      "prompt": "Use case: scientific-educational\nEdit target: the supplied final s01 photograph, rehabilitation action 133 T-AXU-015.\nMake ONE precise correction to the woman's FAR anatomical LEFT arm and hand, on the upper/back side of this picture: keep that arm relaxed and lying flat on the mat beside her torso, but gently angle the entire far left arm outward about 15–20 degrees away from the body's long axis so the left palm and ALL FIVE FINGERS are fully visible on the gray mat OUTSIDE the far outline of her hip and thigh. The left upper arm, elbow, forearm and hand all remain naturally supported by the mat. This is only relaxed resting arm placement, no arm exercise and no lifting. The entire left hand must have a clear unobstructed outline; no part of the left fingers or palm hidden beneath the pants, hip, thigh or torso. Fingers naturally relaxed together with the thumb visible. Do not exaggerate the arm angle.\nKeep EVERYTHING ELSE exactly unchanged: near anatomical RIGHT arm and right hand position, head and face, black ponytail, white shirt, dark gray pants, BOTH BENT KNEES, both bare feet flat in their original positions, head/shoulders/back/pelvis mat contact, neutral spine, same camera angle, body scale, pose, full mat, studio lighting, gray-blue background and landscape 1536 x 1024 composition. Her head remains at image LEFT and feet at image RIGHT, the nearer leg remains her RIGHT leg.\nOne woman with exactly two arms, two hands and two legs, natural joint connections, full hands and feet in frame. No other pose change. No text, numbers, arrows, watermarks, collage, extra equipment, shoes or socks.",
+      "reference_images": [
+        "E:/git冲突问题/rehab image/train/steps/133_T-AXU-015_s01.png"
+      ],
+      "width": 1536,
+      "height": 1024,
+      "sha256": "76D4967DD1EBA8B1B1AD40F5E88B24CB801053105F2C3473A46D59EF3F291CD4",
+      "target_pose": "仰卧双膝屈、双脚踩垫、头肩躯干骨盆接垫；双臂自然在垫上，左臂略外展使左手掌及五指完整可见。",
+      "visual_review": {
+        "method": "tools.view_image逐图视觉审查",
+        "status": "passed_subagent_awaiting_parent_review",
+        "left_hand": "远侧左掌和五指完整露出髋/大腿轮廓，手掌接垫，前臂肘部接垫，未抬臂。",
+        "pose_support": "头肩躯干骨盆接垫；双膝屈、双脚足底脚跟接垫；近侧右臂原位。",
+        "anatomy": "两臂两腿连续，手指脚趾自然，躯干与上下肢比例自然。",
+        "style": "人物服装黑马尾、裸足、灰蓝背景柔光及灰垫保持。",
+        "composition": "原相机、尺度、地垫及足部位置保持；头朝左，近侧为解剖右腿；完整手脚入镜。",
+        "constraints": "无文字箭头水印拼图；无抬臀或脚悬空。"
+      }
+    },
+    {
+      "sequence": 133,
+      "action_id": "T-AXU-015",
+      "step": "s02",
+      "version": "v2",
+      "selected_final": true,
+      "final_path": "E:/git冲突问题/rehab image/train/steps/133_T-AXU-015_s02_v2.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-1957-7331-ae7d-84f512d35a67/exec-00c67c4e-9e23-4adb-973e-e905ce83683e.png",
+      "prompt": "Use case: scientific-educational\nAsset type: Single photorealistic rehabilitation exercise s02 end pose, action 133 T-AXU-015.\nInput 1 is the EDIT TARGET: original s02 photograph with the right leg extended and its heel on the mat.\nInput 2 is the corrected s01 v2 RESTING LEFT ARM REFERENCE: use ONLY its exact far anatomical LEFT arm and hand placement.\nMake ONE correction to input 1: set the far anatomical LEFT arm (the arm on the upper/back side of the photo) to precisely match the resting position in input 2. That left arm lies supported on the mat, gently angled outward 15–20 degrees beside the torso, with its entire left palm and all five fingers fully visible beyond the far body/hip/thigh outline. Copy its shoulder-elbow-wrist-finger positions from input 2 closely. The left hand must not be hidden by the pants, hip, thigh or torso. No lifted arm and no reaching exercise.\nKeep input 1's leg pose EXACTLY: near anatomical RIGHT leg elongated and low with right heel visibly contacting mat toward image right, toes naturally upward; far anatomical LEFT knee stays bent and LEFT FOOT stays flat in the original position. Near RIGHT arm and hand stay in their original places beside the torso. Head, shoulders, trunk and pelvis continue to rest on the mat.\nEverything else identical to input 1 and input 2: exact same woman and face, black ponytail, plain white short sleeve shirt, dark charcoal long pants, bare feet, gray-blue background, rectangular gray mat position, studio lighting, camera angle, body scale, full-body framing, landscape 1536 x 1024. Head at left and feet at right. Left resting arm and hand must be in the SAME position as input 2 across both final steps.\nExactly two arms, two hands and two legs; natural complete fingers and toes, connected anatomy. No text, labels, arrows, numbers, watermarks, collage, raised leg, suspended heel, bridge, shoes, socks or additional objects.",
+      "reference_images": [
+        "E:/git冲突问题/rehab image/train/steps/133_T-AXU-015_s02.png",
+        "C:/Users/Administrator/.codex/generated_images/01a1393f-1957-7331-ae7d-84f512d35a67/exec-1c637a7a-b7b9-4f32-8b02-1b8cff3f606f.png"
+      ],
+      "width": 1536,
+      "height": 1024,
+      "sha256": "A895870635B919AEC3F58CE71A62862C4188B9252EC0D2762D92FEE0EA4824A7",
+      "target_pose": "左脚留原位且左膝屈起；右跟沿垫滑远且接垫，右腿伸长；头肩躯干及双臂保持，左手与s01_v2同位置完整可见。",
+      "visual_review": {
+        "method": "tools.view_image逐图视觉审查，并与s01_v2对照",
+        "status": "passed_subagent_awaiting_parent_review",
+        "left_hand": "远侧左掌和五指完整露出且接垫，位置与s01_v2一致。",
+        "pose_support": "近侧右腿伸长、右跟接垫、脚尖上翘，远侧左脚原位踩垫且左膝屈曲；头肩躯干骨盆接垫，两臂不动。",
+        "anatomy": "伸长右腿比例自然，膝踝连续；手脚完整，无多余肢体、漂浮或抬臀。",
+        "style": "同人物同服装裸足、灰蓝背景柔光及灰垫保持。",
+        "group_consistency": "头脸及躯干、两臂两手、左脚、相机尺度和垫子均与s01_v2一致；仅右腿步骤姿态改变。",
+        "composition": "头朝左，近侧解剖右腿滑向画面右；右跟及完整脚趾在垫及画面内。",
+        "constraints": "无文字箭头水印拼图；无同步伸臂、双腿悬空或举腿。"
+      }
+    }
+  ],
+  "selected_final": "v2",
+  "revision_reason": "完整露出远侧左手掌及五指，左臂在垫上向外自然安放约15～20度，两步保持相同位置；原图保留且标注需修订。",
+  "old_versions": [
+    {
+      "sequence": 133,
+      "action_id": "T-AXU-015",
+      "step": "s01",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/133_T-AXU-015_s01.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-1957-7331-ae7d-84f512d35a67/exec-06eef01b-d091-4fdc-918a-5d5b5683ec5b.png",
+      "prompt": "Use case: scientific-educational\nEdit target: the supplied rehabilitation exercise photograph for 133 T-AXU-015 s01.\nMake one targeted composition correction: raise the camera to an elevated oblique view at about 35-40 degrees above her anatomical right flank, while keeping the head at image left and feet at image right, so the woman's FAR LEFT arm and left hand are also clearly visible resting on the mat on the far side of her torso. The near RIGHT arm remains along her near side with palm on the mat. Both arms rest naturally beside the torso; do not move either arm into an exercising pose. Show each separate knee and each separate bare foot clearly with a little natural perspective separation. Both knees stay comfortably bent and BOTH FEET stay flat on the mat. Keep the same woman, face, black ponytail, white T-shirt, dark charcoal pants, gray-blue studio, soft light, medium gray rectangular mat, full body and entire mat, landscape 1536 x 1024, natural anatomy. The back of her head, shoulders, trunk and hips remain supported by the mat. No bridge.\nNo text, arrows, numbers, labels, watermarks, collage, extra people, duplicate limbs, raised feet, shoes or socks.",
+      "reference_images": "C:/Users/Administrator/.codex/generated_images/01a1393f-1957-7331-ae7d-84f512d35a67/exec-c90a0e56-c57c-44b7-818b-4823cd17f9c9.png",
+      "visual_review": {
+        "method": "逐图 tools.view_image 人工视觉审查",
+        "status": "needs_revision",
+        "identity_clothing_background": "与三张参考一致，白T深灰长裤黑马尾，灰蓝背景柔光。",
+        "pose_support": "仰卧头肩躯干骨盆接垫，双膝屈曲，双脚足底和脚跟接垫，双臂自然两侧；远侧手末端有正常腿部遮挡，左臂走向和接垫位置清楚。",
+        "anatomy_proportions": "头躯干、上臂前臂、双大腿小腿比例自然，关节连续，两膝两脚可辨。",
+        "framing_direction": "完整头足和地垫入镜；近侧解剖右腿，远侧左腿；头朝左。",
+        "constraints": "无文字、箭头、拼图、悬空脚或抬臀。",
+        "rejection_reason": "主代理独立复核发现远侧左手手掌及手指被髋/大腿遮挡，未满足清单完整手脚可见；原子代理将正常遮挡记为通过的结论撤回。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "B26C898DA96A0F79E74BAEC6C0F50906E72A3260C51D18A59FC4E9A4595A8840",
+      "target_pose": "仰卧双膝屈起，双脚踩垫，双臂自然放身体两侧，头肩躯干接垫。",
+      "reused_existing": false,
+      "initial_generation_prompt": "Use case: scientific-educational\nAsset type: One photorealistic rehabilitation exercise demonstration photo, action 133 T-AXU-015, step s01 starting pose. This is a single frame, NOT a collage.\nInput images: reference-01.png, reference-02.png, reference-03.png are identity, clothing, skin tone, gray-blue studio background and photography references only. Do NOT copy their standing pose.\nSubject: the exact same adult East Asian woman from the references, same natural face, body shape and age, black ponytail, plain white short sleeve T-shirt and dark charcoal gray long pants. Bare feet.\nScene/backdrop: seamless gray-blue studio floor and backdrop, one plain medium-gray rectangular rehabilitation mat, soft even studio light and realistic gentle contact shadows. No additional equipment.\nComposition/framing: landscape 1536 x 1024. Full body seen from a slightly elevated oblique side view from her anatomical RIGHT side so the near leg is the RIGHT leg and the far leg is the LEFT leg. Her head is toward the LEFT edge and her feet toward the RIGHT edge. Camera high enough to clearly distinguish both legs and both feet, but still a mostly side view, no top-down view. All head, ponytail, hands, feet and the entire mat in frame with comfortable margins. Natural anatomy and unexaggerated lens perspective.\nSpecific pose s01: she lies supine on the gray mat, looking naturally upward. Back of the head, both shoulders, back and pelvis rest on the mat. Both knees are bent comfortably approximately 90 degrees, both bare feet rest flat on the mat at hip width, heels and soles touching. Both thighs slope upward to the knees and both shins slope down to their own separate feet. Both arms lie relaxed and straight beside her torso on the mat, palms down near hips, all fingers natural. The right near knee and foot and the left far knee and foot must be separately visible. Her lumbar spine is neutral and comfortable, no deliberate bridge or arch, hips remain on the mat.\nConstraints: one woman, two anatomically correct arms and legs, each hand and foot complete, realistic limb proportions, continuously connected knee and ankle joints, real heel/sole mat contact. This will become the fixed camera and scale reference for step s02 where ONLY the right heel slides away. Keep visual style very close to the three references.\nAvoid: any text, numbers, arrows, labels, logos or watermark, panels, illustration, body transparent overlays, raised hips, raised head, shoulders floating, floating feet, duplicate or merged limbs, shoes, socks, bright colored clothing.",
+      "initial_generated_file": "C:/Users/Administrator/.codex/generated_images/01a1393f-1957-7331-ae7d-84f512d35a67/exec-c90a0e56-c57c-44b7-818b-4823cd17f9c9.png",
+      "initial_reference_images": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "revision_reason": "首次斜侧机位偏低，远侧左臂被躯干遮挡；提高机位后左臂、两膝及两足可辨。",
+      "selected_final": false,
+      "version": "v1",
+      "superseded_by": "E:/git冲突问题/rehab image/train/steps/133_T-AXU-015_s01_v2.png"
+    },
+    {
+      "sequence": 133,
+      "action_id": "T-AXU-015",
+      "step": "s02",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/133_T-AXU-015_s02.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-1957-7331-ae7d-84f512d35a67/exec-2ec9dc4e-ac48-4a5f-b475-91f50ab353d8.png",
+      "prompt": "Use case: scientific-educational\nAsset type: One single photorealistic rehabilitation demonstration photo, action 133 T-AXU-015 s02, the END of a right heel slide.\nEdit target and fixed visual reference: the supplied s01 supine starting-pose photo.\nChange ONLY the anatomical RIGHT leg, which is the nearer leg at the bottom/front of this oblique camera view: slide her RIGHT HEEL along the gray mat away from her pelvis toward image right, so the right leg becomes much longer and the right knee almost straight but comfortable, not forcefully locked. The entire right leg stays very low and supported, with the RIGHT HEEL visibly resting on the mat. The toes may naturally point upward; the heel MUST NOT float. The final right heel and entire right foot remain inside both the mat and the photo.\nKeep the anatomical LEFT leg, the far leg toward the top/back of the photo, exactly as in the reference: LEFT KNEE bent up and LEFT FOOT flat on the mat in its original location. This is a one-sided heel slide, with one knee up and one long leg down.\nEvery other element is fixed: same woman, same face, same black ponytail, plain white short sleeve shirt, dark charcoal long pants, bare feet, same gray-blue backdrop, same rectangular gray mat and its position, same soft studio lighting, same camera position and elevated oblique anatomical-right-side angle, same 1536 x 1024 landscape framing and body scale. Head toward image left and feet toward image right. Both arms stay motionless and relaxed beside the torso with palms down on the mat; keep both hands in the same places. Back of the head, shoulders, trunk and pelvis remain in direct mat contact, with neutral spine and pelvis.\nCritical mechanical checks: nearer RIGHT heel has moved farther from the pelvis, far LEFT heel has not moved; nearer RIGHT leg is elongated and low, far LEFT knee remains bent; no raised leg, no two legs suspended, no contralateral arm reach, no raised head or hips. Natural thigh/shin proportions, proper connected joints and complete toes.\nNo text, numbers, arrows, labels, watermarks, overlays, collage, shoes, socks or additional objects.",
+      "reference_images": "C:/Users/Administrator/.codex/generated_images/01a1393f-1957-7331-ae7d-84f512d35a67/exec-06eef01b-d091-4fdc-918a-5d5b5683ec5b.png",
+      "visual_review": {
+        "method": "逐图 tools.view_image 人工视觉审查，并与s01对照",
+        "status": "needs_revision",
+        "identity_clothing_background": "人物、服装、马尾、灰蓝背景、灰垫、光线与s01一致。",
+        "pose_support": "近侧右腿沿垫伸长，右脚跟直接接垫，脚尖自然上翘；远侧左膝仍屈起、左脚保持原位置踩垫。头肩躯干骨盆仍接垫，两臂不动。",
+        "anatomy_proportions": "右膝踝连续，伸长腿比例自然；无漂浮、双腿悬空或多余肢体。",
+        "framing_direction": "头朝左，近侧右腿滑向画面右，右脚跟和完整脚趾留在画面及垫内；全身及地垫入镜。",
+        "group_consistency": "头脸、两臂、躯干、垫子位置、机位和尺度保持，左脚位置与s01一致；只有右腿姿态变化。",
+        "constraints": "无文字、箭头、拼图、同步伸臂或抬臀。",
+        "rejection_reason": "主代理独立复核发现远侧左手手掌及手指被髋/大腿遮挡，未满足清单完整手脚可见；原子代理将正常遮挡记为通过的结论撤回。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "D241CEBBCEA98EE29B18554BEF208D8973410A8B4F2FD906C988F88B10D8AF11",
+      "target_pose": "左脚留原位且左膝仍屈起，右脚跟沿垫滑远，右腿伸长且右脚跟接垫；双臂、头肩躯干保持。",
+      "reused_existing": false,
+      "selected_final": false,
+      "version": "v1",
+      "superseded_by": "E:/git冲突问题/rehab image/train/steps/133_T-AXU-015_s02_v2.png"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "batch": 18,
+  "range": "174-176",
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "source_document": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+  "generation_mode": "built-in image_gen; one initial call per independent image; targeted built-in edits to174 and176",
+  "identity_references": [
+    "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-e0e4d994-f064-49c3-aabe-eae175412eec.png",
+    "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-14d3a1b0-93c6-4f79-bcf5-ef47a663e1fb.png",
+    "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-8cdb12d5-aabb-46b3-bbc3-ebd85866dd33.png"
+  ],
+  "actions": [
+    {
+      "sequence": 174,
+      "id": "T-AXU-033",
+      "name": "哑铃/弹力带肘屈曲",
+      "category": "train",
+      "planned_filename": "174_T-AXU-033_哑铃／弹力带肘屈曲.png",
+      "prompt": "Use case: scientific-educational. Asset: a single independent rehabilitation exercise photograph PNG. The three supplied photographs are STRICT references for the exact SAME East Asian woman, her face, apparent age, skin tone, black low ponytail, plain white fitted short-sleeved T-shirt, dark charcoal full-length athletic pants, soft photographic light, realistic skin and cloth textures. Keep her facial identity and visual style consistent with ALL three references. Keep the exact pale cool gray-blue softly mottled photography backdrop color, seamlessly extended into the floor. Real studio photography, no illustration. Normal natural adult body proportions, about seven to eight heads tall, natural arms and legs, realistic five-finger hands. Portrait 1122 x 1402 PNG, same 4:5 aspect as references. ONE woman only, one continuous camera photo, no duplicate figures, no collage, no inset, no arrows, no labels, no printed words, no graphics, no watermark. Keep full head and face, all participating limbs and equipment clearly visible. Full body and feet where feasible with useful frame margins. Gray low-key necessary exercise equipment only. White unbranded simple trainers permitted. No extra people, room, shelves or decorative objects.\nExercise 174: standing single-arm dumbbell elbow flexion, SUPINATED palm-up biceps curl. The woman faces right in a slightly three-quarter near-side profile consistent with the reference face; show the working near-side arm clearly. Stand steadily with feet comfortable hip width, knees natural, upright torso and neck, no leaning back, no swinging. Hold ONE small light matte gray dumbbell in the working hand. The working upper arm is vertical and closely beside the torso; the elbow bends about 100 degrees, bringing the forearm and light dumbbell toward the shoulder. The working forearm is slightly above horizontal; the palm faces UP to the ceiling, not a neutral hammer grip. Wrist is straight and naturally aligned with forearm, no wrist curl. The other arm hangs relaxed with empty hand. Relax shoulders, no shrug and no raising the upper arm in front of the body. Make the entire dumbbell, elbow, wrist, palm-up grip and hand anatomically clear. Full body including both feet, studio floor and generous margin. No extra weights or bands.",
+      "original_generation_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-beaff4a2-6d3f-44cf-a7ac-dfd8fd35d10a.png",
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-651d2e42-6c30-4bf8-8869-9c5bfafc6b8f.png",
+      "selected_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-651d2e42-6c30-4bf8-8869-9c5bfafc6b8f.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\174_T-AXU-033_哑铃／弹力带肘屈曲.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\174_T-AXU-033_哑铃／弹力带肘屈曲.png",
+      "phase": "站位单手轻哑铃掌心向上肘屈曲约100度阶段，上臂靠身、手腕自然，躯干直立。",
+      "visual_check": {
+        "passed": true,
+        "items": [
+          "与三张原参考的人物脸、黑色低马尾、白短袖、深灰裤和灰蓝斑驳背景保持一致。",
+          "站姿躯干直立，上臂贴近身侧，单手握小灰哑铃。",
+          "修正后前臂接近水平略上抬、肘屈曲约100度，旋后掌向上、腕自然；另一手放松。",
+          "头部、脸、手、哑铃及双足完整，比例自然，无明显肢体断接或多指。"
+        ]
+      },
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1654871,
+      "sha256": "CCB3C631FBCF19619F0EC4AEB3BE5049A28EE3DA92E861989993077687010E5F",
+      "status": "completed",
+      "corrections": [
+        {
+          "reason": "首图弯举屈肘幅度偏大，需降到约100度并保持上臂贴身。",
+          "prompt": "Use case: identity-preserve. Image 1 is the edit target; images 2–4 are the exact identity/outfit/backdrop references. Make ONE local pose correction to the woman's working forearm, hand and small gray dumbbell only. Keep the elbow in its current fixed place beside the torso, keep the upper arm vertical by her side. LOWER the curled forearm and dumbbell substantially so the working FOREARM is approximately HORIZONTAL, only about 10 degrees ABOVE horizontal, corresponding to elbow flexion about 100 degrees from straight. The dumbbell and palm-up hand should now be around lower-chest/upper-abdomen height, not close to her shoulder or upper chest. Preserve the SUPINATED PALM-UP grip, thumb and five fingers naturally holding the same small dumbbell, straight aligned wrist. No neutral hammer grip. Keep the entire other arm, relaxed empty hand, upright body, face, age, low ponytail, white T-shirt, charcoal pants, shoes, gray-blue studio backdrop and floor EXACTLY. Preserve natural arm and body proportions. One portrait PNG1122x1402 photograph, no arrows, text, collage or inset. Change only bent working forearm position to near-horizontal, elbow stays beside body.",
+          "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-651d2e42-6c30-4bf8-8869-9c5bfafc6b8f.png",
+          "accepted": true
+        }
+      ]
+    },
+    {
+      "sequence": 175,
+      "id": "T-AXU-034",
+      "name": "弹力带/绳索肘伸下压",
+      "category": "train",
+      "planned_filename": "175_T-AXU-034_弹力带／绳索肘伸下压.png",
+      "prompt": "Use case: scientific-educational. Asset: a single independent rehabilitation exercise photograph PNG. The three supplied photographs are STRICT references for the exact SAME East Asian woman, her face, apparent age, skin tone, black low ponytail, plain white fitted short-sleeved T-shirt, dark charcoal full-length athletic pants, soft photographic light, realistic skin and cloth textures. Keep her facial identity and visual style consistent with ALL three references. Keep the exact pale cool gray-blue softly mottled photography backdrop color, seamlessly extended into the floor. Real studio photography, no illustration. Normal natural adult body proportions, about seven to eight heads tall, natural arms and legs, realistic five-finger hands. Portrait 1122 x 1402 PNG, same 4:5 aspect as references. ONE woman only, one continuous camera photo, no duplicate figures, no collage, no inset, no arrows, no labels, no printed words, no graphics, no watermark. Keep full head and face, all participating limbs and equipment clearly visible. Full body and feet where feasible with useful frame margins. Gray low-key necessary exercise equipment only. White unbranded simple trainers permitted. No extra people, room, shelves or decorative objects.\nExercise 175: standing two-hand elbow extension PRESS-DOWN using a light resistance band attached to a RELIABLE HIGH ANCHOR. Show the woman upright, facing slightly right in three-quarter side view so both arms are clear. Feet comfortably spaced, torso vertical, shoulders relaxed down, head neutral. Both upper arms stay vertical against her sides; elbows remain near her waist. Both hands grasp a short straight small gray press-down handle in front of the upper thighs with palms downward. Her forearms have pressed DOWN; elbows are nearly extended, about 160–170 degrees, but still slightly soft and NOT forcefully locked or behind body. Straight natural wrists. The handle remains directly in front of the thighs. A taut muted blue-green resistance band connects the CENTER of the handle UP AND SLIGHTLY FORWARD to a clearly visible secured high anchor just above her head height. The anchor is a closed steel eye fixed securely to a compact matte gray stable exercise stand on the RIGHT of frame with a sturdy vertical post, short top crossbar and broad stable floor base; the attachment and band line must both be fully shown, no floating rope/hidden attachment. Keep this simple stand separated from her face and arms. The band runs to her handle without wrapping around her neck, hands or body. Do not show a lat pulldown, biceps curl, overhead triceps extension or push-up. No leaning forward to push, no shoulder shrugging. One continuous studio photo; include anchor, hands, near-straight elbows, full woman and feet clearly in frame.",
+      "original_generation_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-66c7f6c0-e7f5-4401-a290-a9ed88d09b17.png",
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-66c7f6c0-e7f5-4401-a290-a9ed88d09b17.png",
+      "selected_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-66c7f6c0-e7f5-4401-a290-a9ed88d09b17.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\175_T-AXU-034_弹力带／绳索肘伸下压.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\175_T-AXU-034_弹力带／绳索肘伸下压.png",
+      "phase": "高锚点轻阻力双手握柄肘伸下压阶段，上臂贴身，肘接近伸直但不猛锁，躯干直立。",
+      "visual_check": {
+        "passed": true,
+        "items": [
+          "人物、服装、灰蓝背景、柔光和摄影质感与原参考一致。",
+          "高锚点通过闭合钢环和连接件连于灰色坚固训练支架，底座和整条弹力带拉力线可见。",
+          "双手握短直柄下压到大腿前方，上臂靠身，肘近伸直且保留微屈。",
+          "躯干直立、肩放松，无明显后仰、前倾借力或过头伸肘；人物及双足完整。"
+        ]
+      },
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1688422,
+      "sha256": "F704BD015A4150C4FA2E06D6C38A459D116DF99AEB5C99F9CCB6A0575FB610F5",
+      "status": "completed",
+      "corrections": []
+    },
+    {
+      "sequence": 176,
+      "id": "T-AXU-035",
+      "name": "前臂支撑的负重腕背伸",
+      "category": "train",
+      "planned_filename": "176_T-AXU-035_前臂支撑的负重腕背伸.png",
+      "prompt": "Use case: scientific-educational. Asset: a single independent rehabilitation exercise photograph PNG. The three supplied photographs are STRICT references for the exact SAME East Asian woman, her face, apparent age, skin tone, black low ponytail, plain white fitted short-sleeved T-shirt, dark charcoal full-length athletic pants, soft photographic light, realistic skin and cloth textures. Keep her facial identity and visual style consistent with ALL three references. Keep the exact pale cool gray-blue softly mottled photography backdrop color, seamlessly extended into the floor. Real studio photography, no illustration. Normal natural adult body proportions, about seven to eight heads tall, natural arms and legs, realistic five-finger hands. Portrait 1122 x 1402 PNG, same 4:5 aspect as references. ONE woman only, one continuous camera photo, no duplicate figures, no collage, no inset, no arrows, no labels, no printed words, no graphics, no watermark. Keep full head and face, all participating limbs and equipment clearly visible. Full body and feet where feasible with useful frame margins. Gray low-key necessary exercise equipment only. White unbranded simple trainers permitted. No extra people, room, shelves or decorative objects.\nExercise 176: forearm-supported DUMBBELL WRIST EXTENSION, palm DOWN. The woman sits naturally upright on a stable simple gray chair, facing right in a near-side view with a slight front angle to reveal the back of the working hand. Keep the complete head and face and a normal seated body proportion. A low-key gray table at comfortable seated elbow height sits beside/in front of her to the RIGHT. The entire working forearm from the elbow to just before the wrist rests firmly along a soft thin gray pad on the tabletop, horizontal and fully supported. PALM FACES DOWN toward floor, BACK OF HAND and dorsal finger knuckles face UP and are visible. Working wrist extends beyond the right edge of table and pad; the hand does not rest on tabletop. The hand securely holds ONE very small light matte gray dumbbell, modest enough to see hand and wrist anatomy. Raise ONLY the back of the hand up by about 25–30 degrees in wrist EXTENSION relative to the supported horizontal forearm, while forearm and elbow remain fully on the pad. This is a small upward bend at wrist, NOT an elbow curl, NOT an upward palm wrist flexion. Fingers naturally wrap the handle, thumb opposable and visible, five fingers, wrist connected normally; no detached, reversed or extra hands. The other hand rests on her lap and does not assist. Table must not hide the working wrist, hand, elbow or dumbbell; compose with the arm and wrist large enough to understand while preserving full face and natural seated torso, leg and chair scale. Show complete participating arm, full face and feet if framing permits. No hand inset, no arrows, no labels.",
+      "original_generation_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-28bb4bf0-2261-49f3-bdd2-5132786f7492.png",
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-5c710c63-99e7-4f38-aa5f-62ad31c7b55d.png",
+      "selected_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-5c710c63-99e7-4f38-aa5f-62ad31c7b55d.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\176_T-AXU-035_前臂支撑的负重腕背伸.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\176_T-AXU-035_前臂支撑的负重腕背伸.png",
+      "phase": "坐位掌心向下、全前臂稳定支撑桌垫，腕伸出桌边，轻哑铃腕背伸约25–30度阶段。",
+      "visual_check": {
+        "passed": true,
+        "items": [
+          "人物、服装、灰蓝背景、真实摄影质感与原参考一致。",
+          "完整头部脸和坐姿比例保留，灰靠背椅、矩形灰桌面、软垫及小灰哑铃清楚。",
+          "整个工作前臂放在软垫支持上，掌心向下，背侧指关节可见。",
+          "修正后桌面边缘结束在腕下方，手腕、手与小哑铃确实在桌边外，不在连续桌面上方。",
+          "手背向上小幅腕背伸；上臂肘位置稳定，未变成掌心向上腕掌屈。",
+          "手部牢握，人物四肢连接和坐姿比例无明显异常。"
+        ]
+      },
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1697084,
+      "sha256": "2DAB9A9FE8FEB4B3924561D4E15CACC550D272017371C5D88C2A6EBF927F48B2",
+      "status": "completed",
+      "corrections": [
+        {
+          "reason": "首图桌面继续延伸在工作腕与哑铃下方；需让腕越过可见桌边且保留前臂支持。",
+          "prompt": "Use case: precise-object-edit. Image 1 is the edit target; images 2–4 lock the woman's original identity, clothes, photographic style and gray-blue background. Make ONE equipment-geometry correction: the gray tabletop currently continues to the right beneath the working hand and dumbbell. SHORTEN that tabletop so its RIGHT EDGE ENDS immediately underneath the wrist, just beyond the end of the gray forearm-support pad (approximately image x=810). The hand, complete wrist joint, fingers and small dumbbell must all be clearly in OPEN AIR BEYOND THE TABLE'S VISIBLE RIGHT EDGE, with no table surface beneath them. Make the tabletop a small stable rectangular gray side table with its existing leg naturally supporting its edge. It must have a clean visible vertical right edge below the wrist and look structurally plausible, not broken or floating. Keep the entire working forearm, from elbow to just before wrist, supported horizontally on a soft light-gray pad on the remaining tabletop; do NOT lift the forearm. Preserve the woman's exact current palm-DOWN grip, back of hand and finger knuckles facing upward, current small upward wrist-extension pose of about25–30degrees, the same small gray dumbbell, elbow location and hand anatomy. Keep face, head, hair, white T-shirt, gray pants, other hand on lap, gray-backed chair, seated body proportions, shoes, exact photographic backdrop and floor unchanged. Full face and seated figure preserved. One 1122x1402 photograph, no inset, no text, no arrows. The essential correction is clearly FREE hand past the tabletop edge.",
+          "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-5c710c63-99e7-4f38-aa5f-62ad31c7b55d.png",
+          "accepted": true
+        }
+      ]
+    }
+  ]
+}

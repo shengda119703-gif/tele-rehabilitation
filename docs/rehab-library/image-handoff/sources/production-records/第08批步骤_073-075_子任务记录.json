@@ -1,0 +1,140 @@
+{
+  "batch": 8,
+  "type": "分步骤示范图",
+  "range": "073-075",
+  "date": "2026-10-14",
+  "generator": "built-in image_gen",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "identity_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "existing_image_review": [
+    {
+      "sequence": 73,
+      "source_path": "E:/git冲突问题/rehab image/train/073_T-LOW-006_扶稳站姿髋外展：徒手至弹力带.png",
+      "reused": false,
+      "reason_zh": "既有单图使用椅背，不符合本轮固定扶手版本。"
+    },
+    {
+      "sequence": 74,
+      "source_path": "E:/git冲突问题/rehab image/train/074_T-LOW-007_扶稳站姿髋后伸：徒手至弹力带.png",
+      "reused": false,
+      "reason_zh": "既有单图使用椅背，不符合本轮固定扶手版本。"
+    },
+    {
+      "sequence": 75,
+      "source_path": "E:/git冲突问题/rehab image/train/075_T-LOW-008_侧卧髋外展.png",
+      "reused": false,
+      "reason_zh": "左侧下臂/枕过于靠画面边缘且存在裁切，新建留出完整接触点的基础帧。"
+    }
+  ],
+  "actions": [
+    {
+      "sequence": 73,
+      "id": "T-LOW-006",
+      "name": "扶稳站姿髋外展：徒手至弹力带",
+      "frames": [
+        {
+          "step": 1,
+          "filename": "073_T-LOW-006_s01.png",
+          "path": "E:/git冲突问题/rehab image/train/steps/073_T-LOW-006_s01.png",
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a137ef-7e57-7912-801e-b18e28152d89/exec-1e649a4b-7bee-4266-b00e-adc704d03ff1.png",
+          "prompt": "Use case: scientific-educational. Asset: STEP 01 preparation of rehabilitation T-LOW-006 standing supported hip abduction. Reference images 1, 2, 3 strictly define the SAME recognizable adult East Asian woman, exact face/age/skin/build/black ponytail, fitted white short sleeve shirt, charcoal gray full-length pants, normal adult body proportions, soft photorealistic studio lighting and light cool gray-blue seamless background. Preserve all these exactly.\nScene: gray-blue seamless studio floor/background, only required solid fixed gray handrail to the woman's LEFT (viewer RIGHT). Real stable waist-high horizontal gray tubular handrail, about 85–90 cm high, mounted on two sturdy gray upright posts with broad base plates visibly anchored flat to floor. No chair, no moving prop, no elastic band. Simple white athletic shoes.\nPose: preparation, TRUE FRONT VIEW. Woman stands upright square toward camera, pelvis/torso facing directly forward and level, shoulders relaxed. Both legs almost straight, both shoes fully flat on floor, feet comfortably close about hip-width. LEFT hand (viewer right) rests/grips gently on fixed horizontal rail next to her hip, hand on rail clear. Right arm (viewer left) relaxed down by her right thigh. Right leg on viewer left is the designated TEST leg but remains fully planted for preparation. Left leg on viewer right will support and is planted. Normal calm face and forward gaze. Do not begin abduction yet, do not lift any leg.\nComposition: 4:5 vertical full-body photograph about1122x1402, full ponytail/head, both complete hands, all fingers, both entire shoes and floor support contact visible with comfortable margins; reserve extra room on viewer LEFT for later lifting the right leg out sideways, but no cropping. Camera fixed front at midbody height with natural focal length and no distortion. Person height and fixed rail location should be suitable for locked-camera subsequent frame. One person, one stage. No text, numbers, arrows, collage, panels, ghost limbs or watermark. Natural proportions and joint continuity.",
+          "reused": false,
+          "reused_from": null,
+          "pose_zh": "徒手正面站稳，左手扶固定灰扶手，双脚接地、躯干骨盆朝前。",
+          "visual_review": "已目视检查：固定扶手双底座螺栓接地、扶持左手与两完整鞋接触清楚，人物/比例/服装/背景正确。",
+          "correction_prompts": []
+        },
+        {
+          "step": 2,
+          "filename": "073_T-LOW-006_s02.png",
+          "path": "E:/git冲突问题/rehab image/train/steps/073_T-LOW-006_s02.png",
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a137ef-7e57-7912-801e-b18e28152d89/exec-b5caadfb-5500-44cd-a8b7-3b61890c221b.png",
+          "prompt": "Use case: identity-preserve precise pose edit. EDIT TARGET Image 4: E:/git冲突问题/rehab image/train/steps/073_T-LOW-006_s01.png. Images 1–3 are original strict woman identity/clothing/style references. Produce STEP 02 of the SAME T-LOW-006 no-band fixed-handrail hip abduction sequence. LOCK all image 4 invariants exactly: same camera front view/position/focal length/framing/resolution, same woman face/body size/head position, same gray-blue light/background/floor shadows, same clothes/white shoes, same fixed gray handrail and both anchored floor posts at exact coordinates, same LEFT supporting hand (viewer right) on exact rail contact. SAME left support leg/foot on viewer right planted in exact position. Same right arm by thigh, shoulders and level pelvis facing forward.\nChange ONLY her RIGHT TEST LEG on viewer LEFT: slowly abduct it out toward viewer LEFT, whole thigh/leg moving laterally from hip, knee almost straight, shoe lifted fully off floor, modest 20–25 degree outward angle. The hip stays at exactly same location, support leg does not move, pelvis remains level and torso upright without side-lean. Test shoe toes face forward, not crossed in front or externally turned. Correct natural unchanged leg length and proportions. Maintain all upper body/support/rail features locked so two frames can be compared from a fixed camera. One person one pose, no text/number/arrows/panels/ghost limbs.",
+          "edit_target_path": "E:/git冲突问题/rehab image/train/steps/073_T-LOW-006_s01.png",
+          "reused": false,
+          "reused_from": null,
+          "pose_zh": "左腿保持支撑，右测试腿向外侧（画面左侧）抬离地，躯干仍朝前。",
+          "visual_review": "已目视检查：右腿外展且足离地，未跨前，左支撑脚原位、骨盆无明显侧倒，扶持与正常比例正确。",
+          "correction_prompts": []
+        }
+      ],
+      "group_review": "两图对照目视通过：同一正面机位、人物尺度、头/支撑脚/扶持手、扶手双固定底座位置、灰蓝背景光线一致；只改变右测试腿外展及自然随腿的非扶持手位置。"
+    },
+    {
+      "sequence": 74,
+      "id": "T-LOW-007",
+      "name": "扶稳站姿髋后伸：徒手至弹力带",
+      "frames": [
+        {
+          "step": 1,
+          "filename": "074_T-LOW-007_s01.png",
+          "path": "E:/git冲突问题/rehab image/train/steps/074_T-LOW-007_s01.png",
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a137ef-7e57-7912-801e-b18e28152d89/exec-5d39b143-e82e-4eab-bb90-05465f10d1c8.png",
+          "prompt": "Use case: scientific-educational. Asset: STEP01 preparation for T-LOW-007 supported standing hip extension, NO BAND. Reference images 1,2,3 strictly define SAME recognizable adult East Asian woman's face/black ponytail/skin/age/natural slim build, normal adult proportions, fitted white short sleeve T-shirt and charcoal gray full-length trousers, photorealistic soft studio lighting and light cool gray-blue backdrop.\nScene: same seamless gray-blue floor/background; one sturdy FIXED gray tubular handrail in FRONT of her on viewer RIGHT, waist-high about85–90cm, solid horizontal top bar on two upright posts with broad base plates and visible bolts anchored to floor. Not a chair, not wheeled or movable. Plain white athletic shoes.\nPose: clean TRUE SIDE VIEW of whole woman, facing RIGHT. She stands comfortably upright without waist arch, gaze naturally forward, shoulders down, pelvis neutral. Both legs nearly straight and BOTH feet flat on floor underneath hips, shoes side by side; near-camera RIGHT leg/white shoe visibly distinct in front of far leg by natural camera perspective. Her near-camera RIGHT HAND gently holds the fixed rail in front of her around waist height, elbow comfortably slightly bent, fingers and bar contact visible. Other arm relaxed natural at side and hand visible, no pulling on body. Near-camera RIGHT leg is TEST leg to move backward in frame02 but not moving yet; far LEFT leg will SUPPORT in exact planted position.\nComposition: vertical4:5 full-body photo about1122x1402, camera side at normal midbody height, natural focal length, whole head/ponytail/hands/shoes and support contact all visible with comfortable margins. Extra clear space on viewer LEFT behind her for later right leg backward extension; no body cropped or compressed. Solid fixed rail visible including anchored bases, its posts do not conceal support foot. One person one pose, NO text/numbers/arrows/panels/collage/ghost limbs/watermark. Same original identity, clothing, background and soft photo realism.",
+          "reused": false,
+          "reused_from": null,
+          "pose_zh": "徒手侧面站稳，一手扶固定灰扶手，双脚接地，躯干舒适直立。",
+          "visual_review": "已目视检查：侧面机位、固定灰扶手螺栓底座、扶持手和双足清楚，正常比例及原参考人物/服装/背景保持。",
+          "correction_prompts": []
+        },
+        {
+          "step": 2,
+          "filename": "074_T-LOW-007_s02.png",
+          "path": "E:/git冲突问题/rehab image/train/steps/074_T-LOW-007_s02.png",
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a137ef-7e57-7912-801e-b18e28152d89/exec-dbf7383f-c0b5-4f95-8eb9-3b765f8276ec.png",
+          "prompt": "Use case: identity-preserve precise pose edit. EDIT TARGET Image4: E:/git冲突问题/rehab image/train/steps/074_T-LOW-007_s01.png. Images1–3 are strict original identity/clothes/gray-blue photographic reference. Produce STEP02 of SAME no-band fixed-handrail standing hip extension T-LOW-007.\nLOCK image4 exactly: side camera facing right, frame size, camera position/focal length, woman scale/head/torso/pelvis coordinates, recognizable face, black ponytail, light, clothes, white shoes; fixed gray tubular rail and two anchored posts/base plates/bolts at EXACT same coordinates, same supporting hand contact and arm, free near-camera hand relaxed down. SAME far-camera LEFT SUPPORT LEG and shoe remain planted in exact ground position as preparation.\nChange ONLY NEAR-CAMERA RIGHT TEST LEG (the nearer/front visible shoe in step01): extend entire nearly-straight leg gently BACKWARD toward viewer LEFT from hip about15–20 degrees and lift shoe just off ground. Knee stays almost straight with natural slight softness, not a standing knee curl. Hip position unchanged, no torso leaning back or bending forward, no exaggerated low back arch, pelvis and shoulder remain stacked. Test toes point toward floor naturally, not turned outward. Support foot/leg do not move. Show clear gap under back-moving test shoe with whole foot visible. Preserve normal unchanged leg length, no shortening. Same fixed camera composition and contact points for direct comparison. One woman one stage, no text/arrows/numbers/panels/ghost limbs.",
+          "edit_target_path": "E:/git冲突问题/rehab image/train/steps/074_T-LOW-007_s01.png",
+          "reused": false,
+          "reused_from": null,
+          "pose_zh": "保持支撑腿和上身，近镜测试腿向后移并离地，髋后伸而无明显腰后仰。",
+          "visual_review": "已目视检查：近镜测试腿从髋部向后伸展、膝近直、鞋离地，支撑足稳定，躯干未后仰、腰无明显过伸，扶持接触完整。",
+          "correction_prompts": []
+        }
+      ],
+      "group_review": "两图对照目视通过：同侧面机位、人物尺度、头/躯干位置、扶持手与灰固定扶手及底座位置一致；同一近镜腿从接地到后伸，另一足继续支撑，正常腿长一致。"
+    },
+    {
+      "sequence": 75,
+      "id": "T-LOW-008",
+      "name": "侧卧髋外展",
+      "frames": [
+        {
+          "step": 1,
+          "filename": "075_T-LOW-008_s01.png",
+          "path": "E:/git冲突问题/rehab image/train/steps/075_T-LOW-008_s01.png",
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a137ef-7e57-7912-801e-b18e28152d89/exec-2bc56ad4-3745-46e2-9115-6b271df3cdf1.png",
+          "prompt": "Use case: scientific-educational. Asset: STEP01 preparation T-LOW-008 side-lying hip abduction, no band/no ankle weight. References1–3 strictly define SAME adult East Asian woman, exact recognizable face/black ponytail/skin/build/age, fitted white short-sleeve T-shirt and charcoal gray full-length trousers, healthy normal adult head/trunk/limb proportions, soft photorealistic studio light and light cool gray-blue background.\nScene: same seamless gray-blue studio floor/background, ONLY plain thin nonslip gray mat and small plain gray head pillow. White socks, NO shoes.\nPose: woman lying on her LEFT SIDE, head at LEFT of picture, feet toward RIGHT, chest facing camera, shoulders/pelvis stacked vertically without rolling backward. Head and neck comfortably resting ON small pillow, face calm looking slightly forward. Bottom LEFT leg bent comfortably about70–90degrees at knee, knee comes a little forward to support, thigh/knee/shin/foot all distinguishable and remain on mat. Top RIGHT TEST leg nearly straight extending naturally toward viewer RIGHT, lowered at resting starting height, NOT raised, resting lightly in alignment with trunk; its complete white-socked foot visible farther right than bottom foot. Natural continuous leg length. Upper RIGHT hand resting palm down on mat in FRONT of chest as light balance support, whole forearm/elbow/hand visible. Bottom LEFT arm rests on mat in front of pillow/head with elbow comfortably bent and hand visible beside pillow edge; no elbow/hand cropped and no hand hidden underneath pillow. Pillow directly supports head, she does not prop her head up on a hand.\nComposition: true BODY SIDE medium-full view from front of her chest, fixed camera slightly above mat height with natural focal length. Vertical4:5 photo about1122x1402, complete body fits horizontally across LOWER MIDDLE of frame with calm gray-blue blank space above. Leave at least50px comfortable margin beyond leftmost head/pillow/arm and rightmost toes, whole mat and BOTH hands and BOTH socked feet fully visible. Pose is baseline for locked-camera subsequent top-leg raise. One person one stage; no text, numbers, arrows, collage, panels, ghost limbs or watermark. Natural adult anatomy without shortened legs, same reference style and color.",
+          "reused": false,
+          "reused_from": null,
+          "pose_zh": "侧卧防滑垫，头颈枕支撑、底腿屈曲落垫、上侧腿舒适伸展放下。",
+          "visual_review": "已目视检查修正版：头侧直接接触小灰枕、双手/下臂完整可见，底腿屈曲与上腿近直放下清楚，骨盆维持侧卧，比例与原人物服装/背景正确。",
+          "correction_prompts": [
+            {
+              "prompt": "Use case: precise-object-edit / identity-preserve pose correction. EDIT TARGET image4 = C:/Users/Administrator/.codex/generated_images/01a137ef-7e57-7912-801e-b18e28152d89/exec-dcedb9a4-7529-4285-a59a-ca8df9b80654.png. Images1–3 are exact original woman/clothes/photo/background identity references.\nCorrect ONLY HEAD/NECK/PILLOW SUPPORT for step01 side-lying hip abduction T-LOW-008. In target the woman wrongly holds head up above pillow. Lower and relax her head into a true resting side-lying position, left ear/left side of face resting DIRECTLY ON the small gray pillow. MOVE pillow to directly UNDER the head/temple, where it fills gap between head and mat; pillow must visibly contact head. Her neck remains comfortably aligned with sideways torso, NO unsupported tilted-up head, no hand propping head. Face still recognizable, calm, gently toward camera. Head can turn a little naturally but must touch pillow. Leave both hands visible on mat in front, bottom forearm relaxed rather than elbow prop. Pillow is under HEAD, not arm/chest.\nLOCK all other content: same fixed camera/framing/focal length, exact gray-blue background/lighting, same woman scale/face/hair/clothes, same thin gray mat, same stacked sideways pelvis/torso, same bottom leg bent on mat and same TOP RIGHT leg straight lowered to viewer right with white sock on mat. Do not raise leg yet. Whole head, pillow, both hands/elbows and both feet must fit with margins. No text, arrows, numbers, collage, ghost limbs or extra parts.",
+              "edit_target_path": "C:/Users/Administrator/.codex/generated_images/01a137ef-7e57-7912-801e-b18e28152d89/exec-dcedb9a4-7529-4285-a59a-ca8df9b80654.png",
+              "reason_zh": "首稿头部悬空、枕位落到前臂附近，修正为头侧直接落枕。"
+            }
+          ]
+        },
+        {
+          "step": 2,
+          "filename": "075_T-LOW-008_s02.png",
+          "path": "E:/git冲突问题/rehab image/train/steps/075_T-LOW-008_s02.png",
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a137ef-7e57-7912-801e-b18e28152d89/exec-86c35903-95b5-4e02-be80-2696b4237fbd.png",
+          "prompt": "Use case: identity-preserve precise single-joint pose edit. EDIT TARGET image4 = E:/git冲突问题/rehab image/train/steps/075_T-LOW-008_s01.png. Images1–3 are strict original woman/clothes/gray-blue photo references. Produce STEP02 of SAME side-lying hip abduction T-LOW-008.\nLOCK EVERY OTHER DETAIL OF TARGET: exact same camera position/body side view/focal length/portrait framing, woman size/position/recognizable face/black hair/white shirt/charcoal pants/white socks, same gray-blue lighting and background, same gray mat and pillow exact coordinates. Her head MUST continue resting directly on pillow, face relaxed, both hands and forearms remain exactly as target on mat. Same shoulders/torso/pelvis stacked in left side lying, NO pelvis rolling backward. Same bottom LEFT leg bent in exact target position, bottom knee/shin/foot on mat unchanged.\nChange ONLY TOP RIGHT TEST LEG: slowly raise the nearly-straight top leg laterally UPWARD in the plane of her body, about25–30degrees above its resting position, foot moving UP and slightly LEFT as a true same-length hip rotation, not moving forward toward camera or bending knee. Top thigh starts at unchanged hip joint, knee almost straight, white-socked foot clearly above bottom leg/mat, toes naturally forward not rotated upward to ceiling. Maintain exact same natural leg length/anatomy. No body scaling/reframing/scene shifts, so same lower-leg contacts and pillow remain fixed for comparison. Keep entire raised socked foot safely inside right margin. One person one pose, no arrows/text/numbering/collage/ghost limbs or extra parts.",
+          "edit_target_path": "E:/git冲突问题/rehab image/train/steps/075_T-LOW-008_s01.png",
+          "reused": false,
+          "reused_from": null,
+          "pose_zh": "保持侧卧躯干骨盆与底腿，上侧近直测试腿向侧方抬起。",
+          "visual_review": "已目视检查：上侧腿抬起、未前摆，底腿继续同一屈曲落垫，头留原枕、双手接触位置与骨盆朝向保持，完整自然腿长与足部。",
+          "correction_prompts": []
+        }
+      ],
+      "group_review": "两图对照目视通过：同一身体正侧机位、尺度、灰垫/枕位置、头颈枕接触、手和屈曲底腿支点保持一致；同一上腿从放下到侧方抬起，骨盆无明显后滚，人体比例一致。"
+    }
+  ]
+}

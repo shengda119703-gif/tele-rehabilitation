@@ -1,0 +1,136 @@
+{
+  "record_version": "1.0",
+  "production_date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "scope": "115 T-LOW-037 s01—s02；首轮徒手坐位提踵",
+  "generation_mode": "内置 image_gen；每张/每次尝试一调用；未用 CLI/API 替代；未用代码编辑图片",
+  "sources": {
+    "plan": {
+      "path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+      "section": "通用要求 3、4 与 115 T-LOW-037"
+    },
+    "original_card": {
+      "path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+      "sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+      "section": "T-LOW-037"
+    },
+    "original_image": {
+      "path": "E:/git冲突问题/rehab image/train/115_T-LOW-037_坐位提踵：徒手至膝上负荷.png",
+      "sha256": "8ED7152E638F308D08853EDF9EEE803F626879A755E93C7D4D7DB5DBD3C01372",
+      "role": "s01 的图像编辑目标；提供椅与服装/场景基准。未原图直接复用，原图为抬跟全身机位，需改为起点近景"
+    },
+    "references": [
+      {
+        "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77",
+        "role": "人物身份、白色短袖、深灰长裤、灰蓝背景与柔光参考"
+      },
+      {
+        "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094",
+        "role": "同一人物身份与摄影风格参考"
+      },
+      {
+        "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE",
+        "role": "同一人物身份与摄影风格参考"
+      }
+    ]
+  },
+  "images": [
+    {
+      "step": "115-s01",
+      "intended_filename": "115_T-LOW-037_s01.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/115_T-LOW-037_s01.png",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-b8bf-76f1-b515-620de6eb4ab8/exec-e965ada8-5d7c-4cc9-b9f0-e3fb23a35c68.png",
+      "prompt": "Use case: scientific-educational, identity-preserve edit.\nAsset type: one unlabelled photoreal rehabilitation step photograph, 115 T-LOW-037 seated heel raise, s01 preparation.\nInput images: Image 1 is the edit target and establishes the same woman's gray chair, clothing, bare feet and studio; images 2, 3, 4 are supporting identity/style references for the same adult East Asian woman, black ponytail, white plain short-sleeve shirt, dark charcoal long trousers, gray-blue soft studio background.\nEdit image 1 into a FOOT-AND-KNEE CLOSE VIEW of the starting posture. A single stable seated posture on the SAME sturdy matte gray armless chair, pelvis seated on the chair seat, torso upright, hands relaxed palm-down on each thigh. No external weight, no pads on knees, no equipment. Both knees comfortably bent at approximately a right angle; both lower legs upright. BOTH BARE FEET completely flat on the floor: each heel, full forefoot and relaxed toes clearly on the floor, ankles neutral, feet parallel and comfortably separated.\nCamera: side view from the same woman's left side with only a slight front offset so BOTH knees and BOTH entire feet can be distinctly seen, facing image right. Frame from lower chest through thighs, both knees and complete lower legs down to the full bare toes and heels; include the stable chair seat and its legs/contact with floor. The feet and knees are larger than in the original full-body view. Face/head may be out of frame for this local exercise detail. Allow modest floor margin below both feet and right-side explanatory space. Approximately 1122 x 1402 portrait aspect ratio. Natural adult proportions; fingers/toes anatomically correct. White shirt/dark charcoal trousers, photographic texture and soft gray-blue studio seamless floor, lighting and chair material remain consistent with image 1 and references.\nCritical visible step: BOTH full foot soles are resting on floor, neither heel lifted; thigh/knee position stable, hands naturally resting, toes do not grip. One woman, one pose, one chair, no inset, no multiple panels, no text, no labels, no arrows, no watermarks.",
+      "inputs": [
+        "E:/git冲突问题/rehab image/train/115_T-LOW-037_坐位提踵：徒手至膝上负荷.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused_existing_image": false,
+      "reuse_note": "新生成准备位；慢放脚跟返回步骤可复用本图，顺序 s01→s02→s01。旧单图保持原样。",
+      "sha256": "60C393BC4F20BF0895FB4ADCC5B4EBAFABFF007624682C1427426B6990A5D705",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1683713,
+      "status": "通过逐图可见画面审查",
+      "review": {
+        "method": "保存后使用 view_image 看完整 PNG",
+        "action": "坐稳同一灰色椅，双膝舒适屈曲；双脚全掌落地，双前足与双跟起点可见；双手自然置大腿、膝上无器械。",
+        "contact": "骨盆/大腿由椅面承托，椅脚接地；双脚足跟及前足接地，没有悬浮。",
+        "proportion": "双膝、两小腿、足踝与足趾解剖连接连续，长度与侧面透视自然；手指自然。",
+        "visibility": "侧面略前偏近景保留椅面、双膝、全小腿和完整两足；上方从胸下裁切是局部任务构图。",
+        "appearance": "白短袖、深灰长裤、灰蓝无缝背景、柔和棚拍和自然阴影一致；无文字/箭头/拼图。",
+        "independent_parent_review": "主代理另以 view_image 审查：椅面承托、双膝与双全掌地面、自然手位均清楚，近景可用。"
+      }
+    },
+    {
+      "step": "115-s02",
+      "intended_filename": "115_T-LOW-037_s02.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/115_T-LOW-037_s02.png",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-b8bf-76f1-b515-620de6eb4ab8/exec-8a871cf2-af9b-4f52-84cf-43335b49a7c0.png",
+      "prompt": "Use case: scientific-educational, identity-preserve edit.\nAsset type: one unlabelled photoreal rehabilitation step photograph, 115 T-LOW-037 seated heel raise, s02 raised heels.\nInput image 1 is the accepted s01 preparation photograph and exact scene to edit.\nChange ONLY the seated woman's ankles and bare foot posture from both full soles flat to BOTH HEELS RAISED in a seated heel raise. Keep both forefoot balls and toes contacting the EXACT SAME floor footprints as in image 1, no forward/backward/sideways sliding. Lift the heel of each bare foot approximately 4–5 cm above the floor, clearly showing a visible natural gap beneath EACH heel. Both heels must be elevated; neither whole leg nor whole foot lifts off the floor. Each forefoot remains supported on floor; toes stay relaxed and naturally extended, not curled or gripping. Ankles plantarflex naturally, heel rises under ankle; do not point feet away into the air. Preserve the seated position and comfortable bent-knee posture, pelvis fully supported on same chair, hands relaxed palm-down on same thighs; no weights or equipment on thighs or knees.\nKeep the same cropped side / slightly front offset camera, same lens/perspective, exact 1122 x 1402 portrait framing, SAME woman's body proportions, white short sleeve shirt and dark charcoal long trousers, same chair (shape/material/seat/legs and floor positions), same torso/arms/hands, knee placement, same gray-blue backdrop and floor, lighting and photographic detail. Both knees, lower legs and whole bare feet including every toe and heel remain inside frame. Outside ankle/foot posture, preserve image 1 as closely as possible; no new objects, no text, no numbers, no arrows, no watermark, no inset or multiple poses. Critical: TWO heel-floor gaps while TWO forefoot-floor contact locations remain unchanged.",
+      "inputs": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393d-b8bf-76f1-b515-620de6eb4ab8/exec-e965ada8-5d7c-4cc9-b9f0-e3fb23a35c68.png"
+      ],
+      "reused_existing_image": false,
+      "reuse_note": "编辑已验收的 s01，仅将双踝足姿势改为抬跟；不是直接复用旧单图。",
+      "sha256": "7CE46881C1172E32DC3C4C1FC9A33F1BBFE7D56BF4C45688FF72A746B084518B",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1672352,
+      "status": "通过逐图可见画面审查",
+      "attempts": [
+        {
+          "prompt": "Use case: scientific-educational, identity-preserve edit.\nAsset type: one unlabelled photoreal rehabilitation step photograph, 115 T-LOW-037 seated heel raise, s02 raised heels.\nInput image 1 is the accepted s01 preparation photograph and exact scene to edit.\nChange ONLY the seated woman's ankles and bare foot posture from both full soles flat to BOTH HEELS RAISED in a seated heel raise. Keep both forefoot balls and toes contacting the EXACT SAME floor footprints as in image 1, no forward/backward/sideways sliding. Lift the heel of each bare foot approximately 4–5 cm above the floor, clearly showing a visible natural gap beneath EACH heel. Both heels must be elevated; neither whole leg nor whole foot lifts off the floor. Each forefoot remains supported on floor; toes stay relaxed and naturally extended, not curled or gripping. Ankles plantarflex naturally, heel rises under ankle; do not point feet away into the air. Preserve the seated position and comfortable bent-knee posture, pelvis fully supported on same chair, hands relaxed palm-down on same thighs; no weights or equipment on thighs or knees.\nKeep the same cropped side / slightly front offset camera, same lens/perspective, exact 1122 x 1402 portrait framing, SAME woman's body proportions, white short sleeve shirt and dark charcoal long trousers, same chair (shape/material/seat/legs and floor positions), same torso/arms/hands, knee placement, same gray-blue backdrop and floor, lighting and photographic detail. Both knees, lower legs and whole bare feet including every toe and heel remain inside frame. Outside ankle/foot posture, preserve image 1 as closely as possible; no new objects, no text, no numbers, no arrows, no watermark, no inset or multiple poses. Critical: TWO heel-floor gaps while TWO forefoot-floor contact locations remain unchanged.",
+          "inputs": [
+            "E:/git冲突问题/rehab image/train/steps/115_T-LOW-037_s01.png"
+          ],
+          "error": "image generation failed: network error: error sending request",
+          "approx_elapsed_minutes": 18,
+          "final_output": null
+        },
+        {
+          "result": "成功",
+          "duration_seconds": 49.9,
+          "input_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-b8bf-76f1-b515-620de6eb4ab8/exec-e965ada8-5d7c-4cc9-b9f0-e3fb23a35c68.png",
+          "note": "网络失败后重试内置工具，相同 prompt；改为 s01 的原生成目录路径，和最终 s01 字节相同。不把路径改变宣称为网络故障根因。"
+        }
+      ],
+      "review": {
+        "method": "保存后使用 view_image 看完整 PNG，并与 s01 对照",
+        "action": "两足跟均清楚离开地面，双前足与足趾继续接地，呈坐位跖屈提踵终点；没有整腿抬起或整足悬空。",
+        "contact": "双前足接地可见，双跟与地面的空隙可见；骨盆仍承托于椅面。",
+        "proportion": "踝足连续，足趾没有明显蜷抓；膝/小腿/脚比例自然，双足透视关系与 s01 一致。",
+        "visibility": "保留相同胸下近景、椅面、双膝、两小腿、完整双足；单一姿势、无字无箭头。",
+        "appearance": "镜头、主体尺度、灰椅位置/形状、上衣/裤装与背景柔光与 s01 一致。",
+        "group_consistency": "双前足位置在同组视觉对照中保持，膝、髋、手和椅面位置一致，仅踝足及相应裤脚附近随提踵变化；并非逐像素锁定。",
+        "independent_parent_review": "主代理另以 view_image 审查并对比 s01：双跟抬起、双前足落地，前足位置、灰椅、膝与手位清楚且一致，可用。"
+      }
+    }
+  ],
+  "group_review": {
+    "sequence": "s01→s02→s01，慢放回复用 s01",
+    "frame": "两图均 1122×1402，含双膝、双足与椅面，局部机位及主体尺度一致",
+    "equipment": "同一稳固灰色无扶手椅；徒手、膝上无负荷/软垫/弹力带",
+    "visible_change": "双全掌落地→双前足接地且双跟抬起",
+    "non_overwrite": "原单图和既有共享进度 JSON 未改；两新步骤图首次使用目标名，未覆盖已存在图片"
+  },
+  "limitations": [
+    "两张静态合成照片可表达支撑与起终点，不能证明真实连续运动节奏、肌肉激活、力量、实际压力或全过程未滑动。",
+    "局部近景按清单裁去头部，最终图中不能直接核对面部身份；生成输入锁定同一参考人物且服装、肤色、体形一致。",
+    "侧面透视会自然遮挡部分远侧足趾/手指；两足跟、双前足接地和双膝等动作关键点仍可辨认。",
+    "生成编辑存在少量局部像素变化，同组一致性依据可见构图及接触点对照，未宣称严格像素相同。"
+  ],
+  "not_modified": [
+    "共享进度 JSON",
+    "原单图",
+    "清单",
+    "Git 状态",
+    "应用代码/桌面快捷方式"
+  ]
+}

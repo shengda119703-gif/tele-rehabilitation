@@ -1,0 +1,207 @@
+{
+  "range": "068-070",
+  "requested_full_batch": "061-070",
+  "date": "2026-10-14",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "generation_mode": "built-in image_gen local pose edits plus two accepted direct copies",
+  "frames": [
+    {
+      "sequence": 68,
+      "id": "T-LOW-045",
+      "name": "扶稳站姿屈膝：徒手至弹力带",
+      "category": "train",
+      "step": 1,
+      "filename": "068_T-LOW-045_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/068_T-LOW-045_s01.png",
+      "target_pose": "徒手扶稳站立，双脚接地，测试侧大腿自然向下",
+      "reused": false,
+      "reuse_source": null,
+      "prompt": "Identity-preserving rehabilitation photo edit. Input image 1 is the accepted camera and equipment base for this exercise group: it shows the woman side-on, holding a fixed grey waist-high rail, standing on one bare foot with the other knee bent. Input images 2–4 are the ORIGINAL strict same-woman face/age/black low ponytail/white short sleeve shirt/charcoal long trousers/soft real photo/grey-blue background references.\nProduce the STARTING STEP of the same exercise. Change ONLY the bent testing lower leg so its knee is gently straightened and that bare foot lowered onto the SAME flat floor directly next to the supporting foot. Both feet now rest fully on the ground, both thighs hang naturally downward. Keep the supporting leg, its grounded foot and every part of torso, head, face, upper body, hand contact on rail, relaxed other arm, rail location and dimensions, studio backdrop and floor, shadows, lens/camera angle, scale, crop and composition exactly fixed. The testing knee stays directly below its hip, do not swing whole leg back or sideways. No weights or resistance bands. Show a stable normal upright posture, complete woman and both feet, natural adult proportions. Preserve the original 1122×1402 vertical canvas, one single photograph, one moment, no text, number, diagram, arrows, inset, collage or extra person.",
+      "edit_target": "E:/git冲突问题/rehab image/train/068_T-LOW-045_扶稳站姿屈膝：徒手至弹力带.png",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "corrections": [],
+      "original_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-bb8ff641-faaf-4afa-8471-04ce67aa4e4f.png",
+      "visual_check": "双脚全足接地、测试大腿自然向下；双足虽在侧面投影相近但均可见。灰固定扶手与手接触可见，躯干直立，同参考人物和正常成人比例。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "378758920190492FD38FEED568D23053768A908CAB85E8E044D6E0E30BDC18EB"
+    },
+    {
+      "sequence": 68,
+      "id": "T-LOW-045",
+      "name": "扶稳站姿屈膝：徒手至弹力带",
+      "category": "train",
+      "step": 2,
+      "filename": "068_T-LOW-045_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/068_T-LOW-045_s02.png",
+      "target_pose": "同一测试大腿仍向下，只屈测试膝、脚跟向后抬，另一脚持续支撑",
+      "reused": true,
+      "reuse_source": "E:/git冲突问题/rehab image/train/068_T-LOW-045_扶稳站姿屈膝：徒手至弹力带.png",
+      "prompt": "直接复制复用已人工确认完全符合本步骤的旧单图；未调用生成。",
+      "edit_target": null,
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "corrections": [],
+      "original_generated_path": "E:/git冲突问题/rehab image/train/068_T-LOW-045_扶稳站姿屈膝：徒手至弹力带.png",
+      "visual_check": "旧单图已逐图确认完全符合首轮02：徒手无负重无带，大腿仍近竖直，仅测试膝屈曲使脚跟后抬；另一足全掌支持、躯干未明显前倾、扶手接触可见，故直接复用。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "36A02775AB0BC43CB4FD539FB43D0B0555A9C2B2CF8752F54EB7700DACC4C408"
+    },
+    {
+      "sequence": 69,
+      "id": "T-LOW-048",
+      "name": "臀桥位腘绳肌滑动：双腿到单腿离心",
+      "category": "train",
+      "step": 1,
+      "filename": "069_T-LOW-048_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/069_T-LOW-048_s01.png",
+      "target_pose": "仰卧肩背落垫，双膝弯曲，双脚跟各在滑片，骨盆落垫",
+      "reused": false,
+      "reuse_source": null,
+      "prompt": "Identity-preserving rehabilitation photo pose edit. Input image 1 is accepted STEP 02 camera/equipment base of the SAME group: woman on grey mat in a low double-leg bridge, both heels resting on the SAME two circular grey sliders. Input images 2–4 are the ORIGINAL strict identity/face/age/low black ponytail/white T-shirt/charcoal trousers/soft real-photo/grey-blue backdrop references.\nMake STEP 01 starting position by changing ONLY pelvis and associated upper thighs: lower pelvis gently so the buttocks and lower back REST on the grey mat, clearly no bridge and no air gap under pelvis. Keep shoulders, head and neck supported in their EXACT existing position on the same small grey head support, both arms/hands at same mat locations, torso length, both feet/heels at EXACT same positions firmly resting on the same sliders, toes natural, knee bend comfortably bent. Knees may settle slightly with pelvis lowering, but heels and sliders must not slide or move. Do not lift either foot, do not substitute one-leg version, towel or shoes. Keep the mat shape/position/edge, complete whole body including both bare feet/sliders, studio grey-blue background and floor, light, camera viewpoint, person scale, cropping and 1122×1402 vertical canvas completely unchanged. One real photograph, no text/arrows/labels/collage/inset, normal adult limb proportions.",
+      "edit_target": "E:/git冲突问题/rehab image/train/069_T-LOW-048_臀桥位腘绳肌滑动：双腿到单腿离心.png",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "corrections": [],
+      "original_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-36ac0790-b072-42bd-aa62-a189f0949913.png",
+      "visual_check": "肩背与骨盆落垫、双膝舒适弯，双脚跟各压原同一圆滑片；滑片只位于脚跟下，未换毛巾/单腿，完整头双足均在画面。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "972115A7EDB92CB2829E6270C8D5BB023AD567EA95309CF981786200EBCB9051"
+    },
+    {
+      "sequence": 69,
+      "id": "T-LOW-048",
+      "name": "臀桥位腘绳肌滑动：双腿到单腿离心",
+      "category": "train",
+      "step": 2,
+      "filename": "069_T-LOW-048_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/069_T-LOW-048_s02.png",
+      "target_pose": "双脚跟支撑的低幅桥式，双膝仍弯，肩背继续接触垫",
+      "reused": true,
+      "reuse_source": "E:/git冲突问题/rehab image/train/069_T-LOW-048_臀桥位腘绳肌滑动：双腿到单腿离心.png",
+      "prompt": "直接复制复用已人工确认完全符合本步骤的旧单图；未调用生成。",
+      "edit_target": null,
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "corrections": [],
+      "original_generated_path": "E:/git冲突问题/rehab image/train/069_T-LOW-048_臀桥位腘绳肌滑动：双腿到单腿离心.png",
+      "visual_check": "旧单图已确认完全符合首轮02：双足跟分别压灰圆滑片支撑、低幅双腿桥，肩背落垫，腰未明显顶起；故直接复用为本组机位基准。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "E44A60565B8AEB45C000D15231A34A6EAA8A6E7029A3964B91F1692104BB870C"
+    },
+    {
+      "sequence": 69,
+      "id": "T-LOW-048",
+      "name": "臀桥位腘绳肌滑动：双腿到单腿离心",
+      "category": "train",
+      "step": 3,
+      "filename": "069_T-LOW-048_s03.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/069_T-LOW-048_s03.png",
+      "target_pose": "保持同一低幅桥髋位，双跟同时带滑片前移短段，双膝更伸展",
+      "reused": false,
+      "reuse_source": null,
+      "prompt": "Precisely local rehabilitation pose edit. Input image1 is the ACCEPTED SAME GROUP step02 low double-leg bridge. Inputs2–4 are the ORIGINAL same-woman identity, clothing and grey-blue soft-light real-photo references. Make step03: keeping pelvis at EXACTLY SAME low lifted height and horizontal location, move BOTH heels and their SAME two circular grey sliders simultaneously a VERY SHORT distance forward toward the RIGHT in the photograph, around5–7cm in scene (about35–45 pixels), so BOTH knees become somewhat more extended. Both heels continue pressing their sliders, feet remain natural, do not lift either leg. Both knee bends reduce modestly; NEVER stretch shins/thighs longer to fake motion. Anatomy and limb lengths unchanged. Shoulders, head/pillow, back support, upper torso, arms/hands, pelvis height/location, mat shape/edge/location, camera/lens/angle, scale, scene and exact grey-blue floor/backdrop stay FIXED. This remains same LOW bridge, no pelvis dropping to mat, no exaggerated high bridge and no lower-back arch. Slider movement must be visible relative to unchanged mat edge. Both complete feet and both complete circular sliders stay inside the frame with margin; choose short enough slide that neither foot is cropped. Preserve same1122×1402 portrait crop and normal proportions; one photo one moment no arrows/labels/collage/inset or new equipment.",
+      "edit_target": "E:/git冲突问题/rehab image/train/069_T-LOW-048_臀桥位腘绳肌滑动：双腿到单腿离心.png",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "corrections": [],
+      "original_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-380900f2-7c68-4b37-b9a8-f9259f061e5f.png",
+      "visual_check": "双跟与同一对滑片同步向足端短滑出，较02双膝稍更伸；保留同一低幅骨盆高度且双跟未脱滑片，头、手、垫与镜头固定，滑片相对原垫边移动可见，两足与两滑片均完整。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "D9F6E123B46E7CD0FF9958576D8D01E993AACF6660922FF49E18DD4198DFAE9F"
+    },
+    {
+      "sequence": 70,
+      "id": "T-LOW-053",
+      "name": "仰卧带辅助温和后侧链牵伸",
+      "category": "train",
+      "step": 1,
+      "filename": "070_T-LOW-053_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/070_T-LOW-053_s01.png",
+      "target_pose": "仰卧，测试大腿舒适抬高且膝较弯，非弹性带绕前足本人双手握",
+      "reused": false,
+      "reuse_source": null,
+      "prompt": "Identity-preserving rehabilitation photo pose edit. Input image 1 fixes the SAME group camera, mat, floor, head pillow, full body scale/composition, opposite resting leg, woman's face and clothing. Input images 2–4 are ORIGINAL strict face/age/black low ponytail/white short-sleeved T-shirt/charcoal trousers/grey-blue soft-light real-photo references.\nCreate STEP 01 for gentle self-assisted hamstring stretch. Preserve the current raised TESTING THIGH femur position and HIP FLEXION ANGLE exactly, comfortably raised around70–80° relative to mat; keep hip and knee centre at the existing high thigh location. Change the TESTING KNEE so it is CLEARLY MORE BENT, approximately60–70° knee flexion, by moving only the lower leg and bare foot downward/forward. Do not drop or lift the whole thigh. Keep a grey NON-ELASTIC stretching strap looping securely around the BALL/FOREFOOT of this bare foot, not the toes. She personally holds the two strap ends with BOTH hands in a natural controllable gentle grip; hands and strap tension may settle to accommodate bent knee, elbows can relax; no external assistant. Foot and ankle remain relaxed and not strongly dorsiflexed. Head and neck stay supported on same grey pad, no neck curl. Other leg remains fully supported on mat in the exact same relaxed position, no bending/moving it. Natural adult thigh and shin lengths and no stretched anatomy. Keep full head/face, both hands, raised thigh/knee/foot, opposite foot and mat visible on SAME1122×1402 portrait canvas. Same camera/framing/grey-blue seamless studio and soft photo lighting. One moment, no labels/text/arrows/inset/collage or new apparatus. This bent-knee setup is not a straight-leg raise.",
+      "edit_target": "E:/git冲突问题/rehab image/train/070_T-LOW-053_仰卧带辅助温和后侧链牵伸.png",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "corrections": [],
+      "original_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-4fdc841b-bd61-4f5d-a848-374b4edf8ea2.png",
+      "visual_check": "较弯膝准备阶段，测试大腿已抬高；灰非弹性带绕前足非脚趾，本人双手握，头颈落灰支持垫、另一腿支持不动、足踝自然。未采用旧图近直膝作为首轮准备帧。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "42C69D34D16DC8AA4A707D7D3AE5069D57EB740B9796EC6291D1374440D486BD"
+    },
+    {
+      "sequence": 70,
+      "id": "T-LOW-053",
+      "name": "仰卧带辅助温和后侧链牵伸",
+      "category": "train",
+      "step": 2,
+      "filename": "070_T-LOW-053_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/070_T-LOW-053_s02.png",
+      "target_pose": "同组髋位、大腿高度与轴向保持，仅测试膝较起点伸展一些，膝仍弯，双手同样握绕前足非弹性带",
+      "reused": false,
+      "reuse_source": null,
+      "prompt": "Precisely local rehabilitation STEP02 edit of accepted STEP01. Image1 is the accepted starting frame of this exact group: woman supine on mat, head/neck supported, other leg relaxed resting straight on mat, testing THIGH raised and testing KNEE bent, non-elastic grey strap around forefoot held by both hands. Images2–4 are the ORIGINAL identity/face/age/low black ponytail/white short sleeve T-shirt/charcoal pants/grey-blue soft realistic photographic references.\nCRITICAL: freeze the HIP POSITION, femur angle, entire raised THIGH, and KNEE CENTRE exactly as image1. Only extend the testing KNEE somewhat, reducing the knee bend from its current roughly55–65° to a comfortable25–35°, still clearly SOFT/BENT and never locked. This changes only the LOWER LEG and FOOT about the FIXED knee; foot will move upward/closer to line of thigh naturally without raising the thigh or changing hip angle. Preserve original femur and shin lengths. Do not turn this into a straight-leg-raise. Keep the same grey NON-ELASTIC strap securely around the same BALL/FOREFOOT, not toes. Both hands personally hold the two ends, elbows relaxed and gentle controlled assistance; adjust strap span/hand hold only as needed for knee change. Foot/ankle neutral and relaxed, no forced dorsiflexion. Everything else must stay pixel-location consistent: head/neck support and face, upper torso, pelvis, opposite leg/foot, mat/edges, floor/backdrop, light, camera angle/lens/crop/person scale and1122×1402 vertical canvas. Head stays on pad, no neck curl. Complete raised foot, both hands and both legs visible. Normal adult body proportions; one photo/moment, no labels/arrows/diagram/collage/inset/new props.",
+      "edit_target": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-4fdc841b-bd61-4f5d-a848-374b4edf8ea2.png",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "corrections": [],
+      "original_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-3d04b3ce-f70c-48b4-80f3-609bae560097.png",
+      "visual_check": "与01髋位、测试大腿轴及抬高程度视觉一致，仅小腿转动使膝更伸仍留弯；同前足绕带与双手握，头颈和另一腿未动，未加颈屈或强踝背屈；正常成人比例。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "4931B9F8FEDB3BC677C29602DD4D9D285215C32132C204E36F36FFBA06D8BE35"
+    }
+  ],
+  "group_camera_check": [
+    {
+      "sequence": 68,
+      "base_step": 2,
+      "base_source": "E:/git冲突问题/rehab image/train/068_T-LOW-045_扶稳站姿屈膝：徒手至弹力带.png",
+      "review": "逐组对照01与02：同侧面全身机位、人物头身尺度、脸/发/衣裤、灰蓝背景地面、灰扶手与握持、支撑脚和躯干位置保持；改变仅为测试膝和小腿，未加负重或弹力带。",
+      "passed": true
+    },
+    {
+      "sequence": 69,
+      "base_step": 2,
+      "base_source": "E:/git冲突问题/rehab image/train/069_T-LOW-048_臀桥位腘绳肌滑动：双腿到单腿离心.png",
+      "review": "逐组对照01/02/03：同側面含双足机位、完整人物尺度、灰垫边/头垫/手位置与同一对圆灰滑片；01落髋、02低幅抬髋、03保同低幅髋位双跟约5–7cm短滑出，膝随之更伸展。滑出取短程确保足端完整；未变单腿或卸重离心。",
+      "passed": true
+    },
+    {
+      "sequence": 70,
+      "base_step": 1,
+      "base_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-4fdc841b-bd61-4f5d-a848-374b4edf8ea2.png",
+      "review": "逐组对照01与02：同侧面尺度、相同垫与头颈支持、另一腿/足位置、本人双手和非弹性带同前足绕法；测试髋位与大腿轴视觉保持，02仅由较弯膝到较伸但仍弯膝，未升级为直腿抬高。",
+      "passed": true
+    }
+  ]
+}

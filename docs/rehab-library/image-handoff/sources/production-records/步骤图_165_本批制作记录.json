@@ -1,0 +1,72 @@
+{
+  "batch": "用户指定 164/s01–s02；165/s01–s02；166/s01–s03；167/s01–s03 中的 165 两张",
+  "created_date": "2026-10-14",
+  "action_id": "T-AXU-053",
+  "action_index": 165,
+  "action_name": "Push-up Plus：墙面到固定高台",
+  "selected_variant": "墙面直臂支持，肩带小幅前移",
+  "generation_mode": "built-in image_gen one-image-per-call",
+  "reference_paths": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "source_specifications": [
+    "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md#action-165",
+    "E:/game/health-care-software-main/docs/rehab-library/SOURCE_v1.0.md#t-axu-053"
+  ],
+  "images": [
+    {
+      "filename": "165_T-AXU-053_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/165_T-AXU-053_s01.png",
+      "caption": "165 s01｜墙面直臂支持自然起点",
+      "step": "s01",
+      "prompt": "Use case: scientific-educational.\nAsset type: a single photorealistic rehabilitation exercise step image, T-AXU-053 Push-up Plus, wall version, step s01 natural straight-arm starting support.\nInput images: reference-01.png, reference-02.png and reference-03.png are fixed identity, outfit, complexion, hair, realism, lighting and gray-blue studio background references. They are NOT movement targets. Preserve exactly the same East Asian adult woman identity, natural face, black low ponytail, white short-sleeved plain fitted T-shirt and dark charcoal athletic pants.\nCreate ONE clean full-body vertical 4:5 photograph. Woman stands facing a solid plain light gray-blue wall at the RIGHT side of the image. Camera is fixed at waist/chest height, almost pure side view with only 5–10 degrees oblique toward her front so two wrists and two palms are separately visible. The side profile faces RIGHT. Frame the complete head-to-toe body, both complete plain white low-profile athletic shoes and ground contact, all elbows, wrists and hands, plus the solid wall. Leave a little margin above the head and below the soles. Use natural adult body proportions and correct limb lengths, a flat nonslip gray-blue studio floor and a soft shadow at both shoes.\nPOSE: Both feet flat and stable on the floor, parallel approximately hip width, knees relaxed, heels not lifted. She is close enough to the wall for a comfortable upright light forward lean, feet perhaps 45–55 cm from wall. Neck neutral, gaze naturally forward. Head, trunk, hips and legs form a comfortable long nearly straight line with no lumbar arch. Both arms reach forward to the wall at comfortable shoulder/chest height, both palms fully and visibly flat against the wall, fingers naturally pointing upward, hands about shoulder-width apart. Both elbows are nearly straight with natural softness, NOT visibly bent, NOT forcefully locked. Both wrists have natural weight-bearing extension. Chest/ribcage is in the natural relaxed starting position of straight-arm wall support, scapulae neutral: do not already round the upper back or push shoulder blades strongly outward.\nThe upper arms, elbows and wrists must be clear for clinical teaching. Both palms really touch the same vertical wall. Anatomically correct shoulders, elbows, wrists, hands and fingers, no body-wall intersections. This is the starting posture for a later subtle shoulder-girdle protraction, NOT a bent-elbow wall push-up.\nStyle: highly realistic studio instructional photograph, soft even diffused lighting, natural skin texture, understated neutral expression, same cool gray-blue colors and photographic quality as the references.\nConstraints: single person, single frame, no collage, no duplicate ghost figure, no arrows, no captions, no numbers, no labels, no watermarks, no medical costume, no furniture, no ball, no extra equipment. Do not crop the feet. Do not change the referenced identity or outfit.",
+      "reused": false,
+      "source_generated_image_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-5710-7381-a34d-aef03dd9f9b4/exec-12d6ef61-0a6e-4cec-8b35-9d1b274b06b6.png",
+      "selected_version": "第一次生成",
+      "review": {
+        "status": "已逐张查看，通过；待主代理二次审查",
+        "identity_background": "与三张固定参考一致：东亚成年女性、黑色低马尾、白色短袖 T 恤、深灰运动裤、灰蓝摄影背景；补充白色无标志运动鞋。",
+        "action": "墙在右侧，双掌接墙，两肘接近伸直，双脚平稳落地，胸廓为直臂支持自然起点，未屈肘推撑。",
+        "proportion": "全身完整，头部和双鞋不裁切，双掌、手腕和双肘清楚；成人躯干与四肢比例自然。",
+        "support_equipment": "双掌可見平贴墙面；双足鞋底贴地；无多余器械。",
+        "limitations": "侧位近侧肩略遮挡远侧肩，双腕双手仍可辨；不据图确认实际受力或肩胛精确角度。"
+      },
+      "sha256": "583BACA9541F69188F8DB6CED449E9AA1E39EBBF28E81680C32BE808492176B8",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1716759
+    },
+    {
+      "filename": "165_T-AXU-053_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/165_T-AXU-053_s02.png",
+      "caption": "165 s02｜保持直臂，胸廓轻离墙的 Plus 终点",
+      "step": "s02",
+      "prompt": "Use case: identity-preserve / scientific-educational.\nProduce the second step of wall Push-up Plus by editing ONLY the first supplied full-body wall-support photo (s01), keeping the woman's exact identity, white shirt, charcoal pants, white sneakers, wall, floor, fixed camera, framing and natural photographic proportions. The other three input photos are supporting identity references.\nCritical movement correction: make the second posture perceptibly distinct from the starting photo. Her sternum and ribcage move approximately 3–4 cm AWAY FROM THE WALL, towards the LEFT of the image, using a gentle shoulder blade protraction. The front-of-chest outline should sit visibly a little farther LEFT than in the s01 target. Her neutral head and neck follow the ribcage gently LEFT; do not move her face closer to the wall. Shoulder blades glide around the sides of the ribcage, so the upper back gains only a broad, shallow smooth convex curve. Keep her head upright, chin natural, no dropped head. This is a small real scapular movement, never a large hunched spine.\nKeep BOTH palms fully flat at their EXACT original wall positions: the rightward hand endpoints must not change. Keep both heels and entire shoes at EXACT original floor positions: do not shift feet or lift heels. BOTH ELBOWS MUST REMAIN STRAIGHT with their original natural softness, no further bend at all. Preserve realistic arm lengths: the small change is accommodated by the shoulder blades gliding around the ribcage, not bent elbows. Keep pelvis and lower trunk stable and nearly straight, no backward buttock displacement, no new waist arch.\nShow the same complete head-to-toe full-body composition, clearly visible both elbows and wrists, both palms touching the wall and both complete shoes on floor.\nUse natural realistic anatomy and the same cool gray-blue studio photography. NO text, captions, arrows, labels, watermark, diagrams, collage, extra equipment, ghost figure, camera or scale changes.\nThis step must show a subtle but readily visible chest retreat and gentle shoulder-girdle protraction, not a wall push-up and not an identical copy of s01.",
+      "reused": false,
+      "source_generated_image_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-5710-7381-a34d-aef03dd9f9b4/exec-50387ff8-21f5-4ed3-9607-6ca8f643f2ec.png",
+      "edit_anchor_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-5710-7381-a34d-aef03dd9f9b4/exec-12d6ef61-0a6e-4cec-8b35-9d1b274b06b6.png",
+      "selected_version": "第二次生成，s01 定向编辑",
+      "review": {
+        "status": "已逐张查看，通过；待主代理二次审查",
+        "identity_background": "同一人物、衣着、白鞋、右侧墙、灰蓝地面、光线和构图沿用 s01。",
+        "action": "相较 s01 胸廓轮廓和头颈小幅向画面左侧退开，肩带前移、上背出现浅自然弧度；双肘仍接近伸直，没有变成墙面屈肘推撑，也没有夸张圆背低头。",
+        "proportion": "相机尺度一致；手掌和脚位置保持，鞋底落地，头脚完整；肘腕和手臂连续自然。",
+        "support_equipment": "双掌仍贴同一墙面，手高保持；双脚没有抬跟、换位或离地。",
+        "limitations": "动作幅度较小，须以同尺度 s01 对照观察；不据图确认肌肉激活、真实肩胛角度或实际厘米量。"
+      },
+      "sha256": "D54474B1E2C4DFD7C9DB393AB634AA553F046D9806FB6CF7B693C5F54F7C841A",
+      "discarded_attempts": [
+        {
+          "source_generated_image_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-5710-7381-a34d-aef03dd9f9b4/exec-7cef6084-b6e1-4b5a-a8cb-3ff3ea235d06.png",
+          "prompt": "Use case: identity-preserve / scientific-educational.\nAsset type: ONE single photorealistic rehabilitation exercise step, T-AXU-053 Push-up Plus wall version, s02 small scapular protraction endpoint.\nInput image 1 is the EDIT TARGET and exact composition anchor: the supplied s01 wall-support full-body photograph. Supporting images 2–4 are fixed identity/outfit/background references only.\nEdit the s01 photograph to show only a SMALL shoulder-girdle protraction. Keep the very same woman identity, face, hair, expression, white T-shirt, charcoal pants, white sneakers, wall on right, floor, shadows, lighting, photographic style, camera position, focal length, framing, and image size completely unchanged. Do not zoom or reframe. The feet and soles must stay at their exact s01 positions. Both heels remain flat. Both palms and all fingers must remain planted at exactly the same positions and same height on the right wall. Both wrists keep the same wall-support shape. Both elbows stay almost fully straight with exactly the same small natural softness as s01: absolutely no extra elbow bending.\nCHANGE ONLY: With hands and feet fixed, she gently pushes through both palms so her upper chest/ribcage retreats just approximately 2–3 cm LEFT, away from the wall. The shoulder girdle gently protracts: the upper back contour gains only a very shallow natural broadening as the shoulder blades glide forward around the rib cage. This is a visibly small shoulder-girdle movement. Keep head neutral and aligned with body, chin neither dropped nor poked forward, gaze forward. Keep lower trunk, pelvis and knees in stable support; no exaggerated upper-back hump, no rounded whole spine, no lumbar arch, no buttocks sticking out. Shoulder joint to hand connection stays anatomically valid with near-straight arms. Preserve normal adult body proportions and matching arm lengths. The new chest position must differ subtly but perceptibly from s01, while the palms and feet remain fixed.\nThis must clearly illustrate the Plus phase AFTER a straight-arm support, not a bent-elbow push-up. Both arms, elbows, wrists, two palms against the wall, and both complete shoes and floor contacts remain visible.\nConstraints: one person, one clean full-body photograph, no captions, labels, text, arrows, diagrams, watermarks, multiple panels, ghost bodies or extra equipment.",
+          "reason": "与 s01 差异过小，胸廓离墙动作不够清楚，未选用；源图保留于生成目录。"
+        }
+      ],
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1667447
+    }
+  ]
+}

@@ -50,6 +50,81 @@ function attachments(owner){return{
 const DATE=/^\d{4}-\d{2}-\d{2}$/,TIME=/^(?:[01]\d|2[0-3]):[0-5]\d$/;
 function day(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function validDate(value){if(typeof value!=='string'||!DATE.test(value))return false;const time=Date.parse(value+'T12:00:00');return Number.isFinite(time)&&new Date(time).toISOString().slice(0,10)===value;}
+// Independent saved arrangements use the ORIGINAL Store, not visual plans.
+// Numeric limits mirror original training_plans.prescription_settings syntax;
+// they are storage bounds, not a new dose recommendation or clinical rule.
+function validateManualArrangements(records,owner){
+ if(records===undefined)return;
+ const uuid=/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/,bad=()=>{throw Error('已有人工安排结构或来源无效');},ids=new Set();
+ const keys=(v,k)=>v&&typeof v==='object'&&!Array.isArray(v)&&canonical(Object.keys(v).sort())===canonical(k.sort());
+ if(!Array.isArray(records)||records.length>250)bad();
+ for(const r of records){
+  if(!r||r.schema_version!==1||!uuid.test(r.id)||ids.has(r.id)||r.revision!==1||r.record_origin!=='manual_saved'||r.measurement_version!==null||r.assessment_ref!==null||!Number.isFinite(Date.parse(r.created_at))||typeof r.name!=='string'||!r.name.trim()||r.name.length>80)bad();ids.add(r.id);
+  if(r.context?.participant_id!==owner||r.context.provider!=='phone-local-1'||r.context.source_context!=='PHONE_LOCAL:SELF_USE')bad();
+  if(!Array.isArray(r.items)||r.items.length!==1)bad();const e=r.items[0],s=e.settings,p=r.original_payload;
+  if(!uuid.test(e.key)||e.key!==r.id||typeof e.exercise_id!=='string'||!e.exercise_id||!['left','right'].includes(e.side)||typeof e.measurement_contract!=='string'||!e.measurement_contract)bad();
+  if(!keys(s,['target_reps','target_sets','rest_between_sets_s','target_angle_deg','needs_companion'])||!Number.isInteger(s.target_reps)||s.target_reps<1||s.target_reps>999||!Number.isInteger(s.target_sets)||s.target_sets<1||s.target_sets>20||s.rest_between_sets_s!==null&&(!Number.isFinite(s.rest_between_sets_s)||s.rest_between_sets_s<0||s.rest_between_sets_s>1800)||s.target_angle_deg!==null||typeof s.needs_companion!=='boolean')bad();
+  if(!keys(p,['operation_id','name','exercise_id','side','settings'])||p.operation_id!==r.id||p.name!==r.name||p.exercise_id!==e.exercise_id||p.side!==e.side||canonical(p.settings)!==canonical(s))bad();
+ }
+}
+function validatePractices(records,owner){
+ if(records===undefined)return;
+ const uuid=/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/,bad=()=>{throw Error('独立练习记录结构或来源无效');};
+ const integer=(n,max)=>Number.isInteger(n)&&n>=0&&n<=max,optional=(n,max)=>n===null||integer(n,max);
+ if(!Array.isArray(records)||records.length>250)bad();
+ const ids=new Set();let open=0;
+ for(const r of records){
+  if(!r||![1,2].includes(r.schema_version)||!uuid.test(r.id)||ids.has(r.id)||!['PRACTICING','COMMITTED'].includes(r.state))bad();ids.add(r.id);
+  if(r.context?.participant_id!==owner||r.context.provider!=='phone-local-1'||r.context.source_context!=='PHONE_LOCAL:SELF_USE'||r.context.policy_version!=='phone-saved-arrangement-guided-1')bad();
+  const p=r.plan_ref,s=r.start_payload;
+  if(!p||!uuid.test(p.id)||!uuid.test(p.entry_key)||!Number.isInteger(p.revision)||p.revision<1||!s||s.operation_id!==r.id||s.plan_id!==p.id||s.entry_key!==p.entry_key||s.plan_revision!==p.revision)bad();
+  if(typeof r.exercise_id!=='string'||!['left','right'].includes(r.side)||!Number.isFinite(Date.parse(r.created_at))||!r.settings||!Number.isInteger(r.settings.target_reps)||r.settings.target_reps<1)bad();
+  if(r.visual_session_ref!==null||r.confirmed_count!==null||r.formal_plan_contribution!==null)bad();
+  if(r.schema_version===2){
+   if(r.sequence_policy!=='phone-guided-sequence-1'||!uuid.test(r.journey_id)||!Array.isArray(r.arrangement_sequence)||r.arrangement_sequence.length<1||r.arrangement_sequence.length>53||!integer(r.sequence_index,r.arrangement_sequence.length-1)||typeof r.journey_closed!=='boolean'||r.successor_id!==null&&!uuid.test(r.successor_id))bad();
+   const entryKeys=new Set();for(const e of r.arrangement_sequence){
+    const t=e?.settings;if(!e||!uuid.test(e.key)||entryKeys.has(e.key)||typeof e.exercise_id!=='string'||!e.exercise_id||!['left','right'].includes(e.side)||!t||!Number.isInteger(t.target_reps)||t.target_reps<1||t.target_reps>999||!Number.isInteger(t.target_sets)||t.target_sets<1||t.target_sets>20||t.rest_between_sets_s!==null&&(!Number.isFinite(t.rest_between_sets_s)||t.rest_between_sets_s<0||t.rest_between_sets_s>1800))bad();entryKeys.add(e.key);
+   }
+   const current=r.arrangement_sequence[r.sequence_index];if(current.key!==p.entry_key||current.exercise_id!==r.exercise_id||current.side!==r.side||!Number.isInteger(r.set_index)||r.set_index<1||r.set_index>current.settings.target_sets)bad();
+   if(r.predecessor_id!==undefined){const c=r.continue_payload;if(!uuid.test(r.predecessor_id)||!c||canonical(Object.keys(c).sort())!==canonical(['operation_id','manual_arrangement_confirmed','support_ready','companion_present'].sort())||c.operation_id!==r.id||['manual_arrangement_confirmed','support_ready','companion_present'].some(k=>typeof c[k]!=='boolean'))bad();}
+   else if(r.journey_id!==r.id||r.set_index!==1||r.continue_payload!==undefined)bad();
+   if(r.close_payload!==undefined){if(r.state!=='COMMITTED'||!r.journey_closed||r.successor_id||canonical(Object.keys(r.close_payload).sort())!==canonical(['operation_id'])||!uuid.test(r.close_payload.operation_id)||!Number.isFinite(Date.parse(r.journey_closed_at)))bad();}
+   if(r.state==='PRACTICING'&&(r.journey_closed||r.successor_id))bad();
+  }
+  if(r.guidance_policy!==undefined||r.arrangement_ref!==undefined||s.manual_arrangement_confirmed!==undefined){
+   if(r.guidance_policy!=='phone-explicit-manual-practice-1'||r.formal_plan_ref!==null||r.assessment_ref!==null||canonical(r.arrangement_ref)!==canonical({...p,kind:'MANUAL_SAVED'})||s.manual_arrangement_confirmed!==true||s.support_ready!==true||typeof s.companion_present!=='boolean'||r.settings.needs_companion&&!s.companion_present)bad();
+   if(canonical(Object.keys(s).sort())!==canonical(['operation_id','plan_id','plan_revision','entry_key','manual_arrangement_confirmed','support_ready','companion_present'].sort())||r.execution_grant?.policy_version!==r.guidance_policy||r.execution_grant.allowed!==true)bad();
+   if(r.execution_grant.formal_measurement_allowed!==null||r.execution_grant.companion_required!==r.settings.needs_companion)bad();
+  }
+  if(r.state==='PRACTICING'){open++;if(r.finish_payload!==null||r.record_origin!=='GUIDED_PRACTICE'||r.practice_feedback!==undefined)bad();continue;}
+  const f=r.finish_payload;
+  if(!f||!uuid.test(f.operation_id)||!optional(f.count,10000)||!integer(f.elapsed_ms,86400000)||!['ended','completed_set','discomfort'].includes(f.reason)||!f.feedback||!optional(f.feedback.pain,10)||!optional(f.feedback.fatigue,10))bad();
+  if(r.self_reported_count!==f.count||r.count_scope!=='set_total'||r.schema_version===1&&r.set_index!==1||r.elapsed_source!=='frontend_active_time_not_observed_hold'||r.record_origin!==(f.count===null?'GUIDED_PRACTICE':'SELF_RECORDED')||!Number.isFinite(Date.parse(r.ended_at)))bad();
+  if(!Array.isArray(r.mode_segments)||r.mode_segments.length!==1)bad();const segment=r.mode_segments[0];
+  if(segment.mode!=='GUIDED'||segment.source!=='GUIDED_PRACTICE'||segment.time_basis!=='device_receipt_time'||segment.start!==r.created_at||segment.end!==r.ended_at||segment.set_index!==r.set_index)bad();
+  if(r.schema_version===2&&f.reason!=='completed_set'&&!r.journey_closed)bad();
+  if(r.practice_feedback!==undefined){
+   const f=r.practice_feedback,keys=new Set(),same=(a,b)=>canonical(a)===canonical(b);
+   if(!Number.isInteger(f.revision)||f.revision<1||!Array.isArray(f.operations)||f.operations.length!==f.revision||f.revision>100)bad();
+   for(let index=0;index<f.operations.length;index++){
+    const o=f.operations[index],v=o.values;
+    if(!uuid.test(o.operation_id)||keys.has(o.operation_id)||o.expected_revision!==index||o.revision!==index+1||!Number.isFinite(Date.parse(o.saved_at)))bad();keys.add(o.operation_id);
+    if(!v||!same(Object.keys(v).sort(),['fatigue','note','pain'])||!optional(v.pain,10)||!optional(v.fatigue,10)||v.note!==null&&(typeof v.note!=='string'||!v.note.trim()||v.note.length>500)||Object.values(v).every(n=>n===null))bad();
+   }
+   const last=f.operations.at(-1);if(!same(f.values,last.values)||f.saved_at!==last.saved_at)bad();
+  }
+ }
+ if(open>1)bad();
+ const byId=new Map(records.map(r=>[r.id,r]));
+ for(const r of records.filter(r=>r.schema_version===2)){
+  if(r.predecessor_id){
+   const parent=byId.get(r.predecessor_id);if(!parent||parent.schema_version!==2||parent.state!=='COMMITTED'||parent.finish_payload.reason!=='completed_set'||parent.journey_closed||parent.successor_id!==r.id||parent.journey_id!==r.journey_id||parent.plan_ref.id!==r.plan_ref.id||parent.plan_ref.revision!==r.plan_ref.revision||canonical(parent.arrangement_sequence)!==canonical(r.arrangement_sequence)||canonical(parent.context)!==canonical(r.context)||parent.guidance_policy!==r.guidance_policy)bad();
+   const same=r.sequence_index===parent.sequence_index&&r.set_index===parent.set_index+1,next=r.sequence_index===parent.sequence_index+1&&r.set_index===1&&parent.set_index===parent.arrangement_sequence[parent.sequence_index].settings.target_sets;if(!same&&!next)bad();
+   if(r.guidance_policy==='phone-explicit-manual-practice-1'&&['manual_arrangement_confirmed','support_ready','companion_present'].some(k=>r.start_payload[k]!==r.continue_payload[k]))bad();
+  }
+  if(r.successor_id){const child=byId.get(r.successor_id);if(r.journey_closed||!child||child.predecessor_id!==r.id)bad();}
+ }
+}
 function validateBackup(b){
  const bad=()=>{throw Error('备份结构或测量版本无效');};
  if(b?.kind!=='ankang-phone-backup'||b.version!==2||!b.data||JSON.stringify(b).length>12*1048576)bad();
@@ -64,6 +139,13 @@ function validateBackup(b){
  for(const key of Object.keys(v.kv))if(!/^(profile|health|tasks|audit|notifications|family|healthkit-revision|sync-consent|sync-summary):/.test(key)||![v.owner,...members].some(id=>key.endsWith(':'+id))||key.includes('__proto__'))bad();
  for(const j of v.jobs){if(!uuid.test(j.id)||!['assessment','training','fitness','posture'].includes(j.mode)||!['done','failed'].includes(j.state)||!['left','right'].includes(j.side)||!Number.isFinite(Date.parse(j.created_at)))bad();if(j.state==='done'&&(j.measurement_version!=='android-local-projection-1'||j.result?.local_report?.contract!=='android-local-projection-1'||!j.result.summary))bad();}
  const ids=new Set(v.jobs.map(j=>j.id));if(ids.size!==v.jobs.length)bad();
+ validatePractices(v.practices,v.owner);
+ validateManualArrangements(v.manualArrangements,v.owner);
+ for(const r of v.practices||[])if(r.schema_version===2&&canonical(r.settings)!==canonical(r.arrangement_sequence[r.sequence_index].settings))bad();
+ for(const r of v.practices||[])if(r.guidance_policy==='phone-explicit-manual-practice-1'){
+  const original=(v.manualArrangements||[]).find(a=>a.id===r.arrangement_ref.id&&a.revision===r.arrangement_ref.revision)?.items.find(e=>e.key===r.arrangement_ref.entry_key);
+  if(original&&(original.exercise_id!==r.exercise_id||original.side!==r.side||canonical(original.settings)!==canonical(r.settings)))bad();
+ }
  for(const plan of v.plans){if(!uuid.test(plan.id)||!Number.isInteger(plan.revision)||!Array.isArray(plan.items)||plan.items.length>53)bad();for(const i of plan.items)if(!uuid.test(i.key)||!['left','right'].includes(i.side)||!Number.isInteger(i.settings?.target_reps)||i.settings.target_reps<1||i.settings.target_reps>5||!ids.has(i.assessment_id))bad();}
  // Permissions are server-authoritative and never revived from a stale backup.
  for(const [key,value] of Object.entries(v.kv))if(key.startsWith('health:')&&Array.isArray(value?.health?.chat))for(const message of value.health.chat){delete message.conversation;delete message.conversationContext;}
@@ -151,6 +233,6 @@ function backupData(value){
  for(const key of Object.keys(data.kv))if(key.startsWith('care:'))delete data.kv[key];
  return data;
 }
-root.PhoneStore={Store,files,attachments,applyDaily,createCarePort,backupData,day,validDate,validateBackup,KEY,LIN_KEY,ACTIVE_KEY,CLOUD_PREFIX,cloudKey,selectedKey};
+root.PhoneStore={Store,files,attachments,applyDaily,createCarePort,backupData,day,validDate,validateBackup,validatePractices,validateManualArrangements,KEY,LIN_KEY,ACTIVE_KEY,CLOUD_PREFIX,cloudKey,selectedKey};
 if(typeof module!=='undefined')module.exports=root.PhoneStore;
 })(globalThis);

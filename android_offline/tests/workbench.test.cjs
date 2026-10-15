@@ -36,7 +36,7 @@ async function environment(){
  }
  const c={crypto,structuredClone,Date,console,Blob,File,URL,Headers,Response,TextDecoder,TextEncoder,Uint8Array,AbortController,DOMException,setTimeout,clearTimeout,localStorage:storage,location:{origin:'https://test.invalid',href:'/'},document:{addEventListener(){}},Element:class{},MutationObserver:class{},XMLHttpRequest:class{},alert:()=>{},confirm:()=>true};
  c.fetch=async()=>{throw Error('Network unexpectedly requested')};c.AnkangBrowserAccount={origin:identity.origin,identity:()=>cloud.identity,request};vm.createContext(c);vm.runInContext(productBundle(),c);
- for(const name of ['store.js','lin-profile.js','engine.js','cloud.js'])vm.runInContext(fs.readFileSync(path.resolve(__dirname,'../web/'+name),'utf8'),c);
+ for(const name of ['store.js','lin-profile.js','engine.js','practice.js','cloud.js'])vm.runInContext(fs.readFileSync(path.resolve(__dirname,'../web/'+name),'utf8'),c);
  let videos=0;c.PhoneStore.files.put=async()=>{videos++;};c.PhoneStore.files.all=async()=>[];
  c.PhoneMotion={active:false,errors:new Map(),catalog:async()=>catalogue,spec:async()=>spec,analyze:async()=>{},pause(){}};
  vm.runInContext(fs.readFileSync(path.resolve(__dirname,'../web/local-api.js'),'utf8'),c);await c.PhoneLocal.ready;

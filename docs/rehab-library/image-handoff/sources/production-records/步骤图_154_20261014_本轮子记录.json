@@ -1,0 +1,68 @@
+{
+  "created_date": "2026-10-14",
+  "generator": "built-in tools.image_gen__imagegen",
+  "cli_or_api_used": false,
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_original_card": "E:/git冲突问题/安康_康复评估与分级训练动作库.md#t-axu-051",
+  "viewed_original_existing_photo": "E:/git冲突问题/rehab image/train/154_T-AXU-051_墙天使：舒适范围滑动.png",
+  "action_number": "154",
+  "action_id": "T-AXU-051",
+  "action_name": "墙天使：舒适范围滑动",
+  "scope": "首轮基础版本：s01低位起点、s02舒适上滑终点；正面全身机位。未修改原图、既有进度或应用仓库。",
+  "shared_reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "images": [
+    {
+      "step": "s01",
+      "reused": false,
+      "exact_prompt": "Use case: scientific-educational, photorealistic rehabilitation exercise photograph.\nAsset type: single independent step photograph for T-AXU-051 wall angel, s01 LOW START position.\nInput images 1, 2, 3 are visual identity and photographic style references only. Preserve this exact adult East Asian woman: face, age, natural skin texture, normal slim adult proportions, dark ponytail, fitted plain white short-sleeved crew-neck T-shirt and dark charcoal full-length fitted athletic trousers. Repose her as specified; reference arm positions are not the exercise instruction.\nScene: a plain smooth cool light gray-blue studio wall with a matching gray-blue floor and subtle visible wall-floor boundary, matching the references' background hue and soft neutral diffused studio lighting. No other objects. Unbranded low-profile white athletic shoes.\nOne woman in ONE pose, ONE photograph, portrait 4:5 composition. Full body, entire head, both hands and both feet visible with comfortable margins. Camera fixed straight frontal at torso height, natural 70 mm perspective, no wide-angle distortion.\nExact pose: she faces the camera with her upper back lightly supported by the wall. Feet hip-width apart, flat and comfortably a little forward of the wall, knees soft, stable upright torso. Natural small lumbar gap is allowed; do not force head or lower back flat to wall. Her arms are at the LOW START of a gentle wall angel: both upper arms open symmetrically only about 35 to 40 degrees away from her sides, elbows bent approximately 90 degrees; elbows clearly BELOW shoulder level, near lower ribs, and hands near shoulder level. Forearms point diagonally up and slightly outward, forming a relaxed LOW W shape. Palms face forward, fingers naturally relaxed and anatomically correct; arms lie close to the wall without forced wrist contact. Shoulders relaxed and level, not shrugged. Neutral comfortable head and neck, gaze toward camera, calm expression. Ribs stay down and torso stable, no lumbar arch or exaggerated chest lift.\nConstraints: natural adult head-to-body and limb ratios, continuous anatomically correct joints, exactly two arms and two legs, five fingers on each hand. Visible support relation to wall, shoes on floor. No text, letters, labels, step numbers, arrows, symbols, logos, watermark, inset, collage, duplicate pose or ghost limbs. This is a low starting pose, not overhead or shoulder-level goalpost.",
+      "input_image_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-501c-73b3-a29e-8f797da3870a/exec-09125e9a-ac99-4db6-a1eb-b37b7e2d7561.png",
+      "tool_output_hint": "Generated images are saved to C:\\Users\\Administrator\\.codex\\generated_images\\01a13a83-501c-73b3-a29e-8f797da3870a as C:\\Users\\Administrator\\.codex\\generated_images\\01a13a83-501c-73b3-a29e-8f797da3870a\\exec-09125e9a-ac99-4db6-a1eb-b37b7e2d7561.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/154_T-AXU-051_s01.png",
+      "sha256": "DCBAD4FD8D82D939FD18231D1A03BF05BC543D3894BA626608238AFF42D4C5C7",
+      "bytes": 1784642,
+      "visual_review": {
+        "method": "view_image逐张目视",
+        "result": "通过",
+        "pose": "正面全身；上背轻靠灰蓝墙；双脚踩地位于墙前，双肘低于肩、双肘弯曲，双手位于肩附近构成低W；肩放松，头颈中立，躯干无明显仰腰。",
+        "identity_style": "女性白色短袖、深灰长裤、黑色马尾、白鞋、灰蓝棚拍与参考一致；两张面部、服装、光线一致。",
+        "anatomy": "成人头身及四肢比例自然，双臂双腿完整，手指关节连接无明显异常，完整头手脚可见。",
+        "content": "一人一姿势，无图内文字、编号、箭头、拼图或水印。",
+        "limits": "正面照片可见靠墙关系，但不能直接量化腰部间隙、肌肉发力或受力。"
+      }
+    },
+    {
+      "step": "s02",
+      "reused": false,
+      "exact_prompt": "Use case: scientific-educational, identity-preserve photographic pose edit.\nAsset type: single independent step photograph for T-AXU-051 wall angel, s02 COMFORTABLE UPWARD END position.\nInput image 1 is the approved s01 wall-angel starting photograph and the edit target. Input images 2, 3, 4 are the original visual identity/style references for the same adult East Asian woman.\nPrimary request: make ONE independent full-body photograph of this SAME woman at the comfortable upward endpoint of a wall angel, by changing ONLY her two arms from the low starting pose to a symmetrically higher pose.\nKeep exactly unchanged: her facial identity and calm expression, black ponytail, white short-sleeve crew-neck T-shirt, charcoal fitted full-length trousers, white athletic shoes, natural body proportions, neutral head/neck, torso and pelvis, leg and foot positions, feet flat and a little forward of wall, upper back light wall support, gray-blue wall and floor, the wall-floor boundary, soft neutral studio light and shadow, camera position and focal perspective, portrait 4:5 frame, full-body scale and framing. Keep both entire hands and feet visible. Do not re-center, crop or change her stance.\nExact new arm pose: both arms have slid UP along a comfortable symmetric wall-angel route. Raise both elbows from low ribs to just slightly ABOVE shoulder height, upper arms approximately 100 to 110 degrees from the torso. Each elbow remains comfortably bent approximately 85 to 100 degrees. Both forearms point diagonally upward; hands now above crown level, forming a relaxed symmetrical high W shape. Palms face camera, wrists neutral, natural fingers. Arms lie close to the wall but do not force the hand backs to touch. This is a modest comfortable endpoint, not maximally straight overhead arms. Hands and elbows substantially higher than input image 1.\nShoulders remain relaxed and level without shrugging; torso upright with no back arch, no rib flare, no chest lift, no head tilt. Do not force head or lower back onto wall. Preserve exactly two arms and two legs with continuous natural joints and five-finger hands.\nNo text, labels, numbers, arrows, logos, watermark, inset, collage, motion trail, duplicate pose, ghost limbs or extra objects. One posture in one photograph.",
+      "input_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a83-501c-73b3-a29e-8f797da3870a/exec-09125e9a-ac99-4db6-a1eb-b37b7e2d7561.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-501c-73b3-a29e-8f797da3870a/exec-d9478682-8616-4b8a-b5a2-b40e1d9d9125.png",
+      "tool_output_hint": "Generated images are saved to C:\\Users\\Administrator\\.codex\\generated_images\\01a13a83-501c-73b3-a29e-8f797da3870a as C:\\Users\\Administrator\\.codex\\generated_images\\01a13a83-501c-73b3-a29e-8f797da3870a\\exec-d9478682-8616-4b8a-b5a2-b40e1d9d9125.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/154_T-AXU-051_s02.png",
+      "sha256": "F1C6E7EEC0B81DBE80472C298713C8A36F1AC51D6E1DA9B4DB0FFE052AD1FDA3",
+      "bytes": 1750926,
+      "visual_review": {
+        "method": "view_image逐张目视及与s01比较",
+        "result": "通过",
+        "pose": "双肘与双手对称上移；肘约肩高略上、自然弯曲，双手高于头顶；双脚、背部支持、头颈及躯干保持，肩无明显耸起，未以仰腰抬手；不用强贴头腰。",
+        "identity_style": "与s01同人物、同服装、同背景、同光线；双腿、鞋、墙地边界、人物尺度及机位保持一致。",
+        "anatomy": "成人比例自然，双臂双腿完整，手指及肘腕连接连续；完整头手脚可见，上举手与画面边缘仍留出间距。",
+        "content": "一人一姿势，无图内文字、编号、箭头、拼图或水印。",
+        "limits": "正面照片不能直接判定腰部间隙、真实负荷或肩胛骨角度。"
+      }
+    }
+  ]
+}

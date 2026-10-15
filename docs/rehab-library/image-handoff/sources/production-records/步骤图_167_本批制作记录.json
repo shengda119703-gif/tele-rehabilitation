@@ -1,0 +1,118 @@
+{
+  "version": "1.0",
+  "date": "2026-10-14",
+  "action_number": 167,
+  "action_id": "T-AXU-052",
+  "title": "墙面持球小圈与短时支持",
+  "method": "built-in image_gen; one asset per call",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md#action-167",
+  "source_library": "E:/game/health-care-software-main/docs/rehab-library/SOURCE_v1.0.md#t-axu-052",
+  "reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "sequence": "s01 → s02 → 复用 s01 停住 → s03 → 复用 s01；结束先卸力再取球。",
+  "notes": "s02 和 s03 分别以 s01 为唯一锚点。原始 PNG 无文字或箭头。静态瞬间不能单独证明绕圈方向；root 会在 HTML 和独立 SVG 中加入可开关方向轨迹。保留原图，球位小幅上/下变化不足一个球径，不将其当作大范围上下滑动动作。",
+  "images": [
+    {
+      "filename": "167_T-AXU-052_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/167_T-AXU-052_s01.png",
+      "source_generated_image": "C:/Users/Administrator/.codex/generated_images/01a13a84-eb7f-7132-b0ce-361efb7d35bf/exec-c1af511a-ce3e-4eaa-bdd4-738402f18e94.png",
+      "version": "1.0",
+      "step": "s01",
+      "caption": "右手轻抵掌大小软球于墙面，短时静止支持；左手自然下垂。",
+      "prompt": "Use case: identity-preserve, scientific-educational rehabilitation demonstration photograph.\nEdit the reference woman into one new single-frame exercise photograph. Input references 1–3 define her identity, clothing, natural proportions and soft gray-blue studio photographic style; they do not define the pose. Preserve the same Asian adult woman, black ponytail, plain short-sleeved white T-shirt and dark charcoal trousers.\nTarget: T-AXU-052 step s01, gentle stationary right-hand ball support against a wall.\nComposition: portrait 4:5 photograph, front three-quarter view from beside the wall toward the woman's face and chest, not a back view. Include her entire head, shoulders, both arms, torso, hips and upper thighs. A thick solid pale gray wall column occupies the left edge of the picture, with a clearly visible vertical flat side surface facing the woman's hand. The woman stands just to the right of the column; chest and gaze generally face the wall while the camera can clearly see her face and chest. This is forward wall contact, not arm abduction out to the side.\nPose: her ANATOMICAL RIGHT arm is the nearer visible working arm and reaches slightly forward toward the image-left wall column, at a comfortable height just below her shoulder. Elbow remains almost straight but soft. A small matte soft teal ball approximately palm-sized, 8–10 cm diameter, is sandwiched between her right palm and the vertical wall face. Her right palm gently presses the outer hemisphere, fingers naturally curved and clearly connected to her own hand. Show the continuous physical chain wall surface → teal ball → right palm. The ball visibly touches the wall, does not float; retain enough exposed teal ball and a subtle wall contact shadow to make all three contacts intelligible. Her left arm hangs relaxed by the opposite hip with empty left hand fully visible. Torso upright and stable, natural shoulder, neck relaxed, no leaning forward.\nLighting: soft neutral studio light, real natural skin and fabric, clean gray-blue background identical in spirit to the reference images, believable anatomy and hand proportions.\nThis is the stopped starting support frame. No movement trails, no circle arrows, no diagrams, no labels, no text, no watermark, no extra equipment or person. Do not swap hands; do not put a ball in her left hand; do not use a giant exercise ball. Photorealistic high clarity, especially right wrist, fingers, ball and actual solid wall contact.",
+      "reused": false,
+      "anchor": null,
+      "review": {
+        "status": "通过",
+        "method": "生成后及复制后 view_image 逐图检查",
+        "identity_background": "同参考女性、黑马尾、白 T、深灰裤、灰蓝背景；三张脸、服装与机位一致。",
+        "proportions": "人体、肩肘腕与手指比例自然；掌大小青绿色软球，轻压后形状略椭圆；无新增肢体或异常指节。",
+        "support_contact": "右掌/指与球持续接触，球侧面与厚墙柱平面接触可见且有接触阴影；左手空手在髋旁下垂。",
+        "action": "静态轻抵球，手球区接近肩高；躯干直立，无明显前倾。",
+        "direction": "静止，无轨迹需要。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "sha256": "3F1C8A52C54F710E21B4C3819253EDA9083404923B20209166A57EB21D412CF2",
+      "ball_center_pixels": {
+        "x": 161,
+        "y": 428
+      },
+      "ball_center_normalized": {
+        "x": 0.143494,
+        "y": 0.305278
+      },
+      "ball_center_method": "按 view_image 人工估读，供叠加轨迹定位；不是动作测量。",
+      "bytes": 1788307
+    },
+    {
+      "filename": "167_T-AXU-052_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/167_T-AXU-052_s02.png",
+      "source_generated_image": "C:/Users/Administrator/.codex/generated_images/01a13a84-eb7f-7132-b0ce-361efb7d35bf/exec-5ed81680-3745-44a2-aff0-3acddadbf7f3.png",
+      "version": "1.0",
+      "step": "s02",
+      "caption": "保持站距和躯干，右手带球在同一接触区顺时针小圈中途瞬间；方向由独立叠加轨迹表示。",
+      "prompt": "Use case: identity-preserve; scientific-educational rehabilitation demonstration photograph.\nInput image 1 is the EXACT approved step s01 anchor for T-AXU-052, not a generic inspiration. Create one separate single-frame s02 photograph by making only a very small right-hand ball movement.\nKeep the anchor's same woman, face, black ponytail, white T-shirt, charcoal trousers, front three-quarter camera, portrait 4:5 crop, 1122 by 1402 composition, soft gray-blue background and light, left-edge thick wall column, working anatomical RIGHT arm on image-left, and empty left hand naturally down. Keep the woman's trunk, head, hips, shoulder and standing distance in the exact same stable positions; no body lean or twist and no broad side raise.\nAction s02: moment within a slow tiny clockwise circle of the RIGHT palm and soft teal ball on the wall, around the same s01 contact region. Move the center of the ball and palm just about 1–2 cm higher within that same small area, changing the elbow/wrist only as needed for that tiny motion. Keep the SAME 8–10 cm palm-sized teal soft ball, same light compression against the wall, with real solid-wall contact and palm contact continuously maintained. The exposed teal hemisphere and wall contact shadow must remain visible. Every finger belongs to her right hand; palm remains pressing the ball instead of gripping it away from the wall.\nDirection is documented by a separate overlay later. The photograph itself must have NO arrows, no circular line, no text, no motion trail, no watermark. It is one realistic frozen instant; do not make a collage. Keep anatomy, hand and ball dimensions, wall geometry and all nonworking parts of the anchor unchanged.",
+      "reused": false,
+      "anchor": "E:/git冲突问题/rehab image/train/steps/167_T-AXU-052_s01.png",
+      "review": {
+        "status": "通过",
+        "method": "生成后及复制后 view_image 逐图检查",
+        "identity_background": "同参考女性、黑马尾、白 T、深灰裤、灰蓝背景；三张脸、服装与机位一致。",
+        "proportions": "人体、肩肘腕与手指比例自然；掌大小青绿色软球，轻压后形状略椭圆；无新增肢体或异常指节。",
+        "support_contact": "右掌/指与球持续接触，球侧面与厚墙柱平面接触可见且有接触阴影；左手空手在髋旁下垂。",
+        "action": "球与掌较 s01 仅小范围改变，躯干头髋和左手位置稳定，始终保持墙球手接触。",
+        "direction": "顺时针由独立 SVG/HTML 轨迹标注。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "sha256": "DD0BF41FFE5198933D3B13762D2B453E697BF6ECBCC61FC74FF319877FF8CB87",
+      "ball_center_pixels": {
+        "x": 159,
+        "y": 374
+      },
+      "ball_center_normalized": {
+        "x": 0.141711,
+        "y": 0.266762
+      },
+      "ball_center_method": "按 view_image 人工估读，供叠加轨迹定位；不是动作测量。",
+      "bytes": 1685212
+    },
+    {
+      "filename": "167_T-AXU-052_s03.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/167_T-AXU-052_s03.png",
+      "source_generated_image": "C:/Users/Administrator/.codex/generated_images/01a13a84-eb7f-7132-b0ce-361efb7d35bf/exec-56d0822c-a715-46ea-a0d0-b6668e831e3d.png",
+      "version": "1.0",
+      "step": "s03",
+      "caption": "先回 s01 停住，再在同一接触区逆时针小圈中途瞬间；方向由独立叠加轨迹表示。",
+      "prompt": "Use case: identity-preserve; scientific-educational rehabilitation demonstration photograph.\nInput image 1 is the EXACT approved step s01 anchor for T-AXU-052, not a generic inspiration. Create one separate single-frame s03 photograph by making only a very small right-hand ball movement.\nKeep the anchor's same woman, face, black ponytail, white T-shirt, charcoal trousers, front three-quarter camera, portrait 4:5 crop, 1122 by 1402 composition, soft gray-blue background and light, left-edge thick wall column, working anatomical RIGHT arm on image-left, and empty left hand naturally down. Keep trunk, head, hips, shoulder and standing distance in the exact same stable positions; no body lean or twist and no broad side raise.\nAction s03: after returning to the stopped s01 position, this is a moment within a slow tiny COUNTERCLOCKWISE circle of the RIGHT palm and soft teal ball on the wall around that same s01 contact region. Move the ball and right palm only a couple of centimeters LOWER than the s01 anchor (a small displacement, clearly less than one ball diameter) within the same small area, changing elbow/wrist only as required. Keep the SAME 8–10 cm palm-sized teal soft ball, same light compression against the wall, with real solid-wall contact and palm contact continuously maintained. The exposed teal hemisphere and wall contact shadow must remain visible. Every finger belongs to her right hand; palm remains pressing the ball instead of gripping it away from the wall.\nDirection is documented by a separate overlay later. The photograph itself must have NO arrows, no circular line, no text, no motion trail, no watermark. It is one realistic frozen instant; do not make a collage. Keep anatomy, hand and ball dimensions, wall geometry and all nonworking parts of the anchor unchanged.",
+      "reused": false,
+      "anchor": "E:/git冲突问题/rehab image/train/steps/167_T-AXU-052_s01.png",
+      "review": {
+        "status": "通过",
+        "method": "生成后及复制后 view_image 逐图检查",
+        "identity_background": "同参考女性、黑马尾、白 T、深灰裤、灰蓝背景；三张脸、服装与机位一致。",
+        "proportions": "人体、肩肘腕与手指比例自然；掌大小青绿色软球，轻压后形状略椭圆；无新增肢体或异常指节。",
+        "support_contact": "右掌/指与球持续接触，球侧面与厚墙柱平面接触可见且有接触阴影；左手空手在髋旁下垂。",
+        "action": "球与掌较 s01 仅小范围改变，躯干头髋和左手位置稳定，始终保持墙球手接触。",
+        "direction": "逆时针由独立 SVG/HTML 轨迹标注。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "sha256": "746837F0492367CADD7783E28D934B99F054CDD6BD7E8E42C9B3714F768846C3",
+      "ball_center_pixels": {
+        "x": 158,
+        "y": 486
+      },
+      "ball_center_normalized": {
+        "x": 0.14082,
+        "y": 0.346648
+      },
+      "ball_center_method": "按 view_image 人工估读，供叠加轨迹定位；不是动作测量。",
+      "bytes": 1725133
+    }
+  ]
+}

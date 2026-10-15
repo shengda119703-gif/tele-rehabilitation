@@ -1,0 +1,82 @@
+{
+  "batch": "第09批",
+  "requested": [
+    "066-s02",
+    "067-s01",
+    "067-s02"
+  ],
+  "date": "2026-10-14",
+  "generator": "built-in image_gen + validated reuse",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_card": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "reference_paths": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "frames": [
+    {
+      "image_id": "066-s02",
+      "sequence": 66,
+      "action_code": "T-LOW-003",
+      "action_name": "坐姿伸膝：徒手至轻负荷",
+      "step": "s02",
+      "planned_filename": "066_T-LOW-003_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/066_T-LOW-003_s02.png",
+      "source_path": "E:/git冲突问题/rehab image/train/066_T-LOW-003_坐姿伸膝：徒手至轻负荷.png",
+      "reused": true,
+      "prompt": null,
+      "visual_review": "已逐图目视核对旧单图和保存副本：侧面髋膝踝可辨，大腿由椅面承托，测试膝伸展、小腿前抬，另一足落地、躯干直立，双手自然放于大腿；无负重或带。人物服装背景比例符合参考，完整手足可见。",
+      "status": "passed",
+      "group_review": "本批只指定s02，未对未交付的s01作机位一致性声明。"
+    },
+    {
+      "image_id": "067-s01",
+      "sequence": 67,
+      "action_code": "T-LOW-004",
+      "action_name": "仰卧直腿抬高",
+      "step": "s01",
+      "planned_filename": "067_T-LOW-004_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/067_T-LOW-004_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e5-7333-7a62-abf9-fc5b40ab593d/exec-9e51ec6b-4a60-4624-98eb-34e8e5fbce9d.png",
+      "reused": false,
+      "edit_target": "E:/git冲突问题/rehab image/train/067_T-LOW-004_仰卧直腿抬高.png",
+      "prompt": "Use case: identity-preserve rehabilitation scientific-educational photo pose edit. Image 1 is the camera/pose base and EDIT TARGET: accepted STEP02 T-LOW-004 supine straight-leg raise. Images 2–4 are strict original identity and appearance references for the same adult East Asian woman, face, age, skin, black ponytail, fitted white short-sleeve T-shirt, charcoal full-length trousers, grey-blue soft studio photography.\nMake STEP01 preparation. Change ONLY the near-camera straight test leg: lower the WHOLE leg from the hip until the back of the leg and heel rest comfortably on the same grey mat, knee in the SAME almost-straight resting extension, neither bent nor forced locked. Test leg remains comfortably stretched toward the viewer RIGHT, heel on mat. Keep natural same thigh/shin/foot lengths. The far NON-TEST leg MUST remain bent with the far knee pointing up and its entire foot planted at exactly the same mat position as image1; do not change this knee/foot. Same pelvis resting on mat, shoulders/back/head supported at exact same locations, same small head cushion, both arms/hands at original locations. Keep same face, gaze, hair, clothes, mat dimensions/placement, floor/background/lighting/shadows, low side camera position/lens, body scale and 1122x1402 portrait framing unchanged. All feet and hands complete with margins; no bands, weights, props, extra person, text, numbering, arrows, panels or inset. One single photo one moment. Body should be stable supine without bridge or lumbar arch. Preserve exact scene so this frame can pair with original STEP02.",
+      "corrections": [
+        {
+          "prompt": "Use case: identity-preserve precise anatomical photo correction. Image1 is EDIT TARGET, a supine straight-leg-raise PREPARATION STEP01. Images2–4 lock original same woman identity and clothing/style. The non-test BENT leg's planted foot is wrongly hidden by the straight test leg. Correct only the BENT support leg by giving it a comfortable small sideways separation from the straight leg, with its foot planted in the foreground closer to the camera, near the FRONT edge of the grey mat. Make the ENTIRE support foot from heel to toes and sole-to-mat contact clearly visible in FRONT OF and BELOW the silhouette of the straight test leg. Grounded support foot can be around the lower foreground area below its existing knee, but still completely inside the mat. Non-test knee remains comfortably bent and elevated, connected naturally to the same non-test hip. No crossed legs, no impossible disconnected joints. The straight TEST leg remains completely resting along the mat, knee comfortably almost straight, test heel down in the exact original position, its foot also fully visible. Two legs stay naturally side by side with modest lateral spacing at the support foot, no pelvis rolling. Keep exact torso/pelvis/head/arms/hands positions, small head cushion, face/hair/clothes, grey mat size/edges, background, light, camera/framing/1122x1402 size, normal adult leg proportions. One photo, no text/arrows/insets/bands/weights. This is a clear resting preparation frame with BOTH FEET visible and support foot demonstrably planted.",
+          "edit_target": "C:/Users/Administrator/.codex/generated_images/01a138e5-7333-7a62-abf9-fc5b40ab593d/exec-1a7a3a29-798b-4b80-b2da-b9d4ea68b9f1.png",
+          "reason": "初稿支撑脚被伸展测试腿遮住；修订非测试腿自然外侧错位，让完整支撑脚在前景可见。"
+        }
+      ],
+      "visual_review": "已逐图目视检查：仰卧，非测试腿屈膝、完整脚掌支稳且可见；测试腿舒适伸展并落垫，膝起始位可辨；骨盆和躯干落垫，小枕支持头颈，比例自然、无负重。",
+      "status": "passed"
+    },
+    {
+      "image_id": "067-s02",
+      "sequence": 67,
+      "action_code": "T-LOW-004",
+      "action_name": "仰卧直腿抬高",
+      "step": "s02",
+      "planned_filename": "067_T-LOW-004_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/067_T-LOW-004_s02_v2.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e5-7333-7a62-abf9-fc5b40ab593d/exec-17d9b252-8d42-4dff-8d08-7237011ef4f2.png",
+      "reused": false,
+      "edit_target": "E:/git冲突问题/rehab image/train/steps/067_T-LOW-004_s01.png",
+      "prompt": "Use case: identity-preserve rehabilitation scientific-educational photo pose edit. Image1 is EDIT TARGET, the FINAL accepted STEP01 preparation of T-LOW-004 supine straight leg raise; images2–4 original exact same woman's identity/style references. Produce STEP02 from this corrected preparation frame. Change ONLY the STRAIGHT TEST LEG currently resting lengthwise on mat behind the planted bent support foot: lift that WHOLE test leg gently from its HIP a small comfortable height, KEEPING exactly the same almost-straight knee position as in preparation. Same natural leg lengths, toes gently upward; test heel and whole foot now clearly off mat toward viewer right, not a bent-knee march. Keep the NON-TEST bent leg EXACTLY fixed: elevated bent knee at same position, foreground support foot remains whole sole planted on mat at same exact coordinates, heel/toes visible, no sliding or lifting. Same pelvis and lumbar torso remain comfortably resting without lifting/arching, identical shoulders/head/cushion/arms/hands/gaze. Keep the EXACT corrected camera/scale/person framing/1122x1402 portrait, same grey mat/edges and background/light/floor. Supine straight-leg raise at modest teaching endpoint, no maximum height. Make continuous anatomically normal hip-to-thigh-to-knee-to-shin-to-ankle geometry. Full head/hands and BOTH complete feet visible. One photo one pose, no labels/text/number/arrows/insets/ghost limbs/bands/weights/additional objects. Preserve all scene invariants for direct pairing with image1.",
+      "visual_review": "已逐图目视检查：测试腿从髋部整段小幅抬离垫，膝仍接近原舒适伸展位；非测试屈膝腿与前景支撑脚位置保持，完整双足可见；腰骨盆未桥起，肩头手原位，正常肢体比例。",
+      "status": "passed",
+      "group_review": "最终s01与s02_v2对照通过：同一人物机位尺度、垫枕、头肩手、非测试膝与脚支撑保持，变化仅测试腿抬离垫。"
+    }
+  ],
+  "discarded_or_not_selected": [
+    {
+      "path": "C:/Users/Administrator/.codex/generated_images/01a138e5-7333-7a62-abf9-fc5b40ab593d/exec-1a7a3a29-798b-4b80-b2da-b9d4ea68b9f1.png",
+      "reason": "067-s01初稿遮住非测试脚，不登记为完成。"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/train/steps/067_T-LOW-004_s02.png",
+      "reason": "最初复用旧单图本身姿势合格，但与修订s01的非测试脚位置不一致，改选s02_v2；保留此文件，不纳入本批最终10张包。"
+    }
+  ]
+}

@@ -94,10 +94,10 @@ async function local(storage=memory()){
  const c={crypto:globalThis.crypto,structuredClone,Date,console,Blob,File,URL,Headers,Response,TextDecoder,TextEncoder,Uint8Array,AbortController,DOMException,setTimeout,clearTimeout,localStorage:storage,
   location:{origin:'https://appassets.androidplatform.net',href:'/'},document:{addEventListener(){}},Element:class{},MutationObserver:class{},XMLHttpRequest:class{},alert:()=>{},confirm:()=>true};
  c.fetch=async()=>{throw Error('Network unexpectedly requested')};vm.createContext(c);vm.runInContext(bundle(),c);
- for(const name of ['store.js','lin-profile.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'../web/'+name),'utf8'),c);
+ for(const name of ['store.js','lin-profile.js','practice.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'../web/'+name),'utf8'),c);
  storage.setItem(c.PhoneStore.ACTIVE_KEY,c.PhoneStore.KEY);c.PhoneStore.files.all=async()=>[];
  c.PhoneMotion={active:false,errors:new Map(),catalog:async()=>({rehab:[],fitness:[],posture:[]}),pause(){}};
- c.LocalEngine={VERSION:'android-local-projection-1'};
+ vm.runInContext(fs.readFileSync(path.join(__dirname,'../web/engine.js'),'utf8'),c);
  vm.runInContext(fs.readFileSync(path.join(__dirname,'../web/cloud.js'),'utf8'),c);vm.runInContext(fs.readFileSync(path.join(__dirname,'../web/local-api.js'),'utf8'),c);await c.PhoneLocal.ready;
  const local=c.PhoneLocal,owner=local.store.value.owner,today=c.PhoneStore.day();
  return{c,local,owner,today,storage};
@@ -151,4 +151,304 @@ test('original lifecycle clear removes retained legacy approvals while retaining
  await h.local.domain.request('lifecycle.clear',h.owner,{confirmOwner:h.owner},new Date());
  assert.equal(h.local.store.value.careReceipts,undefined);assert(!Object.keys(h.local.store.value.kv).some(k=>k.startsWith('care:')));assert.deepEqual(plain(h.local.store.value.daily),daily);
  await assert.rejects(()=>post(h,'/api/product/care.status',{id:'TEST-legacy'}),/Agent 代操作已下架/);
+});
+
+test('actual local upload route queries its durable operation after lost reply and refuses duplicate writes',async()=>{
+ const h=await local(),operation=crypto.randomUUID(),files=new Map(),inference=[];
+ h.c.PhoneStore.files.put=async(id,value)=>files.set(id,value);h.c.PhoneStore.files.remove=async id=>files.delete(id);
+ h.c.PhoneMotion.spec=async id=>({id});h.c.PhoneMotion.analyze=async(store,job)=>inference.push(job.id);
+ const route='/api/jobs?exercise=shoulder_abduction&side=left&consent=yes',opts={method:'POST',headers:{'X-Rehab-Upload-Operation':operation},body:new Blob(['TEST video bytes'])};
+ const created=await h.local.request(route,opts);const receipt=await h.local.request('/api/uploads/'+operation);
+ assert.equal(receipt.id,created.id);assert.equal(receipt.upload_operation,operation);assert.equal(receipt.mode,'assessment');assert.equal(files.size,1);
+ await assert.rejects(()=>h.local.request(route,opts),e=>e.status===409);
+ await new Promise(resolve=>setTimeout(resolve,5));assert.deepEqual(inference,[created.id]);assert.equal(h.local.store.value.jobs.length,1);
+ const reopened=await local(h.storage),after=await reopened.local.request('/api/uploads/'+operation);
+ assert.equal(after.id,created.id);assert.equal(after.state,'failed');assert.equal(after.upload_operation,operation);
+});
+test('local upload queries keep malformed, missing and foreign-owner receipts separate',async()=>{
+ const h=await local(),other=await local(),operation=crypto.randomUUID();
+ h.local.store.change(v=>v.jobs.push({id:crypto.randomUUID(),upload_operation:operation,exercise:'shoulder_abduction',side:'left',mode:'assessment',state:'failed',created_at:new Date().toISOString(),video_available:false}));
+ assert.equal((await h.local.request('/api/uploads/'+operation)).upload_operation,operation);
+ await assert.rejects(()=>other.local.request('/api/uploads/'+operation),e=>e.status===404);
+ await assert.rejects(()=>h.local.request('/api/uploads/not-a-key'),e=>e.status===400);
+});
+test('failed phone storage does not manufacture an upload receipt or start analysis',async()=>{
+ const h=await local(),operation=crypto.randomUUID();let analysis=0;
+ h.c.PhoneMotion.spec=async id=>({id});h.c.PhoneMotion.analyze=async()=>analysis++;
+ h.c.PhoneStore.files.put=async()=>{throw Error('TEST quota failure');};
+ await assert.rejects(()=>h.local.request('/api/jobs?exercise=shoulder_abduction&side=left&consent=yes',{method:'POST',headers:{'X-Rehab-Upload-Operation':operation},body:new Blob(['TEST video bytes'])}),/quota/);
+ assert.equal(h.local.store.value.jobs.length,0);assert.equal(analysis,0);
+ await assert.rejects(()=>h.local.request('/api/uploads/'+operation),e=>e.status===404);
+});
+
+async function allowedPractice(h,exercise='shoulder_abduction'){
+ const catalog=JSON.parse(fs.readFileSync(path.join(__dirname,'../build/assets/catalog.json'),'utf8'));
+ h.c.PhoneMotion.catalog=async()=>catalog;
+ const spec=catalog.rehab.find(s=>s.id===exercise),baseline=spec.target_direction==='decrease'?90:0,sign=spec.target_direction==='decrease'?-1:1;
+ const values=[...Array(15).fill(baseline),...Array(2).fill([10,25,45,50,50,25,0,0,0,0]).flat().map(v=>baseline+sign*v)];
+ const report=h.c.LocalEngine.analyzeReplay(spec,'left',values.map((v,i)=>[i*.12,v]));
+ assert.equal(report.reps.length,2,'synthetic metric fixture must pass the ORIGINAL engine');
+ const id=crypto.randomUUID();h.local.store.change(v=>v.jobs.push({id,exercise,side:'left',mode:'assessment',state:'done',created_at:new Date().toISOString(),measurement_version:h.c.LocalEngine.VERSION,result:{summary:{completed:2},local_report:report}}));
+ const {plan}=await post(h,'/api/plan',{general_activity_ok:true,standing_support_ok:true});
+ return{operation_id:crypto.randomUUID(),plan_id:plan.id,plan_revision:plan.revision,entry_key:plan.items[0].key};
+}
+const endPractice=(count=null)=>({operation_id:crypto.randomUUID(),count,elapsed_ms:1200,reason:'ended',feedback:{pain:null,fatigue:null}});
+const nextPractice=(companion=false)=>({operation_id:crypto.randomUUID(),manual_arrangement_confirmed:true,support_ready:true,companion_present:companion});
+const completedPractice=(h,a,count=null)=>post(h,'/api/practice/'+a.id+'/finish',{...endPractice(count),reason:'completed_set'});
+
+test('phone sequence keeps two original manual sets as separate facts and atomic links',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),original=plain(record),a=await post(h,'/api/practice',manualStart(record));
+ assert.equal(a.schema_version,2);assert.equal(a.sequence_policy,'phone-guided-sequence-1');
+ const one=await completedPractice(h,a,3);assert.equal(one.continuation.kind,'next_set');assert.equal(one.continuation.rest_remaining_ms,null);
+ const value=nextPractice(),two=await post(h,'/api/practice/'+a.id+'/continue',value);assert.equal(two.set_index,2);assert.equal(two.journey_id,a.id);assert.equal(two.finish_payload,null);
+ assert.equal(two.confirmed_count,null);assert.equal(two.formal_plan_contribution,null);assert.equal(two.predecessor_id,a.id);
+ assert.equal((await h.local.request('/api/practice/'+a.id)).successor_id,two.id);
+ const done=await completedPractice(h,two);assert.equal(done.self_reported_count,null);assert.equal(done.continuation,null);assert.equal(done.mode_segments[0].set_index,2);
+ const rows=await h.local.request('/api/practice');assert.equal(rows.length,2);assert.deepEqual(plain(rows.map(r=>r.self_reported_count)),[null,3]);assert.deepEqual(plain(h.local.store.value.manualArrangements[0]),original);
+ const b=h.c.PhoneStore.validateBackup(await h.local.backup());assert.equal(b.practices.length,2);assert.equal(h.local.store.value.jobs.length,0);assert.equal(h.local.store.value.plans.length,0);
+});
+
+test('phone continuation lost reply and concurrent replay keep one original child across reopen',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),a=await post(h,'/api/practice',manualStart(record));await completedPractice(h,a);
+ const value=nextPractice(),route='/api/practice/'+a.id+'/continue';const [one,two]=await Promise.all([post(h,route,value),post(h,route,value)]);assert.equal(one.id,two.id);
+ const reopened=await local(h.storage),same=await post(reopened,route,value);assert.equal(same.id,one.id);assert.equal(reopened.local.store.value.practices.length,2);
+ await assert.rejects(()=>post(h,route,{...value,support_ready:false}),e=>e.reason.code==='CONTINUE_KEY_CONFLICT');
+ await assert.rejects(()=>post(h,route,nextPractice()),e=>e.reason.code==='NO_NEXT_GROUP');
+});
+
+test('phone original rest authority rejects early writes and grants no exercise time',async()=>{
+ const h=await local(),{record}=await manualArrangement(h,{settings:{target_reps:7,target_sets:2,rest_between_sets_s:30,target_angle_deg:null,needs_companion:false}}),a=await post(h,'/api/practice',manualStart(record));
+ h.c.Date=class extends Date{constructor(...args){super(...(args.length?args:['2026-10-12T08:00:00Z']));}static now(){return Date.parse('2026-10-12T08:00:00Z');}};
+ const one=await completedPractice(h,a),value=nextPractice();assert.equal(one.continuation.rest_remaining_ms,30000);assert.equal(one.continuation.rest_time_basis,'owning_device_receipt_utc');
+ await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',value),e=>e.reason.code==='REST_PENDING');assert.equal(h.local.store.value.practices.length,1);
+ h.c.Date=class extends Date{constructor(...args){super(...(args.length?args:['2026-10-12T08:00:31Z']));}static now(){return Date.parse('2026-10-12T08:00:31Z');}};
+ assert.equal((await post(h,'/api/practice/'+a.id+'/continue',value)).set_index,2);assert.equal(h.local.store.value.practices[0].finish_payload.elapsed_ms,1200);
+});
+
+test('phone next automatic action uses the original proposal and never advances formal progress',async()=>{
+ const h=await local();await allowedPractice(h);h.local.store.change(v=>v.jobs.push({...plain(v.jobs[0]),id:crypto.randomUUID(),side:'right'}));
+ const {plan}=await post(h,'/api/plan',{general_activity_ok:true,standing_support_ok:true});assert.equal(plan.items.length,2);
+ const before=plain(plan),a=await post(h,'/api/practice',{operation_id:crypto.randomUUID(),plan_id:plan.id,plan_revision:plan.revision,entry_key:plan.items[0].key});
+ const one=await completedPractice(h,a,2);assert.equal(one.continuation.kind,'next_action');const two=await post(h,'/api/practice/'+a.id+'/continue',nextPractice());
+ assert.equal(two.plan_ref.entry_key,plan.items[1].key);assert.equal(two.side,plan.items[1].side);assert.equal(two.set_index,1);assert.equal(two.execution_allowed,true);
+ assert.deepEqual(plain(h.local.store.value.plans.at(-1)),before);assert.equal(h.local.planProgress(plan).completed,0);
+ h.local.store.change(v=>v.kv['profile:'+v.owner].profile.conditions=['活动限制']);assert.equal((await h.local.request('/api/practice/'+two.id)).execution_allowed,false);
+ assert.equal((await completedPractice(h,two)).state,'COMMITTED');
+});
+
+test('phone continuation commit failure does not split parent/child and can retry same key',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),a=await post(h,'/api/practice',manualStart(record));await completedPractice(h,a);
+ const value=nextPractice(),write=h.storage.setItem;h.storage.setItem=()=>{throw Error('TEST sequence quota');};
+ await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',value),/quota/);assert.equal(h.local.store.value.practices.length,1);assert.equal(h.local.store.value.practices[0].successor_id,null);
+ h.storage.setItem=write;assert.equal((await post(h,'/api/practice/'+a.id+'/continue',value)).id,value.operation_id);assert.equal(h.local.store.value.practices.length,2);
+});
+
+test('phone close preserves original completed facts, ordinary end has no automatic completion',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),a=await post(h,'/api/practice',manualStart(record)),one=await completedPractice(h,a,3),value={operation_id:crypto.randomUUID()};
+ const closed=await post(h,'/api/practice/'+a.id+'/close-journey',value);assert.equal(closed.journey_closed,true);assert.equal(closed.continuation,null);assert.deepEqual(closed.finish_payload,one.finish_payload);
+ assert.equal((await post(h,'/api/practice/'+a.id+'/close-journey',value)).id,a.id);await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',nextPractice()),e=>e.reason.code==='NO_NEXT_GROUP');
+ const b=await post(h,'/api/practice',manualStart(record)),ended=await post(h,'/api/practice/'+b.id+'/finish',endPractice());assert.equal(ended.continuation,null);assert.equal(ended.finish_payload.reason,'ended');assert.equal(ended.self_reported_count,null);
+});
+
+test('phone next group keeps definition, discomfort, owner and strict payload gates',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),a=await post(h,'/api/practice',manualStart(record));await completedPractice(h,a);
+ await assert.rejects(()=>post(h,'https://other.test/api/practice/'+a.id+'/continue',nextPractice()),e=>e.status===403);
+ await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',{...nextPractice(),set_index:2}),e=>e.status===400);
+ await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',{...nextPractice(),support_ready:'yes'}),e=>e.status===400);
+ h.c.PhoneMotion.catalog=async()=>({rehab:[],fitness:[],posture:[]});await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',nextPractice()),e=>e.reason.code==='MANUAL_DEFINITION_CHANGED');
+ await manualArrangement(h);await post(h,'/api/practice/'+a.id+'/feedback',practiceFeedback(0,{pain:1,fatigue:null,note:null}));await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/continue',nextPractice()),e=>e.reason.code==='PRACTICE_STOP_RECORDED');
+ const other=await local();await assert.rejects(()=>other.local.request('/api/practice/'+a.id),e=>e.status===404);
+});
+
+test('phone backup checks sequence structure and links while old schema1 remains readable',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),a=await post(h,'/api/practice',manualStart(record));await completedPractice(h,a);
+ const two=await post(h,'/api/practice/'+a.id+'/continue',nextPractice());await completedPractice(h,two);const b=plain(await h.local.backup());
+ for(const mutate of [v=>v.practices[1].journey_id=crypto.randomUUID(),v=>v.practices[0].successor_id=null,v=>v.practices[1].set_index=1,v=>v.practices[1].arrangement_sequence[0].settings.target_sets=3,v=>v.practices[1].continue_payload.support_ready=false]){
+  const forged=plain(b);mutate(forged.data);assert.throws(()=>h.c.PhoneStore.validateBackup(forged),/练习记录|备份结构/);
+ }
+ h.local.store.change(v=>{v.practices.splice(1);const r=v.practices[0];r.schema_version=1;for(const k of ['journey_id','arrangement_sequence','sequence_index','sequence_policy','journey_closed','successor_id'])delete r[k];});
+ const old=await h.local.request('/api/practice/'+a.id);assert.equal(old.continuation,null);assert.equal(old.self_reported_count,null);assert.equal(h.c.PhoneStore.validateBackup(await h.local.backup()).practices.length,1);
+});
+
+test('actual PHONE_LOCAL practice route commits once, reopens, and never contributes to visual or plan dose',async()=>{
+ const h=await local(),start=await allowedPractice(h),context=await h.local.request('/api/practice/context');
+ assert.equal(context.participant_id,h.owner);assert.equal(context.provider,'phone-local-1');assert.equal(context.source_context,'PHONE_LOCAL:SELF_USE');
+ const [a,b]=await Promise.all([post(h,'/api/practice',start),post(h,'/api/practice',start)]);
+ assert.deepEqual(a,b);assert.equal(a.execution_allowed,true);assert.equal(h.local.store.value.practices.length,1);
+ const ended=endPractice(10),first=await post(h,'/api/practice/'+a.id+'/finish',ended),again=await post(h,'/api/practice/'+a.id+'/finish',ended);
+ assert.deepEqual(first,again);assert.equal(first.state,'COMMITTED');assert.equal(first.record_origin,'SELF_RECORDED');assert.equal(first.self_reported_count,10);assert.equal(first.confirmed_count,null);assert.equal(first.formal_plan_contribution,null);assert.equal(first.finish_payload.feedback.pain,null);
+ const reopened=await local(h.storage),saved=await reopened.local.request('/api/practice/'+a.id);
+ assert.deepEqual(saved,first);assert.equal((await reopened.local.request('/api/practice')).length,1);
+ assert.equal(reopened.local.planProgress(reopened.local.store.value.plans[0]).completed,0);assert.equal(reopened.local.store.value.jobs.length,1);
+ assert.equal(h.c.PhoneStore.validateBackup(await h.local.backup()).practices[0].id,a.id);
+ await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/finish',{...ended,count:11}),e=>e.status===409);
+ await assert.rejects(()=>post(h,'/api/practice',{...start,entry_key:crypto.randomUUID()}),e=>e.status===409);
+});
+
+test('local practice has no fake grant when assessments, side, version or original feedback are not eligible',async()=>{
+ for(const mutate of [v=>{v.jobs[0].result.local_report.validRatio=0;},v=>{v.plans[0].revision++;},v=>{v.plans[0].items[0].side='right';},v=>{v.kv['profile:'+v.owner].profile.conditions=['活动限制'];},v=>{v.jobs[0].created_at=new Date(Date.now()-8*86400000).toISOString();},v=>{v.jobs.push({...v.jobs[0],id:crypto.randomUUID(),mode:'training',plan_id:v.plans[0].id,entry_key:v.plans[0].items[0].key,feedback:null});}]){
+  const h=await local(),start=await allowedPractice(h);h.local.store.change(mutate);
+  await assert.rejects(()=>post(h,'/api/practice',start),e=>e.status===409);assert.equal(h.local.store.value.practices,undefined);
+ }
+});
+
+test('practice finish still saves after eligibility changes, and plain end keeps null count and null feelings',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start);
+ h.local.store.change(v=>v.plans[0].revision++);
+ assert.equal((await h.local.request('/api/practice/'+a.id)).execution_allowed,false);
+ const saved=await post(h,'/api/practice/'+a.id+'/finish',endPractice());
+ assert.equal(saved.self_reported_count,null);assert.equal(saved.record_origin,'GUIDED_PRACTICE');assert.equal(saved.execution_allowed,false);
+ assert.equal((await post(h,'/api/practice',start)).state,'COMMITTED');
+});
+
+test('one open local practice and explicit discomfort stop remain real execution gates',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start);
+ await assert.rejects(()=>post(h,'/api/practice',{...start,operation_id:crypto.randomUUID()}),e=>e.status===409);
+ const end={...endPractice(),reason:'discomfort',feedback:{pain:2,fatigue:null}};
+ await post(h,'/api/practice/'+a.id+'/finish',end);
+ await assert.rejects(()=>post(h,'/api/practice',{...start,operation_id:crypto.randomUUID()}),e=>e.reason?.code==='PRACTICE_STOP_RECORDED');
+ assert.equal(h.local.store.value.practices.length,1);
+});
+
+test('failed original Store commit creates no practice receipt and same immutable operation can retry',async()=>{
+ const h=await local(),start=await allowedPractice(h),save=h.storage.setItem;
+ h.storage.setItem=()=>{throw Error('TEST storage quota')};await assert.rejects(()=>post(h,'/api/practice',start),/quota/);assert.equal(h.local.store.value.practices,undefined);
+ h.storage.setItem=save;const a=await post(h,'/api/practice',start),end=endPractice(0);
+ h.storage.setItem=()=>{throw Error('TEST storage quota')};await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/finish',end),/quota/);
+ assert.equal((await h.local.request('/api/practice/'+a.id)).state,'PRACTICING');
+ h.storage.setItem=save;assert.equal((await post(h,'/api/practice/'+a.id+'/finish',end)).state,'COMMITTED');
+});
+
+test('practice routes reject scope overrides, foreign origins, unsafe methods and invalid feedback before mutation',async()=>{
+ const h=await local(),start=await allowedPractice(h);
+ await assert.rejects(()=>post(h,'https://other.test/api/practice',start),e=>e.status===403);
+ await assert.rejects(()=>post(h,'/api/practice',{...start,owner:h.owner}),e=>e.status===400);
+ await assert.rejects(()=>h.local.request('/api/practice/context?owner=other'),e=>e.status===403);
+ await assert.rejects(()=>h.local.request('/api/practice',{method:'DELETE'}),e=>e.status===405);
+ const a=await post(h,'/api/practice',start);
+ for(const feedback of [{pain:-1,fatigue:null},{pain:null},{pain:false,fatigue:null},{pain:null,fatigue:11}])await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/finish',{...endPractice(),feedback}),e=>e.status===400);
+ const other=await local();await assert.rejects(()=>other.local.request('/api/practice/'+a.id),e=>e.status===404);
+ assert.equal(h.local.store.value.practices[0].state,'PRACTICING');
+});
+
+test('practice backup validates ownership and source instead of reviving visual results from self reports',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start);await post(h,'/api/practice/'+a.id+'/finish',endPractice(10));
+ const b=await h.local.backup();assert.equal(h.c.PhoneStore.validateBackup(b).practices[0].self_reported_count,10);
+ for(const mutate of [r=>r.context.participant_id=crypto.randomUUID(),r=>r.confirmed_count=10,r=>r.formal_plan_contribution=1,r=>r.record_origin='AUTOMATIC',r=>r.finish_payload.feedback.pain=undefined]){
+  const forged=plain(b);mutate(forged.data.practices[0]);assert.throws(()=>h.c.PhoneStore.validateBackup(forged),/练习记录/);
+ }
+});
+
+async function manualArrangement(h,changes={}){
+ const catalog=JSON.parse(fs.readFileSync(path.join(__dirname,'../build/assets/catalog.json'),'utf8'));h.c.PhoneMotion.catalog=async()=>catalog;
+ const payload={operation_id:crypto.randomUUID(),name:'TEST 本人已有安排',exercise_id:'shoulder_abduction',side:'left',settings:{target_reps:7,target_sets:2,rest_between_sets_s:null,target_angle_deg:null,needs_companion:false},...changes};
+ const record=await post(h,'/api/practice/arrangements',payload);return{record,payload};
+}
+const manualStart=r=>({operation_id:crypto.randomUUID(),plan_id:r.id,plan_revision:r.revision,entry_key:r.items[0].key,manual_arrangement_confirmed:true,support_ready:true,companion_present:false});
+
+test('real local manual input has a durable owned receipt without an assessment or automatic plan',async()=>{
+ const h=await local(),{record,payload}=await manualArrangement(h);
+ assert.equal((await h.local.request('/api/catalog')).manual_arrangement_entry,true);
+ assert.deepEqual(await post(h,'/api/practice/arrangements',payload),record);
+ assert.equal((await h.local.request('/api/practice/arrangements'))[0].id,record.id);
+ assert.equal(h.local.store.value.jobs.length,0);assert.equal(h.local.store.value.plans.length,0);
+ const start=manualStart(record),a=await post(h,'/api/practice',start);
+ assert.equal(a.execution_allowed,true);assert.equal(a.formal_plan_ref,null);assert.equal(a.assessment_ref,null);assert.equal(a.guidance_policy,'phone-explicit-manual-practice-1');
+ assert.equal(a.arrangement_ref.kind,'MANUAL_SAVED');assert.deepEqual(plain(a.settings),payload.settings);
+ const end=endPractice(3),saved=await post(h,'/api/practice/'+a.id+'/finish',end);assert.equal(saved.self_reported_count,3);assert.equal(saved.confirmed_count,null);assert.equal(saved.formal_plan_contribution,null);
+ const reopened=await local(h.storage);assert.deepEqual(await reopened.local.request('/api/practice/'+a.id),saved);assert.equal(reopened.local.store.value.manualArrangements.length,1);
+ const backup=h.c.PhoneStore.validateBackup(await h.local.backup());assert.equal(backup.manualArrangements[0].id,record.id);assert.equal(backup.practices[0].id,a.id);
+});
+
+test('manual support and companion are explicit, and manual flags do not grant automatic eligibility',async()=>{
+ const h=await local(),{record}=await manualArrangement(h,{settings:{target_reps:7,target_sets:2,rest_between_sets_s:30,target_angle_deg:null,needs_companion:true}}),start=manualStart(record);
+ for(const field of ['manual_arrangement_confirmed','support_ready','companion_present']){await assert.rejects(()=>post(h,'/api/practice',{...start,companion_present:true,[field]:false}),e=>e.status===409&&e.reason.category==='MISSING_INPUT');await assert.rejects(()=>post(h,'/api/practice',{...start,[field]:1}),e=>e.status===400);}
+ const plainStart={operation_id:start.operation_id,plan_id:start.plan_id,plan_revision:start.plan_revision,entry_key:start.entry_key};await assert.rejects(()=>post(h,'/api/practice',plainStart),e=>e.status===409);
+ const auto=await allowedPractice(h);await assert.rejects(()=>post(h,'/api/practice',{...auto,manual_arrangement_confirmed:true,support_ready:true,companion_present:true}),e=>e.status===409);
+ assert.equal(h.local.store.value.practices,undefined);assert.equal((await post(h,'/api/practice',{...start,companion_present:true})).execution_allowed,true);
+});
+
+test('manual create, practice start and finish preserve original Store quota failures and same-key retry',async()=>{
+ const h=await local(),catalog=JSON.parse(fs.readFileSync(path.join(__dirname,'../build/assets/catalog.json'),'utf8'));h.c.PhoneMotion.catalog=async()=>catalog;
+ const payload={operation_id:crypto.randomUUID(),name:'TEST 同键安排',exercise_id:'shoulder_abduction',side:'left',settings:{target_reps:7,target_sets:2,rest_between_sets_s:null,target_angle_deg:null,needs_companion:false}},save=h.storage.setItem;
+ h.storage.setItem=()=>{throw Error('TEST original Store quota')};await assert.rejects(()=>post(h,'/api/practice/arrangements',payload),/quota/);assert.equal(h.local.store.value.manualArrangements,undefined);
+ h.storage.setItem=save;const r=await post(h,'/api/practice/arrangements',payload),start=manualStart(r);
+ h.storage.setItem=()=>{throw Error('TEST original Store quota')};await assert.rejects(()=>post(h,'/api/practice',start),/quota/);assert.equal(h.local.store.value.practices,undefined);
+ h.storage.setItem=save;const a=await post(h,'/api/practice',start),end=endPractice();h.storage.setItem=()=>{throw Error('TEST original Store quota')};await assert.rejects(()=>post(h,'/api/practice/'+a.id+'/finish',end),/quota/);
+ assert.equal((await h.local.request('/api/practice/'+a.id)).state,'PRACTICING');h.storage.setItem=save;assert.equal((await post(h,'/api/practice/'+a.id+'/finish',end)).state,'COMMITTED');
+});
+
+test('explicit local stop is immutable across manual arrangements and later zero feedback',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),a=await post(h,'/api/practice',manualStart(record));await post(h,'/api/practice/'+a.id+'/finish',endPractice());
+ await post(h,'/api/practice/'+a.id+'/feedback',{operation_id:crypto.randomUUID(),expected_revision:0,values:{pain:1,fatigue:null,note:null}});
+ await post(h,'/api/practice/'+a.id+'/feedback',{operation_id:crypto.randomUUID(),expected_revision:1,values:{pain:0,fatigue:null,note:null}});
+ const other=await manualArrangement(h);await assert.rejects(()=>post(h,'/api/practice',manualStart(other.record)),e=>e.reason.code==='PRACTICE_STOP_RECORDED');
+ const auto=await allowedPractice(h);await assert.rejects(()=>post(h,'/api/practice',auto),e=>e.reason.code==='PRACTICE_STOP_RECORDED');assert.equal(h.local.store.value.practices.length,1);
+});
+
+test('local manual input refuses foreign scope, dose rewrites, unsupported action and changed receipt',async()=>{
+ const h=await local(),{record,payload}=await manualArrangement(h);
+ await assert.rejects(()=>post(h,'https://other.test/api/practice/arrangements',payload),e=>e.status===403);await assert.rejects(()=>post(h,'/api/practice/arrangements',{...payload,owner:h.owner}),e=>e.status===400);
+ await assert.rejects(()=>post(h,'/api/practice/arrangements',{...payload,name:'改动'}),e=>e.status===409);await assert.rejects(()=>post(h,'/api/practice/arrangements',{...payload,operation_id:crypto.randomUUID(),exercise_id:'fitness_squat'}));
+ await assert.rejects(()=>post(h,'/api/practice',{...manualStart(record),settings:{target_reps:100}}),e=>e.status===400);
+ const other=await local();assert.deepEqual(plain(await other.local.request('/api/practice/arrangements')),[]);await assert.rejects(()=>post(other,'/api/practice',manualStart(record)),e=>e.status===409);
+ for(const mutate of [b=>b.data.manualArrangements[0].context.participant_id=crypto.randomUUID(),b=>b.data.manualArrangements[0].items[0].settings.target_reps=8,b=>b.data.manualArrangements[0].assessment_ref='fake']){const b=plain(await h.local.backup());mutate(b);assert.throws(()=>h.c.PhoneStore.validateBackup(b),/人工安排/);}
+ const a=await post(h,'/api/practice',manualStart(record)),backup=plain(await h.local.backup());backup.data.practices[0].settings.target_reps=8;assert.throws(()=>h.c.PhoneStore.validateBackup(backup),/备份结构/);
+ h.local.store.change(v=>v.practices[0].settings.target_reps=8);const rejected=await h.local.request('/api/practice/'+a.id);assert.equal(rejected.execution_allowed,false);assert.equal(rejected.execution_decision.code,'MANUAL_SNAPSHOT_CHANGED');
+});
+
+test('changed manual definition blocks further execution but does not block preserving already-ended facts',async()=>{
+ const h=await local(),{record}=await manualArrangement(h),start=manualStart(record),a=await post(h,'/api/practice',start);
+ h.c.PhoneMotion.catalog=async()=>({rehab:[],fitness:[],posture:[]});assert.equal((await h.local.request('/api/practice/'+a.id)).execution_allowed,false);
+ assert.equal((await post(h,'/api/practice/'+a.id+'/finish',endPractice())).state,'COMMITTED');
+ const b=await h.local.backup();for(const mutate of [r=>delete r.guidance_policy,r=>r.formal_plan_ref='fake',r=>r.execution_grant.formal_measurement_allowed=true,r=>r.start_payload.support_ready=false]){const forged=plain(b);mutate(forged.data.practices[0]);assert.throws(()=>h.c.PhoneStore.validateBackup(forged),/练习记录/);}
+});
+
+test('recent local measured discomfort still blocks manual practice without requiring an assessment',async()=>{
+ const h=await local(),{record}=await manualArrangement(h);
+ h.local.store.change(v=>v.jobs.push({id:crypto.randomUUID(),exercise:'shoulder_abduction',side:'left',mode:'training',state:'done',created_at:new Date().toISOString(),measurement_version:h.c.LocalEngine.VERSION,result:{summary:{plan_completed:false},local_report:{validRatio:.9,contract:h.c.LocalEngine.VERSION}},feedback:{pain:null,fatigue:5}}));
+ await assert.rejects(()=>post(h,'/api/practice',manualStart(record)),e=>e.reason.code==='TRAINING_STOP_RECORDED');assert.equal(h.local.store.value.practices,undefined);
+});
+
+const practiceFeedback=(revision=0,values={note:'TEST 后补'})=>({operation_id:crypto.randomUUID(),expected_revision:revision,values:{pain:null,fatigue:null,note:null,...values}});
+test('local feedback follows committed practice, survives reopen and never mutates finish or formal progress',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start),path='/api/practice/'+a.id;
+ const payload=practiceFeedback();await assert.rejects(()=>post(h,path+'/feedback',payload),e=>e.reason?.code==='PRACTICE_NOT_COMMITTED');
+ const original=plain(await post(h,path+'/finish',endPractice(10))),r=plain(await post(h,path+'/feedback',payload));
+ assert.equal(r.status,'COMMITTED');assert.equal(r.revision,1);assert.equal(r.values.pain,null);assert.equal(r.values.fatigue,null);
+ const reopened=await local(h.storage);assert.deepEqual(plain(await reopened.local.request(path+'/feedback/operations/'+payload.operation_id)),r);
+ assert.deepEqual(plain(await post(reopened,path+'/feedback',payload)),r);
+ const saved=plain(await reopened.local.request(path));for(const k of ['finish_payload','self_reported_count','confirmed_count','mode_segments','formal_plan_contribution'])assert.deepEqual(saved[k],original[k]);
+ assert.equal(saved.practice_feedback.operations.length,1);assert.equal((await h.local.request('/api/plan')).progress.completed,0);
+ const backup=await reopened.local.backup();assert.equal(h.c.PhoneStore.validateBackup(backup).practices[0].practice_feedback.revision,1);
+});
+test('local feedback conflict reads latest revision but keeps original immutable operation receipt',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start),path='/api/practice/'+a.id;await post(h,path+'/finish',endPractice());
+ const first=practiceFeedback(),r=plain(await post(h,path+'/feedback',first)),second=practiceFeedback(0,{fatigue:2});
+ await assert.rejects(()=>post(h,path+'/feedback',second),e=>e.reason?.code==='FEEDBACK_REVISION_CONFLICT');
+ assert.deepEqual(plain((await h.local.request(path+'/feedback')).values),first.values);
+ await assert.rejects(()=>h.local.request(path+'/feedback/operations/'+second.operation_id),e=>e.status===404);
+ const next={...second,operation_id:crypto.randomUUID(),expected_revision:1};assert.equal((await post(h,path+'/feedback',next)).revision,2);
+ assert.deepEqual(plain(await post(h,path+'/feedback',first)),r);assert.equal((await h.local.request(path+'/feedback')).revision,2);
+ await assert.rejects(()=>post(h,path+'/feedback',{...first,values:next.values}),e=>e.reason?.code==='FEEDBACK_KEY_CONFLICT');
+});
+test('local feedback storage failure acknowledges nothing and same key saves after quota recovers',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start),path='/api/practice/'+a.id;await post(h,path+'/finish',endPractice());
+ const p=practiceFeedback(),save=h.storage.setItem;h.storage.setItem=()=>{throw Error('TEST feedback quota')};await assert.rejects(()=>post(h,path+'/feedback',p),/quota/);
+ assert.equal((await h.local.request(path+'/feedback')).revision,0);await assert.rejects(()=>h.local.request(path+'/feedback/operations/'+p.operation_id),e=>e.status===404);
+ h.storage.setItem=save;assert.equal((await post(h,path+'/feedback',p)).status,'COMMITTED');
+});
+test('later local discomfort stops further execution even after editing to zero but facts still save',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start),path='/api/practice/'+a.id;await post(h,path+'/finish',endPractice());
+ const b=await post(h,'/api/practice',{...start,operation_id:crypto.randomUUID()});
+ await post(h,path+'/feedback',practiceFeedback(0,{pain:1}));await post(h,path+'/feedback',practiceFeedback(1,{pain:0}));
+ assert.equal((await h.local.request('/api/practice/'+b.id)).execution_allowed,false);await post(h,'/api/practice/'+b.id+'/finish',endPractice());
+ await assert.rejects(()=>post(h,'/api/practice',{...start,operation_id:crypto.randomUUID()}),e=>e.reason?.code==='PRACTICE_STOP_RECORDED');
+});
+test('feedback rejects malformed values, foreign owners and forged backup revisions',async()=>{
+ const h=await local(),start=await allowedPractice(h),a=await post(h,'/api/practice',start),path='/api/practice/'+a.id;await post(h,path+'/finish',endPractice());
+ for(const p of [practiceFeedback(0,{}),practiceFeedback(0,{pain:false}),practiceFeedback(0,{note:' '}),practiceFeedback(0,{fatigue:11}),practiceFeedback(0,{note:'x'.repeat(501)}),{...practiceFeedback(),owner:'foreign'}])await assert.rejects(()=>post(h,path+'/feedback',p),e=>e.status===400);
+ const other=await local();await assert.rejects(()=>post(other,path+'/feedback',practiceFeedback()),e=>e.status===404);
+ await post(h,path+'/feedback',practiceFeedback());const backup=await h.local.backup();
+ for(const mutate of [f=>f.revision=2,f=>f.values.pain=0,f=>f.operations[0].expected_revision=2,f=>f.operations[0].values.note=null]){const b=plain(backup);mutate(b.data.practices[0].practice_feedback);assert.throws(()=>h.c.PhoneStore.validateBackup(b),/练习记录/);}
 });

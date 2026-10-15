@@ -17,14 +17,23 @@ from mobile_rehab.barbell import demo_report
 PROJECT = ROOT / 'android_offline'
 OUTPUT = PROJECT / 'build/assets'
 OUTPUT.mkdir(parents=True, exist_ok=True)
+from tools.build_rehab_library_assets import build as build_action_library
+build_action_library()
 shutil.copytree(PROJECT / 'web', OUTPUT / 'local', dirs_exist_ok=True, ignore=shutil.ignore_patterns('app.js','index.html','style.css'))
 # These generated artifacts came from the archived 0.1 UI, not user documents.
 for name in ['app.js','index.html','style.css']:
     (OUTPUT / 'local' / name).unlink(missing_ok=True)
 # Formal UI is copied unchanged. Only non-visual loaders are inserted in HTML.
 static = ROOT / 'mobile_rehab/static'
-shutil.copytree(static, OUTPUT / 'static', dirs_exist_ok=True)
-adapters = ''.join('<script src="' + path + '"></script>' for path in ['/local/engine.js','/local/product.js','/local/model-policy.js','/local/deepseek.js','/local/store.js','/local/motion.js','/local/lin-profile.js','/local/cloud.js','/local/account.js','/local/local-api.js'])
+shutil.copytree(static, OUTPUT / 'static', dirs_exist_ok=True,
+                ignore=shutil.ignore_patterns('rehab-candidates-v10'))
+# Internal, unapproved image candidates and generated fixture payloads are not a release input.
+private_generated = OUTPUT / 'static/assets/rehab-candidates-v10'
+if not private_generated.resolve().is_relative_to(OUTPUT.resolve()) or not OUTPUT.resolve().is_relative_to(PROJECT.resolve()):
+    raise SystemExit('Generated asset cleanup escaped the Android project')
+shutil.rmtree(private_generated, ignore_errors=True)
+(OUTPUT / 'lin-profile.json').unlink(missing_ok=True)
+adapters = ''.join('<script src="' + path + '"></script>' for path in ['/local/engine.js','/local/product.js','/local/model-policy.js','/local/deepseek.js','/local/store.js','/local/motion.js','/local/lin-profile.js','/local/practice.js','/local/cloud.js','/local/account.js','/local/local-api.js'])
 for source, target in [('unified.html', 'index.html'), ('index.html', 'capture.html')]:
     html = (static / source).read_text(encoding='utf-8').replace('<head>', '<head>' + adapters)
     (OUTPUT / target).write_text(html, encoding='utf-8')

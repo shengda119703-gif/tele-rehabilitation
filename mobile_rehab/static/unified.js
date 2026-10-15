@@ -340,15 +340,10 @@ function records() {
 
 function settings() {
   const mode = snapshot().profile?.dataMode;
-  $("#content").innerHTML = `<div class="heading"><h1>设置</h1><a href="#home">返回首页</a></div><section><h2>我的档案</h2><p>${E(profile().name || "称呼未填写")}${profile().age ? " · " + E(profile().age) + " 岁" : ""}</p><p class="muted">${mode === "demo" ? "演示档案" : mode === "personal" ? "个人档案" : "请在电脑核对档案类型"}</p>${button("编辑我的档案", "settings-profile")}</section><p>${button("联系康复医师", "settings-clinician")}</p><section><h2>查看记录的来源</h2>${sourcePicker()}<p class="muted">来源选择用于查看康复记录，不会启动摄像头或训练。</p></section><p>${link("查看通知记录", "#notifications")}</p>`;
+  let connected=false;try{connected=!!assistantIdentity();}catch{}
+  $("#content").innerHTML = `<div class="heading"><h1>设置</h1><a href="#home">返回首页</a></div><section><h2>我的档案</h2><p>${E(profile().name || "称呼未填写")}${profile().age ? " · " + E(profile().age) + " 岁" : ""}</p><p class="muted">${mode === "demo" ? "演示档案" : mode === "personal" ? "个人档案" : "请在电脑核对档案类型"}</p>${button("编辑我的档案", "settings-profile")}</section><p>${button("联系康复医师", "settings-clinician")}</p><section><h2>查看记录的来源</h2>${sourcePicker()}<p class="muted">来源选择用于查看康复记录，不会启动摄像头或训练。</p></section><p>${link("查看通知记录", "#notifications")}</p><section><h2>智能服务</h2><p>${connected ? "管家通过安康云端服务回答；每条回复标明实际来源。" : "登录本人云账号后可使用云端管家；当前使用本地回复。"}</p>${link("打开康复管家", "#assistant")}</section>`;
   bind("settings-profile", editProfile);
   bind("settings-clinician", openClinicianContact);
-  if (globalThis.OfflineAndroid?.deepSeekSettings) {
-    const section=document.createElement("section");
-    section.innerHTML=`<h2>智能服务</h2><p>${snapshot().conversationModelAvailable ? "DeepSeek 已配置；每条回复标明实际来源。" : "DeepSeek 尚未配置，本地功能仍可使用。"}</p>${button("配置 DeepSeek", "settings-deepseek")}`;
-    $("#content").append(section);
-    bind("settings-deepseek",()=>globalThis.OfflineAndroid.deepSeekSettings());
-  }
   bindSource();
 }
 
@@ -832,14 +827,155 @@ let recorder = null,
   voiceStarting = false;
 function conversationSource(metadata) {
   if (metadata?.provider === "deepseek" && metadata.status === "replied") return "DeepSeek 回复";
+  if (metadata?.provider === "local" && metadata.status === "replied") return "本地回复";
   if (metadata?.provider === "local" && metadata.status === "unavailable" && metadata.reason === "not_configured") return "未配置 DeepSeek · 本地回复";
   if (metadata?.provider === "local" && metadata.status === "failed") return "DeepSeek 本轮未完成 · 本地回复";
   return "";
 }
+function assistantPrivate(text,flag=false){
+  if(window.PhoneAccount?.assistantPrivate)return window.PhoneAccount.assistantPrivate(text,flag);
+  return flag===true||/(不要|别).{0,4}(记录|记下来|保存)|(?:不要|别|不想|不希望|不愿意|不愿|不需要).{0,4}(告诉|让|通知).{0,3}(孩子|女儿|儿子|家人|他|她|他们|她们)|(?:不想|不希望|不愿意|不愿|不需要).{0,2}(?:让|叫)?(?:孩子|女儿|儿子|家人).{0,3}(?:知道|看见)/.test(text);
+}
+function assistantIdentity(){
+  if(window.PhoneLocal){
+    if(!window.PhoneAccount?.identity())return null;
+    try{const value=window.PhoneAccount.aiScope(window.PhoneLocal.store);
+    return {key:[snapshot().ownerId,value.account_id,value.patient_id].join(':'),...value};}catch{return null;}
+  }
+  const value=snapshot().cloudAssistant;
+  return value?.connected?{...value,key:[snapshot().ownerId,value.account_id,value.patient_id].join(':')}:null;
+}
+async function assistantRequest(action,body={}){
+  if(window.PhoneLocal){
+    const account=window.PhoneAccount,store=window.PhoneLocal.store;
+    if(action==='assistantPreferences')return account.assistantPreferences(store,body.health_context===undefined?undefined:body);
+    if(action==='assistantConversation')return account.assistantConversation(store,body.after??0);
+    if(action==='assistantTurn')return account.assistantTurn(store,body.text??null,body.retry_operation_id??null);
+    if(['candidate','workflow','workflowProfile'].includes(action)){const before={...account.aiScope(store)},result=await account.request(action,before,body),after=account.aiScope(store);if(before.account_id!==after.account_id||before.patient_id!==after.patient_id)throw Error('账号已变化');return result;}
+    throw Error('未开放此管家操作');
+  }
+  return api('/unified/workbench.'+action+'?source='+encodeURIComponent(ui.source),body);
+}
+function assistantTurns(items){
+  const rows=new Map();for(const row of items||[])if(row&&typeof row.id==='string'&&typeof row.text==='string'&&typeof row.answer==='string')rows.set(row.id,row);
+  return [...rows.values()].sort((a,b)=>a.sequence-b.sequence);
+}
+function assistantMessages(items){
+  return assistantTurns(items).flatMap(row=>{
+    const time=typeof row.created_at==='number'?new Date(row.created_at*1000).toISOString():row.created_at;
+    const common={time,cloud_turn_id:row.id,persisted:true};
+    return [{...common,id:row.id+':user',role:'elder',text:row.text},{...common,id:row.id+':answer',role:'agent',text:row.answer,actions:row.actions,conversation:row.source?{provider:row.source,status:'replied'}:undefined}];
+  });
+}
+function assistantActions(actions,turnId){
+  return (Array.isArray(actions)?actions:[]).slice(0,4).map(action=>{
+    if(action?.kind==='assessment_plan'&&/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(action.plan_id))return link('查看评估计划','/capture?tab=plan&assessmentPlan='+encodeURIComponent(action.plan_id)+'#assessment-plans');
+    if(action?.kind==='assessment'&&/^[a-z][a-z0-9_]{0,79}$/.test(action.exercise_id))return link('打开本人评估','/capture?tab=assess&entry=assistant&exercise='+encodeURIComponent(action.exercise_id));
+    if(action?.kind==='plan')return link('查看康复计划','#rehab');
+    if(action?.kind==='candidate'&&['STARTER','PROGRESSION'].includes(action.candidate_kind))return `<button type="button" data-assistant-turn="${E(turnId)}" data-assistant-candidate="${action.candidate_kind}">${action.candidate_kind==='STARTER'?'提交起始候选核对':'提交进阶候选核对'}</button>`;
+    if(action?.kind==='doctor_review')return '<button type="button" data-assistant-doctor>联系康复医师</button>';
+    return '';
+  }).join('');
+}
+function pendingAssistantQuestions(){
+  if(window.PhoneLocal&&window.PhoneAccount?.assistantPending)return window.PhoneAccount.assistantPending(window.PhoneLocal.store);
+  const old=window.PhoneLocal?.store.value.cloudAssistantPending||snapshot().cloudAssistant?.pending;
+  return old?[old]:[];
+}
+function scheduleAssistantRecovery(state){
+  if(ui.page!=='assistant'||ui.assistantCloud!==state)return;
+  const key=pendingAssistantQuestions().map(row=>row.operation_id).join(':');
+  if(state.recoveryKey!==key){state.recoveryKey=key;state.recoveryAttempts=0;}
+  if(!key||state.recoveryTimer||state.recoveryAttempts>=15)return;
+  state.recoveryTimer=setTimeout(()=>{
+    state.recoveryTimer=null;
+    if(ui.page!=='assistant'||ui.assistantCloud!==state)return;
+    state.recoveryAttempts++;
+    if(ui.busy||state.loading){scheduleAssistantRecovery(state);return;}
+    void refreshAssistant(state,true);
+  },4000);
+}
+async function refreshAssistant(state,quiet=false){
+  if(state.loading)return;state.loading=true;
+  const priorPending=pendingAssistantQuestions(),before=JSON.stringify([state.items,state.error,priorPending]);
+  try{
+    const [preferences,conversation]=await Promise.all([assistantRequest('assistantPreferences'),assistantRequest('assistantConversation',{after:state.pending_after??state.next_after??0})]);
+    if(assistantIdentity()?.key!==state.key)return;
+    const rows=new Map((state.rows||[]).map(row=>[row.id,row]));for(const row of conversation.items)rows.set(row.id,row);
+    state.rows=[...rows.values()];const unresolved=state.rows.filter(row=>typeof row.answer!=='string');
+    state.pending_after=unresolved.length?Math.min(...unresolved.map(row=>row.sequence))-1:null;
+    if(priorPending.some(intent=>intent.text===ui.draft&&conversation.items.some(row=>row.operation_id===intent.operation_id&&row.text===intent.text&&typeof row.answer==='string')))ui.draft='';
+    state.preferences=preferences;state.items=assistantTurns([...state.items,...conversation.items]);state.next_after=conversation.next_after;state.has_more=conversation.has_more;state.error='';state.loaded=true;
+  }catch(error){state.error=error.message;state.loaded=true;}
+  finally{
+    state.loading=false;
+    if(ui.page==='assistant'&&ui.assistantCloud===state){
+      if(!quiet||before!==JSON.stringify([state.items,state.error,pendingAssistantQuestions()])){
+        const focused=quiet&&document.activeElement?.id==='draft',start=focused?document.activeElement.selectionStart:null,end=focused?document.activeElement.selectionEnd:null;
+        assistant();if(focused){$('#draft')?.focus?.();$('#draft')?.setSelectionRange?.(start,end);}
+      }
+      scheduleAssistantRecovery(state);
+    }
+  }
+}
+async function openAssistantWorkflow(state){
+  const value=await assistantRequest('workflow');
+  if(assistantIdentity()?.key!==state.key)throw Error('账号已变化');
+  const p=value.profile||{},regions=['肩','肘','腕','髋','膝','踝','颈','躯干','一般活动'];
+  modal('康复目标与条件',`<form id="assistant-workflow-form"><label>目标<textarea id="assistant-goal" maxlength="500" required>${E(p.goal||'')}</textarea></label><label>身体部位<select id="assistant-region">${regions.map(region=>`<option ${region===p.region?'selected':''}>${region}</option>`).join('')}</select></label><label>器材（逗号分隔）<input id="assistant-equipment" value="${E((p.equipment||[]).join('，'))}" maxlength="1000"></label><label>限制（逗号分隔，无则留空）<input id="assistant-restrictions" value="${E((p.restrictions||[]).join('，'))}" maxlength="1000"></label><label>当前任务等级<select id="assistant-level">${[0,1,2,3].map(level=>`<option value="${level}" ${level===(p.level??0)?'selected':''}>L${level}</option>`).join('')}</select></label><label><input id="assistant-screening" type="checkbox" required>我已核对适用条件、器材及限制；不确定时先联系康复医师</label><p class="muted">保存目标不会开启资料上传或医生共享。提交候选前，需在原评估页面保存真实评估，并另行明确开启同步与医生授权。</p><button type="submit" class="primary">保存目标与条件</button></form>`);
+  $('#assistant-workflow-form').onsubmit=async event=>{
+    event.preventDefault();
+    const split=id=>$(id).value.split(/[,，]/).map(item=>item.trim()).filter(Boolean);
+    const document={expected_version:value.profile_version,goal:$('#assistant-goal').value.trim(),region:$('#assistant-region').value,equipment:split('#assistant-equipment'),restrictions:split('#assistant-restrictions'),level:Number($('#assistant-level').value),screening_confirmed:$('#assistant-screening').checked};
+    const ok=await act(async()=>{if(assistantIdentity()?.key!==state.key)throw Error('账号已变化');await assistantRequest('workflowProfile',document);},'目标与条件已保存；评估同步和医生授权仍需另行开启');
+    if(ok)$('#dialog').close();
+  };
+}
 function assistant() {
-  const chat = snapshot().state?.chat || [];
+  let identity=null,identityError='';try{identity=assistantIdentity();}catch(error){identityError=error.message;}
+  if(!identity||ui.assistantCloud?.key!==identity.key)ui.assistantCloud=identity?{key:identity.key,items:[],preferences:null,loaded:false,loading:false,candidates:{}}:null;
+  const cloud=ui.assistantCloud,local=snapshot().state?.chat||[];
+  const chat=cloud?[...local.filter(m=>!m.cloud_turn_id),...assistantMessages(cloud.items)]:local;
+  const preferences=cloud?.preferences,pendingRows=cloud?pendingAssistantQuestions():[],pending=pendingRows[0];
+  const cloudControls=cloud?`<label><input id="assistant-health-context" type="checkbox" ${preferences?.health_context===true?'checked':''} ${!Number.isSafeInteger(preferences?.version)?'disabled':''}>允许管家使用我的云端康复资料</label><p class="muted">仅使用已同步到本人云账号的资料。此授权不会开启记录上传或医生共享。</p><button type="button" id="assistant-workflow">康复目标与条件</button><button type="button" id="assistant-sync">${cloud.has_more?'继续同步对话':'同步对话'}</button><p role="status">${E(cloud.error||(cloud.loading?'正在同步管家对话…':''))}</p>`:`<p class="muted">${E(identityError||'登录本人云账号后可同步管家对话；未登录及私密对话使用本地回复。')}</p>`;
   $("#content").innerHTML =
-    `<div class="heading"><h1>康复管家</h1><a href="#home">返回首页</a></div><details class="assistant-capability"><summary>使用说明</summary><p>${snapshot().conversationModelAvailable?"康复问答、结果解说与本地候选计划；DeepSeek 已配置。":"康复问答、结果解说与本地候选计划；当前使用本地资料。"}</p><p>对话不录入健康信息或修改模块。共用动作库含63张评估卡和122张训练卡；候选计划先使用已整理的起始模板。</p></details><section class="conversation" aria-label="对话记录">${chat.map((m) => `<div class="bubble ${m.role === "elder" ? "mine" : ""}"><small>${m.role === "elder" ? "我" : "康复管家"}${m.time ? " · " + stamp(m.time) : ""}${m.persisted === false ? " · 本次不记录" : ""}${m.pending ? " · 待确认" : ""}${m.role !== "elder" && conversationSource(m.conversation) ? " · " + E(conversationSource(m.conversation)) : ""}</small>${E(m.text)}</div>`).join("") || '<section class="hero"><h2>有什么康复问题？</h2><p class="muted">可以询问动作做法或解释已有康复结果。</p></section>'}</section>${button("本地候选计划", "local-plan")}<form id="chat-form" class="composer"><label for="draft">发消息给康复管家</label><textarea id="draft" required maxlength="1900" placeholder="坐姿踝内翻与外翻方向观察怎么做？">${E(ui.draft)}</textarea><div class="actions"><label><input id="private" type="checkbox" ${ui.private ? "checked" : ""}>本次不记录</label><div>${button("语音输入", "voice")} <button type="button" id="voice-cancel" hidden>取消录音</button> <button type="submit" class="primary">发送</button></div></div><p id="voice-state" class="muted" role="status"></p><input id="audio-file" type="file" accept="audio/*" hidden></form>`;
+    `<div class="heading"><h1>康复管家</h1><a href="#home">返回首页</a></div><details class="assistant-capability"><summary>使用说明</summary><p>${cloud?"康复问答与结果解说；云端管家已连接。":"康复问答与结果解说；当前使用本地资料。"}</p><p>${cloud?'云端管家可将评估安排保存到“我的计划”的评估计划；完成状态由实际上传评估核对。':'登录本人云账号后可读取管家保存的评估计划。'}对话不代填测量结果。共用动作库含63张评估卡和122张训练卡；候选计划先使用已整理的起始模板。</p>${cloudControls}</details><section class="conversation" aria-label="对话记录">${chat.map((m) => `<div class="bubble ${m.role === "elder" ? "mine" : ""}"><small>${m.role === "elder" ? "我" : "康复管家"}${m.time ? " · " + stamp(m.time) : ""}${m.persisted === false ? " · 本次不记录" : ""}${m.pending ? " · 待确认" : ""}${m.role !== "elder" && conversationSource(m.conversation) ? " · " + E(conversationSource(m.conversation)) : ""}</small>${E(m.text)}${assistantActions(m.actions,m.cloud_turn_id)}</div>`).join("") || '<section class="hero"><h2>有什么康复问题？</h2><p class="muted">可以询问动作做法或解释已有康复结果。</p></section>'}</section>${button("本地候选计划", "local-plan")}<form id="chat-form" class="composer"><label for="draft">发消息给康复管家</label><textarea id="draft" required maxlength="1900" placeholder="坐姿踝内翻与外翻方向观察怎么做？">${E(ui.draft)}</textarea><div class="actions"><label><input id="private" type="checkbox" ${ui.private ? "checked" : ""}>本次不记录</label><div>${button("语音输入", "voice")} <button type="button" id="voice-cancel" hidden>取消录音</button> <button type="submit" class="primary">发送</button></div></div><p id="voice-state" class="muted" role="status"></p><input id="audio-file" type="file" accept="audio/*" hidden></form>`;
+  if(cloud){
+    bind('assistant-workflow',()=>act(()=>openAssistantWorkflow(cloud),''));
+    document.querySelectorAll('[data-assistant-doctor]').forEach(control=>control.onclick=openClinicianContact);
+    bind('assistant-sync',()=>{cloud.loaded=false;void refreshAssistant(cloud);});
+    $('#assistant-health-context').onchange=async event=>{
+      const enabled=event.target.checked,version=cloud.preferences?.version;
+      const ok=await act(async()=>{const value=await assistantRequest('assistantPreferences',{expected_version:version,health_context:enabled});if(assistantIdentity()?.key===cloud.key)cloud.preferences=value;},'管家授权设置已保存');
+      if(!ok)cloud.loaded=false;if(ui.page==='assistant')assistant();
+    };
+    // Recovery stays beside the original question, not inside collapsed help.
+    if(pending){
+      const conversation=$('.conversation');
+      conversation.insertAdjacentHTML?.('beforeend',pendingRows.map(row=>`<div class="bubble mine"><small>我 · 等待回复</small>${E(row.text)}<div class="actions"><button type="button" data-assistant-retry="${E(row.operation_id||'')}">重试这条</button></div></div>`).join(''));
+      document.querySelectorAll('[data-assistant-retry]').forEach(control=>control.onclick=()=>act(async()=>{
+        const result=await assistantRequest('assistantTurn',{retry_operation_id:control.dataset.assistantRetry||null});
+        if(assistantIdentity()?.key!==cloud.key)throw Error('账号已变化');
+        cloud.items=assistantTurns([...cloud.items,{...result.turn,source:result.source}]);cloud.loaded=false;await load();
+      },'管家已回复'));
+      scheduleAssistantRecovery(cloud);
+    }
+    document.querySelectorAll('[data-assistant-candidate]').forEach(control=>control.onclick=()=>{
+      const kind=control.dataset.assistantCandidate;
+      modal('提交候选给医生核对？','<p>程序会重新核对本人已同步评估、目标和授权；候选不会自动启用或增加训练量。</p><button class="primary" id="assistant-candidate-confirm">确认提交</button>');
+      bind('assistant-candidate-confirm',async()=>{
+        let status;
+        const ok=await act(async()=>{
+          if(assistantIdentity()?.key!==cloud.key)throw Error('账号已变化');
+          const key=control.dataset.assistantTurn+':'+kind,operation_id=cloud.candidates[key]??=crypto.randomUUID(),result=await assistantRequest('candidate',{operation_id,kind});
+          if(assistantIdentity()?.key!==cloud.key)throw Error('账号已变化');
+          status=result.state==='PENDING_REVIEW'?'候选已提交，等待医生核对。':'候选状态：'+(result.state||'待核对');
+        },'');
+        if(ok){$('#dialog').close();say(status);}
+      });
+    });
+    if(!cloud.loaded&&!cloud.loading)void refreshAssistant(cloud);
+  }
   bind('local-plan',()=>{
     modal('本地候选计划','<p>本地规则筛选，不调用付费模型。先支持肩、髋、膝、踝的起始模板；核对条件及当次试做后再采用。</p><form id="local-plan-form"><label>目标<input id="plan-goal" required maxlength="200"></label><label>身体部位<input id="plan-region" required maxlength="40"></label><label>器材（逗号分隔）<input id="plan-equipment" maxlength="200" placeholder="稳固椅、硬床、滑布、垫、稳定桌面"></label><label>限制（逗号分隔，无则留空）<input id="plan-restrictions" maxlength="200"></label><label>当前任务等级<select id="plan-level"><option value="0">L0</option><option value="1">L1</option><option value="2">L2</option><option value="3">L3</option></select></label><label><input id="plan-confirmed" type="checkbox" required>已核对适用条件、器材与限制</label><button type="submit">生成候选计划</button></form><p id="plan-result" role="status" style="white-space:pre-wrap"></p>');
     const owner=snapshot().ownerId,source=ui.source;
@@ -864,7 +1000,16 @@ function assistant() {
     let destination, turn;
     const source=ui.source,owner=snapshot().ownerId;
     const ok = await act(
-      async () => {const result=await post("chat", { text, private: priv });turn=result.turn;destination=turn?.agent?.navigation;},
+      async () => {
+        const account=assistantIdentity();
+        if(window.OfflineAndroid?.accountIdentity&&!account&&!assistantPrivate(text,priv))throw Error('请先登录本人账号，再向康复管家提问。');
+        if(account&&!assistantPrivate(text,priv)){
+          const result=await assistantRequest('assistantTurn',{text});
+          if(assistantIdentity()?.key!==account.key)throw Error('账号已变化');
+          cloud.items=assistantTurns([...cloud.items,{...result.turn,source:result.source}]);
+          turn={...result.turn,conversation:{provider:result.source,status:'replied'}};cloud.loaded=false;
+        }else{const result=await post("chat", { text, private: priv });turn=result.turn;destination=turn?.agent?.navigation;}
+      },
       "",
     );
     if (ok) {
@@ -878,6 +1023,8 @@ function assistant() {
         if(location.hash.slice(1)===destination)route();
         else location.hash=destination;
       }
+    }else if(cloud&&ui.page==='assistant'&&assistantIdentity()?.key===cloud.key){
+      assistant();
     }
   };
   bind("voice-cancel", () => {

@@ -1,0 +1,1314 @@
+{
+  "document_version": "v1.0",
+  "created_date_local": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "range": "081-090",
+  "action_count": 10,
+  "selected_image_count": 22,
+  "generation_mode": "built-in image_gen__imagegen; one independent photo per call; no CLI",
+  "all_selected_images_new": true,
+  "source_materials": [
+    {
+      "path": "E:\\git冲突问题\\rehab image\\动作分步骤示范图制作清单_v1.0.md",
+      "sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991"
+    },
+    {
+      "path": "E:\\git冲突问题\\rehab image\\step-image-references\\reference-01.png",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "E:\\git冲突问题\\rehab image\\step-image-references\\reference-02.png",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "E:\\git冲突问题\\rehab image\\step-image-references\\reference-03.png",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ],
+  "selected_images": [
+    {
+      "sequence": 81,
+      "id": "T-LOW-028",
+      "name": "仰卧/坐位髋内收轻夹垫",
+      "step": "01",
+      "caption": "屈膝仰卧夹垫",
+      "filename": "081_T-LOW-028_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/081_T-LOW-028_s01.png",
+      "sha256": "DD0487E5CB7FB7D4A59AFF85EAC9B0E5F726B8D5B656203ACE100C5610180129",
+      "bytes": 1735417,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Asset: one independent rehabilitation demonstration photograph, action 081 T-LOW-028 step 01. Input images 1–3 are STRICT same-woman identity, clothing, lighting and gray-blue backdrop references, not pose references. Repose this exact woman: same East Asian face, age, build, dark ponytail, fitted plain white short sleeve T-shirt and charcoal full-length trousers. Photorealistic studio photo, cool light gray-blue seamless background and matching floor, soft diffused neutral light and natural shadow. ONE person ONE static pose, no text, arrows, numbers, panels, inset, branding, watermark or visible writing. Natural adult anatomy, realistic proportions, complete head, hands, both feet with space around them.\nPose: lie SUPINE on a simple neutral gray nonslip exercise mat, head at image left and feet at image right. Face upward, head comfortably resting, shoulders and pelvis on mat. BOTH knees bent comfortably about 90 degrees, BOTH feet in matching plain white socks placed flat on mat, feet hip-width and aligned. Place a modest SOFT pale gray rectangular PILLOW vertically BETWEEN the inner sides of BOTH KNEES and distal thighs. Both inner knees clearly contact the two sides of the pillow, gentle adduction holding only; hands rest relaxed beside trunk. Pillow must not sit on abdomen, lap or underneath feet. Feet remain grounded, no bridge, hips stay down. Elevated oblique side/front camera from footward side so BOTH knees, the intervening pillow, BOTH separate feet and their contact with mat can be clearly seen, face also visible. Portrait 4:5 frame similar to references 1122x1402; complete body and whole support surface comfortably visible, horizontal body under 85% of frame width. Only mat and pillow, no chair, no gym interior. This is supine variant; do not show sitting.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13853-12f9-7993-b5b4-8d6797141dfa/exec-1087fbb7-a06e-4420-ae36-3c6bcf479234.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_081_088.json",
+      "source_review": "通过：屈膝仰卧，骨盆肩背落垫，两侧内膝夹软垫，两只白袜脚掌稳定接地；自然比例，参考人物服装灰蓝背景一致。远侧手因侧前机位有自然遮挡。",
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 82,
+      "id": "T-LOW-029",
+      "name": "侧卧下侧腿内收抬起",
+      "step": "01",
+      "caption": "下侧直腿落垫准备",
+      "filename": "082_T-LOW-029_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/082_T-LOW-029_s01.png",
+      "sha256": "B96F666E737D6A743E38C4DE2EA61378F6511E5D7330047DD7876689C77B2C21",
+      "bytes": 1748496,
+      "width": 1536,
+      "height": 1024,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Create ONE independent photorealistic rehabilitation exercise demonstration photograph, no collage. These three supplied images are visual identity references: preserve exactly the same adult East Asian woman, facial appearance, natural proportions, black ponytail, plain white short sleeve shirt and dark charcoal gray long trousers. Soft studio lighting, plain gray-blue studio wall and floor, realistic subtle shadows. Wide horizontal side-on full-body composition with head at left and feet toward right; retain all fingers, feet and support contacts, leave modest blank background, no text, numbers, arrows, logos or watermark. Exercise 082 T-LOW-029, step 01, side-lying LOWER leg hip adduction preparation. She lies on her LEFT side on a blue-gray non-slip exercise mat. Head and neck rest on a small white pillow, left arm relaxed under/near pillow, right palm rests on mat in front of torso. LEFT LOWER leg is straight and fully resting on the mat from hip to foot, clearly visible for its entire length. RIGHT UPPER leg is bent at hip and knee and placed FORWARD of the lower leg, with right sole planted firmly on mat in front of the left thigh/knee, without pinning or pressing the straight lower leg. Pelvis stacked and torso lies on its side without rolling. Both legs belong anatomically to the same woman; no floating feet. This is the low/start position, do not lift either leg.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-375b6233-846a-4c80-815d-49f62c1e6796.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_082-084.json",
+      "source_review": {
+        "method": "view_image direct full-resolution visual inspection",
+        "status": "passed_visual_pose_review",
+        "pose": "侧卧低位准备：下侧左直腿落垫，上侧右屈膝脚前方落稳；头颈由左手及小枕支持。",
+        "identity_clothing_background": "通过",
+        "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+        "support_equipment": "上侧足前方落稳、下侧腿未被压住；头颈有支撑",
+        "composition": "完整头、手、足及主要支点；横向单图无标注",
+        "notes": ""
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 82,
+      "id": "T-LOW-029",
+      "name": "侧卧下侧腿内收抬起",
+      "step": "02",
+      "caption": "下侧直腿抬离垫",
+      "filename": "082_T-LOW-029_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/082_T-LOW-029_s02.png",
+      "sha256": "A78B44010EE159957A30D01F484CCDF1B50948AA7B86B1460F63187F348298FA",
+      "bytes": 1707033,
+      "width": 1536,
+      "height": 1024,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Create one independent photo, step 02 of exercise 082 T-LOW-029, lower-leg hip adduction lift. Image 1 is the exact composition and start-pose reference; images 2-4 lock the woman's identity, wardrobe, black ponytail and gray-blue studio styling. Keep Image 1's same woman, white short-sleeve shirt, dark charcoal long trousers, mat, small white pillow, camera, wide landscape frame, body scale, right supporting palm and left head support. Change ONLY the straight LOWER LEFT leg: lift the whole straight lower leg upward from the hip about 15 cm from mat, keeping knee straight and foot natural. The bent UPPER RIGHT leg must remain planted in front exactly as in Image 1, right sole fully on mat, not on the lower leg; its right knee remains bent. Clearly show air gap under the straight lower left calf and foot. Pelvis remains stacked without rolling, torso remains stable lying on left side. Only two anatomical legs and two feet; do not lift the upper bent leg, do not swap their identities. Full head, hands, and feet and support contacts visible, natural human proportions. Photorealistic soft studio photograph. No text, arrows, labels, numbering, collage or watermark.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-aac7d71b-34b7-490f-b26c-17005bcaa029.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_082-084.json",
+      "source_review": {
+        "method": "view_image direct full-resolution visual inspection",
+        "status": "passed_visual_pose_review",
+        "pose": "上侧右脚仍前方落地，下侧左腿保持伸展抬离垫，骨盆方向稳定。",
+        "identity_clothing_background": "通过",
+        "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+        "support_equipment": "上侧足前方落稳、下侧腿未被压住；头颈有支撑",
+        "composition": "完整头、手、足及主要支点；横向单图无标注",
+        "notes": ""
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 83,
+      "id": "T-LOW-030",
+      "name": "短杠杆哥本哈根内收支撑",
+      "step": "01",
+      "caption": "近端小腿承托，骨盆低位",
+      "filename": "083_T-LOW-030_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/083_T-LOW-030_s01.png",
+      "sha256": "4C8A9198D304F863C49599834687E15ACEE392B3163A56E5D019DD7428270382",
+      "bytes": 1846906,
+      "width": 1536,
+      "height": 1024,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Correct the exercise setup in Image 1 while preserving this same reference woman, face, black ponytail, white short-sleeve shirt, dark gray pants, gray-blue background, low left hip on mat, left forearm and lower left leg support, studio photo styling and horizontal full-body framing. Images 2-4 preserve exact visual identity. The required pose is SHORT LEVER Copenhagen support with a BENT upper knee. Crucial correction: move the small padded stool inward underneath the UPPER RIGHT KNEE region and proximal right shin, NOT under right ankle. Fully BEND upper right knee to approximately 90 degrees so a clear anatomical bend is visible. Right thigh reaches the stool; right knee and inner proximal shin, just below knee and away from joint line, rest on broad thick soft pad. Right lower leg folds backwards away from viewer toward the gray-blue wall; ankle and bare foot extend freely beyond back edge of cushion, NOT touching stool, not straight in line with thigh. Use a slightly elevated side-frontal camera if necessary to show this 90-degree upper knee bend, free upper foot and proximal shin support distinctly. Do not shorten shin unnaturally. LOWER LEFT knee and left foot stay firmly contacting mat, hip low. Full body including both feet and support contacts. One independent photorealistic image only, no words, arrows or collage.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-fafa79b8-da43-4494-9537-2537367b1508.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_082-084.json",
+      "source_review": {
+        "method": "view_image direct full-resolution visual inspection",
+        "status": "passed_visual_pose_review",
+        "pose": "短杠杆低位摆位：左前臂落垫，上侧右膝屈曲、膝周/近端区域厚垫承托，下侧左膝足落垫。",
+        "identity_clothing_background": "通过",
+        "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+        "support_equipment": "上侧承托位置与版本相符；下侧膝足辅助接地；前臂支垫；家具真实机械固定无法从图片证实",
+        "composition": "完整头、手、足及主要支点；横向单图无标注",
+        "notes": "上侧小腿朝背景方向，需结合屈膝和近端承托辨认，不能按屏幕长度判断肢段真实长短。"
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 83,
+      "id": "T-LOW-030",
+      "name": "短杠杆哥本哈根内收支撑",
+      "step": "02",
+      "caption": "下腿辅助接地，骨盆抬起",
+      "filename": "083_T-LOW-030_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/083_T-LOW-030_s02.png",
+      "sha256": "F8EADA269FF993C8C59C36A3040C10A60D23736BC34931B7AA39C8D83ED08990",
+      "bytes": 1795120,
+      "width": 1536,
+      "height": 1024,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Create one independent photorealistic photograph for exercise 083 T-LOW-030 step 02, SHORT-LEVER assisted Copenhagen static hold. Image 1 is the accepted preparation pose and exact scene. Images 2-4 identity references. Preserve woman's exact identity, black ponytail, white short-sleeve shirt, dark charcoal pants, barefoot, same mat, same padded low stool against wall, same horizontal full-body camera, same body scale and soft studio lighting. Raise ONLY her pelvis off mat into a controlled SIDE SUPPORT: left elbow and left forearm remain firmly on mat, elbow below shoulder; torso and upper right thigh now form one smooth side-plank alignment towards padded stool. UPPER RIGHT knee remains BENT around 90 degrees, its broad proximal inner shin/knee-adjacent region stays on soft stool pad just as in Image 1. Right foot remains free beyond back of cushion, no ankle support, shin length realistic in foreshortening. LOWER LEFT LEG MUST REMAIN ON GROUND as assistance: the bent lower LEFT knee and left foot remain visibly touching mat underneath and forward of her pelvis. Keep left knee grounded even while pelvis lifts, do NOT lift lower left foot or lower leg into air, do not make both feet floating. Right hand remains on hip, shoulder and pelvis do not twist, do not sag. Full head, both arms/hands and both legs/feet and all support contacts within frame. No text, arrows, numbering, labels, watermark or collage.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-b1c545de-c66c-4b8c-9e58-d19d77cb6992.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_082-084.json",
+      "source_review": {
+        "method": "view_image direct full-resolution visual inspection",
+        "status": "passed_visual_pose_review",
+        "pose": "短杠杆侧向支持：前臂及近端承托保持，骨盆离垫，下侧左膝足保持地面辅助。",
+        "identity_clothing_background": "通过",
+        "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+        "support_equipment": "上侧承托位置与版本相符；下侧膝足辅助接地；前臂支垫；家具真实机械固定无法从图片证实",
+        "composition": "完整头、手、足及主要支点；横向单图无标注",
+        "notes": "上侧小腿朝背景方向，需结合屈膝和近端承托辨认，不能按屏幕长度判断肢段真实长短。"
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 84,
+      "id": "T-LOW-031",
+      "name": "长杠杆哥本哈根内收支撑",
+      "step": "01",
+      "caption": "远端小腿承托，骨盆低位",
+      "filename": "084_T-LOW-031_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/084_T-LOW-031_s01.png",
+      "sha256": "632BE51A05970B1DE596E2B9EBF16EE51754FEB789CBEB7C761B7555D4C2C716",
+      "bytes": 1882075,
+      "width": 1536,
+      "height": 1024,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. ONE independent photorealistic rehabilitation exercise photograph, 084 T-LOW-031 step 01 LONG-LEVER assisted Copenhagen support SETUP. Image 1 provides same woman, studio and furniture look, but CHANGE upper leg and stool spacing for LONG lever. Images 2-4 are exact identity/style references. Preserve same East Asian woman, face, black ponytail, white short-sleeve shirt, dark charcoal pants, barefoot, gray-blue wall/floor, gray-blue non-slip mat, soft studio light, one stable four-legged low padded stool against right wall. Wide horizontal full-body side-frontal photo, head at left, feet and stool at right, slightly widen framing to keep entire upper straight leg and both feet visible. Woman on LEFT side: left forearm and elbow firmly on mat, left elbow below shoulder, left palm flat. Pelvis still LOW and left hip rests mat. UPPER RIGHT leg is FULLY STRAIGHT from hip through knee to ankle, natural thigh and shin lengths, knee has no contact with stool. Move stool farther right so its thick soft pad supports ONLY the broad INNER DISTAL RIGHT SHIN just above ankle, cushioning away from bony ankle point; right bare foot extends beyond cushion edge freely and is visible. LOWER LEFT leg is bent on ground for assistance, left knee and left foot both visibly contacting mat. Right hand on hip. Distinct LONG-lever support at right ankle/distal shin, not knee, not flexed upper knee, no hanging bottom leg. Realistic anatomy and support pressure. No words, arrows, labels, numbers, collage or watermark.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-41d61049-2f8f-4d6b-bf1f-d1469afbcfff.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_082-084.json",
+      "source_review": {
+        "method": "view_image direct full-resolution visual inspection",
+        "status": "passed_visual_pose_review",
+        "pose": "长杠杆低位摆位：上侧右腿伸直、内侧踝/远端小腿厚垫承托，下侧左膝足落垫。",
+        "identity_clothing_background": "通过",
+        "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+        "support_equipment": "上侧承托位置与版本相符；下侧膝足辅助接地；前臂支垫；家具真实机械固定无法从图片证实",
+        "composition": "完整头、手、足及主要支点；横向单图无标注",
+        "notes": ""
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 84,
+      "id": "T-LOW-031",
+      "name": "长杠杆哥本哈根内收支撑",
+      "step": "02",
+      "caption": "下腿辅助接地，骨盆抬起",
+      "filename": "084_T-LOW-031_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/084_T-LOW-031_s02.png",
+      "sha256": "EBF91D826EC7614FD16C32639DE02C568E2B1F8C5BC07ECE9F7ECBB76F8213D7",
+      "bytes": 1844739,
+      "width": 1536,
+      "height": 1024,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Create one independent photorealistic photo: exercise 084 T-LOW-031 step 02 LONG-LEVER assisted Copenhagen static hold. Image 1 is the exact accepted low setup. Images 2-4 visual identity references. Preserve exact same woman, face, black ponytail, white short sleeve shirt, charcoal long trousers, bare feet, non-slip mat, padded low stool at right wall, camera view/body scale/landscape frame and lighting. Change ONLY pelvis and trunk position by lifting the pelvis off mat into controlled side support. The left forearm and elbow stay grounded beneath left shoulder; torso from shoulder to pelvis and UPPER RIGHT STRAIGHT leg form a smooth aligned side plank line toward the stool. The upper RIGHT knee remains straight and unsupported in free space. Same inner DISTAL RIGHT SHIN/ANKLE area remains cushioned on stool, exactly the same long-lever contact as Image 1. LOWER LEFT LEG remains assisted on GROUND: left knee stays bent with left knee and left foot visibly touching mat underneath/forward of the lifted pelvis; do not lift lower leg or foot into air, do not extend lower leg to stool. Right hand at hip. Clearly show pelvic air gap and grounded lower knee/foot. Shoulder, hip and legs anatomically connected, no sagging or twisted pelvis. Full head, both hands, both feet and all equipment contact points in frame. No text, arrows, labels, numbers, watermark or collage.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-251ba033-23ad-43a2-a6f1-4888ea6aa6c8.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_082-084.json",
+      "source_review": {
+        "method": "view_image direct full-resolution visual inspection",
+        "status": "passed_visual_pose_review",
+        "pose": "长杠杆側向支持：上侧右腿伸直、远端承托保持，骨盆离垫，下侧左膝足仍辅助接地。",
+        "identity_clothing_background": "通过",
+        "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+        "support_equipment": "上侧承托位置与版本相符；下侧膝足辅助接地；前臂支垫；家具真实机械固定无法从图片证实",
+        "composition": "完整头、手、足及主要支点；横向单图无标注",
+        "notes": ""
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 85,
+      "id": "T-LOW-044",
+      "name": "弹力带侧向行走",
+      "step": "01",
+      "caption": "膝上带，浅屈膝准备",
+      "filename": "085_T-LOW-044_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/085_T-LOW-044_s01.png",
+      "sha256": "AC76A96864975E4BFFABDE19883C8B329D92AF49CD0A28DB804EBB7856F50E1C",
+      "bytes": 1713592,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Asset type: ONE standalone photorealistic rehabilitation exercise step photograph, no collage. Primary request: preparation for knee-band lateral walking. Input images 1-3 are visual references ONLY: preserve the same East Asian adult woman's face, age, skin tone, natural body proportions and black ponytail, plain white short-sleeve T shirt and dark charcoal long trousers. Do NOT copy the arm exercise from references.\nScene: gray-blue seamless studio background and matching clear flat nonslip floor, soft photographic lighting and natural shadows. ONE simple firmly floor-fixed rehabilitation handrail runs horizontally behind the woman at waist height, with its two bolted posts visible, no moving chair. Clothing consistent. Bare feet, both fully visible.\nCamera: fixed front slight three-quarter view, full body from head to all toes and handrail, natural perspective at waist level, portrait image, modest empty margins. She faces the camera almost squarely, torso upright and stable, knees comfortably shallow bent (about 15 degrees), pelvis level, feet parallel forward and about hip-width apart, both feet flat on floor. A wide continuous muted teal resistance loop is correctly wrapped around both lower thighs just ABOVE both knees at exactly the same height, with light initial tension. Her left hand gently contacts the fixed handrail on image-right, her other hand rests naturally near the waist. Feet and band are unobstructed. This is the START position; her body is near the center of the image with empty floor room to image-left for a later lateral step.\nConstraints: show exactly one clear pose of one woman. Anatomically correct limb lengths, two arms two legs, realistic hands and five fingers, correct floor and rail contact. No numbers, text, labels, arrows, watermarks, split frames, inset panels, motion trails. No band at ankles, no crossed legs, no deep squat, no floating feet.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-4c352f75-1e32-4990-a6f6-98349156d7f1.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_085-086.json",
+      "source_review": "通过：同一参考女性外观、白短袖深灰裤、灰蓝柔光；双足完整接地、膝浅屈、膝上同高弹力带，左手接固定扶手；人体与接触自然。",
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 85,
+      "id": "T-LOW-044",
+      "name": "弹力带侧向行走",
+      "step": "02",
+      "caption": "领先脚侧跨落地",
+      "filename": "085_T-LOW-044_s02_v2.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/085_T-LOW-044_s02_v2.png",
+      "sha256": "487593C1C17ABB30BBCC5ECC3D8016897FCB5749F20D0B5B8FA545477D083474",
+      "bytes": 1618980,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Asset: ONE standalone photorealistic rehabilitation step. EDIT the first input photograph (the knee-band standing preparation) into the next lateral-walking step. Inputs 2-4 are the original identity/style references. Preserve first image camera exactly: full body head to all toes, fixed front three-quarter perspective, same gray-blue backdrop/floor, scale, lighting, metallic floor-bolted handrail/posts, white T shirt, dark charcoal trousers, teal wide loop ABOVE both knees, bare feet, same woman's identity and ponytail, no text.\nChange ONLY the exercise pose and resulting band tension: her anatomical RIGHT foot, seen on IMAGE-LEFT, has taken one small sideways step to image-left and is now firmly planted flat. Move that leading image-left foot about 20 cm farther left than in the first input; her anatomical LEFT foot on IMAGE-RIGHT remains planted in its exact first-input floor position. This makes a clearly wider stance, not a crossed step. Both knees remain comfortably shallow flexed, knees following forward-facing toes, hips level, torso almost upright with only minimal natural forward inclination. Her pelvis is slightly toward image-left to remain comfortably stable. Her LEFT hand remains touching the fixed rail, gliding a little toward image-left along the SAME rail as needed; other hand stays naturally near waist. Teal loop becomes visibly stretched wider but remains at the same lower-thigh height just above both knees, correctly wrapping around each thigh with continuous edges.\nConstraints: exactly one frame, one woman, realistic anatomy and hand contact, both feet fully on ground, entire head/hands/feet/rail floor contacts visible. This image should visibly differ from preparation in foot spacing. No arrows, captions, letters, numbers, logos, watermarks, grid, motion blur, inset, deep squat, ankle band, twisted or crossing feet. Preserve rail and camera positions; do not recenter the framing.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-4c1a138c-ab54-4c4b-a440-99f6199e667f.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_085-086.json",
+      "source_review": "通过：领先右脚清楚侧跨落地，左脚原位、未交叉；定向强化舒适浅屈膝避免锁膝；膝上带、扶手、固定机位、双足接地保持。初版s02保留，但交付选用v2。",
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 85,
+      "id": "T-LOW-044",
+      "name": "弹力带侧向行走",
+      "step": "03",
+      "caption": "另一脚侧向跟进",
+      "filename": "085_T-LOW-044_s03.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/085_T-LOW-044_s03.png",
+      "sha256": "EF6B265599F28FC3D8ED373BADFE87A44C334A5C6BB90A6A9B631E1F12A417BA",
+      "bytes": 1629146,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Asset: ONE standalone photorealistic rehabilitation exercise step photograph. First input is the latest lateral-walking step photograph, second input is the group's original preparation, last three inputs are original identity references. EDIT first photograph to the FOLLOWING-FOOT step; preserve camera/framing, scale, face/ponytail, white short-sleeve T shirt and dark charcoal trousers, bare feet, gray-blue soft studio lighting and floor, metallic floor-bolted handrail in its EXACT same position. Portrait full body, complete toes and hands.\nKey pose change: The leading anatomical RIGHT foot on IMAGE-LEFT stays fixed in the exact sideways position from first input (near the left quarter of the picture). Now the trailing anatomical LEFT foot on IMAGE-RIGHT has taken a controlled small step toward image-left and is planted flat about hip-width to the right of the leading foot. Thus BOTH feet and the woman's pelvis are farther IMAGE-LEFT than the original preparation; the camera must not recenter her. Show a normal comfortably shallow bent-knee stance with two feet flat and parallel forward, roughly the same modest hip-width stance as preparation but translated about 20 cm left. Her pelvis and torso have shifted left over this new stance, stable and upright, level hips. Her LEFT hand slides toward image-left along the SAME fixed rail and remains firmly contacting it; her other hand remains naturally near the waist. Wide teal continuous resistance loop stays above both knees at equal height with gentle retained tension and no slack drooping.\nVery important: leading image-left foot does NOT move back to original preparation. ONLY the image-right following foot moves toward it. Keep original rail posts and ground horizon pixel-stable, make body translation left clearly visible. Natural leg and arm lengths and joints. No crossing legs, no deep squat, no locked knees, no raised heels, no floating feet. Exactly one woman and one pose. No text, numbers, arrows, labels, watermark, motion trails, panels, collage or inset.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-4afb82aa-1aa4-419a-97cd-8b43c465985e.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_085-086.json",
+      "source_review": "通过：跟进左脚向画面左侧落稳，领先脚未回到准备位；人物整体向左平移、机位与扶手固定，膝上带保留张力，双脚恢复约髋宽站距。首稿领先脚偏左已定向修正。",
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 86,
+      "id": "T-LOW-049",
+      "name": "扶稳单腿站立加对侧髋外展顶墙",
+      "step": "01",
+      "caption": "双足接地，软垫触墙",
+      "filename": "086_T-LOW-049_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/086_T-LOW-049_s01.png",
+      "sha256": "F54B351787B9C6D9A3A10149C1B3DA3A70A38FA657B45878F831E04144D4392F",
+      "bytes": 1730243,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Asset: ONE standalone photorealistic rehabilitation exercise photograph, ONE pose. Primary request: supported wall-press hip abduction SETUP with BOTH feet still on the floor. Input reference images define the SAME adult East Asian woman, same face, age, skin tone and build, black ponytail, plain white short-sleeve T shirt, dark charcoal long trousers. Do not copy reference arm poses.\nScene: gray-blue studio background and clear gray-blue flat nonslip floor, soft studio lighting with natural shadows. A real matte pale gray-blue vertical wall is on IMAGE-RIGHT. A firmly floor-bolted metallic rehabilitation handrail is next to her other side on IMAGE-LEFT; both supporting posts and their floor bolts visible. One small pale gray rectangular foam cushion held between the OUTSIDE of her anatomical LEFT distal thigh/lateral knee (IMAGE-RIGHT leg) and the vertical wall. Foam has direct continuous contact with BOTH wall and the outer knee, not floating. No straps or elastic band.\nPose: she faces camera almost frontally and stands next to the right wall with upright torso and level pelvis. Her LEFT wall-side knee is slightly bent, with its outer distal thigh/knee pressing LIGHTLY outward into cushion against the wall. Its foot still touches floor at this setup stage, with toes and sole visible. Her RIGHT leg away from wall is stable, foot fully planted. BOTH feet visibly on the floor, clear slight gap between legs. Her RIGHT hand (IMAGE-LEFT) gently grasps the fixed rail and fingers are anatomically natural; left arm rests naturally near waist and does not hide cushion or knee contact. Entire head, hands, both feet, wall contact, rail floor attachments are in frame.\nCamera: fixed front view with very slight angle to expose foam's contact on lateral knee, natural photographic perspective, portrait full-body framing with modest margins. Critical: TWO floor contact feet in this first frame. No single-leg stance yet; don't bend the wall-side leg up backward.\nConstraints: realistic continuous joints and limb lengths, identical costume and identity, no extra limbs/fingers, no text numbers arrows labels logos watermark collage/inset. No knee band, no ball, no deep squat, no dramatic sideways pelvic lean.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-1d4f281b-6df8-4d2f-b7dc-1b60d4d3cff2.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_085-086.json",
+      "source_review": "通过：双足接地、墙侧左膝微屈，外侧大腿/膝周软垫与墙接触，右手握固定扶手；器材、完整手足、比例自然。组内采用白鞋，后帧保持。",
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 86,
+      "id": "T-LOW-049",
+      "name": "扶稳单腿站立加对侧髋外展顶墙",
+      "step": "02",
+      "caption": "墙侧脚离地，对侧单腿支撑",
+      "filename": "086_T-LOW-049_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/086_T-LOW-049_s02.png",
+      "sha256": "F30D113B4D29EB5A38426430A29EC935C44429A374FD06D3DA8D997478DD29BE",
+      "bytes": 1674985,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Asset: ONE standalone photorealistic rehabilitation step photograph. EDIT the first input (both-feet setup wall-press photo) into the next single-leg HOLD pose. Preserve exact same camera front view, composition, scale, woman and identity, black ponytail, white short-sleeve T shirt, charcoal long trousers, same WHITE SHOES, gray-blue studio floor/background and lighting, IMAGE-RIGHT vertical wall and IMAGE-LEFT floor-bolted metal handrail/posts.\nPose change: Her anatomical LEFT leg, the wall-side leg on IMAGE-RIGHT, now has its FOOT gently lifted off the floor with a clear visible gap of about 10 cm below that shoe; left knee is comfortably bent, lower leg angles slightly backward but the left shoe remains visible on image-right of the supporting leg. The OUTSIDE of this LEFT distal thigh/lateral knee continues to touch and gently press the SAME light-gray foam cushion into the wall. Cushion remains physically sandwiched between knee exterior and wall, at the same contact region with only the small natural position change needed; no floating pad. Her anatomical RIGHT leg away from wall on IMAGE-LEFT is now the sole standing leg, its shoe planted flat in exact original position. Her RIGHT hand stays grasping the same fixed rail at exact original grip point, left arm relaxed at side without hiding cushion contact. Keep pelvis level and torso upright, no major leaning sideways, no hip dropping or twisting. Clearly show single-leg support vs previous two-foot support.\nFull head, both hands and both shoes entirely in frame, fixed wall and rail ground contact unchanged. Realistic human anatomy, connected joints and natural leg lengths, exact same cloth/shoes. ONE person ONE pose. No text, arrows, numbers, letters, watermark, extra limbs, band, ball, collage, motion trails. Do not lift the far-from-wall supporting foot; only image-right wall-side shoe rises.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-8e0761f0-747b-4fe6-8571-4ece2615fafa.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_085-086.json",
+      "source_review": "通过：墙侧左脚明确离地约10cm，对侧右足单脚支撑；软垫外侧膝触墙、右手扶稳，骨盆无明显侧倒；人物服装白鞋、机位、墙/扶手与前帧一致。",
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 87,
+      "id": "T-LOW-054",
+      "name": "扶稳半跪位髋前侧温和牵伸",
+      "step": "01",
+      "caption": "双手扶稳，半跪准备",
+      "filename": "087_T-LOW-054_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/087_T-LOW-054_s01.png",
+      "sha256": "81D46F13E948C3AD5CF8F21C4E2ED163E8629A3D0B2266F4AC7FE2F3E866A37A",
+      "bytes": 1732100,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. ONE independent photorealistic rehabilitation demonstration photograph, exercise 087 T-LOW-054 step 01, supported HALF-KNEEL hip-front gentle stretch setup. Images 1-3 are visual identity references: exactly the same adult East Asian woman, facial features and age, black ponytail, plain white short sleeve t-shirt, dark charcoal gray long trousers, barefoot. Plain gray-blue seamless studio wall and floor, soft studio lighting, realistic natural human anatomy, quiet neutral expression. Side-on full-body camera with slight near-side offset just enough to see BOTH hands, facing toward image RIGHT; vertical portrait composition, whole head, both hands, both knees and both bare feet and supports visible. She is HALF-KNEELING: LEFT rear knee firmly rests on a thick soft blue-gray knee cushion; rear left shin extends behind toward image LEFT on floor with rear foot relaxed. RIGHT front foot is planted fully flat on floor ahead toward image RIGHT; right knee bent about 90 degrees with shin upright. Pelvis directly above left rear knee, torso approximately upright with neutral spine, shoulders relaxed. Both hands comfortably hold the SAME stable fixed metal rehabilitation handrail in front at waist/lower-chest height; the rail has solid floor-bolted supports clearly visible, not a loose chair and not an assistant's hands. Hands relaxed authentic grips, enough arm reach for later slight forward shift. Keep left rear knee away from bare floor by soft cushion. This is low neutral half-kneel setup, no back arch, no deep lunge, no raised arms or weights. No words, arrows, numbering, labels, collage or watermark.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-3ae9633e-92dd-4232-9bf8-5c36a375e60e.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_087.json",
+      "source_review": {
+        "method": "view_image full image visual inspection",
+        "status": "passed_visual_pose_review",
+        "identity_clothing_background": "通过；同参考女性、白短袖深灰裤马尾，灰蓝背景及自然光线一致。",
+        "proportion_joints": "通过；头躯干与上下肢自然连接，手足完整。",
+        "support_equipment": "通过；后膝厚软垫承托，前足全掌落地，双手均接同一金属扶手，底座螺栓可见。",
+        "camera_continuity": "通过；竖版1122×1402，相机、人物尺度、扶手与膝垫位置一致。",
+        "pose": "半跪准备位，躯干大致直立。",
+        "notes": "原始照片不加箭头或文字，保持及回程复用s01可由后续排版文字说明。"
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 87,
+      "id": "T-LOW-054",
+      "name": "扶稳半跪位髋前侧温和牵伸",
+      "step": "02",
+      "caption": "骨盆连身体小幅前移",
+      "filename": "087_T-LOW-054_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/087_T-LOW-054_s02.png",
+      "sha256": "A14609C73300B0448B08E6144898DCDBCD5FAB61F5E907AD6AE95F3CF5E1B966",
+      "bytes": 1701709,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. One independent photorealistic rehabilitation photograph, exercise 087 T-LOW-054 step 02 supported half-kneeling hip-front gentle stretch HOLD. Image 1 is exact accepted setup, images 2-4 are fixed visual identity references. Preserve same woman and face, black ponytail, white short sleeve shirt, charcoal long pants, bare feet, fixed shiny metal handrail and floor bolts, thick blue-gray rear knee cushion, gray-blue studio backdrop, soft lighting, vertical full-body side-on camera, scale and all object positions. Preserve EXACT contact points: left rear KNEE remains on same cushion spot; right FRONT FOOT remains fully flat at same floor spot; BOTH HANDS remain at same grips on same fixed handrail. Move the PELVIS AND WHOLE TORSO together only a SMALL amount FORWARD toward image RIGHT, about 5-7 cm, for gentle hip-front stretch: rear thigh changes from vertical to slight forward lean because pelvis advances while rear knee stays fixed; front knee flexes a little forward while front heel stays down. The torso remains approximately upright, spine neutral, shoulders above pelvis; no lumbar backward arch and no backward lean, no exaggerated lunge. Hands stay supported, elbows naturally bend slightly as body approaches rail. Keep posture change visible at pelvis and rear thigh but modest. All limbs naturally proportioned, head, both hands, both feet, knees, cushion and floor-bolted support visible. One pose only. No text, numbering, arrows, labels, collage or watermark.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-1f8b389c-58c0-4170-9d2b-8534ef8281ef.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_087.json",
+      "source_review": {
+        "method": "view_image full image visual inspection",
+        "status": "passed_visual_pose_review",
+        "identity_clothing_background": "通过；同参考女性、白短袖深灰裤马尾，灰蓝背景及自然光线一致。",
+        "proportion_joints": "通过；头躯干与上下肢自然连接，手足完整。",
+        "support_equipment": "通过；后膝厚软垫承托，前足全掌落地，双手均接同一金属扶手，底座螺栓可见。",
+        "camera_continuity": "通过；竖版1122×1402，相机、人物尺度、扶手与膝垫位置一致。",
+        "pose": "骨盆、头和躯干相对前移约数厘米；前足、后膝及双手支点保持；无腰部明显后仰。",
+        "notes": "原始照片不加箭头或文字，保持及回程复用s01可由后续排版文字说明。"
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 88,
+      "id": "T-LOW-013",
+      "name": "髋铰链触墙练习",
+      "step": "01",
+      "caption": "背对墙站稳，臀墙有间距",
+      "filename": "088_T-LOW-013_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/088_T-LOW-013_s01.png",
+      "sha256": "0EC3EF4701CF5BB957D158A212EC8F96DFABBC6D5CADD70BD0E682FBEEEE5419",
+      "bytes": 1660690,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Asset: action 088 T-LOW-013 hip hinge wall tap, STEP 01 PREPARATION. Images 1–3 are STRICT identity/clothing/backdrop/light references, not exercise pose reference. Repose exact same East Asian woman, black ponytail, same face/age/build, fitted plain white short-sleeve T-shirt, charcoal full-length trousers. ONE independent studio photograph, 4:5 portrait, photorealistic with natural anatomy/proportions. Soft neutral studio lighting, original cool light gray-blue seamless backdrop and matching floor. Add ONLY a simple flat upright wall plane on image LEFT in the exact same gray-blue color; clear vertical wall-floor meeting line, no gym/interior details. Complete head, both hands and both feet within margins, neutral white unbranded low-profile shoes. No writing, text, numbers, arrows, logos, inset, collage, ghost movement.\nBody pose for PREPARATION: side-profile full-body view, woman faces RIGHT with back toward wall LEFT. BOTH feet parallel hip width planted flat, feet about 20–25 cm away from wall at heels. Stand nearly upright, slight comfortable knee bend, arms relaxed down and slightly forward of thighs. Her buttocks visibly have a small starting AIR GAP to wall about 12 cm, back and head NOT touching wall. Natural relaxed tall torso and neutral spine, chin level, shoulders relaxed, eyes look forward. Do NOT bend torso forward yet; do NOT contact buttocks to wall yet. Camera level at hips, 70mm feel with no wide angle distortion, enough floor to see shoe contact. Whole figure fills roughly 70% of height with balanced room around figure; wall left, woman centered.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13853-12f9-7993-b5b4-8d6797141dfa/exec-2e43f2e8-4e2f-4d6a-a358-776b929c7f40.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_081_088.json",
+      "source_review": "通过：背对左侧墙自然站姿，双足落地、膝微屈，臀墙间距清晰；头手双脚完整。",
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 88,
+      "id": "T-LOW-013",
+      "name": "髋铰链触墙练习",
+      "step": "02",
+      "caption": "髋后折，臀部轻触墙",
+      "filename": "088_T-LOW-013_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/088_T-LOW-013_s02.png",
+      "sha256": "CBA72F4C2079CF97978FE204D57C93761D643D9F9B1D2D05BE933C5E9F26584F",
+      "bytes": 1623789,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: identity-preserve. Asset: rehabilitation action 088 T-LOW-013 hip hinge wall tap STEP 02 endpoint. Image 1 is the STEP 01 scene/edit target; images 2–4 are original identity, clothing, studio gray-blue background references. Edit IMAGE 1 into the endpoint while preserving EXACT same woman, face, ponytail, white shirt, charcoal pants, white shoes, flat vertical wall on LEFT, floor, light, portrait frame, camera position and scale. ONE person ONE pose, photorealistic, normal anatomy, no text, no arrows, no collage.\nChange only body pose: woman still faces RIGHT and BACK is toward wall LEFT. KEEP BOTH SHOES at precisely the same floor positions and angle as image1, heels and toes fully grounded; knees remain only slightly bent, shins roughly upright. Push her buttocks backwards to LEFT until the back of buttocks makes visible gentle CONTACT with vertical wall. Flex at BOTH HIP joints so torso naturally inclines forward RIGHT approximately 40 degrees from upright. Long relaxed neck, neutral natural spine curves, head aligned with inclined torso and gaze softly downforward. Arms hang down naturally in front of thighs, hands fully visible, empty. Pelvis rotates over hips rather than rounded lumbar collapse. Do not squat deeply, do not press upper back/head to wall. SHOW small unmistakable buttock-to-wall contact and clearly separated back/head from wall. No prop, no stick, no weights. Whole figure remains within frame with complete head, hands and both feet, same wall-floor reference and negative space.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13853-12f9-7993-b5b4-8d6797141dfa/exec-f17695b6-dd54-474e-9f38-d6df29580711.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_081_088.json",
+      "source_review": "通过：臀向后轻触墙，躯干随髋前倾，背与头未贴墙，双鞋位置与起始帧一致，双脚掌稳定接地、膝轻屈；机位与墙基准一致。",
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 89,
+      "id": "T-LOW-014",
+      "name": "哑铃/壶铃罗马尼亚硬拉",
+      "step": "01",
+      "caption": "站稳持两只哑铃",
+      "filename": "089_T-LOW-014_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/089_T-LOW-014_s01.png",
+      "sha256": "D2A199CD6ACF860B6FC30122D9EF6B7EBB858046884BFCC39B9567719902EF99",
+      "bytes": 1695171,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Asset: one standalone rehabilitation exercise demonstration photograph, 089 T-LOW-014 step 01, no collage. Use all three supplied reference images only as identity, outfit, gray-blue studio background and soft photographic lighting references; do not copy their arm pose. Preserve exactly this same adult East Asian woman, black ponytail, white plain short-sleeve T-shirt, dark charcoal trousers. Full body standing on matte gray non-slip floor, including entire head, both hands and both feet. Plain gray athletic shoes. Nearly side view with a small frontal angle so both identical compact black hex dumbbells and their grips remain visible. She stands upright facing right, feet comfortably hip-width apart at fixed positions, knees slightly soft, neutral spine and neck. Each hand securely grasps one identical dumbbell; straight relaxed arms hang down, weights held closely just in front of her thighs, neutral wrists, palms toward body. Dumbbells already acquired, standing start position of a dumbbell Romanian deadlift, no floor pickup. Minimal gray-blue seamless studio backdrop, natural soft shadow, realistic anatomy and materials, calm instructional expression, consistent scale, substantial clear margin around full body. Exactly one woman, exactly two hands holding exactly two dumbbells. No words, numerals, arrows, badges, logos, watermarks or additional objects. Do not crop feet or weights.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-950a-7023-8b23-15a033f9edf5/exec-cc9e7dd7-f082-4c28-bb3f-347796cdd648.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_089-090.json",
+      "source_review": {
+        "status": "passed",
+        "method": "逐张使用view_image目视核对；根代理复审090组",
+        "pose": "站姿起点，双哑铃近腿前，双足站稳，膝轻屈，手腕握持自然。",
+        "identity_background": "同一女性外观、白短袖/深灰裤/黑马尾、灰蓝棚拍背景与柔光，写实质感保持。",
+        "anatomy_framing": "人体比例、连续关节和握持自然，头/双手/双足/完整器械入镜，无遮挡关键接触；无文字编号箭头水印。",
+        "equipment": "两只同款黑色六角哑铃，固定足位",
+        "limitations": "生成画面有少量体位透视差异；同一身份、器材及机位感保持。",
+        "cannot_verify": "静态生成图不能证明肌肉发力、真实负荷或临床有效性。"
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 89,
+      "id": "T-LOW-014",
+      "name": "哑铃/壶铃罗马尼亚硬拉",
+      "step": "02",
+      "caption": "近腿髋折下降",
+      "filename": "089_T-LOW-014_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/089_T-LOW-014_s02.png",
+      "sha256": "EBDA4792BE1D24992423C5EE8946AC1755F7105B6200938962D0EF4B9568DD23",
+      "bytes": 1702502,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Generate one standalone rehabilitation demonstration photograph for 089 T-LOW-014 step 02. Image 1 is the exact preceding standing start frame: preserve its same woman's identity, white short-sleeved T-shirt, charcoal trousers, black ponytail, gray athletic shoes, two black hex dumbbells, studio gray-blue floor/backdrop, lighting, camera, focal length and body scale. Images 2–4 are original appearance references. Change only the exercise pose to the controlled lower position of a dumbbell Romanian deadlift. Her feet stay exactly at the same floor locations facing right; knees remain only gently bent, not a squat. Push hips backward and hinge at the hip joints; neutral straight spine from pelvis through torso, chest inclines about 45 degrees, head and neck follow spine naturally with gaze diagonally toward floor. Both arms hang straight vertically down from the shoulders, each hand securely holds the same compact dumbbell with neutral wrist. Dumbbells travel CLOSE beside the front of the legs to just below knee or upper shin level, a comfortable endpoint far above floor; do not reach weights forward. Full body, whole head, both feet, both hands and both dumbbells complete and clearly visible. Same nearly-side slightly frontal viewpoint for inspecting hip hinge and both weights. Maintain neutral controlled posture and realistic anatomy. Exactly one pose, no collage. No text, numerals, arrows, logos, watermark. Do not lift from floor, deeply squat, round back, flex elbows or add equipment.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-950a-7023-8b23-15a033f9edf5/exec-c3db93b9-5305-4c10-b732-1d97c907389d.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_089-090.json",
+      "source_review": {
+        "status": "passed",
+        "method": "逐张使用view_image目视核对；根代理复审090组",
+        "pose": "臀后移髋铰链下降，膝轻屈，两哑铃近膝前且远离地面；同器械外观与站姿帧一致。",
+        "identity_background": "同一女性外观、白短袖/深灰裤/黑马尾、灰蓝棚拍背景与柔光，写实质感保持。",
+        "anatomy_framing": "人体比例、连续关节和握持自然，头/双手/双足/完整器械入镜，无遮挡关键接触；无文字编号箭头水印。",
+        "equipment": "两只同款黑色六角哑铃，固定足位",
+        "limitations": "生成画面有少量体位透视差异；同一身份、器材及机位感保持。",
+        "cannot_verify": "静态生成图不能证明肌肉发力、真实负荷或临床有效性。"
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 90,
+      "id": "T-LOW-015",
+      "name": "杠铃罗马尼亚硬拉",
+      "step": "01",
+      "caption": "支架上握稳杠铃准备",
+      "filename": "090_T-LOW-015_s01_v4.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s01_v4.png",
+      "sha256": "5102B4ACC1DF077E340CDB30C6A79FBEB3728AFFA946705E85CE24C3325A6106",
+      "bytes": 1619468,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: precise-object-edit. Create preparation step 01 from this photograph by placing this SAME barbell back UP onto the existing two fixed black stand cradles. KEEP BOTH stands totally untouched, original empty black cradles at their current permanent top height (around image y640), original positions, footprints, contour and lengths; do not move, shorten or change stands. Raise ONLY the barbell and both hands approximately 10 cm so shaft is actually resting supported in BOTH CURRENT cradles, not held below them. Woman stays upright same planted stance and relaxed shoulders; her two elbows must now BEND naturally approximately 20 degrees to keep both hands securely overhand gripping the RACKED bar at lower-waist height. This is preparation BEFORE taking bar out. Both real cradle-to-shaft support contacts visible and both hands still gripping. Same woman/face/hair/white shirt/charcoal trousers/gray shoes, bar shaft, ONE black disc and outside collar per end, camera, background, floor, lighting, scale and framing; all head/hands/feet/bar ends and stand bases complete. Do not change post heights or add any supports; the bar moves UP to the existing top cradles. Single photorealistic image, no words, arrows, numbers, logos, watermark, collage.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-950a-7023-8b23-15a033f9edf5/exec-641e2973-29f5-4f37-bc06-c7c3aaf0eeb6.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_089-090.json",
+      "source_review": {
+        "status": "passed",
+        "method": "逐张使用view_image目视核对；根代理复审090组",
+        "pose": "固定同型黑钢支架上准备握杠，双肘自然微屈，两端杠片与外侧卡扣完整，杆确有双侧承托。",
+        "identity_background": "同一女性外观、白短袖/深灰裤/黑马尾、灰蓝棚拍背景与柔光，写实质感保持。",
+        "anatomy_framing": "人体比例、连续关节和握持自然，头/双手/双足/完整器械入镜，无遮挡关键接触；无文字编号箭头水印。",
+        "equipment": "同一银杆、每端一黑杠片及外侧黑卡扣；同型固定高度黑钢承托架，准备/归位接触清楚。",
+        "limitations": "生成画面存在少量承托轮廓浮动及约30 px背景/底座基准漂移；同型支架和设置高度、动作路线、双手握持及支撑接触可辨。",
+        "cannot_verify": "静态生成图不能证明肌肉发力、真实负荷或临床有效性。"
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 90,
+      "id": "T-LOW-015",
+      "name": "杠铃罗马尼亚硬拉",
+      "step": "02",
+      "caption": "取杠站稳，近腿持杠",
+      "filename": "090_T-LOW-015_s02_v3.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s02_v3.png",
+      "sha256": "79C4CBCF712F7484D477C2662AA0C1476068BE8ACD7576E7A74F59FEDEBBA2C5",
+      "bytes": 1636972,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: precise-object-edit. Change ONLY the woman's forearms and the hand-held bar from racked preparation to unracked standing hold. The shaft must move DOWN 8 centimeters, approximately from current image y700 to image y760, now close in front of her thighs. Both elbows extend naturally, wrists neutral, both hands retain overhand shoulder-width grip, relaxed shoulders, knees soft, woman upright stable, both feet planted. Both smooth black fixed support stands MUST be absolutely frozen unchanged at same height, footprint and pixel locations: LEFT cradle remains x290 y700 and RIGHT cradle x870 y700, LEFT base at bottom left, RIGHT base at lower right. Do not raise/lower/move stands or change their contours; do not move camera/background/body. The same bar is held solely by both hands BELOW and slightly in front of the two now EMPTY original cradles. There is a clear visible gap of 8cm between the shaft and the cradle tops; if overlap in perspective, shaft is clearly in foreground. Same complete silver bar with SAME one black disc and OUTSIDE black collar per end. Preserve woman's face, black ponytail, white T-shirt, charcoal trousers, gray running shoes, full anatomy, soft gray-blue studio frame, light and shadows. Feet and full bar ends visible. One photo only, no text/arrows/numbers/logo/watermark/collage. No floor pull, overhead action, squat or additional supports.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-950a-7023-8b23-15a033f9edf5/exec-020c209d-9f65-49fa-900f-41148f36d7f9.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_089-090.json",
+      "source_review": {
+        "status": "passed",
+        "method": "逐张使用view_image目视核对；根代理复审090组",
+        "pose": "双臂自然向下持杠，杆贴近腿前，双足站稳；黑钢固定支架为空承托。该帧为最终架型高度/位置基准，s01由本帧编辑杆上架生成。",
+        "identity_background": "同一女性外观、白短袖/深灰裤/黑马尾、灰蓝棚拍背景与柔光，写实质感保持。",
+        "anatomy_framing": "人体比例、连续关节和握持自然，头/双手/双足/完整器械入镜，无遮挡关键接触；无文字编号箭头水印。",
+        "equipment": "同一银杆、每端一黑杠片及外侧黑卡扣；同型固定高度黑钢承托架，准备/归位接触清楚。",
+        "limitations": "生成画面存在少量承托轮廓浮动及约30 px背景/底座基准漂移；同型支架和设置高度、动作路线、双手握持及支撑接触可辨。",
+        "cannot_verify": "静态生成图不能证明肌肉发力、真实负荷或临床有效性。"
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 90,
+      "id": "T-LOW-015",
+      "name": "杠铃罗马尼亚硬拉",
+      "step": "03",
+      "caption": "髋后折，杠近腿下降",
+      "filename": "090_T-LOW-015_s03_v3.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s03_v3.png",
+      "sha256": "239F1BC08016D31F8615667A65560A1DF81C13D81E341A82758C1BF4A104C5D7",
+      "bytes": 1677002,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: identity-preserve. Change ONLY this woman's exercise pose from upright step 02 to controlled lower position step 03 of the same barbell Romanian deadlift. Freeze the ENTIRE same studio scene: same two smooth black fixed stands with ONE empty top cradle each at exact original height and footprint, bases, gray-blue background/floor boundary, fixed camera angle/framing and soft light. Do not alter post lengths, cradle contours or stand position. Keep same woman's identity, black ponytail, white short-sleeve T-shirt, dark charcoal trousers, gray shoes and same feet planted in original locations. Her hips and buttocks move BACK, torso hinges forward at HIP joints about 40–45 degrees, neutral straight spine, head aligned with spine naturally looking diagonally downward. Knees remain only mildly bent, no deep squat. BOTH arms hang vertically DOWN from shoulders, BOTH hands keep secure double-overhand shoulder-width grasp and neutral wrists. Same silver shaft with same ONE black disc and outside black collar per end travels CLOSE along the fronts of legs down to chosen endpoint near kneecaps / upper shins, still far above floor; do not reach forward. Both empty original cradles stay visible well ABOVE the lowered bar and untouched. Complete head, hands, feet, full bar including both end plate/collar assemblies and stand bases visible. Realistic continuous joint connections and grip, controlled neutral body position, one single photorealistic pose only. No text, numerals, arrows, logos/watermark/collage, floor pickup, curls, rounded lumbar back or new equipment.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-950a-7023-8b23-15a033f9edf5/exec-1bd87d67-3b32-4f87-a23b-939c72837020.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_089-090.json",
+      "source_review": {
+        "status": "passed",
+        "method": "逐张使用view_image目视核对；根代理复审090组",
+        "pose": "髋后折下降至膝附近，膝轻屈、杠近腿、双手保持握杆；黑钢架同型同设置，空承托顶部高度保持。",
+        "identity_background": "同一女性外观、白短袖/深灰裤/黑马尾、灰蓝棚拍背景与柔光，写实质感保持。",
+        "anatomy_framing": "人体比例、连续关节和握持自然，头/双手/双足/完整器械入镜，无遮挡关键接触；无文字编号箭头水印。",
+        "equipment": "同一银杆、每端一黑杠片及外侧黑卡扣；同型固定高度黑钢承托架，准备/归位接触清楚。",
+        "limitations": "生成画面存在少量承托轮廓浮动及约30 px背景/底座基准漂移；同型支架和设置高度、动作路线、双手握持及支撑接触可辨。",
+        "cannot_verify": "静态生成图不能证明肌肉发力、真实负荷或临床有效性。"
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    },
+    {
+      "sequence": 90,
+      "id": "T-LOW-015",
+      "name": "杠铃罗马尼亚硬拉",
+      "step": "04",
+      "caption": "归位承托，双手未松开",
+      "filename": "090_T-LOW-015_s04_v3.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s04_v3.png",
+      "sha256": "8780EE5537BD092CC70E81A3E360CF8504721C7AD849FF9D14B2773466ADE87F",
+      "bytes": 1620412,
+      "width": 1122,
+      "height": 1402,
+      "status": "selected_after_individual_visual_review",
+      "reused_existing_image": false,
+      "prompt": "Use case: precise-object-edit. Change ONLY this woman's head direction and gaze slightly: lower her chin to look down and confirm the silver barbell has just returned safely to BOTH support cradles at the end of her exercise. Both hands still securely overhand grasp the racked shaft; fingers closed, wrists natural, elbows softly bent. Freeze absolutely ALL other elements unchanged from this image: bar resting in exact SAME black cradle contact positions, both smooth black stand posts/base footprint/height/shape, same bar shaft and ONE black disc with outside black collar per end, complete woman's upright body/clothes/shoes/stance/identity, camera frame/body scale/gray-blue background and matte floor/light/shadow. Only change the face/head's glance downward a small natural amount, no body reposition or equipment change. This is step04 bar safely returned before releasing hands, single standalone realistic photo. No text/numbers/arrows/logo/watermark/collage. Keep head, both feet/hands, complete bar and stand bases uncropped.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-950a-7023-8b23-15a033f9edf5/exec-b623ed34-9a95-444c-be03-fd06387730b0.png",
+      "source_manifest": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_089-090.json",
+      "source_review": {
+        "status": "passed",
+        "method": "逐张使用view_image目视核对；根代理复审090组",
+        "pose": "回架结束，杆在同架承托处落稳，双手尚未松开，低头确认接触；由最终s01只改头部视线，承托高度位置保持。",
+        "identity_background": "同一女性外观、白短袖/深灰裤/黑马尾、灰蓝棚拍背景与柔光，写实质感保持。",
+        "anatomy_framing": "人体比例、连续关节和握持自然，头/双手/双足/完整器械入镜，无遮挡关键接触；无文字编号箭头水印。",
+        "equipment": "同一银杆、每端一黑杠片及外侧黑卡扣；同型固定高度黑钢承托架，准备/归位接触清楚。",
+        "limitations": "生成画面存在少量承托轮廓浮动及约30 px背景/底座基准漂移；同型支架和设置高度、动作路线、双手握持及支撑接触可辨。",
+        "cannot_verify": "静态生成图不能证明肌肉发力、真实负荷或临床有效性。"
+      },
+      "root_visual_review": "逐张查看并对照清单核对人物服装、动作方向、支撑接触、完整手足及比例；同组画面复审。"
+    }
+  ],
+  "generation_manifests": [
+    {
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_081_088.json",
+      "sha256": "1F195992545539A94F6A54FD38FD528A8E9A059C1D288862A25899B26C684278",
+      "content": {
+        "range": "081,088",
+        "date": "2026-10-14",
+        "mode": "built-in image_gen",
+        "records": [
+          {
+            "sequence": 81,
+            "id": "T-LOW-028",
+            "step": "01",
+            "name": "仰卧/坐位髋内收轻夹垫",
+            "source": "C:/Users/Administrator/.codex/generated_images/01a13853-12f9-7993-b5b4-8d6797141dfa/exec-1087fbb7-a06e-4420-ae36-3c6bcf479234.png",
+            "filename": "081_T-LOW-028_s01.png",
+            "prompt": "Use case: scientific-educational. Asset: one independent rehabilitation demonstration photograph, action 081 T-LOW-028 step 01. Input images 1–3 are STRICT same-woman identity, clothing, lighting and gray-blue backdrop references, not pose references. Repose this exact woman: same East Asian face, age, build, dark ponytail, fitted plain white short sleeve T-shirt and charcoal full-length trousers. Photorealistic studio photo, cool light gray-blue seamless background and matching floor, soft diffused neutral light and natural shadow. ONE person ONE static pose, no text, arrows, numbers, panels, inset, branding, watermark or visible writing. Natural adult anatomy, realistic proportions, complete head, hands, both feet with space around them.\nPose: lie SUPINE on a simple neutral gray nonslip exercise mat, head at image left and feet at image right. Face upward, head comfortably resting, shoulders and pelvis on mat. BOTH knees bent comfortably about 90 degrees, BOTH feet in matching plain white socks placed flat on mat, feet hip-width and aligned. Place a modest SOFT pale gray rectangular PILLOW vertically BETWEEN the inner sides of BOTH KNEES and distal thighs. Both inner knees clearly contact the two sides of the pillow, gentle adduction holding only; hands rest relaxed beside trunk. Pillow must not sit on abdomen, lap or underneath feet. Feet remain grounded, no bridge, hips stay down. Elevated oblique side/front camera from footward side so BOTH knees, the intervening pillow, BOTH separate feet and their contact with mat can be clearly seen, face also visible. Portrait 4:5 frame similar to references 1122x1402; complete body and whole support surface comfortably visible, horizontal body under 85% of frame width. Only mat and pillow, no chair, no gym interior. This is supine variant; do not show sitting.",
+            "visual_review": "通过：屈膝仰卧，骨盆肩背落垫，两侧内膝夹软垫，两只白袜脚掌稳定接地；自然比例，参考人物服装灰蓝背景一致。远侧手因侧前机位有自然遮挡。",
+            "path": "E:/git冲突问题/rehab image/train/steps/081_T-LOW-028_s01.png",
+            "reused": false,
+            "status": "visual_review_passed",
+            "width": 1122,
+            "height": 1402,
+            "bytes": 1735417,
+            "sha256": "DD0487E5CB7FB7D4A59AFF85EAC9B0E5F726B8D5B656203ACE100C5610180129"
+          },
+          {
+            "sequence": 88,
+            "id": "T-LOW-013",
+            "step": "01",
+            "name": "髋铰链触墙练习",
+            "source": "C:/Users/Administrator/.codex/generated_images/01a13853-12f9-7993-b5b4-8d6797141dfa/exec-2e43f2e8-4e2f-4d6a-a358-776b929c7f40.png",
+            "filename": "088_T-LOW-013_s01.png",
+            "prompt": "Use case: scientific-educational. Asset: action 088 T-LOW-013 hip hinge wall tap, STEP 01 PREPARATION. Images 1–3 are STRICT identity/clothing/backdrop/light references, not exercise pose reference. Repose exact same East Asian woman, black ponytail, same face/age/build, fitted plain white short-sleeve T-shirt, charcoal full-length trousers. ONE independent studio photograph, 4:5 portrait, photorealistic with natural anatomy/proportions. Soft neutral studio lighting, original cool light gray-blue seamless backdrop and matching floor. Add ONLY a simple flat upright wall plane on image LEFT in the exact same gray-blue color; clear vertical wall-floor meeting line, no gym/interior details. Complete head, both hands and both feet within margins, neutral white unbranded low-profile shoes. No writing, text, numbers, arrows, logos, inset, collage, ghost movement.\nBody pose for PREPARATION: side-profile full-body view, woman faces RIGHT with back toward wall LEFT. BOTH feet parallel hip width planted flat, feet about 20–25 cm away from wall at heels. Stand nearly upright, slight comfortable knee bend, arms relaxed down and slightly forward of thighs. Her buttocks visibly have a small starting AIR GAP to wall about 12 cm, back and head NOT touching wall. Natural relaxed tall torso and neutral spine, chin level, shoulders relaxed, eyes look forward. Do NOT bend torso forward yet; do NOT contact buttocks to wall yet. Camera level at hips, 70mm feel with no wide angle distortion, enough floor to see shoe contact. Whole figure fills roughly 70% of height with balanced room around figure; wall left, woman centered.",
+            "visual_review": "通过：背对左侧墙自然站姿，双足落地、膝微屈，臀墙间距清晰；头手双脚完整。",
+            "path": "E:/git冲突问题/rehab image/train/steps/088_T-LOW-013_s01.png",
+            "reused": false,
+            "status": "visual_review_passed",
+            "width": 1122,
+            "height": 1402,
+            "bytes": 1660690,
+            "sha256": "0EC3EF4701CF5BB957D158A212EC8F96DFABBC6D5CADD70BD0E682FBEEEE5419"
+          },
+          {
+            "sequence": 88,
+            "id": "T-LOW-013",
+            "step": "02",
+            "name": "髋铰链触墙练习",
+            "source": "C:/Users/Administrator/.codex/generated_images/01a13853-12f9-7993-b5b4-8d6797141dfa/exec-f17695b6-dd54-474e-9f38-d6df29580711.png",
+            "filename": "088_T-LOW-013_s02.png",
+            "prompt": "Use case: identity-preserve. Asset: rehabilitation action 088 T-LOW-013 hip hinge wall tap STEP 02 endpoint. Image 1 is the STEP 01 scene/edit target; images 2–4 are original identity, clothing, studio gray-blue background references. Edit IMAGE 1 into the endpoint while preserving EXACT same woman, face, ponytail, white shirt, charcoal pants, white shoes, flat vertical wall on LEFT, floor, light, portrait frame, camera position and scale. ONE person ONE pose, photorealistic, normal anatomy, no text, no arrows, no collage.\nChange only body pose: woman still faces RIGHT and BACK is toward wall LEFT. KEEP BOTH SHOES at precisely the same floor positions and angle as image1, heels and toes fully grounded; knees remain only slightly bent, shins roughly upright. Push her buttocks backwards to LEFT until the back of buttocks makes visible gentle CONTACT with vertical wall. Flex at BOTH HIP joints so torso naturally inclines forward RIGHT approximately 40 degrees from upright. Long relaxed neck, neutral natural spine curves, head aligned with inclined torso and gaze softly downforward. Arms hang down naturally in front of thighs, hands fully visible, empty. Pelvis rotates over hips rather than rounded lumbar collapse. Do not squat deeply, do not press upper back/head to wall. SHOW small unmistakable buttock-to-wall contact and clearly separated back/head from wall. No prop, no stick, no weights. Whole figure remains within frame with complete head, hands and both feet, same wall-floor reference and negative space.",
+            "visual_review": "通过：臀向后轻触墙，躯干随髋前倾，背与头未贴墙，双鞋位置与起始帧一致，双脚掌稳定接地、膝轻屈；机位与墙基准一致。",
+            "path": "E:/git冲突问题/rehab image/train/steps/088_T-LOW-013_s02.png",
+            "reused": false,
+            "status": "visual_review_passed",
+            "width": 1122,
+            "height": 1402,
+            "bytes": 1623789,
+            "sha256": "CBA72F4C2079CF97978FE204D57C93761D643D9F9B1D2D05BE933C5E9F26584F"
+          }
+        ]
+      }
+    },
+    {
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_082-084.json",
+      "sha256": "93C712D31414BBC6C576C54313AD02F80AAC34661AB59BA6FA9B369A8B21EFF1",
+      "content": {
+        "schema_version": "1.0",
+        "scope": "用户请求清单081-090之子任务082-084首轮步骤图，共6张",
+        "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+        "created_date_local": "2026-10-14",
+        "timezone": "Asia/Shanghai",
+        "generation_mode": "built-in image_gen__imagegen, one independent photo per call; no CLI; selected source images copied without image manipulation",
+        "references": [
+          {
+            "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+          },
+          {
+            "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+          },
+          {
+            "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+          }
+        ],
+        "shared_visual_check": "逐张使用view_image检视：同一参考女性、黑色马尾、白色短袖、深灰长裤、灰蓝背景、柔和写实棚拍；无文字编号箭头；头部完整手足和支撑接触可见；1536×1024横向构图，同组机位尺度一致。",
+        "review_boundary": "图片核对仅记录可见姿势及接触，不证明肌肉发力、真实负荷或家具实际机械固定。083/084提示词明确要求凳靠墙固定，画面呈墙边稳定低凳，后侧与墙的接触被透视及凳体部分遮挡，不能由图片证明固定装置。",
+        "images": [
+          {
+            "action_number": "082",
+            "action_id": "T-LOW-029",
+            "step_number": "01",
+            "target_pose": "侧卧低位准备：下侧左直腿落垫，上侧右屈膝脚前方落稳；头颈由左手及小枕支持。",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/082_T-LOW-029_s01.png",
+            "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-375b6233-846a-4c80-815d-49f62c1e6796.png",
+            "tool": "image_gen__imagegen",
+            "sha256": "B96F666E737D6A743E38C4DE2EA61378F6511E5D7330047DD7876689C77B2C21",
+            "width": 1536,
+            "height": 1024,
+            "reused_existing_image": false,
+            "prompt": "Use case: scientific-educational. Create ONE independent photorealistic rehabilitation exercise demonstration photograph, no collage. These three supplied images are visual identity references: preserve exactly the same adult East Asian woman, facial appearance, natural proportions, black ponytail, plain white short sleeve shirt and dark charcoal gray long trousers. Soft studio lighting, plain gray-blue studio wall and floor, realistic subtle shadows. Wide horizontal side-on full-body composition with head at left and feet toward right; retain all fingers, feet and support contacts, leave modest blank background, no text, numbers, arrows, logos or watermark. Exercise 082 T-LOW-029, step 01, side-lying LOWER leg hip adduction preparation. She lies on her LEFT side on a blue-gray non-slip exercise mat. Head and neck rest on a small white pillow, left arm relaxed under/near pillow, right palm rests on mat in front of torso. LEFT LOWER leg is straight and fully resting on the mat from hip to foot, clearly visible for its entire length. RIGHT UPPER leg is bent at hip and knee and placed FORWARD of the lower leg, with right sole planted firmly on mat in front of the left thigh/knee, without pinning or pressing the straight lower leg. Pelvis stacked and torso lies on its side without rolling. Both legs belong anatomically to the same woman; no floating feet. This is the low/start position, do not lift either leg.",
+            "review": {
+              "method": "view_image direct full-resolution visual inspection",
+              "status": "passed_visual_pose_review",
+              "pose": "侧卧低位准备：下侧左直腿落垫，上侧右屈膝脚前方落稳；头颈由左手及小枕支持。",
+              "identity_clothing_background": "通过",
+              "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+              "support_equipment": "上侧足前方落稳、下侧腿未被压住；头颈有支撑",
+              "composition": "完整头、手、足及主要支点；横向单图无标注",
+              "notes": ""
+            }
+          },
+          {
+            "action_number": "082",
+            "action_id": "T-LOW-029",
+            "step_number": "02",
+            "target_pose": "上侧右脚仍前方落地，下侧左腿保持伸展抬离垫，骨盆方向稳定。",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/082_T-LOW-029_s02.png",
+            "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-aac7d71b-34b7-490f-b26c-17005bcaa029.png",
+            "tool": "image_gen__imagegen",
+            "sha256": "A78B44010EE159957A30D01F484CCDF1B50948AA7B86B1460F63187F348298FA",
+            "width": 1536,
+            "height": 1024,
+            "reused_existing_image": false,
+            "prompt": "Use case: scientific-educational. Create one independent photo, step 02 of exercise 082 T-LOW-029, lower-leg hip adduction lift. Image 1 is the exact composition and start-pose reference; images 2-4 lock the woman's identity, wardrobe, black ponytail and gray-blue studio styling. Keep Image 1's same woman, white short-sleeve shirt, dark charcoal long trousers, mat, small white pillow, camera, wide landscape frame, body scale, right supporting palm and left head support. Change ONLY the straight LOWER LEFT leg: lift the whole straight lower leg upward from the hip about 15 cm from mat, keeping knee straight and foot natural. The bent UPPER RIGHT leg must remain planted in front exactly as in Image 1, right sole fully on mat, not on the lower leg; its right knee remains bent. Clearly show air gap under the straight lower left calf and foot. Pelvis remains stacked without rolling, torso remains stable lying on left side. Only two anatomical legs and two feet; do not lift the upper bent leg, do not swap their identities. Full head, hands, and feet and support contacts visible, natural human proportions. Photorealistic soft studio photograph. No text, arrows, labels, numbering, collage or watermark.",
+            "review": {
+              "method": "view_image direct full-resolution visual inspection",
+              "status": "passed_visual_pose_review",
+              "pose": "上侧右脚仍前方落地，下侧左腿保持伸展抬离垫，骨盆方向稳定。",
+              "identity_clothing_background": "通过",
+              "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+              "support_equipment": "上侧足前方落稳、下侧腿未被压住；头颈有支撑",
+              "composition": "完整头、手、足及主要支点；横向单图无标注",
+              "notes": ""
+            }
+          },
+          {
+            "action_number": "083",
+            "action_id": "T-LOW-030",
+            "step_number": "01",
+            "target_pose": "短杠杆低位摆位：左前臂落垫，上侧右膝屈曲、膝周/近端区域厚垫承托，下侧左膝足落垫。",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/083_T-LOW-030_s01.png",
+            "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-fafa79b8-da43-4494-9537-2537367b1508.png",
+            "tool": "image_gen__imagegen",
+            "sha256": "4C8A9198D304F863C49599834687E15ACEE392B3163A56E5D019DD7428270382",
+            "width": 1536,
+            "height": 1024,
+            "reused_existing_image": false,
+            "prompt": "Correct the exercise setup in Image 1 while preserving this same reference woman, face, black ponytail, white short-sleeve shirt, dark gray pants, gray-blue background, low left hip on mat, left forearm and lower left leg support, studio photo styling and horizontal full-body framing. Images 2-4 preserve exact visual identity. The required pose is SHORT LEVER Copenhagen support with a BENT upper knee. Crucial correction: move the small padded stool inward underneath the UPPER RIGHT KNEE region and proximal right shin, NOT under right ankle. Fully BEND upper right knee to approximately 90 degrees so a clear anatomical bend is visible. Right thigh reaches the stool; right knee and inner proximal shin, just below knee and away from joint line, rest on broad thick soft pad. Right lower leg folds backwards away from viewer toward the gray-blue wall; ankle and bare foot extend freely beyond back edge of cushion, NOT touching stool, not straight in line with thigh. Use a slightly elevated side-frontal camera if necessary to show this 90-degree upper knee bend, free upper foot and proximal shin support distinctly. Do not shorten shin unnaturally. LOWER LEFT knee and left foot stay firmly contacting mat, hip low. Full body including both feet and support contacts. One independent photorealistic image only, no words, arrows or collage.",
+            "review": {
+              "method": "view_image direct full-resolution visual inspection",
+              "status": "passed_visual_pose_review",
+              "pose": "短杠杆低位摆位：左前臂落垫，上侧右膝屈曲、膝周/近端区域厚垫承托，下侧左膝足落垫。",
+              "identity_clothing_background": "通过",
+              "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+              "support_equipment": "上侧承托位置与版本相符；下侧膝足辅助接地；前臂支垫；家具真实机械固定无法从图片证实",
+              "composition": "完整头、手、足及主要支点；横向单图无标注",
+              "notes": "上侧小腿朝背景方向，需结合屈膝和近端承托辨认，不能按屏幕长度判断肢段真实长短。"
+            },
+            "discarded_attempts": [
+              {
+                "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-0c9e1957-361b-4032-b8f7-daf0467e6347.png",
+                "prompt": "Use case: scientific-educational. ONE photorealistic rehabilitation photo, exercise 083 T-LOW-030 step 01: SHORT-LEVER assisted Copenhagen adduction support setup. Input images 1-3 are identity and style references; preserve the same adult East Asian woman, black ponytail, plain white short sleeve shirt, dark charcoal long pants, realistic natural body proportions. Plain gray-blue studio wall/floor, soft studio light. Horizontal full-body photo viewed from directly in front of the SIDE of her body, head at left, stool at right. Full head, both hands, both bare feet, mat and all contacts visible. A stable low four-leg exercise stool with a dark cushioned top is at the right, anchored against the studio wall. Woman is on her LEFT side: LEFT forearm on gray-blue mat with left elbow directly below shoulder, left palm flat. UPPER RIGHT knee is bent around 90 degrees; ONLY the broad INNER PROXIMAL RIGHT SHIN immediately below knee rests across a thick soft pad on the stool. Pad contacts fleshy proximal shin, not knee joint line. Bent upper right lower leg folds backward beyond stool, with right ankle and foot free, visible, NOT weight-bearing on stool. LOWER LEFT leg remains bent on mat for assistance, left knee and left foot clearly touch mat. Pelvis is LOW, left hip still contacts mat, torso leaning sideways supported on left forearm. Right hand rests at right hip. This is preparation, not raised side plank. Make upper proximal-shin-to-pad contact and lower leg-to-ground contact anatomically clear. No ankle-supported straight upper leg, no floating lower leg, no extra limbs. No words, labels, numbers, arrows, watermark, collage.",
+                "reason": "上侧承托偏远端、短杠杆屈膝与近端支持不够清楚，针对性返修后选用第二次输出。"
+              }
+            ]
+          },
+          {
+            "action_number": "083",
+            "action_id": "T-LOW-030",
+            "step_number": "02",
+            "target_pose": "短杠杆侧向支持：前臂及近端承托保持，骨盆离垫，下侧左膝足保持地面辅助。",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/083_T-LOW-030_s02.png",
+            "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-b1c545de-c66c-4b8c-9e58-d19d77cb6992.png",
+            "tool": "image_gen__imagegen",
+            "sha256": "F8EADA269FF993C8C59C36A3040C10A60D23736BC34931B7AA39C8D83ED08990",
+            "width": 1536,
+            "height": 1024,
+            "reused_existing_image": false,
+            "prompt": "Use case: scientific-educational. Create one independent photorealistic photograph for exercise 083 T-LOW-030 step 02, SHORT-LEVER assisted Copenhagen static hold. Image 1 is the accepted preparation pose and exact scene. Images 2-4 identity references. Preserve woman's exact identity, black ponytail, white short-sleeve shirt, dark charcoal pants, barefoot, same mat, same padded low stool against wall, same horizontal full-body camera, same body scale and soft studio lighting. Raise ONLY her pelvis off mat into a controlled SIDE SUPPORT: left elbow and left forearm remain firmly on mat, elbow below shoulder; torso and upper right thigh now form one smooth side-plank alignment towards padded stool. UPPER RIGHT knee remains BENT around 90 degrees, its broad proximal inner shin/knee-adjacent region stays on soft stool pad just as in Image 1. Right foot remains free beyond back of cushion, no ankle support, shin length realistic in foreshortening. LOWER LEFT LEG MUST REMAIN ON GROUND as assistance: the bent lower LEFT knee and left foot remain visibly touching mat underneath and forward of her pelvis. Keep left knee grounded even while pelvis lifts, do NOT lift lower left foot or lower leg into air, do not make both feet floating. Right hand remains on hip, shoulder and pelvis do not twist, do not sag. Full head, both arms/hands and both legs/feet and all support contacts within frame. No text, arrows, numbering, labels, watermark or collage.",
+            "review": {
+              "method": "view_image direct full-resolution visual inspection",
+              "status": "passed_visual_pose_review",
+              "pose": "短杠杆侧向支持：前臂及近端承托保持，骨盆离垫，下侧左膝足保持地面辅助。",
+              "identity_clothing_background": "通过",
+              "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+              "support_equipment": "上侧承托位置与版本相符；下侧膝足辅助接地；前臂支垫；家具真实机械固定无法从图片证实",
+              "composition": "完整头、手、足及主要支点；横向单图无标注",
+              "notes": "上侧小腿朝背景方向，需结合屈膝和近端承托辨认，不能按屏幕长度判断肢段真实长短。"
+            }
+          },
+          {
+            "action_number": "084",
+            "action_id": "T-LOW-031",
+            "step_number": "01",
+            "target_pose": "长杠杆低位摆位：上侧右腿伸直、内侧踝/远端小腿厚垫承托，下侧左膝足落垫。",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/084_T-LOW-031_s01.png",
+            "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-41d61049-2f8f-4d6b-bf1f-d1469afbcfff.png",
+            "tool": "image_gen__imagegen",
+            "sha256": "632BE51A05970B1DE596E2B9EBF16EE51754FEB789CBEB7C761B7555D4C2C716",
+            "width": 1536,
+            "height": 1024,
+            "reused_existing_image": false,
+            "prompt": "Use case: scientific-educational. ONE independent photorealistic rehabilitation exercise photograph, 084 T-LOW-031 step 01 LONG-LEVER assisted Copenhagen support SETUP. Image 1 provides same woman, studio and furniture look, but CHANGE upper leg and stool spacing for LONG lever. Images 2-4 are exact identity/style references. Preserve same East Asian woman, face, black ponytail, white short-sleeve shirt, dark charcoal pants, barefoot, gray-blue wall/floor, gray-blue non-slip mat, soft studio light, one stable four-legged low padded stool against right wall. Wide horizontal full-body side-frontal photo, head at left, feet and stool at right, slightly widen framing to keep entire upper straight leg and both feet visible. Woman on LEFT side: left forearm and elbow firmly on mat, left elbow below shoulder, left palm flat. Pelvis still LOW and left hip rests mat. UPPER RIGHT leg is FULLY STRAIGHT from hip through knee to ankle, natural thigh and shin lengths, knee has no contact with stool. Move stool farther right so its thick soft pad supports ONLY the broad INNER DISTAL RIGHT SHIN just above ankle, cushioning away from bony ankle point; right bare foot extends beyond cushion edge freely and is visible. LOWER LEFT leg is bent on ground for assistance, left knee and left foot both visibly contacting mat. Right hand on hip. Distinct LONG-lever support at right ankle/distal shin, not knee, not flexed upper knee, no hanging bottom leg. Realistic anatomy and support pressure. No words, arrows, labels, numbers, collage or watermark.",
+            "review": {
+              "method": "view_image direct full-resolution visual inspection",
+              "status": "passed_visual_pose_review",
+              "pose": "长杠杆低位摆位：上侧右腿伸直、内侧踝/远端小腿厚垫承托，下侧左膝足落垫。",
+              "identity_clothing_background": "通过",
+              "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+              "support_equipment": "上侧承托位置与版本相符；下侧膝足辅助接地；前臂支垫；家具真实机械固定无法从图片证实",
+              "composition": "完整头、手、足及主要支点；横向单图无标注",
+              "notes": ""
+            }
+          },
+          {
+            "action_number": "084",
+            "action_id": "T-LOW-031",
+            "step_number": "02",
+            "target_pose": "长杠杆側向支持：上侧右腿伸直、远端承托保持，骨盆离垫，下侧左膝足仍辅助接地。",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/084_T-LOW-031_s02.png",
+            "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-251ba033-23ad-43a2-a6f1-4888ea6aa6c8.png",
+            "tool": "image_gen__imagegen",
+            "sha256": "EBF91D826EC7614FD16C32639DE02C568E2B1F8C5BC07ECE9F7ECBB76F8213D7",
+            "width": 1536,
+            "height": 1024,
+            "reused_existing_image": false,
+            "prompt": "Use case: scientific-educational. Create one independent photorealistic photo: exercise 084 T-LOW-031 step 02 LONG-LEVER assisted Copenhagen static hold. Image 1 is the exact accepted low setup. Images 2-4 visual identity references. Preserve exact same woman, face, black ponytail, white short sleeve shirt, charcoal long trousers, bare feet, non-slip mat, padded low stool at right wall, camera view/body scale/landscape frame and lighting. Change ONLY pelvis and trunk position by lifting the pelvis off mat into controlled side support. The left forearm and elbow stay grounded beneath left shoulder; torso from shoulder to pelvis and UPPER RIGHT STRAIGHT leg form a smooth aligned side plank line toward the stool. The upper RIGHT knee remains straight and unsupported in free space. Same inner DISTAL RIGHT SHIN/ANKLE area remains cushioned on stool, exactly the same long-lever contact as Image 1. LOWER LEFT LEG remains assisted on GROUND: left knee stays bent with left knee and left foot visibly touching mat underneath/forward of the lifted pelvis; do not lift lower leg or foot into air, do not extend lower leg to stool. Right hand at hip. Clearly show pelvic air gap and grounded lower knee/foot. Shoulder, hip and legs anatomically connected, no sagging or twisted pelvis. Full head, both hands, both feet and all equipment contact points in frame. No text, arrows, labels, numbers, watermark or collage.",
+            "review": {
+              "method": "view_image direct full-resolution visual inspection",
+              "status": "passed_visual_pose_review",
+              "pose": "长杠杆側向支持：上侧右腿伸直、远端承托保持，骨盆离垫，下侧左膝足仍辅助接地。",
+              "identity_clothing_background": "通过",
+              "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+              "support_equipment": "上侧承托位置与版本相符；下侧膝足辅助接地；前臂支垫；家具真实机械固定无法从图片证实",
+              "composition": "完整头、手、足及主要支点；横向单图无标注",
+              "notes": ""
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_085-086.json",
+      "sha256": "73281B3D6BEA455E5F4800D17078352A9A82DC0FA9033E93A59DF35F75D642AD",
+      "content": {
+        "document_version": "v1.0",
+        "created_client_date": "2026-10-14",
+        "range": "085-086",
+        "tool": "built-in image_gen__imagegen",
+        "reused_existing_images": false,
+        "notes": [
+          "每張為獨立單姿勢照片；無文字、編號、箭頭。",
+          "085 s02初版保留不覆蓋，最終選用s02_v2；其餘使用標準文件名。",
+          "086 s01首調用網絡錯誤，原參數重試成功。",
+          "畫面核對僅驗證可見姿勢、比例與接觸，不驗證肌肉發力或真實負荷。"
+        ],
+        "references": [
+          "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+        ],
+        "records": [
+          {
+            "action_number": "085",
+            "action_id": "T-LOW-044",
+            "step": "s01",
+            "target_pose": "双脚接地、舒适浅屈膝，膝上大腿同高弹力带，固定扶手",
+            "prompt": "Use case: scientific-educational. Asset type: ONE standalone photorealistic rehabilitation exercise step photograph, no collage. Primary request: preparation for knee-band lateral walking. Input images 1-3 are visual references ONLY: preserve the same East Asian adult woman's face, age, skin tone, natural body proportions and black ponytail, plain white short-sleeve T shirt and dark charcoal long trousers. Do NOT copy the arm exercise from references.\nScene: gray-blue seamless studio background and matching clear flat nonslip floor, soft photographic lighting and natural shadows. ONE simple firmly floor-fixed rehabilitation handrail runs horizontally behind the woman at waist height, with its two bolted posts visible, no moving chair. Clothing consistent. Bare feet, both fully visible.\nCamera: fixed front slight three-quarter view, full body from head to all toes and handrail, natural perspective at waist level, portrait image, modest empty margins. She faces the camera almost squarely, torso upright and stable, knees comfortably shallow bent (about 15 degrees), pelvis level, feet parallel forward and about hip-width apart, both feet flat on floor. A wide continuous muted teal resistance loop is correctly wrapped around both lower thighs just ABOVE both knees at exactly the same height, with light initial tension. Her left hand gently contacts the fixed handrail on image-right, her other hand rests naturally near the waist. Feet and band are unobstructed. This is the START position; her body is near the center of the image with empty floor room to image-left for a later lateral step.\nConstraints: show exactly one clear pose of one woman. Anatomically correct limb lengths, two arms two legs, realistic hands and five fingers, correct floor and rail contact. No numbers, text, labels, arrows, watermarks, split frames, inset panels, motion trails. No band at ankles, no crossed legs, no deep squat, no floating feet.",
+            "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-4c352f75-1e32-4990-a6f6-98349156d7f1.png",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/085_T-LOW-044_s01.png",
+            "sha256": "AC76A96864975E4BFFABDE19883C8B329D92AF49CD0A28DB804EBB7856F50E1C",
+            "reuse": false,
+            "check": "通过：同一参考女性外观、白短袖深灰裤、灰蓝柔光；双足完整接地、膝浅屈、膝上同高弹力带，左手接固定扶手；人体与接触自然。",
+            "status": "passed_visual_check"
+          },
+          {
+            "action_number": "085",
+            "action_id": "T-LOW-044",
+            "step": "s02",
+            "target_pose": "领先右脚向画面左侧小步侧跨落地、另一脚原位、双膝浅屈",
+            "prompt": "Use case: scientific-educational. Asset: ONE standalone photorealistic rehabilitation step. EDIT the first input photograph (the knee-band standing preparation) into the next lateral-walking step. Inputs 2-4 are the original identity/style references. Preserve first image camera exactly: full body head to all toes, fixed front three-quarter perspective, same gray-blue backdrop/floor, scale, lighting, metallic floor-bolted handrail/posts, white T shirt, dark charcoal trousers, teal wide loop ABOVE both knees, bare feet, same woman's identity and ponytail, no text.\nChange ONLY the exercise pose and resulting band tension: her anatomical RIGHT foot, seen on IMAGE-LEFT, has taken one small sideways step to image-left and is now firmly planted flat. Move that leading image-left foot about 20 cm farther left than in the first input; her anatomical LEFT foot on IMAGE-RIGHT remains planted in its exact first-input floor position. This makes a clearly wider stance, not a crossed step. Both knees remain comfortably shallow flexed, knees following forward-facing toes, hips level, torso almost upright with only minimal natural forward inclination. Her pelvis is slightly toward image-left to remain comfortably stable. Her LEFT hand remains touching the fixed rail, gliding a little toward image-left along the SAME rail as needed; other hand stays naturally near waist. Teal loop becomes visibly stretched wider but remains at the same lower-thigh height just above both knees, correctly wrapping around each thigh with continuous edges.\nConstraints: exactly one frame, one woman, realistic anatomy and hand contact, both feet fully on ground, entire head/hands/feet/rail floor contacts visible. This image should visibly differ from preparation in foot spacing. No arrows, captions, letters, numbers, logos, watermarks, grid, motion blur, inset, deep squat, ankle band, twisted or crossing feet. Preserve rail and camera positions; do not recenter the framing.",
+            "repair_prompts": [
+              "Use case: scientific-educational. ONE standalone rehabilitation exercise photograph. EDIT the first input (wide lateral step) to correct ONLY knee bend: BOTH knees, including the leading right leg on IMAGE-LEFT, should show a clearly comfortable SHALLOW flexion of about 15-20 degrees, without locking either knee. Slightly lower pelvis only about 3 cm as anatomically needed, keep upright stable torso and level hips, knees track the parallel forward-facing toes. The leading leg must remain in lateral step position with its foot flat on the exact same floor location; trailing image-right foot also stays in exact original floor location. Do not change step width or translate the feet. Preserve every other detail: same woman and face, white short-sleeve shirt, dark charcoal trousers, bare feet, teal wide resistance loop just ABOVE both knees with tension, fixed photographic front three-quarter camera, full head to toes framing, gray-blue background and soft shadows, metallic floor-bolted handrail/posts unmoved, left hand contacting rail. Avoid deep squatting or straight locked knees. One pose one woman. No text numbers arrows labels collage watermark.",
+              "ONE standalone photorealistic exercise step. Edit input 1. Correct the POSE to a clearly shallow mini-squat during the wide lateral step: keep BOTH bare feet exactly at their current floor positions and parallel forward. Lower the pelvis and torso approximately 6-7 cm, move hips very slightly backward, flex BOTH knees approximately 25 degrees, so both knees are visibly bent and not straight. Especially the leading RIGHT leg on IMAGE-LEFT must now have a visibly bent knee, with its knee slightly forward toward the camera rather than a straight diagonal hip-to-ankle line. Natural anatomical mini-squat, not a deep squat; level pelvis and spine neutral, trunk only 5 degrees forward. Retain gentle left hand contact on fixed handrail, other hand near waist. Keep the same leading side step width, same face and hair identity, white T shirt, charcoal long pants, teal loop directly above both knees, full body portrait camera fixed and unmoved, gray-blue studio floor/background and soft light, fixed metal handrail/post positions. Show one woman one pose. No text, numbers, arrow, collage or watermark."
+            ],
+            "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-4c1a138c-ab54-4c4b-a440-99f6199e667f.png",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/085_T-LOW-044_s02_v2.png",
+            "sha256": "487593C1C17ABB30BBCC5ECC3D8016897FCB5749F20D0B5B8FA545477D083474",
+            "reuse": false,
+            "check": "通过：领先右脚清楚侧跨落地，左脚原位、未交叉；定向强化舒适浅屈膝避免锁膝；膝上带、扶手、固定机位、双足接地保持。初版s02保留，但交付选用v2。",
+            "status": "passed_visual_check",
+            "superseded_file": {
+              "saved_path": "E:/git冲突问题/rehab image/train/steps/085_T-LOW-044_s02.png",
+              "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-575fa34e-cf0a-4366-a58f-4c7a9284f3b6.png",
+              "reason": "领先腿浅屈表达不足，保留初版不覆盖；选用v2"
+            },
+            "discarded_generation_sources": [
+              "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-14b5b6d7-4672-4e32-955e-afc1b4e0a437.png"
+            ]
+          },
+          {
+            "action_number": "085",
+            "action_id": "T-LOW-044",
+            "step": "s03",
+            "target_pose": "跟进左脚向画面左侧跟进落稳，保留髋宽站距，整体已向左平移",
+            "prompt": "Use case: scientific-educational. Asset: ONE standalone photorealistic rehabilitation exercise step photograph. First input is the latest lateral-walking step photograph, second input is the group's original preparation, last three inputs are original identity references. EDIT first photograph to the FOLLOWING-FOOT step; preserve camera/framing, scale, face/ponytail, white short-sleeve T shirt and dark charcoal trousers, bare feet, gray-blue soft studio lighting and floor, metallic floor-bolted handrail in its EXACT same position. Portrait full body, complete toes and hands.\nKey pose change: The leading anatomical RIGHT foot on IMAGE-LEFT stays fixed in the exact sideways position from first input (near the left quarter of the picture). Now the trailing anatomical LEFT foot on IMAGE-RIGHT has taken a controlled small step toward image-left and is planted flat about hip-width to the right of the leading foot. Thus BOTH feet and the woman's pelvis are farther IMAGE-LEFT than the original preparation; the camera must not recenter her. Show a normal comfortably shallow bent-knee stance with two feet flat and parallel forward, roughly the same modest hip-width stance as preparation but translated about 20 cm left. Her pelvis and torso have shifted left over this new stance, stable and upright, level hips. Her LEFT hand slides toward image-left along the SAME fixed rail and remains firmly contacting it; her other hand remains naturally near the waist. Wide teal continuous resistance loop stays above both knees at equal height with gentle retained tension and no slack drooping.\nVery important: leading image-left foot does NOT move back to original preparation. ONLY the image-right following foot moves toward it. Keep original rail posts and ground horizon pixel-stable, make body translation left clearly visible. Natural leg and arm lengths and joints. No crossing legs, no deep squat, no locked knees, no raised heels, no floating feet. Exactly one woman and one pose. No text, numbers, arrows, labels, watermark, motion trails, panels, collage or inset.",
+            "repair_prompts": [
+              "Use case: scientific-educational. ONE photorealistic rehabilitation exercise step, edit of first input. Input 1 is the following-foot image to repair. Input 2 is the previous wide lateral-step image and is used ONLY to match the exact leading right foot's floor location.\nChange exactly one detail in input 1: reposition the woman's anatomical RIGHT foot (the foot on IMAGE-LEFT) 5 cm toward IMAGE-RIGHT so its sole occupies the SAME floor position as the image-left foot in input 2. The image-left foot must remain forward-facing and flat on the floor. Keep her corresponding leg anatomically natural and shallow bent. Keep the following image-right foot at its current location from input 1. Keep all other first-input details unchanged: translated-left pelvis/torso and head position, other foot, hand contact, waist height, gray-blue background and lighting, ponytail, white T shirt, dark gray trousers, teal resistance loop just above both knees, full-body framing, fixed camera, handrail and both rail posts. Retain natural body proportions and hip-width stance. Do not recenter the woman. No text, arrows, labels, watermark, panels or collage. One pose only."
+            ],
+            "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-4afb82aa-1aa4-419a-97cd-8b43c465985e.png",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/085_T-LOW-044_s03.png",
+            "sha256": "EF6B265599F28FC3D8ED373BADFE87A44C334A5C6BB90A6A9B631E1F12A417BA",
+            "reuse": false,
+            "check": "通过：跟进左脚向画面左侧落稳，领先脚未回到准备位；人物整体向左平移、机位与扶手固定，膝上带保留张力，双脚恢复约髋宽站距。首稿领先脚偏左已定向修正。",
+            "status": "passed_visual_check",
+            "discarded_generation_sources": [
+              "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-a185b774-c36c-47a4-a2a3-5c1a5a773195.png"
+            ]
+          },
+          {
+            "action_number": "086",
+            "action_id": "T-LOW-049",
+            "step": "s01",
+            "target_pose": "墙侧膝微屈、外侧膝软垫轻触墙，双足先接地，右手固定扶手",
+            "prompt": "Use case: scientific-educational. Asset: ONE standalone photorealistic rehabilitation exercise photograph, ONE pose. Primary request: supported wall-press hip abduction SETUP with BOTH feet still on the floor. Input reference images define the SAME adult East Asian woman, same face, age, skin tone and build, black ponytail, plain white short-sleeve T shirt, dark charcoal long trousers. Do not copy reference arm poses.\nScene: gray-blue studio background and clear gray-blue flat nonslip floor, soft studio lighting with natural shadows. A real matte pale gray-blue vertical wall is on IMAGE-RIGHT. A firmly floor-bolted metallic rehabilitation handrail is next to her other side on IMAGE-LEFT; both supporting posts and their floor bolts visible. One small pale gray rectangular foam cushion held between the OUTSIDE of her anatomical LEFT distal thigh/lateral knee (IMAGE-RIGHT leg) and the vertical wall. Foam has direct continuous contact with BOTH wall and the outer knee, not floating. No straps or elastic band.\nPose: she faces camera almost frontally and stands next to the right wall with upright torso and level pelvis. Her LEFT wall-side knee is slightly bent, with its outer distal thigh/knee pressing LIGHTLY outward into cushion against the wall. Its foot still touches floor at this setup stage, with toes and sole visible. Her RIGHT leg away from wall is stable, foot fully planted. BOTH feet visibly on the floor, clear slight gap between legs. Her RIGHT hand (IMAGE-LEFT) gently grasps the fixed rail and fingers are anatomically natural; left arm rests naturally near waist and does not hide cushion or knee contact. Entire head, hands, both feet, wall contact, rail floor attachments are in frame.\nCamera: fixed front view with very slight angle to expose foam's contact on lateral knee, natural photographic perspective, portrait full-body framing with modest margins. Critical: TWO floor contact feet in this first frame. No single-leg stance yet; don't bend the wall-side leg up backward.\nConstraints: realistic continuous joints and limb lengths, identical costume and identity, no extra limbs/fingers, no text numbers arrows labels logos watermark collage/inset. No knee band, no ball, no deep squat, no dramatic sideways pelvic lean.",
+            "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-1d4f281b-6df8-4d2f-b7dc-1b60d4d3cff2.png",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/086_T-LOW-049_s01.png",
+            "sha256": "F54B351787B9C6D9A3A10149C1B3DA3A70A38FA657B45878F831E04144D4392F",
+            "reuse": false,
+            "check": "通过：双足接地、墙侧左膝微屈，外侧大腿/膝周软垫与墙接触，右手握固定扶手；器材、完整手足、比例自然。组内采用白鞋，后帧保持。",
+            "status": "passed_visual_check",
+            "generation_retry_reason": "首调网络错误：error sending request，无输出；同参数重试成功"
+          },
+          {
+            "action_number": "086",
+            "action_id": "T-LOW-049",
+            "step": "s02",
+            "target_pose": "墙侧左脚离地，外侧膝通过软垫轻顶墙，对侧单脚支撑，右手扶稳",
+            "prompt": "Use case: scientific-educational. Asset: ONE standalone photorealistic rehabilitation step photograph. EDIT the first input (both-feet setup wall-press photo) into the next single-leg HOLD pose. Preserve exact same camera front view, composition, scale, woman and identity, black ponytail, white short-sleeve T shirt, charcoal long trousers, same WHITE SHOES, gray-blue studio floor/background and lighting, IMAGE-RIGHT vertical wall and IMAGE-LEFT floor-bolted metal handrail/posts.\nPose change: Her anatomical LEFT leg, the wall-side leg on IMAGE-RIGHT, now has its FOOT gently lifted off the floor with a clear visible gap of about 10 cm below that shoe; left knee is comfortably bent, lower leg angles slightly backward but the left shoe remains visible on image-right of the supporting leg. The OUTSIDE of this LEFT distal thigh/lateral knee continues to touch and gently press the SAME light-gray foam cushion into the wall. Cushion remains physically sandwiched between knee exterior and wall, at the same contact region with only the small natural position change needed; no floating pad. Her anatomical RIGHT leg away from wall on IMAGE-LEFT is now the sole standing leg, its shoe planted flat in exact original position. Her RIGHT hand stays grasping the same fixed rail at exact original grip point, left arm relaxed at side without hiding cushion contact. Keep pelvis level and torso upright, no major leaning sideways, no hip dropping or twisting. Clearly show single-leg support vs previous two-foot support.\nFull head, both hands and both shoes entirely in frame, fixed wall and rail ground contact unchanged. Realistic human anatomy, connected joints and natural leg lengths, exact same cloth/shoes. ONE person ONE pose. No text, arrows, numbers, letters, watermark, extra limbs, band, ball, collage, motion trails. Do not lift the far-from-wall supporting foot; only image-right wall-side shoe rises.",
+            "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-8e0761f0-747b-4fe6-8571-4ece2615fafa.png",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/086_T-LOW-049_s02.png",
+            "sha256": "F30D113B4D29EB5A38426430A29EC935C44429A374FD06D3DA8D997478DD29BE",
+            "reuse": false,
+            "check": "通过：墙侧左脚明确离地约10cm，对侧右足单脚支撑；软垫外侧膝触墙、右手扶稳，骨盆无明显侧倒；人物服装白鞋、机位、墙/扶手与前帧一致。",
+            "status": "passed_visual_check"
+          }
+        ]
+      }
+    },
+    {
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_087.json",
+      "sha256": "8997C6982CFEB51D97D192333720617408348B077525736C43AC5B2862D71495",
+      "content": {
+        "schema_version": "1.0",
+        "scope": "087 T-LOW-054 扶稳半跪位髋前侧温和牵伸，首轮2张",
+        "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+        "created_date_local": "2026-10-14",
+        "timezone": "Asia/Shanghai",
+        "generation_mode": "built-in image_gen__imagegen; one independent photograph per call; copied selected original PNG without manipulation; no CLI",
+        "references": [
+          {
+            "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+          },
+          {
+            "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+          },
+          {
+            "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+          }
+        ],
+        "shared_visual_check": "同一参考女性、黑色马尾、白色短袖、深灰长裤、灰蓝背景、柔和写实摄影；两张均裸足；同款固定金属扶手及后膝软垫；机位构图尺度一致；无文字编号箭头。",
+        "review_boundary": "核对为可见姿势及器材接触的图像审查，不证明肌肉发力、真实医疗负荷或实际扶手安装强度。扶手固定底座及螺栓在画面中可辨。",
+        "images": [
+          {
+            "action_number": "087",
+            "action_id": "T-LOW-054",
+            "step_number": "01",
+            "target_pose": "左后膝跪软垫，右前足全掌落地，双手扶同一固定金属扶手，躯干大致直立。",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/087_T-LOW-054_s01.png",
+            "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-3ae9633e-92dd-4232-9bf8-5c36a375e60e.png",
+            "sha256": "81D46F13E948C3AD5CF8F21C4E2ED163E8629A3D0B2266F4AC7FE2F3E866A37A",
+            "width": 1122,
+            "height": 1402,
+            "bytes": 1732100,
+            "reused_existing_image": false,
+            "tool": "image_gen__imagegen",
+            "prompt": "Use case: scientific-educational. ONE independent photorealistic rehabilitation demonstration photograph, exercise 087 T-LOW-054 step 01, supported HALF-KNEEL hip-front gentle stretch setup. Images 1-3 are visual identity references: exactly the same adult East Asian woman, facial features and age, black ponytail, plain white short sleeve t-shirt, dark charcoal gray long trousers, barefoot. Plain gray-blue seamless studio wall and floor, soft studio lighting, realistic natural human anatomy, quiet neutral expression. Side-on full-body camera with slight near-side offset just enough to see BOTH hands, facing toward image RIGHT; vertical portrait composition, whole head, both hands, both knees and both bare feet and supports visible. She is HALF-KNEELING: LEFT rear knee firmly rests on a thick soft blue-gray knee cushion; rear left shin extends behind toward image LEFT on floor with rear foot relaxed. RIGHT front foot is planted fully flat on floor ahead toward image RIGHT; right knee bent about 90 degrees with shin upright. Pelvis directly above left rear knee, torso approximately upright with neutral spine, shoulders relaxed. Both hands comfortably hold the SAME stable fixed metal rehabilitation handrail in front at waist/lower-chest height; the rail has solid floor-bolted supports clearly visible, not a loose chair and not an assistant's hands. Hands relaxed authentic grips, enough arm reach for later slight forward shift. Keep left rear knee away from bare floor by soft cushion. This is low neutral half-kneel setup, no back arch, no deep lunge, no raised arms or weights. No words, arrows, numbering, labels, collage or watermark.",
+            "generation_inputs": [
+              "reference-01.png",
+              "reference-02.png",
+              "reference-03.png"
+            ],
+            "review": {
+              "method": "view_image full image visual inspection",
+              "status": "passed_visual_pose_review",
+              "identity_clothing_background": "通过；同参考女性、白短袖深灰裤马尾，灰蓝背景及自然光线一致。",
+              "proportion_joints": "通过；头躯干与上下肢自然连接，手足完整。",
+              "support_equipment": "通过；后膝厚软垫承托，前足全掌落地，双手均接同一金属扶手，底座螺栓可见。",
+              "camera_continuity": "通过；竖版1122×1402，相机、人物尺度、扶手与膝垫位置一致。",
+              "pose": "半跪准备位，躯干大致直立。",
+              "notes": "原始照片不加箭头或文字，保持及回程复用s01可由后续排版文字说明。"
+            }
+          },
+          {
+            "action_number": "087",
+            "action_id": "T-LOW-054",
+            "step_number": "02",
+            "target_pose": "保留左后膝、右前足、双手扶手支点，骨盆与躯干小幅向前移，后侧大腿从近垂直转为轻度前倾，躯干无明显后仰。",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/087_T-LOW-054_s02.png",
+            "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-1f8b389c-58c0-4170-9d2b-8534ef8281ef.png",
+            "sha256": "A14609C73300B0448B08E6144898DCDBCD5FAB61F5E907AD6AE95F3CF5E1B966",
+            "width": 1122,
+            "height": 1402,
+            "bytes": 1701709,
+            "reused_existing_image": false,
+            "tool": "image_gen__imagegen",
+            "prompt": "Use case: scientific-educational. One independent photorealistic rehabilitation photograph, exercise 087 T-LOW-054 step 02 supported half-kneeling hip-front gentle stretch HOLD. Image 1 is exact accepted setup, images 2-4 are fixed visual identity references. Preserve same woman and face, black ponytail, white short sleeve shirt, charcoal long pants, bare feet, fixed shiny metal handrail and floor bolts, thick blue-gray rear knee cushion, gray-blue studio backdrop, soft lighting, vertical full-body side-on camera, scale and all object positions. Preserve EXACT contact points: left rear KNEE remains on same cushion spot; right FRONT FOOT remains fully flat at same floor spot; BOTH HANDS remain at same grips on same fixed handrail. Move the PELVIS AND WHOLE TORSO together only a SMALL amount FORWARD toward image RIGHT, about 5-7 cm, for gentle hip-front stretch: rear thigh changes from vertical to slight forward lean because pelvis advances while rear knee stays fixed; front knee flexes a little forward while front heel stays down. The torso remains approximately upright, spine neutral, shoulders above pelvis; no lumbar backward arch and no backward lean, no exaggerated lunge. Hands stay supported, elbows naturally bend slightly as body approaches rail. Keep posture change visible at pelvis and rear thigh but modest. All limbs naturally proportioned, head, both hands, both feet, knees, cushion and floor-bolted support visible. One pose only. No text, numbering, arrows, labels, collage or watermark.",
+            "generation_inputs": [
+              "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-3ae9633e-92dd-4232-9bf8-5c36a375e60e.png",
+              "reference-01.png",
+              "reference-02.png",
+              "reference-03.png"
+            ],
+            "review": {
+              "method": "view_image full image visual inspection",
+              "status": "passed_visual_pose_review",
+              "identity_clothing_background": "通过；同参考女性、白短袖深灰裤马尾，灰蓝背景及自然光线一致。",
+              "proportion_joints": "通过；头躯干与上下肢自然连接，手足完整。",
+              "support_equipment": "通过；后膝厚软垫承托，前足全掌落地，双手均接同一金属扶手，底座螺栓可见。",
+              "camera_continuity": "通过；竖版1122×1402，相机、人物尺度、扶手与膝垫位置一致。",
+              "pose": "骨盆、头和躯干相对前移约数厘米；前足、后膝及双手支点保持；无腰部明显后仰。",
+              "notes": "原始照片不加箭头或文字，保持及回程复用s01可由后续排版文字说明。"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\manifest_089-090.json",
+      "sha256": "FAB3182B94ADA5637B08B98B06EBEC9444E4F9D00E2EE9D7C04CEFF0ED83C024",
+      "content": {
+        "document": "动作分步骤示范图制作登记 089–090",
+        "version": "1.0",
+        "date": "2026-10-14",
+        "tool": "built-in image_gen__imagegen",
+        "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+        "appearance_references": [
+          "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+        ],
+        "final_image_count": 6,
+        "images": [
+          {
+            "action_number": "089",
+            "action_id": "T-LOW-014",
+            "step_number": "01",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/089_T-LOW-014_s01.png",
+            "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13855-950a-7023-8b23-15a033f9edf5/exec-cc9e7dd7-f082-4c28-bb3f-347796cdd648.png",
+            "prompt": "Use case: scientific-educational. Asset: one standalone rehabilitation exercise demonstration photograph, 089 T-LOW-014 step 01, no collage. Use all three supplied reference images only as identity, outfit, gray-blue studio background and soft photographic lighting references; do not copy their arm pose. Preserve exactly this same adult East Asian woman, black ponytail, white plain short-sleeve T-shirt, dark charcoal trousers. Full body standing on matte gray non-slip floor, including entire head, both hands and both feet. Plain gray athletic shoes. Nearly side view with a small frontal angle so both identical compact black hex dumbbells and their grips remain visible. She stands upright facing right, feet comfortably hip-width apart at fixed positions, knees slightly soft, neutral spine and neck. Each hand securely grasps one identical dumbbell; straight relaxed arms hang down, weights held closely just in front of her thighs, neutral wrists, palms toward body. Dumbbells already acquired, standing start position of a dumbbell Romanian deadlift, no floor pickup. Minimal gray-blue seamless studio backdrop, natural soft shadow, realistic anatomy and materials, calm instructional expression, consistent scale, substantial clear margin around full body. Exactly one woman, exactly two hands holding exactly two dumbbells. No words, numerals, arrows, badges, logos, watermarks or additional objects. Do not crop feet or weights.",
+            "referenced_image_paths": [
+              "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+            ],
+            "sha256": "D2A199CD6ACF860B6FC30122D9EF6B7EBB858046884BFCC39B9567719902EF99",
+            "reused_existing_image": false,
+            "format": "PNG",
+            "width": 1122,
+            "height": 1402,
+            "review": {
+              "status": "passed",
+              "method": "逐张使用view_image目视核对；根代理复审090组",
+              "pose": "站姿起点，双哑铃近腿前，双足站稳，膝轻屈，手腕握持自然。",
+              "identity_background": "同一女性外观、白短袖/深灰裤/黑马尾、灰蓝棚拍背景与柔光，写实质感保持。",
+              "anatomy_framing": "人体比例、连续关节和握持自然，头/双手/双足/完整器械入镜，无遮挡关键接触；无文字编号箭头水印。",
+              "equipment": "两只同款黑色六角哑铃，固定足位",
+              "limitations": "生成画面有少量体位透视差异；同一身份、器材及机位感保持。",
+              "cannot_verify": "静态生成图不能证明肌肉发力、真实负荷或临床有效性。"
+            }
+          },
+          {
+            "action_number": "089",
+            "action_id": "T-LOW-014",
+            "step_number": "02",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/089_T-LOW-014_s02.png",
+            "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13855-950a-7023-8b23-15a033f9edf5/exec-c3db93b9-5305-4c10-b732-1d97c907389d.png",
+            "prompt": "Use case: scientific-educational. Generate one standalone rehabilitation demonstration photograph for 089 T-LOW-014 step 02. Image 1 is the exact preceding standing start frame: preserve its same woman's identity, white short-sleeved T-shirt, charcoal trousers, black ponytail, gray athletic shoes, two black hex dumbbells, studio gray-blue floor/backdrop, lighting, camera, focal length and body scale. Images 2–4 are original appearance references. Change only the exercise pose to the controlled lower position of a dumbbell Romanian deadlift. Her feet stay exactly at the same floor locations facing right; knees remain only gently bent, not a squat. Push hips backward and hinge at the hip joints; neutral straight spine from pelvis through torso, chest inclines about 45 degrees, head and neck follow spine naturally with gaze diagonally toward floor. Both arms hang straight vertically down from the shoulders, each hand securely holds the same compact dumbbell with neutral wrist. Dumbbells travel CLOSE beside the front of the legs to just below knee or upper shin level, a comfortable endpoint far above floor; do not reach weights forward. Full body, whole head, both feet, both hands and both dumbbells complete and clearly visible. Same nearly-side slightly frontal viewpoint for inspecting hip hinge and both weights. Maintain neutral controlled posture and realistic anatomy. Exactly one pose, no collage. No text, numerals, arrows, logos, watermark. Do not lift from floor, deeply squat, round back, flex elbows or add equipment.",
+            "referenced_image_paths": [
+              "E:/git冲突问题/rehab image/train/steps/089_T-LOW-014_s01.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+            ],
+            "sha256": "EBDA4792BE1D24992423C5EE8946AC1755F7105B6200938962D0EF4B9568DD23",
+            "reused_existing_image": false,
+            "format": "PNG",
+            "width": 1122,
+            "height": 1402,
+            "review": {
+              "status": "passed",
+              "method": "逐张使用view_image目视核对；根代理复审090组",
+              "pose": "臀后移髋铰链下降，膝轻屈，两哑铃近膝前且远离地面；同器械外观与站姿帧一致。",
+              "identity_background": "同一女性外观、白短袖/深灰裤/黑马尾、灰蓝棚拍背景与柔光，写实质感保持。",
+              "anatomy_framing": "人体比例、连续关节和握持自然，头/双手/双足/完整器械入镜，无遮挡关键接触；无文字编号箭头水印。",
+              "equipment": "两只同款黑色六角哑铃，固定足位",
+              "limitations": "生成画面有少量体位透视差异；同一身份、器材及机位感保持。",
+              "cannot_verify": "静态生成图不能证明肌肉发力、真实负荷或临床有效性。"
+            }
+          },
+          {
+            "action_number": "090",
+            "action_id": "T-LOW-015",
+            "step_number": "01",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s01_v4.png",
+            "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13855-950a-7023-8b23-15a033f9edf5/exec-641e2973-29f5-4f37-bc06-c7c3aaf0eeb6.png",
+            "prompt": "Use case: precise-object-edit. Create preparation step 01 from this photograph by placing this SAME barbell back UP onto the existing two fixed black stand cradles. KEEP BOTH stands totally untouched, original empty black cradles at their current permanent top height (around image y640), original positions, footprints, contour and lengths; do not move, shorten or change stands. Raise ONLY the barbell and both hands approximately 10 cm so shaft is actually resting supported in BOTH CURRENT cradles, not held below them. Woman stays upright same planted stance and relaxed shoulders; her two elbows must now BEND naturally approximately 20 degrees to keep both hands securely overhand gripping the RACKED bar at lower-waist height. This is preparation BEFORE taking bar out. Both real cradle-to-shaft support contacts visible and both hands still gripping. Same woman/face/hair/white shirt/charcoal trousers/gray shoes, bar shaft, ONE black disc and outside collar per end, camera, background, floor, lighting, scale and framing; all head/hands/feet/bar ends and stand bases complete. Do not change post heights or add any supports; the bar moves UP to the existing top cradles. Single photorealistic image, no words, arrows, numbers, logos, watermark, collage.",
+            "referenced_image_paths": [
+              "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s02_v3.png"
+            ],
+            "sha256": "5102B4ACC1DF077E340CDB30C6A79FBEB3728AFFA946705E85CE24C3325A6106",
+            "reused_existing_image": false,
+            "format": "PNG",
+            "width": 1122,
+            "height": 1402,
+            "review": {
+              "status": "passed",
+              "method": "逐张使用view_image目视核对；根代理复审090组",
+              "pose": "固定同型黑钢支架上准备握杠，双肘自然微屈，两端杠片与外侧卡扣完整，杆确有双侧承托。",
+              "identity_background": "同一女性外观、白短袖/深灰裤/黑马尾、灰蓝棚拍背景与柔光，写实质感保持。",
+              "anatomy_framing": "人体比例、连续关节和握持自然，头/双手/双足/完整器械入镜，无遮挡关键接触；无文字编号箭头水印。",
+              "equipment": "同一银杆、每端一黑杠片及外侧黑卡扣；同型固定高度黑钢承托架，准备/归位接触清楚。",
+              "limitations": "生成画面存在少量承托轮廓浮动及约30 px背景/底座基准漂移；同型支架和设置高度、动作路线、双手握持及支撑接触可辨。",
+              "cannot_verify": "静态生成图不能证明肌肉发力、真实负荷或临床有效性。"
+            }
+          },
+          {
+            "action_number": "090",
+            "action_id": "T-LOW-015",
+            "step_number": "02",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s02_v3.png",
+            "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13855-950a-7023-8b23-15a033f9edf5/exec-020c209d-9f65-49fa-900f-41148f36d7f9.png",
+            "prompt": "Use case: precise-object-edit. Change ONLY the woman's forearms and the hand-held bar from racked preparation to unracked standing hold. The shaft must move DOWN 8 centimeters, approximately from current image y700 to image y760, now close in front of her thighs. Both elbows extend naturally, wrists neutral, both hands retain overhand shoulder-width grip, relaxed shoulders, knees soft, woman upright stable, both feet planted. Both smooth black fixed support stands MUST be absolutely frozen unchanged at same height, footprint and pixel locations: LEFT cradle remains x290 y700 and RIGHT cradle x870 y700, LEFT base at bottom left, RIGHT base at lower right. Do not raise/lower/move stands or change their contours; do not move camera/background/body. The same bar is held solely by both hands BELOW and slightly in front of the two now EMPTY original cradles. There is a clear visible gap of 8cm between the shaft and the cradle tops; if overlap in perspective, shaft is clearly in foreground. Same complete silver bar with SAME one black disc and OUTSIDE black collar per end. Preserve woman's face, black ponytail, white T-shirt, charcoal trousers, gray running shoes, full anatomy, soft gray-blue studio frame, light and shadows. Feet and full bar ends visible. One photo only, no text/arrows/numbers/logo/watermark/collage. No floor pull, overhead action, squat or additional supports.",
+            "referenced_image_paths": [
+              "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s01_v3.png"
+            ],
+            "sha256": "79C4CBCF712F7484D477C2662AA0C1476068BE8ACD7576E7A74F59FEDEBBA2C5",
+            "reused_existing_image": false,
+            "format": "PNG",
+            "width": 1122,
+            "height": 1402,
+            "review": {
+              "status": "passed",
+              "method": "逐张使用view_image目视核对；根代理复审090组",
+              "pose": "双臂自然向下持杠，杆贴近腿前，双足站稳；黑钢固定支架为空承托。该帧为最终架型高度/位置基准，s01由本帧编辑杆上架生成。",
+              "identity_background": "同一女性外观、白短袖/深灰裤/黑马尾、灰蓝棚拍背景与柔光，写实质感保持。",
+              "anatomy_framing": "人体比例、连续关节和握持自然，头/双手/双足/完整器械入镜，无遮挡关键接触；无文字编号箭头水印。",
+              "equipment": "同一银杆、每端一黑杠片及外侧黑卡扣；同型固定高度黑钢承托架，准备/归位接触清楚。",
+              "limitations": "生成画面存在少量承托轮廓浮动及约30 px背景/底座基准漂移；同型支架和设置高度、动作路线、双手握持及支撑接触可辨。",
+              "cannot_verify": "静态生成图不能证明肌肉发力、真实负荷或临床有效性。"
+            }
+          },
+          {
+            "action_number": "090",
+            "action_id": "T-LOW-015",
+            "step_number": "03",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s03_v3.png",
+            "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13855-950a-7023-8b23-15a033f9edf5/exec-1bd87d67-3b32-4f87-a23b-939c72837020.png",
+            "prompt": "Use case: identity-preserve. Change ONLY this woman's exercise pose from upright step 02 to controlled lower position step 03 of the same barbell Romanian deadlift. Freeze the ENTIRE same studio scene: same two smooth black fixed stands with ONE empty top cradle each at exact original height and footprint, bases, gray-blue background/floor boundary, fixed camera angle/framing and soft light. Do not alter post lengths, cradle contours or stand position. Keep same woman's identity, black ponytail, white short-sleeve T-shirt, dark charcoal trousers, gray shoes and same feet planted in original locations. Her hips and buttocks move BACK, torso hinges forward at HIP joints about 40–45 degrees, neutral straight spine, head aligned with spine naturally looking diagonally downward. Knees remain only mildly bent, no deep squat. BOTH arms hang vertically DOWN from shoulders, BOTH hands keep secure double-overhand shoulder-width grasp and neutral wrists. Same silver shaft with same ONE black disc and outside black collar per end travels CLOSE along the fronts of legs down to chosen endpoint near kneecaps / upper shins, still far above floor; do not reach forward. Both empty original cradles stay visible well ABOVE the lowered bar and untouched. Complete head, hands, feet, full bar including both end plate/collar assemblies and stand bases visible. Realistic continuous joint connections and grip, controlled neutral body position, one single photorealistic pose only. No text, numerals, arrows, logos/watermark/collage, floor pickup, curls, rounded lumbar back or new equipment.",
+            "referenced_image_paths": [
+              "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s02_v3.png"
+            ],
+            "sha256": "239F1BC08016D31F8615667A65560A1DF81C13D81E341A82758C1BF4A104C5D7",
+            "reused_existing_image": false,
+            "format": "PNG",
+            "width": 1122,
+            "height": 1402,
+            "review": {
+              "status": "passed",
+              "method": "逐张使用view_image目视核对；根代理复审090组",
+              "pose": "髋后折下降至膝附近，膝轻屈、杠近腿、双手保持握杆；黑钢架同型同设置，空承托顶部高度保持。",
+              "identity_background": "同一女性外观、白短袖/深灰裤/黑马尾、灰蓝棚拍背景与柔光，写实质感保持。",
+              "anatomy_framing": "人体比例、连续关节和握持自然，头/双手/双足/完整器械入镜，无遮挡关键接触；无文字编号箭头水印。",
+              "equipment": "同一银杆、每端一黑杠片及外侧黑卡扣；同型固定高度黑钢承托架，准备/归位接触清楚。",
+              "limitations": "生成画面存在少量承托轮廓浮动及约30 px背景/底座基准漂移；同型支架和设置高度、动作路线、双手握持及支撑接触可辨。",
+              "cannot_verify": "静态生成图不能证明肌肉发力、真实负荷或临床有效性。"
+            }
+          },
+          {
+            "action_number": "090",
+            "action_id": "T-LOW-015",
+            "step_number": "04",
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s04_v3.png",
+            "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13855-950a-7023-8b23-15a033f9edf5/exec-b623ed34-9a95-444c-be03-fd06387730b0.png",
+            "prompt": "Use case: precise-object-edit. Change ONLY this woman's head direction and gaze slightly: lower her chin to look down and confirm the silver barbell has just returned safely to BOTH support cradles at the end of her exercise. Both hands still securely overhand grasp the racked shaft; fingers closed, wrists natural, elbows softly bent. Freeze absolutely ALL other elements unchanged from this image: bar resting in exact SAME black cradle contact positions, both smooth black stand posts/base footprint/height/shape, same bar shaft and ONE black disc with outside black collar per end, complete woman's upright body/clothes/shoes/stance/identity, camera frame/body scale/gray-blue background and matte floor/light/shadow. Only change the face/head's glance downward a small natural amount, no body reposition or equipment change. This is step04 bar safely returned before releasing hands, single standalone realistic photo. No text/numbers/arrows/logo/watermark/collage. Keep head, both feet/hands, complete bar and stand bases uncropped.",
+            "referenced_image_paths": [
+              "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s01_v4.png"
+            ],
+            "sha256": "8780EE5537BD092CC70E81A3E360CF8504721C7AD849FF9D14B2773466ADE87F",
+            "reused_existing_image": false,
+            "format": "PNG",
+            "width": 1122,
+            "height": 1402,
+            "review": {
+              "status": "passed",
+              "method": "逐张使用view_image目视核对；根代理复审090组",
+              "pose": "回架结束，杆在同架承托处落稳，双手尚未松开，低头确认接触；由最终s01只改头部视线，承托高度位置保持。",
+              "identity_background": "同一女性外观、白短袖/深灰裤/黑马尾、灰蓝棚拍背景与柔光，写实质感保持。",
+              "anatomy_framing": "人体比例、连续关节和握持自然，头/双手/双足/完整器械入镜，无遮挡关键接触；无文字编号箭头水印。",
+              "equipment": "同一银杆、每端一黑杠片及外侧黑卡扣；同型固定高度黑钢承托架，准备/归位接触清楚。",
+              "limitations": "生成画面存在少量承托轮廓浮动及约30 px背景/底座基准漂移；同型支架和设置高度、动作路线、双手握持及支撑接触可辨。",
+              "cannot_verify": "静态生成图不能证明肌肉发力、真实负荷或临床有效性。"
+            }
+          }
+        ],
+        "not_selected_saved_files": [
+          {
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s01.png",
+            "reason": "旧可调孔位支架组未采用，已改固定黑钢架。"
+          },
+          {
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s02.png",
+            "reason": "旧组承托杯高度/形状偏移，未采用。"
+          },
+          {
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s03.png",
+            "reason": "旧组承托杯高度/形状偏移，未采用。"
+          },
+          {
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s04.png",
+            "reason": "旧组地面和设备基准偏移，未采用。"
+          },
+          {
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s01_v2.png",
+            "reason": "低架方案使空架高度不稳定，未采用。"
+          },
+          {
+            "saved_path": "E:/git冲突问题/rehab image/train/steps/090_T-LOW-015_s01_v3.png",
+            "reason": "由此生成s02_v3后采用s02为最终固定架基准，再生成s01_v4；本帧未采用。"
+          }
+        ],
+        "generation_history_notes": "旧稿和生成源均保留不覆盖，微修未成功的候选未登记为完成。最终090版本为s01_v4/s02_v3/s03_v3/s04_v3，不按最大后缀自动拼配其他旧稿。"
+      }
+    }
+  ],
+  "original_single_image_checks": [
+    {
+      "sequence": 81,
+      "path": "E:\\git冲突问题\\rehab image\\train\\081_T-LOW-028_仰卧／坐位髋内收轻夹垫.png",
+      "unchanged": true
+    },
+    {
+      "sequence": 82,
+      "path": "E:\\git冲突问题\\rehab image\\train\\082_T-LOW-029_侧卧下侧腿内收抬起.png",
+      "unchanged": true
+    },
+    {
+      "sequence": 83,
+      "path": "E:\\git冲突问题\\rehab image\\train\\083_T-LOW-030_短杠杆哥本哈根内收支撑.png",
+      "unchanged": true
+    },
+    {
+      "sequence": 84,
+      "path": "E:\\git冲突问题\\rehab image\\train\\084_T-LOW-031_长杠杆哥本哈根内收支撑.png",
+      "unchanged": true
+    },
+    {
+      "sequence": 85,
+      "path": "E:\\git冲突问题\\rehab image\\train\\085_T-LOW-044_弹力带侧向行走.png",
+      "unchanged": true
+    },
+    {
+      "sequence": 86,
+      "path": "E:\\git冲突问题\\rehab image\\train\\086_T-LOW-049_扶稳单腿站立加对侧髋外展顶墙.png",
+      "unchanged": true
+    },
+    {
+      "sequence": 87,
+      "path": "E:\\git冲突问题\\rehab image\\train\\087_T-LOW-054_扶稳半跪位髋前侧温和牵伸.png",
+      "unchanged": true
+    },
+    {
+      "sequence": 88,
+      "path": "E:\\git冲突问题\\rehab image\\train\\088_T-LOW-013_髋铰链触墙练习.png",
+      "unchanged": true
+    },
+    {
+      "sequence": 89,
+      "path": "E:\\git冲突问题\\rehab image\\train\\089_T-LOW-014_哑铃／壶铃罗马尼亚硬拉.png",
+      "unchanged": true
+    },
+    {
+      "sequence": 90,
+      "path": "E:\\git冲突问题\\rehab image\\train\\090_T-LOW-015_杠铃罗马尼亚硬拉.png",
+      "unchanged": true
+    }
+  ],
+  "notes": [
+    "本记录按制作清单动作序号081-090统计；单动作步骤编号在组内重新编号。",
+    "每张照片只展示一个姿势；文字、编号、箭头没有写入照片。",
+    "085 s02使用_v2；090使用s01_v4及s02/s03/s04_v3。其他试图保留但不纳入22张最终选图。",
+    "082-084为1536x1024横向图，其余为1122x1402竖向图；同组宽高一致。",
+    "画面验收核对可见姿势及接触，不由照片推断真实发力、负荷或家具机械固定。",
+    "090存在轻微器材几何和地面基准生成漂移；复审采用同型固定承托架、近腿取放和明确归位接触的组。"
+  ],
+  "delivery_archive": {
+    "path": "E:\\git冲突问题\\rehab image\\第09批_081-090_分步骤示范图_22张.zip",
+    "image_count": 22,
+    "bytes": 33093632,
+    "sha256": "74CFF5268E0778B4D7ADE2B3FB8E78EC7CF290157E34B1CE602C34EFFD64368E",
+    "all_archive_images_hash_verified": true
+  }
+}

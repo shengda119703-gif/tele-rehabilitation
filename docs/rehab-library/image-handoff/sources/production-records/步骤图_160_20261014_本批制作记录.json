@@ -1,0 +1,97 @@
+{
+  "record_version": "1.0",
+  "date": "2026-10-14",
+  "scope": "160/T-AXU-026 s01–s02",
+  "action_name": "支撑单臂哑铃/壶铃划船",
+  "selected_version": "左手扶固定台面、双脚站稳、右手轻哑铃；单臂划船基础版",
+  "specification": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md：第3、4节与第160条",
+  "method": "内置 image_gen，每张独立调用，新生成照片；s02以本批s01为摆位参考。无旧单图复用，无图像后期改动。",
+  "reference_roles": [
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "role": "人物身份、白T/深灰长裤、灰蓝背景、柔光摄影风格，非动作姿势模板"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "role": "人物身份、白T/深灰长裤、灰蓝背景、柔光摄影风格，非动作姿势模板"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "role": "人物身份、白T/深灰长裤、灰蓝背景、柔光摄影风格，非动作姿势模板"
+    }
+  ],
+  "group_review": "view_image逐图原尺寸查看后通过。两帧人物、灰蓝背景、白T深灰裤白运动鞋、灰色固定台、左右足位置、左手接触、躯干前倾角度和相机尺度保持一致。每张只有一个姿势、无字无箭头；桌面延伸到右侧画外，但支持手、近侧支柱及落地点均清楚。",
+  "files": [
+    {
+      "step": "s01",
+      "planned_filename": "160_T-AXU-026_s01.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/160_T-AXU-026_s01.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a84-21e1-77c3-a456-e482ac485209/exec-16a427c8-61c0-4fd4-8de0-7cc3e0ddfad2.png",
+      "reused": false,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1724582,
+      "sha256": "3659274FA8A1DA2103123C629C9866428E2BA5891C5632E094E37D56CCD2FB2C",
+      "target_pose": "左掌扶台、双足落地，髋后移、躯干自然前倾，右手轻哑铃自然垂下",
+      "review": {
+        "status": "通过",
+        "identity_style": "同一东亚成年女性、黑马尾、白短袖、深灰长裤，灰蓝柔光棚拍与参考一致",
+        "anatomy": "头躯干与四肢比例自然，双手/双脚完整，右手握哑铃自然，未见额外肢体或关节断裂",
+        "support_equipment": "左掌及手指与台面接触，双足完整着地，固定灰色台架支撑可辨，单只哑铃握持真实",
+        "action": "髋向后、膝微屈，右臂近伸直自然下垂；背部自然，未见扭腰",
+        "composition": "全身与哑铃完整；左支持手与双足均清楚可见；单帧、无文字、无箭头"
+      }
+    },
+    {
+      "step": "s02",
+      "planned_filename": "160_T-AXU-026_s02.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/160_T-AXU-026_s02.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a84-21e1-77c3-a456-e482ac485209/exec-44a1dfca-23e3-4690-b58b-f50904d50563.png",
+      "reused": false,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1658478,
+      "sha256": "0714E4FAEB4B18DF6576B1043BC6BA77E712F30C0551347A595E7546B5E4238F",
+      "target_pose": "保留左手双足与躯干位置，右肘向躯干旁后方拉回、哑铃靠近腰侧",
+      "review": {
+        "status": "通过",
+        "identity_style": "人物、服装、白鞋、背景和光线与s01一致",
+        "anatomy": "右肩肘腕连接自然、屈肘握持清晰；未见额外肢体或器械变形",
+        "support_equipment": "左掌与双足支点不变；同一固定灰台和同一小灰哑铃",
+        "action": "右肘屈起拉至躯干侧，哑铃近腰肋，未远甩肘、扭腰或抬起脚",
+        "composition": "相机与人物尺度、躯干前倾和台面位置对齐s01；完整头手脚与哑铃；单帧无字无箭头"
+      }
+    }
+  ],
+  "generation_attempts": [
+    {
+      "attempt": 1,
+      "step": "s01",
+      "tool": "image_gen.imagegen",
+      "transparent_background": false,
+      "prompt": "Use case: scientific-educational.\nAsset: one standalone photorealistic rehabilitation exercise demonstration photograph, action 160 T-AXU-026 step s01, supported one-arm light dumbbell row START POSITION.\nThe three supplied reference images are ONLY identity/wardrobe/background/photographic-style references. Match the same adult East Asian woman, natural face, black ponytail, white short-sleeved crewneck T-shirt and dark charcoal gray long trousers. Do not copy the arm poses in those references.\nScene: clean blue-gray seamless studio background and floor, soft even studio lighting and realistic gentle floor shadows, no wall clutter.\nPose: The woman stands facing toward image right at a stable fixed rectangular waist-height table. BOTH FEET remain fully flat on the floor, shoulder-width comfortable stance, a modest stagger is okay. LEFT palm is planted firmly flat on the tabletop with fingers clearly contacting it. The table has a sturdy visible solid base and a simple neutral light gray surface. She hinges at the hips, hips back, knees softly bent, natural neutral back and long relaxed neck, torso inclined forward about 35–45 degrees from vertical. Her RIGHT hand holds a single compact light gray dumbbell with a visible short grip between two modest weights. RIGHT arm hangs naturally downward under the shoulder, elbow nearly extended without locking; dumbbell near knee height. Her head follows the torso comfortably, gaze slightly forward/down. No braced hyperextension, no back rounding.\nCamera: fixed slightly front-right oblique side angle from her RIGHT side so the right dumbbell arm is in foreground and the left support hand remains clearly visible on the table beyond. Full body composition including complete head, both hands, both feet, floor contact, whole dumbbell and the table support, no cropping. Show the support relation unambiguously. Natural anatomy and body proportions, hands correctly gripping. Landscape 3:2 composition with modest empty blue-gray space.\nOnly ONE woman and ONE frozen pose. No labels, text, numbers, arrows, lines, diagrams, panels, split-screen, ghost limbs, motion blur, watermark or logos. No knee on table, no second dumbbell.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a84-21e1-77c3-a456-e482ac485209/exec-16a427c8-61c0-4fd4-8de0-7cc3e0ddfad2.png",
+      "result": "accepted first attempt"
+    },
+    {
+      "attempt": 2,
+      "step": "s02",
+      "tool": "image_gen.imagegen",
+      "transparent_background": false,
+      "prompt": "Use case: scientific-educational.\nCreate exactly ONE standalone photorealistic rehabilitation demonstration photograph for action 160 T-AXU-026 s02, supported single RIGHT-arm light dumbbell row END POSITION.\nThe first input is the accepted s01 START POSITION photograph and is the precise camera/composition/person/equipment/stance reference. Inputs 2–4 are the original woman identity/style references.\nPreserve the first photograph exactly as much as possible: identical woman and face, black ponytail, white T-shirt, charcoal gray long trousers, white trainers; same neutral blue-gray studio floor/background, soft light, same gray sturdy fixed table, table position and height, same full-body 3:2 framing and camera from woman's right side. Keep LEFT palm flat at exactly the same tabletop contact, same left arm position, BOTH feet flat in exactly the same positions, same slight knee bend, hips back, same forward-leaning torso angle, same pelvis, head and gaze. Keep natural back and neck, no trunk rotation.\nChange ONLY the working RIGHT arm to demonstrate the row: bend her RIGHT elbow approximately 90 degrees and draw that elbow back close beside her right lower ribs. The upper arm lies beside the torso, elbow stops near the torso plane rather than extending far behind the back. The SAME small gray dumbbell is now held beside the right waist/lower ribs close to the body, forearm nearly vertical, wrist neutral and closed fingers wrapped naturally around the central grip. Right shoulder stays relaxed, no shrug, no torso twist, no throwing the weight. Left hand remains visible on the tabletop and both shoes fully visible on the floor.\nOne woman, one frozen pose, no duplicate or extra limbs, no panels or collage. No text, number, arrows, motion paths, watermark or logos. Complete head, hands, feet, dumbbell and support contacts visible. Maintain the same human proportions, table geometry, photographic quality, perspective and scale as first input.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a84-21e1-77c3-a456-e482ac485209/exec-16a427c8-61c0-4fd4-8de0-7cc3e0ddfad2.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a84-21e1-77c3-a456-e482ac485209/exec-44a1dfca-23e3-4690-b58b-f50904d50563.png",
+      "result": "accepted first attempt"
+    }
+  ]
+}

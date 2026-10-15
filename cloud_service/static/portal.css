@@ -2,6 +2,9 @@
 .cloud-portal > header { max-width: 1060px; margin: auto; padding: 24px 28px 8px; justify-content: space-between; }
 .cloud-portal > header .brand { position: static; display: inline; }
 .cloud-portal > header .brand span { display: inline; margin-left: 16px; }
+.doctor-portal > header { flex-wrap: wrap; gap: 12px; }
+.cloud-header-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-left: auto; }
+.cloud-ai-settings select { width: 100%; }
 .cloud-portal > main { max-width: 1000px; margin: auto; padding: 32px 28px 64px; }
 .cloud-portal::before { display: none; }
 .cloud-form { max-width: 440px; margin: 24px auto; }

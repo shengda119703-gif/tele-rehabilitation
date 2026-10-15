@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "scope": "087 T-LOW-054 扶稳半跪位髋前侧温和牵伸，首轮2张",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "created_date_local": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "generation_mode": "built-in image_gen__imagegen; one independent photograph per call; copied selected original PNG without manipulation; no CLI",
+  "references": [
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ],
+  "shared_visual_check": "同一参考女性、黑色马尾、白色短袖、深灰长裤、灰蓝背景、柔和写实摄影；两张均裸足；同款固定金属扶手及后膝软垫；机位构图尺度一致；无文字编号箭头。",
+  "review_boundary": "核对为可见姿势及器材接触的图像审查，不证明肌肉发力、真实医疗负荷或实际扶手安装强度。扶手固定底座及螺栓在画面中可辨。",
+  "images": [
+    {
+      "action_number": "087",
+      "action_id": "T-LOW-054",
+      "step_number": "01",
+      "target_pose": "左后膝跪软垫，右前足全掌落地，双手扶同一固定金属扶手，躯干大致直立。",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/087_T-LOW-054_s01.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-3ae9633e-92dd-4232-9bf8-5c36a375e60e.png",
+      "sha256": "81D46F13E948C3AD5CF8F21C4E2ED163E8629A3D0B2266F4AC7FE2F3E866A37A",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1732100,
+      "reused_existing_image": false,
+      "tool": "image_gen__imagegen",
+      "prompt": "Use case: scientific-educational. ONE independent photorealistic rehabilitation demonstration photograph, exercise 087 T-LOW-054 step 01, supported HALF-KNEEL hip-front gentle stretch setup. Images 1-3 are visual identity references: exactly the same adult East Asian woman, facial features and age, black ponytail, plain white short sleeve t-shirt, dark charcoal gray long trousers, barefoot. Plain gray-blue seamless studio wall and floor, soft studio lighting, realistic natural human anatomy, quiet neutral expression. Side-on full-body camera with slight near-side offset just enough to see BOTH hands, facing toward image RIGHT; vertical portrait composition, whole head, both hands, both knees and both bare feet and supports visible. She is HALF-KNEELING: LEFT rear knee firmly rests on a thick soft blue-gray knee cushion; rear left shin extends behind toward image LEFT on floor with rear foot relaxed. RIGHT front foot is planted fully flat on floor ahead toward image RIGHT; right knee bent about 90 degrees with shin upright. Pelvis directly above left rear knee, torso approximately upright with neutral spine, shoulders relaxed. Both hands comfortably hold the SAME stable fixed metal rehabilitation handrail in front at waist/lower-chest height; the rail has solid floor-bolted supports clearly visible, not a loose chair and not an assistant's hands. Hands relaxed authentic grips, enough arm reach for later slight forward shift. Keep left rear knee away from bare floor by soft cushion. This is low neutral half-kneel setup, no back arch, no deep lunge, no raised arms or weights. No words, arrows, numbering, labels, collage or watermark.",
+      "generation_inputs": [
+        "reference-01.png",
+        "reference-02.png",
+        "reference-03.png"
+      ],
+      "review": {
+        "method": "view_image full image visual inspection",
+        "status": "passed_visual_pose_review",
+        "identity_clothing_background": "通过；同参考女性、白短袖深灰裤马尾，灰蓝背景及自然光线一致。",
+        "proportion_joints": "通过；头躯干与上下肢自然连接，手足完整。",
+        "support_equipment": "通过；后膝厚软垫承托，前足全掌落地，双手均接同一金属扶手，底座螺栓可见。",
+        "camera_continuity": "通过；竖版1122×1402，相机、人物尺度、扶手与膝垫位置一致。",
+        "pose": "半跪准备位，躯干大致直立。",
+        "notes": "原始照片不加箭头或文字，保持及回程复用s01可由后续排版文字说明。"
+      }
+    },
+    {
+      "action_number": "087",
+      "action_id": "T-LOW-054",
+      "step_number": "02",
+      "target_pose": "保留左后膝、右前足、双手扶手支点，骨盆与躯干小幅向前移，后侧大腿从近垂直转为轻度前倾，躯干无明显后仰。",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/087_T-LOW-054_s02.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-1f8b389c-58c0-4170-9d2b-8534ef8281ef.png",
+      "sha256": "A14609C73300B0448B08E6144898DCDBCD5FAB61F5E907AD6AE95F3CF5E1B966",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1701709,
+      "reused_existing_image": false,
+      "tool": "image_gen__imagegen",
+      "prompt": "Use case: scientific-educational. One independent photorealistic rehabilitation photograph, exercise 087 T-LOW-054 step 02 supported half-kneeling hip-front gentle stretch HOLD. Image 1 is exact accepted setup, images 2-4 are fixed visual identity references. Preserve same woman and face, black ponytail, white short sleeve shirt, charcoal long pants, bare feet, fixed shiny metal handrail and floor bolts, thick blue-gray rear knee cushion, gray-blue studio backdrop, soft lighting, vertical full-body side-on camera, scale and all object positions. Preserve EXACT contact points: left rear KNEE remains on same cushion spot; right FRONT FOOT remains fully flat at same floor spot; BOTH HANDS remain at same grips on same fixed handrail. Move the PELVIS AND WHOLE TORSO together only a SMALL amount FORWARD toward image RIGHT, about 5-7 cm, for gentle hip-front stretch: rear thigh changes from vertical to slight forward lean because pelvis advances while rear knee stays fixed; front knee flexes a little forward while front heel stays down. The torso remains approximately upright, spine neutral, shoulders above pelvis; no lumbar backward arch and no backward lean, no exaggerated lunge. Hands stay supported, elbows naturally bend slightly as body approaches rail. Keep posture change visible at pelvis and rear thigh but modest. All limbs naturally proportioned, head, both hands, both feet, knees, cushion and floor-bolted support visible. One pose only. No text, numbering, arrows, labels, collage or watermark.",
+      "generation_inputs": [
+        "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-3ae9633e-92dd-4232-9bf8-5c36a375e60e.png",
+        "reference-01.png",
+        "reference-02.png",
+        "reference-03.png"
+      ],
+      "review": {
+        "method": "view_image full image visual inspection",
+        "status": "passed_visual_pose_review",
+        "identity_clothing_background": "通过；同参考女性、白短袖深灰裤马尾，灰蓝背景及自然光线一致。",
+        "proportion_joints": "通过；头躯干与上下肢自然连接，手足完整。",
+        "support_equipment": "通过；后膝厚软垫承托，前足全掌落地，双手均接同一金属扶手，底座螺栓可见。",
+        "camera_continuity": "通过；竖版1122×1402，相机、人物尺度、扶手与膝垫位置一致。",
+        "pose": "骨盆、头和躯干相对前移约数厘米；前足、后膝及双手支点保持；无腰部明显后仰。",
+        "notes": "原始照片不加箭头或文字，保持及回程复用s01可由后续排版文字说明。"
+      }
+    }
+  ]
+}

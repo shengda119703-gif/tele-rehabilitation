@@ -32,7 +32,10 @@ def build():
     copy(SOURCE / "local" / "model-policy.js", "local/model-policy.js")
     copy(SOURCE / "catalog.json", "catalog.json")
     static = ROOT / "mobile_rehab" / "static"
+    copy(static / 'assets/rehab-library-v1/catalogue.json', 'static/assets/rehab-library-v1/catalogue.json')
     for file in static.rglob("*"):
+        if "rehab-candidates-v10" in file.relative_to(static).parts or file.name.startswith("rehab-image-review"):
+            continue
         if file.is_file() and file.suffix in {".js", ".css", ".svg", ".png", ".jpg", ".jpeg", ".webp"}:
             copy(file, "static/" + file.relative_to(static).as_posix())
     copy(ROOT / "public_web" / "browser-account.js", "web/browser-account.js")
@@ -46,7 +49,8 @@ def build():
         generated = html.replace("<head>", "<head>" + scripts, 1)
         (OUTPUT / output).write_text(generated, encoding="utf-8")
         pages[output] = hashlib.sha256((OUTPUT / output).read_bytes()).hexdigest()
-    manifest = {"schema": "ankang-public-web-1", "version": "0.5.2", "execution_location": "BROWSER_LOCAL_CPU",
+    version = json.loads((ROOT / "android_offline" / "package.json").read_text(encoding="utf-8"))["version"]
+    manifest = {"schema": "ankang-public-web-1", "version": version, "execution_location": "BROWSER_LOCAL_CPU",
                 "assets": assets, "pages": pages, "ui_source": "mobile_rehab/static", "fixture_data_included": False}
     (OUTPUT / "web-manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({"assets": len(assets), "pages": len(pages), "fixture_data_included": False,

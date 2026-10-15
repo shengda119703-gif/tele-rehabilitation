@@ -1,0 +1,103 @@
+{
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "batch": "161/s01-s02;162/s01-s02",
+  "count": 4,
+  "mode": "built-in image_gen__imagegen, one call per single-frame asset; s02 uses same action s01 as reference",
+  "imagegen_skill": "C:/Users/Administrator/.codex/skills/.system/imagegen/SKILL.md",
+  "sources": [
+    "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+    "E:/git冲突问题/安康_康复评估与分级训练动作库.md"
+  ],
+  "source_sections": [
+    "161 T-AXU-054",
+    "162 T-AXU-027"
+  ],
+  "constraints": "未改仓库、总进度或其他图。4张为新增，未覆盖现有资产。灰底写实照片、同一人物白衣深裤白鞋、无字无箭头，各组人物器材机位一致。",
+  "images": [
+    {
+      "name": "161_T-AXU-054_s01.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\161_T-AXU-054_s01.png",
+      "bytes": 1745840,
+      "sha256": "E37AE586565AD9310F24C499F85281F02BDF59600907B62B19B1587356A53983",
+      "width": 1536,
+      "height": 1024,
+      "source_image": "C:/Users/Administrator/.codex/generated_images/01a13a83-4881-79b0-856d-4d4ba993dc58/exec-f22d6f96-4f94-4a6c-bd2b-c24d3ca9ea96.png",
+      "prompt": "Use case: scientific-educational\nAsset type: one standalone photorealistic rehabilitation exercise step photograph, 161 T-AXU-054 s01, not a collage.\nInput images: the three reference images are identity, clothing, lighting, and photography-style references only. Preserve the same adult East Asian woman, black low ponytail, plain white short-sleeve T-shirt, charcoal fitted exercise trousers; complete her outfit with clean plain white athletic shoes.\nScene: clean seamless pale cool-gray studio backdrop and matte gray floor, soft diffuse light, no decoration.\nPose: fixed-anchor resistance-band seated row START position. The woman sits securely on the seat of a sturdy simple armless chair facing toward image right. Both feet are planted flat on the floor, knees comfortably bent, pelvis on chair, upright neutral torso, no leaning backward. Both hands hold separate handles/ends of the same continuous teal resistance band below chest height, with both arms reached forward in front of lower chest, elbows nearly straight but relaxed, wrists neutral. There is light initial tension in the band.\nEquipment and contact: the resistance band runs visibly and continuously from both hands toward one reliable fixed wall anchor at waist / lower-rib height, clearly BELOW her chest. Show a small proper metal anchor bracket securely bolted to a plain fixed vertical wall surface at image right, not a loose pole or a door handle. Show the entire anchor, the full band path to each hand, the full chair including all legs and seat contact, both feet contacting the floor.\nComposition: landscape 3:2 studio exercise photograph, full-body, predominantly direct side view with a very small forward angle so both hands and their distinct grips are readable; enough room at image right for the wall anchor. Camera at seated upper-body height, locked frame. Natural anatomy and hand grips; keep shoulder, elbow, wrist, hip, foot contacts clear.\nText: none. Constraints: exactly one woman in one starting pose; no letters, numbers, labels, logos, watermark, captions, inset, arrows, motion ghosts or diagram lines. No standing version, no band wrapped around feet, no high anchor or band pulling toward her face, no backward torso lean, no extreme shoulder-blade squeeze. Both hands must grip the band; band must physically attach to the visible reliable anchor.",
+      "reference_images": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "qa": {
+        "method": "functions.view_image 单张实际截图目视验收",
+        "status": "pass",
+        "record": "已逐张 view_image：通过。稳定椅坐位，臀与椅接触，双脚踩地；双手真实握柄，双臂前伸、腕中立；青绿色双股带连续连接画右可见的螺栓固定专用墙锚，锚点低于胸口；躯干直立，无后仰；全身、椅、完整锚点及带路径可见；白衣深裤白鞋、灰底，无字无箭头。"
+      },
+      "selected": true,
+      "iteration": 1
+    },
+    {
+      "name": "161_T-AXU-054_s02.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\161_T-AXU-054_s02.png",
+      "bytes": 1649102,
+      "sha256": "66F7197917067E04BC2961E71F81C6D7A61A2462921F3312384DFE719F678CBD",
+      "width": 1536,
+      "height": 1024,
+      "source_image": "C:/Users/Administrator/.codex/generated_images/01a13a83-4881-79b0-856d-4d4ba993dc58/exec-2c08c1b4-c3ce-45d1-b27a-8138a72271d5.png",
+      "prompt": "Use case: scientific-educational\nAsset type: one standalone photorealistic rehabilitation exercise step photograph, 161 T-AXU-054 s02.\nInput image 1: edit target and strict continuity reference. This is step 02 of the SAME seated fixed-anchor resistance-band row. Keep the exact same woman, face, hairstyle, clothing, white shoes, chair, floor contacts, fixed wall anchor, teal band, lighting, studio, camera viewpoint, framing and image dimensions.\nChange only her arm position and the corresponding band extension to show the row PULL-BACK endpoint: both elbows bend and move backward beside the rib cage; both hands and their original black grips come near the front/sides of the lower rib cage / upper waist. Elbows close to the body, not excessively behind it, wrists neutral, shoulders relaxed. Show both hands distinctly holding their same separate handles and both band strands stretching continuously from the original wall anchor to those handles.\nKeep her upright torso, chest, pelvis, chair seat contact, knees, shoes and both planted feet in precisely the same positions as the input. No backward lean, lumbar arch or torso rotation; no shrug or forced shoulder blade squeeze. The reliable wall anchor stays fixed and visibly below chest height. Preserve full-body framing and the entire band/anchor/chair in view.\nThis is a single endpoint photo only, not a composite. No text, letters, numbers, arrows, labels, inset, motion ghosts, logo or watermark.",
+      "reference_images": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a83-4881-79b0-856d-4d4ba993dc58/exec-f22d6f96-4f94-4a6c-bd2b-c24d3ca9ea96.png"
+      ],
+      "qa": {
+        "method": "functions.view_image 单张实际截图目视验收",
+        "status": "pass",
+        "record": "已逐张 view_image：通过。相对 s01 只改变双臂与相应条带伸展，双肘回移至身侧、双手近躯干；人物、椅、鞋、足部、锚点、灰底及机位保持一致；躯干无后仰、双脚踩地。可见两股条带连续连接固定锚点与两手，未朝脸牵引；无字无箭头。"
+      },
+      "selected": true,
+      "iteration": 1
+    },
+    {
+      "name": "162_T-AXU-027_s01.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\162_T-AXU-027_s01.png",
+      "bytes": 1901046,
+      "sha256": "727E7C84868CB30DDEF0E2A7F8EA6E168FCD61E85B909CA87E3E7165F12F0EAC",
+      "width": 1536,
+      "height": 1024,
+      "source_image": "C:/Users/Administrator/.codex/generated_images/01a13a83-4881-79b0-856d-4d4ba993dc58/exec-1a59968d-5d76-4e2c-8621-b4faf719ed4a.png",
+      "prompt": "Use case: scientific-educational\nAsset type: one standalone photorealistic rehabilitation exercise step photograph, 162 T-AXU-027 s01, floor press START / bottom position.\nInput images: three identity/clothing/style references only. Use the same adult East Asian woman with black low ponytail, plain white short-sleeve T-shirt, charcoal fitted exercise trousers, and clean plain white athletic shoes. Preserve reference natural photography, pale cool-gray studio background and soft diffuse lighting.\nScene: clean gray studio floor, one simple dark-gray padded exercise mat lying flat; no other furniture.\nPose and essential geometry: woman lying SUPINE on the mat, head toward image left and feet toward image right, knees bent and BOTH soles planted flat on the mat. Head, shoulders, upper back and pelvis supported on the mat; no bridge. She holds one small matching light dumbbell in EACH hand, two total, one on each side beside the lower chest. At the bottom of this floor press, BOTH upper arms / elbows rest gently on the mat at a comfortable diagonal about 30–45 degrees away from her torso, not a T shape. BOTH forearms are nearly vertical above the floor and BOTH wrists sit directly over their respective elbows. Elbows bent approximately 90 degrees. Natural secure hand grips and straight neutral wrists. Show an honest floor-limited bottom position, not a bench press.\nComposition: landscape 3:2 photo, full woman and complete mat in frame with margin. Camera fixed at a moderately elevated diagonal side-front angle, high enough to clearly separate BOTH dumbbells and both forearms and show the upper-arm-to-mat contact on both sides. Anatomically coherent shoulder-elbow-wrist chains, realistic paired dark dumbbells with short metal handles. Both dumbbells around chest-side level, never over her face.\nConstraints: exactly one woman, one static pose, two matching dumbbells. No text, numbers, labels, logo, watermark, arrows, montage, inset or ghost positions. No exercise bench, no suspended upper arms, no extended press position yet, no pelvis lift, no lumbar arch, no dumbbells merged or intersecting the body, no extra limbs, no huge heavy weights.",
+      "reference_images": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "qa": {
+        "method": "functions.view_image 单张实际截图目视验收",
+        "status": "pass",
+        "record": "已逐张 view_image：通过。仰卧屈膝，双白鞋鞋底接触垫；头肩背及臀支撑于灰垫，无桥式抬臀。两只相同轻哑铃在胸旁，两手真实握持，前臂近竖直、腕在肘上方；近侧上臂和肘明确轻触垫面，远侧肘因躯干自然遮挡，远侧前臂和哑铃清楚可见，未见肩悬空。斜上侧面全身完整，无字无箭头；与制作清单允许的侧面机位一致。"
+      },
+      "selected": true,
+      "iteration": 1
+    },
+    {
+      "name": "162_T-AXU-027_s02.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\162_T-AXU-027_s02.png",
+      "bytes": 1817700,
+      "sha256": "6A318406BF33104CB80394D648EDB29C0BBF12215A17E68734236A545659F729",
+      "width": 1536,
+      "height": 1024,
+      "source_image": "C:/Users/Administrator/.codex/generated_images/01a13a83-4881-79b0-856d-4d4ba993dc58/exec-57b6412d-35a8-47c1-85de-9ed9d97760e1.png",
+      "prompt": "Use case: scientific-educational\nAsset type: one standalone photorealistic rehabilitation exercise step photograph, 162 T-AXU-027 s02.\nInput image 1: edit target and strict step-to-step continuity reference. Preserve the exact same woman, face, ponytail, white T-shirt, charcoal trousers, white shoes, anatomy, head placement, bent knees, both feet contacts, mat shape and placement, studio gray background, soft lighting, camera viewpoint, framing and dimensions.\nChange only both arms and the two dumbbells to show the TOP / press-up endpoint of the SAME supine dumbbell floor press. From the input chest-side bottom position, raise both matching dumbbells vertically upward over her lower/mid chest until both elbows are almost straight with a small natural relaxed bend; do not hyperextend or lock the elbows. BOTH hands remain securely around the same metal handles, wrists straight over the forearms, and the two dumbbells remain distinct with a small separation. Maintain their matching black hex shapes and size; no intersections or fusing.\nHer head, shoulders and upper back stay supported on the mat; pelvis and buttocks stay DOWN in the exact same position, both knees bent and both shoes planted on the mat. No bridge or arch, no shoulder shrug, no weight over her face, no forward sit-up. Her torso and lower body remain unchanged. Natural shoulder-elbow-wrist alignment of a controlled press.\nSingle isolated endpoint photo, no text, letters, numbers, labels, arrows, motion ghosts, montage, inset, watermark or logo.",
+      "reference_images": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a83-4881-79b0-856d-4d4ba993dc58/exec-1a59968d-5d76-4e2c-8621-b4faf719ed4a.png"
+      ],
+      "qa": {
+        "method": "functions.view_image 单张实际截图目视验收",
+        "status": "pass",
+        "record": "已逐张 view_image：通过。双哑铃向上推至胸上方，两肘近伸直且无反弓，腕自然；哑铃保持两只且无融合穿插。头肩背臀仍接触原垫面，膝足及机位保持与 s01 一致，无桥式抬臀或仰腰；全上肢、全身、垫与双脚清楚，无字无箭头。"
+      },
+      "selected": true,
+      "iteration": 1
+    }
+  ]
+}

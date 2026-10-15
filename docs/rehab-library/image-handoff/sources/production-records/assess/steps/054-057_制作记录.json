@@ -1,0 +1,246 @@
+{
+  "source_md": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "date": "2026-10-14",
+  "method": "内置 image_gen__imagegen 编辑；文件仅复制原始输出，不使用API/CLI/图像拼接或程序修改像素。",
+  "planned_frames": 7,
+  "selected_frames": 7,
+  "sequences": [
+    54,
+    56,
+    57
+  ],
+  "identity_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "postprocess": {
+    "54": "PNG不烧文字／箭头。排版时沿三个小范围球位补同一小圈路线箭头，先顺时针、停住后逆时针；逆向复用同姿势，箭头分别明确方向，不把取样点当连续大圈或扩大圈径。",
+    "56": "01→02→01，推回复用01；选用s01_v2。",
+    "57": "01→02→01，伸回复用01。"
+  },
+  "qa_overall": "七个选用帧已逐张view_image查看；人物身份、正常比例、灰蓝棚拍背景、关键手指与接触符合画稿要求。两张首稿返修，未覆盖原文件；未宣称临床协议或动作效果验收。",
+  "frames": [
+    {
+      "sequence": 54,
+      "id": "E-AXU-027",
+      "step": 1,
+      "prompt": "Use case: identity-preserve. Asset type: ONE photoreal rehabilitation key-position photograph, wall small-ball circles, step 01. Input images 1-3 are the fixed character/style identity references: preserve exactly the same East Asian adult woman, recognizable face, black ponytail, plain white short sleeve T-shirt, dark charcoal gray trousers, realistic normal adult body proportions, soft studio photography, identical light gray-blue palette. Image 4 is the action scene/reference to edit. Create one single photo with NO words, labels, arrows, collage, marks or watermark. She faces a vertical gray-blue wall and stands steadily on the same plain gray-blue floor, white sneakers; one hand presses a small soft gray ball flat against the wall just below shoulder level in front of her shoulder. Other arm relaxed at side. Palm and fingers clearly touch the ball, ball touches wall; hand/ball/wall contact is visibly realistic, no floating ball or glued wall fixture. Use a slightly frontward three-quarter camera that clearly shows her recognizable face and shoulder, active hand and fingers, ball and wall contact. Full body head to shoes safely in frame, natural anatomy and scale, not elongated. This is the first sampling position on ONE very small circular route; do NOT add a drawn circle. For the subsequent two frames only hand-ball position will shift subtly along that same small circle while camera, woman, feet, torso and wall remain fixed. Keep the character, clothing, lighting and background color unchanged.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/054_E-AXU-027_墙面持球小圈控制观察.png"
+      ],
+      "tool_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-27d2-76e3-86e8-1271fe8ab722\\exec-9d9c8fd5-b760-44ff-ae7a-3ce47b0f7299.png",
+      "output": "054_E-AXU-027_s01.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/054_E-AXU-027_s01.png",
+      "reuse": false,
+      "qa": "已逐张查看：同一人物、正常头身比例、全身足位、掌球墙接触及放松对侧臂可见；无文字箭头。",
+      "limitations": "小圈方向仅靠静态样本不能表达，需后期小圆路线方向箭头。",
+      "selected": true,
+      "hash": "AE426EE9E379B7CF305B463B2D010B08DD9D8F5DC91288AC5660AF0DF874F28E",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1697755,
+      "QA结论": "已逐张查看：同一人物、正常头身比例、全身足位、掌球墙接触及放松对侧臂可见；无文字箭头。",
+      "不足": "小圈方向仅靠静态样本不能表达，需后期小圆路线方向箭头。"
+    },
+    {
+      "sequence": 54,
+      "id": "E-AXU-027",
+      "step": 2,
+      "prompt": "Use case: identity-preserve, tightly controlled pose edit. Images 1-3 define same exact woman and gray-blue style. Image 4 is wall-ball frame 01 to edit, NOT a new pose or new camera. Make a single frame02 by a TINY LATERAL shift of the ball and pressing hand on wall, without raising her arm. Preserve the entire rest of image4: exact head/face, ponytail, relaxed other arm, torso/shoulders, both feet and shoes, camera, crop, wall and lighting. Ball centre MUST remain at the SAME VERTICAL height as image4, in front of and a little below the shoulder, at about 23.7 percent of full image height (approximately y333 on this 1402-high composition). Move ball centre only slightly RIGHT on the wall from about x834 to about x858 on the 1122-wide image, a quarter of the ball diameter. This is one side sample on a very small wall circle, NOT overhead/shoulder flexion or a large circle. Palm and whole fingers remain pressing the same soft gray ball against wall, no floating. Keep elbow relaxed slightly bent with only minimal forearm adjustment. Absolutely no upward ball lift, no raised shoulder, no text, arrows, labels, circle, collage or watermark. Match exact reference woman white T dark trousers, normal real proportions and photoreal photography.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/steps/054_E-AXU-027_s01.png"
+      ],
+      "tool_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-27d2-76e3-86e8-1271fe8ab722\\exec-59474d0f-dcd2-493e-ae83-02524a2c742f.png",
+      "output": "054_E-AXU-027_s02_v2.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/054_E-AXU-027_s02_v2.png",
+      "reuse": false,
+      "qa": "已查看v2：人物、机位、站位保持；球与掌墙持续接触，球位仅小幅侧移且高度与s01接近，未再抬至肩上。",
+      "limitations": "静态图只能呈现同一小圈的取样位置，不能独立证明闭合轨迹；需后期明确小圈顺／逆时针箭头，箭头不得扩大动作圈或烧入原始PNG。",
+      "selected": true,
+      "attempts": [
+        {
+          "sequence": 54,
+          "id": "E-AXU-027",
+          "step": 2,
+          "prompt": "Use case: identity-preserve, precise position edit. Images 1-3 lock the woman, face, black ponytail, white T-shirt, dark charcoal trousers, realistic normal proportions and exact gray-blue studio style. Image 4 is the exact edit target: wall small-ball-circle frame 01. Keep image 4 pixel composition, camera, wall/floor, head/face/ponytail, torso, shoulders, free arm, feet and shoes fixed. Make ONE frame 02 by changing ONLY the active hand and gray soft ball position, with natural tiny forearm adjustment. Her palm still presses the SAME small soft ball continuously against the SAME wall just below shoulder level. Move ball+hand a very small distance on the wall toward the upper-right sampling location of a tiny circular route: about one-third of the ball's width rightward and about one-sixth of ball height upward relative to target. This is a subtle circle of small diameter, NOT a big arm circle or shoulder abduction; preserve hand height near shoulder front. Full fingers anatomically intact; ball remains sandwiched between palm and wall with realistic contact shadow, no floating. Produce a single photoreal photograph, NO words, numbers, labels, arrows, drawn circle, collage, watermark or equipment changes.",
+          "source": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/steps/054_E-AXU-027_s01.png"
+          ],
+          "tool_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-27d2-76e3-86e8-1271fe8ab722\\exec-8ffb095d-887f-4ba9-b490-7df8ee93d03a.png",
+          "output": "054_E-AXU-027_s02.png",
+          "path": "E:/git冲突问题/rehab image/assess/steps/054_E-AXU-027_s02.png",
+          "reuse": false,
+          "qa": "已查看：人物、球墙接触、站位合格，但工具把取样球位抬得过高，不符合肩前下方同一小圈，待返修。",
+          "limitations": "球位待返修，此版本不选用。",
+          "selected": false,
+          "hash": "C37BF6A4FCE4B1FE0D308645E9C7BC396E38F0938B4779941214F3EBD79156F8",
+          "width": 1122,
+          "height": 1402
+        }
+      ],
+      "hash": "0824EC702114969836C7A8CF9DC8933F2A973E33EB5C417293B85969373586E6",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1672134,
+      "QA结论": "已查看v2：人物、机位、站位保持；球与掌墙持续接触，球位仅小幅侧移且高度与s01接近，未再抬至肩上。",
+      "不足": "静态图只能呈现同一小圈的取样位置，不能独立证明闭合轨迹；需后期明确小圈顺／逆时针箭头，箭头不得扩大动作圈或烧入原始PNG。"
+    },
+    {
+      "sequence": 54,
+      "id": "E-AXU-027",
+      "step": 3,
+      "prompt": "Use case: identity-preserve, tiny pose edit. Images1-3 are fixed same-woman/style references. Image4 is the EXACT wall-ball frame01 edit target. Create one frame03. Keep camera/crop, woman's head and face, ponytail, torso/shoulders, free arm, both feet and white sneakers, gray-blue wall/floor and lighting unchanged. Change ONLY active palm, soft gray ball and tiny necessary forearm adjustment: another nearby point of the SAME SMALL wall-circle. Ball stays continuously pressed between palm and wall, in front of and a little below shoulder. Use a very small lower-right sampling shift: original ball centre approximately x834 y333 in this1122x1402 composition; target centre approximately x845 y353, around 75.3 percent canvas width and25.2 percent canvas height. This is only one-sixth ball diameter right and one-fifth down, NOT a big circle, side arm raise or change of standing position. Fingers anatomically complete and naturally pressed, realistic contact shadow. Do not lift ball above shoulder or detach ball from wall. One single photoreal image preserving exactly same identity white T shirt dark charcoal trousers, soft gray-blue studio color and normal adult body proportions. NO text/numbers/arrows/drawn path/collage/watermark.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/steps/054_E-AXU-027_s01.png"
+      ],
+      "tool_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-27d2-76e3-86e8-1271fe8ab722\\exec-0752a7d7-d9b1-4bb4-b74d-d696c03a99d7.png",
+      "output": "054_E-AXU-027_s03.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/054_E-AXU-027_s03.png",
+      "reuse": false,
+      "qa": "已查看：与s01／s02_v2同一人物、墙面和站位，手球小幅下侧取样，球持续贴墙；身体和足位稳定、正常比例，无文字箭头。",
+      "limitations": "静态图只能呈现同一小圈的取样位置，不能独立证明闭合轨迹；需后期明确小圈顺／逆时针箭头，箭头不得扩大动作圈或烧入原始PNG。",
+      "selected": true,
+      "hash": "FBBBB38B13FF005E929EC43C4A19AB193CD9B3DA644BA96FFDF7A6D9592B485D",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1677547,
+      "QA结论": "已查看：与s01／s02_v2同一人物、墙面和站位，手球小幅下侧取样，球持续贴墙；身体和足位稳定、正常比例，无文字箭头。",
+      "不足": "静态图只能呈现同一小圈的取样位置，不能独立证明闭合轨迹；需后期明确小圈顺／逆时针箭头，箭头不得扩大动作圈或烧入原始PNG。"
+    },
+    {
+      "sequence": 56,
+      "id": "E-AXU-021",
+      "step": 1,
+      "prompt": "Use case: identity-preserve, targeted repair. Images 1-3 lock woman/style; image 4 is the straight-arm frame to repair; image 5 is the original bent-elbow frame providing the exact correct foot footprints and floor positions. Make ONE corrected straight-arm photo. Critical correction: the feet in image 4 were mistakenly moved farther from wall. Reposition BOTH white shoes and feet closer to the wall so they occupy the SAME footprint locations as image 5, while keeping both heels and soles planted and anatomically connecting lower legs naturally. Shoes must match the relative wall-floor corner distance and the original positions shown by image 5. Preserve image 4's straight natural elbows, both palms and fingers on the EXACT same wall spots, recognizable head/face, body proportions, clothing, camera and gray-blue lighting/background. Shoulder-hip-ankle alignment must remain comfortable with no folding waist; adjust lower leg alignment only as required by corrected anchored feet. Do not move hands, wall, camera, crop, change scale, add props or text. Full head and both shoes, no cut fingers. Single photoreal photograph, no arrows, lettering, collage or watermark.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/steps/056_E-AXU-021_s01.png",
+        "E:/git冲突问题/rehab image/assess/056_E-AXU-021_墙面小幅推撑负荷耐受筛查.png"
+      ],
+      "tool_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-27d2-76e3-86e8-1271fe8ab722\\exec-dcba4ec8-036c-487c-a5b8-0e21beaf0458.png",
+      "output": "056_E-AXU-021_s01_v2.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/056_E-AXU-021_s01_v2.png",
+      "reuse": false,
+      "qa": "已查看v2：双手墙面位置和双脚原始足位匹配s02；直臂与屈肘对照明确，身体整体靠墙不折腰，比例正常。",
+      "limitations": "图生编辑存在细微纹理差异，不影响关键体位。",
+      "selected": true,
+      "attempts": [
+        {
+          "sequence": 56,
+          "id": "E-AXU-021",
+          "step": 1,
+          "prompt": "Use case: identity-preserve. Edit target: image 4, the existing bent-elbow wall-push photo. Images 1-3 lock exactly the same woman's face, black ponytail, white T-shirt, dark charcoal trousers, realistic proportions and gray-blue studio color/soft light. Make ONE single step-01 straight-arm wall-push photo. Keep the SAME camera, image framing, vertical wall, floor, white sneakers, foot positions and foot distance from wall, and both palm contact positions on the wall as image 4. Change only the arm/body phase: both elbows are now naturally straight without locking or hyperextension, both palms and all fingers still firmly and anatomically touch the same shoulder-high spots on wall, hands slightly wider than shoulders. Her shoulders and whole body move slightly farther from the wall than the bent-elbow target, body kept in one comfortable head-shoulder-hip-ankle line by a tiny rotation from planted ankles, no folding at waist and no moving the feet. Normal adult anatomy, full head through both shoes, fingers clearly visible, match character and background colors exactly. NO text, labels, arrows, drawn paths, inset, collage, extra equipment, watermark or extra person.",
+          "source": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/056_E-AXU-021_墙面小幅推撑负荷耐受筛查.png"
+          ],
+          "tool_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-27d2-76e3-86e8-1271fe8ab722\\exec-0ab1b38c-2322-45e5-b7a3-14c981f609dd.png",
+          "output": "056_E-AXU-021_s01.png",
+          "path": "E:/git冲突问题/rehab image/assess/steps/056_E-AXU-021_s01.png",
+          "reuse": false,
+          "qa": "首稿已查看：人物与直臂阶段正常；工具把双脚略后移，未与s02足位保持一致，待内置返修。",
+          "limitations": "足位待返修；首稿不作为选用帧。",
+          "selected": false,
+          "hash": "912170B8064B46187F1FA95F0B5C36F321D1D327E6CB742B8AC733293B42C2D7",
+          "width": 1122,
+          "height": 1402
+        }
+      ],
+      "hash": "133FACD213DFB3A03881DF266A1E8204F9A02D4E14317F843B3321883718DEFF",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1638165,
+      "QA结论": "已查看v2：双手墙面位置和双脚原始足位匹配s02；直臂与屈肘对照明确，身体整体靠墙不折腰，比例正常。",
+      "不足": "图生编辑存在细微纹理差异，不影响关键体位。"
+    },
+    {
+      "sequence": 56,
+      "id": "E-AXU-021",
+      "step": 2,
+      "prompt": "复用匹配原图：双手固定墙面，双脚固定，屈肘身体整体小幅靠墙。",
+      "source": [
+        "E:/git冲突问题/rehab image/assess/056_E-AXU-021_墙面小幅推撑负荷耐受筛查.png"
+      ],
+      "output": "056_E-AXU-021_s02.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/056_E-AXU-021_s02.png",
+      "reuse": true,
+      "qa": "已查看原图：身份、灰蓝棚拍、全身足位、双手墙面接触及整体前倾均可见，符合屈肘终点。",
+      "limitations": "仅静态关键帧，不据图判定实际负荷耐受。",
+      "selected": true,
+      "hash": "78A4FAFE7C3A5AFF995198AFCCC40B0575CAB9678628A1AA168BF177B171420A",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1703641,
+      "QA结论": "已查看原图：身份、灰蓝棚拍、全身足位、双手墙面接触及整体前倾均可见，符合屈肘终点。",
+      "不足": "仅静态关键帧，不据图判定实际负荷耐受。"
+    },
+    {
+      "sequence": 57,
+      "id": "E-AXU-017",
+      "step": 1,
+      "prompt": "Use case: identity-preserve. Images 1-3 are fixed character/style references; image 4 shows the same woman's elbow bend but is NOT the required body position. Create ONE single rehabilitation photo of this exact woman STANDING naturally, NO chair, NO props, with comfortable elbow extension. Keep her recognizable East Asian face, black ponytail, plain white T-shirt, dark charcoal trousers, natural anatomy and normal adult body proportions, and exact gray-blue studio palette and soft photographic lighting. Camera is a fixed side view facing the plane of elbow movement, crop from above head to upper thighs so shoulder, elbow, wrist and entire hand are all clearly inside frame. Woman faces right. The near/test upper arm hangs relaxed vertically close against her side, shoulder relaxed; elbow is comfortably extended with a very small natural bend, not locked or hyperextended, forearm points downward by her thigh, empty hand naturally relaxed. Far arm relaxed at side and not assisting. Natural five-finger hand. Leave ample margin around test hand. In the next frame only forearm rotates upward around this fixed elbow so hand nears shoulder; maintain the exact near upper arm, shoulder, torso, feet, camera and framing. No text, numbers, arrows, watermark, collage, weights, chair or other person's hand.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/057_E-AXU-017_肘主动屈曲／伸展ROM筛查.png"
+      ],
+      "tool_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-27d2-76e3-86e8-1271fe8ab722\\exec-c703c907-87de-4de8-b43b-34e2bec62a64.png",
+      "output": "057_E-AXU-017_s01.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/057_E-AXU-017_s01.png",
+      "reuse": false,
+      "qa": "已查看：站位，测试上臂贴身，肘舒适伸展而不锁死，完整肩肘腕手可见；空手、无椅，与参考身份色调相符。",
+      "limitations": "静态图仅表达肢体位置，不代表实际ROM量值。",
+      "selected": true,
+      "hash": "1780E77E582D659FD0591D717235877BBD84C7E178692242DC9DCA2CF7672276",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1678385,
+      "QA结论": "已查看：站位，测试上臂贴身，肘舒适伸展而不锁死，完整肩肘腕手可见；空手、无椅，与参考身份色调相符。",
+      "不足": "静态图仅表达肢体位置，不代表实际ROM量值。"
+    },
+    {
+      "sequence": 57,
+      "id": "E-AXU-017",
+      "step": 2,
+      "prompt": "Use case: identity-preserve. Images 1-3 are fixed character/style identities. Image 4 is the EXACT standing elbow-extension frame 01 to edit. Produce ONE frame 02, elbow flexion: change ONLY the near/test forearm and empty hand by bending the elbow so the empty relaxed hand approaches her same-side shoulder. The test upper arm must remain vertically adjacent to and touching the torso exactly as in image 4; keep shoulder/elbow pivot position, head/face/ponytail, far arm relaxed at side, torso, standing position, clothing, lighting, gray-blue background, side-view camera, crop and natural body proportions all unchanged. Forearm rotates upward around the fixed elbow to a comfortable flexed posture, relaxed wrist and relaxed fingers, no tight fist, no weight, no other hand assistance. Shoulder, whole upper arm, elbow, wrist and full hand all visible with margins. Same woman white T-shirt, dark charcoal trousers. No chair, props, text, arrows, numbers, watermark, inset or collage.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/steps/057_E-AXU-017_s01.png"
+      ],
+      "tool_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-27d2-76e3-86e8-1271fe8ab722\\exec-c1a9a8e8-29a5-4f71-9049-8d66d2cdbd04.png",
+      "output": "057_E-AXU-017_s02.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/057_E-AXU-017_s02.png",
+      "reuse": false,
+      "qa": "已查看：同一站位侧面构图，上臂贴身，前臂屈起空手靠近肩；完整手指、肩肘腕可见，另一手未施力。",
+      "limitations": "仅位置示范，不据图给出ROM数值。",
+      "selected": true,
+      "hash": "F6A8EECD6C655DCCB4E11F157FBBCA8915501A16AA6F4CD6F920D56D515D0F2B",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1657065,
+      "QA结论": "已查看：同一站位侧面构图，上臂贴身，前臂屈起空手靠近肩；完整手指、肩肘腕可见，另一手未施力。",
+      "不足": "仅位置示范，不据图给出ROM数值。"
+    }
+  ]
+}
+

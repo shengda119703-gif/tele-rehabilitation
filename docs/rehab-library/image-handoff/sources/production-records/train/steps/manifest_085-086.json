@@ -1,0 +1,104 @@
+{
+  "document_version": "v1.0",
+  "created_client_date": "2026-10-14",
+  "range": "085-086",
+  "tool": "built-in image_gen__imagegen",
+  "reused_existing_images": false,
+  "notes": [
+    "每張為獨立單姿勢照片；無文字、編號、箭頭。",
+    "085 s02初版保留不覆蓋，最終選用s02_v2；其餘使用標準文件名。",
+    "086 s01首調用網絡錯誤，原參數重試成功。",
+    "畫面核對僅驗證可見姿勢、比例與接觸，不驗證肌肉發力或真實負荷。"
+  ],
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "records": [
+    {
+      "action_number": "085",
+      "action_id": "T-LOW-044",
+      "step": "s01",
+      "target_pose": "双脚接地、舒适浅屈膝，膝上大腿同高弹力带，固定扶手",
+      "prompt": "Use case: scientific-educational. Asset type: ONE standalone photorealistic rehabilitation exercise step photograph, no collage. Primary request: preparation for knee-band lateral walking. Input images 1-3 are visual references ONLY: preserve the same East Asian adult woman's face, age, skin tone, natural body proportions and black ponytail, plain white short-sleeve T shirt and dark charcoal long trousers. Do NOT copy the arm exercise from references.\nScene: gray-blue seamless studio background and matching clear flat nonslip floor, soft photographic lighting and natural shadows. ONE simple firmly floor-fixed rehabilitation handrail runs horizontally behind the woman at waist height, with its two bolted posts visible, no moving chair. Clothing consistent. Bare feet, both fully visible.\nCamera: fixed front slight three-quarter view, full body from head to all toes and handrail, natural perspective at waist level, portrait image, modest empty margins. She faces the camera almost squarely, torso upright and stable, knees comfortably shallow bent (about 15 degrees), pelvis level, feet parallel forward and about hip-width apart, both feet flat on floor. A wide continuous muted teal resistance loop is correctly wrapped around both lower thighs just ABOVE both knees at exactly the same height, with light initial tension. Her left hand gently contacts the fixed handrail on image-right, her other hand rests naturally near the waist. Feet and band are unobstructed. This is the START position; her body is near the center of the image with empty floor room to image-left for a later lateral step.\nConstraints: show exactly one clear pose of one woman. Anatomically correct limb lengths, two arms two legs, realistic hands and five fingers, correct floor and rail contact. No numbers, text, labels, arrows, watermarks, split frames, inset panels, motion trails. No band at ankles, no crossed legs, no deep squat, no floating feet.",
+      "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-4c352f75-1e32-4990-a6f6-98349156d7f1.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/085_T-LOW-044_s01.png",
+      "sha256": "AC76A96864975E4BFFABDE19883C8B329D92AF49CD0A28DB804EBB7856F50E1C",
+      "reuse": false,
+      "check": "通过：同一参考女性外观、白短袖深灰裤、灰蓝柔光；双足完整接地、膝浅屈、膝上同高弹力带，左手接固定扶手；人体与接触自然。",
+      "status": "passed_visual_check"
+    },
+    {
+      "action_number": "085",
+      "action_id": "T-LOW-044",
+      "step": "s02",
+      "target_pose": "领先右脚向画面左侧小步侧跨落地、另一脚原位、双膝浅屈",
+      "prompt": "Use case: scientific-educational. Asset: ONE standalone photorealistic rehabilitation step. EDIT the first input photograph (the knee-band standing preparation) into the next lateral-walking step. Inputs 2-4 are the original identity/style references. Preserve first image camera exactly: full body head to all toes, fixed front three-quarter perspective, same gray-blue backdrop/floor, scale, lighting, metallic floor-bolted handrail/posts, white T shirt, dark charcoal trousers, teal wide loop ABOVE both knees, bare feet, same woman's identity and ponytail, no text.\nChange ONLY the exercise pose and resulting band tension: her anatomical RIGHT foot, seen on IMAGE-LEFT, has taken one small sideways step to image-left and is now firmly planted flat. Move that leading image-left foot about 20 cm farther left than in the first input; her anatomical LEFT foot on IMAGE-RIGHT remains planted in its exact first-input floor position. This makes a clearly wider stance, not a crossed step. Both knees remain comfortably shallow flexed, knees following forward-facing toes, hips level, torso almost upright with only minimal natural forward inclination. Her pelvis is slightly toward image-left to remain comfortably stable. Her LEFT hand remains touching the fixed rail, gliding a little toward image-left along the SAME rail as needed; other hand stays naturally near waist. Teal loop becomes visibly stretched wider but remains at the same lower-thigh height just above both knees, correctly wrapping around each thigh with continuous edges.\nConstraints: exactly one frame, one woman, realistic anatomy and hand contact, both feet fully on ground, entire head/hands/feet/rail floor contacts visible. This image should visibly differ from preparation in foot spacing. No arrows, captions, letters, numbers, logos, watermarks, grid, motion blur, inset, deep squat, ankle band, twisted or crossing feet. Preserve rail and camera positions; do not recenter the framing.",
+      "repair_prompts": [
+        "Use case: scientific-educational. ONE standalone rehabilitation exercise photograph. EDIT the first input (wide lateral step) to correct ONLY knee bend: BOTH knees, including the leading right leg on IMAGE-LEFT, should show a clearly comfortable SHALLOW flexion of about 15-20 degrees, without locking either knee. Slightly lower pelvis only about 3 cm as anatomically needed, keep upright stable torso and level hips, knees track the parallel forward-facing toes. The leading leg must remain in lateral step position with its foot flat on the exact same floor location; trailing image-right foot also stays in exact original floor location. Do not change step width or translate the feet. Preserve every other detail: same woman and face, white short-sleeve shirt, dark charcoal trousers, bare feet, teal wide resistance loop just ABOVE both knees with tension, fixed photographic front three-quarter camera, full head to toes framing, gray-blue background and soft shadows, metallic floor-bolted handrail/posts unmoved, left hand contacting rail. Avoid deep squatting or straight locked knees. One pose one woman. No text numbers arrows labels collage watermark.",
+        "ONE standalone photorealistic exercise step. Edit input 1. Correct the POSE to a clearly shallow mini-squat during the wide lateral step: keep BOTH bare feet exactly at their current floor positions and parallel forward. Lower the pelvis and torso approximately 6-7 cm, move hips very slightly backward, flex BOTH knees approximately 25 degrees, so both knees are visibly bent and not straight. Especially the leading RIGHT leg on IMAGE-LEFT must now have a visibly bent knee, with its knee slightly forward toward the camera rather than a straight diagonal hip-to-ankle line. Natural anatomical mini-squat, not a deep squat; level pelvis and spine neutral, trunk only 5 degrees forward. Retain gentle left hand contact on fixed handrail, other hand near waist. Keep the same leading side step width, same face and hair identity, white T shirt, charcoal long pants, teal loop directly above both knees, full body portrait camera fixed and unmoved, gray-blue studio floor/background and soft light, fixed metal handrail/post positions. Show one woman one pose. No text, numbers, arrow, collage or watermark."
+      ],
+      "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-4c1a138c-ab54-4c4b-a440-99f6199e667f.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/085_T-LOW-044_s02_v2.png",
+      "sha256": "487593C1C17ABB30BBCC5ECC3D8016897FCB5749F20D0B5B8FA545477D083474",
+      "reuse": false,
+      "check": "通过：领先右脚清楚侧跨落地，左脚原位、未交叉；定向强化舒适浅屈膝避免锁膝；膝上带、扶手、固定机位、双足接地保持。初版s02保留，但交付选用v2。",
+      "status": "passed_visual_check",
+      "superseded_file": {
+        "saved_path": "E:/git冲突问题/rehab image/train/steps/085_T-LOW-044_s02.png",
+        "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-575fa34e-cf0a-4366-a58f-4c7a9284f3b6.png",
+        "reason": "领先腿浅屈表达不足，保留初版不覆盖；选用v2"
+      },
+      "discarded_generation_sources": [
+        "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-14b5b6d7-4672-4e32-955e-afc1b4e0a437.png"
+      ]
+    },
+    {
+      "action_number": "085",
+      "action_id": "T-LOW-044",
+      "step": "s03",
+      "target_pose": "跟进左脚向画面左侧跟进落稳，保留髋宽站距，整体已向左平移",
+      "prompt": "Use case: scientific-educational. Asset: ONE standalone photorealistic rehabilitation exercise step photograph. First input is the latest lateral-walking step photograph, second input is the group's original preparation, last three inputs are original identity references. EDIT first photograph to the FOLLOWING-FOOT step; preserve camera/framing, scale, face/ponytail, white short-sleeve T shirt and dark charcoal trousers, bare feet, gray-blue soft studio lighting and floor, metallic floor-bolted handrail in its EXACT same position. Portrait full body, complete toes and hands.\nKey pose change: The leading anatomical RIGHT foot on IMAGE-LEFT stays fixed in the exact sideways position from first input (near the left quarter of the picture). Now the trailing anatomical LEFT foot on IMAGE-RIGHT has taken a controlled small step toward image-left and is planted flat about hip-width to the right of the leading foot. Thus BOTH feet and the woman's pelvis are farther IMAGE-LEFT than the original preparation; the camera must not recenter her. Show a normal comfortably shallow bent-knee stance with two feet flat and parallel forward, roughly the same modest hip-width stance as preparation but translated about 20 cm left. Her pelvis and torso have shifted left over this new stance, stable and upright, level hips. Her LEFT hand slides toward image-left along the SAME fixed rail and remains firmly contacting it; her other hand remains naturally near the waist. Wide teal continuous resistance loop stays above both knees at equal height with gentle retained tension and no slack drooping.\nVery important: leading image-left foot does NOT move back to original preparation. ONLY the image-right following foot moves toward it. Keep original rail posts and ground horizon pixel-stable, make body translation left clearly visible. Natural leg and arm lengths and joints. No crossing legs, no deep squat, no locked knees, no raised heels, no floating feet. Exactly one woman and one pose. No text, numbers, arrows, labels, watermark, motion trails, panels, collage or inset.",
+      "repair_prompts": [
+        "Use case: scientific-educational. ONE photorealistic rehabilitation exercise step, edit of first input. Input 1 is the following-foot image to repair. Input 2 is the previous wide lateral-step image and is used ONLY to match the exact leading right foot's floor location.\nChange exactly one detail in input 1: reposition the woman's anatomical RIGHT foot (the foot on IMAGE-LEFT) 5 cm toward IMAGE-RIGHT so its sole occupies the SAME floor position as the image-left foot in input 2. The image-left foot must remain forward-facing and flat on the floor. Keep her corresponding leg anatomically natural and shallow bent. Keep the following image-right foot at its current location from input 1. Keep all other first-input details unchanged: translated-left pelvis/torso and head position, other foot, hand contact, waist height, gray-blue background and lighting, ponytail, white T shirt, dark gray trousers, teal resistance loop just above both knees, full-body framing, fixed camera, handrail and both rail posts. Retain natural body proportions and hip-width stance. Do not recenter the woman. No text, arrows, labels, watermark, panels or collage. One pose only."
+      ],
+      "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-4afb82aa-1aa4-419a-97cd-8b43c465985e.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/085_T-LOW-044_s03.png",
+      "sha256": "EF6B265599F28FC3D8ED373BADFE87A44C334A5C6BB90A6A9B631E1F12A417BA",
+      "reuse": false,
+      "check": "通过：跟进左脚向画面左侧落稳，领先脚未回到准备位；人物整体向左平移、机位与扶手固定，膝上带保留张力，双脚恢复约髋宽站距。首稿领先脚偏左已定向修正。",
+      "status": "passed_visual_check",
+      "discarded_generation_sources": [
+        "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-a185b774-c36c-47a4-a2a3-5c1a5a773195.png"
+      ]
+    },
+    {
+      "action_number": "086",
+      "action_id": "T-LOW-049",
+      "step": "s01",
+      "target_pose": "墙侧膝微屈、外侧膝软垫轻触墙，双足先接地，右手固定扶手",
+      "prompt": "Use case: scientific-educational. Asset: ONE standalone photorealistic rehabilitation exercise photograph, ONE pose. Primary request: supported wall-press hip abduction SETUP with BOTH feet still on the floor. Input reference images define the SAME adult East Asian woman, same face, age, skin tone and build, black ponytail, plain white short-sleeve T shirt, dark charcoal long trousers. Do not copy reference arm poses.\nScene: gray-blue studio background and clear gray-blue flat nonslip floor, soft studio lighting with natural shadows. A real matte pale gray-blue vertical wall is on IMAGE-RIGHT. A firmly floor-bolted metallic rehabilitation handrail is next to her other side on IMAGE-LEFT; both supporting posts and their floor bolts visible. One small pale gray rectangular foam cushion held between the OUTSIDE of her anatomical LEFT distal thigh/lateral knee (IMAGE-RIGHT leg) and the vertical wall. Foam has direct continuous contact with BOTH wall and the outer knee, not floating. No straps or elastic band.\nPose: she faces camera almost frontally and stands next to the right wall with upright torso and level pelvis. Her LEFT wall-side knee is slightly bent, with its outer distal thigh/knee pressing LIGHTLY outward into cushion against the wall. Its foot still touches floor at this setup stage, with toes and sole visible. Her RIGHT leg away from wall is stable, foot fully planted. BOTH feet visibly on the floor, clear slight gap between legs. Her RIGHT hand (IMAGE-LEFT) gently grasps the fixed rail and fingers are anatomically natural; left arm rests naturally near waist and does not hide cushion or knee contact. Entire head, hands, both feet, wall contact, rail floor attachments are in frame.\nCamera: fixed front view with very slight angle to expose foam's contact on lateral knee, natural photographic perspective, portrait full-body framing with modest margins. Critical: TWO floor contact feet in this first frame. No single-leg stance yet; don't bend the wall-side leg up backward.\nConstraints: realistic continuous joints and limb lengths, identical costume and identity, no extra limbs/fingers, no text numbers arrows labels logos watermark collage/inset. No knee band, no ball, no deep squat, no dramatic sideways pelvic lean.",
+      "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-1d4f281b-6df8-4d2f-b7dc-1b60d4d3cff2.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/086_T-LOW-049_s01.png",
+      "sha256": "F54B351787B9C6D9A3A10149C1B3DA3A70A38FA657B45878F831E04144D4392F",
+      "reuse": false,
+      "check": "通过：双足接地、墙侧左膝微屈，外侧大腿/膝周软垫与墙接触，右手握固定扶手；器材、完整手足、比例自然。组内采用白鞋，后帧保持。",
+      "status": "passed_visual_check",
+      "generation_retry_reason": "首调网络错误：error sending request，无输出；同参数重试成功"
+    },
+    {
+      "action_number": "086",
+      "action_id": "T-LOW-049",
+      "step": "s02",
+      "target_pose": "墙侧左脚离地，外侧膝通过软垫轻顶墙，对侧单脚支撑，右手扶稳",
+      "prompt": "Use case: scientific-educational. Asset: ONE standalone photorealistic rehabilitation step photograph. EDIT the first input (both-feet setup wall-press photo) into the next single-leg HOLD pose. Preserve exact same camera front view, composition, scale, woman and identity, black ponytail, white short-sleeve T shirt, charcoal long trousers, same WHITE SHOES, gray-blue studio floor/background and lighting, IMAGE-RIGHT vertical wall and IMAGE-LEFT floor-bolted metal handrail/posts.\nPose change: Her anatomical LEFT leg, the wall-side leg on IMAGE-RIGHT, now has its FOOT gently lifted off the floor with a clear visible gap of about 10 cm below that shoe; left knee is comfortably bent, lower leg angles slightly backward but the left shoe remains visible on image-right of the supporting leg. The OUTSIDE of this LEFT distal thigh/lateral knee continues to touch and gently press the SAME light-gray foam cushion into the wall. Cushion remains physically sandwiched between knee exterior and wall, at the same contact region with only the small natural position change needed; no floating pad. Her anatomical RIGHT leg away from wall on IMAGE-LEFT is now the sole standing leg, its shoe planted flat in exact original position. Her RIGHT hand stays grasping the same fixed rail at exact original grip point, left arm relaxed at side without hiding cushion contact. Keep pelvis level and torso upright, no major leaning sideways, no hip dropping or twisting. Clearly show single-leg support vs previous two-foot support.\nFull head, both hands and both shoes entirely in frame, fixed wall and rail ground contact unchanged. Realistic human anatomy, connected joints and natural leg lengths, exact same cloth/shoes. ONE person ONE pose. No text, arrows, numbers, letters, watermark, extra limbs, band, ball, collage, motion trails. Do not lift the far-from-wall supporting foot; only image-right wall-side shoe rises.",
+      "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13855-61ba-7a92-83ff-f6289eb522db/exec-8e0761f0-747b-4fe6-8571-4ece2615fafa.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/086_T-LOW-049_s02.png",
+      "sha256": "F30D113B4D29EB5A38426430A29EC935C44429A374FD06D3DA8D997478DD29BE",
+      "reuse": false,
+      "check": "通过：墙侧左脚明确离地约10cm，对侧右足单脚支撑；软垫外侧膝触墙、右手扶稳，骨盆无明显侧倒；人物服装白鞋、机位、墙/扶手与前帧一致。",
+      "status": "passed_visual_check"
+    }
+  ]
+}

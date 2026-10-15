@@ -1,0 +1,115 @@
+{
+  "batch": 18,
+  "range": "177-180",
+  "requested_full_batch": "171-180",
+  "date": "2026-10-14",
+  "source_document": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "actions": [
+    {
+      "sequence": 177,
+      "id": "T-AXU-036",
+      "name": "前臂支撑的负重腕掌屈",
+      "phase": "坐位掌心向上的轻负荷腕掌屈",
+      "prompt": "Use case: scientific-educational. Asset type: a single realistic rehabilitation exercise photo, vertical 1122×1402 pixel composition.\nInput images 1, 2, and 3 are STRICT identity, wardrobe, photographic style, lighting and colour references: they show the SAME woman. Preserve her exact East Asian face, mature adult age, skin tone, natural normal adult head/body and limb proportions, black low ponytail, fitted white short-sleeved crewneck T-shirt and charcoal-grey long sports trousers. Match exactly the softly mottled pale cool grey-blue studio photographic background; continue it as a seamless matte floor in the same colour when the floor is visible. Soft diffuse studio light, realistic fine skin, hair and clothing texture. Same calm gentle expression, complete face visible, natural adult proportions.\nOnly one woman, one moment of one exercise, one standalone photograph. Anatomically accurate joints and five-fingered hands. No collage, inset, montage, arrows, diagram, angle marks, typography, number, logo, watermark, cartoon, extra people, coloured setting or unnecessary props. No clinical labels. Plain white logo-free sports shoes if feet are shown. Equipment is restrained neutral grey and physically stable.\nEquipment and setup: a neutral matte grey rectangular stable table, simple neutral grey chair with backrest, and a small thin light-grey support pad under the exercising forearm at the table edge. The woman sits upright naturally, hips and knees comfortable, torso vertical, shoulder relaxed, upper arm near her side. Non-exercising hand rests relaxed on her own thigh. Show the full head and face, seated torso and enough lower body to make seated posture unambiguous; frame the wrist clearly without sacrificing natural body proportions.\nPrimary request: supported weighted wrist FLEXION, T-AXU-036. Her near-side forearm lies horizontally and remains firmly supported along the pad on the table, elbow bent near 90°. The entire forearm is SUPINATED with inner/volar forearm and palm facing UP. The wrist protrudes just beyond the table edge. She holds one small light compact grey dumbbell securely in the centre of her palm, not at fingertips. Curl the hand gently UP toward the palm/inner forearm by wrist flexion about 20–35°, while the elbow and forearm stay still and touching the pad. The knuckles and palm form a clearly flexed angle at the wrist, the inner forearm/palm side remains visible and facing upward, not downward. No forearm lifting, no elbow curl, no shoulder lifting, no leaning body. This MUST be palm-UP wrist flexion rather than palm-DOWN wrist extension. Camera from an oblique front-side angle where the wrist side profile AND supinated inner forearm are clearly readable, hand and compact dumbbell unobscured. Maintain a slight space around the complete head, and a useful visible wrist size. Small movement, normal anatomy.",
+      "path": "E:/git冲突问题/rehab image/train/177_T-AXU-036_前臂支撑的负重腕掌屈.png",
+      "final_path": "E:/git冲突问题/rehab image/train/177_T-AXU-036_前臂支撑的负重腕掌屈.png",
+      "category": "train",
+      "generation_mode": "built-in image_gen",
+      "reference_paths": [
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-e0e4d994-f064-49c3-aabe-eae175412eec.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-14d3a1b0-93c6-4f79-bcf5-ef47a663e1fb.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-8cdb12d5-aabb-46b3-bbc3-ebd85866dd33.png"
+      ],
+      "original_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-bf138470-bc98-4339-ae03-415dc9ed9c60.png",
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-12e16b31-b502-4eee-a6d7-2855b959d84e.png",
+      "corrections": [
+        {
+          "prompt": "Targeted rehabilitation pose correction. Image 1 is edit target, images 2–4 are ORIGINAL strict identity, wardrobe, grey-blue background/soft lighting references. Preserve woman's exact face, black low ponytail, white shirt, charcoal trousers, full seated pose, chair, white shoes, realistic texture, natural anatomy and adult proportions. Keep image portrait 1122×1402, complete head/body visible. Change ONLY the compact table geometry, soft pad, exercising forearm and wrist alignment to correct SUPPORTED PALM-UP WRIST FLEXION.\nMake the grey table NARROW in the elbow-to-hand direction, such that the far/right END of the table top stops immediately before her wrist; there must be EMPTY AIR and grey-blue floor/background under the hand and dumbbell beyond that end, not any tabletop. Table remains physically stable with four supporting legs. Place a thin long light-grey pad along the entire horizontal forearm, continuously supporting from elbow all the way to just BEFORE the wrist at the end of table. Entire forearm lies flat on this pad and its underside visibly CONTACTS it throughout. Forearm absolutely cannot hover or slope upward. Elbow 90°, upper arm relaxed near body. Wrist extends beyond table/pad end. Palm and inner forearm face UP (supinated). Secure the small grey dumbbell in the palm, not fingertips. Flex ONLY the wrist UP toward inner forearm by a visible gentle 25–30°, hand axis slightly rises beyond the horizontal supported forearm. This is palm-up wrist flexion; not palm-down extension, not elbow lifting. Show this small bent wrist in side profile, clear pad support and hand beyond edge. Other arm hand remains on thigh; torso upright. No text, arrows, inset, diagrams or other objects.",
+          "input_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-bf138470-bc98-4339-ae03-415dc9ed9c60.png",
+          "result_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-12e16b31-b502-4eee-a6d7-2855b959d84e.png",
+          "reason": "修正前臂支撑和桌边外自由手腕几何，保持动作方向"
+        }
+      ],
+      "visual_check": "人工逐图检查：首图前臂支撑不足、手位在桌面上方；一次定向修正后灰窄桌与连续浅灰软垫支撑肘至腕前，手与小哑铃悬于桌边外，内侧前臂朝上，腕小幅向掌侧屈曲。完整参考人物、正常成人比例、灰蓝背景与柔光一致；无多阶段拼图。图片只展示姿势，不推定负荷或疗效。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "24C33F02C59DDA68CD979CD1F4E09FC323EF8FB9E7AB8D1EA96B78B3ECA0E632"
+    },
+    {
+      "sequence": 178,
+      "id": "T-AXU-037",
+      "name": "腕尺偏／桡偏轻负荷控制",
+      "phase": "前臂中立支撑、短握轻负荷小幅桡偏",
+      "prompt": "Use case: scientific-educational. Asset type: a single realistic rehabilitation exercise photo, vertical 1122×1402 pixel composition.\nInput images 1, 2, and 3 are STRICT identity, wardrobe, photographic style, lighting and colour references: they show the SAME woman. Preserve her exact East Asian face, mature adult age, skin tone, natural normal adult head/body and limb proportions, black low ponytail, fitted white short-sleeved crewneck T-shirt and charcoal-grey long sports trousers. Match exactly the softly mottled pale cool grey-blue studio photographic background; continue it as a seamless matte floor in the same colour when the floor is visible. Soft diffuse studio light, realistic fine skin, hair and clothing texture. Same calm gentle expression, complete face visible, natural adult proportions.\nOnly one woman, one moment of one exercise, one standalone photograph. Anatomically accurate joints and five-fingered hands. No collage, inset, montage, arrows, diagram, angle marks, typography, number, logo, watermark, cartoon, extra people, coloured setting or unnecessary props. No clinical labels. Plain white logo-free sports shoes if feet are shown. Equipment is restrained neutral grey and physically stable.\nEquipment and setup: a neutral matte grey rectangular stable table, simple neutral grey chair with backrest, and a small thin light-grey support pad under the exercising forearm at the table edge. The woman sits upright naturally, hips and knees comfortable, torso vertical, shoulder relaxed, upper arm near her side. Non-exercising hand rests relaxed on her own thigh. Show the full head and face, seated torso and enough lower body to make seated posture unambiguous; frame the wrist clearly without sacrificing natural body proportions.\nPrimary request: light-load wrist RADIAL DEVIATION, T-AXU-037, choose one small radial-deviation phase. Her near-side forearm lies horizontally supported along the light-grey pad, elbow near 90°. Forearm is in NEUTRAL handshake orientation: thumb points UP and palm faces inward SIDEWAYS toward the other arm, neither palm upward nor palm downward. Wrist protrudes just past table edge. Hand firmly but gently grasps the CENTRAL grip of a SMALL compact light grey dumbbell/short weighted rod, close to its centre of gravity, almost no long lever; not a hammer, not long handle, not end grip. Move the whole hand only 10–15° toward the THUMB side, a small upward radial tilt while the forearm remains still and neutral. Thumb stays on upper side, no turning/supination/pronation, no wrist bending into palm or back. Show an unobstructed near side profile of forearm, wrist and thumb-side lateral deviation plane, with the hand axis visibly slightly angled toward thumb side relative to forearm. Camera frames her full head and reference face, upper seated body, table forearm and wrist clearly at useful size. Normal anatomy, no extreme wrist angle.",
+      "path": "E:/git冲突问题/rehab image/train/178_T-AXU-037_腕尺偏／桡偏轻负荷控制.png",
+      "final_path": "E:/git冲突问题/rehab image/train/178_T-AXU-037_腕尺偏／桡偏轻负荷控制.png",
+      "category": "train",
+      "generation_mode": "built-in image_gen",
+      "reference_paths": [
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-e0e4d994-f064-49c3-aabe-eae175412eec.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-14d3a1b0-93c6-4f79-bcf5-ef47a663e1fb.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-8cdb12d5-aabb-46b3-bbc3-ebd85866dd33.png"
+      ],
+      "original_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-7cc7a7af-2cfe-4830-931c-edbf090f716a.png",
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-1e74c2fc-b6fb-4b33-b3c0-42876507fb29.png",
+      "corrections": [
+        {
+          "prompt": "Targeted correction of equipment support and free wrist for this wrist RADIAL DEVIATION photo. Image 1 is edit target, images 2–4 are ORIGINAL strict identity, wardrobe, grey-blue background/soft lighting references. Preserve exact reference woman face, low ponytail, white shirt, charcoal trousers, full seated posture, chair, white shoes, realistic style and normal adult proportions. Only adjust the exercising forearm support, small table geometry and tiny wrist tilt.\nKeep FOREARM in NEUTRAL handshake orientation, thumb points UP, palm points inward SIDEWAYS, absolutely no palm-up/down forearm rotation. Keep supported elbow about90°. Narrow the grey table in elbow-to-hand direction so its far/right END stops immediately BEFORE the wrist; the entire hand and short small grey dumbbell should be beyond that far end over EMPTY AIR, with grey-blue background below the hand, NOT tabletop. Show a physically stable compact table with legs. Thin light-grey pad continuously supports horizontal forearm from elbow all the way to its far end just before wrist. Forearm lies in full contact with support, does not lift. Wrist protrudes beyond edge. Grip compact dumbbell at central handle near centre of gravity, thumb uppermost, short lever, no hammer. Gently tilt hand toward THUMB side by10–15° (radial deviation) while forearm stays horizontal and thumb-up. Normal small side-plane wrist tilt, no wrist palm/back bending, no supination/pronation. Show clear side view of supported forearm/hand/thumb-side tilt. Full head and naturally proportioned seated person preserved, portrait1122×1402. No text, arrows or inset.",
+          "input_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-7cc7a7af-2cfe-4830-931c-edbf090f716a.png",
+          "result_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-1e74c2fc-b6fb-4b33-b3c0-42876507fb29.png",
+          "reason": "修正前臂支撑和桌边外自由手腕几何，保持动作方向"
+        }
+      ],
+      "visual_check": "人工逐图检查：一次定向修正桌面几何，使前臂在浅灰软垫上连续支撑，手与轻小哑铃在桌边外。拇指朝上中立前臂，中央短握、小幅朝拇指侧桡偏，未见明显旋前旋后或掌屈背伸替代。完整参考人物、正常成人比例、灰蓝摄影背景一致。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "2911EBBCC2202725530006026CA6E34D0CD659916AE5B404FB6F4A1DFA40EBF9"
+    },
+    {
+      "sequence": 179,
+      "id": "T-AXU-038",
+      "name": "前臂旋前／旋后：空手到短杠杆",
+      "phase": "有支撑肘90度的空手旋后、掌心朝上",
+      "prompt": "Use case: scientific-educational. Asset type: a single realistic rehabilitation exercise photo, vertical 1122×1402 pixel composition.\nInput images 1, 2, and 3 are STRICT identity, wardrobe, photographic style, lighting and colour references: they show the SAME woman. Preserve her exact East Asian face, mature adult age, skin tone, natural normal adult head/body and limb proportions, black low ponytail, fitted white short-sleeved crewneck T-shirt and charcoal-grey long sports trousers. Match exactly the softly mottled pale cool grey-blue studio photographic background; continue it as a seamless matte floor in the same colour when the floor is visible. Soft diffuse studio light, realistic fine skin, hair and clothing texture. Same calm gentle expression, complete face visible, natural adult proportions.\nOnly one woman, one moment of one exercise, one standalone photograph. Anatomically accurate joints and five-fingered hands. No collage, inset, montage, arrows, diagram, angle marks, typography, number, logo, watermark, cartoon, extra people, coloured setting or unnecessary props. No clinical labels. Plain white logo-free sports shoes if feet are shown. Equipment is restrained neutral grey and physically stable.\nEquipment and setup: a neutral matte grey rectangular stable table, simple neutral grey chair with backrest, and a small thin light-grey support pad under the exercising forearm at the table edge. The woman sits upright naturally, hips and knees comfortable, torso vertical, shoulder relaxed, upper arm near her side. Non-exercising hand rests relaxed on her own thigh. Show the full head and face, seated torso and enough lower body to make seated posture unambiguous; frame the wrist clearly without sacrificing natural body proportions.\nPrimary request: supported forearm SUPINATION, T-AXU-038. Use EMPTY HAND phase, no weight, no dumbbell, no hammer, no rod. Upper arm remains close to torso, elbow bent around 90° and supported by the light-grey pad, forearm extends horizontally on the table support to just past its edge. Choose the moment when she has turned her forearm so the OPEN PALM faces UP toward ceiling. Clearly show natural palm surface and five relaxed naturally extended fingers, fingers together or slightly separate, open hand. Wrist stays completely NEUTRAL, palm/hand and forearm in one straight line, absolutely no wrist flexion/extension, no side deviation, no elbow biceps curl. Forearm does not lift from table, elbow does not flare, shoulder and torso don't turn. Camera oblique front-side slightly elevated enough to reveal palm, elbow, supported inner forearm and straight wrist, while her complete reference face and seated body remain naturally proportioned and clear. One supinated stage only.",
+      "path": "E:/git冲突问题/rehab image/train/179_T-AXU-038_前臂旋前／旋后：空手到短杠杆.png",
+      "final_path": "E:/git冲突问题/rehab image/train/179_T-AXU-038_前臂旋前／旋后：空手到短杠杆.png",
+      "category": "train",
+      "generation_mode": "built-in image_gen",
+      "reference_paths": [
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-e0e4d994-f064-49c3-aabe-eae175412eec.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-14d3a1b0-93c6-4f79-bcf5-ef47a663e1fb.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-8cdb12d5-aabb-46b3-bbc3-ebd85866dd33.png"
+      ],
+      "original_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-73eb56ba-77dc-4a9e-9f06-64e22df415e1.png",
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-73eb56ba-77dc-4a9e-9f06-64e22df415e1.png",
+      "corrections": [],
+      "visual_check": "人工逐图检查：空手旋后代表阶段，掌面朝上、五指自然舒展，前臂在桌上软垫支撑、肘约90度、上臂贴近身侧，腕基本中立、未见拿锤或侧偏替代。完整参考脸与坐姿、自然比例、同灰蓝背景柔光。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "54056E9E3AD90F2C2E91F26E64CF553E88CC1504BE984C8D45BCBF3E907FAE5A"
+    },
+    {
+      "sequence": 180,
+      "id": "T-AXU-039",
+      "name": "桌面到四点跪的手掌承重转移",
+      "phase": "站位双掌支撑固定高台的小幅移重",
+      "prompt": "Use case: scientific-educational. Asset type: a single realistic rehabilitation exercise photo, vertical 1122×1402 pixel composition.\nInput images 1, 2, and 3 are STRICT identity, wardrobe, photographic style, lighting and colour references: they show the SAME woman. Preserve her exact East Asian face, mature adult age, skin tone, natural normal adult head/body and limb proportions, black low ponytail, fitted white short-sleeved crewneck T-shirt and charcoal-grey long sports trousers. Match exactly the softly mottled pale cool grey-blue studio photographic background; continue it as a seamless matte floor in the same colour when the floor is visible. Soft diffuse studio light, realistic fine skin, hair and clothing texture. Same calm gentle expression, complete face visible, natural adult proportions.\nOnly one woman, one moment of one exercise, one standalone photograph. Anatomically accurate joints and five-fingered hands. No collage, inset, montage, arrows, diagram, angle marks, typography, number, logo, watermark, cartoon, extra people, coloured setting or unnecessary props. No clinical labels. Plain white logo-free sports shoes if feet are shown. Equipment is restrained neutral grey and physically stable.\nPrimary request: gentle supported palm weight shift at a HIGH fixed table, T-AXU-039, initial easy STANDING version only. A stable neutral matte grey rectangular table is at WAIST height. The woman stands beside it with BOTH white-shod feet planted flat on the floor, hip-width apart and close to the table. Place BOTH bare palms flat and stable on the top near edge, fingers naturally spread and pointing forward on table. The wrists, palm contact, elbows and shoulders must be unobstructed. Elbows almost straight with softness, not locked, shoulders relaxed and not shrugged. Move body weight only SLIGHTLY toward the hands, approximately a small 5–10° forward lean from ankles, trunk nearly upright and straight rather than a horizontal plank. Feet remain near table; do not step far backward. This is a gentle high-table palm-loading posture, NOT push-up, no deep elbow bend, no lying on table, no kneeling, no yoga or four-point quadruped pose. Side or oblique-side camera shows complete full body from head to both shoes with margin, normal proportions, entire head and reference face visible, both palm and wrist contacts clear. Only one table and one standing woman, no chair needed.",
+      "path": "E:/git冲突问题/rehab image/train/180_T-AXU-039_桌面到四点跪的手掌承重转移.png",
+      "final_path": "E:/git冲突问题/rehab image/train/180_T-AXU-039_桌面到四点跪的手掌承重转移.png",
+      "category": "train",
+      "generation_mode": "built-in image_gen",
+      "reference_paths": [
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-e0e4d994-f064-49c3-aabe-eae175412eec.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-14d3a1b0-93c6-4f79-bcf5-ef47a663e1fb.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-8cdb12d5-aabb-46b3-bbc3-ebd85866dd33.png"
+      ],
+      "original_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-4a3e0844-71d7-4352-a986-4234ebe9cf22.png",
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-4a3e0844-71d7-4352-a986-4234ebe9cf22.png",
+      "corrections": [],
+      "visual_check": "人工逐图检查：站位初始高台版本，双掌稳定贴灰固定桌、双足落稳，身体小幅向手侧前移、肘近伸直且肩未耸；未生成俯卧撑或四点跪拼图。完整头足、白无标鞋、正常成人比例、参考人物与灰蓝背景一致。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "9F673B983E3465231AFE26CFE143A627E9AEF0F86664B9213DFB023817F55BD7"
+    }
+  ]
+}

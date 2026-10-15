@@ -1,0 +1,312 @@
+{
+  "record_version": "1.0",
+  "production_date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "requested": "123-s02；124-s01～s02；125-s01～s03；126-s01～s03；127-s01",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "method": "内置image_gen；每资产独立调用。最终9张新生成、1张经审查复用。未使用CLI/API/Python生成或编辑图片。",
+  "counts": {
+    "final_images": 10,
+    "new_generated_final_images": 9,
+    "reused_images": 1,
+    "builtin_imagegen_calls": 14,
+    "discarded_candidates": 5
+  },
+  "reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "final_version_policy": "126选用s01/s02/s03_v2；其他选用本记录逐项final_path。旧单图、步骤初稿和旧进度JSON保留。",
+  "sequence_notes": {
+    "123": "01→02→01；本轮只请求02。",
+    "124": "01→02→01。",
+    "125": "01→02→01→03→01；02为本人左，03为本人右。",
+    "126": "01→02→01→03→01；足端机位本人左=观者右，本人右=观者左。",
+    "127": "01→02→01；本轮只请求01。"
+  },
+  "review_limits": [
+    "这是可见画面姿势、支撑接触与人体比例核对，不能证明真实肌肉发力、呼吸、运动速度、精确关节角度或临床适用性。",
+    "124远侧手在侧视下被躯干遮挡；126双脚随摆膝的滚动较细微。"
+  ],
+  "independent_records": [
+    "E:/git冲突问题/rehab image/步骤图_123_124_127_本轮制作记录.json",
+    "E:/git冲突问题/rehab image/步骤图_125_本轮制作记录.json",
+    "E:/git冲突问题/rehab image/步骤图_126_本轮制作记录.json"
+  ],
+  "entries": [
+    {
+      "filename": "123_T-AXU-001_s02.png",
+      "action_number": 123,
+      "action_id": "T-AXU-001",
+      "step": "s02",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/123_T-AXU-001_s02.png",
+      "raw_generated_path": null,
+      "reused": true,
+      "reused_original_path": "E:/git冲突问题/rehab image/train/123_T-AXU-001_坐位支持下的小幅躯干前屈.png",
+      "reuse_reason": "原单图经主代理和独立代理查看，符合123-s02；按制作清单4.3核对后复用。",
+      "prompt": null,
+      "width": 1122,
+      "height": 1402,
+      "inspection": {
+        "status": "可见画面核对通过",
+        "method": "最终保存路径逐张view_image视觉审查；123及124另经独立代理核对",
+        "posture": "稳定椅坐位小幅躯干前屈，双手位于大腿远端近膝上方且仍接触；臀与双足保留支撑。",
+        "support_and_contacts": "臀部椅面承托、双足鞋底着地、双手大腿接触可见。",
+        "anatomy": "肢段比例与关节连续，未见明显多肢或断裂；手指遮挡处不能从单帧核实。",
+        "appearance": "人物脸部、黑马尾、白短袖、深灰长裤、灰蓝背景及柔和棚拍与参考保持视觉一致。",
+        "text_check": "原始照片无文字、编号及箭头。",
+        "limits": "静态画面不能验证动作速度、呼吸或内部肌肉受力。"
+      },
+      "sha256": "F799E4511626EE12FFD2AB7C6559A2CAE0AF583D5D80259CF3A2914B937B26B2",
+      "bytes": 1734274
+    },
+    {
+      "filename": "124_T-AXU-002_s01.png",
+      "action_number": 124,
+      "action_id": "T-AXU-002",
+      "step": "s01",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/124_T-AXU-002_s01.png",
+      "raw_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-314c-7ae1-abf8-15e0464151b0/exec-99364265-9979-452b-9746-d4bd56443251.png",
+      "reused": false,
+      "reused_original_path": null,
+      "reuse_reason": null,
+      "prompt": "Use case: scientific-educational.\nAsset type: one rehabilitation exercise step photograph, portrait 4:5, single pose.\nCreate action 124 T-AXU-002 step s01, the neutral standing starting pose for gentle supported trunk extension. The three supplied reference images ONLY fix the same adult East Asian woman's face, age, natural skin tone, black ponytail, white plain short sleeve T-shirt, charcoal dark grey long trousers, photoreal studio style, soft lighting, grey-blue seamless background. Do not copy their arm gestures.\nTrue SIDE VIEW showing complete head, hands, hips, knees and both whole feet with generous floor margin, woman faces RIGHT. Camera at mid torso height, neutral lens perspective, full body centered. She stands comfortably with feet about hip width, BOTH entire soles and heels of simple white athletic shoes fully flat on floor. Knees softly unlocked, pelvis neutral, torso naturally upright without exaggerated chest lifting or back arch. BOTH hands lightly rest on the lateral pelvis at the iliac crests, elbows relaxed, fingers anatomically natural, no force pushing the lower back. The near hand clearly touches the near pelvic side; farther hand may be partly occluded in true profile. Head and neck in comfortable neutral alignment, calm expression looking forward. Plain grey-blue studio floor, realistic soft contact shadows.\nConstraints: same reference identity, natural human limb lengths and joint connections, no chair or wall or other props; single frame only, no text, no labels, no arrows, no symbols, no watermark. Neutral starting pose must not lean backward yet. Output should be a clean anatomical teaching photo.",
+      "width": 1122,
+      "height": 1402,
+      "inspection": {
+        "status": "可见画面核对通过",
+        "method": "最终保存路径逐张view_image视觉审查；123及124另经独立代理核对",
+        "posture": "侧面自然直立，双膝自然微松，近侧手轻扶骨盆上缘侧前方，头颈舒适。",
+        "support_and_contacts": "双脚原位全掌着地；近侧手骨盆接触可见，远侧手被躯干遮挡。",
+        "anatomy": "肢段比例与关节连续，未见明显多肢或断裂；手指遮挡处不能从单帧核实。",
+        "appearance": "人物脸部、黑马尾、白短袖、深灰长裤、灰蓝背景及柔和棚拍与参考保持视觉一致。",
+        "text_check": "原始照片无文字、编号及箭头。",
+        "limits": "远侧手在侧视下被遮挡，轻扶力度及精确后伸角度不能由照片验证。"
+      },
+      "sha256": "DB5415F6BAC0C41CC93F761BD80E944B2E4201EC26E734430DFE196A5D4E5EE5",
+      "bytes": 1642230
+    },
+    {
+      "filename": "124_T-AXU-002_s02.png",
+      "action_number": 124,
+      "action_id": "T-AXU-002",
+      "step": "s02",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/124_T-AXU-002_s02.png",
+      "raw_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-314c-7ae1-abf8-15e0464151b0/exec-27d7342a-bf5a-4d90-9864-7bd6e713d7c0.png",
+      "reused": false,
+      "reused_original_path": null,
+      "reuse_reason": null,
+      "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation action 124 T-AXU-002 step s02, one portrait photograph.\nEdit the supplied neutral standing image into the GENTLE SMALL-RANGE TRUNK EXTENSION endpoint. Keep EXACTLY the same woman identity, ponytail, white T-shirt, charcoal trousers, white athletic shoes, true side-view camera, subject scale, framing, grey-blue studio floor and background, lighting and foot locations. Woman continues facing RIGHT.\nChange only her torso and head as needed for a small comfortable backward movement: pelvis stays in place, both hands keep their light contact on lateral pelvic crests, knees remain softly unlocked, both shoe soles and heels stay entirely planted at exactly the original positions. Above the pelvis her upper trunk gently extends backward (toward image LEFT), shoulders and upper chest shift slightly left from the upright reference, about one third of a head-width. Her trunk inclines only roughly 10–15 degrees backward, not a deep backbend. Head and neck follow the small trunk movement with chin relaxed and eyes roughly forward, no dramatic head tipping or neck hyperextension. Natural modest lumbar extension; no knee lock, no pelvis thrust forward, no foot movement, no lifted toes/heels.\nFull body visible from head to both complete shoes, anatomy realistic. One clear pose only. No text, arrows, overlays, measurements, labels, watermark or collage. The distinction from s01 should be visible through the upper trunk gently moving backward while pelvis and support remain stable.",
+      "width": 1122,
+      "height": 1402,
+      "inspection": {
+        "status": "可见画面核对通过",
+        "method": "最终保存路径逐张view_image视觉审查；123及124另经独立代理核对",
+        "posture": "上躯干温和后移，肩与头相对骨盆后移可辨，无深后弯或单纯仰头；手仍在骨盆上缘。",
+        "support_and_contacts": "双脚鞋底保持地面接触，无抬脚或迈步；近侧手接触骨盆，远侧手被躯干遮挡。",
+        "anatomy": "肢段比例与关节连续，未见明显多肢或断裂；手指遮挡处不能从单帧核实。",
+        "appearance": "人物脸部、黑马尾、白短袖、深灰长裤、灰蓝背景及柔和棚拍与参考保持视觉一致。",
+        "text_check": "原始照片无文字、编号及箭头。",
+        "limits": "远侧手在侧视下被遮挡，轻扶力度及精确后伸角度不能由照片验证。"
+      },
+      "sha256": "67DA87101426FA2F60E2977019118085F28303A16FD879A234BDBC381FECD6AD",
+      "bytes": 1622238
+    },
+    {
+      "filename": "125_T-AXU-003_s01.png",
+      "action_number": 125,
+      "action_id": "T-AXU-003",
+      "step": "s01",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/125_T-AXU-003_s01.png",
+      "raw_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-eea4-79c3-bdde-cd6ce4fcd412/exec-2558b543-2057-439b-82fe-775abd4dd85c.png",
+      "reused": false,
+      "reused_original_path": null,
+      "prompt": "Use case: scientific-educational. Asset type: one independent rehabilitation exercise demonstration photograph, action 125 T-AXU-003, step 01.\nReference images 1, 2 and 3 are only the identity, clothing, lighting, and plain studio background references. Use the same adult East Asian woman with black ponytail, plain white short-sleeve T-shirt, charcoal gray pants and white low-top athletic shoes. Do NOT copy the reference standing pose or arm gesture.\nProduce a high quality realistic full-body portrait photograph in a clean pale gray seamless studio. FRONT VIEW camera directly square to chest, slightly above chair-seat height, natural undistorted proportions. She is seated securely near the middle of a stable plain gray armless four-legged chair, backrest behind her. Both buttocks clearly stay on the seat. She sits upright in neutral posture, pelvis level, chest and face facing camera, shoulders relaxed and level, neck upright. Both palms rest flat naturally on their corresponding front thighs, fingers pointing toward knees. Both knees comfortably bent around a right angle, feet hip-width apart with BOTH whole shoe soles planted flat on the ground. Seat support, both shoulders and hips, both hands, entire chair and both feet clearly visible. Frame all of the body, chair legs, and shoe soles with generous empty margins. Front-facing hands and legs must be anatomically normal; no extra fingers or limbs. Soft even lighting and realistic contact shadows under feet and chair legs. No text, no arrows, no numbers, no collage, no inset panels, no therapist or other people, no exercise equipment. This is the neutral starting pose, with no lateral bending, no chest rotation, no forward bend and no shrugging.",
+      "input_images": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "width": 1122,
+      "height": 1402,
+      "inspection": {
+        "status": "视觉核对通过",
+        "identity_background": "同一女性身份、白短袖、深灰裤、白鞋、灰椅和灰底一致",
+        "posture": "正面中立坐位，肩颈放松，双手置同侧大腿，双脚着地。",
+        "proportion_joints": "全身与椅完整入镜，人体及椅尺度一致；未见明显多肢、关节错向或比例异常",
+        "support_contact": "双臀仍由椅面支撑，双足着地、椅腿着地、手与同侧大腿接触清楚",
+        "rotation_forward_bend_shrug": "未见明显转胸、前屈或主动耸肩",
+        "direction": "中立，无侧屈",
+        "limitations": "本记录为可见姿势与画面审查，不替代临床动作审核",
+        "primary_agent_review": "已逐张view_image复核：中立与相反侧屈方向可辨，胸口朝前，双臀留椅面，双足着地，手与大腿接触。"
+      },
+      "sha256": "5680CA90252AA495B7B72FCBCDCDE3619BFA0AB676C200564F8340ECCFF076F0",
+      "bytes": 1692322
+    },
+    {
+      "filename": "125_T-AXU-003_s02.png",
+      "action_number": 125,
+      "action_id": "T-AXU-003",
+      "step": "s02",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/125_T-AXU-003_s02.png",
+      "raw_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-eea4-79c3-bdde-cd6ce4fcd412/exec-8e476934-b5a6-4243-89ce-3ce5d9eb834e.png",
+      "reused": false,
+      "reused_original_path": null,
+      "prompt": "Use case: identity-preserve. Asset type: one independent rehabilitation exercise photograph, action 125 T-AXU-003 step 02. The input is the edit target and it is the neutral seated starting pose. Preserve this exact woman's identity and appearance, hairstyle, white T-shirt, charcoal pants, white shoes, gray armless four-legged chair, background, lighting, camera position, portrait framing, body scale, shoe positions, knees and the entire lower body.\nChange ONLY the pose of upper trunk, head and left arm to demonstrate a clearly visible gentle LEFT LATERAL TRUNK FLEXION: her own anatomical LEFT is the viewer's RIGHT. Her pelvis and buttocks remain seated in the original middle position with both hips level. Above the pelvis, her trunk inclines gently about 15 degrees toward the VIEWER'S RIGHT, making her left shoulder on the viewer's right lower than her right shoulder on the viewer's left. Left side of waist visibly shortens, right side lengthens. Her head follows the gentle side bend naturally, not tilting independently. Chest and face continue to face the camera squarely, without turning or twisting. Her own LEFT hand (VIEWER'S RIGHT hand) has slid a little downward along the FRONT of her LEFT thigh toward the knee and remains naturally touching that thigh. Her own right hand remains in comfortable contact with the right thigh. Shoulders and neck relaxed, neither shoulder shrugged. Both complete soles remain flat on ground in their identical starting positions; no feet or chair legs lift. Buttocks have not lifted or slid off the seat. This is pure gentle side bending while seated, NO forward bow and NO chest rotation. Realistic natural anatomy, five fingers per hand, normal limb proportions. Preserve all unaffected parts exactly. No text, arrows, panels, diagrams, watermark, other people, or objects.",
+      "input_images": [
+        "E:/git冲突问题/rehab image/train/steps/125_T-AXU-003_s01.png"
+      ],
+      "width": 1122,
+      "height": 1402,
+      "inspection": {
+        "status": "视觉核对通过",
+        "identity_background": "同一女性身份、白短袖、深灰裤、白鞋、灰椅和灰底一致",
+        "posture": "本人左侧屈（观者右），左手沿左大腿向膝小幅下滑，胸口仍朝前，臀部留椅面。",
+        "proportion_joints": "全身与椅完整入镜，人体及椅尺度一致；未见明显多肢、关节错向或比例异常",
+        "support_contact": "双臀仍由椅面支撑，双足着地、椅腿着地、手与同侧大腿接触清楚",
+        "rotation_forward_bend_shrug": "未见明显转胸、前屈或主动耸肩",
+        "direction": "本人左/观者右",
+        "limitations": "本记录为可见姿势与画面审查，不替代临床动作审核",
+        "primary_agent_review": "已逐张view_image复核：中立与相反侧屈方向可辨，胸口朝前，双臀留椅面，双足着地，手与大腿接触。"
+      },
+      "sha256": "57B73E33B6BE66FDE70A9AC2665E7114D940F63ED29901B3D7A5D1EA3F367BB4",
+      "bytes": 1657812
+    },
+    {
+      "filename": "125_T-AXU-003_s03.png",
+      "action_number": 125,
+      "action_id": "T-AXU-003",
+      "step": "s03",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/125_T-AXU-003_s03.png",
+      "raw_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-eea4-79c3-bdde-cd6ce4fcd412/exec-6eacb0bf-83c8-4ee3-acbd-b00ff05e929d.png",
+      "reused": false,
+      "reused_original_path": null,
+      "prompt": "Use case: identity-preserve. Asset type: one independent rehabilitation exercise photograph, action 125 T-AXU-003 step 03. The input is the edit target and it is the neutral seated starting pose. Preserve this exact woman's identity and appearance, hairstyle, white T-shirt, charcoal pants, white shoes, gray armless four-legged chair, background, lighting, camera position, portrait framing, body scale, shoe positions, knees and the entire lower body.\nChange ONLY the pose of upper trunk, head and right arm to demonstrate a clearly visible gentle RIGHT LATERAL TRUNK FLEXION: her own anatomical RIGHT is the viewer's LEFT. Her pelvis and buttocks remain seated in the original middle position with both hips level. Above the pelvis, her trunk inclines gently about 15 degrees toward the VIEWER'S LEFT, making her right shoulder on the viewer's left lower than her left shoulder on the viewer's right. Right side of waist visibly shortens, left side lengthens. Her head follows the gentle side bend naturally, not tilting independently. Chest and face continue to face the camera squarely, without turning or twisting. Her own RIGHT hand (VIEWER'S LEFT hand) has slid a little downward along the FRONT of her RIGHT thigh toward the knee and remains naturally touching that thigh. Her own left hand remains in comfortable contact with the left thigh. Shoulders and neck relaxed, neither shoulder shrugged. Both complete soles remain flat on ground in their identical starting positions; no feet or chair legs lift. Buttocks have not lifted or slid off the seat. This is pure gentle side bending while seated, NO forward bow and NO chest rotation. Realistic natural anatomy, five fingers per hand, normal limb proportions. Preserve all unaffected parts exactly. No text, arrows, panels, diagrams, watermark, other people, or objects.",
+      "input_images": [
+        "E:/git冲突问题/rehab image/train/steps/125_T-AXU-003_s01.png"
+      ],
+      "width": 1122,
+      "height": 1402,
+      "inspection": {
+        "status": "视觉核对通过",
+        "identity_background": "同一女性身份、白短袖、深灰裤、白鞋、灰椅和灰底一致",
+        "posture": "由中立位置本人右侧屈（观者左），右手沿右大腿向膝小幅下滑，胸口仍朝前，臀部留椅面。",
+        "proportion_joints": "全身与椅完整入镜，人体及椅尺度一致；未见明显多肢、关节错向或比例异常",
+        "support_contact": "双臀仍由椅面支撑，双足着地、椅腿着地、手与同侧大腿接触清楚",
+        "rotation_forward_bend_shrug": "未见明显转胸、前屈或主动耸肩",
+        "direction": "本人右/观者左",
+        "limitations": "本记录为可见姿势与画面审查，不替代临床动作审核",
+        "primary_agent_review": "已逐张view_image复核：中立与相反侧屈方向可辨，胸口朝前，双臀留椅面，双足着地，手与大腿接触。"
+      },
+      "sha256": "6A4EE9272B225437A6784273D0E073110A42F3CE3DA7D211DFDBE3D5A6BDA20E",
+      "bytes": 1656752
+    },
+    {
+      "filename": "126_T-AXU-004_s01_v2.png",
+      "action_number": 126,
+      "action_id": "T-AXU-004",
+      "step": "s01",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/126_T-AXU-004_s01_v2.png",
+      "raw_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-2a7fd2a3-5409-4ef3-9333-275b473f1bf7.png",
+      "reused": false,
+      "reused_original_path": null,
+      "prompt": "Use case: identity-preserve\nAsset type: action 126 T-AXU-004 step 01 final revised camera, one rehabilitation photograph.\nInput image: edit target preserving the same woman's exact identity, outfit, supine central bent-knee position and studio scene.\nPrimary request: CHANGE THE CAMERA AND COMPOSITION. Camera must be positioned directly above the FOOT END on the body's CENTERLINE, looking diagonally down at 55 degrees from the floor. This is a symmetric elevated foot-end view, NOT a side view. The woman's HEAD is at TOP CENTER of the image; her TWO FEET are at BOTTOM CENTER, with her body axis vertical in the image. Her anatomical LEFT is on the VIEWER'S RIGHT, anatomical RIGHT on the viewer's LEFT. This symmetric view is essential for later left-versus-right bent-knee tilt.\nKeep the same woman from the edit target: same Asian face, black ponytail lying behind her head, white short-sleeved T-shirt, dark charcoal-gray long trousers, bare feet. Same soft gray-blue studio photography, thin gray exercise mat, neutral gray floor.\nPose: lying on her back with face and chest toward the ceiling. The back of the head, both shoulder blades, upper back and pelvis stay supported on the mat. BOTH knees bent upward in the neutral middle position, close together; BOTH feet flat on mat close together with each separately visible. Both arms naturally open diagonally at about 45 degrees to the sides, resting on floor/mat, palms upward, hands relaxed. Arms are not raised.\nComposition: one landscape 16:9 photograph showing ENTIRE body, both hands, both knees, both whole feet and entire mat with floor margin. The long rectangular mat is vertical from top to bottom in the image. No diagonal head-left/feet-right body alignment. Make a generous full body frame to contain opened arms. Normal human proportions; knees must not block the face or shoulders because camera is high enough.\nConstraints: elevated symmetric FOOT-END view with head TOP and feet BOTTOM. Do NOT reuse the old side camera angle. Do NOT rotate only the photograph; actually reposition the camera to foot-end above the body centerline. Neutral knees centered with no left/right tilt yet. Two arms, hands, legs and feet. No crossed legs, no pillow, no shoes, no text, arrows, collage, watermark or logo.",
+      "edit_target": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-ecc468da-4ab9-4954-a7ce-911891c0d54e.png",
+      "width": 1672,
+      "height": 941,
+      "inspection": {
+        "person_background": "通过：与三张身份参考同一女性面部/黑马尾/白短袖/深灰长裤，灰蓝柔光摄影；整组赤足、同一薄灰垫。",
+        "framing_scale": "通过：足端斜上全身机位固定，头在图上方/脚在下方；双肩、双手、双膝与双足完整，垫全入镜，人物尺度稳定。",
+        "anatomy_joints": "通过：双臂双手双腿双足数量正常，比例与关节未见明显变形；双膝靠近，无单腿跨越或膝压地。",
+        "support_contact": "通过：头、两肩/上背与骨盆保持垫面支撑；手臂自然留原支点，脚跟和脚缘区域有支撑，未出现足部悬空或远移。",
+        "direction": "通过：双膝处于中间位。",
+        "limitations": "照片显示静态起点，不承载时序文字。",
+        "result": "accepted",
+        "primary_agent_review": "最终路径逐张view_image复核：中间、本人左和本人右三姿态可辨，双膝靠近同向，无跨腿或膝压地，两肩上背支撑保留，完整手足；足部滚动细微。"
+      },
+      "sha256": "80912148A718997F642AE4C930C97EAADECE05A35568401C63638B3A5DCBD479",
+      "bytes": 1845977
+    },
+    {
+      "filename": "126_T-AXU-004_s02_v2.png",
+      "action_number": 126,
+      "action_id": "T-AXU-004",
+      "step": "s02",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/126_T-AXU-004_s02_v2.png",
+      "raw_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-89d4c629-adda-48e5-ae33-04727d422de8.png",
+      "reused": false,
+      "reused_original_path": null,
+      "prompt": "Use case: identity-preserve\nAsset type: action 126 T-AXU-004 step 02 final, one photograph.\nEdit target: supplied symmetric foot-end elevated photograph. Woman's head is at top, feet at bottom, anatomical LEFT is VIEWER'S RIGHT. Preserve the photograph's exact camera and entire composition.\nPrimary request: CHANGE ONLY her bent legs and the minimal pelvis rotation needed. Move BOTH BENT KNEES TOGETHER in a SMALL tilt toward VIEWER'S RIGHT, which is the woman's anatomical LEFT. The two knee tops must both clearly shift right from the central body line, staying very close together; move both knees about one knee width toward the image right, approximately 20 degrees of gentle lateral tilt. Their direction is identical. Keep the knees bent, no crossing or separation; neither knee touches or presses into the floor. This is a small knee sway, not an extreme twisting stretch.\nFeet remain close together near their ORIGINAL positions at bottom center. They naturally roll slightly onto their image-RIGHT edges with the gentle knee tilt, while maintaining visible edge contact with the mat and natural ankle alignment. Do not move feet across the floor or detach heels. No exaggerated ankle inversion.\nInvariants: shoulders, both shoulder blades and upper back remain supported on the mat. Same head, face, hair, gaze, chest, shirt, arms, both hands, floor and mat; keep head and opened arms exactly in their original locations. Same body scale, lighting, shadows, full-body crop and elevated FOOT-END camera. Only legs and slight pelvis rotation change. Keep white short sleeve T-shirt, dark charcoal long trousers, bare feet.\nAccuracy constraints: both bent knees lean toward the RIGHT side of the IMAGE, visibly different from the original centered upright knees. Two legs and feet, normal proportions and joints. No single-leg crossing, no knee to floor, no raised shoulder or head. No text, arrows, overlays, collage, watermark or logos.",
+      "edit_target": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-2a7fd2a3-5409-4ef3-9333-275b473f1bf7.png",
+      "width": 1672,
+      "height": 941,
+      "inspection": {
+        "person_background": "通过：与三张身份参考同一女性面部/黑马尾/白短袖/深灰长裤，灰蓝柔光摄影；整组赤足、同一薄灰垫。",
+        "framing_scale": "通过：足端斜上全身机位固定，头在图上方/脚在下方；双肩、双手、双膝与双足完整，垫全入镜，人物尺度稳定。",
+        "anatomy_joints": "通过：双臂双手双腿双足数量正常，比例与关节未见明显变形；双膝靠近，无单腿跨越或膝压地。",
+        "support_contact": "通过：头、两肩/上背与骨盆保持垫面支撑；手臂自然留原支点，脚跟和脚缘区域有支撑，未出现足部悬空或远移。",
+        "direction": "通过：两膝均向图右/本人左移动。",
+        "limitations": "足部滚动幅度细微；为保持源清单的小幅动作，没有扩大摆膝来强化足部展示。",
+        "result": "accepted",
+        "primary_agent_review": "最终路径逐张view_image复核：中间、本人左和本人右三姿态可辨，双膝靠近同向，无跨腿或膝压地，两肩上背支撑保留，完整手足；足部滚动细微。"
+      },
+      "sha256": "D46C6E88FBAB8A840B152C44F81DB2AC2A47B101A05A0CFA20FB665C2BE618DA",
+      "bytes": 1746508
+    },
+    {
+      "filename": "126_T-AXU-004_s03_v2.png",
+      "action_number": 126,
+      "action_id": "T-AXU-004",
+      "step": "s03",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/126_T-AXU-004_s03_v2.png",
+      "raw_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-98405b57-f983-484a-b28d-82c3188e7e15.png",
+      "reused": false,
+      "reused_original_path": null,
+      "prompt": "Use case: identity-preserve\nAsset type: action 126 T-AXU-004 step 03 final, one photograph.\nEdit target: supplied symmetric foot-end elevated photograph. Woman's head is at top, feet at bottom, anatomical RIGHT is VIEWER'S LEFT. Preserve the photograph's exact camera and entire composition.\nPrimary request: CHANGE ONLY her bent legs and the minimal pelvis rotation needed. Move BOTH BENT KNEES TOGETHER in a SMALL tilt toward VIEWER'S LEFT, which is the woman's anatomical RIGHT. The two knee tops must both clearly shift LEFT from the central body line, staying very close together; move both knees about one knee width toward image LEFT, approximately 20 degrees of gentle lateral tilt. The two knees should be noticeably left of their original positions, leaning left above the feet which remain bottom center. Their direction is identical. Keep knees bent; legs do not cross or separate. Neither knee touches or presses into the floor. It is a gentle sway, not an extreme twisting stretch.\nFeet remain close together near their ORIGINAL positions at bottom center. They naturally roll slightly onto their image-LEFT edges with this gentle knee tilt, while maintaining visible edge contact with the mat and natural ankle alignment. Do not move feet across the floor or detach heels. No exaggerated ankle inversion.\nInvariants: shoulders, both shoulder blades and upper back remain supported on the mat. Same head, face, hair, gaze, chest, shirt, arms, both hands, floor and mat; keep head and opened arms exactly in their original locations. Same body scale, lighting, shadows, full-body crop and elevated FOOT-END camera. Only legs and slight pelvis rotation change. Keep white short sleeve T-shirt, dark charcoal long trousers, bare feet.\nAccuracy constraints: BOTH bent knees lean toward the LEFT side of the IMAGE, visibly opposite to a rightward pair of knees. Do not accidentally shift either knee toward image right. Two legs and feet, normal proportions and joints. No single-leg crossing, no knee to floor, no raised shoulder or head. No text, arrows, overlays, collage, watermark or logos.",
+      "edit_target": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-2a7fd2a3-5409-4ef3-9333-275b473f1bf7.png",
+      "width": 1672,
+      "height": 941,
+      "inspection": {
+        "person_background": "通过：与三张身份参考同一女性面部/黑马尾/白短袖/深灰长裤，灰蓝柔光摄影；整组赤足、同一薄灰垫。",
+        "framing_scale": "通过：足端斜上全身机位固定，头在图上方/脚在下方；双肩、双手、双膝与双足完整，垫全入镜，人物尺度稳定。",
+        "anatomy_joints": "通过：双臂双手双腿双足数量正常，比例与关节未见明显变形；双膝靠近，无单腿跨越或膝压地。",
+        "support_contact": "通过：头、两肩/上背与骨盆保持垫面支撑；手臂自然留原支点，脚跟和脚缘区域有支撑，未出现足部悬空或远移。",
+        "direction": "通过：两膝均向图左/本人右移动，与 s02 明确相反。",
+        "limitations": "足部滚动幅度细微；为保持源清单的小幅动作，没有扩大摆膝来强化足部展示。",
+        "result": "accepted",
+        "primary_agent_review": "最终路径逐张view_image复核：中间、本人左和本人右三姿态可辨，双膝靠近同向，无跨腿或膝压地，两肩上背支撑保留，完整手足；足部滚动细微。"
+      },
+      "sha256": "A8EEB54E2E55CEE543B4EBD6C648B36F6CE11E0EFD4F6C993D62583FFB4D1C89",
+      "bytes": 1749080
+    },
+    {
+      "filename": "127_T-AXU-005_s01.png",
+      "action_number": 127,
+      "action_id": "T-AXU-005",
+      "step": "s01",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/127_T-AXU-005_s01.png",
+      "raw_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-314c-7ae1-abf8-15e0464151b0/exec-7a842355-78c6-4256-b8d5-ebc4897305c6.png",
+      "reused": false,
+      "reused_original_path": null,
+      "reuse_reason": null,
+      "prompt": "Use case: identity-preserve.\nAsset type: one rehabilitation action 127 T-AXU-005 step s01 photograph, portrait 4:5.\nEdit the supplied seated woman photo to show the NATURAL RELAXED NEUTRAL SITTING START POSITION before gently rounding the upper back. Keep this exact woman's face, black ponytail, age, skin, plain white short sleeve shirt, charcoal grey long trousers, white athletic shoes, stable grey four-legged chair, grey-blue background, soft lighting, same side-view camera and subject scale.\nChange her upper body from forward leaning to natural relaxed sitting: pelvis stays on the front/middle of the chair seat, both feet stay fully flat in their original positions, knees comfortably bent, torso upright with a natural soft spinal curve, shoulders down and relaxed, upper back neither exaggeratedly rounded nor forcefully straightened. Do not arch the lower back or push chest up. Head and neck comfortably over torso, eyes looking softly forward to RIGHT, no strong chin tuck or head drop. BOTH hands rest lightly palm-down on their corresponding thighs just above the knees, fingertips gently laid on thigh fabric, no crossed arms, elbows relaxed.\nRetain visible chair-seat buttock support, shoulders hips and knees, and complete whole head, hands and shoes inside the frame. Anatomical limb proportions realistic. This is the preparation pose, not the rounded-back endpoint or a breathing diagram. No text, numbers, arrows, symbols, watermark, borders or collage.",
+      "width": 1122,
+      "height": 1402,
+      "inspection": {
+        "status": "可见画面核对通过",
+        "method": "最终保存路径逐张view_image视觉审查；123及124另经独立代理核对",
+        "posture": "自然坐姿，上背中立，肩颈放松，双手轻放大腿，无耸肩、强低头或圆背终点。",
+        "support_and_contacts": "臀部稳坐椅面，双足鞋底落地；完整头手足、肩髋膝均在画面内。",
+        "anatomy": "肢段比例与关节连续，未见明显多肢或断裂；手指遮挡处不能从单帧核实。",
+        "appearance": "人物脸部、黑马尾、白短袖、深灰长裤、灰蓝背景及柔和棚拍与参考保持视觉一致。",
+        "text_check": "原始照片无文字、编号及箭头。",
+        "limits": "静态画面不能验证动作速度、呼吸或内部肌肉受力。"
+      },
+      "sha256": "557DDC35DE638FB2F989146B8CFCDD823195B936C1237E8C43B6B85EC490C026",
+      "bytes": 1677730
+    }
+  ],
+  "selected_package_directory": "E:/git冲突问题/rehab image/分步骤_123s02-127s01_10张_选用",
+  "zip_path": "E:/git冲突问题/rehab image/分步骤_123s02-127s01_10张_选用.zip"
+}

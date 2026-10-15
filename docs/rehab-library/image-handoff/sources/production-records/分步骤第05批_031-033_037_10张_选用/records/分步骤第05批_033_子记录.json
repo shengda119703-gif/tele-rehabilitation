@@ -1,0 +1,124 @@
+{
+  "record_version": "1.0",
+  "date_local": "2026-10-14",
+  "batch": "05",
+  "action_id": "E-LOW-022",
+  "action_name": "许可后的低跳与落地能力观察",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "delivery_count": 4,
+  "generation_mode": "built-in image_gen only, one image per call",
+  "notes": "未使用旧单图复用，未覆盖源清单、旧进度JSON或现有单图；原生成文件留存。检查结果为示范图视觉核对，不作为真人动作测试或负荷证据。",
+  "records": [
+    {
+      "planned_filename": "033_E-LOW-022_s01.png",
+      "actual_saved_path": "E:/git冲突问题/rehab image/assess/steps/033_E-LOW-022_s01.png",
+      "step": "s01",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a138e4-d42a-7e71-9c12-96a4d432713a/exec-5eaecf9a-58ac-4961-a277-b08bea65c73f.png",
+      "tool": "built-in image_gen",
+      "reuse": false,
+      "reused_original": null,
+      "prompt": "Use case: scientific-educational.\nAsset type: single photorealistic rehabilitation exercise demonstration photograph, step 01 of four of a very low two-foot jump and landing sequence. Generate only one image, portrait 1024x1536.\nInput images: reference images 1, 2 and 3 are visual identity/style references only, not pose targets. Match this exact East Asian adult woman, facial features, natural slim-average adult body, black ponytail, plain white short-sleeve crew-neck T-shirt and fitted dark charcoal-gray long trousers. Add plain unbranded white athletic shoes.\nScene/backdrop: seamless light gray-blue studio floor and backdrop, soft diffuse studio light with natural floor shadow. Empty level floor, no props, no platforms.\nComposition/framing: fixed oblique full-body camera from her front-left side (a three-quarter side view), woman facing screen right. Camera at mid-body height with natural perspective, head and complete hands and both feet fully in frame; moderate comfortable margin over head and below shoes. Subject around 75% of canvas height, central. Feet clearly separately visible rather than occluded. Stable floor origin directly beneath her.\nExact pose: she is standing quietly upright at rest, both feet planted entirely flat on the same level floor, feet hip-width apart, knees comfortably straight but not hyperextended, trunk upright, arms and open relaxed hands naturally resting beside her thighs, gaze horizontal toward screen right. This is the standing preparation BEFORE bending or jumping. Feet under her hips, no forward step.\nAnatomy and contact: believable limb proportions, continuous hip/knee/ankle anatomy, correct natural fingers, both shoes touch floor securely. Realistic photographic texture.\nConstraints: only one woman, one pose, same reference identity/clothing/hair/light/background. No text, labels, numbers, arrows, motion trails, borders, collage, watermark, brand logos, equipment or heavy weights. Do not copy the references' raised arm poses.",
+      "reference_images": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "9DB03E7ADC340A9B80CA05FE2E2D1EB689720785767472101C30C70A0E3E47EF",
+      "qa": {
+        "method": "逐张 view_image 实际视觉检查",
+        "status": "pass_visual",
+        "identity_clothing_background": "同一东亚女性、黑马尾、白色短袖T恤、深灰长裤与无商标白运动鞋；柔和灰蓝棚拍、自然地面阴影一致。",
+        "action": "双脚全足底接地、髋宽站距、直立稳站、双臂自然垂于身侧，完整双足及空旷原地落点可见。",
+        "anatomy_proportions": "头、躯干、上/前臂、大小腿长度自然，关节连续；双足与鞋完整，无明显多肢、断肢、手指融合，斜侧透视合理。",
+        "camera_group_consistency": "全组同一斜侧全身机位，面向画面右，人物尺度和地面基准整体一致；准备/落地图脚位与底图视觉偏差很小，无跨步/远跳。",
+        "text_and_layout": "单姿势原始照片，无文字、编号、箭头、拼贴、水印或额外设备。"
+      }
+    },
+    {
+      "planned_filename": "033_E-LOW-022_s02.png",
+      "actual_saved_path": "E:/git冲突问题/rehab image/assess/steps/033_E-LOW-022_s02.png",
+      "step": "s02",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a138e4-d42a-7e71-9c12-96a4d432713a/exec-38982e0f-6c7e-4b9e-b7c9-eafd7b2d9ecd.png",
+      "tool": "built-in image_gen",
+      "reuse": false,
+      "reused_original": null,
+      "prompt": "Use case: identity-preserve.\nAsset type: single photorealistic rehabilitation exercise demonstration photo, step 02, small preparation for a very low two-foot jump, portrait 1024x1536.\nImage 1 is the edit target and exact full-body/camera/background/wardrobe reference. Produce one edited image. Keep identical woman, face, body proportions, ponytail, plain white T-shirt, charcoal long trousers and white unbranded sneakers; identical three-quarter side view facing screen right, camera position, crop, subject scale, lighting, gray-blue seamless studio background and floor. Keep the original floor location of both feet absolutely fixed. Head and complete hands and feet remain in frame.\nChange ONLY her body pose to the pre-jump preparation: both feet still entirely flat on the floor at the same hip-width spacing; hips flex gently and knees bend only around 25 degrees from straight, a shallow dip of about 10 cm, NOT a deep squat. Hips move slightly back, torso leans slightly forward but remains long and controlled; spine straight, head follows torso with gaze forward. Knees track forward over toes; neither foot nor heel leaves ground. Arms relaxed and swing modestly behind her hips, elbows soft, natural hands.\nMake this preparation phase visibly distinct from upright rest. Keep anatomy believable and continuous; all fingers natural.\nDo not change original camera perspective or enlarge/crop/recenter the woman. No extra props, no platform, no weights, no text, arrows, numbering, watermark, logos, border, collage, duplicated people, ghost limbs or motion blur.",
+      "reference_images": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e4-d42a-7e71-9c12-96a4d432713a/exec-5eaecf9a-58ac-4961-a277-b08bea65c73f.png"
+      ],
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "7D4747F5F71640F533D3FBA6662006651799932D02B31F59C234C47C547FA84F",
+      "qa": {
+        "method": "逐张 view_image 实际视觉检查",
+        "status": "pass_visual",
+        "identity_clothing_background": "同一东亚女性、黑马尾、白色短袖T恤、深灰长裤与无商标白运动鞋；柔和灰蓝棚拍、自然地面阴影一致。",
+        "action": "双脚及脚跟保持落地，小幅屈髋屈膝与轻前倾，手臂轻摆后方；浅准备位可辨，非深蹲，尚未腾空。",
+        "anatomy_proportions": "头、躯干、上/前臂、大小腿长度自然，关节连续；双足与鞋完整，无明显多肢、断肢、手指融合，斜侧透视合理。",
+        "camera_group_consistency": "全组同一斜侧全身机位，面向画面右，人物尺度和地面基准整体一致；准备/落地图脚位与底图视觉偏差很小，无跨步/远跳。",
+        "text_and_layout": "单姿势原始照片，无文字、编号、箭头、拼贴、水印或额外设备。"
+      }
+    },
+    {
+      "planned_filename": "033_E-LOW-022_s03.png",
+      "actual_saved_path": "E:/git冲突问题/rehab image/assess/steps/033_E-LOW-022_s03.png",
+      "step": "s03",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a138e4-d42a-7e71-9c12-96a4d432713a/exec-669bc8f2-8560-4296-8063-aa79f9e181d0.png",
+      "tool": "built-in image_gen",
+      "reuse": false,
+      "reused_original": null,
+      "prompt": "Use case: identity-preserve.\nAsset type: single photorealistic rehabilitation exercise demonstration photo, step 03 of a VERY LOW two-foot jump, portrait 1024x1536.\nImage 1 is the edit target and exact identity/camera/background/wardrobe reference. Keep identical woman, face, realistic body proportions, ponytail, plain white short-sleeve shirt, charcoal long trousers and white logo-free sneakers. Keep exactly the same front-left oblique full-body camera facing screen right, camera position, perspective, crop, image scale, gray-blue seamless studio light/floor/backdrop and original floor origin.\nChange ONLY pose to a tiny vertical two-foot jump caught in mid-air: she is directly above her original footprint, NOT traveling forwards. BOTH feet are simultaneously off the floor at the same small height, soles mostly level and a clearly visible narrow gap of about 3 to 5 centimeters between the lowest part of BOTH shoe soles and the floor below. Include separate natural shadows on the unchanged level floor directly underneath both feet so the air gap is unmistakable. This is a tiny hop, maximum 3-5cm, not a high jump. Lift her whole body by this tiny amount without changing its scale. Legs almost extended naturally, knees slightly soft around 10 degrees, ankles gently plantarflexed but neither shoe touches floor. Feet still hip-width apart, no split legs, no tucked knees, no raised platform. Upper body controlled and nearly upright. Arms have swung a little forward, elbows comfortably flexed and hands around lower rib/waist height, no raised overhead arms. Keep complete head, hair, natural hands and both shoes within the original frame.\nMaintain exact original woman's identity and unaltered clothing, lighting and studio setting. Anatomically natural proportions and joints, all fingers believable.\nDo not let one foot stay grounded. No dramatic high leap, no forward long jump, no step stool, no equipment, no text/numbers/arrows/collage/border/logo/watermark/ghost pose.",
+      "reference_images": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e4-d42a-7e71-9c12-96a4d432713a/exec-5eaecf9a-58ac-4961-a277-b08bea65c73f.png"
+      ],
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "687AFF97FA81AAF1C2E7F82B2776958505EF9265149E45F71F800EEA4A14DEB8",
+      "qa": {
+        "method": "逐张 view_image 实际视觉检查",
+        "status": "pass_visual",
+        "identity_clothing_background": "同一东亚女性、黑马尾、白色短袖T恤、深灰长裤与无商标白运动鞋；柔和灰蓝棚拍、自然地面阴影一致。",
+        "action": "双足同时低幅离地，两只鞋底与原地投影上方均有清晰空隙，身躯基本直立，无向前远跳，无高台。视觉表达约3—5cm低跳；摄影示范不能证明精确实测高度。",
+        "anatomy_proportions": "头、躯干、上/前臂、大小腿长度自然，关节连续；双足与鞋完整，无明显多肢、断肢、手指融合，斜侧透视合理。",
+        "camera_group_consistency": "全组同一斜侧全身机位，面向画面右，人物尺度和地面基准整体一致；准备/落地图脚位与底图视觉偏差很小，无跨步/远跳。",
+        "text_and_layout": "单姿势原始照片，无文字、编号、箭头、拼贴、水印或额外设备。"
+      }
+    },
+    {
+      "planned_filename": "033_E-LOW-022_s04.png",
+      "actual_saved_path": "E:/git冲突问题/rehab image/assess/steps/033_E-LOW-022_s04.png",
+      "step": "s04",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a138e4-d42a-7e71-9c12-96a4d432713a/exec-0a1e80a6-25e3-4417-ad98-4f67ffb4beec.png",
+      "tool": "built-in image_gen",
+      "reuse": false,
+      "reused_original": null,
+      "prompt": "Use case: identity-preserve.\nAsset type: single photorealistic rehabilitation exercise demonstration photo, step 04 of a tiny two-foot jump sequence: controlled landing, portrait 1024x1536.\nImage 1 is the edit target showing the exact scene and identity with a shallow preparatory bend; Image 2 shows the upright starting footprint. Keep the same woman and exact face, ponytail, white plain T-shirt, charcoal trousers, white logo-free athletic shoes, body proportions, front-left oblique full-body camera facing screen right, camera position/crop/scale, seamless gray-blue background and level studio floor, and identical soft light.\nChange ONLY to the stable landing pose AFTER a very low hop: BOTH feet have returned to their exact original location and are now completely flat and in full contact with the floor. Hip-width stance, no step or forward travel. Hips and knees flex gently to absorb landing, shallow 25-30 degree knee bend, not a deep squat; controlled long trunk leaning just slightly forward, pelvis back slightly. Show a quiet stable fully grounded stance, neither heel nor toe airborne and no second jump. To clearly distinguish this landing from the preparatory image, move BOTH arms from behind hips to naturally bent IN FRONT of lower chest/waist for balance, elbows around 80-100 degrees and open relaxed fingers, no arms overhead. Head, both hands and full shoes in the frame. Natural grounded shadows in direct contact underneath the soles, no gap.\nMatch all visual identity and studio invariants. Natural anatomical length and joint continuity. Do not change the camera view, footwear or standing footprint, no text/numbers/arrows/logos/watermark/collage/props/platforms/duplicate limbs.",
+      "reference_images": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e4-d42a-7e71-9c12-96a4d432713a/exec-38982e0f-6c7e-4b9e-b7c9-eafd7b2d9ecd.png",
+        "C:/Users/Administrator/.codex/generated_images/01a138e4-d42a-7e71-9c12-96a4d432713a/exec-5eaecf9a-58ac-4961-a277-b08bea65c73f.png"
+      ],
+      "dimensions": {
+        "width": 1024,
+        "height": 1536
+      },
+      "sha256": "412F8B785C1583C7F89F8D511D7F5D1BA12027ADAB06CEF0A96D02584D3EBD69",
+      "qa": {
+        "method": "逐张 view_image 实际视觉检查",
+        "status": "pass_visual",
+        "identity_clothing_background": "同一东亚女性、黑马尾、白色短袖T恤、深灰长裤与无商标白运动鞋；柔和灰蓝棚拍、自然地面阴影一致。",
+        "action": "双足全足底重新接地、原位浅屈髋屈膝，双臂屈肘于前方辅助平衡；明确接地承接姿势，与准备图手臂后摆相区分。",
+        "anatomy_proportions": "头、躯干、上/前臂、大小腿长度自然，关节连续；双足与鞋完整，无明显多肢、断肢、手指融合，斜侧透视合理。",
+        "camera_group_consistency": "全组同一斜侧全身机位，面向画面右，人物尺度和地面基准整体一致；准备/落地图脚位与底图视觉偏差很小，无跨步/远跳。",
+        "text_and_layout": "单姿势原始照片，无文字、编号、箭头、拼贴、水印或额外设备。"
+      }
+    }
+  ]
+}

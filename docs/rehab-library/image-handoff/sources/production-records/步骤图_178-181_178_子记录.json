@@ -1,0 +1,82 @@
+{
+  "batch": "178-181",
+  "action": "178",
+  "action_id": "T-AXU-037",
+  "title": "腕尺偏/桡偏轻负荷控制",
+  "created_date": "2026-10-14",
+  "method": "built-in image_gen; separate call per single image",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "assets": [
+    {
+      "action_id": "T-AXU-037",
+      "step": "s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/178_T-AXU-037_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-da8b-7ee2-a947-38ac16de6d09/exec-68faca3f-cf42-42a1-b261-d914eba81909.png",
+      "reference_source": "three identity references",
+      "prompt": "Use case: scientific-educational. Create ONE photorealistic rehabilitation exercise demonstration photo, landscape 1536x1024. The three input photos are identity, wardrobe, skin tone, studio lighting and gray-blue background references only. Match the same adult East Asian woman with black ponytail, white short-sleeve T-shirt and dark gray trousers. Do not copy the raised-arm pose.\nAction 178 / T-AXU-037, frame s01: neutral wrist position for radial/ulnar deviation. She is seated beside a stable plain matte light-gray table. Her RIGHT elbow and whole RIGHT forearm rest firmly on the tabletop, right upper arm close to torso, elbow bent around 90 degrees. Forearm runs horizontally from the left side of the picture toward the right table edge. The wrist is just beyond the edge, right hand empty and unsupported beyond the edge. Right hand is in a thumb-up handshake orientation: palm plane vertical, thumb on upper edge, little finger on lower edge. Four fingers together, naturally relaxed and mostly extended, one thumb, exactly five anatomically correct digits. Hand and forearm longitudinal axes are aligned horizontally in neutral, neither upward nor downward deviation.\nCamera: close view perpendicular to the VERTICAL radial/ulnar deviation plane, from the palm-facing side with a slight front angle so palm, thumb side and little-finger side can be distinguished. Include right elbow, full supported forearm, complete wrist and fingertips, tabletop and its real edge; include a modest part of the woman's white-shirt torso at left as body reference. The exercise arm dominates the frame, avoid a remote wide shot. Natural adult limb lengths and continuous wrist anatomy. Soft diffuse photographic studio light, gray-blue seamless background, same visual treatment as references, natural skin texture and table contact shadow. Moderate blank background above the arm. Do not include dumbbells or any device. No text, no numbers, no arrows, no inset, no collage, no watermark. Exactly one still pose.",
+      "review": {
+        "pose": "中立",
+        "details": "右手空手，拇指在上、小指在下，四指自然并拢；手与前臂长轴水平延续。右肘和完整前臂在同一桌面支持，腕和手在桌边外；手背面和各指轮廓可辨。局部近景包括邻近肘和躯干参照。五指连续，无多指/断腕；无文字箭头或拼图。",
+        "direction": "passed",
+        "method": "逐张 view_image 视觉审查",
+        "identity_clothing_background": "passed",
+        "proportion_joint_digit": "passed",
+        "support_contact": "passed",
+        "camera_consistency": "passed"
+      },
+      "sha256": "44110BD07C7853509D20EF0BEC1E4D9B2448A85968CC90FC020655C86924D611",
+      "width": 1536,
+      "height": 1024,
+      "status": "passed"
+    },
+    {
+      "action_id": "T-AXU-037",
+      "step": "s02",
+      "path": "E:/git冲突问题/rehab image/train/steps/178_T-AXU-037_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-da8b-7ee2-a947-38ac16de6d09/exec-e67cbbac-1492-429e-aadf-2fccd81d590a.png",
+      "reference_source": "178 neutral s01 source",
+      "prompt": "Use case: scientific-educational. Edit this one rehabilitation wrist demonstration photograph into frame 178 / T-AXU-037 s02. Preserve the exact same woman, identity, clothes, chair, table, tabletop edge, forearm position, elbow contact, torso, lighting, gray-blue background, photographic realism, camera crop and image dimensions. Change ONLY the right hand angle at the wrist.\nThe supported right forearm stays horizontal and exactly still on the table. The empty right hand remains in thumb-up orientation with the thumb side above and little-finger side below; keep its currently visible dorsal surface facing the camera without rotating the forearm.\nAt the wrist, move the whole hand gently about 15 degrees UPWARD toward its THUMB side, producing small RADIAL DEVIATION, so the four fingers and hand longitudinal axis now slope slightly upward to the right. The thumb rotates with the hand. Fingers retain the same relaxed together pose and same lengths, exactly four fingers plus one thumb. The wrist pivot stays at the same point just beyond the table edge. Anatomically gentle, continuous wrist contours, no extra flexion or extension, no pronation or supination, no raised elbow or forearm.\nThis is one single still photo. No text, numbers, arrows, inset, collage, watermark or device.",
+      "review": {
+        "pose": "小幅桡偏",
+        "details": "手部长轴向画面右上方偏转，朝拇指侧，和s01/03方向明确区分；手背朝向、拇指上方关系保持，未出现前臂旋前旋后或整臂上抬。肘/前臂仍接触原桌面，腕在原桌边外。五指和腕连接自然。人物、衣着、桌、椅、背景、光线和机位保持。无文字箭头或拼图。",
+        "direction": "passed",
+        "method": "逐张 view_image 视觉审查",
+        "identity_clothing_background": "passed",
+        "proportion_joint_digit": "passed",
+        "support_contact": "passed",
+        "camera_consistency": "passed"
+      },
+      "sha256": "F683027BBE29FB1B7E4BF8F5985EA337F7C3269E2BACD9DD5A82E3B171C20CE0",
+      "width": 1536,
+      "height": 1024,
+      "status": "passed"
+    },
+    {
+      "action_id": "T-AXU-037",
+      "step": "s03",
+      "path": "E:/git冲突问题/rehab image/train/steps/178_T-AXU-037_s03.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-da8b-7ee2-a947-38ac16de6d09/exec-45f97324-cc1a-46c6-a926-a57c77b07a97.png",
+      "reference_source": "178 neutral s01 source",
+      "prompt": "Use case: scientific-educational. Edit this neutral rehabilitation wrist photograph into frame 178 / T-AXU-037 s03. Preserve the exact same woman, identity, clothes, chair, table, tabletop edge, elbow contact, supported forearm position, torso, lighting, gray-blue background, photographic realism, camera crop and image dimensions. Change ONLY the right hand angle at the wrist.\nThe supported right forearm stays horizontal and exactly still on the table. The empty right hand remains in thumb-up orientation with the thumb side above and little-finger side below; keep its currently visible dorsal surface facing the camera without rotating the forearm.\nAt the wrist, move the whole hand gently about 18 degrees DOWNWARD toward its LITTLE-FINGER side, producing small ULNAR DEVIATION. The four fingers and hand longitudinal axis now slope slightly downward to the right. This is the opposite direction to upward radial deviation. The thumb rotates together with the hand and stays on the upper side. Fingers retain the same relaxed together pose and same lengths, exactly four fingers plus one thumb. Wrist pivot remains just beyond the same table edge, with continuous anatomy and a smooth modest angle. No wrist flexion or extension, no pronation or supination, no raised elbow or forearm.\nThis is one single still photo. No text, numbers, arrows, inset, collage, watermark or device.",
+      "review": {
+        "pose": "小幅尺偏",
+        "details": "手部长轴向画面右下方偏转，朝小指侧，与s02相反；拇指仍在上侧，手背朝向保持，没有旋转前臂或折断样角度。肘/前臂支持和腕支点保持。五指和腕连接自然。人物、衣着、桌、椅、背景、光线和机位保持。无文字箭头或拼图。",
+        "direction": "passed",
+        "method": "逐张 view_image 视觉审查",
+        "identity_clothing_background": "passed",
+        "proportion_joint_digit": "passed",
+        "support_contact": "passed",
+        "camera_consistency": "passed"
+      },
+      "sha256": "887014407C11FCC47E7D15B76849D8317DDDB16299E73C9CA27E027A13FD37B9",
+      "width": 1536,
+      "height": 1024,
+      "status": "passed"
+    }
+  ]
+}

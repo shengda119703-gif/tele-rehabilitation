@@ -1,0 +1,60 @@
+{
+  "png_count": 10,
+  "zip_entry_count": 14,
+  "all_png_hashes_match": true,
+  "zip_path": "E:\\git冲突问题\\rehab image\\步骤图_140-142_10张.zip",
+  "zip_bytes": 14505318,
+  "zip_sha256": "D4A504DD00068711FD11E469A6D7DB635EC73EF594150C64C029E0BB6A9A886E",
+  "images": [
+    {
+      "file": "140_T-AXU-057_s01.png",
+      "sha256": "C8B0E7EA1F1F4269290105D6CA79480552C942AC1EBFC27EC7EBA22190CB6264",
+      "bytes": 1667480
+    },
+    {
+      "file": "140_T-AXU-057_s02.png",
+      "sha256": "0A87D035279133D60CC50C2D91E60F9B884D551EF83EED90103ABB434EFCF996",
+      "bytes": 1580314
+    },
+    {
+      "file": "141_T-AXU-019_s01.png",
+      "sha256": "7245169545330F6C9A86A3F27D0F5985E9D915E04639934D1840277D0403F00F",
+      "bytes": 1677082
+    },
+    {
+      "file": "141_T-AXU-019_s02.png",
+      "sha256": "651641AD045CB7B7193CF4EF07ECDF8A2F4FA242F22A5499D4036E0EA0D0855D",
+      "bytes": 1658033
+    },
+    {
+      "file": "141_T-AXU-019_s03.png",
+      "sha256": "7D906196A51E71BB72588A92BC9C49639C73085AB8932EB59EB7C3AF50FFA229",
+      "bytes": 1639649
+    },
+    {
+      "file": "141_T-AXU-019_s04.png",
+      "sha256": "A91F04ABDE07D2D2CBB2915F3F2609B5133E40B773EB589FDABBF7204BB95DB1",
+      "bytes": 1687442
+    },
+    {
+      "file": "142_T-AXU-020_s01_v2.png",
+      "sha256": "16323E9BB3AA2C3BC2F04BCD8A47563C4BCD7F1D4094D06FE07ADD67C775F6CA",
+      "bytes": 1639337
+    },
+    {
+      "file": "142_T-AXU-020_s02_v2.png",
+      "sha256": "5A3AD84DA41D6E0239E447D42EF0FE95164B66640C9A561F6BD8C3E65F1710F7",
+      "bytes": 1617517
+    },
+    {
+      "file": "142_T-AXU-020_s03_v2.png",
+      "sha256": "0E944D99FC64E473D5D9E658E57E791014DBE00ED2BBC3D5E71BA2E8A1E31886",
+      "bytes": 1644602
+    },
+    {
+      "file": "142_T-AXU-020_s04.png",
+      "sha256": "DAF28526D3BC597025A874D4BE942AE392EA0083518FCBF580DBA3D2638232AD",
+      "bytes": 1669807
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "batch": "分步骤第05批_037",
+  "date": "2026-10-14",
+  "tool": "内置 image_gen",
+  "source_document": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "items": [
+    {
+      "action_sequence": 37,
+      "id": "E-AXU-004",
+      "name": "站立躯干左右侧屈筛查",
+      "step": "s01",
+      "phase_zh": "正面对镜头自然站稳，双臂自然下垂、肩髋中立、双足接地",
+      "prompt": "Use case: scientific-educational.\nAsset: single photorealistic rehabilitation demonstration photograph, action 037 E-AXU-004 step s01, neutral standing starting position.\nUse the three supplied reference photographs as strict identity, hair, clothing, background and photographic style references. Repose and reframe that SAME adult East Asian woman. Preserve exact facial features, age appearance, skin tone, natural body shape, black ponytail, plain fitted white short-sleeve crew neck T-shirt and dark charcoal long trousers from the references. Plain white unbranded low-profile athletic shoes.\nScene: seamless cool gray-blue studio backdrop and matching floor, soft diffuse neutral studio lighting, natural small shadows. Nothing else in scene.\nComposition: ONE full body portrait photograph, vertical 4:5, exact straight-on FRONT view; subject centered with ample room on BOTH sides for subsequent left/right trunk side bending. Entire head, both complete hands and both shoes visible with safe margins. Eye-level normal 50mm-like perspective; natural anatomy and adult head-to-body and limb proportions.\nPose: standing naturally upright with feet fixed hip-width apart and parallel, both shoe soles flat on floor. Knees naturally straight, not locked. Pelvis centered and level, shoulders level. Both arms fully relaxed hanging at sides, both hands resting beside outer upper thighs. Head upright facing directly FORWARD at camera, no rotation. Calm natural expression.\nThis is the NEUTRAL starting image: no side bend, forward bend, trunk twist, neck tilt, stepping, arm raise or hand on hip. Exactly one woman and one distinct posture. No text, numbers, labels, arrows, logo, watermark, collage, inset or motion ghost. Keep gray-blue photographic palette of input references.",
+      "source_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-65c7-70f3-b97d-ffe5ac067c42/exec-eff0f025-dce1-4f96-9670-f5cfd84411d4.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/037_E-AXU-004_s01.png",
+      "reused": false,
+      "width": 1122,
+      "height": 1402,
+      "sha256": "79F5595ED2247965F2A314425F674E80E7AABBF80B455B92BB23F522DBE75D41",
+      "QA": {
+        "passed": true,
+        "observations": "全身正面中立，双臂自然垂下、完整手足可见，双足固定接地，比例自然"
+      }
+    },
+    {
+      "action_sequence": 37,
+      "id": "E-AXU-004",
+      "name": "站立躯干左右侧屈筛查",
+      "step": "s02",
+      "phase_zh": "向人物自身左侧屈，左手沿左大腿下滑，双足位置不变",
+      "prompt": "Use case: identity-preserve.\nAsset: single photorealistic rehabilitation demonstration photograph, action 037 E-AXU-004 s02 (woman's anatomical LEFT trunk side bend).\nEdit image 1, the locked neutral front-standing frame. Images 2–4 are the SAME woman's original identity, hair, clothing and studio references. Preserve image 1's camera, exact crop and scale, cool gray-blue seamless backdrop and floor, lighting, shoes, trousers, all foot locations, identity and natural body proportions.\nChange ONLY this posture: make a controlled comfortable moderate LEFT LATERAL bend of the TRUNK about 20 degrees while both feet stay flat and fixed. Since she faces the viewer, HER OWN LEFT is on the RIGHT SIDE OF THE IMAGE. Her head and chest must move toward IMAGE RIGHT; left shoulder (image right) becomes lower than right shoulder (image left). Her LEFT hand on IMAGE RIGHT slides downward along the outer LEFT thigh toward just above the knee, fingers naturally relaxed. Her RIGHT hand on IMAGE LEFT glides slightly up its thigh. Both arms hang naturally, not raised. Pelvis stays relatively level and centered over the same feet with minimal translation. Both knees remain in same soft straight stance.\nChest and face continue facing directly FORWARD toward camera, without torso twist or neck rotation. Head follows the gentle lateral trunk line; avoid turning head or bending head alone. No forward bend. Do NOT mirror to image left. Do NOT rotate or change feet, step, bend knees or lift a heel.\nKeep entire head, BOTH hands and both full shoes visible within original margins. Maintain realistic forearm/thigh lengths, continuous joints, normal hands and exact same soft studio look. One person, one posture, no text, numbers, arrows, labels, logo, watermark, inset, collage or ghost motion.",
+      "source_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/037_E-AXU-004_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-65c7-70f3-b97d-ffe5ac067c42/exec-43c8a3fc-cacc-4bc1-a50c-75d1a4e8d71f.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/037_E-AXU-004_s02.png",
+      "reused": false,
+      "width": 1122,
+      "height": 1402,
+      "sha256": "B6476576EA2B84836C099779AA3E5348C885C03F8AC8C8C2AA95142B348F1C7B",
+      "QA": {
+        "passed": true,
+        "observations": "躯干向画面右侧即人物自身左侧倾，左手沿左大腿下滑，双足接地且脚位固定，胸口朝前，无前屈或旋转"
+      }
+    }
+  ]
+}

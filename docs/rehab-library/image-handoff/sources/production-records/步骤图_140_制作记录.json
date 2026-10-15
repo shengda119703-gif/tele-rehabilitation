@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-14",
+  "range": "140-s01～s02",
+  "generation_mode": "built-in image_gen",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "action_id": "T-AXU-057",
+  "name": "稳定地面高跪位Pallof抗旋转",
+  "camera": "近正面15度，固定机位和尺度",
+  "reuse_sequence": "01→02→复用01；卸去张力后才转向换侧",
+  "note": "以三张用户参考锁定视觉，第二张以本组s01为编辑锚点；未覆盖原单图或进度JSON。",
+  "images": [
+    {
+      "sequence": 140,
+      "id": "T-AXU-057",
+      "step": "01",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-7712-7a10-a21c-472e01a8fdd6/exec-61f1a806-f389-4f0d-95ed-529e1e1ea856.png",
+      "bytes": 1667480,
+      "sha256": "C8B0E7EA1F1F4269290105D6CA79480552C942AC1EBFC27EC7EBA22190CB6264",
+      "visual_review": "双膝在薄地垫高跪，髋伸直、躯干朝前，双手在胸前较低位握带；侧方固定金属锚点与带连接可见，完整头手膝鞋和支撑入镜。",
+      "path": "E:/git冲突问题/rehab image/train/steps/140_T-AXU-057_s01.png",
+      "prompt": "Use case: scientific-educational rehabilitation exercise photograph.\nAsset: 140 T-AXU-057 s01, ONE independent preparation-position photograph, portrait 4:5.\nInput images 1,2,3 are strict identity, clothing, backdrop and photographic-style REFERENCES ONLY. Use the exact same adult East Asian woman with the same face, age, skin tone, proportions and black ponytail, plain white short-sleeve T-shirt and full-length dark charcoal trousers. White unbranded low-profile trainers. Do NOT copy the standing arm poses from these references.\nScene: softly lit gray-blue seamless photography studio with a gray-blue flat stable floor. A thin flat muted blue-gray exercise mat supports BOTH knees and lower legs, with no wobble cushion or ball. At the far LEFT of frame a securely floor-mounted rigid dark gray upright anchor post with a stable broad base has one reliable D-ring at a LOW position, about 55-60 cm above the floor. One simple blue resistance band is attached to this lateral D-ring and extends with gentle visible tension toward her hands, pulling from her anatomical RIGHT side (viewer left). Include the whole post base and band.\nPose s01: she is TALL KNEELING on BOTH knees, knees hip-width on the mat, shins resting on the mat behind her, feet naturally relaxed. Hips extended, pelvis directly over the knees, trunk erect and neutral, chest and pelvis facing straight FORWARD toward the camera, head naturally aligned, shoulders relaxed. She is NOT sitting back on heels and is NOT half-kneeling. Both hands securely clasp the free end of the band together at the LOWER CENTER OF HER CHEST, just in front of lower sternum. Both elbows comfortably bent and close beside the rib cage. The band approaches from the SIDE, not directly from the front. Do not rotate or bend her torso toward the anchor. No abdominal or muscle diagrams.\nComposition: FIXED near-frontal full-body camera, just 15 degrees off exact front to show arm depth, both knees and relaxed lower legs/feet; natural 60mm lens feel without wide-angle distortion. Subject centered-right with space for the lateral anchor left. Include full head, complete hands, both knees, lower legs and shoes, all support contacts, entire mat and stable anchor base with margins. Normal adult anatomical proportions and correct hands with believable grip.\nSoft studio illumination and subtle natural contact shadows, true high-quality realistic photograph matching reference background and light.\nText: NONE. No arrows, step labels, lettering, logo, watermark, collage, duplicate figure or ghost poses.\nThe ONLY posture is the chest-held preparation of tall-kneeling Pallof press.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "status": "visually_reviewed",
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "sequence": 140,
+      "id": "T-AXU-057",
+      "step": "02",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-7712-7a10-a21c-472e01a8fdd6/exec-2ef6ddf8-f3f1-4d6f-b85e-b281a7bd0b2e.png",
+      "bytes": 1580314,
+      "sha256": "0A87D035279133D60CC50C2D91E60F9B884D551EF83EED90103ABB434EFCF996",
+      "visual_review": "双手向身体正前推出小段，肘仍轻屈；双膝、躯干与骨盆朝向保持，未随带旋转或后仰；同一锚点、带、垫和机位。",
+      "path": "E:/git冲突问题/rehab image/train/steps/140_T-AXU-057_s02.png",
+      "prompt": "Use case: identity-preserve, scientific-educational rehabilitation photograph.\nInput image 1 is the EDIT TARGET and exact scene anchor for 140 T-AXU-057 tall-kneeling Pallof press. Produce the next single static frame s02. Preserve the SAME woman's face, age, hairstyle, body proportions, white T-shirt, dark charcoal trousers, white shoes; preserve EXACT camera position, near-frontal viewing angle, focal length, subject scale, background, lighting, floor, gray-blue mat, both knee positions, rigid dark-gray anchor post and its bolted base on viewer LEFT, same low D-ring, and same blue resistance band setup. Portrait 4:5, one subject one pose, no text or arrows.\nChange ONLY the arms and hands to a SHORT controlled forward Pallof press: BOTH hands still clasp the band end together at the lower-chest height, but are now pushed about 20-25 cm STRAIGHT FORWARD away from her lower sternum, in the direction her chest faces, toward the camera and very slightly frame-right because of the existing near-frontal perspective. The elbows open from their bent preparation position, remaining softly bent, never locked; her hands are visibly farther from the chest, and both forearms clearly point forward in depth with physically correct foreshortening. Do not push her hands laterally toward the anchor, do not raise to shoulder height, do not extend maximally.\nKeep her hips extended directly above both grounded knees, upright neutral trunk, chest and pelvis facing in the SAME direction as the input. Maintain same head direction. No torso twist toward the band, no side lean, no backward arch, no sitting on heels, no one-knee lunge. The band stretches diagonally from the UNMOVED left-side D-ring to the hands now in front of her torso; show gentle tension and anatomically plausible uninterrupted band grip, no band passing through the body.\nFull head, complete hands, both knees, lower legs/feet, mat and anchor base stay inside the same frame. Real natural adult anatomy and continuous joint connections. Match input photograph exactly in photographic texture, gray-blue studio backdrop, shadows and framing.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393e-7712-7a10-a21c-472e01a8fdd6/exec-61f1a806-f389-4f0d-95ed-529e1e1ea856.png"
+      ],
+      "reused": false,
+      "status": "visually_reviewed",
+      "width": 1122,
+      "height": 1402
+    }
+  ]
+}

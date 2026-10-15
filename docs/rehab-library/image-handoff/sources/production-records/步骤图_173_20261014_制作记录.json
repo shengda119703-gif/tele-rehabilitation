@@ -1,0 +1,52 @@
+{
+  "record_version": "1.0",
+  "created_date": "2026-10-14",
+  "batch": "173/s01–s02",
+  "generator": "built-in image_gen.imagegen",
+  "source_assets_preserved": true,
+  "qa_scope": "逐张实际画面核对动作、器材支撑、人物身份与比例；仅为示范照片视觉验收。",
+  "images": [
+    {
+      "sequence": 173,
+      "action_id": "T-AXU-062",
+      "step": "01",
+      "prompt": "Use case: scientific-educational.\nAsset type: one single photorealistic rehabilitation exercise step photograph, 173 T-AXU-062 s01 standing bilateral resistance-band chest fly START.\nInput images 1–3 are identity, clothing, lighting and photographic style references ONLY, not pose instructions. Match the exact same adult East Asian woman, face, age, natural build, black ponytail, plain white short-sleeve T-shirt, dark charcoal full-length trousers.\nScene: soft studio light, seamless gray-blue backdrop and matte gray-blue floor, natural contact shadows. Landscape composition, entire woman including complete head, hands and bare feet visible.\nEquipment: a realistic wide sturdy gray metal exercise frame BEHIND her, two vertical side uprights with stable floor feet and a horizontal top crossbar. One distinct secure eyelet anchor on EACH upright slightly above her shoulder height and well to each side of her. Two separate teal elastic exercise tubes, each running from its own side anchor to a black D-handle in the hand on that same side. Anchor hardware, both entire tube paths, both handles, frame feet clearly visible. These are elastic tubes, no weights, no pulleys, no cable machine.\nPose: woman stands one small step FORWARD of the anchor plane, feet planted hip-width, knees softly unlocked, body upright, ribs and pelvis neutral, shoulders relaxed. Near-frontal camera only about 15 degrees oblique so BOTH arms and BOTH anchors visible. Her arms are open out to the sides in a comfortable start position at approximately mid-chest/just below shoulder level, slightly forward of her torso, elbow joints gently bent about 20–25 degrees. Each hand firmly grips its OWN handle, wrists straight, thumbs roughly upward and palms facing inward toward each other. Arms look like a shallow open C, not hyperextended behind her torso. Both elastic tubes already lightly taut and angled back-outward-upward from each hand to its own anchor, no tube connects hand to hand across her chest.\nOne clear static START pose only. Accurate human limb lengths, continuous shoulders/elbows/wrists, realistic fingers around handles. No words, numbers, arrows, logos, motion trails, collage, panels, watermark, therapist, extra person or extra limbs. Do not raise arms overhead. Keep generous crop margins around hands and apparatus.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a83-56a3-7690-b6f1-623fa1a030fd/exec-82b57e3f-e94b-4d3c-906b-543b65d6ac88.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/173_T-AXU-062_s01.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_observation": "同参考女性、白T恤深灰裤、灰蓝棚拍；双脚稳定、双臂侧方起始肘微屈；两侧独立高于肩锚点，各自连接同侧握柄，完整手足和路径可见。"
+    },
+    {
+      "sequence": 173,
+      "action_id": "T-AXU-062",
+      "step": "02",
+      "prompt": "Use case: identity-preserve. Input image 1 is the photo to correct, input image 2 is the start position for reference, images 3–5 are identity references. Make one corrected single photograph of the standing chest fly ENDPOINT.\nCorrect ONLY both arms, hands, elastic tube free sections: raise the two hands to MID STERNUM / MID CHEST HEIGHT, clearly ABOVE the lower shirt hem by about 25 cm. Extend the elbows more so each elbow is only gently bent around 20–25 degrees short of straight (interior elbow angle about 155–160 degrees). BOTH upper arms reach forward from the shoulders, with the entire arms lifted to almost shoulder level, only about 10–15 degrees below horizontal. The two arms form a wide softly curved hugging arc OUT IN FRONT of the chest, hands together with 3 cm gap. Elbows stay out-forward, NOT tucked against the waist. Do not create a right-angle elbow curl or a press with elbows tucked by ribs. Both fists grip the same black D-handles vertically, thumbs up and palms facing one another; neutral wrists. Chest fly brings the hands together in front of the chest with elbow bend held gentle and almost unchanged from the open start.\nThe TWO teal elastic tubes still connect each same-side handle to its original separate high side anchor with clear uninterrupted diagonal tension paths, no line between hands.\nLock ALL other pixels as closely as possible: same woman identity, face and gaze, ponytail, torso, relaxed shoulders, white T-shirt, dark trousers, planted feet at exact same locations, complete frame equipment including two anchors and frame feet, floor and blue-gray backdrop, lighting, framing, camera scale and full-body crop. Preserve natural joint anatomy and fingers, exactly two hands. No text, symbols, arrows, motion trails or extra people.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a83-56a3-7690-b6f1-623fa1a030fd/exec-f56221b2-f042-4a21-89df-1ec32e2d1c0d.png",
+        "E:/git冲突问题/rehab image/train/steps/173_T-AXU-062_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a83-56a3-7690-b6f1-623fa1a030fd/exec-2b23ed64-7800-4d10-aaee-e10db97ee682.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/173_T-AXU-062_s02.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_observation": "双手在胸前会合且保留间隙，双肘仍微屈，两侧弹力带独立连续无交叉；双脚躯干与机位不变，未过头推举或后仰。",
+      "generation_attempts": [
+        {
+          "source": "C:/Users/Administrator/.codex/generated_images/01a13a83-56a3-7690-b6f1-623fa1a030fd/exec-f56221b2-f042-4a21-89df-1ec32e2d1c0d.png",
+          "prompt": "Use case: identity-preserve.\nAsset type: single rehabilitation photograph, 173 T-AXU-062 s02 standing bilateral resistance-band chest fly FINISH.\nInput image 1 is the exact scene and pose edit target; images 2–4 are the same woman's identity and clothing references only.\nChange only BOTH ARMS AND HANDS from the open start into the chest-fly endpoint: keep a gentle bend in BOTH elbows (about 25–35 degrees, never straight-locked), sweep BOTH upper arms in a horizontal inward arc to bring the black D-handles together IN FRONT of the lower sternum at mid-chest height, roughly 30–40 cm ahead of the chest. Hands side by side with about a 3–5 cm gap, palms facing each other, thumbs upward, wrists neutral and realistic grip. Both elbows remain softly bent and well below the shoulders, no overhead raise. This is a hugging fly arc with the same gentle elbow bend, not an elbow-extension chest press.\nKeep the exact same two teal elastic tubes, EACH connected to the same eyelet on the same-side upright. At this endpoint the longer taut tubes run diagonally from the two separated high side anchors toward the two center-front handles, remaining distinct, uncrossed and unbroken; no elastic tube between the two hands.\nPreserve EVERYTHING else from image 1: same complete metal frame, eyelet positions, floor feet, woman identity and head orientation, ponytail, plain white short-sleeve T-shirt, charcoal trousers, natural upright trunk, pelvis, softly unlocked knees, both bare feet at the SAME floor positions, gray-blue background, contact shadows, lighting, camera, landscape canvas size, framing and person scale. No body lean, backward arch, shrug or squeezing shoulders up. Complete head, arms, hands, legs, bare feet, both anchors and full tube paths clearly visible. Natural continuous anatomical joints.\nOnly one woman and one static endpoint. No text, labels, numbers, arrows, panels, motion trails, overlays, watermark or extra limbs.",
+          "selected": false,
+          "reason": "双手终点偏低、屈肘偏大，定向修订抬高会合高度并减少屈肘。"
+        }
+      ]
+    }
+  ]
+}

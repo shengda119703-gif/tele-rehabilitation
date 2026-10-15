@@ -1,3 +1,3 @@
 """Local, single-input rehabilitation assistant."""
 
-__version__ = '0.25.2'
+__version__ = '0.25.7'

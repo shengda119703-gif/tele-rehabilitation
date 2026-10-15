@@ -26,7 +26,7 @@ def main():
         pg("createdb", target)
         pg("pg_restore", "--exit-on-error", "--dbname", target, stdin=plain)
         checked = pg("psql", "--no-psqlrc", "-At", "-d", target, "-c",
-            "SELECT (SELECT version FROM cloud_schema) IN (1,2,3) AND (SELECT count(*) FROM accounts WHERE role='DOCTOR_ADMIN')=1 AND (SELECT count(*) FROM cloud_audit)>0",
+            "SELECT (SELECT version FROM cloud_schema) IN (1,2,3,4) AND (SELECT count(*) FROM accounts WHERE role='DOCTOR_ADMIN')=1 AND (SELECT count(*) FROM cloud_audit)>0",
             capture_output=True, text=True)
         if checked.stdout.strip() != "t":
             raise SystemExit("Restored facts did not match expected foundation")

@@ -1,12 +1,17 @@
 # 文档索引
 
-当前源码：电脑 **0.25.2**，独立 Android **0.5.2／code52**，云端 **0.3.2／schema3**。源码版本不等于本机已安装版本或公网部署；工作台为云分支的选择性整合。
+当前发行：电脑 **0.25.4**，独立 Android **0.5.4／code54**，公网云端 **0.3.5／schema4**。APK和网站已实际发布；DeepSeek 尚待管理员配置有效 Key，手机真机安装另验。
 
 **当前产品与开发基准统一为 `main`。** 旧版本不作为并列入口；尚未合并的队友开发成果继续保留。分支用途、归档与恢复规则见[分支说明](BRANCHES.md)。
 
 | 你要了解什么 | 文档 |
 | --- | --- |
 | 当前入口、数据归属、版本与未完成项 | [当前交接](HANDOFF.md) |
+| 本人管家、授权上下文、对话同步、用量与医生审核 | [个人管家与统一网关](cloud/PERSONAL_ASSISTANT.md)；[本轮验证](validation/PERSONAL_ASSISTANT_2026-10-15.md) |
+| 10月15日APK、官网、最新UI实际发布 | [发布验收](validation/PUBLIC_RELEASE_2026-10-15.md)；[官网与安装](cloud/PUBLIC_DOWNLOADS.md) |
+| 10月15日最新main与本地融合、两天提交明细 | [本次融合验证与提交汇总](validation/GITHUB_SYNC_2026-10-15.md) |
+| 10月13日main与本地运动功能融合 | [历史融合回归、APK与实际边界](validation/MAIN_WEARABLE_MERGE_2026-10-13.md) |
+| 本地保留的跟练、自动轨迹、穿戴与研究历史 | [本地专项索引](history/LOCAL_DOCUMENT_INDEX_2026-10-13.md)；[合并前交接](history/HANDOFF_LOCAL_INCREMENTS_2026-10-13.md) |
 | main、开发分支与旧版本归档规则 | [分支说明](BRANCHES.md) |
 | 启动、相机、评估、训练和报告 | [使用指南](USER_GUIDE.md) |
 | 开发环境和运行方式 | [开发说明](DEVELOPMENT.md) |

@@ -1,0 +1,87 @@
+{
+  "batch": "02",
+  "action": "006 E-LOW-001 扶稳站姿主动屈髋",
+  "record_version": "1.0",
+  "created_on": "2026-10-14",
+  "generation_mode": "built-in image_gen",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_action_library": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "images": [
+    {
+      "logical_id": "006-s01",
+      "intended_filename": "006_E-LOW-001_s01.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/006_E-LOW-001_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-098c-7f80-845f-b4d19cbbedd1/exec-c202e028-fa6b-4be6-81f8-be856a794c66.png",
+      "reused": false,
+      "reused_from": null,
+      "prompt": "Use case: scientific-educational.\nAsset type: one independent unlabelled rehabilitation demonstration photograph, action 006 E-LOW-001 step s01 preparation. Produce exactly one single image, no panels.\nInput images: reference-01.png, reference-02.png and reference-03.png are identity, clothing, photographic quality, soft studio light and gray-blue color references ONLY; their arm poses are not the requested action.\nScene and subject: the very same adult East Asian woman from all three supplied references, identical face, age, skin tone, black low ponytail, plain white short-sleeve T-shirt and fitted dark charcoal-gray full-length pants. Bare feet. Seamless muted gray-blue studio background and floor, natural soft contact shadows, realistic educational studio photography.\nFraming: portrait 1024x1536 requested. Fixed left-side camera view, subject facing frame right, entire head, both hands, complete legs, both bare feet and all support contact visible with comfortable margins; natural perspective and body proportions. Subject occupies about 80% of image height. Soft even light and modest empty space.\nAction: quiet neutral standing start. Both knees comfortably straight, both feet flat on the floor at about hip width; feet point forward to frame right with a slight width separation so both foot contacts can be seen. Torso, pelvis and head naturally upright. Her RIGHT (far-side) hand lightly rests at waist height on one sturdy fixed matte light-gray metal exercise support rail positioned in front of and slightly to her right. Rail is firmly floor-mounted, with a horizontal grip and two visible vertical posts; it must look stable, and the hand must visibly touch the horizontal grip with plausible fingers. Her LEFT near-side arm hangs relaxed along the body; left hand is away from the legs and does not lift a leg. The left testing leg is the nearer leg; both feet are down in this preparation.\nRequirements: believable hip-knee-ankle alignment; anatomically correct continuous joints, arm lengths, leg lengths, hands with normal fingers and bare feet with normal toes. Preserve the woman's appearance faithfully. Use exactly one woman and only the necessary support rail. No lifted knee, no leaning, no stepping or pulling on the rail. No furniture unrelated to this action, no shoes, no mat, no text, numbers, arrows, diagrams, watermark or logo.",
+      "sha256": "E1543B67F937A7476EC35A4B0C11317274E1872B8A5F1B5E8BBBC8BF79D1BCCD",
+      "width": 1024,
+      "height": 1536,
+      "review": {
+        "view_image_completed": true,
+        "status": "passed",
+        "identity_clothing_background": "同参考人物外观；黑马尾、白短袖和深灰裤；灰蓝背景及柔和棚拍光。",
+        "pose": "侧面全身、面朝右，双足落地、膝自然伸直、躯干直立；右手轻扶固定扶手，左手自然下垂。",
+        "support_contact": "右手触及水平扶手；双足全足掌着地；双立柱底板及螺栓可见。",
+        "anatomy_proportion": "头躯干和四肢比例自然、关节连接连续、完整双手和双足可见。",
+        "no_text_or_arrow": true
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-098c-7f80-845f-b4d19cbbedd1/exec-c202e028-fa6b-4be6-81f8-be856a794c66.png",
+          "prompt": "Use case: scientific-educational.\nAsset type: one independent unlabelled rehabilitation demonstration photograph, action 006 E-LOW-001 step s01 preparation. Produce exactly one single image, no panels.\nInput images: reference-01.png, reference-02.png and reference-03.png are identity, clothing, photographic quality, soft studio light and gray-blue color references ONLY; their arm poses are not the requested action.\nScene and subject: the very same adult East Asian woman from all three supplied references, identical face, age, skin tone, black low ponytail, plain white short-sleeve T-shirt and fitted dark charcoal-gray full-length pants. Bare feet. Seamless muted gray-blue studio background and floor, natural soft contact shadows, realistic educational studio photography.\nFraming: portrait 1024x1536 requested. Fixed left-side camera view, subject facing frame right, entire head, both hands, complete legs, both bare feet and all support contact visible with comfortable margins; natural perspective and body proportions. Subject occupies about 80% of image height. Soft even light and modest empty space.\nAction: quiet neutral standing start. Both knees comfortably straight, both feet flat on the floor at about hip width; feet point forward to frame right with a slight width separation so both foot contacts can be seen. Torso, pelvis and head naturally upright. Her RIGHT (far-side) hand lightly rests at waist height on one sturdy fixed matte light-gray metal exercise support rail positioned in front of and slightly to her right. Rail is firmly floor-mounted, with a horizontal grip and two visible vertical posts; it must look stable, and the hand must visibly touch the horizontal grip with plausible fingers. Her LEFT near-side arm hangs relaxed along the body; left hand is away from the legs and does not lift a leg. The left testing leg is the nearer leg; both feet are down in this preparation.\nRequirements: believable hip-knee-ankle alignment; anatomically correct continuous joints, arm lengths, leg lengths, hands with normal fingers and bare feet with normal toes. Preserve the woman's appearance faithfully. Use exactly one woman and only the necessary support rail. No lifted knee, no leaning, no stepping or pulling on the rail. No furniture unrelated to this action, no shoes, no mat, no text, numbers, arrows, diagrams, watermark or logo.",
+          "selected": true,
+          "review_status": "passed"
+        }
+      ]
+    },
+    {
+      "logical_id": "006-s02",
+      "intended_filename": "006_E-LOW-001_s02.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/006_E-LOW-001_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-098c-7f80-845f-b4d19cbbedd1/exec-7834dd4e-d140-4cc2-be78-8471e137d7ac.png",
+      "reused": false,
+      "reused_from": null,
+      "prompt": "Use case: scientific-educational.\nAsset type: single unlabelled rehabilitation demonstration photograph, action 006 E-LOW-001 step s02 active hip flexion.\nInput images: FIRST image is the approved step s01 preparation and is the exact scene/composition/identity reference. The following three images are original identity, white shirt, charcoal pants, black ponytail, photographic style and gray-blue background references. Produce exactly one independent image without panels.\nPrimary request: derive the second posture of this same photograph by changing only the LEFT near-camera leg from neutral standing to an actively raised bent knee. Preserve the woman, face, hair, plain white short-sleeve T-shirt, fitted charcoal-gray pants, bare feet, floor, gray-blue backdrop, soft studio lighting, shadows, full-body scale, 1024x1536 portrait framing, camera and the sturdy floor-bolted support rail from image 1.\nAction detail: the woman still faces frame right, fixed left-side full-body camera. Her RIGHT far-side hand lightly contacts exactly the same waist-height horizontal rail at the same location; no heavy pull and no change to the rail. Her LEFT near-side hand remains naturally lowered next to her trunk and does NOT touch or pull the leg. Her RIGHT support foot stays fully flat on the floor at exactly its original position, support knee comfortably straight. Slowly active LEFT hip flexion shown at a comfortable endpoint: bring the near LEFT knee forward and up, with the knee bent approximately 90 degrees, left thigh visibly lifted forward approximately 65–75 degrees from vertical, and the entire left bare foot clearly off the floor; lower leg hangs naturally down beneath the knee. The raised knee and foot must be clearly distinguishable from the planted leg.\nTorso, pelvis, shoulders and head remain naturally upright and aligned with no backward trunk lean or lumbar arch and no hip hike. Only one clear static endpoint. The pose is active knee lifting, no hands holding the knee. Show complete head, both hands, full raised and support feet, all joints and rail-ground contacts without crop.\nAnatomy and style: photorealistic studio educational photography, same adult East Asian woman as all input references, natural arm and leg lengths, anatomically continuous hip-knee-ankle connections, realistic hands with normal fingers, realistic toes, no duplicate limbs. No text, labels, numbers, arrows, motion trail, watermark, logos, shoes, socks or unrelated objects.",
+      "sha256": "5720920B4F0F90200DEA055CFD46062F145CA7CFFBD6F32244FC44B7800672FE",
+      "width": 1024,
+      "height": 1536,
+      "review": {
+        "view_image_completed": true,
+        "status": "passed",
+        "identity_clothing_background": "同s01人物、黑马尾、白短袖、深灰裤、灰蓝背景及柔光一致。",
+        "pose": "同侧面全身机位、面朝右；近侧左腿主动屈髋抬膝，膝屈约90度、测试足离地；躯干直立、无手抱拉。",
+        "support_contact": "右手持续轻扶同一水平扶手；右支撑足全足掌落地。与s01对照足部投影有小幅位置变化，接触与支撑姿态仍清楚；按可见姿势教学验收，未主张像素配准。",
+        "anatomy_proportion": "四肢比例自然、关节连接连续，支撑腿与抬腿可辨，完整双手及双足可见。",
+        "no_text_or_arrow": true,
+        "group_invariants": "人物尺度、相机、扶手、背景和躯干姿势保持一致。"
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-098c-7f80-845f-b4d19cbbedd1/exec-7834dd4e-d140-4cc2-be78-8471e137d7ac.png",
+          "prompt": "Use case: scientific-educational.\nAsset type: single unlabelled rehabilitation demonstration photograph, action 006 E-LOW-001 step s02 active hip flexion.\nInput images: FIRST image is the approved step s01 preparation and is the exact scene/composition/identity reference. The following three images are original identity, white shirt, charcoal pants, black ponytail, photographic style and gray-blue background references. Produce exactly one independent image without panels.\nPrimary request: derive the second posture of this same photograph by changing only the LEFT near-camera leg from neutral standing to an actively raised bent knee. Preserve the woman, face, hair, plain white short-sleeve T-shirt, fitted charcoal-gray pants, bare feet, floor, gray-blue backdrop, soft studio lighting, shadows, full-body scale, 1024x1536 portrait framing, camera and the sturdy floor-bolted support rail from image 1.\nAction detail: the woman still faces frame right, fixed left-side full-body camera. Her RIGHT far-side hand lightly contacts exactly the same waist-height horizontal rail at the same location; no heavy pull and no change to the rail. Her LEFT near-side hand remains naturally lowered next to her trunk and does NOT touch or pull the leg. Her RIGHT support foot stays fully flat on the floor at exactly its original position, support knee comfortably straight. Slowly active LEFT hip flexion shown at a comfortable endpoint: bring the near LEFT knee forward and up, with the knee bent approximately 90 degrees, left thigh visibly lifted forward approximately 65–75 degrees from vertical, and the entire left bare foot clearly off the floor; lower leg hangs naturally down beneath the knee. The raised knee and foot must be clearly distinguishable from the planted leg.\nTorso, pelvis, shoulders and head remain naturally upright and aligned with no backward trunk lean or lumbar arch and no hip hike. Only one clear static endpoint. The pose is active knee lifting, no hands holding the knee. Show complete head, both hands, full raised and support feet, all joints and rail-ground contacts without crop.\nAnatomy and style: photorealistic studio educational photography, same adult East Asian woman as all input references, natural arm and leg lengths, anatomically continuous hip-knee-ankle connections, realistic hands with normal fingers, realistic toes, no duplicate limbs. No text, labels, numbers, arrows, motion trail, watermark, logos, shoes, socks or unrelated objects.",
+          "selected": true,
+          "review_status": "passed_with_group_note",
+          "note": "支撑足与s01投影略有变化，已记录。"
+        },
+        {
+          "attempt": 2,
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-098c-7f80-845f-b4d19cbbedd1/exec-9c2f2ddb-116b-4bb3-b3e3-6a928fee1228.png",
+          "prompt": "Use case: scientific-educational.\nAsset type: one unlabelled rehabilitation demonstration photograph, 006 E-LOW-001 s02, precise correction.\nInput image 1: the raised-knee photograph is the edit target. Input image 2: the two-feet-standing photograph is the exact reference for the original SUPPORT FOOT POSITION and unchanged scene. Input images 3, 4, 5 are original woman identity and photographic style references.\nMake one targeted correction to input image 1: restore the planted RIGHT support leg and foot to the exact position of the FAR foot in image 2. At 1024x1536, that original far foot has its heel around x355,y1340, ankle around x395,y1308, toe-tip around x520,y1350, and entire sole flat on the same floor. Keep this right foot fixed there, pointing to frame right. The raised LEFT knee remains raised forward with about 90-degree knee bend and bare foot off the floor. Adjust the support leg naturally from hip to original support-foot anchor with continuous normal knee and ankle anatomy. It is a supported standing knee lift with the same support foot, NOT a step.\nKeep EVERYTHING else from image 1 invariant: same woman's face and body, black ponytail, white T-shirt, dark charcoal pants, the raised leg pose and free left hand, right hand lightly resting on identical bolted gray support rail, upright torso without backward lean, camera viewpoint, frame crop, body scale, gray-blue background, original rail position and lighting. One woman, full head/hands/feet/contact points visible, bare feet with normal toes, realistic anatomy and proportions, single photograph. No text, arrows, labels, numbers, watermark, logos or extra objects.",
+          "selected": false,
+          "view_image_completed": true,
+          "review_status": "not_selected",
+          "note": "针对支撑足原落点修订；画面接触正确，但落点未实质改变，相比初版无显著优势，未将修订另拷贝到交付目录。"
+        }
+      ]
+    }
+  ]
+}

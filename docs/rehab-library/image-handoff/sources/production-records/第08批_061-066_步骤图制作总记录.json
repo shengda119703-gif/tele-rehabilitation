@@ -1,0 +1,462 @@
+{
+  "version": "1.0",
+  "date": "2026-10-14",
+  "batch": "第08批",
+  "requested_frames": [
+    "061-s02",
+    "062-s01",
+    "062-s02",
+    "062-s03",
+    "063-s01",
+    "063-s02",
+    "064-s01",
+    "065-s01",
+    "065-s02",
+    "066-s01"
+  ],
+  "source_plan": "E:\\git冲突问题\\rehab image\\动作分步骤示范图制作清单_v1.0.md",
+  "source_plan_sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+  "method": "built-in image_gen, 7 accepted new frames and 3 byte-preserving reviewed original copies; no API/CLI or pixel editing",
+  "selected_frames": 10,
+  "adopted_new_frames": 7,
+  "reused_frames": 3,
+  "per_action_counts": {
+    "064": 1,
+    "066": 1,
+    "065": 2,
+    "063": 2,
+    "061": 1,
+    "062": 3
+  },
+  "qa_scope": "Each selected PNG actually viewed; pose, identity, proportions, object/support contact and stage checked; PNG headers, hashes and requested scope verified.",
+  "selection_notes": [
+    "本批恰为用户指定的10张；061仅s02、066仅s01，不表示6套动作均已完整。",
+    "061-s02、064-s01、065-s02复用审查合格原图，字节未改。",
+    "062统一灰杯与右肘支持；s03采用落桌后半松握修订版。",
+    "063为单右掌组，s02采用_v2；掌与足站位固定，前臂趋平和小幅靠墙使腕姿变化可辨。",
+    "外部与仓库清单仅来源链接一行不同，动作条目一致；两个SHA均保留。",
+    "原单图、废弃候选和共享旧口径进度保留；照片仅表述姿势，不证明肌力、负荷或精确角度。"
+  ],
+  "repository_plan_sha256": "398BD1C7E9F68435B3C14E91AF70E5CCC86E78353040F0179B483EFA3FFE87EB",
+  "frames": [
+    {
+      "sequence": 61,
+      "id": "E-AXU-022",
+      "name": "已知轻负荷弯举功能任务",
+      "category": "assess",
+      "step": 2,
+      "file": "061_E-AXU-022_s02.png",
+      "selected_source_path": "E:/git冲突问题/rehab image/assess/steps/061_E-AXU-022_s02.png",
+      "sha256": "EC4242B166D181C7847A3770039F719248441467FBCEFACBAF2FAD345B53C8F0",
+      "bytes": 1655789,
+      "width": 1122,
+      "height": 1402,
+      "reuse": true,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已实际查看原图：人物站位躯干直立，右上臂靠近体侧，屈肘将同一小灰哑铃送近肩，肩不耸起、腕自然、握持和完整手可见，面部服装背景符合参考。",
+        "limitations": [
+          "本批仅包含s02；当前未发现独立s01，未把本终点登记为起点。",
+          "物体质量须按原计划记录，不能从照片判定。"
+        ]
+      },
+      "record_file": "第08批步骤_061_064-066_制作记录.json",
+      "prompt": null,
+      "input_references": [
+        "E:/git冲突问题/rehab image/assess/061_E-AXU-022_已知轻负荷弯举功能任务.png"
+      ],
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/061_E-AXU-022_已知轻负荷弯举功能任务.png",
+          "sha256": "EC4242B166D181C7847A3770039F719248441467FBCEFACBAF2FAD345B53C8F0"
+        }
+      ],
+      "tool_output_path": null,
+      "external_record_path": "E:\\git冲突问题\\rehab image\\第08批步骤_061_064-066_制作记录.json"
+    },
+    {
+      "sequence": 62,
+      "id": "E-AXU-029",
+      "name": "已知轻物握持与提放功能观察",
+      "category": "assess",
+      "step": 1,
+      "file": "062_E-AXU-029_s01.png",
+      "selected_source_path": "E:/git冲突问题/rehab image/assess/steps/062_E-AXU-029_s01.png",
+      "sha256": "6252B26034D0BB27A652079651F84854B020D98A1D9B968789BCBADB1845DD4F",
+      "bytes": 1750192,
+      "width": 1122,
+      "height": 1402,
+      "reuse": false,
+      "qa": {
+        "accepted": true,
+        "limitations": [],
+        "reviewed": true,
+        "observation": "通过。与人物参考保持同一女性面貌、黑马尾、白T与深灰裤；灰蓝背景和灰桌椅统一。右肘及大部分右前臂真实接桌，右腕接近自然直线，右手指围握灰杯握把，杯底平贴桌面并有紧贴接触影。左手独立放左大腿未帮助。肩未耸起，人体比例正常，手指没有明显异常。无文字、箭头或拼图。"
+      },
+      "record_file": "第08批步骤_062_制作记录.json",
+      "prompt": "Use case: scientific-educational. Create ONE photorealistic rehabilitation demonstration photograph, step 01 of a three-frame sequence for seated grasp-lift-return of a known lightweight object.\nInputs: images 1-3 are identity, ponytail, wardrobe, lighting and gray-blue background references; image 4 is a supporting reference for the same seated woman, plain gray chair, plain gray table, and plain light-gray cup. The reference 4 pose has an unsupported elbow: correct that support setting for this new three-step sequence, do not copy that unsupported pose.\nSubject: exactly the same adult East Asian woman as reference 1-3, black ponytail, plain white short-sleeved crewneck T-shirt and dark charcoal trousers. Upright stable sitting on the gray chair, body facing right, shoulders relaxed and level, torso vertical.\nScene: gray-blue seamless studio background, softly lit real skin and realistic anatomy. Oblique right-side view near the working arm, portrait composition showing head, shoulders, both elbows, both hands, table and lap, uncropped action hand and cup.\nLocked setup for all 3 steps: flat matte gray tabletop at seated elbow height, near edge just ahead of torso. Her RIGHT upper arm remains close to her torso. The RIGHT ELBOW and the proximal third of the forearm rest firmly on the table at its near edge, with unmistakable real table support visible. Right forearm extends forward on the tabletop toward the cup. Left hand remains separately relaxed on her left thigh and does not help.\nObject: exactly one small lightweight empty cylindrical light-gray cup, matte finish, no labels, no text, one simple D-shaped handle on its left side facing the woman's hand, consistent with reference 4. Cup about 10 cm tall, upright.\nStep 01: right fingers comfortably curl through and around the cup handle, thumb above handle; wrist straight and natural, roughly aligned with forearm, no sharp flexion. Cup bottom rests fully on the tabletop with obvious contact and a tight contact shadow, not floating. The cup is supported by the table, ready to lift. Right elbow remains visibly on tabletop. Camera must clearly show hand-handle contact and cup-bottom-table contact. Natural proportional fingers, no merged hands, no extra objects. This is one still photograph: no arrows, no captions, no letters, no labels, no collage, no panel borders, no watermark.",
+      "input_references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/062_E-AXU-029_已知轻物握持与提放功能观察.png"
+      ],
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/assess/062_E-AXU-029_已知轻物握持与提放功能观察.png",
+          "sha256": "8F0D0B1CA81673BCB3843CA85A01BEFF601F2DBC37ACDFE38D7B9CA1393864F9"
+        }
+      ],
+      "tool_output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-439d-7460-8cac-36e4166971be/exec-9e63cedf-2bab-4e27-a303-e0c79c51e1d1.png",
+      "external_record_path": "E:\\git冲突问题\\rehab image\\第08批步骤_062_制作记录.json"
+    },
+    {
+      "sequence": 62,
+      "id": "E-AXU-029",
+      "name": "已知轻物握持与提放功能观察",
+      "category": "assess",
+      "step": 2,
+      "file": "062_E-AXU-029_s02.png",
+      "selected_source_path": "E:/git冲突问题/rehab image/assess/steps/062_E-AXU-029_s02.png",
+      "sha256": "3F3D993E1CFC840902F0610A434F11ACFFACDE3B6FCB53288E09C204B935C773",
+      "bytes": 1688399,
+      "width": 1122,
+      "height": 1402,
+      "reuse": false,
+      "qa": {
+        "accepted": true,
+        "limitations": [],
+        "reviewed": true,
+        "observation": "通过。单张可见杯底与桌面约5–7厘米明显间隙，杯体直立且形状、颜色、握把与s01一致；右手稳握杯把，右腕仍接近中立，右肘保留原桌边接触支持，前臂绕支撑肘轻抬。肩、躯干、相机、桌椅与s01位置一致，无明显耸肩。左手仍在左腿未代持。人物及无字无箭头规范通过。"
+      },
+      "record_file": "第08批步骤_062_制作记录.json",
+      "prompt": "Use case: identity-preserve and scientific-educational.\nImage 1 is the accepted step 01 photograph and the ONLY composition/edit target. Images 2-4 are identity references. Create ONE step 02 photograph by preserving exactly this person's face, black ponytail, white T-shirt, charcoal pants, gray-blue backdrop, lighting, camera viewpoint, portrait crop, gray chair, gray table, cup design and table geometry.\nChange ONLY her right forearm-and-hand/cup pose into a small controlled lift from the tabletop. Keep right shoulder and upper arm exactly in place, relaxed and near torso; keep right ELBOW in precisely the same supported place ON THE TABLE. The elbow and proximal forearm must remain clearly resting on the tabletop. Rotate the distal right forearm upward gently about the supported elbow so the hand and cup rise only about 5-7 cm. Right wrist stays natural and straight, aligned with forearm. Right fingers continue the exact realistic full grip around the cup handle and thumb on top. The SAME plain matte light-gray cylindrical cup remains upright, same single D-shaped handle, same size and shape. There must be an unmistakable 5-7 cm gap of visible tabletop/background between the cup bottom and tabletop; cup does not touch table; modest shadow falls separately beneath it. This is a short steady hold, not a sip: cup stays far below mouth. Left hand remains on left thigh, clearly separate, no help, no torso lean, no shoulder shrug. All invariants from image 1 stay fixed. Natural anatomy and realistic hand-handle contact. No additional objects, no captions, no arrows, no labels, no lettering, no collage or watermark.",
+      "input_references": [
+        "E:/git冲突问题/rehab image/assess/steps/062_E-AXU-029_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/steps/062_E-AXU-029_s01.png",
+          "sha256": "6252B26034D0BB27A652079651F84854B020D98A1D9B968789BCBADB1845DD4F"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        }
+      ],
+      "tool_output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-439d-7460-8cac-36e4166971be/exec-b215a089-2cc7-4e01-ad5d-6b8778520cf9.png",
+      "external_record_path": "E:\\git冲突问题\\rehab image\\第08批步骤_062_制作记录.json"
+    },
+    {
+      "sequence": 62,
+      "id": "E-AXU-029",
+      "name": "已知轻物握持与提放功能观察",
+      "category": "assess",
+      "step": 3,
+      "file": "062_E-AXU-029_s03.png",
+      "selected_source_path": "E:/git冲突问题/rehab image/assess/steps/062_E-AXU-029_s03.png",
+      "sha256": "1EACD077B0BA66F136FD9918060A93C326BB346B5695F3884A2A80C85DECB06C",
+      "bytes": 1672555,
+      "width": 1122,
+      "height": 1402,
+      "reuse": false,
+      "qa": {
+        "accepted": true,
+        "limitations": [],
+        "reviewed": true,
+        "observation": "通过。同一灰杯已完整回到桌面，杯底贴桌并有紧贴接触影；右肘及前臂回原支持位，右腕自然。右手已从s01握拳变为半松开：拇指和靠近握把的指尖保留轻接触，其他手指明显展开，可见握把内部空隙；明确表达落桌后准备松开。人物、肩和躯干、桌椅、背景、机位保持一致；左手不帮助，手部五指及比例无明显异常。无文字、箭头或拼图。"
+      },
+      "record_file": "第08批步骤_062_制作记录.json",
+      "prompt": "Use case: precise-object-edit and scientific-educational. Edit ONLY the RIGHT HAND FINGERS in input image 1. Keep every other pixel-level composition feature stable: face, ponytail, body, shoulder, forearm, supported elbow, tabletop, chair, left hand on thigh, cup position, cup contact shadow, lighting and background.\nThis is the final return-to-table and release-preparation step of a rehabilitation grasp-lift-return sequence. The gray cup has already been returned and its entire bottom remains firmly resting on the table in the exact same place. Keep this unmistakable full tabletop contact.\nMandatory visible change: her right hand must now be visibly RELAXING ITS GRIP at the cup handle. The hand should be half open, not a clenched fist. Her thumb gently touches the upper handle and her index fingertip is still lightly touching its outer edge, while her middle, ring and little fingers are clearly uncurled in a loose relaxed curve, withdrawn a little toward her own body, separated from the handle opening by a visible small space. Keep the hand close to the handle, not completely withdrawn. Show anatomically correct five digits with realistic joints and skin. Hand and wrist proportional, wrist remains neutral, forearm and elbow still resting on table. No change to gray cup shape, size, single handle, tabletop location, or any other object. The cup is supported by the table, no longer actively grasped for lifting.\nThis specific open/relaxed finger pose must visibly distinguish the image from a firm closed-fist grip. No additional hands, no extra objects, no text, no arrows, no collage or watermark.",
+      "input_references": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e6-439d-7460-8cac-36e4166971be/exec-25f580ea-1bdf-487b-98da-9ec8cffa5825.png"
+      ],
+      "input_source_hashes": [
+        {
+          "path": "C:/Users/Administrator/.codex/generated_images/01a138e6-439d-7460-8cac-36e4166971be/exec-25f580ea-1bdf-487b-98da-9ec8cffa5825.png",
+          "sha256": "9250DCE2137C1C8E06E1B016D7BD1396FD9BA8593B813E5119626B4647313DB3"
+        }
+      ],
+      "tool_output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-439d-7460-8cac-36e4166971be/exec-1e665f2d-7398-4d39-8001-54a182a5ed3e.png",
+      "external_record_path": "E:\\git冲突问题\\rehab image\\第08批步骤_062_制作记录.json"
+    },
+    {
+      "sequence": 63,
+      "id": "E-AXU-030",
+      "name": "墙面手掌承重的腕背伸观察",
+      "category": "assess",
+      "step": 1,
+      "file": "063_E-AXU-030_s01.png",
+      "selected_source_path": "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s01.png",
+      "sha256": "1995FB6EA275D6AF29F2582BBC76AFE5316F5B594744D95A0F565B4D595434A5",
+      "bytes": 1716474,
+      "width": 1122,
+      "height": 1402,
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "method": "实际保存PNG经view_image完整查看；返回MIME需改传image/png后才正确显示，文件像素未编辑。",
+        "accepted": true,
+        "observation": "人物参考外观、服装和灰蓝色棚拍背景一致。全身与两鞋入镜，双脚站稳支持。仅右手贴墙，左手自然垂放且可见。右肘保留弯曲，前臂从肘向腕略上斜；掌根及指部轮廓与墙连续接触，腕背伸起点舒适，手腕、肘和前臂连接自然。",
+        "limitations": [
+          "斜侧面可见指部叠合轮廓与拇指，不能从此角度逐根核验全部隐藏指面。",
+          "单幅生成照片不能证明实际掌压、可承重结论或医疗评估有效性。"
+        ]
+      },
+      "record_file": "第08批步骤_063_制作记录.json",
+      "prompt": "Use case: scientific-educational. Produce ONE photorealistic rehabilitation instructional photograph for E-AXU-030 step 01, comfortable initial standing palm-to-wall wrist position. Input images 1–3 are solely the identity, clothes, photographic light and gray-blue studio COLOR references: the SAME adult East Asian woman, same facial shape, skin tone, body build, black low ponytail, plain white short-sleeve T-shirt, fitted dark charcoal gray long pants. Do not copy their arm exercises. A matte gray-blue vertical wall stands on the right, continuous matching studio floor and backdrop, soft even light with natural shadows. Full-body slightly oblique side camera from her RIGHT side: show her face in profile, right shoulder, right elbow, right wrist/hand in readable silhouette, wall contact, both entire shoes and floor, no cropping. She stands facing the wall, feet hip-width on level floor, both soles and heels supported, light gray trainers, upright relaxed torso. Only her RIGHT testing hand is lightly flat against the wall at comfortable lower-chest height, fingers naturally pointing UP, all five anatomically normal digits, palm heel visibly making contact with the opaque wall. Her LEFT arm hangs naturally beside her body, not touching the wall. Her right elbow is gently bent, slightly BELOW the wall-contact wrist, so the forearm slopes gently upward toward the wall. The right wrist has a modest comfortable extension angle (not an extreme right angle), shoulders relaxed. Choose a stand-off distance enabling this light-contact initial posture, not a push-up. Keep body proportions, upper-arm and forearm lengths and joint connections realistic. SINGLE unlabelled photograph, no arrows, numbers, text, overlays, collage, diagram, watermark, extra person, brace, band, table, chair, or weights. Leave modest space around full figure and retain large enough right hand detail.",
+      "input_references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        }
+      ],
+      "tool_output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-77cb-71c2-a353-4075a6328b3b/exec-cbd68dcf-382f-4a61-b782-87b027fac355.png",
+      "external_record_path": "E:\\git冲突问题\\rehab image\\第08批步骤_063_制作记录.json"
+    },
+    {
+      "sequence": 63,
+      "id": "E-AXU-030",
+      "name": "墙面手掌承重的腕背伸观察",
+      "category": "assess",
+      "step": 2,
+      "file": "063_E-AXU-030_s02.png",
+      "selected_source_path": "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s02_v2.png",
+      "sha256": "FA6CB85366172186B1E50406E94E76A1589BAEDBF836BCB9405448C9163D18D2",
+      "bytes": 1632322,
+      "width": 1122,
+      "height": 1402,
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "method": "实际保存PNG经view_image完整查看；返回MIME需改传image/png后才正确显示，文件像素未编辑。",
+        "accepted": true,
+        "observation": "头胸位置较s01清楚向墙靠近，整体保持从踝起轻前倾而无腰部折叠。两鞋保持原站位、鞋底及足跟仍接地。右掌根与指部仍在原墙接触高度；右肘保持弯曲，前臂由s01上斜转为接近水平，腕背伸变化可辨，无手掌离墙或明显极端压腕。左手继续自然下垂，人物、机位、背景和全身比例一致。",
+        "limitations": [
+          "生成编辑造成右上臂/前臂轮廓与衣袖小幅差异，鞋与掌边缘也有少量生成差异；可用于体位方向对照，不可按像素差推精确腕角、位移或负荷。",
+          "侧面指部有遮挡；照片不能证明真实轻压力、疼痛耐受、腕骨稳定性或测试有效性。"
+        ]
+      },
+      "record_file": "第08批步骤_063_制作记录.json",
+      "prompt": "Precise anatomy correction of this ONE rehabilitation photograph. The input image is the edit target. Preserve EVERYTHING outside the woman's RIGHT test arm: exact face, head/neck, torso lean, white T-shirt, black ponytail, left arm/hand, gray pants, legs, both gray shoes at identical image positions, wall contact point and height, entire wall/floor, camera, crop, lighting and scale. Keep the RIGHT PALM and all fingers flat against the wall at exactly their current location, fingers upward. Fix only the RIGHT ELBOW / forearm arrangement: raise the RIGHT elbow modestly upward so the forearm approaches the unchanged wall-contact wrist on a nearly horizontal line, with only a slight upward incline. In this image the elbow is currently much too LOW, making the forearm rise steeply to the wrist. Lift that elbow into a natural position approximately 50–60 image pixels higher; keep the upper arm and forearm their natural original lengths and the elbow slightly flexed. The wrist/palm remain on wall. Raising the elbow this way creates visibly GREATER comfortable WRIST EXTENSION: the palm remains vertical and the forearm is now almost horizontal, making a natural rounded visible backward bend at the wrist. Continuous normal wrist anatomy, no severe forced angle, no detached or stretched elbow. Keep the same gently forward-leaning chest position and fixed feet; do not lean further or move shoulders. One single unchanged scene, no text, numbers, arrows, panels, watermark, extra digits, extra limb, band or equipment.",
+      "input_references": [
+        "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s02.png"
+      ],
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/steps/063_E-AXU-030_s02.png",
+          "sha256": "BDB6B7F950AABCB14C4E55A7053C9C2DCA6A00DC4E7B24E0FF78F575BCE02F96"
+        }
+      ],
+      "tool_output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-77cb-71c2-a353-4075a6328b3b/exec-18d3f870-efec-4183-a7a7-a59be3bada80.png",
+      "external_record_path": "E:\\git冲突问题\\rehab image\\第08批步骤_063_制作记录.json"
+    },
+    {
+      "sequence": 64,
+      "id": "T-LOW-001",
+      "name": "股四头肌等长收缩",
+      "category": "train",
+      "step": 1,
+      "file": "064_T-LOW-001_s01.png",
+      "selected_source_path": "E:/git冲突问题/rehab image/train/steps/064_T-LOW-001_s01.png",
+      "sha256": "4D96AB843FE8941EBC31E0BCF05D7A88B3EE13159C5A28903CBDD6E3E7A62DBD",
+      "bytes": 1572940,
+      "width": 1122,
+      "height": 1402,
+      "reuse": true,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已实际查看原图：仰卧于灰色垫、测试腿舒适伸展，膝下薄折毛巾与膝后接触可辨，双臂放松、完整双脚可见，头后有低垫，体位和比例自然。",
+        "limitations": [
+          "静态照片不证明收缩强度；放松→收紧→短时保持→放松由排版文字说明。"
+        ]
+      },
+      "record_file": "第08批步骤_061_064-066_制作记录.json",
+      "prompt": null,
+      "input_references": [
+        "E:/git冲突问题/rehab image/train/064_T-LOW-001_股四头肌等长收缩.png"
+      ],
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/train/064_T-LOW-001_股四头肌等长收缩.png",
+          "sha256": "4D96AB843FE8941EBC31E0BCF05D7A88B3EE13159C5A28903CBDD6E3E7A62DBD"
+        }
+      ],
+      "tool_output_path": null,
+      "external_record_path": "E:\\git冲突问题\\rehab image\\第08批步骤_061_064-066_制作记录.json"
+    },
+    {
+      "sequence": 65,
+      "id": "T-LOW-002",
+      "name": "滑跟屈膝",
+      "category": "train",
+      "step": 1,
+      "file": "065_T-LOW-002_s01.png",
+      "selected_source_path": "E:/git冲突问题/rehab image/train/steps/065_T-LOW-002_s01.png",
+      "sha256": "69C4D7E5BFAE042D8DE7A6BDEE2F885E8C1D994386966C2FB85F1F60284BF83B",
+      "bytes": 1577493,
+      "width": 1122,
+      "height": 1402,
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已实际查看最终PNG，仰卧测试近侧腿舒适伸展，脚跟接触灰滑布，头垫、肩背骨盆落垫、手位和机位与原s02对应。双腿长度及膝踝连接自然，完整手脚可見，未出现抬腿或悬跟；独立审查通过。",
+        "limitations": [
+          "滑布褶边与s02略有生成差异，不影响接触辨认。"
+        ]
+      },
+      "record_file": "第08批步骤_061_064-066_制作记录.json",
+      "prompt": "Use case: scientific-educational. Single photorealistic rehabilitation photograph, one pose only. Images 1–3 are IDENTITY and STYLE references: lock the same adult East Asian woman, exact face, natural body proportions, black ponytail, white short-sleeved T-shirt, dark gray trousers, soft studio light and pale gray-blue backdrop. Image 4 is the EDIT TARGET and camera/scene anchor for the heel-slide exercise. Preserve the woman's head and neck on the same low gray head cushion, supine torso, pelvis, resting hands, other leg, the long gray mat, camera viewpoint, framing, floor line, person scale and lighting. Change ONLY the near/test leg from bent to the STARTING position: straighten it comfortably alongside the other leg with both knees almost straight, the test heel resting down on the small thin folded gray sliding cloth. Move that SAME small cloth together with the heel away from her buttocks to beneath the EXTENDED test heel; no towel remains under the knee. The cloth is under the heel and clearly touching the mat. Both complete feet and toes, hip, knee and heel visible. The near leg remains separate and anatomically clear from the other leg. Ankles and toes relaxed naturally. No raised straight leg, no knee bending, no foot floating, no extra props, no straps, no weights. Keep the full original image canvas and crop; no text, arrows, numbers, watermark or panels. Intended as 065 T-LOW-002 step01.",
+      "input_references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/train/065_T-LOW-002_滑跟屈膝.png"
+      ],
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/train/065_T-LOW-002_滑跟屈膝.png",
+          "sha256": "9EC540BC4B60FD840201BCAF4F2B793AFFC91FE1FC13C8A02E8CC0E351F8A51E"
+        }
+      ],
+      "tool_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a138e5-347e-74a0-9647-d41ae402c6c8\\exec-ed799e37-c482-4239-ac3b-948727c0dfbd.png",
+      "external_record_path": "E:\\git冲突问题\\rehab image\\第08批步骤_061_064-066_制作记录.json"
+    },
+    {
+      "sequence": 65,
+      "id": "T-LOW-002",
+      "name": "滑跟屈膝",
+      "category": "train",
+      "step": 2,
+      "file": "065_T-LOW-002_s02.png",
+      "selected_source_path": "E:/git冲突问题/rehab image/train/steps/065_T-LOW-002_s02.png",
+      "sha256": "9EC540BC4B60FD840201BCAF4F2B793AFFC91FE1FC13C8A02E8CC0E351F8A51E",
+      "bytes": 1633868,
+      "width": 1122,
+      "height": 1402,
+      "reuse": true,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已实际查看原图：仰卧，近侧测试腿屈膝、脚跟连同脚底落在滑布上，脚跟未抬离垫面；另一腿舒适伸展，躯干安稳，双手放松、完整头脚可见。",
+        "limitations": [
+          "静态图仅示终点，滑动速度和回程由01→02→01及文字表达。"
+        ]
+      },
+      "record_file": "第08批步骤_061_064-066_制作记录.json",
+      "prompt": null,
+      "input_references": [
+        "E:/git冲突问题/rehab image/train/065_T-LOW-002_滑跟屈膝.png"
+      ],
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/train/065_T-LOW-002_滑跟屈膝.png",
+          "sha256": "9EC540BC4B60FD840201BCAF4F2B793AFFC91FE1FC13C8A02E8CC0E351F8A51E"
+        }
+      ],
+      "tool_output_path": null,
+      "external_record_path": "E:\\git冲突问题\\rehab image\\第08批步骤_061_064-066_制作记录.json"
+    },
+    {
+      "sequence": 66,
+      "id": "T-LOW-003",
+      "name": "坐姿伸膝：徒手至轻负荷",
+      "category": "train",
+      "step": 1,
+      "file": "066_T-LOW-003_s01.png",
+      "selected_source_path": "E:/git冲突问题/rehab image/train/steps/066_T-LOW-003_s01.png",
+      "sha256": "AE05722BD64469CCB3137D5863C475FE7013F0C65D135E062BE3FD6C0800EFAA",
+      "bytes": 1693655,
+      "width": 1122,
+      "height": 1402,
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已实际查看最终PNG，近侧测试小腿自然下垂，大腿臀部受同一椅面支持，双足落地；小腿与椅架之间留有活动空隙。躯干直稳、双手自然放大腿、无负重，人物椅子背景机位与原终点对应；独立审查通过。",
+        "limitations": [
+          "仅示准备位，本批未另制作s02。"
+        ]
+      },
+      "record_file": "第08批步骤_061_064-066_制作记录.json",
+      "prompt": "Use case: scientific-educational. Create a single photorealistic pose edit. Images1–3 are IDENTITY and STYLE references locking the same adult East Asian woman, exact face and black ponytail, white short-sleeved T-shirt, dark charcoal trousers, pale gray-blue studio backdrop, soft light and normal human proportions. Image4 is the EDIT TARGET for seated knee extension. Preserve its right-facing side camera, entire canvas and crop, person size, seated torso perfectly upright, head neutral, pelvis, thighs supported horizontally by the stable gray chair seat, both hands resting naturally on thighs, chair appearance and floor contacts. Change ONLY the near/test lower leg: lower it from the extended forward endpoint to the PREPARATION pose, bending the test knee naturally to about a right angle so that the shin hangs down freely from the seat edge, beside the other shin. Test thigh stays in complete contact with the seat, hip unchanged. Both bare feet complete and visible, placed naturally at or lightly touching the floor with test leg free to move; test knee and shin clearly separated from the chair front leg, with no chair bar or obstacle blocking the shin's forward path. The other leg stays in its original resting position. Natural limb lengths, continuous knee and ankle anatomy, relaxed toes. No ankle weights, elastic bands, dumbbells or extra props. No backward leaning, no thigh lifting, no dangling disconnected feet. Single photographed starting pose only, no text, arrows, numbers, watermark or panels. Intended as 066 T-LOW-003 step01.",
+      "input_references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/train/066_T-LOW-003_坐姿伸膝：徒手至轻负荷.png"
+      ],
+      "input_source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/train/066_T-LOW-003_坐姿伸膝：徒手至轻负荷.png",
+          "sha256": "CEE296FB5D51ABFDFE67C484551F00222A314553D9DDFDD245B3FA7EF6D430A0"
+        }
+      ],
+      "tool_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a138e5-347e-74a0-9647-d41ae402c6c8\\exec-710242a9-7a9f-40ee-9795-795ff3410537.png",
+      "external_record_path": "E:\\git冲突问题\\rehab image\\第08批步骤_061_064-066_制作记录.json"
+    }
+  ]
+}

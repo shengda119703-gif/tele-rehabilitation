@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "batch": "分步骤第03批",
+  "date": "2026-10-14",
+  "tool": "内置 image_gen",
+  "source_document": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "items": [
+    {
+      "action_sequence": 10,
+      "id": "E-LOW-005",
+      "name": "仰卧主动直腿抬高功能观察",
+      "step": "s01",
+      "phase_zh": "仰卧、双腿伸展、身体与双脚自然放稳。",
+      "prompt": "Use case: scientific-educational.\nAsset type: one independent photorealistic rehabilitation step demonstration photograph.\nInput images: images 1-3 are strict identity, clothing, photographic quality, light and gray-blue background references, not exercise pose instructions.\nSubject: EXACT SAME East Asian adult woman as all 3 references, same face, age, skin tone, body build and black ponytail; plain white short sleeve crewneck T-shirt, dark charcoal full length trousers; plain white unbranded low-profile thin-soled sneakers.\nScene: cool muted gray-blue seamless studio floor/backdrop, soft diffuse neutral studio light, natural soft shadows. A single thin dark charcoal nonslip exercise mat on the flat floor.\nComposition: wide landscape 3:2 single camera, normal 50mm perspective, low true side view with a very slight view from foot/front side to distinguish the two legs without foreshortening. Her head is at image LEFT and feet at image RIGHT. Whole body occupies roughly 80% of image width. Include full head, both hands, both complete shoes, entire mat with small comfortable margins. Camera about 45 cm above mat, horizontal lens and stable floor datum. No pillow, bed, chair, straps or medical equipment. Normal adult human proportions and continuous joints, exactly two arms/two legs, correct hands.\nAction 010 E-LOW-005 supine active straight-leg raise, basic assessment version with NON-TEST LEG STRAIGHT along the mat.\nStep 01 ONLY: she lies relaxed on her back, head, shoulders and pelvis resting on the mat. Both legs extended straight side by side and supported on the mat, knees comfortably straight. Both heels touch mat, toes point naturally slightly upwards. Arms relaxed long at her sides with both hands resting on mat. Show both feet distinctly, feet separated a little laterally (anatomical hip-width), no one leg stacked over other. Calm neutral face looking upwards, head and neck supported naturally.\nConstraints: a SINGLE clean photo, ONE person, ONE pose, no montage, inset, mirror, motion ghosts, arrows, number, text, labels, logos or watermark. Leave modest empty gray-blue space above body. Preserve identity/style of references.",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e2-8fbd-7342-9578-0499eeac4a8b/exec-c1b399c6-047c-4c2f-9390-0e0b24e8919b.png",
+      "filename": "010_E-LOW-005_s01.png",
+      "reused": false,
+      "QA": {
+        "passed": false,
+        "observations": "已实际看图：头肩与骨盆落垫，双腿伸展，双脚完整、脚跟接垫；近侧手完整可见，远侧臂位自然部分遮挡，未参与托扶；人物、服装、背景一致，人体比例自然。 交叉检查发现远手遮挡，未作为最终选用；修订版见对应_v2图片。"
+      },
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/010_E-LOW-005_s01.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "51C465171C768BC56279227F06ED865CEE72331A4B89E4C1F4BD3DBB681E0013",
+      "bytes": 1761165
+    },
+    {
+      "action_sequence": 10,
+      "id": "E-LOW-005",
+      "name": "仰卧主动直腿抬高功能观察",
+      "step": "s02",
+      "phase_zh": "主动抬起近相机側直腿，膝保持伸展，非测试腿继续伸直留垫。",
+      "prompt": "Use case: scientific-educational.\nAsset type: one independent photorealistic rehabilitation step demonstration photo.\nImage 1 is the exact composition/base frame for action 010 E-LOW-005 step 01. Images 2-4 are identity/clothing/gray-blue studio references.\nCreate STEP 02 for the same straight-leg raise. Preserve the exact woman, face, body build, black ponytail, white short sleeve shirt, dark charcoal long trousers, white unbranded thin-soled shoes. Preserve identical head-left/feet-right position, horizontal landscape 3:2 camera/framing/perspective/person scale, thin dark gray mat, gray-blue seamless studio, light, natural shadows. Head, upper back, pelvis, both arms and resting hands remain on mat in their EXACT positions. Head and neck remain relaxed, supported, no sit-up.\nCHANGE ONLY the near-camera leg: actively lift this whole leg from the hip approximately 40 degrees above the mat, maintaining the knee comfortably straight in its original extended alignment. The thigh, knee, shin, ankle form one continuous naturally proportioned long straight leg with foot relaxed, no knee bend. Raise the foot towards the upper right of the frame, full shoe visible. The FAR leg remains fully EXTENDED, straight and flat on mat in its EXACT original position and far heel remains in contact with mat. Clearly separate lifted near leg from far grounded leg so both knees and both shoes can be seen. No belt, hands pulling leg, straps or external aid. Pelvis stays level, resting on mat, no bridge or lumbar arch.\nA single woman in one pose, full head/hands/both shoes retained, anatomically correct normal adult thigh/calf lengths and feet, no extra limbs. No montage, text, arrow, numbers, logo, watermark or inset. Keep generous gray-blue empty space above.",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e2-8fbd-7342-9578-0499eeac4a8b/exec-7c894046-2edf-4ddc-839b-5aec1cef7261.png",
+      "filename": "010_E-LOW-005_s02.png",
+      "reused": false,
+      "QA": {
+        "passed": false,
+        "observations": "已实际看图：测试腿整体从髋抬起，膝保持伸展；另一腿仍伸直、脚跟接垫，骨盆和头肩留垫；没有屈膝抬腿、手拉腿或桥式。两帧相机、垫位、人物尺度与衣着一致，完整头部与双脚入镜，比例自然。 交叉检查发现远手遮挡，未作为最终选用；修订版见对应_v2图片。"
+      },
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/010_E-LOW-005_s02.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "265BB570EA2D0CF73B7D757753E1E4DA09294ADB27F9A6AB1CCE9ACE6BFE9DC1",
+      "bytes": 1698616
+    }
+  ],
+  "status": "superseded_by_010_v2",
+  "superseded_by": "第03批_010_修订子记录.json"
+}

@@ -1,0 +1,110 @@
+{
+  "record_version": "1.0",
+  "date": "2026-10-14",
+  "action": "119",
+  "action_id": "T-LOW-041",
+  "title": "支撑旁单腿触点平衡",
+  "method": "built-in image_gen__imagegen",
+  "specification": "E:\\git冲突问题\\rehab image\\动作分步骤示范图制作清单_v1.0.md",
+  "support_leg": "right",
+  "reaching_leg": "left",
+  "support_hand": "right",
+  "status": "s01 and s02 complete; s03 managed separately",
+  "assets": [
+    {
+      "step": "s01",
+      "status": "complete",
+      "prompt": "Use case: scientific-educational\nAsset type: a single unlabelled photographic rehabilitation exercise demonstration, action 119 T-LOW-041, frame s01.\nPrimary request: Create one highly realistic full-body studio photograph showing the neutral starting position for supported single-leg target-touch balance. Use the same East Asian adult woman from all three supplied identity references, identical natural face, age, body shape, black ponytail, plain white short-sleeved T-shirt and dark charcoal-gray long pants. Bare feet.\nInput images: Images 1, 2 and 3 are identity, clothing, photographic quality and gray-blue background references only. Their arm poses are not the exercise.\nScene/backdrop: clean gray-blue seamless studio wall and matching level nonslip floor. Beside her anatomical RIGHT side (viewer LEFT), place one sturdy waist-high gray horizontal handrail, fully fixed with two visible vertical posts bolted to the floor. Her RIGHT hand rests securely on this rail with visible fingers and contact; left arm relaxed beside the body.\nComposition/framing: portrait image, front view with only a slight front oblique angle so her feet and the floor distances are legible; full head, ponytail, complete hands, both bare feet, rail and its grounded supports included. Fixed camera eye level and natural 50 mm perspective; generous margin around all body parts. Woman centered.\nExact visible pose: her RIGHT leg is the test support leg, RIGHT sole fully flat on the floor directly below her right hip, RIGHT knee comfortably nearly straight and pelvis balanced over that right foot. Her LEFT non-support foot is gathered close beside the right ankle, LEFT knee slightly flexed, LEFT foot lifted just 1-2 cm from the floor and clearly not bearing weight. Torso relaxed and upright. No deep knee bend.\nTwo fixed small flat circular floor target discs must both be visible: one muted teal disc about 20 cm in FRONT of the gathered LEFT foot, closer to the camera; another muted blue disc about 20 cm to her LEFT side (viewer RIGHT). These are nearby easy targets, not distant athletic targets. Keep ample open floor around them. The two target discs are not under either foot in this starting frame.\nLighting: soft diffuse photographic studio light, realistic skin texture, soft shadows matching the source photographs.\nConstraints: only one clear pose; natural human proportions and correct hands and toes; exactly two legs, two arms and two target discs. The right supporting foot, rail, camera, body scale and target positions will be reused unchanged in the later frames.\nAvoid: any words, letters, numbers, arrows, logos, watermarks, collage, inset images, floating handrail, chair, shoe, exercise band, gym scenery, tiptoe supporting foot, lunge, left-foot weight bearing, exaggerated posture or cropped limbs.",
+      "reference_paths": [
+        "E:\\git冲突问题\\rehab image\\step-image-references\\reference-01.png",
+        "E:\\git冲突问题\\rehab image\\step-image-references\\reference-02.png",
+        "E:\\git冲突问题\\rehab image\\step-image-references\\reference-03.png"
+      ],
+      "source_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-ecf6-7132-af6f-c72aff1b9bcd\\exec-08e264be-80ed-4b8f-abd6-e1c5d3275727.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\119_T-LOW-041_s01.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "D967C85BB308668044CC62A18A25CD3C34BD0FAE447A62DD3A1EAEE599A5734C",
+      "visible_pose_review": {
+        "result": "passed",
+        "findings": [
+          "Right test-support foot is fully flat under the right hip; left knee is gently flexed and left foot gathered close to the right ankle, visibly off the floor.",
+          "Right hand has clear contact with a gray horizontal rail; two rail posts terminate in visible bolted floor bases.",
+          "Teal front target and blue lateral target are both visible and empty, close to the subject.",
+          "Same female photographic appearance, white short-sleeved shirt, dark charcoal pants, black ponytail, bare feet and gray-blue background.",
+          "Full head, both hands, both feet, rail supports and both target discs fit in frame; no text, numbers, arrows or watermarks."
+        ]
+      }
+    },
+    {
+      "step": "s02",
+      "status": "complete",
+      "prompt": "Use case: scientific-educational.\nEdit the single supplied starting-frame photograph to make frame s02 of supported target-touch balance.\nChange only the anatomical LEFT leg (viewer RIGHT). Extend that LEFT foot slightly FORWARD toward the camera until only its toe pads gently touch the existing teal FRONT floor disc, with the LEFT heel lifted a little. This is a light target touch; the LEFT foot does not carry her weight. No lunge and no forward body lean.\nThe anatomical RIGHT foot (viewer LEFT) stays completely flat in exactly the original location and remains the main support foot. Keep the RIGHT knee comfortable and nearly straight, the pelvis and upright torso over the RIGHT support leg, and the RIGHT hand on the same rail.\nStrictly preserve the woman's identity, face, black ponytail, gaze, white T-shirt, dark gray pants, bare feet, expression, body scale, full-body framing, photographic light, gray-blue backdrop and level floor. Preserve the rail, both visible grounded bolted posts, hand position, BOTH floor target discs at exactly the same positions, shapes, sizes and colors as the input. The teal disc remains in front, the blue lateral disc on viewer RIGHT remains empty. Only the LEFT leg and its local trouser folds may change.\nKeep complete head, hands, feet and all rail bases in frame. One realistic photograph, correct anatomy, no text, numbers, arrows, watermark, extra object, camera change, target relocation, mirrored leg or cropped limb.",
+      "reference_paths": [
+        "E:\\git冲突问题\\rehab image\\train\\steps\\119_T-LOW-041_s01.png"
+      ],
+      "source_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-ecf6-7132-af6f-c72aff1b9bcd\\exec-b9d94312-dd09-4b26-8486-f5eba6997fa4.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\119_T-LOW-041_s02.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "28225DC868DD496DB6F3008F456B174FA25D54329CB5681192FDB896E4C5551B",
+      "visible_pose_review": {
+        "result": "passed",
+        "findings": [
+          "Same right test-support foot remains flat in its original position, with upright torso retained over the support leg.",
+          "Left non-support foot reaches a short distance forward; left forefoot touches the floor at the rear edge of the teal front target, heel is lightly raised; no lunge posture.",
+          "Right hand contact and the gray rail with both bolted supports match s01.",
+          "Both fixed targets, full-body camera, scale, identity, clothing and gray-blue photographic scene match s01.",
+          "Complete head, hands, feet and rail bases remain in frame, with no text, numbers, arrows or watermarks."
+        ],
+        "limits": "Visible posture is checked; a static photograph does not measure actual limb loading."
+      },
+      "attempts": [
+        {
+          "step": "s02",
+          "status": "failed",
+          "prompt": "Use case: scientific-educational\nAsset type: one unlabelled photographic rehabilitation demonstration, action 119 T-LOW-041 frame s02.\nPrimary request: edit the supplied neutral starting-frame photo to show the SAME woman's LEFT non-support foot reaching to lightly touch the SAME teal FRONT target. Image 1 is the exact composition and exercise scene target; Images 2-4 are supporting identity references.\nChange only the LEFT leg and foot pose from Image 1: extend her anatomical LEFT leg a short distance FORWARD, toward the camera and to the already existing teal front disc. Set only the LEFT forefoot/toe pads lightly touching the teal disc, LEFT heel raised a little. Her LEFT leg must not carry her weight; it is a gentle target touch, not a forward step or lunge. LEFT knee comfortably nearly straight.\nThe anatomical RIGHT leg (viewer LEFT) remains the sole main support, RIGHT foot fully flat at EXACTLY the same pixel location as in Image 1, RIGHT knee comfortable and nearly straight. Pelvis and upright torso remain stacked over that RIGHT support foot, not shifted toward the reaching foot. RIGHT hand still rests on the same gray fixed rail at the same place, LEFT hand relaxed.\nInvariants: preserve woman identity, expression, gaze, face, ponytail, white T-shirt, charcoal long pants, bare feet, gray-blue wall and floor, soft natural light, rail geometry and grounded bolts, entire full-body portrait framing, camera position, focal length, body scale. Preserve BOTH target discs at EXACTLY their Image 1 positions, sizes and colors. Front teal disc stays below the left reaching forefoot; side blue disc remains empty on viewer RIGHT. Do not move, enlarge, remove or add floor targets.\nNatural anatomy with clear complete hands and feet, realistic skin and cloth. Keep head, full limbs, all toes, both handrail supports and both discs inside frame. Single pose, no montage.\nAvoid: any text, numbers, arrows, labels, logos, watermarks, lunge, forward weight transfer, right heel rise, right foot movement, swapped support leg, side reach, new disc, camera change, changed rail, shoes or extra props.",
+          "reference_paths": [
+            "E:\\git冲突问题\\rehab image\\train\\steps\\119_T-LOW-041_s01.png",
+            "E:\\git冲突问题\\rehab image\\step-image-references\\reference-01.png",
+            "E:\\git冲突问题\\rehab image\\step-image-references\\reference-02.png",
+            "E:\\git冲突问题\\rehab image\\step-image-references\\reference-03.png"
+          ],
+          "source_generated_path": null,
+          "final_path": null,
+          "tool_error": "image generation failed: network error: error sending request",
+          "visible_pose_review": {
+            "result": "not_reviewable",
+            "findings": [
+              "No image was returned by the built-in tool."
+            ]
+          }
+        },
+        {
+          "step": "s02",
+          "status": "complete",
+          "prompt": "Use case: scientific-educational.\nEdit the single supplied starting-frame photograph to make frame s02 of supported target-touch balance.\nChange only the anatomical LEFT leg (viewer RIGHT). Extend that LEFT foot slightly FORWARD toward the camera until only its toe pads gently touch the existing teal FRONT floor disc, with the LEFT heel lifted a little. This is a light target touch; the LEFT foot does not carry her weight. No lunge and no forward body lean.\nThe anatomical RIGHT foot (viewer LEFT) stays completely flat in exactly the original location and remains the main support foot. Keep the RIGHT knee comfortable and nearly straight, the pelvis and upright torso over the RIGHT support leg, and the RIGHT hand on the same rail.\nStrictly preserve the woman's identity, face, black ponytail, gaze, white T-shirt, dark gray pants, bare feet, expression, body scale, full-body framing, photographic light, gray-blue backdrop and level floor. Preserve the rail, both visible grounded bolted posts, hand position, BOTH floor target discs at exactly the same positions, shapes, sizes and colors as the input. The teal disc remains in front, the blue lateral disc on viewer RIGHT remains empty. Only the LEFT leg and its local trouser folds may change.\nKeep complete head, hands, feet and all rail bases in frame. One realistic photograph, correct anatomy, no text, numbers, arrows, watermark, extra object, camera change, target relocation, mirrored leg or cropped limb.",
+          "reference_paths": [
+            "E:\\git冲突问题\\rehab image\\train\\steps\\119_T-LOW-041_s01.png"
+          ],
+          "source_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-ecf6-7132-af6f-c72aff1b9bcd\\exec-b9d94312-dd09-4b26-8486-f5eba6997fa4.png",
+          "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\119_T-LOW-041_s02.png",
+          "width": 1122,
+          "height": 1402,
+          "sha256": "28225DC868DD496DB6F3008F456B174FA25D54329CB5681192FDB896E4C5551B",
+          "visible_pose_review": {
+            "result": "passed",
+            "findings": [
+              "Same right test-support foot remains flat in its original position, with upright torso retained over the support leg.",
+              "Left non-support foot reaches a short distance forward; left forefoot touches the floor at the rear edge of the teal front target, heel is lightly raised; no lunge posture.",
+              "Right hand contact and the gray rail with both bolted supports match s01.",
+              "Both fixed targets, full-body camera, scale, identity, clothing and gray-blue photographic scene match s01.",
+              "Complete head, hands, feet and rail bases remain in frame, with no text, numbers, arrows or watermarks."
+            ],
+            "limits": "Visible posture is checked; a static photograph does not measure actual limb loading."
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "batch": 19,
+  "range": "181-185",
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "source": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+  "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+  "generation_mode": "built-in image_gen; one independent PNG per action",
+  "identity_references": [
+    "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-d62371e8-5f6e-4310-a6d6-2068c4297c1c.png",
+    "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-0b2bd155-fd46-4bad-b86b-225571201214.png",
+    "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-44810b7e-2888-45c9-9d35-20a18476d62e.png"
+  ],
+  "constraints": "同一参考人物、脸、马尾、白短袖深灰长裤、灰蓝背景、写实摄影和正常比例；一动作一张单阶段图，无画面文字；按文档详细卡全局顺序命名。",
+  "completed": 5,
+  "actions": [
+    {
+      "sequence": 181,
+      "id": "T-AXU-059",
+      "name": "哑铃锤式弯举",
+      "category": "train",
+      "filename": "181_T-AXU-059_哑铃锤式弯举.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\181_T-AXU-059_哑铃锤式弯举.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ed-fdba-7742-9ef2-2ab7fd33637e\\exec-8bbd187e-fe0e-4d7b-99e5-99bd7fb4879b.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1670012,
+      "sha256": "1F0754D4115BEC9A0A1EFD1A6F15C68B70A3EB50ECCA68F8418AF66975455C9C",
+      "prompt": "Use case: scientific-educational, photorealistic rehabilitation exercise photograph, identity-preserve reposing.\nAll THREE input photographs are STRICT IDENTITY, CLOTHING, BACKGROUND COLOR and PHOTOGRAPHIC STYLE references of the SAME woman, not exercise pose targets. Repose that exact woman only. Preserve her exact recognizable face and age, East Asian features, natural skin texture, dark brown/black ponytail, fitted plain white short-sleeve crew-neck T-shirt, dark charcoal fitted full-length athletic trousers. Keep the EXACT original cool muted light gray-blue seamless studio backdrop and same-color floor, soft even photographic studio lighting, no CGI or illustration. Normal adult head-to-body and torso-to-limb proportions, ordinary limb lengths and shoe sizes, correct anatomy and hands. Full body with plain unbranded white athletic shoes.\nAction 181 T-AXU-059 哑铃锤式弯举 / HAMMER CURL. Show the mid-to-upper phase of a slow simultaneous two-arm neutral-grip dumbbell hammer curl, not a supinated biceps curl. Woman standing steadily in a comfortable small staggered stance, both feet entirely planted, hips and torso upright with no swinging or lumbar arch. Slightly oblique side view facing right so both elbows, hands and weights are separately visible. Both upper arms vertical and close to the sides of ribs, elbows kept by her waist, shoulders relaxed down. Both elbows flexed about 90–105 degrees, forearms point forward/slightly upward. Her PALMS face INWARD toward each other and body midline, THUMBS upward, wrists straight and aligned with forearms. Each hand securely grips one small light unbranded gray dumbbell in NEUTRAL handshake grip. The long shafts of both dumbbells are VERTICAL with one end above and one end below each fist, not horizontal supinated grip. Keep both weights distinct and away from her body. Calm expression as reference.\nComposition: one woman, one coherent exercise phase, one independent portrait photo 1122x1402 matching the 4:5 reference ratio; full head, both complete hands/weights and both feet within clean comfortable margins, normal lens perspective with no wide-angle distortion. Only the two needed lightweight dumbbells are present. No letters, caption, title, numbers, logos, watermark, arrows, inset, panels, collage, ghosted movement, other people, extra fingers or extra limbs.",
+      "phase_zh": "站姿双臂同步锤式弯举上程：掌心相向、拇指向上，双哑铃纵轴竖直，肘屈曲且腕自然。",
+      "visual_review": "通过：原参考人物、白短袖深灰裤、灰蓝摄影背景与正常比例保持一致；双脚落稳，锤式中立握法可见，双肘腕和哑铃完整，躯干直立无摆腰。",
+      "status": "completed",
+      "final_visual_review": "通过：主任务逐张查看最终保存图片，人物、服装、灰蓝摄影背景与参考一致，正常身体比例，关键握法/器械/接触完整可见。"
+    },
+    {
+      "sequence": 182,
+      "id": "T-AXU-061",
+      "name": "单臂轻哑铃过头肘伸",
+      "category": "train",
+      "filename": "182_T-AXU-061_单臂轻哑铃过头肘伸.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\182_T-AXU-061_单臂轻哑铃过头肘伸.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-9b39-7ce0-90e1-b272cded876d\\exec-9327fb3a-43ae-483f-95ab-b87632af825d.png",
+      "prompt": "Use case: photorealistic-natural.\nCreate ONE independent full-body rehabilitation exercise photograph for action 182, T-AXU-061 单臂轻哑铃过头肘伸 (single-arm light-dumbbell overhead elbow extension), showing the flexed-elbow starting position.\nINPUT REFERENCES: All THREE supplied photos are identity and style references of the SAME exact Asian adult woman, not pose targets. Strictly preserve her recognizable face, age, skin tone, dark brown low ponytail, healthy ordinary adult body proportions, plain white fitted crew-neck short-sleeve T-shirt and charcoal-gray full-length pants. Preserve the original cool pale gray-blue seamless photography backdrop, soft studio light, realistic skin and clothing textures. Simple white athletic shoes.\nPOSE: woman stands upright and balanced facing right, camera at a slightly oblique SIDE angle which shows her face and the working arm without head overlap. Feet hip-width, both complete feet planted flat. Her working near-side upper arm is lifted overhead almost VERTICAL beside her head, elbow clearly visible ABOVE head. Her working elbow is bent around 90 degrees: forearm folds backwards behind her head, holding ONE small lightweight dumbbell with secure natural grip. This is one-arm overhead triceps extension with a stable upper arm, NOT shoulder press. The single dumbbell is behind and above the head, with an obvious safe air gap from skull and ponytail, never touching the head. Her own OTHER hand lightly supports the working UPPER ARM near the triceps/below the elbow, not the dumbbell, not the wrist. Exactly two distinct anatomical arms and hands: one hand grips dumbbell, one hand supports upper arm. Shoulder stays natural and stable, upper arm not flared outward; elbow and wrist not hidden behind head. Torso upright, ribs and pelvis stacked, no backward lean or lumbar arch, neutral head and neck, calm face looking forward.\nCOMPOSITION: ONE vertical photoreal studio photo, 1122 x 1402 pixels or the same 4:5 portrait ratio. Entire full body from highest raised elbow and complete dumbbell to both complete shoes with generous outer margins. Normal human proportions, realistic arm/forearm lengths. No cropping at hands, elbow, dumbbell or feet. Face, both shoulder-to-hand connections, exact arm support contact and safe dumbbell-head air gap visibly clear. Gray-blue seamless studio floor and background unchanged; no scenery or furniture.\nCONSTRAINTS: same reference identity, hairstyle, clothes, background hue, photography style. One woman and ONE light small dumbbell only. No helper, no two-handed grip on dumbbell, no second dumbbell, no extreme bend, no giant muscles, no extra limbs, no distorted fingers, no visible text, captions, numbers, arrows, logos, watermarks, diagram, split panel or duplicated phases.",
+      "phase_zh": "站稳的过头肘伸屈肘起点：近侧上臂在头旁近竖直、肘约90°屈曲，前臂向头后，一手握轻哑铃与后脑留安全空隙，本人另一手轻支持动作上臂。",
+      "visual_review": "通过。已读取MD详细卡独立核对序号182与T-AXU-061对应。已使用view_image检查实际保存PNG：人物面貌、马尾、白色短袖、深灰长裤、灰蓝写实摄影背景与原参考一致，比例自然。单臂上举过头，上臂基本竖直、屈肘约90°、动作肘和腕清楚，轻哑铃与头发/后脑之间有明显空隙；另一手支持上臂而未握哑铃，躯干自然直立无明显仰腰，双脚站稳。单人单一姿态，整头、双肘手腕、哑铃及全身双足入镜，无文字箭头分镜。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1631702,
+      "sha256": "4130A2223EA50A543A904B098067B1622D1B5A3E3F69C3F24ACCB176750FFE99",
+      "status": "completed",
+      "final_visual_review": "通过：主任务逐张查看最终保存图片，人物、服装、灰蓝摄影背景与参考一致，正常身体比例，关键握法/器械/接触完整可见。"
+    },
+    {
+      "sequence": 183,
+      "id": "T-AXU-056",
+      "name": "下蹲—站稳—轻负重推举的分段组合",
+      "category": "train",
+      "filename": "183_T-AXU-056_下蹲—站稳—轻负重推举的分段组合.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\183_T-AXU-056_下蹲—站稳—轻负重推举的分段组合.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ed-fdba-7742-9ef2-2ab7fd33637e\\exec-0c0a5a2a-9d2e-4590-a5f2-bc76197151c2.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1641539,
+      "sha256": "27E7389D5E3C3E73627CDED4F3CF217BA98BB15C804AF57ED9F60598F46397A8",
+      "prompt": "Use case: scientific-educational, photorealistic rehabilitation exercise photograph, identity-preserve reposing.\nALL THREE input images are STRICT references for the same woman's exact identity, clothes, photographic style and background color, not pose targets. Repose the EXACT SAME woman. Preserve her recognizable face, age, East Asian features and natural skin texture, dark brown/black ponytail, plain white fitted short-sleeve crew-neck T-shirt, dark charcoal full-length athletic trousers. Keep EXACT pale cool gray-blue seamless studio backdrop color from references and same-color floor, soft even neutral studio light and natural photographic textures. Normal adult human proportions: realistic head-to-body, torso-to-leg and upper-arm/forearm ratios, no stretched or shortened limbs. Plain white low-profile unbranded athletic shoes.\nAction 183 T-AXU-056 下蹲—站稳—轻负重推举的分段组合 (controlled squat, stand stable, then light overhead press). Show ONLY the final STABLE STANDING OVERHEAD PRESS phase after controlled squat-to-stand, as ONE single still photograph. Woman faces right in a clear slightly oblique side view. Both feet flat on floor about hip-to-shoulder width, knees comfortably extended, pelvis neutral, torso upright and steady, no squat at this current press phase. She holds one SMALL LIGHT matte gray dumbbell firmly in EACH hand and presses both overhead. Upper arms in comfortable overhead range alongside/just forward of her ears, elbows nearly extended but not locked, wrists straight, both weights clearly overhead with a small gap above head. Shoulders not shrugged, ribs not flared, no leaning backward, no torso twist, neutral neck and calm reference expression. Palms face forward/slightly inward, both dumbbells have naturally oriented horizontal shafts, left and right dumbbell and hands separate and fully readable. Show controlled weight placement, not a jerk, snatch, throw or jump. No implied momentum from a squat; she has already stood still before pressing.\nComposition: ONE woman, ONE current phase, ONE independent portrait photo 1122x1402 at reference 4:5 ratio. Widen camera distance enough to fit BOTH overhead dumbbells plus fingers, full head, complete torso, legs and both shoes with comfortable top/bottom margins; natural normal-lens perspective, avoid body distortion to fit frame. Props only the two light dumbbells, seamless gray-blue studio unchanged. No text, title, number, labels, logos, watermark, arrows, trajectory, inset, split panels, collage, duplicated phases, ghosting, extra limbs, other people, room decor or fitness poster styling.",
+      "phase_zh": "蹲起并站稳后的轻负重推举终点：双脚全掌落地，站直后双手持轻哑铃过头。",
+      "visual_review": "通过：原参考人物、服装、灰蓝写实摄影背景延续；身体比例自然，双臂与双哑铃完整入镜，躯干直立无后仰、双脚落稳。单图记录推举阶段，不表示完整组合循环。",
+      "status": "completed",
+      "final_visual_review": "通过：主任务逐张查看最终保存图片，人物、服装、灰蓝摄影背景与参考一致，正常身体比例，关键握法/器械/接触完整可见。"
+    },
+    {
+      "sequence": 184,
+      "id": "T-AXU-040",
+      "name": "双手壶铃摆动：后期熟练者项目",
+      "category": "train",
+      "filename": "184_T-AXU-040_双手壶铃摆动：后期熟练者项目.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\184_T-AXU-040_双手壶铃摆动：后期熟练者项目.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-acbfe0da-60eb-435e-b584-6aa21b5f2564.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: one independent rehabilitation exercise library photograph, 184 T-AXU-040 双手壶铃摆动：后期熟练者项目.\nInput images: the three supplied pictures are strict reference images for the same woman's identity, photographic style, clothing and backdrop. Preserve exactly her face and natural facial proportions, East Asian appearance, black low ponytail, white fitted short sleeve T-shirt, dark charcoal full length pants, and same softly mottled gray-blue studio background. Add simple plain white sports shoes consistent with full-body photos.\nPrimary request: depict the TOP PHASE of an established two-handed kettlebell swing to lower-chest height. Show one woman facing right at a slight side-front angle, head to shoes visible. Her feet are planted about shoulder width apart, both entire soles flat on a stable nonslip floor. Her hips have extended, so she is standing upright with pelvis beneath ribs, a neutral spine and natural comfortably near-straight knees. She does not lean backward or arch her lower back. Both hands firmly enclose the handle of ONE compact light dark-gray kettlebell, side by side; wrists neutral and grip clearly plausible. Both arms extend forward together naturally with nearly straight elbows toward lower chest height, slightly lower than horizontal shoulder height. The kettlebell floats forward at the controlled top of the swing, its whole compact bell and handle visible, definitely below the shoulders and never overhead. Shoulders relaxed down, chest natural, no shrugging or exaggerated proud chest, no deep squat. Her expression remains calm and neutral as in references.\nScene/backdrop: exactly the reference softly mottled gray-blue studio background with matching gray-blue floor, soft even studio light and natural skin/fabric texture. No gym scenery, decor, furniture, rail, helper or extra equipment. Keep ample empty space ahead of the kettlebell.\nComposition: full-body portrait canvas 1122 by 1402, same ratio as all references. Anatomically normal adult body proportions, normal head size, realistic torso/leg lengths and shoe sizes, correct arms and hands. Both shoes, face and entire kettlebell fit within the image with safe margins and no cropping.\nConstraints: one single coherent pose, one woman, one kettlebell. Identical woman/face/hair/white T-shirt/charcoal pants/gray-blue backdrop/photorealism as references. No text, labels, number, captions, logo, watermark, arrows, split panels, ghost limbs, motion trails or blur. Do not change to illustration, render or cartoon. No extra limbs or distorted fingers. This single still shows the upper phase, not a multistage sequence.",
+      "phase_zh": "双手壶铃摆动至胸前高度的上端阶段：髋伸展站直，双脚完整落稳，双臂自然近伸直前伸，双手牢握一只壶铃，壶铃低于肩且不过头。",
+      "visual_review": {
+        "result": "accepted",
+        "method": "生成结果完整预览；view_image目标文件调用出现缩略图异常后，使用node_repl直接读取保存PNG原始字节并emitImage完整显示，逐项审查。",
+        "identity_style_background": "人物脸、马尾、白短袖T、深灰裤、灰蓝背景与写实摄影风格保持一致；身体比例正常，全身与完整壶铃可见。",
+        "pose": "双脚约肩宽且双全掌落稳；髋伸展站直，膝自然接近伸直；双手握同一壶铃把手，双臂胸前近伸直，肩放松；未见过度后仰或过头；无文字、箭头、分镜或动态残影。",
+        "limitations": "本图仅展示摆动上端单一姿态，不能表示完整轨迹或证实熟练程度。"
+      },
+      "status": "completed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1667027,
+      "sha256": "599B78A5DA98660C7F52B85DCB6972CEFDBC748002F34764A650E4AC2F9FB844",
+      "final_visual_review": "通过：主任务逐张查看最终保存图片，人物、服装、灰蓝摄影背景与参考一致，正常身体比例，关键握法/器械/接触完整可见。"
+    },
+    {
+      "sequence": 185,
+      "id": "T-LOW-057",
+      "name": "固定自行车的分段活动耐受训练",
+      "category": "train",
+      "filename": "185_T-LOW-057_固定自行车的分段活动耐受训练.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\185_T-LOW-057_固定自行车的分段活动耐受训练.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-0ebe-7552-b1cd-ef5b43c949c3/exec-3f96aead-aba8-46a3-89f2-166e097eb0f4.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: single rehabilitation exercise photograph.\nPrimary request: action 185, T-LOW-057 固定自行车的分段活动耐受训练: an adult woman gently pedaling a stable ordinary upright stationary exercise bike at an easy comfortable pace. One photograph, one woman, one clear moment of the pedal cycle. Do not put any title or number in the image.\nReference images: All three supplied photographs strictly define the SAME woman, SAME recognizable face, SAME dark ponytail, SAME white fitted short-sleeve crewneck T-shirt, SAME charcoal dark gray long pants, SAME normal adult body proportions, SAME natural skin, SAME soft realistic studio photography and SAME muted light gray-blue background color. Match the references closely. For footwear she wears simple white low-top sports shoes.\nScene: plain seamless light gray-blue studio backdrop and matching matte floor. No gym, room, decor or distracting objects.\nPose and anatomy: she faces right while sitting securely ON the actual saddle of a regular gray/black upright stationary bike. Her buttocks are clearly supported by the saddle at the correct hip position; she is not standing on the pedals or floating above the seat. Normal torso and normal length thighs/shins/arms, no stretched limbs. Her spine is neutral, torso almost upright with only a gentle forward inclination, head upright and calm expression like the references. Both hands rest lightly on a high comfortable handlebar; relaxed elbows, no racing crouch. Correct adjusted saddle height: the leg whose pedal is near the bottom of its circle remains slightly bent at the knee, not locked or hyperextended. The other leg is comfortably bent with its pedal near the top. The two crank arms are opposite ends of one realistic crankshaft (180 degrees apart), and each white shoe is placed securely flat on its own pedal. Both shoes, both pedal contacts, both knees and ankles are visibly distinguishable. One foot is down around five/six o'clock, the opposite foot is up around eleven/twelve o'clock. Natural comfortable movement range, no cramped extreme knee bend.\nBike: ordinary compact upright exercise bike with physically coherent saddle, seat post, high handlebar and handlebar post, central flywheel casing, exactly two pedal cranks, two individual pedals, and front/rear stable floor stabilizer bars. Gray/black matte metal and realistic rubber parts, no brand name. Bike chassis, saddle contact, crank mechanism, both feet on pedals and complete stabilizer bars must be fully in frame and readable. Avoid obscuring the far shoe and far pedal with the bike casing; choose a slight 15-degree three-quarter angle off a right-facing side view to separate both legs and both pedal contacts while retaining a mostly side-profile pose.\nComposition: vertical 4:5, approximately 1122 by 1402 pixels, camera level with normal portrait lens and proportional human anatomy. Pull back enough that the complete woman from head through both white shoes and the complete bike including handlebars, saddle and all stable feet fit with clear margins. Do not shrink the torso or stretch legs to fit the bike. Soft reference-like studio lighting, photorealistic natural textures, gentle floor contact shadows.\nConstraints: one woman, one bike, one pose. Exactly two arms, two legs and two feet. No arrows, text, numbers, logos, readable console display, watermark, panels, collage, secondary figures or therapist. No racing handlebars/crouch, no impossible crank alignment, no locked knee, no floating feet, no extra pedals, no cropped head/feet/bike.",
+      "phase_zh": "普通直立固定自行车上安静坐稳，双手扶高位把手，双脚踩各自上下对置踏板，下方腿近伸直保留轻屈，低阻舒适慢骑示范姿态。",
+      "visual_review": "已对实际保存的 PNG 使用 view_image 审查：原三张参考同一女性脸部、深色马尾、白色短袖T恤与深灰长裤、灰蓝写实摄影背景保持一致，白色运动鞋；全身与完整稳定车体无裁切，鞍座实际承托臀部，双手扶高把手、脊柱自然近直立轻前倾，正常头身与四肢比例；两足分别安全接触上下踏板，曲柄上下对置，下方膝保留轻屈，上方膝舒适弯曲，双鞋与踏板可见；无文字数字logo箭头分镜。主任务已实际查看最终保存PNG并复核通过。",
+      "status": "completed",
+      "correction_prompts": [
+        "Use case: scientific-educational.\nCreate one realistic studio rehabilitation photo of an ordinary upright stationary bike ridden gently by the SAME woman in the three supplied references. The references strictly define her recognizable face, dark ponytail, white fitted short-sleeve crewneck T-shirt, charcoal dark-gray full-length pants, natural skin texture, normal adult body proportions and the unchanged soft light gray-blue studio background color and lighting. Simple white low-top sports shoes. No image text.\nShe faces right in a mostly side view, camera only slightly angled 10–15 degrees to reveal both legs. She sits firmly ON the actual saddle, buttocks visibly supported, spine neutral and torso nearly upright. She has a calm comfortable expression and only a little forward inclination. Both hands lightly hold HIGH upright comfortable handlebars, elbows softly bent, not a racing crouch.\nCritical mechanical geometry: show a simple physically correct pedal bicycle drivetrain: ONE round crankshaft axle at the lower center of the stationary bike and exactly TWO opposite crank arms connected to its opposite sides, 180 degrees apart. The NEAR/visible RIGHT foot is on the LOW pedal at the five-o'clock position (below and slightly to the RIGHT of the axle), and that knee is comfortably still slightly bent around 20–30 degrees. The FAR LEFT foot is on the HIGH pedal at eleven-o'clock (above and slightly to the LEFT of the SAME axle), with its knee bent comfortably. Both feet are on two real pedals, not on the chassis. The far foot and pedal must be shown clearly, choose open frame and narrow drivetrain casing so that neither shoe nor pedal contact is obscured. Do not put both pedals to the same side of the axle, do not put far foot on top of flywheel housing. The crank arms must be visibly physically connected and correctly aligned.\nBike: basic modern gray/black open-frame stationary bike, with small enclosed flywheel housing positioned away from the pedal contacts, saddle post and HIGH handlebar post, simple black saddle directly underneath her pelvis, two clearly visible realistic opposing crank arms/pedals and stable front/rear horizontal floor bases. It is a normal upright exercise bike used for easy rehabilitation, with no brand, no screen numbers. The entire machine and full rider fit naturally together, correct saddle height, coherent scale, no elongated arms/legs and no miniature torso.\nFrame: portrait 4:5 approximately 1122 by 1402 pixels, complete head, hands, both knees, ankles, both entire white shoes, both pedal contact areas, saddle and complete bicycle including stabilizer feet fit inside with clear margins. Level camera, normal lens, no perspective stretching. Plain seamless light gray-blue photographic background and floor matched to original references, realistic soft shadows, no gym or room décor.\nOnly ONE woman, ONE bike, ONE pedal-cycle moment. No collage, arrow, number, text, logo, watermark, diagram, panels, therapist, other equipment, extra limbs, mismatched foot positions, floating person, floating shoe, standing on pedals, locked knee, extreme flexion, low racing handlebars or cropped bike.",
+        "Make a precise photorealistic pose/seat-height correction to reference image 4. Images 1, 2 and 3 strictly lock the SAME woman, face, ponytail, white short-sleeve T-shirt, charcoal dark-gray long pants, reference gray-blue studio background and lighting. Image 4 gives the stationary-bike composition and correct opposing-pedal arrangement to retain.\nCorrect ONLY the riding setup and pose: raise the saddle to a proper adult seat height and position the near pedal at the bottom of its circle, so the woman's near/right leg is visibly LONG and ALMOST EXTENDED, but the knee remains gently flexed around 20–25 degrees (included knee angle around 155–160 degrees). The current lower-pedal knee bends too much; this must be fixed. Do not lengthen or distort any body part. Move the saddle upward relative to the crankshaft enough to reach this proper setup. Reposition her whole natural body on that raised saddle. The near thigh and shin should form an almost straight relaxed line toward the near low pedal, with only a small knee bend.\nKeep the far/left pedal at the top of the same crank circle, exactly 180 degrees opposite, and the far knee comfortably bent. Both white shoes must rest naturally on their own visible pedals, both sole-pedal contacts clearly visible, neither foot floating or standing on chassis. The same single crankshaft connects both exactly opposing crank arms physically. Preserve a clear stable gray/black ordinary upright exercise bike, actual saddle directly supporting buttocks, coherent saddle post and high comfortable handlebar post, full front/rear stabilizer feet on the floor. Her posture remains almost upright and neutral, only mild forward inclination, both hands resting lightly at the high handlebar, shoulders relaxed, calm face.\nPull the camera farther back as necessary so the complete head, hands, normal-length torso, both normal-length legs, both white shoes, all pedal contacts and the ENTIRE stationary bike fit comfortably within the portrait canvas with clean margins. Maintain NORMAL human head/torso/leg ratios. The seat height should look right for this adult woman's normally proportioned body. No racing crouch. A mostly right-facing side view with a slight angle to see both legs.\nSame photorealistic style, exact muted light gray-blue seamless studio backdrop and matching floor, same soft lighting, 1122 by 1402 pixels, portrait 4:5. One woman, one bike, one moment. No text, arrows, numbers, panels, logo, readable screen, watermark, therapist or room décor. Exactly two arms/two legs/two white shoes, no extra pedals, no locked knee, no overlong limbs."
+      ],
+      "discarded_source_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a137f0-0ebe-7552-b1cd-ef5b43c949c3/exec-ae81e00e-4cd7-4b0a-8160-5ce8cff85f34.png",
+        "C:/Users/Administrator/.codex/generated_images/01a137f0-0ebe-7552-b1cd-ef5b43c949c3/exec-77ba3482-f0de-4232-b5d9-3efb11bfb83d.png"
+      ],
+      "discarded_reviews": [
+        "首版下方远侧鞋/踏板被车体遮挡，曲柄180°对置关系不够可信。",
+        "第二版踏板接触与曲柄修正，但座高偏低、下方膝弯较大，第三版修正座高与下方腿姿态。"
+      ],
+      "reference_image_paths": [
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-d62371e8-5f6e-4310-a6d6-2068c4297c1c.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-0b2bd155-fd46-4bad-b86b-225571201214.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-44810b7e-2888-45c9-9d35-20a18476d62e.png"
+      ],
+      "tool": "built-in image_gen",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1759344,
+      "sha256": "F3A8670FE6BCC2B53369D12B709F0CB584C17222053A9F62CFBA3C62DFE36EE3",
+      "final_visual_review": "通过：主任务逐张查看最终保存图片，人物、服装、灰蓝摄影背景与参考一致，正常身体比例，关键握法/器械/接触完整可见。"
+    }
+  ],
+  "sub_records": [
+    "第19批_181-183_生成子记录.json",
+    "第19批_182_生成子记录.json",
+    "第19批_184_生成子记录.json",
+    "第19批_185_生成子记录.json"
+  ]
+}

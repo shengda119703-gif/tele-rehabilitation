@@ -1,0 +1,123 @@
+{
+  "batch_date": "2026-10-14",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "sequence": 129,
+  "action_id": "T-AXU-007",
+  "action_name": "坐位上躯干侧屈活动",
+  "mode": "built-in image_gen; new outputs copied without image editing; s03 reused only after visual acceptance",
+  "status": "全部 3 张已逐帧视觉验收通过；内置生成 2 张，复用合格原图 1 张",
+  "identity_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "camera": "正面固定全身机位；含肩、髋、椅面、双手、双脚；同一人物与灰椅、灰蓝棚拍背景。",
+  "sequence_playback": "s01 → s02 → 复用 s01 → s03 → 复用 s01",
+  "reused_original": "E:/git冲突问题/rehab image/train/129_T-AXU-007_坐位上躯干侧屈活动.png",
+  "images": [
+    {
+      "step": "s01",
+      "status": "accepted",
+      "reused": false,
+      "path": "E:/git冲突问题/rehab image/train/steps/129_T-AXU-007_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-3544-76e3-b43a-676a2cd9b831/exec-574da3bd-2ed1-4827-a86f-bfa35e92a52b.png",
+      "prompt": "Use case: scientific-educational\nAsset type: 安康康复动作分步骤示范图 129 T-AXU-007 s01，中立起始位，单张写实照片，无文字。\nPrimary request: Edit the last reference image (the seated front-facing woman on a gray chair) into a neutral upright seated position for a rehabilitation exercise, seated upper-trunk lateral flexion. Change ONLY the lateral bend of her torso and head to a comfortable neutral upright posture. Preserve all other visible elements.\nInput images: Image 1, 2, and 3 are identity/clothing/photographic style references. Image 4, the original 129 seated side-bend photo, is the exact edit target and composition/equipment reference.\nSubject: Exactly the same East Asian woman, same age, face, skin tone, body proportions and black ponytail. Same plain white short-sleeve T-shirt, dark charcoal full-length pants and white athletic shoes.\nScene/backdrop: Same gray-blue seamless studio floor and background, same soft lighting and natural contact shadows.\nPose: She sits stably in the center of the same simple gray armless upholstered chair. Both sit bones rest evenly on the horizontal chair seat, pelvis level and facing forward. Both feet flat on the floor in exactly their existing positions. Knees comfortable, shins vertical. Both hands lightly rest on their respective thighs, relaxed fingers and elbows. Upper body upright in neutral, centered over the pelvis, shoulder line naturally level, shoulders relaxed. Face and chest face the camera, chin neutral, no trunk rotation.\nComposition/framing: Preserve the original front camera, focal-length feeling, portrait 4:5 framing, floor baseline, subject size and exact chair and foot locations. Full head, both hands, the visible chair seat, entire legs and complete shoes stay inside the image with adequate margins.\nConstraints: Only one person and one posture. Anatomically natural head/torso/limb lengths; normal visible hand digits. The chair must remain stable and plausible, with visible seat contact and all visible legs continuous. Keep the identity, clothing, chair, background, lighting, scale and full-body framing of image 4.\nAvoid: Lateral lean, forward flexion, back arching, head tilt, shrugging, lifting any hip or foot, arms raised, text, labels, numbering, arrows, watermark, collage, additional props.",
+      "references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/train/129_T-AXU-007_坐位上躯干侧屈活动.png"
+      ],
+      "visual_review": "通过：上身正面中立，肩线放松水平，头颈舒适；两侧臀部均留在椅面、骨盆水平；双手轻放各自大腿、手指正常；两脚完整踩地，椅面及其接触处清楚。人物、服装、背景柔光匹配；头、躯干和四肢比例自然，头手脚全入镜。与原图椅子、地面、尺度匹配。",
+      "issues": [],
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1640959,
+      "sha256": "B8204C2F76A73CD975DE132182D580531373561238C6741E332BB1D085A91EBF"
+    },
+    {
+      "step": "s02",
+      "status": "accepted",
+      "reused": false,
+      "path": "E:/git冲突问题/rehab image/train/steps/129_T-AXU-007_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-3544-76e3-b43a-676a2cd9b831/exec-5dd04bca-c2fb-4ba1-9429-c053c4afac3e.png",
+      "prompt": "Use case: scientific-educational. Single photorealistic rehabilitation exercise photograph, no text.\nImage 1 is the exact neutral seated photograph to edit; image 2 defines the SAME woman's identity, black ponytail, white T-shirt, charcoal trousers, gray-blue background and photographic style.\nChange ONLY the upper trunk pose to a gentle lateral bend TOWARD THE RIGHT EDGE OF THE PICTURE. For this woman facing camera this is HER anatomical LEFT side.\nHer head and chest move clearly a small distance toward the RIGHT side of the image from the fixed center of her pelvis. Her shoulder on the RIGHT SIDE OF THE PICTURE becomes LOWER; her shoulder on the LEFT SIDE OF THE PICTURE becomes HIGHER. The RIGHT SIDE OF THE PICTURE waist shortens, the LEFT SIDE waist lengthens. A gentle visible upper-trunk curve toward image RIGHT, about 12 degrees. Face and chest still face camera.\nBoth hands stay relaxed on their respective thighs. BOTH sit bones stay planted evenly on the chair seat, pelvis remains level and centered, BOTH feet fixed flat on the floor. Keep hips, knees, feet, gray chair, front camera, exact framing, scale, lighting and background unchanged from image 1. Full body including head, hands and complete shoes.\nNo neck-only tilt, no chest rotation, no whole-body fall, no shrug, no foot or hip lifting, no raised arm, no text, labels, arrows or watermark.",
+      "references": [
+        "E:/git冲突问题/rehab image/train/steps/129_T-AXU-007_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png"
+      ],
+      "visual_review": "通过：人物自身左侧（画面右）轻缓上躯干侧屈，头与胸均明显位于骨盆中线的画面右侧，画面右侧肩降低、左侧肩抬高，胸口与脸仍正前；腰侧有轻缓弧线，非头颈单独偏斜或整体侧倒。两坐骨持续接触椅面、骨盆水平且固定居中，双脚原位完整落地；两手仍轻放各自大腿，手指自然，无抬臂、耸肩、旋胸或抬臀。正面全身机位、灰椅、人物尺度、地面基准、服装和背景柔光与 s01 匹配。与 s03 是清楚相反的独立侧屈方向。",
+      "issues": [],
+      "generation_attempts": [
+        {
+          "attempt": 1,
+          "status": "failed",
+          "prompt": "Use case: scientific-educational\nAsset type: 安康康复动作分步骤示范图 129 T-AXU-007 s02，自身左侧轻缓上躯干侧屈，单张写实照片，无文字。\nPrimary request: Edit the provided neutral upright seated photograph into a small comfortable LEFT lateral bend of the UPPER TRUNK. Anatomical LEFT is toward the RIGHT side of the image for this frontal view. Change only the upper torso lateral-flexion pose, with corresponding relaxed head alignment and natural arm adjustment.\nInput image: The supplied s01 photograph is the exact edit target. Preserve this same woman's identity, face, age, body build, black ponytail, white T-shirt, charcoal trousers and white shoes. Preserve exactly the same gray armless upholstered chair, front camera and floor baseline.\nPose: The same woman sits stably, both sit bones stay fully and equally in contact with the horizontal chair seat and pelvis remains level, centered, facing the camera. Both feet stay planted in the exact s01 positions, knees and lower legs unchanged. Both hands still rest gently on the fronts of their respective thighs and remain visibly supported; relaxed normal fingers. She bends her upper trunk gently to HER LEFT (image RIGHT), creating a mild visible curved side bend through the thoracic torso, rather than tipping her entire body. Her LEFT lower ribs move slightly toward the LEFT hip, her RIGHT waist lengthens. Shoulder line slopes naturally with lateral flexion, left shoulder is slightly lower than right. Head stays comfortably aligned with the bent upper trunk, no extra neck tilt. The chest and face continue to face the camera, no forward bend or trunk rotation. Right side of pelvis must NOT lift off the chair.\nScene/backdrop: Exactly the same gray-blue seamless studio backdrop and floor, same soft studio lighting and natural shadow.\nComposition/framing: Exact same frontal camera, portrait 4:5 composition, focal length, woman size, chair position, seat height, and floor line as s01. Full head, both hands, entire chair seat, complete legs and both complete shoes visible within the frame.\nConstraints: Single anatomical pose, same equipment, same view, same camera scale. Natural proportion and connected joints. Only gentle comfortable upper-trunk lateral flexion around 12–15 degrees, not extreme. Both hands remain on thighs, all support contacts remain.\nAvoid: Bending toward image left, leaning pelvis, hip lifting, whole-body falling sideways, twisting chest toward ground, shrugging, hands off thighs, reaching arms overhead, leg movement, head-only neck bend, text, labels, arrows, numbering, watermark, collage, added objects.",
+          "references": [
+            "E:/git冲突问题/rehab image/train/steps/129_T-AXU-007_s01.png"
+          ],
+          "source_path": null,
+          "error": "image generation failed: connection failed: error sending request",
+          "note": "同一内置工具调用长时间等待后明确报连接失败，未形成输出文件。未切换 CLI/API。"
+        },
+        {
+          "attempt": 2,
+          "status": "rejected",
+          "prompt": "Use case: scientific-educational\nAsset type: 安康康复动作分步骤示范图 129 T-AXU-007 s02，自身左侧轻缓上躯干侧屈，单张写实照片，无文字。\nPrimary request: Edit the provided neutral upright seated photograph into a small comfortable LEFT lateral bend of the UPPER TRUNK. Anatomical LEFT is toward the RIGHT side of the image for this frontal view. Change only the upper torso lateral-flexion pose, with corresponding relaxed head alignment and natural arm adjustment.\nInput image: The supplied s01 photograph is the exact edit target. Preserve this same woman's identity, face, age, body build, black ponytail, white T-shirt, charcoal trousers and white shoes. Preserve exactly the same gray armless upholstered chair, front camera and floor baseline.\nPose: The same woman sits stably, both sit bones stay fully and equally in contact with the horizontal chair seat and pelvis remains level, centered, facing the camera. Both feet stay planted in the exact s01 positions, knees and lower legs unchanged. Both hands still rest gently on the fronts of their respective thighs and remain visibly supported; relaxed normal fingers. She bends her upper trunk gently to HER LEFT (image RIGHT), creating a mild visible curved side bend through the thoracic torso, rather than tipping her entire body. Her LEFT lower ribs move slightly toward the LEFT hip, her RIGHT waist lengthens. Shoulder line slopes naturally with lateral flexion, left shoulder is slightly lower than right. Head stays comfortably aligned with the bent upper trunk, no extra neck tilt. The chest and face continue to face the camera, no forward bend or trunk rotation. Right side of pelvis must NOT lift off the chair.\nScene/backdrop: Exactly the same gray-blue seamless studio backdrop and floor, same soft studio lighting and natural shadow.\nComposition/framing: Exact same frontal camera, portrait 4:5 composition, focal length, woman size, chair position, seat height, and floor line as s01. Full head, both hands, entire chair seat, complete legs and both complete shoes visible within the frame.\nConstraints: Single anatomical pose, same equipment, same view, same camera scale. Natural proportion and connected joints. Only gentle comfortable upper-trunk lateral flexion around 12–15 degrees, not extreme. Both hands remain on thighs, all support contacts remain.\nAvoid: Bending toward image left, leaning pelvis, hip lifting, whole-body falling sideways, twisting chest toward ground, shrugging, hands off thighs, reaching arms overhead, leg movement, head-only neck bend, text, labels, arrows, numbering, watermark, collage, added objects.",
+          "references": [
+            "E:/git冲突问题/rehab image/train/steps/129_T-AXU-007_s01.png"
+          ],
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-3544-76e3-b43a-676a2cd9b831/exec-3a425d0e-2017-4dbe-9609-cb8346e84cfb.png",
+          "visual_review": "不通过：生成结果为人物自身右侧（画面左）侧屈，画面左肩降低、头胸左偏，与 s03 同向；虽然支撑及服装机位合格，但左右方向错误，未复制到最终步骤目录。"
+        },
+        {
+          "attempt": 3,
+          "status": "accepted",
+          "prompt": "Use case: scientific-educational. Single photorealistic rehabilitation exercise photograph, no text.\nImage 1 is the exact neutral seated photograph to edit; image 2 defines the SAME woman's identity, black ponytail, white T-shirt, charcoal trousers, gray-blue background and photographic style.\nChange ONLY the upper trunk pose to a gentle lateral bend TOWARD THE RIGHT EDGE OF THE PICTURE. For this woman facing camera this is HER anatomical LEFT side.\nHer head and chest move clearly a small distance toward the RIGHT side of the image from the fixed center of her pelvis. Her shoulder on the RIGHT SIDE OF THE PICTURE becomes LOWER; her shoulder on the LEFT SIDE OF THE PICTURE becomes HIGHER. The RIGHT SIDE OF THE PICTURE waist shortens, the LEFT SIDE waist lengthens. A gentle visible upper-trunk curve toward image RIGHT, about 12 degrees. Face and chest still face camera.\nBoth hands stay relaxed on their respective thighs. BOTH sit bones stay planted evenly on the chair seat, pelvis remains level and centered, BOTH feet fixed flat on the floor. Keep hips, knees, feet, gray chair, front camera, exact framing, scale, lighting and background unchanged from image 1. Full body including head, hands and complete shoes.\nNo neck-only tilt, no chest rotation, no whole-body fall, no shrug, no foot or hip lifting, no raised arm, no text, labels, arrows or watermark.",
+          "references": [
+            "E:/git冲突问题/rehab image/train/steps/129_T-AXU-007_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png"
+          ],
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-3544-76e3-b43a-676a2cd9b831/exec-5dd04bca-c2fb-4ba1-9429-c053c4afac3e.png",
+          "visual_review": "通过：把运动方向写为画面右边缘、画面右肩降低、头胸右移，得到正确自身左屈；其余不变量与全身支撑保留。"
+        }
+      ],
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1633370,
+      "sha256": "8BD7B1CB3D35CDABC7E08CE5AA49AA0732588C6E47955936070611CBFA73E8AC"
+    },
+    {
+      "step": "s03",
+      "status": "accepted",
+      "reused": true,
+      "reused_from": "E:/git冲突问题/rehab image/train/129_T-AXU-007_坐位上躯干侧屈活动.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/129_T-AXU-007_s03.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137ef-7e57-7912-801e-b18e28152d89/exec-20eb9b5b-fb95-4c7f-b940-a86e1f708464.png",
+      "source_record": "E:/git冲突问题/rehab image/第13批_121-130_生成记录.json",
+      "visual_review": "本轮重新目视验收通过：人物自身右侧（画面左）小幅上躯干侧屈清晰，侧屈方向将与 s02 相反；胸口正前、腰侧曲线轻缓，非头部单独侧倾；两侧坐骨持续留座且骨盆水平，两脚保持落地；双手仍轻放大腿，无抬臂或牵拉头；肩自然无耸肩。正面全身机位、椅面、手脚完整，四肢及头躯干比例自然，参考女性/衣着/灰蓝背景/棚拍光线匹配。复制后 hash 与原图相同。",
+      "issues": [],
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1640961,
+      "sha256": "62CDA913D068FE4EBA9DA04C8CF5EF0B79984702E6BA10D74352C88496EB82C6",
+      "original_prompt": "Use case: scientific-educational. Asset type: single photorealistic rehabilitation demonstration of T-AXU-007 坐位上躯干侧屈活动. Reference images 1, 2, 3 strictly define the SAME adult East Asian woman. Preserve her recognizable face, black ponytail, natural healthy slim body and normal adult limb and torso proportions; exactly the same fitted white short-sleeve T-shirt and dark charcoal full-length trousers. Photorealism and soft studio lighting must match references.\nScene/backdrop: exactly same light cool gray-blue seamless studio background and floor as reference pictures. Only a plain stable gray four-legged chair, no wheels, and plain white sports shoes.\nPose: front-facing woman seated securely on the chair, both feet flat on floor, both knees about 90 degrees, BOTH SIT BONES and both buttocks remain planted on seat. Show gentle lateral bend of upper trunk toward her LEFT (viewer right), about 10–15 degrees. Chest faces front, no trunk rotation, no pelvis shifting sideways and no raised buttock. Her left hand slides a little down her left thigh and rests there. Her right upper arm is softly raised outward and upward with elbow comfortably bent; right fingertips rest LIGHTLY BESIDE her right temple/ear, not behind head and not pushing or pulling the head. The raised arm serves only as an optional light lever. Face calm, gaze forward, head naturally follows trunk, shoulders relaxed. Clear modest side-bend arc in upper trunk, not merely tilting head. Her spine and chest curve softly laterally while pelvis remains level.\nComposition: direct FRONT full-body view, vertical 4:5 portrait photograph, entire head/ponytail, both hands including raised elbow, chair and both complete shoes within frame with margins. Single person, single exercise phase, anatomically correct normal proportions, no limb duplication, no distortion, no text, numbering, labels, captions, arrows, split panels, collage or watermark. Preserve same woman and exact reference clothing/background/photo style.",
+      "original_corrections": [
+        {
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a137ef-7e57-7912-801e-b18e28152d89/exec-49776bbd-71cb-47a2-9372-d89b92f7f3d4.png",
+          "review": "首稿主要表现为头倾，躯干侧屈不够清晰。",
+          "prompt": "Edit input image 4, the seated exercise photo, using images 1–3 only as strict references for the same woman's face, identity, white short-sleeve T-shirt, charcoal gray long trousers, normal adult body proportions, black ponytail, gray-blue studio color and soft photorealistic lighting. Preserve the target photo's chair, white shoes, frontal camera, full-body framing and original identity.\nMake ONE targeted correction to exercise T-AXU-007: clearly show a gentle small SIDE BEND OF THE UPPER TRUNK TOWARD VIEWER RIGHT (her left), instead of a straight torso with head tilt. Keep BOTH buttocks and sit bones contacting the gray chair seat, pelvis horizontal, both feet planted, knees in the same position. Translate shoulders and head gently to viewer right about a hand-width relative to pelvis, creating a soft lateral arc through trunk of about 15 degrees. The shoulder on viewer right is lower; shoulder on viewer left higher. The woman's head and neck naturally align with the tilted trunk; do NOT tilt neck in the opposite direction and do NOT perform only a neck side bend. Chest and face still face forward without rotation.\nKeep her right raised fingertips lightly beside right ear on viewer left without pulling head; her left hand rests/slides down left thigh on viewer right. No forceful head pressure. Small controlled trunk side bend with calm face, normal anatomy. No other changes. One person, one phase, no text, arrows, numbers, panels, ghost limbs, extra fingers or distortions. Keep full head, hands, elbows, shoes in frame."
+        },
+        {
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a137ef-7e57-7912-801e-b18e28152d89/exec-d9ea3e51-01d9-420a-ac68-25d929842552.png",
+          "review": "躯干侧屈已经清晰，但可选抬手侧与侧屈方向不理想；改用正文允许的双手低位大腿变式。",
+          "prompt": "Edit input image 4 only; images 1–3 are strict identity, clothing and studio color/style references for this SAME woman. Keep the target image's naturally small lateral upper-trunk bend toward VIEWER LEFT, neck following trunk, recognizable face, normal adult anatomy and proportions, white T-shirt, charcoal pants, black ponytail, white shoes, full-body framing, stable gray chair and gray-blue soft studio background identical.\nONE targeted pose correction: LOWER THE RAISED ARM. Both hands must now rest lightly on their respective thighs, with both elbows lowered naturally alongside the body. Her right hand on viewer left slides/rests a little lower on her right thigh as she gently bends her upper trunk toward viewer left. Her left hand on viewer right rests naturally on left thigh. There is NO hand near head, no raised arm, and no hand pulling head. Keep chest facing forward and the clearly visible gentle side-bend through upper torso; keep both buttocks and sit bones planted flat on chair seat, pelvis level, both feet flat on floor. This is T-AXU-007 seated upper-trunk lateral bending in its simple low-hand variation. Preserve all other parts of the photo. One person, one stage, no text, numbers, arrows, collage, distortion or extra limbs."
+        }
+      ],
+      "final_source_prompt": "Edit input image 4 only; images 1–3 are strict identity, clothing and studio color/style references for this SAME woman. Keep the target image's naturally small lateral upper-trunk bend toward VIEWER LEFT, neck following trunk, recognizable face, normal adult anatomy and proportions, white T-shirt, charcoal pants, black ponytail, white shoes, full-body framing, stable gray chair and gray-blue soft studio background identical.\nONE targeted pose correction: LOWER THE RAISED ARM. Both hands must now rest lightly on their respective thighs, with both elbows lowered naturally alongside the body. Her right hand on viewer left slides/rests a little lower on her right thigh as she gently bends her upper trunk toward viewer left. Her left hand on viewer right rests naturally on left thigh. There is NO hand near head, no raised arm, and no hand pulling head. Keep chest facing forward and the clearly visible gentle side-bend through upper torso; keep both buttocks and sit bones planted flat on chair seat, pelvis level, both feet flat on floor. This is T-AXU-007 seated upper-trunk lateral bending in its simple low-hand variation. Preserve all other parts of the photo. One person, one stage, no text, numbers, arrows, collage, distortion or extra limbs."
+    }
+  ],
+  "completed": 3,
+  "final_review": "本轮逐帧核对 s01 中立、s02 自身左屈（画面右）、s03 自身右屈（画面左）；三张手在腿上、双坐骨与双脚持续支撑、骨盆水平、胸口不转、头手脚完整。三张均 1122×1402。同组灰椅、正面相机、衣着、人物尺度、灰蓝背景和柔光匹配。",
+  "preserved_scope": "仅新建129步骤图及此子记录；未修改原图、清单、全局进度、代码仓库或他人记录。"
+}

@@ -1,0 +1,78 @@
+{
+  "batch": 11,
+  "range": "106",
+  "date": "2026-10-14",
+  "generation_mode": "built-in image_gen",
+  "action_id": "T-LOW-060",
+  "name": "轻负荷常规杠铃硬拉：地面起落",
+  "note": "采用斜侧全身机位兼顾双手和完整杠端。组内存在生成式摄影细微透视差异；已逐张核对可见接触、人体比例和动作阶段。",
+  "review_scope": "可见图像检查，不是临床有效性或负荷验证。",
+  "attempts": [
+    {
+      "step": "04",
+      "result": "首次内置工具网络错误；同提示词重试成功，无切换CLI"
+    }
+  ],
+  "images": [
+    {
+      "sequence": 106,
+      "id": "T-LOW-060",
+      "step": "01",
+      "path": "E:/git冲突问题/rehab image/train/steps/106_T-LOW-060_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13854-8e4e-72c3-a676-9d1460199481/exec-68226d56-0846-4e21-9d7b-e3d6bebae919.png",
+      "prompt": "Use case: identity-preserve, scientific-educational rehabilitation photo. Input image 1 is the edit target and EXACT group anchor of action106 T-LOW-060. Repose this exact woman only while keeping the SAME face, ponytail, white T-shirt, charcoal trousers, white trainers, gray-blue backdrop, lighting, camera viewpoint, focal length, floor and framing. Keep the same two feet positions and their scale. Keep the identical straight silver bar, collars and single black plate at each end, BOTH ENDS completely visible. Same near-side full-body viewpoint as reference. Do not zoom camera or recenter equipment. Natural normal anatomy, whole head to feet and hands with margins. Output one independent 4:5 portrait photograph; no text, labels, arrows, logo, watermark or multiple exposures. Do not add props.\nPhase s01 before grasping: she stands naturally UPRIGHT behind the bar on the floor, head over shoulders and pelvis, both knees comfortably extended. Both hands are EMPTY and hang beside thighs, clearly not touching shaft. The bar stays on the FLOOR in exactly the same place, both full plates grounded. Feet remain at the same positions as reference just behind the shaft, bar near shins. No hip hinge yet, no lifted bar. Make room for the full standing head inside the SAME canvas without increasing her body scale.",
+      "reused": false,
+      "visual_review": "双足地面站稳，手尚未握杠；杠两端接地且近小腿，人物全身和完整器械可见。",
+      "status": "visually_reviewed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1719709,
+      "sha256": "664EFA3E060796642BCD3B20A7225BDDABF6D323C078E5866EFE9529CBBD2C8F"
+    },
+    {
+      "sequence": 106,
+      "id": "T-LOW-060",
+      "step": "02",
+      "path": "E:/git冲突问题/rehab image/train/steps/106_T-LOW-060_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13854-8e4e-72c3-a676-9d1460199481/exec-7b729359-fd11-459f-87c5-53fb4fccd190.png",
+      "prompt": "Use case: scientific-educational. Asset: one independent rehabilitation exercise photograph, 106 T-LOW-060 conventional light-load barbell deadlift, one static phase only.\nInput images 1-3: strict reference images for the SAME woman's identity, age, face, dark ponytail, white short sleeve T shirt, dark charcoal full-length trousers, soft photographic studio lighting and gray-blue background. Input image 4: supporting reference for the deadlift implement and grip, not an edit target. Keep realistic natural adult anatomy and joint connections; unbranded white low profile trainers.\nScene: cool light gray-blue seamless studio floor and backdrop. One light silver barbell with matching thin full-diameter black training plates, one plate at each end and collars, both ends fully visible. Nonslip floor, no mat, no stand, no blocks, no rail. Same bar and same fixed feet positions in all phases. Feet hip width, toes forward with small comfortable turn-out. Bar near shins and over midfeet. Only a double overhand grip with both palms toward body, hands just outside legs when holding. Conventional bent-knee deadlift, never stiff-legged. Neutral comfortable torso, neck follows torso without excessive upward gaze.\nCamera: fixed natural-lens near-side full-body view, about 20 degrees forward of a strict lateral view so both hands, both feet and both ends of the bar are separately readable, no frontal squat view. Portrait 4:5, whole head, hands, feet, full bar and plates with margins. One pose, no composite.\nText: none. Avoid labels, arrows, watermarks, logos, ghost limbs, extra people, extra fingers, altered leg lengths, bent bar or floating grounded plates.\nSpecific requested phase s02: she has hinged hips back AND bent both knees to reach the bar on the FLOOR, both full plates resting solidly on the floor, both elbows straight and both hands firmly grasping the shaft in DOUBLE OVERHAND grip just outside shins. Hips are above knees, torso leaning forward from hips with neutral spine, feet entirely flat, bar close to shins. Do not lift bar yet. This is the setup at the ground immediately before lifting. Make the full plate ground contacts and near-side bent knee unmistakably visible.",
+      "reused": false,
+      "visual_review": "屈髋并屈膝，双手双正握地面杠，肘伸直；两端杠片均接地，全足支撑；常规起拉准备可辨。",
+      "status": "visually_reviewed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1821408,
+      "sha256": "05BA86E0BF2B1949725BD99F2A4BE84F1B2D29028CC7AF3604A2C3AC7BF8A94E"
+    },
+    {
+      "sequence": 106,
+      "id": "T-LOW-060",
+      "step": "03",
+      "path": "E:/git冲突问题/rehab image/train/steps/106_T-LOW-060_s03.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13854-8e4e-72c3-a676-9d1460199481/exec-45ba16c8-79a6-4ff6-a50d-d3e3cd60b5e8.png",
+      "prompt": "Use case: identity-preserve, scientific-educational rehabilitation photo. Input image 1 is the edit target and EXACT group anchor of action106 T-LOW-060. Repose this exact woman only while keeping the SAME face, ponytail, white T-shirt, charcoal trousers, white trainers, gray-blue backdrop, lighting, camera viewpoint, focal length, floor and framing. Keep the same two feet positions and their scale. Keep the identical straight silver bar, collars and single black plate at each end, BOTH ENDS completely visible. Same near-side full-body viewpoint as reference. Do not zoom camera or recenter equipment. Natural normal anatomy, whole head to feet and hands with margins. Output one independent 4:5 portrait photograph; no text, labels, arrows, logo, watermark or multiple exposures. Do not add props.\nPhase s03 halfway in the lift: she has extended both knees and hips partway, rising from the setup, with both hips AND knees still visibly slightly flexed, torso leaning forward about 25-35 degrees from vertical and neutral spine. Both elbows straight, DOUBLE OVERHAND hands steady just outside legs, bar now slightly below the KNEES close to shins/legs. Both plates clearly OFF the floor at the same height; this is not the ground setup and not yet fully upright. Keep feet planted and exactly fixed. Do not squat low, do not stiff-leg, do not swing bar out in front.",
+      "reused": false,
+      "visual_review": "膝髋伸展中段，双膝仍屈，杠沿近身上移至膝下，两端杠片离地；尚未站直。",
+      "status": "visually_reviewed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1741106,
+      "sha256": "714BB244A11E9B884FE30027FA9F52EAAF90FAA67AD101A7FA481C2F9E0FAB2C"
+    },
+    {
+      "sequence": 106,
+      "id": "T-LOW-060",
+      "step": "04",
+      "path": "E:/git冲突问题/rehab image/train/steps/106_T-LOW-060_s04.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13854-8e4e-72c3-a676-9d1460199481/exec-0ef4f1eb-ca21-4b59-bf91-edabc3c45a66.png",
+      "prompt": "Use case: identity-preserve, scientific-educational rehabilitation photo. Input image 1 is the edit target and EXACT group anchor of action106 T-LOW-060. Repose this exact woman only while keeping the SAME face, ponytail, white T-shirt, charcoal trousers, white trainers, gray-blue backdrop, lighting, camera viewpoint, focal length, floor and framing. Keep the same two feet positions and their scale. Keep the identical straight silver bar, collars and single black plate at each end, BOTH ENDS completely visible. Same near-side full-body viewpoint as reference. Do not zoom camera or recenter equipment. Natural normal anatomy, whole head to feet and hands with margins. Output one independent 4:5 portrait photograph; no text, labels, arrows, logo, watermark or multiple exposures. Do not add props.\nPhase s04 the completed controlled stand: she stands naturally UPRIGHT with both hips and knees comfortably extended, shoulders over pelvis, NO backward lean. Both elbows remain straight, DOUBLE OVERHAND hands hold the same bar close against the upper/middle THIGHS; both matching plates clearly off the floor at equal height. Feet remain flat at exactly the same positions. Hold steadily with relaxed neutral face. Full standing head fits in unchanged canvas and body scale. Do not bend elbows, shrug or hyperextend.",
+      "reused": false,
+      "visual_review": "自然站直、无额外后仰，双正握持杠于大腿近侧；双足落地、杠两端全入镜。",
+      "status": "visually_reviewed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1719087,
+      "sha256": "175079FA64A4C610362795DC073A75F0C68F34AF03BB3979171925DA003C3F53"
+    }
+  ]
+}

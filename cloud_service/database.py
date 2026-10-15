@@ -7,7 +7,7 @@ from sqlalchemy import (
 )
 
 metadata = MetaData()
-SCHEMA_VERSION = 5
+SCHEMA_VERSION = 6
 schema = Table("cloud_schema", metadata, Column("version", Integer, primary_key=True))
 accounts = Table("accounts", metadata,
     Column("id", String(36), primary_key=True),
@@ -110,12 +110,13 @@ class Database:
         from . import reports  # noqa: F401
         from . import plan_programmes  # noqa: F401
         from . import rehab_workflow  # noqa: F401
+        from . import assistant  # noqa: F401
         from . import family  # noqa: F401
         with self.engine.begin() as connection:
             if self.engine.dialect.name == "postgresql":
                 connection.exec_driver_sql("SELECT pg_advisory_xact_lock(74321001)")
             version = connection.scalar(select(schema.c.version)) if inspect(connection).has_table(schema.name) else None
-            if version not in {None, 1, 2, 3, 4, SCHEMA_VERSION}:
+            if version not in {None, 1, 2, 3, 4, 5, SCHEMA_VERSION}:
                 raise RuntimeError("Unsupported cloud schema version")
             metadata.create_all(connection)
             if version is None:

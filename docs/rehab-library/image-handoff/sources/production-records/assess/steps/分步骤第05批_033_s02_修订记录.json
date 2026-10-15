@@ -1,0 +1,36 @@
+{
+  "record_version": "1.0",
+  "date_local": "2026-10-14",
+  "batch": "05",
+  "action_id": "E-LOW-022",
+  "step": "s02",
+  "revision": 2,
+  "supersedes_selection": "E:/git冲突问题/rehab image/assess/steps/033_E-LOW-022_s02.png",
+  "original_preserved": true,
+  "reason": "独立QA发现原s02远侧手被躯干遮挡；修订仅调整远侧手臂以显露完整远侧手。",
+  "actual_saved_path": "E:/git冲突问题/rehab image/assess/steps/033_E-LOW-022_s02_v2.png",
+  "generated_source": "C:/Users/Administrator/.codex/generated_images/01a138e4-d42a-7e71-9c12-96a4d432713a/exec-9986a356-76dd-4d39-a8b2-77857a91fc68.png",
+  "tool": "built-in image_gen",
+  "reuse": false,
+  "reused_original": null,
+  "prompt": "Use case: precise-object-edit.\nAsset type: photorealistic full-body rehabilitation exercise step 02, tiny two-foot jump preparation.\nImage 1 is the EXACT EDIT TARGET. Image 2 is supporting identity/reference only. Return ONE portrait 1024x1536 photograph.\nMake just ONE small correction to Image 1: reveal her currently occluded FAR-SIDE HAND by moving the far arm a little away from her body. She must have exactly two natural arms and two natural hands. Keep the visible near-side arm and hand in their existing relaxed backward swing. Adjust the far-side elbow/forearm naturally with a small backward and outward swing, so the COMPLETE far hand, including its entire fingers and wrist outline, is visible against clear gray-blue background behind/alongside the hips. Put this second hand slightly higher than and separated from the existing near hand, with a clear visual gap, not overlapping it. The far forearm must connect naturally to the far elbow; no inverted or backward joints. Both hands softly relaxed, not fists. A little asymmetry in arm swing is acceptable.\nPreserve EVERYTHING ELSE exactly: same head and gaze, torso lean, hips, shallow bent knees, both complete white athletic shoes fully planted on original floor locations, natural body/limb scale and proportions, same woman/face/black ponytail/white T-shirt/charcoal trousers, fixed oblique full-body camera facing screen right, original crop/subject position, identical gray-blue seamless floor/backdrop, soft light and shadows. No other pose change, no camera movement, no moving feet, no airborne soles, no deeper squat. It must still be shallow preparation BEFORE jumping, not an arm exercise.\nNo added text/arrows/numbering/labels/logos/watermarks/collage/borders/props or extra limbs.",
+  "reference_images": [
+    "E:/git冲突问题/rehab image/assess/steps/033_E-LOW-022_s02.png",
+    "E:/git冲突问题/rehab image/assess/steps/033_E-LOW-022_s01.png"
+  ],
+  "dimensions": {
+    "width": 1024,
+    "height": 1536
+  },
+  "sha256": "BDDE21F1BB57BE2CB2755FEA783C1391555B351EF101D044820A299E51C738B4",
+  "qa": {
+    "method": "view_image 实际视觉审查",
+    "status": "pass_visual",
+    "correction": "远侧前臂和手向后略离身，完整独立手指和腕部轮廓显露在灰蓝背景上，远侧手略高于近侧手、两手有分离空隙。",
+    "action": "头躯干、髋膝浅弯、双脚原位全足底接地保留；仍为低跳前浅准备而非腾空、深蹲或落地再跳。",
+    "anatomy_proportions": "只有两条自然手臂和两只手，远侧上臂经肩后至肘腕连接合理；手指轮廓、关节与人体比例自然。",
+    "identity_camera_light": "原人物身份、黑马尾、白T、深灰裤、白鞋、斜侧全身朝画面右机位尺度、灰蓝背景与柔光地面阴影保留。",
+    "complete_visibility": "头部、双手、双足完整在画内。",
+    "text_and_layout": "无文字编号箭头、水印或拼贴。"
+  }
+}

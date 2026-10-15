@@ -2,10 +2,10 @@ const {test}=require('node:test'),assert=require('node:assert/strict'),fs=requir
 const source=fs.readFileSync(__dirname+'/../web/cloud.js','utf8');
 function fixture({account=true,legacy=true}={}){
  const calls=[],identity={account_id:crypto.randomUUID(),patient_id:crypto.randomUUID()};
- const store={key:account?'cloud:current':'local',value:{owner:identity.patient_id,cloudIdentity:structuredClone(identity)}};
+ const store={key:account?'cloud:current':'local',value:{owner:identity.patient_id}};
  let current=identity;
  const c={PhoneStore:{LIN_KEY:'lin',cloudKey:k=>k==='cloud:current'},PhoneLocal:{store},
-  PhoneAccount:{identity:()=>current,validateIdentity:v=>{if(!v)throw Error('signed out');return v;},aiScope:s=>{if(!current)throw Error('signed out');return current;},request:async(action,value,body)=>{calls.push({action,value,body});return {ok:true};}},
+  PhoneAccount:{aiScope:s=>{if(!current)throw Error('signed out');return current;},request:async(action,value,body)=>{calls.push({action,value,body});return {ok:true};}},
   OfflineAndroid:{cloudConfigured:()=>legacy,cloudRequest:(id,path,method,body)=>{calls.push({legacy:true,path});c.PhoneCloud.reply(id,200,'{"ok":true}');}},
   setTimeout,clearTimeout,Map,Promise,Error};vm.runInNewContext(source,c);
  return {c,calls,identity,store,setIdentity:x=>current=x};
@@ -27,8 +27,4 @@ test('account change during reply discards old family data',async()=>{
 });
 test('unbound legacy profiles retain original family transport',async()=>{
  const h=fixture({account:false});assert(h.c.PhoneCloud.familyConfigured());await h.c.PhoneCloud.request('/v1/family');assert(h.calls[0].legacy);
-});
-test('main baseline without assistant scope still validates the current account family identity',async()=>{
- const h=fixture({legacy:false});delete h.c.PhoneAccount.aiScope;assert(h.c.PhoneCloud.familyConfigured());await h.c.PhoneCloud.request('/v1/family');assert.equal(h.calls[0].action,'family');
- h.store.value.cloudIdentity.account_id=crypto.randomUUID();await assert.rejects(h.c.PhoneCloud.request('/v1/family'),/登录/);
 });

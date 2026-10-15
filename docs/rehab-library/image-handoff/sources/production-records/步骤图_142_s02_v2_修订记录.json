@@ -1,0 +1,30 @@
+{
+  "action_id": "T-AXU-020",
+  "sequence": "142",
+  "step": "s02",
+  "revision": "v2",
+  "date": "2026-10-14",
+  "mode": "built-in image_gen edit",
+  "source_edit_target": "C:/Users/Administrator/.codex/generated_images/01a1393f-46cf-7433-b662-3db989b8787e/exec-c96847ff-c24c-4f5e-a015-db2025e7e43d.png",
+  "generated_source": "C:/Users/Administrator/.codex/generated_images/01a1393e-7712-7a10-a21c-472e01a8fdd6/exec-24b29fe3-6247-42c3-936c-ac5f37420ab0.png",
+  "saved_path": "E:/git冲突问题/rehab image/train/steps/142_T-AXU-020_s02_v2.png",
+  "prompt": "Use case: identity-preserve, scientific-educational exercise photography.\nInput image 1 is the EDIT TARGET, the finalized scene anchor for 142 T-AXU-020 farmers carry. Produce ONE independent s02 straight-walking frame, portrait 4:5, no text, no labels, arrows or collage.\nPreserve EXACT camera position, projection, framing, floor, backdrop, lighting and the solid dark-gray placement pedestal with light-gray top. The pedestal must remain at the EXACT SAME canvas location and size as the input: approximate screen bounding rectangle x654–996, y716–1151 on1122x1402. Do not move, enlarge or shrink the pedestal. Preserve the SAME East Asian adult woman, face, age, black ponytail, white T-shirt, charcoal long trousers, white sneakers, limb lengths and normal adult proportions, and identical two small black kettlebells.\nChange ONLY the woman's posture and implement location: she is now STANDING UPRIGHT beside and LEFT of the pedestal, with hips and spine comfortably extended, shoulders relaxed. She takes ONE SMALL natural step along the clear straight floor path, chest and pelvis facing camera-right/front (about40 degrees from frontal), right foot a modest distance ahead and fully grounded, left foot trailing with heel only slightly raised and forefoot/toes in contact. No lunge, no long stride, no crossing legs. BOTH complete shoes clearly visible in free floor area LEFT of the pedestal, and not occluded by it.\nBoth arms naturally hang straight downward at her anatomical sides. Her RIGHT HAND firmly grips one black kettlebell and her LEFT HAND grips the identical second kettlebell. Both bells hang vertical at the sides near the thighs, with small clearance from legs and never touching them. Elbows straight but relaxed, no swing, no shoulder shrug, no weight reaching over the pedestal. The two bells are OFF THE PEDESTAL and clearly carried at her sides in this walking frame.\nKeep the same physical proportions and camera-depth scale. Her head may rise on the SAME canvas because she has stood up, but do not zoom the camera or resize her body. Entire head, hands, BOTH bells and complete shoes fit with margins. Realistic continuous joints, believable five-finger grips and natural slight foreshortening. Only ONE static natural short-stepping pose. Match input photographic texture and gray-blue studio style.",
+  "file": {
+    "format": "PNG",
+    "width": 1122,
+    "height": 1402,
+    "bytes": 1617517,
+    "sha256": "5A3AD84DA41D6E0239E447D42EF0FE95164B66640C9A561F6BD8C3E65F1710F7"
+  },
+  "review": {
+    "method": "generatedImage full output visual inspection",
+    "verdict": "通过视觉验收",
+    "checks": {
+      "pose": "躯干直立，自然小步向前，前足完整接地、后足跟微抬且前足接触地面，未交叉；双腿比例自然。",
+      "grip_and_bells": "双手各稳握一只同型黑壶铃自然垂在身侧，有腿部间距，未碰腿或外甩。",
+      "scene_invariants": "新基准台位置、大小和角点基本一致，机位和背景光线保持。",
+      "identity": "同一女性白短袖、深灰长裤、黑马尾、白鞋，头手铃脚完整可见。"
+    }
+  },
+  "preservation": "原s02保留，v2单独保存；使用s04合格末帧场景基准保持全组一致。"
+}

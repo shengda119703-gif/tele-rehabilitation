@@ -1,0 +1,62 @@
+{
+  "record_version": "1.0",
+  "date": "2026-10-14",
+  "task": "121-s03～s04 单次极低双脚跳的接地缓冲与停稳步骤图",
+  "action_id": "T-LOW-043",
+  "generation_mode": "内置 image_gen；每张独立调用；identity-preserve 编辑；不使用 CLI",
+  "source_specification": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_card": "E:/git冲突问题/安康_康复评估与分级训练动作库.md#t-low-043",
+  "edit_target": "C:/Users/Administrator/.codex/generated_images/01a1393d-dae9-7b73-a2d9-e79bd938540c/exec-4fe9e2e8-2957-4079-8792-c9a00e7af721.png",
+  "edit_target_sha256": "E5ECF4FA4BF23C6CBC836E9BD4E24CA4C082AA2210E182BA42149603CB23977B",
+  "edit_target_inspected": true,
+  "save_policy": "原默认生成文件保留；复制到指定外部步骤目录；保存前确认目标不存在，不覆盖既有图片；未改仓库 Git 或共享进度。",
+  "images": [
+    {
+      "step": "s03",
+      "target_pose": "双足返回地面，髋膝小幅受控屈曲，形成落地缓冲。",
+      "prompt": "Use case: identity-preserve edit.\nAsset type: one rehabilitation exercise step photograph, T-LOW-043, step s03 (controlled landing cushioning).\nInput image 1 is the edit target and exact continuity reference: preserve this same woman, facial features, age, skin tone, black ponytail, white short-sleeve T-shirt, dark charcoal full-length trousers, and the identical white lace-up athletic shoes. Preserve the photoreal studio quality, soft lighting, seamless gray-blue background, camera at the same oblique side viewpoint, same perspective, lens, floor plane, full-body scale and 1024 x 1536 portrait composition.\nPrimary request: change only the exercise pose to the instant after a single extremely low two-foot hop has landed. BOTH FEET ARE NOW ON THE ORIGINAL FLAT FLOOR, soles contacting the floor, heels down. Same feet placement and width as the input. Hips and knees bend a little under control to absorb the landing, a shallow cushioning squat slightly more bent than the input, with the pelvis moving a little back and torso a little forward. Keep knees tracking the toes, center of mass controlled between the feet, spine and neck natural. Arms remain relaxed and slightly forward/down for balance, complete hands visible. Show quiet stable ground contact and natural contact shadows directly beneath both shoes. This is a gentle, shallow landing, not a deep squat.\nConstraints: whole person including top of head, complete hands and both complete feet within the frame; normal anatomical proportions and joint continuity; retain identical body proportions from the input. The figure may become slightly lower ONLY from real hip/knee flexion, never from resizing. Do not move the camera or change clothing, shoes or face. One image, one pose, no collage, no labels, no text, no arrows, no numbers, no watermark. No flight, floating feet, high platform, equipment, weights, step, single-leg stance, rebound or successive jump.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a1393e-5f85-7e82-a5f5-3090fb57ba62/exec-9553a7f5-b972-45a8-86b1-41fa4b535edf.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/121_T-LOW-043_s03.png",
+      "sha256": "B0A506F6117E6AB171145DA02A97D715DA45B2BCADB0F4167BFE0931817AC179",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1648363,
+      "reused": false,
+      "attempts": 1,
+      "qa": {
+        "method": "生成结果展示及实际 view_image 逐图查看，与已查看底图对比。",
+        "passed": true,
+        "pose": "双脚鞋底和脚跟均接地；髋向后、膝小幅屈曲，属于浅缓冲姿势，无腾空。",
+        "support": "地面接触及自然接触阴影明确，双足位置与底图保持一致。",
+        "continuity": "女性脸型、黑马尾、白短袖、深灰长裤、白系带鞋、灰蓝背景及柔光一致；斜侧机位、地面基准与肢体尺度无明显漂移。",
+        "anatomy": "头、躯干、手臂、大腿、小腿与完整双手双足自然，关节连接无明显异常。",
+        "exclusions": "单帧单姿势，无文字箭头、器材、高台、负重、单腿跳或连续反弹。",
+        "revision_required": false
+      }
+    },
+    {
+      "step": "s04",
+      "target_pose": "双足稳固落地，恢复舒适自然站立，双臂垂放并独立停稳。",
+      "prompt": "Use case: identity-preserve edit.\nAsset type: one rehabilitation exercise step photograph, T-LOW-043, step s04 (fully settled standing rest after the landing).\nInput image 1 is the edit target and exact continuity reference. Preserve this exact same woman, facial features, age, skin tone, black ponytail, white short-sleeve T-shirt, dark charcoal full-length trousers, and identical white lace-up athletic shoes. Preserve the photoreal studio quality, soft lighting, seamless gray-blue background, identical oblique side camera viewpoint, perspective, lens, floor plane and full-body pixel scale. Output 1024 x 1536 portrait.\nPrimary request: change only her pose from the shallow bent-knee preparation to a COMFORTABLE NATURAL UPRIGHT STAND, paused quietly after completing one low jump and landing. Keep both feet in the same positions and spacing on the original flat floor, both complete soles and heels firmly on the floor. Straighten hips and knees to a relaxed standing posture without rigidly hyperextending or locking knees. Torso vertical, shoulders relaxed, head and neck natural, both arms hanging naturally by her sides, full hands and fingers visible. Clear stationary support, a stable balanced stance, contact shadows directly under both shoes. She is resting and has fully stopped; not preparing to rebound.\nComposition/framing: keep the shoes and floor contact plane at exactly the original positions, with the same camera and body scale; head rises naturally from knee/hip extension, retain enough clear space above the ponytail and whole head, do not resize or lengthen body to fill the frame. Complete head, hands, and feet in frame.\nConstraints: natural anatomy and unchanged head/body/limb proportions, same identity, clothing, shoe design, gray-blue floor and background, lighting and camera; one image, one pose, no montage, no text, labels, arrows, numbers or watermark. No squat, no obvious knee bend, no stepping, no flight, floating feet, high platform, equipment, weights, single-leg balance, continuous jumps or rebound.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a1393e-5f85-7e82-a5f5-3090fb57ba62/exec-f9e54d69-722d-40ba-ace0-e820292f3bdb.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/121_T-LOW-043_s04.png",
+      "sha256": "D9CE4225A9AFEB7D19124509C8C509A59B42B5D3C5D613D78D2BF1710B177143",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1611147,
+      "reused": false,
+      "attempts": 1,
+      "qa": {
+        "method": "生成结果展示及实际 view_image 逐图查看，与已查看底图和 s03 对比。",
+        "passed": true,
+        "pose": "躯干自然直立，髋膝恢复舒适站立位，双臂自然垂放；双脚均接地，呈停稳休息姿态。",
+        "support": "两只完整鞋底和脚跟接地，双足足位与底图/s03固定，无离地或迈步。",
+        "continuity": "同一女性脸型、黑马尾、白短袖、深灰长裤、白系带鞋；相机斜侧视角、地面与柔光灰蓝背景一致。头部因自然伸髋伸膝略升高，全头仍完整可见。",
+        "anatomy": "肢体长度、头身比例、手部与关节连续自然，无明显拉长或异常接触。",
+        "exclusions": "单帧单姿势，无文字箭头、器材、高台、负重、单腿站或连续反弹。",
+        "revision_required": false
+      }
+    }
+  ],
+  "review_scope": "本记录为图片姿势、外观、比例和支撑的呈现审查；动作启用条件继续以原卡为准。"
+}

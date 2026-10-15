@@ -1,0 +1,91 @@
+{
+  "batch": 11,
+  "sub_batch": "105-107",
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "source_document": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+  "numbering": "全局详细动作卡顺序",
+  "records": [
+    {
+      "sequence": 105,
+      "category": "train",
+      "id": "T-LOW-059",
+      "name": "扶稳直线弓步走：分段版",
+      "tool": "built-in image_gen",
+      "identity_references": [
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-d62371e8-5f6e-4310-a6d6-2068c4297c1c.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-0b2bd155-fd46-4bad-b86b-225571201214.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-44810b7e-2888-45c9-9d35-20a18476d62e.png"
+      ],
+      "prompt": "Use case: photorealistic-natural.\nCreate ONE independent rehabilitation exercise photograph for action 105, T-LOW-059 扶稳直线弓步走：分段版, showing the controlled shallow forward walking-lunge phase.\nInput images: ALL THREE supplied files are identity and style references of the SAME woman, not pose targets. Strictly preserve her exact recognizable face, age, skin tone, dark brown ponytail hairstyle, ordinary healthy adult body build, plain white fitted crew-neck short-sleeve T-shirt and charcoal-gray full-length pants. Keep the same cool pale gray-blue seamless studio background color, soft photographic lighting and realistic skin/clothing textures. Extend the frame to include her full body with natural white athletic shoes.\nPose: full-body slightly oblique side view, facing right, calm face looking forward. One foot has stepped forward on a short straight walking path into a shallow lunge: front foot entirely flat on floor, front knee modestly bent and aligned with foot, rear leg extended back with rear heel naturally lifted and ball of rear foot touching floor. Comfortable stance length, not a deep or extreme lunge. Torso upright, shoulders level, pelvis square, no spinal twisting. Her near hand lightly holds a long reliably FIXED continuous waist-height horizontal rehabilitation handrail beside her, visible support posts clearly anchored to the floor; handrail continues along the straight path. Her other hand naturally rests alongside the body. She carries NO weight. Show only this woman, no helper.\nComposition: a single vertical studio photo at 1122x1402 or matching 4:5 portrait ratio, normal human anatomical proportions, natural leg lengths, whole head and both complete shoes inside generous image margins, all support contact visible. Rail does not obscure feet, knees, hands or face. Seamless gray-blue floor/backdrop remains like the references; only necessary handrail prop added.\nConstraints: exact reference identity and photographic style, anatomically normal two arms/two legs and hands, no collage, no multiple stages or duplicated person, no text/numbers/captions, no arrows, no icons, no watermark, no room decor, no dramatic color or lighting change.",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-9b39-7ce0-90e1-b272cded876d\\exec-92323dc6-0518-47e7-973f-2b9b3498c8c9.png",
+      "saved_path": "E:\\git冲突问题\\rehab image\\train\\105_T-LOW-059_扶稳直线弓步走：分段版.png",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "sha256": "946479491DD0D6C1459AFF27B7A8F1E56B7F8F17FA97F2B99DC78AC1C1A034B6",
+      "visual_review": "通过。原参考人物面貌、马尾、白色短袖和深灰长裤一致，灰蓝摄影背景一致。全身侧斜视角，前脚全掌落地、前膝浅屈、后腿后伸并自然提跟，一手轻扶长固定扶栏，徒手；头、手、双足和扶栏完整可见，比例自然。",
+      "status": "completed"
+    },
+    {
+      "sequence": 106,
+      "category": "train",
+      "id": "T-LOW-060",
+      "name": "轻负荷常规杠铃硬拉：地面起落",
+      "tool": "built-in image_gen",
+      "identity_references": [
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-d62371e8-5f6e-4310-a6d6-2068c4297c1c.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-0b2bd155-fd46-4bad-b86b-225571201214.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-44810b7e-2888-45c9-9d35-20a18476d62e.png"
+      ],
+      "prompt": "Use case: photorealistic-natural.\nGenerate ONE independent rehabilitation exercise photograph for 106 T-LOW-060 轻负荷常规杠铃硬拉：地面起落, showing a light conventional barbell deadlift START position from the floor.\nAll THREE supplied images are identity and style references showing the SAME exact woman, not pose targets. Preserve her recognizable face, Asian adult age, skin tone, dark-brown low ponytail, normal healthy adult body proportions, exact plain fitted white short-sleeve crew-neck T-shirt and charcoal-gray full-length pants. Preserve the same pale cool gray-blue seamless photography backdrop and soft natural studio lighting, photographic texture. Her full body includes simple white athletic shoes.\nPose and apparatus: slightly oblique side view, woman facing right, whole head to both shoes visible. A straight lightweight training barbell rests on floor at approximately mid-shin bar height, using a single THIN full-diameter lightweight technique plate securely collared on each end, no heavy plate stacks. Both plate-floor contacts visible. Her two feet are about hip width, toes slightly outward, soles flat. She bends both hips AND both knees into a conventional deadlift floor start: hips above knees but well below shoulders, torso hinges forward with straight natural neutral spine, chest open, neck in line with spine rather than head arched upward. Both arms straight down and TWO anatomically correct hands firmly grip the bar with double overhand grip just outside knees. Bar close to shins, over midfoot, her shoulders over/slightly ahead of bar. Capture before lifting, plate edges touching ground. Realistic light-load instruction photo, she is stable and calm; not deeply rounded back, not a straight-leg Romanian deadlift, not a deep squat.\nComposition: single portrait photograph 1122x1402 or equivalent 4:5 portrait, generous margins around all head/limbs/shoes/bar and both entire barbell plates. Slight oblique side view keeps both hands, legs, shoes and collars legible. Background and floor are seamless gray-blue just like references, no gym scene or additional props.\nConstraints: strictly same woman, face, hair, clothes, photographic style, color; normal body ratio and limb lengths. Exactly one woman, one barbell. No text, numbers, arrows, diagrams, collage, duplicated phases, watermark or logos.",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-9b39-7ce0-90e1-b272cded876d\\exec-acf1a160-9229-47a0-936b-4d77ac531d72.png",
+      "saved_path": "E:\\git冲突问题\\rehab image\\train\\106_T-LOW-060_轻负荷常规杠铃硬拉：地面起落.png",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "sha256": "D9BDECE3724764A02504BA82B4301DCC06AD690E8E30859D593AD4DF72A5A054",
+      "visual_review": "通过。屈髋屈膝常规地面硬拉准备位，双脚约髋宽全掌落地，双正握直臂，杠靠小腿，薄片两端触地并有锁扣；髋高于膝、低于肩，躯干自然稳定。原人物和灰蓝摄影背景延续，全身和杠片完整，比例自然。",
+      "status": "completed"
+    },
+    {
+      "sequence": 107,
+      "category": "train",
+      "id": "T-LOW-032",
+      "name": "膝顶墙背屈活动训练",
+      "tool": "built-in image_gen",
+      "identity_references": [
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-d62371e8-5f6e-4310-a6d6-2068c4297c1c.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-0b2bd155-fd46-4bad-b86b-225571201214.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-44810b7e-2888-45c9-9d35-20a18476d62e.png"
+      ],
+      "prompt": "Use case: photorealistic-natural.\nGenerate ONE independent exercise photograph for action 107 T-LOW-032 膝顶墙背屈活动训练 (standing knee-to-wall ankle dorsiflexion training).\nInput images: all THREE reference photos are identity and photographic style references for the SAME woman, not copied action poses. Keep her exact recognizable face, age, skin tone, dark-brown ponytail hairstyle, normal healthy body proportions, fitted plain white crew-neck short-sleeve T-shirt, charcoal-gray long pants, and realistic photography textures. Keep the original pale gray-blue studio background hue and soft lighting. Full-length framing with simple white athletic shoes.\nPose: strict SIDE view with only enough slight angle to see both hands, woman faces right towards a plain fixed wall plane at right edge. She is in a comfortable SHORT split stance near wall: front foot points straight toward the wall, front shoe toe about 5–8 cm away from wall, ENTIRE FRONT FOOT AND ESPECIALLY FRONT HEEL REMAIN COMPLETELY FLAT on floor. Front knee bends and travels forward over toes in the same direction as foot, gently reaches or nearly reaches wall; tibia inclines forward to show ankle dorsiflexion. Back foot comfortably grounded for balance, back knee slightly soft. Torso erect to slightly inclined forward, hips stable. BOTH hands lightly touch the wall at chest height with relaxed elbows; no pushing knee with hands. Her relaxed neutral face looks towards wall. All necessary joints, both shoes, front heel-ground contact and knee-wall relationship clearly visible in profile. Wall is matte gray-blue matching original backdrop; do not turn scene into a room.\nComposition: ONE portrait studio photograph at 1122x1402 or matching 4:5 ratio. Entire head and both feet remain inside generous margins. Visible gray-blue seamless floor and background, a minimal vertical wall plane only as necessary exercise prop. Camera level, realistic ordinary anatomy with exactly two arms and two legs.\nConstraints: same woman, face/hair/clothes/background and photo style as references. No kneeling, no raised front heel, no exaggerated ankle bend, no rocking or impact. No bands, no weights, no helper, no text, numbers, arrows, diagrams, multi-panel layout, duplicated woman, logos or watermark.\nEssential positioning correction for this image: the FRONT SHOE TOE MUST NOT TOUCH THE WALL. Show an obvious small 6 cm gray-blue floor GAP between the tip of the front shoe and the wall. The front knee gently touches the wall beyond her toe, so the FRONT SHIN visibly slopes forward about 20 degrees from vertical (not a vertical shin). Front heel and whole front sole remain planted flat on floor. Use a shorter comfortable split stance. This floor gap and forward front-shin tilt are the defining feature of this action and must be plainly visible.",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-9b39-7ce0-90e1-b272cded876d\\exec-18cb5dcc-4abb-4a7e-97f0-e7ad86aaa540.png",
+      "saved_path": "E:\\git冲突问题\\rehab image\\train\\107_T-LOW-032_膝顶墙背屈活动训练.png",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "sha256": "2D757B756B826BC5D49E9F938EA14EFAB77892CF64512BF532DAC326F2EF1A95",
+      "visual_review": "通过。重生成后前胫骨明确前倾，前膝轻靠墙、前脚完整尤其脚跟持续落地，脚尖距墙留小空隙；双手轻扶墙，站位而非半跪位，双足全入镜。参考人物衣着及灰蓝摄影背景延续，比例自然。",
+      "status": "completed",
+      "attempts": [
+        {
+          "prompt": "Use case: photorealistic-natural.\nGenerate ONE independent exercise photograph for action 107 T-LOW-032 膝顶墙背屈活动训练 (standing knee-to-wall ankle dorsiflexion training).\nInput images: all THREE reference photos are identity and photographic style references for the SAME woman, not copied action poses. Keep her exact recognizable face, age, skin tone, dark-brown ponytail hairstyle, normal healthy body proportions, fitted plain white crew-neck short-sleeve T-shirt, charcoal-gray long pants, and realistic photography textures. Keep the original pale gray-blue studio background hue and soft lighting. Full-length framing with simple white athletic shoes.\nPose: strict SIDE view with only enough slight angle to see both hands, woman faces right towards a plain fixed wall plane at right edge. She is in a comfortable SHORT split stance near wall: front foot points straight toward the wall, front shoe toe about 5–8 cm away from wall, ENTIRE FRONT FOOT AND ESPECIALLY FRONT HEEL REMAIN COMPLETELY FLAT on floor. Front knee bends and travels forward over toes in the same direction as foot, gently reaches or nearly reaches wall; tibia inclines forward to show ankle dorsiflexion. Back foot comfortably grounded for balance, back knee slightly soft. Torso erect to slightly inclined forward, hips stable. BOTH hands lightly touch the wall at chest height with relaxed elbows; no pushing knee with hands. Her relaxed neutral face looks towards wall. All necessary joints, both shoes, front heel-ground contact and knee-wall relationship clearly visible in profile. Wall is matte gray-blue matching original backdrop; do not turn scene into a room.\nComposition: ONE portrait studio photograph at 1122x1402 or matching 4:5 ratio. Entire head and both feet remain inside generous margins. Visible gray-blue seamless floor and background, a minimal vertical wall plane only as necessary exercise prop. Camera level, realistic ordinary anatomy with exactly two arms and two legs.\nConstraints: same woman, face/hair/clothes/background and photo style as references. No kneeling, no raised front heel, no exaggerated ankle bend, no rocking or impact. No bands, no weights, no helper, no text, numbers, arrows, diagrams, multi-panel layout, duplicated woman, logos or watermark.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-9b39-7ce0-90e1-b272cded876d\\exec-135945da-22a1-4344-afb2-0942e81b2a01.png",
+          "selected": false,
+          "reason": "前脚靠墙过近、前胫骨前倾不足，重新生成以更明确展示膝顶墙背屈。"
+        },
+        {
+          "prompt": "Use case: photorealistic-natural.\nGenerate ONE independent exercise photograph for action 107 T-LOW-032 膝顶墙背屈活动训练 (standing knee-to-wall ankle dorsiflexion training).\nInput images: all THREE reference photos are identity and photographic style references for the SAME woman, not copied action poses. Keep her exact recognizable face, age, skin tone, dark-brown ponytail hairstyle, normal healthy body proportions, fitted plain white crew-neck short-sleeve T-shirt, charcoal-gray long pants, and realistic photography textures. Keep the original pale gray-blue studio background hue and soft lighting. Full-length framing with simple white athletic shoes.\nPose: strict SIDE view with only enough slight angle to see both hands, woman faces right towards a plain fixed wall plane at right edge. She is in a comfortable SHORT split stance near wall: front foot points straight toward the wall, front shoe toe about 5–8 cm away from wall, ENTIRE FRONT FOOT AND ESPECIALLY FRONT HEEL REMAIN COMPLETELY FLAT on floor. Front knee bends and travels forward over toes in the same direction as foot, gently reaches or nearly reaches wall; tibia inclines forward to show ankle dorsiflexion. Back foot comfortably grounded for balance, back knee slightly soft. Torso erect to slightly inclined forward, hips stable. BOTH hands lightly touch the wall at chest height with relaxed elbows; no pushing knee with hands. Her relaxed neutral face looks towards wall. All necessary joints, both shoes, front heel-ground contact and knee-wall relationship clearly visible in profile. Wall is matte gray-blue matching original backdrop; do not turn scene into a room.\nComposition: ONE portrait studio photograph at 1122x1402 or matching 4:5 ratio. Entire head and both feet remain inside generous margins. Visible gray-blue seamless floor and background, a minimal vertical wall plane only as necessary exercise prop. Camera level, realistic ordinary anatomy with exactly two arms and two legs.\nConstraints: same woman, face/hair/clothes/background and photo style as references. No kneeling, no raised front heel, no exaggerated ankle bend, no rocking or impact. No bands, no weights, no helper, no text, numbers, arrows, diagrams, multi-panel layout, duplicated woman, logos or watermark.\nEssential positioning correction for this image: the FRONT SHOE TOE MUST NOT TOUCH THE WALL. Show an obvious small 6 cm gray-blue floor GAP between the tip of the front shoe and the wall. The front knee gently touches the wall beyond her toe, so the FRONT SHIN visibly slopes forward about 20 degrees from vertical (not a vertical shin). Front heel and whole front sole remain planted flat on floor. Use a shorter comfortable split stance. This floor gap and forward front-shin tilt are the defining feature of this action and must be plainly visible.",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-9b39-7ce0-90e1-b272cded876d\\exec-18cb5dcc-4abb-4a7e-97f0-e7ad86aaa540.png",
+          "selected": true,
+          "reason": "前胫骨前倾、足跟接地和膝墙关系清楚，选作交付。"
+        }
+      ]
+    }
+  ]
+}
+

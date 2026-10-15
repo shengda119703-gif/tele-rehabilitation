@@ -1,0 +1,229 @@
+{
+  "batch": 10,
+  "range": "091–100",
+  "date": "2026-10-14",
+  "source": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+  "mode": "内置 image_gen",
+  "category": "train",
+  "reference_role": "三张原人物、服装、摄影风格和背景色参考",
+  "reference_paths": [
+    "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-db026e54-a343-4867-80c1-5934b83ef697.png",
+    "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-53facc44-2a2b-4dd8-ae77-6fcf50cef7d3.png",
+    "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-2555800f-5022-48a9-9772-091ca3fc56a2.png"
+  ],
+  "constraints": "同一参考女性人物、黑色低马尾、白色短袖、深灰长裤、灰蓝背景与写实柔光摄影；自然正常人体比例；每个动作独立单张PNG；名字与序号放文件名，不在图内加文字、拼图或箭头。",
+  "shared_progress": "独立记录本批091–100，不覆盖共享动作生成进度.json或其他批次记录。",
+  "images": [
+    {
+      "sequence": 91,
+      "id": "T-LOW-016",
+      "name": "扶稳单腿罗马尼亚硬拉",
+      "category": "train",
+      "filename": "091_T-LOW-016_扶稳单腿罗马尼亚硬拉.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\091_T-LOW-016_扶稳单腿罗马尼亚硬拉.png",
+      "source_card_line": 5953,
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-28286454-b6fc-43c6-beb9-547232c6e95a.png",
+      "shown_stage": "扶稳徒手单腿髋铰链中段：支撑膝轻屈、髋向后折，另一腿自然向后伸并离地；骨盆大致朝前。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Footwear: plain white low-top athletic sneakers on both feet, no brand or logos. Full-body composition with generous margin above hair and below both shoes, camera around torso level, no perspective distortion. Pose specification: Action 91 T-LOW-016 扶稳单腿罗马尼亚硬拉. Supported SINGLE-LEG ROMANIAN DEADLIFT, initial UNWEIGHTED version, controlled comfortable midway hip hinge. Full body near-side three-quarter profile facing right. Far-side hand lightly grips a securely floor-fixed gray waist-height handrail in front and to the side, clear contact. Her near-side supporting foot stays completely planted on the floor, supporting knee softly bent around 15 degrees. Hinge hips BACK so torso inclines forward about 40 degrees from vertical with a neutral straight spine and natural head-neck alignment. The other leg extends backward gently toward frame left, knee nearly straight and foot CLEARLY OFF floor about 15–25 cm. Chest and pelvis stay facing same direction, hips level without twisting. Her free near hand hangs naturally beside supporting knee, not reaching floor. No dumbbell or kettlebell, no elevated front foot. Show BOTH full legs, off-floor rear foot, standing foot and supporting hand/rail clearly separated and unobstructed. Realistic adult limb lengths, no enormous rear leg, no excessive arched back.",
+      "visual_review": "已实际审图：人物、服装、背景、正常比例，以及关键姿势、握持和支撑接触。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "E74585A6301EFC3DAE8053F5D18B0CA68775753DA7135CACB92A4045FAA6673A",
+      "bytes": 1665263
+    },
+    {
+      "sequence": 92,
+      "id": "T-LOW-017",
+      "name": "分级坐站训练",
+      "category": "train",
+      "filename": "092_T-LOW-017_分级坐站训练.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\092_T-LOW-017_分级坐站训练.png",
+      "source_card_line": 6011,
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-3ab43488-4da7-4371-9ebf-e7be1f8d7e4e.png",
+      "shown_stage": "扶手辅助坐站的起立早期：臀部刚离椅面，身体适当前移，双脚着地、双手扶椅把。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Footwear: plain white low-top athletic sneakers on both feet, no brand or logos. Full-body composition with generous margin above hair and below both shoes, camera around torso level, no perspective distortion. Pose specification: Action 92 T-LOW-017 分级坐站训练. Graded SIT-TO-STAND with ARMREST assistance, initial unweighted version. Same woman facing right, side view with slight three-quarter angle to show both legs and face. Stable simple gray chair WITH TWO ARMRESTS and a backrest behind her, all four legs on floor, no wheels. Show early rising phase: buttocks have just lifted about 8 cm above seat, pelvis still close to front edge of seat, hips and knees partly bent, trunk naturally leaning forward around 30 degrees to put shoulders over feet. BOTH feet planted comfortably shoulder width, soles and heels touching floor, knees follow toes. BOTH hands press down naturally on the two armrests with visible contact, arms help her rise. Head follows neutral spine, no looking down sharply, no rounded hunched spine. Clearly show gap between pelvis and chair seat and the chair; not a generic squat far away from chair. Full head-to-shoe body and chair fit in frame with generous margins. No weights, no arrows, no second seated/standing duplicate.",
+      "visual_review": "已实际审图：人物、服装、背景、正常比例，以及关键姿势、握持和支撑接触。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "66293691FAF230365B94C071F7B8C0F833C6416050DD252B97C975EEE59C00FF",
+      "bytes": 1745813
+    },
+    {
+      "sequence": 93,
+      "id": "T-LOW-018",
+      "name": "扶稳浅蹲/椅前目标蹲",
+      "category": "train",
+      "filename": "093_T-LOW-018_扶稳浅蹲／椅前目标蹲.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\093_T-LOW-018_扶稳浅蹲／椅前目标蹲.png",
+      "source_card_line": 6067,
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-d653a2e9-0330-4d70-8bd0-b588c4d01059.png",
+      "shown_stage": "徒手扶稳浅蹲的下降中段：双手轻扶固定扶手、膝轻屈，后方椅子作为深度目标，臀部未接触椅面。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Footwear: plain white low-top athletic sneakers on both feet, no brand or logos. Full-body composition with generous margin above hair and below both shoes, camera around torso level, no perspective distortion. Pose specification: Action 93 T-LOW-018 扶稳浅蹲/椅前目标蹲. Supported SHALLOW SQUAT, initial unweighted version. Near-side three-quarter profile facing right. Both hands comfortably resting on a firm gray floor-fixed waist-height handrail in front with visible contact. Woman stands with feet about hip/shoulder width, both soles and heels flat. Knees bend only about 35 degrees in a small mini squat, hips travel modestly backward, chest slightly inclined with neutral spine, torso stable, head natural. Knees follow the feet, no inward collapse. A stable simple gray chair BEHIND her is a depth target, with buttocks visibly ABOVE and well clear of seat, NOT seated or falling back. Chair is behind hips, rail in front, do not hide feet/knees. Full body hair to shoes, both feet, handrail contact and chair fit naturally in frame. No load. Small comfortable range, not a full deep squat.",
+      "visual_review": "已实际审图：人物、服装、背景、正常比例，以及关键姿势、握持和支撑接触。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "9A89FD2C5A0CF55126BBC04F3CAE169C303A34C529CD62FEE3EAE0CE3C825D97",
+      "bytes": 1691229
+    },
+    {
+      "sequence": 94,
+      "id": "T-LOW-019",
+      "name": "哑铃/壶铃杯式深蹲",
+      "category": "train",
+      "filename": "094_T-LOW-019_哑铃／壶铃杯式深蹲.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\094_T-LOW-019_哑铃／壶铃杯式深蹲.png",
+      "source_card_line": 6123,
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-dfbc7fa4-04fb-45e3-95a7-972c472ae048.png",
+      "shown_stage": "单只轻壶铃杯式蹲的受控下降阶段：双手握铃靠近胸前，双脚全掌稳定，展示个人舒适中等深度。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Footwear: plain white low-top athletic sneakers on both feet, no brand or logos. Full-body composition with generous margin above hair and below both shoes, camera around torso level, no perspective distortion. Pose specification: Action 94 T-LOW-019 哑铃/壶铃杯式深蹲. GOBLET SQUAT using ONE SMALL light plain gray kettlebell. Full body near-side front three-quarter view facing slightly right. Hold both sides of the kettlebell handle/horns securely in TWO hands close in front of upper chest, elbows bent downward, wrists comfortable and natural. Kettlebell stays close to chest without hiding face or blocking breathing; one object only. Controlled moderate squat, knees about 65–75 degrees flexion and thighs comfortably above parallel, hips moving back/down, feet about shoulder width naturally turned out a little, both soles and heels firmly planted. Knees aligned with toes, no inward collapse. Chest open, spine neutral, slight natural forward torso inclination, gaze level. Entire head-to-feet woman and kettlebell shown with room around knees, normal thigh and shin lengths. No overhead press, no twisting, no enormous weight, no numeric label or text.",
+      "visual_review": "已实际审图：人物、服装、背景、正常比例，以及关键姿势、握持和支撑接触。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "7EA732A92484E4796E0FBB75D1078840577B7C0DE17E1704F973CF92FB679438",
+      "bytes": 1730171
+    },
+    {
+      "sequence": 95,
+      "id": "T-LOW-020",
+      "name": "杠铃背蹲：已有技术者的受控版本",
+      "category": "train",
+      "filename": "095_T-LOW-020_杠铃背蹲：已有技术者的受控版本.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\095_T-LOW-020_杠铃背蹲：已有技术者的受控版本.png",
+      "source_card_line": 6181,
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-48616e3b-5f96-4633-bca4-d8d3bb41324e.png",
+      "shown_stage": "空杆杠铃背蹲的受控部分下降阶段：杆放上背，双侧安全杆就位，双脚全掌着地；不展示重负荷。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Footwear: plain white low-top athletic sneakers on both feet, no brand or logos. Full-body composition with generous margin above hair and below both shoes, camera around torso level, no perspective distortion. Pose specification: Action 95 T-LOW-020 杠铃背蹲：已有技术者的受控版本. Controlled HIGH-BAR BACK SQUAT with EMPTY BAR in a proper POWER RACK. Preserve same gray-blue studio backdrop, do NOT switch to a gym or dark room. Full body slightly front-side three-quarter view of woman facing right, within a sturdy simple neutral gray four-post squat cage with a flat stable base. Rack must have a visibly installed horizontal safety rail on EACH side; BOTH safety rails at upper-thigh/hip level just BELOW the bar's lowest shown position so they can catch it, and visible J-hooks higher on uprights. Do NOT omit safety equipment. The plain metal training bar rests across her upper back/trapezius below neck, NOT on neck or head; she holds bar with two natural hands outside shoulders, elbows bent down/back and wrists aligned. Bar is unloaded with visible end sleeves/collars, no huge plates, no weight text. Controlled partial squat with knees bent about 55–65 degrees, both feet shoulder width soles/heels planted, hips down/back, spine neutral, torso mildly forward and head natural. Show the entire woman, bar, both feet, relevant rack frame and BOTH installed safety rails; arrange rack so front upright never hides her face or body joints. Wide enough camera distance in portrait for normal person proportions and safe rack geometry, not close-up or cut-off feet. Only one woman, no spotter, no text or labels.",
+      "visual_review": "已实际审图：人物、服装、背景、正常比例，以及关键姿势、握持和支撑接触。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "97E28553551AF25E261C6508A2B5515C94AAC20EF2068375D49C58595110FCF8",
+      "bytes": 1806043
+    },
+    {
+      "sequence": 96,
+      "id": "T-LOW-021",
+      "name": "扶稳分腿蹲：徒手至哑铃",
+      "category": "train",
+      "filename": "096_T-LOW-021_扶稳分腿蹲：徒手至哑铃.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\096_T-LOW-021_扶稳分腿蹲：徒手至哑铃.png",
+      "source_card_line": 6237,
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-8ee52aed-f30b-4289-8092-cbae3f79f28f.png",
+      "shown_stage": "扶稳原地分腿蹲的下降阶段：前脚整掌着地、后脚前足支撑，保留左右站距；选择徒手版本。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Footwear: plain white low-top athletic sneakers on both feet, no brand or logos. Full-body composition with generous margin above hair and below both shoes, camera around torso level, no perspective distortion. Pose specification: Action 96 T-LOW-021 扶稳分腿蹲：徒手至哑铃. SUPPORTED STATIC SPLIT SQUAT, initial UNWEIGHTED version. Full body side/front three-quarter view facing right. Front near foot at frame right fully planted, rear far foot at frame left with ball/toes firmly on floor and heel naturally raised. Fore-aft stance moderately separated, feet on two parallel tracks with lateral width, not tightrope or crossed. In comfortable shallow-to-moderate descent, both knees bend, front knee about 60 degrees, rear knee stays OFF floor around 25–30 cm. Pelvis lowers fairly vertically, trunk mostly upright with natural slight lean, shoulders level. One hand lightly grips a firm floor-fixed gray waist-height handrail at her SIDE with clear contact, the other arm relaxed down. No weights. Show both feet and both knee positions separated clearly; no kneeling, no rear foot on bench, no forward stepping dynamic. Whole hair-to-shoe body and support inside frame, natural proportions.",
+      "visual_review": "已实际审图：人物、服装、背景、正常比例，以及关键姿势、握持和支撑接触。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "5640D6DB07686EB97CF16A60BBD1D508E01CCC3F1205AB29B98120E01D8C6B68",
+      "bytes": 1694708
+    },
+    {
+      "sequence": 97,
+      "id": "T-LOW-022",
+      "name": "反向弓步：徒手至哑铃",
+      "category": "train",
+      "filename": "097_T-LOW-022_反向弓步：徒手至哑铃.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\097_T-LOW-022_反向弓步：徒手至哑铃.png",
+      "source_card_line": 6295,
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-8142a3dd-7d82-487d-9fb3-e20fcd83ceeb.png",
+      "shown_stage": "反向弓步的后退落脚后下降阶段：前脚全掌支撑，后脚前足落稳再屈膝，徒手、保留侧向站距。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Footwear: plain white low-top athletic sneakers on both feet, no brand or logos. Full-body composition with generous margin above hair and below both shoes, camera around torso level, no perspective distortion. Pose specification: Action 97 T-LOW-022 反向弓步：徒手至哑铃. REVERSE LUNGE, initial UNWEIGHTED version. Same woman full body facing right from side/front three-quarter view. Show controlled shallow lunge immediately AFTER the near-side leg has stepped BACKWARD toward frame left and landed on its forefoot: rear near toes/ball firmly touch floor, heel naturally raised, rear knee bends and remains off floor. Far-side front foot stays fully planted at frame right under front knee, front knee about 55–65 degrees flexion. Moderate step length, two feet keep lateral hip-width spacing, no crossing or tightrope. Torso upright with gentle forward inclination, neutral spine, pelvis square, shoulders down, head natural. Hands rest lightly on hips, no dumbbells and no helping hand. A firm gray side support rail can remain nearby outside the foot path, without hiding legs. Both feet/soles, knees, head, hands and complete body visible. Static snapshot of landed step and descent, no arrows or sequential duplicates. No jump, no front step, no trailing foot floating.",
+      "visual_review": "已实际审图：人物、服装、背景、正常比例，以及关键姿势、握持和支撑接触。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "55828032B3E3CFCA787D6968584F4EA559F4620C62153294B8FB5D955B26C936",
+      "bytes": 1673289
+    },
+    {
+      "sequence": 98,
+      "id": "T-LOW-023",
+      "name": "后脚抬高分腿蹲：徒手至哑铃",
+      "category": "train",
+      "filename": "098_T-LOW-023_后脚抬高分腿蹲：徒手至哑铃.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\098_T-LOW-023_后脚抬高分腿蹲：徒手至哑铃.png",
+      "source_card_line": 6351,
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-616ab857-59c9-44d7-a7cc-79aae8d72686.png",
+      "shown_stage": "扶稳徒手后脚抬高分腿蹲的下降阶段：前脚全掌着地，后脚脚背接触固定低凳软垫，后膝未触地。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Footwear: plain white low-top athletic sneakers on both feet, no brand or logos. Full-body composition with generous margin above hair and below both shoes, camera around torso level, no perspective distortion. Pose specification: Action 98 T-LOW-023 后脚抬高分腿蹲：徒手至哑铃. REAR-FOOT-ELEVATED SPLIT SQUAT, initial SUPPORTED UNWEIGHTED version. Full body near-side profile facing right with enough three-quarter angle to separate feet. Her near-side front foot at right is firmly on floor, whole sole and heel planted; front knee bent comfortably around 55–65 degrees. Rear far foot at left has its INSTEP resting comfortably on a padded sturdy LOW gray bench only about 20–25 cm high, not a tall chair or table. Bench must be wide with stable fixed legs, placed against a plain wall panel of the SAME background gray-blue at frame left to visibly stop sliding. Rear knee bends downward naturally but stays off ground; ankle relaxed on padding, no cramped toes or impossible ankle twist. Fore-aft stance has comfortable lateral width, pelvis faces forward, trunk upright with slight natural lean. One hand at far side holds securely floor-fixed gray waist-height support rail to her side/in front, free arm relaxed. Show hand support contact, whole bench, rear FOOT-TO-BENCH contact, front foot sole and knee clearly. No dumbbell or kettlebell, no floating rear foot, no crossed legs. Fit all woman and relevant props into frame, normal limb proportions.",
+      "visual_review": "已实际审图：人物、服装、背景、正常比例，以及关键姿势、握持和支撑接触。",
+      "revision_history": [
+        {
+          "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-dded2ab7-2a35-4ba1-af6f-ccd7dc4ae2e0.png",
+          "status": "discarded",
+          "reason": "凳体左端截出画面，靠墙固定条件未显示"
+        },
+        {
+          "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-616ab857-59c9-44d7-a7cc-79aae8d72686.png",
+          "status": "selected",
+          "prompt": "Use case: identity-preserve. Edit image 1, the existing rear-foot-elevated split squat photograph. Images 2,3,4 are strict original identity, clothing and gray-blue studio photo references. Preserve the SAME woman's exact face, low black ponytail, white T-shirt, charcoal trousers, plain white sneakers, realistic normal body proportions, same soft photo lighting, SAME cool gray-blue studio background COLOR, and this same supported unweighted split squat.\nFix the bench support and framing: step camera back slightly so the FULL padded low long bench and its sturdy fixed legs are within the frame with visible margin. Replace the cropped tall-looking bench with a sturdy gray padded LOW bench, roughly 25–30 cm high, suitably long and wide. Its LEFT end is physically flush against a visible vertical wall panel at frame left, wall is EXACTLY the same gray-blue color as reference backdrop. SHOW the actual BENCH END-TO-WALL CONTACT clearly, no gap; do not merely imply a hidden wall. Bench cannot be cropped off. Rear shoe instep must still physically rest comfortably on the padded bench top, ankle natural; adjust rear leg only as needed for lower bench, maintain two anatomically correct legs. Front foot whole sole firmly on floor, front knee comfortably bent, rear knee off floor. Same woman's hand still securely grips the fixed waist-height rail, full handrail contact visible. Torso remains upright, hips level, knees and feet aligned, stance has lateral width and no crossing. Entire woman, both shoes, low bench, wall contact and hand support fit the 4:5 portrait without distorting proportions. No weights, no text/arrows/collage.",
+          "reason": "完整展示凳体、后脚接触与靠墙位置"
+        }
+      ],
+      "width": 1122,
+      "height": 1402,
+      "sha256": "50EE5A51DDA8C87AA7B721599CD4A9A3CD70EAE315BB53C82A5B6BB5A454863F",
+      "bytes": 1691806
+    },
+    {
+      "sequence": 99,
+      "id": "T-LOW-024",
+      "name": "侧弓步：徒手至杯式负荷",
+      "category": "train",
+      "filename": "099_T-LOW-024_侧弓步：徒手至杯式负荷.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\099_T-LOW-024_侧弓步：徒手至杯式负荷.png",
+      "source_card_line": 6407,
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-d74f9f7f-5b85-4de1-8ae4-1acf793e482b.png",
+      "shown_stage": "徒手小幅侧弓步的重心移向迈步侧阶段：该侧髋膝屈曲，另一腿近伸展但不强锁，双脚稳定。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Footwear: plain white low-top athletic sneakers on both feet, no brand or logos. Full-body composition with generous margin above hair and below both shoes, camera around torso level, no perspective distortion. Pose specification: Action 99 T-LOW-024 侧弓步：徒手至杯式负荷. LATERAL LUNGE, initial UNWEIGHTED version, small comfortable lateral step. Full body FRONT three-quarter view; woman faces camera with her recognizable face turned only slightly. She has stepped her anatomical right foot modestly to her right (VIEWER LEFT). Weight shifts toward that foot, right hip sits back slightly and right knee bends about 45–55 degrees over the same-direction toes. Opposite leg at VIEWER RIGHT extends laterally with knee nearly straight but SOFT, not hyperextended. Both whole soles and heels remain on floor, toes roughly forward with comfortable slight outward angle, stance only moderately wider than shoulder width, no maximal stretch or side split. Torso inclines mildly forward from hips, chest mostly forward and level, pelvis not twisted, spine neutral. Both hands lightly on hips, no load. Full body including both widely separated feet, hair and hands in frame with generous margins, natural human proportions, avoid tiny torso or elongated legs. No deep Cossack squat, no heel raised, no knee collapse.",
+      "visual_review": "已实际审图：人物、服装、背景、正常比例，以及关键姿势、握持和支撑接触。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "43E4005B3D1ACB647D47AA655F6844E92825B99DFB581455C767DE0F1148FE77",
+      "bytes": 1672460
+    },
+    {
+      "sequence": 100,
+      "id": "T-LOW-025",
+      "name": "小幅弓步转体",
+      "category": "train",
+      "filename": "100_T-LOW-025_小幅弓步转体.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\100_T-LOW-025_小幅弓步转体.png",
+      "source_card_line": 6463,
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-7c50b6ed-85af-43f7-a86a-a8ef35607b1f.png",
+      "shown_stage": "原地徒手浅弓步的小幅转胸阶段：胸廓向前腿一侧轻转，骨盆、膝足保持可控，双手在胸前。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Footwear: plain white low-top athletic sneakers on both feet, no brand or logos. Full-body composition with generous margin above hair and below both shoes, camera around torso level, no perspective distortion. Pose specification: Action 100 T-LOW-025 小幅弓步转体. SMALL LUNGE WITH GENTLE CHEST ROTATION, strictly UNWEIGHTED per source. Full body FRONT three-quarter view that reveals shoulder and pelvis directions separately, not full profile. Woman enters stable STATIC SHALLOW split lunge with her anatomical RIGHT foot forward toward foreground/VIEWER LEFT, left foot behind toward frame right. Front right foot flat and knee softly bent only about 35–45 degrees; rear left forefoot planted with heel naturally raised, rear knee slightly bent and OFF floor. Feet keep lateral width and toes/ knees point the same stable forward-lunge direction, no foot or knee twisting. Pelvis and lower limbs remain square to original forward direction. Rotate ONLY chest/shoulder line gently about 20–25 degrees toward her FRONT RIGHT leg (VIEWER LEFT). Both empty hands loosely together in front of sternum, elbows comfortably bent, head follows chest naturally; neither arms swung outward nor one hand touching knee. Show a clearly SMALL rotation relative to forward pelvis, not 90-degree twist. No kettlebell, dumbbell, ball, band or weight whatsoever. Whole body hair to both shoes in frame, natural proportions, same woman and gray-blue studio photograph. No jumping, no deep lunge, no maximal rotation.",
+      "visual_review": "已实际审图：人物、服装、背景、正常比例，以及关键姿势、握持和支撑接触。",
+      "revision_history": [
+        {
+          "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-0acb9160-d651-47e1-b1e7-9f6011439057.png",
+          "status": "discarded",
+          "reason": "站位呈交叉倾向，转胸方向需要更清晰"
+        },
+        {
+          "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-7c50b6ed-85af-43f7-a86a-a8ef35607b1f.png",
+          "status": "selected",
+          "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Footwear: plain white low-top athletic sneakers on both feet, no brand or logos. Full-body composition with generous margin above hair and below both shoes, camera around torso level, no perspective distortion. Pose specification: Action 100 T-LOW-025 小幅弓步转体. Correct UNWEIGHTED shallow static lunge with a gentle torso rotation toward the FRONT LEG.\nComposition: full-body FRONT-SIDE three-quarter camera view. Her pelvis and feet originally face toward FRAME RIGHT. Her NEAR leg (closest to camera) is the FRONT leg: near hip, near thigh, near knee and front shoe form a clear non-crossing path toward FRAME RIGHT; front shoe is fully planted at frame right. Her FAR leg remains BACK at FRAME LEFT, rear ball/toes touching floor with heel raised, rear knee off ground. Keep two PARALLEL leg tracks separated by comfortable hip-width lateral distance; feet are NOT crossed and thighs must NOT form an X. Modest fore-aft distance and shallow front-knee flexion about 35 degrees, upright torso, no deep kneeling.\nHold stable lower body and pelvis facing frame right. Gently rotate chest/shoulder line about 20–25 degrees toward the FRONT NEAR LEG, which turns the chest slightly TOWARD THE CAMERA: chest is more front-facing than pelvis. Head naturally follows this same small chest turn toward camera, not toward rear leg. Both EMPTY hands loosely together at sternum, elbows bent and relaxed, not swinging. Clearly visible slight shoulder-to-pelvis rotation. Neutral straight spine, level shoulders, stable feet and knees remain original orientation. All hair, two hands, two knees and two shoes fully visible. No kettlebell, dumbbell, ball or any load. No crossed stance, no curtsy lunge, no foot twist, no backward chest rotation, no leap, no multi-stage image.",
+          "reason": "保持前后分腿，胸廓向近侧前腿小幅转动"
+        }
+      ],
+      "width": 1122,
+      "height": 1402,
+      "sha256": "95F5FC753227AA3EC0229B53CC327C0A676B8347687505465676C6EB173907B6",
+      "bytes": 1682399
+    }
+  ],
+  "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+  "reference_hashes": [
+    {
+      "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-db026e54-a343-4867-80c1-5934b83ef697.png",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-53facc44-2a2b-4dd8-ae77-6fcf50cef7d3.png",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-2555800f-5022-48a9-9772-091ca3fc56a2.png",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ]
+}

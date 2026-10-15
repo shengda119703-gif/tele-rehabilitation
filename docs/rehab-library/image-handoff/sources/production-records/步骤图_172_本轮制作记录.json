@@ -1,0 +1,82 @@
+{
+  "record_version": "1.0",
+  "date": "2026-10-14",
+  "action": "172",
+  "action_id": "T-AXU-060",
+  "name": "单臂绳索或弹力带侧平举",
+  "scope": "仅制作172首轮右侧动作s01/s02；未改应用仓库、未提交Git。",
+  "source_documents": [
+    "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+    "E:/git冲突问题/安康_康复评估与分级训练动作库.md"
+  ],
+  "reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "original_single_image": {
+    "path": "E:/git冲突问题/rehab image/train/172_T-AXU-060_单臂绳索或弹力带侧平举.png",
+    "reviewed": true,
+    "reused": false,
+    "reason": "原单图左臂抬向画面右、锚点在画面左，与首轮要求右手动作和人物左侧锚点相反，因此未复用。"
+  },
+  "generation_mode": "built-in image_gen, one asset per call, s02 edited from s01",
+  "calls": [
+    {
+      "stage": "s01",
+      "prompt": "Use case: scientific-educational.\nCreate ONE photorealistic rehabilitation exercise demonstration photograph, step 01 starting pose of single-arm resistance-band lateral raise (T-AXU-060). Input images 1, 2, 3 are identity and visual-style references only: use the SAME adult East Asian woman, same black ponytail, white short-sleeved athletic T-shirt, charcoal dark-grey ankle-length pants, and realistic facial identity/skin texture. White athletic shoes.\nScene: seamless muted grey-blue studio wall and matching floor, soft even studio lighting, restrained medical exercise catalog photography. Portrait 4:5 aspect ratio. One person, one pose, no collage, no writing, no arrows, no labels, no watermark.\nCamera: FRONT VIEW, camera facing her chest directly, full body including head, both white shoes, complete band and waist-high anchor. Leave enough lateral space for the next frame's right arm lateral raise. Fix the camera and apparatus for this two-step series. Her chest, shoulders and hips face camera, head comfortably forward, feet stable about hip-width apart.\nCRITICAL anatomical left/right: the metal fixed anchor post is on THE WOMAN'S LEFT SIDE, therefore on the VIEWER'S RIGHT SIDE of this front-view image. Its one anchor ring is exactly at her natural WAIST height, not near the floor. The exercise hand is her RIGHT HAND, therefore on the VIEWER'S LEFT SIDE. Her right hand is the FAR hand relative to the anchor. Her LEFT arm (viewer right) hangs relaxed at her side and does not hold any band or handle.\nStep 01 pose: her RIGHT upper arm rests near her right side, with a relaxed slight bend at the elbow. Her right hand grips a black D handle just in front of the right upper thigh, natural neutral wrist. A single light grey elastic resistance tube connects the handle at viewer left to the fixed metal waist-height anchor ring at viewer right. The tube passes visibly ACROSS THE FRONT of her lower abdomen/hip area, slightly diagonally downward from waist-height anchor to handle; the entire continuous tube remains IN FRONT of her body, never inside or behind the torso, never threaded through clothing or limbs. Show mechanically credible handle connector and anchor attachment with mild starting tension. Only one tube, one handle, one anchor.\nKeep neutral upright posture without leaning, twisting, shrugging or compensatory waist extension. Realistic normal anatomy, two arms, two hands with believable grip. Do NOT raise the left arm, do NOT place the anchor on viewer left, do NOT put an anchor at ankle/floor height. The image must show the STARTING pose with the exercise arm DOWN, not the lateral-raise endpoint.",
+      "inputs": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-c445-78b3-94ed-d1fa129732d4/exec-b561fb30-539d-4c25-8ca6-5a6ce5afe05a.png",
+      "selected": true
+    },
+    {
+      "stage": "s02_first_draft",
+      "prompt": "Use case: identity-preserve.\nEdit this image into step 02 endpoint of T-AXU-060, single-arm resistance-band lateral raise. The supplied image is the edit target and the exact invariant composition.\nCHANGE ONLY the woman's RIGHT exercise arm (viewer LEFT) and the connected elastic tube's path to show the controlled endpoint.\nLift her RIGHT arm directly OUT TO HER RIGHT SIDE (toward the LEFT edge of this front-view photograph), with the hand just BELOW shoulder height (approximately 70–80 degrees of lateral shoulder abduction). Right elbow keeps a small natural bend, wrist neutral, hand still firmly holding the SAME black D handle. Her right upper arm and forearm extend laterally in her frontal plane, not across her chest and not forward. The RIGHT hand must remain visible with a small margin from the left edge.\nA SINGLE light-grey elastic tube now stretches from that raised right hand at viewer left to the SAME fixed waist-height anchor ring on the metal post at VIEWER RIGHT. Show an unbroken taut, mechanically credible tube diagonally across the FRONT of her torso, clearly external to clothing and body. Retain credible handle connector and anchor connection, and the same tube color/material. Do not add a second tube.\nPreserve EXACTLY: same front-view camera, portrait 4:5 composition, grey-blue studio backdrop and floor, lighting, woman identity, ponytail, neutral head position and gaze, white short-sleeved T-shirt, charcoal trousers, white shoes, standing foot positions, straight upright chest and hips facing camera, post position, post design, waist-height anchor ring and floor base. The LEFT arm (viewer RIGHT) still hangs relaxed at her side, unchanged, holding nothing. Shoulders remain level and relaxed; no shrugging, no leaning or twisting, no rib flare. Only one woman and one pose. No text, arrows, labels, collage or watermark.\nDo not change sides: subject RIGHT arm is viewer LEFT exercise arm, subject LEFT anchor is viewer RIGHT. Do not lift the left arm, do not place hand above shoulder height, do not move anchor down to floor height, do not move feet or reframe the camera.",
+      "inputs": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a83-c445-78b3-94ed-d1fa129732d4/exec-b561fb30-539d-4c25-8ca6-5a6ce5afe05a.png"
+      ],
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-c445-78b3-94ed-d1fa129732d4/exec-55b3a823-8812-4278-b547-ad87fcdb7af2.png",
+      "selected": false,
+      "review": "右手终点接近肩平线，进一步降低终点使不超过肩高更明确。"
+    },
+    {
+      "stage": "s02_revision",
+      "prompt": "Use case: precise-object-edit. This is a targeted posture correction to the supplied T-AXU-060 endpoint photograph.\nChange ONLY the RIGHT raised arm (viewer LEFT) and the connected band shape: LOWER her right exercise arm by about 15 degrees from horizontal so that her right hand and handle are clearly 10–15 cm BELOW shoulder level. Target about 70–75 degrees of lateral abduction. The shoulder stays at exactly its current relaxed height and position. The RIGHT upper arm must visibly slope downward toward viewer left, and the mildly flexed elbow/forearm remain in the same frontal lateral plane with a neutral wrist; don't bend the arm into a row. This is still a lateral raise endpoint with arm well away from the body, but never above shoulder high.\nKeep the single grey tube taut and continuously connected from that handle to the EXACT SAME fixed waist-high anchor ring on VIEWER RIGHT. It passes across the FRONT of her torso, not behind or through the body.\nPreserve everything else exactly: woman identity, face, ponytail, white T-shirt, charcoal trousers, white shoes, upright chest and hips facing camera, feet, relaxed nonexercise LEFT arm (viewer RIGHT) at side, fixed anchor post and ring height, floor base, 4:5 full-body front-view camera, studio grey-blue background, framing and lighting. One woman, one pose, no text, no arrows, no collage. Do not mirror anything. Subject's RIGHT hand is viewer LEFT, anchor on subject's LEFT is viewer RIGHT.",
+      "inputs": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a83-c445-78b3-94ed-d1fa129732d4/exec-55b3a823-8812-4278-b547-ad87fcdb7af2.png"
+      ],
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-c445-78b3-94ed-d1fa129732d4/exec-7e85b866-8edd-46ef-85d9-f8a45bbdba1a.png",
+      "selected": true
+    }
+  ],
+  "files": [
+    {
+      "step": "s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/172_T-AXU-060_s01.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1683383,
+      "sha256": "A29C697E33D3E6B2850F8762351D392BAEF98A9705CB68DF93E921CFF9CC25DB",
+      "reused": false,
+      "review": "通过：正面全身入镜；人物右手在画面左、左侧腰高锚点在画面右；右臂起始低位，带经过身前并连续连接，左臂自然下垂；双脚站稳。"
+    },
+    {
+      "step": "s02",
+      "path": "E:/git冲突问题/rehab image/train/steps/172_T-AXU-060_s02.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1561603,
+      "sha256": "AA93CA108F692F44E647FC61F08DD56B16655018DF1B2742B5483D890AB1FBED",
+      "reused": false,
+      "review": "通过：右臂向右侧展开且手明显低于肩高，无耸肩、胸髋扭转或斜向跨体抬举；腰高锚点与连续带路径一致；人物、服装、机位、双足与器材保持同组一致。"
+    }
+  ],
+  "review_method": "已逐张使用view_image检查三张参考、原单图、生成稿及最终保存文件；并核对PNG尺寸、字节数和SHA256。",
+  "review_status": "accepted",
+  "limitations": "图片为教学姿势示范，实际动作范围和阻力仍按原动作库与个体计划确认。",
+  "non_overwrite_policy": "若同名交付文件存在则递增_v2、_v3；本轮两个目标文件不存在，保存为标准s01/s02。"
+}

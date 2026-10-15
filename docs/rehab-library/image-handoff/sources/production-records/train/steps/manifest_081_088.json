@@ -1,0 +1,58 @@
+{
+  "range": "081,088",
+  "date": "2026-10-14",
+  "mode": "built-in image_gen",
+  "records": [
+    {
+      "sequence": 81,
+      "id": "T-LOW-028",
+      "step": "01",
+      "name": "仰卧/坐位髋内收轻夹垫",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a13853-12f9-7993-b5b4-8d6797141dfa/exec-1087fbb7-a06e-4420-ae36-3c6bcf479234.png",
+      "filename": "081_T-LOW-028_s01.png",
+      "prompt": "Use case: scientific-educational. Asset: one independent rehabilitation demonstration photograph, action 081 T-LOW-028 step 01. Input images 1–3 are STRICT same-woman identity, clothing, lighting and gray-blue backdrop references, not pose references. Repose this exact woman: same East Asian face, age, build, dark ponytail, fitted plain white short sleeve T-shirt and charcoal full-length trousers. Photorealistic studio photo, cool light gray-blue seamless background and matching floor, soft diffused neutral light and natural shadow. ONE person ONE static pose, no text, arrows, numbers, panels, inset, branding, watermark or visible writing. Natural adult anatomy, realistic proportions, complete head, hands, both feet with space around them.\nPose: lie SUPINE on a simple neutral gray nonslip exercise mat, head at image left and feet at image right. Face upward, head comfortably resting, shoulders and pelvis on mat. BOTH knees bent comfortably about 90 degrees, BOTH feet in matching plain white socks placed flat on mat, feet hip-width and aligned. Place a modest SOFT pale gray rectangular PILLOW vertically BETWEEN the inner sides of BOTH KNEES and distal thighs. Both inner knees clearly contact the two sides of the pillow, gentle adduction holding only; hands rest relaxed beside trunk. Pillow must not sit on abdomen, lap or underneath feet. Feet remain grounded, no bridge, hips stay down. Elevated oblique side/front camera from footward side so BOTH knees, the intervening pillow, BOTH separate feet and their contact with mat can be clearly seen, face also visible. Portrait 4:5 frame similar to references 1122x1402; complete body and whole support surface comfortably visible, horizontal body under 85% of frame width. Only mat and pillow, no chair, no gym interior. This is supine variant; do not show sitting.",
+      "visual_review": "通过：屈膝仰卧，骨盆肩背落垫，两侧内膝夹软垫，两只白袜脚掌稳定接地；自然比例，参考人物服装灰蓝背景一致。远侧手因侧前机位有自然遮挡。",
+      "path": "E:/git冲突问题/rehab image/train/steps/081_T-LOW-028_s01.png",
+      "reused": false,
+      "status": "visual_review_passed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1735417,
+      "sha256": "DD0487E5CB7FB7D4A59AFF85EAC9B0E5F726B8D5B656203ACE100C5610180129"
+    },
+    {
+      "sequence": 88,
+      "id": "T-LOW-013",
+      "step": "01",
+      "name": "髋铰链触墙练习",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a13853-12f9-7993-b5b4-8d6797141dfa/exec-2e43f2e8-4e2f-4d6a-a358-776b929c7f40.png",
+      "filename": "088_T-LOW-013_s01.png",
+      "prompt": "Use case: scientific-educational. Asset: action 088 T-LOW-013 hip hinge wall tap, STEP 01 PREPARATION. Images 1–3 are STRICT identity/clothing/backdrop/light references, not exercise pose reference. Repose exact same East Asian woman, black ponytail, same face/age/build, fitted plain white short-sleeve T-shirt, charcoal full-length trousers. ONE independent studio photograph, 4:5 portrait, photorealistic with natural anatomy/proportions. Soft neutral studio lighting, original cool light gray-blue seamless backdrop and matching floor. Add ONLY a simple flat upright wall plane on image LEFT in the exact same gray-blue color; clear vertical wall-floor meeting line, no gym/interior details. Complete head, both hands and both feet within margins, neutral white unbranded low-profile shoes. No writing, text, numbers, arrows, logos, inset, collage, ghost movement.\nBody pose for PREPARATION: side-profile full-body view, woman faces RIGHT with back toward wall LEFT. BOTH feet parallel hip width planted flat, feet about 20–25 cm away from wall at heels. Stand nearly upright, slight comfortable knee bend, arms relaxed down and slightly forward of thighs. Her buttocks visibly have a small starting AIR GAP to wall about 12 cm, back and head NOT touching wall. Natural relaxed tall torso and neutral spine, chin level, shoulders relaxed, eyes look forward. Do NOT bend torso forward yet; do NOT contact buttocks to wall yet. Camera level at hips, 70mm feel with no wide angle distortion, enough floor to see shoe contact. Whole figure fills roughly 70% of height with balanced room around figure; wall left, woman centered.",
+      "visual_review": "通过：背对左侧墙自然站姿，双足落地、膝微屈，臀墙间距清晰；头手双脚完整。",
+      "path": "E:/git冲突问题/rehab image/train/steps/088_T-LOW-013_s01.png",
+      "reused": false,
+      "status": "visual_review_passed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1660690,
+      "sha256": "0EC3EF4701CF5BB957D158A212EC8F96DFABBC6D5CADD70BD0E682FBEEEE5419"
+    },
+    {
+      "sequence": 88,
+      "id": "T-LOW-013",
+      "step": "02",
+      "name": "髋铰链触墙练习",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a13853-12f9-7993-b5b4-8d6797141dfa/exec-f17695b6-dd54-474e-9f38-d6df29580711.png",
+      "filename": "088_T-LOW-013_s02.png",
+      "prompt": "Use case: identity-preserve. Asset: rehabilitation action 088 T-LOW-013 hip hinge wall tap STEP 02 endpoint. Image 1 is the STEP 01 scene/edit target; images 2–4 are original identity, clothing, studio gray-blue background references. Edit IMAGE 1 into the endpoint while preserving EXACT same woman, face, ponytail, white shirt, charcoal pants, white shoes, flat vertical wall on LEFT, floor, light, portrait frame, camera position and scale. ONE person ONE pose, photorealistic, normal anatomy, no text, no arrows, no collage.\nChange only body pose: woman still faces RIGHT and BACK is toward wall LEFT. KEEP BOTH SHOES at precisely the same floor positions and angle as image1, heels and toes fully grounded; knees remain only slightly bent, shins roughly upright. Push her buttocks backwards to LEFT until the back of buttocks makes visible gentle CONTACT with vertical wall. Flex at BOTH HIP joints so torso naturally inclines forward RIGHT approximately 40 degrees from upright. Long relaxed neck, neutral natural spine curves, head aligned with inclined torso and gaze softly downforward. Arms hang down naturally in front of thighs, hands fully visible, empty. Pelvis rotates over hips rather than rounded lumbar collapse. Do not squat deeply, do not press upper back/head to wall. SHOW small unmistakable buttock-to-wall contact and clearly separated back/head from wall. No prop, no stick, no weights. Whole figure remains within frame with complete head, hands and both feet, same wall-floor reference and negative space.",
+      "visual_review": "通过：臀向后轻触墙，躯干随髋前倾，背与头未贴墙，双鞋位置与起始帧一致，双脚掌稳定接地、膝轻屈；机位与墙基准一致。",
+      "path": "E:/git冲突问题/rehab image/train/steps/088_T-LOW-013_s02.png",
+      "reused": false,
+      "status": "visual_review_passed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1623789,
+      "sha256": "CBA72F4C2079CF97978FE204D57C93761D643D9F9B1D2D05BE933C5E9F26584F"
+    }
+  ]
+}

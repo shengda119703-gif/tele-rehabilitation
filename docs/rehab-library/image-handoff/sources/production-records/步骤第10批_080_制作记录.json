@@ -1,0 +1,87 @@
+{
+  "batch": 10,
+  "action_index": "080",
+  "action_id": "T-LOW-012",
+  "action_name": "稳定长凳髋推：徒手至哑铃/杠铃",
+  "date": "2026-10-14",
+  "mode": "built-in image_gen",
+  "tool": "tools.image_gen__imagegen",
+  "specification_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "action_card_path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "invariants": "同一成年东亚女性、黑马尾、白短袖T恤、深灰长裤、白运动鞋；横向3:2侧面略斜固定机位；同一灰色靠墙稳定长凳、防滑灰垫及单轻黑六角哑铃。",
+  "pixel_edits": "无。仅内置工具生成并进行字节不变复制；源文件保留。",
+  "review_method": "每张使用 tools.view_image 实际视觉检查，逐一核对清单体位、支撑、器械、人体完整性及组内连续性。非临床专业验收。",
+  "steps": [
+    {
+      "step": "s01",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e7-3762-7db2-bea0-9d9da27d662d/exec-0dede238-37b7-4a6a-9662-b6f74af50d5b.png",
+      "target_path": "E:\\git冲突问题\\rehab image\\train\\steps\\080_T-LOW-012_s01.png",
+      "sha256": "A37212E7052D77572A083F405E1D415788306DCEFC96490D7348566F0A84DB53",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1861512,
+      "copy_verified": true,
+      "prompt": "Use case: scientific-educational.\nAsset type: a single photorealistic rehabilitation exercise demonstration photograph, 080 T-LOW-012 step s01, no text.\nInput images: images 1–3 are identity, clothing and photographic lighting references. Image 4 is only a reference for hip-thrust equipment orientation; replace its top-position pose with the specified lowered seated start, add the wall, mat and dumbbell, and use white athletic shoes.\nIdentity: the same adult East Asian woman with black ponytail and natural face, plain white short sleeve crew-neck T-shirt, dark charcoal full-length athletic leggings, plain white low-profile athletic shoes. One woman only.\nScene: calm gray-blue photography studio with an actual matte gray-blue wall meeting a gray-blue floor, neutral soft diffuse light. One sturdy fixed grey padded bench with steel base and rubber feet, no wheels, securely set against the wall, on the left of frame. Rectangular dark gray nonslip exercise mat under the woman and her feet. Bench is transverse behind her upper back, with its rear short end flush against the wall so it cannot slide backward.\nCamera: landscape photograph, camera at low waist height, almost exact side view from her right with a slight frontal offset enough to see BOTH hands and BOTH planted feet. Show full head, hands, hips, knees, shoes, whole bench and bench-to-wall contact with generous margins. The woman faces to the right.\nSpecific pose: LOWERED START of weighted bench hip thrust. Her buttocks are unmistakably resting low on the mat immediately in front of the bench. Her torso leans back diagonally with her shoulder-blade / upper thoracic region visibly supported against the front padded bench edge. The edge is below the shoulders and far below the neck, NOT pressing her neck, NOT lying flat on the bench. Head and neck free above the edge, chin relaxed slightly tucked. Both knees comfortably bent and both whole soles flat on the mat. Feet stay shoulder-width apart. One SMALL black hex dumbbell, a realistic light dumbbell with short silver handle and exactly two black hexagonal heads, lies horizontally across her anterior HIP CREASE on top of a small dark hip pad, below the abdomen. BOTH hands hold and stabilize the dumbbell to prevent rolling. Her pelvis is low; this is not the raised hip-thrust peak.\nAccuracy: anatomically natural joints and fingers, clearly visible upper-back support point, stable low seated support, no belly compression, no lumbar hyperextension, both shoes grounded. Clean realistic shadows and material textures.\nNo text, labels, numerals, arrows, logos, watermark, border, split screen, collage or diagrams. Do not draw a barbell, kettlebell, extra dumbbells, assistant, medical claims or motion blur. Keep the single frame clean and neutral.",
+      "input_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/train/080_T-LOW-012_稳定长凳髋推：徒手至哑铃／杠铃.png"
+      ],
+      "target_pose": "低坐于凳前，上背凳边承托非颈部，臀接垫，双脚稳地，单哑铃髋前防滚。",
+      "qa_status": "passed_visual_review",
+      "qa": "头手脚完整；臀已接垫；上背与凳缘接触，颈部离凳；凳端靠墙；双鞋掌接垫；同一单六角哑铃跨髋前护垫，两手防滚，不压腹。"
+    },
+    {
+      "step": "s02",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e7-3762-7db2-bea0-9d9da27d662d/exec-91c2b82f-c365-4aae-81e4-a82e53dcb245.png",
+      "target_path": "E:\\git冲突问题\\rehab image\\train\\steps\\080_T-LOW-012_s02.png",
+      "sha256": "97A2BA49DF33FFD79F7AE497EE7F773FEACA844030A95ECFF9A40C69B30D1D46",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1749768,
+      "copy_verified": true,
+      "prompt": "Use case: scientific-educational. Targeted anatomical pose correction to the attached hip-thrust photograph.\nThe woman is demonstrating the PEAK of a controlled light dumbbell hip thrust. In input image 1, her pelvis is still visibly sagging. Correct ONLY that by raising her pelvis another approximately 8–10 centimeters to the same vertical level as her KNEE JOINTS and SHOULDERS. The center of shoulder, center of hip, and center of knee should now lie on one nearly straight horizontal line. Her torso and thighs should form a continuous straight bridge, with no dip at the pelvis. Keep neutral ribs/pelvis and do not arch the lumbar spine or flare the ribs. The change comes from hip extension. Keep the head relaxed slightly tucked and free of the bench.\nPreserve everything else precisely: this exact East Asian woman and identity, black ponytail, white short-sleeve T-shirt, charcoal leggings, white sneakers, both feet at their exact current grounded positions, slightly side-front landscape 3:2 framing, grey padded bench and steel legs against the left gray-blue wall, mat and backdrop, lighting, lens, scale. The upper back and shoulder blades remain visibly supported by the same padded bench edge, never the neck. The same small black hex dumbbell rests on the same dark pad over the HIP CREASE below the abdomen; BOTH hands stabilize it in place and move upward with the lifted hip.\nFull head, hands, both feet, bench and wall contact in view. One realistic photograph, anatomically normal body. No words, labels, arrows, logos, panels, collages, extra props or ghost poses.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e7-3762-7db2-bea0-9d9da27d662d/exec-003b1396-aa4a-4aaf-a37c-0864e197a396.png"
+      ],
+      "target_pose": "双足固定抬髋，上背凳支持，肩髋膝接近水平线，同一哑铃髋前双手防滚，无明显顶腰。",
+      "qa_status": "passed_visual_review_after_targeted_revision",
+      "qa": "头手脚完整；肩髋膝比初图明显更接近水平线；上背仍凳缘支持；足位与凳垫墙连续；双手同哑铃不滚；未见明显腰部硬拱。",
+      "prior_attempt": {
+        "prompt": "Use case: scientific-educational.\nAsset type: one photorealistic rehabilitation demonstration photograph, 080 T-LOW-012 step s02.\nInput image 1 is the EXACT scene, person and camera continuity reference from step s01. Create its next exercise position while keeping the same woman, face, ponytail, white T-shirt, charcoal leggings, white athletic shoes, equipment and fixed camera. Other input images are identity references only.\nChange the pose to the controlled TOP of this same light dumbbell bench HIP THRUST: her pelvis is lifted well clear of the mat by pressing through both feet. Her upper back and shoulder-blade region pivots against and is supported by the same padded FRONT edge of the bench. Shoulder, hip and knee form a nearly straight HORIZONTAL line, torso and thighs approximately parallel to the floor. Both knees are comfortably near a right angle, both whole soles remain flat on the SAME mat at EXACTLY the same left/right foot positions. Keep her chin slightly tucked, face towards the right, neck relaxed and free of the bench; the neck does not support her weight. Ribs remain down, neutral pelvis, no excessive low-back arch.\nThe exact SAME single small black hex dumbbell lies crosswise on the same small dark pad over the HIP CREASE, below the abdomen; both hands continue holding it firmly so it cannot roll. The black heads and short handle stay plausible, no extra weights.\nPreserve the framing of input 1 exactly: landscape 3:2, almost side view with slight frontal offset, full head, both hands, both feet, full gray padded bench with steel legs against the visible wall on the left, entire dark gray nonslip mat, gray-blue wall/floor and studio lighting. Bench, wall, mat and feet do not move. Show clear upper-back-to-bench contact and planted feet. The ONLY change is raising the pelvis and rotating the torso into the peak hip-thrust pose, with naturally adjusted arm angles while stabilizing the dumbbell.\nPhotographic realism with correct human anatomy and natural hands, no illustration treatment.\nOne image, no text, numbers, labels, arrows, captions, logo, watermark, border, panels, collage, ghost poses, assistant, motion blur or added props.",
+        "input_paths": [
+          "C:/Users/Administrator/.codex/generated_images/01a138e7-3762-7db2-bea0-9d9da27d662d/exec-0dede238-37b7-4a6a-9662-b6f74af50d5b.png",
+          "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+        ],
+        "output_path": "C:/Users/Administrator/.codex/generated_images/01a138e7-3762-7db2-bea0-9d9da27d662d/exec-003b1396-aa4a-4aaf-a37c-0864e197a396.png",
+        "selection": "discarded",
+        "reason": "初图髋仍低于肩膝连线，针对抬髋高度修正后选新版。"
+      }
+    },
+    {
+      "step": "s03",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e7-3762-7db2-bea0-9d9da27d662d/exec-d1608d3b-6ec5-46e7-8ed4-9c8073b753d2.png",
+      "target_path": "E:\\git冲突问题\\rehab image\\train\\steps\\080_T-LOW-012_s03.png",
+      "sha256": "A161404D363A161EBB709E389481830DCEBD5A5EBA3F096DAEB45E5D82075826",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1786406,
+      "copy_verified": true,
+      "prompt": "Use case: scientific-educational.\nAsset type: one photorealistic rehabilitation exercise step photograph, 080 T-LOW-012 s03, safe finished unloading.\nInput image 1 is the EXACT LOW SEATED start photograph (s01), providing woman, pose, equipment, lighting and fixed camera continuity. Input image 2 shows the same woman and scene at the top. Return her to the low seated position of input 1 and show that the dumbbell has now been unloaded.\nScene/person invariants: same adult East Asian woman with black ponytail, plain white short sleeve T-shirt, charcoal full-length leggings, white athletic shoes, same grey padded sturdy steel-base bench against the wall on the left, dark grey nonslip mat, gray-blue wall and floor, exact same landscape 3:2 almost-side camera with slight frontal offset. Entire head, both hands, both shoes, bench and mat remain visible with generous margins. Bench and both feet do not move.\nSpecific final pose: her BUTTOCKS are fully resting on the mat in a LOW SEATED position in front of the bench, both knees bent, both whole soles flat at their original positions. Her pelvis is completely lowered, not a raised bridge. Her upper back stays close to the supporting bench edge; neck clear of the bench. She leans slightly toward her own camera-facing side only as much as needed to reach the weight beside her hip; she looks calmly down at the unloaded dumbbell.\nEquipment and hand action: the SAME single small black hex dumbbell is NO LONGER on her hip or belly. It is now visibly resting FLAT and STABLE with BOTH hex heads in contact with the MAT immediately BESIDE her camera-facing HIP, separated from her thighs and feet. It is not between her thighs, not floating, not dropping, not balanced vertically. Her BOTH hands are still lightly controlling this grounded dumbbell—one touching the handle, the other touching a head—to show completion of safe placement before she releases it. Both arms and hands belong to her and are naturally extended toward this nearby weight. The small dark hip pad may remain empty on her lap or beside the grounded dumbbell. Keep only one dumbbell.\nInstructional priority: LOWERED pelvis plus an unmistakably grounded weight beside her hip, both hands still in contact, both feet still on the mat. This is the end-of-set unload, not a repetition peak or standing up.\nNatural anatomy, correct joints/fingers, realistic contact shadows, no exaggerated body twisting.\nNo text, labels, numerals, arrows, logos, watermark, panels, collage, motion blur, ghost poses, extra person or extra props.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e7-3762-7db2-bea0-9d9da27d662d/exec-0dede238-37b7-4a6a-9662-b6f74af50d5b.png",
+        "C:/Users/Administrator/.codex/generated_images/01a138e7-3762-7db2-bea0-9d9da27d662d/exec-91c2b82f-c365-4aae-81e4-a82e53dcb245.png"
+      ],
+      "target_pose": "落髋低坐臀接垫后，哑铃已卸至身体侧方垫面平放，两手仍控制器械，双足接地。",
+      "qa_status": "passed_visual_review",
+      "qa": "低坐臀接垫、双脚接地；哑铃不再压髋，身体近侧垫面两六角端稳定平放；一手握把、一手控制铃端；体现已落髋卸重完成；空护垫仍近髋；同场景机位。"
+    }
+  ],
+  "limitations": [
+    "生成静态教学图无法证明实际器材承重、稳定性或真实负荷。",
+    "视觉检查通过不替代康复专业人员对动作适用性及技术细节的最终确认。"
+  ]
+}

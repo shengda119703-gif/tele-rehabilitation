@@ -17,10 +17,11 @@ function assertScope(){
  if(invalid||localStorage.getItem(PS.ACTIVE_KEY)!==key){invalidate();throw Error('账号已变化，请重新打开本人档案');}
 }
 async function api(path,method='GET',body){
+ assertScope();
  const headers={};
  if(body!==undefined)headers['Content-Type']='application/json';
  if(method!=='GET')headers['X-CSRF-Token']=csrf;
- const response=await nativeFetch('/api/cloud/v1'+path,{method,headers,credentials:'same-origin',cache:'no-store',redirect:'error',signal:AbortSignal.timeout(path.endsWith('/ai/requests')?35000:20000),body:body===undefined?undefined:JSON.stringify(body)});
+ const response=await nativeFetch('/api/cloud/v1'+path,{method,headers,credentials:'same-origin',cache:'no-store',redirect:'error',signal:AbortSignal.timeout(path.endsWith('/ai/requests')||path.endsWith('/assistant/turns')?35000:20000),body:body===undefined?undefined:JSON.stringify(body)});
  const value=await response.json();
  if(!response.ok){if(response.status===401)invalidate();throw Object.assign(Error(value.message||'暂时无法连接，请稍后重试'),{status:response.status,code:value.code});}
  assertScope();
@@ -36,6 +37,7 @@ async function check(){
 }
 async function request(action,value,body={}){
  assertScope();if(value.patient_id!==identity.patient_id||value.account_id!==identity.account_id)throw Error('记录不属于当前账号');
+ if(['assessmentPlans','assessmentPlanCancel','assessmentPlanResult'].includes(action)&&root.navigator?.onLine===false)throw Error('当前离线，无法读取或保存云端评估计划');
  await check();const patient='/patients/'+identity.patient_id;
  if(action==='family')return api(patient+'/family');
  if(action==='familyInvite')return api(patient+'/family/invite','POST',{});
@@ -48,6 +50,21 @@ async function request(action,value,body={}){
  if(action==='profile')return api(patient);
  if(action==='aiUsage')return api(patient+'/ai/usage');
  if(action==='aiAsk')return api(patient+'/ai/requests','POST',{operation_id:body.operation_id,text:body.text});
+ if(action==='assistantPreferences')return body.health_context===undefined?api(patient+'/assistant/preferences'):api(patient+'/assistant/preferences','PUT',{expected_version:body.expected_version,health_context:body.health_context});
+ if(action==='assistantConversation'){
+  const after=body.after??0,limit=body.limit??30;
+  if(!Number.isSafeInteger(after)||after<0||after>2147483647||!Number.isSafeInteger(limit)||limit<1||limit>100)throw Error('对话查询范围无效');
+  return api(patient+'/assistant/conversation?after='+after+'&limit='+limit);
+ }
+ if(action==='assistantTurn'){if(body.private===true)throw Error('本次不记录的对话仅在本机处理');return api(patient+'/assistant/turns','POST',{operation_id:body.operation_id,text:body.text});}
+ if(action==='assessmentPlans'||action==='assessmentPlanCancel'||action==='assessmentPlanResult'){
+  if(root.navigator?.onLine===false)throw Error('当前离线，无法读取或取消云端评估计划');
+  const uuid=/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
+  if(action!=='assessmentPlans'&&!uuid.test(body.plan_id))throw Error('评估计划编号无效');
+  if(action==='assessmentPlanResult'&&(!uuid.test(body.record_id)||!Number.isSafeInteger(body.item_index)||body.item_index<0||body.item_index>52))throw Error('评估项目或记录编号无效');
+  const result=await api(patient+'/assistant/assessment-plans'+(action==='assessmentPlans'?'':'/'+body.plan_id+(action==='assessmentPlanResult'?'/results':'/cancel')),action==='assessmentPlans'?'GET':'POST',action==='assessmentPlans'?undefined:action==='assessmentPlanResult'?{item_index:body.item_index,record_id:body.record_id}:{});
+  await check();assertScope();return result;
+ }
  if(action==='reports')return api(patient+'/reports');
  if(action==='workflow')return api(patient+'/rehab-workflow');
  if(action==='workflowProfile')return api(patient+'/rehab-workflow/profile','PUT',body);

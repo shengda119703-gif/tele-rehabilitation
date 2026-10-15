@@ -1,0 +1,307 @@
+{
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "scope": "164/s01-s02；165/s01-s02；166/s01-s03；167/s01-s03",
+  "image_count": 10,
+  "newly_generated_selected": 9,
+  "reused_selected": 1,
+  "generation_mode": "built-in image_gen",
+  "source_checklist": "E:\\git冲突问题\\rehab image\\动作分步骤示范图制作清单_v1.0.md",
+  "source_checklist_sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+  "output_directory": "E:\\git冲突问题\\rehab image\\train\\steps",
+  "review_scope": "原图逐张视觉核对，HTML以非破坏式SVG排版层表现167小圈方向。",
+  "images": [
+    {
+      "filename": "164_T-AXU-029_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/164_T-AXU-029_s01.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a82-dbea-7ee1-9724-7deab71cb814/exec-62eab349-cd5e-4f23-a543-cd6674929aef.png",
+      "reused": false,
+      "prompt": "Use case: scientific-educational.\nAsset: single raw photographic rehabilitation step 164/T-AXU-029/s01, portrait 1122x1402.\nPrimary request: edit Image 4, the existing wall push-up photo, into its straight-arm starting position. Images 1–3 are identity, clothing and studio color references; Image 4 is the exact target scene, camera, wall, shoes and hand/foot placements.\nPreserve the same adult East Asian woman, face, black ponytail, plain white short sleeve T-shirt, dark charcoal fitted long athletic trousers, plain white sneakers, soft photographic realism, muted grey-blue studio backdrop, natural shadows. Preserve Image 4's single solid wall on the right, floor baseline, exact camera and framing, and both palms' precise wall contact positions and both feet's exact ground positions.\nOnly change the exercise phase: straighten BOTH elbows almost fully, without hyperextension, and move head, shoulder, torso and pelvis together away from the wall around the fixed feet into a comfortable straight-arm wall support. This is a wall push-up start, NOT the bent elbow photo. Shoulder-to-wrist upper arm and forearm form a straight continuous line; fingers point upward, palm heels fully touch the wall, two hands comfortably a little wider than shoulders. Whole body maintains a controlled straight head–torso–pelvis–leg line with modest forward lean; neck neutral and no jutting head, no sitting hips, no arched lower back. Both feet flat and stable, heels stay grounded.\nComposition: exactly one full body pose, a near-side view with enough perspective to see two separate palms and arms, intact head and all hands and both shoes, wall contact and full floor contact visible, modest margins.\nNatural human anatomical proportions and hands with five anatomically plausible fingers, realistic elbows and joint continuity.\nNo text, labels, arrows, numbers, logos, watermark, inset, split panels, ghosted poses or motion trails. Output one complete photograph, preserve the input image size and same crop.",
+      "caption": "双手撑墙，双臂接近伸直",
+      "review": "与固定参考的面容、黑马尾、白色短袖、深灰长裤相符。近侧肘接近伸直，远侧手掌接墙、手脚完整。身体形成可控整体线，双足落地。相机、墙、掌位与s02保持，生成存在数像素服装和鞋轮廓差异。人体比例自然。",
+      "sequence": "164",
+      "step": "01",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1658505,
+      "sha256": "3FB7DABDA461707F8E4CCE9BC7C9EDADB0FA39A7CDA3828F848F29A4C64359F7",
+      "status": "visually_reviewed"
+    },
+    {
+      "filename": "164_T-AXU-029_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/164_T-AXU-029_s02.png",
+      "reused": true,
+      "reused_source": "E:/git冲突问题/rehab image/train/164_T-AXU-029_推撑阶梯：墙面→固定台面→地面俯卧撑.png",
+      "prompt": null,
+      "caption": "原支点不变，屈肘让身体整体靠墙",
+      "review": "现有单图逐图查看合格后复用。双肘屈曲，头胸骨盆成整体向墙靠近，双掌撑墙，双脚落地。无臀部后坐或单独探头。完整手脚和接触可见，头躯干四肢比例自然。",
+      "sequence": "164",
+      "step": "02",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1701035,
+      "sha256": "7BA6242CEA1B67D49189F4AB78D45C23443B0B10EE17E75BFD545155BCBBD49F",
+      "status": "visually_reviewed"
+    },
+    {
+      "filename": "165_T-AXU-053_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/165_T-AXU-053_s01.png",
+      "caption": "墙面直臂支持的自然起点",
+      "step": "01",
+      "prompt": "Use case: scientific-educational.\nAsset type: a single photorealistic rehabilitation exercise step image, T-AXU-053 Push-up Plus, wall version, step s01 natural straight-arm starting support.\nInput images: reference-01.png, reference-02.png and reference-03.png are fixed identity, outfit, complexion, hair, realism, lighting and gray-blue studio background references. They are NOT movement targets. Preserve exactly the same East Asian adult woman identity, natural face, black low ponytail, white short-sleeved plain fitted T-shirt and dark charcoal athletic pants.\nCreate ONE clean full-body vertical 4:5 photograph. Woman stands facing a solid plain light gray-blue wall at the RIGHT side of the image. Camera is fixed at waist/chest height, almost pure side view with only 5–10 degrees oblique toward her front so two wrists and two palms are separately visible. The side profile faces RIGHT. Frame the complete head-to-toe body, both complete plain white low-profile athletic shoes and ground contact, all elbows, wrists and hands, plus the solid wall. Leave a little margin above the head and below the soles. Use natural adult body proportions and correct limb lengths, a flat nonslip gray-blue studio floor and a soft shadow at both shoes.\nPOSE: Both feet flat and stable on the floor, parallel approximately hip width, knees relaxed, heels not lifted. She is close enough to the wall for a comfortable upright light forward lean, feet perhaps 45–55 cm from wall. Neck neutral, gaze naturally forward. Head, trunk, hips and legs form a comfortable long nearly straight line with no lumbar arch. Both arms reach forward to the wall at comfortable shoulder/chest height, both palms fully and visibly flat against the wall, fingers naturally pointing upward, hands about shoulder-width apart. Both elbows are nearly straight with natural softness, NOT visibly bent, NOT forcefully locked. Both wrists have natural weight-bearing extension. Chest/ribcage is in the natural relaxed starting position of straight-arm wall support, scapulae neutral: do not already round the upper back or push shoulder blades strongly outward.\nThe upper arms, elbows and wrists must be clear for clinical teaching. Both palms really touch the same vertical wall. Anatomically correct shoulders, elbows, wrists, hands and fingers, no body-wall intersections. This is the starting posture for a later subtle shoulder-girdle protraction, NOT a bent-elbow wall push-up.\nStyle: highly realistic studio instructional photograph, soft even diffused lighting, natural skin texture, understated neutral expression, same cool gray-blue colors and photographic quality as the references.\nConstraints: single person, single frame, no collage, no duplicate ghost figure, no arrows, no captions, no numbers, no labels, no watermarks, no medical costume, no furniture, no ball, no extra equipment. Do not crop the feet. Do not change the referenced identity or outfit.",
+      "reused": false,
+      "source_generated_image_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-5710-7381-a34d-aef03dd9f9b4/exec-12d6ef61-0a6e-4cec-8b35-9d1b274b06b6.png",
+      "selected_version": "第一次生成",
+      "review": {
+        "status": "已逐张查看，通过；待主代理二次审查",
+        "identity_background": "与三张固定参考一致：东亚成年女性、黑色低马尾、白色短袖 T 恤、深灰运动裤、灰蓝摄影背景；补充白色无标志运动鞋。",
+        "action": "墙在右侧，双掌接墙，两肘接近伸直，双脚平稳落地，胸廓为直臂支持自然起点，未屈肘推撑。",
+        "proportion": "全身完整，头部和双鞋不裁切，双掌、手腕和双肘清楚；成人躯干与四肢比例自然。",
+        "support_equipment": "双掌可見平贴墙面；双足鞋底贴地；无多余器械。",
+        "limitations": "侧位近侧肩略遮挡远侧肩，双腕双手仍可辨；不据图确认实际受力或肩胛精确角度。"
+      },
+      "sha256": "583BACA9541F69188F8DB6CED449E9AA1E39EBBF28E81680C32BE808492176B8",
+      "sequence": "165",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1716759,
+      "status": "visually_reviewed"
+    },
+    {
+      "filename": "165_T-AXU-053_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/165_T-AXU-053_s02.png",
+      "caption": "双肘保持，小幅肩带前移，胸廓离墙",
+      "step": "02",
+      "prompt": "Use case: identity-preserve / scientific-educational.\nProduce the second step of wall Push-up Plus by editing ONLY the first supplied full-body wall-support photo (s01), keeping the woman's exact identity, white shirt, charcoal pants, white sneakers, wall, floor, fixed camera, framing and natural photographic proportions. The other three input photos are supporting identity references.\nCritical movement correction: make the second posture perceptibly distinct from the starting photo. Her sternum and ribcage move approximately 3–4 cm AWAY FROM THE WALL, towards the LEFT of the image, using a gentle shoulder blade protraction. The front-of-chest outline should sit visibly a little farther LEFT than in the s01 target. Her neutral head and neck follow the ribcage gently LEFT; do not move her face closer to the wall. Shoulder blades glide around the sides of the ribcage, so the upper back gains only a broad, shallow smooth convex curve. Keep her head upright, chin natural, no dropped head. This is a small real scapular movement, never a large hunched spine.\nKeep BOTH palms fully flat at their EXACT original wall positions: the rightward hand endpoints must not change. Keep both heels and entire shoes at EXACT original floor positions: do not shift feet or lift heels. BOTH ELBOWS MUST REMAIN STRAIGHT with their original natural softness, no further bend at all. Preserve realistic arm lengths: the small change is accommodated by the shoulder blades gliding around the ribcage, not bent elbows. Keep pelvis and lower trunk stable and nearly straight, no backward buttock displacement, no new waist arch.\nShow the same complete head-to-toe full-body composition, clearly visible both elbows and wrists, both palms touching the wall and both complete shoes on floor.\nUse natural realistic anatomy and the same cool gray-blue studio photography. NO text, captions, arrows, labels, watermark, diagrams, collage, extra equipment, ghost figure, camera or scale changes.\nThis step must show a subtle but readily visible chest retreat and gentle shoulder-girdle protraction, not a wall push-up and not an identical copy of s01.",
+      "reused": false,
+      "source_generated_image_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-5710-7381-a34d-aef03dd9f9b4/exec-50387ff8-21f5-4ed3-9607-6ca8f643f2ec.png",
+      "edit_anchor_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-5710-7381-a34d-aef03dd9f9b4/exec-12d6ef61-0a6e-4cec-8b35-9d1b274b06b6.png",
+      "selected_version": "第二次生成，s01 定向编辑",
+      "review": {
+        "status": "已逐张查看，通过；待主代理二次审查",
+        "identity_background": "同一人物、衣着、白鞋、右侧墙、灰蓝地面、光线和构图沿用 s01。",
+        "action": "相较 s01 胸廓轮廓和头颈小幅向画面左侧退开，肩带前移、上背出现浅自然弧度；双肘仍接近伸直，没有变成墙面屈肘推撑，也没有夸张圆背低头。",
+        "proportion": "相机尺度一致；手掌和脚位置保持，鞋底落地，头脚完整；肘腕和手臂连续自然。",
+        "support_equipment": "双掌仍贴同一墙面，手高保持；双脚没有抬跟、换位或离地。",
+        "limitations": "动作幅度较小，须以同尺度 s01 对照观察；不据图确认肌肉激活、真实肩胛角度或实际厘米量。"
+      },
+      "sha256": "D54474B1E2C4DFD7C9DB393AB634AA553F046D9806FB6CF7B693C5F54F7C841A",
+      "discarded_attempts": [
+        {
+          "source_generated_image_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-5710-7381-a34d-aef03dd9f9b4/exec-7cef6084-b6e1-4b5a-a8cb-3ff3ea235d06.png",
+          "prompt": "Use case: identity-preserve / scientific-educational.\nAsset type: ONE single photorealistic rehabilitation exercise step, T-AXU-053 Push-up Plus wall version, s02 small scapular protraction endpoint.\nInput image 1 is the EDIT TARGET and exact composition anchor: the supplied s01 wall-support full-body photograph. Supporting images 2–4 are fixed identity/outfit/background references only.\nEdit the s01 photograph to show only a SMALL shoulder-girdle protraction. Keep the very same woman identity, face, hair, expression, white T-shirt, charcoal pants, white sneakers, wall on right, floor, shadows, lighting, photographic style, camera position, focal length, framing, and image size completely unchanged. Do not zoom or reframe. The feet and soles must stay at their exact s01 positions. Both heels remain flat. Both palms and all fingers must remain planted at exactly the same positions and same height on the right wall. Both wrists keep the same wall-support shape. Both elbows stay almost fully straight with exactly the same small natural softness as s01: absolutely no extra elbow bending.\nCHANGE ONLY: With hands and feet fixed, she gently pushes through both palms so her upper chest/ribcage retreats just approximately 2–3 cm LEFT, away from the wall. The shoulder girdle gently protracts: the upper back contour gains only a very shallow natural broadening as the shoulder blades glide forward around the rib cage. This is a visibly small shoulder-girdle movement. Keep head neutral and aligned with body, chin neither dropped nor poked forward, gaze forward. Keep lower trunk, pelvis and knees in stable support; no exaggerated upper-back hump, no rounded whole spine, no lumbar arch, no buttocks sticking out. Shoulder joint to hand connection stays anatomically valid with near-straight arms. Preserve normal adult body proportions and matching arm lengths. The new chest position must differ subtly but perceptibly from s01, while the palms and feet remain fixed.\nThis must clearly illustrate the Plus phase AFTER a straight-arm support, not a bent-elbow push-up. Both arms, elbows, wrists, two palms against the wall, and both complete shoes and floor contacts remain visible.\nConstraints: one person, one clean full-body photograph, no captions, labels, text, arrows, diagrams, watermarks, multiple panels, ghost bodies or extra equipment.",
+          "reason": "与 s01 差异过小，胸廓离墙动作不够清楚，未选用；源图保留于生成目录。"
+        }
+      ],
+      "sequence": "165",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1667447,
+      "status": "visually_reviewed"
+    },
+    {
+      "step": "01",
+      "filename": "166_T-AXU-045_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/166_T-AXU-045_s01.png",
+      "caption": "双手撑固定高台，双脚稍分开",
+      "prompt": "Use case: scientific-educational.\nAsset type: ONE single photorealistic rehabilitation demonstration photograph, action 166 T-AXU-045 step s01 (both hands on a FIXED HIGH COUNTER).\nInput images: the three provided photos are identity, clothing, studio lighting and grey-blue background references ONLY. They are not pose references.\nCreate the SAME adult East Asian woman in the references, same facial identity, age, skin tone and body proportions, black ponytail, plain white short sleeve T-shirt, dark grey full-length trousers, bare feet. Soft diffused studio photography, grey-blue seamless backdrop and floor, natural contact shadows, realistic anatomy.\nPose: an INCLINED STRAIGHT-ARM SUPPORT on a stable fixed countertop at approximately waist height. Both palms planted flat on the top of the counter, hands shoulder-width apart and fingers directed forward naturally. Both elbows nearly straight without hyperextension. Both bare feet on the floor behind her, slightly apart around hip width, toes forward, soles firmly planted. The shoulder-to-hip-to-ankle line stays long and straight in a gentle inclined plank, no folded waist, no sagging lower back, no twisted trunk. Her chest faces the counter, head and neck aligned naturally with the torso and gaze toward the support surface. This is only holding support, not doing a push-up.\nEquipment: one heavy fixed high counter with a flat pale grey top and a solid built-in rectangular base visibly attached to floor/wall, no wheels, no narrow freestanding legs, no stool, no chair. Hands rest on its near edge. The counter must be wide enough for both separated hands and visually stable. Show both wrists and full palms clearly.\nCamera and composition: fixed horizontal camera, three-quarter FRONT OBLIQUE full-body view, about 45 degrees to her forward-facing direction, looking slightly toward her chest/front and allowing BOTH separate arms, hands and hand-to-counter contacts to be clearly readable. At the same time show the overall straight shoulder-hip-ankle inclined support line. Her anatomical RIGHT arm is the nearer foreground arm on IMAGE LEFT, anatomical LEFT arm is the farther arm on IMAGE RIGHT. Feet slightly apart and both entirely visible. Full head, ponytail, BOTH entire hands, BOTH entire feet and floor contacts inside a square frame with generous margins. Natural perspective, no strong wide-angle distortion. This s01 will anchor two subsequent tiny alternating hand lifts, so keep camera and support contacts unambiguous.\nConstraints: ONE woman and ONE pose, realistic complete fingers and toes, correct continuous limb proportions. No bent-elbow pushup, no shoulder tap, no torso rotation. No words, numbering, labels, arrows, ghost limbs, movement trails, collage, logos or watermarks. No unrelated equipment. Preserve reference appearance faithfully.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "source_generated_image": "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-158678d6-fbdf-4264-a5dc-fa9bd26f00eb.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-158678d6-fbdf-4264-a5dc-fa9bd26f00eb.png",
+      "reused": false,
+      "status": "accepted_after_visual_review",
+      "version": 1,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1768935,
+      "sha256": "C5A3024DDD6996B2BE9371EB77E6AB9F538021FFBD13AB1AC4BA7587B9C9C763",
+      "review": {
+        "identity_clothing_background": "同一女性、黑马尾、白短袖、深灰长裤和灰蓝柔光棚拍一致",
+        "pose": "两手分开平撑高台、肘近伸直，双脚稍分开，全身倾斜支持线稳定",
+        "support_equipment": "整体固定柜式台面与实体底座，非椅凳、无轮；双脚地面接触可见，支持手接触清楚",
+        "anatomy_and_framing": "头部、双手、完整双脚均在画面内，手指脚趾与肢段连续，人体比例和透视自然",
+        "group_consistency": "s02、s03 均直接编辑自 s01；相机、台面、地面、脚位、身形尺度一致",
+        "text_overlay": "单一静态姿势，无文字、箭头、编号、拼图或水印",
+        "source_and_saved_review": "生成源图和实际保存定稿均已逐张 view_image 审查"
+      },
+      "sequence": "166"
+    },
+    {
+      "step": "02",
+      "filename": "166_T-AXU-045_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/166_T-AXU-045_s02.png",
+      "caption": "左手轻离台，右手与双脚继续支持",
+      "prompt": "Use case: identity-preserve.\nAsset type: ONE photorealistic rehabilitation demonstration photo, action 166 T-AXU-045 step s02, a TINY LEFT-HAND lift from approved s01.\nInput image: edit target and exact scene anchor. Preserve the camera, counter, woman and all support geometry.\nChange ONLY her ANATOMICAL LEFT HAND, the FARTHER HAND ON IMAGE RIGHT currently planted farther back on the counter: lift that palm and all five fingers approximately 4 centimetres directly above its previous counter contact, showing a clearly visible small air gap. The hand remains palm-down, relaxed, close to its original place immediately over the countertop, NOT moving toward any shoulder. Its forearm moves only as needed for this tiny lift, its elbow stays nearly straight, no large bend. Her ANATOMICAL RIGHT HAND, the NEAR FOREGROUND HAND ON IMAGE LEFT, remains planted flat at EXACTLY the same countertop location, complete palm and fingers in contact.\nKeep both feet and all lower body pixels as unchanged as possible: both bare feet remain at the identical floor positions and orientation, slightly apart, soles planted; ankles, knees, hips and pelvis remain in the identical positions. Keep the shoulder-hip-ankle inclined support line stable and straight, chest still facing the counter, with NO trunk rotation, no shoulder swinging open, no sag, no folded waist, no lowering like a push-up. Tiny weight transfer to the planted right hand is allowed without visible body rotation.\nPreserve the exact same woman's face, black ponytail, white short sleeve T-shirt, dark grey trousers, natural anatomy, entire head and complete hands and feet. Preserve exact counter top and solid fixed base, its floor attachment, background, floor, shadows, soft studio lighting, full-body square crop, camera angle and subject scale. Both hands must be visible and distinct: near right hand on counter, far left hand hovering a few centimetres above. One single still frame. No shoulder touch, no simultaneous two-hand lift, no bent-elbow push-up, no text, labels, numbering, arrows, ghost hands, motion trails, collage, logos, watermark, added people or objects.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-158678d6-fbdf-4264-a5dc-fa9bd26f00eb.png"
+      ],
+      "source_generated_image": "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-e169fd2c-5e66-403b-8982-d8a3f9783cbb.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-e169fd2c-5e66-403b-8982-d8a3f9783cbb.png",
+      "reused": false,
+      "status": "accepted_after_visual_review",
+      "version": 1,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1701972,
+      "sha256": "A33AD6CB633AED22CC70B66480829673A69C90C3D6233253A8F0A1B3B89A64E4",
+      "review": {
+        "identity_clothing_background": "同一女性、黑马尾、白短袖、深灰长裤和灰蓝柔光棚拍一致",
+        "pose": "远侧左手仅离台少量，近侧右手仍平撑；未触肩，胸口继续朝台",
+        "support_equipment": "整体固定柜式台面与实体底座，非椅凳、无轮；双脚地面接触可见，支持手接触清楚",
+        "anatomy_and_framing": "头部、双手、完整双脚均在画面内，手指脚趾与肢段连续，人体比例和透视自然",
+        "group_consistency": "s02、s03 均直接编辑自 s01；相机、台面、地面、脚位、身形尺度一致",
+        "text_overlay": "单一静态姿势，无文字、箭头、编号、拼图或水印",
+        "source_and_saved_review": "生成源图和实际保存定稿均已逐张 view_image 审查"
+      },
+      "sequence": "166"
+    },
+    {
+      "step": "03",
+      "filename": "166_T-AXU-045_s03.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/166_T-AXU-045_s03.png",
+      "caption": "重置后右手轻离台，左手与双脚继续支持",
+      "prompt": "Use case: identity-preserve.\nAsset type: ONE photorealistic rehabilitation demonstration photo, action 166 T-AXU-045 step s03, a TINY RIGHT-HAND lift after resetting to both-hands-on-counter s01.\nInput image is the approved s01 BOTH-HANDS-SUPPORT anchor, not the preceding lifted-left-hand frame. Keep its scene and all support geometry identical.\nChange ONLY her ANATOMICAL RIGHT HAND, the NEAR FOREGROUND HAND ON IMAGE LEFT: lift that entire palm and all five fingers approximately 4 centimetres directly above its original near-edge counter contact, showing a clear small air gap underneath. Keep it palm-down and relaxed, close to its former location directly above the counter. Forearm moves only enough to lift a few centimetres and elbow stays nearly straight, no large elbow bend. Her ANATOMICAL LEFT HAND, the FARTHER HAND ON IMAGE RIGHT, must remain fully replanted flat at EXACTLY its s01 counter location with full palm and fingers touching the top. This represents s01 reset, then right-hand lift; never two hands off at once.\nKeep both bare feet at identical floor positions and orientation with soles planted, slightly apart. Freeze all lower-body placement: ankles, knees, hips, pelvis and trousers remain as in s01. Preserve the same stable straight inclined shoulder-hip-ankle support line and chest facing the counter, no visible trunk rotation, no shoulder opening, no sag or folded waist, no body lowering. A minimal controlled weight shift toward the planted left hand is acceptable without rotation.\nPreserve EXACT same woman, face, ponytail, white short sleeve shirt, dark grey full-length trousers, entire head and complete hands/feet, realistic anatomy and proportions. Preserve same fixed high countertop with solid built-in base, background/floor, lighting and shadows, camera angle, perspective, square full-body crop and scale. Both arms and hands remain separately visible; near right hand hovers just above counter, far left hand is clearly in contact.\nNo shoulder tap or touch, no bent-elbow push-up, no simultaneous two-hand lift, no added people/equipment. Single still pose, no text, numbering, labels, arrows, motion trails, ghost limbs, collage, logo or watermark.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-158678d6-fbdf-4264-a5dc-fa9bd26f00eb.png"
+      ],
+      "source_generated_image": "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-c04642eb-7d59-402c-b0c3-46e262eb4384.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-c04642eb-7d59-402c-b0c3-46e262eb4384.png",
+      "reused": false,
+      "status": "accepted_after_visual_review",
+      "version": 1,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1684424,
+      "sha256": "8A01C90478FE4F9C5D6947C3534017BA9231C77395047FF27F8BBB01845215F9",
+      "review": {
+        "identity_clothing_background": "同一女性、黑马尾、白短袖、深灰长裤和灰蓝柔光棚拍一致",
+        "pose": "近侧右手仅离台少量，远侧左手恢复平撑；未同时离双手，未触肩",
+        "support_equipment": "整体固定柜式台面与实体底座，非椅凳、无轮；双脚地面接触可见，支持手接触清楚",
+        "anatomy_and_framing": "头部、双手、完整双脚均在画面内，手指脚趾与肢段连续，人体比例和透视自然",
+        "group_consistency": "s02、s03 均直接编辑自 s01；相机、台面、地面、脚位、身形尺度一致",
+        "text_overlay": "单一静态姿势，无文字、箭头、编号、拼图或水印",
+        "source_and_saved_review": "生成源图和实际保存定稿均已逐张 view_image 审查"
+      },
+      "sequence": "166"
+    },
+    {
+      "filename": "167_T-AXU-052_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/167_T-AXU-052_s01.png",
+      "source_generated_image": "C:/Users/Administrator/.codex/generated_images/01a13a84-eb7f-7132-b0ce-361efb7d35bf/exec-c1af511a-ce3e-4eaa-bdd4-738402f18e94.png",
+      "version": "1.0",
+      "step": "01",
+      "caption": "右手轻抵软球，手球墙接触",
+      "prompt": "Use case: identity-preserve, scientific-educational rehabilitation demonstration photograph.\nEdit the reference woman into one new single-frame exercise photograph. Input references 1–3 define her identity, clothing, natural proportions and soft gray-blue studio photographic style; they do not define the pose. Preserve the same Asian adult woman, black ponytail, plain short-sleeved white T-shirt and dark charcoal trousers.\nTarget: T-AXU-052 step s01, gentle stationary right-hand ball support against a wall.\nComposition: portrait 4:5 photograph, front three-quarter view from beside the wall toward the woman's face and chest, not a back view. Include her entire head, shoulders, both arms, torso, hips and upper thighs. A thick solid pale gray wall column occupies the left edge of the picture, with a clearly visible vertical flat side surface facing the woman's hand. The woman stands just to the right of the column; chest and gaze generally face the wall while the camera can clearly see her face and chest. This is forward wall contact, not arm abduction out to the side.\nPose: her ANATOMICAL RIGHT arm is the nearer visible working arm and reaches slightly forward toward the image-left wall column, at a comfortable height just below her shoulder. Elbow remains almost straight but soft. A small matte soft teal ball approximately palm-sized, 8–10 cm diameter, is sandwiched between her right palm and the vertical wall face. Her right palm gently presses the outer hemisphere, fingers naturally curved and clearly connected to her own hand. Show the continuous physical chain wall surface → teal ball → right palm. The ball visibly touches the wall, does not float; retain enough exposed teal ball and a subtle wall contact shadow to make all three contacts intelligible. Her left arm hangs relaxed by the opposite hip with empty left hand fully visible. Torso upright and stable, natural shoulder, neck relaxed, no leaning forward.\nLighting: soft neutral studio light, real natural skin and fabric, clean gray-blue background identical in spirit to the reference images, believable anatomy and hand proportions.\nThis is the stopped starting support frame. No movement trails, no circle arrows, no diagrams, no labels, no text, no watermark, no extra equipment or person. Do not swap hands; do not put a ball in her left hand; do not use a giant exercise ball. Photorealistic high clarity, especially right wrist, fingers, ball and actual solid wall contact.",
+      "reused": false,
+      "anchor": null,
+      "review": {
+        "status": "通过",
+        "method": "生成后及复制后 view_image 逐图检查",
+        "identity_background": "同参考女性、黑马尾、白 T、深灰裤、灰蓝背景；三张脸、服装与机位一致。",
+        "proportions": "人体、肩肘腕与手指比例自然；掌大小青绿色软球，轻压后形状略椭圆；无新增肢体或异常指节。",
+        "support_contact": "右掌/指与球持续接触，球侧面与厚墙柱平面接触可见且有接触阴影；左手空手在髋旁下垂。",
+        "action": "静态轻抵球，手球区接近肩高；躯干直立，无明显前倾。",
+        "direction": "静止，无轨迹需要。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "sha256": "3F1C8A52C54F710E21B4C3819253EDA9083404923B20209166A57EB21D412CF2",
+      "ball_center_pixels": {
+        "x": 161,
+        "y": 428
+      },
+      "ball_center_normalized": {
+        "x": 0.143494,
+        "y": 0.305278
+      },
+      "ball_center_method": "按 view_image 人工估读，供叠加轨迹定位；不是动作测量。",
+      "sequence": "167",
+      "bytes": 1788307,
+      "status": "visually_reviewed"
+    },
+    {
+      "filename": "167_T-AXU-052_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/167_T-AXU-052_s02.png",
+      "source_generated_image": "C:/Users/Administrator/.codex/generated_images/01a13a84-eb7f-7132-b0ce-361efb7d35bf/exec-5ed81680-3745-44a2-aff0-3acddadbf7f3.png",
+      "version": "1.0",
+      "step": "02",
+      "caption": "右手带球，在原点附近顺时针小圈",
+      "prompt": "Use case: identity-preserve; scientific-educational rehabilitation demonstration photograph.\nInput image 1 is the EXACT approved step s01 anchor for T-AXU-052, not a generic inspiration. Create one separate single-frame s02 photograph by making only a very small right-hand ball movement.\nKeep the anchor's same woman, face, black ponytail, white T-shirt, charcoal trousers, front three-quarter camera, portrait 4:5 crop, 1122 by 1402 composition, soft gray-blue background and light, left-edge thick wall column, working anatomical RIGHT arm on image-left, and empty left hand naturally down. Keep the woman's trunk, head, hips, shoulder and standing distance in the exact same stable positions; no body lean or twist and no broad side raise.\nAction s02: moment within a slow tiny clockwise circle of the RIGHT palm and soft teal ball on the wall, around the same s01 contact region. Move the center of the ball and palm just about 1–2 cm higher within that same small area, changing the elbow/wrist only as needed for that tiny motion. Keep the SAME 8–10 cm palm-sized teal soft ball, same light compression against the wall, with real solid-wall contact and palm contact continuously maintained. The exposed teal hemisphere and wall contact shadow must remain visible. Every finger belongs to her right hand; palm remains pressing the ball instead of gripping it away from the wall.\nDirection is documented by a separate overlay later. The photograph itself must have NO arrows, no circular line, no text, no motion trail, no watermark. It is one realistic frozen instant; do not make a collage. Keep anatomy, hand and ball dimensions, wall geometry and all nonworking parts of the anchor unchanged.",
+      "reused": false,
+      "anchor": "E:/git冲突问题/rehab image/train/steps/167_T-AXU-052_s01.png",
+      "review": {
+        "status": "通过",
+        "method": "生成后及复制后 view_image 逐图检查",
+        "identity_background": "同参考女性、黑马尾、白 T、深灰裤、灰蓝背景；三张脸、服装与机位一致。",
+        "proportions": "人体、肩肘腕与手指比例自然；掌大小青绿色软球，轻压后形状略椭圆；无新增肢体或异常指节。",
+        "support_contact": "右掌/指与球持续接触，球侧面与厚墙柱平面接触可见且有接触阴影；左手空手在髋旁下垂。",
+        "action": "球与掌较 s01 仅小范围改变，躯干头髋和左手位置稳定，始终保持墙球手接触。",
+        "direction": "顺时针由独立 SVG/HTML 轨迹标注。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "sha256": "DD0BF41FFE5198933D3B13762D2B453E697BF6ECBCC61FC74FF319877FF8CB87",
+      "ball_center_pixels": {
+        "x": 159,
+        "y": 374
+      },
+      "ball_center_normalized": {
+        "x": 0.141711,
+        "y": 0.266762
+      },
+      "ball_center_method": "按 view_image 人工估读，供叠加轨迹定位；不是动作测量。",
+      "sequence": "167",
+      "bytes": 1685212,
+      "status": "visually_reviewed",
+      "annotation_layer": "E:\\git冲突问题\\rehab image\\167_T-AXU-052_s02_方向标注.svg",
+      "direction_note": "箭头为后续排版的方向示意；静态照片本身不证明持续运动轨迹。"
+    },
+    {
+      "filename": "167_T-AXU-052_s03.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/167_T-AXU-052_s03.png",
+      "source_generated_image": "C:/Users/Administrator/.codex/generated_images/01a13a84-eb7f-7132-b0ce-361efb7d35bf/exec-56d0822c-a715-46ea-a0d0-b6668e831e3d.png",
+      "version": "1.0",
+      "step": "03",
+      "caption": "停住重置后，在同一区域逆时针小圈",
+      "prompt": "Use case: identity-preserve; scientific-educational rehabilitation demonstration photograph.\nInput image 1 is the EXACT approved step s01 anchor for T-AXU-052, not a generic inspiration. Create one separate single-frame s03 photograph by making only a very small right-hand ball movement.\nKeep the anchor's same woman, face, black ponytail, white T-shirt, charcoal trousers, front three-quarter camera, portrait 4:5 crop, 1122 by 1402 composition, soft gray-blue background and light, left-edge thick wall column, working anatomical RIGHT arm on image-left, and empty left hand naturally down. Keep trunk, head, hips, shoulder and standing distance in the exact same stable positions; no body lean or twist and no broad side raise.\nAction s03: after returning to the stopped s01 position, this is a moment within a slow tiny COUNTERCLOCKWISE circle of the RIGHT palm and soft teal ball on the wall around that same s01 contact region. Move the ball and right palm only a couple of centimeters LOWER than the s01 anchor (a small displacement, clearly less than one ball diameter) within the same small area, changing elbow/wrist only as required. Keep the SAME 8–10 cm palm-sized teal soft ball, same light compression against the wall, with real solid-wall contact and palm contact continuously maintained. The exposed teal hemisphere and wall contact shadow must remain visible. Every finger belongs to her right hand; palm remains pressing the ball instead of gripping it away from the wall.\nDirection is documented by a separate overlay later. The photograph itself must have NO arrows, no circular line, no text, no motion trail, no watermark. It is one realistic frozen instant; do not make a collage. Keep anatomy, hand and ball dimensions, wall geometry and all nonworking parts of the anchor unchanged.",
+      "reused": false,
+      "anchor": "E:/git冲突问题/rehab image/train/steps/167_T-AXU-052_s01.png",
+      "review": {
+        "status": "通过",
+        "method": "生成后及复制后 view_image 逐图检查",
+        "identity_background": "同参考女性、黑马尾、白 T、深灰裤、灰蓝背景；三张脸、服装与机位一致。",
+        "proportions": "人体、肩肘腕与手指比例自然；掌大小青绿色软球，轻压后形状略椭圆；无新增肢体或异常指节。",
+        "support_contact": "右掌/指与球持续接触，球侧面与厚墙柱平面接触可见且有接触阴影；左手空手在髋旁下垂。",
+        "action": "球与掌较 s01 仅小范围改变，躯干头髋和左手位置稳定，始终保持墙球手接触。",
+        "direction": "逆时针由独立 SVG/HTML 轨迹标注。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "sha256": "746837F0492367CADD7783E28D934B99F054CDD6BD7E8E42C9B3714F768846C3",
+      "ball_center_pixels": {
+        "x": 158,
+        "y": 486
+      },
+      "ball_center_normalized": {
+        "x": 0.14082,
+        "y": 0.346648
+      },
+      "ball_center_method": "按 view_image 人工估读，供叠加轨迹定位；不是动作测量。",
+      "sequence": "167",
+      "bytes": 1725133,
+      "status": "visually_reviewed",
+      "annotation_layer": "E:\\git冲突问题\\rehab image\\167_T-AXU-052_s03_方向标注.svg",
+      "direction_note": "箭头为后续排版的方向示意；静态照片本身不证明持续运动轨迹。"
+    }
+  ],
+  "group_flows": {
+    "164": "01 → 02 → 复用01推回",
+    "165": "01 → 02 → 复用01",
+    "166": "01 → 02 → 复用01重置 → 03 → 复用01",
+    "167": "01 → 02顺时针 → 复用01停住 → 03逆时针 → 复用01"
+  }
+}

@@ -18,11 +18,16 @@ import javax.crypto.spec.GCMParameterSpec;
 import javax.net.ssl.HttpsURLConnection;
 import org.json.JSONObject;
 
-/** New account channel, independent of the old family/backup connection code. */
+/** Unified account channel; legacy device backups keep a separate transport. */
 public final class AccountTransport {
     private static final String ORIGIN="https://139.224.216.18", PREFIX="/api/cloud/v1", ALIAS="ankang-account-v1";
     private final SharedPreferences preferences;
     private volatile JSONObject session;
+    private static final java.util.Set<String> ACTIONS=new java.util.HashSet<>(java.util.Arrays.asList(
+        "identity","session","records","append","grant","logout","messages","send","read","plans","current","accept",
+        "aiUsage","aiAsk","workflow","workflowProfile","candidate","assistantPreferences","assistantConversation","assistantTurn","assessmentPlans","assessmentPlanCancel","assessmentPlanResult","reports","shareReport",
+        "family","familyInvite","familyBind","familyGrant","familyUnbind","familySummary"));
+    public static boolean supports(String action){return ACTIONS.contains(action);}
     public static final class Reply { public final int status;public final String body;Reply(int s,String b){status=s;body=b;} }
     public AccountTransport(Context context){preferences=context.getSharedPreferences("account-v1",Context.MODE_PRIVATE);}
     private SecretKey key() throws Exception {
@@ -53,10 +58,12 @@ public final class AccountTransport {
     }
     private void clear(){preferences.edit().remove("sealed").commit();session=null;}
     private Reply http(String path,String method,JSONObject data,String token) throws Exception {
-        boolean betaPath=path.matches("/patients/[a-f0-9-]{36}/(ai/(usage|requests)|reports|rehab-workflow(/profile)?|rehab-candidates)");
-        if(!betaPath&&!path.matches("/auth/(register|password/login|refresh|me|logout)|/patients/[a-f0-9-]{36}(/(record-events|records(/latest)?\\?offset=[0-9]+&limit=[0-9]+|doctor-access|messages(/read|\\?after=[0-9]+&limit=50&latest=true|\\?before=[0-9]+&limit=50)?|plans(/current|\\?offset=[0-9]+&limit=5|/[a-f0-9-]{36}/accept)?))?"))throw new Exception("云接口地址无效");
+        boolean betaPath=path.matches("/patients/[a-f0-9-]{36}/(ai/(usage|requests)|assistant/(preferences|turns|conversation(\\?after=[0-9]+&limit=[0-9]+)?)|reports|rehab-workflow(/profile)?|rehab-candidates)");
+        boolean familyPath=path.matches("/patients/[a-f0-9-]{36}/family(/(invite|bind|grant|unbind|summary))?");
+        boolean assessmentPath=path.matches("/patients/[a-f0-9-]{36}/assistant/assessment-plans(/[a-f0-9-]{36}/(cancel|results))?");
+        if(!betaPath&&!familyPath&&!assessmentPath&&!path.matches("/auth/(register|password/login|refresh|me|logout)|/patients/[a-f0-9-]{36}(/(record-events|records(/latest)?\\?offset=[0-9]+&limit=[0-9]+|doctor-access|messages(/read|\\?after=[0-9]+&limit=50&latest=true|\\?before=[0-9]+&limit=50)?|plans(/current|\\?offset=[0-9]+&limit=5|/[a-f0-9-]{36}/accept)?))?"))throw new Exception("云接口地址无效");
         HttpsURLConnection connection=(HttpsURLConnection)new URL(ORIGIN+PREFIX+path).openConnection();
-        connection.setConnectTimeout(12000);connection.setReadTimeout(path.endsWith("/ai/requests")?35000:12000);connection.setInstanceFollowRedirects(false);connection.setRequestMethod(method);
+        connection.setConnectTimeout(12000);connection.setReadTimeout(path.endsWith("/ai/requests")||path.endsWith("/assistant/turns")?35000:12000);connection.setInstanceFollowRedirects(false);connection.setRequestMethod(method);
         connection.setRequestProperty("Content-Type","application/json");connection.setRequestProperty("X-Ankang-Client","native");
         if(token!=null)connection.setRequestProperty("Authorization","Bearer "+token);
         try{
@@ -87,32 +94,42 @@ public final class AccountTransport {
         value.put("origin",ORIGIN);try{save(value);}catch(Exception e){http("/auth/logout","POST",new JSONObject(),value.getString("access_token"));throw e;}
         return identity();
     }
+    // The WebView's synchronous identity bridge must never wait on an HTTP call.
     public JSONObject identity() throws Exception {
         JSONObject value=session();return new JSONObject().put("account_id",value.getString("account_id")).put("patient_id",value.getString("patient_id"))
             .put("username",value.getString("username")).put("origin",ORIGIN).put("role","PATIENT");
     }
     public synchronized Reply request(String action,String raw) throws Exception {
+        if(!supports(action))throw new Exception("没有这个云操作");
         JSONObject data=new JSONObject(raw),value=session();String patient=value.getString("patient_id");
         if(!patient.equals(data.optString("patient_id")))throw new Exception("账号已变化，请返回当前账号档案");
+        if((action.equals("assessmentPlans")||action.equals("assessmentPlanCancel")||action.equals("assessmentPlanResult"))&&!value.getString("account_id").equals(data.optString("account_id")))throw new Exception("账号已变化，请重新读取评估计划");
         if(action.equals("identity"))return new Reply(200,identity().toString());
         if(action.equals("logout")){
             Reply reply;try{reply=authorized("/auth/logout","POST",new JSONObject());}finally{clear();}return reply;
         }
         // Validate identity before operations; no patient/installation URL comes from JS.
         JSONObject me=success(authorized("/auth/me","GET",null));if(!patient.equals(me.getString("patient_id")))throw new Exception("账号身份已变化，请重新登录");
-        if(action.equals("aiUsage"))return authorized("/patients/"+patient+"/ai/usage","GET",null);
-        if(action.equals("workflow"))return authorized("/patients/"+patient+"/rehab-workflow","GET",null);
-        if(action.equals("workflowProfile")){JSONObject document=new JSONObject(data.toString());document.remove("patient_id");return authorized("/patients/"+patient+"/rehab-workflow/profile","PUT",document);}
-        if(action.equals("candidate"))return authorized("/patients/"+patient+"/rehab-candidates","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("kind",data.getString("kind")));
-        if(action.equals("aiAsk"))return authorized("/patients/"+patient+"/ai/requests","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("text",data.getString("text")));
-        if(action.equals("reports"))return authorized("/patients/"+patient+"/reports","GET",null);
-        if(action.equals("shareReport"))return authorized("/patients/"+patient+"/reports","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("filename",data.getString("filename")).put("mime",data.getString("mime")).put("data",data.getString("data")).put("shared",data.getBoolean("shared")));
+        if(action.equals("session"))return new Reply(200,identity().toString());
         if(action.equals("family"))return authorized("/patients/"+patient+"/family","GET",null);
         if(action.equals("familyInvite"))return authorized("/patients/"+patient+"/family/invite","POST",new JSONObject());
         if(action.equals("familyBind"))return authorized("/patients/"+patient+"/family/bind","POST",new JSONObject().put("code",data.getString("code")));
         if(action.equals("familyUnbind"))return authorized("/patients/"+patient+"/family/unbind","POST",new JSONObject().put("member",data.getString("member")));
         if(action.equals("familyGrant"))return authorized("/patients/"+patient+"/family/grant","POST",new JSONObject().put("member",data.getString("member")).put("categories",data.getJSONArray("categories")));
         if(action.equals("familySummary")){JSONObject document=new JSONObject(data.toString());document.remove("patient_id");return authorized("/patients/"+patient+"/family/summary","PUT",document);}
+        if(action.equals("aiUsage"))return authorized("/patients/"+patient+"/ai/usage","GET",null);
+        if(action.equals("workflow"))return authorized("/patients/"+patient+"/rehab-workflow","GET",null);
+        if(action.equals("workflowProfile")){JSONObject document=new JSONObject(data.toString());document.remove("patient_id");return authorized("/patients/"+patient+"/rehab-workflow/profile","PUT",document);}
+        if(action.equals("candidate"))return authorized("/patients/"+patient+"/rehab-candidates","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("kind",data.getString("kind")));
+        if(action.equals("aiAsk"))return authorized("/patients/"+patient+"/ai/requests","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("text",data.getString("text")));
+        if(action.equals("assistantPreferences"))return data.has("health_context")?authorized("/patients/"+patient+"/assistant/preferences","PUT",new JSONObject().put("expected_version",data.getInt("expected_version")).put("health_context",data.getBoolean("health_context"))):authorized("/patients/"+patient+"/assistant/preferences","GET",null);
+        if(action.equals("assistantConversation")){int after=data.optInt("after",0),limit=data.optInt("limit",30);if(after<0||limit<1||limit>100)throw new Exception("对话查询范围无效");return authorized("/patients/"+patient+"/assistant/conversation?after="+after+"&limit="+limit,"GET",null);}
+        if(action.equals("assistantTurn")){if(data.optBoolean("private",false))throw new Exception("本次不记录的对话仅在本机处理");return authorized("/patients/"+patient+"/assistant/turns","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("text",data.getString("text")));}
+        if(action.equals("assessmentPlans"))return authorized("/patients/"+patient+"/assistant/assessment-plans","GET",null);
+        if(action.equals("assessmentPlanCancel")){String plan=data.getString("plan_id");if(!plan.matches("[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}"))throw new Exception("评估计划编号无效");return authorized("/patients/"+patient+"/assistant/assessment-plans/"+plan+"/cancel","POST",new JSONObject());}
+        if(action.equals("assessmentPlanResult")){String plan=data.getString("plan_id"),record=data.getString("record_id");int index=data.getInt("item_index");if(!plan.matches("[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}")||!record.matches("[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}")||index<0||index>52)throw new Exception("评估项目或记录编号无效");return authorized("/patients/"+patient+"/assistant/assessment-plans/"+plan+"/results","POST",new JSONObject().put("item_index",index).put("record_id",record));}
+        if(action.equals("reports"))return authorized("/patients/"+patient+"/reports","GET",null);
+        if(action.equals("shareReport"))return authorized("/patients/"+patient+"/reports","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("filename",data.getString("filename")).put("mime",data.getString("mime")).put("data",data.getString("data")).put("shared",data.getBoolean("shared")));
         if(action.equals("records")){
             int offset=data.optInt("offset",0);if(offset<0)throw new Exception("查询范围无效");
             return authorized("/patients/"+patient+"/records/latest?offset="+offset+"&limit=30","GET",null);

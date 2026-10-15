@@ -6,14 +6,14 @@ function fixture(){
  const memory=new Map(),listeners={},calls=[],redirects=[];
  const identity={patient_id:patient,account_id:account,username:'alice',role:'PATIENT'};
  const storage={getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)};
- let current={...identity,csrf_token:'memory-only'};
+ let current={...identity,csrf_token:'memory-only'},onFetch=()=>{};
  class Store{constructor(s,k){this.value=JSON.parse(s.getItem(k)||JSON.stringify({owner:patient}));this.change=fn=>{fn(this.value);s.setItem(k,JSON.stringify(this.value));};}}
  const context={PhoneStore:{CLOUD_PREFIX:'cloud:',ACTIVE_KEY:'active',Store,cloudKey:k=>k==='cloud:'+patient},localStorage:storage,
   document:{getElementById:()=>({textContent:JSON.stringify(identity)})},location:{origin:'https://139.224.216.18',replace:u=>redirects.push(u),assign:u=>redirects.push(u)},
-  fetch:async(url,options)=>{calls.push({url,options});return{ok:true,status:200,json:async()=>url.endsWith('/auth/me')?structuredClone(current):{items:[],status:'COMMITTED'}};},
+  fetch:async(url,options)=>{calls.push({url,options});await onFetch(url,options);return{ok:true,status:200,json:async()=>url.endsWith('/auth/me')?structuredClone(current):{items:[],status:'COMMITTED'}};},
   addEventListener:(name,fn)=>listeners[name]=fn,structuredClone,AbortSignal,URLSearchParams,alert:()=>{}};
  vm.runInNewContext(source,context);
- return {context,memory,calls,listeners,redirects,identity,setCurrent:v=>current=v};
+ return {context,memory,calls,listeners,redirects,identity,setCurrent:v=>current=v,onFetch:fn=>onFetch=fn};
 }
 test('browser identity is per-patient and credentials never persist in local storage',async()=>{
  const f=fixture();await f.context.AnkangBrowserAccount.ready;
@@ -50,10 +50,41 @@ test('workbench requests remain bound to current patient and require CSRF for wr
  assert(![...f.memory.values()].join('').includes('待发送原文'),'Transport does not cache private conversation; patient outbox owns persistence');
 });
 
+test('assistant transport preserves original text, explicit preferences and bounded conversation cursors',async()=>{
+ const f=fixture();await f.context.AnkangBrowserAccount.ready;const api=f.context.AnkangBrowserAccount;
+ await api.request('assistantPreferences',f.identity);assert(f.calls.at(-1).url.endsWith('/assistant/preferences'));assert.equal(f.calls.at(-1).options.method,'GET');
+ await api.request('assistantPreferences',f.identity,{expected_version:0,health_context:true});assert.equal(f.calls.at(-1).options.method,'PUT');assert.equal(f.calls.at(-1).options.headers['X-CSRF-Token'],'memory-only');
+ assert.deepEqual(JSON.parse(f.calls.at(-1).options.body),{expected_version:0,health_context:true});
+ await api.request('assistantConversation',f.identity,{after:37,limit:30});assert(f.calls.at(-1).url.endsWith('/assistant/conversation?after=37&limit=30'));
+ await assert.rejects(api.request('assistantConversation',f.identity,{after:-1}));
+ await assert.rejects(api.request('assistantTurn',f.identity,{operation_id:account,text:'TEST incognito',private:true}));
+ await api.request('assistantTurn',f.identity,{operation_id:account,text:'查看我已有的肩部结果',owner:'WRONG'});
+ assert.deepEqual(JSON.parse(f.calls.at(-1).options.body),{operation_id:account,text:'查看我已有的肩部结果'});
+ assert(![...f.memory.values()].join('').includes('查看我已有的肩部结果'));
+});
+
 test('family uses self account, CSRF and narrowly shaped mutation bodies',async()=>{
  const f=fixture();await f.context.AnkangBrowserAccount.ready;const api=f.context.AnkangBrowserAccount;
  for(const [action,tail,body,method] of [['family','',{},'GET'],['familyInvite','/invite',{},'POST'],['familyBind','/bind',{code:'1234ABCD'},'POST'],['familyGrant','/grant',{member:account,categories:[]},'POST'],['familyUnbind','/unbind',{member:account},'POST'],['familySummary','/summary',{name:'TEST',health:[],rehab:[],doses:[]},'PUT']]){
   await api.request(action,f.identity,body);const call=f.calls.at(-1);assert(call.url.endsWith('/patients/'+patient+'/family'+tail));assert.equal(call.options.method,method);
   if(method!=='GET'){assert.equal(call.options.headers['X-CSRF-Token'],'memory-only');assert.deepEqual(JSON.parse(call.options.body),body);}
  }
+});
+
+test('assessment plan API is account-bound, uncached, and cancels with empty JSON and CSRF',async()=>{
+ const f=fixture();await f.context.AnkangBrowserAccount.ready;const api=f.context.AnkangBrowserAccount;
+ await api.request('assessmentPlans',f.identity);
+ const get=f.calls.findLast(c=>c.url.endsWith('/assistant/assessment-plans'));assert.equal(get.options.method,'GET');assert.equal(get.options.cache,'no-store');assert.equal(get.options.body,undefined);
+ await api.request('assessmentPlanCancel',f.identity,{plan_id:account,record_id:'forged',status:'COMPLETED'});
+ const cancel=f.calls.findLast(c=>c.url.endsWith('/assistant/assessment-plans/'+account+'/cancel'));assert.equal(cancel.options.method,'POST');assert.deepEqual(JSON.parse(cancel.options.body),{});assert.equal(cancel.options.headers['X-CSRF-Token'],'memory-only');
+ await assert.rejects(api.request('assessmentPlanCancel',f.identity,{plan_id:'../../other'}),/编号无效/);
+ assert(![...f.memory.values()].join('').includes('PLANNED'));
+ f.context.navigator={onLine:false};const count=f.calls.length;await assert.rejects(api.request('assessmentPlans',f.identity),/离线/);assert.equal(f.calls.length,count);
+});
+
+test('cookie identity changing while a plan request is in flight discards the old response',async()=>{
+ const f=fixture();await f.context.AnkangBrowserAccount.ready;
+ f.onFetch(url=>{if(url.endsWith('/assistant/assessment-plans'))f.setCurrent({...f.identity,patient_id:account,csrf_token:'other'});});
+ await assert.rejects(f.context.AnkangBrowserAccount.request('assessmentPlans',f.identity),/已变化/);
+ assert.equal(f.calls.filter(c=>c.url.endsWith('/assistant/assessment-plans')).length,1);assert.equal(f.redirects[0],'/account?next=/');
 });

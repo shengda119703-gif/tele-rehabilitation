@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "date_local": "2026-10-14",
+  "action_number": 128,
+  "action_code": "T-AXU-006",
+  "action_name": "椅背支持的坐位伸胸",
+  "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "mode": "built-in image_gen; 原图严格验收后复用 s01",
+  "references_reviewed": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "assets": [
+    {
+      "step": "s01",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/128_T-AXU-006_s01.png",
+      "source_path": "E:/git冲突问题/rehab image/train/128_T-AXU-006_椅背支持的坐位伸胸.png",
+      "reused": true,
+      "prompt": null,
+      "prompt_reason": "复用已存在的原图；本批未对 s01 调用生成工具。",
+      "visual_acceptance": {
+        "passed": true,
+        "viewed_final_file": true,
+        "checks": [
+          "人物坐稳，上身自然坐长。",
+          "椅背上缘清楚接触中上背。",
+          "臀部在椅面后方，无前滑。",
+          "双手交叉轻放胸前。",
+          "双脚全掌落地、膝髋支撑明确。",
+          "侧面全身含头、肩、髋、椅背与双脚，椅子比例合理。"
+        ],
+        "limitations": "头部有轻微自然抬眼；未见颈部悬垂或腰部大幅后折。"
+      }
+    },
+    {
+      "step": "s02",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/128_T-AXU-006_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-fc03-7161-87e2-db5eddc99c91/exec-caed7ca4-9e11-4338-b3eb-723c5e4bcff2.png",
+      "reused": false,
+      "tool": "image_gen.imagegen",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/128_T-AXU-006_椅背支持的坐位伸胸.png"
+      ],
+      "prompt": "Use case: scientific-educational.\nAsset type: single rehabilitation demonstration photograph, action 128 T-AXU-006, step 02.\nInput image 1 is the edit target. It is the starting neutral seated pose; preserve its woman, clothing, hair, facial identity, chair, floor, background, side camera facing right and full-body framing.\nMake a clear but gentle thoracic extension around the TOP EDGE of the chair back. In the starting image the torso and neck are essentially vertical. For this step move the ribcage, shoulders and head as a unit slightly BACKWARD (towards image LEFT), approximately 10 degrees, centered at the upper edge of the chair back at the lower shoulder blade level. The upper back remains visibly resting against that chair edge. Show the sternum lifted and the upper torso leaning mildly backward above the edge, enough that the shoulder position is plainly different from the starting image. The shoulder must shift roughly 4 to 6 cm toward image LEFT. Keep her chin softly tucked with no additional neck extension; let the head follow the upper trunk so it cannot look like only tilting her head.\nKeep both hands lightly crossed against her chest following the torso. Keep buttocks and pelvis at the original rear seat position, both thighs and knees, lower legs and shoe soles exactly unmoved and grounded, all chair geometry unmoved. Lower back should remain long and close to neutral; movement comes from middle-upper thoracic spine, not a large hinge at the waist. Keep all the original full-body composition and scale.\nPhotorealistic studio instructional image. Single woman, single pose, no text, no arrows, no watermark.\nAvoid: identical neutral torso, merely tipping head upward, deep lumbar bend, head dangling, loss of chair-back contact, sliding hips, lifted feet, changed face, additional fingers, changed outfit, changed camera.",
+      "visual_acceptance": {
+        "passed": true,
+        "viewed_final_file": true,
+        "checks": [
+          "相比 s01 肩、胸、头向后小幅移动，上背展开可见。",
+          "椅背上缘接触中上背，支撑接触保留。",
+          "双手仍交叉胸前跟随躯干。",
+          "臀部、双脚与椅子位置和同组 s01 基本保持，双鞋全掌着地。",
+          "头随上胸移动，未悬垂，颈部处于舒适位置。",
+          "未见腰部大幅折弯或臀部前滑。",
+          "人物、白衣深裤白鞋、侧面机位、灰背景、椅子与尺度一致。"
+        ],
+        "limitations": "AI 编辑在面部与手臂轮廓存在细微像素变化；动作幅度为舒适小幅，不是精确测角影像。"
+      }
+    }
+  ],
+  "generation_attempts": [
+    {
+      "step": "s02",
+      "attempt": 1,
+      "tool": "image_gen.imagegen",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-fc03-7161-87e2-db5eddc99c91/exec-8adc92da-57b5-4a80-af85-3c180800e465.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: rehabilitation step demonstration photograph, action 128 T-AXU-006, step 02.\nInput images: Image 1 is the edit target and exact composition/identity/chair reference. Images 2, 3 and 4 are identity, outfit, natural photographic style references only.\nPrimary request: Edit the first photograph to show the small supported thoracic-extension end position of seated chest opening against a chair back. Keep the same woman, camera side view facing right, crop, image dimensions, gray-blue seamless studio background, gray chair, white short-sleeve T-shirt, dark trousers, white sneakers, hairstyle, facial likeness, hands lightly crossed over the chest.\nChange only the upper-back pose: her middle-upper thoracic back keeps clear supported contact against the TOP EDGE of the chair back, and her ribcage and shoulders gently open backward above that contact by a small but visible comfortable amount, around 10 degrees. The head moves with the shoulders while the neck stays naturally aligned, the chin mildly tucked, gaze forward and a little upward, no head dangling backward. Her lower back remains near neutral with no deep lumbar crease and no large waist hinge.\nCritical locked invariants: pelvis and buttocks stay exactly on the same rear area of the seat; feet, knees, thighs, chair, chair legs, camera, ground shadows, subject scale and framing remain in exactly their original positions. Both shoe soles stay flat on the floor. Preserve visible head, shoulders, hips, chair support and both feet with margins.\nStyle: faithful realistic instructional studio photograph matching the first image. One single person in one single pose, no montage.\nAvoid: no labels, no arrows, no typography, no watermark, no loss of chair-back contact, no pelvis sliding forward, no exaggerated arch, no cervical hyperextension, no lumbar folding, no lifted feet, no additional limbs, no outfit changes.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/128_T-AXU-006_椅背支持的坐位伸胸.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "accepted": false,
+      "issue": "胸椎后展开差异过小，画面与原中立坐姿接近；未作为终稿。",
+      "revision": "保留椅、臀脚和镜头，单点要求肩胸在椅背上缘上方约 10° 小幅后展且头随躯干，避免仅仰头。"
+    },
+    {
+      "step": "s02",
+      "attempt": 2,
+      "tool": "image_gen.imagegen",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-fc03-7161-87e2-db5eddc99c91/exec-caed7ca4-9e11-4338-b3eb-723c5e4bcff2.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: single rehabilitation demonstration photograph, action 128 T-AXU-006, step 02.\nInput image 1 is the edit target. It is the starting neutral seated pose; preserve its woman, clothing, hair, facial identity, chair, floor, background, side camera facing right and full-body framing.\nMake a clear but gentle thoracic extension around the TOP EDGE of the chair back. In the starting image the torso and neck are essentially vertical. For this step move the ribcage, shoulders and head as a unit slightly BACKWARD (towards image LEFT), approximately 10 degrees, centered at the upper edge of the chair back at the lower shoulder blade level. The upper back remains visibly resting against that chair edge. Show the sternum lifted and the upper torso leaning mildly backward above the edge, enough that the shoulder position is plainly different from the starting image. The shoulder must shift roughly 4 to 6 cm toward image LEFT. Keep her chin softly tucked with no additional neck extension; let the head follow the upper trunk so it cannot look like only tilting her head.\nKeep both hands lightly crossed against her chest following the torso. Keep buttocks and pelvis at the original rear seat position, both thighs and knees, lower legs and shoe soles exactly unmoved and grounded, all chair geometry unmoved. Lower back should remain long and close to neutral; movement comes from middle-upper thoracic spine, not a large hinge at the waist. Keep all the original full-body composition and scale.\nPhotorealistic studio instructional image. Single woman, single pose, no text, no arrows, no watermark.\nAvoid: identical neutral torso, merely tipping head upward, deep lumbar bend, head dangling, loss of chair-back contact, sliding hips, lifted feet, changed face, additional fingers, changed outfit, changed camera.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/128_T-AXU-006_椅背支持的坐位伸胸.png"
+      ],
+      "accepted": true,
+      "issue": null
+    }
+  ],
+  "workflow_notes": [
+    "没有覆盖原图、原清单、其他制作记录或仓库文件。",
+    "仅复制生成的原始 PNG；未使用 Python 或其他工具图像后处理。",
+    "最终两个 PNG 均从磁盘再次使用 view_image 检视。"
+  ]
+}

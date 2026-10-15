@@ -1,0 +1,97 @@
+{
+  "batch": 12,
+  "range": "117-120",
+  "requested_full_batch": "111-120",
+  "date": "2026-10-14",
+  "source_document": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "entries": [
+    {
+      "sequence": 117,
+      "action_id": "T-LOW-039",
+      "action_name": "短足练习：坐位至站位",
+      "action_phase": "坐位短足轻收足弓",
+      "category": "train",
+      "generation_mode": "内置 image_gen",
+      "reference_paths": [
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-e0e4d994-f064-49c3-aabe-eae175412eec.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-14d3a1b0-93c6-4f79-bcf5-ef47a663e1fb.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-8cdb12d5-aabb-46b3-bbc3-ebd85866dd33.png"
+      ],
+      "prompt": "Use case: scientific-educational. Asset: ONE standalone realistic rehabilitation training photograph, portrait canvas 1122:1402 proportion. Input images 1, 2, 3 are strict identity, wardrobe, photographic style, lighting and background references; they show the SAME woman. Preserve her exact East Asian face, age, skin tone, natural average healthy body, black low ponytail, white short-sleeved crewneck sports T-shirt and charcoal-grey long sports trousers. Use exactly the same softly mottled pale cool grey-blue studio photographic background, continued as a seamless matte ground of the same colour, soft diffuse light and realistic camera rendering. Natural normal head/body and limb proportions, anatomically correct hands and bare feet. Her face must remain fully visible. Expand the reference framing to include the complete woman, head, feet and ground, with generous margin. Do NOT copy the original arm exercise. One woman, one action phase, one photograph; no collage, inset, arrows, diagram, words, number, labels, watermark, logos, cartoon, illustration, coloured scenery or equipment other than explicitly specified.\nAction: seated short-foot exercise, the seated beginning phase of T-LOW-039. The woman sits upright on a simple stable grey chair with backrest, hips and knees approximately 90 degrees. Both bare feet lightly rest flat on the ground, heels and ball of foot at the first and fifth metatarsal heads remain touching the floor. Gently draw the forefoot slightly toward the heel so the medial arch subtly domes, a SMALL natural change. Toes remain relaxed, naturally extended, lying on the ground; absolutely no toe curling or gripping and no heel raise. Ankles neutral, outside of feet stays grounded. Hands rest naturally on thighs, she has calm expression and looks forward. Camera from her front-side, approximately low enough to reveal the medial side of the near bare foot while keeping full face and body in frame. Her feet should be sufficiently prominent and clear in the lower part of the single full-body portrait, with naturally formed toes. No exaggerated high arch.",
+      "repair_prompt": null,
+      "initial_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-fd3b2c07-17ae-4cd3-ab04-6ef59172e628.png",
+      "generated_original_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-fd3b2c07-17ae-4cd3-ab04-6ef59172e628.png",
+      "final_path": "E:/git冲突问题/rehab image/train/117_T-LOW-039_短足练习：坐位至站位.png",
+      "visual_check": "人工逐图检查：同参考女性、低马尾、白上衣与深灰裤；灰蓝背景一致，完整脸和身体、正常比例。稳固灰椅坐位，赤足脚跟与前掌贴地，趾自然伸展，足弓轻微收拢，未见抓地蜷趾或提踵。画面只表示教学姿势，不由图片判定肌激活。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "D36AC5641B6EB7F1B6A067EFD93E906FB63B2CF293118209790F0D8F2A0FD538"
+    },
+    {
+      "sequence": 118,
+      "action_id": "T-LOW-040",
+      "action_name": "扶稳抬前足",
+      "action_phase": "站位足跟贴地、双前足抬起",
+      "category": "train",
+      "generation_mode": "内置 image_gen",
+      "reference_paths": [
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-e0e4d994-f064-49c3-aabe-eae175412eec.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-14d3a1b0-93c6-4f79-bcf5-ef47a663e1fb.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-8cdb12d5-aabb-46b3-bbc3-ebd85866dd33.png"
+      ],
+      "prompt": "Use case: scientific-educational. Asset: ONE standalone realistic rehabilitation training photograph, portrait canvas 1122:1402 proportion. Input images 1, 2, 3 are strict identity, wardrobe, photographic style, lighting and background references; they show the SAME woman. Preserve her exact East Asian face, age, skin tone, natural average healthy body, black low ponytail, white short-sleeved crewneck sports T-shirt and charcoal-grey long sports trousers. Use exactly the same softly mottled pale cool grey-blue studio photographic background, continued as a seamless matte ground of the same colour, soft diffuse light and realistic camera rendering. Natural normal head/body and limb proportions, anatomically correct hands and bare feet. Her face must remain fully visible. Expand the reference framing to include the complete woman, head, feet and ground, with generous margin. Do NOT copy the original arm exercise. One woman, one action phase, one photograph; no collage, inset, arrows, diagram, words, number, labels, watermark, logos, cartoon, illustration, coloured scenery or equipment other than explicitly specified.\nAction: supported forefoot raise, T-LOW-040. Show her standing upright, lightly holding a simple fixed matte grey waist-height support rail with hands. Both bare feet point forward parallel, hip-width apart. Both HEELS remain firmly touching the flat floor. She dorsiflexes both ankles so the ENTIRE forefoot including balls and toes lifts visibly 2–4cm above the floor; soles incline upward from the grounded heels. This is not merely extending the toes. Spine upright, weight balanced over heels, body does not lean or topple backward, knees nearly straight with slight softness. Side-front camera allows a clear unobstructed view of BOTH grounded heels and raised forefeet, yet complete body and reference face must be visible. A real grounded support rail can have two vertical posts and a horizontal rail, simple and restrained. Bare feet have correct anatomy and normal sizes.",
+      "repair_prompt": "Use case: identity-preserve, targeted anatomical pose correction. Image 1 is the edit target: the same woman upright holding grey rail in grey-blue studio. Images 2, 3, 4 are original strict identity, clothing, style, colour references. Keep the woman, exact face, black low ponytail, white short-sleeved shirt, charcoal trousers, normal full-body proportions, composition, softly mottled pale cool grey-blue seamless studio background and floor, lighting, support rail and hands unchanged. Change ONLY the posture of both feet in image 1: make both bare feet point forward, side by side with natural normal human foot proportions. Both heels stay firmly touching floor with realistic contact shadows. Rotate the whole foot gently upwards about the heel at only 10–15 degrees to the flat floor, the balls of the foot and toes are JUST 2–4cm above the floor, NOT highly vertical. Both forefeet should be lifted together. Toes remain relaxed, extend naturally in line with the forefoot; eliminate the exaggerated curling/upturning at toe joints. This is a small ankle dorsiflexion/toe-raise, not standing on toes, not merely raising toe tips, not foot ballet pose. A low subtle gap beneath forefeet is clearly visible, both heels planted, upright balanced trunk. Correct natural ankle and toe anatomy. Keep complete woman and both feet visible with margin, portrait 1122:1402 proportion, no cropping, no text, arrows or inset.",
+      "initial_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-e1b9485e-22c5-423c-ad1f-a5222926d491.png",
+      "generated_original_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-4ec10964-8af0-41c0-b707-c060319e3dbb.png",
+      "final_path": "E:/git冲突问题/rehab image/train/118_T-LOW-040_扶稳抬前足.png",
+      "visual_check": "人工逐图检查：首图前足与脚趾上翘过高，定向修正后保留同人物背景与扶手。双足跟贴地、整个前足小幅上抬，脚趾自然延伸，身体直立稳定；完整头足，正常比例。选择修正图为最终图。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "6D3A274B5F7422CA00E42C90700061E3B73364F067C45EE6CDA4465C572FC82B"
+    },
+    {
+      "sequence": 119,
+      "action_id": "T-LOW-041",
+      "action_name": "支撑旁单腿触点平衡",
+      "action_phase": "单腿支撑、另一脚前方近点轻触",
+      "category": "train",
+      "generation_mode": "内置 image_gen",
+      "reference_paths": [
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-e0e4d994-f064-49c3-aabe-eae175412eec.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-14d3a1b0-93c6-4f79-bcf5-ef47a663e1fb.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-8cdb12d5-aabb-46b3-bbc3-ebd85866dd33.png"
+      ],
+      "prompt": "Use case: scientific-educational. Asset: ONE standalone realistic rehabilitation training photograph, portrait canvas 1122:1402 proportion. Input images 1, 2, 3 are strict identity, wardrobe, photographic style, lighting and background references; they show the SAME woman. Preserve her exact East Asian face, age, skin tone, natural average healthy body, black low ponytail, white short-sleeved crewneck sports T-shirt and charcoal-grey long sports trousers. Use exactly the same softly mottled pale cool grey-blue studio photographic background, continued as a seamless matte ground of the same colour, soft diffuse light and realistic camera rendering. Natural normal head/body and limb proportions, anatomically correct hands and bare feet. Her face must remain fully visible. Expand the reference framing to include the complete woman, head, feet and ground, with generous margin. Do NOT copy the original arm exercise. One woman, one action phase, one photograph; no collage, inset, arrows, diagram, words, number, labels, watermark, logos, cartoon, illustration, coloured scenery or equipment other than explicitly specified.\nAction: supported single-leg near-point reach balance, T-LOW-041. Front three-quarter full-body camera. She lightly holds a simple fixed matte grey waist-height rail beside her with one hand. Her body weight rests on one supporting leg, its full bare foot flat firmly on the floor and its knee gently flexed aligned over the foot. The other bare leg reaches only a SHORT distance forward, so its toes lightly touch a small discreet grey tape mark 20–30cm ahead of the supporting foot, with that foot's heel raised and no body weight placed on it. Support knee slightly bent, hips level, trunk vertical and calm, no deep squat, no lunge, no far reach or unstable posture. The marker is a tiny flat grey rectangular tape strip, not arrows or words. Both feet, the near forward tap, simple rail, face and complete person clearly visible with floor margin.",
+      "repair_prompt": null,
+      "initial_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-28a27571-3727-45a9-9e49-1c5489394f07.png",
+      "generated_original_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-28a27571-3727-45a9-9e49-1c5489394f07.png",
+      "final_path": "E:/git冲突问题/rehab image/train/119_T-LOW-041_支撑旁单腿触点平衡.png",
+      "visual_check": "人工逐图检查：同人物与灰蓝摄影背景、完整头足与正常比例；固定灰扶手旁单手轻扶，支撑脚全掌贴地、膝微屈，另一脚向前方近距离灰贴条轻点、足跟抬起，躯干直立，未见深蹲或追远。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "B4D0410A6B226549800E9C8641EA3ABA9CD9A522B2CF6D4E2290D9DDBA23D66E"
+    },
+    {
+      "sequence": 120,
+      "action_id": "T-LOW-042",
+      "action_name": "分段渐进步行",
+      "action_phase": "平地舒适短步步行",
+      "category": "train",
+      "generation_mode": "内置 image_gen",
+      "reference_paths": [
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-e0e4d994-f064-49c3-aabe-eae175412eec.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-14d3a1b0-93c6-4f79-bcf5-ef47a663e1fb.png",
+        "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-8cdb12d5-aabb-46b3-bbc3-ebd85866dd33.png"
+      ],
+      "prompt": "Use case: scientific-educational. Asset: ONE standalone realistic rehabilitation training photograph, portrait canvas 1122:1402 proportion. Input images 1, 2, 3 are strict identity, wardrobe, photographic style, lighting and background references; they show the SAME woman. Preserve her exact East Asian face, age, skin tone, natural average healthy body, black low ponytail, white short-sleeved crewneck sports T-shirt and charcoal-grey long sports trousers. Use exactly the same softly mottled pale cool grey-blue studio photographic background, continued as a seamless matte ground of the same colour, soft diffuse light and realistic camera rendering. Natural normal head/body and limb proportions, anatomically correct hands and bare feet. Her face must remain fully visible. Expand the reference framing to include the complete woman, head, feet and ground, with generous margin. Do NOT copy the original arm exercise. One woman, one action phase, one photograph; no collage, inset, arrows, diagram, words, number, labels, watermark, logos, cartoon, illustration, coloured scenery or equipment other than explicitly specified.\nAction: gradual walking in manageable short segments, T-LOW-042. Show one natural comfortable normal small walking step across the seamless flat grey-blue studio floor, full body from front-side three-quarter camera. She wears plain white appropriately fitting athletic walking shoes without brand or logo and the same shirt and charcoal long trousers. Upright relaxed head and trunk, eyes look ahead toward path. One leg naturally takes a SHORT step ahead and the other trails slightly; natural contralateral relaxed arm swing with modest bent elbows, not exaggerated power walking, running or marching. Expression calm, stable normal gait. No phone, no chair, no rail, no scenery, no track, no extra person. Preserve the exact reference subject and background colour. Capture a single clear walking moment and include both shoes fully with generous bottom margin.",
+      "repair_prompt": null,
+      "initial_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-61d3f10e-8ede-4f8f-8b6a-0cc97ca90bd2.png",
+      "generated_original_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137f1-d44a-7552-bd82-8d6676dec0ba\\exec-61d3f10e-8ede-4f8f-8b6a-0cc97ca90bd2.png",
+      "final_path": "E:/git冲突问题/rehab image/train/120_T-LOW-042_分段渐进步行.png",
+      "visual_check": "人工逐图检查：同人物同衣裤及灰蓝摄影背景、完整头足与正常比例；平坦地面舒适小步走，白色无标志运动鞋，目视前方，双臂自然对侧摆动，单一人物单一动作，无手机或多余场景。",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "D34373CC1C7AE20E59231558811C3738C2AAE2F6F4C402D6461A48EB9DA919FB"
+    }
+  ]
+}

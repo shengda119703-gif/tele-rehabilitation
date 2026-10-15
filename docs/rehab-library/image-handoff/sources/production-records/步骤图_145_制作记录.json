@@ -1,0 +1,91 @@
+{
+  "record_version": "1.0",
+  "created_date": "2026-10-14",
+  "generator": "built-in image_gen.imagegen",
+  "generation_mode": "builtin",
+  "action_sequence": 145,
+  "action_id": "T-AXU-048",
+  "action_name": "仰卧手抵膝的屈髋等长控制",
+  "checklist_source": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "action_card_source": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "identity_references": [
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "role": "identity_clothing_style_reference",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "role": "identity_clothing_style_reference",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "role": "identity_clothing_style_reference",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ],
+  "sequence_note": "s01→s02保持→逐渐卸力后复用s01表示足落回。另一侧复用技术说明，本轮图组选择右腿。",
+  "interpretation_boundary": "照片只呈现静态体位、手掌与大腿接触、足与垫面接触；不能凭此验证实际施力大小、肌肉收缩、真实保持时长或骶髂复位。",
+  "images": [
+    {
+      "step": "s01",
+      "proposed_filename": "145_T-AXU-048_s01.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/145_T-AXU-048_s01.png",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-6c15-7f42-9cfd-85c7d0545e16/exec-a34a9572-53a6-44ba-a5cc-52a92b7ebc04.png",
+      "reuse": false,
+      "edit_target": null,
+      "prompt": "Use case: scientific-educational.\nAsset type: One standalone photorealistic rehabilitation exercise demonstration photograph, action 145 T-AXU-048 step s01, landscape image.\nInput images: reference-01.png, reference-02.png, reference-03.png are the same female identity, clothing and photographic studio style references only. Preserve her recognizable facial features, age, skin tone, proportions, black ponytail, plain white short sleeve T-shirt and dark charcoal long trousers. Do not copy the standing arm positions.\nScene: Quiet seamless gray-blue studio background and floor, soft diffused light and natural shadows. One simple muted dark gray-blue exercise mat lying flat on the floor. No other equipment.\nPrimary request: This same woman lies comfortably SUPINE on her back on the mat. Head to the left of the frame and feet to the right. Both knees bent comfortably, both bare feet flat on the mat, feet separated at natural hip width. Head, shoulders, whole back and pelvis rest on the mat; neutral relaxed neck, no crunch, no bridge, no chin forced downward. Both arms rest naturally along the sides with hands resting on the mat near her hips. Nothing held in her hands, hands not on the knees.\nComposition: Fixed camera roughly at the height of the bent knees, from the woman's anatomical RIGHT side with only a small oblique angle so both knees and both foot-to-mat contacts can be separately seen. Whole body from crown to full toes and all fingers in frame, horizontal wide scene with comfortable margins, pelvis and knee angles readable. The right leg is nearer the camera. Natural proportions and continuous anatomy. The camera will remain identical for the next step.\nStyle: Real high quality studio photograph, same gentle gray-blue palette as the supplied references, realistic fabric and skin.\nConstraints: Exactly one woman and one pose, no split panel, no inset, no collage. No text, no numbers, no arrows, no logos, no watermark. No dramatic expressions, no forceful movements, no kneeling, no raised foot, no extra limbs or distorted joints.",
+      "tool_input_references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "BD678D65D7507940F354A6EE39EF6C3B4EA20450C7FB231EB68E2263AE169EBF",
+      "visual_check": {
+        "method": "view_image inspected full generated PNG",
+        "accepted": true,
+        "identity_clothing_background": "面容、肤色、黑色马尾、白短袖深灰长裤、灰蓝棚拍背景与参考一致。",
+        "pose": "仰卧，双膝舒适屈起、双脚落垫；头肩躯干与骨盆留在垫面，近侧手臂自然沿身侧放在垫上。",
+        "support_and_visibility": "头、躯干、髋、双膝、完整双脚入镜；近侧手完整可见，远侧手臂受躯干自然遮挡但没有异常肢体；双脚与垫面接触可辨。",
+        "anatomy": "整体头身与四肢比例自然，关节连接连续，无额外肢体。",
+        "prohibited_content": "单人物单姿势，画面无文字、编号、箭头、拼图、水印。",
+        "limitations": "静止照片不能核验呼吸或肌肉发力。"
+      },
+      "revision_count": 0
+    },
+    {
+      "step": "s02",
+      "proposed_filename": "145_T-AXU-048_s02.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/145_T-AXU-048_s02.png",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-6c15-7f42-9cfd-85c7d0545e16/exec-4583b5c7-bae6-4d98-b1c8-8daad41e3f9d.png",
+      "reuse": false,
+      "edit_target": "E:/git冲突问题/rehab image/train/steps/145_T-AXU-048_s01.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: One standalone photorealistic rehabilitation demonstration photograph, action 145 T-AXU-048 step s02.\nInput image: 145_T-AXU-048_s01.png is the EDIT TARGET and the exact identity, camera, studio, mat and body-scale reference.\nEdit only the near-side RIGHT leg and the near-side RIGHT arm/hand into the following exercise position. Preserve the woman's face, black ponytail, white short-sleeve shirt, dark charcoal trousers, gray-blue background and floor, lighting, mat placement, same landscape crop, lens, camera angle, head at frame left and feet at frame right. Preserve head, shoulders, back and pelvis resting on the mat and preserve the far-side LEFT knee bend and LEFT bare foot planted flat on the mat.\nRequired new pose: Raise the near-side anatomical RIGHT foot from the mat, by bending the RIGHT hip comfortably so the right thigh angles upward, approximately 65-80 degrees to the floor; the RIGHT knee stays bent approximately 90 degrees and the lower leg and bare right foot are suspended comfortably above the mat. Do not pull the knee into the chest. The right foot must be clearly visible in the air, with realistic proportions. Keep left foot clearly contacting the mat behind it.\nBring the woman's RIGHT hand up from her side so the open palm rests gently on the ANTERIOR distal RIGHT THIGH just above the knee, on soft thigh tissue several centimeters proximal to the kneecap. The palm's contact area is on the thigh, not on the patella, not wrapped around the knee. Right elbow bent naturally and shoulder remains on the mat. Fingers relaxed, correct anatomy. Left arm rests naturally at her side. She appears relaxed and comfortable; show a static hand-to-thigh contact setup without trying to visualize force or muscle activation.\nComposition and invariants: Exactly the same fixed side camera with a slight oblique view and same framing as s01, whole body including crown, right hand, hip, both knees, planted left foot and raised right foot all in frame. The right leg is nearest the camera. Do not add any objects. No crunch or bridge; no raised head or shoulders; no extreme hip flexion. Exactly one woman, one single pose, no panel, collage, inset, text, labels, numbers, arrows, motion blur, logos or watermark. Natural skin and fabric texture, continuous human anatomy.",
+      "tool_input_references": [
+        "E:/git冲突问题/rehab image/train/steps/145_T-AXU-048_s01.png"
+      ],
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "057BB1AB8EF6C5E90E9782938E190A2FE9C01DD11499EFB0DEECF7C4AA632DED",
+      "visual_check": {
+        "method": "view_image inspected full generated PNG and compared with s01",
+        "accepted": true,
+        "identity_clothing_background": "人物、服装、灰蓝背景、光线、垫子与s01保持一致。",
+        "pose": "远侧左脚落垫，近侧右髋膝舒适屈起、右脚悬空；右手掌贴于右大腿近膝软组织，掌心主要接触在髌骨近侧的大腿，没有抓膝或压髌骨。",
+        "support_and_visibility": "头肩背与骨盆仍落垫，无抬肩卷腹；右手、右髋膝、悬空右脚及落垫左脚清楚，未把膝拉至胸前。",
+        "anatomy": "手指与四肢比例自然，右腕、肘和膝连接连续。",
+        "camera_consistency": "头位、地面基准、垫子边缘、人物尺度和固定侧面机位沿用s01。",
+        "prohibited_content": "单人物单姿势，画面无文字、编号、箭头、拼图、水印。",
+        "limitations": "手掌与大腿接触只能说明摆位；不能声称已确认实际发力或肌肉收缩。"
+      },
+      "revision_count": 0
+    }
+  ]
+}

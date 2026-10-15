@@ -1,0 +1,569 @@
+{
+  "batch": 5,
+  "sequences": "041-050",
+  "date": "2026-10-13",
+  "generation_mode": "built-in image_gen",
+  "source": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+  "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+  "identity_references": [
+    "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+    "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+    "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+  ],
+  "files": [
+    {
+      "sequence": 41,
+      "id": "E-AXU-008",
+      "name": "坐位抱胸转胸筛查",
+      "category": "assess",
+      "filename": "041_E-AXU-008_坐位抱胸转胸筛查.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\041_E-AXU-008_坐位抱胸转胸筛查.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "66BFDEB26B51C9DD1598D445BFECD3ABCF0B2CFBB9CD41F3ACEECC9D625251BC",
+      "phase": "抱胸坐稳，胸口与肩线舒适转向画面右侧；头自然跟随胸口，骨盆、双膝和双脚保持朝前，双坐骨不离椅。",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "041",
+        "id": "E-AXU-008",
+        "title": "坐位抱胸转胸筛查",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\041_E-AXU-008_坐位抱胸转胸筛查.png",
+        "phase": "抱胸坐稳，胸口与肩线舒适转向画面右侧；头自然跟随胸口，骨盆、双膝和双脚保持朝前，双坐骨不离椅。",
+        "source_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+        "source_card_lines": "2891-2955",
+        "source_reference": "REF-S014，动作4：坐位抱胸转体",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-c3a2d09d-683e-47fd-b89a-d9cb8f1b45f6.png",
+        "prompt": "Use case: photorealistic-natural.\nAsset type: one individual rehabilitation assessment library photograph, portrait high resolution, one scene.\nInput images: All THREE images are references for the exact SAME adult woman, face, low black ponytail, normal adult body proportions, white fitted short-sleeved tee, dark charcoal full-length LONG trousers, cool cloudy gray-blue studio background and soft photographic light. Preserve her face and identity faithfully.\nPrimary request: a CLEAR seated arms-crossed CHEST ROTATION pause, where the chest rotates relative to a fixed forward-facing pelvis. The movement is in the upper trunk, not just the neck.\nPose geometry: The chair, pelvis, both thighs, knees and two white flat sneakers face the camera straight-on, and both feet stay flat on the floor hip width apart. She sits upright on a stable four-legged armless chair without wheels, both sitting bones firmly on the seat. Both forearms comfortably crossed over chest and each hand rests on opposite upper arm. Her UPPER TRUNK rotates clearly toward the RIGHT EDGE of the photograph so the ribcage, sternum, shoulder line and crossed arms are all seen in a three-quarter side orientation, distinctly turned about 40 degrees relative to her square forward-facing hips. The white shirt upper chest must show a clearly oblique plane rather than a frontal plane. One shoulder recedes and the other advances from rotation. Head and gaze follow the already rotated chest naturally, not farther away as an isolated head turn. Keep her upright and balanced with no lateral leaning, no arching back, no twisting pelvis, no lifting feet, no pulling chair.\nCamera and framing: camera straight ahead at seated chest height, portrait complete full body, shoulders pelvis knees and both whole feet visible, entire chair visible, head and shoes fully inside frame. Only one adult woman, normal real anatomical scale, clear chair and contact points.\nScene and style: exact original cool cloudy muted pale gray-blue photography studio backdrop from references, natural subtle cloudy mottling, seamless similar floor, soft neutral photographic illumination, realistic skin fabric and shadows.\nConstraints: Anatomically correct two arms and two legs with natural hands. No shorts or cropped pants; full-length dark charcoal trousers. White flat athletic sneakers. No text, symbols, numbers, arrows, measurement marks, watermarks, borders, collage, inset, motion trail, extra people, medical diagram or gym setting. Reference images are identity/style references only, do not repeat their standing arm pose.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "attempts": 2,
+        "selected_attempt": 2,
+        "sha256": "66BFDEB26B51C9DD1598D445BFECD3ABCF0B2CFBB9CD41F3ACEECC9D625251BC",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1707715,
+        "review": {
+          "accepted": true,
+          "identity": "与三张原参考的人脸、黑色低马尾、白色贴身短袖与深炭灰长裤一致，成人比例正常。",
+          "pose": "第2次肩胸相对朝前骨盆明显旋转；双臂抱胸，稳定无轮椅，双脚白色平底鞋平稳着地。",
+          "composition": "单人单场景竖幅摄影，灰蓝云雾背景，无文字箭头。"
+        },
+        "attempt_history": [
+          {
+            "attempt": 1,
+            "prompt": "Use case: photorealistic-natural.\nAsset type: one individual rehabilitation assessment library photograph, portrait high resolution.\nPrimary request: seated arms-crossed thoracic rotation screening, ONE photograph of ONE movement phase.\nInput images: ALL THREE supplied images are identity, clothing, proportions, photography and background references of the exact SAME adult woman. Reproduce her same face faithfully, natural East Asian adult facial features, black hair tied into a low ponytail, white fitted short-sleeved crew-neck T-shirt, dark charcoal full-length LONG trousers. Normal adult proportions, no infantilizing or stylizing.\nScene/backdrop: the ORIGINAL cool cloudy pale gray-blue studio backdrop with subtle soft mottled cloudy texture, matching the three references; floor blends into the backdrop, soft photographic light and realistic shadows.\nPose: The woman sits upright firmly on a plain stable four-legged chair WITHOUT wheels or armrests. Both sitting bones remain on the seat. Both feet in white flat athletic sneakers are planted fully on the floor, hip-width apart. Knees bent naturally at roughly a right angle. Pelvis, hips, thighs, knees and feet all remain aligned forward and stable. She crosses both forearms comfortably over the upper chest, each hand touching the opposite upper arm near the shoulder. Her CHEST and shoulders rotate visibly to her own right in a comfortable moderate range; her head follows her chest naturally. Upper trunk rotation must be clearly visible relative to the forward-facing pelvis and knees, not merely a head turn. Torso upright, relaxed breathing, no lean, no twisting pelvis, no hand gripping the chair.\nComposition/framing: portrait single full-body scene, camera in front at a very slight oblique angle, showing both shoulders, pelvis, both knees, both feet, whole chair and entire head with margin. Keep the woman large enough for the rotation to be legible. Photorealistic soft studio exercise instruction photograph.\nConstraints: Preserve exact adult woman identity and original reference photo style. Full length trousers reaching ankles; white flat sneakers. Anatomically correct two arms, two legs and natural hands. One scene only. No text, no letters, no numbers, no captions, no arrows, no motion trails, no inset, no collage, no watermarks, no measurement marks, no additional people, no gym setting. Do not copy the standing arm poses from the references; use references for identity and appearance only.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ],
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-82d38bc8-3e0d-42cb-b2c8-6098655f1531.png",
+            "sha256": "C4B5E0359E1F20E8802FA5910F6B0881693A03A518CD0E37E3C2556A6D3FA57A",
+            "width": 1122,
+            "height": 1402,
+            "selected": false,
+            "review": "人物与背景及抱胸坐稳正确，胸口旋转不够明显，主要表现为头转；针对动作关键点修正一次。"
+          },
+          {
+            "attempt": 2,
+            "prompt": "Use case: photorealistic-natural.\nAsset type: one individual rehabilitation assessment library photograph, portrait high resolution, one scene.\nInput images: All THREE images are references for the exact SAME adult woman, face, low black ponytail, normal adult body proportions, white fitted short-sleeved tee, dark charcoal full-length LONG trousers, cool cloudy gray-blue studio background and soft photographic light. Preserve her face and identity faithfully.\nPrimary request: a CLEAR seated arms-crossed CHEST ROTATION pause, where the chest rotates relative to a fixed forward-facing pelvis. The movement is in the upper trunk, not just the neck.\nPose geometry: The chair, pelvis, both thighs, knees and two white flat sneakers face the camera straight-on, and both feet stay flat on the floor hip width apart. She sits upright on a stable four-legged armless chair without wheels, both sitting bones firmly on the seat. Both forearms comfortably crossed over chest and each hand rests on opposite upper arm. Her UPPER TRUNK rotates clearly toward the RIGHT EDGE of the photograph so the ribcage, sternum, shoulder line and crossed arms are all seen in a three-quarter side orientation, distinctly turned about 40 degrees relative to her square forward-facing hips. The white shirt upper chest must show a clearly oblique plane rather than a frontal plane. One shoulder recedes and the other advances from rotation. Head and gaze follow the already rotated chest naturally, not farther away as an isolated head turn. Keep her upright and balanced with no lateral leaning, no arching back, no twisting pelvis, no lifting feet, no pulling chair.\nCamera and framing: camera straight ahead at seated chest height, portrait complete full body, shoulders pelvis knees and both whole feet visible, entire chair visible, head and shoes fully inside frame. Only one adult woman, normal real anatomical scale, clear chair and contact points.\nScene and style: exact original cool cloudy muted pale gray-blue photography studio backdrop from references, natural subtle cloudy mottling, seamless similar floor, soft neutral photographic illumination, realistic skin fabric and shadows.\nConstraints: Anatomically correct two arms and two legs with natural hands. No shorts or cropped pants; full-length dark charcoal trousers. White flat athletic sneakers. No text, symbols, numbers, arrows, measurement marks, watermarks, borders, collage, inset, motion trail, extra people, medical diagram or gym setting. Reference images are identity/style references only, do not repeat their standing arm pose.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ],
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-c3a2d09d-683e-47fd-b89a-d9cb8f1b45f6.png",
+            "sha256": "66BFDEB26B51C9DD1598D445BFECD3ABCF0B2CFBB9CD41F3ACEECC9D625251BC",
+            "width": 1122,
+            "height": 1402,
+            "selected": true,
+            "review": "通过，肩胸相对朝前骨盆明显转开，坐姿与足部接触正确。"
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 42,
+      "id": "E-AXU-025",
+      "name": "四点跪位后坐活动观察",
+      "category": "assess",
+      "filename": "042_E-AXU-025_四点跪位后坐活动观察.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\042_E-AXU-025_四点跪位后坐活动观察.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "62979D9B0E6854C9AC91D9EEA7284EE14AC42A0C46D75E669F1A4BD11E294B02",
+      "phase": "保持双手双膝四个固定支点，缓慢后移臀部至舒适中段；臀部高于足跟，未强坐到足跟，头颈自然。",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "042",
+        "id": "E-AXU-025",
+        "title": "四点跪位后坐活动观察",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\042_E-AXU-025_四点跪位后坐活动观察.png",
+        "phase": "保持双手双膝四个固定支点，缓慢后移臀部至舒适中段；臀部高于足跟，未强坐到足跟，头颈自然。",
+        "source_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+        "source_card_lines": "2961-3011",
+        "source_reference": "REF-S008，Kneeling Back Extension：后坐阶段",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-78d21134-9ec6-4b38-97f1-a39da78edd15.png",
+        "prompt": "Orientation FIRST: strictly VERTICAL PORTRAIT photograph, tall canvas approximately 1024 pixels wide by 1536 pixels high, height greater than width. This is an individual rehabilitation library image. Even though the body pose extends horizontally, frame it within a tall portrait studio composition with generous cool gray-blue background above and below, NEVER make a landscape canvas.\nUse case: photorealistic-natural.\nInput images: ALL THREE original reference photographs are identity/style references of the exact SAME adult woman. Match her face faithfully, normal East Asian adult facial features, black low ponytail, white fitted short-sleeved crew-neck T-shirt, dark charcoal full-length LONG trousers, normal adult body proportions, original cool cloudy pale gray-blue studio background and soft photographic lighting. Do not copy standing arm poses.\nPrimary request: ONE full-body SIDE VIEW photograph of a FOUR-POINT KNEELING ROCK-BACK in a comfortable midrange pause. One scene, one adult woman, in a VERTICAL PORTRAIT frame.\nPose: facing to the RIGHT edge of photo on a simple muted gray exercise mat. BOTH palms remain flat on mat shoulder-width apart, fingers forward, palms fixed in place. BOTH knees remain planted hip-width apart on small gray soft knee pads. From all-fours she has shifted hips and buttocks BACKWARD toward heels by a modest comfortable amount. Hips lie behind the knees, thighs slope backward, and buttocks stay clearly elevated above heels, never seated onto heels. Shoulders sit behind wrists, arms straight naturally and extending diagonally forward to the unchanged palms. Torso naturally aligned, no abrupt humped back, no extreme arch or sag. Neck comfortably aligned with torso, gaze down and forward, same face visible in profile. Shins lie on mat, bare feet relaxed with tops of feet resting on mat, trousers reach ankles. Four stable support points are hands and knees. Keep near and far limbs naturally identifiable with slight depth separation, symmetric stance.\nComposition: strictly VERTICAL PORTRAIT 2:3 framing. Low side camera approximately torso height. Show ENTIRE head, shoulders, elbows, palms, hips, both knees, lower legs, ankles and bare feet, whole supporting mat, with clear breathing space around all edges. Keep body in the central-middle portion of tall frame, cloudy studio above and studio floor below. Realistic body proportions; do NOT enlarge or crop body to fill width; do NOT generate a landscape or square canvas.\nStyle: exact original soft photographic cool gray-blue cloudy studio aesthetic, realistic skin and fabric, gentle lighting and shadows. Plain mat and knee pads only props.\nConstraints: exact same adult woman and clothes; LONG charcoal trousers, no shorts; bare feet for kneeling pose. Anatomically correct two arms and two legs, natural fingers/toes. No text, no numbers, no arrows, no collage, no inset, no multiple poses, no watermark, no extra people, no diagram, no gym setting. Capture a moderate rock-back NOT a child's pose, not buttocks touching heels, not an upright kneel. Final format MUST be vertical portrait.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "attempts": 2,
+        "selected_attempt": 2,
+        "sha256": "62979D9B0E6854C9AC91D9EEA7284EE14AC42A0C46D75E669F1A4BD11E294B02",
+        "width": 1024,
+        "height": 1536,
+        "bytes": 1692664,
+        "review": {
+          "accepted": true,
+          "identity": "与三张原参考的人脸、黑色低马尾、白色贴身短袖与深炭灰长裤一致，成人比例正常。",
+          "pose": "正侧面舒适后坐中段，双掌平稳贴垫，双膝有软垫支撑，肩在腕后，臀在膝后但高于足跟；赤脚足背接触垫。",
+          "composition": "第2次为竖幅单场景摄影，灰蓝云雾背景，无文字箭头。"
+        },
+        "attempt_history": [
+          {
+            "attempt": 1,
+            "prompt": "Use case: photorealistic-natural.\nAsset type: one individual rehabilitation assessment library photograph, portrait high resolution.\nInput images: ALL THREE reference images show the exact SAME adult woman and are identity, clothing, normal adult body proportions, studio lighting and background references. Preserve her same East Asian adult face, black LOW ponytail, white fitted short-sleeved crew-neck T-shirt and dark charcoal full-length LONG trousers, normal anatomical proportions. The standing arm positions in references are not the requested pose.\nPrimary request: ONE clear side-view photograph of a FOUR-POINT KNEELING ROCK-BACK movement, captured paused midway through a comfortable hips-back phase.\nPose geometry: She is on a thin plain exercise mat, facing toward the RIGHT side of the image. BOTH palms and BOTH knees remain planted and bear support throughout. Palms stay fixed shoulder-width apart toward the front of mat, fingers point forward naturally, wrists with palms flat. Knees stay hip-width apart on small plain soft knee padding. Starting from all-fours she has shifted pelvis and buttocks BACKWARD toward her heels by a moderate amount. Hips are now behind the knees, thighs tilt backward, but buttocks remain clearly ELEVATED above the heels and never touch them. Shoulders move backward behind wrists, arms extend diagonally forward with elbows straight naturally, both hands still fixed on mat. Spine stays near natural relaxed alignment, no aggressive rounded hump, no extreme arched lower back. Head and neck continue the torso comfortably, gaze down and forward, face visible in natural profile. Lower legs rest on mat behind knees, bare feet and ankles relaxed with tops of feet on mat. This is a moderate quadruped rock-back, NOT a fully folded child's pose, NOT sitting upright on heels, NOT a lunge, NOT a pushup.\nCamera/framing: true SIDE VIEW at low torso-height, entire woman from head to bare feet plus palms/knees/supporting mat in view, shoulders elbows wrists hips knees ankles visible. Both near and far palms and knees can be slightly offset in depth to remain identifiable, without changing symmetric hip-width stance. Portrait composition with the full body clearly occupying the central scene, realistic physical scale, no cropped hands or feet. Single subject, single scene.\nScene/backdrop: match ORIGINAL cool cloudy pale gray-blue studio backdrop in ALL THREE references, same soft mottled clouds and seamless cool floor, soft natural studio photography lighting and gentle shadows. A simple muted gray exercise mat and small knee pads are the only props.\nConstraints: exact same adult woman face and appearance. Full length dark charcoal trousers reaching ankles, NO SHORTS. Bare feet appropriate for the floor kneeling pose, no shoes on mat. Anatomically correct two arms, two palms, two legs and natural fingers/toes. No text, no letters, no numbers, no arrows, no motion trail, no multiple phases, no diagram, no collage or inset, no extra people, no watermark, no measurement marks.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ],
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-8bb7d12d-f648-4aba-8017-bbaeaa743465.png",
+            "sha256": "142BEF6AB88EEB914CA4FC9213C0AB97956DC78263CE6A0C854D213D5B486C86",
+            "width": 1402,
+            "height": 1122,
+            "selected": false,
+            "review": "四点支撑、后坐与身份背景合格，但生成器返回横幅；针对竖幅要求修正一次。"
+          },
+          {
+            "attempt": 2,
+            "prompt": "Orientation FIRST: strictly VERTICAL PORTRAIT photograph, tall canvas approximately 1024 pixels wide by 1536 pixels high, height greater than width. This is an individual rehabilitation library image. Even though the body pose extends horizontally, frame it within a tall portrait studio composition with generous cool gray-blue background above and below, NEVER make a landscape canvas.\nUse case: photorealistic-natural.\nInput images: ALL THREE original reference photographs are identity/style references of the exact SAME adult woman. Match her face faithfully, normal East Asian adult facial features, black low ponytail, white fitted short-sleeved crew-neck T-shirt, dark charcoal full-length LONG trousers, normal adult body proportions, original cool cloudy pale gray-blue studio background and soft photographic lighting. Do not copy standing arm poses.\nPrimary request: ONE full-body SIDE VIEW photograph of a FOUR-POINT KNEELING ROCK-BACK in a comfortable midrange pause. One scene, one adult woman, in a VERTICAL PORTRAIT frame.\nPose: facing to the RIGHT edge of photo on a simple muted gray exercise mat. BOTH palms remain flat on mat shoulder-width apart, fingers forward, palms fixed in place. BOTH knees remain planted hip-width apart on small gray soft knee pads. From all-fours she has shifted hips and buttocks BACKWARD toward heels by a modest comfortable amount. Hips lie behind the knees, thighs slope backward, and buttocks stay clearly elevated above heels, never seated onto heels. Shoulders sit behind wrists, arms straight naturally and extending diagonally forward to the unchanged palms. Torso naturally aligned, no abrupt humped back, no extreme arch or sag. Neck comfortably aligned with torso, gaze down and forward, same face visible in profile. Shins lie on mat, bare feet relaxed with tops of feet resting on mat, trousers reach ankles. Four stable support points are hands and knees. Keep near and far limbs naturally identifiable with slight depth separation, symmetric stance.\nComposition: strictly VERTICAL PORTRAIT 2:3 framing. Low side camera approximately torso height. Show ENTIRE head, shoulders, elbows, palms, hips, both knees, lower legs, ankles and bare feet, whole supporting mat, with clear breathing space around all edges. Keep body in the central-middle portion of tall frame, cloudy studio above and studio floor below. Realistic body proportions; do NOT enlarge or crop body to fill width; do NOT generate a landscape or square canvas.\nStyle: exact original soft photographic cool gray-blue cloudy studio aesthetic, realistic skin and fabric, gentle lighting and shadows. Plain mat and knee pads only props.\nConstraints: exact same adult woman and clothes; LONG charcoal trousers, no shorts; bare feet for kneeling pose. Anatomically correct two arms and two legs, natural fingers/toes. No text, no numbers, no arrows, no collage, no inset, no multiple poses, no watermark, no extra people, no diagram, no gym setting. Capture a moderate rock-back NOT a child's pose, not buttocks touching heels, not an upright kneel. Final format MUST be vertical portrait.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ],
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-78d21134-9ec6-4b38-97f1-a39da78edd15.png",
+            "sha256": "62979D9B0E6854C9AC91D9EEA7284EE14AC42A0C46D75E669F1A4BD11E294B02",
+            "width": 1024,
+            "height": 1536,
+            "selected": true,
+            "review": "通过，竖幅1024×1536，四个支点与舒适后坐阶段清楚，未强坐足跟。"
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 43,
+      "id": "E-AXU-023",
+      "name": "轻阻力Pallof抗旋转任务筛查",
+      "category": "assess",
+      "filename": "043_E-AXU-023_轻阻力Pallof抗旋转任务筛查.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\043_E-AXU-023_轻阻力Pallof抗旋转任务筛查.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "443086AD8545E3061CABF1D203BEE505170A0E6A9E606A8949706A006A3572CB",
+      "phase": "站位轻张力Pallof：双手从胸前小幅前推后的短暂停留；胸口和骨盆保持原方向。",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "043",
+        "id": "E-AXU-023",
+        "title": "轻阻力Pallof抗旋转任务筛查",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\043_E-AXU-023_轻阻力Pallof抗旋转任务筛查.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-73703389-c3ca-4956-a1ee-829e3654f899.png",
+        "phase": "站位轻张力Pallof：双手从胸前小幅前推后的短暂停留；胸口和骨盆保持原方向。",
+        "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment demonstration photograph, action 043 E-AXU-023 轻阻力Pallof抗旋转任务筛查.\nInput images: all three attached original images are mandatory identity, clothing, photographic lighting, and background references. Image 1, Image 2, Image 3 all show the SAME adult East Asian woman; reproduce this same woman, exact face and features, black low ponytail, normal adult body proportions, white fitted plain short-sleeve tee, dark charcoal full-length LONG trousers. Do not borrow their arm poses.\nPrimary request: Generate one single full-body photograph of this woman doing a light-resistance standing Pallof anti-rotation assessment. Capture the brief hold after BOTH hands gently press the band handle a short distance forward from her chest, not full maximal extension. The chest, sternum and pelvis maintain the same forward direction without rotation. She stands stable with feet hip-width apart flat on the floor, knees soft and slightly unlocked, shoulders relaxed, calm breathing.\nCrucial band geometry: a simple intact light gray resistance band is securely fixed to a small sturdy plain gray dedicated anchor support directly to the woman's SIDE at chest height. Clearly show the support to the lateral left of the image and the taut band travelling from that side anchor to the handle held together in BOTH hands at lower-chest height. The anchor is not ahead of her, not behind her, not under her feet. Her hands press forward away from her chest while band force pulls laterally; her torso and pelvis resist that pull without turning toward the anchor. Both hands and correct band connection must be clearly visible.\nScene/backdrop: match the originals' cool cloudy pale gray-blue seamless studio backdrop, softly mottled, with the same soft natural photographic lighting. Plain gray floor merging into backdrop, no gym, house, clinic, architectural room or furniture. Only the minimal gray anchor support and light gray band.\nComposition/framing: portrait high-resolution realistic photograph, full body including entire head, hands, feet and side anchor, unobstructed three-quarter front view with enough angle to make the short forward hand displacement visibly clear and sternum/pelvis direction assessable. Woman centered with comfortable margins. Preserve normal adult anatomy and proportions.\nFootwear: flat plain white low-top sneakers.\nConstraints: one woman, one scene, one valid low-load assessment phase. Exact same original woman and wardrobe. No other people, no text, no action number, no labels, arrows, diagrams, captions, logos, watermarks, collage, duplicate body parts, medical interface. No torso twisting, heavy loading, deep squat, exaggerated extension, short pants, cropped trousers or bare feet.",
+        "source_card_line": 3017,
+        "source_card_excerpt": "身体侧对锚点，双脚稳定，带位于胸高。双手把带柄放胸前，先感受轻张力。呼气把手缓慢推出少量距离，胸口尽量保持原方向。",
+        "visual_review": "Pass: same adult woman and wardrobe; side anchor at chest height; both hands hold handle and gently press forward; chest and pelvis remain aligned; stable feet, soft knees; original gray-blue photographic studio appearance.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "references": [
+          {
+            "path": "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+            "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+          },
+          {
+            "path": "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+            "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+          },
+          {
+            "path": "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+            "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+          }
+        ],
+        "attempts": 1,
+        "attempt_history": [
+          {
+            "attempt": 1,
+            "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment demonstration photograph, action 043 E-AXU-023 轻阻力Pallof抗旋转任务筛查.\nInput images: all three attached original images are mandatory identity, clothing, photographic lighting, and background references. Image 1, Image 2, Image 3 all show the SAME adult East Asian woman; reproduce this same woman, exact face and features, black low ponytail, normal adult body proportions, white fitted plain short-sleeve tee, dark charcoal full-length LONG trousers. Do not borrow their arm poses.\nPrimary request: Generate one single full-body photograph of this woman doing a light-resistance standing Pallof anti-rotation assessment. Capture the brief hold after BOTH hands gently press the band handle a short distance forward from her chest, not full maximal extension. The chest, sternum and pelvis maintain the same forward direction without rotation. She stands stable with feet hip-width apart flat on the floor, knees soft and slightly unlocked, shoulders relaxed, calm breathing.\nCrucial band geometry: a simple intact light gray resistance band is securely fixed to a small sturdy plain gray dedicated anchor support directly to the woman's SIDE at chest height. Clearly show the support to the lateral left of the image and the taut band travelling from that side anchor to the handle held together in BOTH hands at lower-chest height. The anchor is not ahead of her, not behind her, not under her feet. Her hands press forward away from her chest while band force pulls laterally; her torso and pelvis resist that pull without turning toward the anchor. Both hands and correct band connection must be clearly visible.\nScene/backdrop: match the originals' cool cloudy pale gray-blue seamless studio backdrop, softly mottled, with the same soft natural photographic lighting. Plain gray floor merging into backdrop, no gym, house, clinic, architectural room or furniture. Only the minimal gray anchor support and light gray band.\nComposition/framing: portrait high-resolution realistic photograph, full body including entire head, hands, feet and side anchor, unobstructed three-quarter front view with enough angle to make the short forward hand displacement visibly clear and sternum/pelvis direction assessable. Woman centered with comfortable margins. Preserve normal adult anatomy and proportions.\nFootwear: flat plain white low-top sneakers.\nConstraints: one woman, one scene, one valid low-load assessment phase. Exact same original woman and wardrobe. No other people, no text, no action number, no labels, arrows, diagrams, captions, logos, watermarks, collage, duplicate body parts, medical interface. No torso twisting, heavy loading, deep squat, exaggerated extension, short pants, cropped trousers or bare feet.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ],
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-73703389-c3ca-4956-a1ee-829e3654f899.png",
+            "selected": true,
+            "review": "Pass: same adult woman and wardrobe; side anchor at chest height; both hands hold handle and gently press forward; chest and pelvis remain aligned; stable feet, soft knees; original gray-blue photographic studio appearance."
+          }
+        ],
+        "source_document_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+        "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+        "sha256": "443086AD8545E3061CABF1D203BEE505170A0E6A9E606A8949706A006A3572CB",
+        "width": 1122,
+        "height": 1402,
+        "byte_length": 1639435
+      }
+    },
+    {
+      "sequence": 44,
+      "id": "E-AXU-024",
+      "name": "低负荷侧向支撑耐受筛查",
+      "category": "assess",
+      "filename": "044_E-AXU-024_低负荷侧向支撑耐受筛查.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\044_E-AXU-024_低负荷侧向支撑耐受筛查.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "DB73B8990FEB6005994DA21D704B155FEBB15E2A47C7F81D26482D62C459B595",
+      "phase": "首选站位墙面侧向前臂支撑：短时、非极限低负荷保持，双脚靠近墙，躯干整体直线。",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "044",
+        "id": "E-AXU-024",
+        "title": "低负荷侧向支撑耐受筛查",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\044_E-AXU-024_低负荷侧向支撑耐受筛查.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-04db9233-0349-4044-8cb3-4b139767adc4.png",
+        "phase": "首选站位墙面侧向前臂支撑：短时、非极限低负荷保持，双脚靠近墙，躯干整体直线。",
+        "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment demonstration photograph, action 044 E-AXU-024 低负荷侧向支撑耐受筛查.\nInput images: all THREE original attached photos are mandatory references for identity, face, clothes, studio background and soft lighting. They show the SAME adult East Asian woman. Reproduce her exact face and features, black low ponytail, normal adult body proportions, plain white fitted short-sleeve tee, dark charcoal LONG full-length trousers. Do not reproduce their arm poses.\nPrimary request: one single full-body rehabilitation photo of the SAME woman doing the source card's FIRST CHOICE, low-load STANDING WALL FOREARM SIDE SUPPORT, during a calm brief hold. This is the low-load wall option of a modified side plank tolerance assessment. She stands SIDE-ON to a sturdy simple gray vertical wall on the LEFT of the picture. Her LEFT elbow and forearm both make stable full contact with the wall; elbow bent comfortably about 90 degrees, placed approximately under the shoulder, forearm upright against the wall with hand up. Left shoulder relaxed away from ear, not shrugged. The supporting arm and its exact wall contact must be clearly visible.\nBoth feet are planted close to the wall so loading is deliberately small; knees softly unlocked. Whole body forms one straight line from head through shoulders, hips and ankles with only a subtle side lean toward the supporting wall, never bending or folding at the waist. Chest and pelvis face in the same direction toward the camera rather than rotating toward the wall. She lightly lifts away from completely relaxed leaning posture for a short non-maximal hold, calmly breathing. Free right hand rests naturally at hip. No knee-supported or floor-supported plank in this photo because the exact card expressly prefers wall forearm support.\nScene/backdrop: ORIGINAL cool cloudy light gray-blue seamless studio background and floor, same softly mottled background and gentle photographic light as all three references. The wall is one simple matte light-gray support plane at the lateral edge only. No room corners, home, clinic, gym, windows or furnishings.\nComposition/framing: portrait high-resolution photorealistic full-body photograph, entire head, supporting elbow, forearm, hands, pelvis and both feet visible. Oblique front viewpoint chosen so the face and side trunk line, arm contact, and firm feet are assessable. Comfortable unclipped framing and natural adult anatomy.\nFootwear: plain flat white low-top sneakers on both feet.\nConstraints: single woman, one scene, single low-load phase, exact original woman and wardrobe; straight trunk with small side lean, stable forearm wall support, feet close to support. No text, titles, labels, arrows, numbers, logos, watermarks, collage, extra people or extra limbs. No exaggerated sideways tilt, flexed or sagging waist, shoulder shrug, arm hanging off wall, unsupported floating elbow, floor plank, hard maximal exercise, shorts, cropped pants, barefoot standing.",
+        "source_card_line": 3086,
+        "source_card_excerpt": "首选侧身靠墙，前臂接触墙，肘约肩下；脚靠近墙以控制负荷，正斜面拍全身。先轻靠墙建立稳定前臂支撑。身体保持整体直线，轻轻离开完全放松位置。",
+        "phase_selection_reason": "Exact card explicitly prioritizes standing wall forearm support; mat-based bent-knee support is a separately permitted option and separate load condition.",
+        "visual_review": "Pass: same adult woman and long-trouser wardrobe; supporting elbow and forearm contact simple gray wall; shoulder relaxed; feet close to wall and flat; straight side trunk line and a small lean; original cool studio background.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "references": [
+          {
+            "path": "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+            "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+          },
+          {
+            "path": "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+            "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+          },
+          {
+            "path": "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+            "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+          }
+        ],
+        "attempts": 1,
+        "attempt_history": [
+          {
+            "attempt": 1,
+            "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment demonstration photograph, action 044 E-AXU-024 低负荷侧向支撑耐受筛查.\nInput images: all THREE original attached photos are mandatory references for identity, face, clothes, studio background and soft lighting. They show the SAME adult East Asian woman. Reproduce her exact face and features, black low ponytail, normal adult body proportions, plain white fitted short-sleeve tee, dark charcoal LONG full-length trousers. Do not reproduce their arm poses.\nPrimary request: one single full-body rehabilitation photo of the SAME woman doing the source card's FIRST CHOICE, low-load STANDING WALL FOREARM SIDE SUPPORT, during a calm brief hold. This is the low-load wall option of a modified side plank tolerance assessment. She stands SIDE-ON to a sturdy simple gray vertical wall on the LEFT of the picture. Her LEFT elbow and forearm both make stable full contact with the wall; elbow bent comfortably about 90 degrees, placed approximately under the shoulder, forearm upright against the wall with hand up. Left shoulder relaxed away from ear, not shrugged. The supporting arm and its exact wall contact must be clearly visible.\nBoth feet are planted close to the wall so loading is deliberately small; knees softly unlocked. Whole body forms one straight line from head through shoulders, hips and ankles with only a subtle side lean toward the supporting wall, never bending or folding at the waist. Chest and pelvis face in the same direction toward the camera rather than rotating toward the wall. She lightly lifts away from completely relaxed leaning posture for a short non-maximal hold, calmly breathing. Free right hand rests naturally at hip. No knee-supported or floor-supported plank in this photo because the exact card expressly prefers wall forearm support.\nScene/backdrop: ORIGINAL cool cloudy light gray-blue seamless studio background and floor, same softly mottled background and gentle photographic light as all three references. The wall is one simple matte light-gray support plane at the lateral edge only. No room corners, home, clinic, gym, windows or furnishings.\nComposition/framing: portrait high-resolution photorealistic full-body photograph, entire head, supporting elbow, forearm, hands, pelvis and both feet visible. Oblique front viewpoint chosen so the face and side trunk line, arm contact, and firm feet are assessable. Comfortable unclipped framing and natural adult anatomy.\nFootwear: plain flat white low-top sneakers on both feet.\nConstraints: single woman, one scene, single low-load phase, exact original woman and wardrobe; straight trunk with small side lean, stable forearm wall support, feet close to support. No text, titles, labels, arrows, numbers, logos, watermarks, collage, extra people or extra limbs. No exaggerated sideways tilt, flexed or sagging waist, shoulder shrug, arm hanging off wall, unsupported floating elbow, floor plank, hard maximal exercise, shorts, cropped pants, barefoot standing.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ],
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-04db9233-0349-4044-8cb3-4b139767adc4.png",
+            "selected": true,
+            "review": "Pass: same adult woman and long-trouser wardrobe; supporting elbow and forearm contact simple gray wall; shoulder relaxed; feet close to wall and flat; straight side trunk line and a small lean; original cool studio background."
+          }
+        ],
+        "source_document_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+        "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+        "sha256": "DB73B8990FEB6005994DA21D704B155FEBB15E2A47C7F81D26482D62C459B595",
+        "width": 1122,
+        "height": 1402,
+        "byte_length": 1668616
+      }
+    },
+    {
+      "sequence": 45,
+      "id": "E-AXU-009",
+      "name": "颈部主动屈曲/伸展筛查",
+      "category": "assess",
+      "filename": "045_E-AXU-009_颈部主动屈曲／伸展筛查.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\045_E-AXU-009_颈部主动屈曲／伸展筛查.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "DF25D1B820CF6B56DF8482C6FA529335C7E6A4DF8B8170ED91D9641A27853240",
+      "phase": "坐稳主动低头阶段：躯干保持直立，肩放松，双手放大腿",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "045",
+        "id": "E-AXU-009",
+        "title": "颈部主动屈曲/伸展筛查",
+        "phase": "坐稳主动低头阶段：躯干保持直立，肩放松，双手放大腿",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\045_E-AXU-009_颈部主动屈曲／伸展筛查.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a134ff-8818-7f93-b8db-d4f3efb26af7\\exec-ba63f6c6-f29e-4ca8-9722-eedb12426eb1.png",
+        "prompt": "Photorealistic rehabilitation action photograph. Use ALL three original references to preserve the SAME EXACT East Asian adult woman, original face/body identity, black low ponytail, white fitted short-sleeve crewneck tee, charcoal LONG trousers. Same original cool light gray-blue subtly cloudy seamless background, soft studio lighting and natural skin/fabric, normal proportions. Portrait high-resolution image, one woman, no text, arrows, labels, watermark, collage, gym or extra people. Framing head to upper thighs, comfortably include whole hair/head, both shoulders, arms and chair seat without cutting relevant anatomy.\n045 E-AXU-009 颈部主动屈曲/伸展筛查. Single ACTIVE NECK FLEXION phase. Right-facing SIDE camera like the original face profile. Seated upright on fixed simple gray chair, shoulders relaxed and LEVEL, chest and pelvis remain vertical without rounding upper back or folding trunk. Hands rest relaxed on thighs. ONLY head/neck gently bends forward about25degrees: chin approaches upper chest with a comfortable small gap, eyes naturally look diagonally downward. Face remains visible in right-facing profile, preserve original nose/eyes/jaw identity despite head pitch. No hand pressing head, no trunk flexion, no extreme chin compressed to chest, no shoulder shrug. Chair stays stable.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "quality_review": "已检查原人物、服装、灰蓝背景、正常人体比例、头相对躯干运动及肩线稳定。"
+      }
+    },
+    {
+      "sequence": 46,
+      "id": "E-AXU-010",
+      "name": "颈部主动左右侧屈筛查",
+      "category": "assess",
+      "filename": "046_E-AXU-010_颈部主动左右侧屈筛查.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\046_E-AXU-010_颈部主动左右侧屈筛查.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "63ED314B2EC85DF461503F2B18996B1F0723E72046A9F190A2C7ED85B16A17AC",
+      "phase": "正面主动向右侧屈阶段：鼻尖朝前，双肩保持放松，不用手拉头",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "046",
+        "id": "E-AXU-010",
+        "title": "颈部主动左右侧屈筛查",
+        "phase": "正面主动向右侧屈阶段：鼻尖朝前，双肩保持放松，不用手拉头",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\046_E-AXU-010_颈部主动左右侧屈筛查.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a134ff-8818-7f93-b8db-d4f3efb26af7\\exec-f0932c3d-bf11-4445-b10e-c59b3a422d17.png",
+        "prompt": "Photorealistic rehabilitation action photograph. Use ALL three original references to preserve the SAME EXACT East Asian adult woman, original face/body identity, black low ponytail, white fitted short-sleeve crewneck tee, charcoal LONG trousers. Same original cool light gray-blue subtly cloudy seamless background, soft studio lighting and natural skin/fabric, normal proportions. Portrait high-resolution image, one woman, no text, arrows, labels, watermark, collage, gym or extra people. Framing head to upper thighs, comfortably include whole hair/head, both shoulders, arms and chair seat without cutting relevant anatomy.\n046 E-AXU-010 颈部主动左右侧屈筛查. Single comfortable ACTIVE NECK SIDE FLEXION phase. FRONT CAMERA and front-facing nose/eyes, do not turn her face sideways. Seated upright on stable simple gray chair, chest and pelvis face front and stay vertical, BOTH SHOULDERS are RELAXED and LEVEL, arms resting beside torso with hands on thighs. Only HEAD/NECK tilts about15–20degrees toward HER RIGHT (frame-left), right ear approaches right shoulder but does not touch it; right side of face lower, left side higher. Head center shifts slightly frame-left while trunk stays centered and shoulders do NOT rise. Eyes naturally forward, calm expression. Preserve exact original woman's eyes/face/nose/lips identity in this new frontal view; no replacement model. No hand stretching, no trunk sidebend, shoulder shrug, head rotation, extreme bend, neck strain. Frame full head/hair, both shoulders, torso, hands and upper thighs.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "quality_review": "已检查原人物、服装、灰蓝背景、正常人体比例、头相对躯干运动及肩线稳定。"
+      }
+    },
+    {
+      "sequence": 47,
+      "id": "E-AXU-011",
+      "name": "颈部主动左右旋转筛查",
+      "category": "assess",
+      "filename": "047_E-AXU-011_颈部主动左右旋转筛查.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\047_E-AXU-011_颈部主动左右旋转筛查.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "1E30D7DF8425F778CE8EA5E4895769758B1454E5B477747266693627F3818978",
+      "phase": "主动向左转头阶段（画面右侧）：胸口与双肩仍朝前，下巴保持自然高度",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "047",
+        "id": "E-AXU-011",
+        "title": "颈部主动左右旋转筛查",
+        "phase": "主动向左转头阶段（画面右侧）：胸口与双肩仍朝前，下巴保持自然高度",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\047_E-AXU-011_颈部主动左右旋转筛查.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a134ff-8818-7f93-b8db-d4f3efb26af7\\exec-dd095166-3853-4043-9529-2f91dad8ff2d.png",
+        "prompt": "Photorealistic rehabilitation action photograph. Use ALL three original references to preserve the SAME EXACT East Asian adult woman, original face/body identity, black low ponytail, white fitted short-sleeve crewneck tee, charcoal LONG trousers. Same original cool light gray-blue subtly cloudy seamless background, soft studio lighting and natural skin/fabric, normal proportions. Portrait high-resolution image, one woman, no text, arrows, labels, watermark, collage, gym or extra people. Framing head to upper thighs, comfortably include whole hair/head, both shoulders, arms and chair seat without cutting relevant anatomy.\n047 E-AXU-011 颈部主动左右旋转筛查. Single seated ACTIVE NECK ROTATION toward frame-right. FRONT camera. Woman sits upright on stable gray chair, chest/shoulders/pelvis square toward camera, shoulders level and relaxed, both arms relaxed with hands on thighs, feet grounded outside or within frame. Turn ONLY head/neck comfortably about55degrees toward frame-right, using original right-facing three-quarter/profile facial identity. Chin remains at natural level, no upward/downward head pitch and no side tilt. Make shoulders symmetric/front-facing while face/nose look right, clearly isolating head rotation from torso. No trunk rotation, hands pulling head, extreme end-range, forward head thrust, shoulder shrug. Whole head/ponytail, both shoulders and chest/arms/thighs fully visible.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "quality_review": "已检查原人物、服装、灰蓝背景、正常人体比例、头相对躯干运动及肩线稳定。"
+      }
+    },
+    {
+      "sequence": 48,
+      "id": "E-AXU-012",
+      "name": "肩主动前举/后伸活动筛查",
+      "category": "assess",
+      "filename": "048_E-AXU-012_肩主动前举／后伸活动筛查.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\048_E-AXU-012_肩主动前举／后伸活动筛查.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "11EDB7D1629D9B1D8BD14A59F75D34BBC8E9A1B78C93653A210D87AA98801901",
+      "phase": "单臂主动前举至舒适肩高停顿；肘自然伸直，肩放松，躯干直立不后仰；对侧手臂自然下垂。仅展示前举方向。",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "048",
+        "id": "E-AXU-012",
+        "title": "肩主动前举/后伸活动筛查",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\048_E-AXU-012_肩主动前举／后伸活动筛查.png",
+        "phase": "单臂主动前举至舒适肩高停顿；肘自然伸直，肩放松，躯干直立不后仰；对侧手臂自然下垂。仅展示前举方向。",
+        "source_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+        "source_card_lines": "3370-3436",
+        "source_reference": "REF-S025、REF-S085；Shoulder ROM、Wall Climbers及主动抬举路线；具体平面另参Stanford肩检查。",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-885ba55d-d591-4c11-8d7c-f18fa63f9330.png",
+        "prompt": "Use case: photorealistic-natural.\nAsset type: one individual rehabilitation assessment photo for E-AXU-012 shoulder active forward raise, single phase.\nInput images: Use ALL THREE supplied ORIGINAL photographs as identity, clothing, body-proportion, background and photographic-style references of the exact SAME adult woman. Image 2 is the closest right-facing profile pose/framing reference. Faithfully preserve her exact face, East Asian adult appearance, black low ponytail, white fitted short-sleeve crew-neck tee and dark charcoal full-length LONG trousers, normal adult proportions.\nPrimary request: One new real-looking studio photograph of her standing upright in RIGHT-FACING TRUE SIDE PROFILE, performing a single active forward shoulder raise at comfortable shoulder height. The camera-facing arm extends straight forward horizontally toward the RIGHT edge, upper arm at shoulder height, elbow naturally straight but not rigidly locked, hand comfortably relaxed palm down and all fingertips visible. The opposite arm hangs naturally at her side. Shoulders stay relaxed without shrugging; head and neck neutral, gaze forward; torso vertical without leaning backward, pelvis upright. Only one arm raised, no weight, no aid, no second motion.\nScene/backdrop: Preserve the ORIGINAL muted cool cloudy pale gray-blue studio background with soft diffuse clouds from all references, identical soft realistic photography lighting, realistic skin and fabric.\nComposition: Like reference image 2, side profile framing from above the entire head down through hips and thighs is sufficient. Portrait-style composition, woman left of center with ample space on the right to show the entire raised arm, wrist, hand and EVERY fingertip inside frame with margin. Full camera-facing shoulder elbow wrist and hip visible. Normal adult anatomy and scale.\nConstraints: Exact same woman, face, low ponytail and clothing; dark charcoal LONG trousers, no shorts. Photorealistic soft studio photo, single person and single scene. No text, symbols, arrows, labels, measurements, collage, inset, motion trail, diagram, watermark, props or extra people. Do not crop fingers.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "attempts": 1,
+        "selected_attempt": 1,
+        "sha256": "11EDB7D1629D9B1D8BD14A59F75D34BBC8E9A1B78C93653A210D87AA98801901",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1668831,
+        "review": {
+          "accepted": true,
+          "identity": "原参考人物面貌、黑色低马尾、白色贴身短袖、深炭灰长裤和正常成人比例一致。",
+          "pose": "右向正侧面、单臂肩高前举，肘自然伸直、对侧臂垂下，肩髋可见，躯干无明显后仰或耸肩。",
+          "composition": "参考图2头至大腿构图，完整手腕手掌手指留在画面内，灰蓝云雾摄影背景，单人单场景无文字。"
+        },
+        "attempt_history": [
+          {
+            "attempt": 1,
+            "prompt": "Use case: photorealistic-natural.\nAsset type: one individual rehabilitation assessment photo for E-AXU-012 shoulder active forward raise, single phase.\nInput images: Use ALL THREE supplied ORIGINAL photographs as identity, clothing, body-proportion, background and photographic-style references of the exact SAME adult woman. Image 2 is the closest right-facing profile pose/framing reference. Faithfully preserve her exact face, East Asian adult appearance, black low ponytail, white fitted short-sleeve crew-neck tee and dark charcoal full-length LONG trousers, normal adult proportions.\nPrimary request: One new real-looking studio photograph of her standing upright in RIGHT-FACING TRUE SIDE PROFILE, performing a single active forward shoulder raise at comfortable shoulder height. The camera-facing arm extends straight forward horizontally toward the RIGHT edge, upper arm at shoulder height, elbow naturally straight but not rigidly locked, hand comfortably relaxed palm down and all fingertips visible. The opposite arm hangs naturally at her side. Shoulders stay relaxed without shrugging; head and neck neutral, gaze forward; torso vertical without leaning backward, pelvis upright. Only one arm raised, no weight, no aid, no second motion.\nScene/backdrop: Preserve the ORIGINAL muted cool cloudy pale gray-blue studio background with soft diffuse clouds from all references, identical soft realistic photography lighting, realistic skin and fabric.\nComposition: Like reference image 2, side profile framing from above the entire head down through hips and thighs is sufficient. Portrait-style composition, woman left of center with ample space on the right to show the entire raised arm, wrist, hand and EVERY fingertip inside frame with margin. Full camera-facing shoulder elbow wrist and hip visible. Normal adult anatomy and scale.\nConstraints: Exact same woman, face, low ponytail and clothing; dark charcoal LONG trousers, no shorts. Photorealistic soft studio photo, single person and single scene. No text, symbols, arrows, labels, measurements, collage, inset, motion trail, diagram, watermark, props or extra people. Do not crop fingers.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ],
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-885ba55d-d591-4c11-8d7c-f18fa63f9330.png",
+            "sha256": "11EDB7D1629D9B1D8BD14A59F75D34BBC8E9A1B78C93653A210D87AA98801901",
+            "width": 1122,
+            "height": 1402,
+            "selected": true,
+            "review": "通过，动作、人物与完整上肢构图符合卡片与参考要求，无需重试。"
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 49,
+      "id": "E-AXU-013",
+      "name": "肩主动外展/回收内收筛查",
+      "category": "assess",
+      "filename": "049_E-AXU-013_肩主动外展／回收内收筛查.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\049_E-AXU-013_肩主动外展／回收内收筛查.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "0E712AEBD72789202466E40CBDCA72BF1D11387662E063E40EC09DEB9ED4A06F",
+      "phase": "单侧主动肩外展：右臂沿侧方向抬到约肩高；肘自然伸直、胸口朝前、躯干保持稳定。",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "049",
+        "id": "E-AXU-013",
+        "title": "肩主动外展/回收内收筛查",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\049_E-AXU-013_肩主动外展／回收内收筛查.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-d0aa785b-0b2c-4a8d-a5ea-f59f6f3d735d.png",
+        "phase": "单侧主动肩外展：右臂沿侧方向抬到约肩高；肘自然伸直、胸口朝前、躯干保持稳定。",
+        "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment photograph, action 049 E-AXU-013 肩主动外展/回收内收筛查.\nInput images: ALL THREE original attached photographs are mandatory references. They show the SAME adult East Asian woman. Use all three for her exact face and features, black LOW ponytail, normal adult proportions, plain white FITTED SHORT-SLEEVE tee, dark charcoal LONG full-length trousers, soft photographic light and cool cloudy pale gray-blue studio background. Image 3 is also the reference for a single straight arm held sideways near shoulder height; do not alter the woman's identity.\nPrimary request: one single realistic photograph of the same woman performing active shoulder abduction, at the comfortable SHOULDER-HEIGHT lateral raise phase. She stands upright stable, chest and pelvis facing forward toward the camera, with no side lean or torso turn. Her RIGHT arm (on the LEFT side of the image) is raised straight out sideways in the frontal plane to roughly 90 degrees from her torso, at shoulder height, naturally straight elbow, wrist neutral, hand naturally relaxed in a comfortable orientation. Her other arm hangs relaxed alongside the opposite hip. Both shoulders remain low and relaxed, never shrugged, and the head is neutral. It is a gentle active ROM screening, not loaded exercise, not overhead stretching.\nScene/backdrop: reproduce the ORIGINAL softly mottled cool cloudy light gray-blue seamless studio background and original soft photography. No room, gym, clinic, home, furniture or equipment.\nComposition/framing: portrait high-resolution photograph similar to the original references, frame entire head through upper thighs, with the raised arm, elbow, wrist and every fingertip fully visible and unclipped. Place the woman's torso slightly to the right of the picture to leave sufficient space for the extended arm to the left. Front or very slight oblique front view so the shoulder abduction and upright chest/pelvis are clear; natural adult anatomy.\nConstraints: one scene, one woman, one action phase. Preserve exact original adult woman, face, low ponytail, fitted white short-sleeve tee and dark charcoal long trousers. No text, labels, arrows, numbers, logos, watermarks, collage, extra people or extra limbs. No torso lean, elevated shoulder, bent elbow, arm reaching forward, overhead elevation, weights, bands, shortened trousers or childlike proportions. If feet appear, plain flat white low-top sneakers.",
+        "source_card_line": 3442,
+        "source_card_excerpt": "正面对镜头，双脚稳定；可单侧先测，手臂和上半身全程留在画面内。缓慢向侧方抬臂到可耐受高度，不必须到头顶。胸口朝前，减少向对侧歪身。肘保持自然伸直，不耸肩硬顶。",
+        "visual_review": "Pass: same adult woman and wardrobe with low ponytail and original cool gray-blue backdrop; single arm abducted laterally at shoulder height with natural straight elbow; stable upright chest and pelvis; relaxed other arm; full hand unclipped.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "references": [
+          {
+            "path": "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+            "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+          },
+          {
+            "path": "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+            "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+          },
+          {
+            "path": "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+            "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+          }
+        ],
+        "attempts": 1,
+        "attempt_history": [
+          {
+            "attempt": 1,
+            "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment photograph, action 049 E-AXU-013 肩主动外展/回收内收筛查.\nInput images: ALL THREE original attached photographs are mandatory references. They show the SAME adult East Asian woman. Use all three for her exact face and features, black LOW ponytail, normal adult proportions, plain white FITTED SHORT-SLEEVE tee, dark charcoal LONG full-length trousers, soft photographic light and cool cloudy pale gray-blue studio background. Image 3 is also the reference for a single straight arm held sideways near shoulder height; do not alter the woman's identity.\nPrimary request: one single realistic photograph of the same woman performing active shoulder abduction, at the comfortable SHOULDER-HEIGHT lateral raise phase. She stands upright stable, chest and pelvis facing forward toward the camera, with no side lean or torso turn. Her RIGHT arm (on the LEFT side of the image) is raised straight out sideways in the frontal plane to roughly 90 degrees from her torso, at shoulder height, naturally straight elbow, wrist neutral, hand naturally relaxed in a comfortable orientation. Her other arm hangs relaxed alongside the opposite hip. Both shoulders remain low and relaxed, never shrugged, and the head is neutral. It is a gentle active ROM screening, not loaded exercise, not overhead stretching.\nScene/backdrop: reproduce the ORIGINAL softly mottled cool cloudy light gray-blue seamless studio background and original soft photography. No room, gym, clinic, home, furniture or equipment.\nComposition/framing: portrait high-resolution photograph similar to the original references, frame entire head through upper thighs, with the raised arm, elbow, wrist and every fingertip fully visible and unclipped. Place the woman's torso slightly to the right of the picture to leave sufficient space for the extended arm to the left. Front or very slight oblique front view so the shoulder abduction and upright chest/pelvis are clear; natural adult anatomy.\nConstraints: one scene, one woman, one action phase. Preserve exact original adult woman, face, low ponytail, fitted white short-sleeve tee and dark charcoal long trousers. No text, labels, arrows, numbers, logos, watermarks, collage, extra people or extra limbs. No torso lean, elevated shoulder, bent elbow, arm reaching forward, overhead elevation, weights, bands, shortened trousers or childlike proportions. If feet appear, plain flat white low-top sneakers.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ],
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-d0aa785b-0b2c-4a8d-a5ea-f59f6f3d735d.png",
+            "selected": true,
+            "review": "Pass: same adult woman and wardrobe with low ponytail and original cool gray-blue backdrop; single arm abducted laterally at shoulder height with natural straight elbow; stable upright chest and pelvis; relaxed other arm; full hand unclipped."
+          }
+        ],
+        "source_document_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+        "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+        "sha256": "0E712AEBD72789202466E40CBDCA72BF1D11387662E063E40EC09DEB9ED4A06F",
+        "original_sha256": "0E712AEBD72789202466E40CBDCA72BF1D11387662E063E40EC09DEB9ED4A06F",
+        "width": 1122,
+        "height": 1402,
+        "byte_length": 1657137
+      }
+    },
+    {
+      "sequence": 50,
+      "id": "E-AXU-014",
+      "name": "肘靠身的肩主动内旋/外旋筛查",
+      "category": "assess",
+      "filename": "050_E-AXU-014_肘靠身的肩主动内旋／外旋筛查.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\050_E-AXU-014_肘靠身的肩主动内旋／外旋筛查.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "95BEBAFBE5F20F8B5AC5DEBADCCEE940038792FE5773334BAB744E621D73CE32",
+      "phase": "肩主动外旋阶段：右上臂垂直贴近肋侧、肘屈约90°且位置固定，水平前臂向外转动，胸口和骨盆朝前。",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "050",
+        "id": "E-AXU-014",
+        "title": "肘靠身的肩主动内旋/外旋筛查",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\050_E-AXU-014_肘靠身的肩主动内旋／外旋筛查.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-f4e788a3-72b1-4001-b10c-0eb724ad3d24.png",
+        "phase": "肩主动外旋阶段：右上臂垂直贴近肋侧、肘屈约90°且位置固定，水平前臂向外转动，胸口和骨盆朝前。",
+        "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment photograph, action 050 E-AXU-014 肘靠身的肩主动内旋/外旋筛查.\nInput images: ALL THREE original attached images are mandatory identity, wardrobe, background and photographic lighting references. All show the SAME adult East Asian woman. Match her exact face/features, black LOW ponytail, normal adult body proportions, fitted plain white SHORT-SLEEVE tee, dark charcoal LONG full-length trousers. Do not copy an unrelated arm pose from the references.\nPrimary request: generate one single realistic photo of this same woman performing gentle ACTIVE SHOULDER EXTERNAL ROTATION with her RIGHT UPPER ARM kept VERTICAL AND FIRMLY BESIDE HER RIB CAGE. Her RIGHT ELBOW is bent approximately 90 degrees and remains tucked beside the waist, its position fixed against the body. At this single selected outward-rotation phase, only the horizontal forearm has swept OUTWARD away from the abdomen, around the long axis of the upper arm. The forearm projects outward to the LEFT of the picture at about waist height with the elbow still against the body. The elbow-to-wrist line is horizontal, wrist straight, hand loosely relaxed with thumb upward in neutral wrist/forearm orientation. This is shoulder axial rotation, not rolling the palm, not wrist rotation, not pronation/supination, not elbow extension or abduction.\nThe woman stands upright stable, chest, pelvis and head face forward in the same direction, no torso rotation, no side lean, relaxed shoulder far from ear. Keep the elbow flexion near a right angle throughout and the upper arm attached close to the trunk. Her opposite arm hangs naturally beside the hip, not pushing or assisting. No hand rests on the hip. No resistance and no maximal forced end range.\nScene/backdrop: exactly the ORIGINAL cool cloudy pale gray-blue softly mottled studio backdrop with the same gentle natural photographic light. Seamless photo environment, no gym, clinic, home, architectural room or furniture.\nComposition/framing: portrait high-resolution photograph, entire head through upper thighs, enough space so both arms, the right elbow at the ribs, the horizontal rotated forearm, wrist and every fingertip are clearly visible and unclipped. Camera slightly in front and slightly above arm level, as the source card specifies, to reveal the horizontal forearm sweep and stable upper arm. Natural adult anatomy and body proportions.\nConstraints: single woman, single scene, single source-valid shoulder external-rotation phase. Match all three original references for exact face, hair, clothes and background. No upper arm lifting sideways, no elbow moving away from the body or behind torso, no straightened elbow, no forearm held upright, no palm-up demonstration of pronation, no hand on abdomen or hip, no twisting body, weights or bands. No text, labels, numbers, captions, arrows, logos, watermark, collage, extra people or body parts. Long dark charcoal trousers; if feet appear, plain flat white low-top sneakers.",
+        "source_card_line": 3515,
+        "source_card_excerpt": "坐或站稳，肘屈约90°并贴近身侧；手机前上方能看清前臂水平扫动。肘靠身，前臂从舒适中间位置开始。保持肘位置大致不变，缓慢向外转动前臂。上臂不要张开或向后甩。身体不要随前臂一起转。",
+        "visual_review": "Pass: exact-reference adult woman and consistent white short-sleeve tee, low ponytail and charcoal long trousers; right upper arm remains vertical at ribs and elbow tucked with approximately 90-degree flexion; horizontal forearm rotated outward with neutral thumb-up hand; no torso rotation, hand-on-hip, assisted motion or forearm pronation demonstration.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "references": [
+          {
+            "path": "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+            "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+          },
+          {
+            "path": "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+            "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+          },
+          {
+            "path": "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+            "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+          }
+        ],
+        "attempts": 1,
+        "attempt_history": [
+          {
+            "attempt": 1,
+            "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment photograph, action 050 E-AXU-014 肘靠身的肩主动内旋/外旋筛查.\nInput images: ALL THREE original attached images are mandatory identity, wardrobe, background and photographic lighting references. All show the SAME adult East Asian woman. Match her exact face/features, black LOW ponytail, normal adult body proportions, fitted plain white SHORT-SLEEVE tee, dark charcoal LONG full-length trousers. Do not copy an unrelated arm pose from the references.\nPrimary request: generate one single realistic photo of this same woman performing gentle ACTIVE SHOULDER EXTERNAL ROTATION with her RIGHT UPPER ARM kept VERTICAL AND FIRMLY BESIDE HER RIB CAGE. Her RIGHT ELBOW is bent approximately 90 degrees and remains tucked beside the waist, its position fixed against the body. At this single selected outward-rotation phase, only the horizontal forearm has swept OUTWARD away from the abdomen, around the long axis of the upper arm. The forearm projects outward to the LEFT of the picture at about waist height with the elbow still against the body. The elbow-to-wrist line is horizontal, wrist straight, hand loosely relaxed with thumb upward in neutral wrist/forearm orientation. This is shoulder axial rotation, not rolling the palm, not wrist rotation, not pronation/supination, not elbow extension or abduction.\nThe woman stands upright stable, chest, pelvis and head face forward in the same direction, no torso rotation, no side lean, relaxed shoulder far from ear. Keep the elbow flexion near a right angle throughout and the upper arm attached close to the trunk. Her opposite arm hangs naturally beside the hip, not pushing or assisting. No hand rests on the hip. No resistance and no maximal forced end range.\nScene/backdrop: exactly the ORIGINAL cool cloudy pale gray-blue softly mottled studio backdrop with the same gentle natural photographic light. Seamless photo environment, no gym, clinic, home, architectural room or furniture.\nComposition/framing: portrait high-resolution photograph, entire head through upper thighs, enough space so both arms, the right elbow at the ribs, the horizontal rotated forearm, wrist and every fingertip are clearly visible and unclipped. Camera slightly in front and slightly above arm level, as the source card specifies, to reveal the horizontal forearm sweep and stable upper arm. Natural adult anatomy and body proportions.\nConstraints: single woman, single scene, single source-valid shoulder external-rotation phase. Match all three original references for exact face, hair, clothes and background. No upper arm lifting sideways, no elbow moving away from the body or behind torso, no straightened elbow, no forearm held upright, no palm-up demonstration of pronation, no hand on abdomen or hip, no twisting body, weights or bands. No text, labels, numbers, captions, arrows, logos, watermark, collage, extra people or body parts. Long dark charcoal trousers; if feet appear, plain flat white low-top sneakers.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ],
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-f4e788a3-72b1-4001-b10c-0eb724ad3d24.png",
+            "selected": true,
+            "review": "Pass: exact-reference adult woman and consistent white short-sleeve tee, low ponytail and charcoal long trousers; right upper arm remains vertical at ribs and elbow tucked with approximately 90-degree flexion; horizontal forearm rotated outward with neutral thumb-up hand; no torso rotation, hand-on-hip, assisted motion or forearm pronation demonstration."
+          }
+        ],
+        "source_document_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+        "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+        "sha256": "95BEBAFBE5F20F8B5AC5DEBADCCEE940038792FE5773334BAB744E621D73CE32",
+        "original_sha256": "95BEBAFBE5F20F8B5AC5DEBADCCEE940038792FE5773334BAB744E621D73CE32",
+        "width": 1122,
+        "height": 1402,
+        "byte_length": 1670485
+      }
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "scope": "164/T-AXU-029/s01-s02",
+  "generation_mode": "built-in image_gen",
+  "selected_version": "墙面推撑基础版",
+  "images": [
+    {
+      "filename": "164_T-AXU-029_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/164_T-AXU-029_s01.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a82-dbea-7ee1-9724-7deab71cb814/exec-62eab349-cd5e-4f23-a543-cd6674929aef.png",
+      "reused": false,
+      "prompt": "Use case: scientific-educational.\nAsset: single raw photographic rehabilitation step 164/T-AXU-029/s01, portrait 1122x1402.\nPrimary request: edit Image 4, the existing wall push-up photo, into its straight-arm starting position. Images 1–3 are identity, clothing and studio color references; Image 4 is the exact target scene, camera, wall, shoes and hand/foot placements.\nPreserve the same adult East Asian woman, face, black ponytail, plain white short sleeve T-shirt, dark charcoal fitted long athletic trousers, plain white sneakers, soft photographic realism, muted grey-blue studio backdrop, natural shadows. Preserve Image 4's single solid wall on the right, floor baseline, exact camera and framing, and both palms' precise wall contact positions and both feet's exact ground positions.\nOnly change the exercise phase: straighten BOTH elbows almost fully, without hyperextension, and move head, shoulder, torso and pelvis together away from the wall around the fixed feet into a comfortable straight-arm wall support. This is a wall push-up start, NOT the bent elbow photo. Shoulder-to-wrist upper arm and forearm form a straight continuous line; fingers point upward, palm heels fully touch the wall, two hands comfortably a little wider than shoulders. Whole body maintains a controlled straight head–torso–pelvis–leg line with modest forward lean; neck neutral and no jutting head, no sitting hips, no arched lower back. Both feet flat and stable, heels stay grounded.\nComposition: exactly one full body pose, a near-side view with enough perspective to see two separate palms and arms, intact head and all hands and both shoes, wall contact and full floor contact visible, modest margins.\nNatural human anatomical proportions and hands with five anatomically plausible fingers, realistic elbows and joint continuity.\nNo text, labels, arrows, numbers, logos, watermark, inset, split panels, ghosted poses or motion trails. Output one complete photograph, preserve the input image size and same crop.",
+      "caption": "双手撑墙，接近直臂的起点",
+      "review": "与固定参考的面容、黑马尾、白色短袖、深灰长裤相符。近侧肘接近伸直，远侧手掌接墙、手脚完整。身体形成可控整体线，双足落地。相机、墙、掌位与s02保持，生成存在数像素服装和鞋轮廓差异。人体比例自然。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1658505,
+      "sha256": "3FB7DABDA461707F8E4CCE9BC7C9EDADB0FA39A7CDA3828F848F29A4C64359F7"
+    },
+    {
+      "filename": "164_T-AXU-029_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/164_T-AXU-029_s02.png",
+      "reused": true,
+      "reused_source": "E:/git冲突问题/rehab image/train/164_T-AXU-029_推撑阶梯：墙面→固定台面→地面俯卧撑.png",
+      "prompt": null,
+      "caption": "保持支点，屈肘让身体整体靠墙",
+      "review": "现有单图逐图查看合格后复用。双肘屈曲，头胸骨盆成整体向墙靠近，双掌撑墙，双脚落地。无臀部后坐或单独探头。完整手脚和接触可见，头躯干四肢比例自然。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1701035,
+      "sha256": "7BA6242CEA1B67D49189F4AB78D45C23443B0B10EE17E75BFD545155BCBBD49F"
+    }
+  ],
+  "reuse_sequence": "s01 → s02 → 复用s01",
+  "review_scope": "视觉姿势、接触、外观及比例；静态图不判定真实受力。"
+}

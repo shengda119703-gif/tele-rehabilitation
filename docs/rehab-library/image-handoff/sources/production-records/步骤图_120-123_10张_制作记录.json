@@ -1,0 +1,470 @@
+{
+  "date": "2026-10-14",
+  "scope": "120-s01～s02；121-s01～s04；122-s01～s03；123-s01",
+  "count": 10,
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "generation_tool": "内置 image_gen；每张独立生成/定向修订",
+  "reuse_existing_single_images": false,
+  "image_policy": "PNG原图不叠加文字或箭头；总览和HTML中的编号只在排版层。",
+  "source_and_visual_review": "逐条核对制作清单和原卡；生成者逐张看图，主协作者复查选用图。",
+  "references": [
+    {
+      "path": "E:\\git冲突问题\\rehab image\\step-image-references\\reference-01.png",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "E:\\git冲突问题\\rehab image\\step-image-references\\reference-02.png",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "E:\\git冲突问题\\rehab image\\step-image-references\\reference-03.png",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ],
+  "images": [
+    {
+      "number": "120-s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/120_T-LOW-042_s01.png",
+      "caption": "自然交替迈步",
+      "visual_review": "passed",
+      "root_review_notes": "前脚跟着地，后足支撑，步幅自然。",
+      "reused": false,
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1709564,
+      "sha256": "FBA40D01DEB89994904A4051310A6A2B70DF45868CE22DA93BC693D2084A05EE"
+    },
+    {
+      "number": "120-s02",
+      "path": "E:/git冲突问题/rehab image/train/steps/120_T-LOW-042_s02.png",
+      "caption": "双脚停稳休息",
+      "visual_review": "passed",
+      "root_review_notes": "双脚鞋底落地，停止迈步。",
+      "reused": false,
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1632131,
+      "sha256": "35094C9A0E65B15AAB588B42D84011FEAFB59049D13741383753C6FFAD460CE0"
+    },
+    {
+      "number": "121-s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/121_T-LOW-043_s01.png",
+      "caption": "双足浅屈髋膝准备",
+      "visual_review": "passed",
+      "root_review_notes": "双脚平地支撑，轻微屈髋膝。",
+      "reused": false,
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1699868,
+      "sha256": "E5ECF4FA4BF23C6CBC836E9BD4E24CA4C082AA2210E182BA42149603CB23977B"
+    },
+    {
+      "number": "121-s02",
+      "path": "E:/git冲突问题/rehab image/train/steps/121_T-LOW-043_s02.png",
+      "caption": "极低双脚腾空",
+      "visual_review": "passed",
+      "root_review_notes": "两只鞋都离地，间隙小；与接地帧可区分。",
+      "reused": false,
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1645055,
+      "sha256": "9FBF7A31A9B3A3318489A9AD0FBC4A1E85EEA8BD8ABC86447A79E57D08DE5A4A"
+    },
+    {
+      "number": "121-s03",
+      "path": "E:/git冲突问题/rehab image/train/steps/121_T-LOW-043_s03.png",
+      "caption": "双脚接地缓冲",
+      "visual_review": "passed",
+      "root_review_notes": "双鞋接地，髋膝受控屈曲。",
+      "reused": false,
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1648363,
+      "sha256": "B0A506F6117E6AB171145DA02A97D715DA45B2BCADB0F4167BFE0931817AC179"
+    },
+    {
+      "number": "121-s04",
+      "path": "E:/git冲突问题/rehab image/train/steps/121_T-LOW-043_s04.png",
+      "caption": "恢复站稳停住",
+      "visual_review": "passed",
+      "root_review_notes": "两脚稳定落地，躯干舒适站直，双臂垂放。",
+      "reused": false,
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1611147,
+      "sha256": "D9CE4225A9AFEB7D19124509C8C509A59B42B5D3C5D613D78D2BF1710B177143"
+    },
+    {
+      "number": "122-s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/122_T-LOW-046_s01.png",
+      "caption": "踝中立位",
+      "visual_review": "passed",
+      "root_review_notes": "小腿水平实际承托，足伸出支持边缘，足纵轴近垂直小腿。",
+      "reused": false,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1774628,
+      "sha256": "002BD48859401D22DC027272F25210A212E2B668589B887941AB55962585FD4E"
+    },
+    {
+      "number": "122-s02",
+      "path": "E:/git冲突问题/rehab image/train/steps/122_T-LOW-046_s02.png",
+      "caption": "踝主动背屈",
+      "visual_review": "passed",
+      "root_review_notes": "前足向小腿方向抬起，踝前夹角减小，支撑不变。",
+      "reused": false,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1759017,
+      "sha256": "CD9949CB0117854DCEECFCFDCD2C13E3C35DF2846C1F8DE0FC8B87163E11FA43"
+    },
+    {
+      "number": "122-s03",
+      "path": "E:/git冲突问题/rehab image/train/steps/122_T-LOW-046_s03.png",
+      "caption": "踝主动跖屈",
+      "visual_review": "passed",
+      "root_review_notes": "前足向远离小腿方向轻移，踝前夹角增大，支撑不变。",
+      "reused": false,
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1774349,
+      "sha256": "06436DA177E4F200ACC97938D3870F6E79E5D269E210BF8907D79AC780DCA5FF"
+    },
+    {
+      "number": "123-s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/123_T-AXU-001_s01.png",
+      "caption": "椅前自然坐直准备",
+      "visual_review": "passed",
+      "root_review_notes": "臀接椅前部，上身自然坐直，双手大腿，双脚踩地。",
+      "reused": false,
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1608838,
+      "sha256": "B890CCB47FCB7ACD20ECA7ACC616AD8746642570B33F950473F9296DE509FDB7"
+    }
+  ],
+  "generation_records": [
+    {
+      "created_date": "2026-10-14",
+      "scope": "120-s01～s02；123-s01",
+      "tool": "内置 image_gen",
+      "refs": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "reuse": false,
+      "files": [
+        {
+          "filename": "120_T-LOW-042_s01.png",
+          "number": "120-s01",
+          "pose": "自然交替迈步",
+          "source": "C:/Users/Administrator/.codex/generated_images/01a1393c-e00e-7da1-9960-a0c93a23873a/exec-1b122d5a-4052-46ea-bf0c-d5bd5a3c5f08.png",
+          "prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation exercise step photograph, 120_T-LOW-042_s01, portrait 4:5.\nPrimary request: create the WALKING phase of a two-frame comfortable short-route walking exercise.\nInput images: the three supplied files are identity, wardrobe, studio photography and backdrop references only. Match the exact same adult East Asian woman, natural proportions, black ponytail, plain white short-sleeve T-shirt and dark charcoal long trousers. The raised-arm poses of the references are not the requested pose.\nScene/backdrop: clean grey-blue seamless studio wall and flat non-slip grey-blue floor, soft broad studio lighting and realistic contact shadows. This represents a plain familiar short flat route without extra scenery or equipment. No walking aid is selected for this whole two-frame set.\nSubject/action: she faces image-right and walks naturally at a comfortable pace, left leg taking a modest step forwards, left heel touching the floor and rear right foot in late stance with its forefoot still contacting the floor, natural small opposite arm swing, upright relaxed trunk and level gaze. Normal modest stride length; not lunging, running or marching. Both hands relaxed with natural fingers. Wear simple unbranded light-grey flat comfortable walking shoes.\nComposition/framing: full head-to-shoes view from the woman's left side with a very small frontal angle, about a 15-degree oblique side view, camera at hip height, natural 70mm lens appearance. Entire body, hands, all shoes and floor contacts visible, generous floor margin and some free background. Single woman in a single pose, centered; portrait 4:5, keep this camera height, floor baseline, scale, wardrobe and shoe model for the subsequent stopped frame.\nConstraints: realistic head, torso, thigh and calf lengths, continuous joints, shoes not fused, both hands intact. No chair, no walking aid, no measurement device, no weights, no platform.\nText: none. Avoid any lettering, labels, numbers, arrows, watermark, collage, multiple panels, ghost limbs or motion trails.",
+          "qa": [
+            "自然适中步幅，躯干直立",
+            "前脚跟着地、后足处于支撑期，行走阶段可辨",
+            "头、双手、鞋和支撑点完整",
+            "同一女性白短袖深灰裤，灰蓝柔光",
+            "无文字箭头或无关器材"
+          ],
+          "final_path": "E:/git冲突问题/rehab image/train/steps/120_T-LOW-042_s01.png",
+          "visual_review": "通过画面要求核对；AI生成静态示意，不据此证明动态控制或训练启用资格"
+        },
+        {
+          "filename": "120_T-LOW-042_s02.png",
+          "number": "120-s02",
+          "pose": "双足停稳休息",
+          "source": "C:/Users/Administrator/.codex/generated_images/01a1393c-e00e-7da1-9960-a0c93a23873a/exec-0ee2c591-4a28-4ab5-945a-3795576dd76d.png",
+          "prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation step photo, 120_T-LOW-042_s02, portrait 4:5.\nPrimary request: make the STOPPED REST phase of the walking exercise by editing image 1. Image 1 is the accepted walking frame. Images 2–4 are the original identity and visual-style references.\nChange only the walking pose to a comfortable fully stopped upright standing posture: both feet are parallel about hip-width apart at the same forward/back position, BOTH COMPLETE SOLES flat and stable on the ground; no foot raised, no heel lifted, no stride. Arms rest naturally down beside the body, hands relaxed. She has stopped at the planned point to rest, her relaxed face and level gaze still face image-right.\nInvariants: exactly the same East Asian woman and recognizable face, black ponytail, white short-sleeve T-shirt, charcoal long trousers, light-grey comfortable walking shoes from image 1. Keep the same left-side slight frontal oblique camera angle, camera height and lens, portrait framing, approximate hip and torso position, head height, grey-blue seamless backdrop and floor, soft light and shadows. Natural body proportions with complete head, hands and shoes visible, matching her size in image 1; no zoom change.\nScene: empty flat familiar route represented by studio floor, no walking aid selected for this pair. No chair, measurement apparatus, weights, platform or other props.\nOne woman and one unambiguous stopped posture only. No lettering, numbers, arrows, collage, motion trails or watermark.",
+          "qa": [
+            "两足完整落地、脚位并列，无继续迈步",
+            "手臂自然下垂、站稳休息",
+            "与s01人物身份、服装、鞋、机位、背景和尺度一致",
+            "头手足均完整，人体比例自然"
+          ],
+          "final_path": "E:/git冲突问题/rehab image/train/steps/120_T-LOW-042_s02.png",
+          "visual_review": "通过画面要求核对；AI生成静态示意，不据此证明动态控制或训练启用资格"
+        },
+        {
+          "filename": "123_T-AXU-001_s01.png",
+          "number": "123-s01",
+          "pose": "椅前自然坐直，双手大腿",
+          "source": "C:/Users/Administrator/.codex/generated_images/01a1393c-e00e-7da1-9960-a0c93a23873a/exec-5d120d68-923a-41c6-ad8d-e587c25cc02b.png",
+          "prompt": "Use case: scientific-educational. Asset type: corrected 123_T-AXU-001_s01 preparation photograph.\nEdit image 1 with one targeted change: seat this woman clearly on the FRONT PART of the chair seat. Keep her exact upright body posture, face, hair, clothes, hands touching thighs, knee angles, both flat planted shoes, camera and frame unchanged. Shift the entire chair slightly backwards toward image-left relative to the unchanged woman, about 10 cm in real space, so there is a visibly clear gap of approximately 10–15 cm between her lower back/buttocks and the backrest. The back part of the seat behind her should be visibly empty. Keep enough front seat area directly underneath both buttocks and upper thighs for secure comfortable support; she must not be balancing on an edge. Her legs and hands should not move.\nKeep the same stable matte-grey armless four-leg chair, all four legs grounded with appropriate contact shadows, and continuous seat geometry. Retain the exact grey-blue backdrop and floor, soft light, single-pose full-body portrait, natural anatomy. No other changes, no text, numbers, arrows, watermark or extra props.",
+          "initial_prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation step photograph, 123_T-AXU-001_s01, portrait 4:5.\nPrimary request: show ONLY the natural upright seated PREPARATION position for supported small trunk forward flexion.\nInput images: the three references identify the exact same East Asian adult woman and her black ponytail, white short-sleeve T-shirt, charcoal trousers, photography, grey-blue background and soft lighting. Reference raised arms are not the requested action.\nScene/backdrop: clean seamless grey-blue studio backdrop and flat grey-blue floor, soft diffused studio light with realistic contact shadows.\nSubject and posture: the same woman sits securely on the FRONT PART of the flat seat of a sturdy plain matte-grey armless four-leg chair with a modest backrest. Sufficient buttock/thigh contact with the seat, do not perch on a tiny edge. She faces image-right. Trunk naturally upright above pelvis, relaxed shoulders, neutral head and level gaze. Both knees are comfortably bent around 90 degrees, lower legs nearly vertical. BOTH feet are fully planted on the floor at hip width, wearing plain unbranded light-grey flat comfortable shoes. Both hands gently rest with relaxed fingers on the upper/mid thighs, one on each thigh; elbows naturally bent, hands actually touch trousers. No leaning or forward flexion yet.\nComposition: clear true left-side view with a tiny frontal angle to make both knees, hands and feet visible, full body from top of ponytail to complete shoes, entire chair and four stable ground-contact legs visible. Shoulders, hips, knees and chair-seat contact must be unobstructed. Natural 70mm lens, no perspective distortion, portrait 4:5 with usable blank background around subject.\nConstraints: one single pose of one woman, realistic face and natural head/torso/limb proportions, anatomically continuous arms and legs, natural hands/fingers, no floating feet or buttocks. Stable seated support, no armrests, no table, no cushion, no exercise device, no weights. No text, labels, numbers, arrows, logo, watermark, collage, multiple frames or motion trail.",
+          "rejected_draft": "C:/Users/Administrator/.codex/generated_images/01a1393c-e00e-7da1-9960-a0c93a23873a/exec-5a677168-1087-4c27-82be-b19a76e79a68.png",
+          "revision_reason": "首稿坐位距椅背过近，定向调整椅子后移，保留人物坐直、膝位、手与足位置。",
+          "qa": [
+            "臀部坐在椅面前部，椅背后方间隙明确",
+            "臀与上大腿有足够椅面支撑、椅腿接地",
+            "上身自然坐直，双手轻放大腿，两足完整踩地",
+            "肩髋膝完整可见，未做用户未请求s02"
+          ],
+          "final_path": "E:/git冲突问题/rehab image/train/steps/123_T-AXU-001_s01.png",
+          "visual_review": "通过画面要求核对；AI生成静态示意，不据此证明动态控制或训练启用资格"
+        }
+      ]
+    },
+    {
+      "record_version": "1.0",
+      "created_date": "2026-10-14",
+      "agent": "jump_121",
+      "tool_mode": "built-in image_gen",
+      "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "action": "121 T-LOW-043",
+      "references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "source_retained": true,
+      "reused_existing": false,
+      "delegated_later_steps": "s03/s04 由 parent 另行分配并行制作，本记录仅登记 s01/s02。",
+      "assets": [
+        {
+          "step": "s01",
+          "prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation exercise step photograph, 121 T-LOW-043 step 01, portrait 1024x1536.\nInput images 1, 2, 3 are identity, wardrobe, skin tone, body proportion, photographic lighting, and gray-blue background references. Preserve the same adult East Asian woman, same recognizable face and age, black low ponytail, plain white short-sleeve T-shirt and dark charcoal gray long trousers. Do not copy the reference arm positions.\nPrimary request: a single clear full-body PREPARATION pose for a very low two-foot vertical hop in place. Both feet are planted flat on a matte nonslip level studio floor, at a comfortable hip-width distance. She bends both hips and knees a SMALL amount, around 20-25 degrees of knee flexion, hips gently back, torso only slightly leaning forward with a neutral spine. Knees track forward over the feet. Both arms are relaxed naturally close to her sides, elbows slightly bent, hands loosely held near the front outer thighs. Feet remain firmly supported, no elevation or platform. Plain white low-profile closed-toe athletic shoes with simple soles, identical pair; no visible brands.\nCamera: fixed eye-level three-quarter side view, approximately 25 degrees from her right-side profile toward the front, woman facing screen right, both feet and knees visible with true perspective. Natural 70mm lens feel without distortion, full head, ponytail, complete hands and both complete shoes visible. Subject centered, generous modest empty space on both sides and above; feet on a fixed floor baseline about 88% down the portrait. This camera and scale will be reused unchanged across a 4-frame group.\nScene: seamless cool muted gray-blue studio background and matching matte gray-blue floor, soft broad studio lighting and realistic gentle foot contact shadows.\nConstraints: one woman, ONE pose and one photograph only. No text, labels, numbers, arrows, motion trails, collage, border, watermark, equipment, high platform, weights or furniture. Anatomically plausible limb lengths and joints, five natural fingers per hand, no disconnected feet. This is a small ready dip, not a deep squat, single-leg exercise, large jump, running, or arm raise. Preserve reference identity and realistic photographic texture.",
+          "original_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-dae9-7b73-a2d9-e79bd938540c/exec-4fe9e2e8-2957-4079-8792-c9a00e7af721.png",
+          "final_saved_path": "E:/git冲突问题/rehab image/train/steps/121_T-LOW-043_s01.png",
+          "width": 1024,
+          "height": 1536,
+          "sha256": "E5ECF4FA4BF23C6CBC836E9BD4E24CA4C082AA2210E182BA42149603CB23977B",
+          "visual_qa": {
+            "status": "accepted",
+            "identity_clothing_background": "与三张参考一致的成年东亚女性、黑色低马尾、白色短袖、深灰长裤；白鞋；灰蓝背景柔光写实。",
+            "pose": "双脚平地站稳，小幅屈髋屈膝、髋轻后移，躯干轻前倾，双手低位自然。",
+            "contact": "双脚完整足底接地，无单腿、高台或器材。",
+            "anatomy_visibility": "头部、完整手脚、膝髋踝清楚；肢体比例与连接自然，鞋子成对一致。",
+            "camera": "朝画面右，三分之四斜侧全身；无字、箭头或拼图。",
+            "revision_required": false,
+            "limitations": "静态画面不证明训练启用条件或动态控制。"
+          },
+          "revisions": []
+        },
+        {
+          "step": "s02",
+          "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation exercise standalone step photograph, 121 T-LOW-043 step 02, portrait 1024x1536.\nImage 1 is the accepted step-01 photograph and is the PRIMARY edit target and continuity reference. Images 2-4 are original identity/wardrobe/style references. Preserve Image 1 camera position, lens perspective, gray-blue seamless backdrop and matte floor, lighting, framing, woman identity, ponytail, white T-shirt, dark charcoal trousers, white athletic shoes and body size exactly.\nChange only the body pose to the small airborne phase of ONE extremely low TWO-FOOT vertical hop in place. Both complete shoes are simultaneously airborne, their lowest sole points only about 2-3 centimeters above the SAME original floor. Show a narrow but UNAMBIGUOUS visible band of background floor under BOTH shoes, with separate soft shadows immediately below each shoe. Neither heel nor toe touches the floor. This must read as a very low controlled vertical hop, not a heel raise.\nHer hips and knees have nearly gently extended out of the preparatory dip, retaining natural slight knee softness; feet still parallel and hip-width, toes point in the same direction as Image 1, body remains over the same landing position. Torso upright and controlled, head calm, hands low beside her hips, elbows slightly bent, no overhead arm swing. Natural anatomy and balanced perspective with both legs, both hands and both shoes fully visible.\nDo not increase hop height or crop/zoom/reposition camera. No tuck jump, bent-up legs, run, single-leg stance, lateral movement, deep squat, platform, equipment or motion effects. One woman and one pose only; no text, arrows, labels, border, collage or watermark. Keep the reference woman recognizable, realistic photographic skin and fabric, and full-body continuity.",
+          "input_images": [
+            "C:/Users/Administrator/.codex/generated_images/01a1393d-dae9-7b73-a2d9-e79bd938540c/exec-4fe9e2e8-2957-4079-8792-c9a00e7af721.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "status": "accepted",
+          "original_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-dae9-7b73-a2d9-e79bd938540c/exec-7d297818-c98d-4e21-b3ec-a9e79a152e61.png",
+          "final_saved_path": "E:/git冲突问题/rehab image/train/steps/121_T-LOW-043_s02.png",
+          "visual_qa": {
+            "status": "accepted",
+            "identity_clothing_background": "人物身份、黑色低马尾、白T、深灰裤、白鞋及灰蓝背景与 s01 及原参考一致。",
+            "pose": "双脚同时轻微离地，髋膝近伸展但保留自然轻屈，躯干控制，双手保持低位；为单次原地低跳。",
+            "contact": "双只鞋底与地面均有清楚的小幅间隙，鞋下有对应柔和阴影，脚跟与脚尖均未接地。",
+            "anatomy_visibility": "完整头手脚可见，腿长、关节与鞋子自然，未屈腿上收或单腿腾空。",
+            "camera": "沿用 s01 的斜侧朝右视角、人物尺度、画面宽度与地面位置；无文字、编号、箭头、拼图。",
+            "revision_required": false,
+            "limitations": "鞋底间隙视觉上为很低的数厘米；二维静态照片不能精确测量厘米高度，不能证明动作许可条件。"
+          },
+          "revisions": [],
+          "generation_attempts": [
+            {
+              "attempt": 1,
+              "status": "terminated_after_no_response",
+              "reason": "内置 imagegen 超过 12 分钟仍无返回；按 parent 指示终止 exec cell 7 后重试一次。",
+              "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation exercise standalone step photograph, 121 T-LOW-043 step 02, portrait 1024x1536.\nImage 1 is the accepted step-01 photograph and is the PRIMARY edit target and continuity reference. Images 2-4 are original identity/wardrobe/style references. Preserve Image 1 camera position, lens perspective, gray-blue seamless backdrop and matte floor, lighting, framing, woman identity, ponytail, white T-shirt, dark charcoal trousers, white athletic shoes and body size exactly.\nChange only the body pose to the small airborne phase of ONE extremely low TWO-FOOT vertical hop in place. Both complete shoes are simultaneously airborne, their lowest sole points only about 2-3 centimeters above the SAME original floor. Show a narrow but UNAMBIGUOUS visible band of background floor under BOTH shoes, with separate soft shadows immediately below each shoe. Neither heel nor toe touches the floor. This must read as a very low controlled vertical hop, not a heel raise.\nHer hips and knees have nearly gently extended out of the preparatory dip, retaining natural slight knee softness; feet still parallel and hip-width, toes point in the same direction as Image 1, body remains over the same landing position. Torso upright and controlled, head calm, hands low beside her hips, elbows slightly bent, no overhead arm swing. Natural anatomy and balanced perspective with both legs, both hands and both shoes fully visible.\nDo not increase hop height or crop/zoom/reposition camera. No tuck jump, bent-up legs, run, single-leg stance, lateral movement, deep squat, platform, equipment or motion effects. One woman and one pose only; no text, arrows, labels, border, collage or watermark. Keep the reference woman recognizable, realistic photographic skin and fabric, and full-body continuity.",
+              "input_images": [
+                "C:/Users/Administrator/.codex/generated_images/01a1393d-dae9-7b73-a2d9-e79bd938540c/exec-4fe9e2e8-2957-4079-8792-c9a00e7af721.png",
+                "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+                "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+                "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+              ]
+            },
+            {
+              "attempt": 2,
+              "status": "completed_and_accepted",
+              "elapsed_seconds": 55.5,
+              "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation exercise standalone step photograph, 121 T-LOW-043 step 02, portrait 1024x1536.\nImage 1 is the accepted step-01 photograph and is the PRIMARY edit target and continuity reference. Images 2-4 are original identity/wardrobe/style references. Preserve Image 1 camera position, lens perspective, gray-blue seamless backdrop and matte floor, lighting, framing, woman identity, ponytail, white T-shirt, dark charcoal trousers, white athletic shoes and body size exactly.\nChange only the body pose to the small airborne phase of ONE extremely low TWO-FOOT vertical hop in place. Both complete shoes are simultaneously airborne, their lowest sole points only about 2-3 centimeters above the SAME original floor. Show a narrow but UNAMBIGUOUS visible band of background floor under BOTH shoes, with separate soft shadows immediately below each shoe. Neither heel nor toe touches the floor. This must read as a very low controlled vertical hop, not a heel raise.\nHer hips and knees have nearly gently extended out of the preparatory dip, retaining natural slight knee softness; feet still parallel and hip-width, toes point in the same direction as Image 1, body remains over the same landing position. Torso upright and controlled, head calm, hands low beside her hips, elbows slightly bent, no overhead arm swing. Natural anatomy and balanced perspective with both legs, both hands and both shoes fully visible.\nDo not increase hop height or crop/zoom/reposition camera. No tuck jump, bent-up legs, run, single-leg stance, lateral movement, deep squat, platform, equipment or motion effects. One woman and one pose only; no text, arrows, labels, border, collage or watermark. Keep the reference woman recognizable, realistic photographic skin and fabric, and full-body continuity.",
+              "original_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-dae9-7b73-a2d9-e79bd938540c/exec-7d297818-c98d-4e21-b3ec-a9e79a152e61.png",
+              "note": "原提示词重试；不是视觉修订。"
+            }
+          ],
+          "width": 1024,
+          "height": 1536,
+          "sha256": "9FBF7A31A9B3A3318489A9AD0FBC4A1E85EEA8BD8ABC86447A79E57D08DE5A4A"
+        }
+      ],
+      "completed_steps": [
+        "s01",
+        "s02"
+      ],
+      "pending_by_other_agent": [
+        "s03",
+        "s04"
+      ]
+    },
+    {
+      "record_version": "1.0",
+      "date": "2026-10-14",
+      "task": "121-s03～s04 单次极低双脚跳的接地缓冲与停稳步骤图",
+      "action_id": "T-LOW-043",
+      "generation_mode": "内置 image_gen；每张独立调用；identity-preserve 编辑；不使用 CLI",
+      "source_specification": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "source_card": "E:/git冲突问题/安康_康复评估与分级训练动作库.md#t-low-043",
+      "edit_target": "C:/Users/Administrator/.codex/generated_images/01a1393d-dae9-7b73-a2d9-e79bd938540c/exec-4fe9e2e8-2957-4079-8792-c9a00e7af721.png",
+      "edit_target_sha256": "E5ECF4FA4BF23C6CBC836E9BD4E24CA4C082AA2210E182BA42149603CB23977B",
+      "edit_target_inspected": true,
+      "save_policy": "原默认生成文件保留；复制到指定外部步骤目录；保存前确认目标不存在，不覆盖既有图片；未改仓库 Git 或共享进度。",
+      "images": [
+        {
+          "step": "s03",
+          "target_pose": "双足返回地面，髋膝小幅受控屈曲，形成落地缓冲。",
+          "prompt": "Use case: identity-preserve edit.\nAsset type: one rehabilitation exercise step photograph, T-LOW-043, step s03 (controlled landing cushioning).\nInput image 1 is the edit target and exact continuity reference: preserve this same woman, facial features, age, skin tone, black ponytail, white short-sleeve T-shirt, dark charcoal full-length trousers, and the identical white lace-up athletic shoes. Preserve the photoreal studio quality, soft lighting, seamless gray-blue background, camera at the same oblique side viewpoint, same perspective, lens, floor plane, full-body scale and 1024 x 1536 portrait composition.\nPrimary request: change only the exercise pose to the instant after a single extremely low two-foot hop has landed. BOTH FEET ARE NOW ON THE ORIGINAL FLAT FLOOR, soles contacting the floor, heels down. Same feet placement and width as the input. Hips and knees bend a little under control to absorb the landing, a shallow cushioning squat slightly more bent than the input, with the pelvis moving a little back and torso a little forward. Keep knees tracking the toes, center of mass controlled between the feet, spine and neck natural. Arms remain relaxed and slightly forward/down for balance, complete hands visible. Show quiet stable ground contact and natural contact shadows directly beneath both shoes. This is a gentle, shallow landing, not a deep squat.\nConstraints: whole person including top of head, complete hands and both complete feet within the frame; normal anatomical proportions and joint continuity; retain identical body proportions from the input. The figure may become slightly lower ONLY from real hip/knee flexion, never from resizing. Do not move the camera or change clothing, shoes or face. One image, one pose, no collage, no labels, no text, no arrows, no numbers, no watermark. No flight, floating feet, high platform, equipment, weights, step, single-leg stance, rebound or successive jump.",
+          "generated_source": "C:/Users/Administrator/.codex/generated_images/01a1393e-5f85-7e82-a5f5-3090fb57ba62/exec-9553a7f5-b972-45a8-86b1-41fa4b535edf.png",
+          "final_path": "E:/git冲突问题/rehab image/train/steps/121_T-LOW-043_s03.png",
+          "sha256": "B0A506F6117E6AB171145DA02A97D715DA45B2BCADB0F4167BFE0931817AC179",
+          "width": 1024,
+          "height": 1536,
+          "bytes": 1648363,
+          "reused": false,
+          "attempts": 1,
+          "qa": {
+            "method": "生成结果展示及实际 view_image 逐图查看，与已查看底图对比。",
+            "passed": true,
+            "pose": "双脚鞋底和脚跟均接地；髋向后、膝小幅屈曲，属于浅缓冲姿势，无腾空。",
+            "support": "地面接触及自然接触阴影明确，双足位置与底图保持一致。",
+            "continuity": "女性脸型、黑马尾、白短袖、深灰长裤、白系带鞋、灰蓝背景及柔光一致；斜侧机位、地面基准与肢体尺度无明显漂移。",
+            "anatomy": "头、躯干、手臂、大腿、小腿与完整双手双足自然，关节连接无明显异常。",
+            "exclusions": "单帧单姿势，无文字箭头、器材、高台、负重、单腿跳或连续反弹。",
+            "revision_required": false
+          }
+        },
+        {
+          "step": "s04",
+          "target_pose": "双足稳固落地，恢复舒适自然站立，双臂垂放并独立停稳。",
+          "prompt": "Use case: identity-preserve edit.\nAsset type: one rehabilitation exercise step photograph, T-LOW-043, step s04 (fully settled standing rest after the landing).\nInput image 1 is the edit target and exact continuity reference. Preserve this exact same woman, facial features, age, skin tone, black ponytail, white short-sleeve T-shirt, dark charcoal full-length trousers, and identical white lace-up athletic shoes. Preserve the photoreal studio quality, soft lighting, seamless gray-blue background, identical oblique side camera viewpoint, perspective, lens, floor plane and full-body pixel scale. Output 1024 x 1536 portrait.\nPrimary request: change only her pose from the shallow bent-knee preparation to a COMFORTABLE NATURAL UPRIGHT STAND, paused quietly after completing one low jump and landing. Keep both feet in the same positions and spacing on the original flat floor, both complete soles and heels firmly on the floor. Straighten hips and knees to a relaxed standing posture without rigidly hyperextending or locking knees. Torso vertical, shoulders relaxed, head and neck natural, both arms hanging naturally by her sides, full hands and fingers visible. Clear stationary support, a stable balanced stance, contact shadows directly under both shoes. She is resting and has fully stopped; not preparing to rebound.\nComposition/framing: keep the shoes and floor contact plane at exactly the original positions, with the same camera and body scale; head rises naturally from knee/hip extension, retain enough clear space above the ponytail and whole head, do not resize or lengthen body to fill the frame. Complete head, hands, and feet in frame.\nConstraints: natural anatomy and unchanged head/body/limb proportions, same identity, clothing, shoe design, gray-blue floor and background, lighting and camera; one image, one pose, no montage, no text, labels, arrows, numbers or watermark. No squat, no obvious knee bend, no stepping, no flight, floating feet, high platform, equipment, weights, single-leg balance, continuous jumps or rebound.",
+          "generated_source": "C:/Users/Administrator/.codex/generated_images/01a1393e-5f85-7e82-a5f5-3090fb57ba62/exec-f9e54d69-722d-40ba-ace0-e820292f3bdb.png",
+          "final_path": "E:/git冲突问题/rehab image/train/steps/121_T-LOW-043_s04.png",
+          "sha256": "D9CE4225A9AFEB7D19124509C8C509A59B42B5D3C5D613D78D2BF1710B177143",
+          "width": 1024,
+          "height": 1536,
+          "bytes": 1611147,
+          "reused": false,
+          "attempts": 1,
+          "qa": {
+            "method": "生成结果展示及实际 view_image 逐图查看，与已查看底图和 s03 对比。",
+            "passed": true,
+            "pose": "躯干自然直立，髋膝恢复舒适站立位，双臂自然垂放；双脚均接地，呈停稳休息姿态。",
+            "support": "两只完整鞋底和脚跟接地，双足足位与底图/s03固定，无离地或迈步。",
+            "continuity": "同一女性脸型、黑马尾、白短袖、深灰长裤、白系带鞋；相机斜侧视角、地面与柔光灰蓝背景一致。头部因自然伸髋伸膝略升高，全头仍完整可见。",
+            "anatomy": "肢体长度、头身比例、手部与关节连续自然，无明显拉长或异常接触。",
+            "exclusions": "单帧单姿势，无文字箭头、器材、高台、负重、单腿站或连续反弹。",
+            "revision_required": false
+          }
+        }
+      ],
+      "review_scope": "本记录为图片姿势、外观、比例和支撑的呈现审查；动作启用条件继续以原卡为准。"
+    },
+    {
+      "action_id": "T-LOW-046",
+      "sequence": "122",
+      "title": "坐姿踝主动背屈与跖屈：无外阻",
+      "date": "2026-10-14",
+      "manifest": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "output_directory": "E:/git冲突问题/rehab image/train/steps",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "global_qa": "三张为独立照片，每张一个姿态；同侧面机位、同人物服装、灰蓝背景柔光、同椅和软垫凳、同膝与小腿支持位置。测试足赤足伸出承托边缘，无外阻、无手掰、无箭头文字。只在外部指定目录保存，没有改仓库或共用进度。",
+      "files": [
+        {
+          "step": "s01",
+          "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-74c70667-25a1-4571-aa9d-8ee67a37d4da.png",
+          "saved_path": "E:\\git冲突问题\\rehab image\\train\\steps\\122_T-LOW-046_s01.png",
+          "width": 1536,
+          "height": 1024,
+          "sha256": "002BD48859401D22DC027272F25210A212E2B668589B887941AB55962585FD4E",
+          "bytes": 1774628,
+          "target": "坐姿小腿支撑，中立踝",
+          "source_key": "122source02",
+          "prompt_key": "122prompt02",
+          "qa": "近景水平小腿由灰软垫凳承托，膝位固定，踝和足伸出支撑边缘完全自由；足跟在下、脚尖朝上，足纵轴近垂直于水平小腿，为中立位。保持参考白T、深灰裤及灰蓝柔光；局部裁切上半面，保留相邻膝、完整足和坐位支持。第二次输出实际达到中立，将该输出用于s01，不沿用原调用的s02意图。",
+          "prompt": "Use case: scientific-educational, precise-object-edit. Edit the supplied photograph to create action 122 T-LOW-046 step 02: active ankle DORSIFLEXION. The supplied image is the exact scene to preserve, not merely a style reference. Keep the same seated woman, white T-shirt, charcoal trousers with same hem, body and hands, chair, gray padded footstool, calf support contact, neutral gray-blue studio, shadows, camera angle, dimensions, crop, knee, shin position and heel position. Change ONLY the tested bare ankle and foot angle, preserving anatomically continuous skin. The tested leg remains horizontal and points to camera-right; the calf must stay fully in its exact supported position. Rotate the tested foot gently at the ankle about 15 degrees TOWARD THE SHIN relative to the starting right-angle neutral foot. Pull the whole FOREFOOT toward the lower leg, not merely lifting or curling the toes. In this side view that means the relaxed toe/forefoot endpoint shifts camera-left and slightly upward toward the shin; the ankle-front angle between shin and top of foot becomes smaller than in the input. Normal comfortable dorsiflexion, toes stay long and relaxed, no clawing, no toe extension substitute. Heel and ankle remain airborne beyond the stool edge, entire bare foot clear of support and floor. Preserve the foot's natural length and five toes. Keep all other visible objects and body locations unchanged. Only ONE static dorsiflexed foot in the final photograph. No arrows, text, numbering, collage, duplicate positions, bands, weights, therapist hands, braces, or watermarks.",
+          "generation_method": "built-in image_gen",
+          "visual_qa": "passed"
+        },
+        {
+          "step": "s02",
+          "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-f59a7219-d30f-4660-b8e7-b8cc8a16e05f.png",
+          "saved_path": "E:\\git冲突问题\\rehab image\\train\\steps\\122_T-LOW-046_s02.png",
+          "width": 1536,
+          "height": 1024,
+          "sha256": "CD9949CB0117854DCEECFCFDCD2C13E3C35DF2846C1F8DE0FC8B87163E11FA43",
+          "bytes": 1759017,
+          "target": "同支撑下踝背屈",
+          "source_key": "122source02final",
+          "prompt_key": "122prompt02final",
+          "qa": "相对s01，整前足向小腿方向（画面左上）回倾，足背与小腿前侧夹角减小；足跟在下、脚趾放松，未变成单纯抬趾。小腿、膝、椅、凳、衣服、构图和背景保持一致。肉眼方向审查通过，未从生成像素推定实际临床角度。",
+          "prompt": "Use case: scientific-educational. Edit target supplied photo to create action 122 T-LOW-046 step 02, GENTLE ANKLE DORSIFLEXION. The entire scene is already correct: preserve exact woman, white shirt, charcoal trousers, hands, chair, padded stool, horizontal supported calf, grounded other shoe, gray-blue background, light, shadows, crop, image dimensions, camera and scale. The supported right shin runs left-to-right horizontally. Its ankle, heel and foot are free in air beyond the stool. The input foot is close to neutral: heel below, toes above.\nChange ONLY this free bare ankle/foot, rotating the whole foot backward TOWARD THE SHIN by about 15 degrees from the input, so the toes and forefoot now lean diagonally UPPER-LEFT toward the woman's knee. The big toe endpoint must visibly shift LEFT of its input location, closer to the knee, and the foot's dorsum/front-to-shin angle must decrease. The heel remains down, toes remain up; never flip the foot upside down or put toes below the heel. Preserve ankle center and calf positions, preserve natural foot length. The movement is at the ankle, NOT isolated toe lifting: all toes and forefoot move together as one relaxed foot. Toes stay comfortably long and relaxed. The horizontal calf stays in contact with exactly the same pad with no leg lift. Bare foot stays wholly unsupported, with every toe visible, realistic anatomy. Single static pose. No arrows, labels, words, numbers, bands, weights, manipulation, duplicate feet, collage or watermark.",
+          "generation_method": "built-in image_gen",
+          "visual_qa": "passed"
+        },
+        {
+          "step": "s03",
+          "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-b8d214d9-75f0-4849-96a4-cc87841583fc.png",
+          "saved_path": "E:\\git冲突问题\\rehab image\\train\\steps\\122_T-LOW-046_s03.png",
+          "width": 1536,
+          "height": 1024,
+          "sha256": "06436DA177E4F200ACC97938D3870F6E79E5D269E210BF8907D79AC780DCA5FF",
+          "bytes": 1774349,
+          "target": "同支撑下踝跖屈",
+          "source_key": "122source03final",
+          "prompt_key": "122prompt03revision",
+          "qa": "相对s01，整前足向远离小腿方向（画面右方）前倾，足纵轴从近垂直变为右上斜，踝前夹角增大；脚尖仍高于足跟，未倒翻或极端垂足。与s02方向相反。小腿、膝、椅、凳、衣服、构图和背景一致。脚趾自然且完整。",
+          "prompt": "Use case: scientific-educational. This is an exact photo edit for seated ankle step 03. Preserve every part of the supplied neutral image except the free right foot. Use the same fixed horizontal right shin supported by the gray padded stool, same knee position, white T-shirt/charcoal trousers, chair, other shoe on floor, gray-blue backdrop, hands, soft light, crop and scale.\nMake a SMALL TO MODERATE plantarflexion, approximately 30 degrees away from this vertical neutral foot. IMPORTANT TARGET GEOMETRY: the whole bare foot must slope UPWARD TOWARD THE RIGHT from heel to toes, like a diagonal slash /. Heel stays at the lower-left end of this diagonal, and toes are at the upper-right end. The relaxed toe tips remain CLEARLY HIGHER in the image than the heel. Starting input toe tips are near x=1180, y=410 on this 1536x1024 canvas; put edited toe tips around x=1260, y=455, and keep the heel near x=1150, y=590. These approximate locations express a gentle forward pointing of the whole foot, NOT a foot flopping down. This gentle ankle plantarflexion lowers the forefoot slightly and moves it farther right compared to the vertical neutral input. Do NOT aim the toes below the heel. Do NOT make a horizontal foot. Do NOT make a ballet point or 90-degree plantarflexion. Rotate at the ankle only. Retain natural foot length and shape, relaxed five toes, and realistic calf-ankle continuity. Support and ankle location stay fixed; the ankle and foot remain beyond the stool edge in air. Exact same scene. No text, arrows, labels, number, collage, duplicate limb, strap, external resistance or watermark.",
+          "generation_method": "built-in image_gen",
+          "visual_qa": "passed"
+        }
+      ],
+      "iterations": [
+        {
+          "attempt": 1,
+          "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-013fb922-98a4-4211-ac50-26a60d3a341e.png",
+          "prompt": "Use case: scientific-educational. Create one realistic studio rehabilitation demonstration photograph, action 122 T-LOW-046, step 01, seated ankle active motion with NO external resistance. The three attached images are ONLY identity, clothing, skin tone, photographic style, lighting, and gray-blue background references; they are not pose references. Same adult East Asian woman with black ponytail, plain white short-sleeve T-shirt and charcoal-gray long trousers.\nScene and composition: side-on close view at knee and ankle height, woman seated stably on a simple gray upholstered chair facing camera-right. Her tested right leg is extended forward, knee naturally almost straight, lower leg horizontal. A separate stable low rectangular gray upholstered footstool with a soft gray pad directly supports the entire calf from below. The distal calf is supported, while the ankle, heel, and entire bare tested foot project past the pad's right edge and are entirely free in air with obvious clearance. The stool stops BEFORE the ankle, never under the heel or sole. The other leg is bent and its shoe rests on the studio floor behind; keep it visually secondary and distinguishable. Roll the tested trouser hem slightly above the ankle to make the ankle anatomy clear; all other reference clothing remains. Her hands rest passively on thighs away from the ankle.\nStep 01 target pose: tested ankle in neutral middle position; with the shin horizontal pointing to the right, the bare foot hangs naturally downward approximately at a right angle to the shin. Relaxed naturally extended toes, no clawing. Anatomically accurate continuous knee-calf-ankle-foot, normal foot size. Show the whole tested knee, shin, ankle, heel and every toe, the calf-to-pad contact, and enough lower torso plus chair seat to establish sitting; upper face may be outside this detail crop. Use a consistent medium-close landscape photo composition, not an isolated floating foot. Leave some gray-blue negative space. Soft natural studio light and realistic floor shadow, match references.\nConstraints: one person, one static posture, no split panels, no montage, no duplicate foot positions. No arrows, letters, numbers, labels, watermarks or logos. No band, resistance weight, therapist hand, ankle brace or force applied to the foot. Realistic anatomically correct foot with five toes. Bare tested foot and calf support must be unmistakable.",
+          "status": "rejected",
+          "finding": "中立位生成成脚尖过度向下的足角，无法作为可信中立示范，未复制到交付目录。"
+        },
+        {
+          "attempt": 2,
+          "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-74c70667-25a1-4571-aa9d-8ee67a37d4da.png",
+          "prompt": "Use case: scientific-educational, precise-object-edit. Edit the supplied photograph to create action 122 T-LOW-046 step 02: active ankle DORSIFLEXION. The supplied image is the exact scene to preserve, not merely a style reference. Keep the same seated woman, white T-shirt, charcoal trousers with same hem, body and hands, chair, gray padded footstool, calf support contact, neutral gray-blue studio, shadows, camera angle, dimensions, crop, knee, shin position and heel position. Change ONLY the tested bare ankle and foot angle, preserving anatomically continuous skin. The tested leg remains horizontal and points to camera-right; the calf must stay fully in its exact supported position. Rotate the tested foot gently at the ankle about 15 degrees TOWARD THE SHIN relative to the starting right-angle neutral foot. Pull the whole FOREFOOT toward the lower leg, not merely lifting or curling the toes. In this side view that means the relaxed toe/forefoot endpoint shifts camera-left and slightly upward toward the shin; the ankle-front angle between shin and top of foot becomes smaller than in the input. Normal comfortable dorsiflexion, toes stay long and relaxed, no clawing, no toe extension substitute. Heel and ankle remain airborne beyond the stool edge, entire bare foot clear of support and floor. Preserve the foot's natural length and five toes. Keep all other visible objects and body locations unchanged. Only ONE static dorsiflexed foot in the final photograph. No arrows, text, numbering, collage, duplicate positions, bands, weights, therapist hands, braces, or watermarks.",
+          "status": "accepted_as_s01",
+          "finding": "修订使足跟在下、脚尖朝上、足纵轴近垂直于水平小腿。实际是中立位，改编为s01。"
+        },
+        {
+          "attempt": 3,
+          "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-f59a7219-d30f-4660-b8e7-b8cc8a16e05f.png",
+          "prompt": "Use case: scientific-educational. Edit target supplied photo to create action 122 T-LOW-046 step 02, GENTLE ANKLE DORSIFLEXION. The entire scene is already correct: preserve exact woman, white shirt, charcoal trousers, hands, chair, padded stool, horizontal supported calf, grounded other shoe, gray-blue background, light, shadows, crop, image dimensions, camera and scale. The supported right shin runs left-to-right horizontally. Its ankle, heel and foot are free in air beyond the stool. The input foot is close to neutral: heel below, toes above.\nChange ONLY this free bare ankle/foot, rotating the whole foot backward TOWARD THE SHIN by about 15 degrees from the input, so the toes and forefoot now lean diagonally UPPER-LEFT toward the woman's knee. The big toe endpoint must visibly shift LEFT of its input location, closer to the knee, and the foot's dorsum/front-to-shin angle must decrease. The heel remains down, toes remain up; never flip the foot upside down or put toes below the heel. Preserve ankle center and calf positions, preserve natural foot length. The movement is at the ankle, NOT isolated toe lifting: all toes and forefoot move together as one relaxed foot. Toes stay comfortably long and relaxed. The horizontal calf stays in contact with exactly the same pad with no leg lift. Bare foot stays wholly unsupported, with every toe visible, realistic anatomy. Single static pose. No arrows, labels, words, numbers, bands, weights, manipulation, duplicate feet, collage or watermark.",
+          "status": "accepted_as_s02",
+          "finding": "锁定中立底图，仅将整前足向小腿方向回倾，清楚呈现背屈方向。"
+        },
+        {
+          "attempt": 4,
+          "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-53d8ca89-f516-46e1-8cb7-685f0fcbe5b1.png",
+          "prompt": "Use case: scientific-educational. Edit supplied neutral-ankle photograph for action 122 T-LOW-046 step 03: gentle active ankle PLANTARFLEXION without external resistance. The supplied image is the exact scene to preserve. Keep the woman, lower torso, white T-shirt, charcoal trousers and folded hem, hands on thighs, gray chair, gray padded stool, horizontally supported right calf and knee, grounded other shoe, studio background, soft light, shadows, camera angle, framing, dimensions, and scale IDENTICAL. Change only the tested bare ankle/foot posture, using a realistic rotation around the fixed ankle center.\nThe supplied bare foot has its heel down and toes up at neutral. Rotate the whole bare foot gently AWAY FROM THE SHIN by about 25 to 30 degrees, lowering the forefoot and pointing its toes diagonally camera-right/up, farther away from the knee. In this right-facing horizontal-leg side view, the toe endpoint moves RIGHT and DOWN compared with the input, while staying ABOVE the heel. The foot is now a natural diagonal approximately 55 to 60 degrees above horizontal, rather than vertical. Smooth comfortable plantarflexion, no forced ballet pointe, no extreme floppy foot, never flip toes below the heel. The calf remains firmly supported on the same pad; heel and ankle stay free beyond the stool's edge, bare foot entirely in air. Toes follow the forefoot as a relaxed unit, not curled or clawed. Foot length, five toes, anatomy and skin continuity remain natural. This must visibly be the opposite direction from pulling the toes back toward the shin. One single static pose. No arrows, text, labels, numbers, duplicate feet, split panels, band, ankle weight, hands manipulating foot, brace or watermark.",
+          "status": "rejected",
+          "finding": "跖屈被生成成过度前下指足，脚尖降到足跟下方且角度过大，不符合轻轻向下的选定温和终点。"
+        },
+        {
+          "attempt": 5,
+          "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-b8d214d9-75f0-4849-96a4-cc87841583fc.png",
+          "prompt": "Use case: scientific-educational. This is an exact photo edit for seated ankle step 03. Preserve every part of the supplied neutral image except the free right foot. Use the same fixed horizontal right shin supported by the gray padded stool, same knee position, white T-shirt/charcoal trousers, chair, other shoe on floor, gray-blue backdrop, hands, soft light, crop and scale.\nMake a SMALL TO MODERATE plantarflexion, approximately 30 degrees away from this vertical neutral foot. IMPORTANT TARGET GEOMETRY: the whole bare foot must slope UPWARD TOWARD THE RIGHT from heel to toes, like a diagonal slash /. Heel stays at the lower-left end of this diagonal, and toes are at the upper-right end. The relaxed toe tips remain CLEARLY HIGHER in the image than the heel. Starting input toe tips are near x=1180, y=410 on this 1536x1024 canvas; put edited toe tips around x=1260, y=455, and keep the heel near x=1150, y=590. These approximate locations express a gentle forward pointing of the whole foot, NOT a foot flopping down. This gentle ankle plantarflexion lowers the forefoot slightly and moves it farther right compared to the vertical neutral input. Do NOT aim the toes below the heel. Do NOT make a horizontal foot. Do NOT make a ballet point or 90-degree plantarflexion. Rotate at the ankle only. Retain natural foot length and shape, relaxed five toes, and realistic calf-ankle continuity. Support and ankle location stay fixed; the ankle and foot remain beyond the stool edge in air. Exact same scene. No text, arrows, labels, number, collage, duplicate limb, strap, external resistance or watermark.",
+          "status": "accepted_as_s03",
+          "finding": "以固定底图增加明确足跟到脚尖的右上斜目标，最终跖屈角温和，足跟在下、脚尖在右上，方向与背屈相反。"
+        }
+      ],
+      "limitations": "图像用于动作姿势示范；视觉审查不能确认真实主动发力、负荷或患者适用性。提示词目标角度只用于生成控制，未记录为像素测量或临床活动范围。"
+    }
+  ]
+}

@@ -67,6 +67,20 @@ def test_early_cancel_and_silence_never_run_asr_or_send(monkeypatch):
     with pytest.raises(RuntimeError,match='清晰语音'):host.handle('voice.recognize',{})
 
 
+def test_early_cancel_never_imports_optional_microphone_or_asr(monkeypatch):
+    import builtins
+    original_import=builtins.__import__
+    def guarded_import(name,*args,**kwargs):
+        if name in ('sounddevice','faster_whisper'):
+            pytest.fail('Cancelled input attempted to load an optional audio component')
+        return original_import(name,*args,**kwargs)
+    host=NativeVoiceHost();host.state['available']=True;host.prepare();host.cancel()
+    monkeypatch.setattr(builtins,'__import__',guarded_import)
+    monkeypatch.setattr(host,'transcribe',lambda _:pytest.fail('Cancelled input reached ASR'))
+    with pytest.raises(RuntimeError,match='取消'):host.handle('voice.recognize',{})
+    assert host.live_status()['phase']=='idle' and host.process is None
+
+
 def test_cancel_at_recognition_boundary_never_returns_committed_text(monkeypatch):
     sounddevice=pytest.importorskip('sounddevice',reason='Optional microphone dependency')
     host=NativeVoiceHost();host.state['available']=True;host.prepare()

@@ -1,0 +1,94 @@
+{
+  "batch": 10,
+  "type": "分步骤示范图",
+  "range": "077",
+  "date": "2026-10-14",
+  "generator": "built-in image_gen",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_checklist_sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+  "action_id": "T-LOW-010",
+  "action_name": "坐姿髋内外旋控制",
+  "selected_version": "徒手高椅，右腿，正面",
+  "selected_frames": 3,
+  "reused_frames": 0,
+  "existing_image_review": {
+    "path": "E:\\git冲突问题\\rehab image\\train\\077_T-LOW-010_坐姿髋内外旋控制.png",
+    "reused": false,
+    "reason": "既有单图只有外摆姿势，本组新建中立位，并从同一中立帧制作两个方向以比较膝和骨盆位置。"
+  },
+  "frames": [
+    {
+      "step": 1,
+      "filename": "077_T-LOW-010_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/077_T-LOW-010_s01.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a138e5-acaf-77f2-8876-8c32e0ececd8\\exec-6265aa99-9714-4ce1-8579-b227654a3d7c.png",
+      "prompt": "Use case: scientific-educational. Asset: single rehabilitation exercise demonstration photograph, 077 T-LOW-010 step s01, seated hip rotation neutral preparation. Input references 1,2,3 lock EXACT same adult East Asian woman, face, age, skin tone, normal slim-average build, black low ponytail, plain fitted white short sleeve T-shirt, dark charcoal full-length pants and cool pale gray-blue studio background with soft realistic light. Reference 4 supplies the existing high gray armless chair and front-facing camera arrangement only; DO NOT copy its sideways lower-leg pose.\nScene and pose: woman sits comfortably upright, pelvis square and still on a STABLE high gray armless chair with backrest and all four legs firmly on seamless studio floor. Chair seat supports BOTH thighs nearly horizontally to just behind the knees; hips/knees roughly 90 degrees. Both hands rest gently on proximal thighs. Both knees face directly forward and sit symmetrically at comfortable hip width. Both shins hang VERTICALLY down below their own knees, both white lace-up athletic shoes in neutral forward direction clearly suspended about 5-8 cm ABOVE the floor, no tiptoe ground contact. Her anatomical RIGHT leg on VIEWER LEFT is the designated moving leg for later frames, but stays entirely neutral in this frame; her LEFT leg on VIEWER RIGHT also hangs neutral. No thigh splaying. Ankles neutral, entire shoes and lower legs visible.\nComposition: single 4:5 portrait realistic studio photograph, true FRONT camera at pelvis height, natural 70mm lens feel without distortion. Include full head, ponytail, entire torso, pelvis, both hands, both thighs, knees, shins, BOTH entire shoes, chair and floor with comfortable margins. Ample lateral space beside the lower legs for next steps; pelvis and knees easy to compare. Clinical clean photo, one person one pose. Natural head/body and limb proportions, connected joints, five natural fingers each hand, consistent pants and shoes. No text, numbers, arrows, watermarks, panels, collage, ghost limbs, bands or extra equipment.",
+      "input_references": [
+        "E:\\git冲突问题\\rehab image\\step-image-references\\reference-01.png",
+        "E:\\git冲突问题\\rehab image\\step-image-references\\reference-02.png",
+        "E:\\git冲突问题\\rehab image\\step-image-references\\reference-03.png",
+        "E:\\git冲突问题\\rehab image\\train\\077_T-LOW-010_坐姿髋内外旋控制.png"
+      ],
+      "reused": false,
+      "qa_status": "通过逐图视觉检查",
+      "description": "高椅坐稳，双大腿椅面承托，双小腿自然悬垂。",
+      "qa": "双膝对称向前，双脚悬空，骨盆端正，头手鞋完整可见。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1652492,
+      "sha256": "CADB467AF97C9FB6FD2A2275088A098589DBA8DA734F0387287205F833DF6B80",
+      "byte_copy_hash_verified": true
+    },
+    {
+      "step": 2,
+      "filename": "077_T-LOW-010_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/077_T-LOW-010_s02.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a138e5-acaf-77f2-8876-8c32e0ececd8\\exec-d3635d46-eb78-4801-9813-def2d9d46d05.png",
+      "prompt": "Use case: scientific-educational. Make a SINGLE new photographic pose for 077 T-LOW-010 step s02 by editing image4, the approved neutral seated frame. Images1-3 are identity/style only. LOCK all image4 invariants: exact face, black ponytail, white short sleeve shirt, charcoal trousers, identical high gray chair and its four planted legs, true front camera, 4:5 portrait framing, body scale, floor baseline, light, gray-blue background, hand positions, seated pelvis/torso, BOTH horizontal thighs and BOTH knee positions. Same white athletic shoes.\nChange ONLY the woman's anatomical RIGHT LOWER LEG (VIEWER LEFT) into gentle outward swing. Its RIGHT KNEE must stay at the EXACT same screen location under right thigh as in image4. Right thigh does not splay or shift outward. From this fixed right knee pivot, right shin inclines diagonally DOWN AND TO VIEWER LEFT about 20-25 degrees from vertical; right ankle and entire right shoe move roughly one shoe width toward viewer LEFT away from her midline, while remaining suspended off floor. The foot travels WITH the shin, ankle stays natural rather than rolling sole sideways. This is hip INTERNAL rotation shown as lower-leg outward swing, NOT hip abduction and NOT ankle inversion/eversion. Keep LEFT lower leg (VIEWER RIGHT) absolutely vertical and unchanged under left knee with the same suspended left shoe; knees stay symmetrical and forward. Both hands rest on thighs as before. No motion trail or ghost leg.\nPreserve an anatomically continuous realistic leg with proper knee-shin-ankle connections, natural limb lengths, chair support, five fingers. Complete head, both hands, pelvis, both knees and BOTH entire shoes remain visible with margin. One adult woman, one calm clinical studio pose, no text, arrows, numbers, collage, elastic band, extra prop or watermark.",
+      "input_references": [
+        "E:\\git冲突问题\\rehab image\\step-image-references\\reference-01.png",
+        "E:\\git冲突问题\\rehab image\\step-image-references\\reference-02.png",
+        "E:\\git冲突问题\\rehab image\\step-image-references\\reference-03.png",
+        "E:\\git冲突问题\\rehab image\\train\\steps\\077_T-LOW-010_s01.png"
+      ],
+      "reused": false,
+      "qa_status": "通过逐图视觉检查",
+      "description": "同一右膝和大腿保持基本位置，右小腿与鞋向身体外侧（画面左）摆。",
+      "qa": "右小腿外摆清楚，左腿保持垂直，未见明显大腿外移或骨盆转动，鞋随小腿移动，手脚完整。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1652089,
+      "sha256": "4D51A49CE1F0413905CD57044BD39AA1C917FE6C0C76D975D7B6A18294A60E06",
+      "byte_copy_hash_verified": true
+    },
+    {
+      "step": 3,
+      "filename": "077_T-LOW-010_s03.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/077_T-LOW-010_s03.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a138e5-acaf-77f2-8876-8c32e0ececd8\\exec-d00b0064-676c-4528-bf10-f9d95bd69872.png",
+      "prompt": "Use case: scientific-educational. Single rehabilitation pose photo 077 T-LOW-010 s03, seated hip EXTERNAL rotation endpoint, the SAME anatomical RIGHT leg as step02. Edit reference image4, approved NEUTRAL preparation frame, not the outward swing. References1–3 lock the same face and gray-blue studio look. Lock exact full image4 scene: true front view 4:5 portrait canvas, head/torso/pelvis orientation and scale, high stable gray chair and four floor contacts, both hands on thighs, hip-height camera, white T-shirt, dark charcoal pants, white athletic shoes, light, background, seated position and BOTH knees. Both thighs remain supported horizontally on chair, knees remain directly forward at the very same locations and comfortable hip-width distance. No shift or rotation of pelvis or upper body.\nONLY the anatomical RIGHT shin and right shoe (VIEWER LEFT at baseline) now swing gently INWARD toward the woman's midline, using the unmoved RIGHT KNEE as pivot. Right lower leg angles diagonally down and toward VIEWER RIGHT, about 15-20 degrees from vertical. Right ankle and shoe end below the central gap between the two knees, roughly one shoe width inward from neutral, visibly clear of the other shin, no contact. This is the opposite of outward swing step02. RIGHT foot and shin move together, ankle natural/neutral, not only a sideways rolled ankle. The anatomical LEFT shin (VIEWER RIGHT) stays vertical and unchanged beneath its left knee; its left shoe remains in exactly original location. BOTH shoes suspended off floor, both completely visible; show one shoe under body midline and the unchanging other on viewer-right without fusion/overlap. Do not change moving sides. No crossed thighs, do not adduct right thigh or move the right knee. No forced extreme angle.\nNatural adult limb lengths, continuous knee/shin/ankle, normal toes hidden in real shoes, natural relaxed hands. Complete head, both hands, pelvis, both knees, both entire shoes, chair and floor visible with comfortable margins. Single still pose photograph, no text, numbers, arrows, collage, motion trail, extra legs/people, bands, watermark.",
+      "input_references": [
+        "E:\\git冲突问题\\rehab image\\step-image-references\\reference-01.png",
+        "E:\\git冲突问题\\rehab image\\step-image-references\\reference-02.png",
+        "E:\\git冲突问题\\rehab image\\step-image-references\\reference-03.png",
+        "E:\\git冲突问题\\rehab image\\train\\steps\\077_T-LOW-010_s01.png"
+      ],
+      "reused": false,
+      "qa_status": "通过逐图视觉检查",
+      "description": "回中立后同侧右小腿与鞋向身体内侧（画面右）摆。",
+      "qa": "右小腿内摆清楚，左腿仍垂直，两鞋可区分，膝与骨盆未明显横移，未靠另一脚强推。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1648167,
+      "sha256": "04FCA91081745B334049A92151EF60150E85B4505A35DF143E6E25D66A10491D",
+      "byte_copy_hash_verified": true
+    }
+  ],
+  "sequence": "01→02→01→03→01",
+  "group_qa": "三图人物、服装、高椅、背景、光线、前视构图及脚悬空状态一致；有小量衣褶与肢体轮廓生成差异，不能作为精确角度测量。",
+  "notes": [
+    "小腿向外摆对应髋内旋；小腿向内摆对应髋外旋。",
+    "仅核对照片姿势和比例，不能由图片判定许可范围、真实肌肉发力或精确旋转角度。",
+    "保存原始PNG字节，不做程序像素编辑。"
+  ]
+}

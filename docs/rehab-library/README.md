@@ -6,6 +6,10 @@
 
 更新来源后运行`python tools/import_rehab_library.py`，重新构建桥接与安卓领域bundle并验证。导入器分离详细卡、说明章节及引用出处，保留原文剂量、器材、开始和停止条件。完整性检查只是字段存在检查，不代表临床审核或摄像头能力已验证。
 
+## 图片接入交接
+
+图片交接包1.0见[交接说明](image-handoff/README.md)：185动作CSV、471步骤CSV、656正式图片索引、742候选文件记录、机器可读JSON及完整原文卡片。图片按评估／训练和11个部位分类保存到`rehab_codex_single_camera_v2_1/assets/rehab-library-images/`；路径为仓库相对路径，方便另一台电脑或伙伴接入。正式图片文件齐全，旧版本与重复副本另存archive。本轮是资源整理，尚未改变正式UI与53项视觉任务映射。
+
 ## 本地候选计划
 
 `rehab.plan.draft` 接收目标goal、部位region、器材equipment、限制restrictions、当前任务等级level（0–3）及screeningConfirmed。它不调用LLM，不保存或采用计划，不修改日期或当前计划。

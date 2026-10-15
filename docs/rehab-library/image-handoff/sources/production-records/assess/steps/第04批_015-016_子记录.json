@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0",
+  "batch": "第04批_015-016",
+  "tool": "内置 image_gen",
+  "generation_calls": 5,
+  "source_document": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "scope": "015 E-LOW-013 五次坐站s01/s02；016 E-LOW-014 标准30秒坐站s01/s02",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "notes": "四张最终图均1536×1024，白短袖、深灰裤、黑马尾、白鞋及灰蓝棚拍与参考保持一致；无扶手木质硬面直靠背椅。椅高43.2 cm是生成设定，照片不替代现场椅高与协议核对。015以v2坐位锁定宽幅机位，016继承该场景；不同动作的交叉胸前与手置对侧肩分别保留。原始015 s01只因构图未给完整站姿足够余量被返修，原图非覆盖保留。只写本子记录，无共享全局进度修改。",
+  "items": [
+    {
+      "action_sequence": 15,
+      "id": "E-LOW-013",
+      "step": "s01",
+      "phase_zh": "背轻靠椅背坐稳，双脚平放，双臂交叉胸前；手在对侧上臂",
+      "protocol_version": "standard_no_hand_support",
+      "prompt": "Use case: identity-preserve. Asset type: 015 E-LOW-013 s01 seated starting frame revision for a photorealistic rehabilitation step sequence.\nImage 1 is the exact edit target. Images 2-4 are supporting identity and photographic studio style references.\nChange ONLY the camera scale/framing of Image 1: pull the camera back so the ENTIRE seated woman and entire chair are approximately 25 percent smaller within the same 1536x1024 landscape canvas. Keep the floor under both shoes around y=885 pixels, the seated head top around y=280 pixels, the chair seat around y=682 pixels. Reserve the clear vertical space above the woman so her full standing height in the NEXT photograph could fit with standing head around y=130 and feet around y=885, without zooming or moving the camera. This is important: the woman is still SEATED in THIS photograph, do not stand her up.\nPreserve her recognizable face, same black ponytail, white short-sleeve t-shirt, dark charcoal trousers, plain white shoes, side profile facing RIGHT, exact crossed arms with hands on opposite upper arms below shoulders, seated buttock/seat contact, back lightly against the chair back, knees about 90 degrees, both feet flat at the same relative foot positions. Preserve the same stable hard natural wood armless straight-back chair and its approximately 43.2 cm real-world seat height. Preserve chair geometry and plausible body size. Same gray-blue seamless studio background, neutral soft light, matte floor and realistic physical contact shadows. No posture change, extra person, extra limbs, duplicate poses, text, arrows, logos or watermark.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e3-ec3e-7e52-b82d-e02efa4cd34e/exec-333a8d15-2fd2-45e0-b2d7-234e334836f7.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-ec3e-7e52-b82d-e02efa4cd34e/exec-9f19761c-7f28-4ca5-b228-c7625f05b6ee.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/015_E-LOW-013_s01_v2.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "4287bf5f7e4e54734d1f6b4ddc69112ee01aaa7eb76d92a29c4724215e6ad296",
+      "bytes": 1626721,
+      "QA": {
+        "passed": true,
+        "review_method": "生成后逐张查看原图，并核对连续帧中的机位、尺度、椅脚和双足位置",
+        "observations": "坐稳臀部接触椅面，背轻触椅背；双臂交叉于胸前，两手在对侧上臂下于肩部；双脚和四椅脚真实落地；侧面朝右，无文字箭头，全身及未来站姿上方余量充足。人物、衣着、背景合格。"
+      }
+    },
+    {
+      "action_sequence": 15,
+      "id": "E-LOW-013",
+      "step": "s02",
+      "phase_zh": "保持双臂交叉胸前，完整站起，椅在身后",
+      "protocol_version": "standard_no_hand_support",
+      "prompt": "Use case: identity-preserve.\nAsset type: 015 E-LOW-013 s02, completed stand for the five-times sit-to-stand standard hands-free assessment.\nImage 1 is the exact previous seated frame EDIT TARGET and scene anchor. Images 2-4 are supporting identity and style references. Produce ONE 1536x1024 landscape photograph.\nChange only the woman's seated body pose in image 1 into a fully completed standing position. Preserve the exact same camera position, distance, framing, perspective and subject scale; the exact same wood hard-seat armless straight-back chair, its pixel placement and size (seat around y=660, chair feet around y=842), the same gray-blue studio background, light and floor. Do not zoom in when she stands.\nThe same woman now stands fully upright immediately in front of that chair facing RIGHT in true side profile. Both hips and knees are extended naturally, not a squat or partly standing. Buttocks completely clear of the chair seat. Her weight is balanced over both flat shoes. Keep both white shoes planted at the same pixel positions from image 1, not moving or stepping, slight width across the depth plane, toes to the right. Standing shoulders approximately over hips and ankles; no backward lumbar arch or exaggerated chest.\nBoth arms still cross in front of her chest in the exact same folded arm configuration as image 1, each hand rests on the opposite upper arm BELOW the shoulder. No hand touching the chair or thighs. Preserve same face, black ponytail, plain white short-sleeve t-shirt, dark charcoal trousers, unbranded white shoes. Top of standing head should be around y=130-170 and soles around y=842 so she is fully in-frame. Chair remains immediately behind her toward the left of the picture, fully visible and untouched in the same place.\nConstraints: a single stable final upright stance, no seated duplicate or montage, no motion blur, text, arrows, logos, watermark, helper or stopwatch. Realistic hands, knees, body proportions, foot and chair floor contact.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e3-ec3e-7e52-b82d-e02efa4cd34e/exec-9f19761c-7f28-4ca5-b228-c7625f05b6ee.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-ec3e-7e52-b82d-e02efa4cd34e/exec-18f0281a-0c72-43cd-9a2f-9b2704614ad5.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/015_E-LOW-013_s02.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "9c177b0873d5bf0c88929a682215f26631451f5cd81bdd9ed16eaf3319d13823",
+      "bytes": 1593010,
+      "QA": {
+        "passed": true,
+        "review_method": "生成后逐张查看原图，并核对连续帧中的机位、尺度、椅脚和双足位置",
+        "observations": "髋膝自然伸直，臀部清晰离开椅面，完整站稳；双臂手位延续坐位，未借手撑。椅、镜头尺度、两鞋位置与s01_v2匹配；头脚完整，面朝右，真实足底与椅脚接地，无图中文字。"
+      }
+    },
+    {
+      "action_sequence": 16,
+      "id": "E-LOW-014",
+      "step": "s01",
+      "phase_zh": "自然直背坐稳，双脚平放，双手交叉置对侧肩",
+      "protocol_version": "standard_no_hand_support",
+      "prompt": "Use case: identity-preserve.\nAsset type: 016 E-LOW-014 s01, standard 30-second chair stand assessment, seated starting frame. ONE photorealistic educational photograph, 1536x1024 landscape.\nImage 1 is the seated scene edit target from action 015. Images 2-4 are supporting identity and studio-style references. Preserve this exact woman, white short-sleeve t-shirt, dark charcoal long trousers, black ponytail and plain white unbranded athletic shoes. Preserve the EXACT same locked wide side-view camera, face direction RIGHT, scene scale, entire natural wood HARD-seat armless upright-back chair, four fixed legs, approximately 43.2 cm seat height, chair placement, shoe positions, gray-blue seamless studio, lighting and floor. Keep generous empty space above her seated head for the following full standing photograph.\nMake TWO specified pose changes for this standard test: (1) She sits in a naturally straight, upright back posture without leaning back on the backrest; spine neutral, shoulders relaxed over pelvis, a small visible natural gap between upper back and chair back. Her buttocks remain fully supported by the seat, feet BOTH flat in their same previous places, knees and hips roughly 90 degrees. (2) BOTH forearms cross over her chest, with her RIGHT hand resting ON her LEFT shoulder and her LEFT hand ON her RIGHT shoulder. The near-side hand must clearly touch the TOP of the opposite shoulder, not low on the upper arm; the far crossed wrist/hand is at the other shoulder, anatomically plausible from this side view. Fingers relaxed and believable. Distinguish this opposite-shoulder hand placement from the previous below-shoulder folded arms.\nSingle static starting pose only. Keep chair surface, head, both shoes, buttock/seat contact and floor fully visible. No hand supporting weight on chair, no armrests, no person duplicates, text, arrows, labels, numbers, watermark, logos, timer or extra props. Do not change camera or zoom.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e3-ec3e-7e52-b82d-e02efa4cd34e/exec-9f19761c-7f28-4ca5-b228-c7625f05b6ee.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-ec3e-7e52-b82d-e02efa4cd34e/exec-505aae84-8b6d-40e2-9d78-6d6cdaa4631d.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/016_E-LOW-014_s01.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "9fe1088912330d73695baca3380fb2468484d0c8c4c87fb96a219d915b309906",
+      "bytes": 1606654,
+      "QA": {
+        "passed": true,
+        "review_method": "生成后逐张查看原图，并核对连续帧中的机位、尺度、椅脚和双足位置",
+        "observations": "自然直立坐稳，臀部支于椅面，双足平放；近侧手明确覆盖对侧肩顶部，远侧交叉手部分由侧面遮挡，交叉前臂关系合理。无手撑椅面或扶手；保留同一无扶手椅、机位尺度及鞋位。肩上手位与015上臂手位区分清楚。"
+      }
+    },
+    {
+      "action_sequence": 16,
+      "id": "E-LOW-014",
+      "step": "s02",
+      "phase_zh": "双手保持对侧肩，完整站起，臀部离开椅面",
+      "protocol_version": "standard_no_hand_support",
+      "prompt": "Use case: identity-preserve.\nAsset type: 016 E-LOW-014 s02, completed stand for the STANDARD 30-second chair stand test. ONE single photorealistic educational step photo, 1536x1024 landscape.\nInput image 1 is the exact previous 016 seated frame EDIT TARGET and scene anchor. Input image 2 is the already generated 015 full-standing photograph, a supporting reference for standing endpoint and exact camera scale. Images 3-5 are identity and studio style references.\nChange only the seated body pose of image 1 into a fully completed upright standing pose as in image 2, BUT preserve the 016 hand placement from image 1: RIGHT hand rests ON LEFT SHOULDER, LEFT hand ON RIGHT SHOULDER, both forearms CROSS over chest, hands clearly at shoulder tops rather than lower upper arms. Keep this same cross-shoulder configuration all the way through this final frame.\nPreserve the EXACT locked wide side-view camera, framing, chair size and pixel placement, wood hard-seat armless upright back chair with four fixed legs and about 43.2 cm seat height, same background, lighting, floor and woman scale. Both white shoes stay planted at the same image-1 floor positions (soles around y=842), not stepping. The same woman is fully upright facing RIGHT in side profile, hips and knees naturally straight, head upright, shoulders relaxed aligned above hips and ankles. Buttocks fully separated from chair seat. Chair remains directly behind her to the left, visible and in exactly the same position (seat around y=660 and chair feet around y=842). Full standing head is around y=120-170 and whole body fits with generous margin, as in image 2.\nPreserve exact face, black ponytail, white plain short-sleeve t-shirt, dark charcoal trousers, unbranded white shoes. Believable anatomy and floor contacts. This is a stable final stand, not half-rising, leaning back, knee bend or squat. No hand support on chair; no armrests, duplicated poses, motion ghosts, text, labels, arrows, numbers, watermark, logo, timer, helper or extra prop.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e3-ec3e-7e52-b82d-e02efa4cd34e/exec-505aae84-8b6d-40e2-9d78-6d6cdaa4631d.png",
+        "C:/Users/Administrator/.codex/generated_images/01a138e3-ec3e-7e52-b82d-e02efa4cd34e/exec-18f0281a-0c72-43cd-9a2f-9b2704614ad5.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-ec3e-7e52-b82d-e02efa4cd34e/exec-9fee920e-f372-4eb3-a976-13a0c996b4b9.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/016_E-LOW-014_s02.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "3111d6052b1d8fd2e43ef607a33515c3f14658545761564195d31bd99a295c63",
+      "bytes": 1605031,
+      "QA": {
+        "passed": true,
+        "review_method": "生成后逐张查看原图，并核对连续帧中的机位、尺度、椅脚和双足位置",
+        "observations": "完整直立站稳，髋膝自然伸展、臀部离椅，双足留地；保持肩上交叉手位，近侧手仍在对侧肩顶部，远侧手由侧面部分遮挡，无支撑借力。椅位置、两鞋接地位置和机位尺度与s01一致，头脚完整，侧面朝右，无文字箭头。"
+      }
+    }
+  ],
+  "revisions": [
+    {
+      "action_sequence": 15,
+      "id": "E-LOW-013",
+      "step": "s01",
+      "selected": false,
+      "prompt": "Use case: scientific-educational.\nAsset type: single photorealistic rehabilitation assessment step photograph, 015 E-LOW-013 s01, five-times sit-to-stand standard hands-free reference version.\nInput images 1-3 are identity and studio style references only. Preserve the same East Asian adult woman's recognizable face, black ponytail, plain white short-sleeve t-shirt and dark charcoal trousers. Add plain unbranded white athletic shoes.\nCreate ONE single photograph in a 1536 x 1024 landscape composition. Full-body true side view, she faces the RIGHT edge. Locked camera sufficiently wide to include her entire future standing height, chair, head, both shoes and floor with generous margin, eye-level from the side, no close crop. Cool gray-blue seamless studio background, matte floor, soft even light, realistic anatomy and neutral expression.\nPose: she is seated stably on a sturdy straight-backed armless HARD-seat chair with seat approximately 43.2 cm from the floor, practical light natural wood square seat and straight backrest, four fixed legs, no wheels, no cushion, no brand. Her buttocks rest fully on the seat, her back rests lightly against the chair's upright backrest. Torso nearly vertical with natural small recline for backrest contact, head upright. Both knees and hips comfortably around 90 degrees, both feet flat on floor at natural hip-width spacing under/slightly behind knees, toes forward to right. Both arms crossed in front of her chest; each hand rests on the opposite upper arm, below the shoulder, without touching chair or thighs. Feet and chair contact with floor anatomically and physically clear. Keep both shoes visible with slight lateral separation, not a stride. Seat, legs and backrest visible.\nConstraints: a single static seated starting pose, no standing duplicate, no sequence, no montage, no text, numbers, captions, arrows, diagrams, watermark, logo, helper, timer, armrest or additional prop. No hand support, no floating shoes, no extra limbs. Maintain believable body proportions from the references.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-ec3e-7e52-b82d-e02efa4cd34e/exec-333a8d15-2fd2-45e0-b2d7-234e334836f7.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/015_E-LOW-013_s01.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "7ae82c461c82b7d72a5aa39c69a672d9ca5f0e2257c7ebba33e70acd306f2a0c",
+      "bytes": 1732714,
+      "QA": {
+        "passed": false,
+        "observations": "动作、支撑、外貌及背景通过，但坐位占画幅过大，按相同比例完整站姿可能超出顶部；扩大构图制作s01_v2，此文件保留不选用。"
+      },
+      "replacement_path": "E:/git冲突问题/rehab image/assess/steps/015_E-LOW-013_s01_v2.png"
+    }
+  ]
+}

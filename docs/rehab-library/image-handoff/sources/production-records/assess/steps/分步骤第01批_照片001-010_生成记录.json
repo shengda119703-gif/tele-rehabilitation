@@ -1,0 +1,328 @@
+{
+  "schema_version": "1.0",
+  "batch": "分步骤第01批_照片001-010",
+  "date": "2026-10-14",
+  "source_document": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+  "scope": "按制作清单顺序只做前10张步骤照片；并非001–010十个动作的全部步骤。",
+  "tool": "内置 image_gen",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "completed_photos": 10,
+  "action_groups_complete": [
+    {
+      "action_sequence": 1,
+      "id": "E-GEN-001",
+      "steps": 3
+    },
+    {
+      "action_sequence": 2,
+      "id": "E-GEN-002",
+      "steps": 6
+    }
+  ],
+  "action_groups_partial": [
+    {
+      "action_sequence": 3,
+      "id": "E-GEN-003",
+      "completed_steps": [
+        "s01"
+      ],
+      "remaining_steps": [
+        "s02",
+        "s03",
+        "s04"
+      ]
+    }
+  ],
+  "planned_total_photos": 471,
+  "next_photo": {
+    "photo_sequence": 11,
+    "action_sequence": 3,
+    "id": "E-GEN-003",
+    "step": "s02",
+    "filename": "003_E-GEN-003_s02.png",
+    "phase_zh": "扶稳保持支撑脚位置，测试脚向前方触点轻点足尖。"
+  },
+  "generation_notes": "自然步行s01首次请求遇网络错误，使用同一内置工具重试成功。TUG s02修正远侧手与扶手接触；触点准备图修正多余细线。原始生成图与返修尝试均保留在各自generated_images路径。未覆盖既有单张动作图片或修改旧185动作进度文件。",
+  "group_records": [
+    "第01批_004-009_TUG_子记录.json",
+    "第01批_010_触点准备_子记录.json"
+  ],
+  "items": [
+    {
+      "photo_sequence": 1,
+      "action_sequence": 1,
+      "id": "E-GEN-001",
+      "name": "家庭短距离自然步行观察",
+      "step": "s01",
+      "phase_zh": "起点自然站稳，双脚落地，身体朝向行走方向。",
+      "prompt": "Use case: scientific-educational, photorealistic rehabilitation exercise STEP photo.\nThree input images are strict identity/clothing/photo/background references. Generate that EXACT SAME East Asian woman: same facial features, age, skin tone, body shape, dark ponytail, plain fitted white short-sleeve crew-neck T-shirt, dark charcoal full-length trousers. Plain white unbranded low-profile athletic shoes. Strictly preserve reference soft cool gray-blue seamless studio backdrop and floor, soft diffused neutral studio lighting and natural subtle shadows. Normal adult body proportions and anatomy, exactly 2 arms and 2 legs, normal hands/fingers. High quality realistic photograph, natural skin/fabric texture.\nSingle independent photo and only ONE person in ONE distinct posture, NO collage, no inset, no ghost motion, no labels, numbers, text, arrows, watermarks or logos. Entire head, hands and both complete shoes visible with comfortable margins, natural lens perspective without limb foreshortening/distortion. Props only as requested.\n\nAction group 001 E-GEN-001, natural short-distance walking observation, not a standardized distance test.\nLANDSCAPE wide 3:2 composition, camera fixed front-side oblique (slightly frontal view of her right-facing profile), normal 50mm lens, lens at torso level, level horizon. Spacious gray-blue seamless studio and unobstructed floor form a simple walking path. Two short thin light-gray plain floor tape marks, start near left of frame and stop near right, no writing or measurements. Both parallel floor marks perpendicular to direction of walking, identical depth and perspective. Photo is wide enough to show person in full at any point of route. Person height about 70 percent of image height. Keep precisely SAME CAMERA, SCALE, FLOOR MARKS, BACKDROP, light and clothing for all three photos. No chairs, poles or extra objects. Walking direction left to right. Calm natural expression, eyes forward.\nPhoto step 01: At the LEFT START tape mark of the path, she stands naturally upright facing right. Both shoes wholly grounded hip-width apart, both knees softly straight, arms relaxed at sides, shoulders level. Clear still-standing preparatory position, no stepping, enough route remains visible to image right.",
+      "correction_prompt": null,
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a137e1-a6ed-7ff1-b533-19f92a29b5da/exec-d8cdf304-0df3-46c8-a5f8-674e3cb78d70.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/001_E-GEN-001_s01.png",
+      "reused": false,
+      "QA": {
+        "passed": true,
+        "observations": "通过：起点双足站稳、身体朝行走方向，路线起止位置和全身手脚可见，人物比例及背景符合参考。"
+      },
+      "category": "assess",
+      "filename": "001_E-GEN-001_s01.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "bytes": 1634161,
+      "sha256": "6E51DE84BD330B3F5A59358636DE823EE39CAE20850B957BE2250A36E906090E",
+      "status": "completed"
+    },
+    {
+      "photo_sequence": 2,
+      "action_sequence": 1,
+      "id": "E-GEN-001",
+      "name": "家庭短距离自然步行观察",
+      "step": "s02",
+      "phase_zh": "沿通路自然迈步，一脚支撑、另一脚前迈。",
+      "prompt": "Use case: identity-preserve rehabilitation STEP photograph.\nImage 1 is the exact walking scene/identity base to EDIT; images 2–4 are original identity, clothing, gray-blue backdrop and photography references.\nUse case: scientific-educational, photorealistic rehabilitation exercise STEP photo.\nThree input images are strict identity/clothing/photo/background references. Generate that EXACT SAME East Asian woman: same facial features, age, skin tone, body shape, dark ponytail, plain fitted white short-sleeve crew-neck T-shirt, dark charcoal full-length trousers. Plain white unbranded low-profile athletic shoes. Strictly preserve reference soft cool gray-blue seamless studio backdrop and floor, soft diffused neutral studio lighting and natural subtle shadows. Normal adult body proportions and anatomy, exactly 2 arms and 2 legs, normal hands/fingers. High quality realistic photograph, natural skin/fabric texture.\nSingle independent photo and only ONE person in ONE distinct posture, NO collage, no inset, no ghost motion, no labels, numbers, text, arrows, watermarks or logos. Entire head, hands and both complete shoes visible with comfortable margins, natural lens perspective without limb foreshortening/distortion. Props only as requested.\n\nAction group 001 E-GEN-001, natural short-distance walking observation, not a standardized distance test.\nLANDSCAPE wide 3:2 composition, camera fixed front-side oblique (slightly frontal view of her right-facing profile), normal 50mm lens, lens at torso level, level horizon. Spacious gray-blue seamless studio and unobstructed floor form a simple walking path. Two short thin light-gray plain floor tape marks, start near left of frame and stop near right, no writing or measurements. Both parallel floor marks perpendicular to direction of walking, identical depth and perspective. Photo is wide enough to show person in full at any point of route. Person height about 70 percent of image height. Keep precisely SAME CAMERA, SCALE, FLOOR MARKS, BACKDROP, light and clothing for all three photos. No chairs, poles or extra objects. Walking direction left to right. Calm natural expression, eyes forward.\nCRITICAL: Keep exactly the same 1536x1024 landscape 3:2 frame, camera viewpoint, lens, image field, backdrop, floor, lighting and two floor tape positions of image 1. MOVE/REPOSE ONLY THE WOMAN. Same height and bodily proportions as image 1; do not zoom or resize. Keep both start/stop markers at their exact original screen positions. Do not replace gray-blue studio with a room. Photo step 02: Along SAME path near CENTER between the start and finish marks, she naturally walks right at an ordinary pace. Far/left support foot grounded beneath her hip with heel slightly rising as normal, camera-near/right foot advancing forward mid-swing and a little off floor, right knee softly flexed. Modest ordinary stride, torso tall, subtle opposite arm swing, no high knee march, sprint, exaggerated lunge or forward hunch. Both complete shoes visible.",
+      "correction_prompt": null,
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a137e1-a6ed-7ff1-b533-19f92a29b5da/exec-3c7d5f2f-c1ae-4155-839c-543ebf9d3202.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/001_E-GEN-001_s02.png",
+      "reused": false,
+      "QA": {
+        "passed": true,
+        "observations": "通过：自然右向迈步、双脚可见、躯干直立、正常对侧摆臂，机位/标线/背景与起点一致。"
+      },
+      "category": "assess",
+      "filename": "001_E-GEN-001_s02.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "bytes": 1632415,
+      "sha256": "28B86E234693884E0FA40EE3EC19D71D6B3DCE202DDDC14DD81278E2D4E0ED1F",
+      "status": "completed"
+    },
+    {
+      "photo_sequence": 3,
+      "action_sequence": 1,
+      "id": "E-GEN-001",
+      "name": "家庭短距离自然步行观察",
+      "step": "s03",
+      "phase_zh": "到终点停稳，双脚重新落地，身体自然直立。",
+      "prompt": "Use case: identity-preserve rehabilitation STEP photograph.\nImage 1 is the exact walking scene/identity base to EDIT; images 2–4 are original identity, clothing, gray-blue backdrop and photography references.\nUse case: scientific-educational, photorealistic rehabilitation exercise STEP photo.\nThree input images are strict identity/clothing/photo/background references. Generate that EXACT SAME East Asian woman: same facial features, age, skin tone, body shape, dark ponytail, plain fitted white short-sleeve crew-neck T-shirt, dark charcoal full-length trousers. Plain white unbranded low-profile athletic shoes. Strictly preserve reference soft cool gray-blue seamless studio backdrop and floor, soft diffused neutral studio lighting and natural subtle shadows. Normal adult body proportions and anatomy, exactly 2 arms and 2 legs, normal hands/fingers. High quality realistic photograph, natural skin/fabric texture.\nSingle independent photo and only ONE person in ONE distinct posture, NO collage, no inset, no ghost motion, no labels, numbers, text, arrows, watermarks or logos. Entire head, hands and both complete shoes visible with comfortable margins, natural lens perspective without limb foreshortening/distortion. Props only as requested.\n\nAction group 001 E-GEN-001, natural short-distance walking observation, not a standardized distance test.\nLANDSCAPE wide 3:2 composition, camera fixed front-side oblique (slightly frontal view of her right-facing profile), normal 50mm lens, lens at torso level, level horizon. Spacious gray-blue seamless studio and unobstructed floor form a simple walking path. Two short thin light-gray plain floor tape marks, start near left of frame and stop near right, no writing or measurements. Both parallel floor marks perpendicular to direction of walking, identical depth and perspective. Photo is wide enough to show person in full at any point of route. Person height about 70 percent of image height. Keep precisely SAME CAMERA, SCALE, FLOOR MARKS, BACKDROP, light and clothing for all three photos. No chairs, poles or extra objects. Walking direction left to right. Calm natural expression, eyes forward.\nCRITICAL: Keep exactly the same 1536x1024 landscape 3:2 frame, camera viewpoint, lens, image field, backdrop, floor, lighting and two floor tape positions of image 1. MOVE/REPOSE ONLY THE WOMAN. Same height and bodily proportions as image 1; do not zoom or resize. Keep both start/stop markers at their exact original screen positions. Do not replace gray-blue studio with a room. Photo step 03: At the RIGHT FINISH tape mark of SAME path, she has stopped walking and stands naturally upright still facing right. Both entire shoe soles grounded beside each other hip-width, both knees softly straight, arms relaxed at sides. This must visibly be stopped standing, not a walking stride, not turning. Start mark visible back to left, finish mark beneath/near shoes, within the clear path. Person same height and scale as starting photo, camera unchanged.",
+      "correction_prompt": null,
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a137e1-a6ed-7ff1-b533-19f92a29b5da/exec-0e74327e-638a-4a23-a275-75f6e380fea2.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/001_E-GEN-001_s03.png",
+      "reused": false,
+      "QA": {
+        "passed": true,
+        "observations": "通过：终点双脚落地停稳，全身手脚完整，机位/标线/人物尺度与同组一致。"
+      },
+      "category": "assess",
+      "filename": "001_E-GEN-001_s03.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "bytes": 1603929,
+      "sha256": "E3EDE68C29489BA9CA5652D0849D52F384B8F3AC49E86209E36A34EFE9E88FE8",
+      "status": "completed"
+    },
+    {
+      "photo_sequence": 4,
+      "action_sequence": 2,
+      "id": "E-GEN-002",
+      "step": "s01",
+      "phase_zh": "背靠扶手椅坐稳，双手放扶手，双脚落地",
+      "prompt": "Use case: scientific-educational, photorealistic rehabilitation demonstration photo.\nMake ONE standalone photograph for E-GEN-002 TUG, step 01, the initial seated ready position. NOT a collage.\nINPUT IMAGES: the three provided images are strict identity, wardrobe, studio color, and photographic style references. Depict exactly the same East Asian adult woman with the same face, black low ponytail, white plain short-sleeve T-shirt, charcoal-gray fitted long trousers. Add ordinary plain white low-top athletic shoes, no branding.\nSCENE: maintain the references' cool gray-blue seamless studio backdrop and matching smooth gray-blue floor, soft diffuse studio light, realistic skin and cloth. A single sturdy gray upholstered armchair with backrest, TWO clearly visible side armrests and four fixed legs, no wheels, placed at LEFT of picture facing toward the RIGHT along a straight unobstructed three-metre walking route. At the chair front is a short dark-gray flat tape start line transverse to the route. At RIGHT, exactly 3 metres ahead along the same route, a parallel dark-gray flat tape turn line. No other markers, no cones, no text.\nCAMERA: fixed wide landscape 3:2 composition, side-front three-quarter view, camera facing the entire route slightly from its front side. Full chair plus complete seated person and both floor lines in the same shot, all body parts and shoes unclipped, a little margin all around. Natural perspective with realistic anatomy, no fisheye, no elongated limbs.\nPOSE: woman sits upright and comfortably with her BACK supported against the chair backrest, BUTTOCKS firmly resting on the seat, feet BOTH flat on the floor about hip width in front of the chair, knees about right angle. She faces toward the RIGHT walking route. Each of her TWO hands rests naturally on its corresponding left/right armrest, with palms visibly touching armrests and fingers normal. Calm neutral expression; head looks along route. Hands belong to the woman.\nThe chair, tape lines, lighting, focus and camera composition become the invariant scene for six sequential steps. Render just this seated ready instant. No motion ghosts, no overlaid arrows, no words, numbers, labels, borders, panels, watermark, extra people, furniture or extra limbs. Keep the reference woman's identity and proportions closely.",
+      "correction_prompt": null,
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a13857-5634-79c0-9bee-94dd9e07179a/exec-563fb6d6-4f53-4f33-8e72-e9f9361ca228.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/002_E-GEN-002_s01.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "93F5C65AC17FA545C369DBD20D14BB581CBEDA91BE703AFE692EE8BCDF73AF6A",
+      "bytes": 1766047,
+      "QA": {
+        "step": "s01",
+        "passed": true,
+        "observations": "同一女性外貌、白T恤深灰长裤马尾与白鞋；灰蓝棚拍横幅；扶手椅稳固无轮；双手分别接触扶手，背靠椅，臀坐椅面、双脚平放地面；全身、椅及双标线可见。"
+      },
+      "name": "标准3 m起立行走计时：TUG",
+      "category": "assess",
+      "reused": false,
+      "filename": "002_E-GEN-002_s01.png",
+      "status": "completed"
+    },
+    {
+      "photo_sequence": 5,
+      "action_sequence": 2,
+      "id": "E-GEN-002",
+      "step": "s02",
+      "phase_zh": "双手扶扶手起立，臀已离座，双足落地",
+      "prompt": "Use case: identity-preserve, photographic rehabilitation teaching image.\nEdit image 1 into E-GEN-002 TUG step 02, rising using both armrests. Generate ONE standalone photo.\nIMAGE ROLES: Image 1 is the EXACT scene/composition edit target and identity/wardrobe base. Images 2–4 are the ORIGINAL strict same-woman face, hair, clothes, cool gray-blue studio and photographic-style references.\nINVARIANTS: keep camera position, fixed landscape 3:2 framing, lens, field of view, size and scale, floor and seamless background color, lighting, two tape marks and their exact positions, same sturdy gray two-armrest chair on LEFT facing RIGHT, all furniture geometry and foot locations exactly as image 1. No moving furniture, no zoom/reframe. Same woman, face, black ponytail, white T-shirt, charcoal trousers, ordinary white shoes and normal anatomy.\nCHANGE ONLY WOMAN'S POSE: she is in the middle of rising from this same chair, oriented RIGHT along the route. Her BUTTOCKS have visibly lifted 10–15 cm clear ABOVE the seat, no seat contact; knees and hips still bent, torso leaned forward naturally from hips, head looks along route. BOTH palms are visibly pressing their corresponding original left and right chair armrests, with anatomically correct fingers, both hands belong to this woman. BOTH feet remain planted flat on original floor positions in front of chair, stable hip-width spacing. This is the armrest-assisted lift phase, not standing upright and not a squat facing away. Show visible air gap between buttocks and seat. Chair remains fully visible and solid. Keep all of her head/body/limbs/shoes in-frame at the SAME human scale.\nNo overlaid words, numbers, labels, arrows, collage, motion ghosts, other people, extra limbs, altered armrests or invented equipment. Soft photorealistic reference quality.",
+      "correction_prompt": "Use case: precise-object-edit, photographic rehabilitation demonstration.\nCorrect ONLY the distant/far hand-to-armrest contact in image 1. Image 2 is original scene and exact armchair reference; images 3–5 show exact woman's identity and style.\nImage 1 already shows the correct rising pose: buttocks above seat, knees bent, torso forward, close hand pressing close armrest, both feet fixed on floor. Preserve this entire pose, face, hair, clothes, proportions, head position, feet position, floor and background, lighting, camera, framing, chair location and both tape marks.\nThe woman's FAR hand is currently visually ambiguous against her trousers. Make her far palm CLEARLY press the TOP of the FAR gray upholstered armrest, at the very same height as the near armrest. Show a short, definite visible gray upholstered horizontal support underneath the palm belonging to the chair's far armrest. Her far hand must NOT rest on thigh or knee, and not float. Correct only this contact locally, with a natural slightly bent elbow, recognizable fingers. Keep TWO hands total and TWO armrests, no extra supports or limbs.\nKeep the exact same fixed landscape framing, same scene and scale. ONE standalone photorealistic photo, no text, arrows, panels, collage or watermarks.",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a13857-5634-79c0-9bee-94dd9e07179a/exec-e5d6cc14-1c92-41e0-a83f-56227ef89464.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/002_E-GEN-002_s02.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "97321BBB6879F344C1E1BFA25A69952B1E9C1B155AE428594DC82A90532CA356",
+      "bytes": 1665934,
+      "QA": {
+        "step": "s02",
+        "passed": true,
+        "observations": "已修正远側掌压扶手位置；现双手与两扶手接触明确，臀离座有空隙、髋膝仍屈，足位固定地面。相机、椅、标线与基准一致。",
+        "rejected_original": "C:/Users/Administrator/.codex/generated_images/01a13857-5634-79c0-9bee-94dd9e07179a/exec-430ae4a2-ec4b-4b0d-9f59-1c7ac6393826.png",
+        "rejected_reason": "远侧手与扶手接触不够清楚，初版保留未删除。"
+      },
+      "name": "标准3 m起立行走计时：TUG",
+      "category": "assess",
+      "reused": false,
+      "filename": "002_E-GEN-002_s02.png",
+      "status": "completed"
+    },
+    {
+      "photo_sequence": 6,
+      "action_sequence": 2,
+      "id": "E-GEN-002",
+      "step": "s03",
+      "phase_zh": "沿去程走近三米转向线，一足支撑另一足前迈，尚未转身",
+      "prompt": "Use case: identity-preserve, photographic rehabilitation step demonstration.\nCreate E-GEN-002 TUG step 03 as a precise scene-preserving edit of image 1, ONE standalone landscape photo.\nImage 1: exact scene edit target. Images 2–4: same woman's original face, hair, clothes, studio color and photography references.\nLOCK SCENE: retain exact same landscape 3:2 framing, fixed camera position and lens, background and floor gray-blue color, studio lighting and shadows. Retain unchanged exact gray chair on LEFT, facing RIGHT, with two upholstered armrests and four fixed legs, now EMPTY. Retain both dark gray tape floor lines at their exact locations and sizes. No reframe, zoom, new chair, new marker, extra tape or people.\nCHANGE ONLY PERSON'S POSE AND POSITION: the SAME woman is near the far RIGHT turn line, walking the OUTWARD direction from chair toward RIGHT. Her face, nose, chest, pelvis and feet are still pointed RIGHT; she has NOT begun turning or returning. Position her a small step BEFORE the original right tape line (about 35 cm), left behind her is the unchanged empty chair and original start tape. Natural gait: one foot planted supporting weight just short of marker, the other foot lifted a few centimetres and stepping toward the marker. Natural small opposite arm swing, neither hand touches furniture. Head looks toward RIGHT, spine upright, normal joints. Full body from head through both white shoes entirely visible, with natural adult proportions and consistent person scale; do not elongate legs, make legs huge, shrink head or crop feet. Same black ponytail, white T-shirt, charcoal long trousers, plain white shoes.\nThis SINGLE still instant clearly shows walking TOWARD the right turn marker before turning, no motion ghosts, no multiple poses, no text/arrows/labels/watermarks. Preserve exact photographic style and identity.",
+      "correction_prompt": null,
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a13857-5634-79c0-9bee-94dd9e07179a/exec-bc7e3ca3-f09f-4a1c-8ca8-cc11b26c630e.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/002_E-GEN-002_s03.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "58810DDF40D0B6B37C4FBA27F2D126AF29516777007D37EFDA3BC53CDA750C80",
+      "bytes": 1700889,
+      "QA": {
+        "step": "s03",
+        "passed": true,
+        "observations": "人物位于右侧转向线前，脸胸髋足朝去程右侧；后足支撑前足迈向标线，未转身。空椅和双标线清楚，人物比例、手指脚和棚拍场景正常一致。"
+      },
+      "name": "标准3 m起立行走计时：TUG",
+      "category": "assess",
+      "reused": false,
+      "filename": "002_E-GEN-002_s03.png",
+      "status": "completed"
+    },
+    {
+      "photo_sequence": 7,
+      "action_sequence": 2,
+      "id": "E-GEN-002",
+      "step": "s04",
+      "phase_zh": "在三米转向线处实际转身，双脚调整，躯干从去程转向回程",
+      "prompt": "Use case: identity-preserve, photographic rehabilitation step demonstration.\nMake ONE standalone photo of E-GEN-002 TUG step 04, ACTUAL TURNING at the 3-metre far line. Edit image 1 precisely. Image 1 is preceding outward walking step; image 2 is original exact scene; images 3–5 lock the original woman's identity, clothes and photographic style.\nLOCK ALL SCENE: exactly same fixed camera viewpoint, 3:2 landscape crop and zoom, unchanged gray-blue studio backdrop/floor/light. EXACT same empty gray fixed-leg two-armrest chair on LEFT facing RIGHT, exact start line on left and turn line on right at their original positions. Furniture and marks do not rotate, shift or change. Keep person scale and complete head to both white shoes within frame.\nCHANGE ONLY woman's placement and pose: at the far RIGHT tape turn line, she is in the middle of a controlled 180-degree TURN from rightward outward travel to leftward return toward chair. Show intermediate roughly 90-degree orientation: her torso and pelvis face mostly toward CAMERA (front view), her head has begun turning gently toward the LEFT chair, not still profile-right and not already side-profile-left walking. Feet are clearly actively repositioned for the turn: one planted foot just beside the turn line, the other makes a short turning step closer to camera/left, toes point in slightly different angles consistent with ongoing turn; both knees gently unlocked, normal anatomy, no severe twisting of knees, no crossed over legs. The visible far tape line stays beside/under the edge of turning foot and must not be hidden by the body. Hands free with small natural balance position near sides, no pointing or chair contact. She is NOT marching forward, NOT walking backward, NOT simply facing camera at the middle of the route. This is clearly the turning moment right AT the far line with empty chair across route to her LEFT.\nSame woman, normal proportions, reference face/black ponytail/white T-shirt/dark gray trousers/plain white shoes. One person and two arms/legs only. No text, labels, numbers, overlays, arrows, collage, motion ghosts, added people, equipment or watermarks.",
+      "correction_prompt": null,
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a13857-5634-79c0-9bee-94dd9e07179a/exec-60b5815b-430f-47c2-b933-0efda18bac43.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/002_E-GEN-002_s04.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "E2F041D6949F9EFB06926E71C4D75EF56882B1E659A35DD27AA4E9E2AFC77E22",
+      "bytes": 1646705,
+      "QA": {
+        "step": "s04",
+        "passed": true,
+        "observations": "在右转向线处，胸髋朝相机约转向中段，头向左椅，双脚调方向且一脚跟微提、未交叉；真实转身而非去程/回程直走。转向线、双脚、空椅清楚，场景与比例一致。"
+      },
+      "name": "标准3 m起立行走计时：TUG",
+      "category": "assess",
+      "reused": false,
+      "filename": "002_E-GEN-002_s04.png",
+      "status": "completed"
+    },
+    {
+      "photo_sequence": 8,
+      "action_sequence": 2,
+      "id": "E-GEN-002",
+      "step": "s05",
+      "phase_zh": "转身已完成，面向椅子沿原路回程，双足继续迈步",
+      "prompt": "Use case: identity-preserve, photographic rehabilitation teaching still.\nE-GEN-002 TUG STEP 05: walking RETURN toward chair. ONE standalone image. Precise scene-preserving edit.\nImages: 1 is exact unchanged scene/composition base seated initial photo; 2 is approved outgoing walking photo for standing person scale and outfit; 3–5 are strict reference identity/photographic style.\nLOCK ALL SCENE AND CAMERA: same fixed landscape 3:2 framing, lens, camera viewpoint, gray-blue background and floor, lighting. EXACT same empty gray upholstered armchair at LEFT facing RIGHT, two armrests four fixed legs. Exact same two dark floor tape marks at original locations and geometry, no new marks. No rotate/shift furniture, no reframing, no crop or zoom. Leave entire route visible.\nCHANGE WOMAN ONLY: same woman has completed the FAR-line turn and is returning LEFT toward the chair along SAME route, now in the middle-left part of route, still several normal steps short of chair; she has NOT touched chair and NOT sat down. Nose, head, torso, pelvis and shoes clearly face LEFT toward chair (opposite of outward image 2), no walking backwards. Show a natural leftward walking stride, one foot supporting and other moving forward toward LEFT/start line; small natural opposite arm swing. Feet and her full head-to-toe remain visible with the same natural standing size as image 2. Place her nearer LEFT/start than FAR line but keep a visible safe gap from chair, BOTH lines remain visible. She looks toward left chair. No leaning, kneeling, squat, turn-in-place or endpoint seated pose.\nKeep identical original woman's face, black ponytail, plain white T-shirt, charcoal-gray trousers, normal limbs and body proportions, ordinary white trainers; natural hands. One woman only. No overlays, text, labels, numbers, arrows, panels, collage, ghosts, extra people/limbs or watermarks.",
+      "correction_prompt": null,
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a13857-5634-79c0-9bee-94dd9e07179a/exec-71ac44e8-f5c6-4556-a9bd-65dfa92bc5ad.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/002_E-GEN-002_s05.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "A9F4525B71342646316BD0E3CAE86E2C9E81BA41173A04C2EDA225BC9A448CCC",
+      "bytes": 1704053,
+      "QA": {
+        "step": "s05",
+        "passed": true,
+        "observations": "回程左向自然迈步，脸胸髋足向左椅，前足微离地后足支持；与椅仍有间距尚未终点。双标线、椅与摄影背景保持同一设置，人体和手脚正常。"
+      },
+      "name": "标准3 m起立行走计时：TUG",
+      "category": "assess",
+      "reused": false,
+      "filename": "002_E-GEN-002_s05.png",
+      "status": "completed"
+    },
+    {
+      "photo_sequence": 9,
+      "action_sequence": 2,
+      "id": "E-GEN-002",
+      "step": "s06",
+      "phase_zh": "转向后坐回原椅，双手接触扶手、臀部实坐椅面，双足落地",
+      "prompt": "Use case: identity-preserve, photographic rehabilitation step demonstration.\nCreate E-GEN-002 TUG STEP 06, the final ENDPOINT seated again after completing the return. ONE standalone scene-preserving photo.\nImage 1 is exact original seated preparation scene and MUST remain unchanged except person's very slight endpoint posture; image 2 is approved armrest-assisted rising pose for the same scene; images 3–5 lock original woman identity and reference style.\nSTRICT INVARIANTS: identical fixed wide landscape 3:2 framing, camera viewpoint, focus, natural scale, gray-blue seamless backdrop/floor and soft studio light. EXACT same gray upholstered chair on LEFT facing RIGHT with TWO armrests, backrest and four fixed legs; both dark floor tape lines stay in exactly the same positions. No reposition/rotate/resize chair or markers. Same woman, same face, black ponytail, plain white short-sleeve T-shirt, charcoal-gray trousers and ordinary white shoes, natural anatomy.\nPOSE CHANGE: after returning LEFT to chair she has turned to face RIGHT along the route, and has sat back DOWN. Her BUTTOCKS are fully and visibly in contact with the seat cushion, thighs supported by chair seat, seated at original height (NOT hovering, NOT rising and NOT squatting). Keep a clear natural seated silhouette, knees bent near right angles. BOTH feet flat on floor at original stable positions, hip width, complete shoes visible. BOTH palms visibly touch and gently press their OWN corresponding TWO gray armrests as she completes controlled sitting. Each hand has real gray upholstered armrest top directly underneath it; far hand MUST NOT rest on thigh/knee. For this endpoint posture torso only slightly inclined forward by 5–10 degrees, head looking RIGHT calmly; not leaned so far buttocks lift. There is NO GAP between buttocks and seat. This is the seated finish, visually close to image 1 but with slight forward endpoint posture. Maintain full head/body/shoes and whole chair in frame, consistent proportions and background.\nNo words, numbers, labels, arrows, motion ghosts, panels/collage, extra people/limbs, altered furniture or watermark.",
+      "correction_prompt": null,
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a13857-5634-79c0-9bee-94dd9e07179a/exec-0f61c54f-1ee1-490f-a01b-b17c1b5bede0.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/002_E-GEN-002_s06.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "E723D4827C522785312DC3EDA952F2F836C9E5F38790DC625107522584AEAECC",
+      "bytes": 1687959,
+      "QA": {
+        "step": "s06",
+        "passed": true,
+        "observations": "臀实坐椅面无悬空、双掌分别接触扶手，双足平放地面；坐回后朝路线右方；人物全身、椅、双标线可见。保持与初始图相近且正常比例；场景、背景及外貌一致。"
+      },
+      "name": "标准3 m起立行走计时：TUG",
+      "category": "assess",
+      "reused": false,
+      "filename": "002_E-GEN-002_s06.png",
+      "status": "completed"
+    },
+    {
+      "photo_sequence": 10,
+      "action_sequence": 3,
+      "id": "E-GEN-003",
+      "step": "s01",
+      "step_number": 1,
+      "phase_zh": "左手扶固定支撑、双脚在起始位置站稳，右脚前方、斜前方、侧方三枚平面触点均可见",
+      "prompt": "Use case: scientific-educational, photorealistic rehabilitation demonstration photo.\nCreate ONE standalone photograph for E-GEN-003 step 01: initial ready position for supported multidirectional ground toe touches. This is only the ready stance, no reaching foot movement.\nINPUT IMAGES: three strict references of the SAME East Asian adult woman, original face, black low ponytail, plain white short-sleeve T-shirt, fitted charcoal-gray full-length trousers; preserve her identity, clothing colors, realistic skin and cloth. Plain white low-top athletic shoes without branding.\nSCENE/STYLE: exact reference soft diffuse studio photography and cool gray-blue seamless background; matching flat cool gray-blue floor. Normal adult proportions, natural face and hands, no fisheye or exaggerated joints.\nCOMPOSITION: landscape 3:2, 1536 by 1024 look; side-front three-quarter full-body camera viewpoint, complete head and both shoes, arm and stable hand support in frame, all THREE flat floor targets clearly visible with margin. Woman in center, slightly facing camera and forward, camera is sufficiently high to see the floor marks.\nSUPPORT: a single sturdy fixed gray metal horizontal support rail at her anatomical LEFT side (toward viewer RIGHT). Rail at her waist height, mounted securely on TWO vertical posts with real bolted feet to the floor, no wheels, no instability. Her LEFT hand visibly grips/rests on top of this fixed rail, elbow slightly bent, palm and fingers naturally contacting rail. Right arm naturally relaxed at her side, no rail contact.\nREADY POSE: upright torso, eyes ahead, shoulders relaxed, BOTH feet fully and firmly flat on floor in a comfortable hip-width starting stance. Her anatomical RIGHT foot (viewer LEFT) is intended as the later testing foot but is currently still in the same stable starting stance; neither foot is lifted or touching a target. LEFT foot will later be support foot. Only one standing pose.\nTHREE FLOOR TARGETS: exactly THREE small flat dark-gray circular tape dots on floor, distinct and clearly visible, NOT upright cones or objects. All placed within a comfortable short toe-reach radius of her RIGHT foot (around 25–40 cm), not distant. Arrange in a fan on her anatomical RIGHT side of starting stance: dot 1 directly FORWARD of right toes (toward foreground), dot 2 diagonally RIGHT-FORWARD of right foot (toward foreground and viewer LEFT), dot 3 directly LATERAL RIGHT of right foot (toward viewer LEFT, beside foot at similar depth). The lateral dot is not behind her and not on her left-foot/support-rail side. Three separate visible dots, no start dot under feet, no extra markers, no ruler, no writing.\nAll hand-to-rail, both shoe-to-floor and dots-to-floor contact realistic. Full body and feet are NOT cut off. No text, numbers, symbols, labels, arrows, ghost poses, panels, collage, border, watermark, extra people/limbs, chair, cones or other equipment.",
+      "correction_prompt": "Use case: precise-object-edit. Edit only a few fine unwanted lines on floor in image 1.\nImage 1 is the exact complete photo edit target. Images 2–4 are original woman/style references, preserve image 1 identity and all content strictly.\nRemove ONLY the three very thin gray straight connector lines running between the three circular floor dots and the woman's right shoe in lower-left/center foreground. Replace these narrow line pixels with seamless matching gray-blue floor texture.\nPreserve ALL THREE dark flat circular dots at their exact existing locations, sizes and shades; three separate circles only, NO connectors or lines of any kind. Do not alter or move her feet, shoes or shadows. Do not add floor markings. The woman must remain in the identical upright ready stance with BOTH feet flat, LEFT hand touching the fixed rail on viewer-right, same face/black ponytail/white T-shirt/charcoal trousers, and exact same normal proportions.\nKeep exact full fixed rail geometry and its bolted posts, camera position, landscape 3:2 framing, image composition, gray-blue backdrop and lighting. No pose change, no resizing/reframing, no text, arrow, label, collage or watermark. This is a local floor cleanup only.",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a13857-5634-79c0-9bee-94dd9e07179a/exec-99a0ca47-d5d0-4c08-8e44-d25a2b3848b1.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/003_E-GEN-003_s01.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "309164F9D6F9CC7C63071F801DEDE6D0BA9A39359F50A6581AF8CE71935A426D",
+      "bytes": 1610192,
+      "QA": {
+        "passed": true,
+        "observations": "同一原参考女性、白T恤深灰长裤黑马尾、灰蓝棚拍背景与柔光，普通白鞋；正常人体比例与自然双手。左手明确接触固定灰栏，支架底座与地面连接可见，双足落地还未伸向目标。右脚前方、右斜前、右侧三枚深灰平面点清楚且在短距离可及范围；全身与三点、支撑均不裁切，无文字箭头拼图、连接线和额外标记。",
+        "rejected_original": "C:/Users/Administrator/.codex/generated_images/01a13857-5634-79c0-9bee-94dd9e07179a/exec-7d05eb05-015a-41d5-bd9f-fcf5ca317fbf.png",
+        "rejected_reason": "初版自行出现极细的触点连接线，仅局部移除，原图保留未删除。"
+      },
+      "name": "地面多方向触点动态平衡：非标准化功能观察",
+      "category": "assess",
+      "reused": false,
+      "filename": "003_E-GEN-003_s01.png",
+      "status": "completed"
+    }
+  ]
+}

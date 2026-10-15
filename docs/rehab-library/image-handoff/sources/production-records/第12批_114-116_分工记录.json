@@ -1,0 +1,113 @@
+{
+  "batch": 12,
+  "range": "114-116",
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "source_document": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+  "generation_mode": "built-in image_gen; one call per independent image; 114 received two targeted image_gen edits",
+  "identity_references": [
+    "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-e0e4d994-f064-49c3-aabe-eae175412eec.png",
+    "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-14d3a1b0-93c6-4f79-bcf5-ef47a663e1fb.png",
+    "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-8cdb12d5-aabb-46b3-bbc3-ebd85866dd33.png"
+  ],
+  "actions": [
+    {
+      "sequence": 114,
+      "id": "T-LOW-051",
+      "name": "双脚上升—单脚缓降提踵",
+      "category": "train",
+      "planned_filename": "114_T-LOW-051_双脚上升—单脚缓降提踵.png",
+      "prompt": "Use case: scientific-educational. Asset: one independent PNG rehabilitation exercise photograph. The three supplied photographs are STRICT identity, wardrobe, lighting and backdrop references for the SAME woman. Preserve her exact East Asian face, apparent age, skin tone, black low ponytail, white plain short sleeve fitted athletic T-shirt, dark charcoal full length athletic pants, soft photographic light, realistic skin and cloth textures. Preserve the exact soft pale cool gray-blue subtly mottled photography backdrop color and extend it seamlessly onto the studio floor. This is a real studio photograph, not an illustration. NORMAL natural adult body proportions, approximately seven to eight heads tall, natural lengths of thighs, calves, torso, hands and feet; realistic five-finger hands and five-toed bare feet. Full body including head and both complete feet, enough margins around everything. Portrait canvas 1122 x 1402, same 4:5 proportions as references. One single continuous camera photograph with ONE woman only, no inset, no collage, no repeated figures, no written labels, no arrows, no text, no graphic overlay, no watermarks. Match references closely; only adapt pose and add the necessary simple exercise support. Barefoot so ankle and forefoot contacts are visible.\nExercise 114: eccentric heel lowering after rising on both feet. Show the single-leg lowering mid-stage, late in the controlled descent. The woman is standing upright in a right-facing near-side profile, spine and head naturally aligned, on perfectly level floor. ONE supporting leg almost straight with its whole ball of foot and toes grounded; that supporting heel is only 1–2 cm off the flat floor, visibly a very low heel raise. Her other knee bends gently so the non-training foot is clearly suspended a small distance behind the supporting calf; it has no ground contact. ONE hand LIGHTLY touches a fixed matte gray waist-height handrail with solid stable base. The other arm hangs relaxed. No dumbbell, no external weight. Do not make an exaggerated tiptoe at the top. No step, no platform, no incline board, no jumping. Natural arm, leg and foot anatomy. Side view allows the low supporting heel, forefoot contact, and separate lifted foot to be unambiguously visible. Keep entire rail and subject sensibly composed without occluding her face or feet.",
+      "original_generation_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-ba20a5e4-b26a-43dd-ac1f-cf95fd2a7c93.png",
+      "selected_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-032240d3-29a5-4186-bbd8-fad80dafe8b1.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\114_T-LOW-051_双脚上升—单脚缓降提踵.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\114_T-LOW-051_双脚上升—单脚缓降提踵.png",
+      "phase": "双脚抬跟后非训练脚离地，训练侧单脚缓降接近平地阶段；跟仅离地1–2厘米。",
+      "visual_check": {
+        "passed": true,
+        "items": [
+          "原参考人物的脸、低马尾、白短袖、深灰长裤及灰蓝背景保持一致。",
+          "一手轻扶固定扶手，另一手自然下垂，无外负重。",
+          "非训练脚离地；训练脚前足接地，脚跟降至接近地面的低幅位置，未使用台阶。",
+          "完整头部、躯干、四肢和两足入镜，比例自然，无明显多指、多趾或肢体断接。",
+          "单张静态只呈现双上单下过程中的下降阶段，不表示完整动态序列。"
+        ]
+      },
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1574420,
+      "sha256": "5BA316F89AB6D73CB5FBC40411C7D547D268F2AC3B350CF8D84F3597A7E5E1EB",
+      "status": "completed",
+      "corrections": [
+        {
+          "reason": "首图支撑跟过高，接近顶部。",
+          "prompt": "Use case: identity-preserve. Image 1 is the EDIT TARGET; images 2, 3, 4 are the original identity, outfit, lighting and gray-blue backdrop references. Make ONE local pose correction to the supporting bare foot and ankle in image 1: it is too high on tiptoe. Lower the supporting heel toward the same flat floor so the heel is JUST 1–2 cm above the floor, a very narrow visible gap; the supporting foot is almost flat, with only a slight 5–10 degree upward heel tilt. Keep the supporting ball of foot and toes in their EXACT original grounded place. This is the late stage of controlled single-leg eccentric heel lowering, not the high top of a calf raise. Relax and reduce plantarflexion to lower heel; the foot must stay normal anatomy, full-length heel to toes. Lower the rest of the body only a tiny matching amount if biomechanically necessary. Preserve the woman's exact face, age, ponytail, white T-shirt, dark charcoal pants, proportions, entire upper body, hand lightly on gray handrail, other hand relaxed, NON-SUPPORTING knee bent with that foot OFF the floor in the same position. Preserve photographic lighting, framing, pale gray-blue mottled studio background and floor EXACTLY. Output one PNG portrait 1122x1402 with full person and feet, no text, no arrows, no diagram, no collage. No dumbbell, no steps. Avoid redesigning the scene. Only lower the supporting heel to near-floor.",
+          "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-0be12177-66a7-466f-b688-7113f9c73922.png",
+          "accepted": false
+        },
+        {
+          "reason": "进一步降低支撑跟，呈现接近平地的缓降阶段。",
+          "prompt": "EDIT TARGET image 1; images 2–4 lock the original woman's exact face, hairstyle, clothes, colors and photographic background. Lower the single supporting heel MUCH MORE. In image 1 the supporting heel is STILL too high. The finished supporting FOOT SHOULD LOOK ALMOST FLAT on the ground: supporting toe/ball contact at the existing floor position; supporting HEEL SOLE at essentially the same horizontal level as toe contact, but a tiny visible 1 cm gap remains beneath heel. Its long sole line is nearly horizontal, only 5–8 degrees tilted, NOT 30 degrees. The heel sole should be about 8–12 image pixels above the floor at this framing. It should resemble a foot about to finish landing heel down, not standing on tiptoe. Reduce ankle plantarflexion; lower the body a tiny matching amount naturally if needed while staying upright. Keep the opposite knee flexed and foot clearly airborne behind, hand lightly on fixed gray waist-high rail, relaxed other hand. Preserve normal anatomy, identity, proportions and entire photograph composition. Do not change background, wardrobe or rail. One continuous full body studio photograph. Portrait PNG 1122x1402. No words, arrows, overlay or collage.",
+          "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-032240d3-29a5-4186-bbd8-fad80dafe8b1.png",
+          "accepted": true
+        }
+      ]
+    },
+    {
+      "sequence": 115,
+      "id": "T-LOW-037",
+      "name": "坐位提踵：徒手至膝上负荷",
+      "category": "train",
+      "planned_filename": "115_T-LOW-037_坐位提踵：徒手至膝上负荷.png",
+      "prompt": "Use case: scientific-educational. Asset: one independent PNG rehabilitation exercise photograph. The three supplied photographs are STRICT identity, wardrobe, lighting and backdrop references for the SAME woman. Preserve her exact East Asian face, apparent age, skin tone, black low ponytail, white plain short sleeve fitted athletic T-shirt, dark charcoal full length athletic pants, soft photographic light, realistic skin and cloth textures. Preserve the exact soft pale cool gray-blue subtly mottled photography backdrop color and extend it seamlessly onto the studio floor. This is a real studio photograph, not an illustration. NORMAL natural adult body proportions, approximately seven to eight heads tall, natural lengths of thighs, calves, torso, hands and feet; realistic five-finger hands and five-toed bare feet. Full body including head and both complete feet, enough margins around everything. Portrait canvas 1122 x 1402, same 4:5 proportions as references. One single continuous camera photograph with ONE woman only, no inset, no collage, no repeated figures, no written labels, no arrows, no text, no graphic overlay, no watermarks. Match references closely; only adapt pose and add the necessary simple exercise support. Barefoot so ankle and forefoot contacts are visible.\nExercise 115: seated heel raise, the unweighted beginning version. Show the SAME woman seated upright on a stable simple matte gray armless chair without wheels. Near-side view facing right, entire head, body, chair and both feet fully visible with margins. Hips and knees in comfortable sitting position, knees bent about 90 degrees, lower legs almost vertical and feet directly beneath or slightly in front of knees, NOT stretched far forward. Both bare feet rest on level floor through the forefeet and toes; BOTH heels clearly lifted about 3–4 cm by ankle plantarflexion. The balls of the feet remain in flat floor contact. Toes relaxed and uncurled. Her hands naturally rest on the far end of her thighs ABOVE the knee, no pressing directly on kneecaps. Use NO dumbbell and NO added weight for this version. Chair supports her buttocks, not hovering. Natural relaxed upright torso, reference face in right profile, shoulders down. No foot stool, no step, no incline. Make both lifted heels and the front of feet fully visible and anatomically distinct.",
+      "original_generation_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-9e4ef180-08e7-4fc3-bb4d-a9dfc152c34c.png",
+      "selected_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-9e4ef180-08e7-4fc3-bb4d-a9dfc152c34c.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\115_T-LOW-037_坐位提踵：徒手至膝上负荷.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\115_T-LOW-037_坐位提踵：徒手至膝上负荷.png",
+      "phase": "无外负重坐位双脚提踵顶部，双前足接地，双脚跟抬高。",
+      "visual_check": {
+        "passed": true,
+        "items": [
+          "原参考人物、服装、摄影风格及灰蓝背景一致。",
+          "稳固灰椅坐位，膝约90度，脚在膝下略前；双前足接地且双脚跟抬高。",
+          "采用无外负重版，双手自然置大腿上，无重物压髌骨。",
+          "完整人物、椅和两足入镜，人体比例、足跟和脚趾无明显异常。"
+        ]
+      },
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1691691,
+      "sha256": "8ED7152E638F308D08853EDF9EEE803F626879A755E93C7D4D7DB5DBD3C01372",
+      "status": "completed"
+    },
+    {
+      "sequence": 116,
+      "id": "T-LOW-038",
+      "name": "弹力带踝四方向：按许可单独启用",
+      "category": "train",
+      "planned_filename": "116_T-LOW-038_弹力带踝四方向：按许可单独启用.png",
+      "prompt": "Use case: scientific-educational. Asset: one independent PNG rehabilitation exercise photograph. The three supplied photographs are STRICT identity, wardrobe, lighting and backdrop references for the SAME woman. Preserve her exact East Asian face, apparent age, skin tone, black low ponytail, white plain short sleeve fitted athletic T-shirt, dark charcoal full length athletic pants, soft photographic light, realistic skin and cloth textures. Preserve the exact soft pale cool gray-blue subtly mottled photography backdrop color and extend it seamlessly onto the studio floor. This is a real studio photograph, not an illustration. NORMAL natural adult body proportions, approximately seven to eight heads tall, natural lengths of thighs, calves, torso, hands and feet; realistic five-finger hands and five-toed bare feet. Full body including head and both complete feet, enough margins around everything. Portrait canvas 1122 x 1402, same 4:5 proportions as references. One single continuous camera photograph with ONE woman only, no inset, no collage, no repeated figures, no written labels, no arrows, no text, no graphic overlay, no watermarks. Match references closely; only adapt pose and add the necessary simple exercise support. Barefoot so ankle and forefoot contacts are visible.\nExercise 116: seated ankle RESISTED PLANTARFLEXION ONLY, one representative direction of the four-direction ankle card. Show the SAME woman in right-facing near-side view, seated upright on a stable simple matte gray chair without wheels. ONE working leg is comfortably extended forward, knee nearly straight, with calf supported horizontally on a simple low narrow padded gray support. The working heel and ankle extend past the edge so the ankle can move freely; the calf is supported, not the toes. Her other leg bends comfortably with the non-working bare foot on the floor. A single muted blue-green flat exercise band wraps safely around the BALL OF THE WORKING FOOT at the forefoot/metatarsal area, NOT around the ankle. Both ends are held firmly in her two hands near her lower chest/abdomen; two taut straight strands run FORWARD from hands toward the working forefoot. She pushes the working forefoot AWAY from her shin and FORWARD AND DOWN in comfortable plantarflexion, resisting the backward pull of the band. The working toes point slightly downward, not upward toward the shin. Shin and knee remain stable, no hip rotation, toes relaxed rather than curled. Realistic intact band routing and natural hands gripping the two ends. Side camera clearly displays calf support, free ankle, band around ball of foot, hands and foot direction. Entire woman, both feet, chair, support and band in frame. No multi-direction collage, no text.",
+      "original_generation_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-ca5f2552-c9d7-4972-be32-838610ee60ad.png",
+      "selected_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ef-4487-7331-822e-ab8ede417e28\\exec-ca5f2552-c9d7-4972-be32-838610ee60ad.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\116_T-LOW-038_弹力带踝四方向：按许可单独启用.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\116_T-LOW-038_弹力带踝四方向：按许可单独启用.png",
+      "phase": "坐位有支撑弹力带踝跖屈代表阶段：手向身体牵住带，前足向前下方推，小腿稳定。",
+      "visual_check": {
+        "passed": true,
+        "items": [
+          "原参考人物、服装、摄影风格及灰蓝背景一致。",
+          "坐稳灰椅，工作腿小腿由垫凳支持，踝足伸出支撑边缘。",
+          "弹力带绕工作侧前足，双手向身体牵住两端，带有连续合理路径；未绕踝。",
+          "工作侧前足向前下方推，呈跖屈代表方向；非工作脚落地。",
+          "完整人物、两足、椅、腿支撑与弹力带入镜，比例自然。",
+          "本张只示范跖屈代表阶段，不同时呈现四方向。"
+        ]
+      },
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1721307,
+      "sha256": "04F82C2BD17A339FC33FAB4E1ECF81DB1E9DEE875BC1D8B626FF83218F54E73B",
+      "status": "completed"
+    }
+  ]
+}

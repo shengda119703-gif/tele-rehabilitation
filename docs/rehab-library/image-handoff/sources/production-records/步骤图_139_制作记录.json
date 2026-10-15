@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "date": "2026-10-14",
+  "tool": "内置 image_gen",
+  "scope": "139 T-AXU-018 s01-s02",
+  "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "review": "生成后逐张读取实际PNG视觉审查",
+  "selected_version": "站位侧对胸高固定锚点，蓝色弹力带，一只黑色握柄由双手共同握持；图组相机、足位及锚点固定。清单未指定锚点左右侧，以画面左侧为本组固定侧。",
+  "assets": [
+    {
+      "filename": "139_T-AXU-018_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/139_T-AXU-018_s01.png",
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-2f98-7543-b661-21d63860552a\\exec-9a9cc7a8-a982-4087-8206-257b9a9ab60d.png",
+      "reused": false,
+      "prompt": "Use case: scientific-educational.\nAsset: rehabilitation step demonstration photo 139_T-AXU-018_s01, a single full body photograph, no text.\nInput images 1-3 are reference images for exact female identity, face, black ponytail, skin, plain white short sleeve T-shirt, charcoal dark grey long pants, realistic studio photography and cool grey-blue seamless background. Their arm poses are not pose targets.\nPrimary request: create the starting pose of a STANDING PALLOF PRESS. Same middle-aged East Asian woman, barefoot, standing upright feet hip width both planted, soft knees, neutral head neck, shoulders level, chest and pelvis facing straight ahead. Body is SIDE-ON to a dependable rigid wall/post anchor positioned at her LEFT SIDE at lower sternum/chest height, visible at the left edge of frame. The anchor is at the same front-to-back depth as her chest, thus truly lateral, not in front. It is a closed metal eye bolted securely into a solid vertical structural column; no wheeled object. A simple blue flat resistance band runs in a straight lightly taut continuous line from this lateral anchor to both hands holding ONE black padded grip at the midline of her sternum. Both hands clasp the grip together at chest level, elbows bent tucked gently down; the band connects to the LEFT side of the grip, with an anatomically believable hold, not passing through fingers/body. She does NOT face or rotate toward the anchor. The band must be physically connected at both ends.\nComposition: portrait frame approx 1024x1536. Fixed three-quarter front view, camera somewhat in front of her right shoulder so her forward direction and left side anchor are distinguishable. Full head, both entire hands, legs, all feet and contact shadows visible with generous margins. Woman centered slightly right, post visible left. Camera at approximately lower chest, normal 50mm perspective. White T shirt and long dark grey trousers; no added colored outfit, jewelry or gloves. Photorealistic same woman as all references with natural anatomical proportions and believable five-finger hands. Soft neutral studio light, matte grey-blue floor blending into background, subtle natural shadows.\nConstraints: single person, single starting pose. No arrows, lettering, watermark, inset, collage, border, illustration, logo. Do not show pushed-out arms; hands at sternum for s01.",
+      "references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "review_status": "视觉核对通过",
+      "checks": [
+        "胸口朝前、身体侧对锚点",
+        "双脚完整稳定踩地",
+        "双手在胸前握同一柄，肘屈曲",
+        "带从侧方锚点连续连接到握柄",
+        "面貌服装背景相符，手脚关节比例自然"
+      ]
+    },
+    {
+      "filename": "139_T-AXU-018_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/139_T-AXU-018_s02.png",
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-2f98-7543-b661-21d63860552a\\exec-c4fbb9ea-855a-47df-a627-120e3b653708.png",
+      "reused": false,
+      "prompt": "Use case: scientific-educational. Asset: single photographic rehabilitation step 139_T-AXU-018_s02, standing Pallof press pushed forward endpoint.\nEDIT Image 1, the accepted s01 photo. Keep exact same woman face, black ponytail, white short sleeved T shirt, dark grey long trousers, bare feet, overall human proportions, head gaze, pelvis, torso direction, feet stance and both contact points, grey-blue studio set, soft shadows, rigid column, bolted ring anchor position and height, camera view/focal perspective, framing, size, scale and light unchanged.\nChange only the arm position and consequent resistance band angle to a forward Pallof press: both hands continue clasping the SAME SINGLE black vertical padded grip with believable five-finger anatomy. Move the clasped hands and grip STRAIGHT FORWARD AWAY FROM HER STERNUM, in the direction her chest already faces (toward the right side of this frame, slightly toward viewer), at sternum height. Both elbows are now comfortably extended almost straight, arms parallel and level or slightly below shoulder, not locked or stretched up. The grip is roughly 40-50cm in front of her chest. The blue band remains taut and continuously attached at the SAME stationary frame-left chest-high bolted ring and to the left edge of the same black grip; this forms a diagonal from the lateral anchor to the forward hands. It must remain visible without passing through arms, torso or hands. Do not change or move the anchor to match the hands. Chest and pelvis do not rotate toward the anchor, she resists the sideways pull while looking straight ahead. Both feet remain planted at their exact original positions. No side bend, leaning backward or lumbar arch. Full body with intact feet and hands, no additional person, collage, border, text, numbers or arrows. This is the forward push endpoint, not a sideways pull or rowing movement.",
+      "references": [
+        "E:/git冲突问题/rehab image/train/steps/139_T-AXU-018_s01.png"
+      ],
+      "review_status": "视觉核对通过",
+      "checks": [
+        "双手在胸前朝前推出，肘近伸直",
+        "双脚位置、胸口髋部朝向和锚点保持",
+        "带从侧方连续牵引，无明显穿插",
+        "同一人物机位和光线，完整头脚和双手可见"
+      ]
+    }
+  ],
+  "sequence": "s01→s02→复用s01",
+  "limitations": "画面审核记录只确认可见姿势、比例和器材关系，无法从照片确认实际阻力或肌肉发力。"
+}

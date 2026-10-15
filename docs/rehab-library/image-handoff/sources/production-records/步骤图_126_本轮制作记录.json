@@ -1,0 +1,193 @@
+{
+  "record_version": "1.0",
+  "production_date": "2026-10-14",
+  "action_id": "T-AXU-004",
+  "list_number": 126,
+  "action_name": "仰卧屈膝小幅左右摆膝",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "generation_mode": "built-in image_gen",
+  "built_in_call_total": 8,
+  "final_asset_total": 3,
+  "discarded_candidate_total": 5,
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "version_policy": "保留已存 s01 初稿和全部内置生成候选；最终三张统一使用 _v2 后缀，未覆盖既有文件。s02/s03 以最终高机位 s01 为编辑目标。",
+  "sequence": "s01 → s02 → 复用 s01 → s03 → 复用 s01",
+  "common_review": "三张逐张查看；采用固定足端斜上机位，本人左=观者右，本人右=观者左。左右温和可辨，肩背保持支撑，双膝无交叉及压地。",
+  "prompts": [
+    {
+      "step": "s01",
+      "prompt": "Use case: scientific-educational\nAsset type: one standalone photographic rehabilitation demonstration, action 126 T-AXU-004 step 01, starting position.\nPrimary request: Create a natural realistic studio photograph of the SAME adult Asian woman in the three reference images. The reference images establish her face, black ponytail hairstyle, ordinary healthy adult body proportions, white short-sleeved T-shirt and dark charcoal-gray long trousers, and soft gray-blue studio look; they do not establish the new pose.\nPose: The woman is lying supine, face upward, on a thin flat gray exercise mat. The back of her head, both shoulders, back and pelvis rest naturally on the mat. Both knees are bent upward in a neutral central position, knees close together, BOTH feet resting flat on the mat close together. Her arms are naturally opened out to her sides on the mat, relaxed hands, palms upward. Her legs are not crossed. She is barefoot so the later natural rolling of the feet can be clearly demonstrated; keep natural modest clothing and uncovered feet.\nComposition and camera: one landscape 16:9 photograph; elevated oblique full-body view from the woman's anatomical LEFT side, looking diagonally down at her, including head, BOTH shoulders, BOTH hands, BOTH knees and BOTH entire feet, without cropping. Head toward the left of the image and feet toward the right, entire mat visible with natural floor margin. Enough elevation to see both knees and both feet and the contacts with the mat. Show normal human scale and realistic joints, no foreshortened enormous feet.\nScene: minimal seamless gray-blue studio backdrop and neutral gray floor, thin rectangular gray exercise mat with realistic contact shadows. Soft diffuse photographic light as in the reference images, clean educational clinical photography, no dramatic shadows.\nConstraints: one woman, two arms, two hands, two legs, two feet. Accurate anatomy, natural neck, limbs and joints. Barefoot for this whole 126 sequence. No shoes, no socks, no blanket, no pillow, no furniture, no equipment, no instructor. No text, numbers, graphic labels, arrows, border, collage, watermark, logos. This is only the neutral middle starting posture, BOTH knees pointing upward, neither knee tipped left or right yet."
+    },
+    {
+      "step": "s02",
+      "prompt": "Use case: identity-preserve\nAsset type: one standalone photographic rehabilitation demonstration, action 126 T-AXU-004 step 02.\nInput image: the supplied supine neutral-knee photograph is the EDIT TARGET and establishes the exact same woman, face, hair, clothes, body proportions, head position, arms and hands, studio backdrop, thin gray mat, lighting, camera, crop, body scale and floor.\nPrimary request: Edit ONLY the two legs and the subtle pelvis rotation required by this pose, changing the neutral central knees to a SMALL tilt together toward the woman's anatomical LEFT. The camera is on her left side, so both knees move moderately toward the camera / toward the lower foreground side of this same image, not toward the far background. Both knees remain close together, bent at the same angle and travelling in the same direction, about 20 degrees from upright. It is a gentle small lower-trunk rotation, not a full twist or stretch.\nFeet: Both bare feet remain close together in the same floor region and naturally roll along with the knees on their edges against the mat; anatomically consistent ankle orientation, no hovering feet. Keep all ten natural toes. The heels stay near the original locations.\nFixed support: both shoulder blades and upper back must remain resting on the mat; her head, chest and both opened arms and hands remain EXACTLY in their original pose and location. Do not lift a shoulder, change the head angle, change her face or change either arm. Keep the mat, shadows, room, camera, frame and lighting identical.\nConstraints: Preserve realistic normal anatomy and clothing. The two legs must NOT cross, and neither knee touches or presses to the ground. Do not move just one knee; both tilt together as a close pair. Do not move the feet far across the mat. This one picture is the leftward small tilt step, with clear visual difference from the neutral upright knees. No text, arrows, labels, collage, logos or watermark."
+    },
+    {
+      "step": "s02_corrective",
+      "prompt": "Use case: precise-object-edit\nAsset type: action 126 T-AXU-004 step 02 corrective pass.\nEdit target: the supplied image of the woman lying on a gray mat with BOTH bent knees gently inclined together toward the near-camera foreground, her anatomical LEFT side.\nPrimary request: Preserve the already correct knee inclination and fix ONLY the bare feet and ankle angles so their contact with the mat matches this gentle leftward knee tilt. The feet are close together and stay near their existing locations. The nearer foot is her left foot: slightly roll it onto its OUTER/little-toe side so its inner/big-toe side rises visibly a little. The farther foot is her right foot: roll it onto its INNER/big-toe side so its outer/little-toe side rises a little. These are small natural ankle rotations accompanying the knees, not exaggerated inversions. Both foot edges still have real mat contact, neither foot floating, the toes are relaxed and anatomically normal. Do not simply leave both soles completely flat.\nInvariants: keep BOTH knees exactly where they are, legs bent and close, same pelvis, same shoulders and upper back supported on mat, same head, face, hair, white T-shirt, charcoal trousers, both arms and hands, mat, backdrop, camera, crop, scale and lighting. Keep toes, heels and skin realistic; no extra feet or limbs. No text, arrows, labels, collage, logos or watermark."
+    },
+    {
+      "step": "s03",
+      "prompt": "Use case: identity-preserve\nAsset type: one standalone photographic rehabilitation demonstration, action 126 T-AXU-004 step 03.\nInput image: the supplied supine neutral-knee photograph is the EDIT TARGET and establishes the exact same woman, face, hair, clothes, body proportions, head position, arms and hands, studio backdrop, thin gray mat, lighting, camera, crop, body scale and floor.\nPrimary request: Edit ONLY the two legs and the subtle pelvis rotation required by this pose, changing the neutral central knees to a SMALL tilt together toward the woman's anatomical RIGHT. The camera is on her left side, so both knees move moderately AWAY FROM the camera, toward the UPPER / FAR BACKGROUND side of this same image, the opposite of the left-tilt step. Both knees remain close together, bent at the same angle and travel in the same direction, about 25 degrees from upright. Show their tops displaced together clearly toward the far edge of the mat, rather than centered or toward the near-camera bottom. It is a gentle small lower-trunk rotation, not a full twist or stretch.\nFeet: both bare feet remain close together in their same floor region and naturally roll with the knees on their edges against the mat. The nearer foot is her left foot: roll it slightly onto its INNER / big-toe side. The farther foot is her right foot: roll it slightly onto its OUTER / little-toe side. Small anatomically natural ankle rotations accompanying the knee tilt, heels remain near the original locations, no hovering feet.\nFixed support: both shoulder blades and upper back stay resting on the mat. Her head, chest and both opened arms and hands remain EXACTLY in their original pose and location. Do not lift a shoulder, change the head angle, change her face or change either arm. Keep the mat, shadows, room, camera, frame and lighting identical.\nConstraints: Preserve realistic normal anatomy and clothing. Two legs, two knees, two feet; legs must NOT cross, and neither knee touches or presses to the ground. Do not move just one knee; both tilt together as a close pair. Do not move feet far across the mat. This picture is the rightward small tilt step, clearly opposite to a leftward near-camera tilt and visibly different from the neutral upright knees. No text, arrows, labels, collage, logos or watermark."
+    },
+    {
+      "step": "s01_camera_correction",
+      "prompt": "Use case: identity-preserve\nAsset type: action 126 T-AXU-004 step 01 final camera correction, one photographic rehabilitation demonstration.\nInput images: Image 1 is the edit target showing the woman supine with neutral bent knees. Images 2-4 are her identity, clothing and studio photography references.\nPrimary request: Re-photograph the SAME supine neutral-bent-knee pose using a MUCH HIGHER camera angle: an elevated diagonal overhead view from about 65 degrees above the floor, close to a top-down clinical exercise photograph, with only mild perspective. The current image's low side camera angle is incorrect. We must clearly see the positions of BOTH knees and BOTH feet from above to compare small LEFT and RIGHT knee rotation in later images.\nKeep the exact same woman, face, black ponytail, plain white T-shirt, charcoal-gray long trousers, bare feet, thin gray exercise mat and gray-blue soft studio environment. Ordinary realistic human proportions and natural skin and fabric texture.\nPose: Lie supine with the back of the head, both shoulder blades, upper back and pelvis supported on the mat. BOTH knees bent and close together, BOTH feet flat on mat close together, knees pointing straight upward in the central neutral position. BOTH arms naturally opened diagonally to the sides, hands relaxed, palms upward, fully visible. No leg crossing. No pillow or shoes.\nComposition: 16:9 landscape, FULL BODY including all hands and entire feet. The woman and mat run diagonally from her head at upper-left to feet at lower-right. Entire rectangular mat in frame with generous gray floor margin. Camera on the woman's anatomical LEFT, but HIGH ABOVE rather than side-on; see chest facing up, both thighs, both knees and both foot contacts distinctly. The two feet must be separately readable. Camera position will be locked across this three-frame sequence.\nConstraints: high overhead oblique angle is essential; no low side view. One woman, two arms and hands, two legs and feet, accurate joints. Soft gray-blue diffuse studio photography matching references. No words, arrows, diagram, captions, border, collage, watermark or logo."
+    },
+    {
+      "step": "s01_final",
+      "prompt": "Use case: identity-preserve\nAsset type: action 126 T-AXU-004 step 01 final revised camera, one rehabilitation photograph.\nInput image: edit target preserving the same woman's exact identity, outfit, supine central bent-knee position and studio scene.\nPrimary request: CHANGE THE CAMERA AND COMPOSITION. Camera must be positioned directly above the FOOT END on the body's CENTERLINE, looking diagonally down at 55 degrees from the floor. This is a symmetric elevated foot-end view, NOT a side view. The woman's HEAD is at TOP CENTER of the image; her TWO FEET are at BOTTOM CENTER, with her body axis vertical in the image. Her anatomical LEFT is on the VIEWER'S RIGHT, anatomical RIGHT on the viewer's LEFT. This symmetric view is essential for later left-versus-right bent-knee tilt.\nKeep the same woman from the edit target: same Asian face, black ponytail lying behind her head, white short-sleeved T-shirt, dark charcoal-gray long trousers, bare feet. Same soft gray-blue studio photography, thin gray exercise mat, neutral gray floor.\nPose: lying on her back with face and chest toward the ceiling. The back of the head, both shoulder blades, upper back and pelvis stay supported on the mat. BOTH knees bent upward in the neutral middle position, close together; BOTH feet flat on mat close together with each separately visible. Both arms naturally open diagonally at about 45 degrees to the sides, resting on floor/mat, palms upward, hands relaxed. Arms are not raised.\nComposition: one landscape 16:9 photograph showing ENTIRE body, both hands, both knees, both whole feet and entire mat with floor margin. The long rectangular mat is vertical from top to bottom in the image. No diagonal head-left/feet-right body alignment. Make a generous full body frame to contain opened arms. Normal human proportions; knees must not block the face or shoulders because camera is high enough.\nConstraints: elevated symmetric FOOT-END view with head TOP and feet BOTTOM. Do NOT reuse the old side camera angle. Do NOT rotate only the photograph; actually reposition the camera to foot-end above the body centerline. Neutral knees centered with no left/right tilt yet. Two arms, hands, legs and feet. No crossed legs, no pillow, no shoes, no text, arrows, collage, watermark or logo."
+    },
+    {
+      "step": "s02_final",
+      "prompt": "Use case: identity-preserve\nAsset type: action 126 T-AXU-004 step 02 final, one photograph.\nEdit target: supplied symmetric foot-end elevated photograph. Woman's head is at top, feet at bottom, anatomical LEFT is VIEWER'S RIGHT. Preserve the photograph's exact camera and entire composition.\nPrimary request: CHANGE ONLY her bent legs and the minimal pelvis rotation needed. Move BOTH BENT KNEES TOGETHER in a SMALL tilt toward VIEWER'S RIGHT, which is the woman's anatomical LEFT. The two knee tops must both clearly shift right from the central body line, staying very close together; move both knees about one knee width toward the image right, approximately 20 degrees of gentle lateral tilt. Their direction is identical. Keep the knees bent, no crossing or separation; neither knee touches or presses into the floor. This is a small knee sway, not an extreme twisting stretch.\nFeet remain close together near their ORIGINAL positions at bottom center. They naturally roll slightly onto their image-RIGHT edges with the gentle knee tilt, while maintaining visible edge contact with the mat and natural ankle alignment. Do not move feet across the floor or detach heels. No exaggerated ankle inversion.\nInvariants: shoulders, both shoulder blades and upper back remain supported on the mat. Same head, face, hair, gaze, chest, shirt, arms, both hands, floor and mat; keep head and opened arms exactly in their original locations. Same body scale, lighting, shadows, full-body crop and elevated FOOT-END camera. Only legs and slight pelvis rotation change. Keep white short sleeve T-shirt, dark charcoal long trousers, bare feet.\nAccuracy constraints: both bent knees lean toward the RIGHT side of the IMAGE, visibly different from the original centered upright knees. Two legs and feet, normal proportions and joints. No single-leg crossing, no knee to floor, no raised shoulder or head. No text, arrows, overlays, collage, watermark or logos."
+    },
+    {
+      "step": "s03_final",
+      "prompt": "Use case: identity-preserve\nAsset type: action 126 T-AXU-004 step 03 final, one photograph.\nEdit target: supplied symmetric foot-end elevated photograph. Woman's head is at top, feet at bottom, anatomical RIGHT is VIEWER'S LEFT. Preserve the photograph's exact camera and entire composition.\nPrimary request: CHANGE ONLY her bent legs and the minimal pelvis rotation needed. Move BOTH BENT KNEES TOGETHER in a SMALL tilt toward VIEWER'S LEFT, which is the woman's anatomical RIGHT. The two knee tops must both clearly shift LEFT from the central body line, staying very close together; move both knees about one knee width toward image LEFT, approximately 20 degrees of gentle lateral tilt. The two knees should be noticeably left of their original positions, leaning left above the feet which remain bottom center. Their direction is identical. Keep knees bent; legs do not cross or separate. Neither knee touches or presses into the floor. It is a gentle sway, not an extreme twisting stretch.\nFeet remain close together near their ORIGINAL positions at bottom center. They naturally roll slightly onto their image-LEFT edges with this gentle knee tilt, while maintaining visible edge contact with the mat and natural ankle alignment. Do not move feet across the floor or detach heels. No exaggerated ankle inversion.\nInvariants: shoulders, both shoulder blades and upper back remain supported on the mat. Same head, face, hair, gaze, chest, shirt, arms, both hands, floor and mat; keep head and opened arms exactly in their original locations. Same body scale, lighting, shadows, full-body crop and elevated FOOT-END camera. Only legs and slight pelvis rotation change. Keep white short sleeve T-shirt, dark charcoal long trousers, bare feet.\nAccuracy constraints: BOTH bent knees lean toward the LEFT side of the IMAGE, visibly opposite to a rightward pair of knees. Do not accidentally shift either knee toward image right. Two legs and feet, normal proportions and joints. No single-leg crossing, no knee to floor, no raised shoulder or head. No text, arrows, overlays, collage, watermark or logos."
+    }
+  ],
+  "candidates": [
+    {
+      "call": 1,
+      "prompt_id": "s01",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-ecc468da-4ab9-4954-a7ce-911891c0d54e.png",
+      "sha256": "F99C384DBD4AA53E5CB2884A79779B25D7B3F8E2AAFF1B388CB9FFEA9B84C39B",
+      "status": "discarded",
+      "retained_copy": "E:/git冲突问题/rehab image/train/steps/126_T-AXU-004_s01.png",
+      "reason": "侧方机位偏低，不利于清楚区分左右摆膝；保留初稿，最终使用足端斜上机位 v2。"
+    },
+    {
+      "call": 2,
+      "prompt_id": "s02",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-06c96a22-c361-4568-9bc0-ae7ecbc09cd0.png",
+      "sha256": "17F970ED0CEB257ABEA7D8DD9A26C70C06093BAD499C70025DC76C007CCA5B52",
+      "status": "discarded",
+      "reason": "侧方机位的同向双膝倾斜可见，但足部滚动较不明确；随后做足部修正，最终统一重做为足端斜上机位。"
+    },
+    {
+      "call": 3,
+      "prompt_id": "s02_corrective",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-cc9f7484-7da0-448b-a9e5-38c06ce19d86.png",
+      "sha256": "2539896B863A098E7EDEBA6F3720B88BD713621D2E0741DFED3423A5413F1CC8",
+      "status": "discarded",
+      "reason": "足部微调候选。原侧方机位仍不利于相反方向对照，随整组机位调整而弃用。"
+    },
+    {
+      "call": 4,
+      "prompt_id": "s03",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-323f070f-40a7-45c5-8f2e-a15cf4bc6ce2.png",
+      "sha256": "F722128661B7E235BD745CB711123E606CEDBAE5F35E9FA815B66BA3ECB789EF",
+      "status": "discarded",
+      "reason": "侧方机位中右摆膝与中间/左摆膝视觉区分不足，不能作为最终方向示范。"
+    },
+    {
+      "call": 5,
+      "prompt_id": "s01_camera_correction",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-db5b7fe3-83e3-4df7-b6bb-f9e65833602d.png",
+      "sha256": "D090944EAF74D6D5B1B480572734BE3922D0C3AF4F20C00E117E823CFDF74EAF",
+      "status": "discarded",
+      "reason": "提高机位后的斜侧方候选。后续选择足端对称斜上机位使本人左右与观者左右映射固定且更可辨。"
+    },
+    {
+      "call": 6,
+      "prompt_id": "s01_final",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-2a7fd2a3-5409-4ef3-9333-275b473f1bf7.png",
+      "sha256": "80912148A718997F642AE4C930C97EAADECE05A35568401C63638B3A5DCBD479",
+      "status": "accepted",
+      "target_path": "E:/git冲突问题/rehab image/train/steps/126_T-AXU-004_s01_v2.png"
+    },
+    {
+      "call": 7,
+      "prompt_id": "s02_final",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-89d4c629-adda-48e5-ae33-04727d422de8.png",
+      "sha256": "D46C6E88FBAB8A840B152C44F81DB2AC2A47B101A05A0CFA20FB665C2BE618DA",
+      "status": "accepted",
+      "target_path": "E:/git冲突问题/rehab image/train/steps/126_T-AXU-004_s02_v2.png"
+    },
+    {
+      "call": 8,
+      "prompt_id": "s03_final",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-98405b57-f983-484a-b28d-82c3188e7e15.png",
+      "sha256": "A8EEB54E2E55CEE543B4EBD6C648B36F6CE11E0EFD4F6C993D62583FFB4D1C89",
+      "status": "accepted",
+      "target_path": "E:/git冲突问题/rehab image/train/steps/126_T-AXU-004_s03_v2.png"
+    }
+  ],
+  "final_assets": [
+    {
+      "action_id": "T-AXU-004",
+      "list_number": 126,
+      "step_id": "s01",
+      "file_name": "126_T-AXU-004_s01_v2.png",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-2a7fd2a3-5409-4ef3-9333-275b473f1bf7.png",
+      "target_path": "E:/git冲突问题/rehab image/train/steps/126_T-AXU-004_s01_v2.png",
+      "sha256": "80912148A718997F642AE4C930C97EAADECE05A35568401C63638B3A5DCBD479",
+      "width": 1672,
+      "height": 941,
+      "reused_existing_asset": false,
+      "edit_target": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-ecc468da-4ab9-4954-a7ce-911891c0d54e.png",
+      "pose": "地垫仰卧，双膝屈起且大致并拢，双脚近处踩垫，双手自然打开。",
+      "review": {
+        "person_background": "通过：与三张身份参考同一女性面部/黑马尾/白短袖/深灰长裤，灰蓝柔光摄影；整组赤足、同一薄灰垫。",
+        "framing_scale": "通过：足端斜上全身机位固定，头在图上方/脚在下方；双肩、双手、双膝与双足完整，垫全入镜，人物尺度稳定。",
+        "anatomy_joints": "通过：双臂双手双腿双足数量正常，比例与关节未见明显变形；双膝靠近，无单腿跨越或膝压地。",
+        "support_contact": "通过：头、两肩/上背与骨盆保持垫面支撑；手臂自然留原支点，脚跟和脚缘区域有支撑，未出现足部悬空或远移。",
+        "direction": "通过：双膝处于中间位。",
+        "limitations": "照片显示静态起点，不承载时序文字。",
+        "result": "accepted"
+      }
+    },
+    {
+      "action_id": "T-AXU-004",
+      "list_number": 126,
+      "step_id": "s02",
+      "file_name": "126_T-AXU-004_s02_v2.png",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-89d4c629-adda-48e5-ae33-04727d422de8.png",
+      "target_path": "E:/git冲突问题/rehab image/train/steps/126_T-AXU-004_s02_v2.png",
+      "sha256": "D46C6E88FBAB8A840B152C44F81DB2AC2A47B101A05A0CFA20FB665C2BE618DA",
+      "width": 1672,
+      "height": 941,
+      "reused_existing_asset": false,
+      "edit_target": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-2a7fd2a3-5409-4ef3-9333-275b473f1bf7.png",
+      "pose": "双膝大致并拢，向本人左侧/观者右侧温和倾斜，双足留近原位并轻微随动。",
+      "review": {
+        "person_background": "通过：与三张身份参考同一女性面部/黑马尾/白短袖/深灰长裤，灰蓝柔光摄影；整组赤足、同一薄灰垫。",
+        "framing_scale": "通过：足端斜上全身机位固定，头在图上方/脚在下方；双肩、双手、双膝与双足完整，垫全入镜，人物尺度稳定。",
+        "anatomy_joints": "通过：双臂双手双腿双足数量正常，比例与关节未见明显变形；双膝靠近，无单腿跨越或膝压地。",
+        "support_contact": "通过：头、两肩/上背与骨盆保持垫面支撑；手臂自然留原支点，脚跟和脚缘区域有支撑，未出现足部悬空或远移。",
+        "direction": "通过：两膝均向图右/本人左移动。",
+        "limitations": "足部滚动幅度细微；为保持源清单的小幅动作，没有扩大摆膝来强化足部展示。",
+        "result": "accepted"
+      }
+    },
+    {
+      "action_id": "T-AXU-004",
+      "list_number": 126,
+      "step_id": "s03",
+      "file_name": "126_T-AXU-004_s03_v2.png",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-98405b57-f983-484a-b28d-82c3188e7e15.png",
+      "target_path": "E:/git冲突问题/rehab image/train/steps/126_T-AXU-004_s03_v2.png",
+      "sha256": "A8EEB54E2E55CEE543B4EBD6C648B36F6CE11E0EFD4F6C993D62583FFB4D1C89",
+      "width": 1672,
+      "height": 941,
+      "reused_existing_asset": false,
+      "edit_target": "C:/Users/Administrator/.codex/generated_images/01a1393f-2d9b-7063-a18a-8d885c376834/exec-2a7fd2a3-5409-4ef3-9333-275b473f1bf7.png",
+      "pose": "双膝大致并拢，向本人右侧/观者左侧温和倾斜，与 s02 相反。",
+      "review": {
+        "person_background": "通过：与三张身份参考同一女性面部/黑马尾/白短袖/深灰长裤，灰蓝柔光摄影；整组赤足、同一薄灰垫。",
+        "framing_scale": "通过：足端斜上全身机位固定，头在图上方/脚在下方；双肩、双手、双膝与双足完整，垫全入镜，人物尺度稳定。",
+        "anatomy_joints": "通过：双臂双手双腿双足数量正常，比例与关节未见明显变形；双膝靠近，无单腿跨越或膝压地。",
+        "support_contact": "通过：头、两肩/上背与骨盆保持垫面支撑；手臂自然留原支点，脚跟和脚缘区域有支撑，未出现足部悬空或远移。",
+        "direction": "通过：两膝均向图左/本人右移动，与 s02 明确相反。",
+        "limitations": "足部滚动幅度细微；为保持源清单的小幅动作，没有扩大摆膝来强化足部展示。",
+        "result": "accepted"
+      }
+    }
+  ],
+  "untouched": "未修改原清单、旧进度 JSON 或仓库文件。"
+}

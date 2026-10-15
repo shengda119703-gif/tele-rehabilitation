@@ -59,6 +59,23 @@ def test_family_invite_single_use_across_workers_and_private_defaults(postgres_a
     assert state["familyMembers"][0]["categories"]==[]
 
 
+def test_concurrent_online_assessments_reuse_one_pending_plan(postgres_app):
+    from cloud_service.ai_usage import AIConfig
+    app=create_app(postgres_app.state.settings,postgres_app.state.database,ai_config=AIConfig())
+    patient,signed=native_patient(app)
+    url=BASE+f'/patients/{patient}/assistant'
+    def send(_):
+        with TestClient(app,headers={'Authorization':'Bearer '+signed['access_token']}) as c:
+            r=c.post(url+'/turns',json={'operation_id':str(uuid4()),'text':'安排肩部线上评估'})
+            assert r.is_success,r.text
+            return r.json()['turn']['actions'][0]['plan_id']
+    with ThreadPoolExecutor(2) as pool: ids=list(pool.map(send,range(2)))
+    assert ids[0]==ids[1]
+    with TestClient(app,headers={'Authorization':'Bearer '+signed['access_token']}) as c:
+        rows=c.get(url+'/assessment-plans').json()['items']
+        assert len(rows)==1 and rows[0]['status']=='PLANNED'
+
+
 def test_concurrent_native_refresh_only_once(postgres_app):
     _, signed = native_patient(postgres_app)
     def attempt(_):
@@ -68,6 +85,40 @@ def test_concurrent_native_refresh_only_once(postgres_app):
         statuses = list(executor.map(attempt, range(4)))
     assert statuses.count(200) == 1
     assert statuses.count(401) == 3
+
+
+def test_assistant_retry_cross_device_only_one_provider_dispatch(postgres_app):
+    import threading
+    from cloud_service.ai_usage import AIConfig
+    entered, release, calls = threading.Event(), threading.Event(), []
+    def dispatch(*_):
+        calls.append(1);entered.set();assert release.wait(10)
+        return {'id':'TEST-PG-receipt','choices':[{'finish_reason':'stop','message':{'content':'请核对原训练安排。'}}],
+                'usage':{'prompt_tokens':100,'completion_tokens':50,'total_tokens':150,'prompt_cache_hit_tokens':0,'prompt_cache_miss_tokens':100}}
+    app=create_app(postgres_app.state.settings,postgres_app.state.database,
+                   ai_config=AIConfig(key='TEST-ISOLATED-NOT-LIVE'),ai_dispatch=dispatch)
+    patient,signed=native_patient(app)
+    other=TestClient(app,headers={'Origin':'http://testserver'})
+    desktop=other.post(BASE+'/auth/password/login',json={'username':'qa','password':'1','client_kind':'DESKTOP'}).json()
+    body={'operation_id':str(uuid4()),'text':'TEST 给我一般性解释'}
+    def send(token):
+        with TestClient(app,headers={'Authorization':'Bearer '+token}) as c:
+            response=c.post(BASE+f'/patients/{patient}/assistant/turns',json=body)
+            assert response.is_success,response.text
+            return response.json()
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        pending=executor.submit(send,signed['access_token'])
+        try:
+            assert entered.wait(10)
+            running=send(desktop['access_token'])
+            assert running['state']=='RUNNING'
+        finally:release.set()
+        finished=pending.result(timeout=15)
+    assert send(desktop['access_token'])==finished and len(calls)==1
+    with TestClient(app,headers={'Authorization':'Bearer '+desktop['access_token']}) as c:
+        history=c.get(BASE+f'/patients/{patient}/assistant/conversation').json()
+        usage=c.get(BASE+f'/patients/{patient}/ai/usage').json()
+    assert len(history['items'])==1 and usage['usage']['total_tokens']==150
 
 
 def test_concurrent_record_retries_one_fact(postgres_app):

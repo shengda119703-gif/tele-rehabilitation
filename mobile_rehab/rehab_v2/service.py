@@ -659,11 +659,19 @@ class SessionService:
                 source_time = runtime.engine.last_t if self.internal_replay else time.monotonic()-runtime.started
                 current = runtime.cues.query(source_time_s=source_time or 0.,
                     emission_age_ms=age, phase=runtime.engine.phase, calibration_epoch=runtime.engine.calibration_epoch)
-                item['current_cue'] = current
+                # Read-only B03 clock projection. Original evidence/phase/TTL
+                # decisions remain in CueEvents; clients never subtract clocks.
+                item['current_cue'] = (dict(current, remaining_ttl_ms=max(0., min(
+                    current['ttl_after_emission_ms']-age,
+                    1000*(current['expires_at_source_s']-(source_time or 0.))))) if current else None)
         return item
 
     def history(self, owner, *, limit=20, before=None):
-        return self.repository.history(owner, limit=limit, before=before)
+        result = self.repository.history(owner, limit=limit, before=before)
+        for item in result['items']:
+            # Read original mode, not an inference from a zero contribution.
+            item['submode'] = self.repository.get(owner, item['session_id'])['frozen_plan']['plan']['submode']
+        return result
 
     def diagnostics(self, owner, sid):
         item = self.repository.get(owner, sid)  # No metrics before authorization.

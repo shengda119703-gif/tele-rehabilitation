@@ -1,0 +1,53 @@
+{
+  "record_version": "1.0",
+  "batch": "actions-148",
+  "created_date": "2026-10-14",
+  "user_source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "generator": "built-in image_gen.imagegen",
+  "final_output_count": 2,
+  "source_assets_preserved": true,
+  "formal_repository_modified": false,
+  "qa_scope": "逐张实际画面视觉核对，依据指定制作清单，不代表临床验收。",
+  "images": [
+    {
+      "sequence": 148,
+      "action_id": "T-AXU-010",
+      "step": "01",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/148_T-AXU-010_s01.png",
+      "generated_source": "E:/git冲突问题/rehab image/train/steps/147_T-AXU-009_s01.png",
+      "reused": true,
+      "reused_source_record": "E:/git冲突问题/rehab image/步骤图_144_147_制作记录.json",
+      "prompt": "不另行生成；按清单复用已逐张核验的侧面中立椅坐位147/s01。",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "qa_status": "pass",
+      "qa_observation": "侧面椅坐中立、眼睛自然平视，胸肩放松；完整头马尾双肩及膝上双手可见，椅背位于背部而非颈后。人物衣着背景与指定参考一致。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "439B5370E0B07177746FEB22E31F59356CB1E2C2E323CDB31749E4413B8B95BB"
+    },
+    {
+      "sequence": 148,
+      "action_id": "T-AXU-010",
+      "step": "02",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/148_T-AXU-010_s02.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a81-ce13-70a1-816e-eaac4b69cea4/exec-775bf901-c58e-458d-bfd0-8ba1fce9d436.png",
+      "reused": false,
+      "prompt": "Use case: identity-preserve.\nAsset type: one photorealistic rehabilitation step photograph, 148 T-AXU-010 s02 comfortable ACTIVE neck extension.\nInput image 1 is the EXACT seated neutral scene to edit. Images 2–4 are the same woman's identity and photography-style references only.\nChange ONLY the head and cervical posture: the woman keeps facing image RIGHT in true side profile, and gently raises her gaze with a SMALL cervical extension of about 20–25 degrees from level. The face inclines diagonally upwards and eyes look gently up; chin lifts only moderately, with natural continuous neck anatomy. This is a clearly visible comfortable endpoint, not an extreme backward head bend; do not look straight at the ceiling.\nKeep everything else exactly as in image 1: same facial identity, head size, black ponytail, white short-sleeved shirt, dark charcoal trousers, chair and chair location, torso upright naturally and not arching backwards, shoulders relaxed and at the exact same height, both hands on thighs at the exact same positions. The chair back remains below shoulder level and does not touch the neck. No hand on forehead or head. Match canvas dimensions 1536x1024 landscape, camera, crop, woman scale, gray-blue background and soft lighting. Complete head, hair, shoulders, torso and lap hands visible as before.\nExactly one woman and one pose. No text, numbers, arrows, collage, border, motion ghosts or watermark. Preserve natural skin and fabric texture and realistic anatomy.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/148_T-AXU-010_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "qa_status": "pass",
+      "qa_observation": "视线抬高，头部可见小幅后仰，未极限后仰；上身自然直立、胸肩与双手位置稳定，同椅与机位；头颈连接与比例自然，无手施压。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "0785603DB4E04363870AC4E99998745ACCA98A49B54CFE5D54149732D412A5FA"
+    }
+  ]
+}

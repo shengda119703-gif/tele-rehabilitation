@@ -1,0 +1,88 @@
+{
+  "record_version": "1.0",
+  "batch": "action-150",
+  "created_date": "2026-10-14",
+  "user_source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "action_source": "E:/game/health-care-software-main/docs/rehab-library/SOURCE_v1.0.md#t-axu-012",
+  "generator": "built-in image_gen.imagegen",
+  "final_output_count": 3,
+  "new_generated_output_count": 2,
+  "reused_output_count": 1,
+  "source_assets_preserved": true,
+  "formal_repository_modified": false,
+  "qa_scope": "动作清单姿势、身份、方向、头颈关节、胸肩固定与连续画面手动视觉核对；不代表临床验收。",
+  "sequence": "s01 → s02 → 复用 s01 → s03 → 复用 s01",
+  "images": [
+    {
+      "output_path": "E:/git冲突问题/rehab image/train/steps/150_T-AXU-012_s01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "76F8815D98E3B0B4FC475A46186CC0C3A7E4ACD343D45F1540C1AFDCB69BC05A",
+      "bytes": 1723252,
+      "sequence": 150,
+      "action_id": "T-AXU-012",
+      "step": "01",
+      "target_pose": "中立自然平视",
+      "reused": true,
+      "reuse_source": "E:/git冲突问题/rehab image/train/steps/149_T-AXU-011_s01.png",
+      "prompt": "Reuse the accepted front-facing neutral seated image 149 T-AXU-011 s01 byte-for-byte as 150 T-AXU-012 s01. No regeneration or raster editing.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "E:/git冲突问题/rehab image/train/steps/149_T-AXU-011_s01.png",
+      "qa_status": "pass",
+      "qa_observation": "正面稳定灰椅坐位，头中立自然平视、脸与胸口同朝前，双肩水平放松；双手完整放于膝上、灰蓝背景、白短袖深灰裤；完整头肩和椅支持可见。与 149 s01 原字节复用、SHA256 一致。",
+      "qa_method": "每张生成结果实看，并调用 view_image 查看保存输出；手动视觉验收。"
+    },
+    {
+      "output_path": "E:/git冲突问题/rehab image/train/steps/150_T-AXU-012_s02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "E46553FF0BB79E65F47B482FF6E9DB98D6581E49A23DB1654EEBA958D877A666",
+      "bytes": 1670111,
+      "sequence": 150,
+      "action_id": "T-AXU-012",
+      "step": "02",
+      "target_pose": "左转头（画面右）舒适终点",
+      "reused": false,
+      "reuse_source": null,
+      "prompt": "Use case: identity-preserve.\nAsset type: ONE single photorealistic rehabilitation step photograph, action 150 T-AXU-012 s02.\nInput image 1 is the exact neutral front-facing seated photograph to EDIT. Images 2–4 are supporting identity and photographic-style references of the SAME woman only.\nPrimary request: Preserve the entire scene and change ONLY the head orientation by a gentle active neck rotation. Rotate her head toward HER ANATOMICAL LEFT, which appears toward the RIGHT EDGE of the image, approximately 45–55 degrees from facing the camera. The nose points distinctly toward image RIGHT. Her eyes turn with the face and look in the same image-right direction at a natural level height. The head is upright: ears remain level, no head sideways tilt, no forward bow, no upward lift. Natural comfortable three-quarter view, not looking behind her. Neutral jaw and gentle expression.\nInvariants: Her chest, shoulders, collarbone line and pelvis stay square to the camera, both shoulders relaxed and at the same level as the source, upright torso stays stationary. Keep her plain white short-sleeve T-shirt, dark charcoal trousers, both arms and hands on thighs, gray chair, gray-blue studio background, soft light, camera position, image canvas dimensions, crop, woman scale, floor and shadows exactly unchanged. Same face and black ponytail with naturally appropriate local movement.\nComposition: Identical landscape front camera seated head-and-shoulders/upper-body framing as the source. Complete head, hair and shoulders remain visible.\nAvoid: torso turning, shrugging, shoulder tilt, chin tilting up or down, neck overtwist, gaze behind the shoulder, hand assistance, text, numbers, arrows, panels, collage, border, watermark, new objects or other people.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/150_T-AXU-012_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a83-b22d-70c1-84df-355c93f1d17e/exec-db0429c4-bbb9-4d40-bbbe-4443a3990845.png",
+      "qa_status": "pass",
+      "qa_observation": "头主动向人物解剖左侧转，即鼻尖朝画面右、双眼随脸同向且自然平视；舒适三分之四转头终点，未追看身后，未侧歪或仰头；胸口双肩仍朝前，双肩、手、椅、衣着、相机、背景及裁幅保持，与 s01 连贯。",
+      "qa_method": "每张生成结果实看，并调用 view_image 查看保存输出；手动视觉验收。"
+    },
+    {
+      "output_path": "E:/git冲突问题/rehab image/train/steps/150_T-AXU-012_s03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "DCE5B487DB1E75139781DBE42354E76B52E6629A1962FB05F9B96B61AE3DEE19",
+      "bytes": 1682932,
+      "sequence": 150,
+      "action_id": "T-AXU-012",
+      "step": "03",
+      "target_pose": "右转头（画面左）舒适终点",
+      "reused": false,
+      "reuse_source": null,
+      "prompt": "Use case: identity-preserve.\nAsset type: ONE single photorealistic rehabilitation step photograph, action 150 T-AXU-012 s03.\nInput image 1 is the exact neutral front-facing seated photograph to EDIT. Images 2–4 are supporting identity and photographic-style references of the SAME woman only.\nPrimary request: Preserve the entire scene and change ONLY the head orientation by a gentle active neck rotation. Rotate her head toward HER ANATOMICAL RIGHT, which appears toward the LEFT EDGE of the image, approximately 45–55 degrees from facing the camera. The nose points distinctly toward image LEFT. Her eyes turn with the face and look in the same image-left direction at a natural level height. The head is upright: ears remain level, no head sideways tilt, no forward bow, no upward lift. Natural comfortable three-quarter view, not looking behind her. Neutral jaw and gentle expression.\nInvariants: Her chest, shoulders, collarbone line and pelvis stay square to the camera, both shoulders relaxed and at the same level as the source, upright torso stays stationary. Keep her plain white short-sleeve T-shirt, dark charcoal trousers, both arms and hands on thighs, gray chair, gray-blue studio background, soft light, camera position, image canvas dimensions, crop, woman scale, floor and shadows exactly unchanged. Same face and black ponytail with naturally appropriate local movement.\nComposition: Identical landscape front camera seated head-and-shoulders/upper-body framing as the source. Complete head, hair and shoulders remain visible.\nAvoid: torso turning, shrugging, shoulder tilt, chin tilting up or down, neck overtwist, gaze behind the shoulder, hand assistance, text, numbers, arrows, panels, collage, border, watermark, new objects or other people.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/150_T-AXU-012_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a83-b22d-70c1-84df-355c93f1d17e/exec-81d24880-1d73-48ba-bcfe-fd430305c8b4.png",
+      "qa_status": "pass",
+      "qa_observation": "先回中立后头主动向人物解剖右侧转，即鼻尖朝画面左、双眼随脸同向且自然平视；与 s02 为相反方向，头无侧歪、肩未耸起，未追看身后；胸口双肩保持朝前，双手与灰椅及裁幅保持，与同一 s01 连贯。",
+      "qa_method": "每张生成结果实看，并调用 view_image 查看保存输出；手动视觉验收。"
+    }
+  ]
+}

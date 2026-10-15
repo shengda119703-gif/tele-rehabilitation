@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-14",
+  "zip_path": "E:\\git冲突问题\\rehab image\\步骤图_168-172_10张.zip",
+  "zip_bytes": 14646815,
+  "zip_sha256": "8438AF6A3C433F87C4256C7A949984F29B39FA2784C0054867079F9F881474F4",
+  "entry_count": 17,
+  "png_count": 10,
+  "all_images_viewed_and_reviewed": true,
+  "all_zip_image_hashes_match": true,
+  "all_dimensions": "1122x1402",
+  "preview_image_count": 10,
+  "preview_references_checked": true,
+  "image_checks": [
+    {
+      "filename": "168_T-AXU-030_s01.png",
+      "byte_length_match": true,
+      "sha256_match": true
+    },
+    {
+      "filename": "168_T-AXU-030_s02.png",
+      "byte_length_match": true,
+      "sha256_match": true
+    },
+    {
+      "filename": "169_T-AXU-031_s01.png",
+      "byte_length_match": true,
+      "sha256_match": true
+    },
+    {
+      "filename": "169_T-AXU-031_s02.png",
+      "byte_length_match": true,
+      "sha256_match": true
+    },
+    {
+      "filename": "170_T-AXU-032_s01.png",
+      "byte_length_match": true,
+      "sha256_match": true
+    },
+    {
+      "filename": "170_T-AXU-032_s02.png",
+      "byte_length_match": true,
+      "sha256_match": true
+    },
+    {
+      "filename": "171_T-AXU-058_s01.png",
+      "byte_length_match": true,
+      "sha256_match": true
+    },
+    {
+      "filename": "171_T-AXU-058_s02.png",
+      "byte_length_match": true,
+      "sha256_match": true
+    },
+    {
+      "filename": "172_T-AXU-060_s01.png",
+      "byte_length_match": true,
+      "sha256_match": true
+    },
+    {
+      "filename": "172_T-AXU-060_s02.png",
+      "byte_length_match": true,
+      "sha256_match": true
+    }
+  ],
+  "reuse_checks": [
+    {
+      "sequence": 168,
+      "source_path": "E:\\git冲突问题\\rehab image\\train\\168_T-AXU-030_坐位／站位哑铃过头推举.png",
+      "source_hash_equals_step_hash": true
+    },
+    {
+      "sequence": 169,
+      "source_path": "E:\\git冲突问题\\rehab image\\train\\169_T-AXU-031_胸前下拉：器械或弹力带.png",
+      "source_hash_equals_step_hash": true
+    },
+    {
+      "sequence": 170,
+      "source_path": "E:\\git冲突问题\\rehab image\\train\\170_T-AXU-032_弹力带胸前水平展开.png",
+      "source_hash_equals_step_hash": true
+    },
+    {
+      "sequence": 171,
+      "source_path": "E:\\git冲突问题\\rehab image\\train\\171_T-AXU-058_上斜凳轻哑铃胸推.png",
+      "source_hash_equals_step_hash": true
+    }
+  ]
+}

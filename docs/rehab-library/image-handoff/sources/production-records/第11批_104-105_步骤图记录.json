@@ -1,0 +1,317 @@
+{
+  "schema_version": "1.0",
+  "batch": "第11批（子分工104-105）",
+  "date": "2026-10-14",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "tool_mode": "built-in image_gen; one asset per independent call",
+  "scope": {
+    "actions": [
+      104,
+      105
+    ],
+    "planned_frames": 8,
+    "generated_and_saved_frames": 8,
+    "visual_pass_frames": 7,
+    "needs_revision_frames": [
+      "105_T-LOW-059_s04.png"
+    ]
+  },
+  "overall_status": "104四帧通过；105前三帧可用，105s04连续性待主代理修正。主代理将自行登记选用修订文件；本记录保留原版和实际局限。",
+  "constraints": "未修改旧单图、既有进度JSON或仓库；所有规范步骤图以首次创建方式保存，无覆盖。弃用尝试保留生成工具默认源位置。",
+  "frames": [
+    {
+      "action_number": "104",
+      "action_id": "T-LOW-056",
+      "step": "01",
+      "filename": "104_T-LOW-056_s01.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/104_T-LOW-056_s01.png",
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-6b6314d8-c48c-4c4d-ad9a-ba6488d67355.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1786656,
+      "sha256": "9C1E08F39FA9A51F65A281BDD06BFA6BDA92C1F661A418A5E964DB3522855477",
+      "reused_existing": false,
+      "reuse_source": null,
+      "full_prompt": "Use case: scientific-educational. Generate exactly one rehabilitation exercise photograph matching reference image 1, which is the camera and scene anchor. Preserve camera position, perspective, image crop, focal length, floor level, chair geometry and placement against left wall, fixed front rail geometry and placement, light, shadow style and the exact same woman including identity, white T-shirt, charcoal trousers and white trainers. IMPORTANT: Do not zoom in on the seated figure, do not recenter furniture, do not enlarge her head. Leave large empty blue-gray upper space where the standing woman's head was. Change only the woman's posture from standing to sitting on the front half of this same chair, facing right. STEP 01: Hips securely supported on front half of chair seat; torso upright; knees about 90 degrees, both feet flat fully planted shoulder-width, shoes remain on the same floor plane; hands relaxed on thighs and not on the rail. Chair back stays against left wall. Fixed rail remains in the same spot as anchor and is reachable after standing. One woman, one pose, realistic limbs and fingers, full body, both shoes visible; no text, numbers, arrows, watermark, montage, ghosts.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-8163d656-9a12-41ca-8dcc-e67c25005961.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "review": {
+        "method": "生成展示后view_image逐张检查，复制至final_path后再次view_image逐张查看。",
+        "target_pose": "坐在椅前半部、双脚全掌落地，双手放大腿；前方固定扶栏可及。",
+        "support_and_contact": "椅背可见贴靠左墙、臀部接椅、双鞋接地；未扶栏。",
+        "proportion_joint_and_framing": "四肢关节连贯，头身及上下肢长度自然，完整双手双脚在镜头内。",
+        "identity_style": "同女性、黑马尾、白短袖、深灰裤、白鞋；灰蓝背景柔光；组内固定相机构图及家具大体一致。",
+        "no_text_or_arrows": true,
+        "result": "pass"
+      }
+    },
+    {
+      "action_number": "104",
+      "action_id": "T-LOW-056",
+      "step": "02",
+      "filename": "104_T-LOW-056_s02.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/104_T-LOW-056_s02.png",
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-2acaf363-dde0-4731-8054-787616b4ca36.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1781657,
+      "sha256": "B64B13A8C5BCE3308E7199C6810E4E1278ADC5B74857EC137E4EF071A122DA67",
+      "reused_existing": false,
+      "reuse_source": null,
+      "full_prompt": "Use case: scientific-educational. One photorealistic exercise step photograph. Image 1 is the exact fixed-camera standing scene; image 2 is its seated beginning. Preserve camera viewpoint, framing, left-wall chair position and geometry, rail position and floor bolts, floor baseline, light, the same adult East Asian woman and natural body proportions, face, ponytail, white T-shirt, charcoal trousers, white trainers. Keep scale fixed, no automatic portrait enlargement. STEP 02 ONLY: intermediate sit-to-stand beginning, facing right. Both feet are flat fully planted at the same seated foot placement, body center has moved forward over feet, torso inclined forward from hips with natural straight back, hips visibly lifted about 10-15 cm ABOVE AND A LITTLE FORWARD OF the chair seat leaving a clear gap below buttocks; knees and hips still substantially bent, not fully standing yet. Hands may press gently on own thighs just above knees as she rises, both arms belong to her and palms contact own thighs realistically. No hand on rail yet. Neither heel lifts, no jump. Fixed support remains ahead within reach once upright. Head, both hands, feet, seat gap, empty seat and rail completely visible. Single pose only; no arrows, text, numbers, watermark, ghost bodies, collage or extra limbs.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-8163d656-9a12-41ca-8dcc-e67c25005961.png",
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-6b6314d8-c48c-4c4d-ad9a-ba6488d67355.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "review": {
+        "method": "生成展示后view_image逐张检查，复制至final_path后再次view_image逐张查看。",
+        "target_pose": "前移后开始起身，髋已离椅，膝髋仍屈曲、双脚全掌落地。",
+        "support_and_contact": "臀下清楚留空，双手接自己大腿，未同时提踵；椅栏位置延续。",
+        "proportion_joint_and_framing": "髋膝屈曲、腿长、手臂及手指目视自然，无多余肢体。",
+        "identity_style": "同女性、黑马尾、白短袖、深灰裤、白鞋；灰蓝背景柔光；组内固定相机构图及家具大体一致。",
+        "no_text_or_arrows": true,
+        "result": "pass"
+      }
+    },
+    {
+      "action_number": "104",
+      "action_id": "T-LOW-056",
+      "step": "03",
+      "filename": "104_T-LOW-056_s03.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/104_T-LOW-056_s03.png",
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-8163d656-9a12-41ca-8dcc-e67c25005961.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1818827,
+      "sha256": "49C4DD41E6645DD4BBBFA8BA3DB6E6DC9B6AE87F4826FCACD72DBF4579460218",
+      "reused_existing": false,
+      "reuse_source": null,
+      "full_prompt": "Use case: scientific-educational. Asset type: one photorealistic rehabilitation exercise step photograph, portrait 1122x1402 style. Match the same East Asian adult woman, face, black ponytail, skin, white short sleeve T-shirt, charcoal fitted long trousers and white trainers from the three reference photos. Soft studio lighting, pale blue-gray wall and floor, natural shadows. Fixed full-body side view facing right, slight front oblique enough to see both feet and hands; same camera at hip height and same human scale across the series. Scene: gray upholstered armless stable chair at screen left, its back firmly against a visible vertical pale blue-gray wall on left; seat faces right. In front of chair, a fixed gray metal horizontal support rail at standing waist height, securely bolted by floor posts, reachable after standing with one hand; enough clearance for knees and body. Keep chair, rail, wall, floor, camera, clothes and anatomy identical across four steps. Head, both feet, full chair seat and support contact visible; realistic body proportions and hand/finger contact. Only one woman in one pose. No text, numbers, arrows, watermarks, ghost limbs or panels. Use image 4 only as room/furniture arrangement reference. Frame the camera farther back to accommodate the entire upright woman from ponytail to shoes with 10% headroom; the woman standing should occupy 75% of image height. STEP 03 only: Woman has risen from the chair and is standing completely upright in front of the chair. Both feet flat fully planted and parallel shoulder-width, knees straight naturally, torso vertical without lean, her farther right hand lightly resting on the same fixed front rail at waist height. Near left arm relaxed by side. Heels fully on floor, not yet a heel raise. Chair now empty still visibly against left wall. Full body and whole rail contact must be visible.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-eb9a584f-53c3-4105-810e-6ae080ec6da2.png"
+      ],
+      "review": {
+        "method": "生成展示后view_image逐张检查，复制至final_path后再次view_image逐张查看。",
+        "target_pose": "站直站稳，双脚平放、远侧右手扶住固定栏杆。",
+        "support_and_contact": "手掌与栏相接、椅空置靠墙、双足跟接地。",
+        "proportion_joint_and_framing": "关节连续、无后仰、两脚完整可辨；身份、服装、背景延续。",
+        "identity_style": "同女性、黑马尾、白短袖、深灰裤、白鞋；灰蓝背景柔光；组内固定相机构图及家具大体一致。",
+        "no_text_or_arrows": true,
+        "result": "pass"
+      }
+    },
+    {
+      "action_number": "104",
+      "action_id": "T-LOW-056",
+      "step": "04",
+      "filename": "104_T-LOW-056_s04.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/104_T-LOW-056_s04.png",
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-0dfa2795-a167-4d9d-a6a9-ec13a5296d72.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1766072,
+      "sha256": "0752042E897FBADB45D5C532E4D7A6DC19162B2D497E35E30EE16A3879A817FE",
+      "reused_existing": false,
+      "reuse_source": null,
+      "full_prompt": "Use case: scientific-educational. One realistic rehabilitation exercise step photograph. Reference image 1 is the fixed-camera standing scene; keep its exact camera, framing, perspective, woman's identity and scale, body proportions, white T-shirt, dark charcoal trousers, white trainers, empty gray chair with back against left wall, front fixed gray bolted waist-height rail, floor and soft light. Change only to STEP 04, supported DOUBLE-FOOT HEEL RAISE: she stays upright facing right, far right hand gently rests on the SAME rail at the SAME contact location, near left arm relaxed. Both knees naturally straight, torso vertical without back lean. BOTH heels raised moderately 5-7 cm OFF the floor at the same time, with visible clearance and natural ankle plantarflexion; BOTH forefeet and toes stay firmly touching floor at the same side-by-side shoulder-width foot positions. Show both shoes clearly separated so both elevated heels are visible. Neither foot is lifted completely, no jump, no single-leg version. Her body rises slightly from the heel raise, preserve limb lengths. Full head/hands/feet inside frame, no text, numbers, arrows, logos, montage or ghost limbs.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-8163d656-9a12-41ca-8dcc-e67c25005961.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "review": {
+        "method": "生成展示后view_image逐张检查，复制至final_path后再次view_image逐张查看。",
+        "target_pose": "保持扶栏，双前足着地、两个足跟抬起。",
+        "support_and_contact": "近侧足跟离地明显，远侧足跟也抬起但部分受近腿遮挡；前足保持地面接触。",
+        "proportion_joint_and_framing": "踝跖屈方向合理、膝基本伸直、躯干不后仰，全头手足入镜。",
+        "identity_style": "同女性、黑马尾、白短袖、深灰裤、白鞋；灰蓝背景柔光；组内固定相机构图及家具大体一致。",
+        "no_text_or_arrows": true,
+        "result": "pass"
+      }
+    },
+    {
+      "action_number": "105",
+      "action_id": "T-LOW-059",
+      "step": "01",
+      "filename": "105_T-LOW-059_s01.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/105_T-LOW-059_s01.png",
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-679bf308-9e8d-43bb-b716-2c7a815ba10a.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1809049,
+      "sha256": "81EC9D7B0D78DD12B0932FBF832C0D6BF55868A63B73D430E88B81A4C6A7F645",
+      "reused_existing": false,
+      "reuse_source": null,
+      "full_prompt": "Use case: scientific-educational. Asset type: one photorealistic rehabilitation exercise step photograph. Match the SAME East Asian adult woman identity, face, black ponytail, skin, white short sleeve T-shirt, charcoal fitted long trousers and white trainers from the three reference photos. Soft studio lighting, pale blue-gray wall and non-slip matte floor, natural shadows. Fixed camera in full-body right-facing side view with a small front oblique angle so near left and far right legs and shoes both remain clear. Composition includes a short straight path moving horizontally from screen left to screen right, no floor markings; continuous waist-height stainless-steel horizontal railing behind and beside her on the far side, spanning full image width with secure vertical floor-bolted posts at far left and far right. Woman's farther right hand gently contacts this same reachable rail, near left arm hangs free. Empty path ahead, no chair, no equipment apart from rail. Both complete hands/feet/head visible, realistic anatomy, scale and light; no text, numbering, arrows, logos, montage or ghosts. STEP 01 only, starting standing position: Place the woman's full body in the LEFT HALF of the image, leaving generous empty floor and rail along the path to her right for a future forward step. She faces right, both feet parallel flat shoulder-width side by side at the starting point, knees naturally straight, torso upright. The far right hand contacts rail at waist height without leaning; left arm relaxed. Same fixed camera must accommodate later shallow forward lunge AND forward gathering of rear foot in the RIGHT HALF, so use a slightly wider full-body composition, standing woman's height about 78% image height. No forward stride yet; both feet fully on floor.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "review": {
+        "method": "生成展示后view_image逐张检查，复制至final_path后再次view_image逐张查看。",
+        "target_pose": "直线路径左侧起点并排平足站稳，右手扶连续长栏。",
+        "support_and_contact": "两端栏柱和完整连续扶栏可见、右手接栏、双鞋接地；前方留空。",
+        "proportion_joint_and_framing": "身体比例自然，双手双脚完整；侧面轻斜以辨两脚。",
+        "identity_style": "同女性、黑马尾、白短袖、深灰裤、白鞋；灰蓝背景柔光；组内固定相机构图及家具大体一致。",
+        "no_text_or_arrows": true,
+        "result": "pass"
+      }
+    },
+    {
+      "action_number": "105",
+      "action_id": "T-LOW-059",
+      "step": "02",
+      "filename": "105_T-LOW-059_s02.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/105_T-LOW-059_s02.png",
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-bfcff5a6-89e1-4946-9729-bc862736b59d.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1765307,
+      "sha256": "42FD778F67361B1C148C9DDF6E8996F635C6B60E7F895B89E3CFEA08EA2F29D9",
+      "reused_existing": false,
+      "reuse_source": null,
+      "full_prompt": "Use case: scientific-educational. Asset type: one photorealistic rehabilitation exercise step photograph. Match the SAME East Asian adult woman identity, face, black ponytail, skin, white short sleeve T-shirt, charcoal fitted long trousers and white trainers from the three reference photos. Soft studio lighting, pale blue-gray wall and non-slip matte floor, natural shadows. Fixed camera in full-body right-facing side view with a small front oblique angle so near left and far right legs and shoes both remain clear. Composition includes a short straight path moving horizontally from screen left to screen right, no floor markings; continuous waist-height stainless-steel horizontal railing behind and beside her on the far side, spanning full image width with secure vertical floor-bolted posts at far left and far right. Woman's farther right hand gently contacts this same reachable rail, near left arm hangs free. Empty path ahead, no chair, no equipment apart from rail. Both complete hands/feet/head visible, realistic anatomy, scale and light; no text, numbering, arrows, logos, montage or ghosts. Image 1 is exact scene and camera anchor, preserve its framing, floor baseline, rail horizontal height and posts at both sides, identity/clothes/proportions and scale. Do not recenter the scene or change focal length. STEP 02 only: having started at screen left as in image 1, she has stepped her NEAR LEFT FOOT forward about half a meter toward SCREEN RIGHT, landing flat; her FAR RIGHT FOOT stays back at the original starting location. This is an upright stable SPLIT STANCE BEFORE the shallow lunge: hips high, torso vertical, both knees nearly straight naturally, no lowering or squat yet. Feet maintain comfortable sideways width with no crossing; both shoes contact floor. Near front left shoe is around 60% image width and rear right shoe around 25%. Right hand slides forward along same continuous rail and remains in contact, left arm relaxed by body. Full body, all contact points and both shoes visible. One pose only.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-679bf308-9e8d-43bb-b716-2c7a815ba10a.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "review": {
+        "method": "生成展示后view_image逐张检查，复制至final_path后再次view_image逐张查看。",
+        "target_pose": "向右前迈一脚后先站稳，前后脚落地、膝髋尚未下蹲。",
+        "support_and_contact": "近侧前脚平放、后脚仍落地，侧向宽度可辨，不交叉；右手继续接栏。",
+        "proportion_joint_and_framing": "头身、上下肢自然，站姿与下一帧浅屈可区分。",
+        "identity_style": "同女性、黑马尾、白短袖、深灰裤、白鞋；灰蓝背景柔光；组内固定相机构图及家具大体一致。",
+        "no_text_or_arrows": true,
+        "result": "pass"
+      }
+    },
+    {
+      "action_number": "105",
+      "action_id": "T-LOW-059",
+      "step": "03",
+      "filename": "105_T-LOW-059_s03.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/105_T-LOW-059_s03.png",
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-872e17d4-bca7-4d5a-942d-2876274a4bb6.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1785820,
+      "sha256": "2A1B7193BDA42AA1BB9698CBB0CA4079BD8C1665C0E8CC638B2694963558C2EA",
+      "reused_existing": false,
+      "reuse_source": null,
+      "full_prompt": "Use case: scientific-educational. Asset type: one photorealistic rehabilitation exercise step photograph. Match the SAME East Asian adult woman identity, face, black ponytail, skin, white short sleeve T-shirt, charcoal fitted long trousers and white trainers from the three reference photos. Soft studio lighting, pale blue-gray wall and non-slip matte floor, natural shadows. Fixed camera in full-body right-facing side view with a small front oblique angle so near left and far right legs and shoes both remain clear. Composition includes a short straight path moving horizontally from screen left to screen right, no floor markings; continuous waist-height stainless-steel horizontal railing behind and beside her on the far side, spanning full image width with secure vertical floor-bolted posts at far left and far right. Woman's farther right hand gently contacts this same reachable rail, near left arm hangs free. Empty path ahead, no chair, no equipment apart from rail. Both complete hands/feet/head visible, realistic anatomy, scale and light; no text, numbering, arrows, logos, montage or ghosts. Image 1 is the exact stable split stance after the forward step, image 2 is the starting scene. Preserve exact camera, crop, rail and post geometry, floor baseline, woman's identity/clothes/proportions and image scale. STEP 03 only: make a CONTROLLED SHALLOW FORWARD LUNGE at EXACTLY THE SAME FOOT LOCATIONS as image 1. Near LEFT foot stays forward toward screen right at the same floor spot, flat; far RIGHT foot stays back at screen left, its forefoot stays grounded and heel can naturally lift slightly. Feet stay comfortably separated sideways, never crossed. Lower pelvis modestly by bending BOTH knees and hips, front knee bends about 35 degrees, back knee also bends slightly so this reads as a shallow lunge, not a straight back-leg calf stretch. Torso remains near vertical under control, head faces right. Far right hand stays in contact with same continuous rail while elbow naturally adjusts; near left arm relaxed down. Do not move either foot or the rail, do not deepen to kneeling, no walking blur. Full head, hands, both shoes and all support contact visible. Single pose only.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-bfcff5a6-89e1-4946-9729-bc862736b59d.png",
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-679bf308-9e8d-43bb-b716-2c7a815ba10a.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "review": {
+        "method": "生成展示后view_image逐张检查，复制至final_path后再次view_image逐张查看。",
+        "target_pose": "相同前后脚顺序与大体落点下作浅弓步，前膝髋屈曲、后膝轻微屈曲。",
+        "support_and_contact": "右手接栏，前足平地、后足接地；连续栏和两端柱保持，未转弯交叉。",
+        "proportion_joint_and_framing": "浅幅而非跪地，关节连续；相对s02有少量生成位置漂移，不据像素推精确关节角度。",
+        "identity_style": "同女性、黑马尾、白短袖、深灰裤、白鞋；灰蓝背景柔光；组内固定相机构图及家具大体一致。",
+        "no_text_or_arrows": true,
+        "result": "pass_with_note"
+      }
+    },
+    {
+      "action_number": "105",
+      "action_id": "T-LOW-059",
+      "step": "04",
+      "filename": "105_T-LOW-059_s04.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/105_T-LOW-059_s04.png",
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-935265cc-c76d-4165-9672-65def13e65d5.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1758377,
+      "sha256": "B90EDF7C326F28340FAD5D2D80E9874D7AC412938A2A0CE474E0B4A2FE29E608",
+      "reused_existing": false,
+      "reuse_source": null,
+      "full_prompt": "Use case: scientific-educational. Asset type: one photorealistic rehabilitation exercise step photograph. Match the SAME East Asian adult woman identity, face, black ponytail, skin, white short sleeve T-shirt, charcoal fitted long trousers and white trainers from the three reference photos. Soft studio lighting, pale blue-gray wall and non-slip matte floor, natural shadows. Fixed camera in full-body right-facing side view with a small front oblique angle so near left and far right legs and shoes both remain clear. Composition includes a short straight path moving horizontally from screen left to screen right, no floor markings; continuous waist-height stainless-steel horizontal railing behind and beside her on the far side, spanning full image width with secure vertical floor-bolted posts at far left and far right. Woman's farther right hand gently contacts this same reachable rail, near left arm hangs free. Empty path ahead, no chair, no equipment apart from rail. Both complete hands/feet/head visible, realistic anatomy, scale and light; no text, numbering, arrows, logos, montage or ghosts. Image 1 shows shallow forward lunge and image 2 initial starting scene. Maintain exactly the same fixed camera, framing, horizontal rail height and floor-post positions, same floor baseline, same woman/clothes/identity/proportions and scale. STEP 04 ONLY: controlled return to UPRIGHT STANDING at a NEW FORWARD LOCATION toward SCREEN RIGHT. Near LEFT foot from image 1 stays at its forward landing position, approximately 60% of image width. The rear FAR RIGHT foot has come FORWARD to stand next to the left foot, both feet flat parallel at hip width. Do not bring front foot backward, do not return to screen-left starting point. Body is therefore now standing in the CENTER-RIGHT portion of image, hips above the collected feet, knees naturally straight and torso vertical, head facing right, both hands and shoes fully visible. Far right hand slides forward along the same continuous rail and gently supports her; near left arm relaxed. No feet crossing, no continued lunge, no heel raise. Only one pose, one woman, no text/arrows.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-872e17d4-bca7-4d5a-942d-2876274a4bb6.png",
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-679bf308-9e8d-43bb-b716-2c7a815ba10a.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "review": {
+        "method": "生成展示后view_image逐张检查，复制至final_path后再次view_image逐张查看。",
+        "target_pose": "前进后收拢双足并排、站直扶栏；但相对s03前脚有约50-80px后移。",
+        "support_and_contact": "右手接同栏、两脚均平地、相对s01位置已右移；前脚未完全固定。",
+        "proportion_joint_and_framing": "单张站立比例/接触合理；动作连续性需修正，不能当作严格足位固定的完成帧。",
+        "identity_style": "同女性、黑马尾、白短袖、深灰裤、白鞋；灰蓝背景柔光；组内固定相机构图及家具大体一致。",
+        "no_text_or_arrows": true,
+        "result": "needs_revision"
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "frame": "104_s01",
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-eb9a584f-53c3-4105-810e-6ae080ec6da2.png",
+      "full_prompt": "Use case: scientific-educational. Asset type: one photorealistic rehabilitation exercise step photograph, portrait 1122x1402 style. Match the same East Asian adult woman, face, black ponytail, skin, white short sleeve T-shirt, charcoal fitted long trousers and white trainers from the three reference photos. Soft studio lighting, pale blue-gray wall and floor, natural shadows. Fixed full-body side view facing right, slight front oblique enough to see both feet and hands; same camera at hip height and same human scale across the series. Scene: gray upholstered armless stable chair at screen left, its back firmly against a visible vertical pale blue-gray wall on left; seat faces right. In front of chair, a fixed gray metal horizontal support rail at standing waist height, securely bolted by floor posts, reachable after standing with one hand; enough clearance for knees and body. Keep chair, rail, wall, floor, camera, clothes and anatomy identical across four steps. Head, both feet, full chair seat and support contact visible; realistic body proportions and hand/finger contact. Only one woman in one pose. No text, numbers, arrows, watermarks, ghost limbs or panels. STEP 01 only: Woman seated securely on front half of chair seat, hips clearly supported, knees about 90 degrees, both feet flat fully planted shoulder-width on floor below or slightly behind knees, torso upright and hands relaxed on thighs. The fixed waist-height rail must be visible in front of her within easy reach once standing; she is not yet standing or raising heels. Chair must visibly meet the left wall.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "selected": false,
+      "reason": "坐姿被自动放大，后续站姿无法保持同尺度构图；后以站姿s03固定机位重新做坐姿。"
+    },
+    {
+      "frame": "105_s04",
+      "source_output_path": null,
+      "full_prompt": "Use case: scientific-educational. Asset type: one photorealistic rehabilitation exercise step photograph. Match the SAME East Asian adult woman identity, face, black ponytail, skin, white short sleeve T-shirt, charcoal fitted long trousers and white trainers from the three reference photos. Soft studio lighting, pale blue-gray wall and non-slip matte floor, natural shadows. Fixed camera in full-body right-facing side view with a small front oblique angle so near left and far right legs and shoes both remain clear. Composition includes a short straight path moving horizontally from screen left to screen right, no floor markings; continuous waist-height stainless-steel horizontal railing behind and beside her on the far side, spanning full image width with secure vertical floor-bolted posts at far left and far right. Woman's farther right hand gently contacts this same reachable rail, near left arm hangs free. Empty path ahead, no chair, no equipment apart from rail. Both complete hands/feet/head visible, realistic anatomy, scale and light; no text, numbering, arrows, logos, montage or ghosts. Image 1 shows shallow forward lunge and image 2 initial starting scene. Maintain exactly the same fixed camera, framing, horizontal rail height and floor-post positions, same floor baseline, same woman/clothes/identity/proportions and scale. STEP 04 ONLY: controlled return to UPRIGHT STANDING at a NEW FORWARD LOCATION toward SCREEN RIGHT. Near LEFT foot from image 1 stays at its forward landing position, approximately 60% of image width. The rear FAR RIGHT foot has come FORWARD to stand next to the left foot, both feet flat parallel at hip width. Do not bring front foot backward, do not return to screen-left starting point. Body is therefore now standing in the CENTER-RIGHT portion of image, hips above the collected feet, knees naturally straight and torso vertical, head facing right, both hands and shoes fully visible. Far right hand slides forward along the same continuous rail and gently supports her; near left arm relaxed. No feet crossing, no continued lunge, no heel raise. Only one pose, one woman, no text/arrows.",
+      "selected": false,
+      "result": "tool_failure",
+      "reason": "首次调用约121秒后connection failed; retry identical prompt succeeded, saved normative s04."
+    },
+    {
+      "frame": "105_s04_attempt2",
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-d4fd1eb6-91c6-47a7-893c-47f824f863ae.png",
+      "full_prompt": "Use case: scientific-educational. One photorealistic rehabilitation exercise step image, 1122x1402 portrait. Image 1 is a shallow lunge with LEFT leg forward, image 2 is a nearly correct collected standing result whose FEET have drifted backward. Create the corrected collected standing photograph. LOCK image 1 camera framing, geometry of long rail and its two posts, floor level, woman identity/face/hair/clothing/proportions and scale. Show one woman facing SCREEN RIGHT, torso fully upright, knees naturally straight, RIGHT hand touching the continuous rail farther right than in image 1, left arm relaxed. THE LEFT FRONT SHOE FROM IMAGE 1 MUST STAY IN EXACTLY ITS CURRENT FORWARD LOCATION: its heel is about x600 and toe about x770 in the 1122 pixel wide frame. Keep that left shoe shape, angle and floor location. Bring ONLY the back RIGHT FOOT forward next to it at comfortable hip width so both shoes are flat side by side near x620-790. Pelvis and head move right to stand vertically above these forward feet, woman's torso centered around x680. This is a final stable standing pose after gathering the back foot, NOT a step backwards and not at the initial starting point. Both hands and full feet visible; no heel raise, crossed feet, motion blur, text, numbers, arrows, logo, panel or ghost limbs. Keep floor contact shadows natural.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-872e17d4-bca7-4d5a-942d-2876274a4bb6.png",
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-935265cc-c76d-4165-9672-65def13e65d5.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "selected": false,
+      "reason": "试图锁前脚落点，结果仍约保留原后移，未复制到交付目录。"
+    },
+    {
+      "frame": "105_s04_attempt3",
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-900885a9-9cae-4215-8cfd-3c4a7d154fdf.png",
+      "full_prompt": "精确局部姿势编辑：只用这张弓步照片作为相机、人物、服装、背景、栏杆及前脚位置的唯一基准。生成一张同场景的动作终点照片，画面里仍只有这一个女人，无文字无箭头。保持固定相机和原图构图不变，栏杆、左右两个立柱、地平基准全部不动，人物头身比和四肢长度不变。她面朝右，右手一直扶住原长栏杆。把原来留在画面左侧的后脚向右前收拢，与原来画面右下方的前脚并排站稳，两脚全掌平地、膝髋伸直，上身直立。关键：原图在右下方的前鞋完全不挪动，仍保持脚跟约在画面宽度53%处、鞋尖约68%处；只把左侧后脚送到这个前脚旁边。因此骨盆和上身应该向右移动至这只固定前脚正上方。禁止把原前脚向左撤回，禁止把人物重心居中重排。手随身体沿原长栏向右滑，左臂自然垂下，两只完整鞋、手和头部全在镜头内。写实康复教学摄影，灰蓝背景柔光，自然阴影。",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13855-8ea7-7f12-a0ab-56ad71c32289/exec-872e17d4-bca7-4d5a-942d-2876274a4bb6.png"
+      ],
+      "selected": false,
+      "reason": "只参考s03中文定向修正，结果改善有限，未复制到交付目录；之后主代理接手修正。"
+    }
+  ],
+  "review_limits": [
+    "审核为AI生成静态图目视核对，不证明真实发力、负荷、节奏、支撑承重或临床适用性。",
+    "人物、器材及相机连续性为目视级匹配，不是摄影测量或像素级复刻。",
+    "105s02到s03有轻微位置漂移；105s04前脚明显回移，已明确标记待修而不声称全套通过。",
+    "104s04远侧脚跟部分受遮挡，仍可见双侧前足接地及跟部抬起，未额外生成局部近景。"
+  ]
+}

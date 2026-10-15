@@ -1,0 +1,307 @@
+{
+  "record_version": "1.0",
+  "created_date": "2026-10-14",
+  "batch": "148/s01–s02；149/s01–s03；150/s01–s03；151/s01–s02",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "generator": "built-in image_gen.imagegen",
+  "final_output_count": 10,
+  "new_generated_count": 7,
+  "reused_count": 3,
+  "image_dimensions": [
+    1536,
+    1024
+  ],
+  "source_assets_preserved": true,
+  "formal_repository_modified": false,
+  "direction_convention": "左右均指人物解剖方向；正面照片中人物左为画面右，人物右为画面左。",
+  "review_scope": "依据指定清单的画面视觉核对；不从照片测定实际厘米或精确关节角度。",
+  "image_sequence": {
+    "148": "01→02→复用01",
+    "149": "01→02→复用01→03→复用01",
+    "150": "01→02→复用01→03→复用01",
+    "151": "01→02保持→复用01完全放松"
+  },
+  "source_records": [
+    "E:/git冲突问题/rehab image/步骤图_148_制作记录.json",
+    "E:/git冲突问题/rehab image/步骤图_149_制作记录.json",
+    "E:/git冲突问题/rehab image/步骤图_150_制作记录.json",
+    "E:/git冲突问题/rehab image/train/steps/步骤图_151_制作记录.json"
+  ],
+  "images": [
+    {
+      "sequence": 148,
+      "action_id": "T-AXU-010",
+      "step": "01",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/148_T-AXU-010_s01.png",
+      "generated_source": "E:/git冲突问题/rehab image/train/steps/147_T-AXU-009_s01.png",
+      "reused": true,
+      "reused_source_record": "E:/git冲突问题/rehab image/步骤图_144_147_制作记录.json",
+      "prompt": "不另行生成；按清单复用已逐张核验的侧面中立椅坐位147/s01。",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "qa_status": "pass",
+      "qa_observation": "侧面椅坐中立、眼睛自然平视，胸肩放松；完整头马尾双肩及膝上双手可见，椅背位于背部而非颈后。人物衣着背景与指定参考一致。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "439B5370E0B07177746FEB22E31F59356CB1E2C2E323CDB31749E4413B8B95BB",
+      "source_record": "E:/git冲突问题/rehab image/步骤图_148_制作记录.json",
+      "bytes": 1715068,
+      "final_review": "已逐张查看实际输出，身份衣着背景、姿势方向、肩躯干稳定与头肩比例通过清单视觉核对；复用图另以哈希确认。"
+    },
+    {
+      "sequence": 148,
+      "action_id": "T-AXU-010",
+      "step": "02",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/148_T-AXU-010_s02.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a81-ce13-70a1-816e-eaac4b69cea4/exec-775bf901-c58e-458d-bfd0-8ba1fce9d436.png",
+      "reused": false,
+      "prompt": "Use case: identity-preserve.\nAsset type: one photorealistic rehabilitation step photograph, 148 T-AXU-010 s02 comfortable ACTIVE neck extension.\nInput image 1 is the EXACT seated neutral scene to edit. Images 2–4 are the same woman's identity and photography-style references only.\nChange ONLY the head and cervical posture: the woman keeps facing image RIGHT in true side profile, and gently raises her gaze with a SMALL cervical extension of about 20–25 degrees from level. The face inclines diagonally upwards and eyes look gently up; chin lifts only moderately, with natural continuous neck anatomy. This is a clearly visible comfortable endpoint, not an extreme backward head bend; do not look straight at the ceiling.\nKeep everything else exactly as in image 1: same facial identity, head size, black ponytail, white short-sleeved shirt, dark charcoal trousers, chair and chair location, torso upright naturally and not arching backwards, shoulders relaxed and at the exact same height, both hands on thighs at the exact same positions. The chair back remains below shoulder level and does not touch the neck. No hand on forehead or head. Match canvas dimensions 1536x1024 landscape, camera, crop, woman scale, gray-blue background and soft lighting. Complete head, hair, shoulders, torso and lap hands visible as before.\nExactly one woman and one pose. No text, numbers, arrows, collage, border, motion ghosts or watermark. Preserve natural skin and fabric texture and realistic anatomy.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/148_T-AXU-010_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "qa_status": "pass",
+      "qa_observation": "视线抬高，头部可见小幅后仰，未极限后仰；上身自然直立、胸肩与双手位置稳定，同椅与机位；头颈连接与比例自然，无手施压。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "0785603DB4E04363870AC4E99998745ACCA98A49B54CFE5D54149732D412A5FA",
+      "source_record": "E:/git冲突问题/rehab image/步骤图_148_制作记录.json",
+      "bytes": 1681712,
+      "final_review": "已逐张查看实际输出，身份衣着背景、姿势方向、肩躯干稳定与头肩比例通过清单视觉核对；复用图另以哈希确认。"
+    },
+    {
+      "sequence": 149,
+      "action_id": "T-AXU-011",
+      "step": "01",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/149_T-AXU-011_s01.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-6694-7031-9832-b40f90d58153/exec-dad5f740-d7af-41c7-a6b0-3424a75b08fe.png",
+      "reused": false,
+      "edit_base": null,
+      "prompt": "Use case: scientific-educational.\nAsset type: one photorealistic rehabilitation exercise demonstration photo, action 149 T-AXU-011 step s01 neutral setup.\nInput images: all three supplied reference images are identity, wardrobe, photographic lighting and gray-blue background references only. Use exactly this same East Asian adult woman, same age, face, skin tone, natural proportions, black ponytail, plain white short-sleeve T-shirt and dark charcoal gray trousers. Do not copy the arm gestures of references.\nPrimary request: a front-facing seated neutral head position for gentle neck movement. She sits stably and naturally upright on a simple gray armless chair. Chest and face point straight toward the camera. Head is precisely upright, nose centered, chin level, eyes look straight forward. Both ears and shoulder relationships are clear. Shoulders are relaxed, naturally dropped, at equal height. Both arms hang relaxed and BOTH complete hands rest palm-down separately on their corresponding thighs just above knees. Fingers natural and readable.\nComposition/framing: a single 3:2 horizontal image, approximately 1536 by 1024 pixels. Fixed centered frontal camera at upper chest/head level, natural portrait lens perspective. Show entire head including ponytail, both shoulders, upper torso, both elbows, both forearms, both complete hands, knees/upper thighs and visible gray chair edges/back cues. Frame from modest margin over head down to just below knees. No full legs are needed. Her head and neck must be large enough to clearly teach a small neck movement. Plenty of unobtrusive background to both sides.\nStyle/medium: realistic reference-matched studio photograph, soft gray-blue seamless background and soft natural studio light, crisp anatomy and fine fabric/hair texture. Calm mild pleasant expression, mouth closed.\nConstraints: one woman, one posture, no head rotation, no side bend, no neck extension or flexion, no shoulder shrug, no trunk lean. No text, numbers, arrows, logos, watermark or picture panels. This is the shared neutral reference for later side bending and head rotation; keep pose visibly symmetric.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "visual_identity_reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "qa_status": "pass",
+      "qa_observation": "实看验收通过：女性身份、白短袖深灰裤、马尾、灰蓝背景及柔和棚拍光线与三参考一致；正面坐稳，头中立平视、鼻尖朝前，双肩水平自然下垂，胸口朝前；完整头部、双肩、上身、双臂、双手、膝上及灰椅线索清楚；手指与关节连续，未见可辨畸形；无字无箭头。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "76F8815D98E3B0B4FC475A46186CC0C3A7E4ACD343D45F1540C1AFDCB69BC05A",
+      "source_record": "E:/git冲突问题/rehab image/步骤图_149_制作记录.json",
+      "bytes": 1723252,
+      "final_review": "已逐张查看实际输出，身份衣着背景、姿势方向、肩躯干稳定与头肩比例通过清单视觉核对；复用图另以哈希确认。"
+    },
+    {
+      "sequence": 149,
+      "action_id": "T-AXU-011",
+      "step": "02",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/149_T-AXU-011_s02.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-6694-7031-9832-b40f90d58153/exec-eb393ed5-8e9b-4f3d-870b-313fcb7eef17.png",
+      "reused": false,
+      "edit_base": "E:/git冲突问题/rehab image/train/steps/149_T-AXU-011_s01.png",
+      "prompt": "Use case: identity-preserve; scientific educational rehabilitation exercise photo.\nEdit target: the provided frontal seated neutral photo is the exact base. Produce action 149 T-AXU-011 step s02 in one photo.\nCHANGE ONLY HEAD/NECK POSITION: she actively side-bends her head to HER anatomical LEFT, which is the RIGHT side of this frontal image. A clearly visible but gentle 22 degree lateral tilt: top/crown of the head moves toward image RIGHT, her left ear (on image right) moves down toward her left shoulder. Face, nose and chest continue pointing straight at camera; there is no rotation toward either side, no chin raise, no chin drop. Both eyes are still aimed forward, the eye line slopes naturally because the entire head is tilted. Keep her mild calm expression. Her ponytail moves naturally with the head.\nLOCK ALL OTHER CONTENT: camera, 1536 by 1024 horizontal crop and composition, subject identity and facial features, subject scale, all torso posture, level relaxed down shoulders at EXACT original positions, chest straight forward, arms, hands, fingers, lap, white short-sleeve shirt, dark gray trousers, gray chair, soft gray-blue studio background, lighting, fabric folds below the neck. Trunk remains upright and centered. Lower neck curves gently to support the tilted head; anatomy continuous.\nNo shoulder shrug, no torso lean, no hand touching or pulling head, no strong end-range stretch. No text, no numbers, no arrows, no watermark, no additional person or panels.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/149_T-AXU-011_s01.png"
+      ],
+      "visual_identity_reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "qa_status": "pass",
+      "qa_observation": "实看验收通过：头向人物解剖左侧屈，即画面右侧，约轻中等可见幅度；左耳朝左肩靠近，鼻尖及脸部仍朝前，无转头；左右肩保留中立原位、无抬肩，双手仍在膝上、无手拉头；躯干正直，身份、衣服、背景、相机、尺度、构图与s01一致。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "0DD5A42927D47FB55BF040B635C3C88D12DC240C1BD18C476699121D14106EE0",
+      "source_record": "E:/git冲突问题/rehab image/步骤图_149_制作记录.json",
+      "bytes": 1623828,
+      "final_review": "已逐张查看实际输出，身份衣着背景、姿势方向、肩躯干稳定与头肩比例通过清单视觉核对；复用图另以哈希确认。"
+    },
+    {
+      "sequence": 149,
+      "action_id": "T-AXU-011",
+      "step": "03",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/149_T-AXU-011_s03.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-6694-7031-9832-b40f90d58153/exec-bcf6bc57-5067-408f-ac18-55590a0e8063.png",
+      "reused": false,
+      "edit_base": "E:/git冲突问题/rehab image/train/steps/149_T-AXU-011_s01.png",
+      "prompt": "Use case: identity-preserve; scientific educational rehabilitation exercise photo.\nEdit target: the provided frontal seated neutral photo is the exact base. Produce action 149 T-AXU-011 step s03 in one photo.\nCHANGE ONLY HEAD/NECK POSITION: she actively side-bends her head to HER anatomical RIGHT, which is the LEFT side of this frontal image. A clearly visible but gentle 22 degree lateral tilt: top/crown of the head moves toward image LEFT, her right ear (on image left) moves down toward her right shoulder. This is the opposite direction from a head tilt to image right. Face, nose and chest continue pointing straight at camera; there is no rotation toward either side, no chin raise, no chin drop. Both eyes are still aimed forward, the eye line slopes naturally because the entire head is tilted. Keep her mild calm expression. Her ponytail moves naturally with the head.\nLOCK ALL OTHER CONTENT: camera, 1536 by 1024 horizontal crop and composition, subject identity and facial features, subject scale, all torso posture, level relaxed down shoulders at EXACT original positions, chest straight forward, arms, hands, fingers, lap, white short-sleeve shirt, dark gray trousers, gray chair, soft gray-blue studio background, lighting, fabric folds below the neck. Trunk remains upright and centered. Lower neck curves gently to support the tilted head; anatomy continuous.\nNo shoulder shrug, no torso lean, no hand touching or pulling head, no strong end-range stretch. No text, no numbers, no arrows, no watermark, no additional person or panels.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/149_T-AXU-011_s01.png"
+      ],
+      "visual_identity_reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "qa_status": "pass",
+      "qa_observation": "实看验收通过：头向人物解剖右侧屈，即画面左侧，与s02方向相反，约轻中等可见幅度；右耳朝右肩靠近，脸部仍朝前、无转头；双肩水平自然下垂，无躯干侧倒及手拉头；身份、衣服、背景、相机、尺度、构图与s01一致。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "16CA82AF8006C13CDD7DB9213229C6189537F417DAD6F2C24FA6B281B83618B3",
+      "source_record": "E:/git冲突问题/rehab image/步骤图_149_制作记录.json",
+      "bytes": 1631788,
+      "final_review": "已逐张查看实际输出，身份衣着背景、姿势方向、肩躯干稳定与头肩比例通过清单视觉核对；复用图另以哈希确认。"
+    },
+    {
+      "output_path": "E:/git冲突问题/rehab image/train/steps/150_T-AXU-012_s01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "76F8815D98E3B0B4FC475A46186CC0C3A7E4ACD343D45F1540C1AFDCB69BC05A",
+      "bytes": 1723252,
+      "sequence": 150,
+      "action_id": "T-AXU-012",
+      "step": "01",
+      "target_pose": "中立自然平视",
+      "reused": true,
+      "reuse_source": "E:/git冲突问题/rehab image/train/steps/149_T-AXU-011_s01.png",
+      "prompt": "Reuse the accepted front-facing neutral seated image 149 T-AXU-011 s01 byte-for-byte as 150 T-AXU-012 s01. No regeneration or raster editing.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "E:/git冲突问题/rehab image/train/steps/149_T-AXU-011_s01.png",
+      "qa_status": "pass",
+      "qa_observation": "正面稳定灰椅坐位，头中立自然平视、脸与胸口同朝前，双肩水平放松；双手完整放于膝上、灰蓝背景、白短袖深灰裤；完整头肩和椅支持可见。与 149 s01 原字节复用、SHA256 一致。",
+      "qa_method": "每张生成结果实看，并调用 view_image 查看保存输出；手动视觉验收。",
+      "source_record": "E:/git冲突问题/rehab image/步骤图_150_制作记录.json",
+      "final_review": "已逐张查看实际输出，身份衣着背景、姿势方向、肩躯干稳定与头肩比例通过清单视觉核对；复用图另以哈希确认。"
+    },
+    {
+      "output_path": "E:/git冲突问题/rehab image/train/steps/150_T-AXU-012_s02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "E46553FF0BB79E65F47B482FF6E9DB98D6581E49A23DB1654EEBA958D877A666",
+      "bytes": 1670111,
+      "sequence": 150,
+      "action_id": "T-AXU-012",
+      "step": "02",
+      "target_pose": "左转头（画面右）舒适终点",
+      "reused": false,
+      "reuse_source": null,
+      "prompt": "Use case: identity-preserve.\nAsset type: ONE single photorealistic rehabilitation step photograph, action 150 T-AXU-012 s02.\nInput image 1 is the exact neutral front-facing seated photograph to EDIT. Images 2–4 are supporting identity and photographic-style references of the SAME woman only.\nPrimary request: Preserve the entire scene and change ONLY the head orientation by a gentle active neck rotation. Rotate her head toward HER ANATOMICAL LEFT, which appears toward the RIGHT EDGE of the image, approximately 45–55 degrees from facing the camera. The nose points distinctly toward image RIGHT. Her eyes turn with the face and look in the same image-right direction at a natural level height. The head is upright: ears remain level, no head sideways tilt, no forward bow, no upward lift. Natural comfortable three-quarter view, not looking behind her. Neutral jaw and gentle expression.\nInvariants: Her chest, shoulders, collarbone line and pelvis stay square to the camera, both shoulders relaxed and at the same level as the source, upright torso stays stationary. Keep her plain white short-sleeve T-shirt, dark charcoal trousers, both arms and hands on thighs, gray chair, gray-blue studio background, soft light, camera position, image canvas dimensions, crop, woman scale, floor and shadows exactly unchanged. Same face and black ponytail with naturally appropriate local movement.\nComposition: Identical landscape front camera seated head-and-shoulders/upper-body framing as the source. Complete head, hair and shoulders remain visible.\nAvoid: torso turning, shrugging, shoulder tilt, chin tilting up or down, neck overtwist, gaze behind the shoulder, hand assistance, text, numbers, arrows, panels, collage, border, watermark, new objects or other people.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/150_T-AXU-012_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a83-b22d-70c1-84df-355c93f1d17e/exec-db0429c4-bbb9-4d40-bbbe-4443a3990845.png",
+      "qa_status": "pass",
+      "qa_observation": "头主动向人物解剖左侧转，即鼻尖朝画面右、双眼随脸同向且自然平视；舒适三分之四转头终点，未追看身后，未侧歪或仰头；胸口双肩仍朝前，双肩、手、椅、衣着、相机、背景及裁幅保持，与 s01 连贯。",
+      "qa_method": "每张生成结果实看，并调用 view_image 查看保存输出；手动视觉验收。",
+      "source_record": "E:/git冲突问题/rehab image/步骤图_150_制作记录.json",
+      "final_review": "已逐张查看实际输出，身份衣着背景、姿势方向、肩躯干稳定与头肩比例通过清单视觉核对；复用图另以哈希确认。"
+    },
+    {
+      "output_path": "E:/git冲突问题/rehab image/train/steps/150_T-AXU-012_s03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "DCE5B487DB1E75139781DBE42354E76B52E6629A1962FB05F9B96B61AE3DEE19",
+      "bytes": 1682932,
+      "sequence": 150,
+      "action_id": "T-AXU-012",
+      "step": "03",
+      "target_pose": "右转头（画面左）舒适终点",
+      "reused": false,
+      "reuse_source": null,
+      "prompt": "Use case: identity-preserve.\nAsset type: ONE single photorealistic rehabilitation step photograph, action 150 T-AXU-012 s03.\nInput image 1 is the exact neutral front-facing seated photograph to EDIT. Images 2–4 are supporting identity and photographic-style references of the SAME woman only.\nPrimary request: Preserve the entire scene and change ONLY the head orientation by a gentle active neck rotation. Rotate her head toward HER ANATOMICAL RIGHT, which appears toward the LEFT EDGE of the image, approximately 45–55 degrees from facing the camera. The nose points distinctly toward image LEFT. Her eyes turn with the face and look in the same image-left direction at a natural level height. The head is upright: ears remain level, no head sideways tilt, no forward bow, no upward lift. Natural comfortable three-quarter view, not looking behind her. Neutral jaw and gentle expression.\nInvariants: Her chest, shoulders, collarbone line and pelvis stay square to the camera, both shoulders relaxed and at the same level as the source, upright torso stays stationary. Keep her plain white short-sleeve T-shirt, dark charcoal trousers, both arms and hands on thighs, gray chair, gray-blue studio background, soft light, camera position, image canvas dimensions, crop, woman scale, floor and shadows exactly unchanged. Same face and black ponytail with naturally appropriate local movement.\nComposition: Identical landscape front camera seated head-and-shoulders/upper-body framing as the source. Complete head, hair and shoulders remain visible.\nAvoid: torso turning, shrugging, shoulder tilt, chin tilting up or down, neck overtwist, gaze behind the shoulder, hand assistance, text, numbers, arrows, panels, collage, border, watermark, new objects or other people.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/150_T-AXU-012_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a83-b22d-70c1-84df-355c93f1d17e/exec-81d24880-1d73-48ba-bcfe-fd430305c8b4.png",
+      "qa_status": "pass",
+      "qa_observation": "先回中立后头主动向人物解剖右侧转，即鼻尖朝画面左、双眼随脸同向且自然平视；与 s02 为相反方向，头无侧歪、肩未耸起，未追看身后；胸口双肩保持朝前，双手与灰椅及裁幅保持，与同一 s01 连贯。",
+      "qa_method": "每张生成结果实看，并调用 view_image 查看保存输出；手动视觉验收。",
+      "source_record": "E:/git冲突问题/rehab image/步骤图_150_制作记录.json",
+      "final_review": "已逐张查看实际输出，身份衣着背景、姿势方向、肩躯干稳定与头肩比例通过清单视觉核对；复用图另以哈希确认。"
+    },
+    {
+      "sequence": 151,
+      "action_id": "T-AXU-013",
+      "step": "01",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/151_T-AXU-013_s01.png",
+      "generated_source": "E:/git冲突问题/rehab image/train/steps/147_T-AXU-009_s01.png",
+      "reused": true,
+      "prompt": null,
+      "reference_paths": [],
+      "supporting_identity_references": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "role": "已人工查看的人物身份、服装和背景参考；没有作为s02工具输入",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "role": "已人工查看的人物身份、服装和背景参考；没有作为s02工具输入",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "role": "已人工查看的人物身份、服装和背景参考；没有作为s02工具输入",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        }
+      ],
+      "qa_status": "pass",
+      "qa_observation": "同参考女性，白色短袖、黑裤、马尾、灰蓝背景；头肩比例自然，耳靠近肩上方，平视且下颌放松，没有刻意前伸；稳定灰色靠背椅支持，双手在膝上，双肩自然下垂；完整头部、马尾、肩部；侧面方向清楚，无遮挡、文字、箭头",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "439B5370E0B07177746FEB22E31F59356CB1E2C2E323CDB31749E4413B8B95BB",
+      "source_record": "E:/git冲突问题/rehab image/train/steps/步骤图_151_制作记录.json",
+      "bytes": 1715068,
+      "final_review": "已逐张查看实际输出，身份衣着背景、姿势方向、肩躯干稳定与头肩比例通过清单视觉核对；复用图另以哈希确认。"
+    },
+    {
+      "sequence": 151,
+      "action_id": "T-AXU-013",
+      "step": "02",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/151_T-AXU-013_s02.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a84-015c-7351-a817-19cdc2644515/exec-31f066bc-9531-4e1e-af39-7a876cf065bb.png",
+      "reused": false,
+      "prompt": "Use case: identity-preserve.\nAsset type: one photorealistic rehabilitation step demonstration, action 151 T-AXU-013, step 02, gentle seated chin retraction.\nInput image: the attached seated side-profile photograph is the sole edit target. Preserve its person, identity, hairstyle/ponytail, white T-shirt, black trousers, gray backed chair, relaxed shoulders, trunk, hands on thighs, seat contact, camera, exact framing, dimensions 1536x1024, light and blue-gray background.\nChange ONLY the head and its local neck transition: the whole head slides horizontally backward toward the left of the image by a small 1–2 cm, while the face continues looking to the right with eyes at approximately the same horizontal level. This is cervical retraction, a tiny horizontal chin glide; the chin makes a small soft double-chin fold. Keep the nose and eye direction essentially horizontal, preserving approximately the original head orientation. Ear, nose, jaw and whole skull translate posteriorly together; do not rotate the face downward or upward. The movement is gentle and barely a little visible, with a naturally proportioned comfortable neck.\nKeep the entire crown, ponytail and shoulders in frame. The back continues resting naturally by the same chair back; never press the head against a wall or forcefully into a chair. Keep shoulders lowered and trunk completely unchanged. One posture, no text, no arrows, no diagrams, no ghost outlines, no split panels, no new props. Avoid neck flexion, nodding, bowing the head, looking down, looking up, exaggerated chin tucking, overcompression or extreme head retraction.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/151_T-AXU-013_s01.png"
+      ],
+      "supporting_identity_references": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "role": "已人工查看的人物身份、服装和背景参考；没有作为s02工具输入",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "role": "已人工查看的人物身份、服装和背景参考；没有作为s02工具输入",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "role": "已人工查看的人物身份、服装和背景参考；没有作为s02工具输入",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        }
+      ],
+      "qa_status": "pass",
+      "qa_observation": "人物身份、马尾、服装、灰蓝背景和光线保持；耳鼻下颌整头后移约30像素可辨；眼部高度基本不变，鼻脸方向近水平，小双下巴可见。没有低头、抬头或大幅点头；肩和躯干基本保持，双手仍安放在膝上，背靠椅支持，不靠墙、不强顶椅背；完整头部、马尾、双肩；无字箭头，无多帧叠影，未混入仰卧点头；1–2厘米为生成提示的轻幅意图；照片没有标尺，实际物理位移不能据图精确测定",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "0ACE87796AD2857F2FCF388E22F8A25296653D64EE154E9457E941B0FD7942FD",
+      "source_record": "E:/git冲突问题/rehab image/train/steps/步骤图_151_制作记录.json",
+      "bytes": 1681425,
+      "final_review": "已逐张查看实际输出，身份衣着背景、姿势方向、肩躯干稳定与头肩比例通过清单视觉核对；复用图另以哈希确认。"
+    }
+  ]
+}

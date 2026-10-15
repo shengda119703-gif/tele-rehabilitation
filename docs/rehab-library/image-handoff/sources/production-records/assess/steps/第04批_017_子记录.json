@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "batch": "分步骤第04批_017_子记录",
+  "date": "2026-10-14",
+  "source_document": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+  "tool": "内置 image_gen",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "selected_version": "徒手、自选中等偏浅目标深度；侧面全身；无椅子。",
+  "flow": "01→02→01，固定本组目标深度。",
+  "completed_photos": 2,
+  "items": [
+    {
+      "action_sequence": 17,
+      "id": "E-LOW-015",
+      "name": "自选深度康复下蹲",
+      "step": "s01",
+      "phase_zh": "双脚自然间距站稳，足尖自然方向，双臂自然下垂。",
+      "filename": "017_E-LOW-015_s01.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/017_E-LOW-015_s01.png",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e2-d29b-7940-8a24-16b626ba24dd/exec-8482148c-d913-4aef-929e-3092e186ec68.png",
+      "prompt": "Use case: scientific-educational, photorealistic rehabilitation exercise STEP photo.\nInput images 1-3 are strict references for the EXACT same woman, face, age, skin tone, natural body proportions, black ponytail, fitted plain white short-sleeve shirt and dark charcoal full-length trousers. Preserve cool gray-blue seamless studio backdrop and floor, soft neutral diffused studio light and subtle natural shadows. Wear simple plain white low-profile athletic shoes, no branding.\nCreate only ONE person in ONE static posture in a single independent photo, no collage, inset, motion blur, ghost limbs, text, labels, arrows, numbers, logos or watermark. Realistic anatomy: two arms and two legs, naturally continuous joints, normal hands and fingers, adult limb proportions. Show entire head, hands and both complete shoes with generous margins.\nAction 017 E-LOW-015, self-selected-depth bodyweight rehabilitation squat. No chair, support, equipment or added props. Fixed LANDSCAPE 1536x1024 composition, essentially side-on view of woman facing RIGHT, with a tiny frontal oblique offset so both feet, both hands and both knees remain identifiable. Normal 50 mm perspective, camera level at mid-torso, no wide-angle distortion. Subject full standing height about 78 percent of frame. Keep camera fixed, consistent subject scale, floor foot positions and lighting across the group. Comfortable natural hip-to-shoulder-width foot spacing with toes naturally a little outward. Calm neutral face.\nPhoto step 01 PREPARATION: she stands naturally upright in the described side view, feet naturally spaced and BOTH entire shoe soles flat on the ground, knees and hips softly extended, weight balanced evenly. BOTH arms hang relaxed naturally alongside her body, both hands visible. Shoulders level, back naturally aligned, gaze horizontally forward. This is a still standing preparation, no squat and no stepping. Preserve the woman's exact reference identity and reference shirt/trouser styling.",
+      "correction_prompt": null,
+      "reused": false,
+      "category": "assess",
+      "status": "completed",
+      "QA": {
+        "passed": true,
+        "observations": "通过：双足平放、自然站距，手臂下垂，膝髋起始位清楚；同参考人物、服装、背景及光线，完整头手脚入镜。"
+      },
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "bytes": 1652722,
+      "sha256": "B312814408F7C9FE67E35B103C75CB0C36C220B31DBE0901C574B5E9EEB99F22"
+    },
+    {
+      "action_sequence": 17,
+      "id": "E-LOW-015",
+      "name": "自选深度康复下蹲",
+      "step": "s02",
+      "phase_zh": "双脚保持落地，屈髋屈膝下降至本组选定的中等偏浅下蹲目标；躯干自然前倾，双臂前伸平衡。",
+      "filename": "017_E-LOW-015_s02_v2.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/017_E-LOW-015_s02_v2.png",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e2-d29b-7940-8a24-16b626ba24dd/exec-7fa82c45-e1c9-4da9-9b5c-1f5b9ca9c1a6.png",
+      "prompt": "Use case: identity-preserve, photorealistic rehabilitation STEP photograph.\nInput image 1 is the exact standing scene to EDIT. Input images 2-4 are the original woman identity and clothing/photo style references. Preserve image 1 exact woman, facial identity, clothes, shoes, natural limb lengths, studio backdrop, floor, lighting, camera, landscape 1536x1024 framing, perspective and scale. Do not zoom or move camera, do not move the feet or rotate the body; preserve shoe contact positions.\nChange ONLY the woman's posture from standing to the controlled endpoint of a comfortable shallow-to-moderate bodyweight rehabilitation squat. She faces RIGHT in the SAME slight side-oblique view. BOTH feet remain wholly flat, including BOTH heels, hip/shoulder width and natural slight outward toe angle. Bend BOTH hips and knees to about 60 degrees of knee flexion, hips move slightly BACK and DOWN. Thighs slope clearly above horizontal, this is NOT a maximal/deep squat. Spine stays naturally aligned, torso leans forward modestly in a realistic hip hinge while head remains in line, gaze forward/down slightly. BOTH knees follow the natural foot directions. Both arms reach forward comfortably at about lower chest height for counterbalance, elbows slightly soft, palms down and fingers naturally together. Show both hands distinctly with correct anatomy.\nSingle static pose, ONE woman, entire head, both hands, both full shoes visible, no ghost limbs, no added chair or props. Gray-blue seamless studio, natural adult proportions. NO text, arrows, labels, motion effects, collage or watermark. The fixed target for this two-photo group is this moderate squat; do not add a deeper squat or a sitting endpoint.",
+      "correction_prompt": "Use case: identity-preserve scientific-educational photograph.\nImage 1 is the STRICT locked-camera background, person size, identity, anatomy and shoe-position base (standing). Image 2 is ONLY a reference for the desired comfortable squat posture. Images 3-5 are original identity/style references.\nProduce the final squat step photo as an edit of image 1, with the controlled moderately shallow squat pose seen in image 2. The earlier squat image 2 slightly enlarged the woman and shifted the feet. Correct ONLY that scale/position mismatch when transferring the pose. Preserve image 1 original 1536x1024 pixel canvas, fixed camera perspective, floor, shadows style, lighting, clothes, shoes, woman's body proportions and exact SAME natural stance. BOTH shoe soles must stay grounded at exactly the SAME frame positions as image 1: the near shoe spans approximately x605-750 with bottom at y983, and far shoe spans x650-800 with bottom at y941. No shifting her stance or moving her closer to camera. Face/head and shoe physical sizes must match image 1, do not enlarge. The woman keeps facing right in same near-side angle.\nShe bends both hips and knees to the same moderate squat depth as image 2, hips back/down, thighs clearly above horizontal. Both knees track the shoe directions, both heels stay planted. Back naturally aligned, moderate torso forward lean, gaze comfortably forward. Both arms reach forward at lower chest level for balance, palms down, anatomically normal hands, both visible. This must look like the SAME person on the SAME camera in the SAME room going from image1 standing to a squat, with standing and squat naturally at different head heights. She is not sitting on anything.\nOnly one person in one still posture, full head, both hands and complete shoes in frame, no added chair/equipment, no text/numbers/arrows/collage/ghosting/watermarks. Exact white short-sleeve shirt, charcoal trousers, black ponytail and white unbranded shoes, gray-blue seamless backdrop.",
+      "reused": false,
+      "category": "assess",
+      "status": "completed",
+      "QA": {
+        "passed": true,
+        "observations": "通过：选定下蹲终点清楚，大腿高于水平，脚跟与前足接地，膝随足方向、躯干自然前倾，完整手脚和人体连接自然。首稿尺度/脚位漂移已返修；复核同组机位/身份/光线一致，鞋底位置差约10—20px、鞋长差约4—6%（目视估计）为可接受生成变异。"
+      },
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "bytes": 1621428,
+      "sha256": "7118866F5478C6DC69D85DBA22B434131BDBC311C1DC7A965BFBAD9E1B7AFBC2",
+      "supersedes": "E:/git冲突问题/rehab image/assess/steps/017_E-LOW-015_s02.png"
+    }
+  ],
+  "discarded_attempts": [
+    {
+      "step": "s02",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e2-d29b-7940-8a24-16b626ba24dd/exec-795adf24-6374-43ed-a0a7-936098fe05fe.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/017_E-LOW-015_s02.png",
+      "reason": "单帧姿势通过，同组鞋底位置/尺度明显漂移；用s02_v2替代。",
+      "sha256": "217ABB198049CFEBA8A5488AC755FF2762FD02ADAD5D84F2B771CDB5F17AE3DA"
+    }
+  ]
+}

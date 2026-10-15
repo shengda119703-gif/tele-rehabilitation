@@ -122,7 +122,9 @@ def test_csrf_and_external_origin(setup):
     assert c.get(BASE + "/auth/me").status_code == 401
 
 
-def test_login_generic_and_throttle_shared_across_apps(setup):
+def test_login_generic_and_throttle_shared_across_apps(setup, monkeypatch):
+    # Keep the entire assertion in one configured fixed window, even on a slow host.
+    monkeypatch.setattr('cloud_service.security.time.time', lambda: 1_800_000_001.0)
     app, db, settings = setup
     a = client(app); b = client(create_app(settings, db)); register(a)
     messages = set()

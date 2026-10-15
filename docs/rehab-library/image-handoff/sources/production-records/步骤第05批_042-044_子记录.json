@@ -1,0 +1,118 @@
+{
+  "images": [
+    {
+      "sequence": 42,
+      "id": "E-AXU-025",
+      "name": "四点跪位后坐活动观察",
+      "step": 1,
+      "filename": "042_E-AXU-025_s01.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\042_E-AXU-025_s01.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-9b39-7ce0-90e1-b272cded876d\\exec-0cbf0fe5-3d08-487f-866d-b95f2d107650.png",
+      "prompt": "Use case: photorealistic-natural. Create ONE independent rehabilitation step photograph, action 042 E-AXU-025 四点跪位后坐活动观察, step s01 starting position.\nThe THREE input photos are ONLY identity/style references, all showing the same woman. Preserve her exact recognizable face, adult age, skin tone, dark brown low ponytail, white fitted plain crew-neck short-sleeve T-shirt, charcoal gray long pants, original soft cool gray-blue seamless studio photography background and realistic photographic lighting/materials. Normal healthy adult anatomy and proportions. Add plain WHITE SOCKS, NO shoes, NO bare feet.\nPose: near-side-on camera, slight oblique side angle just enough to separately see both palms and both knees. Woman faces right in a neutral ALL-FOURS hands-and-knees posture on ONE flat rectangular medium-gray exercise mat. Both arms comfortably straight and nearly VERTICAL, palms flat about shoulder width, wrists directly below shoulders. Both thighs nearly VERTICAL, knees flat on mat directly below hips, knees hip width apart. Both shins rest naturally on mat pointing backward, sock-covered feet relax on mat. Her trunk/back nearly HORIZONTAL and neutral, pelvis in natural starting position, no back arch or rounding. Neutral neck, face tilted slightly down to floor in front of hands, face recognizable. All FOUR actual contact points (two flat hands and two knees) separately visible, no extra support pads or equipment.\nComposition: single portrait 1122x1402, full entire woman including hair, hands and both socked feet, entire mat visible with room around edges. Body horizontally spans middle/lower part of portrait with natural size and generous gray-blue space. Camera level at hip height, retain this exact mat/camera/person scale for follow-up step. Crisp soft studio rehabilitation photo.\nNo text, numbers, arrows, labels, collage, panels, duplicate person, watermark, helper, bands, furniture, separate knee pads or additional props.",
+      "target_pose": "人物在灰垫上四点跪，双手双膝落稳，大腿与躯干处于自然起始位置。",
+      "visual_review": "通过。实际保存图侧斜机位可分辨双手双膝四个支点与骨盆；灰垫白袜、原人物/衣着/灰蓝摄影背景、比例正常。躯干起始近水平，手膝落稳。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1663589,
+      "sha256": "AD4F3F82FB232FAA84F401657A89090F202787CB0B0A333F15F1F1BB308BDAF7",
+      "reused": false,
+      "reuse_source": null,
+      "status": "completed"
+    },
+    {
+      "sequence": 42,
+      "id": "E-AXU-025",
+      "name": "四点跪位后坐活动观察",
+      "step": 2,
+      "filename": "042_E-AXU-025_s02.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\042_E-AXU-025_s02.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-9b39-7ce0-90e1-b272cded876d\\exec-b2871883-21dd-480e-a601-8ab6dd7de5c9.png",
+      "prompt": "Use case: identity-preserve. Edit FIRST image into step s02 of action 042 E-AXU-025 四点跪位后坐活动观察.\nInput 1 is the ACTUAL EDIT TARGET and fixed scene for this group. Inputs 2–4 are the three original identity/style references for the same woman. Keep input 1's exact woman/face/ponytail/white shirt/gray pants/white socks, gray-blue studio lighting/backdrop, gray rectangular mat, camera angle, crop, mat edges, body scale, all pixel placements of BOTH PALMS AND BOTH KNEES AND BOTH SOCKED FEET, and all scene details unchanged.\nONLY change body pose from neutral all-fours to a SMALL controlled backward hip rock: while all four original hand/knee support points remain continuously in exactly their original locations on mat, move her pelvis/buttocks gently BACKWARD toward her heels by about 10–15 cm, increase hip flexion, allow shoulders to travel slightly backward so the still-straight arms slope gently forward-down to the FIXED palms. Her hips remain WELL ABOVE AND AWAY from her heels, not sitting on heels, not a child pose. Both knees remain contacting mat, shins/feet remain still, palms remain flat. Keep natural neutral spine and neck, without forcing back round or arch. Show a clearly visible moderate backward shift relative to input 1 but a low-amplitude exercise.\nSingle full-person photograph, portrait 1122x1402, exact same camera/distance/framing, gray mat and white socks. Do NOT move, lift or redraw support contacts. Do NOT change identity, head size, clothes, equipment positions, background or lighting. No arrows, labels, text, numbers, panels, collage, duplicated phases or helper.",
+      "target_pose": "保持双手双膝原支点接触垫面，臀部小幅向后移、髋屈增加，不坐到足跟。",
+      "visual_review": "通过。与本组s01相比，机位、尺度、垫、双手双膝支点和白袜足位置保持；臀肩后移、髋屈变化清楚，四支点仍落垫，臀距足跟明显未坐下。已弃用变化不清楚初稿。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1622895,
+      "sha256": "463745C8FFA3A34EF2491E29A298F8078B8EC25FB8870F664621E6B14C0C8F68",
+      "reused": false,
+      "reuse_source": null,
+      "status": "completed",
+      "correction_prompts": [
+        "Edit input 1 (the first all-fours photo) to the clearly different SECOND step, SMALL BACKWARD HIP ROCK for action 042 E-AXU-025. Inputs 2-4 are only the original identity references.\nKeep the exact photographed woman, clothes, white socks, gray mat, blue-gray backdrop, light, body scale, camera and framing from input 1. Keep BOTH PALM CONTACTS, BOTH KNEE CONTACTS, SHINS AND SOCKED FEET in the EXACT original image positions. Do not move the mat.\nRequired visible pose change: her pelvis and shoulders shift backward (towards LEFT of image, towards heels) about 15-20 cm. Upper thigh now angles FORWARD-DOWN from the hips to the stationary knees instead of standing vertical. Her buttock/hip center is clearly BEHIND the stationary knee centers. Her straight arms now angle FORWARD-DOWN from shoulders to the fixed palms, visibly diagonal rather than vertical. Keep spine comfortable neutral and head/neck naturally aligned. Her chest and head travel slightly backward/down with the torso. Hip flexion increases, but buttocks remain at least 20 cm ABOVE AND AWAY FROM heels, not touching or sitting on heels. This is a modest rock-back, NOT child's pose, not maximal kneeling.\nThe previous small edit that left arms/thighs almost vertical did NOT show enough action change. Make the above backward shift plainly visible while all four support contacts remain unmoved. Exact same photographic composition, single woman, 1122x1402, no text/arrows/numbers/panels."
+      ],
+      "discarded_source_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-9b39-7ce0-90e1-b272cded876d\\exec-7a39b1bd-0e87-4f13-a62d-1a32e7704eed.png"
+      ]
+    },
+    {
+      "sequence": 43,
+      "id": "E-AXU-023",
+      "name": "轻阻力Pallof抗旋转任务筛查",
+      "step": 1,
+      "filename": "043_E-AXU-023_s01.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\043_E-AXU-023_s01.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-9b39-7ce0-90e1-b272cded876d\\exec-b75bfcf5-aee4-4800-ad5d-b6a0042739d3.png",
+      "prompt": "Use case: photorealistic-natural. Create ONE independent step photo for action 043 E-AXU-023 轻阻力Pallof抗旋转任务筛查, step s01, hands AT CHEST starting position.\nAll THREE input images are original identity/style references of the SAME woman. Keep exact face, adult age, skin tone, dark-brown low ponytail, fitted plain white short-sleeve crew-neck T-shirt, charcoal gray full-length pants, normal body/limb proportions, gray-blue seamless studio photography background and soft realistic studio lighting. Full body with simple white athletic shoes.\nSetup: a securely FIXED upright metal anchor post at LEFT of frame with an unmistakable secure eyelet/strap at her CHEST height; post base anchored to the studio floor. One light resistance band has a clearly continuous route from that anchor to ONE dark handle held by BOTH hands. Complete post, anchor joint, band, hands and both feet visible. Band pulled gently taut, physically in FREE AIR in front/side of torso, not penetrating body or passing through clothing, not around waist. No extra weights.\nWoman stands to RIGHT of anchor with feet hip-to-shoulder width, both shoes flat, knees softly straight. Her torso is SIDE-ON to anchor: her chest faces forward toward a point approximately 90 degrees away from the lateral anchor, shown by an oblique FRONT camera angle (not facing anchor). Head/chest/pelvis naturally aligned, torso upright without lean or twist. BOTH hands grip the one handle TOGETHER exactly just in FRONT OF STERNUM at chest height, elbows comfortably bent and tucked near body, handle about 8-12 cm in front of chest, not extended forward yet. Her face looks in the same direction as chest. Band approaches the handle laterally from her side with gentle tension. Camera angle makes all band connection and handle grip unambiguous.\nComposition: one full-body portrait 1122x1402, woman and complete anchor in generous frame margins, original pale gray-blue seamless studio setting. Keep the post/camera/feet/face/body scale/background positions available unchanged for follow-up step. Exact natural anatomy, both arms/hands visible.\nNo text, numbers, captions, arrows, collage/panels, duplicated person, watermark, helper, gym decor or other equipment.",
+      "target_pose": "侧对固定胸高锚点，双脚站稳，双手握带柄置胸前，弹力带有轻张力。",
+      "visual_review": "通过。双手握同一带柄在胸前，肘屈且靠近身体；胸高固定锚点、连接扣、红带及双足完整可见。张力连接连续，在身体前方空中经过，没有断开/穿身。原人物灰蓝摄影风格，比例正常。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1657979,
+      "sha256": "8921F6ABEBADED79A6FBE9A0ABCECDC73B434D4E570A193F21EB68FCD22A2076",
+      "reused": false,
+      "reuse_source": null,
+      "status": "completed"
+    },
+    {
+      "sequence": 43,
+      "id": "E-AXU-023",
+      "name": "轻阻力Pallof抗旋转任务筛查",
+      "step": 2,
+      "filename": "043_E-AXU-023_s02.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\043_E-AXU-023_s02.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-9b39-7ce0-90e1-b272cded876d\\exec-e098e4ca-2b7f-490c-a5fb-d801ff7ba13f.png",
+      "prompt": "Use case: identity-preserve. Edit input 1 into step s02 of action 043 E-AXU-023 Pallof anti-rotation press. Input 1 is the EXACT EDIT TARGET: current standing chest-held handle scene. Inputs 2–4 are only original identity references.\nLOCK all of input 1's camera angle, crop, body scale, woman's exact face/ponytail/white shirt/gray pants/white shoes, head/chest/pelvis orientation, feet positions, post position, secure chest-high anchor, red resistance band type/color, background and lighting. No change of stance, no whole-body turning, no movement of post or anchor.\nONLY change arms/handle: keeping her chest facing the SAME original forward direction (side-on to lateral anchor), slowly PRESS BOTH HANDS AND THE SINGLE HANDLE directly FORWARD away from sternum to a clear extended arm position at chest height, about 35-45 cm farther in front of chest. Both elbows now gently NEAR STRAIGHT, both hands still together gripping that handle. Shoulders level, torso does not rotate toward the band, no lean/back arch, feet and knees exactly stationary.\nThe SAME red resistance band remains continuously connected from the SAME post's anchor to handle and becomes correspondingly more stretched and diagonal as handle moves forward. Show a physically correct taut band route through FREE AIR IN FRONT OF the body, not cutting through skin, upper arms, torso or clothing, no broken/vanishing connection. All anchor-to-band-to-handle joins visible; no extra handle or band, hands and handle not cropped.\nONE full-body 1122x1402 portrait photographic frame, exactly same position, scale, clothing, background/equipment setup and camera as input 1. Do not paste input1 as a second panel. No text/numbers/arrows/labels/collage/watermark.",
+      "target_pose": "胸口原朝向及脚位不变，将双手和带柄前推出，带持续连接锚点。",
+      "visual_review": "通过。与s01相比，同机位、人物尺度、脚位、躯干朝向、立柱及胸高锚点固定；仅双臂柄推出，双肘近直。红带持续连接锚点与柄且张力路线完整，人物未随带方向转体、脚未移动。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1641201,
+      "sha256": "8C7C7446CECEAC02DBC224E821377C758542BF3F5D5D87CE9C56576AD12D1F39",
+      "reused": false,
+      "reuse_source": null,
+      "status": "completed"
+    },
+    {
+      "sequence": 44,
+      "id": "E-AXU-024",
+      "name": "低负荷侧向支撑耐受筛查",
+      "step": 1,
+      "filename": "044_E-AXU-024_s01.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\044_E-AXU-024_s01.png",
+      "source_path": "E:\\git冲突问题\\rehab image\\assess\\044_E-AXU-024_低负荷侧向支撑耐受筛查.png",
+      "prompt": "复用已通过清单逐项视觉核对的原单图，无本轮生成提示词。",
+      "target_pose": "侧身墙面前臂支撑，墙侧前臂接触墙、肘位于肩下附近，双足近墙落地，身体整体直线。",
+      "visual_review": "通过并精确复用原单图。前臂墙面接触与肘下方关系明确，双足近墙落稳，肩髋躯干整体直立、腰未向墙侧折。单人静态1帧无地面侧桥，原人物服装灰蓝摄影背景、正常比例符合清单；复制后查看实际保存图。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1668616,
+      "sha256": "DB73B8990FEB6005994DA21D704B155FEBB15E2A47C7F81D26482D62C459B595",
+      "reused": true,
+      "reuse_source": "E:\\git冲突问题\\rehab image\\assess\\044_E-AXU-024_低负荷侧向支撑耐受筛查.png",
+      "status": "completed"
+    }
+  ],
+  "group_review": {
+    "042": "s01→s02 同灰垫、白袜、侧斜相机和人物尺度；双手双膝及足固定，臀向后移、不坐足跟，可用01→02→01顺序。",
+    "043": "s01→s02 同立柱、胸高锚点、红带、脚位、胸口朝向、相机和尺度；双手从胸前推出，连接始终连续。",
+    "044": "首轮墙面静态单帧；未混入地面侧桥。"
+  },
+  "reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "source_plan": "E:\\git冲突问题\\rehab image\\动作分步骤示范图制作清单_v1.0.md",
+  "date": "2026-10-14"
+}
+

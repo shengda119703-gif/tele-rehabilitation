@@ -1,0 +1,16 @@
+{
+  "sequence": 105,
+  "id": "T-LOW-059",
+  "step": "04",
+  "path": "E:/git冲突问题/rehab image/train/steps/105_T-LOW-059_s04_v2.png",
+  "source_path": "C:/Users/Administrator/.codex/generated_images/01a13854-8e4e-72c3-a676-9d1460199481/exec-f61ed421-ce33-48e8-b028-1895ed77f1f0.png",
+  "prompt": "Use case: precise-object-edit / scientific-educational exercise photograph. Image 1 is the EDIT TARGET (a woman standing after a walking lunge). Image 2 is a supporting position reference for the preceding shallow lunge, NOT a second output. Deliver ONE photograph, exactly the same 1122x1402 canvas and camera.\nMake ONE spatial correction to image 1: shift the ENTIRE standing woman rigidly about 75 pixels to the RIGHT while preserving exactly her upright standing pose, natural adult body proportions, face, black ponytail, white short-sleeve T-shirt, charcoal long trousers, white shoes, arms and both feet together. She is farther along the horizontal handrail after stepping the trailing foot FORWARD. Specifically the forward/far shoe heel should sit around x=610 and toe around x=795 on this 1122-wide canvas, matching the fixed FRONT foot location in image 2; the other shoe stands beside it with normal lateral width. This is standing with both feet together, NOT a lunge and not walking. Do not move either foot BACKWARD. The body should still stand upright above the two feet. Retain the exact body height and shoe size of image1. The supporting hand continues resting naturally on the same rail at its new forward location; do not stretch her arm back.\nKeep the entire background, floor, horizontal rail, two rail posts, their bases, shadows, camera, crop and lighting in EXACTLY the SAME pixel positions. Do not shift the whole image or move equipment. Recreate only the naturally occluded background at the woman's old position. Full head, hands and feet clearly visible. No text, numbers, arrows, logos, extra people, extra limbs, ghosting, doubled shoes or collage.",
+  "reused": false,
+  "visual_review": "向右前进后收拢站稳，后脚移向前脚，双足落地；校正后前足与s03大致对齐且不再明显向后退。手仍扶同一长栏，人体比例自然。静帧之间仍有轻微生成透视/像素位移，不视为运动测量证据。",
+  "status": "visually_reviewed",
+  "supersedes": "105_T-LOW-059_s04.png",
+  "width": 1122,
+  "height": 1402,
+  "bytes": 1707155,
+  "sha256": "2D328715CFF7FE98B14A38FDD4CEABA99DE2DE17AFC89F572E780CC687BF5200"
+}

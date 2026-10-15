@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-14",
+  "requested_pngs": 10,
+  "actual_pngs": 10,
+  "zip_path": "E:\\git冲突问题\\rehab image\\步骤图_159s02-163_10张_20261014.zip",
+  "zip_bytes": 15384113,
+  "zip_sha256": "EDA2D7BA6DE3075F765A3432668042F06FF0516C4A2F2E5D292BD8B18FF58050",
+  "zip_entries": 17,
+  "relative_html_image_paths_preserved": true,
+  "all_png_hashes_match": true,
+  "images": [
+    {
+      "filename": "159_T-AXU-055_s02.png",
+      "sha256": "5BD52EF664B27E12843216D95B85D20956B5249A0B4FA7DC869A94F8F9124FAA",
+      "matches_source": true
+    },
+    {
+      "filename": "159_T-AXU-055_s03.png",
+      "sha256": "D55C02BB26CDB7EF2DE71699C563975152C63475C12A9ED1BDFA09E8E9524531",
+      "matches_source": true
+    },
+    {
+      "filename": "160_T-AXU-026_s01.png",
+      "sha256": "3659274FA8A1DA2103123C629C9866428E2BA5891C5632E094E37D56CCD2FB2C",
+      "matches_source": true
+    },
+    {
+      "filename": "160_T-AXU-026_s02.png",
+      "sha256": "0714E4FAEB4B18DF6576B1043BC6BA77E712F30C0551347A595E7546B5E4238F",
+      "matches_source": true
+    },
+    {
+      "filename": "161_T-AXU-054_s01.png",
+      "sha256": "E37AE586565AD9310F24C499F85281F02BDF59600907B62B19B1587356A53983",
+      "matches_source": true
+    },
+    {
+      "filename": "161_T-AXU-054_s02.png",
+      "sha256": "66F7197917067E04BC2961E71F81C6D7A61A2462921F3312384DFE719F678CBD",
+      "matches_source": true
+    },
+    {
+      "filename": "162_T-AXU-027_s01.png",
+      "sha256": "727E7C84868CB30DDEF0E2A7F8EA6E168FCD61E85B909CA87E3E7165F12F0EAC",
+      "matches_source": true
+    },
+    {
+      "filename": "162_T-AXU-027_s02.png",
+      "sha256": "6A318406BF33104CB80394D648EDB29C0BBF12215A17E68734236A545659F729",
+      "matches_source": true
+    },
+    {
+      "filename": "163_T-AXU-028_s01.png",
+      "sha256": "0B989C69F3E8F75DC573A687C19F0F2841302F6FB2B83C3629104FDACCEA2D61",
+      "matches_source": true
+    },
+    {
+      "filename": "163_T-AXU-028_s02.png",
+      "sha256": "7F45C86EB544F559C11F27BA7A2CB8531EB122B8F9192A703B2935640FE3F05B",
+      "matches_source": true
+    }
+  ]
+}

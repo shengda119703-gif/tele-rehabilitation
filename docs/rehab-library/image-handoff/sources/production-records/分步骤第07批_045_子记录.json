@@ -1,0 +1,160 @@
+{
+  "batch": "第07批",
+  "scope": [
+    "045-s01",
+    "045-s02",
+    "045-s03"
+  ],
+  "created_date": "2026-10-14",
+  "action_id": "E-AXU-009",
+  "action_name": "颈部主动屈曲/伸展筛查",
+  "generation_mode": "built-in image_gen__imagegen",
+  "reference_inspection": "已先通过 view_image 实际查看三张身份/服装/背景参考，逐张查看生成画面并调用 view_image 检查落盘文件。",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md#action-045",
+  "source_action_library": "E:/git冲突问题/安康_康复评估与分级训练动作库.md#e-axu-009",
+  "reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "source_conditions": [
+    "稳定椅坐稳；肩放松；侧面上半身近景，头肩胸同框。",
+    "动作方向须为当前计划允许；不加手压和颈椎加压。",
+    "低头到舒适范围后回到中立位；若允许，才抬头到舒适位置。",
+    "抬头避免胸腰后仰；两个方向独立，不做绕颈圆周。"
+  ],
+  "reuse_order": "s01 → s02 → s01（回正停顿）→ s03（仅许可下）→ s01",
+  "files": [
+    {
+      "path": "E:/git冲突问题/rehab image/assess/steps/045_E-AXU-009_s01.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1789729,
+      "sha256": "B3C045D65E3995FEBAD539CC97499A9E5D69D1853140E53F383019ACBDF83514",
+      "step": "s01",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-0fd3-7bd0-bc5a-18d3c1513b07/exec-a41fa7b0-1815-4f87-b779-2c3ce877ae54.png",
+      "requested_filename": "045_E-AXU-009_s01.png",
+      "actual_saved_path": "E:/git冲突问题/rehab image/assess/steps/045_E-AXU-009_s01.png",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational.\nAsset type: rehabilitation action step 045 E-AXU-009 s01, one natural photorealistic studio photograph.\nInput images 1, 2, 3 are identity and studio style references only. Preserve exactly the reference woman's face, age impression, warm skin tone, natural proportions, black low ponytail, plain white short-sleeve T-shirt and dark charcoal-gray trousers. Do not copy the raised-arm poses.\nCreate the neck neutral starting position for seated active neck flexion / extension observation. The same woman sits steadily on a simple stable armless gray chair. Hands rest naturally on thighs, shoulders relaxed and lowered. Her torso is naturally upright, head in neutral alignment with her torso, chin level, eyes naturally looking straight ahead toward image right. This is a true side/profile camera view, showing the entire head, ponytail, both shoulder contour and full chest, waist, hands resting on thighs, and a small visible part of seat/chair establishing seated posture. Portrait single-frame close upper-body photograph, subject about 70 percent of image height, leave comfortable clear margin above head, no clipped hands or head, no extreme closeup. The camera is fixed at upper-chest height perpendicular to sagittal plane. Use the cool gray-blue seamless background, soft studio lighting and subtle natural shadows matching references. Keep clear empty background on image right.\nNatural relaxed expression, medically plausible comfortable posture. No neck rotation or side bend, no forward leaning or arched back. No text, labels, arrows, diagrams, collage, panels, watermark, logos, equipment besides chair. One posture in one image.",
+      "references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "edit_target": null,
+      "pose": "椅上坐稳，肩放松、躯干直立，头中立、自然平视。",
+      "visual_acceptance": {
+        "status": "通过图片视觉验收",
+        "identity_outfit_background": "面貌、肤色、低黑马尾、白色短袖、深灰裤、灰蓝背景及柔和摄影光一致。",
+        "framing": "侧面机位一致，完整头、肩胸、手与椅上坐位可辨；此任务为头肩局部观察，不以足部裁切判为缺损。",
+        "anatomy_contact": "人体比例、关节连接与双手放大腿接触可辨，无多肢或手压头。",
+        "specific_check": "头中立、目视前方；头肩胸中立同框。",
+        "group_invariants": "相机方向、人物尺度、椅外观、下身位置和手放大腿基本一致；未作精确像素配准或临床角度测量。"
+      }
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/assess/steps/045_E-AXU-009_s02.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1774047,
+      "sha256": "C07E70F03E1351E5CD7968508B7435BA47D319798DAC8134C52BFD0BCED4D55F",
+      "step": "s02",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-0fd3-7bd0-bc5a-18d3c1513b07/exec-b5cff99f-b3b3-4079-9573-629f524b33f6.png",
+      "requested_filename": "045_E-AXU-009_s02.png",
+      "actual_saved_path": "E:/git冲突问题/rehab image/assess/steps/045_E-AXU-009_s02.png",
+      "reused_existing_image": false,
+      "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation action step 045 E-AXU-009 s02, single natural photorealistic photograph.\nInput image 1 is the EDIT TARGET: the seated neck-neutral s01 photograph. Images 2, 3, 4 are supporting identity and studio references.\nChange ONLY the woman's head-and-neck posture to comfortable active neck flexion: gently bend the neck so her chin moves down toward her upper chest and eyes look downward; the face profile clearly tilts down about 35 degrees compared to the neutral head, without forcing chin to touch chest. Neck motion is visibly distinct from the neutral starting position.\nPreserve exactly the same woman, facial identity, skin tone, black low ponytail, plain white short-sleeved T-shirt and dark charcoal trousers, body proportions, chair appearance and position, fixed side/profile camera view facing image right, framing, body scale, light and gray-blue background. Keep the full head within frame, and all shoulder, chest, torso, pelvis, arms and hands stationary relative to the edit target. Torso remains naturally upright, shoulder relaxed, hands remain resting on thighs; no rounding or forward folding of the chest or waist, no lifted shoulders, no hand pressing on head, no neck rotation or lateral bend. Preserve all pixels below shoulder as faithfully as possible, changing hair position only as needed by head tilt. One pose, no text or arrows or panels or watermark.",
+      "references": [
+        "E:/git冲突问题/rehab image/assess/steps/045_E-AXU-009_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "edit_target": "E:/git冲突问题/rehab image/assess/steps/045_E-AXU-009_s01.png",
+      "pose": "保持椅与下身位置，头颈舒适屈曲，下巴向胸口移动、眼看下方。",
+      "visual_acceptance": {
+        "status": "通过图片视觉验收",
+        "identity_outfit_background": "面貌、肤色、低黑马尾、白色短袖、深灰裤、灰蓝背景及柔和摄影光一致。",
+        "framing": "侧面机位一致，完整头、肩胸、手与椅上坐位可辨；此任务为头肩局部观察，不以足部裁切判为缺损。",
+        "anatomy_contact": "人体比例、关节连接与双手放大腿接触可辨，无多肢或手压头。",
+        "specific_check": "低头来源为颈部变化，未见整个躯干前弯；肩放松。",
+        "group_invariants": "相机方向、人物尺度、椅外观、下身位置和手放大腿基本一致；未作精确像素配准或临床角度测量。"
+      }
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/assess/steps/045_E-AXU-009_s03.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1735986,
+      "sha256": "93525A74C5C6D70AE1DBBD9BA6AD1F265554CE63B6F35B5039BD26BB32791180",
+      "step": "s03",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-0fd3-7bd0-bc5a-18d3c1513b07/exec-25291bc4-ef28-448a-ac38-126ff7df8b72.png",
+      "requested_filename": "045_E-AXU-009_s03.png",
+      "actual_saved_path": "E:/git冲突问题/rehab image/assess/steps/045_E-AXU-009_s03.png",
+      "reused_existing_image": false,
+      "prompt": "Edit only the head and neck of this original seated neutral-profile photograph to show gentle active neck extension. Keep the shoulder and EVERY part of the T-shirt, both arms, hands, trousers, chair, camera framing and background EXACTLY unchanged. This is a small localized head/neck edit; the original upper back, shoulders and chest must not change position or shape.\nAt the fixed neck base above the original T-shirt collar, gently rotate the head so the chin raises and gaze angles upward by about 20 degrees. This comfortable modest upward head angle is sufficient. Keep the same woman, same facial features, skin, black low ponytail and photorealistic lighting. Entire head stays visible. Do not lift the chest, do not extend or arch the upper back, do not shift either shoulder forward, do not raise shoulder; she remains sitting naturally upright exactly as in the input image. No text, no arrows, no panels, no added objects.",
+      "references": [
+        "E:/git冲突问题/rehab image/assess/steps/045_E-AXU-009_s01.png"
+      ],
+      "edit_target": "E:/git冲突问题/rehab image/assess/steps/045_E-AXU-009_s01.png",
+      "pose": "从中立独立展示舒适小幅颈伸，抬下巴、眼看上方，肩胸及腰保持直立。",
+      "visual_acceptance": {
+        "status": "通过图片视觉验收",
+        "identity_outfit_background": "面貌、肤色、低黑马尾、白色短袖、深灰裤、灰蓝背景及柔和摄影光一致。",
+        "framing": "侧面机位一致，完整头、肩胸、手与椅上坐位可辨；此任务为头肩局部观察，不以足部裁切判为缺损。",
+        "anatomy_contact": "人体比例、关节连接与双手放大腿接触可辨，无多肢或手压头。",
+        "specific_check": "抬头与低头方向区别明确；末次精修的肩胸轮廓与 s01 视觉一致，未见胸腰后仰。",
+        "group_invariants": "相机方向、人物尺度、椅外观、下身位置和手放大腿基本一致；未作精确像素配准或临床角度测量。"
+      }
+    }
+  ],
+  "unused_attempts": [
+    {
+      "path": "C:/Users/Administrator/.codex/generated_images/01a138e6-0fd3-7bd0-bc5a-18d3c1513b07/exec-310f1c7b-b198-4151-ab03-7d452a271500.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1764737,
+      "sha256": "45EEEABB4B28F99237507EF56205B6B1DB1D7FB5903A9C44D63BFB805A75121F",
+      "step": "s03",
+      "attempt": 1,
+      "selected": false,
+      "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation action step 045 E-AXU-009 s03, single natural photorealistic photograph.\nInput image 1 is the EDIT TARGET: the seated neck-neutral s01 photograph. Images 2, 3, 4 are supporting identity and studio references.\nChange ONLY the woman's head-and-neck posture to comfortable active neck extension: gently lift her chin and tilt the head backward a modest amount, face profile looking upward about 25 to 30 degrees compared to neutral. This must be a clearly visible neck extension posture, without forcing extreme end range. The entire face and head remain visible in the frame.\nPreserve exactly the same woman, facial identity, skin tone, black low ponytail, plain white short-sleeved T-shirt and dark charcoal trousers, body proportions, chair appearance and position, fixed side/profile camera view facing image right, framing, body scale, light and gray-blue background. Keep all shoulder, chest, torso, pelvis, arms and hands stationary relative to the edit target. The torso remains naturally upright in the same s01 alignment. Shoulders stay relaxed and lowered. Hands remain on thighs. No chest or waist leaning backward, no forward or backward movement of the chair or pelvis, no lifted shoulders, no hand pressing on head, no neck rotation, no lateral bend, no neck circles. Preserve all pixels below shoulder as faithfully as possible, changing hair only as needed by head tilt. Natural relaxed expression. One pose, no text or arrows or panels or watermark.",
+      "references": [
+        "E:/git冲突问题/rehab image/assess/steps/045_E-AXU-009_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "rejection_reason": "抬头方向正确，但肩胸轮廓相对 s01 有向前偏移，因此不入选。",
+      "retention": "只保留于内置生成源目录，未复制到步骤图交付目录。"
+    },
+    {
+      "path": "C:/Users/Administrator/.codex/generated_images/01a138e6-0fd3-7bd0-bc5a-18d3c1513b07/exec-05c21556-2401-41b2-838b-e61c9cd6e5b0.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1743979,
+      "sha256": "A10EF2DF07B9F481CCC8ADA1E836DF8C7AF5F51D9753500039AFB6E2786B95E0",
+      "step": "s03",
+      "attempt": 2,
+      "selected": false,
+      "prompt": "Use case: identity-preserve.\nCreate one corrected rehabilitation educational photo, neck extension step 045 E-AXU-009 s03.\nInput 1 is the ORIGINAL NEUTRAL IMAGE and the only edit target. Input 2 is a rejected extension attempt; use ONLY its upward head tilt as movement reference, do not use its shifted shoulder/chest. Inputs 3, 4, 5 are identity/style references.\nCritical correction: make the smallest possible localized edit to ORIGINAL image 1. Everything BELOW the base of neck / T-shirt collar must be preserved in its exact original position, silhouette and shape. Shoulder seam, shoulder height, sleeve, upper arm, chest outline, waist outline, hands, pelvis, knees, seat and chair back remain exactly like image 1. Do NOT move the shoulder forward or widen the chest, do NOT arch the rib cage, do NOT lean backward. Fixed camera, original scale and frame.\nOnly rotate the head gently upward at the neck into comfortable visible extension, upward gaze and chin raised, a modest 25 degree head tilt. Keep neck base anchored to exactly its original location and retain relaxed shoulder. Natural neck skin and face anatomy. Preserve woman's same identity, original low black ponytail and white T-shirt/dark trousers; hair can naturally follow head tilt. Full head remains within original frame. Cool gray-blue background and soft studio light identical to image 1. One pose in one photo. No hand pressure, no neck circles, no text, no arrows, no panels, no added objects, no watermark.",
+      "references": [
+        "E:/git冲突问题/rehab image/assess/steps/045_E-AXU-009_s01.png",
+        "C:/Users/Administrator/.codex/generated_images/01a138e6-0fd3-7bd0-bc5a-18d3c1513b07/exec-310f1c7b-b198-4151-ab03-7d452a271500.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "rejection_reason": "针对肩胸偏移的修订仍复制了被弃用图的上胸轮廓；不满足本组锁定姿势要求，未入选。",
+      "retention": "只保留于内置生成源目录，未复制到步骤图交付目录。"
+    }
+  ],
+  "acceptance_limits": [
+    "图片验收只确认可见姿勢与动作方向；生成照片无法证明真实症状、临床安全性、神经或血管情况。",
+    "不得以面部俯仰直接代表解剖颈椎各节段 ROM；未测量临床角度、负荷、疼痛或被动末端感。",
+    "本组图不能表达动作速度、方向间停顿、自报症状和许可条件；需配合源卡文字及顺序。"
+  ],
+  "overwrites": false,
+  "repository_changes": false
+}

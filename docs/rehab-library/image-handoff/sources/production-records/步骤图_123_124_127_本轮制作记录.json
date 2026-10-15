@@ -1,0 +1,118 @@
+{
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "requested_subset": "123-s02；124-s01～s02；127-s01",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "method": "内置image_gen生成3张；经审查复用原单图1张；无Python/CLI图片编辑",
+  "counts": {
+    "final_images": 4,
+    "new_images": 3,
+    "reused": 1
+  },
+  "entries": [
+    {
+      "filename": "123_T-AXU-001_s02.png",
+      "action_number": 123,
+      "action_id": "T-AXU-001",
+      "step": "s02",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/123_T-AXU-001_s02.png",
+      "raw_generated_path": null,
+      "reused": true,
+      "reused_original_path": "E:/git冲突问题/rehab image/train/123_T-AXU-001_坐位支持下的小幅躯干前屈.png",
+      "reuse_reason": "原单图经主代理和独立代理查看，符合123-s02；按制作清单4.3核对后复用。",
+      "prompt": null,
+      "width": 1122,
+      "height": 1402,
+      "inspection": {
+        "status": "可见画面核对通过",
+        "method": "最终保存路径逐张view_image视觉审查；123及124另经独立代理核对",
+        "posture": "稳定椅坐位小幅躯干前屈，双手位于大腿远端近膝上方且仍接触；臀与双足保留支撑。",
+        "support_and_contacts": "臀部椅面承托、双足鞋底着地、双手大腿接触可见。",
+        "anatomy": "肢段比例与关节连续，未见明显多肢或断裂；手指遮挡处不能从单帧核实。",
+        "appearance": "人物脸部、黑马尾、白短袖、深灰长裤、灰蓝背景及柔和棚拍与参考保持视觉一致。",
+        "text_check": "原始照片无文字、编号及箭头。",
+        "limits": "静态画面不能验证动作速度、呼吸或内部肌肉受力。"
+      },
+      "sha256": "F799E4511626EE12FFD2AB7C6559A2CAE0AF583D5D80259CF3A2914B937B26B2",
+      "bytes": 1734274
+    },
+    {
+      "filename": "124_T-AXU-002_s01.png",
+      "action_number": 124,
+      "action_id": "T-AXU-002",
+      "step": "s01",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/124_T-AXU-002_s01.png",
+      "raw_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-314c-7ae1-abf8-15e0464151b0/exec-99364265-9979-452b-9746-d4bd56443251.png",
+      "reused": false,
+      "reused_original_path": null,
+      "reuse_reason": null,
+      "prompt": "Use case: scientific-educational.\nAsset type: one rehabilitation exercise step photograph, portrait 4:5, single pose.\nCreate action 124 T-AXU-002 step s01, the neutral standing starting pose for gentle supported trunk extension. The three supplied reference images ONLY fix the same adult East Asian woman's face, age, natural skin tone, black ponytail, white plain short sleeve T-shirt, charcoal dark grey long trousers, photoreal studio style, soft lighting, grey-blue seamless background. Do not copy their arm gestures.\nTrue SIDE VIEW showing complete head, hands, hips, knees and both whole feet with generous floor margin, woman faces RIGHT. Camera at mid torso height, neutral lens perspective, full body centered. She stands comfortably with feet about hip width, BOTH entire soles and heels of simple white athletic shoes fully flat on floor. Knees softly unlocked, pelvis neutral, torso naturally upright without exaggerated chest lifting or back arch. BOTH hands lightly rest on the lateral pelvis at the iliac crests, elbows relaxed, fingers anatomically natural, no force pushing the lower back. The near hand clearly touches the near pelvic side; farther hand may be partly occluded in true profile. Head and neck in comfortable neutral alignment, calm expression looking forward. Plain grey-blue studio floor, realistic soft contact shadows.\nConstraints: same reference identity, natural human limb lengths and joint connections, no chair or wall or other props; single frame only, no text, no labels, no arrows, no symbols, no watermark. Neutral starting pose must not lean backward yet. Output should be a clean anatomical teaching photo.",
+      "width": 1122,
+      "height": 1402,
+      "inspection": {
+        "status": "可见画面核对通过",
+        "method": "最终保存路径逐张view_image视觉审查；123及124另经独立代理核对",
+        "posture": "侧面自然直立，双膝自然微松，近侧手轻扶骨盆上缘侧前方，头颈舒适。",
+        "support_and_contacts": "双脚原位全掌着地；近侧手骨盆接触可见，远侧手被躯干遮挡。",
+        "anatomy": "肢段比例与关节连续，未见明显多肢或断裂；手指遮挡处不能从单帧核实。",
+        "appearance": "人物脸部、黑马尾、白短袖、深灰长裤、灰蓝背景及柔和棚拍与参考保持视觉一致。",
+        "text_check": "原始照片无文字、编号及箭头。",
+        "limits": "远侧手在侧视下被遮挡，轻扶力度及精确后伸角度不能由照片验证。"
+      },
+      "sha256": "DB5415F6BAC0C41CC93F761BD80E944B2E4201EC26E734430DFE196A5D4E5EE5",
+      "bytes": 1642230
+    },
+    {
+      "filename": "124_T-AXU-002_s02.png",
+      "action_number": 124,
+      "action_id": "T-AXU-002",
+      "step": "s02",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/124_T-AXU-002_s02.png",
+      "raw_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-314c-7ae1-abf8-15e0464151b0/exec-27d7342a-bf5a-4d90-9864-7bd6e713d7c0.png",
+      "reused": false,
+      "reused_original_path": null,
+      "reuse_reason": null,
+      "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation action 124 T-AXU-002 step s02, one portrait photograph.\nEdit the supplied neutral standing image into the GENTLE SMALL-RANGE TRUNK EXTENSION endpoint. Keep EXACTLY the same woman identity, ponytail, white T-shirt, charcoal trousers, white athletic shoes, true side-view camera, subject scale, framing, grey-blue studio floor and background, lighting and foot locations. Woman continues facing RIGHT.\nChange only her torso and head as needed for a small comfortable backward movement: pelvis stays in place, both hands keep their light contact on lateral pelvic crests, knees remain softly unlocked, both shoe soles and heels stay entirely planted at exactly the original positions. Above the pelvis her upper trunk gently extends backward (toward image LEFT), shoulders and upper chest shift slightly left from the upright reference, about one third of a head-width. Her trunk inclines only roughly 10–15 degrees backward, not a deep backbend. Head and neck follow the small trunk movement with chin relaxed and eyes roughly forward, no dramatic head tipping or neck hyperextension. Natural modest lumbar extension; no knee lock, no pelvis thrust forward, no foot movement, no lifted toes/heels.\nFull body visible from head to both complete shoes, anatomy realistic. One clear pose only. No text, arrows, overlays, measurements, labels, watermark or collage. The distinction from s01 should be visible through the upper trunk gently moving backward while pelvis and support remain stable.",
+      "width": 1122,
+      "height": 1402,
+      "inspection": {
+        "status": "可见画面核对通过",
+        "method": "最终保存路径逐张view_image视觉审查；123及124另经独立代理核对",
+        "posture": "上躯干温和后移，肩与头相对骨盆后移可辨，无深后弯或单纯仰头；手仍在骨盆上缘。",
+        "support_and_contacts": "双脚鞋底保持地面接触，无抬脚或迈步；近侧手接触骨盆，远侧手被躯干遮挡。",
+        "anatomy": "肢段比例与关节连续，未见明显多肢或断裂；手指遮挡处不能从单帧核实。",
+        "appearance": "人物脸部、黑马尾、白短袖、深灰长裤、灰蓝背景及柔和棚拍与参考保持视觉一致。",
+        "text_check": "原始照片无文字、编号及箭头。",
+        "limits": "远侧手在侧视下被遮挡，轻扶力度及精确后伸角度不能由照片验证。"
+      },
+      "sha256": "67DA87101426FA2F60E2977019118085F28303A16FD879A234BDBC381FECD6AD",
+      "bytes": 1622238
+    },
+    {
+      "filename": "127_T-AXU-005_s01.png",
+      "action_number": 127,
+      "action_id": "T-AXU-005",
+      "step": "s01",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/127_T-AXU-005_s01.png",
+      "raw_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-314c-7ae1-abf8-15e0464151b0/exec-7a842355-78c6-4256-b8d5-ebc4897305c6.png",
+      "reused": false,
+      "reused_original_path": null,
+      "reuse_reason": null,
+      "prompt": "Use case: identity-preserve.\nAsset type: one rehabilitation action 127 T-AXU-005 step s01 photograph, portrait 4:5.\nEdit the supplied seated woman photo to show the NATURAL RELAXED NEUTRAL SITTING START POSITION before gently rounding the upper back. Keep this exact woman's face, black ponytail, age, skin, plain white short sleeve shirt, charcoal grey long trousers, white athletic shoes, stable grey four-legged chair, grey-blue background, soft lighting, same side-view camera and subject scale.\nChange her upper body from forward leaning to natural relaxed sitting: pelvis stays on the front/middle of the chair seat, both feet stay fully flat in their original positions, knees comfortably bent, torso upright with a natural soft spinal curve, shoulders down and relaxed, upper back neither exaggeratedly rounded nor forcefully straightened. Do not arch the lower back or push chest up. Head and neck comfortably over torso, eyes looking softly forward to RIGHT, no strong chin tuck or head drop. BOTH hands rest lightly palm-down on their corresponding thighs just above the knees, fingertips gently laid on thigh fabric, no crossed arms, elbows relaxed.\nRetain visible chair-seat buttock support, shoulders hips and knees, and complete whole head, hands and shoes inside the frame. Anatomical limb proportions realistic. This is the preparation pose, not the rounded-back endpoint or a breathing diagram. No text, numbers, arrows, symbols, watermark, borders or collage.",
+      "width": 1122,
+      "height": 1402,
+      "inspection": {
+        "status": "可见画面核对通过",
+        "method": "最终保存路径逐张view_image视觉审查；123及124另经独立代理核对",
+        "posture": "自然坐姿，上背中立，肩颈放松，双手轻放大腿，无耸肩、强低头或圆背终点。",
+        "support_and_contacts": "臀部稳坐椅面，双足鞋底落地；完整头手足、肩髋膝均在画面内。",
+        "anatomy": "肢段比例与关节连续，未见明显多肢或断裂；手指遮挡处不能从单帧核实。",
+        "appearance": "人物脸部、黑马尾、白短袖、深灰长裤、灰蓝背景及柔和棚拍与参考保持视觉一致。",
+        "text_check": "原始照片无文字、编号及箭头。",
+        "limits": "静态画面不能验证动作速度、呼吸或内部肌肉受力。"
+      },
+      "sha256": "557DDC35DE638FB2F989146B8CFCDD823195B936C1237E8C43B6B85EC490C026",
+      "bytes": 1677730
+    }
+  ]
+}

@@ -35,3 +35,7 @@ android_offline/.gradle/
 **/*.jks
 **/*.keystore
 **/local.properties
+# Version only the selected public action-card bundle, not raw local originals.
+mobile_rehab/static/assets/rehab-library-v1/*
+!mobile_rehab/static/assets/rehab-library-v1/catalogue.json
+!mobile_rehab/static/assets/rehab-library-v1/*.webp

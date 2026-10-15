@@ -1,0 +1,101 @@
+{
+  "batch": "第01批",
+  "subset": "005-s01、005-s02、005-s03",
+  "action_id": "E-LOW-017",
+  "action_name": "4米常速步行",
+  "date": "2026-10-14",
+  "mode": "built-in image_gen",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_card": "E:/git冲突问题/安康_康复评估与分级训练动作库.md#e-low-017",
+  "references_inspected": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+    "E:/git冲突问题/rehab image/assess/005_E-LOW-017_4米常速步行.png"
+  ],
+  "original_reused": false,
+  "original_unchanged": true,
+  "shared_review": {
+    "identity": "通过：同一东亚成年女性、黑色低马尾、白T恤、深灰长裤及白色平底系带鞋，面部年龄感与参考相近。",
+    "style": "通过：灰蓝无缝棚拍背景、柔和光线、自然地面阴影，无文字编号箭头。",
+    "composition": "通过：3张均为1774x887宽幅，固定起终两条地面贴条、同机位、完整路段、终线外继续走空间及完整全身。",
+    "scale": "通过：缩小s01初稿人物后，路线跨度约1070px、人物站立全高约440px，约为2.4个人身高；与4米走道示意合理。生成照片只提供路线比例示意，不能证明现场实测距离。",
+    "anatomy": "通过：头躯干与四肢比例自然，关节连接连续，双手与双鞋完整，支撑接触可辨。"
+  },
+  "frames": [
+    {
+      "frame": "005-s01",
+      "file": "E:/git冲突问题/rehab image/assess/steps/005_E-LOW-017_s01.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a138e3-67f3-7bf0-a0e2-d8ad1a2f0821/exec-7c16747d-a5f0-4fd3-9132-7f92ca7eb7d4.png",
+      "width": 1774,
+      "height": 887,
+      "format": "PNG",
+      "bytes": 1543701,
+      "sha256": "666C6A0A9667988A1D6ABC2A8212BFFC30ECE149E8E5730F07F39BF902CAB8CB",
+      "reused": false,
+      "status": "passed_visual_review",
+      "target_pose": "起线前双脚静止站稳、朝终线",
+      "review": "两脚并列贴地、未迈步；起线位于鞋尖前方，终线及完整通路可见，身体面向右侧终线。",
+      "attempts": [
+        {
+          "kind": "generation",
+          "prompt": "Use case: scientific-educational\nAsset type: one raw photographic rehabilitation demonstration frame, sequence 005 E-LOW-017 step 01, static start of a four-metre usual-pace walking test.\nInput images: reference-01.png, reference-02.png and reference-03.png are the identity, clothing, face, proportions, ponytail, soft studio lighting and gray-blue seamless studio appearance references. The old 005 photograph is only a full-body clothing and white shoe reference; do NOT copy its short marker distance or walking pose.\nPrimary request: Make one highly realistic wide landscape studio photograph, approximately 2:1 width to height, of the SAME East Asian adult woman with black low ponytail, fitted plain white short-sleeve T-shirt, dark charcoal gray full-length trousers and the SAME simple white flat lace-up sneakers as the fourth reference. This is the stationary START frame, she is absolutely not taking a step.\nScene/backdrop: spacious clean pale gray-blue seamless studio, continuous matte gray-blue level floor, soft diffuse studio light and naturally soft grounded shadows. No other person and no furniture. A single unobstructed straight left-to-right walking route has only TWO short dark gray tape strips crossing it: one start strip on the left, one finish strip farther to the right. The start-to-finish distance is physically four metres: roughly 2.4 times the woman's standing head-to-floor height. Do not compress this to one stride. Tape strip width about 3 cm and length about 60 cm, both identical, clearly visible.\nComposition/framing: lock one fixed camera position, broad nearly lateral side view with a very slight three-quarter angle allowing both shoes to be distinguished. The horizontal route lies across the lower portion of this wide frame. Camera never follows the woman. Entire 4 m route, both tape strips, full woman from crown to complete shoes, and an extra 1 m clear floor AFTER the finish strip remain visible. Use realistic normal-lens perspective rather than fisheye. Standing woman on LEFT near the start, start strip approximately 17 percent of picture width, finish approximately 74 percent, leave continuing space to the right. The woman should be only about 45–50 percent of image height so the real four-metre route can fit, but facial identity should remain recognizable. Stable ample clearance around her head and feet.\nSubject pose: woman stands completely still at the start strip, both whole feet planted parallel next to each other, toes immediately behind and not past the start strip. Feet hip width, knees naturally straight but not locked, body erect, arms resting naturally down at sides, face and chest oriented RIGHT toward the finish line, eyes looking ahead along the route. No split stance, no raised heel, no stride or forward lean.\nConstraints: exactly one woman and one clear posture, same identity and age impression as references, natural connected anatomy and body proportions, complete head/hands/feet, matte plain clothing and white flat sneakers, both physical tape markers visible and widely separated, no graphic overlays. Every subsequent image will keep this exact floor, tape positions, camera, focal length, framing, illumination, outfit and scale.\nAvoid: any text, numerals, labels, ruler, measuring tape, arrow, symbol, watermark, border, collage, ghosted figure, duplicate person, running, turning, bent lunge, exaggerated motion, cropped body, distorted hands or limbs.",
+          "tool_output_hint": "Generated images are saved to C:\\Users\\Administrator\\.codex\\generated_images\\01a138e3-67f3-7bf0-a0e2-d8ad1a2f0821 as C:\\Users\\Administrator\\.codex\\generated_images\\01a138e3-67f3-7bf0-a0e2-d8ad1a2f0821\\exec-f367ab93-65bb-4622-9ea7-efea7aca5e64.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+          "accepted": false,
+          "review": "初稿人物全高约画高64%，路线跨度仅约1.9个人身高，返修人物尺度。"
+        },
+        {
+          "kind": "targeted_repair",
+          "prompt": "Use case: identity-preserve\nEdit target: Image 1 is the wide walking-test start photograph. Images 2–4 are identity references.\nMake one targeted correction only: reduce the woman's apparent full standing height from about 64 percent of canvas height to approximately 49 percent (about 440 pixels on this 887-pixel-high image). She must now appear as if standing farther from the fixed camera while maintaining realistic head/body/leg proportions, not by shortening her legs. Her feet must stay at the SAME start strip on the left, with toes just before it, both flat, side by side, and she still faces right standing absolutely still. Keep her recognizable face, black ponytail, same white T-shirt, charcoal trousers, white flat sneakers, natural neutral pose.\nDo not move or change the two existing floor tape strips: their present distance across the frame is fixed. The about 1070 pixel horizontal strip-to-strip span needs to be roughly 2.4 times her corrected full-body height, representing a four-metre route for an adult around 1.65 m tall. Preserve the entire 1774x887 wide frame composition, SAME gray-blue seamless studio, SAME floor horizon/texture, lighting, colors, focal-length look, camera position, and spare space beyond the right finish strip. Only the one woman and her necessary grounded soft shadow should change size.\nNo labels, measurement graphics, numerals, arrows, text, watermarks, additional objects or additional people. Full head, both hands, complete shoes remain in frame.",
+          "tool_output_hint": "Generated images are saved to C:\\Users\\Administrator\\.codex\\generated_images\\01a138e3-67f3-7bf0-a0e2-d8ad1a2f0821 as C:\\Users\\Administrator\\.codex\\generated_images\\01a138e3-67f3-7bf0-a0e2-d8ad1a2f0821\\exec-7c16747d-a5f0-4fd3-9132-7f92ca7eb7d4.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+          "accepted": true,
+          "review": "人物全高约画高49%，双线跨度约2.4个人身高；固定场景与静止起步姿势通过。"
+        }
+      ]
+    },
+    {
+      "frame": "005-s02",
+      "file": "E:/git冲突问题/rehab image/assess/steps/005_E-LOW-017_s02.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a138e3-67f3-7bf0-a0e2-d8ad1a2f0821/exec-487ca803-19ef-4060-a76e-b42fadd6d184.png",
+      "width": 1774,
+      "height": 887,
+      "format": "PNG",
+      "bytes": 1540247,
+      "sha256": "E2086331F198D0013013C951B5F165040399D9516FA89646BED71FAA99045EBB",
+      "reused": false,
+      "status": "passed_visual_review",
+      "target_pose": "在线间自然常速步行、一足支撑另一足前迈",
+      "review": "人物位于两条贴线之间，后脚支撑、前脚向前，手臂自然交替摆动，躯干直立，完整双鞋，双线机位与人物尺度和s01一致。",
+      "attempts": [
+        {
+          "kind": "identity_and_scene_preserving_edit",
+          "prompt": "Use case: identity-preserve\nAsset type: scientific-educational photographic rehabilitation demonstration, 005 E-LOW-017 step 02, usual-pace walking BETWEEN the two lines.\nImage 1 is the edit target and exact scene/camera/identity reference. Make the next frame in the SAME scene by changing ONLY the single woman's horizontal location, body pose and corresponding grounded shadow.\nMove the same woman from the left start strip to exactly halfway between the two floor tape strips, near horizontal centre of the frame. She faces RIGHT and walks normally along the straight left-to-right route, looking ahead, no turning and no running. Show one natural gait instant: left foot flat supporting on the floor under/slightly behind the pelvis, right leg stepping forward with mild knee flexion and heel just above the floor. Natural small reciprocal arm swing, left arm a little forward and right arm a little backward, relaxed hands, nearly upright torso. Natural small usual-walking step, not a long lunge. No frozen standing stance.\nLOCK these invariants: entire 1774x887 landscape composition; exact two dark gray tape strips at the SAME original coordinates and angles (start left, finish right); no additional floor marks; same gray-blue seamless studio floor/backdrop, soft illumination and shadows; same camera viewpoint and normal lens look; same low black ponytail, East Asian face and age impression, white plain T-shirt, dark charcoal trousers, flat white lace-up sneakers; same height and body scale as target (about 440 pixels head-to-floor, about 49 percent image height). Body may not grow or shrink as she moves. Keep the floor contact height aligned to the start-frame route. Both whole feet and full head/hands visible, subject wholly BETWEEN start and finish, route and spare floor beyond finish retained.\nNo duplicate or ghost woman at the old position. No text, numerals, arrows, labels, watermarks, collage, new props, measuring tape, dramatic motion or graphic overlays. Preserve original background and floor geometry as closely as possible.",
+          "tool_output_hint": "Generated images are saved to C:\\Users\\Administrator\\.codex\\generated_images\\01a138e3-67f3-7bf0-a0e2-d8ad1a2f0821 as C:\\Users\\Administrator\\.codex\\generated_images\\01a138e3-67f3-7bf0-a0e2-d8ad1a2f0821\\exec-487ca803-19ef-4060-a76e-b42fadd6d184.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+          "accepted": true
+        }
+      ]
+    },
+    {
+      "frame": "005-s03",
+      "file": "E:/git冲突问题/rehab image/assess/steps/005_E-LOW-017_s03.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a138e3-67f3-7bf0-a0e2-d8ad1a2f0821/exec-edbcaeb8-f316-4d1b-a6cd-0cf85ff76aef.png",
+      "width": 1774,
+      "height": 887,
+      "format": "PNG",
+      "bytes": 1548936,
+      "sha256": "79DD72C3D92EF2E382ED85F7B59A88680CBFCBF01F6F1E3DE97EF544AFA929F1",
+      "reused": false,
+      "status": "passed_visual_review",
+      "target_pose": "明显越过终线后仍继续向前步行",
+      "review": "终线位于人物后方，两鞋完全在终线右侧，后鞋与终线有可见空隙，前脚持续迈出、手臂仍自然摆动，未停在线上、未转弯。人物尺寸及双线场景与前两图一致，前鞋和手头完整无裁切。",
+      "attempts": [
+        {
+          "kind": "identity_and_scene_preserving_edit",
+          "prompt": "Use case: identity-preserve\nAsset type: scientific-educational photographic rehabilitation demonstration, 005 E-LOW-017 step 03, CONTINUE WALKING AFTER crossing the four-metre finish line.\nImage 1 is the edit target, exact studio scene and stationary-camera reference. Image 2 is the immediately previous walking frame, same woman/scale/outfit/gait reference.\nMake the final frame by changing ONLY the single woman's horizontal position, natural gait pose and corresponding grounded shadow. Remove her from the left start. Put her on the FAR RIGHT AFTER the existing RIGHT floor tape strip, facing RIGHT, continuing naturally forward. Her entire body and BOTH shoes must now be visibly beyond the finish strip. The finish strip stays fully visible BEHIND her, a clear floor gap between it and the rear shoe. On the 1774-pixel-wide canvas, preserve the right tape strip around x1360–1420. Place rear shoe entirely at approximately x1490–1550 and forward shoe at approximately x1620–1690, so BOTH shoes are fully to the right of the rightmost finish strip edge. Keep the complete front toe and entire head/hands in frame, ample margin at right. Pelvis around x1580, person height SAME as reference about 430–440 pixels (49 percent frame height).\nPose: one comfortable continuing normal-walking stride, left leg forward with front heel planted and toes slightly raised at heel strike, right leg trailing with rear heel gently lifted and toes contacting floor. Natural reciprocal arm swing (right arm slightly forward and left slightly back), hands relaxed, torso upright, eyes forward along the route. She is still moving onward, not standing still, not turning toward camera, not braking at the line, not running. Natural anatomy and proportions, no extra limbs.\nLOCK: entire 1774x887 landscape composition, EXACT two existing dark gray tape markers' positions, angles, shape and scale; no new markers. SAME gray-blue seamless background and flat floor, floor-contact level, exact camera position and normal lens look, lighting and colors. SAME recognizable East Asian face and low black ponytail, plain white short-sleeve T-shirt, charcoal full-length trousers and simple flat white lace-up sneakers. Do not enlarge or shrink the figure. Entire four-metre path remains visible from empty left start line to right finish line, plus the continuing space after finish.\nNo duplicate woman or ghost at old location. No text, numerals, label, arrow, motion trail, watermark, ruler, measuring tape, additional props, collage or graphic overlays.",
+          "tool_output_hint": "Generated images are saved to C:\\Users\\Administrator\\.codex\\generated_images\\01a138e3-67f3-7bf0-a0e2-d8ad1a2f0821 as C:\\Users\\Administrator\\.codex\\generated_images\\01a138e3-67f3-7bf0-a0e2-d8ad1a2f0821\\exec-edbcaeb8-f316-4d1b-a6cd-0cf85ff76aef.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+          "accepted": true
+        }
+      ]
+    }
+  ]
+}

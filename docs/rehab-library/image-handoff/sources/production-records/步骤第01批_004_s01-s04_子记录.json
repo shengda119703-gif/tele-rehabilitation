@@ -1,0 +1,144 @@
+{
+  "schema_version": "1.0",
+  "batch": "分步骤第01批_照片014-017_004",
+  "date": "2026-10-14",
+  "source_document": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+  "tool": "内置 image_gen",
+  "generation_calls": 7,
+  "completed_photos": 4,
+  "selected_version": "徒手、侧面全身、持续单手扶固定栏、近距离前迈及浅下降版本",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "generation_notes": "准备图将过远的贴条缩短；下降初稿及首次定向修订均因后脚位移未采用，改为从s02重生成浅下降并保持双足位置。s04独立生成保留起身后、收脚前的步骤边界。既有单图、003准备图及其他进度JSON未覆盖。",
+  "items": [
+    {
+      "photo_sequence": 14,
+      "action_sequence": 4,
+      "id": "E-GEN-004",
+      "step": "s01",
+      "phase_zh": "站稳准备",
+      "prompt": "Use case: scientific-educational.\nAsset type: realistic rehabilitation assessment step photograph, 004 E-GEN-004, s01 preparation.\nInput images: images 1,2,3 are identity, clothing, lighting and gray-blue studio reference photographs of THE SAME adult East Asian woman. Preserve this exact woman's face, age, build, natural skin and black low ponytail. Do not copy their arm poses.\nPrimary request: One single photo, first of a four-frame forward lunge sequence. Show quiet standing BEFORE stepping forward. Full body in side view, looking and facing to the RIGHT; camera nearly perpendicular to walking direction, slight 10-degree front offset to separate the two shoes and show support-hand contact. Both knees straight but unlocked, both feet flat, alongside each other at hip width at the starting location, no stride yet, torso upright. Her LEFT hand lightly rests on a stable waist-height gray metal handrail at her left side, a little forward of her hip; other arm relaxed naturally. Keep hand and rail contact believable and visible.\nScene/backdrop: exact cool light gray-blue studio backdrop and matching seamless floor from references, soft cloudy tonal variation. Simple long fixed gray metal rail with two floor-bolted vertical posts, running parallel to the future stepping direction on the woman's left side, posts outside the leg area. Only ONE short charcoal-gray flat transverse floor tape strip is the forward foot landing target, about 55–65 cm ahead of the starting toes. Rail and landing strip both completely in frame. No weights.\nComposition/framing: landscape 1536 by 1024, one camera, full head and both hands and full shoes visible with ample floor space. Subject just left of center, extra clear space to the right for the future forward foot and tape strip. Show realistic rail geometry, floor contact shadows, normal adult body proportions, no stretched torso or short legs. Full-body side profile with clear hip, knee and ankle landmarks.\nOutfit: same plain white short-sleeve crew-neck fitted t-shirt and dark charcoal straight trousers as reference, white simple low-top flat sneakers.\nLighting: soft studio photo lighting and natural skin and fabric texture exactly like references.\nConstraints: ONE woman, ONE pose, ONE photograph. A preparation standing pose with no walking, no bent-knee lunge yet. No text, numbers, arrows, labels, watermark or montage. No gym, no extra people, no extra equipment. Anatomically continuous joints, realistic five-finger hands and two shoes.",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/004_E-GEN-004_s01.png",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e1-fb76-77b0-aec9-d8e9b257a19c/exec-2a5e945d-ad0f-48b8-abe9-5ec3e926d0af.png",
+      "reused": false,
+      "status": "completed",
+      "category": "assess",
+      "name": "前向弓步分段控制观察",
+      "QA": {
+        "passed": true,
+        "observations": "同一女性、服装及灰蓝棚拍柔光；双足平放准备，前方单一近距离落点贴条、固定扶栏与手接触可见；侧面全身及完整双鞋，无额外负重。"
+      },
+      "correction_prompt": "Use case: precise-object-edit.\nImage 1 is the photo to edit. Correct ONLY its single floor tape target position.\nKeep the exact woman, her face, ponytail, white T-shirt, charcoal trousers, white sneakers, her quiet two-feet-flat ready stance, both hands, handrail contact, the entire gray metal railing and bolted posts, gray-blue backdrop, soft light, 1536x1024 landscape composition, and camera absolutely unchanged.\nThe single charcoal floor tape strip currently centered at approximately image pixel (1102,904) is too far forward for a short comfortable forward step. REMOVE that strip from its old location and put the SAME one short flat strip centered at approximately (865,904), on the same floor depth line and the same transverse orientation, size and dark-gray shade. It should be around 55–65 cm forward from her starting toes. Exactly ONE target strip remains. Smooth matching floor texture at its old position. Nothing else changes. No text, number, arrow, watermark or extra line.",
+      "rejected_attempts": [
+        {
+          "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e1-fb76-77b0-aec9-d8e9b257a19c/exec-6bb569bd-e6ca-4f51-8037-866b607671b6.png",
+          "reason": "准备图前方贴条过远，缩短至近距离落点后采用。"
+        }
+      ],
+      "filename": "004_E-GEN-004_s01.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "bytes": 1581991,
+      "sha256": "D85E9F35FF489595054AF3ECB726326D63D9ECD3B25D57FB676610B6536D75EB"
+    },
+    {
+      "photo_sequence": 15,
+      "action_sequence": 4,
+      "id": "E-GEN-004",
+      "step": "s02",
+      "phase_zh": "前迈并站稳",
+      "prompt": "Use case: identity-preserve, scientific-educational rehabilitation photo.\nImage 1 is the EXACT base scene and the same woman. Images 2–4 are the exact woman's face/clothing/style references. Edit image 1 to show only the next pose of a forward-lunge step sequence, 004 E-GEN-004 s02: STEP FORWARD AND STAND STEADY before lowering.\nLOCK the camera, entire 1536x1024 landscape framing, gray-blue seamless backdrop/floor, studio light, rail horizontal bar and both bolted posts, and the ONE target strip at its exact image-1 position. Same woman's facial identity, black ponytail, body proportions, white shirt, dark trousers and white flat sneakers.\nPOSE CHANGE: She still faces screen RIGHT in side profile. Move her NEAR/CAMERA-SIDE foot FORWARD onto the single target tape strip, while her OTHER/rear foot stays at its original starting ground position. Her feet form a comfortable forward/back split stance with normal hip-width spacing, no crossing. The front foot is fully flat resting on the target strip; rear foot is also fully grounded and stable. Both knees nearly straight but unlocked; pelvis and torso upright, same standing height. This is the steady upright split stance BEFORE any descent. Move her pelvis/torso only the natural amount required for a short forward step, not a deep lunge or a squat.\nHer SAME far-side hand continues visibly resting on the same fixed rail, sliding a small distance along the bar only as naturally required by the new stance; same elbow gently bent. Near-side arm still relaxed at her side. No reaching both hands, no grip swap.\nShow ONE pose clearly, full head, both hands, hips, both knees and BOTH entire shoes and their ground contacts. Correct knee/ankle alignment and natural proportions.\nNo changes to floor tape position or rail; no added objects. No text, arrows, numbers, watermark, motion blur, ghost figure, collage or panels.",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/004_E-GEN-004_s02.png",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e1-fb76-77b0-aec9-d8e9b257a19c/exec-3fd2c431-be81-4b29-99e8-42e265262764.png",
+      "reused": false,
+      "status": "completed",
+      "category": "assess",
+      "name": "前向弓步分段控制观察",
+      "QA": {
+        "passed": true,
+        "observations": "前脚覆盖既定贴条，后脚留在起始位置，双足接地、不交叉，髋膝仍在站稳位；同一扶持方式、机位、背景和器械。"
+      },
+      "filename": "004_E-GEN-004_s02.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "bytes": 1591439,
+      "sha256": "239C70D2B5105387CD2EF0F603D3444B396D30E3654F82E2F4858F9EE3FF8530"
+    },
+    {
+      "photo_sequence": 16,
+      "action_sequence": 4,
+      "id": "E-GEN-004",
+      "step": "s03",
+      "phase_zh": "屈髋屈膝下降",
+      "prompt": "Use case: identity-preserve, scientific-educational rehabilitation step photograph.\nImage 1 is the exact preceding upright split-stance frame to edit; image 2 is the original ready stance for scene consistency. Images 3–5 are the SAME woman's original face and clothing references.\nChange only her body pose to 004 E-GEN-004 s03: CONTROLLED DOWNWARD PHASE of a supported forward lunge.\nPreserve image 1 exact fixed camera and full 1536x1024 landscape framing, gray-blue floor and backdrop, rail geometry and both posts, the single target tape strip, soft light, same woman face/body/hair/outfit/white shoes. Same front leg and rear leg as image 1 — never swap limbs. Front shoe stays at EXACT same target strip position; rear forefoot stays at exact previous starting position. No longer step, no crossing feet.\nBend BOTH hips and knees to lower her pelvis and torso moderately, visibly below the preceding standing height. Comfortable controlled lunge, not a maximum-depth squat. Front knee bends to approximately 65–80 degrees, tracks in same direction as front foot. Rear knee bends downward toward floor but remains clearly suspended around 15–25 cm ABOVE floor; NOT kneeling and NOT touching the ground. Front sole remains FLAT on tape target; rear forefoot/toes remain on the floor, rear heel may naturally rise without sliding the rear foot.\nTorso remains naturally upright with only a small comfortable forward inclination, shoulders relaxed, head faces right as before. Same far-side hand continues lightly touching the SAME fixed rail with realistic elbow flexion as she lowers. Same near-side arm remains relaxed beside torso, fingers clear. Nothing floating or detached.\nPhoto shows full head, torso, both hands including rail contact, hips, BOTH knees, BOTH shoes and target, with continuous natural anatomy and NORMAL limb lengths. Preserve landscape composition and floor margins; do not zoom or crop. No text, arrows, labels, numbers, watermark, ghost poses, montage, extra people or equipment.",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/004_E-GEN-004_s03.png",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e1-fb76-77b0-aec9-d8e9b257a19c/exec-70d64566-a7ee-47e5-af28-3c65619fd336.png",
+      "reused": false,
+      "status": "completed",
+      "category": "assess",
+      "name": "前向弓步分段控制观察",
+      "QA": {
+        "passed": true,
+        "observations": "选择浅下降示范；头肩髋较s02下降，髋膝可见屈曲、后膝明确悬空，前后脚接触位置均与s02保持；单手持续扶栏，全身及鞋完整。"
+      },
+      "correction_prompt": "Use case: identity-preserve scientific-educational photo.\nEdit IMAGE 1, the upright split stance. Keep the camera and scene locked. Create the DOWNWARD phase of this very SAME short forward lunge, by bending her two knees and lowering her pelvis by only about 15–20 cm. A SHALLOW controlled descent, not a deep lunge.\nABSOLUTE FOOT-PLACEMENT LOCK: KEEP BOTH SHOE LOCATIONS EXACTLY AS THEY ARE IN IMAGE 1. Do not slide the back foot even one shoe-length back. FRONT SHOE remains on the single tape strip at x700–830,y830–895. REAR SHOE remains at x455–600,y840–905, toe end around x590,y890. Keep rear toe planted there, NOT at x440 or x490. It is fine to keep the rear heel grounded for this shallow demonstration. Preserve the original short split stance; only bend knees. The rear knee bends but stays far above the floor. No kneeling.\nNatural anatomy: moderate hip and knee flexion, upright torso, head/shoulders/hips clearly a little lower than upright frame, front knee around 40–55 degrees flexion. Same front/back anatomical legs as input, continuous natural thigh/shin proportions. Feet not crossed.\nHer same far-side supporting hand maintains natural contact with this same fixed gray rail; other arm relaxed. Exact same woman face, white shirt, charcoal trousers, ponytail and white sneakers. Exact same 1536x1024 landscape camera, gray-blue backdrop and floor, ONE target strip and entire rail and bolted posts at same coordinates. Full head, hands, knees and both shoes. One photographic pose, no arrows/text/montage/watermark.",
+      "rejected_attempts": [
+        {
+          "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e1-fb76-77b0-aec9-d8e9b257a19c/exec-22bfb2ec-2a07-4a06-9b16-5e4facd19cea.png",
+          "reason": "下降初稿后脚移远，组内脚位不一致。"
+        },
+        {
+          "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e1-fb76-77b0-aec9-d8e9b257a19c/exec-86af9121-42c3-4e6e-9e06-15c8a95ab6ca.png",
+          "prompt": "Use case: identity-preserve, precise pose correction.\nImage 1 is the current descended lunge frame to correct. Image 2 is the preceding upright split stance that DEFINES the correct foot contact locations. Image 3 is initial scene/reference. Keep exact same camera, full 1536x1024 landscape framing, fixed gray metal rail and two bolted posts, tape target, woman identity/face/hair/outfit, studio light and gray-blue floor/backdrop.\nCRITICAL correction: the REAR FOOT in image 1 has slid backward much too far. Restore its floor toe/forefoot contact to the SAME ground position as the REAR FOOT in image 2. In image 2, rear shoe occupies approximately x460–600 y840–905, with its forward/toe end at about x590,y890. The corrected image-1 REAR SHOE TOE must end near x590,y890, not x440,y870. The rear heel can lift naturally while the forefoot stays there. The FRONT SHOE stays precisely on the tape at x700–830,y830–895, exactly unchanged. Do NOT move tape. Do NOT move either rail post.\nAdapt only the rear leg and, if anatomically necessary, slightly reduce the depth of the lower-body lunge to fit this original short split stance. Both knees stay visibly bent and hips lowered relative to image 2, a comfortable shallow controlled lunge is acceptable. Rear knee is suspended clearly ABOVE floor, never kneeling. Do not extend stride or slide any contact backward. Keep normal upper-leg and shin lengths; continuous realistic joints.\nPreserve image 1 upper-body appearance, soft expression, torso naturally upright and supporting hand in contact with SAME rail; same relaxed near-side arm. Full woman and both complete shoes visible. One photo, no text, arrows, symbols, extra markers, watermark, montage or ghost poses.",
+          "reason": "定向修订后后脚仍有位移，未采用。"
+        }
+      ],
+      "filename": "004_E-GEN-004_s03.png",
+      "references": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e1-fb76-77b0-aec9-d8e9b257a19c/exec-3fd2c431-be81-4b29-99e8-42e265262764.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "bytes": 1595025,
+      "sha256": "C96F52D2F087A6F74FC6A994B618781E58D45B9F6FA112A2D1716552E7ABECD2"
+    },
+    {
+      "photo_sequence": 17,
+      "action_sequence": 4,
+      "id": "E-GEN-004",
+      "step": "s04",
+      "phase_zh": "起身并保持分腿站位",
+      "prompt": "Use case: identity-preserve, scientific-educational rehabilitation step photograph.\nImage 1 is the preceding SHALLOW descended lunge frame. Image 2 is the same scene upright split stance and defines the original standing height. Images 3–5 are the same woman's exact face, outfit and studio references.\nEdit IMAGE 1 to show 004 E-GEN-004 s04: after CONTROLLED RISING from the lunge, STAND UPRIGHT while STILL in the same front/back split stance, BEFORE bringing the front foot back.\nExtend hips and BOTH knees to raise her pelvis, head and shoulders back to natural upright standing height similar to image 2. Both knees nearly straight but naturally unlocked. Torso upright, looking screen RIGHT, head clearly higher than the descended image-1 pose.\nABSOLUTE ground-contact lock: FRONT SHOE stays on the tape at its exact previous x700–830,y830–895 coordinates. REAR SHOE stays at its exact previous x455–600,y840–905 coordinates, fully grounded. DO NOT move either foot, DO NOT bring feet back together, no crossing or extra step. Preserve exact same anatomical front and rear legs as image 1.\nSame far-side hand keeps lightly resting on the SAME fixed rail in a natural supported standing position, elbow relaxed; near-side hand/arm relaxed beside body, five natural fingers. No change of support hand or rail.\nLOCK: exact same entire 1536x1024 landscape framing and side camera, woman identity/age/build/black ponytail, plain white short-sleeve T-shirt, dark charcoal trousers, white shoes, rail/posts/bolted feet, the ONE tape target, gray-blue seamless floor/backdrop and soft studio lighting. Full head, both hands, both knees and both shoes clearly visible, continuous normal anatomy.\nONE still photo. No text, numbers, arrows, labels, watermark, blur, ghost poses, montage, panels, extra people or equipment.",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/004_E-GEN-004_s04.png",
+      "reused": false,
+      "status": "completed",
+      "category": "assess",
+      "name": "前向弓步分段控制观察",
+      "QA": {
+        "passed": true,
+        "observations": "从下降位伸髋伸膝起身，头肩髋明显高于s03；仍保持前后脚站位且前脚覆盖贴条，未提前收脚；同一扶栏方式和机位。"
+      },
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e1-fb76-77b0-aec9-d8e9b257a19c/exec-c7237a53-1615-4b08-9baf-3fbf5d6ba687.png",
+      "filename": "004_E-GEN-004_s04.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "bytes": 1608828,
+      "sha256": "3AF90EC76D28DD6B561B905B78C8D91B51AF370BC8116DB0ED229F2ADDFA12DE"
+    }
+  ]
+}

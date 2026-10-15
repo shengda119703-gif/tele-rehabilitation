@@ -1,0 +1,186 @@
+{
+  "batch": "第10批步骤图",
+  "action_number": "079",
+  "action_id": "T-LOW-047",
+  "action_name": "单腿臀桥：双侧过渡到单侧",
+  "created_date": "2026-10-14",
+  "method": "内置 image_gen__imagegen；一张一调用；局部姿势修正也用内置 image_gen；未做像素编辑、裁切、缩放或再编码；最终文件为原PNG字节复制",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md#action-079",
+  "source_card": "E:/game/health-care-software-main/docs/rehab-library/SOURCE_v1.0.md#t-low-047",
+  "visual_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "inspected_existing_single_image": "E:/git冲突问题/rehab image/train/079_T-LOW-047_单腿臀桥：双侧过渡到单侧.png",
+  "selected_version": "右侧支撑单腿版本；左膝屈曲约90°且左足离垫；同侧面斜俯全身机位、人物、灰垫、鞋；双手分开轻放腹前，避免远侧手被骨盆遮挡；源卡未规定手撑地，肩头、支撑足保持要求",
+  "generation_attempts": [
+    {
+      "step": "079-s01",
+      "attempt": 1,
+      "prompt": "Use case: scientific-educational.\nCreate ONE photorealistic rehabilitation exercise demonstration photograph, single pose only, landscape composition approximately 1536x1024.\nInput images 1, 2, 3 are identity and visual-style references only. Match exactly the same adult East Asian woman, facial structure and age, black ponytail, white short-sleeve crewneck T-shirt and dark charcoal full-length fitted pants. Plain white low-profile athletic shoes on BOTH feet.\nGrey-blue seamless studio background and grey-blue floor, soft diffuse studio light and natural contact shadows. One rectangular thin grey nonslip exercise mat. No other equipment.\nCamera: full-body near-side lateral view, slightly oblique (about 10 degrees toward the foot end) so that BOTH legs and both feet are clearly separated and visible, fixed level camera, natural anatomy, head at left and feet at right. Show complete head, hands, shoes and entire mat with comfortable margins.\nAction 079 T-LOW-047 step s01: START of right-leg single-leg glute bridge, pelvis NOT raised. Woman supine, head, shoulder blades, back and buttocks resting on mat. Both arms rest beside torso, palms down on mat. Near-side RIGHT knee bent, RIGHT foot sole completely flat and securely planted on mat, foot at normal bridge distance from buttocks. Far-side LEFT leg is non-supporting: left knee stays bent about 90 degrees, LEFT foot is gently lifted completely clear of mat with an unambiguous visible air gap; bent left leg is raised just enough to remove support, not kicked high, not straightened. Pelvis level and resting, neutral relaxed lower back, no hip lift. Left foot must be distinguishable from the planted right foot, do not superimpose them. Exactly two legs, two arms and two shoes, continuous natural joints.\nThis will be first of a matched pair. Keep a visually clear difference between planted right sole and floating left shoe. No text, letters, labels, arrows, motion trails, logos, watermark, collage, split panel or duplicated person.",
+      "input_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-f9d123fe-3859-4160-915b-e66697280d45.png",
+      "selected": false,
+      "qa": "实际 view_image 检查：人物、服装、风格、骨盆落垫、支撑足落地和另一足离地可见；悬腿为偏高的桌面姿势，与选定轻离地版本不够一致。未作为交付，做针对性低悬腿修正。"
+    },
+    {
+      "step": "079-s01",
+      "attempt": 2,
+      "prompt": "Use case: scientific-educational. Edit image 1, the supplied START-pose rehabilitation photograph. Images 2–4 are identity/style references.\nMake ONLY the following precise pose correction, retaining the exact woman, clothing, shoes, face, arms resting, pelvis on mat, background, mat, lighting, lens and full-body landscape composition:\nThe near-side anatomical RIGHT leg is the supporting leg; its knee bent and its entire white shoe sole FLAT on mat. The farther anatomical LEFT leg must be the floating leg with LEFT knee bent about 90 degrees and LEFT white shoe hovering gently only about 8–12 cm ABOVE the mat, visible air gap beneath the sole. Lower the current floating bent leg from its high tabletop pose, with its bent shin slanting gently downward toward the feet. Keep the floating left thigh roughly alongside the supporting right thigh with clear visual separation; DO NOT straighten the left knee, do not kick high, do not rest the left shoe on the mat. Make BOTH shoes fully visible and distinguishable, the planted right shoe slightly nearer camera, floating left shoe farther from camera.\nSupine START pose: head, shoulder blades, back and buttocks remain completely down on the mat, neutral lumbar position, no hip bridge lift, level pelvis. Keep two naturally proportioned legs and joint continuity. No text, arrows, labels, collage or extra limbs.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-f9d123fe-3859-4160-915b-e66697280d45.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-873b8ffa-47a1-4099-af14-c3b67d181b14.png",
+      "selected": false,
+      "qa": "初审漏检远侧手遮挡，原“完整手部”结论撤回；复审可见骨盆落垫及双足状态，但远侧手仅露指尖，不满足清单第3.5，返修并由v2替代。"
+    },
+    {
+      "step": "079-s02",
+      "attempt": 1,
+      "prompt": "Use case: scientific-educational. Create the SECOND photograph in the exact matched exercise pair by editing image 1 (accepted single-leg bridge START photograph). Images 2–4 are the same woman's identity/style references.\nKeep image 1's exact woman, face, black ponytail, white T-shirt, charcoal full-length pants, two white low-profile athletic shoes, grey-blue studio background and floor, single grey nonslip mat, lighting, natural shadows, camera position/lens, full-body framing and landscape dimensions. Keep head at left, shoes at right. Near-side RIGHT leg is support, farther LEFT leg floats.\nChange only to action 079 T-LOW-047 s02, controlled TOP of a RIGHT-leg single-leg glute bridge:\nRaise buttocks and pelvis off mat to a moderate bridge height until the shoulder–hip–supporting RIGHT knee form an approximately straight continuous diagonal line. Lift through hip extension, neutral lower back, ribs not flared, NO exaggerated lumbar arch. Pelvis level, no rotation or one hip higher. Head, neck, shoulder blades, both arms and palms REMAIN supported on mat in same positions.\nSupporting near-side RIGHT white shoe remains exactly at its original location, whole sole flat on mat, RIGHT knee flexed and shin approximately upright. Farther LEFT shoe remains clearly OFF mat (a visible air gap); LEFT knee remains bent approximately 90 degrees in the SAME gently raised single-leg version as image 1, and the left leg does not kick or straighten. The bent floating leg may naturally move with pelvic rise but should remain modestly raised with its shin angled down toward feet, not an extended leg in the air. BOTH shoes and their different contact states stay obvious, left shoe is farther from camera and above the mat.\nShow ONE static raised pelvis pose. Entire person, both hands, both complete shoes and mat are in frame. Natural anatomy, exactly two arms/two legs/two shoes. No text, arrows, labels, watermark, collage or second person.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-873b8ffa-47a1-4099-af14-c3b67d181b14.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-f03cd94c-06c8-4a61-add6-52cfc6985eb8.png",
+      "selected": false,
+      "qa": "实际 view_image 检查通过：骨盆明显离垫，中等桥高，肩—髋—训练右膝在近一直线；头和肩背接垫、手掌接垫；右鞋仍落垫，左鞋仍离垫且左膝保持屈曲；未见明显骨盆高低倾斜或夸张顶腰；人物、鞋、机位、垫子与首图一致；单姿势无文字箭头。 随首图姿势与镜头修订，整体由v2替代。"
+    },
+    {
+      "step": "079-s01",
+      "attempt": 3,
+      "prompt": "Use case: scientific-educational. Precisely edit Image 1, the single-leg glute bridge START photograph. Images 2–4 are identity/style references.\nONE correction only: the woman's farther LEFT hand is currently hidden behind her buttocks. Reposition her far LEFT arm slightly outward from the body, with relaxed elbow, to put the FULL far LEFT HAND, wrist and all five fingers clearly visible PALM DOWN on the mat in an open area alongside the hip. The hand must be visibly connected to its forearm and part of this same woman, with natural length and joints. Both hands must be fully visible with believable mat contact, no fingertip-only view. The near RIGHT arm and hand remain in the same pose. If required for true visibility, use only a very slight increase in camera elevation/obliqueness so the far palm can be seen, but retain lateral view of both feet.\nPreserve the exact same woman, face, black ponytail, white short sleeve T-shirt, charcoal pants, two white shoes, grey-blue seamless studio, soft light, grey mat and whole-body landscape framing. Preserve leg and pelvic pose exactly: buttocks, back, shoulder blades and head down on mat; near RIGHT shoe sole fully planted; far LEFT knee bent approximately90degrees and LEFT shoe gently OFF mat with visible gap; level resting pelvis, no bridge yet. Natural body proportions; complete head, BOTH whole hands, BOTH whole shoes and whole mat in frame. No labels, arrows, words, watermarks, collage, extra fingers, arms or person.",
+      "input_paths": [
+        "E:/git冲突问题/rehab image/train/steps/079_T-LOW-047_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-26ca0340-341c-4da0-ba5f-c6cce1f09ee3.png",
+      "selected": false,
+      "qa": "针对远侧手略外展的修订仍仅见部分远侧手，view_image复审不通过，未交付。"
+    },
+    {
+      "step": "079-s01",
+      "attempt": 4,
+      "prompt": "Use case: scientific-educational. Revise Image 1 for clear bilateral hand visibility. Images 2–4 lock the exact woman's identity, clothing and studio appearance.\nThe far hand is STILL partially hidden behind the pelvis. Solve this with a fixed moderately elevated SIDE camera, looking down about 25–30 degrees at the body, with a small foot-end oblique angle. It must remain a lateral exercise demonstration, not overhead. This new camera will be used identically for the matched start/end pair.\nMove the farther LEFT arm outward about 25–30 degrees away from her torso, resting on the grey mat. Its WHOLE hand, wrist and fingers must be FULLY visible in the open mat area on the FAR side of the hip, seen from above, with clear uninterrupted mat beneath it. The far hand must not disappear behind the buttock, thigh or shirt. Show a plausible connected forearm from the same shoulder, relaxed elbow, natural arm length. Her near RIGHT arm can remain beside the torso as before. Use a standard broad nonslip grey exercise mat wide enough that both palms are supported. The final picture must distinctly show two entire hands.\nPreserve the same START pose: woman supine, head, shoulder blades, back and buttocks resting on mat; near RIGHT knee bent and RIGHT shoe entire sole on mat; far LEFT knee bent about90degrees and LEFT white shoe gently lifted with a clear air gap. Pelvis down, level and neutral; no bridge lift. Keep exact face, black ponytail, white short-sleeve T-shirt, charcoal trousers and white shoes. Grey-blue seamless studio, soft natural light, whole body and mat visible, landscape1536x1024 framing. Exactly two normal arms, two hands, two legs and two shoes. No words, arrows, labels, diagrams or collage.",
+      "input_paths": [
+        "E:/git冲突问题/rehab image/train/steps/079_T-LOW-047_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-d72beea0-ca21-4e0e-911f-4483aca8db01.png",
+      "selected": false,
+      "qa": "改为侧面斜俯机位，双手可见；但连续抬髋图再次隐藏远手，因此不作为最终图组，未交付。"
+    },
+    {
+      "step": "079-s02",
+      "attempt": 2,
+      "prompt": "Use case: scientific-educational. Edit Image 1 into the matched END pose of this same single-leg bridge pair. Images 2–4 are identity/style references.\nKEEP EXACTLY Image 1's moderately elevated lateral-oblique camera, lens, landscape1536x1024 framing, grey mat position/size, grey-blue background, light, exact woman/face/black ponytail, white T-shirt, dark charcoal pants, white shoes, and both arms/hands' positions. BOTH whole hands must stay completely visible PALM DOWN supported on mat, near hand diagonally beside hip and far hand in the open far-side mat space. Keep their visible natural wrist/forearm connections.\nChange ONLY pelvis/hip posture to RIGHT-leg single-leg glute bridge TOP: raise buttocks/pelvis moderately off mat by hip extension, with shoulder–hip–supporting right knee near a straight diagonal line. Neutral lumbar shape, ribs not flared, no exaggerated arched waist or pelvic tilt. Head and shoulder blades REMAIN resting on mat, no head lift.\nThe near anatomical RIGHT foot remains exactly planted at its original spot, entire sole contacting mat, right knee bent, shin approximately upright. Far LEFT knee remains bent about90degrees and far LEFT shoe remains completely OFF mat with obvious air gap; no kick, no straightened leg and no second-foot support. Preserve the same gently raised bent-left-leg version, allowing natural repositioning with hip rise. Pelvis level, no one-sided hip rise.\nOne static pose only. Both whole hands and both whole shoes fully visible, exactly two natural arms/two legs. Entire mat and head remain in frame. No writing, labels, arrows, watermark, duplicates or collage.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-d72beea0-ca21-4e0e-911f-4483aca8db01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-16e6b95f-2179-442f-9618-75292cea2e25.png",
+      "selected": false,
+      "qa": "侧面斜俯、手放体侧的连续抬髋图，view_image发现远侧整只手隐藏，复审不通过，未交付。"
+    },
+    {
+      "step": "079-s01",
+      "attempt": 5,
+      "prompt": "Use case: scientific-educational. Edit Image 1, the single-leg bridge START, to show BOTH hands clearly and consistently. Images2–4 are identity/style references.\nONLY change arm/hand positioning: both elbows remain relaxed and supported on mat, but bend both elbows and place BOTH hands lightly on TOP OF the white T-shirt over the abdomen. Keep the hands slightly separated, one toward each side of the abdomen, with BOTH full palms/backs of hands, thumbs and all fingers clearly visible, no overlap and no body occlusion. Natural wrists, natural connected forearms and exactly two hands. Hands merely rest on shirt, not pull legs and not press into ribs. This hand-on-abdomen position will stay identical in both photographs.\nKEEP exact camera/view/lens, grey mat, studio, face, black ponytail, white T-shirt, charcoal pants and white shoes. Preserve START pose: head/shoulder blades/back/buttocks resting on mat; RIGHT near-side knee bent and RIGHT foot sole fully on mat; LEFT farther knee bent near90degrees with LEFT shoe gently hovering fully off mat. Pelvis level and not lifted. No new objects. Full body, whole mat, both hands and both shoes complete in frame. Landscape1536x1024. No text, numbers, arrows, watermark, collage or duplicate person.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-d72beea0-ca21-4e0e-911f-4483aca8db01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-b2eebb76-0128-437f-9c4e-494904fe258e.png",
+      "selected": true,
+      "qa": "实际view_image检查通过：肩背、头和骨盆落垫；近侧右鞋全底落垫、远侧左鞋离垫且屈膝近90°；双手分开轻放腹前，两只整手、手腕及手指完整可见且不重叠；肘部自然放置；全身与全垫完整，人体比例自然，无文字/箭头/拼图。"
+    },
+    {
+      "step": "079-s02",
+      "attempt": 3,
+      "prompt": "Use case: scientific-educational. Edit Image 1 into the END pose of this exact matched single-leg bridge exercise pair. Images2–4 lock woman's identity/style.\nPreserve Image1's exact elevated lateral-oblique camera/lens/framing, mat position and size, grey-blue background, lighting, woman/face/black ponytail, white T-shirt, charcoal pants and white shoes. MOST IMPORTANT: preserve BOTH hands separately resting on TOP OF white T-shirt over abdomen, fully visible and not overlapped, with elbows relaxed on mat. Do not move arms back beside torso; do not hide or omit a hand. Their position relative to her abdomen stays identical as torso rises.\nChange ONLY hips to TOP of a RIGHT-leg single-leg glute bridge. Raise buttocks and pelvis off mat moderately, until shoulder–hip–supporting RIGHT knee form a near straight diagonal. Neutral spine without exaggerated waist arch, level pelvis and no twisting. Head and shoulder blades stay on mat, neck relaxed.\nThe near anatomical RIGHT foot remains at original mat location, whole white shoe sole planted, right knee flexed, shin approximately upright. The farther LEFT knee remains flexed near90degrees, LEFT white shoe continues gently floating fully off mat with clear air gap; no left-foot support, no kicking, no straightened leg. Keep same modest bent-left-leg version, only naturally reposition it with pelvic rise.\nTwo complete clearly visible hands on abdomen, two complete shoes, head and full mat in frame. Exactly two arms and two legs, natural anatomy. One static pose, landscape1536x1024. No text, arrows, labels, watermark, collage or duplicated person.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-b2eebb76-0128-437f-9c4e-494904fe258e.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-acfef42f-c11e-495c-940a-32d32702da8e.png",
+      "selected": true,
+      "qa": "实际view_image检查通过：骨盆抬起，肩—髋—支撑膝近一直线，未见夸张顶腰或骨盆倾斜；头、肩背与右足保持接垫、左足仍离垫并屈膝；双手仍分开轻放腹前、完整手腕和手指可见；镜头、地面、人物、垫子、鞋与修订首图一致；全身完整、单静态姿势、无文字箭头。"
+    }
+  ],
+  "delivered_files": [
+    {
+      "step": "079-s01",
+      "version": "v2",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a138e6-f772-7e31-8880-38c1e3e327ad\\exec-b2eebb76-0128-437f-9c4e-494904fe258e.png",
+      "target_path": "E:\\git冲突问题\\rehab image\\train\\steps\\079_T-LOW-047_s01_v2.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1987765,
+      "sha256": "F06E4383DBDEB3C4B483626568DFB8FDBFEC51D6FE45C6BF4E6338B69AAB86BE",
+      "byte_copy_hash_verified": true,
+      "qa_status": "visual_pass_after_revision"
+    },
+    {
+      "step": "079-s02",
+      "version": "v2",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a138e6-f772-7e31-8880-38c1e3e327ad\\exec-acfef42f-c11e-495c-940a-32d32702da8e.png",
+      "target_path": "E:\\git冲突问题\\rehab image\\train\\steps\\079_T-LOW-047_s02_v2.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1984819,
+      "sha256": "3A18447832416779349C3295BF2C471939508CAF07853EEE55C116BEA7D9BFE7",
+      "byte_copy_hash_verified": true,
+      "qa_status": "visual_pass_after_revision"
+    }
+  ],
+  "qa_limits": "照片仅检查可见姿势、支撑接触与图组一致性；约90°未作医学量角。斜侧面不能精确证明解剖左右、骨盆旋转角、真实承重比例或肌肉发力，支撑侧按提示词设定登记。最终双手轻放腹前，没有手撑垫；源卡未规定手支撑。仅v2为最终交付，原文件与未交付尝试均保留供追溯。",
+  "updated_date": "2026-10-14",
+  "revision": "v2 双手可见性复审修订",
+  "revision_reason": "独立复审发现原 s01 远侧手只露指尖，未满足清单第3.5完整手脚要求。初次QA对此误判。针对性移手仍遮挡，改侧面斜俯首图虽双手可见，但抬髋时模型再遮远手；最终整组采用双手分开轻放腹前版本，连续生成并逐图复审。",
+  "historical_files": [
+    {
+      "step": "079-s01",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-873b8ffa-47a1-4099-af14-c3b67d181b14.png",
+      "target_path": "E:/git冲突问题/rehab image/train/steps/079_T-LOW-047_s01.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1726392,
+      "sha256": "30ECC702FFD81CDAAA53FE05B520A8600D12308533634018B6FC0CFABC6D3538",
+      "byte_copy_hash_verified": true,
+      "qa_status": "superseded_by_v2",
+      "reason": "复审发现远侧手遮挡，已保留但不作为最终交付"
+    },
+    {
+      "step": "079-s02",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-f772-7e31-8880-38c1e3e327ad/exec-f03cd94c-06c8-4a61-add6-52cfc6985eb8.png",
+      "target_path": "E:/git冲突问题/rehab image/train/steps/079_T-LOW-047_s02.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1725056,
+      "sha256": "DF6AA65B982734A6A09BB5BD2A04E11F12386DA2DFF07445C0C16666B5FED63E",
+      "byte_copy_hash_verified": true,
+      "qa_status": "superseded_by_v2",
+      "reason": "随首图手部姿势和镜头统一修订，已保留但不作为最终交付"
+    }
+  ]
+}

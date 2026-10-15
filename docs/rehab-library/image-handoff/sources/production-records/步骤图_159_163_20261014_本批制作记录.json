@@ -1,0 +1,96 @@
+{
+  "record_version": "1.0",
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "generator": "built-in image_gen.imagegen",
+  "skill": "C:/Users/Administrator/.codex/skills/.system/imagegen/SKILL.md",
+  "requested_scope": "159/s02-s03;163/s01-s02",
+  "images": [
+    {
+      "sequence": 159,
+      "action_id": "T-AXU-055",
+      "step": "02",
+      "filename": "159_T-AXU-055_s02.png",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a82-8f2a-7443-b3f2-d780c74d6930/exec-04f02385-f837-4ab3-ae5b-92d75d9976f9.png",
+      "prompt": "Use case: scientific-educational. Create exactly ONE independent photorealistic rehabilitation exercise photograph, frame 159 / step s02, the MIDWAY posture of an UNLOADED RIGHT-arm diagonal raise, not a montage.\nReference images 1–3 are identity, clothing and photographic style references ONLY. Same Chinese adult woman, identical facial identity and age, natural proportions, black ponytail, plain white short-sleeve T-shirt and charcoal full-length trousers; clean white trainers. Seamless grey-blue studio floor and backdrop, soft studio light and natural contact shadows, no text or arrows.\nCamera: nearly frontal, very slightly from her right, fixed full-body portrait framing including complete head, both hands and both shoes with margins. She stands upright facing forward, feet hip-width and parallel, pelvis and breastbone square forward, no trunk twist, no arching.\nAction: it is her anatomical RIGHT hand (viewer LEFT arm in the frontal view). The motion starts with this right hand in front of the opposite LEFT thigh and will finish diagonally up and out to her RIGHT front at below shoulder height. Show only the MIDPOINT now: her right hand is in the space in front of the middle of her abdomen, at approximately upper-waist / lower-sternum height, moving away from the opposite left thigh toward her right front. Right arm reaches forward in a low diagonal, elbow nearly straight but relaxed, wrist straight, fingers relaxed and clearly anatomically correct. Right hand is EMPTY. Left arm hangs relaxed beside her left hip. Shoulders remain level and relaxed, head looks forward. This midpoint must be substantially lower and closer to the body midline than the final raised arm. No ghosted limbs, no motion trails, no weights, no extra objects.",
+      "reference_images": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "checks": [
+        "右手徒手位于腹部前方中途，低于终点、接近身体中线",
+        "左手自然下垂，双肩/躯干/骨盆朝前未扭转",
+        "头、双手、双足完整可见，比例自然、手指连续",
+        "衣着/身份/灰蓝背景与参考一致"
+      ],
+      "visual_status": "通过"
+    },
+    {
+      "sequence": 159,
+      "action_id": "T-AXU-055",
+      "step": "03",
+      "filename": "159_T-AXU-055_s03.png",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a82-8f2a-7443-b3f2-d780c74d6930/exec-86cb1dc5-d784-45d2-9d42-3ec899fcd2a5.png",
+      "prompt": "Use case: scientific-educational. Make exactly ONE independent rehabilitation exercise photograph, frame 159 / s03. Reference image 1 is the preceding approved s02 photograph and is the strict scene, character, camera and stance continuity reference. Reference images 2–4 are the original identity and studio-style references.\nKeep exactly the same woman, facial identity, black ponytail, white short-sleeve T-shirt, charcoal trousers, white trainers, gray-blue seamless studio, lighting, floor, full-body portrait crop, scale, feet locations, upright forward-facing torso, neutral head and relaxed left arm as image 1. Only change the anatomical RIGHT arm, the arm on viewer LEFT.\nShow the FINISH of an empty-right-hand diagonal raise that began at the opposite left thigh and passed the central abdomen as in image 1. Raise the right arm diagonally forward-and-out toward HER RIGHT (viewer LEFT), in a plane approximately 30–40 degrees forward of a pure sideways raise. Her right hand is now clearly outside the right side of her torso and slightly below her own shoulder height, not higher. Shoulder elevation approximately 65–70 degrees; elbow almost straight with a relaxed slight bend; wrist straight, fingers naturally together and relaxed. Make the forward component visible through correct perspective: it is a diagonal forward-outward reach, not a purely lateral T-pose. Keep shoulder down, chest and pelvis square, no trunk rotation or backward arch, no shoulder shrug. Empty hand, no weights. Full head, entire right hand, both shoes and floor contact remain visible. Photorealistic human anatomy with exactly two arms and five fingers per visible hand. No text, arrows, labels, border, collage or motion ghosting.",
+      "reference_images": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a82-8f2a-7443-b3f2-d780c74d6930/exec-04f02385-f837-4ab3-ae5b-92d75d9976f9.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "checks": [
+        "右手到本人右前外方终点，明确低于肩高；通过前臂透视保留前向分量",
+        "无明显耸肩、扭腰或后仰，非过头抬举",
+        "与s02机位/人物大小/脚位/左手/服装/背景相同",
+        "双手双足完整、手指正常，无器械"
+      ],
+      "visual_status": "通过"
+    },
+    {
+      "sequence": 163,
+      "action_id": "T-AXU-028",
+      "step": "01",
+      "filename": "163_T-AXU-028_s01.png",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a82-8f2a-7443-b3f2-d780c74d6930/exec-9e27a9ad-1137-4fa5-8d18-c6722600b448.png",
+      "prompt": "Use case: scientific-educational. Generate exactly ONE independent photorealistic rehabilitation exercise photograph: action 163 T-AXU-028, s01 START of a standing TWO-HANDED landmine bar press. The 3 reference images define the same Chinese adult woman's facial identity, age, black ponytail, white short-sleeve T-shirt, charcoal long trousers and soft gray-blue studio photographic style. Add clean white trainers.\nWide landscape composition, a fixed three-quarter SIDE-FRONT camera with a mostly side-on view of the exercise. Woman stands on the RIGHT side of image facing LEFT, full body visible with both complete shoes and both hands. Seamless gray-blue background/floor, soft light and natural shadows. No text, arrows, logos, collage or inset.\nEquipment must be mechanically realistic: a straight rigid approximately 2-meter Olympic bar, one end securely captured in a visible purpose-made floor-mounted swiveling landmine socket on the LEFT of frame. Show the complete low heavy black steel rectangular landmine base with four visible mounting bolts and the pivoted cylindrical bar socket. The other free bar end rises diagonally up-right from that fixed pivot to her two hands in front of her upper chest / shoulder level. Full rod and both ends visible. No wall, improvised corner, floating bar, bent rod or extra bar. Use a light unloaded bar with a normal short thick free sleeve, no weight discs.\nPose: both feet planted hip-width in a stable parallel stance, knees softly unlocked, pelvis and ribcage upright without leaning back. Both hands clasp the SAME free bar sleeve end together close in front of upper chest at shoulder level, palms/fingers wrap around and support the end, both elbows bent and angled down. Keep her torso behind the grip, bar in front of body, no shaft through the body. Shoulders relaxed, neck neutral, gaze along the bar. It is the start frame before extending both arms forward and upward around the fixed pivot. Show clear hand grip, both elbow positions, ground contacts and dedicated base. Natural human limb proportions and anatomically correct hands.",
+      "reference_images": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "checks": [
+        "站姿双手在肩前握同一杠端，肘弯曲下垂，双脚着地",
+        "专用带螺栓底座和转动套筒明确可见，杠杆连续不穿体",
+        "完整全身/整杆/支点可见，长度与身高比例合理",
+        "躯干稳定无后仰，人物/衣服/灰蓝背景一致"
+      ],
+      "visual_status": "通过"
+    },
+    {
+      "sequence": 163,
+      "action_id": "T-AXU-028",
+      "step": "02",
+      "filename": "163_T-AXU-028_s02.png",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a82-8f2a-7443-b3f2-d780c74d6930/exec-f564043e-277d-4c7b-a3da-58588ee0576c.png",
+      "prompt": "Use case: scientific-educational. Produce exactly ONE independent photorealistic rehabilitation photo, action 163 T-AXU-028 s02, the FINISH of the standing TWO-HANDED landmine press. Input image 1 is the approved s01 START photo: it is the strict continuity target. Input images 2–4 are original facial identity references.\nPreserve the exact same camera, wide 1536x1024 landscape composition, same full-body woman at image RIGHT facing LEFT, face/age/black ponytail/white T-shirt/charcoal trousers/white shoes, identical feet placement, stance, upright pelvis and torso, identical seamless gray-blue studio light and floor. Keep the complete dedicated bolted steel landmine base at exactly the same image LEFT floor position. The base and fixed pivot CANNOT move.\nChange only her two arms and the straight bar's angle by rotating it UP around that SAME floor pivot. Her two hands still clasp the SAME free sleeve end together. She has now pressed both hands FORWARD (toward image LEFT) AND UP, to a comfortable endpoint approximately around upper-face height, with both elbows almost straight but softly unlocked. Hands are farther from the chest and higher than in image 1. Shoulders do not shrug; ribcage and pelvis remain upright without backward lean; knees and feet do not move. Both hands visibly wrap/support the same bar end, no crossing rod through her fingers or body.\nCRITICAL MECHANICS: This is the SAME rigid straight bar with the SAME physical LENGTH and same sleeve/shaft proportions as s01. The free end follows a circular arc around the original pivot; the shaft rotates steeper as the end moves forward-up. Never shorten, extend, bend or split the bar. Keep complete base, entire bar, grip, elbows, head and both shoes fully inside frame with top margin; if necessary select a modest forward-up endpoint instead of cropping. Keep same framing rather than zooming. No added weights, no changes to equipment; no text/arrows/logos/collage/ghost limbs. Natural human anatomy.",
+      "reference_images": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a82-8f2a-7443-b3f2-d780c74d6930/exec-9e27a9ad-1137-4fa5-8d18-c6722600b448.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "checks": [
+        "双手向前上方推到终点，双肘接近伸直但未反弓",
+        "同一固定底座位置、杆件和转轴，杆绕支点上转、直线连续无伸缩或弯折",
+        "双脚与躯干位置保持，肩部自然，无明显后仰",
+        "手、足、头与整杆底座完整，衣着/构图一致"
+      ],
+      "visual_status": "通过"
+    }
+  ]
+}

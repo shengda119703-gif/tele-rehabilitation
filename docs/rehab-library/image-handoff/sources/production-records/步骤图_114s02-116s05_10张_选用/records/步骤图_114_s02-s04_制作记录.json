@@ -1,0 +1,124 @@
+{
+  "batch": "114-s02～s04",
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "generation_mode": "内置 image_gen.imagegen；每资产独立调用；未使用CLI/API或代码编辑图片",
+  "counts": {
+    "final_images": 3,
+    "new_generated_final_images": 3,
+    "reused_images": 0,
+    "builtin_calls": 4
+  },
+  "identity_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "entries": [
+    {
+      "step": 2,
+      "sha256": "CD2342E36F8D30C3F22CA324EEC03D24FE12C52466C51004D564B4F9CBA12B7E",
+      "file_size_bytes": 1631055,
+      "filename": "114_T-LOW-051_s02.png",
+      "action_number": 114,
+      "action_id": "T-LOW-051",
+      "width": 1122,
+      "height": 1402,
+      "final_path": "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s02.png",
+      "output_source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393c-2270-7811-a1d5-e281f36e1a42\\exec-b79e76cc-8299-4c96-9432-a1b9fd9fd125.png",
+      "target_pose": "双脚前足接地、双跟一起抬起，扶手保持",
+      "reused": false,
+      "reused_original_path": null,
+      "prompt": "Use case: scientific-educational. Asset type: one rehabilitation exercise step photograph, portrait PNG, approximately 1122x1402. Reference image 1 is the previous exercise 114 photograph, used ONLY to match the fixed grey handrail, the woman's white short-sleeve shirt and dark charcoal long trousers, the pale grey-blue studio background and soft photographic lighting. Images 2-4 are the same woman's identity and appearance references. Create a new step 02 photograph for eccentric heel lowering after bilateral calf raise. Camera is fixed at a true SIDE VIEW facing right, CLOSE framing from her waist through BOTH complete knees, calves, ankles and bare feet, plus the supporting hand touching the fixed rail at the upper-right; head deliberately outside the close-up. Both legs nearly straight, both feet shoulder-width apart on a perfectly flat grey-blue floor, offset naturally in depth just enough to see each heel separately. BOTH bare forefeet (balls of feet and relaxed toes) remain firmly planted and BOTH HEELS are lifted together approximately 4 cm at the TOP of a comfortable bilateral calf raise. It is crucial to show TWO lifted heels and TWO grounded forefeet; neither foot is lifted entirely. No external weight, no step or platform. One hand lightly rests on the same fixed matte gray waist-height handrail to the right; natural arm segment and hand visible at top. Human anatomy and leg lengths natural, dark trousers reach above bare ankles. Preserve the backdrop/soft light from references. Single pose, continuous photographic image. No text, numbers, arrows, diagram, borders, montage or inset. Foot and heel gaps should be large enough for teaching. Keep toes and heels fully inside frame.",
+      "input_paths": [
+        "E:/git冲突问题/rehab image/train/114_T-LOW-051_双脚上升—单脚缓降提踵.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "inspection": {
+        "method": "主代理逐张view_image最终文件并与前帧比较",
+        "status": "可见姿势检查通过",
+        "pose": "双脚前足接地、双跟一起抬起，扶手保持",
+        "support_and_contacts": "平地、灰色固定扶手，完整双膝、双足及扶手接触手可见；03和04仅训练侧脚接地",
+        "anatomy": "最终图为两腿两足；关节连接与腿足比例视觉上自然，无明显额外肢体",
+        "appearance": "局部侧面足近景不含面部；白短袖下摆、深灰裤、肤色、灰蓝背景与柔光一致，身份由三参考及原单图延续",
+        "camera_group": "侧面机位、扶手及地面背景一致；足部因踝角度改变出现投影变化，未作像素配准或厘米测量",
+        "text": "无编号、箭头、拼图或文字"
+      }
+    },
+    {
+      "step": 3,
+      "sha256": "D1384A36ECAA043EC5044DDAB0334EDF9328FE0BB6DA5D5616335BE0AC5BC2E6",
+      "file_size_bytes": 1570870,
+      "filename": "114_T-LOW-051_s03.png",
+      "action_number": 114,
+      "action_id": "T-LOW-051",
+      "width": 1122,
+      "height": 1402,
+      "final_path": "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s03.png",
+      "output_source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393c-2270-7811-a1d5-e281f36e1a42\\exec-86415113-515b-4cac-b091-c9fd86dcf3df.png",
+      "target_pose": "训练侧前足接地及跟抬高；非训练侧足完全离地",
+      "reused": false,
+      "reused_original_path": null,
+      "prompt": "Use case: identity-preserve. Asset: exercise 114 step 03, one rehabilitation studio photograph. Image 1 is the EDIT TARGET, the accepted step 02 bilateral heel-rise photograph. Make ONLY the necessary change from two feet supporting at the top to ONE training foot supporting at the top: keep the NEAR-camera leg nearly straight and its forefoot/toes in EXACTLY the same ground contact place; keep its heel raised at EXACTLY the same comfortable height. The far-camera non-training leg now bends gently at the knee, moves its lower leg backwards toward the left of the image, and lifts the ENTIRE far foot completely clear of the flat floor. Show an obvious air gap of about 8 cm beneath that far foot, located behind and to the LEFT of the near training calf, without overlap with the near bare foot. The far foot stays relaxed and natural, NOT bearing any weight, with five normal toes. This is transfer at the TOP after rising on both feet; the near training heel MUST remain clearly elevated and must not lower yet. Preserve everything else exactly: same side close view from waist through both complete knees/legs/feet, same hand resting on grey fixed handrail, white T-shirt hem, charcoal long pants, natural knee/ankle continuity, floor shadows and pale grey-blue photographic background, same camera/focal length/framing and person size. No weight, no step, no platform, no jumping. Only one static pose, no arrows, labels, text, inset or collage. Output portrait PNG same 1122x1402 frame as target.",
+      "input_paths": [
+        "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s02.png"
+      ],
+      "inspection": {
+        "method": "主代理逐张view_image最终文件并与前帧比较",
+        "status": "可见姿势检查通过",
+        "pose": "训练侧前足接地及跟抬高；非训练侧足完全离地",
+        "support_and_contacts": "平地、灰色固定扶手，完整双膝、双足及扶手接触手可见；03和04仅训练侧脚接地",
+        "anatomy": "最终图为两腿两足；关节连接与腿足比例视觉上自然，无明显额外肢体",
+        "appearance": "局部侧面足近景不含面部；白短袖下摆、深灰裤、肤色、灰蓝背景与柔光一致，身份由三参考及原单图延续",
+        "camera_group": "侧面机位、扶手及地面背景一致；足部因踝角度改变出现投影变化，未作像素配准或厘米测量",
+        "text": "无编号、箭头、拼图或文字"
+      },
+      "corrections": [
+        {
+          "reason": "第一稿保留了原远侧落地足并额外生成抬起的足，形成三足；该稿弃用",
+          "discarded_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393c-2270-7811-a1d5-e281f36e1a42\\exec-02da337c-c18a-47db-bbef-893051e52d0d.png",
+          "prompt": "Use case: precise-object-edit. EDIT TARGET image 1. Correct an anatomy error: the woman currently appears to have THREE feet. REMOVE ONLY the erroneous extra grounded FAR foot and its narrow lower trouser leg that are visible immediately BEHIND/right of the main supporting bare foot. This extra foot's toes currently extend to the RIGHT behind the support foot near floor; erase that entire duplicate grounded foot/ankle and any duplicated trouser sliver above it, replacing them with the same grey-blue background/floor. There must be EXACTLY TWO legs and TWO bare feet after editing: (1) the MAIN NEAR leg centered, nearly straight, with forefoot planted and heel raised, retained unchanged; (2) the OTHER leg bent backwards to the LEFT with its one foot already suspended in air, retained unchanged. The woman has ONE standing support foot only. Preserve the existing bent airborne limb to the left, preserve both real knees, main training heel raise height, natural leg continuity, trousers, same hand on grey fixed rail, white shirt, side-close framing, grey-blue background, soft light and camera. No new limb. No changes to the raised supporting foot or airborne foot. One anatomical woman with just two legs, just two feet. Portrait PNG same dimensions. No words, arrows, marks or collage.",
+          "accepted_source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393c-2270-7811-a1d5-e281f36e1a42\\exec-86415113-515b-4cac-b091-c9fd86dcf3df.png"
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "sha256": "910FCD112BBF9707D24F9D38B2232C18AA4B968AF4EEC8C207B88CC8602E9C73",
+      "file_size_bytes": 1563773,
+      "filename": "114_T-LOW-051_s04.png",
+      "action_number": 114,
+      "action_id": "T-LOW-051",
+      "width": 1122,
+      "height": 1402,
+      "final_path": "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s04.png",
+      "output_source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393c-2270-7811-a1d5-e281f36e1a42\\exec-43130e0f-555c-45bb-b84f-fd8aa2f7efb7.png",
+      "target_pose": "训练脚跟及全掌落到平地，非训练侧足仍离地",
+      "reused": false,
+      "reused_original_path": null,
+      "prompt": "Use case: identity-preserve. Asset: rehabilitation exercise 114 step 04, single studio photograph. Image 1 is the accepted step 03 EDIT TARGET with EXACTLY TWO legs and TWO feet: the near leg currently raised on its forefoot, and the far leg bent backwards with its foot suspended to the LEFT. Change ONLY the supporting ankle/heel to show the END of controlled single-leg heel lowering. Lower the near TRAINING heel ALL THE WAY DOWN until the heel's sole makes FULL CONTACT with the flat floor, at the same floor level as the toes and forefoot. The entire training sole from heel to ball and toes is now naturally flat/grounded; forefoot and toes remain at exactly the original forward/right contact position and must not slide. Rotate the support ankle naturally out of its raised tiptoe angle and let the supporting knee/body drop a small matching amount, remaining nearly straight. KEEP the OTHER foot clearly airborne behind to the LEFT; it MUST NOT return to floor at this step. Maintain exactly two real legs, no duplicated leg behind the support shin, no third foot. Preserve side-close framing from waist through both complete knees and feet, same natural limb lengths and proportions, same white shirt/charcoal trousers, hand on grey fixed support rail, background/floor color, shadows/soft light and camera scale. The rail stays perfectly fixed in same location; hand can naturally slide a tiny amount down it with lowering. No weight, no step. The final sole is fully FLAT, not hovering, not remaining on tiptoe. Same 1122x1402 portrait PNG, no labels, arrows, text or collage.",
+      "input_paths": [
+        "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s03.png"
+      ],
+      "inspection": {
+        "method": "主代理逐张view_image最终文件并与前帧比较",
+        "status": "可见姿势检查通过",
+        "pose": "训练脚跟及全掌落到平地，非训练侧足仍离地",
+        "support_and_contacts": "平地、灰色固定扶手，完整双膝、双足及扶手接触手可见；03和04仅训练侧脚接地",
+        "anatomy": "最终图为两腿两足；关节连接与腿足比例视觉上自然，无明显额外肢体",
+        "appearance": "局部侧面足近景不含面部；白短袖下摆、深灰裤、肤色、灰蓝背景与柔光一致，身份由三参考及原单图延续",
+        "camera_group": "侧面机位、扶手及地面背景一致；足部因踝角度改变出现投影变化，未作像素配准或厘米测量",
+        "text": "无编号、箭头、拼图或文字"
+      }
+    }
+  ],
+  "independent_review": "116跖屈子代理逐张view_image独立审查114-s02～s04：双脚上升、非训练脚离地、训练脚跟落地三阶段明确，双膝及完整双足可见，未见关键姿势或人体比例异常。",
+  "limitations": [
+    "静态图无法证明真实双侧承重比例、离心发力、受控下降时间或动作适用性。",
+    "提示词中的厘米为生成目标，最终没有依据图像验证厘米/角度；不作为测量或测试证据。",
+    "本次只制作用户指定02—04；01不在本轮交付范围。"
+  ]
+}

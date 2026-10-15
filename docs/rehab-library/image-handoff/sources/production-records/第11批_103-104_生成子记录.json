@@ -1,0 +1,56 @@
+{
+  "batch": "第11批",
+  "range": "103-104",
+  "generation_mode": "built-in image_gen; each action one independent call",
+  "document_path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "reference_images": [
+    "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-d62371e8-5f6e-4310-a6d6-2068c4297c1c.png",
+    "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-0b2bd155-fd46-4bad-b86b-225571201214.png",
+    "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-44810b7e-2888-45c9-9d35-20a18476d62e.png"
+  ],
+  "generated_date": "2026-10-14",
+  "images": [
+    {
+      "sequence": 103,
+      "id": "T-LOW-055",
+      "name": "低台阶交替点踏与受控上落",
+      "category": "train",
+      "prompt": "Use case: scientific-educational.\nAsset type: one independent PNG photograph for exercise 103 T-LOW-055, 低台阶交替点踏与受控上落.\nInput images: all three supplied images are strict identity, clothing, photographic style and background-color references. Generate a new pose while retaining precisely the same East Asian woman: identical facial features, black low ponytail, natural skin, white short-sleeve fitted T-shirt and dark charcoal full-length pants. Add plain white trainers appropriate to full body framing.\nPrimary request: show ONE still phase of slow alternating low-step toe taps. The woman faces right in a true side view, stands beside a single very low stable 10 cm step. The REAR foot is flat on the floor with a nearly straight supporting knee, taking her weight. The FORWARD foot is lightly placed completely on the low step with bent knee. Her pelvis and upright trunk remain directly above the rear floor foot, clearly illustrating a light step tap, NOT having stepped her whole body up. One relaxed hand securely holds an immovable fixed rehabilitation rail at waist height beside her. Both feet, shoe-to-step contact and shoe-to-floor contact must be unobstructed and unmistakable. No hopping. Her expression is calm and neutral as in the references.\nScene/backdrop: keep the identical softly mottled gray-blue seamless studio background and gray-blue floor as the references; no new room decoration. A minimal neutral gray rail is securely bolted to floor supports and a matte low nonslip gray step, physically stable, are the only exercise equipment. Do not let a rail support cover either shoe.\nStyle: same realistic studio photography, natural detail, soft even lighting, identical background hue; no illustration or CGI appearance.\nComposition: portrait canvas matching original 1122 by 1402 ratio, approximately 4:5; entire head, natural adult torso/limbs, both shoes, step and support visible with margin. Normal unexaggerated adult body proportions, realistic foot sizes, correct hands, no crop of feet. The apparent head-to-body proportion should be anatomically normal.\nConstraints: a single woman and one coherent single pose; absolutely no text, titles, labels, sequence panels, arrows, numbers or watermark. Keep identity, clothing, hair, background color and photographic style unchanged. Do not add a second person, furniture, weights or extra limbs.",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-ca0e16e9-4ba6-4e03-83f2-9d4e135d59a5.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/103_T-LOW-055_低台阶交替点踏与受控上落.png",
+      "visual_review": {
+        "status": "accepted",
+        "review_method": "生成结果完整预览及目标文件view_image逐张审查",
+        "pose": "点踏分轨：后脚留在地面承重，前脚完整轻放低台阶，髋在地面支撑脚上方，手扶固定扶栏。",
+        "identity_style_background": "原参考人物、发型、白短袖T、深灰裤和灰蓝写实摄影背景保持一致，正常成人比例，全身双足可见。",
+        "limitations": "单张仅表示点踏阶段，不代表完整交替点踏或整人上落循环；台阶与鞋均完整可见。"
+      },
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "sha256": "AFC8F24F48AA281833C04B10BDC2447E0A70C1CEDE0CED83DE5504CC32D032E0"
+    },
+    {
+      "sequence": 104,
+      "id": "T-LOW-056",
+      "name": "坐站结合扶稳提踵：分段版",
+      "category": "train",
+      "prompt": "Use case: scientific-educational.\nAsset type: one independent exercise-library PNG photograph for 104 T-LOW-056 坐站结合扶稳提踵：分段版.\nInput images: all three supplied images are strict identity, clothing, photographic style and background-color references. Preserve exactly the same East Asian woman, facial features, black low ponytail, natural skin, white short sleeve fitted T-shirt and dark charcoal full length pants. Plain white sports shoes.\nPrimary request: show ONE still phase, specifically the double-leg heel raise after she has stood up and stabilized. She faces right in a clear full body side view, stands tall with naturally straight knees, pelvis beneath trunk, with two feet parallel and hip-width apart. BOTH white shoes have their forefeet/toes in contact with the floor and BOTH heels lifted by approximately 5 cm, clearly visible as a small gap beneath EACH heel. She is in a controlled bilateral calf raise, not walking, not standing on only one foot. Perspective is slightly offset from true side so both shoe heels and their floor gaps can be separately seen. One hand holds a firmly fixed neutral gray waist-height rehabilitation rail beside her, without hanging from it. The other hand rests naturally at her side. A stable neutral gray armless chair stands immediately behind her, its back set against the gray-blue wall; it visibly indicates the prior sit-to-stand phase and safe return seat, but neither chair legs nor rail supports obstruct either foot. Only one subject and one current pose, no montage. Calm neutral expression as in references.\nScene/backdrop: maintain precisely the reference soft mottled gray-blue seamless studio background and same hue floor; if wall contact for the chair is suggested, keep a subtle wall/floor join of exactly the same hue, no added room decor.\nStyle: identical photoreal studio image, natural skin and fabric textures, soft even lighting, same color palette. No illustration, 3D render or cartoon.\nComposition: portrait ratio identical to original references 1122 by 1402 (~4:5). Whole head, normal anatomical adult torso and limb proportions, both fully visible shoes, the entire chair and stable floor-mounted support fit within frame with margins. Realistic shoe sizes; no enlarged head, stretched legs, shrunken torso or cropped equipment.\nConstraints: use the supplied woman's identity, not a lookalike with changed features. Same hair, white T-shirt, charcoal pants and gray-blue background. Correct realistic hands and limbs. No text, title, number, label, arrows, split screen, ghost poses, caption, diagram or watermark. No extra people, weights or decorative objects. The visible posture must be the controlled double-leg heel-raise phase while upright and supported, not a sitting pose.",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-d7b67e21-c344-4c79-b585-72f744b1ef04.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/104_T-LOW-056_坐站结合扶稳提踵：分段版.png",
+      "visual_review": {
+        "status": "accepted",
+        "review_method": "生成结果完整预览及目标文件view_image逐张审查",
+        "pose": "站起并站稳后的双脚提踵阶段：身躯直立，一手扶固定扶栏，两脚前掌接地、后跟抬起，身后稳固椅靠灰蓝背景墙，不遮双足。",
+        "identity_style_background": "原参考人物、发型、白短袖T、深灰裤和灰蓝写实摄影背景保持一致，正常成人比例，全身双足可见。",
+        "limitations": "单张仅表示提踵阶段，不代表坐站与提踵完整循环；固定扶栏右侧延伸至画面边缘，不影响人物与双足动作辨识。"
+      },
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "sha256": "4A9B47D0E623DC4799BDD0497547E85EEA37BE04C5A8B75FCED0850F730BB426"
+    }
+  ]
+}

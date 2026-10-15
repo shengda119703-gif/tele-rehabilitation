@@ -28,7 +28,7 @@ def main():
     db = Database(settings.database_url)
     db.migrate()
     bootstrap_doctor(db, settings, "1")
-    uvicorn.run(create_app(settings, db), host="127.0.0.1", port=args.port)
+    uvicorn.run(create_app(settings, db, web_assets=ROOT / "public_web" / "build"), host="127.0.0.1", port=args.port)
 
 
 if __name__ == "__main__":

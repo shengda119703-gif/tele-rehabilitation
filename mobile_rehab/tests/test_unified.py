@@ -190,3 +190,21 @@ def test_retired_care_routes_closed_and_library_plan_is_owner_local(shared):
     assert result.json()['adopted'] is False
     assert backend.call('snapshot',adapter.owner)['state']['events']==before['state']['events']
     assert backend.call('snapshot','owner-b')['library']['cards']==185
+
+
+def test_assessment_plan_bridge_requires_pairing_and_forwards_only_account_contract(shared, monkeypatch):
+    backend, adapter, app, client = shared
+    identity = dict(patient_id='11111111-1111-4111-8111-111111111111', account_id='22222222-2222-4222-8222-222222222222')
+    assert client.post('/api/unified/workbench.assessmentPlans', json=identity).status_code == 401
+    pair(client)
+    calls = []
+    def call(uid, operation, payload=None, *, source='LIVE_CAMERA'):
+        calls.append((uid, operation, payload))
+        return {'items': []}
+    monkeypatch.setattr(adapter, 'call', call)
+    assert client.post('/api/unified/workbench.assessmentPlans', json=identity).json() == {'items': []}
+    cancel = dict(identity, plan_id='33333333-3333-4333-8333-333333333333')
+    assert client.post('/api/unified/workbench.assessmentPlanCancel', json=cancel).status_code == 200
+    assert [row[1:] for row in calls] == [('workbench.assessmentPlans', identity), ('workbench.assessmentPlanCancel', cancel)]
+    assert client.post('/api/unified/workbench.assessmentPlanCancel', json=dict(cancel, record_id='forged')).status_code == 400
+    assert len(calls) == 2

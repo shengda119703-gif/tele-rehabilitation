@@ -1,0 +1,250 @@
+{
+  "schema_version": 1,
+  "selections": {
+    "010_E-LOW-005_s01": {
+      "filename": "010_E-LOW-005_s01_v2.png",
+      "evidence": ["assess/steps/第03批_010_修订子记录.json", "assess/steps/第03批_010-014_制作总记录.json"],
+      "note": "修订子记录及总记录最终选用 v2；原版因远侧手遮挡被替代。"
+    },
+    "010_E-LOW-005_s02": {
+      "filename": "010_E-LOW-005_s02_v2.png",
+      "evidence": ["assess/steps/第03批_010_修订子记录.json", "assess/steps/第03批_010-014_制作总记录.json"],
+      "note": "修订子记录及总记录最终选用 v2；原版因远侧手遮挡被替代。"
+    },
+    "015_E-LOW-013_s01": {
+      "filename": "015_E-LOW-013_s01_v2.png",
+      "evidence": "assess/steps/第04批_015-016_子记录.json",
+      "note": "items.actual_path 为 v2，QA.passed=true；notes 明确以 v2 坐位锁定宽幅机位。"
+    },
+    "017_E-LOW-015_s02": {
+      "filename": "017_E-LOW-015_s02_v2.png",
+      "evidence": "assess/steps/第04批_017_子记录.json",
+      "note": "items 最终路径为 v2，status=completed；首稿尺度及脚位漂移后修订。"
+    },
+    "018_E-LOW-023_s01": {
+      "filename": "018_E-LOW-023_s01_v2.png",
+      "evidence": "assess/steps/batch_018-020_records.json",
+      "note": "entries 中 v2 标记 selected=true。"
+    },
+    "020_E-LOW-025_s01": {
+      "filename": "020_E-LOW-025_s01_v2.png",
+      "evidence": "assess/steps/batch_018-020_records.json",
+      "note": "entries 中 v2 标记 selected=true。"
+    },
+    "021_E-LOW-016_s01": {
+      "filename": "021_E-LOW-016_s01_v2.png",
+      "evidence": "第04批_021_子记录.json",
+      "note": "final_images 路径为 v2，qa_status=accepted；原版留存为 superseded。"
+    },
+    "021_E-LOW-016_s02": {
+      "filename": "021_E-LOW-016_s02_v2.png",
+      "evidence": "第04批_021_子记录.json",
+      "note": "final_images 路径为 v2，qa_status=accepted；原版留存为 superseded。"
+    },
+    "023_E-LOW-009_s02": {
+      "filename": "023_E-LOW-009_s02_v2.png",
+      "evidence": "assess/steps/021-030_022-024_子记录.json",
+      "note": "records 中 v2 标记 selected=true；原版方向表达有歧义，不选用。"
+    },
+    "024_E-LOW-010_s01": {
+      "filename": "024_E-LOW-010_s01_v2.png",
+      "evidence": "assess/steps/021-030_022-024_子记录.json",
+      "note": "records 中 v2 标记 selected=true。"
+    },
+    "024_E-LOW-010_s02": {
+      "filename": "024_E-LOW-010_s02_v2.png",
+      "evidence": "assess/steps/021-030_022-024_子记录.json",
+      "note": "records 中 v2 标记 selected=true；原版与准备位足位漂移，不选用。"
+    },
+    "029_E-LOW-018_s01": {
+      "filename": "029_E-LOW-018_s01_v2.png",
+      "evidence": "assess/steps/021-030_028-030_子记录.json",
+      "note": "items 中 v2 标记 selected=true。"
+    },
+    "030_E-LOW-019_s02": {
+      "filename": "030_E-LOW-019_s02_v2.png",
+      "evidence": "assess/steps/021-030_028-030_子记录.json",
+      "note": "items 中 v2 标记 selected=true。"
+    },
+    "033_E-LOW-022_s02": {
+      "filename": "033_E-LOW-022_s02_v2.png",
+      "evidence": ["assess/steps/分步骤第05批_033_s02_修订记录.json", "分步骤第05批_031-033_037_10张_制作记录.json"],
+      "note": "修订记录 actual_saved_path 及总记录 actual_path 均为 v2；原 s02 因远侧手遮挡被替代。"
+    },
+    "037_E-AXU-004_s03": {
+      "filename": "037_E-AXU-004_s03_v2.png",
+      "evidence": ["第06批步骤_037s03-038_子记录.json", "分步骤第06批_037s03-040_制作记录.json"],
+      "note": "总记录 records.final_path 为 v2，review 明确脚距修订后最终选用 v2。"
+    },
+    "040_E-AXU-007_s01": {
+      "filename": "040_E-AXU-007_s01_v2.png",
+      "evidence": ["第06批步骤_040_子记录.json", "分步骤第06批_037s03-040_制作记录.json"],
+      "note": "entries 及总记录路径为 v2，status=passed；原中立图为 superseded。"
+    },
+    "052_E-AXU-016_s02": {
+      "filename": "052_E-AXU-016_s02.png",
+      "evidence": ["assess/steps/051-052_制作记录.json", "assess/steps/051-060_选用/manifest.json"],
+      "note": "例外：选原版，不能取最高 v。frames 中原版 selected=true，交付 manifest.selected_source_path 也指向原版；v2 属于未选用候选。"
+    },
+    "052_E-AXU-016_s03": {
+      "filename": "052_E-AXU-016_s03_v2.png",
+      "evidence": ["assess/steps/051-052_制作记录.json", "assess/steps/051-060_选用/manifest.json"],
+      "note": "frames 中 v2 标记 selected=true，为后腰组准备位。"
+    },
+    "054_E-AXU-027_s02": {
+      "filename": "054_E-AXU-027_s02_v2.png",
+      "evidence": "assess/steps/054-057_制作记录.json",
+      "note": "frames 中 v2 标记 selected=true；原稿球位过高，不选用。"
+    },
+    "056_E-AXU-021_s01": {
+      "filename": "056_E-AXU-021_s01_v2.png",
+      "evidence": "assess/steps/054-057_制作记录.json",
+      "note": "frames 中 v2 标记 selected=true；原稿足位与同组终点不一致，不选用。"
+    },
+    "060_E-AXU-020_s02": {
+      "filename": "060_E-AXU-020_s02_v2.png",
+      "evidence": "assess/steps/058-060_制作记录.json",
+      "note": "frames 路径为 v2，qa.reviewed=true 且 qa.accepted=true；decision 指定新侧偏帧采用 v2。"
+    },
+    "060_E-AXU-020_s03": {
+      "filename": "060_E-AXU-020_s03_v2.png",
+      "evidence": "assess/steps/058-060_制作记录.json",
+      "note": "frames 路径为 v2，qa.reviewed=true 且 qa.accepted=true；decision 指定新侧偏帧采用 v2。"
+    },
+    "063_E-AXU-030_s02": {
+      "filename": "063_E-AXU-030_s02_v2.png",
+      "evidence": "第08批步骤_063_制作记录.json",
+      "note": "selected 列表及 images.final_path 均指向 v2，qa.accepted=true。"
+    },
+    "067_T-LOW-004_s02": {
+      "filename": "067_T-LOW-004_s02_v2.png",
+      "evidence": ["步骤第09批_066-067_子记录.json", "步骤第09批_066-076_制作记录.json"],
+      "note": "frames.path 及总记录选用路径均为 v2，status=passed；planned_filename 原版名不作为实际选用依据。"
+    },
+    "078_T-LOW-011_s01": {
+      "filename": "078_T-LOW-011_s01_v2.png",
+      "evidence": ["补缺_041_078_111-114_041-078_子记录.json", "补缺_041_078_111-114_制作总记录.json"],
+      "note": "final_images 明确补充配套准备图 v2，以匹配最终 s02 的双手位置和机位。"
+    },
+    "079_T-LOW-047_s01": {
+      "filename": "079_T-LOW-047_s01_v2.png",
+      "evidence": "步骤第10批_079_制作记录.json",
+      "note": "delivered_files 为 v2，qa_status=visual_pass_after_revision；原版 historical_files 为 superseded_by_v2。"
+    },
+    "079_T-LOW-047_s02": {
+      "filename": "079_T-LOW-047_s02_v2.png",
+      "evidence": "步骤第10批_079_制作记录.json",
+      "note": "delivered_files 为 v2，qa_status=visual_pass_after_revision；原版 historical_files 为 superseded_by_v2。"
+    },
+    "085_T-LOW-044_s02": {
+      "filename": "085_T-LOW-044_s02_v2.png",
+      "evidence": ["train/steps/manifest_085-086.json", "第09批_081-090_分步骤生成记录.json"],
+      "note": "manifest 最终记录及总记录 selected_images 均为 v2，review.status=passed_visual_check。"
+    },
+    "090_T-LOW-015_s01": {
+      "filename": "090_T-LOW-015_s01_v4.png",
+      "evidence": ["train/steps/manifest_089-090.json", "第09批_081-090_分步骤生成记录.json"],
+      "note": "最终混合版本图组：s01_v4 配 s02/s03/s04_v3；manifest.images.saved_path 为 v4，review.status=passed。"
+    },
+    "090_T-LOW-015_s02": {
+      "filename": "090_T-LOW-015_s02_v3.png",
+      "evidence": ["train/steps/manifest_089-090.json", "第09批_081-090_分步骤生成记录.json"],
+      "note": "最终混合版本图组：s01_v4 配 s02/s03/s04_v3；manifest.images.saved_path 为 v3，review.status=passed。"
+    },
+    "090_T-LOW-015_s03": {
+      "filename": "090_T-LOW-015_s03_v3.png",
+      "evidence": ["train/steps/manifest_089-090.json", "第09批_081-090_分步骤生成记录.json"],
+      "note": "最终混合版本图组：s01_v4 配 s02/s03/s04_v3；manifest.images.saved_path 为 v3，review.status=passed。"
+    },
+    "090_T-LOW-015_s04": {
+      "filename": "090_T-LOW-015_s04_v3.png",
+      "evidence": ["train/steps/manifest_089-090.json", "第09批_081-090_分步骤生成记录.json"],
+      "note": "最终混合版本图组：s01_v4 配 s02/s03/s04_v3；manifest.images.saved_path 为 v3，review.status=passed。"
+    },
+    "095_T-LOW-020_s02": {
+      "filename": "095_T-LOW-020_s02_v2.png",
+      "evidence": ["步骤图_095-097_制作记录.json", "步骤图_091-100_制作总记录.json"],
+      "note": "总记录 selected_assets 为 v2；子记录明确采用 v2 的 J 钩外观修订。"
+    },
+    "095_T-LOW-020_s03": {
+      "filename": "095_T-LOW-020_s03_v2.png",
+      "evidence": ["步骤图_095-097_制作记录.json", "步骤图_091-100_制作总记录.json"],
+      "note": "总记录 selected_assets 为 v2；子记录明确采用 v2 的 J 钩外观修订。"
+    },
+    "105_T-LOW-059_s04": {
+      "filename": "105_T-LOW-059_s04_v2.png",
+      "evidence": ["第11批_105_s04_步骤图修订记录.json", "第11批_101-110_步骤图记录.json"],
+      "note": "修订记录 status=visually_reviewed 并 supersedes 原版；总记录 images 已选 v2，历史子记录的 needs_revision 不代表 v2 状态。"
+    },
+    "116_T-LOW-038_s06": {
+      "filename": "116_T-LOW-038_s06_v2.png",
+      "evidence": "步骤图_116_s06-s08_制作记录.json",
+      "note": "例外：按现有选用登记选 v2，不能取最高 v。images 及 selected_revision.s06 均指向 v2；目录另有 v4，但整目录 JSON/MD 未找到其选用登记，保留为未登记候选待确认。"
+    },
+    "117_T-LOW-039_s02": {
+      "filename": "117_T-LOW-039_s02_v2.png",
+      "evidence": "步骤图_117_制作记录.json",
+      "note": "delivered_images.final_path 为 v2，pose_review.status=通过画面审查。"
+    },
+    "126_T-AXU-004_s01": {
+      "filename": "126_T-AXU-004_s01_v2.png",
+      "evidence": ["步骤图_126_本轮制作记录.json", "步骤图_123s02-127s01_10张_制作总记录.json"],
+      "note": "candidates 中 v2 status=accepted，总记录 entries 选 v2；保留原版为 discarded。"
+    },
+    "133_T-AXU-015_s01": {
+      "filename": "133_T-AXU-015_s01_v2.png",
+      "evidence": ["步骤图_133_20261014_子记录.json", "步骤图_131s02-135_10张_20261014_制作记录.json"],
+      "note": "selected_final=true；总记录已补主代理复核通过及 selected_status=accepted_visual，子记录旧 awaiting_parent_review 不作为最终状态。"
+    },
+    "133_T-AXU-015_s02": {
+      "filename": "133_T-AXU-015_s02_v2.png",
+      "evidence": ["步骤图_133_20261014_子记录.json", "步骤图_131s02-135_10张_20261014_制作记录.json"],
+      "note": "selected_final=true；总记录已补主代理复核通过及 selected_status=accepted_visual，子记录旧 awaiting_parent_review 不作为最终状态。"
+    },
+    "138_T-AXU-046_s01": {
+      "filename": "138_T-AXU-046_s01_v2.png",
+      "evidence": ["步骤图_138_制作记录.json", "步骤图_136-139_制作总记录.json"],
+      "note": "images 中 v2 selected=true，review_status 明确最终选用；原版因左右与清单不符而弃用。"
+    },
+    "138_T-AXU-046_s02": {
+      "filename": "138_T-AXU-046_s02_v2.png",
+      "evidence": ["步骤图_138_制作记录.json", "步骤图_136-139_制作总记录.json"],
+      "note": "images 中 v2 selected=true，review_status 明确最终选用；原版因左右与清单不符而弃用。"
+    },
+    "138_T-AXU-046_s03": {
+      "filename": "138_T-AXU-046_s03_v2.png",
+      "evidence": ["步骤图_138_制作记录.json", "步骤图_136-139_制作总记录.json"],
+      "note": "images 中 v2 selected=true，review_status 明确最终选用；原版因左右与清单不符而弃用。"
+    },
+    "142_T-AXU-020_s01": {
+      "filename": "142_T-AXU-020_s01_v2.png",
+      "evidence": ["步骤图_142_制作记录.json", "步骤图_140-142_10张_制作记录.json"],
+      "note": "files 中 v2 selected=true；全组最终为 s01/s02/s03_v2 配 s04 原版，前三张原版 selected=false。"
+    },
+    "142_T-AXU-020_s02": {
+      "filename": "142_T-AXU-020_s02_v2.png",
+      "evidence": ["步骤图_142_制作记录.json", "步骤图_140-142_10张_制作记录.json", "步骤图_142_s02_v2_修订记录.json"],
+      "note": "files 中 v2 selected=true；全组最终为 s01/s02/s03_v2 配 s04 原版，前三张原版 selected=false。"
+    },
+    "142_T-AXU-020_s03": {
+      "filename": "142_T-AXU-020_s03_v2.png",
+      "evidence": ["步骤图_142_制作记录.json", "步骤图_140-142_10张_制作记录.json", "步骤图_142_s03_v2_修订记录.json"],
+      "note": "files 中 v2 selected=true；全组最终为 s01/s02/s03_v2 配 s04 原版，前三张原版 selected=false。"
+    },
+    "182_T-AXU-061_s01": {
+      "filename": "182_T-AXU-061_s01_v2.png",
+      "evidence": "步骤图_182_本批制作记录.json",
+      "note": "items.path 为 v2，status=visual_pass；原版属于未选候选。"
+    },
+    "182_T-AXU-061_s02": {
+      "filename": "182_T-AXU-061_s02_v2.png",
+      "evidence": "步骤图_182_本批制作记录.json",
+      "note": "items.path 为 v2，status=visual_pass；原版属于未选候选。"
+    },
+    "184_T-AXU-040_s01": {
+      "filename": "184_T-AXU-040_s01_v2.png",
+      "evidence": "步骤图_184_本批制作记录.json",
+      "note": "images.path 为 v2，review.result=accepted；group_consistency 明确选用 s01_v2。这里只登记版本选择，不替代逐图医疗或动作验收。"
+    }
+  }
+}

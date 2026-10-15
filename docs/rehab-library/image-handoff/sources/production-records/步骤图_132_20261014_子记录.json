@@ -1,0 +1,70 @@
+{
+  "version": "1.0",
+  "created_date": "2026-10-14",
+  "tool": "built-in image_gen.imagegen",
+  "scope": "132 T-AXU-042 s01～s03",
+  "review_method": "生成后以 view_image 逐图审查",
+  "notes": "三张为同组裸足、1536×1024横图；s03仅原计划允许舒展分支。猫式顺序 s01→s02→s01；舒展分支 s01→s03→s01。不修改原单图或应用仓库。",
+  "records": [
+    {
+      "sequence": 132,
+      "action_id": "T-AXU-042",
+      "step": "s01",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/132_T-AXU-042_s01.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-e4d6-7120-9f65-d7e0234465f7/exec-ff23bb90-0856-4f45-97b1-2a4aa676a2e6.png",
+      "prompt": "Use case: scientific-educational. Asset type: one raw rehabilitation exercise demonstration photograph, 132 T-AXU-042 s01, neutral quadruped. Input images 1–3 are the same woman's identity, clothing, photography and backdrop reference; reproduce her facial features, adult age, East Asian appearance, skin tone, body build, black ponytail, plain white short-sleeved T-shirt and dark charcoal gray long pants. Generate a single landscape studio photograph, 1536 by 1024 preferred. Same soft studio lighting, gray-blue seamless backdrop and floor, natural shadows, one plain medium-gray rectangular exercise mat only. Full body exact side profile: the woman's head is at image LEFT and feet at image RIGHT. Camera low enough to show the side silhouette, level and undistorted, normal lens perspective. Show a comfortable four-point kneeling tabletop starting pose. Both flat palms are planted on mat near shoulder level with fingers facing image left; arms near vertical and elbows naturally extended, shoulders relaxed. Both knees firmly supported on mat near hip level, thighs near vertical, knees bent about a right angle, lower legs extend toward image right, tops of both bare feet rest on mat. Near and far arms, hands, knees and bare feet should be anatomically present with a slight natural visible separation without sacrificing true side profile. Neutral natural back, gently level from shoulder to pelvis, no forced arching or rounding, neck comfortably continuing trunk with her face looking diagonally down to mat. All hand and knee contact points are clear, head, ponytail, both hands, knees and toes entirely within frame. Preserve realistic proportions of head, torso, upper and lower arms, thighs and lower legs. Leave modest clean margins around entire person and mat for later layout. ONE photograph of ONE woman in ONE pose. No text, numbers, captions, arrows, watermarks, borders, collage, duplicate figures, shoes or socks, extra equipment.",
+      "reference_images": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "visual_review": {
+        "passed": true,
+        "checks": "同一女性，白T深灰裤黑马尾；灰蓝棚拍背景和灰色垫；头朝左正侧面全身；双手肩下、双膝髋下接垫；双裸足完整，背部自然中立，头颈自然；肢体比例和手指接触合理；无文字箭头拼图。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "6334B425D66224C6D1081C867B47C8995F7A9C52DBC5424A0F329D7F62133A98",
+      "reused": false
+    },
+    {
+      "sequence": 132,
+      "action_id": "T-AXU-042",
+      "step": "s02",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/132_T-AXU-042_s02.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-e4d6-7120-9f65-d7e0234465f7/exec-aa9addca-1fa8-4280-bf09-c9ace9c0ed01.png",
+      "prompt": "Use case: scientific-educational, identity-preserve rehabilitation step photograph. Edit the supplied 132 T-AXU-042 neutral four-point kneeling photograph into step s02 ONLY: with exactly the same flat palm positions and knee positions on the mat, gently round the upper and mid back into a comfortable small cat-pose curve, a clearly visible but modest convex arc of the back. A mild pelvic tuck can accompany the rounded back. The head follows the movement with the chin and face slightly lowered toward the mat; neck remains comfortable, no forcing the chin into the chest. Both elbows naturally extended; both shoulders remain relaxed, without excessive shrugging. Keep full anatomical hands, knees, lower legs and bare feet firmly supported in exactly the same contact locations. The spine motion occurs between the shoulder and pelvis, not by moving the limbs, hips backward or shoulders forward. Preserve the same woman's identity, facial features, black ponytail, white short-sleeved T-shirt, dark charcoal pants, bare feet, body proportions; the exact same left-facing true side-profile camera, scale, frame, mat, lighting, gray-blue backdrop and shadows. Head at image left, feet image right, entire person and contact points inside frame. Make the rounding modest, calm, non-straining. One person, one posture, one photograph. No text, arrows, numbers, collage, borders, watermarks or additional objects. Maintain landscape 1536×1024 composition.",
+      "reference_images": [
+        "E:/git冲突问题/rehab image/train/steps/132_T-AXU-042_s01.png"
+      ],
+      "visual_review": {
+        "passed": true,
+        "checks": "轻圆背明显，头顺势轻低，未大幅耸肩；相同双手双膝位置接垫，未后坐或移支点；身份服装灰蓝背景、机位尺度和垫一致；全手脚完整，比例自然；无文字箭头拼图。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "D624E5EC2B857E73A5B8D46B666B4A2BFAC1D8C93D1DEFDF066BDE6FEBEFB2B9",
+      "reused": false
+    },
+    {
+      "sequence": 132,
+      "action_id": "T-AXU-042",
+      "step": "s03",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/132_T-AXU-042_s03.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-e4d6-7120-9f65-d7e0234465f7/exec-e8359777-77be-4496-8063-4ac7cbab7be9.png",
+      "prompt": "Use case: scientific-educational. Asset type: a single raw rehabilitation demonstration photograph, 132 T-AXU-042 s03, conditional gentle upper-back opening. Edit the supplied neutral quadruped reference photograph. Change ONLY her thoracic / upper-back posture with a VERY SMALL comfortable opening of the upper back and gentle forward lift of the chest, like an extremely mild thoracic extension from neutral, not a full yoga cow pose. Keep the lumbar area close to the reference's neutral curvature; do not drop the belly, sag the low back or sharply tilt the pelvis. Her neck remains long and comfortable continuing the upper spine, face and eyes still directed diagonally down toward the mat ahead of her hands; do not lift her chin or look up. Both flat palms stay planted in exactly the same shoulder-width positions near the shoulders, both knees stay firmly supported in exactly the same positions under the hips. Shoulders relaxed, elbows naturally extended, thighs almost vertical; lower legs and tops of bare feet supported exactly as in reference. The change relative to neutral should be a subtle slightly flatter or gently extended upper back and chest opening, only within a tiny range; no extreme spinal arch. Preserve exactly the same woman, facial identity, adult age, skin, body build, black ponytail, white short-sleeved T-shirt and dark charcoal gray long pants. Preserve exact mat shape and position, gray-blue seamless studio background, lighting, shadows, true side-profile camera, landscape 1536×1024 composition, body scale and framing, head at left and feet at right. All fingers, hands, knees, feet and toes remain fully inside frame, anatomically correct, and contact with mat visible. One photo, one woman, one posture. This is an optional allowed-range branch image, not a universal required end posture. No text, numbers, arrows, watermarks, borders, collage, duplicate figures, extra equipment, shoes or socks.",
+      "reference_images": [
+        "E:/git冲突问题/rehab image/train/steps/132_T-AXU-042_s01.png"
+      ],
+      "visual_review": {
+        "passed": true,
+        "checks": "从中立位小幅展开上背，腰部弧度温和，未极限凹腰，头颈延续躯干、目光朝垫面，无仰头；同一双手双膝接垫且支点保持；身份服装灰蓝背景、机位尺度和垫一致；手脚全入镜，比例自然；无文字箭头拼图。",
+        "semantic_note": "仅原计划允许分支；使用顺序 s01→s03→s01。猫式独立顺序为 s01→s02→s01。"
+      },
+      "width": 1536,
+      "height": 1024,
+      "sha256": "E37963941B29629AC1D8F0222DD1ED124C0EB6104D15EE1E77115C06FBBBF1E4",
+      "reused": false
+    }
+  ]
+}

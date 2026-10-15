@@ -335,6 +335,17 @@ class Runtime:
 
     def _execute(self, name, kw):
         c, store = self.controller, self.store
+        if name.startswith('practice_'):
+            from .guided_practice import execute, PracticeError
+            if name in ('practice_prepare', 'practice_start', 'practice_continue') and (
+                    c.session is not None or c.pending is not None or
+                    c.state in ('CONNECTING', 'PREVIEW', 'ONLINE', 'SAVE_FAILED') or
+                    getattr(self, 'camera_test', False)):
+                raise PracticeError('ORIGINAL_TASK_ACTIVE', '请先结束原采集任务，再进入独立跟练。')
+            result = execute(store, name, kw['scope'], kw)
+            self._message('practice_result', command=name, request_id=kw['request_id'],
+                          scope=kw['scope'], result=result)
+            return
         if name == 'family_demo':
             demo = getattr(self, 'family_demo', None)
             action = kw.get('action')
@@ -522,7 +533,11 @@ class Runtime:
             self._view(c.latest_packet, c.latest_pose)
         elif name == 'history':
             sessions = store.list_sessions()
-            self._message('history', sessions=[{k: v for k, v in s.items() if k not in ('metrics', 'poses')} for s in sessions])
+            extra = {}
+            if kw.get('include_guided') is True:
+                from .guided_practice import execute
+                extra = dict(practices=execute(store, 'practice_history', kw['scope'], {}), practice_scope=kw['scope'])
+            self._message('history', sessions=[{k: v for k, v in s.items() if k not in ('metrics', 'poses')} for s in sessions], **extra)
         elif name in ('longitudinal_history', 'export_longitudinal_history'):
             from .longitudinal import build_longitudinal_history
             from .reports import export_longitudinal_history
@@ -614,6 +629,15 @@ class Runtime:
                 self._message('training_plan_prepared', scope=scope, plan=plan)
             else:
                 plans = [training_plan_view(p, profile) for p in store.list_training_plans(scope, include_archived=True)]
+                if kw.get('include_guided') is True:
+                    from .guided_practice import decision
+                    def annotate(conn):
+                        for plan in plans:
+                            for entry in plan['items']:
+                                checked = decision(conn, scope, plan['id'], plan['revision'], entry['key'], {})
+                                entry['practice_decision'] = checked
+                        return plans
+                    plans = store._call(annotate)
                 self._message('training_plans', scope=scope, plans=plans, selected_id=selected_id,
                               saved=name == 'save_training_plan')
         elif name in ('assessment_batch', 'create_assessment_batch', 'change_assessment_batch'):
@@ -794,8 +818,9 @@ class Runtime:
                         else:
                             self._execute(name, kw)
                     except Exception as exc:
-                        self._message('error', text=str(exc), command=name, request_id=kw.get('request_id'))
-                        if name not in ('silver', 'family_demo'):
+                        self._message('error', text=str(exc), command=name, request_id=kw.get('request_id'),
+                                      code=getattr(exc, 'code', None), category=getattr(exc, 'category', None))
+                        if name not in ('silver', 'family_demo') and not name.startswith('practice_'):
                             self._view(error=str(exc), operation_error=True)
                     finally:
                         if not dispatched:

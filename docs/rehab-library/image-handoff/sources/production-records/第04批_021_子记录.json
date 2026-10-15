@@ -1,0 +1,248 @@
+{
+  "record_version": "1.0",
+  "batch": "第04批",
+  "action_sequence": "021",
+  "action_id": "E-LOW-016",
+  "action_name": "低台阶上落功能观察",
+  "created_date_local": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "generator": "内置 image_gen.imagegen；每次调用一帧，后帧以前帧为编辑目标",
+  "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "original_action_library_path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "original_card_review": {
+    "checked": true,
+    "lines": "1657-1707",
+    "key_constraints": [
+      "已知高度稳固低台阶＋固定扶手",
+      "整只测试脚台面支持",
+      "受控上台阶、按选定方式慢慢下阶",
+      "同组扶手使用一致",
+      "斜侧机位，台阶上下边缘和双足可见"
+    ]
+  },
+  "chosen_route": {
+    "step_height_cm": 10,
+    "height_note": "画面按10 cm低台阶设置生成；照片不替代真实高度测量。",
+    "leading_leg": "右腿",
+    "descent": "身体始终朝向台阶，倒退下阶，左腿先下；s04左足地面、右足仍台面",
+    "hand_support": "左手轻扶固定水平金属扶手；两竖立柱以带螺栓底板固定于地面",
+    "camera": "斜侧全身、人物朝画面右，1536×1024横向",
+    "step_surface": "深度容纳双足的宽矩形灰色10 cm台阶，深色防滑台面"
+  },
+  "identity_style": {
+    "references": [
+      "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+    ],
+    "person": "同参考成年女性、黑马尾、白短袖、深灰裤、白色无品牌运动鞋",
+    "background": "灰蓝棚拍、柔和光线、自然阴影",
+    "text_or_arrows": false
+  },
+  "final_images": [
+    {
+      "step": "s01",
+      "version": "v2",
+      "path": "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s01_v2.png",
+      "sha256": "8ABE638C0A88F013CDE249E81400D6F44CBDECC040736C8A9833178BD1CBC2E1",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "qa_status": "accepted",
+      "qa_observations": "逐张view_image实际查看：双足平地、身体朝右、左手轻扶水平栏杆且接触自然；同参考女性、白短袖深灰长裤黑马尾、白无品牌鞋；人体比例自然，全身/双手/双足/台阶边缘/扶手地面螺栓底板完整可见。扩充头顶留白以支持后续上阶帧。"
+    },
+    {
+      "step": "s02",
+      "version": "v2",
+      "path": "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s02_v2.png",
+      "sha256": "EDA55E3AE0E42DF0454A45C5B0283E02AD474FD0A7F7A38CC5A09259ED2835B2",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "qa_status": "accepted",
+      "qa_observations": "逐张view_image实际查看：近镜头右腿领先，整右足平放低台阶台面且跟趾均在边缘内，左足完整地面支持；左手持续轻扶固定栏杆。身份服装/灰蓝背景/光线匹配，脚踝、双鞋、髋膝和台阶接触清楚，人体连续自然，固定台阶/扶手与v2准备位一致。"
+    },
+    {
+      "step": "s03",
+      "version": "v2",
+      "path": "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s03_v2.png",
+      "sha256": "57F4F6791A5F1D06B3E4413E6CABB6E23684C88AC249617E4EBB43F68C85A17C",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "qa_status": "accepted",
+      "qa_observations": "逐张view_image实际查看：双足已经移到台面，各完整鞋底支持并留在边缘内、身体朝右近直立、左手同扶手轻接触；全身无裁切、未画腾空或跳上，关节/肢体自然；宽台面容纳双足，台阶上下边缘、扶手固定底板可见。宽构图与前两帧相符，人物尺度维持。"
+    },
+    {
+      "step": "s04",
+      "version": "v3",
+      "path": "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s04_v3.png",
+      "sha256": "1D93840F6332D0E9BA0FD577BD4D799625EBCCB5163D60059D3877A526DEFED5",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "qa_status": "accepted",
+      "qa_observations": "逐张view_image实际查看：身体仍朝右面向台阶，左足向后在地面完整接触、右足整足仍留台面，右膝屈曲与髋下降表现受控下阶；左手持续轻接触固定扶手，右臂自然；双鞋/台阶边缘/固定底板完整可见，关节连接与比例自然。已将台阶及扶手位置恢复到s03_v2固定场景，镜头与器材不再整体上移，未画跳下、掉落、脚尖搭边。"
+    }
+  ],
+  "nonoverwrite_policy": "原始现图和既有登记未修改；初版s01/s02保留在steps，所有最终修订另存_v2或_v3；失败图仅保留内置工具原始输出，不纳入最终组。",
+  "reuse": {
+    "reused_existing_single_action_image": false,
+    "original_image_path": null
+  },
+  "visual_limits": "照片用于姿势示范，不据静态照片判定真实负荷、精确单腿力量或关节接触力；按选定协议文字独立说明。",
+  "attempts": [
+    {
+      "attempt": "s01",
+      "prompt": "Use case: scientific-educational\nAsset type: one independent photorealistic rehabilitation exercise demonstration photograph, action E-LOW-016, step s01, no composite.\nInput images: reference-01, reference-02 and reference-03 are identity, clothing, lighting and gray-blue studio background references only. Use exactly the same East Asian adult woman with black ponytail, face, age, skin tone and natural body proportions, plain white short-sleeved T-shirt and dark charcoal full-length pants. Add plain white unbranded athletic shoes.\nPrimary request: preparation before stepping onto a low platform. She stands on the FLOOR facing screen RIGHT toward the platform, BOTH FEET flat on the floor, hip-width apart, knees comfortably straight, neutral upright torso, head looking ahead. One hand lightly rests on a REAL FIXED HANDRAIL next to her, the other arm relaxed by her side.\nScene: soft gray-blue seamless studio backdrop and floor with natural shadows. A sturdy rectangular low step is positioned directly in front of her to the right, only 10 cm high, about 90 cm wide and 65 cm deep, broad enough for both whole feet. Dark neutral nonslip top, simple gray sidewall, crisp visible upper and lower edges. Single straight horizontal metal handrail beside the platform on her anatomical left side, waist height, runs in direction of walking, with two vertical support posts securely BOLTED to the FLOOR with clearly visible floor plates; it is a permanent fixed handrail, not a mobile chair, cane or walker. Her LEFT hand lightly contacts the horizontal rail with plausible fingers. Choose a clear diagonal side camera position so the supporting hand contact, the platform's top surface and edges and BOTH complete shoes can all be seen.\nComposition/framing: landscape 1536x1024, full-body diagonal side view, facing screen right, head-to-toe including all fingers and all feet and the step and rail mounts; generous clean margins, stable camera and natural normal-lens perspective. This exact environment, rail, platform, camera and person scale will be fixed for the next three steps.\nLighting: match references' soft photographic studio lighting and gray-blue color.\nConstraints: SINGLE woman, SINGLE pose. Both whole shoes on floor before step; no foot on platform yet. Accurate anatomically continuous limbs and realistic handrail contact. No text, numerals, arrows, logos, watermark, collage or motion trails. Do not depict jumping, balancing on tiptoe, a tall stair or unsupported portable rail.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-3fdb-7dd0-a123-4fc6d67f87f9/exec-7d77c5d5-beba-4f5d-b5c2-0113253f19b9.png",
+      "saved_path": "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s01.png",
+      "sha256": "1BA6C65C8A59AC5FD082209D67F20F49EFF880A3FDE69E9B52E7A5032F95327D",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "qa_status": "superseded",
+      "qa_observations": "双足平地站稳、身体朝右面向低台阶、左手轻扶固定栏杆；手脚完整，螺栓固定底板及台阶上下边缘清楚。初版头顶留白不足，导致后续站上台阶时易缩放人物；不作为最终图组。"
+    },
+    {
+      "attempt": "s02",
+      "prompt": "Use case: identity-preserve\nAsset type: independent rehabilitation exercise demonstration photograph E-LOW-016 s02.\nInput image 1 is the EDIT TARGET: the accepted preparation photo 021_E-LOW-016_s01.png. Other images are identity/style references.\nPrimary request: change ONLY the woman's pose to the initial right-foot placement on the same low platform. Keep exactly the same woman, face, black ponytail, plain white T-shirt, dark gray pants, white unbranded shoes, background, lighting, camera, crop, person scale, 10 cm gray rectangular step with black nonslip top, its location and dimensions, and the fixed stainless horizontal rail bolted to floor.\nPOSE: She remains facing screen RIGHT toward the platform, in the same diagonal side view. Her RIGHT leg (the near-camera leg) steps forward and the ENTIRE RIGHT SOLE lies flat well inside the platform top: heel AND toes fully supported with clear space from edge. The right knee is gently flexed for this low 10 cm step. Her LEFT shoe (far-camera foot) remains flat on the FLOOR behind the step, not on the platform. The torso is controlled and upright with a small natural forward shift; she has not yet stood all the way up. Her same LEFT hand maintains light natural contact on the SAME horizontal rail; her right arm hangs relaxed beside torso. Both complete shoes and both ankles are visible, with unambiguous separation between right shoe ON TOP and left shoe ON FLOOR.\nInvariants: rail has same two posts and same bolted floor plates; platform remains low and wide enough for both feet, exact same top/front/side edges; camera/framing/background fixed. One person, one pose, single photograph, landscape 1536x1024. Natural human limb lengths, continuous joints, realistic finger contact. No jump, no toe-only contact, no floating feet, no foot intersecting platform. No text, labels, arrows, watermark, logos or collage.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-3fdb-7dd0-a123-4fc6d67f87f9/exec-359d706f-8275-445c-aae5-b90de1fb4a86.png",
+      "saved_path": "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s02.png",
+      "sha256": "B3E546C60B613AF30226B4284C5DC542715896B65E9C503EEE12C9AC47231911",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "qa_status": "superseded",
+      "qa_observations": "右侧近镜头整足踩台面，左足地面、左手同扶手、右臂自然下垂；单帧动作清楚。为同组镜头和人物尺度统一由v2替代。"
+    },
+    {
+      "attempt": "s03",
+      "prompt": "Use case: identity-preserve\nAsset type: independent rehabilitation demonstration photograph E-LOW-016 s03.\nInput image 1 is EDIT TARGET 021_E-LOW-016_s02.png. Other input images are identity/style references. Change ONLY her pose to the completed standing-up stage.\nPOSE: The SAME woman now has BOTH FEET flat and fully supported on the SAME 10 cm platform. Her right foot remains where it was on top in s02; her left foot has come up onto the platform next to it. BOTH complete white shoes, including heels and toes, must be visibly separated by hip-width and clear inside the front/top edges. She stands upright comfortably with both knees nearly straight, hips centered above her feet, no jump, no hovering. Body remains oriented toward screen RIGHT. Her SAME LEFT hand still lightly contacts the SAME fixed horizontal stainless handrail, hand moving naturally a little along it as she comes up; the other arm relaxed at side. Since the platform is only 10 cm high, lift the standing body 10 cm relative to standing on the floor, preserving body dimensions.\nInvariants: preserve EXACT same identity, face, black ponytail, plain white short-sleeved T-shirt, dark gray full-length pants, plain white unbranded shoes; same studio background and lighting. Preserve exact platform position, dark nonslip top, height 10 cm, width/depth and gray sidewalls; preserve exact rail, two support posts and floor plates with bolts, without moving or raising the rail. Same camera, landscape 1536x1024 framing, head and complete hands/feet/rail mounts inside image; leave adequate top margin as she rises. Natural anatomy and proportions, coherent shadow contact.\nConstraints: one woman, one posture, a single photo, no collage. Both shoes ENTIRELY on the platform, no shoe on floor, no toe hanging past edge. No floating or jumping, no text, arrows, watermark or logos.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-3fdb-7dd0-a123-4fc6d67f87f9/exec-fb31e96b-2fb7-479d-b5e2-19f399893103.png",
+      "saved_path": null,
+      "sha256": "E5205B8AD940A3AD2DF20907B9A0ECCAF933846C06B3AC135A13E0B7AF08B42D",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "qa_status": "superseded",
+      "qa_observations": "双足台面、同左手扶持、身体朝右，单帧姿势符合。但为容纳站上台阶人物相对初版准备位约缩小8%，图组一致性返修。"
+    },
+    {
+      "attempt": "s01_v2",
+      "prompt": "Use case: identity-preserve\nAsset type: independent rehabilitation demonstration photo E-LOW-016 s01 revision v2.\nInput image 1 is edit target, the existing preparation image. Preserve this woman's pose, face, identity, black ponytail, clothes and shoes, her left hand contact with rail, BOTH shoes flat on FLOOR, platform 10 cm high, and permanent handrail with two posts and floor bolted mounts exactly.\nChange only CAMERA FRAMING to a wider full-body framing with much more gray-blue background ABOVE the woman's head and margins around objects, so there will be room for the woman's head to rise 10 cm when she stands on the step in future frames. Keep all human and equipment proportions unchanged. Place the woman's head about 150 pixels below the top of this 1536x1024 landscape canvas. Her entire standing body from head to shoe sole should occupy about 735 pixels of image height, feet near y=885. The step and rail should occupy correspondingly consistent smaller image scale; do not shrink just the woman relative to them. Same three-quarter diagonal side view facing screen right, same studio light and background, one woman one pose. Both shoes are on the floor BEFORE platform, left hand lightly resting on rail, right arm by her side. Full step edges and both support-post bolted floor plates remain visible.\nDo not change the exercise pose or anatomy or make a collage. No text, arrows, logos, watermark. Natural anatomy.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s01.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-3fdb-7dd0-a123-4fc6d67f87f9/exec-e8142bba-650b-4b1f-9fc1-00f7e331600d.png",
+      "saved_path": "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s01_v2.png",
+      "sha256": "8ABE638C0A88F013CDE249E81400D6F44CBDECC040736C8A9833178BD1CBC2E1",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "qa_status": "accepted",
+      "qa_observations": "逐张view_image实际查看：双足平地、身体朝右、左手轻扶水平栏杆且接触自然；同参考女性、白短袖深灰长裤黑马尾、白无品牌鞋；人体比例自然，全身/双手/双足/台阶边缘/扶手地面螺栓底板完整可见。扩充头顶留白以支持后续上阶帧。"
+    },
+    {
+      "attempt": "s02_v2",
+      "prompt": "Use case: identity-preserve\nAsset type: independent rehabilitation exercise demonstration photograph E-LOW-016 s02 revision v2.\nInput image 1 is EDIT TARGET: 021_E-LOW-016_s01_v2.png. Other images are identity/style references.\nChange ONLY the woman's pose. EXACT same camera framing, woman's body/head/limb dimensions and image scale, background, gray-blue lighting, and all scene objects fixed. Do not zoom in or enlarge her. Leave the large current empty margin above her head unchanged.\nPOSE: She remains facing screen RIGHT toward the platform. Her RIGHT near-camera leg steps forward, and the ENTIRE RIGHT SOLE is flat well inside the same low 10 cm platform top. Heel AND toes fully supported, clear of edges. Her left far-camera shoe remains FLAT on the FLOOR behind the platform. Right hip/knee moderately flexed for placing the foot onto this very low step; controlled torso above the left leg with slight natural forward shift, not yet fully standing up. SAME LEFT hand lightly contacting SAME fixed rail with relaxed plausible fingers, right arm relaxed beside torso. Both complete shoes and both ankles visible and separated: right shoe ON platform, left shoe ON floor.\nInvariants: same woman, face, ponytail, white short-sleeved T-shirt, dark charcoal trousers, plain white unbranded shoes, skin tone and natural proportions. Step's position, 10 cm height, black nonslip top, gray walls and complete edges unchanged; same fixed stainless rail, two posts and bolted floor plates. Same landscape 1536x1024, camera and margins. Single person, single clear posture. No text, labels, arrows, logos, watermark, collage, jump, floating foot, foot intersecting step or toe-only platform contact.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s01_v2.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-3fdb-7dd0-a123-4fc6d67f87f9/exec-178574fb-b880-4b2e-ad17-04af067d5939.png",
+      "saved_path": "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s02_v2.png",
+      "sha256": "EDA55E3AE0E42DF0454A45C5B0283E02AD474FD0A7F7A38CC5A09259ED2835B2",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "qa_status": "accepted",
+      "qa_observations": "逐张view_image实际查看：近镜头右腿领先，整右足平放低台阶台面且跟趾均在边缘内，左足完整地面支持；左手持续轻扶固定栏杆。身份服装/灰蓝背景/光线匹配，脚踝、双鞋、髋膝和台阶接触清楚，人体连续自然，固定台阶/扶手与v2准备位一致。"
+    },
+    {
+      "attempt": "s03_v2",
+      "prompt": "Use case: identity-preserve\nAsset type: single rehabilitation demonstration photo E-LOW-016 s03 revision v2.\nInput image 1 is EDIT TARGET 021_E-LOW-016_s02_v2.png. Input image 2 is the same group's preparation photo to reinforce her unchanged body dimensions and scene; remaining images are identity references.\nPrimary request: change ONLY the woman's pose to standing fully upright with BOTH FEET on the SAME very low 10 cm platform. She completes stepping up under control, not a jump. Both hips and knees comfortably straight, torso upright, body facing screen RIGHT, BOTH entire white shoe soles flat side-by-side hip-width on top of the low step, ALL heels and toes completely supported, both complete feet distinctly visible. Right foot remains in the current platform area while left foot comes up beside it. SAME LEFT hand lightly rests on the SAME fixed horizontal rail, sliding naturally along rail to remain beside her torso; right arm relaxed beside body.\nScale: retain EXACT SAME woman's height, head size, body and limb dimensions in pixels as s01_v2. Her full upright standing body should remain approximately 590 pixels high from head top to shoe bottom; now it is physically raised by the low step, so head is around y=210-225 instead of y=265. Do not shrink the woman on the step. Preserve the extra empty space above her head. Camera does not move or zoom. Platform, rail and floor mounts remain in exactly the same positions and same image scale.\nInvariants: same face/age/skin/body, black ponytail, plain white shirt, dark gray long trousers and white shoes, natural joints and limb proportions; same gray-blue studio background and soft light; same broad platform dark nonslip top, gray sidewalls and upper/lower edges; same stainless fixed rail with two floor-bolted posts. Full body, hands, both shoes, step edges and rail mounts within 1536x1024 landscape photo.\nNo shoe on the FLOOR in this frame. No toe at edge, no floating feet, no jumping. One woman and one clear posture. No text, arrows, logos, watermark, collage or trails.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s02_v2.png",
+        "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s01_v2.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-3fdb-7dd0-a123-4fc6d67f87f9/exec-236952bc-6e00-4b5f-82de-b16000e7eb2c.png",
+      "saved_path": "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s03_v2.png",
+      "sha256": "57F4F6791A5F1D06B3E4413E6CABB6E23684C88AC249617E4EBB43F68C85A17C",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "qa_status": "accepted",
+      "qa_observations": "逐张view_image实际查看：双足已经移到台面，各完整鞋底支持并留在边缘内、身体朝右近直立、左手同扶手轻接触；全身无裁切、未画腾空或跳上，关节/肢体自然；宽台面容纳双足，台阶上下边缘、扶手固定底板可见。宽构图与前两帧相符，人物尺度维持。"
+    },
+    {
+      "attempt": "s04_v2",
+      "prompt": "Use case: identity-preserve\nAsset type: independent rehabilitation exercise demonstration photograph E-LOW-016 s04 revision v2.\nInput image 1 is EDIT TARGET, the accepted s03_v2 standing on platform photo. Input image 2 is the same group's s02_v2 right-foot on platform pose, a reference for foot placement and body proportions. Others are identity references.\nPrimary request: change ONLY woman's pose to CONTROLLED BACKWARD STEP-DOWN, LEFT LEG FIRST. She stays facing SCREEN RIGHT toward the platform during the descent; she does NOT turn around. Her RIGHT near-camera foot remains ENTIRELY flat on the SAME platform top, fully supported heel-to-toe inside edge. The RIGHT knee now flexes naturally and her hips lower under control. Her LEFT far-camera leg reaches BACKWARDS toward screen LEFT and the entire LEFT shoe has just made flat contact on the FLOOR behind the step. Show clearly the LEFT shoe on FLOOR and RIGHT shoe still on PLATFORM. Torso stays controlled, nearly upright with small natural forward lean; this is a calm supported descent, not a jump or fall. SAME LEFT hand maintains light contact with SAME fixed stainless rail, sliding slightly backward along it if needed. Right arm relaxed at side.\nKeep exact same female identity, face, age, skin tone, black ponytail, white plain short-sleeved T-shirt, dark gray trousers, white unbranded shoes. Keep SAME woman's body dimensions, head size and natural limb proportions and image scale; no zoom or body shrinking. Keep exact same camera/framing, gray-blue studio, soft light, low 10 cm broad gray platform with dark nonslip top and visible edges, and stationary handrail with two floor-bolted posts and plates. Landscape 1536x1024 with complete head, hands, BOTH SHOES, platform edges and rail mounts.\nImportant anatomy: near-camera RIGHT leg on top; far-camera LEFT leg behind and down on floor, NOT right foot down. Both sole contacts realistic. Do not swap legs, rotate the person, move step, move or raise rail, make her tiptoe, hover, jump or fall. One person and one pose, no text, arrows, numerals, logos, watermark, montage or trails.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s03_v2.png",
+        "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s02_v2.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-3fdb-7dd0-a123-4fc6d67f87f9/exec-9b498f5b-f0ab-491d-bfb5-18fcf9be4374.png",
+      "saved_path": null,
+      "sha256": "CB018DE34B7BE357956A86E517F6B80A5CB5FA2FA24E1A3F74487D51E99768AA",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "qa_status": "superseded",
+      "qa_observations": "右足台面、左足倒退落地与同左手扶持姿势符合，但台阶与扶手整体上移约25px，同组景物位置漂移；定点返修，由v3替代，不纳入最终组。"
+    },
+    {
+      "attempt": "s04_v3",
+      "prompt": "Use case: identity-preserve\nAsset type: rehabilitation photo E-LOW-016 s04 revision v3.\nINPUT 1 is the BASE EDIT TARGET, s03_v2. Input 2 is a POSE REFERENCE ONLY showing desired left-leg backward step-down; do not copy its changed backdrop or moved objects.\nMake one precise pose edit to INPUT 1. Preserve INPUT 1's gray-blue background, shadows, lighting, camera, framing and ALL EQUIPMENT IN EXACT SAME PIXEL POSITIONS. The low platform and fixed rail must not move at all. Rail horizontal bar stays around y=516 across x=649 to x=1273; left bolted floor mount around y=780 and right mount around y=840. The low platform front-left upper corner remains around x=706,y=802, bottom-left corner near y=856; front-right bottom corner around x=1042,y=905. Do not slide platform or rail vertically or horizontally, do not alter platform height or top proportions. Whole image landscape 1536x1024.\nChange woman's pose from both feet on platform to LEFT-LEG-FIRST backward controlled step-down, similar to input 2: body still facing SCREEN RIGHT, right near-camera shoe stays fully flat on platform at its s03 position, left far-camera foot reaches BACKWARDS to screen left and lands fully flat on FLOOR behind step. Right knee softly bends and hips lower 10 cm under control, torso near upright with natural slight forward lean, head facing right. SAME LEFT hand remains lightly touching SAME horizontal rail, sliding a little toward screen left along it, while right arm relaxed. Retain exactly the woman's input1 identity, face, ponytail, plain white short-sleeved T-shirt, dark gray trousers, plain white shoes, body/limb proportions and image scale. Complete head hands both shoes, step edges and bolted rail mounts visible.\nBoth shoes must be identifiable: LEFT down on floor, RIGHT still on top, both heel-to-toe supported. Single woman single pose, natural anatomy, no jump, no hovering, no torso rotation, no toe-only contact, no detached joints. No text, arrows, logos, watermark, collage. The only changed element is woman's pose; all background and equipment fixed.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s03_v2.png",
+        "C:/Users/Administrator/.codex/generated_images/01a138e4-3fdb-7dd0-a123-4fc6d67f87f9/exec-9b498f5b-f0ab-491d-bfb5-18fcf9be4374.png"
+      ],
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-3fdb-7dd0-a123-4fc6d67f87f9/exec-52a70139-6479-4cf7-8ae9-7441929a3e0b.png",
+      "saved_path": "E:/git冲突问题/rehab image/assess/steps/021_E-LOW-016_s04_v3.png",
+      "sha256": "1D93840F6332D0E9BA0FD577BD4D799625EBCCB5163D60059D3877A526DEFED5",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "qa_status": "accepted",
+      "qa_observations": "逐张view_image实际查看：身体仍朝右面向台阶，左足向后在地面完整接触、右足整足仍留台面，右膝屈曲与髋下降表现受控下阶；左手持续轻接触固定扶手，右臂自然；双鞋/台阶边缘/固定底板完整可见，关节连接与比例自然。已将台阶及扶手位置恢复到s03_v2固定场景，镜头与器材不再整体上移，未画跳下、掉落、脚尖搭边。"
+    }
+  ]
+}

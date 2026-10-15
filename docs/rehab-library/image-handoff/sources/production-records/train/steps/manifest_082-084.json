@@ -1,0 +1,177 @@
+{
+  "schema_version": "1.0",
+  "scope": "用户请求清单081-090之子任务082-084首轮步骤图，共6张",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "created_date_local": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "generation_mode": "built-in image_gen__imagegen, one independent photo per call; no CLI; selected source images copied without image manipulation",
+  "references": [
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ],
+  "shared_visual_check": "逐张使用view_image检视：同一参考女性、黑色马尾、白色短袖、深灰长裤、灰蓝背景、柔和写实棚拍；无文字编号箭头；头部完整手足和支撑接触可见；1536×1024横向构图，同组机位尺度一致。",
+  "review_boundary": "图片核对仅记录可见姿势及接触，不证明肌肉发力、真实负荷或家具实际机械固定。083/084提示词明确要求凳靠墙固定，画面呈墙边稳定低凳，后侧与墙的接触被透视及凳体部分遮挡，不能由图片证明固定装置。",
+  "images": [
+    {
+      "action_number": "082",
+      "action_id": "T-LOW-029",
+      "step_number": "01",
+      "target_pose": "侧卧低位准备：下侧左直腿落垫，上侧右屈膝脚前方落稳；头颈由左手及小枕支持。",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/082_T-LOW-029_s01.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-375b6233-846a-4c80-815d-49f62c1e6796.png",
+      "tool": "image_gen__imagegen",
+      "sha256": "B96F666E737D6A743E38C4DE2EA61378F6511E5D7330047DD7876689C77B2C21",
+      "width": 1536,
+      "height": 1024,
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Create ONE independent photorealistic rehabilitation exercise demonstration photograph, no collage. These three supplied images are visual identity references: preserve exactly the same adult East Asian woman, facial appearance, natural proportions, black ponytail, plain white short sleeve shirt and dark charcoal gray long trousers. Soft studio lighting, plain gray-blue studio wall and floor, realistic subtle shadows. Wide horizontal side-on full-body composition with head at left and feet toward right; retain all fingers, feet and support contacts, leave modest blank background, no text, numbers, arrows, logos or watermark. Exercise 082 T-LOW-029, step 01, side-lying LOWER leg hip adduction preparation. She lies on her LEFT side on a blue-gray non-slip exercise mat. Head and neck rest on a small white pillow, left arm relaxed under/near pillow, right palm rests on mat in front of torso. LEFT LOWER leg is straight and fully resting on the mat from hip to foot, clearly visible for its entire length. RIGHT UPPER leg is bent at hip and knee and placed FORWARD of the lower leg, with right sole planted firmly on mat in front of the left thigh/knee, without pinning or pressing the straight lower leg. Pelvis stacked and torso lies on its side without rolling. Both legs belong anatomically to the same woman; no floating feet. This is the low/start position, do not lift either leg.",
+      "review": {
+        "method": "view_image direct full-resolution visual inspection",
+        "status": "passed_visual_pose_review",
+        "pose": "侧卧低位准备：下侧左直腿落垫，上侧右屈膝脚前方落稳；头颈由左手及小枕支持。",
+        "identity_clothing_background": "通过",
+        "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+        "support_equipment": "上侧足前方落稳、下侧腿未被压住；头颈有支撑",
+        "composition": "完整头、手、足及主要支点；横向单图无标注",
+        "notes": ""
+      }
+    },
+    {
+      "action_number": "082",
+      "action_id": "T-LOW-029",
+      "step_number": "02",
+      "target_pose": "上侧右脚仍前方落地，下侧左腿保持伸展抬离垫，骨盆方向稳定。",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/082_T-LOW-029_s02.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-aac7d71b-34b7-490f-b26c-17005bcaa029.png",
+      "tool": "image_gen__imagegen",
+      "sha256": "A78B44010EE159957A30D01F484CCDF1B50948AA7B86B1460F63187F348298FA",
+      "width": 1536,
+      "height": 1024,
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Create one independent photo, step 02 of exercise 082 T-LOW-029, lower-leg hip adduction lift. Image 1 is the exact composition and start-pose reference; images 2-4 lock the woman's identity, wardrobe, black ponytail and gray-blue studio styling. Keep Image 1's same woman, white short-sleeve shirt, dark charcoal long trousers, mat, small white pillow, camera, wide landscape frame, body scale, right supporting palm and left head support. Change ONLY the straight LOWER LEFT leg: lift the whole straight lower leg upward from the hip about 15 cm from mat, keeping knee straight and foot natural. The bent UPPER RIGHT leg must remain planted in front exactly as in Image 1, right sole fully on mat, not on the lower leg; its right knee remains bent. Clearly show air gap under the straight lower left calf and foot. Pelvis remains stacked without rolling, torso remains stable lying on left side. Only two anatomical legs and two feet; do not lift the upper bent leg, do not swap their identities. Full head, hands, and feet and support contacts visible, natural human proportions. Photorealistic soft studio photograph. No text, arrows, labels, numbering, collage or watermark.",
+      "review": {
+        "method": "view_image direct full-resolution visual inspection",
+        "status": "passed_visual_pose_review",
+        "pose": "上侧右脚仍前方落地，下侧左腿保持伸展抬离垫，骨盆方向稳定。",
+        "identity_clothing_background": "通过",
+        "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+        "support_equipment": "上侧足前方落稳、下侧腿未被压住；头颈有支撑",
+        "composition": "完整头、手、足及主要支点；横向单图无标注",
+        "notes": ""
+      }
+    },
+    {
+      "action_number": "083",
+      "action_id": "T-LOW-030",
+      "step_number": "01",
+      "target_pose": "短杠杆低位摆位：左前臂落垫，上侧右膝屈曲、膝周/近端区域厚垫承托，下侧左膝足落垫。",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/083_T-LOW-030_s01.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-fafa79b8-da43-4494-9537-2537367b1508.png",
+      "tool": "image_gen__imagegen",
+      "sha256": "4C8A9198D304F863C49599834687E15ACEE392B3163A56E5D019DD7428270382",
+      "width": 1536,
+      "height": 1024,
+      "reused_existing_image": false,
+      "prompt": "Correct the exercise setup in Image 1 while preserving this same reference woman, face, black ponytail, white short-sleeve shirt, dark gray pants, gray-blue background, low left hip on mat, left forearm and lower left leg support, studio photo styling and horizontal full-body framing. Images 2-4 preserve exact visual identity. The required pose is SHORT LEVER Copenhagen support with a BENT upper knee. Crucial correction: move the small padded stool inward underneath the UPPER RIGHT KNEE region and proximal right shin, NOT under right ankle. Fully BEND upper right knee to approximately 90 degrees so a clear anatomical bend is visible. Right thigh reaches the stool; right knee and inner proximal shin, just below knee and away from joint line, rest on broad thick soft pad. Right lower leg folds backwards away from viewer toward the gray-blue wall; ankle and bare foot extend freely beyond back edge of cushion, NOT touching stool, not straight in line with thigh. Use a slightly elevated side-frontal camera if necessary to show this 90-degree upper knee bend, free upper foot and proximal shin support distinctly. Do not shorten shin unnaturally. LOWER LEFT knee and left foot stay firmly contacting mat, hip low. Full body including both feet and support contacts. One independent photorealistic image only, no words, arrows or collage.",
+      "review": {
+        "method": "view_image direct full-resolution visual inspection",
+        "status": "passed_visual_pose_review",
+        "pose": "短杠杆低位摆位：左前臂落垫，上侧右膝屈曲、膝周/近端区域厚垫承托，下侧左膝足落垫。",
+        "identity_clothing_background": "通过",
+        "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+        "support_equipment": "上侧承托位置与版本相符；下侧膝足辅助接地；前臂支垫；家具真实机械固定无法从图片证实",
+        "composition": "完整头、手、足及主要支点；横向单图无标注",
+        "notes": "上侧小腿朝背景方向，需结合屈膝和近端承托辨认，不能按屏幕长度判断肢段真实长短。"
+      },
+      "discarded_attempts": [
+        {
+          "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-0c9e1957-361b-4032-b8f7-daf0467e6347.png",
+          "prompt": "Use case: scientific-educational. ONE photorealistic rehabilitation photo, exercise 083 T-LOW-030 step 01: SHORT-LEVER assisted Copenhagen adduction support setup. Input images 1-3 are identity and style references; preserve the same adult East Asian woman, black ponytail, plain white short sleeve shirt, dark charcoal long pants, realistic natural body proportions. Plain gray-blue studio wall/floor, soft studio light. Horizontal full-body photo viewed from directly in front of the SIDE of her body, head at left, stool at right. Full head, both hands, both bare feet, mat and all contacts visible. A stable low four-leg exercise stool with a dark cushioned top is at the right, anchored against the studio wall. Woman is on her LEFT side: LEFT forearm on gray-blue mat with left elbow directly below shoulder, left palm flat. UPPER RIGHT knee is bent around 90 degrees; ONLY the broad INNER PROXIMAL RIGHT SHIN immediately below knee rests across a thick soft pad on the stool. Pad contacts fleshy proximal shin, not knee joint line. Bent upper right lower leg folds backward beyond stool, with right ankle and foot free, visible, NOT weight-bearing on stool. LOWER LEFT leg remains bent on mat for assistance, left knee and left foot clearly touch mat. Pelvis is LOW, left hip still contacts mat, torso leaning sideways supported on left forearm. Right hand rests at right hip. This is preparation, not raised side plank. Make upper proximal-shin-to-pad contact and lower leg-to-ground contact anatomically clear. No ankle-supported straight upper leg, no floating lower leg, no extra limbs. No words, labels, numbers, arrows, watermark, collage.",
+          "reason": "上侧承托偏远端、短杠杆屈膝与近端支持不够清楚，针对性返修后选用第二次输出。"
+        }
+      ]
+    },
+    {
+      "action_number": "083",
+      "action_id": "T-LOW-030",
+      "step_number": "02",
+      "target_pose": "短杠杆侧向支持：前臂及近端承托保持，骨盆离垫，下侧左膝足保持地面辅助。",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/083_T-LOW-030_s02.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-b1c545de-c66c-4b8c-9e58-d19d77cb6992.png",
+      "tool": "image_gen__imagegen",
+      "sha256": "F8EADA269FF993C8C59C36A3040C10A60D23736BC34931B7AA39C8D83ED08990",
+      "width": 1536,
+      "height": 1024,
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Create one independent photorealistic photograph for exercise 083 T-LOW-030 step 02, SHORT-LEVER assisted Copenhagen static hold. Image 1 is the accepted preparation pose and exact scene. Images 2-4 identity references. Preserve woman's exact identity, black ponytail, white short-sleeve shirt, dark charcoal pants, barefoot, same mat, same padded low stool against wall, same horizontal full-body camera, same body scale and soft studio lighting. Raise ONLY her pelvis off mat into a controlled SIDE SUPPORT: left elbow and left forearm remain firmly on mat, elbow below shoulder; torso and upper right thigh now form one smooth side-plank alignment towards padded stool. UPPER RIGHT knee remains BENT around 90 degrees, its broad proximal inner shin/knee-adjacent region stays on soft stool pad just as in Image 1. Right foot remains free beyond back of cushion, no ankle support, shin length realistic in foreshortening. LOWER LEFT LEG MUST REMAIN ON GROUND as assistance: the bent lower LEFT knee and left foot remain visibly touching mat underneath and forward of her pelvis. Keep left knee grounded even while pelvis lifts, do NOT lift lower left foot or lower leg into air, do not make both feet floating. Right hand remains on hip, shoulder and pelvis do not twist, do not sag. Full head, both arms/hands and both legs/feet and all support contacts within frame. No text, arrows, numbering, labels, watermark or collage.",
+      "review": {
+        "method": "view_image direct full-resolution visual inspection",
+        "status": "passed_visual_pose_review",
+        "pose": "短杠杆侧向支持：前臂及近端承托保持，骨盆离垫，下侧左膝足保持地面辅助。",
+        "identity_clothing_background": "通过",
+        "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+        "support_equipment": "上侧承托位置与版本相符；下侧膝足辅助接地；前臂支垫；家具真实机械固定无法从图片证实",
+        "composition": "完整头、手、足及主要支点；横向单图无标注",
+        "notes": "上侧小腿朝背景方向，需结合屈膝和近端承托辨认，不能按屏幕长度判断肢段真实长短。"
+      }
+    },
+    {
+      "action_number": "084",
+      "action_id": "T-LOW-031",
+      "step_number": "01",
+      "target_pose": "长杠杆低位摆位：上侧右腿伸直、内侧踝/远端小腿厚垫承托，下侧左膝足落垫。",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/084_T-LOW-031_s01.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-41d61049-2f8f-4d6b-bf1f-d1469afbcfff.png",
+      "tool": "image_gen__imagegen",
+      "sha256": "632BE51A05970B1DE596E2B9EBF16EE51754FEB789CBEB7C761B7555D4C2C716",
+      "width": 1536,
+      "height": 1024,
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. ONE independent photorealistic rehabilitation exercise photograph, 084 T-LOW-031 step 01 LONG-LEVER assisted Copenhagen support SETUP. Image 1 provides same woman, studio and furniture look, but CHANGE upper leg and stool spacing for LONG lever. Images 2-4 are exact identity/style references. Preserve same East Asian woman, face, black ponytail, white short-sleeve shirt, dark charcoal pants, barefoot, gray-blue wall/floor, gray-blue non-slip mat, soft studio light, one stable four-legged low padded stool against right wall. Wide horizontal full-body side-frontal photo, head at left, feet and stool at right, slightly widen framing to keep entire upper straight leg and both feet visible. Woman on LEFT side: left forearm and elbow firmly on mat, left elbow below shoulder, left palm flat. Pelvis still LOW and left hip rests mat. UPPER RIGHT leg is FULLY STRAIGHT from hip through knee to ankle, natural thigh and shin lengths, knee has no contact with stool. Move stool farther right so its thick soft pad supports ONLY the broad INNER DISTAL RIGHT SHIN just above ankle, cushioning away from bony ankle point; right bare foot extends beyond cushion edge freely and is visible. LOWER LEFT leg is bent on ground for assistance, left knee and left foot both visibly contacting mat. Right hand on hip. Distinct LONG-lever support at right ankle/distal shin, not knee, not flexed upper knee, no hanging bottom leg. Realistic anatomy and support pressure. No words, arrows, labels, numbers, collage or watermark.",
+      "review": {
+        "method": "view_image direct full-resolution visual inspection",
+        "status": "passed_visual_pose_review",
+        "pose": "长杠杆低位摆位：上侧右腿伸直、内侧踝/远端小腿厚垫承托，下侧左膝足落垫。",
+        "identity_clothing_background": "通过",
+        "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+        "support_equipment": "上侧承托位置与版本相符；下侧膝足辅助接地；前臂支垫；家具真实机械固定无法从图片证实",
+        "composition": "完整头、手、足及主要支点；横向单图无标注",
+        "notes": ""
+      }
+    },
+    {
+      "action_number": "084",
+      "action_id": "T-LOW-031",
+      "step_number": "02",
+      "target_pose": "长杠杆側向支持：上侧右腿伸直、远端承托保持，骨盆离垫，下侧左膝足仍辅助接地。",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/084_T-LOW-031_s02.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13855-3353-7833-9bc0-1e98d7de9823/exec-251ba033-23ad-43a2-a6f1-4888ea6aa6c8.png",
+      "tool": "image_gen__imagegen",
+      "sha256": "EBF91D826EC7614FD16C32639DE02C568E2B1F8C5BC07ECE9F7ECBB76F8213D7",
+      "width": 1536,
+      "height": 1024,
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational. Create one independent photorealistic photo: exercise 084 T-LOW-031 step 02 LONG-LEVER assisted Copenhagen static hold. Image 1 is the exact accepted low setup. Images 2-4 visual identity references. Preserve exact same woman, face, black ponytail, white short sleeve shirt, charcoal long trousers, bare feet, non-slip mat, padded low stool at right wall, camera view/body scale/landscape frame and lighting. Change ONLY pelvis and trunk position by lifting the pelvis off mat into controlled side support. The left forearm and elbow stay grounded beneath left shoulder; torso from shoulder to pelvis and UPPER RIGHT STRAIGHT leg form a smooth aligned side plank line toward the stool. The upper RIGHT knee remains straight and unsupported in free space. Same inner DISTAL RIGHT SHIN/ANKLE area remains cushioned on stool, exactly the same long-lever contact as Image 1. LOWER LEFT LEG remains assisted on GROUND: left knee stays bent with left knee and left foot visibly touching mat underneath/forward of the lifted pelvis; do not lift lower leg or foot into air, do not extend lower leg to stool. Right hand at hip. Clearly show pelvic air gap and grounded lower knee/foot. Shoulder, hip and legs anatomically connected, no sagging or twisted pelvis. Full head, both hands, both feet and all equipment contact points in frame. No text, arrows, labels, numbers, watermark or collage.",
+      "review": {
+        "method": "view_image direct full-resolution visual inspection",
+        "status": "passed_visual_pose_review",
+        "pose": "长杠杆側向支持：上侧右腿伸直、远端承托保持，骨盆离垫，下侧左膝足仍辅助接地。",
+        "identity_clothing_background": "通过",
+        "proportion_joints": "通过；083上侧小腿向背景方向屈曲，有透视缩短",
+        "support_equipment": "上侧承托位置与版本相符；下侧膝足辅助接地；前臂支垫；家具真实机械固定无法从图片证实",
+        "composition": "完整头、手、足及主要支点；横向单图无标注",
+        "notes": ""
+      }
+    }
+  ]
+}

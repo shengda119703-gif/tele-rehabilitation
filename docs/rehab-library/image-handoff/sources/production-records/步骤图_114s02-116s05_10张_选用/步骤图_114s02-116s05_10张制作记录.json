@@ -1,0 +1,846 @@
+{
+  "record_version": "v1.0",
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "requested_scope": "114-s02～s04；115-s01～s02；116-s01～s05",
+  "status": "10张已保存并完成可见姿势检查",
+  "output_directory": "E:/git冲突问题/rehab image/train/steps",
+  "generation_mode": "内置 image_gen.imagegen；10个独立照片资产；原始PNG复制保存；未使用CLI或代码编辑图片",
+  "counts": {
+    "requested_images": 10,
+    "final_images": 10,
+    "new_generated_final_images": 10,
+    "reused_images": 0
+  },
+  "sources": [
+    {
+      "path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991"
+    },
+    {
+      "path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+      "sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138"
+    }
+  ],
+  "assets": [
+    {
+      "filename": "114_T-LOW-051_s02.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\114_T-LOW-051_s02.png",
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1631055,
+      "sha256": "CD2342E36F8D30C3F22CA324EEC03D24FE12C52466C51004D564B4F9CBA12B7E",
+      "reused": false,
+      "target_pose": "双脚一起抬跟，双前足接地",
+      "root_visual_review": "双前足接地、双跟抬起；双足可区分"
+    },
+    {
+      "filename": "114_T-LOW-051_s03.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\114_T-LOW-051_s03.png",
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1570870,
+      "sha256": "D1384A36ECAA043EC5044DDAB0334EDF9328FE0BB6DA5D5616335BE0AC5BC2E6",
+      "reused": false,
+      "target_pose": "训练脚保持抬跟，非训练脚离地",
+      "root_visual_review": "训练侧前足支撑且保持抬跟，非训练侧完全离地；第一稿多余足已纠正"
+    },
+    {
+      "filename": "114_T-LOW-051_s04.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\114_T-LOW-051_s04.png",
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1563773,
+      "sha256": "910FCD112BBF9707D24F9D38B2232C18AA4B968AF4EEC8C207B88CC8602E9C73",
+      "reused": false,
+      "target_pose": "训练脚跟落到平地，非训练脚仍离地",
+      "root_visual_review": "训练侧跟及全掌落平地，另一足仍离地；侧面膝足和扶手接触清楚"
+    },
+    {
+      "filename": "115_T-LOW-037_s01.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\115_T-LOW-037_s01.png",
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1683713,
+      "sha256": "60C393BC4F20BF0895FB4ADCC5B4EBAFABFF007624682C1427426B6990A5D705",
+      "reused": false,
+      "target_pose": "坐稳，双脚全掌落地",
+      "root_visual_review": "灰椅面支撑，双全掌落地，膝位舒适、双手自然置大腿"
+    },
+    {
+      "filename": "115_T-LOW-037_s02.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\115_T-LOW-037_s02.png",
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1672352,
+      "sha256": "7CE46881C1172E32DC3C4C1FC9A33F1BBFE7D56BF4C45688FF72A746B084518B",
+      "reused": false,
+      "target_pose": "坐姿提踵，双前足保持接地",
+      "root_visual_review": "双跟抬起，双前足接地点保持；椅、膝和手位一致"
+    },
+    {
+      "filename": "116_T-LOW-038_s01.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\116_T-LOW-038_s01.png",
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1965550,
+      "sha256": "A41FDAA252FF61804824514942D90380CA02CDA5CDCE121D496875749A25492D",
+      "reused": false,
+      "target_pose": "背屈组起点 · 前方锚点",
+      "root_visual_review": "右小腿低软垫支持、右足自然中立、前方锚点及前足绕带清楚"
+    },
+    {
+      "filename": "116_T-LOW-038_s02.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\116_T-LOW-038_s02.png",
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1848730,
+      "sha256": "65FD302404624B91E15ECDEFF18163C3B19549CF086E335BFB9563BE6B3828E9",
+      "reused": false,
+      "target_pose": "背屈组终点 · 前足向小腿抬起",
+      "root_visual_review": "右前足朝右小腿背屈；软垫、小腿、前方锚点及镜头保持"
+    },
+    {
+      "filename": "116_T-LOW-038_s03.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\116_T-LOW-038_s03.png",
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1824914,
+      "sha256": "129EF936F3E0147D44A8ABDE609AD013AB53E16B3C53504564FCD82DF3613BE0",
+      "reused": false,
+      "target_pose": "跖屈组起点 · 本人双手握带",
+      "root_visual_review": "长坐垫面、本人双手由身体方向握带、右踝中立、右跟越垫边"
+    },
+    {
+      "filename": "116_T-LOW-038_s04.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\116_T-LOW-038_s04.png",
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1748409,
+      "sha256": "E13F274390FB023AD4BF458FD4D21D193BDC7C43881EE23C12FD6509C7132EAB",
+      "reused": false,
+      "target_pose": "跖屈组终点 · 前足向前下推",
+      "root_visual_review": "双手握带和小腿支持保持；右前足向前下推，跖屈变化清楚"
+    },
+    {
+      "filename": "116_T-LOW-038_s05.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\116_T-LOW-038_s05.png",
+      "width": 1122,
+      "height": 1402,
+      "file_size_bytes": 1797540,
+      "sha256": "A36F948E93F00BA96B15820CCEE764A30804445764BD90303E14FF4C9B92AF9F",
+      "reused": false,
+      "target_pose": "内翻组起点 · 右脚外侧锚点",
+      "root_visual_review": "右足近镜，外侧锚点在近镜前景且位于与远侧左腿相反侧，带位/中立足清楚"
+    }
+  ],
+  "root_review": {
+    "date": "2026-10-14",
+    "method": "主代理逐张view_image最终PNG（116-s03/s04检查与最终文件相同的生成源）并跨帧对比",
+    "status": "可见姿势检查通过",
+    "frames": {
+      "114-s02": "双前足接地、双跟抬起；双足可区分",
+      "114-s03": "训练侧前足支撑且保持抬跟，非训练侧完全离地；第一稿多余足已纠正",
+      "114-s04": "训练侧跟及全掌落平地，另一足仍离地；侧面膝足和扶手接触清楚",
+      "115-s01": "灰椅面支撑，双全掌落地，膝位舒适、双手自然置大腿",
+      "115-s02": "双跟抬起，双前足接地点保持；椅、膝和手位一致",
+      "116-s01": "右小腿低软垫支持、右足自然中立、前方锚点及前足绕带清楚",
+      "116-s02": "右前足朝右小腿背屈；软垫、小腿、前方锚点及镜头保持",
+      "116-s03": "长坐垫面、本人双手由身体方向握带、右踝中立、右跟越垫边",
+      "116-s04": "双手握带和小腿支持保持；右前足向前下推，跖屈变化清楚",
+      "116-s05": "右足近镜，外侧锚点在近镜前景且位于与远侧左腿相反侧，带位/中立足清楚"
+    }
+  },
+  "independent_114_review": "116跖屈子代理逐张审查114-s02～s04，动作区别、人体比例及扶手接触未见关键异常",
+  "direction_groups_116": [
+    "s01↔s02：背屈，前方固定锚点",
+    "s03↔s04：跖屈，本人双手由身体方向握带",
+    "s05：内翻起点，右足外侧锚点；s06—s08不在本轮范围"
+  ],
+  "prompt_set_and_provenance": [
+    {
+      "filename": "步骤图_114_s02-s04_制作记录.json",
+      "path": "E:\\git冲突问题\\rehab image\\步骤图_114_s02-s04_制作记录.json",
+      "sha256": "785D651545ACE04CDD00C7C6F34C93C474CC848E7970DE4E12E87CC9A6DA2D2A",
+      "contents": {
+        "batch": "114-s02～s04",
+        "date": "2026-10-14",
+        "timezone": "Asia/Shanghai",
+        "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+        "generation_mode": "内置 image_gen.imagegen；每资产独立调用；未使用CLI/API或代码编辑图片",
+        "counts": {
+          "final_images": 3,
+          "new_generated_final_images": 3,
+          "reused_images": 0,
+          "builtin_calls": 4
+        },
+        "identity_references": [
+          "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+        ],
+        "entries": [
+          {
+            "step": 2,
+            "sha256": "CD2342E36F8D30C3F22CA324EEC03D24FE12C52466C51004D564B4F9CBA12B7E",
+            "file_size_bytes": 1631055,
+            "filename": "114_T-LOW-051_s02.png",
+            "action_number": 114,
+            "action_id": "T-LOW-051",
+            "width": 1122,
+            "height": 1402,
+            "final_path": "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s02.png",
+            "output_source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393c-2270-7811-a1d5-e281f36e1a42\\exec-b79e76cc-8299-4c96-9432-a1b9fd9fd125.png",
+            "target_pose": "双脚前足接地、双跟一起抬起，扶手保持",
+            "reused": false,
+            "reused_original_path": null,
+            "prompt": "Use case: scientific-educational. Asset type: one rehabilitation exercise step photograph, portrait PNG, approximately 1122x1402. Reference image 1 is the previous exercise 114 photograph, used ONLY to match the fixed grey handrail, the woman's white short-sleeve shirt and dark charcoal long trousers, the pale grey-blue studio background and soft photographic lighting. Images 2-4 are the same woman's identity and appearance references. Create a new step 02 photograph for eccentric heel lowering after bilateral calf raise. Camera is fixed at a true SIDE VIEW facing right, CLOSE framing from her waist through BOTH complete knees, calves, ankles and bare feet, plus the supporting hand touching the fixed rail at the upper-right; head deliberately outside the close-up. Both legs nearly straight, both feet shoulder-width apart on a perfectly flat grey-blue floor, offset naturally in depth just enough to see each heel separately. BOTH bare forefeet (balls of feet and relaxed toes) remain firmly planted and BOTH HEELS are lifted together approximately 4 cm at the TOP of a comfortable bilateral calf raise. It is crucial to show TWO lifted heels and TWO grounded forefeet; neither foot is lifted entirely. No external weight, no step or platform. One hand lightly rests on the same fixed matte gray waist-height handrail to the right; natural arm segment and hand visible at top. Human anatomy and leg lengths natural, dark trousers reach above bare ankles. Preserve the backdrop/soft light from references. Single pose, continuous photographic image. No text, numbers, arrows, diagram, borders, montage or inset. Foot and heel gaps should be large enough for teaching. Keep toes and heels fully inside frame.",
+            "input_paths": [
+              "E:/git冲突问题/rehab image/train/114_T-LOW-051_双脚上升—单脚缓降提踵.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+            ],
+            "inspection": {
+              "method": "主代理逐张view_image最终文件并与前帧比较",
+              "status": "可见姿势检查通过",
+              "pose": "双脚前足接地、双跟一起抬起，扶手保持",
+              "support_and_contacts": "平地、灰色固定扶手，完整双膝、双足及扶手接触手可见；03和04仅训练侧脚接地",
+              "anatomy": "最终图为两腿两足；关节连接与腿足比例视觉上自然，无明显额外肢体",
+              "appearance": "局部侧面足近景不含面部；白短袖下摆、深灰裤、肤色、灰蓝背景与柔光一致，身份由三参考及原单图延续",
+              "camera_group": "侧面机位、扶手及地面背景一致；足部因踝角度改变出现投影变化，未作像素配准或厘米测量",
+              "text": "无编号、箭头、拼图或文字"
+            }
+          },
+          {
+            "step": 3,
+            "sha256": "D1384A36ECAA043EC5044DDAB0334EDF9328FE0BB6DA5D5616335BE0AC5BC2E6",
+            "file_size_bytes": 1570870,
+            "filename": "114_T-LOW-051_s03.png",
+            "action_number": 114,
+            "action_id": "T-LOW-051",
+            "width": 1122,
+            "height": 1402,
+            "final_path": "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s03.png",
+            "output_source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393c-2270-7811-a1d5-e281f36e1a42\\exec-86415113-515b-4cac-b091-c9fd86dcf3df.png",
+            "target_pose": "训练侧前足接地及跟抬高；非训练侧足完全离地",
+            "reused": false,
+            "reused_original_path": null,
+            "prompt": "Use case: identity-preserve. Asset: exercise 114 step 03, one rehabilitation studio photograph. Image 1 is the EDIT TARGET, the accepted step 02 bilateral heel-rise photograph. Make ONLY the necessary change from two feet supporting at the top to ONE training foot supporting at the top: keep the NEAR-camera leg nearly straight and its forefoot/toes in EXACTLY the same ground contact place; keep its heel raised at EXACTLY the same comfortable height. The far-camera non-training leg now bends gently at the knee, moves its lower leg backwards toward the left of the image, and lifts the ENTIRE far foot completely clear of the flat floor. Show an obvious air gap of about 8 cm beneath that far foot, located behind and to the LEFT of the near training calf, without overlap with the near bare foot. The far foot stays relaxed and natural, NOT bearing any weight, with five normal toes. This is transfer at the TOP after rising on both feet; the near training heel MUST remain clearly elevated and must not lower yet. Preserve everything else exactly: same side close view from waist through both complete knees/legs/feet, same hand resting on grey fixed handrail, white T-shirt hem, charcoal long pants, natural knee/ankle continuity, floor shadows and pale grey-blue photographic background, same camera/focal length/framing and person size. No weight, no step, no platform, no jumping. Only one static pose, no arrows, labels, text, inset or collage. Output portrait PNG same 1122x1402 frame as target.",
+            "input_paths": [
+              "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s02.png"
+            ],
+            "inspection": {
+              "method": "主代理逐张view_image最终文件并与前帧比较",
+              "status": "可见姿势检查通过",
+              "pose": "训练侧前足接地及跟抬高；非训练侧足完全离地",
+              "support_and_contacts": "平地、灰色固定扶手，完整双膝、双足及扶手接触手可见；03和04仅训练侧脚接地",
+              "anatomy": "最终图为两腿两足；关节连接与腿足比例视觉上自然，无明显额外肢体",
+              "appearance": "局部侧面足近景不含面部；白短袖下摆、深灰裤、肤色、灰蓝背景与柔光一致，身份由三参考及原单图延续",
+              "camera_group": "侧面机位、扶手及地面背景一致；足部因踝角度改变出现投影变化，未作像素配准或厘米测量",
+              "text": "无编号、箭头、拼图或文字"
+            },
+            "corrections": [
+              {
+                "reason": "第一稿保留了原远侧落地足并额外生成抬起的足，形成三足；该稿弃用",
+                "discarded_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393c-2270-7811-a1d5-e281f36e1a42\\exec-02da337c-c18a-47db-bbef-893051e52d0d.png",
+                "prompt": "Use case: precise-object-edit. EDIT TARGET image 1. Correct an anatomy error: the woman currently appears to have THREE feet. REMOVE ONLY the erroneous extra grounded FAR foot and its narrow lower trouser leg that are visible immediately BEHIND/right of the main supporting bare foot. This extra foot's toes currently extend to the RIGHT behind the support foot near floor; erase that entire duplicate grounded foot/ankle and any duplicated trouser sliver above it, replacing them with the same grey-blue background/floor. There must be EXACTLY TWO legs and TWO bare feet after editing: (1) the MAIN NEAR leg centered, nearly straight, with forefoot planted and heel raised, retained unchanged; (2) the OTHER leg bent backwards to the LEFT with its one foot already suspended in air, retained unchanged. The woman has ONE standing support foot only. Preserve the existing bent airborne limb to the left, preserve both real knees, main training heel raise height, natural leg continuity, trousers, same hand on grey fixed rail, white shirt, side-close framing, grey-blue background, soft light and camera. No new limb. No changes to the raised supporting foot or airborne foot. One anatomical woman with just two legs, just two feet. Portrait PNG same dimensions. No words, arrows, marks or collage.",
+                "accepted_source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393c-2270-7811-a1d5-e281f36e1a42\\exec-86415113-515b-4cac-b091-c9fd86dcf3df.png"
+              }
+            ]
+          },
+          {
+            "step": 4,
+            "sha256": "910FCD112BBF9707D24F9D38B2232C18AA4B968AF4EEC8C207B88CC8602E9C73",
+            "file_size_bytes": 1563773,
+            "filename": "114_T-LOW-051_s04.png",
+            "action_number": 114,
+            "action_id": "T-LOW-051",
+            "width": 1122,
+            "height": 1402,
+            "final_path": "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s04.png",
+            "output_source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393c-2270-7811-a1d5-e281f36e1a42\\exec-43130e0f-555c-45bb-b84f-fd8aa2f7efb7.png",
+            "target_pose": "训练脚跟及全掌落到平地，非训练侧足仍离地",
+            "reused": false,
+            "reused_original_path": null,
+            "prompt": "Use case: identity-preserve. Asset: rehabilitation exercise 114 step 04, single studio photograph. Image 1 is the accepted step 03 EDIT TARGET with EXACTLY TWO legs and TWO feet: the near leg currently raised on its forefoot, and the far leg bent backwards with its foot suspended to the LEFT. Change ONLY the supporting ankle/heel to show the END of controlled single-leg heel lowering. Lower the near TRAINING heel ALL THE WAY DOWN until the heel's sole makes FULL CONTACT with the flat floor, at the same floor level as the toes and forefoot. The entire training sole from heel to ball and toes is now naturally flat/grounded; forefoot and toes remain at exactly the original forward/right contact position and must not slide. Rotate the support ankle naturally out of its raised tiptoe angle and let the supporting knee/body drop a small matching amount, remaining nearly straight. KEEP the OTHER foot clearly airborne behind to the LEFT; it MUST NOT return to floor at this step. Maintain exactly two real legs, no duplicated leg behind the support shin, no third foot. Preserve side-close framing from waist through both complete knees and feet, same natural limb lengths and proportions, same white shirt/charcoal trousers, hand on grey fixed support rail, background/floor color, shadows/soft light and camera scale. The rail stays perfectly fixed in same location; hand can naturally slide a tiny amount down it with lowering. No weight, no step. The final sole is fully FLAT, not hovering, not remaining on tiptoe. Same 1122x1402 portrait PNG, no labels, arrows, text or collage.",
+            "input_paths": [
+              "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s03.png"
+            ],
+            "inspection": {
+              "method": "主代理逐张view_image最终文件并与前帧比较",
+              "status": "可见姿势检查通过",
+              "pose": "训练脚跟及全掌落到平地，非训练侧足仍离地",
+              "support_and_contacts": "平地、灰色固定扶手，完整双膝、双足及扶手接触手可见；03和04仅训练侧脚接地",
+              "anatomy": "最终图为两腿两足；关节连接与腿足比例视觉上自然，无明显额外肢体",
+              "appearance": "局部侧面足近景不含面部；白短袖下摆、深灰裤、肤色、灰蓝背景与柔光一致，身份由三参考及原单图延续",
+              "camera_group": "侧面机位、扶手及地面背景一致；足部因踝角度改变出现投影变化，未作像素配准或厘米测量",
+              "text": "无编号、箭头、拼图或文字"
+            }
+          }
+        ],
+        "independent_review": "116跖屈子代理逐张view_image独立审查114-s02～s04：双脚上升、非训练脚离地、训练脚跟落地三阶段明确，双膝及完整双足可见，未见关键姿势或人体比例异常。",
+        "limitations": [
+          "静态图无法证明真实双侧承重比例、离心发力、受控下降时间或动作适用性。",
+          "提示词中的厘米为生成目标，最终没有依据图像验证厘米/角度；不作为测量或测试证据。",
+          "本次只制作用户指定02—04；01不在本轮交付范围。"
+        ]
+      }
+    },
+    {
+      "filename": "步骤图_115_s01-s02_制作记录.json",
+      "path": "E:\\git冲突问题\\rehab image\\步骤图_115_s01-s02_制作记录.json",
+      "sha256": "BA86FCFC92B7F4CC39D43A3DBC3FFB9B0429F33BFD9017816B3049084117FFD1",
+      "contents": {
+        "record_version": "1.0",
+        "production_date": "2026-10-14",
+        "timezone": "Asia/Shanghai",
+        "scope": "115 T-LOW-037 s01—s02；首轮徒手坐位提踵",
+        "generation_mode": "内置 image_gen；每张/每次尝试一调用；未用 CLI/API 替代；未用代码编辑图片",
+        "sources": {
+          "plan": {
+            "path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+            "sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+            "section": "通用要求 3、4 与 115 T-LOW-037"
+          },
+          "original_card": {
+            "path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+            "sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+            "section": "T-LOW-037"
+          },
+          "original_image": {
+            "path": "E:/git冲突问题/rehab image/train/115_T-LOW-037_坐位提踵：徒手至膝上负荷.png",
+            "sha256": "8ED7152E638F308D08853EDF9EEE803F626879A755E93C7D4D7DB5DBD3C01372",
+            "role": "s01 的图像编辑目标；提供椅与服装/场景基准。未原图直接复用，原图为抬跟全身机位，需改为起点近景"
+          },
+          "references": [
+            {
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77",
+              "role": "人物身份、白色短袖、深灰长裤、灰蓝背景与柔光参考"
+            },
+            {
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094",
+              "role": "同一人物身份与摄影风格参考"
+            },
+            {
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+              "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE",
+              "role": "同一人物身份与摄影风格参考"
+            }
+          ]
+        },
+        "images": [
+          {
+            "step": "115-s01",
+            "intended_filename": "115_T-LOW-037_s01.png",
+            "final_path": "E:/git冲突问题/rehab image/train/steps/115_T-LOW-037_s01.png",
+            "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-b8bf-76f1-b515-620de6eb4ab8/exec-e965ada8-5d7c-4cc9-b9f0-e3fb23a35c68.png",
+            "prompt": "Use case: scientific-educational, identity-preserve edit.\nAsset type: one unlabelled photoreal rehabilitation step photograph, 115 T-LOW-037 seated heel raise, s01 preparation.\nInput images: Image 1 is the edit target and establishes the same woman's gray chair, clothing, bare feet and studio; images 2, 3, 4 are supporting identity/style references for the same adult East Asian woman, black ponytail, white plain short-sleeve shirt, dark charcoal long trousers, gray-blue soft studio background.\nEdit image 1 into a FOOT-AND-KNEE CLOSE VIEW of the starting posture. A single stable seated posture on the SAME sturdy matte gray armless chair, pelvis seated on the chair seat, torso upright, hands relaxed palm-down on each thigh. No external weight, no pads on knees, no equipment. Both knees comfortably bent at approximately a right angle; both lower legs upright. BOTH BARE FEET completely flat on the floor: each heel, full forefoot and relaxed toes clearly on the floor, ankles neutral, feet parallel and comfortably separated.\nCamera: side view from the same woman's left side with only a slight front offset so BOTH knees and BOTH entire feet can be distinctly seen, facing image right. Frame from lower chest through thighs, both knees and complete lower legs down to the full bare toes and heels; include the stable chair seat and its legs/contact with floor. The feet and knees are larger than in the original full-body view. Face/head may be out of frame for this local exercise detail. Allow modest floor margin below both feet and right-side explanatory space. Approximately 1122 x 1402 portrait aspect ratio. Natural adult proportions; fingers/toes anatomically correct. White shirt/dark charcoal trousers, photographic texture and soft gray-blue studio seamless floor, lighting and chair material remain consistent with image 1 and references.\nCritical visible step: BOTH full foot soles are resting on floor, neither heel lifted; thigh/knee position stable, hands naturally resting, toes do not grip. One woman, one pose, one chair, no inset, no multiple panels, no text, no labels, no arrows, no watermarks.",
+            "inputs": [
+              "E:/git冲突问题/rehab image/train/115_T-LOW-037_坐位提踵：徒手至膝上负荷.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+            ],
+            "reused_existing_image": false,
+            "reuse_note": "新生成准备位；慢放脚跟返回步骤可复用本图，顺序 s01→s02→s01。旧单图保持原样。",
+            "sha256": "60C393BC4F20BF0895FB4ADCC5B4EBAFABFF007624682C1427426B6990A5D705",
+            "width": 1122,
+            "height": 1402,
+            "bytes": 1683713,
+            "status": "通过逐图可见画面审查",
+            "review": {
+              "method": "保存后使用 view_image 看完整 PNG",
+              "action": "坐稳同一灰色椅，双膝舒适屈曲；双脚全掌落地，双前足与双跟起点可见；双手自然置大腿、膝上无器械。",
+              "contact": "骨盆/大腿由椅面承托，椅脚接地；双脚足跟及前足接地，没有悬浮。",
+              "proportion": "双膝、两小腿、足踝与足趾解剖连接连续，长度与侧面透视自然；手指自然。",
+              "visibility": "侧面略前偏近景保留椅面、双膝、全小腿和完整两足；上方从胸下裁切是局部任务构图。",
+              "appearance": "白短袖、深灰长裤、灰蓝无缝背景、柔和棚拍和自然阴影一致；无文字/箭头/拼图。",
+              "independent_parent_review": "主代理另以 view_image 审查：椅面承托、双膝与双全掌地面、自然手位均清楚，近景可用。"
+            }
+          },
+          {
+            "step": "115-s02",
+            "intended_filename": "115_T-LOW-037_s02.png",
+            "final_path": "E:/git冲突问题/rehab image/train/steps/115_T-LOW-037_s02.png",
+            "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-b8bf-76f1-b515-620de6eb4ab8/exec-8a871cf2-af9b-4f52-84cf-43335b49a7c0.png",
+            "prompt": "Use case: scientific-educational, identity-preserve edit.\nAsset type: one unlabelled photoreal rehabilitation step photograph, 115 T-LOW-037 seated heel raise, s02 raised heels.\nInput image 1 is the accepted s01 preparation photograph and exact scene to edit.\nChange ONLY the seated woman's ankles and bare foot posture from both full soles flat to BOTH HEELS RAISED in a seated heel raise. Keep both forefoot balls and toes contacting the EXACT SAME floor footprints as in image 1, no forward/backward/sideways sliding. Lift the heel of each bare foot approximately 4–5 cm above the floor, clearly showing a visible natural gap beneath EACH heel. Both heels must be elevated; neither whole leg nor whole foot lifts off the floor. Each forefoot remains supported on floor; toes stay relaxed and naturally extended, not curled or gripping. Ankles plantarflex naturally, heel rises under ankle; do not point feet away into the air. Preserve the seated position and comfortable bent-knee posture, pelvis fully supported on same chair, hands relaxed palm-down on same thighs; no weights or equipment on thighs or knees.\nKeep the same cropped side / slightly front offset camera, same lens/perspective, exact 1122 x 1402 portrait framing, SAME woman's body proportions, white short sleeve shirt and dark charcoal long trousers, same chair (shape/material/seat/legs and floor positions), same torso/arms/hands, knee placement, same gray-blue backdrop and floor, lighting and photographic detail. Both knees, lower legs and whole bare feet including every toe and heel remain inside frame. Outside ankle/foot posture, preserve image 1 as closely as possible; no new objects, no text, no numbers, no arrows, no watermark, no inset or multiple poses. Critical: TWO heel-floor gaps while TWO forefoot-floor contact locations remain unchanged.",
+            "inputs": [
+              "C:/Users/Administrator/.codex/generated_images/01a1393d-b8bf-76f1-b515-620de6eb4ab8/exec-e965ada8-5d7c-4cc9-b9f0-e3fb23a35c68.png"
+            ],
+            "reused_existing_image": false,
+            "reuse_note": "编辑已验收的 s01，仅将双踝足姿势改为抬跟；不是直接复用旧单图。",
+            "sha256": "7CE46881C1172E32DC3C4C1FC9A33F1BBFE7D56BF4C45688FF72A746B084518B",
+            "width": 1122,
+            "height": 1402,
+            "bytes": 1672352,
+            "status": "通过逐图可见画面审查",
+            "attempts": [
+              {
+                "prompt": "Use case: scientific-educational, identity-preserve edit.\nAsset type: one unlabelled photoreal rehabilitation step photograph, 115 T-LOW-037 seated heel raise, s02 raised heels.\nInput image 1 is the accepted s01 preparation photograph and exact scene to edit.\nChange ONLY the seated woman's ankles and bare foot posture from both full soles flat to BOTH HEELS RAISED in a seated heel raise. Keep both forefoot balls and toes contacting the EXACT SAME floor footprints as in image 1, no forward/backward/sideways sliding. Lift the heel of each bare foot approximately 4–5 cm above the floor, clearly showing a visible natural gap beneath EACH heel. Both heels must be elevated; neither whole leg nor whole foot lifts off the floor. Each forefoot remains supported on floor; toes stay relaxed and naturally extended, not curled or gripping. Ankles plantarflex naturally, heel rises under ankle; do not point feet away into the air. Preserve the seated position and comfortable bent-knee posture, pelvis fully supported on same chair, hands relaxed palm-down on same thighs; no weights or equipment on thighs or knees.\nKeep the same cropped side / slightly front offset camera, same lens/perspective, exact 1122 x 1402 portrait framing, SAME woman's body proportions, white short sleeve shirt and dark charcoal long trousers, same chair (shape/material/seat/legs and floor positions), same torso/arms/hands, knee placement, same gray-blue backdrop and floor, lighting and photographic detail. Both knees, lower legs and whole bare feet including every toe and heel remain inside frame. Outside ankle/foot posture, preserve image 1 as closely as possible; no new objects, no text, no numbers, no arrows, no watermark, no inset or multiple poses. Critical: TWO heel-floor gaps while TWO forefoot-floor contact locations remain unchanged.",
+                "inputs": [
+                  "E:/git冲突问题/rehab image/train/steps/115_T-LOW-037_s01.png"
+                ],
+                "error": "image generation failed: network error: error sending request",
+                "approx_elapsed_minutes": 18,
+                "final_output": null
+              },
+              {
+                "result": "成功",
+                "duration_seconds": 49.9,
+                "input_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-b8bf-76f1-b515-620de6eb4ab8/exec-e965ada8-5d7c-4cc9-b9f0-e3fb23a35c68.png",
+                "note": "网络失败后重试内置工具，相同 prompt；改为 s01 的原生成目录路径，和最终 s01 字节相同。不把路径改变宣称为网络故障根因。"
+              }
+            ],
+            "review": {
+              "method": "保存后使用 view_image 看完整 PNG，并与 s01 对照",
+              "action": "两足跟均清楚离开地面，双前足与足趾继续接地，呈坐位跖屈提踵终点；没有整腿抬起或整足悬空。",
+              "contact": "双前足接地可见，双跟与地面的空隙可见；骨盆仍承托于椅面。",
+              "proportion": "踝足连续，足趾没有明显蜷抓；膝/小腿/脚比例自然，双足透视关系与 s01 一致。",
+              "visibility": "保留相同胸下近景、椅面、双膝、两小腿、完整双足；单一姿势、无字无箭头。",
+              "appearance": "镜头、主体尺度、灰椅位置/形状、上衣/裤装与背景柔光与 s01 一致。",
+              "group_consistency": "双前足位置在同组视觉对照中保持，膝、髋、手和椅面位置一致，仅踝足及相应裤脚附近随提踵变化；并非逐像素锁定。",
+              "independent_parent_review": "主代理另以 view_image 审查并对比 s01：双跟抬起、双前足落地，前足位置、灰椅、膝与手位清楚且一致，可用。"
+            }
+          }
+        ],
+        "group_review": {
+          "sequence": "s01→s02→s01，慢放回复用 s01",
+          "frame": "两图均 1122×1402，含双膝、双足与椅面，局部机位及主体尺度一致",
+          "equipment": "同一稳固灰色无扶手椅；徒手、膝上无负荷/软垫/弹力带",
+          "visible_change": "双全掌落地→双前足接地且双跟抬起",
+          "non_overwrite": "原单图和既有共享进度 JSON 未改；两新步骤图首次使用目标名，未覆盖已存在图片"
+        },
+        "limitations": [
+          "两张静态合成照片可表达支撑与起终点，不能证明真实连续运动节奏、肌肉激活、力量、实际压力或全过程未滑动。",
+          "局部近景按清单裁去头部，最终图中不能直接核对面部身份；生成输入锁定同一参考人物且服装、肤色、体形一致。",
+          "侧面透视会自然遮挡部分远侧足趾/手指；两足跟、双前足接地和双膝等动作关键点仍可辨认。",
+          "生成编辑存在少量局部像素变化，同组一致性依据可见构图及接触点对照，未宣称严格像素相同。"
+        ],
+        "not_modified": [
+          "共享进度 JSON",
+          "原单图",
+          "清单",
+          "Git 状态",
+          "应用代码/桌面快捷方式"
+        ]
+      }
+    },
+    {
+      "filename": "步骤图_116_s01-s02_制作记录.json",
+      "path": "E:\\git冲突问题\\rehab image\\步骤图_116_s01-s02_制作记录.json",
+      "sha256": "218193A5F108990471AB7A3E913FB46011472C9ABACE3706BDA04FC1CD05EDBB",
+      "contents": {
+        "record_version": "1.0",
+        "created_date": "2026-10-14",
+        "timezone": "Asia/Shanghai",
+        "action_sequence": "116",
+        "action_id": "T-LOW-038",
+        "action_name": "弹力带踝四方向：按许可单独启用",
+        "scope": [
+          "116-s01",
+          "116-s02"
+        ],
+        "independent_group": "背屈组",
+        "tool": "built-in image_gen.imagegen",
+        "cli_used": false,
+        "source_documents": [
+          {
+            "path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+            "sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+            "sections": [
+              "3.人物、风格、背景与比例固定要求",
+              "4.图组顺序、命名、复用与验收",
+              "116 T-LOW-038，01与02"
+            ]
+          },
+          {
+            "path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+            "sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+            "section": "T-LOW-038 原动作卡，操作步骤背屈：阻力从脚前方牵引，前足向小腿移动后控制回程"
+          }
+        ],
+        "visual_references": [
+          {
+            "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77",
+            "role": "人物身份、白T与深灰裤、灰蓝柔光；已用view_image查看"
+          },
+          {
+            "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094",
+            "role": "人物身份、白T与深灰裤、灰蓝柔光；已用view_image查看"
+          },
+          {
+            "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE",
+            "role": "人物身份、白T与深灰裤、灰蓝柔光；已用view_image查看"
+          }
+        ],
+        "original_single_image": {
+          "path": "E:/git冲突问题/rehab image/train/116_T-LOW-038_弹力带踝四方向：按许可单独启用.png",
+          "reused": false,
+          "reason": "本轮采用制作清单指定长坐垫面及低软垫支小腿版本，新生成并编辑；未覆盖原单图"
+        },
+        "generation_history": [
+          {
+            "target": "116-s01",
+            "attempt": 1,
+            "type": "generate-with-visual-references",
+            "referenced_image_paths": [
+              "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+            ],
+            "prompt": "Use case: scientific-educational. Asset type: a single photorealistic rehabilitation exercise step photo for T-LOW-038, step 116-s01, the START of resisted RIGHT ankle dorsiflexion.\nInput images: reference-01.png, reference-02.png, reference-03.png are visual identity / clothes / lighting references ONLY. Use the same adult East Asian woman, natural warm skin, black ponytail, white short-sleeved T-shirt, charcoal dark grey trousers. Change her exercise pose as specified.\nScene: clean muted blue-grey seamless studio and blue-grey floor, soft even studio light, real shadows, a low light-grey exercise mat.\nPose and exercise: she is in LONG SITTING on the mat, both legs extended straight forward with natural soft unlocked knees. The RIGHT leg is closest to the camera and is the exercising leg; the LEFT leg is farther from the camera, resting unbanded. A small low light-grey soft cushion supports ONLY the right calf. The RIGHT heel and ankle project beyond the distal end of this cushion, letting the ankle move freely. The right shin and knee remain supported and stationary. Bare feet. The right ankle is at an ordinary neutral starting position: the right forefoot is roughly perpendicular (90 degrees) to the shin, not actively pulled back, not strongly pointed down; all five toes are relaxed, natural and visible.\nResistance setup: one wide flat blue-green elastic exercise band wraps securely around the BALL OF THE RIGHT FOOT at the metatarsal / forefoot region, below the toes, never strangling or covering the toes. Its two flat strands travel FORWARD AWAY FROM HER BODY, beyond the toe end in the same direction as the shin's long axis, and join a small low stable heavy GREY FLOOR ANCHOR BASE immediately in front of the right foot. Show the entire low anchor base and the visible fastening point clearly; the base rests firmly on the floor outside the mat. The anchor must be directly beyond the right foot in the direction the feet point, not to either side and not under her leg. The band has mild visible tension without forcefully deforming skin. Her hands do NOT hold the band. Nothing is connected to her face, neck, torso, left leg, or foot cushion.\nCamera: fixed right-front slightly elevated oblique SIDE close view. The photo is portrait, about 1122 x 1402 pixels, framing the complete right knee, whole right shin, cushion, heel, ankle, complete toes, band's full path, and anchor. Include enough partial thighs / mat and the far left leg to prove long sitting. Prioritize a clear right-foot side profile showing the foot-shin angle and its movement plane; knee and foot must not be cropped. Right shin runs diagonally from upper left to lower right; foreground right ankle and forefoot are central-lower, front anchor farther beyond them toward the right-bottom of frame. No need to show her whole head for this local ankle task, but any visible body must match the references.\nNatural body proportions, correct connected knee-calf-ankle-foot anatomy, exactly two feet, five toes each, uninjured real skin and fabric. This is one clear neutral-start pose, a photograph, not a collage. NO text, NO numbers, NO arrows, NO diagram overlay, NO logos, NO watermark. Do not show a chair or standing position.",
+            "generation_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-e4555fc2-a580-4447-89a5-f7a3ca7788e1.png",
+            "selected": false,
+            "review": "人物、長坐、右足及前方锚点合理；镜头包含全身太多，未达踝足近景要求，针对性纠正构图"
+          },
+          {
+            "target": "116-s01",
+            "attempt": 2,
+            "type": "edit-framing",
+            "referenced_image_paths": [
+              "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-e4555fc2-a580-4447-89a5-f7a3ca7788e1.png"
+            ],
+            "prompt": "Use case: precise-object-edit / scientific-educational. Edit the supplied START image for 116-s01. SINGLE CORRECTION: make this a tighter portrait photographic ankle-and-lower-leg CLOSE VIEW, as required by the exercise teaching brief. Output about 1122 x 1402 pixels. Reframe from the same woman's right-front oblique angle, slightly elevated, so the complete foreground RIGHT KNEE, whole RIGHT CALF, low light-grey calf cushion, bare RIGHT HEEL, ankle, entire neutral right foot with all relaxed toes, blue-green flat band path, and entire grey floor anchor are large, clear and fully within frame. The exercising right knee should be toward upper-left, the right ankle/foot central-lower, and the anchor below/right beyond that foot; show portions of thighs and the far LEFT leg for a long-sitting context, but cut out her head and most upper torso. Any visible white T-shirt and dark grey pants must be the same woman and clothes.\nPreserve the exact setup and neutral START pose: she is long sitting on the light-grey exercise mat with legs extended, right leg nearer camera, left leg farther and unbanded. Right calf is supported on the same low light-grey soft cushion; right ankle and heel project beyond the end of it. Right foot is neutral roughly 90 degrees to right shin, NOT actively pulled toward shin, NOT pointed down, toes relaxed. Preserve the wide flat teal band around the right forefoot's metatarsal ball region BELOW the toe bases, two strands extending forward away from her body to a clearly visible low stable grey floor anchor directly in front of the right foot beyond the toes. No hands holding the band. Same anchor shape and mat, same soft blue-grey studio and lighting. Keep realistic ankle and foot anatomy and skin, without skin indentation. Photograph of one pose only. No text, letters, numbers, arrows, diagram overlays, logos or watermark.",
+            "generation_path": null,
+            "selected": false,
+            "result": "failed",
+            "error": "image generation failed: network error: error sending request",
+            "note": "较长等待后明确失败，未产生输出，随后同工具同提示词重试"
+          },
+          {
+            "target": "116-s01",
+            "attempt": 3,
+            "type": "edit-framing-retry",
+            "referenced_image_paths": [
+              "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-e4555fc2-a580-4447-89a5-f7a3ca7788e1.png"
+            ],
+            "prompt": "Use case: precise-object-edit / scientific-educational. Edit the supplied START image for 116-s01. SINGLE CORRECTION: make this a tighter portrait photographic ankle-and-lower-leg CLOSE VIEW, as required by the exercise teaching brief. Output about 1122 x 1402 pixels. Reframe from the same woman's right-front oblique angle, slightly elevated, so the complete foreground RIGHT KNEE, whole RIGHT CALF, low light-grey calf cushion, bare RIGHT HEEL, ankle, entire neutral right foot with all relaxed toes, blue-green flat band path, and entire grey floor anchor are large, clear and fully within frame. The exercising right knee should be toward upper-left, the right ankle/foot central-lower, and the anchor below/right beyond that foot; show portions of thighs and the far LEFT leg for a long-sitting context, but cut out her head and most upper torso. Any visible white T-shirt and dark grey pants must be the same woman and clothes.\nPreserve the exact setup and neutral START pose: she is long sitting on the light-grey exercise mat with legs extended, right leg nearer camera, left leg farther and unbanded. Right calf is supported on the same low light-grey soft cushion; right ankle and heel project beyond the end of it. Right foot is neutral roughly 90 degrees to right shin, NOT actively pulled toward shin, NOT pointed down, toes relaxed. Preserve the wide flat teal band around the right forefoot's metatarsal ball region BELOW the toe bases, two strands extending forward away from her body to a clearly visible low stable grey floor anchor directly in front of the right foot beyond the toes. No hands holding the band. Same anchor shape and mat, same soft blue-grey studio and lighting. Keep realistic ankle and foot anatomy and skin, without skin indentation. Photograph of one pose only. No text, letters, numbers, arrows, diagram overlays, logos or watermark.",
+            "generation_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-2130c666-d58a-4cba-a195-f2bd0090a55c.png",
+            "selected": true,
+            "review": "生成31秒返回；view_image逐图检查通过：右膝/整小腿/右足/前方锚点近景清晰"
+          },
+          {
+            "target": "116-s02",
+            "attempt": 1,
+            "type": "edit-ankle-dorsiflexion-only",
+            "referenced_image_paths": [
+              "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-2130c666-d58a-4cba-a195-f2bd0090a55c.png"
+            ],
+            "prompt": "Use case: precise-object-edit, scientific-educational rehabilitation exercise photograph. Input image is the accepted START of 116-s01, right resisted ankle dorsiflexion.\nMake ONLY the right ankle movement change to create 116-s02, the END of resisted right ankle dorsiflexion. Keep the image composition, camera, crop, lighting, blue-grey studio, woman, white shirt, dark grey pants, grey exercise mat, stationary RIGHT KNEE and SHIN, calf on the exact same low light-grey cushion, LEFT leg and LEFT foot, and heavy grey floor anchor EXACTLY where they are. The low grey anchor remains in front of the right foot beyond the toe end, pulling AWAY from the body. Keep the same blue-green flat band forefoot wrap and fixed connection to anchor, with the same nominal band setup; its stretched strands naturally follow the rotated foot.\nThe only changed body part is the RIGHT FOOT rotating about the ankle into comfortable, clearly visible dorsiflexion: draw the entire right forefoot BACK TOWARD the RIGHT SHIN, approximately 15-20 degrees beyond the neutral start shown in the input. The right heel / ankle pivot stays in the same location; the toe ends and ball of the foot travel UP and BACK toward the knee. In this image the right knee is upper-left, so the right toe tips should shift noticeably toward upper-left from their input position, narrowing the angle between the top of the foot and the shin. The foot should rotate as a connected whole at the ankle; do not merely curl or extend the toes. All five toes remain relaxed. Do NOT point the foot down or forward away from the knee, do NOT invert or evert it, do NOT rotate or lift the calf or move the knee, do NOT move the anchor or change the cushion.\nMaintain realistic ankle tendons, plausible 15-20 degree dorsiflexion, normal foot/leg proportions. Band is wrapped below toe bases over ball/metatarsal region, not over the toes, with no skin constriction; all toe tips remain visible. Right foot/ankle, whole calf, knee and entire band path/anchor remain clear. No hands touching or holding the band. One photorealistic pose only. Same portrait dimensions about 1122 x 1402 pixels. NO text, numbers, arrows, overlays, collage, logos or watermark.",
+            "generation_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-c84b3c70-7b54-4500-87a3-ba5d9b21b069.png",
+            "selected": true,
+            "review": "生成34秒返回；view_image逐图检查通过：前足整体回向右小腿，支持/锚点/镜头与s01保持"
+          }
+        ],
+        "assets": [
+          {
+            "step": "116-s01",
+            "target_pose": "背屈组起点：长坐，右小腿低软垫承托，踝自然中立、足趾放松，带绕右前足，锚点在足前方",
+            "final_path": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s01.png",
+            "generation_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-2130c666-d58a-4cba-a195-f2bd0090a55c.png",
+            "sha256": "A41FDAA252FF61804824514942D90380CA02CDA5CDCE121D496875749A25492D",
+            "dimensions": {
+              "width": 1122,
+              "height": 1402
+            },
+            "bytes": 1965550,
+            "reused": false,
+            "reuse_source": null,
+            "review": {
+              "status": "passed",
+              "method": "view_image 原尺寸目视审查",
+              "identity_and_clothes": "首稿人物面貌与3张参考匹配；最终局部继承同人物白色T恤、深灰裤及肤色，最终近景不含脸",
+              "background": "灰蓝背景/地面、柔和棚拍光及自然阴影",
+              "visible_action": "右足近镜、左腿远镜，长坐垫面；右踝自然中立，足趾放松，没有主动下压/内翻/外翻",
+              "proportions_and_joints": "右膝、小腿、踝、足连接连续，脚趾数目及长短自然；近足透视比例可解释",
+              "contact_and_equipment": "右小腿接触低浅灰软垫，右跟与踝越出软垫 distal 边；带环在右前足跖骨/球部区而非勒趾，双股扁带接前方灰色低锚座，锚座落地，非接人体",
+              "visibility": "完整右膝及小腿、右跟/踝/五趾、带路径及全锚座均可见；左远足趾缘局部出画不影响右足任务",
+              "text_and_overlays": "无文字、编号、箭头、拼图、水印"
+            }
+          },
+          {
+            "step": "116-s02",
+            "target_pose": "背屈组终点：保持右小腿支持、前方锚点，右前足对抗前方牵拉向右小腿抬起",
+            "final_path": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s02.png",
+            "generation_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-c84b3c70-7b54-4500-87a3-ba5d9b21b069.png",
+            "sha256": "65FD302404624B91E15ECDEFF18163C3B19549CF086E335BFB9563BE6B3828E9",
+            "dimensions": {
+              "width": 1122,
+              "height": 1402
+            },
+            "bytes": 1848730,
+            "reused": false,
+            "reuse_source": null,
+            "edit_base": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s01.png",
+            "review": {
+              "status": "passed",
+              "method": "view_image 原尺寸逐图目视审查，并与s01比较",
+              "identity_and_clothes": "同白T、深灰裤、肤色及身体局部，不含脸",
+              "background": "灰蓝背景/地面、柔光及自然阴影与s01一致",
+              "visible_action": "右前足和五趾作为整个足体回向右小腿，踝背屈方向清晰；不是只动趾，也未变为跖屈或内外翻",
+              "proportions_and_joints": "小腿未平移，踝到足连接自然，没有额外脚/趾；前足旋转后的踝前皮肤褶皱可解释",
+              "contact_and_equipment": "右小腿仍在原低软垫支持点；前方灰低锚座原位置不变，弹力带继续环住右前足球部并接同锚点，未勒趾、未加手持牵引",
+              "visibility": "右膝、整小腿、整个右足五趾和完整带/锚点可见",
+              "text_and_overlays": "无文字、编号、箭头、拼图、水印"
+            }
+          }
+        ],
+        "group_review": {
+          "status": "passed",
+          "camera_and_scale": "s01/s02使用同右侧前方略高斜侧局部镜头、同构图/相机尺度、同地面与垫面基准",
+          "stationary_support": "右膝/小腿位置及软垫形状和位置保持，左腿/足与躯干局部保持",
+          "stationary_anchor": "灰色低锚座形状及地面位置、带固定点保持；带随前足背屈出现自然路径变化",
+          "movement_difference": "只需表现的右踝足从自然中立到背屈改变；右前足靠近小腿，s01/s02的方向差异清楚",
+          "independent_group_boundary": "仅背屈组01↔02；不表示与s03～s08连续八步，各方向卸张力后独立设置",
+          "sequence_and_reuse": "s01→s02→复用s01表示控制回程，不另生成相同返回位",
+          "other_116_reference_review": "曾查看已完成116-s03用于外观一致性对照；未用其图作为本组生成或编辑输入"
+        },
+        "limitations": [
+          "最终图为踝足局部近景，不含人物面部；身份一致性依据三张参考和已审查首稿的继承，不声称最终近景能独立确认人脸。",
+          "静态AI生成图片只能核对可见姿势与接触关系，不能证明实际肌力、张力、锚座质量/承载、品牌型号、临床许可、剂量或真实动态回程。",
+          "提示词中的15～20度是出图方向约束；未作标定角度测量，也不从图片推导临床关节角度。",
+          "右足为任务足，完整入画；远侧左足部分边缘出画，仅作长坐及左右参考。",
+          "原始及未选生成稿留在Codex默认generated_images目录；最终采用PNG原文件复制，未裁图、缩放、重画或改变像素内容。"
+        ]
+      }
+    },
+    {
+      "filename": "步骤图_116_s03-s05_制作记录.json",
+      "path": "E:\\git冲突问题\\rehab image\\步骤图_116_s03-s05_制作记录.json",
+      "sha256": "3BFC15B2F47EE516142F63620846525211472AB2E07F0D11A605B3720CA9CF72",
+      "contents": {
+        "document": "安康康复动作分步骤示范图制作记录",
+        "record_version": "1.0",
+        "date": "2026-10-14",
+        "timezone": "Asia/Shanghai",
+        "action_number": "116",
+        "action_id": "T-LOW-038",
+        "action_title": "弹力带踝四方向：按许可单独启用",
+        "requested_frames": [
+          "s03",
+          "s04",
+          "s05"
+        ],
+        "method": "内置 image_gen；每次调用一张资产；生成后复制，不使用 CLI、API SDK 或图像后处理",
+        "scope": "仅制作独立跖屈组s03/s04和内翻组准备s05，不修改应用、共享进度或Git",
+        "sources": [
+          {
+            "path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+            "sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+            "sections": [
+              "3 人物、风格、背景与比例固定要求",
+              "4 图组顺序、命名、复用与验收",
+              "116 T-LOW-038"
+            ],
+            "read": true
+          },
+          {
+            "path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+            "sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+            "section": "T-LOW-038 原动作卡",
+            "read": true
+          }
+        ],
+        "references": [
+          {
+            "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77",
+            "role": "人物身份、白T深灰长裤、灰蓝背景与柔和棚拍光线参考；已view_image"
+          },
+          {
+            "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094",
+            "role": "同一身份/外观/摄影质感参考；动作体位不复用；已view_image"
+          },
+          {
+            "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE",
+            "role": "同一身份/外观/摄影质感参考；动作体位不复用；已view_image"
+          }
+        ],
+        "common_setting": {
+          "posture": "長坐浅灰垫面，右足近镜，左足远镜；右小腿由低浅灰软垫承托，右跟悬出垫面边缘、踝足自由活动",
+          "camera": "右侧前方略高斜侧局部机位，保留右膝/整小腿/整足、左腿足以及必要躯干；s03/s04双手握持全可见",
+          "wardrobe": "白色短袖T恤、深灰长裤、赤足",
+          "lighting": "柔和棚拍光线、灰蓝背景地面、自然阴影",
+          "prohibited": "无字、无编号、无箭头、无拼图、无水印、无椅子",
+          "canvas": {
+            "width": 1122,
+            "height": 1402,
+            "format": "PNG"
+          }
+        },
+        "attempts": [
+          {
+            "id": "116-s03-attempt-01",
+            "prompt": "Use case: scientific-educational.\nCreate ONE photorealistic rehabilitation exercise demonstration photograph, portrait composition approximately 1122 x 1402, NO text, labels, arrows, numbers, diagrams, collage, or watermark.\nInput images 1, 2, 3 are identity, wardrobe, background color, and studio-lighting references ONLY. Preserve the same adult East Asian woman, natural build and skin tone, black ponytail, plain white short-sleeved T-shirt and dark charcoal long trousers. Do NOT copy standing or arm poses from the references.\nThis is step 116-s03, ankle plantarflexion preparation: she is in LONG SITTING ON A LIGHT GREY MAT, both legs comfortably extended. Bare feet. Her RIGHT leg is nearest the camera, left leg farther away. The right calf rests securely across a low soft pale-grey rectangular cushion, knee supported and still. The right heel projects just beyond the mat's front edge so the ankle and foot are free to move. The right ankle is anatomically neutral, roughly a right angle to the lower leg, toes relaxed and naturally separated. Do not point the foot yet. Use a flat teal-blue elastic resistance band wrapping broadly and comfortably around the right forefoot at the metatarsal area behind the toes, never around toes or ankle. BOTH of the woman's own hands securely grasp the two separate tails of this same band from the direction of her body. The band tails extend BACK toward her body and hands, with gentle straight tension. Her hands are near her lower abdomen / upper thighs, visibly closed around the band ends, elbows comfortable. NO external anchor and NO object ahead of the foot. Both band tails, both hands, forefoot contact, calf support and relaxed toes must be unmistakably visible.\nComposition: fixed camera from her RIGHT FRONT and slightly above, oblique side local close-up. Show at least the right knee, complete right lower leg and foot, left lower leg/foot as anatomical orientation, both hands and the necessary lower torso / white T-shirt. The action foot is the main visual subject, face can remain outside this localized crop. The right knee should be toward the upper left, right foot near lower right foreground, left foot farther away. Maintain natural lower-leg and foot lengths with moderate perspective, not an enormous foot. Background and floor are the same muted grey-blue seamless studio as references. Mat and low cushion are light grey. Soft even photographic studio lighting and natural contact shadows. No chair, stool, treatment-table furniture, shoes, socks, helper, extra limbs, malformed fingers or toes. A single clear neutral preparation posture.",
+            "input_image_paths": [
+              "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+            ],
+            "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-7a8f-7830-8cbf-f17504fd0989/exec-0b5281ef-13a9-45e3-942a-7cd8f330dd84.png",
+            "review_method": "view_image",
+            "status": "rejected",
+            "reason": "右跟仍落在垫面，足部缺少清晰活动间隙；人物/双手牵带/前足带位基本正确，针对支持关系返修"
+          },
+          {
+            "id": "116-s03-attempt-02",
+            "prompt": "Use case: precise-object-edit. Edit this single rehabilitation photograph to correct ONLY the support relationship at the right distal calf, heel, and mat front edge. Everything else must remain exactly the same: fixed camera and crop, white-shirt woman, body and hands, two hand-held teal band tails returning toward the body, neutral right ankle, relaxed toes, left leg, lighting and grey-blue studio. The near-camera bare foot is her RIGHT foot.\nCritical correction: the right heel is currently resting on the mat. Make the RIGHT CALF be securely supported on the same low soft light-grey rectangular cushion, and place the mat's FRONT EDGE behind the right heel. Shift the same low cushion a little toward the distal calf and increase its thickness only enough that the right heel and the whole right foot are clearly SUSPENDED about 4–6 cm above the grey-blue studio floor, beyond the front edge of the mat, with a clearly visible small air gap and soft cast shadow under the heel. The lower leg stays comfortably straight, knee unchanged. The right ankle remains approximately 90 degrees neutral and the toes remain relaxed. Preserve all limb lengths and foot sizes. It is still long sitting on a floor mat, NOT a chair or table. Do not change the safe teal band contact around the metatarsal forefoot, or either hand grip. Make physical support and clearance unmistakably correct. One photograph, no text or arrows.",
+            "input_image_paths": [
+              "C:/Users/Administrator/.codex/generated_images/01a1393e-7a8f-7830-8cbf-f17504fd0989/exec-0b5281ef-13a9-45e3-942a-7cd8f330dd84.png"
+            ],
+            "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-7a8f-7830-8cbf-f17504fd0989/exec-22cd116e-a759-47ea-8908-11f1730f6009.png",
+            "review_method": "view_image",
+            "status": "accepted",
+            "reason": "同机位及双手牵带保留，右跟明确悬出垫边并有地面间隙"
+          },
+          {
+            "id": "116-s04-attempt-01",
+            "prompt": "Use case: precise-object-edit. This input is the approved preparation photograph for step 116-s03. Produce step 116-s04 of the SAME ankle plantarflexion exercise by changing ONLY the near-camera woman's RIGHT ANKLE/FOOT pose and the naturally corresponding band shape. LOCK the entire camera, framing, resolution, torso, two hands and grip positions, trousers, both knees, both lower-leg positions, low grey cushion, mat edge, far left foot, background, lighting, and shadows to this photograph.\nThe right calf must stay motionless supported by the same low light-grey soft cushion. The right heel stays at the SAME location suspended beyond the mat's front edge, with clear ground clearance. Both of the woman's own hands still firmly grasp the two teal band tails pulling toward her body; neither grip shifts or loosens; NO external anchor.\nAction: she actively and slowly PUSHES HER RIGHT FOREFOOT DOWN AND FORWARD AWAY FROM HER BODY into gentle, comfortable ankle PLANTARFLEXION. Relative to the neutral starting foot in the input, rotate the WHOLE foot at the right ankle about 25–30 degrees toward the extended forward pointing position. The heel and shin remain fixed. The toes move farther away from the shin and slightly downward/forward in the image, so the right toes are clearly LESS upright than in the input and the ankle-to-foot angle opens. Toes stay relaxed, straight and uncurled: the movement must come from the ankle, NOT merely bending or curling toes. The band remains broad around the right metatarsal forefoot behind the toes, comfortably contacting the ball area, with its two continuous tails leading BACK toward the SAME two hands at her body. Show naturally greater extension of the band due to the changed foot angle. Ensure the entire right foot and five relaxed toes remain within the frame, with natural skin, foot shape and joint continuity. No inverting or turning the leg sideways. ONE photograph, no text, arrow, number, collage, watermark.",
+            "input_image_paths": [
+              "C:/Users/Administrator/.codex/generated_images/01a1393e-7a8f-7830-8cbf-f17504fd0989/exec-22cd116e-a759-47ea-8908-11f1730f6009.png"
+            ],
+            "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-7a8f-7830-8cbf-f17504fd0989/exec-343e3a54-41b2-4803-a44c-771fa1cf85c0.png",
+            "review_method": "view_image",
+            "status": "accepted",
+            "reason": "右前足缓慢下推姿态可辨，小腿/膝/双手握带位置及软垫和镜头保持"
+          },
+          {
+            "id": "116-s05-attempt-01",
+            "prompt": "Use case: scientific-educational / precise-object-edit.\nCreate ONE photograph for step 116-s05, RIGHT ankle INVERSION PREPARATION in a NEW independent band setup. The input photograph is the approved 116-s03 appearance/camera reference. Keep the SAME fixed camera angle and portrait frame, woman in plain white T-shirt and charcoal long trousers, long-sitting legs on the same light-grey mat, same calf pillow, same knee positions, same right bare foot nearest camera and left bare foot farther away, muted grey-blue studio and soft even light. The right calf stays supported by the low soft grey pillow and the right heel remains suspended just beyond the mat edge with a visible floor clearance. The RIGHT ankle must be exactly at natural neutral like this input, around 90 degrees, toes upright relaxed, NOT pointed down, NOT already inverted. Full right lower leg, knee, ankle and foot, and the other left leg and foot remain visible.\nCRITICAL band change: remove the two hand-held tails completely. Her own two hands now rest naturally and separately on her thighs, holding nothing. In this INVERSION setup, the same style flat teal-blue resistance band safely wraps around the RIGHT METATARSAL FOREFOOT behind the toes. The band is connected to a visible sturdy small LOW GREY FLOOR ANCHOR BASE with one metal ring, placed exclusively on the RIGHT FOOT'S ANATOMICAL LATERAL SIDE (the little-toe side), AWAY FROM the space between the two legs. Because the RIGHT leg is the near leg and the LEFT leg is behind it in this right-front oblique camera, the lateral anchor is on the near-side foreground OUTSIDE the right foot, towards the camera / lower-left foreground, OPPOSITE the farther left foot. The anchor's longitudinal position must be alongside the right forefoot, and about 30–40 cm laterally outside it: its teal band line pulls ACROSS the forefoot from the outside, approximately perpendicular to the right lower-leg axis, never along the forward direction of the toes. The complete band contact and straight outside-to-foot connection are clearly visible. Use one continuous band with its two tails gathered securely at the single grey floor-base ring; a physically credible wrap around the forefoot, not a narrow cord or ankle cuff. The toes and five natural digit contours remain uncovered.\nDo NOT put the anchor in front of the right toes. Do NOT place the anchor between the two feet. Do NOT attach the band to her hands or to the left foot. The whole scene must clearly teach an independent neutral start for inward ankle movement against an outside pull. Preserve body proportions, foot size and leg orientation. No chair, shoes, socks, helper, text, arrows, labels, collage or watermark.",
+            "input_image_paths": [
+              "C:/Users/Administrator/.codex/generated_images/01a1393e-7a8f-7830-8cbf-f17504fd0989/exec-22cd116e-a759-47ea-8908-11f1730f6009.png"
+            ],
+            "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-7a8f-7830-8cbf-f17504fd0989/exec-36356a8d-c9f6-4cbc-ba2f-a3e310b9da3b.png",
+            "review_method": "view_image",
+            "status": "accepted",
+            "reason": "独立内翻准备；右踝中立，外侧灰低锚座位置明确，非手牵与前方牵拉"
+          }
+        ],
+        "assets": [
+          {
+            "frame": "s03",
+            "group": "跖屈组准备",
+            "target": "右踝自然中立、足趾放松；双手从身体方向稳妥牵带",
+            "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-7a8f-7830-8cbf-f17504fd0989/exec-22cd116e-a759-47ea-8908-11f1730f6009.png",
+            "final_path": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s03.png",
+            "sha256": "129EF936F3E0147D44A8ABDE609AD013AB53E16B3C53504564FCD82DF3613BE0",
+            "width": 1122,
+            "height": 1402,
+            "reused": false,
+            "reused_original_path": null,
+            "derived_from": "116-s03-attempt-01，针对支持关系编辑返修；不复用旧单图",
+            "checks": {
+              "visible_posture": "通过：长坐、近镜右足、自然中立与放松足趾可辨",
+              "contact": "通过：右小腿压在低软垫；右跟悬出垫边；双手分别握两带尾且方向朝身体，宽带绕前足跖骨区，趾端未被勒住",
+              "proportion": "通过：双膝至踝连续，小腿/足透视自然，双手指形握持合理，无多肢",
+              "appearance": "通过：肤色/服装/柔光/灰蓝背景与参考相容；局部任务未完整展示脸部",
+              "group": "通过：作为s04的唯一编辑基础，摄影机与身体支持未变"
+            },
+            "status": "accepted"
+          },
+          {
+            "frame": "s04",
+            "group": "跖屈组终点",
+            "target": "双手稳牵不松、小腿固定，右前足对抗朝身体拉力缓慢下推",
+            "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-7a8f-7830-8cbf-f17504fd0989/exec-343e3a54-41b2-4803-a44c-771fa1cf85c0.png",
+            "final_path": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s04.png",
+            "sha256": "E13F274390FB023AD4BF458FD4D21D193BDC7C43881EE23C12FD6509C7132EAB",
+            "width": 1122,
+            "height": 1402,
+            "reused": false,
+            "reused_original_path": null,
+            "derived_from": "s03合格图编辑，仅改变右踝足及相应带形",
+            "checks": {
+              "visible_posture": "通过：前足由中立向前下伸，整足在踝变化，未仅蜷趾",
+              "contact": "通过：右小腿/低软垫接触与双手握带不变；足跟与地面留间隙；前足宽带接触合理",
+              "proportion": "通过：踝关节与小腿/足连续，足长与相机透视保持自然",
+              "appearance": "通过：白T/深灰裤/灰蓝背景、照明和躯干完全对应s03",
+              "group": "通过：与s03同机位、双膝双手/软垫/垫边相同，足姿差异清晰"
+            },
+            "status": "accepted"
+          },
+          {
+            "frame": "s05",
+            "group": "内翻组准备（独立设置）",
+            "target": "右踝自然中立、足趾放松；带绕前足、右脚解剖外侧锚点从外侧牵拉",
+            "generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-7a8f-7830-8cbf-f17504fd0989/exec-36356a8d-c9f6-4cbc-ba2f-a3e310b9da3b.png",
+            "final_path": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s05.png",
+            "sha256": "A36F948E93F00BA96B15820CCEE764A30804445764BD90303E14FF4C9B92AF9F",
+            "width": 1122,
+            "height": 1402,
+            "reused": false,
+            "reused_original_path": null,
+            "derived_from": "使用s03固定机位/外观及中立足作为参考，移除手牵尾端，改独立外侧锚座",
+            "checks": {
+              "visible_posture": "通过：长坐、右踝中立、左足远镜用于左右解剖方向参考，未提前内翻",
+              "contact": "通过：右小腿低软垫支持，右跟活动间隙可见；宽带绕前足趾后，与外侧灰色低锚座金属环连续连接；双手空手放在大腿",
+              "proportion": "通过：腿足尺度和五趾轮廓自然，双手各五指无额外肢体",
+              "appearance": "通过：机位/低软垫/灰垫/服装/背景及光线对应s03",
+              "group": "通过：锚座在近镜右足小趾外侧、远离另一左腿；与s01前方锚点、s03手牵设置均有清楚区别。s06不在本批请求内"
+            },
+            "status": "accepted"
+          }
+        ],
+        "group_check": {
+          "plantarflexion": "s03↔s04同机位、同支持、同握带：中立到前下推；回程可复用s03。",
+          "inversion": "s05是独立内翻组准备，不得作为s04的连续下一步。带设置切换须另有卸张力文字；s06未制作。",
+          "four_directions": "116共有四个独立方向组，各自固定设置；本记录不表示s01到s08连续八步。",
+          "cross_task_visual_reference": "已view_image另一任务116-s01首图作灰垫/右足/色调参考；其全身机位未用于本组三图，背屈组负责代理正在改局部。",
+          "preserved_originals": true,
+          "non_destructive_copy": true,
+          "final_files_viewed": true
+        },
+        "independent_reviews": [
+          {
+            "reviewer": "主代理 /root",
+            "date": "2026-10-14",
+            "method": "独立view_image",
+            "frames": [
+              "s03",
+              "s04"
+            ],
+            "reviewed_paths": [
+              "C:/Users/Administrator/.codex/generated_images/01a1393e-7a8f-7830-8cbf-f17504fd0989/exec-22cd116e-a759-47ea-8908-11f1730f6009.png",
+              "C:/Users/Administrator/.codex/generated_images/01a1393e-7a8f-7830-8cbf-f17504fd0989/exec-343e3a54-41b2-4803-a44c-771fa1cf85c0.png"
+            ],
+            "result": "可用",
+            "findings": "握带来自身体方向；右踝中立→前下推；右跟越过垫边和软垫支持可见；动作/带位/比例可用。"
+          },
+          {
+            "reviewer": "主代理 /root",
+            "date": "2026-10-14",
+            "method": "独立view_image",
+            "frames": [
+              "s05"
+            ],
+            "reviewed_paths": [
+              "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s05.png"
+            ],
+            "result": "可用",
+            "findings": "右侧测试足近镜，外侧锚点在近镜前景、与远侧左足相反侧；带位/中立足/软垫/足比例清楚。"
+          }
+        ],
+        "limitations": [
+          "画面验收仅确认可见体位、方向、支撑、器械和比例；不证明实际带张力、韧带应力、肌力等级、疗效或临床许可。",
+          "局部近景不完整展示脸部/马尾，身份由三个参考输入锁定及可见肤色、体形、服装一致性支持，未将不可见面部细节标为已直接核验。",
+          "照片表达姿态差异，不给出真实测量的踝角度；prompt中的角度仅是制作姿态控制提示。",
+          "生成锚座是视觉示范道具；实际固定可靠性不能由静态照片验证。"
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "画面审查仅针对可见姿势、人体比例与器材/支撑接触；不证明实际负荷、肌肉发力、临床适用性、下降速度、保持时长或测量精度。",
+    "局部近景按清单保留相关膝、小腿、踝足和必要躯干/手位；面部多在画外，身份由三参考与原图锁定。116-s01/s02远侧非活动左足外缘有局部裁切，测试右足完整。",
+    "116按方向分别设置，不能将本轮五帧当作连续动作。"
+  ],
+  "preservation": "没有覆盖旧单图/旧步骤图或共享进度JSON；未修改正式应用、版本、桌面快捷方式或Git。"
+}

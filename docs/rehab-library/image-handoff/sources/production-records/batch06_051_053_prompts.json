@@ -1,0 +1,169 @@
+{
+  "generation_mode": "built-in image_gen",
+  "created_at_utc": "2026-10-13T15:18:34.035Z",
+  "source_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+  "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+  "reference_images": [
+    {
+      "path": "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1435890
+    },
+    {
+      "path": "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1486874
+    },
+    {
+      "path": "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1392350
+    }
+  ],
+  "files": [
+    {
+      "number": "051",
+      "id": "E-AXU-015",
+      "title": "肩水平内收/水平外展功能筛查",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\051_E-AXU-015_肩水平内收／水平外展功能筛查.png",
+      "phase": "单臂在舒适肩高主动横跨身前至对侧，另一臂自然下垂，不牵拉抬起的手臂；躯干保持自然稳定。只展示水平内收阶段。",
+      "source_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+      "source_card_lines": "3585-3649",
+      "source_reference": "REF-S025、REF-S085、REF-S028；Shoulder ROM、Wall Climbers及主动抬举路线；具体平面另参Stanford肩检查。",
+      "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-d7c7263e-7866-493d-ba93-57e2f0f9d70e.png",
+      "prompt": "Use case: photorealistic-natural.\nAsset type: one individual rehabilitation assessment library photograph for shoulder horizontal adduction, ONE phase, ONE scene.\nInput images: ALL THREE original references show the exact SAME adult East Asian woman. Preserve her same recognizable face, black low ponytail, white fitted short-sleeve crew-neck T-shirt, dark charcoal full-length LONG trousers, normal adult body proportions, and original cool cloudy gray-blue studio photography style. The reference arm positions are not the requested action.\nPrimary request: standing active cross-body shoulder horizontal adduction at comfortable shoulder height, WITHOUT assistance from the other hand.\nPose: She stands naturally upright with chest and pelvis facing forward. Her RIGHT arm is raised at shoulder height and crosses HORIZONTALLY across the FRONT of her chest toward her LEFT side; the right upper arm clearly crosses over the sternum, elbow only slightly bent, and the right forearm and relaxed hand extend just beyond her opposite shoulder toward the RIGHT side of the image. Palm naturally downward, fingertips complete and visible. Her LEFT arm hangs relaxed at her side and DOES NOT grab, pull, push, support or stretch the raised arm. Only ONE arm crosses the chest, not both arms folded. Torso remains forward and stable, no turning her body to follow the arm, no shrugging, no extreme range, no leaning. Head neutral, calm natural expression.\nCamera/framing: camera from slightly above and slightly oblique in front, as required to show both shoulders, the arm crossing across the body, shoulder-level upper arm height and stable torso. Portrait studio composition from above complete head and raised arm down through hips and thighs, full right hand and every fingertip comfortably inside frame, realistic adult anatomy.\nScene/backdrop: exact original muted cool cloudy pale gray-blue backdrop with subtle diffuse mottling from all references, soft neutral photographic light, real skin and fabric.\nConstraints: exact same woman identity and long trousers, no shorts; natural two arms and two legs. Single standalone photorealistic photo. No text, arrows, captions, labels, measurement marks, motion trails, collage, inset, diagram, watermark, props or extra people. No cropped fingers.",
+      "referenced_image_paths": [
+        "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+        "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+        "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+      ],
+      "attempts": 1,
+      "selected_attempt": 1,
+      "sha256": "F8CF015117E95877FEFD8A0161E9EC8A2CA896E2F5CD0B7E8A08A5A36CC1D764",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1688230,
+      "review": {
+        "accepted": true,
+        "identity": "保持三张原参考成人女性的面貌、黑色低马尾、白色贴身短袖与深炭灰长裤，成人比例自然。",
+        "pose": "一臂横跨胸前，肘自然近伸直，另一臂自然下垂未作辅助，手掌手指完整可见，无明显大幅躯干随转。",
+        "composition": "单人单场景1122×1402摄影，原灰蓝云雾背景，头至大腿构图，完整手指，无文字、箭头或拼图。"
+      },
+      "attempt_history": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: photorealistic-natural.\nAsset type: one individual rehabilitation assessment library photograph for shoulder horizontal adduction, ONE phase, ONE scene.\nInput images: ALL THREE original references show the exact SAME adult East Asian woman. Preserve her same recognizable face, black low ponytail, white fitted short-sleeve crew-neck T-shirt, dark charcoal full-length LONG trousers, normal adult body proportions, and original cool cloudy gray-blue studio photography style. The reference arm positions are not the requested action.\nPrimary request: standing active cross-body shoulder horizontal adduction at comfortable shoulder height, WITHOUT assistance from the other hand.\nPose: She stands naturally upright with chest and pelvis facing forward. Her RIGHT arm is raised at shoulder height and crosses HORIZONTALLY across the FRONT of her chest toward her LEFT side; the right upper arm clearly crosses over the sternum, elbow only slightly bent, and the right forearm and relaxed hand extend just beyond her opposite shoulder toward the RIGHT side of the image. Palm naturally downward, fingertips complete and visible. Her LEFT arm hangs relaxed at her side and DOES NOT grab, pull, push, support or stretch the raised arm. Only ONE arm crosses the chest, not both arms folded. Torso remains forward and stable, no turning her body to follow the arm, no shrugging, no extreme range, no leaning. Head neutral, calm natural expression.\nCamera/framing: camera from slightly above and slightly oblique in front, as required to show both shoulders, the arm crossing across the body, shoulder-level upper arm height and stable torso. Portrait studio composition from above complete head and raised arm down through hips and thighs, full right hand and every fingertip comfortably inside frame, realistic adult anatomy.\nScene/backdrop: exact original muted cool cloudy pale gray-blue backdrop with subtle diffuse mottling from all references, soft neutral photographic light, real skin and fabric.\nConstraints: exact same woman identity and long trousers, no shorts; natural two arms and two legs. Single standalone photorealistic photo. No text, arrows, captions, labels, measurement marks, motion trails, collage, inset, diagram, watermark, props or extra people. No cropped fingers.",
+          "referenced_image_paths": [
+            "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+            "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+            "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+          ],
+          "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-d7c7263e-7866-493d-ba93-57e2f0f9d70e.png",
+          "sha256": "F8CF015117E95877FEFD8A0161E9EC8A2CA896E2F5CD0B7E8A08A5A36CC1D764",
+          "width": 1122,
+          "height": 1402,
+          "selected": true,
+          "review": "一次通过，已人工查看生成图；一臂横跨胸前，肘自然近伸直，另一臂自然下垂未作辅助，手掌手指完整可见，无明显大幅躯干随转。"
+        }
+      ]
+    },
+    {
+      "number": "052",
+      "id": "E-AXU-016",
+      "title": "梳头/够后腰功能够取",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\052_E-AXU-016_梳头／够后腰功能够取.png",
+      "phase": "单手自然够取并轻触头顶部，停顿约一秒；另一手自然下垂，头与腰保持自然，不靠另一手牵拉。仅展示摸头顶任务。",
+      "source_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+      "source_card_lines": "3655-3719",
+      "source_reference": "REF-S025、REF-S085、REF-S088；Shoulder internal/external rotation：头后和背后功能够取；主动观察分轨。",
+      "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-b2c153c5-d785-42a7-ae12-b182c484ccc7.png",
+      "prompt": "Use case: photorealistic-natural.\nAsset type: one individual rehabilitation assessment photograph for functional reaching to the top of head, ONE single movement phase.\nInput images: ALL THREE original references show the exact SAME adult East Asian woman and must be used to match her exact recognizable face, black low ponytail, white fitted short-sleeve crew-neck T-shirt, dark charcoal full-length LONG trousers, normal adult proportions, original cool cloudy pale gray-blue studio background and soft photography. Do not copy the reference standing arm exercises.\nPrimary request: natural single-hand functional reach to TOUCH THE CROWN / TOP OF HER OWN HEAD, paused comfortably as a daily-life hair-grooming reach. No object, no comb required.\nPose: She stands naturally upright in a slight right-facing side / three-quarter profile, camera-facing arm raised and elbow bent so its hand rests gently on the TOP of her head, fingers naturally in contact with her hair at the crown and entire hand contour visible. Raised upper arm angled upward comfortably, elbow comfortably away from torso and plainly visible. Her other arm hangs relaxed by her side; no other-hand pulling or assistance. Head remains upright and neutral, not ducking or tilting to meet the hand, neck natural. Torso and pelvis remain upright and relaxed without leaning, twisting or overarch. Calm natural expression, shoulders not forcefully shrugged.\nComposition/framing: portrait-like soft studio photograph, frame from above the complete raised elbow and whole hand on head down through hips and thighs, ample margin above head and elbow. Shoulder, elbow, wrist, hand, fingertips, head and hip visible; do not crop fingers or the elbow. The photo clearly shows hand actually contacting the top of the head. Single woman and single scene, normal adult anatomy.\nScene/backdrop: ORIGINAL cool cloudy gray-blue softly mottled photography background from ALL THREE references, consistent soft lighting, realistic skin and fabric texture.\nConstraints: identical adult woman, black LOW ponytail, white fitted short sleeves and charcoal LONG trousers, no shorts, no changed hairstyle. Anatomically correct two arms and two legs, natural hand. No text, arrows, captions, labels, measurements, collage, inset, motion trails, watermark, diagram, comb, other props or extra people. This is touching the top of head only, not two tasks at once and not reaching behind low back.",
+      "referenced_image_paths": [
+        "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+        "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+        "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+      ],
+      "attempts": 1,
+      "selected_attempt": 1,
+      "sha256": "73068D9D931BB52DE591A178A55A9237509F5E5FC5C19F868FC8FAC61CCF0793",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1667267,
+      "review": {
+        "accepted": true,
+        "identity": "保持三张原参考成人女性的面貌、黑色低马尾、白色贴身短袖与深炭灰长裤，成人比例自然。",
+        "pose": "一手掌轻贴头冠部，抬臂屈肘可见，另一臂下垂，头颈直立无明显迎手代偿，完整手及肘留在画面。",
+        "composition": "单人单场景1122×1402摄影，原灰蓝云雾背景，头至大腿构图，完整手指，无文字、箭头或拼图。"
+      },
+      "attempt_history": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: photorealistic-natural.\nAsset type: one individual rehabilitation assessment photograph for functional reaching to the top of head, ONE single movement phase.\nInput images: ALL THREE original references show the exact SAME adult East Asian woman and must be used to match her exact recognizable face, black low ponytail, white fitted short-sleeve crew-neck T-shirt, dark charcoal full-length LONG trousers, normal adult proportions, original cool cloudy pale gray-blue studio background and soft photography. Do not copy the reference standing arm exercises.\nPrimary request: natural single-hand functional reach to TOUCH THE CROWN / TOP OF HER OWN HEAD, paused comfortably as a daily-life hair-grooming reach. No object, no comb required.\nPose: She stands naturally upright in a slight right-facing side / three-quarter profile, camera-facing arm raised and elbow bent so its hand rests gently on the TOP of her head, fingers naturally in contact with her hair at the crown and entire hand contour visible. Raised upper arm angled upward comfortably, elbow comfortably away from torso and plainly visible. Her other arm hangs relaxed by her side; no other-hand pulling or assistance. Head remains upright and neutral, not ducking or tilting to meet the hand, neck natural. Torso and pelvis remain upright and relaxed without leaning, twisting or overarch. Calm natural expression, shoulders not forcefully shrugged.\nComposition/framing: portrait-like soft studio photograph, frame from above the complete raised elbow and whole hand on head down through hips and thighs, ample margin above head and elbow. Shoulder, elbow, wrist, hand, fingertips, head and hip visible; do not crop fingers or the elbow. The photo clearly shows hand actually contacting the top of the head. Single woman and single scene, normal adult anatomy.\nScene/backdrop: ORIGINAL cool cloudy gray-blue softly mottled photography background from ALL THREE references, consistent soft lighting, realistic skin and fabric texture.\nConstraints: identical adult woman, black LOW ponytail, white fitted short sleeves and charcoal LONG trousers, no shorts, no changed hairstyle. Anatomically correct two arms and two legs, natural hand. No text, arrows, captions, labels, measurements, collage, inset, motion trails, watermark, diagram, comb, other props or extra people. This is touching the top of head only, not two tasks at once and not reaching behind low back.",
+          "referenced_image_paths": [
+            "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+            "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+            "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+          ],
+          "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-b2c153c5-d785-42a7-ae12-b182c484ccc7.png",
+          "sha256": "73068D9D931BB52DE591A178A55A9237509F5E5FC5C19F868FC8FAC61CCF0793",
+          "width": 1122,
+          "height": 1402,
+          "selected": true,
+          "review": "一次通过，已人工查看生成图；一手掌轻贴头冠部，抬臂屈肘可见，另一臂下垂，头颈直立无明显迎手代偿，完整手及肘留在画面。"
+        }
+      ]
+    },
+    {
+      "number": "053",
+      "id": "E-AXU-026",
+      "title": "墙面滑手的抬举与代偿观察",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\053_E-AXU-026_墙面滑手的抬举与代偿观察.png",
+      "phase": "面墙自然站立，单手通过小折叠毛巾支持在墙上上滑至舒适较高位置并暂停；另一臂自然下垂，躯干直立不借腰后仰碰高点。",
+      "source_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+      "source_card_lines": "3725-3775",
+      "source_reference": "REF-S025；Wall Climbers / Table Stretch Flexion & Abduction：抬举与回落。",
+      "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-2507d219-496d-48f2-a79b-c8dcedfde9f4.png",
+      "prompt": "Use case: photorealistic-natural.\nAsset type: one individual rehabilitation assessment photograph for supported wall hand-slide elevation, ONE comfortable upward phase.\nInput images: Use ALL THREE original reference photographs to faithfully preserve the exact SAME adult East Asian woman's recognizable face, black LOW ponytail, white fitted short-sleeved crew-neck T-shirt, dark charcoal full-length LONG trousers, normal adult body proportions, and ORIGINAL soft cool cloudy pale gray-blue photographic studio appearance.\nPrimary request: standing facing a wall, single hand gently sliding UP the wall on a small folded towel, paused at a comfortable elevated hand position, no leaning backward to reach higher.\nPose: Right-facing true SIDE PROFILE to the camera, woman naturally upright facing a vertical wall at the RIGHT edge of image, standing a comfortable arm-reach distance from it. The camera-facing arm is raised forward and upward; its PALM is flat against a small folded light-gray towel held BETWEEN palm and wall at around forehead height. Hand and fingertips naturally point upward along the wall, with visible physically correct towel-wall contact. Upper arm clearly elevated above a horizontal forward reach, elbow naturally almost straight with a small relaxed bend; shoulder allowed natural movement, not forcefully shrugged. Other arm hangs relaxed at her side. Torso and pelvis stay vertical without arching lower back, backward leaning, body twisting or pushing onto wall. Head and neck neutral, look toward hand, calm expression. One stable standing pose. If feet visible, white flat sneakers.\nScene/backdrop: preserve exact ORIGINAL muted cool cloudy gray-blue studio backdrop and soft photography lighting from references across the background; add only a simple plain vertical cool gray-blue wall plane occupying the right edge for the required contact. No room interior, no gym. Towel is the only added small prop.\nComposition/framing: side profile, portrait-style photographic composition from above the COMPLETE elevated hand/fingers and head down to hips and thighs is sufficient. Shoulder, elbow, wrist, fingertips, towel and wall contact, head and hip must be visible. Full palm/finger contour stays inside frame with margin; no cropped fingertips. Camera horizontal at torso height.\nConstraints: same exact woman, face, low ponytail, white fitted tee and LONG charcoal trousers, no shorts. Anatomically correct two arms, natural hands, two legs. Single standalone real photo with realistic skin and fabric. No text, captions, arrows, labels, measurements, collage, inset, motion trails, diagram, watermarks or extra people. Must show actual hand-on-towel-on-wall contact, not hand hovering and not forearm pushing.",
+      "referenced_image_paths": [
+        "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+        "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+        "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+      ],
+      "attempts": 1,
+      "selected_attempt": 1,
+      "sha256": "8ACEC53812B1C7854964591C1BD6983A0E1DF3477028CC47C0B3E8B14EEBDCB9",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1751302,
+      "review": {
+        "accepted": true,
+        "identity": "保持三张原参考成人女性的面貌、黑色低马尾、白色贴身短袖与深炭灰长裤，成人比例自然。",
+        "pose": "侧面完整显示肩肘腕及手掌经过毛巾与墙面的接触，手臂向前上方抬举，另一臂垂下，躯干无明显后仰，手指完整。",
+        "composition": "单人单场景1122×1402摄影，原灰蓝云雾背景，头至大腿构图，完整手指，无文字、箭头或拼图。"
+      },
+      "attempt_history": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: photorealistic-natural.\nAsset type: one individual rehabilitation assessment photograph for supported wall hand-slide elevation, ONE comfortable upward phase.\nInput images: Use ALL THREE original reference photographs to faithfully preserve the exact SAME adult East Asian woman's recognizable face, black LOW ponytail, white fitted short-sleeved crew-neck T-shirt, dark charcoal full-length LONG trousers, normal adult body proportions, and ORIGINAL soft cool cloudy pale gray-blue photographic studio appearance.\nPrimary request: standing facing a wall, single hand gently sliding UP the wall on a small folded towel, paused at a comfortable elevated hand position, no leaning backward to reach higher.\nPose: Right-facing true SIDE PROFILE to the camera, woman naturally upright facing a vertical wall at the RIGHT edge of image, standing a comfortable arm-reach distance from it. The camera-facing arm is raised forward and upward; its PALM is flat against a small folded light-gray towel held BETWEEN palm and wall at around forehead height. Hand and fingertips naturally point upward along the wall, with visible physically correct towel-wall contact. Upper arm clearly elevated above a horizontal forward reach, elbow naturally almost straight with a small relaxed bend; shoulder allowed natural movement, not forcefully shrugged. Other arm hangs relaxed at her side. Torso and pelvis stay vertical without arching lower back, backward leaning, body twisting or pushing onto wall. Head and neck neutral, look toward hand, calm expression. One stable standing pose. If feet visible, white flat sneakers.\nScene/backdrop: preserve exact ORIGINAL muted cool cloudy gray-blue studio backdrop and soft photography lighting from references across the background; add only a simple plain vertical cool gray-blue wall plane occupying the right edge for the required contact. No room interior, no gym. Towel is the only added small prop.\nComposition/framing: side profile, portrait-style photographic composition from above the COMPLETE elevated hand/fingers and head down to hips and thighs is sufficient. Shoulder, elbow, wrist, fingertips, towel and wall contact, head and hip must be visible. Full palm/finger contour stays inside frame with margin; no cropped fingertips. Camera horizontal at torso height.\nConstraints: same exact woman, face, low ponytail, white fitted tee and LONG charcoal trousers, no shorts. Anatomically correct two arms, natural hands, two legs. Single standalone real photo with realistic skin and fabric. No text, captions, arrows, labels, measurements, collage, inset, motion trails, diagram, watermarks or extra people. Must show actual hand-on-towel-on-wall contact, not hand hovering and not forearm pushing.",
+          "referenced_image_paths": [
+            "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+            "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+            "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+          ],
+          "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a1-9e51-78a0-ab60-ca77ec19ba41\\exec-2507d219-496d-48f2-a79b-c8dcedfde9f4.png",
+          "sha256": "8ACEC53812B1C7854964591C1BD6983A0E1DF3477028CC47C0B3E8B14EEBDCB9",
+          "width": 1122,
+          "height": 1402,
+          "selected": true,
+          "review": "一次通过，已人工查看生成图；侧面完整显示肩肘腕及手掌经过毛巾与墙面的接触，手臂向前上方抬举，另一臂垂下，躯干无明显后仰，手指完整。"
+        }
+      ]
+    }
+  ]
+}

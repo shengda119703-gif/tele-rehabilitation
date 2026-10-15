@@ -20,6 +20,7 @@ class ProductBackend:
         self.jobs, self.results = queue.Queue(), queue.Queue()
         self.stop_event = threading.Event()
         self.bridge = None
+        self.assistant_cache = {}
         self.factory = bridge_factory
         from .daily_store import DailyStore
         self.daily = DailyStore(self.data_dir)
@@ -86,6 +87,23 @@ class ProductBackend:
                             result = {'connected': connected, 'username': session['username'] if connected else '', 'upload_enabled': client.consent(owner) if connected else False}
                         elif not connected:
                             raise CloudError('请先在电脑工作台登录，并确认当前本人档案与云账号绑定')
+                        elif operation == 'workbench.assistantPreferences':
+                            result = client.assistant_preferences(payload if 'health_context' in payload else None)
+                        elif operation == 'workbench.assistantConversation':
+                            result = client.assistant_conversation(payload.get('after', 0))
+                        elif operation == 'workbench.assistantTurn':
+                            result = client.assistant_turn(payload.get('text'))
+                        elif operation in ('workbench.assessmentPlans', 'workbench.assessmentPlanCancel'):
+                            result = client.assistant_assessment_plans(owner,
+                                payload.get('patient_id'), payload.get('account_id'),
+                                payload.get('plan_id') if operation == 'workbench.assessmentPlanCancel' else None,
+                                cancel=operation == 'workbench.assessmentPlanCancel')
+                        elif operation == 'workbench.candidate':
+                            result = client.candidate(payload['kind'], payload['operation_id'])
+                        elif operation == 'workbench.workflow':
+                            result = client.workflow()
+                        elif operation == 'workbench.workflowProfile':
+                            result = client.save_workflow_profile(payload)
                         elif operation == 'workbench.messages':
                             result = client.messages(payload.get('before', 0))
                         elif operation == 'workbench.send':
@@ -103,7 +121,7 @@ class ProductBackend:
                                 raise CloudError('请先在本机保存本人康复记录')
                             if operation == 'workbench.sync':
                                 if self.bridge is None:
-                                    self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150)
+                                    self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150,env={'ANKANG_PRODUCT_DISABLE_MODEL':'1'})
                                 client.queue_product(owner, self.bridge.product('snapshot', owner, {}))
                                 with self._workbench_store(readonly=True) as store:
                                     client.queue_rehab(owner, store)
@@ -149,7 +167,7 @@ class ProductBackend:
                         else:
                             payload['bytes'] = list(data)
                     if self.bridge is None:
-                        self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150)
+                        self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150,env={'ANKANG_PRODUCT_DISABLE_MODEL':'1'})
                     tools = RehabReadTools(self.data_dir/'home_rehab.sqlite3', scope) if scope else None
                     cloud_client = None
                     cloud_directory = self.data_dir / 'cloud-account'
@@ -161,7 +179,9 @@ class ProductBackend:
                             binding = connection.execute('SELECT patient_id FROM bindings WHERE local_id=?', (owner,)).fetchone()
                         if session and binding and binding[0] == session['patient_id']:
                             cloud_client = candidate
-                    self.bridge.cloud_conversation = cloud_client is not None
+                    # Submitted public text is sent directly below. Local/private
+                    # product turns never select a native model or a cloud tool.
+                    self.bridge.cloud_conversation = False
                     def host_tools(name, arguments):
                         if name == 'conversation.cloud_reply':
                             if cloud_client is None or set(arguments) != {'text'} or not isinstance(arguments['text'], str):
@@ -188,12 +208,23 @@ class ProductBackend:
                         result = self.daily.apply(owner, operation, payload, scope)
                         self._deliver((operation, owner, token, result, None))
                         continue
-                    result = self.bridge.product(operation, owner, payload, tool_handler=host_tools)
+                    if operation == 'chat' and cloud_client is not None and not cloud_client.assistant_private(payload.get('text', ''), payload.get('private')):
+                        response = cloud_client.assistant_turn(payload['text'])
+                        metadata = {'provider': response['source'], 'status': 'replied'}
+                        result = {'turn': {**response['turn'], 'reply': {'text': response['turn']['answer'], 'persisted': True},
+                            'conversation': metadata, 'appliedChanges': {}, 'persistence': {'status': 'saved'}},
+                            'snapshot': self.bridge.product('snapshot', owner, {}, tool_handler=host_tools)}
+                    else:
+                        if operation == 'chat' and payload.get('private') is True:
+                            payload['text'] = '不要记录：' + payload['text']
+                        result = self.bridge.product(operation, owner, payload, tool_handler=host_tools)
                     if operation == 'lifecycle.clear':
                         self.daily.clear(owner)
                     if operation == 'lifecycle.export' and isinstance(result, dict):
                         result['dailyProduct'] = self.daily.snapshot(owner, scope)
                     snapshot = result.get('snapshot', result) if isinstance(result, dict) else None
+                    if isinstance(snapshot, dict) and 'state' in snapshot:
+                        self._assistant_snapshot(snapshot, cloud_client, owner, result.get('turn') if operation == 'chat' else None)
                     if isinstance(snapshot, dict) and 'state' in snapshot and tools:
                         snapshot['rehabilitation'] = {name: tools(name, {}) for name in TOOLS}
                         snapshot['rehabilitation_ui'] = tools.desktop_snapshot()
@@ -244,6 +275,51 @@ class ProductBackend:
         if self.bridge:
             self.bridge.terminate()
         self.thread.join(timeout=2)
+
+    def _assistant_snapshot(self, snapshot, client, owner, submitted=None):
+        """Server chat is authoritative; no local health facts are uploaded here."""
+        snapshot['cloudAssistant'] = {'connected': False}
+        if client is None:
+            return
+        session = client.session()
+        if not session:
+            return
+        patient, account = session['patient_id'], session['account_id']
+        key = (owner, patient, account)
+        items = {row['id']: row for row in self.assistant_cache.get(key, [])}
+        unresolved = [row['sequence'] for row in items.values() if not isinstance(row.get('answer'), str)]
+        after = min(unresolved) - 1 if unresolved else max((row['sequence'] for row in items.values()), default=0)
+        if submitted and isinstance(submitted.get('answer'), str):
+            items[submitted['id']] = {**submitted, 'source': submitted.get('conversation', {}).get('provider')}
+        error = ''
+        try:
+            conversation = client.assistant_conversation(after)
+            items.update({row['id']: {**items.get(row['id'], {}), **row} for row in conversation['items']})
+        except Exception as exc:
+            error = str(exc)
+        current = client.session()
+        if not current or (current['patient_id'], current['account_id']) != (patient, account):
+            raise ValueError('账号已变化，旧管家对话未显示')
+        rows = sorted(items.values(), key=lambda row: row['sequence'])
+        self.assistant_cache = {key: rows}
+        with client.db() as db:
+            pending = bool(db.execute('SELECT 1 FROM assistant_pending WHERE patient_id=? AND account_id=?', (patient, account)).fetchone())
+        snapshot['cloudAssistant'] = dict(connected=True, patient_id=patient, account_id=account, pending=pending, error=error)
+        snapshot['conversationModelAvailable'] = True
+        local = [row for row in snapshot['state'].get('chat', []) if not row.get('cloud_turn_id')]
+        from datetime import datetime, timezone
+        for row in rows:
+            timestamp = row['created_at']
+            if isinstance(timestamp, (int, float)):
+                timestamp = datetime.fromtimestamp(timestamp, timezone.utc).isoformat()
+            common = dict(time=timestamp, persisted=True, cloud_turn_id=row['id'])
+            if not isinstance(row.get('answer'), str):
+                local.append(dict(common, id=row['id'] + ':user', role='elder', text=row['text'], pending=True))
+                continue
+            local.append(dict(common, id=row['id'] + ':user', role='elder', text=row['text']))
+            local.append(dict(common, id=row['id'] + ':answer', role='agent', text=row['answer'], actions=row.get('actions', []),
+                conversation={'provider': row.get('source'), 'status': 'replied'}))
+        snapshot['state']['chat'] = local
 
     def _workbench_store(self, readonly=False):
         from contextlib import contextmanager

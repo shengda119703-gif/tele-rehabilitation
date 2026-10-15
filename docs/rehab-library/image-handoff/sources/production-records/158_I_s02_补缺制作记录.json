@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-10-14",
+  "action_id": "T-AXU-050",
+  "action_name": "俯卧I/Y/T/W分路线抬臂",
+  "step": "s02",
+  "route": "I",
+  "stage": "抬起",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "target_pose": "俯卧，双臂沿身体两侧轻抬离垫，额头由同一软垫支持，胸腹仍在垫上。",
+  "generation_tool": "built-in image_gen.imagegen",
+  "generation_intent": "edit",
+  "planned_filename": "158_T-AXU-050_s02.png",
+  "final_path": "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s02.png",
+  "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13ad9-8df1-77d2-a406-9d97d6c8b9b9/exec-5d424728-06f5-40bc-8875-e5e48efde40e.png",
+  "edit_target": "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s01.png",
+  "referenced_image_paths": [
+    "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s01.png"
+  ],
+  "transparent_background": false,
+  "prompt": "Use case: identity-preserve\nAsset type: one photorealistic rehabilitation exercise step photograph, 158 T-AXU-050 s02, I-route gentle arm lift.\nInput image 1 is the EDIT TARGET: the existing I-route starting photograph. Make a narrowly scoped edit to this exact photograph. Change ONLY the height of BOTH arms and their local shadows, from resting on the mat to gently lifted above the mat, while preserving their existing direction along the sides of the torso toward the feet.\n\nPOSE: the same woman lies prone with head toward the BOTTOM of the image and feet toward the TOP. Both arms remain close to her body, parallel to the body's long axis, with each hand beside its own hip/upper thigh, pointing toward the feet. Elbows comfortably straight, neutral wrists and relaxed empty hands. Gently raise BOTH complete arms a small amount, around 5 to 8 cm, with upper arms, elbows, forearms, wrists and all fingertips clearly off the mat. Make the small lift visually legible through realistic separation and detached soft shadows beneath BOTH arms and BOTH hands; neither hand rests on the mat or on the thigh. The shoulders remain naturally connected to the supported torso. Keep both arms symmetric with anatomically natural limb lengths, continuous joints and five fingers per hand. This I route stays at the body sides.\n\nSTRICT INVARIANTS: preserve the woman's identity, age, skin tone, body proportions, black ponytail, plain white short-sleeve T-shirt, dark gray long trousers, bare feet, all non-arm body positions, original body scale and location. Her forehead remains gently supported on the same small gray soft pad. The neck is neutral. The chest, abdomen, pelvis, legs and feet remain resting on the same large gray-blue exercise mat. Preserve the exact camera angle, perspective, focal-length feel, 1536-by-1024 landscape composition, mat shape and corners, gray-blue studio background, soft photographic lighting and natural texture.\n\nNo head lift, no raised chest, no back arch, no shrug, no overhead arms, no Y/T/W arm direction, no weights or other equipment. All hands and feet stay fully in frame. Return one single realistic photograph without text, numbers, arrows, border, inset, montage or watermark.",
+  "dimensions": {
+    "width": 1536,
+    "height": 1024
+  },
+  "sha256": "1153BD30D86DBC9EB699D78EC9A8CC8DEE79A2C8784F911F2DD5CE9E21957D1A",
+  "reused_existing": false,
+  "qa": {
+    "status": "通过",
+    "review_method": "主代理实际检查内置生成工具返回的完整画面，再用 view_image 检查最终保存图，并由只读子代理独立复核；生成原件路径在主代理端 view_image 显示极小，复制至最终目录后显示完整。文件尺寸由 System.Drawing 读取，保存副本 SHA256 与原件一致。",
+    "identity_clothing_background": "与s01保持同一人物、白短袖、深灰裤、黑马尾、赤脚、灰蓝背景及柔和光线。",
+    "camera_composition": "斜上方、头下脚上构图，原宽垫、身体位置及画幅保留。",
+    "route_pose": "双臂沿体侧向脚方向低幅抬起，肘自然近伸直；未转为头顶举臂、Y、T或W。",
+    "support_contact": "两侧手臂可见离垫阴影；额头仍落在原软垫，胸腹、骨盆、腿脚保留支撑，未见抬头、抬胸或伸腰借力。",
+    "anatomy_visibility": "左右臂关节连续、比例自然，双手双足完整入镜。",
+    "equipment_and_overlays": "空手，无器械、文字、编号、箭头或拼图。",
+    "limitations": "提示词中的5–8厘米为视觉生成目标，不能从照片精确测定实际抬臂高度或确认肌肉发力。"
+  },
+  "discarded_attempts": [],
+  "notes": [
+    "以已批准s01作为唯一编辑目标。",
+    "新增指定s02和本记录，保留生成原件；未覆盖同组已有图片，未修改清单、其他进度JSON或正式软件仓库。"
+  ]
+}

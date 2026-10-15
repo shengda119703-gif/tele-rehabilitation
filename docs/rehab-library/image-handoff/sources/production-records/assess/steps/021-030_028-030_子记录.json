@@ -1,0 +1,336 @@
+{
+  "source": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "items": [
+    {
+      "sequence": 28,
+      "id": "E-LOW-029",
+      "step": 1,
+      "label": "双脚脚跟接地准备位",
+      "planned_filename": "028_E-LOW-029_s01.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\028_E-LOW-029_s01.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "18021B8A627634DE95260EEF2A25136CF9B0BE1C3FEAD1806F9A45E4FAE614F9",
+      "bytes": 1633933,
+      "source_generated": "C:/Users/Administrator/.codex/generated_images/01a137f0-2694-7023-92c8-1734f1cbc6f5/exec-8057fd47-cc27-44ca-8272-528fdb8ea22d.png",
+      "reused": false,
+      "reused_from": null,
+      "prompt": "Use case: scientific-educational.\nAsset type: one photorealistic rehabilitation assessment step photograph, no captions, no collage.\nInput images 1–3 are identity, clothing, photographic style and background-color references ONLY. Preserve the exact same adult East Asian woman: same facial features, age, skin tone, build and black low ponytail; white short-sleeve T-shirt and dark charcoal full-length pants. Anatomically normal adult proportions, natural hands and ten bare toes.\n\nScene/backdrop: match the references' soft cool pale blue-gray seamless studio background and ground, diffuse lighting and natural shadows. Only add the fixed support required by the task: one simple gray metal safety handrail at comfortable hand height, rigidly floor-mounted with two visible supports. No medical room decoration.\n\nPrimary request: STEP 01 PREPARATION for bilateral heel-raise short hold, E-LOW-029. The woman stands still on a level floor with BOTH bare feet parallel about hip width apart, both soles and BOTH heels resting flat on the ground. Knees natural and gently unlocked, no squat. She faces the right side of the image in a true lateral side view, torso upright, eyes open looking naturally forward. One hand lightly holds the rail immediately in front of her; the other arm hangs naturally. Do not lift either heel in this preparation photograph.\n\nComposition/framing: single full-body portrait 1122x1402-style framing, whole head, hands, feet, rail supports and ground visible with comfortable margins. Camera locked at body mid-height, normal photographic perspective, nearly exact side view with just enough separation between the feet to see both heels. Woman occupies the center-left, rail to her front on image right; bare feet stay in a fixed parallel stance. Feet and heels must be clear enough to compare with the next image.\nConstraints: same reference woman and background color, realistic normal proportions, no shoes or socks, no crop, no arrows, no text, no numbers, no watermark, no extra people, no step/ledge, no lifted heel, no forward lean. This will be the immutable scene and camera anchor for STEP 02; preserve a simple stable composition.",
+      "references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "revision_attempts": [],
+      "selected_final": true,
+      "qa": {
+        "reviewed": true,
+        "identity": "pass",
+        "clothing": "pass",
+        "background_lighting": "pass",
+        "normal_proportions": "pass",
+        "pose": "pass:双脚跟均接地、膝自然、躯干直立",
+        "support_contact": "pass:同一手轻扶固定扶手",
+        "full_body_hands_feet": "pass",
+        "frame_direction": "pass:侧面全身",
+        "group_consistency": "pass:与s02逐张对照，同扶手、脚位、机位尺度，体位差异为抬跟",
+        "text_arrows_watermark": "none"
+      }
+    },
+    {
+      "sequence": 28,
+      "id": "E-LOW-029",
+      "step": 2,
+      "label": "双脚抬跟短时保持位",
+      "planned_filename": "028_E-LOW-029_s02.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\028_E-LOW-029_s02.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "A3D145C00D7EE047ED783526853D58ECA85FF2A81A8780CD273640AB8F21E527",
+      "bytes": 1613192,
+      "source_generated": "C:/Users/Administrator/.codex/generated_images/01a137f0-2694-7023-92c8-1734f1cbc6f5/exec-6078a8e4-a130-4a20-be4d-f819ba593446.png",
+      "reused": false,
+      "reused_from": null,
+      "prompt": "Use case: identity-preserve.\nAsset type: one photorealistic rehabilitation step image, E-LOW-029 STEP 02 bilateral heel-raise hold.\nImage 1 is the exact scene and camera EDIT TARGET / IMMUTABLE ANCHOR. Images 2–4 are the original woman's identity and visual style references.\nPrimary request: make the next frame of the SAME photograph series. Change ONLY the bilateral heel-raise state: lift BOTH bare heels together to a small controlled comfortable height above the SAME level floor, while BOTH forefeet and toes remain grounded at exactly the same floor locations. She is holding this raised-heel position, not stepping, not hopping. Both lower legs remain natural, knees maintain the same gently unlocked angle as Image 1, torso upright; the whole body rises only naturally with the calf raise. Same hand lightly touching the exact same location of the handrail. The other hand, gaze, expression and hair remain the same.\nKeep unchanged: exact woman, facial features, age, skin tone, white T-shirt, charcoal long pants, bare feet, normal adult proportions; same side-view camera position and focal perspective, same portrait canvas 1122x1402, identical background blue-gray color, floor baseline, lighting, shadows, metal railing geometry and its fixed support feet, same stance width and foot orientation, same amount of full-body framing. Rail must not move or change height. Show both raised heels clearly with a real small visible gap under each heel, both forefeet stay planted. Do not rotate the camera, enlarge subject, bend knees into a squat, change feet to one-foot stand, move the toes forward, pull up on the rail or lean the torso. No text, arrows, numbers, collage or watermark. Only one clear held posture.",
+      "references": [
+        "E:\\git冲突问题\\rehab image\\assess\\steps\\028_E-LOW-029_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "revision_attempts": [],
+      "selected_final": true,
+      "qa": {
+        "reviewed": true,
+        "identity": "pass",
+        "clothing": "pass",
+        "background_lighting": "pass",
+        "normal_proportions": "pass",
+        "pose": "pass:双脚跟抬起、前足留地、膝位自然、躯干直立",
+        "support_contact": "pass:同一手同一扶手接触位置",
+        "full_body_hands_feet": "pass",
+        "frame_direction": "pass:侧面全身",
+        "group_consistency": "pass:与s01同人物、机位、尺度、固定扶手和脚位；抬跟造成自然升高",
+        "text_arrows_watermark": "none"
+      }
+    },
+    {
+      "sequence": 29,
+      "id": "E-LOW-018",
+      "step": 1,
+      "label": "睁眼并足站立、手在固定扶手旁可触及无接触",
+      "planned_filename": "029_E-LOW-018_s01.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\029_E-LOW-018_s01_v2.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "1CFD927C623C5DBF92EDC3489CF7598F99742ECC6912D769C17C3D637A2468A3",
+      "bytes": 1578609,
+      "source_generated": "C:/Users/Administrator/.codex/generated_images/01a137f0-2694-7023-92c8-1734f1cbc6f5/exec-6b3d080f-43e3-4551-8afd-10fc6a74349a.png",
+      "reused": false,
+      "reused_from": null,
+      "prompt": "Use case: precise-object-edit.\nImage 1 is the EXACT EDIT TARGET. Produce one minimally changed photograph, not a new composition.\nChange ONLY the woman's hand and a very small natural forearm adjustment on image RIGHT beside the metal rail: lift that hand so it hovers relaxed in the air about 5–6 cm ABOVE the rail, with a clearly visible blue-gray background gap between ALL fingers/palm and the rail. She is not touching, resting on, gripping or leaning on the handrail. Fingers relaxed, natural hand anatomy. The hand remains immediately reachable beside the safety rail, ready to touch if needed. Keep the hand close to its current horizontal position; do not change the rail.\nAbsolutely preserve the same full image: exact woman, facial identity/expression, eyes open looking straight forward, black ponytail, white T-shirt, dark charcoal trousers, both bare feet touching SIDE-BY-SIDE on the same line, parallel aligned heels/toes, feet fully grounded, torso/shoulders/pelvis frontal and upright, other arm hanging, normal proportions, same camera/scale/1122x1402 portrait framing, same cool gray-blue background and floor, lighting/shadows, identical gray handrail posts/footplates and location. No new text, arrows, numbers, watermark, collage or objects. Do not stagger or lift either foot, do not change face or clothes. Only remove hand-rail contact by the small natural hand lift described.",
+      "initial_prompt": "Use case: scientific-educational.\nAsset type: one photorealistic rehabilitation assessment posture photograph, E-LOW-018, STEP 01 eyes-open feet-together stance ONLY.\nInput images 1–3 are the original woman's identity, white shirt/dark trousers, studio-photo style and blue-gray background references. Match exactly the same adult East Asian woman, age, facial features, natural skin tone, black low ponytail and body build. Same plain white short-sleeve T-shirt and charcoal gray long trousers, bare feet with normal toes and natural adult proportions.\n\nScene/backdrop: cool pale gray-blue seamless studio ground and background matching the reference color, soft diffuse light, gentle natural shadows. One simple gray metal fixed handrail immediately beside her at comfortable hand height, two posts mounted firmly to ground with visible footplates; plain background otherwise.\n\nPrimary request: strictly FRONTAL full-body photograph. The woman faces and looks directly forward, eyes open, shoulders and pelvis square to the camera, upright relaxed stance. Both bare feet stand SIDE BY SIDE CLOSE TOGETHER on the level ground, inner edges almost touching, both heels aligned on the same transverse line and both toes aligned forward. Both feet flat and fully grounded. This is the parallel feet-together version, NOT staggered stance, NOT semi-tandem, NOT heel-to-toe tandem. One hand is relaxed immediately beside/above the nearby rail in an easily reachable position, not gripping or visibly leaning on it; the other arm hangs naturally. No pose requiring stepping or lifting a foot.\n\nComposition/framing: portrait photo matching 1122x1402 reference proportions; head, both hands, both complete bare feet and the fixed rail with footplates visible with comfortable margins. Woman centered slightly left, rail beside her on image right, camera frontal at body mid-height with normal perspective. Preserve natural head-to-body and limb proportions, visible parallel feet together.\nConstraints: one person, one posture, no text/numbers/arrows/watermark/collage, no shoes/socks, no closed eyes, no forward-back foot offset, no crossed ankles, no body lean, no changing the background color or clothing.",
+      "references": [
+        "E:\\git冲突问题\\rehab image\\assess\\steps\\029_E-LOW-018_s01.png"
+      ],
+      "revision_attempts": [
+        {
+          "attempt": 1,
+          "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\029_E-LOW-018_s01.png",
+          "width": 1122,
+          "height": 1402,
+          "sha256": "00A9C119EE1B15F0D55DC21FC390949B392C74AC7D795B527F5358BB72594280",
+          "bytes": 1674103,
+          "source_generated": "C:/Users/Administrator/.codex/generated_images/01a137f0-2694-7023-92c8-1734f1cbc6f5/exec-813914ce-a91b-49e8-8dc4-2e5dc2207d0c.png",
+          "prompt": "Use case: scientific-educational.\nAsset type: one photorealistic rehabilitation assessment posture photograph, E-LOW-018, STEP 01 eyes-open feet-together stance ONLY.\nInput images 1–3 are the original woman's identity, white shirt/dark trousers, studio-photo style and blue-gray background references. Match exactly the same adult East Asian woman, age, facial features, natural skin tone, black low ponytail and body build. Same plain white short-sleeve T-shirt and charcoal gray long trousers, bare feet with normal toes and natural adult proportions.\n\nScene/backdrop: cool pale gray-blue seamless studio ground and background matching the reference color, soft diffuse light, gentle natural shadows. One simple gray metal fixed handrail immediately beside her at comfortable hand height, two posts mounted firmly to ground with visible footplates; plain background otherwise.\n\nPrimary request: strictly FRONTAL full-body photograph. The woman faces and looks directly forward, eyes open, shoulders and pelvis square to the camera, upright relaxed stance. Both bare feet stand SIDE BY SIDE CLOSE TOGETHER on the level ground, inner edges almost touching, both heels aligned on the same transverse line and both toes aligned forward. Both feet flat and fully grounded. This is the parallel feet-together version, NOT staggered stance, NOT semi-tandem, NOT heel-to-toe tandem. One hand is relaxed immediately beside/above the nearby rail in an easily reachable position, not gripping or visibly leaning on it; the other arm hangs naturally. No pose requiring stepping or lifting a foot.\n\nComposition/framing: portrait photo matching 1122x1402 reference proportions; head, both hands, both complete bare feet and the fixed rail with footplates visible with comfortable margins. Woman centered slightly left, rail beside her on image right, camera frontal at body mid-height with normal perspective. Preserve natural head-to-body and limb proportions, visible parallel feet together.\nConstraints: one person, one posture, no text/numbers/arrows/watermark/collage, no shoes/socks, no closed eyes, no forward-back foot offset, no crossed ankles, no body lean, no changing the background color or clothing.",
+          "qa": "not_selected:手仍与扶手接触，局部修订以保证旁可触及且无接触",
+          "selected": false,
+          "reason": "初稿手仍触扶手，本组严格选择无接触的旁可触及版本"
+        }
+      ],
+      "selected_final": true,
+      "qa": {
+        "reviewed": true,
+        "identity": "pass",
+        "clothing": "pass",
+        "background_lighting": "pass",
+        "normal_proportions": "pass",
+        "pose": "pass:正面、睁眼、双脚并拢同线接地",
+        "support_contact": "pass:手与扶手之间存在清楚间隙，旁可触及",
+        "full_body_hands_feet": "pass",
+        "frame_direction": "pass:正面全身",
+        "group_consistency": "single_frame",
+        "text_arrows_watermark": "none"
+      }
+    },
+    {
+      "sequence": 30,
+      "id": "E-LOW-019",
+      "step": 1,
+      "label": "支撑旁双足接地轻扶准备位",
+      "planned_filename": "030_E-LOW-019_s01.png",
+      "test_leg": "人物左腿/画面右侧靠扶手腿",
+      "non_test_leg": "人物右腿/画面左侧腿",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\030_E-LOW-019_s01.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "1A4020F565A83C8307B7D7D1D01A521CDD1E7F1C5D97A73EA2B8A8113DE51619",
+      "bytes": 1656382,
+      "source_generated": "C:/Users/Administrator/.codex/generated_images/01a137f0-2694-7023-92c8-1734f1cbc6f5/exec-d209af19-76e2-45e7-be2a-93ea6a4fae79.png",
+      "reused": false,
+      "reused_from": null,
+      "prompt": "Use case: scientific-educational.\nAsset type: one photorealistic rehabilitation assessment step photograph, E-LOW-019 STEP 01 preparation for lightly supported eyes-open single-leg stand.\nImages 1–3 are identity and style references. Image 4 is a supplementary frontal face and handrail reference from this same series, not the exact feet pose. Match the same adult East Asian woman precisely: face, age, natural skin tone, black low ponytail, white short-sleeve T-shirt, dark charcoal full-length trousers, normal adult head/body and limb proportions, anatomically natural hands and bare feet.\n\nScene: same reference cool pale blue-gray seamless studio ground/background and diffuse soft photography lighting. A simple gray floor-fixed metal safety rail beside the woman on image RIGHT, with two full support posts and footplates visible, no other props.\nPrimary request: a strict FRONTAL full-body preparation frame. She looks straight forward with eyes open, shoulders and pelvis facing the camera, relaxed upright body. BOTH bare feet fully flat on the level floor, parallel and aligned front/back, comfortable small hip-width stance. Her hand on image RIGHT lightly rests on the rail; the other arm hangs naturally. The leg on image RIGHT near the rail is selected as the TEST/support leg for the upcoming next frame. The leg on image LEFT is the non-test leg, still fully on the ground in this preparation. No foot is lifted yet. Keep hand support light, avoid pulling or leaning. Knees natural and gently unlocked.\n\nComposition: portrait 1122x1402-style canvas, frontal camera at body mid-height with normal lens perspective; full head, both hands, both whole bare feet and fixed handrail contacts/footplates clearly visible, comfortable margins. Woman centered slightly left, rail on image right. This photograph is the immutable camera/scene anchor for the following hold frame. Feet can be clearly compared at the floor.\nConstraints: one image one posture, no arrows/text/numbers/watermarks/collage, no shoes/socks, no elevated knees, no crossed feet, no tandem feet, no lifted heels, no body tilt, no obscured feet, no change of background color, face or clothing.",
+      "references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:\\git冲突问题\\rehab image\\assess\\steps\\029_E-LOW-018_s01_v2.png"
+      ],
+      "revision_attempts": [],
+      "selected_final": true,
+      "qa": {
+        "reviewed": true,
+        "identity": "pass",
+        "clothing": "pass",
+        "background_lighting": "pass",
+        "normal_proportions": "pass",
+        "pose": "pass:正面、睁眼、双脚同线平行接地、膝自然",
+        "support_contact": "pass:画面右侧手轻扶固定扶手",
+        "full_body_hands_feet": "pass",
+        "frame_direction": "pass:正面全身",
+        "group_consistency": "pass:与s02最终v2逐张对照，同机位尺度、扶手接触点及支撑足位置，轻扶条件始终固定",
+        "text_arrows_watermark": "none"
+      }
+    },
+    {
+      "sequence": 30,
+      "id": "E-LOW-019",
+      "step": 2,
+      "label": "轻扶条件固定、仅非测试足稍离地保持位",
+      "planned_filename": "030_E-LOW-019_s02.png",
+      "test_leg": "人物左腿/画面右侧靠扶手腿",
+      "non_test_leg": "人物右腿/画面左侧腿",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\030_E-LOW-019_s02_v2.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "B6676A0521C09D2F540904D50557AA157EE1B0DB808441BC4EAD3A4F04A4F2A3",
+      "bytes": 1563506,
+      "source_generated": "C:/Users/Administrator/.codex/generated_images/01a137f0-2694-7023-92c8-1734f1cbc6f5/exec-7a4b8133-e1d6-44ec-b021-b8ebdc2669ac.png",
+      "reused": false,
+      "reused_from": null,
+      "prompt": "Use case: precise-object-edit.\nImage 1 is the exact EDIT TARGET for supported single-leg standing. Image 2 is the PREPARATION FRAME scene/camera reference.\nChange ONLY the lifted non-test leg on IMAGE LEFT: lower that bare foot toward the floor so the whole foot stays only JUST above the level ground, with a small but clear visible gap under the lowest toe/sole of about 20–30 image pixels at this framing. The current gap is too large. Reduce that gap by roughly half to two-thirds. Keep the foot's horizontal location unchanged, not touching the support leg, not crossing. The leg should appear nearly straight with only a tiny relaxed knee bend, knee no longer conspicuously raised relative to the support knee. Show the complete bare foot hovering just above its own original floor location, not toe-touching. This is merely lifting the foot enough to break ground contact, not a marching pose.\nStrict invariants: SAME woman face, age, black ponytail, open eyes looking forward, expression, white T-shirt, dark charcoal trousers, body build and normal limb lengths. Support/test leg on IMAGE RIGHT must remain exactly grounded in its original location with heel down. Same right-side hand lightly contacting the exact same point on identical fixed rail, free hand unchanged. Same head/torso posture, full-body front camera, subject scale, 1122x1402 framing, background color, floor baseline, diffuse lighting and rail/posts/footplates. Do not move, stretch or resize anything else. No text/arrows/watermarks/extra objects. Keep the soft shadow on the floor under the lowered hovering foot.",
+      "initial_prompt": "Use case: identity-preserve.\nAsset type: one photorealistic rehabilitation assessment step image, E-LOW-019 STEP 02 lightly supported single-leg hold.\nImage 1 is the EXACT EDIT TARGET and immutable scene/camera anchor. Images 2–4 are original visual identity references.\nPrimary request: make the next frame of this same photograph. Keep the leg on image RIGHT next to the rail as the TEST/SUPPORT leg: that foot remains completely flat on the floor at exactly its original location and orientation, heel grounded. Keep the same hand on image RIGHT lightly touching the exact same point on the same rail. Change only the non-test leg on image LEFT: lift its whole bare foot a SMALL distance, just 3–4 cm clear of the floor, with only a minimal soft knee bend. The lifted foot stays under its own hip and slightly to the side of the supporting foot, without crossing, without touching the support leg. A clear small gap under ALL toes and sole must show it really is airborne. This is a low foot lift, not marching, not high knee, not yoga tree pose, not toe-tip support. Both knees remain low and at nearly their starting height, lifted knee must not approach waist or thigh. Natural small weight transfer to the grounded leg is permitted; torso remains upright, shoulders level, eyes open looking straight forward.\n\nInvariants: exact woman/face/age/expression/hair, white T-shirt and charcoal long trousers, normal adult anatomy and limb lengths, bare feet; same frontal full-body camera and focal perspective, same portrait canvas 1122x1402 and head-to-foot framing, same blue-gray background, ground level and lighting; same gray rail, posts, footplates, height and contact point. Grounded support foot must not slide, pivot, tiptoe or change position. Preserve lightly supported condition throughout. Keep free hand unchanged. No text/arrows/numbers/watermarks/collage, no shoes or socks, no additional props, no body lean. Only the modest low lift of the non-test foot and necessary natural weight shift.",
+      "references": [
+        "E:\\git冲突问题\\rehab image\\assess\\steps\\030_E-LOW-019_s02.png",
+        "E:\\git冲突问题\\rehab image\\assess\\steps\\030_E-LOW-019_s01.png"
+      ],
+      "revision_attempts": [
+        {
+          "attempt": 1,
+          "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\030_E-LOW-019_s02.png",
+          "width": 1122,
+          "height": 1402,
+          "sha256": "38B3B529FEA49F73C1D46691E80315DC716A53868E9B81516F785C54C0DEAC68",
+          "bytes": 1611498,
+          "source_generated": "C:/Users/Administrator/.codex/generated_images/01a137f0-2694-7023-92c8-1734f1cbc6f5/exec-fb863bf1-d00c-4210-84d6-1a354a34cf43.png",
+          "prompt": "Use case: identity-preserve.\nAsset type: one photorealistic rehabilitation assessment step image, E-LOW-019 STEP 02 lightly supported single-leg hold.\nImage 1 is the EXACT EDIT TARGET and immutable scene/camera anchor. Images 2–4 are original visual identity references.\nPrimary request: make the next frame of this same photograph. Keep the leg on image RIGHT next to the rail as the TEST/SUPPORT leg: that foot remains completely flat on the floor at exactly its original location and orientation, heel grounded. Keep the same hand on image RIGHT lightly touching the exact same point on the same rail. Change only the non-test leg on image LEFT: lift its whole bare foot a SMALL distance, just 3–4 cm clear of the floor, with only a minimal soft knee bend. The lifted foot stays under its own hip and slightly to the side of the supporting foot, without crossing, without touching the support leg. A clear small gap under ALL toes and sole must show it really is airborne. This is a low foot lift, not marching, not high knee, not yoga tree pose, not toe-tip support. Both knees remain low and at nearly their starting height, lifted knee must not approach waist or thigh. Natural small weight transfer to the grounded leg is permitted; torso remains upright, shoulders level, eyes open looking straight forward.\n\nInvariants: exact woman/face/age/expression/hair, white T-shirt and charcoal long trousers, normal adult anatomy and limb lengths, bare feet; same frontal full-body camera and focal perspective, same portrait canvas 1122x1402 and head-to-foot framing, same blue-gray background, ground level and lighting; same gray rail, posts, footplates, height and contact point. Grounded support foot must not slide, pivot, tiptoe or change position. Preserve lightly supported condition throughout. Keep free hand unchanged. No text/arrows/numbers/watermarks/collage, no shoes or socks, no additional props, no body lean. Only the modest low lift of the non-test foot and necessary natural weight shift.",
+          "qa": "not_selected:仅离地且无高抬膝，但足部离地间隙较显眼，局部降低非测试足以严格匹配稍离地",
+          "selected": false,
+          "reason": "初稿离地间隙较显眼，局部降低非测试足以严格匹配稍离地"
+        }
+      ],
+      "selected_final": true,
+      "qa": {
+        "reviewed": true,
+        "identity": "pass",
+        "clothing": "pass",
+        "background_lighting": "pass",
+        "normal_proportions": "pass",
+        "pose": "pass:正面睁眼、测试足全足着地，另一足低位离地、无高抬膝或贴支撑腿",
+        "support_contact": "pass:画面右侧同一手同一固定扶手接触位置",
+        "full_body_hands_feet": "pass",
+        "frame_direction": "pass:正面全身",
+        "group_consistency": "pass:与s01同机位尺度、扶手与接触点、支撑足位置，仅非测试足抬起与自然小幅移重",
+        "text_arrows_watermark": "none"
+      }
+    }
+  ],
+  "reuse_review": [
+    {
+      "sequence": 28,
+      "old": "E:/git冲突问题/rehab image/assess/028_E-LOW-029_扶稳提踵短时保持观察.png",
+      "reuse": false,
+      "reason": "旧图仅有保持位，尚无同机位准备位；新步骤组从准备位建立锚图以固定同组构图。"
+    },
+    {
+      "sequence": 29,
+      "old": "E:/git冲突问题/rehab image/assess/029_E-LOW-018_窄基底与串联站立.png",
+      "reuse": false,
+      "reason": "旧图双脚前后错开，不符合本轮并足版本。"
+    },
+    {
+      "sequence": 30,
+      "old": "E:/git冲突问题/rehab image/assess/030_E-LOW-019_支撑旁睁眼单脚站立.png",
+      "reuse": false,
+      "reason": "旧图抬脚较高且机位略斜，不符合本轮正面、另一脚仅稍离地的图组方案。"
+    }
+  ],
+  "source_sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+  "library_source": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "library_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+  "record_version": "1.0",
+  "batch": "021-030",
+  "subrange": "028-030",
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "mode": "built-in image_gen",
+  "requested_final_images": 5,
+  "final_image_count": 5,
+  "new_final_images": 5,
+  "old_single_images_reused": 0,
+  "individual_tool_calls": 7,
+  "selected_final_paths": [
+    "E:\\git冲突问题\\rehab image\\assess\\steps\\028_E-LOW-029_s01.png",
+    "E:\\git冲突问题\\rehab image\\assess\\steps\\028_E-LOW-029_s02.png",
+    "E:\\git冲突问题\\rehab image\\assess\\steps\\029_E-LOW-018_s01_v2.png",
+    "E:\\git冲突问题\\rehab image\\assess\\steps\\030_E-LOW-019_s01.png",
+    "E:\\git冲突问题\\rehab image\\assess\\steps\\030_E-LOW-019_s02_v2.png"
+  ],
+  "retained_rejected_candidates": [
+    {
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\029_E-LOW-018_s01.png",
+      "sha256": "00A9C119EE1B15F0D55DC21FC390949B392C74AC7D795B527F5358BB72594280",
+      "reason": "初稿手仍触扶手，本组严格选择无接触的旁可触及版本",
+      "selected_final": false
+    },
+    {
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\030_E-LOW-019_s02.png",
+      "sha256": "38B3B529FEA49F73C1D46691E80315DC716A53868E9B81516F785C54C0DEAC68",
+      "reason": "初稿离地间隙较显眼，局部降低非测试足以严格匹配稍离地",
+      "selected_final": false
+    }
+  ],
+  "group_review": [
+    {
+      "sequence": 28,
+      "count": 2,
+      "order": "s01→s02保持→复用s01返回",
+      "version": "双足平地、膝自然固定、一手轻扶",
+      "camera": "侧面全身",
+      "result": "pass",
+      "checks": [
+        "同人物/服装/背景/光线",
+        "同固定扶手、足位、机位和人物尺度",
+        "s01双脚跟接地；s02双脚跟抬起并前足留地",
+        "相应自然升高之外无换姿或加高步骤"
+      ]
+    },
+    {
+      "sequence": 29,
+      "count": 1,
+      "order": "单帧静态并足保持",
+      "version": "并足睁眼、手在固定扶手旁可触及无接触",
+      "camera": "正面全身",
+      "result": "pass",
+      "checks": [
+        "双足并拢、同线、同时接地",
+        "眼睛睁开",
+        "没有半串联、串联或脚位时序混用",
+        "最终v2手与扶手留明确间隙"
+      ]
+    },
+    {
+      "sequence": 30,
+      "count": 2,
+      "order": "s01→s02保持→复用s01返回",
+      "version": "同一手轻扶固定扶手",
+      "camera": "正面全身",
+      "test_leg": "人物左腿/画面右侧靠扶手腿",
+      "non_test_leg": "人物右腿/画面左侧腿",
+      "result": "pass",
+      "checks": [
+        "同人物/服装/背景/光线",
+        "同机位尺度、固定扶手与手接触点",
+        "s01双足接地；s02测试足全足着地、非测试足仅低位离地",
+        "不高抬膝、不交叉或贴支撑腿",
+        "轻扶条件固定，不解释为无支撑成绩"
+      ]
+    }
+  ],
+  "preserved": [
+    "制作清单未修改",
+    "旧单图未修改",
+    "现有任何进度JSON未修改",
+    "已有步骤图未覆盖；返修另加_v2"
+  ],
+  "limitations": [
+    "图片仅示范选定体位及可见支撑关系，无法证明肌肉发力、真实负荷、规定保持时长或评估效度。",
+    "同组已经按视觉检查人物、机位、尺度、足位和器材一致性；AI生成帧不作为像素级角度或距离测量依据。"
+  ]
+}
+

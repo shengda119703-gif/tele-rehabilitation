@@ -1,0 +1,47 @@
+{
+  "record_version": "1.0",
+  "created_date": "2026-10-14",
+  "sequence": 170,
+  "action_id": "T-AXU-032",
+  "name": "弹力带胸前水平展开",
+  "generator": "built-in image_gen.imagegen",
+  "scope": "仅外部素材制作，不修改正式软件仓库",
+  "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "sequence_reuse": "s01 → s02 → 复用s01",
+  "reference_paths": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "images": [
+    {
+      "step": "01",
+      "filename": "170_T-AXU-032_s01.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/170_T-AXU-032_s01.png",
+      "reused": false,
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-2fa0-7292-90a2-8312c71969f7/exec-58cd300d-1ab8-4b34-98ed-82f6f4b0f803.png",
+      "edit_target": "E:/git冲突问题/rehab image/train/170_T-AXU-032_弹力带胸前水平展开.png",
+      "prompt": "Use case: identity-preserve. Asset type: scientific-educational photorealistic rehabilitation exercise STEP PHOTO.\nImage 1 is the EDIT TARGET: the accepted end position of band pull-apart. Images 2–4 are strict identity/style references for the exact same woman.\nCreate the PREPARATION position of this very same exercise, changing ONLY the two arms and the resistance band and necessary shirt wrinkles. Preserve EXACT same woman, face, head direction, hair/black ponytail, adult proportions, white short sleeve shirt, charcoal trousers, white sneakers, upright torso, feet placement, camera direction, focal length, image framing, floor, light gray-blue studio background, and soft lighting. Keep her body scale and framing perfectly matched to image1, 1122x1402 portrait.\nSpecific T-AXU-032 band pull-apart s01: Stand stable and upright with chest and hips held in the same direction. BOTH ARMS reach FORWARD in front of her mid/upper chest at the same height as image1, roughly shoulder-width apart, not spread sideways. Each elbow remains naturally slightly flexed only 10–15 degrees; wrists neutral. Both hands firmly grip the ends of the SAME plain neutral-gray flat resistance band, which forms a short horizontal lightly taut segment between the hands well in front of the chest, away from the face. Hand spacing approximately45cm. This is the starting posture before moving both hands outward laterally into the original target image, not a row or curl. Do not bend elbows 90 degrees or keep hands against torso. Hands and elbows are continuous anatomically, correct finger grips on each end of band. Any perspective changes come only from arms extending forward, not camera or torso rotation.\nFull head, complete feet, both hands and band visible. Exactly one woman and one posture. Natural photographic skin and anatomy. No text, arrows, numbers, logos, labels, collage or inset.",
+      "visual_review": "通过：同一人物与原图机位、站姿、服装、背景；双臂胸前前伸、肘微屈、双手真实握带，带有轻张力且远离脸，完整头足；不是屈肘划船。",
+      "status": "completed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1609426,
+      "sha256": "BC98D8E2EC1C7FE00A4A419484FB8E3C79B3EE4E99B3046147187AFD6A0FC8ED"
+    },
+    {
+      "step": "02",
+      "filename": "170_T-AXU-032_s02.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/170_T-AXU-032_s02.png",
+      "reused": true,
+      "reuse_source": "E:/git冲突问题/rehab image/train/170_T-AXU-032_弹力带胸前水平展开.png",
+      "prompt": "复用原图，没有本轮生成提示词；原提示词见第17批_161-170_生成记录.json中170条目。",
+      "visual_review": "通过：双手向两侧展开、肘微屈，带完整在胸前、手未明显到身体后方，胸髋稳定、双足站稳；人物比例自然、完整头手足；同组身份机位道具一致。",
+      "status": "completed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1647743,
+      "sha256": "98D7C8694AFE3D73EA2557B77516FC6AADF3DF124110774331E286455D46F9EB"
+    }
+  ]
+}

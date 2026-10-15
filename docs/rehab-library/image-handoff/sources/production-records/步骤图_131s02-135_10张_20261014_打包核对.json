@@ -1,0 +1,22 @@
+{
+  "zip": "E:\\git冲突问题\\rehab image\\步骤图_131s02-135_10张_20261014.zip",
+  "zip_bytes": 15083350,
+  "zip_sha256": "3AB74EC0E48BEBD756DC3470B79118BDE9E1E7C51807E8876590F8DBF4F2BF22",
+  "png_count": 10,
+  "zip_crc": "passed",
+  "all_png_sha256_matches": "passed",
+  "html_image_count": 10,
+  "html_all_relative_image_paths_exist": true,
+  "selected_files": [
+    "train/steps/131_T-AXU-041_s02.png",
+    "train/steps/132_T-AXU-042_s01.png",
+    "train/steps/132_T-AXU-042_s02.png",
+    "train/steps/132_T-AXU-042_s03.png",
+    "train/steps/133_T-AXU-015_s01_v2.png",
+    "train/steps/133_T-AXU-015_s02_v2.png",
+    "train/steps/134_T-AXU-016_s01.png",
+    "train/steps/134_T-AXU-016_s02.png",
+    "train/steps/135_T-AXU-043_s01.png",
+    "train/steps/135_T-AXU-043_s02.png"
+  ]
+}

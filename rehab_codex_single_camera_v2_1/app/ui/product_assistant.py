@@ -199,7 +199,9 @@ def refresh_summary(window):
         w.assistant_portal_status.setText('请选择用户，或等待当前用户资料读取完成。')
         w.assistant_module_buttons['reference'].setDescription('等待当前用户的康复记录。')
     else:
-        w.assistant_portal_status.setText('康复问答、解说与本地候选计划 · '+('DeepSeek 对话已配置；每条回复标明实际来源。' if s.get('conversationModelAvailable') else 'DeepSeek 对话尚未配置。'))
+        cloud = s.get('cloudAssistant', {})
+        status = '云端连接待恢复，本地功能仍可用。' if cloud.get('error') else '云账号已连接；每条回复标明实际来源。' if cloud.get('connected') else '当前使用本地资料；登录本人云账号后可同步管家对话。'
+        w.assistant_portal_status.setText('康复问答、解说与候选计划 · ' + status)
         plans=len(w._rehab_data('rehab.get_training_plan'))
         training=len(w._rehab_data('rehab.get_training_history'))
         w.assistant_module_buttons['reference'].setDescription(f'当前范围：{plans} 项计划、{training} 条训练记录。')

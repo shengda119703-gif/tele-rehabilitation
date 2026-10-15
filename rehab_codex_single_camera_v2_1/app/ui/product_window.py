@@ -998,7 +998,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
             self.tasks.addItem('当前没有待办。用药和健康照护任务会依据已填写资料与记录生成。')
         concerns = s['twin']['personTwin'].get('activeConcerns',[])
         self.home_status.setText('；'.join(concerns) if concerns else '已有 '+str(len(state['events']))+' 条健康记录；暂未形成需关注的摘要。数据不足时不能判断整体健康状态。')
-        self.agent_status.setText('DeepSeek 对话已配置；每条回复会标明实际来源。' if s.get('conversationModelAvailable') else '本地动作资料可用；DeepSeek 尚未配置。助手仅问答、解说与候选计划。')
+        cloud = s.get('cloudAssistant', {})
+        self.agent_status.setText('云端连接待恢复，本地功能仍可用。' if cloud.get('error') else '云账号已连接；管家对话可同步，回复来源以实际回执为准。' if cloud.get('connected') else '本地动作资料可用；登录本人云账号后可同步管家对话。')
         self._render_conversation()
         twin = s['twin']['personTwin']
         self.twin_text.setText(' · '.join(title+'：'+STATUS_LABELS.get(twin[key],twin[key]) for key,title in [('activity','活动'),('mobility','行动'),('sleep','睡眠'),('nightActivity','夜间活动')])+'\n数据更新时间：'+display_time(s['twin'].get('dataUpdatedAt'))+'\n这是已有资料的状态摘要，不是诊断。')
@@ -1026,6 +1027,14 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
         timeline += [(r.get('end_utc',''),'康复训练',r.get('exercise_label','')+' · '+str(r.get('summary',{}).get('completed','未记录'))+
             ' · '+self._feedback_text(r.get('training_feedback',{})),'康复',r) for r in training_records]
         timeline += [(r.get('end_utc',''),'康复评估',r.get('exercise_label','')+' · '+{'ASSESSED':'已评估','UNAVAILABLE':'数据不足'}.get(r.get('status'),'请查看测量条件'),'评估',r) for r in assessments]
+        for record in rehab.get('guided_practice', {}).get('records', []):
+            from ..exercises import exercise_spec
+            count = record.get('self_reported_count')
+            timeline.append((record.get('ended_at') or record['created_at'], '康复跟练 / 本人记录',
+                exercise_spec(record['exercise_id'])['label'] + f" · 第{record.get('set_index', 1)}组 · " +
+                (str(count) + ' 次' if count is not None else '次数未填写') + ' · ' +
+                ('已保存' if record['state'] == 'COMMITTED' else '练习未结束'), '康复',
+                dict(record, record_type='GUIDED_PRACTICE')))
         self.timeline_entries = sorted(timeline,key=lambda r:r[0] or '',reverse=True)
         self._filter_timeline()
         rows(self.medication_history,[entry[:3] for entry in self.timeline_entries if entry[3]=='用药'])

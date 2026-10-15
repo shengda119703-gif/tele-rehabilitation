@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "batch_date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "action_number": "130",
+  "action_id": "T-AXU-008",
+  "action_name": "侧卧开书式转胸",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "method": "built-in image_gen；每生成资产一次调用；s03 严格验收后原图复用；全部复制原始 PNG，无图像后处理。",
+  "source_original": "E:/git冲突问题/rehab image/train/130_T-AXU-008_侧卧开书式转胸.png",
+  "reference_images_inspected": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "series_invariants": [
+    "同一成年东亚女性，低马尾、白短袖、深灰裤、白袜。",
+    "固定斜前上方机位，头左脚右，全身及两手完整入镜，1122 × 1402。",
+    "左侧卧，头枕、灰地垫、膝间薄软垫相同。",
+    "髋膝适度弯曲，双膝上下叠放、双脚叠放，骨盆和腿不随胸口翻转。",
+    "单人物、单姿势、无文字编号箭头或水印。"
+  ],
+  "assets": [
+    {
+      "step": "s01",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\130_T-AXU-008_s01.png",
+      "source_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393f-7533-77f1-8b06-250e2c358d77\\exec-72f95630-3888-4960-b06b-0815fd616713.png",
+      "generator": "image_gen",
+      "reused": false,
+      "raw_prompt": "Use case: scientific-educational\nAsset type: 康复动作分步骤单帧示范照片，130 T-AXU-008 s01「侧卧开书式转胸」起始姿势。\nInput images: Image 1（130原图）是主要编辑目标，用于人物、相机、机位、尺度、灰蓝纯背景、灰色地垫、头枕和膝间薄软垫；Image 2 是同一位人物的身份/服装参考。\nPrimary request: 把 Image 1 的开胸终点姿势改成动作起始姿势，其余保持相同。这位成年东亚女性穿素白短袖、深灰长运动裤、白袜，黑发低马尾。在灰色地垫上左侧卧（左肩与左髋是下侧承重侧，右肩是上侧）。头部持续由原灰色枕头完整支撑，颈部自然。髋膝适度弯曲，两个膝盖上下叠放在相同位置，保留原图膝间薄灰色软垫，两只脚叠放，骨盆稳定不翻转。\n动作必须清楚：胸口重新转向身体前方，右肩自然位于左肩上方。左臂和右臂同时从胸前朝身体前方伸出，肘自然伸直，两臂平行相叠，右手掌合在左手掌上，形成「合书」起点。两只手在画面靠近观看者的前下方，双手相合位置完整入镜；不得仍画成右手悬空打开。头部自然随身体回到侧卧，头仍放在枕头上。\nStyle/medium: 写实、清晰、柔和自然棚拍光的康复教学照片，匹配原图的质感与灰蓝色环境。\nComposition/framing: 完全保留 Image 1 的固定斜前上方机位，头在画面左侧、双脚在右侧。单一人物、单一静态姿勢，全身、头枕、两肩、髋、双膝、双脚和合在一起的双手均完整入镜；保留周围宽松留白，不改画面尺度或相机方向。\nConstraints: 身体比例与关节解剖自然；腿与骨盆位置完全不随胸部变化；只能改变上躯干与右臂到合书起点；左臂仍在胸前相同方向。无任何文字、编号、箭头、虚线、动作轨迹、水印、拼图或额外人物；不可在腰/骨盆放重物；不要把两个膝盖翻到另一边；不要坐起、不要仰卧、不要把头离开枕头。",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/train/130_T-AXU-008_侧卧开书式转胸.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png"
+      ],
+      "reference_roles": [
+        "主要编辑目标、人物器材机位",
+        "人物身份和服装"
+      ],
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1731938,
+      "sha256": "C7272B4F5B95582054CF5ABA4625A000EF5F6E62D6FDAD772D20878BE74696AD",
+      "visual_acceptance": {
+        "status": "pass",
+        "review": "生成工具完整图及落盘 PNG 完整图均已目视审查。头由灰枕支撑，左侧卧，双膝与双脚上下叠放，两臂胸前伸出且双手相合；两手、两膝、脚及头完整入镜。骨盆及腿位置与原图一致。",
+        "issues": [],
+        "revisions": [],
+        "calls": 1
+      }
+    },
+    {
+      "step": "s02",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\130_T-AXU-008_s02.png",
+      "source_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393f-7533-77f1-8b06-250e2c358d77\\exec-28f79a73-8902-4e8a-b12c-529bbaed6aed.png",
+      "generator": "image_gen",
+      "reused": false,
+      "raw_prompt": "Use case: scientific-educational\nAsset type: 康复动作分步骤单帧示范照片，130 T-AXU-008 s02「侧卧开书式转胸」打开中途。\nInput images: Image 1 是已定稿的 s01 起始帧，是主编辑目标；Image 2 是同机位同人物的舒适打开终点，仅作为动作终点参考，不要复制终点姿态。\nPrimary request: 从 Image 1 起点只改变上侧右手臂和上胸到「打开约一半」的中途姿勢。左侧卧这位成年东亚女性，左肩/左髋为下侧，右肩为上侧；低马尾、白短袖、深灰裤、白袜、灰蓝棚拍背景、灰地垫、灰头枕、膝间薄软垫全部保持。髋膝弯曲、双膝上下叠放、双脚位置、骨盆、左手左臂固定不移动，头仍由原枕支撑。\n中途动作：下侧左臂仍沿 Image 1 的方向在胸前向画面前下方伸直，左手保持在原位置（靠观看者的画面左下）。上侧右手从左手离开，右臂抬起并向身体身后打开，在起点与 Image 2 终点之间只完成大约一半，右手举在右肩斜上方，右臂向上天空方向伸长，手臂与地面呈约70至90度，右肘自然伸直。右肩随着轻柔胸椎转动已离开左肩的正上方，胸口部分转向天花板，但旋转幅度明显小于 Image 2。视线可自然朝抬起的右手，颈部无扭曲，头没有离开枕头。\nComposition/framing: 固定 Image 1 斜前上方相机位置、焦距、画面尺度、头在左脚在右的全身布局、全部留白。两肩、上側右手、下側左手、两个叠放膝盖和双脚均完整可见。只有一个人物和一个静态中途姿勢。\nStyle/medium: 写实康复教学棚拍照片，柔和自然光，精确延续参考的身份与服装细节。\nConstraints: 两只正常手、两只正常手臂、正常身体比例；下侧左臂不抬起，只有上侧右臂打开。双膝绝对不跟着胸口翻到身后；双膝不分开、右腿不抬起，骨盆仍左侧卧。不要把 s02 画成 s01 双手相合或 s03 完全打开的终点。原图薄软垫只在膝间，不在腰或骨盆加重物。无字、无编号、无箭头、无动作轨迹、无重影、无拼图、无水印、无额外人物。",
+      "referenced_image_paths": [
+        "E:\\git冲突问题\\rehab image\\train\\steps\\130_T-AXU-008_s01.png",
+        "E:/git冲突问题/rehab image/train/130_T-AXU-008_侧卧开书式转胸.png"
+      ],
+      "reference_roles": [
+        "首帧连续性主编辑目标",
+        "舒适终点动作对照"
+      ],
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1739865,
+      "sha256": "F5F17D1E92E6EBD958D7EDAC2716DC1560DF6ACE3BEDDE06562899DA554A2A80",
+      "visual_acceptance": {
+        "status": "pass",
+        "review": "生成工具完整图及落盘 PNG 完整图均已目视审查。左臂在胸前原位置，右手离开左手并抬至右肩斜上方，右臂位于合手起点与身后终点之间；上胸转开，右肩离开左肩上方，头仍有枕支撑。双膝、脚、骨盆保持原位，不随躯干翻向另一侧。右手举起与 s03 向身后舒适伸出的姿态有明确区别。",
+        "issues": [],
+        "revisions": [],
+        "calls": 1
+      }
+    },
+    {
+      "step": "s03",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\130_T-AXU-008_s03.png",
+      "source_output_path": "E:/git冲突问题/rehab image/train/130_T-AXU-008_侧卧开书式转胸.png",
+      "generator": null,
+      "reused": true,
+      "raw_prompt": null,
+      "reuse_reason": "原单张图符合 s03 清单要求：右臂向身后打开到舒适终点，胸口转开，视线跟随右手；头枕持续支撑，双膝继续叠放，右手无需触地，腰/骨盆没有重物。前两帧沿用原图机位、人物和器材，以保持连续。原样复制，SHA256 与原图相同。",
+      "referenced_image_paths": [],
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1740502,
+      "sha256": "039460421DADBAA7DF3DA55D9F337D1E28112ECAED22A7DC5EDC33D9C0C32546",
+      "visual_acceptance": {
+        "status": "pass",
+        "review": "原图与最终复制文件已分别完整目视审查。右臂打开至身后舒适终点且手悬空，上胸转开，左臂仍在胸前。双膝与双脚上下叠放，头部枕垫清楚；薄软垫仅位于两膝之间，腰/骨盆无重物；四肢比例自然。",
+        "issues": [],
+        "revisions": [],
+        "calls": 0
+      }
+    }
+  ],
+  "inspection_note": "view_image 对两张生成 PNG 的 Data URL MIME 报 application/octet-stream；以相同原始字节、仅改显示 MIME 为 image/png 完整展示复核。磁盘 PNG 均正常，未重编码、裁切、重绘或编辑。",
+  "notes": [
+    "清单没有禁止膝间轻薄支撑垫；沿用原图膝间薄灰垫，双膝上下对齐、髋膝适度弯曲。",
+    "s03 不强求触地，右臂保持原图舒适悬空终点。",
+    "制作范围仅本组三张图及本子记录；未改源图、清单、全局进度、应用仓库或其他制作者记录。"
+  ]
+}

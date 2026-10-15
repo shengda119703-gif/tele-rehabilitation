@@ -49,6 +49,12 @@ WORKBENCH_FIELDS = {
     'workbench.messages': {'before'}, 'workbench.send': {'operation_id', 'text'},
     'workbench.read': {'cursor'}, 'workbench.plans': set(), 'workbench.current': set(),
     'workbench.adopt': {'plan_id', 'expected_version', 'expected_current_revision'},
+    'workbench.assistantPreferences': {'expected_version', 'health_context'},
+    'workbench.assistantConversation': {'after'}, 'workbench.assistantTurn': {'text'},
+    'workbench.assessmentPlans': {'patient_id', 'account_id'},
+    'workbench.assessmentPlanCancel': {'patient_id', 'account_id', 'plan_id'},
+    'workbench.candidate': {'operation_id', 'kind'}, 'workbench.workflow': set(),
+    'workbench.workflowProfile': {'expected_version', 'goal', 'region', 'level', 'equipment', 'restrictions', 'screening_confirmed'},
 }
 
 

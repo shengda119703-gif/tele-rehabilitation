@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f8f9f6">
+  <meta name="description" content="安康安卓客户端下载。技术支持微信：AK2452409。">
+  <title>安康 · Android 下载</title>
+  <link rel="icon" href="/static/icon.svg">
+  <link rel="stylesheet" href="/cloud-static/download.css">
+  <script src="/cloud-static/download.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#content">跳到正文</a>
+  <header class="site-header">
+    <a class="brand" href="/download" aria-label="安康下载首页"><img src="/static/icon.svg" alt="" width="40" height="40"><span>安康</span></a>
+    <nav aria-label="网站入口"><a href="/account?next=/">网页版</a><a href="/care">医生端</a></nav>
+  </header>
+  <main id="content">
+    <section class="hero" aria-labelledby="download-title">
+      <div class="intro">
+        <p class="edition">安卓客户端</p>
+        <h1 id="download-title">安康 Android 版</h1>
+        <p class="subtitle">康复评估、动作训练与健康记录。</p>
+        <a href="/download/android" class="download-button">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          下载 Android 安装包
+        </a>
+        <p class="release-info">版本 {{VERSION}}<span aria-hidden="true"> / </span>{{SIZE}}<span aria-hidden="true"> / </span>Android 10 及以上</p>
+        <p class="compatibility">{{DESCRIPTION}}</p>
+      </div>
+      <div class="app-mark" aria-hidden="true"><img src="/static/icon.svg" alt="" width="164" height="164"><span>安康</span><p>从评估到训练</p></div>
+    </section>
+    <section class="support" id="support" aria-labelledby="support-title">
+      <div><h2 id="support-title">需要帮助？</h2><p>安装、登录或使用问题，联系技术人员。</p></div>
+      <div class="contact"><div><span class="contact-label">技术支持微信</span><span id="wechat" tabindex="-1">{{WECHAT}}</span></div><button type="button" id="copy-wechat">复制微信号</button><p id="copy-status" role="status" aria-live="polite"></p></div>
+    </section>
+    <section class="install" aria-labelledby="install-title">
+      <div><h2 id="install-title">安装说明</h2><p>下载后，按手机提示允许浏览器安装。更新前保留备份，不要先卸载或清除应用数据。</p></div>
+      <details><summary>安装包信息与其他版本</summary><p>下载页更新于 {{DATE}}。安装包保留原签名。</p><p class="hash-label">SHA256</p><p class="hash">{{SHA256}}</p><ul class="other-releases">{{OLDER_RELEASES}}</ul></details>
+    </section>
+  </main>
+  <footer><span>安康</span><a href="/account">云端档案</a><span>技术支持微信 AK2452409</span></footer>
+</body>
+</html>

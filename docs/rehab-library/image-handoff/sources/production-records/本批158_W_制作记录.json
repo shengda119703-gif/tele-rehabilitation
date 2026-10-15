@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "batch": "158/s07; 158/s08",
+  "date": "2026-10-14",
+  "generation_method": "built-in image_gen edit",
+  "list_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "mother_reference": {
+    "final_file": "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s01.png",
+    "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13a82-4b38-7480-b27d-60e721c2bd48/exec-fd50c675-ef55-4506-a009-89e56681e9ae.png",
+    "role": "Lock camera, person, scale, clothing, wide mat, forehead cushion, prone torso support and leg positions; change arms only."
+  },
+  "assets": [
+    {
+      "action_id": 158,
+      "action_code": "T-AXU-050",
+      "route": "W",
+      "step": "s07",
+      "final_file": "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s07.png",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-51b2-7020-a9ca-326f4dd3497c/exec-0d34d466-87ba-4e96-8b4e-9e9417e39971.png",
+      "sha256": "9E2616EC8F185FCC681288311AD037C986D16D908481697E7C162A27F8183D80",
+      "final_prompt": "Use case: precise-object-edit for rehabilitation education.\nEdit ONLY the arm layout in the supplied photograph. Keep ALL non-arm pixels and composition as unchanged as possible: exact overhead oblique camera and full-body scale, same broad blue-gray mat, same woman and ponytail, white shirt, charcoal pants, bare feet, same legs/feet, same forehead cushion and head position, and identical trunk contact. Head remains at the BOTTOM of the image, feet at TOP. Forehead, chest, belly and pelvis stay down on support.\nCORRECT THE ARM ROUTE FROM GOALPOST TO TRUE W:\nMove BOTH elbows noticeably farther toward the feet, which is UPWARD in this photograph, so elbows lie around the level of the lower chest / upper ribs rather than level with the shoulder. Let each upper arm run diagonally OUTWARD AND TOWARD FEET from its shoulder, about 50–60 degrees of abduction relative to the trunk. Keep both elbows clearly bent close to 90 degrees.\nEach forearm should run diagonally from elbow toward HEAD AND OUTWARD. Therefore each hand must be (1) LOWER in the image than its elbow, towards the head, and (2) FARTHER FROM THE CENTERLINE than its elbow. This second point is essential: hand is outward from elbow, not inward. On image left, the leftmost hand is farther left than its elbow. On image right, the rightmost hand is farther right than its elbow. Create symmetric W, with obvious two bent elbow corners and diagonally outward forearms, rather than squared U or goalpost.\nThis is START position: ALL upper arms, both elbows, forearms and empty relaxed hands are resting directly on the mat, no lifting and no air gaps. Neutral wrists and natural fingers. Preserve soft studio light, photorealistic anatomy and no equipment. No text, letters, numbers, drawn outlines, arrows, watermark or panels.",
+      "attempts": [
+        {
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-51b2-7020-a9ca-326f4dd3497c/exec-cdd2ff1d-8ec9-4f2a-90ad-6953cfb00feb.png",
+          "prompt": "Use case: precise-object-edit; rehabilitation education.\nEdit the supplied mother photograph to create ONLY ONE new pose: prone W-route preparation, step s07 of action 158.\nSTRICT INVARIANTS: retain the exact same woman, face/head, black ponytail, white short-sleeve shirt, charcoal trousers, bare feet, exact leg and foot positions, body size, body position, mat, little rectangular forehead cushion, gray-blue studio background, lighting, full-body framing and fixed overhead oblique camera. Do NOT zoom, rotate, crop, change camera angle or recompose. Keep the woman's head towards the BOTTOM of the photograph and feet towards TOP. Forehead must rest on its cushion; chest, abdomen and pelvis remain supported on the broad mat, without any trunk lift, head lift or spinal arch.\nCHANGE ONLY THE TWO ARMS FROM STRAIGHT I TO SYMMETRICAL BENT W:\nOn BOTH sides, upper arms open outward about 60 degrees from the trunk. Both elbows bend clearly by about 90 degrees. Elbows lie wide to each side of the shoulders and a little toward the feet (slightly ABOVE the shoulders in the photograph). From each elbow the forearm points forward toward the head and a little outward. Thus both hands must be nearer the BOTTOM edge of the image than the corresponding elbows. Hands are outside the head rather than near hips. The combination forms a clear symmetric W arm arrangement when viewed from this unchanged overhead camera: bent elbows distinguish it from straight T or Y.\nThis is the RESTING start position: all upper arms, both elbows, forearms, wrists and hands are physically resting on the mat, no air gap anywhere under the arms. Hands empty with relaxed natural fingers, wrists neutral. Keep the whole of both arms, hands, both legs, bare feet and forehead cushion in frame.\nPhotorealistic instructional studio photograph. No text, numbers, letters, arrows, labels, drawn W outline, panels, weight or other equipment, watermark, extra anatomy or distorted joints.",
+          "qa": {
+            "status": "rejected",
+            "inspection": "actual view_image",
+            "reason": "上臂接近水平，前臂朝头略向内，偏门柱形。"
+          }
+        },
+        {
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-51b2-7020-a9ca-326f4dd3497c/exec-0d34d466-87ba-4e96-8b4e-9e9417e39971.png",
+          "prompt": "Use case: precise-object-edit for rehabilitation education.\nEdit ONLY the arm layout in the supplied photograph. Keep ALL non-arm pixels and composition as unchanged as possible: exact overhead oblique camera and full-body scale, same broad blue-gray mat, same woman and ponytail, white shirt, charcoal pants, bare feet, same legs/feet, same forehead cushion and head position, and identical trunk contact. Head remains at the BOTTOM of the image, feet at TOP. Forehead, chest, belly and pelvis stay down on support.\nCORRECT THE ARM ROUTE FROM GOALPOST TO TRUE W:\nMove BOTH elbows noticeably farther toward the feet, which is UPWARD in this photograph, so elbows lie around the level of the lower chest / upper ribs rather than level with the shoulder. Let each upper arm run diagonally OUTWARD AND TOWARD FEET from its shoulder, about 50–60 degrees of abduction relative to the trunk. Keep both elbows clearly bent close to 90 degrees.\nEach forearm should run diagonally from elbow toward HEAD AND OUTWARD. Therefore each hand must be (1) LOWER in the image than its elbow, towards the head, and (2) FARTHER FROM THE CENTERLINE than its elbow. This second point is essential: hand is outward from elbow, not inward. On image left, the leftmost hand is farther left than its elbow. On image right, the rightmost hand is farther right than its elbow. Create symmetric W, with obvious two bent elbow corners and diagonally outward forearms, rather than squared U or goalpost.\nThis is START position: ALL upper arms, both elbows, forearms and empty relaxed hands are resting directly on the mat, no lifting and no air gaps. Neutral wrists and natural fingers. Preserve soft studio light, photorealistic anatomy and no equipment. No text, letters, numbers, drawn outlines, arrows, watermark or panels.",
+          "qa": {
+            "status": "passed",
+            "inspection": "actual view_image of saved final and generated-image full preview",
+            "checks": [
+              "同母图人物、服装、宽垫、额头软垫及机位尺度。",
+              "头朝画面下，胸腹及额头仍由支撑面承托；腿脚位置保持。",
+              "双肘明显屈曲，肘位于肩的两侧且稍靠脚侧；前臂朝头及外侧，双手比肘更靠画面下方并更外侧，W路线可辨。",
+              "双上臂、肘、前臂和手落在垫面，空手，无文字箭头或编号。",
+              "全身手脚完整，无新增器材。"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "action_id": 158,
+      "action_code": "T-AXU-050",
+      "route": "W",
+      "step": "s08",
+      "edit_reference": "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s07.png",
+      "final_file": "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s08.png",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-51b2-7020-a9ca-326f4dd3497c/exec-86f5fe88-b117-4d68-9915-47db856cfe5a.png",
+      "sha256": "3021626886BD67F1A8BE250D67B3C10B864AB32DCB3FA183181A72A80D6BE708",
+      "final_prompt": "Use case: precise-object-edit; rehabilitation education.\nEdit the supplied W-resting photograph to make a single matching W-lift endpoint, action 158 step s08.\nSTRICT INVARIANTS: fixed exact overhead oblique camera, framing, body scale and position, broad blue-gray mat, gray-blue studio background, same woman black ponytail white shirt charcoal trousers and bare feet, unchanged legs and feet, unchanged little forehead cushion and head position. Forehead remains planted on the cushion; chest, abdomen and pelvis remain fully resting on the mat. No head lift, chest lift, spinal extension, torso shift or shoulder shrug.\nCHANGE ONLY THE VERTICAL HEIGHT OF BOTH ENTIRE BENT ARMS:\nPreserve precisely the existing symmetric W arm directions and 90-degree elbow bends. Keep elbows outside the shoulders and slightly toward feet (image TOP); keep hands toward head (image BOTTOM) and farther out from centerline than elbows. DO NOT straighten elbows or change route into T, Y, or I.\nLift the ENTIRE left and right arm assemblies gently 5–8 cm above the mat in the same W shape. BOTH UPPER ARMS, BOTH ELBOWS, BOTH FOREARMS, WRISTS AND HANDS must be off the mat together. The elbows are especially important: do not leave either elbow resting while only lifting the hands. Show small natural visible air gaps and narrow separated soft cast shadows under each elbow, forearm and hand, so the lifting is perceptible from the unchanged camera. Keep lift low and restrained, not high overhead. Arms rotate only as needed to raise as an intact bent shape; neutral wrists and empty relaxed hands. Anatomically plausible relaxed shoulders and normal proportions.\nRetain the same soft realistic studio light, natural skin and garment textures. Full body, all hands and feet in frame. One pose per image, no montage. No dumbbells, objects, text, letters, numbers, arrows, drawn outline, watermark or labels.",
+      "attempts": [
+        {
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-51b2-7020-a9ca-326f4dd3497c/exec-86f5fe88-b117-4d68-9915-47db856cfe5a.png",
+          "prompt": "Use case: precise-object-edit; rehabilitation education.\nEdit the supplied W-resting photograph to make a single matching W-lift endpoint, action 158 step s08.\nSTRICT INVARIANTS: fixed exact overhead oblique camera, framing, body scale and position, broad blue-gray mat, gray-blue studio background, same woman black ponytail white shirt charcoal trousers and bare feet, unchanged legs and feet, unchanged little forehead cushion and head position. Forehead remains planted on the cushion; chest, abdomen and pelvis remain fully resting on the mat. No head lift, chest lift, spinal extension, torso shift or shoulder shrug.\nCHANGE ONLY THE VERTICAL HEIGHT OF BOTH ENTIRE BENT ARMS:\nPreserve precisely the existing symmetric W arm directions and 90-degree elbow bends. Keep elbows outside the shoulders and slightly toward feet (image TOP); keep hands toward head (image BOTTOM) and farther out from centerline than elbows. DO NOT straighten elbows or change route into T, Y, or I.\nLift the ENTIRE left and right arm assemblies gently 5–8 cm above the mat in the same W shape. BOTH UPPER ARMS, BOTH ELBOWS, BOTH FOREARMS, WRISTS AND HANDS must be off the mat together. The elbows are especially important: do not leave either elbow resting while only lifting the hands. Show small natural visible air gaps and narrow separated soft cast shadows under each elbow, forearm and hand, so the lifting is perceptible from the unchanged camera. Keep lift low and restrained, not high overhead. Arms rotate only as needed to raise as an intact bent shape; neutral wrists and empty relaxed hands. Anatomically plausible relaxed shoulders and normal proportions.\nRetain the same soft realistic studio light, natural skin and garment textures. Full body, all hands and feet in frame. One pose per image, no montage. No dumbbells, objects, text, letters, numbers, arrows, drawn outline, watermark or labels.",
+          "qa": {
+            "status": "passed",
+            "inspection": "actual view_image of saved final and generated-image full preview",
+            "checks": [
+              "同s07人物服装、机位尺度、宽垫和额头软垫，腿脚保持。",
+              "W屈肘和前臂外开方向保持，未变成直臂T/Y/I。",
+              "双上臂、双肘、前臂手一起离垫，垫面阴影与空隙清楚，未只抬手而留肘落垫。",
+              "额头留在软垫上、胸腹继续贴垫，未抬头抬胸或伸腰。",
+              "空手，无文字箭头编号，完整手脚。"
+            ],
+            "measurement_note": "Prompt目标为轻抬5–8cm；视觉审查确认整条双臂适度离垫，但无标尺照片不作精确厘米量测。"
+          }
+        }
+      ]
+    }
+  ]
+}

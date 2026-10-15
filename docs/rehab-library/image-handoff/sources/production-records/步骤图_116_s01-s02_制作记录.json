@@ -1,0 +1,177 @@
+{
+  "record_version": "1.0",
+  "created_date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "action_sequence": "116",
+  "action_id": "T-LOW-038",
+  "action_name": "弹力带踝四方向：按许可单独启用",
+  "scope": [
+    "116-s01",
+    "116-s02"
+  ],
+  "independent_group": "背屈组",
+  "tool": "built-in image_gen.imagegen",
+  "cli_used": false,
+  "source_documents": [
+    {
+      "path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+      "sections": [
+        "3.人物、风格、背景与比例固定要求",
+        "4.图组顺序、命名、复用与验收",
+        "116 T-LOW-038，01与02"
+      ]
+    },
+    {
+      "path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+      "sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+      "section": "T-LOW-038 原动作卡，操作步骤背屈：阻力从脚前方牵引，前足向小腿移动后控制回程"
+    }
+  ],
+  "visual_references": [
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77",
+      "role": "人物身份、白T与深灰裤、灰蓝柔光；已用view_image查看"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094",
+      "role": "人物身份、白T与深灰裤、灰蓝柔光；已用view_image查看"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE",
+      "role": "人物身份、白T与深灰裤、灰蓝柔光；已用view_image查看"
+    }
+  ],
+  "original_single_image": {
+    "path": "E:/git冲突问题/rehab image/train/116_T-LOW-038_弹力带踝四方向：按许可单独启用.png",
+    "reused": false,
+    "reason": "本轮采用制作清单指定长坐垫面及低软垫支小腿版本，新生成并编辑；未覆盖原单图"
+  },
+  "generation_history": [
+    {
+      "target": "116-s01",
+      "attempt": 1,
+      "type": "generate-with-visual-references",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "prompt": "Use case: scientific-educational. Asset type: a single photorealistic rehabilitation exercise step photo for T-LOW-038, step 116-s01, the START of resisted RIGHT ankle dorsiflexion.\nInput images: reference-01.png, reference-02.png, reference-03.png are visual identity / clothes / lighting references ONLY. Use the same adult East Asian woman, natural warm skin, black ponytail, white short-sleeved T-shirt, charcoal dark grey trousers. Change her exercise pose as specified.\nScene: clean muted blue-grey seamless studio and blue-grey floor, soft even studio light, real shadows, a low light-grey exercise mat.\nPose and exercise: she is in LONG SITTING on the mat, both legs extended straight forward with natural soft unlocked knees. The RIGHT leg is closest to the camera and is the exercising leg; the LEFT leg is farther from the camera, resting unbanded. A small low light-grey soft cushion supports ONLY the right calf. The RIGHT heel and ankle project beyond the distal end of this cushion, letting the ankle move freely. The right shin and knee remain supported and stationary. Bare feet. The right ankle is at an ordinary neutral starting position: the right forefoot is roughly perpendicular (90 degrees) to the shin, not actively pulled back, not strongly pointed down; all five toes are relaxed, natural and visible.\nResistance setup: one wide flat blue-green elastic exercise band wraps securely around the BALL OF THE RIGHT FOOT at the metatarsal / forefoot region, below the toes, never strangling or covering the toes. Its two flat strands travel FORWARD AWAY FROM HER BODY, beyond the toe end in the same direction as the shin's long axis, and join a small low stable heavy GREY FLOOR ANCHOR BASE immediately in front of the right foot. Show the entire low anchor base and the visible fastening point clearly; the base rests firmly on the floor outside the mat. The anchor must be directly beyond the right foot in the direction the feet point, not to either side and not under her leg. The band has mild visible tension without forcefully deforming skin. Her hands do NOT hold the band. Nothing is connected to her face, neck, torso, left leg, or foot cushion.\nCamera: fixed right-front slightly elevated oblique SIDE close view. The photo is portrait, about 1122 x 1402 pixels, framing the complete right knee, whole right shin, cushion, heel, ankle, complete toes, band's full path, and anchor. Include enough partial thighs / mat and the far left leg to prove long sitting. Prioritize a clear right-foot side profile showing the foot-shin angle and its movement plane; knee and foot must not be cropped. Right shin runs diagonally from upper left to lower right; foreground right ankle and forefoot are central-lower, front anchor farther beyond them toward the right-bottom of frame. No need to show her whole head for this local ankle task, but any visible body must match the references.\nNatural body proportions, correct connected knee-calf-ankle-foot anatomy, exactly two feet, five toes each, uninjured real skin and fabric. This is one clear neutral-start pose, a photograph, not a collage. NO text, NO numbers, NO arrows, NO diagram overlay, NO logos, NO watermark. Do not show a chair or standing position.",
+      "generation_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-e4555fc2-a580-4447-89a5-f7a3ca7788e1.png",
+      "selected": false,
+      "review": "人物、長坐、右足及前方锚点合理；镜头包含全身太多，未达踝足近景要求，针对性纠正构图"
+    },
+    {
+      "target": "116-s01",
+      "attempt": 2,
+      "type": "edit-framing",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-e4555fc2-a580-4447-89a5-f7a3ca7788e1.png"
+      ],
+      "prompt": "Use case: precise-object-edit / scientific-educational. Edit the supplied START image for 116-s01. SINGLE CORRECTION: make this a tighter portrait photographic ankle-and-lower-leg CLOSE VIEW, as required by the exercise teaching brief. Output about 1122 x 1402 pixels. Reframe from the same woman's right-front oblique angle, slightly elevated, so the complete foreground RIGHT KNEE, whole RIGHT CALF, low light-grey calf cushion, bare RIGHT HEEL, ankle, entire neutral right foot with all relaxed toes, blue-green flat band path, and entire grey floor anchor are large, clear and fully within frame. The exercising right knee should be toward upper-left, the right ankle/foot central-lower, and the anchor below/right beyond that foot; show portions of thighs and the far LEFT leg for a long-sitting context, but cut out her head and most upper torso. Any visible white T-shirt and dark grey pants must be the same woman and clothes.\nPreserve the exact setup and neutral START pose: she is long sitting on the light-grey exercise mat with legs extended, right leg nearer camera, left leg farther and unbanded. Right calf is supported on the same low light-grey soft cushion; right ankle and heel project beyond the end of it. Right foot is neutral roughly 90 degrees to right shin, NOT actively pulled toward shin, NOT pointed down, toes relaxed. Preserve the wide flat teal band around the right forefoot's metatarsal ball region BELOW the toe bases, two strands extending forward away from her body to a clearly visible low stable grey floor anchor directly in front of the right foot beyond the toes. No hands holding the band. Same anchor shape and mat, same soft blue-grey studio and lighting. Keep realistic ankle and foot anatomy and skin, without skin indentation. Photograph of one pose only. No text, letters, numbers, arrows, diagram overlays, logos or watermark.",
+      "generation_path": null,
+      "selected": false,
+      "result": "failed",
+      "error": "image generation failed: network error: error sending request",
+      "note": "较长等待后明确失败，未产生输出，随后同工具同提示词重试"
+    },
+    {
+      "target": "116-s01",
+      "attempt": 3,
+      "type": "edit-framing-retry",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-e4555fc2-a580-4447-89a5-f7a3ca7788e1.png"
+      ],
+      "prompt": "Use case: precise-object-edit / scientific-educational. Edit the supplied START image for 116-s01. SINGLE CORRECTION: make this a tighter portrait photographic ankle-and-lower-leg CLOSE VIEW, as required by the exercise teaching brief. Output about 1122 x 1402 pixels. Reframe from the same woman's right-front oblique angle, slightly elevated, so the complete foreground RIGHT KNEE, whole RIGHT CALF, low light-grey calf cushion, bare RIGHT HEEL, ankle, entire neutral right foot with all relaxed toes, blue-green flat band path, and entire grey floor anchor are large, clear and fully within frame. The exercising right knee should be toward upper-left, the right ankle/foot central-lower, and the anchor below/right beyond that foot; show portions of thighs and the far LEFT leg for a long-sitting context, but cut out her head and most upper torso. Any visible white T-shirt and dark grey pants must be the same woman and clothes.\nPreserve the exact setup and neutral START pose: she is long sitting on the light-grey exercise mat with legs extended, right leg nearer camera, left leg farther and unbanded. Right calf is supported on the same low light-grey soft cushion; right ankle and heel project beyond the end of it. Right foot is neutral roughly 90 degrees to right shin, NOT actively pulled toward shin, NOT pointed down, toes relaxed. Preserve the wide flat teal band around the right forefoot's metatarsal ball region BELOW the toe bases, two strands extending forward away from her body to a clearly visible low stable grey floor anchor directly in front of the right foot beyond the toes. No hands holding the band. Same anchor shape and mat, same soft blue-grey studio and lighting. Keep realistic ankle and foot anatomy and skin, without skin indentation. Photograph of one pose only. No text, letters, numbers, arrows, diagram overlays, logos or watermark.",
+      "generation_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-2130c666-d58a-4cba-a195-f2bd0090a55c.png",
+      "selected": true,
+      "review": "生成31秒返回；view_image逐图检查通过：右膝/整小腿/右足/前方锚点近景清晰"
+    },
+    {
+      "target": "116-s02",
+      "attempt": 1,
+      "type": "edit-ankle-dorsiflexion-only",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-2130c666-d58a-4cba-a195-f2bd0090a55c.png"
+      ],
+      "prompt": "Use case: precise-object-edit, scientific-educational rehabilitation exercise photograph. Input image is the accepted START of 116-s01, right resisted ankle dorsiflexion.\nMake ONLY the right ankle movement change to create 116-s02, the END of resisted right ankle dorsiflexion. Keep the image composition, camera, crop, lighting, blue-grey studio, woman, white shirt, dark grey pants, grey exercise mat, stationary RIGHT KNEE and SHIN, calf on the exact same low light-grey cushion, LEFT leg and LEFT foot, and heavy grey floor anchor EXACTLY where they are. The low grey anchor remains in front of the right foot beyond the toe end, pulling AWAY from the body. Keep the same blue-green flat band forefoot wrap and fixed connection to anchor, with the same nominal band setup; its stretched strands naturally follow the rotated foot.\nThe only changed body part is the RIGHT FOOT rotating about the ankle into comfortable, clearly visible dorsiflexion: draw the entire right forefoot BACK TOWARD the RIGHT SHIN, approximately 15-20 degrees beyond the neutral start shown in the input. The right heel / ankle pivot stays in the same location; the toe ends and ball of the foot travel UP and BACK toward the knee. In this image the right knee is upper-left, so the right toe tips should shift noticeably toward upper-left from their input position, narrowing the angle between the top of the foot and the shin. The foot should rotate as a connected whole at the ankle; do not merely curl or extend the toes. All five toes remain relaxed. Do NOT point the foot down or forward away from the knee, do NOT invert or evert it, do NOT rotate or lift the calf or move the knee, do NOT move the anchor or change the cushion.\nMaintain realistic ankle tendons, plausible 15-20 degree dorsiflexion, normal foot/leg proportions. Band is wrapped below toe bases over ball/metatarsal region, not over the toes, with no skin constriction; all toe tips remain visible. Right foot/ankle, whole calf, knee and entire band path/anchor remain clear. No hands touching or holding the band. One photorealistic pose only. Same portrait dimensions about 1122 x 1402 pixels. NO text, numbers, arrows, overlays, collage, logos or watermark.",
+      "generation_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-c84b3c70-7b54-4500-87a3-ba5d9b21b069.png",
+      "selected": true,
+      "review": "生成34秒返回；view_image逐图检查通过：前足整体回向右小腿，支持/锚点/镜头与s01保持"
+    }
+  ],
+  "assets": [
+    {
+      "step": "116-s01",
+      "target_pose": "背屈组起点：长坐，右小腿低软垫承托，踝自然中立、足趾放松，带绕右前足，锚点在足前方",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s01.png",
+      "generation_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-2130c666-d58a-4cba-a195-f2bd0090a55c.png",
+      "sha256": "A41FDAA252FF61804824514942D90380CA02CDA5CDCE121D496875749A25492D",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "bytes": 1965550,
+      "reused": false,
+      "reuse_source": null,
+      "review": {
+        "status": "passed",
+        "method": "view_image 原尺寸目视审查",
+        "identity_and_clothes": "首稿人物面貌与3张参考匹配；最终局部继承同人物白色T恤、深灰裤及肤色，最终近景不含脸",
+        "background": "灰蓝背景/地面、柔和棚拍光及自然阴影",
+        "visible_action": "右足近镜、左腿远镜，长坐垫面；右踝自然中立，足趾放松，没有主动下压/内翻/外翻",
+        "proportions_and_joints": "右膝、小腿、踝、足连接连续，脚趾数目及长短自然；近足透视比例可解释",
+        "contact_and_equipment": "右小腿接触低浅灰软垫，右跟与踝越出软垫 distal 边；带环在右前足跖骨/球部区而非勒趾，双股扁带接前方灰色低锚座，锚座落地，非接人体",
+        "visibility": "完整右膝及小腿、右跟/踝/五趾、带路径及全锚座均可见；左远足趾缘局部出画不影响右足任务",
+        "text_and_overlays": "无文字、编号、箭头、拼图、水印"
+      }
+    },
+    {
+      "step": "116-s02",
+      "target_pose": "背屈组终点：保持右小腿支持、前方锚点，右前足对抗前方牵拉向右小腿抬起",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s02.png",
+      "generation_path": "C:/Users/Administrator/.codex/generated_images/01a1393e-1a88-7a10-bc55-30a2ee154131/exec-c84b3c70-7b54-4500-87a3-ba5d9b21b069.png",
+      "sha256": "65FD302404624B91E15ECDEFF18163C3B19549CF086E335BFB9563BE6B3828E9",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "bytes": 1848730,
+      "reused": false,
+      "reuse_source": null,
+      "edit_base": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s01.png",
+      "review": {
+        "status": "passed",
+        "method": "view_image 原尺寸逐图目视审查，并与s01比较",
+        "identity_and_clothes": "同白T、深灰裤、肤色及身体局部，不含脸",
+        "background": "灰蓝背景/地面、柔光及自然阴影与s01一致",
+        "visible_action": "右前足和五趾作为整个足体回向右小腿，踝背屈方向清晰；不是只动趾，也未变为跖屈或内外翻",
+        "proportions_and_joints": "小腿未平移，踝到足连接自然，没有额外脚/趾；前足旋转后的踝前皮肤褶皱可解释",
+        "contact_and_equipment": "右小腿仍在原低软垫支持点；前方灰低锚座原位置不变，弹力带继续环住右前足球部并接同锚点，未勒趾、未加手持牵引",
+        "visibility": "右膝、整小腿、整个右足五趾和完整带/锚点可见",
+        "text_and_overlays": "无文字、编号、箭头、拼图、水印"
+      }
+    }
+  ],
+  "group_review": {
+    "status": "passed",
+    "camera_and_scale": "s01/s02使用同右侧前方略高斜侧局部镜头、同构图/相机尺度、同地面与垫面基准",
+    "stationary_support": "右膝/小腿位置及软垫形状和位置保持，左腿/足与躯干局部保持",
+    "stationary_anchor": "灰色低锚座形状及地面位置、带固定点保持；带随前足背屈出现自然路径变化",
+    "movement_difference": "只需表现的右踝足从自然中立到背屈改变；右前足靠近小腿，s01/s02的方向差异清楚",
+    "independent_group_boundary": "仅背屈组01↔02；不表示与s03～s08连续八步，各方向卸张力后独立设置",
+    "sequence_and_reuse": "s01→s02→复用s01表示控制回程，不另生成相同返回位",
+    "other_116_reference_review": "曾查看已完成116-s03用于外观一致性对照；未用其图作为本组生成或编辑输入"
+  },
+  "limitations": [
+    "最终图为踝足局部近景，不含人物面部；身份一致性依据三张参考和已审查首稿的继承，不声称最终近景能独立确认人脸。",
+    "静态AI生成图片只能核对可见姿势与接触关系，不能证明实际肌力、张力、锚座质量/承载、品牌型号、临床许可、剂量或真实动态回程。",
+    "提示词中的15～20度是出图方向约束；未作标定角度测量，也不从图片推导临床关节角度。",
+    "右足为任务足，完整入画；远侧左足部分边缘出画，仅作长坐及左右参考。",
+    "原始及未选生成稿留在Codex默认generated_images目录；最终采用PNG原文件复制，未裁图、缩放、重画或改变像素内容。"
+  ]
+}

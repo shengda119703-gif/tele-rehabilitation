@@ -1,0 +1,513 @@
+{
+  "batch": "058-060",
+  "created_at": "2026-10-14T12:21:21+08:00",
+  "timezone": "Asia/Shanghai",
+  "tool": "built-in image_gen.imagegen",
+  "generation_policy": "每张独立调用内置工具；本批没有API、CLI、Python修图或拼图；生成产物路径从工具output_hint读取后复制，保留原始生成文件。",
+  "plan_source": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "sequence_range": [
+    58,
+    60
+  ],
+  "planned_frames": 9,
+  "adopted_frames": 9,
+  "reused_frames": 2,
+  "adopted_new_frames": 7,
+  "built_in_calls": 9,
+  "rejected_retained_versions": 2,
+  "identity_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "status": "completed_with_visual_qa",
+  "source_image_review": [
+    {
+      "sequence": 58,
+      "decision": "原图复用作s02旋后位",
+      "path": "E:/git冲突问题/rehab image/assess/058_E-AXU-018_前臂主动旋前／旋后筛查.png"
+    },
+    {
+      "sequence": 59,
+      "decision": "原图不复用；桌面在腕下延伸，不能清楚验证腕伸出桌边，因此三个姿态均重新生成",
+      "path": "E:/git冲突问题/rehab image/assess/059_E-AXU-019_腕主动掌屈／背伸ROM筛查.png"
+    },
+    {
+      "sequence": 60,
+      "decision": "原图复用作s01中立位；新侧偏帧经返修采用v2",
+      "path": "E:/git冲突问题/rehab image/assess/060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png"
+    }
+  ],
+  "adopted_version_map": {
+    "058_s01": "058_E-AXU-018_s01.png",
+    "058_s02": "058_E-AXU-018_s02.png",
+    "058_s03": "058_E-AXU-018_s03.png",
+    "059_s01": "059_E-AXU-019_s01.png",
+    "059_s02": "059_E-AXU-019_s02.png",
+    "059_s03": "059_E-AXU-019_s03.png",
+    "060_s01": "060_E-AXU-020_s01.png",
+    "060_s02": "060_E-AXU-020_s02_v2.png",
+    "060_s03": "060_E-AXU-020_s03_v2.png"
+  },
+  "qa_scope": "每张实际文件均经view_image核对人物、风格、背景、五指/腕连接、身体关联、动作方向、接触关系及同组构图；未将照片作为精确ROM角度测量。",
+  "known_limitations": [
+    "058与059侧面视角存在自然的手指互相遮挡。",
+    "060固定使用源图斜上方机位，不是垂直顶视；生成侧偏帧与中立源图的前臂轮廓和腕接触点仍有小幅差异，方向教学可辨，不适于像素位置或精确角度比较。"
+  ],
+  "frames": [
+    {
+      "sequence": 58,
+      "id": "E-AXU-018",
+      "step": 1,
+      "prompt": "Use case: identity-preserve. Create ONE photorealistic rehabilitation teaching photograph, a single image, not a collage. Input images 1–3 are immutable identity/style references: the exact same East Asian adult woman with black low ponytail, plain white short sleeve T-shirt, dark gray trousers, soft gray-blue studio background. Input image 4 is the EDIT TARGET and governs the entire composition. Preserve its seated right-facing side-view camera, face, body proportions, chair, lighting, clothes, left hand resting on thigh, upper arm and elbow position, horizontal right forearm, image crop and gray-blue background EXACTLY. Change ONLY the axial rotation of her RIGHT forearm and right hand: show the NEUTRAL forearm position, THUMB POINTING UP vertically, palm facing sideways rather than up or down. Elbow stays bent and close to the torso, forearm remains horizontal pointing toward the right edge; wrist stays straight in line with forearm, no wrist flexion/extension or side-bending. Four fingers point naturally forward, relaxed and gently open, one anatomically correct thumb points upward; five fingers total, natural skin texture, normal female hand size. No shoulder rotation, no elbow displacement, no new table, no text, no arrows, no watermark. Keep the reference woman's identity and natural anatomy unchanged. Portrait composition matching target.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/058_E-AXU-018_前臂主动旋前／旋后筛查.png"
+      ],
+      "output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-4f1b-7ef3-948b-536b66bb3085\\exec-c9a59313-f25c-4aeb-9355-c44f5296fd52.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\058_E-AXU-018_s01.png",
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已查看实际保存帧：同一女性侧面坐位，右肘近身弯曲、前臂水平，右手拇指上指，四指自然向前，腕大致中立；面部服装背景与源图一致。",
+        "limitations": [
+          "机位为侧面，照片用于姿态比较而非精确旋转角测量。"
+        ]
+      },
+      "hash": "AB9BB22642612B6B6CF0CF3DE4758C332ADFC6239DF813E6FC2E84C871B661AB",
+      "bytes": 1792288,
+      "source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/assess/058_E-AXU-018_前臂主动旋前／旋后筛查.png",
+          "sha256": "B00822303CE5BECA361AD22818B8F92273A34A9096363D864391B29DA770A77D"
+        }
+      ]
+    },
+    {
+      "sequence": 58,
+      "id": "E-AXU-018",
+      "step": 2,
+      "prompt": null,
+      "source": [
+        "E:/git冲突问题/rehab image/assess/058_E-AXU-018_前臂主动旋前／旋后筛查.png"
+      ],
+      "output": "source_copy",
+      "path": "E:/git冲突问题/rehab image/assess/steps/058_E-AXU-018_s02.png",
+      "reuse": true,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "源图坐位、右肘屈曲近身，右前臂水平、掌心朝上；同一女性、服装、灰蓝背景，手指自然，复用作旋后姿态。",
+        "limitations": [
+          "掌上各指因侧面视角局部重叠，照片不提供精确旋后角度。"
+        ]
+      },
+      "hash": "B00822303CE5BECA361AD22818B8F92273A34A9096363D864391B29DA770A77D",
+      "bytes": 1787878,
+      "source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/058_E-AXU-018_前臂主动旋前／旋后筛查.png",
+          "sha256": "B00822303CE5BECA361AD22818B8F92273A34A9096363D864391B29DA770A77D"
+        }
+      ]
+    },
+    {
+      "sequence": 58,
+      "id": "E-AXU-018",
+      "step": 3,
+      "prompt": "Use case: identity-preserve. Make ONE photorealistic rehabilitation teaching photograph. Images 1–3 lock the SAME reference adult East Asian woman: black low ponytail, white short-sleeve T-shirt, dark gray pants, soft gray-blue studio backdrop, natural proportions. Image 4 is the EDIT TARGET; preserve its seated side-view camera, face, chair, clothes, lighting, crop, left hand on thigh, right upper arm and bent elbow close to torso, and horizontal right forearm EXACTLY. Change ONLY the axial rotation of her RIGHT forearm and hand to PRONATION: the RIGHT PALM FACES DOWN toward the floor, back of the right hand faces upward, fingers point forward along the horizontal forearm direction. Wrist stays straight in line with forearm, not bent up or down. Four relaxed naturally spaced fingers and exactly one thumb, five digits, natural wrist-to-forearm anatomy and normal hand size. The elbow and forearm do not move sideways; do not rotate her shoulder or torso. This is after returning to the thumb-up neutral position, not a wrist extension pose. No text, no arrows, no collage, no watermark, no new table or props. Preserve portrait framing exactly.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:\\git冲突问题\\rehab image\\assess\\steps\\058_E-AXU-018_s01.png"
+      ],
+      "output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-4f1b-7ef3-948b-536b66bb3085\\exec-122a4ece-35fa-4875-bdb9-78a8a1239c53.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\058_E-AXU-018_s03.png",
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已查看实际文件：同一坐位侧面构图、右上臂近身，右前臂水平，掌向下、手背向上；腕未抬高或下垂，脸衣椅背景持续一致。",
+        "limitations": [
+          "侧面视角造成指端重叠和拇指部分遮挡；方向可辨，不作为精确ROM测量。"
+        ]
+      },
+      "hash": "4D4C6E45B95E3E6F0D766A9F64D935CF822F3EE54B8114F48572444DB37A36B2",
+      "bytes": 1778824,
+      "source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        },
+        {
+          "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\058_E-AXU-018_s01.png",
+          "sha256": "AB9BB22642612B6B6CF0CF3DE4758C332ADFC6239DF813E6FC2E84C871B661AB"
+        }
+      ]
+    },
+    {
+      "sequence": 59,
+      "id": "E-AXU-019",
+      "step": 1,
+      "prompt": "Use case: identity-preserve, photorealistic rehabilitation teaching photo. Produce ONE single portrait photo, no collage. Images 1–3 are strict identity/style references: the SAME East Asian adult woman, black low ponytail, plain white T-shirt, dark gray pants, soft gray-blue studio background, natural anatomy and proportions. Image 4 is the editing target for her seated right-facing side profile, face, chair, outfit, left hand resting on thigh, and soft lighting. This is E-AXU-019 wrist ROM NEUTRAL frame. Preserve those body/camera elements. Correct the support geometry clearly: a stable simple gray table supports the RIGHT elbow and the entire RIGHT forearm, the table's RIGHT outer edge ends just proximal to her wrist. Her whole right wrist and hand extend beyond that edge into EMPTY AIR; there is NO tabletop underneath or beyond the hand. Show the table edge clearly. Right palm faces DOWN, the back of the hand faces UP. Forearm stays horizontal on table; the wrist is straight, and the right hand continues horizontally in line with forearm, neither bent upward nor downward. Exactly five anatomically natural digits, fingers relaxed gently open, normal hand-to-forearm proportions. Right shoulder relaxed, elbow remains comfortably bent; no shoulder motion, no fist, no weights. Keep the same reference face, background COLOR, outfit and photo style. Side view shows elbow, forearm, wrist and entire hand, with her face/white T-shirt/dark pants maintaining clear body association. No labels, text, arrows, watermark.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/059_E-AXU-019_腕主动掌屈／背伸ROM筛查.png"
+      ],
+      "output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-4f1b-7ef3-948b-536b66bb3085\\exec-a82c2c01-a0e8-442d-858e-06a6d8e21387.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\059_E-AXU-019_s01.png",
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "实际文件已查看：右肘前臂支撑于桌面，桌子右侧外缘在腕近端结束，右腕手掌伸至空中，掌向下、手腕中立；同一坐位女性和灰蓝背景。",
+        "limitations": [
+          "侧面视角有手指重叠，腕中立以教学姿态判断，不据照片标角度。"
+        ]
+      },
+      "hash": "45367438F16EEA13AFD21830DDD9BE626ACD37C42B38A9D1DC6F2D9DF2B31330",
+      "bytes": 1773081,
+      "source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/assess/059_E-AXU-019_腕主动掌屈／背伸ROM筛查.png",
+          "sha256": "8D986E24286A57EC99A454D002DBEDCCAB02421055D237FBAE4C812C3ECCE18F"
+        }
+      ]
+    },
+    {
+      "sequence": 59,
+      "id": "E-AXU-019",
+      "step": 2,
+      "prompt": "Use case: identity-preserve. Produce ONE single photorealistic rehabilitation teaching photograph. Input images 1–3 are the fixed same adult East Asian woman identity/style references: black low ponytail, white short-sleeve T-shirt, dark gray pants, gray-blue studio background, normal proportions. Input image 4 is the exact EDIT TARGET. Preserve the woman's face, seated body, chair, left hand on thigh, clothes, side-view camera/crop, lighting, gray-blue background and entire gray table EXACTLY. Preserve her RIGHT elbow and RIGHT forearm resting horizontally on the tabletop, which ends just before the wrist. Change ONLY her RIGHT WRIST to PALMAR FLEXION: the entire right hand gently bends DOWNWARD at the wrist into the empty air beyond the table edge. The palm remains generally down/inward toward the flexion side, the relaxed fingers move with the whole hand and point diagonally down, not just curl. Show a visible natural wrist bend from horizontal supported forearm to downward hand, no extreme angle. Five normal digits total, natural thumb placement, fingers relaxed, no fist. Forearm MUST remain on the table and must not lift, slide or rotate; tabletop must not extend under the hand, and hand must not intersect table. Keep all anatomy, identity, clothing, background COLOR, composition and furniture unchanged; this is wrist flexion, NOT forearm rotation or shoulder movement. No text, arrows, labels, panels or watermark.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:\\git冲突问题\\rehab image\\assess\\steps\\059_E-AXU-019_s01.png"
+      ],
+      "output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-4f1b-7ef3-948b-536b66bb3085\\exec-2c069eb5-924a-4f36-9da5-b3ba14de906f.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\059_E-AXU-019_s02.png",
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已查看实际文件：右前臂完整支桌，腕在桌边外向掌侧下屈，整个手掌随腕下落、手指放松；桌边无穿插，构图人物背景与中立图一致。",
+        "limitations": [
+          "掌屈图侧面各指相互遮挡，未逐个显示所有指腹；只表达方向，不设ROM数值。"
+        ]
+      },
+      "hash": "B4DA602BA799C4939AA4112B6C3F69428DD67792033F127F2560F7C963B9FD73",
+      "bytes": 1754662,
+      "source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        },
+        {
+          "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\059_E-AXU-019_s01.png",
+          "sha256": "45367438F16EEA13AFD21830DDD9BE626ACD37C42B38A9D1DC6F2D9DF2B31330"
+        }
+      ]
+    },
+    {
+      "sequence": 59,
+      "id": "E-AXU-019",
+      "step": 3,
+      "prompt": "Use case: identity-preserve. ONE single photorealistic rehabilitation teaching photo. Images 1–3 fix the same East Asian woman, black low ponytail, plain white T-shirt, dark gray trousers, gray-blue studio background and natural proportions. Image 4 is the EXACT EDIT TARGET, the neutral right-wrist photo. Preserve face, seated body position, chair, left hand on thigh, right shoulder/elbow, horizontal right forearm resting on the gray table, table geometry, lighting, side-view camera and crop EXACTLY. Change ONLY the RIGHT WRIST into DORSIFLEXION / WRIST EXTENSION: the whole right hand bends gently UPWARD from the wrist, above the empty air beyond the table edge; relaxed fingers travel with the hand and point diagonally up. Make the wrist extension clear but natural, not an extreme bend. The right forearm must remain fully supported horizontally on the table, with the wrist outside its outer edge. Palm stays generally oriented away/down from the back of the hand, with NO forearm rotation. Exactly one thumb and four natural fingers, five digits total, relaxed open fingers, anatomically correct wrist-to-forearm attachment and normal hand size. Do not lift the forearm, do not move the elbow, do not just extend fingers at their knuckles. No weights, second person, text, arrows, diagrams, panels or watermark. Maintain all reference identity, white clothes, dark pants, gray-blue background COLOR, and furniture unchanged.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:\\git冲突问题\\rehab image\\assess\\steps\\059_E-AXU-019_s01.png"
+      ],
+      "output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-4f1b-7ef3-948b-536b66bb3085\\exec-02d929c9-6fae-48f9-b0f5-c82253c0fb5f.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\059_E-AXU-019_s03.png",
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "实际文件已查看：前臂仍平放桌面，右腕在桌边外向手背侧抬起，整个手随腕背伸、手指放松；固定侧面构图及面部服装背景一致，桌边接触关系明确。",
+        "limitations": [
+          "侧面视角各指重叠，不能从照片测精确背伸角度；不是仅抬手指。"
+        ]
+      },
+      "hash": "CC1BC8C33A6AAA15AAB065D37F7842CD5C020DB588815144938DAA2EE7B9BF4E",
+      "bytes": 1790445,
+      "source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        },
+        {
+          "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\059_E-AXU-019_s01.png",
+          "sha256": "45367438F16EEA13AFD21830DDD9BE626ACD37C42B38A9D1DC6F2D9DF2B31330"
+        }
+      ]
+    },
+    {
+      "sequence": 60,
+      "id": "E-AXU-020",
+      "step": 1,
+      "prompt": null,
+      "source": [
+        "E:/git冲突问题/rehab image/assess/060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png"
+      ],
+      "output": "source_copy",
+      "path": "E:/git冲突问题/rehab image/assess/steps/060_E-AXU-020_s01.png",
+      "reuse": true,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "源图右前臂接触桌面，右掌向下、手与前臂大致中立，拇指侧与小指侧可辨；同一人物服装与背景。",
+        "limitations": [
+          "机位为斜上方而非垂直顶视，适于方向教学，不能据此做精确ROM测量。"
+        ]
+      },
+      "hash": "EDE75EBF8198B09D19757E05FED7CB750DC1779FD6F6FC4F4AC488060E8CB6C6",
+      "bytes": 1814183,
+      "source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png",
+          "sha256": "EDE75EBF8198B09D19757E05FED7CB750DC1779FD6F6FC4F4AC488060E8CB6C6"
+        }
+      ]
+    },
+    {
+      "sequence": 60,
+      "id": "E-AXU-020",
+      "step": 2,
+      "prompt": "Precise anatomy edit of a single rehabilitation photograph. Images 1–3 establish the EXACT SAME woman, white short sleeve T-shirt, dark charcoal pants, black ponytail, natural face/body, gray-blue studio photo background. Image 4 is the AUTHORITATIVE edit target: do not move any part of it except her RIGHT hand distal to the wrist. Keep the RIGHT upper arm, elbow, entire forearm and wrist joint location fixed, along with camera, head/torso, other hand, table, chair, lighting and crop. Show unmistakable RIGHT WRIST RADIAL DEVIATION while the PALM STAYS DOWN flat on the table. Bend the WHOLE right hand sideways toward the thumb (the thumb is on the viewer-right side of this hand). Her fingers should aim more toward the RIGHT SIDE of the frame than in the original, making a clearly visible gentle sideways angle between the unchanged forearm axis and the middle-finger/hand axis. The little-finger edge of the wrist lengthens, thumb side shortens slightly. Keep the entire hand in the tabletop plane: NO hand lifting, NO palm-up rotation, NO finger-only bend. Exactly four relaxed normal fingers and one thumb, normal hand size, natural tendons and wrist, no exaggerated splaying. The wrist joint stays at the ORIGINAL exact table contact point; only the hand rotates sideways around it. Keep forearm elbow contact and direction exactly unchanged. Keep the exact same identity and soft gray-blue background color. Photorealistic single portrait, no text, arrows, panels or watermark.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png"
+      ],
+      "output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-4f1b-7ef3-948b-536b66bb3085\\exec-a1f63dca-d07b-4c4d-b196-02271f0749ef.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\060_E-AXU-020_s02_v2.png",
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已查看v2实际文件：右掌保持朝下并接桌，右手朝拇指侧形成可见侧偏，手轴向相对前臂改变，不是翻掌或抬腕；五指自然，右肘仍支桌，人物机位服装背景保持同组。",
+        "limitations": [
+          "较中立源图，前臂轮廓与腕接触点存在小幅生成差异；同一视角方向教学可辨，但不应据像素位移或两帧夹角进行精确测量。"
+        ]
+      },
+      "revisions": [
+        {
+          "version": 1,
+          "prompt": "Use case: identity-preserve. Create ONE photorealistic rehabilitation teaching photo. Input images 1–3 lock the exact same East Asian adult woman, black low ponytail, plain white short sleeve shirt, dark gray trousers, soft gray-blue studio backdrop, natural female proportions. Image 4 is the exact EDIT TARGET. Keep its oblique high/front camera, face, white shirt, dark pants, chair, gray table, right shoulder/elbow and the entire RIGHT FOREARM resting palm-down on the table, left hand on thigh, crop and lighting EXACTLY. Change ONLY the RIGHT HAND at the wrist to RADIAL DEVIATION, bending sideways TOWARD HER RIGHT THUMB SIDE. In this target view her right thumb is on the viewer's RIGHT side of the test hand; move the whole hand/fingers modestly to that thumb side in the FLAT PLANE OF THE TABLE while the wrist/forearm stay anchored in the original place and direction. The right PALM remains DOWN against/parallel to the tabletop and the back of the hand remains UP, nails visible. Fingers remain relaxed naturally extended, not splayed exaggeratedly. This is sideways wrist bending ONLY: NO flipping the palm, NO axial forearm rotation, NO hand lifting off the table, NO dorsiflexion or palmar flexion, NO elbow or shoulder displacement. Exactly one thumb plus four anatomically correct fingers, natural tendons and wrist connection, normal hand size. Preserve the woman's identity, outfit, gray-blue background COLOR and composition. No arrows, labels, text, montage, watermark or added props.",
+          "source": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png"
+          ],
+          "output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-4f1b-7ef3-948b-536b66bb3085\\exec-d38938a9-e487-47d2-a769-d60dc430eccd.png",
+          "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\060_E-AXU-020_s02.png",
+          "adopted": false,
+          "qa": {
+            "reviewed": true,
+            "accepted": false,
+            "observation": "人物身份、掌向下、桌面与五指结构自然；但相比中立图，右前臂和腕的位置发生小幅变化，手相对前臂的桡偏夹向不够清楚，不能把侧移整个前臂当作腕桡偏。",
+            "limitations": [
+              "方向教学差异不够明确，需要定住前臂并让手朝拇指侧明显侧偏后再采用。"
+            ]
+          },
+          "hash": "7F997AB764D72DE87B7310FE9CF7D1202BE4F49BE57B998E83FB674B0210333F",
+          "bytes": 1738943
+        },
+        {
+          "version": 2,
+          "prompt": "Precise anatomy edit of a single rehabilitation photograph. Images 1–3 establish the EXACT SAME woman, white short sleeve T-shirt, dark charcoal pants, black ponytail, natural face/body, gray-blue studio photo background. Image 4 is the AUTHORITATIVE edit target: do not move any part of it except her RIGHT hand distal to the wrist. Keep the RIGHT upper arm, elbow, entire forearm and wrist joint location fixed, along with camera, head/torso, other hand, table, chair, lighting and crop. Show unmistakable RIGHT WRIST RADIAL DEVIATION while the PALM STAYS DOWN flat on the table. Bend the WHOLE right hand sideways toward the thumb (the thumb is on the viewer-right side of this hand). Her fingers should aim more toward the RIGHT SIDE of the frame than in the original, making a clearly visible gentle sideways angle between the unchanged forearm axis and the middle-finger/hand axis. The little-finger edge of the wrist lengthens, thumb side shortens slightly. Keep the entire hand in the tabletop plane: NO hand lifting, NO palm-up rotation, NO finger-only bend. Exactly four relaxed normal fingers and one thumb, normal hand size, natural tendons and wrist, no exaggerated splaying. The wrist joint stays at the ORIGINAL exact table contact point; only the hand rotates sideways around it. Keep forearm elbow contact and direction exactly unchanged. Keep the exact same identity and soft gray-blue background color. Photorealistic single portrait, no text, arrows, panels or watermark.",
+          "source": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png"
+          ],
+          "output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-4f1b-7ef3-948b-536b66bb3085\\exec-a1f63dca-d07b-4c4d-b196-02271f0749ef.png",
+          "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\060_E-AXU-020_s02_v2.png",
+          "adopted": true,
+          "qa": {
+            "reviewed": true,
+            "accepted": true,
+            "observation": "已查看v2实际文件：右掌保持朝下并接桌，右手朝拇指侧形成可见侧偏，手轴向相对前臂改变，不是翻掌或抬腕；五指自然，右肘仍支桌，人物机位服装背景保持同组。",
+            "limitations": [
+              "较中立源图，前臂轮廓与腕接触点存在小幅生成差异；同一视角方向教学可辨，但不应据像素位移或两帧夹角进行精确测量。"
+            ]
+          },
+          "hash": "C9236A6BDEC4762B2CAFD2B18AF04260CC61A03A1861FC575DBABA167A9D6D85",
+          "bytes": 1753719
+        }
+      ],
+      "hash": "C9236A6BDEC4762B2CAFD2B18AF04260CC61A03A1861FC575DBABA167A9D6D85",
+      "bytes": 1753719,
+      "source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/assess/060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png",
+          "sha256": "EDE75EBF8198B09D19757E05FED7CB750DC1779FD6F6FC4F4AC488060E8CB6C6"
+        }
+      ]
+    },
+    {
+      "sequence": 60,
+      "id": "E-AXU-020",
+      "step": 3,
+      "prompt": "Single photorealistic edit. Images 1–3 lock the exact same East Asian woman, black ponytail, white T-shirt, dark gray pants, gray-blue background and realistic proportions. Image 4 is the EDIT TARGET; preserve its face, seated torso, table, chair, left hand, camera, crop and lighting. Preserve the RIGHT elbow, RIGHT forearm direction, and wrist contact point on the table. Change ONLY the RIGHT hand beyond the wrist: make clearly visible ULNAR DEVIATION, i.e. sideways toward the LITTLE FINGER side. The palm stays FLAT DOWN on the tabletop, nails/back of hand upward. Important spatial target: the original fingers point diagonally down-right; now the entire hand must bend sideways LEFT so that the middle fingertip and relaxed fingertips lie almost directly BELOW the wrist, or slightly LEFT of it in the photo. This must make a visible side-bending angle at the wrist while the forearm remains in its original diagonal direction. The thumb remains on the RIGHT edge of the hand. Do NOT shift/rotate the forearm to cancel the hand bend. Do NOT merely spread or curve the fingers. Whole hand turns sideways in the TABLE PLANE, with no palm flipping, no raised wrist, no wrist flexion/extension. One normal thumb plus four normal relaxed fingers, anatomical wrist and natural hand size. No severe extreme, no disconnected hand. Same reference identity and soft gray-blue background color. No arrows, text, labels, collage or watermark.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png"
+      ],
+      "output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-4f1b-7ef3-948b-536b66bb3085\\exec-31b38164-4f7b-48c8-a622-2e6d6023fa99.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\060_E-AXU-020_s03_v2.png",
+      "reuse": false,
+      "qa": {
+        "reviewed": true,
+        "accepted": true,
+        "observation": "已查看v2实际文件：右掌与手背朝向保持，手在桌面平面内向小指侧偏移，指端朝腕下方偏左，手轴相对前臂有明确尺偏；与中立、桡偏方向可区分，五指与腕前臂连接自然。",
+        "limitations": [
+          "与中立源图的前臂轮廓、腕接触点仍存在小幅生成差异；斜上方视角用于方向示范，不用来测精确角度或像素位移。"
+        ]
+      },
+      "revisions": [
+        {
+          "version": 1,
+          "prompt": "Precise anatomy edit, single photorealistic rehabilitation photograph. Images 1–3 lock the SAME adult East Asian woman, black low ponytail, white T-shirt, dark gray pants, soft gray-blue background, natural face/body. Image 4 is the authoritative NEUTRAL wrist edit target. Keep everything unchanged except her RIGHT hand distal to the wrist. Keep right shoulder, elbow, entire forearm direction and tabletop contact fixed, and preserve face, other hand, clothing, chair, table, lighting, high oblique camera and crop. Show RIGHT WRIST ULNAR DEVIATION: bend the WHOLE right hand sideways toward the LITTLE-FINGER side (viewer-left side of her test hand), while her RIGHT PALM stays DOWN in the plane of the table. Fingers should aim more toward the LOWER-LEFT / bottom of the frame than in the neutral target, creating a clear natural sideways angle between the unchanged forearm axis and the hand/middle-finger axis. Thumb remains on the viewer-right side of her hand, relaxed and anatomically normal. No palm flipping, NO hand lifting, NO wrist up/down bend, NO shoulder/forearm rotation or elbow displacement. Keep the wrist joint at its original contact point and rotate only the hand sideways around it; palm and fingers remain lightly in contact with or parallel to the tabletop. Exactly five digits, four relaxed natural fingers and one thumb, normal hand proportions and natural wrist connection. No severe extreme angle. Same reference woman's identity, studio photograph style and gray-blue background COLOR. No text, arrows, watermark, panels or props.",
+          "source": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png"
+          ],
+          "output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-4f1b-7ef3-948b-536b66bb3085\\exec-374aa421-01e2-48e9-94b3-726fbaa31b7d.png",
+          "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\060_E-AXU-020_s03.png",
+          "adopted": false,
+          "qa": {
+            "reviewed": true,
+            "accepted": false,
+            "observation": "实际图掌面朝下与五指结构正常，但小指侧尺偏终点不够清楚；前臂方向改变抵消手的侧偏，手指仍较明显指向右下，不能据此清楚区分尺偏与中立。",
+            "limitations": [
+              "需固定前臂并让手轴更朝小指侧后再采用。"
+            ]
+          },
+          "hash": "5853F1A7B6CB45E23178F758FE0E2E5DCAEA51A5266558668AD7BFF6D7A5A4C4",
+          "bytes": 1763219
+        },
+        {
+          "version": 2,
+          "prompt": "Single photorealistic edit. Images 1–3 lock the exact same East Asian woman, black ponytail, white T-shirt, dark gray pants, gray-blue background and realistic proportions. Image 4 is the EDIT TARGET; preserve its face, seated torso, table, chair, left hand, camera, crop and lighting. Preserve the RIGHT elbow, RIGHT forearm direction, and wrist contact point on the table. Change ONLY the RIGHT hand beyond the wrist: make clearly visible ULNAR DEVIATION, i.e. sideways toward the LITTLE FINGER side. The palm stays FLAT DOWN on the tabletop, nails/back of hand upward. Important spatial target: the original fingers point diagonally down-right; now the entire hand must bend sideways LEFT so that the middle fingertip and relaxed fingertips lie almost directly BELOW the wrist, or slightly LEFT of it in the photo. This must make a visible side-bending angle at the wrist while the forearm remains in its original diagonal direction. The thumb remains on the RIGHT edge of the hand. Do NOT shift/rotate the forearm to cancel the hand bend. Do NOT merely spread or curve the fingers. Whole hand turns sideways in the TABLE PLANE, with no palm flipping, no raised wrist, no wrist flexion/extension. One normal thumb plus four normal relaxed fingers, anatomical wrist and natural hand size. No severe extreme, no disconnected hand. Same reference identity and soft gray-blue background color. No arrows, text, labels, collage or watermark.",
+          "source": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/assess/060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png"
+          ],
+          "output": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-4f1b-7ef3-948b-536b66bb3085\\exec-31b38164-4f7b-48c8-a622-2e6d6023fa99.png",
+          "path": "E:\\git冲突问题\\rehab image\\assess\\steps\\060_E-AXU-020_s03_v2.png",
+          "adopted": true,
+          "qa": {
+            "reviewed": true,
+            "accepted": true,
+            "observation": "已查看v2实际文件：右掌与手背朝向保持，手在桌面平面内向小指侧偏移，指端朝腕下方偏左，手轴相对前臂有明确尺偏；与中立、桡偏方向可区分，五指与腕前臂连接自然。",
+            "limitations": [
+              "与中立源图的前臂轮廓、腕接触点仍存在小幅生成差异；斜上方视角用于方向示范，不用来测精确角度或像素位移。"
+            ]
+          },
+          "hash": "46813211B4B594038BF30C6F22A7D040298E66D0ACDC3E6747E1A4D89CCFDCA4",
+          "bytes": 1746466
+        }
+      ],
+      "hash": "46813211B4B594038BF30C6F22A7D040298E66D0ACDC3E6747E1A4D89CCFDCA4",
+      "bytes": 1746466,
+      "source_hashes": [
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/assess/060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png",
+          "sha256": "EDE75EBF8198B09D19757E05FED7CB750DC1779FD6F6FC4F4AC488060E8CB6C6"
+        }
+      ]
+    }
+  ]
+}
+

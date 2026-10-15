@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "created_date": "2026-10-14",
+  "production_tool": "built-in image_gen.imagegen",
+  "action_index": "185",
+  "action_id": "T-LOW-057",
+  "action_name": "固定自行车的分段活动耐受训练",
+  "version": "稳定直立自行车基础版",
+  "step": "s01",
+  "target_pose": "坐实车座，双手分别置于既有两握把；右踏板低、右腿较伸展且保留膝轻屈，左踏板高、左膝屈曲，两曲柄相对，双足各接触对应踏板。",
+  "sources": [
+    {
+      "path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991"
+    },
+    {
+      "path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+      "sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/train/185_T-LOW-057_固定自行车的分段活动耐受训练.png",
+      "sha256": "F3A8670FE6BCC2B53369D12B709F0CB584C17222053A9F62CFBA3C62DFE36EE3"
+    }
+  ],
+  "proposed_filename": "185_T-LOW-057_s01.png",
+  "final_path": "E:/git冲突问题/rehab image/train/steps/185_T-LOW-057_s01.png",
+  "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a84-1187-7fc1-a200-6acf66177b60/exec-0a1b7fa2-e5fb-4106-852b-c99451b93530.png",
+  "width": 1122,
+  "height": 1402,
+  "bytes": 1683995,
+  "sha256": "82C39ECD633819E20AFB65F317810D26C56A2DA95C8FF80C5E150224594D36D3",
+  "reused_existing_image": false,
+  "reuse_source_path": null,
+  "supporting_reference_path": "E:/git冲突问题/rehab image/train/185_T-LOW-057_固定自行车的分段活动耐受训练.png",
+  "status": "accepted_after_visual_review",
+  "review": {
+    "identity_clothing_background": "女性外观、黑马尾、白短袖深灰长裤、写实柔光及灰蓝背景与三张参考一致。",
+    "pose": "本人右侧近腿伸展较多，右膝保留轻屈；左侧远腿屈膝较多。坐实车座，上身自然近直立。",
+    "hand_contacts": "针对首图两手集中同一握把的问题修订；定稿两手分别握住既有近、远握把，手腕和手指连续可辨。",
+    "pedals_feet_support": "双脚各贴对应踏板，右低左高，两曲柄方向相对，未同时最低；踏带未表现明显勒压。鞍座承托与前后底座落地清楚。",
+    "anatomy_framing": "正常头身与四肢比例，完整头、双手、双鞋、髋膝踝及全车稳定底座入镜，无明显肢段畸变或裁切。",
+    "text_overlay": "单张单姿势，无文字、编号、箭头、拼图及水印。",
+    "independent_review": "另一代理实际view_image复查生成修订图通过；根代理检查生成图与实际保存PNG，保存件和源图SHA256一致。"
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "type": "generate_with_identity_and_bike_references",
+      "prompt": "Use case: scientific-educational.\nAsset type: one photorealistic rehabilitation demonstration photograph, action 185 T-LOW-057, step s01.\nInput images: images 1, 2 and 3 are appearance reference images for the same adult East Asian woman, her recognizable face, age, natural skin, black ponytail, white short-sleeve crewneck T-shirt, dark charcoal full-length trousers, normal body proportions, gray-blue seamless studio background and soft photographic lighting. Image 4 is a supporting reference for the ordinary upright stationary bicycle and general composition. Create a fresh single photograph that obeys the step description below and maintains the reference identity and style.\nPrimary request: the woman is seated securely on the saddle of a stable ordinary upright stationary exercise bike, facing image right. Both hands are placed naturally on the bike's existing high comfortable handlebar grips, elbows relaxed. Torso nearly upright with a slight comfortable forward inclination, pelvis supported by the visible saddle, calm expression.\nCritical pose: her anatomical RIGHT leg is on the NEAR side of the bicycle, with the RIGHT foot on the LOW pedal near five/six o'clock. The right leg is relatively extended with a small visible knee bend, never locked. Her LEFT leg is on the FAR side, with the LEFT foot on the HIGH pedal near eleven/twelve o'clock, left knee comfortably more flexed. Exactly TWO opposite crank arms belonging to ONE crank axle, 180 degrees apart. The two pedal centers and the axle must form a physically coherent opposite-pedal arrangement. Both entire white low-top sports shoes and their separate pedal contacts must be visibly distinguishable, with each sole resting on its own real pedal. Pedal straps should be loosely fitted with a plausible small clearance and no indentation. Do not put a foot on the bike casing.\nBike: normal gray/black upright stationary exercise bike with saddle, adjustable seat post, high handlebars, realistic central crankshaft and drivetrain casing, front and rear stable floor bases. Proper saddle height relative to a normally proportioned adult body. Visible buttock-saddle contact and all floor support contacts. Keep the drivetrain narrow enough to show the far foot and pedal. Exactly two pedals, no added supports under feet. No racing crouch and no recumbent bike.\nComposition: mostly side profile from the woman's anatomical RIGHT, with only a slight 10-degree front oblique angle to separate both legs and both feet. Level camera and natural portrait lens perspective. Portrait 4:5 photograph. Complete head, both hands, both hips/knees/ankles, complete shoes, saddle, handlebars and entire bike including floor stabilizer bases all fit within the frame with clear margins. Matching muted light gray-blue seamless backdrop and matte floor, soft diffused studio lighting, natural contact shadows. Same realistic photography as the references.\nConstraints: one woman, one bike, one clear still pose. Natural continuous joints and correct adult head/torso/arm/thigh/shin proportions. No words, numbers, diagrams, arrows, labels, logo, watermark, readable display, inset, collage, room decor or additional people. Do not depict motion blur or imply cadence from a still image. Avoid impossible crank geometry, both pedals down, floating feet, clipped bike, distorted hands, extra limbs, locked knee or stretched body parts.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/train/185_T-LOW-057_固定自行车的分段活动耐受训练.png"
+      ],
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-1187-7fc1-a200-6acf66177b60/exec-82ae1cff-b41d-4acb-8b4c-fcc7a140e7e7.png",
+      "selection": "discarded",
+      "reason": "双手集中近侧握把，远侧既有握把空着，左手接触不清楚。"
+    },
+    {
+      "attempt": 2,
+      "type": "targeted_hand_contact_edit",
+      "prompt": "Use case: precise-object-edit.\nAsset type: 185 T-LOW-057 s01 rehabilitation photograph.\nInput image: edit target.\nCorrect ONLY the two-hand handlebar contacts in this image. The woman's anatomical RIGHT hand, the nearer foreground hand, must keep holding the NEAR existing upright black handlebar grip (the left grip as seen in the picture). Her anatomical LEFT hand, on the far side, must reach naturally to and wrap around the SECOND, FAR existing upright black handlebar grip (the right grip as seen in the picture). The currently empty far grip must be visibly held by her left hand. Do not put both hands on one grip. Reposition only the left forearm and left hand as needed to show the separate far-grip contact, with natural arm length and elbow bend. Show a coherent left wrist, palm and fingers curling around the existing far grip. Preserve her two arms without duplicate hands. The far hand must meet the existing far grip, never float in front of it.\nPreserve ALL other details: same woman's face, age, black ponytail, white short-sleeve T-shirt, dark gray trousers and white sports shoes; same saddle and seated pelvic contact; same nearly upright torso; same right low pedal and right slightly bent near knee; same left high pedal and flexed left knee; same two opposite crank arms and both shoe-pedal contacts. Preserve exactly the same bike geometry, handlebar heights and positions, seat height, full-body pose, camera, portrait 4:5 crop, image scale, gray-blue studio background, floor, light and shadows. Complete woman and complete stable bicycle remain in frame.\nNo text, numbers, arrows, labels, logos, watermark, duplicated limbs or extra equipment. Only one still photograph. Make the two individual hand-to-handlebar contacts clearly readable.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a84-1187-7fc1-a200-6acf66177b60/exec-82ae1cff-b41d-4acb-8b4c-fcc7a140e7e7.png"
+      ],
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-1187-7fc1-a200-6acf66177b60/exec-0a1b7fa2-e5fb-4106-852b-c99451b93530.png",
+      "selection": "accepted"
+    }
+  ],
+  "sequence_note": "本卡首轮仅1张；低阻慢骑→分段骑行→缓慢降速→停稳再下车的时序留待后续排版文字说明。",
+  "validation_note": "仅核对静态外观、姿势与可见器械接触；不从单图判断实际阻力、踏频或心肺耐受。保留原单图和现有进度JSON，未修改正式应用仓库。"
+}

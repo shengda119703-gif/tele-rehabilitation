@@ -6,7 +6,7 @@ function configured(){if(root.PhoneLocal?.store.key===PhoneStore.LIN_KEY)return 
 function accountFamily(){
  const local=root.PhoneLocal,store=local?.store;
  if(!store||!root.PhoneStore.cloudKey(store.key)||store.value.fixture)return null;
- try{const value=root.PhoneAccount.aiScope?root.PhoneAccount.aiScope(store):root.PhoneAccount.validateIdentity(root.PhoneAccount.identity());if(store.value.cloudIdentity?.account_id!==value.account_id||store.value.cloudIdentity?.patient_id!==value.patient_id)throw Error('档案与账号不一致');if(store.value.owner!==value.patient_id)return null;return{value,store};}catch{return null;}
+ try{const value=root.PhoneAccount.aiScope(store);if(store.value.owner!==value.patient_id)return null;return{value,store};}catch{return null;}
 }
 function familyConfigured(){return !!accountFamily()||(!root.PhoneStore.cloudKey(root.PhoneLocal?.store.key)&&configured());}
 function request(path,method='GET',data=null){

@@ -1,0 +1,195 @@
+{
+  "record_version": "1.0",
+  "created_date": "2026-10-14",
+  "batch": "174/s01–s02；175/s01–s02",
+  "generator": "built-in image_gen.imagegen",
+  "transparent_background": false,
+  "requested_count": 4,
+  "final_output_count": 4,
+  "generation_calls": 4,
+  "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_action_library": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "output_dir": "E:/git冲突问题/rehab image/train/steps",
+  "source_assets_preserved": true,
+  "formal_repository_modified": false,
+  "reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "selected_versions": [
+    {
+      "sequence": 174,
+      "action_id": "T-AXU-033",
+      "name": "哑铃/弹力带肘屈曲",
+      "selected": "双手轻哑铃、站姿舒适旋后握",
+      "camera": "侧面略向前偏，双手与双哑铃可见，全身含完整头/手/脚",
+      "return_sequence": "s01→s02→复用s01缓慢伸肘"
+    },
+    {
+      "sequence": 175,
+      "action_id": "T-AXU-034",
+      "name": "弹力带/绳索肘伸下压",
+      "selected": "高位固定锚板、两条弹力管至两只手柄的双手站姿下压",
+      "camera": "侧面略偏，全身含可见高锚和完整双带路径",
+      "return_sequence": "s01→s02→复用s01受控屈肘"
+    }
+  ],
+  "qa_scope": "逐张实际画面核对动作、器械连续连接、握持、比例、完整部位和组内机位；不依据静态生成图确认肌肉发力、实际重量、带张力、锚点承载或临床效果。",
+  "images": [
+    {
+      "filename": "174_T-AXU-033_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/174_T-AXU-033_s01.png",
+      "bytes": 1677386,
+      "width": 1122,
+      "height": 1402,
+      "sha256": "E8BDE03237F03F2D5D4E99ADAF58B9447D9B0146613FA2D269779D96F5C59984",
+      "sequence": 174,
+      "action_id": "T-AXU-033",
+      "step": "s01",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-e2e4-7570-955b-b4fd598d92df/exec-f586ec1b-0bfa-41af-b617-af0de59aa921.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/174_T-AXU-033_s01.png",
+      "mode": "reference-guided generation",
+      "prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation demonstration photograph, action 174 T-AXU-033 step s01.\nInput images: all three supplied images are appearance references only, defining this SAME adult East Asian woman, facial identity, age, skin tone, build, black ponytail, fitted plain white short-sleeve shirt, full-length charcoal gray trousers, gray-blue background and soft studio photography. Do not copy their arm poses.\nPrimary request: show this woman standing stably preparing a TWO-DUMBBELL SUPINATED BICEPS CURL. Both upper arms rest close beside her torso, shoulders relaxed. Both elbows are nearly extended with a slight comfortable bend, not locked. Each hand securely holds one identical small light black hex dumbbell down beside the front/side of her thigh. Both forearms are SUPINATED with palms facing FORWARD relative to her chest, not palms inward; dumbbell shafts run left-right across the palms. Wrists straight naturally aligned with forearms, realistic wrapped fingers and thumbs. Two dumbbells remain clearly distinct.\nComposition: full body portrait 4:5 from a near side view with 25-degree anterior oblique angle, she faces picture right. Both hands, dumbbells, shoulder-elbow-wrist chains and both feet must remain separately visible. Natural neutral upright spine, neck and gaze forward, no torso lean, feet hip-width on same flat non-slip gray studio floor, gray plain athletic trainers. Entire head, fingers, both complete dumbbells, both shoes and soft contact shadow inside frame with generous margins. Normal lens, realistic body proportions, soft diffuse light, seamless gray-blue floor/background matching references.\nText: none. Exactly one woman, two hands, two identical small dumbbells, one clear posture. No arrows, words, numbers, logos, watermarks, collage, extra equipment, bent wrists, hammer grip, shoulder elevation or body swing.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "qa_status": "逐张实际画面检查通过，供教学图审核",
+      "visual_inspection": {
+        "result": "通过本轮视觉核对",
+        "method": "查看内置imagegen实际返回画面，并调用view_image核对落盘图；只调整显示data URL MIME标识，未编辑图片像素。",
+        "posture": "双臂在身侧，双上臂近身，双肘接近伸直但自然；双手旋后掌心朝前，各握一只轻小黑六角哑铃。",
+        "checks": [
+          "旋后握法可辨，未变成掌心向内锤式。",
+          "双哑铃形状相同，各自由对应手指闭合握持，手腕自然。",
+          "躯干直立、双足稳定，肩未耸起。",
+          "同一女性外观、黑马尾、白短袖、深灰裤与柔光灰蓝背景；写实摄影。",
+          "头部、双手、双脚及全部器械完整入镜；人体比例与连接自然。",
+          "一张仅一个姿势，无文字、编号、箭头、拼图、水印。"
+        ],
+        "limitations": [
+          "肘角由教学外观判断，不作为精确角度测量。"
+        ]
+      }
+    },
+    {
+      "filename": "174_T-AXU-033_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/174_T-AXU-033_s02.png",
+      "bytes": 1644055,
+      "width": 1122,
+      "height": 1402,
+      "sha256": "9AC91BF05E48FB8360A763819354E5665C43B07385384536BF14FE1254B09BF3",
+      "sequence": 174,
+      "action_id": "T-AXU-033",
+      "step": "s02",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-e2e4-7570-955b-b4fd598d92df/exec-de11b4c7-f222-4550-8e06-449f8f897fa6.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/174_T-AXU-033_s02.png",
+      "mode": "identity-preserving pose edit from same-group s01",
+      "prompt": "Use case: scientific-educational.\nAsset type: action 174 T-AXU-033 step s02, ONE standalone rehabilitation demonstration photograph.\nInput images: Image 1 is the EXACT preceding s01 photograph to edit and preserve. Images 2-4 are identity/outfit/background references.\nPrimary request: change ONLY both forearms and their carried dumbbells to the raised endpoint of the same SUPINATED TWO-DUMBBELL BICEPS CURL. Bend both elbows to about 110 degrees of flexion, bringing both same small black hex dumbbells upward toward the fronts of her shoulders/lower chest. Keep BOTH upper arms close along the SAME sides of her torso with elbows essentially at their old waist positions; no shoulder flexion and no swinging elbows forward. Both palms keep facing upward toward shoulders through the supinated curl, not a hammer grip. Wrists remain neutral aligned with forearms. Both distinct dumbbells are still securely held with realistic wrapped fingers and thumbs, identical shape/size/material to Image 1.\nInvariants: preserve her same face, ponytail, plain white short-sleeved shirt, charcoal trousers, gray trainers; preserve head/gaze, relaxed shoulders, upright torso/pelvis, knees, both foot positions, gray-blue studio floor/backdrop, light/shadows, exact camera angle, focal length, scale, crop and full-body margins. This is elbow flexion only, stable body. Entire head, both hands and complete dumbbells, both feet visible. One clear pose, photorealistic anatomy. No text, arrow, number, logo, watermark, panel or collage; no lumbar arch, body swing, folded wrists or changed equipment.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/train/steps/174_T-AXU-033_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "qa_status": "逐张实际画面检查通过，供教学图审核",
+      "visual_inspection": {
+        "result": "通过本轮视觉核对",
+        "method": "查看内置imagegen实际返回画面，并调用view_image核对落盘图；只调整显示data URL MIME标识，未编辑图片像素。",
+        "posture": "双肘弯曲，双哑铃向肩前/胸前抬起，双上臂仍近身。",
+        "checks": [
+          "双侧为屈肘动作，未以肩前举或腰后仰抬重。",
+          "旋后握法与s01一致，双手/双哑铃完整且独立。",
+          "同组相机角度、头/躯干/下肢和脚位保持，哑铃同型同色。",
+          "同一女性外观、黑马尾、白短袖、深灰裤与柔光灰蓝背景；写实摄影。",
+          "头部、双手、双脚及全部器械完整入镜；人体比例与连接自然。",
+          "一张仅一个姿势，无文字、编号、箭头、拼图、水印。"
+        ],
+        "limitations": [
+          "上臂和衣褶存在轻微生成浮动，未改变动作类型。"
+        ]
+      }
+    },
+    {
+      "filename": "175_T-AXU-034_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/175_T-AXU-034_s01.png",
+      "bytes": 1753347,
+      "width": 1122,
+      "height": 1402,
+      "sha256": "3EF22DCD580E139B51448FB0728D906A1F54A9DC635A541ECC2C23BCC8704424",
+      "sequence": 175,
+      "action_id": "T-AXU-034",
+      "step": "s01",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-e2e4-7570-955b-b4fd598d92df/exec-6ced9a31-b269-4f2c-8f33-326a063f6f19.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/175_T-AXU-034_s01.png",
+      "mode": "reference-guided generation",
+      "prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation demonstration photograph, action 175 T-AXU-034 step s01.\nInput images: the three supplied photographs specify the SAME adult East Asian woman's face, age, skin, body, black ponytail, plain white short-sleeved T-shirt, charcoal full-length trousers and gray-blue studio photographic style; these are identity and style references only.\nPrimary request: starting posture for standing TWO-HAND HIGH-ANCHOR RESISTANCE-BAND TRICEPS PRESS-DOWN. She stands upright facing picture right, feet hip-width on a flat non-slip floor, soft knees, neutral pelvis/spine and neck, no lean. Both upper arms hang close along her torso; both elbows bent about 90 degrees at waist level, both forearms extend almost horizontally forward toward picture right. Both hands separately and securely grasp matching compact black D-handles in front of her lower chest/upper abdomen, neutral wrists, palms face downward through the handle grips. Both shoulder-elbow-wrist chains, hands and two handles are distinct and visible.\nEquipment: a simple fixed dark wall anchor plate on a plain structural gray-blue wall IN FRONT of her and a little above head height, at upper right of frame. TWO identical blue elastic resistance tubes securely clip to that high plate at two closely spaced attachment loops; each tube runs in a clear straight diagonal line down-left to ONE corresponding hand-held black handle. Both anchor-to-tube-to-handle continuities and attachments visible, mild tautness, realistic gripping and no tubes wrapping around body. Wall plate held by visible fasteners. Keep equipment minimal; no pulley, machine, dumbbells, extra loops or unexplained floating ends.\nComposition: full body portrait 4:5, nearly side-on with a 25-degree anterior oblique angle so BOTH arms/handles/tubes can be inspected without overlap. Her same gray plain trainers, entire head, both shoes, both full hands, both full handles and complete high anchor with generous margin in one frame; anchor high at picture right, woman slightly left of center, sufficient headroom. Seamless gray-blue studio floor/backdrop with subtle wall-floor transition, soft diffuse realistic light and contact shadows, normal lens, natural proportions, calm expression.\nExactly one woman, one posture, two hands and two tube-and-handle routes. No words, numbers, arrows, logos, watermark, collage; no overhead elbow pose, shoulder elevation, forward torso lean or locked joints.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "qa_status": "逐张实际画面检查通过，供教学图审核",
+      "visual_inspection": {
+        "result": "通过本轮视觉核对",
+        "method": "查看内置imagegen实际返回画面，并调用view_image核对落盘图；只调整显示data URL MIME标识，未编辑图片像素。",
+        "posture": "站姿，双上臂近身，双肘约直角屈曲，双前臂近水平，双手柄在胸腹前。",
+        "checks": [
+          "一个高于头部的固定锚板及两处连接可见。",
+          "两条蓝色弹力管分别连续连接至两只黑D柄，路线清晰、不绕身体。",
+          "肩肘腕关系连续、握持自然，躯干无明显前倾。",
+          "同一女性外观、黑马尾、白短袖、深灰裤与柔光灰蓝背景；写实摄影。",
+          "头部、双手、双脚及全部器械完整入镜；人体比例与连接自然。",
+          "一张仅一个姿势，无文字、编号、箭头、拼图、水印。"
+        ],
+        "limitations": [
+          "照片能显示连接关系，不能证明真实锚点承载能力或带张力。"
+        ]
+      }
+    },
+    {
+      "filename": "175_T-AXU-034_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/175_T-AXU-034_s02.png",
+      "bytes": 1707997,
+      "width": 1122,
+      "height": 1402,
+      "sha256": "7253310DBC4B2F9974EBED9D617860A45CA371414F3E76B53EA2274FA90E48B0",
+      "sequence": 175,
+      "action_id": "T-AXU-034",
+      "step": "s02",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-e2e4-7570-955b-b4fd598d92df/exec-126f9cb3-853f-4e1f-8ffa-a9134d47fb48.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/175_T-AXU-034_s02.png",
+      "mode": "identity-preserving pose edit from same-group s01",
+      "prompt": "Use case: scientific-educational.\nAsset type: rehabilitation demonstration action 175 T-AXU-034 step s02, one photo.\nInput images: Image 1 is the EXACT preceding s01 photograph to edit. Images 2–4 are additional identity and studio references.\nPrimary request: change ONLY the TWO forearms, hands, handles and their elastic tube paths from the bent-elbow preparation into the bottom endpoint of the SAME high-anchor resistance-band TRICEPS PRESS-DOWN. BOTH elbows extend almost straight with a small soft bend remaining, about 10 degrees short of locked. Preserve both shoulder positions, both upper arms close at sides, elbows at the same waist-side locations; hands and black handles now descend beside the FRONT of her upper thighs, wrists neutral, neither hand behind her body. Both forearms point downward, not backward. Keep fingers securely and plausibly wrapped around the same two handle bars; keep the same grip and handle dimensions/materials. The TWO blue tubes remain attached to exactly the SAME pair of high fixed wall-anchor points, same black plate with same fasteners, and now lengthen along two clear straight taut routes down-left to the same two lowered handles. Every clip/handle and both complete tube-to-anchor routes remain clearly visible and physically connected, no floating ends, no new equipment.\nInvariants: keep the same woman identity, hair, face, gaze, white shirt, charcoal trousers and gray shoes; same upright spine/pelvis, shoulders, knees and planted foot locations; same gray-blue studio wall/floor, light/shadows, high anchor EXACT position, camera angle, normal lens, subject scale, full-body frame and margins. Include entire head, both full hands and handles, both shoes and entire high anchor. Natural anatomy and light, single clear posture. No text, numbers, arrows, collage, watermark, logos, backward arm sweep, body lean, shoulder swing, elbow hyperextension or overhead arm position.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/train/steps/175_T-AXU-034_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "qa_status": "逐张实际画面检查通过，供教学图审核",
+      "visual_inspection": {
+        "result": "通过本轮视觉核对",
+        "method": "查看内置imagegen实际返回画面，并调用view_image核对落盘图；只调整显示data URL MIME标识，未编辑图片像素。",
+        "posture": "双肘接近伸直，手柄向下到大腿前方，仍保留自然微屈，双上臂近身。",
+        "checks": [
+          "双手柄在大腿前侧，未向身体后方扫臂。",
+          "双带仍从原高锚板连续连接至各自手柄，锚板位置和器械外观保持。",
+          "躯干直立，双肩无明显大幅前后摆；组内足位、相机、人物尺度一致。",
+          "同一女性外观、黑马尾、白短袖、深灰裤与柔光灰蓝背景；写实摄影。",
+          "头部、双手、双脚及全部器械完整入镜；人体比例与连接自然。",
+          "一张仅一个姿势，无文字、编号、箭头、拼图、水印。"
+        ],
+        "limitations": [
+          "相较s01，上臂和衣褶存在少量生成浮动；仍是以上臂近身为条件的下压姿态。"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "batch": "补缺_041_078_111-114",
+  "date": "2026-10-14",
+  "status": "parent_frames_complete",
+  "requested_count": 10,
+  "parent_requested_count": 3,
+  "supplemental_count": 1,
+  "method": "内置 image_gen__imagegen；每帧独立调用，姿势返修同样内置；最终PNG原字节复制，不裁切缩放或再编码。",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_card": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "selected_version_notes": [
+    "041按本人左右方向命名，头随胸口；每个终点独立由中立准备图出发，椅、髋膝与双足固定。",
+    "078继承已有高斜侧俯视横图；源卡未限制手撑地，为解决远手遮挡选择双手分开放腹前，配套新增s01_v2，原s01保留。",
+    "111/112/113为白运动鞋；114沿用另一会话已生成赤足组的近景机位、扶手和双足位置，保持本动作组一致。"
+  ],
+  "protected_start_assets": [
+    {
+      "path": "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s01.png",
+      "sha256": "196BA4EC930259131CEC32ACD74260A438DECC523BBB937F253D507F15F7B4B2"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+      "sha256": "51B2D3F0BDFE12EB3334765E281966253C3C168E7E0DBAE51D560289B4E65EA9"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt_key": "041-s02",
+      "prompt": "Use case: scientific-educational. Edit image 1 into ONE matching rehabilitation demonstration photograph for action 041 E-AXU-008 step s02. Images 2–4 are identity/style references only. Preserve image 1's exact adult East Asian woman, face, age, black ponytail, white short-sleeve T-shirt, dark charcoal long pants, white sneakers, grey stationary armless chair, grey-blue seamless studio floor and background, soft diffuse lighting, camera position, portrait framing, subject size and entire head-to-shoes composition. Change ONLY the seated upper torso posture: with both arms still crossed naturally across the chest, hands visible on opposite upper arms, turn the CHEST and shoulders comfortably about 35 degrees toward HER OWN ANATOMICAL LEFT; the head follows the chest naturally with a relaxed neutral neck. Her anatomical left is toward the image RIGHT because she is viewed from the front, slightly oblique. This should turn her upper chest further toward image RIGHT, away from the fixed forward direction of her knees. Pelvis stays seated level and facing forward; BOTH thighs, knees and feet stay at their original locations pointing forward and both complete soles remain flat on floor. Chair remains EXACTLY stationary, not rotated. Keep upright spine, no backward arch, no side leaning. Make thoracic rotation obvious by the shoulder line and sternum orientation relative to unchanged knees. Crossed arms move WITH chest, do not pull chair or uncross. Natural anatomy, continuous joints, exactly two arms and two legs, proper visible fingers. ONE static pose, not a collage. No text, number, label, arrows, watermark or extra people.",
+      "input_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-97da0173-5ae0-43c1-91af-41a2664df04b.png",
+      "selected": false,
+      "qa": "胸口旋转不足，主要是转头；返修。"
+    },
+    {
+      "attempt_key": "041-s03",
+      "prompt": "Use case: scientific-educational. Edit image 1 into ONE matching rehabilitation demonstration photograph for action 041 E-AXU-008 step s03. Images 2–4 are identity/style references only. Preserve image 1's exact adult East Asian woman, face, age, black ponytail, white short-sleeve T-shirt, dark charcoal long pants, white sneakers, grey stationary armless chair, grey-blue studio background/floor, soft diffuse lighting, camera/lens/portrait framing and complete head-to-shoes composition. Change ONLY the seated upper torso posture to the opposite direction: with BOTH arms naturally crossed across the chest, hands visible on opposite upper arms, turn the CHEST and shoulders comfortably about 35 degrees toward HER OWN ANATOMICAL RIGHT. Anatomical RIGHT points toward image LEFT for this front-oblique view. Her upper chest and face therefore turn toward image LEFT while both knees still point toward the same original slightly image-right forward direction. Head follows chest naturally, neutral neck. Pelvis remains seated level and forward, BOTH thighs, knees and feet stay at their exact original locations facing forward. Both soles fully flat on floor. Chair must remain exactly stationary, not rotated. No forward bending, backward arch, side leaning or arm pulling. Make opposite thoracic rotation clearly visible by shoulder/sternum orientation relative to fixed knees. Natural proportions and continuous joints; exactly two arms, two legs and two complete shoes, fingers natural. Single static pose, no text, labels, number, arrows, watermark, collage, duplicate person.",
+      "input_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-d81fbe6c-6fb6-46b4-b964-6fc337a9eaee.png",
+      "selected": false,
+      "qa": "胸口旋转不足，主要是转头；返修。"
+    },
+    {
+      "attempt_key": "078-s02",
+      "prompt": "Use case: scientific-educational. Edit image 1 into the matching END pose of action 078 T-LOW-011 step s02, bilateral glute bridge. Images 2–4 are woman identity/style references only. Keep image 1's EXACT woman, face, black ponytail, white short-sleeve T-shirt, dark charcoal full-length trousers, BOTH white sneakers, grey nonslip mat, grey-blue seamless studio floor/background, soft lighting, high oblique lateral camera, landscape framing, head on image LEFT and feet on image RIGHT. Keep the same head, shoulder, hand and shoe positions, whole person in frame with full hands and shoes. Change ONLY by raising pelvis and buttocks into a moderate controlled two-foot bridge, so shoulder–hip–knee form an approximately straight diagonal line. Head and neck relaxed on mat, upper shoulder blades remain supported on mat. BOTH arms remain relaxed beside torso, BOTH full hands palm-down on mat. BOTH shoe soles fully flat and stable at their original locations and comfortable spacing, no foot sliding, heel rising or floating shoe; both knees remain bent and aligned over their feet. Lift through hip extension, level pelvis; maintain neutral lumbar spine, gently engaged abdomen and no dramatic lower-back arch or rib flare. Show clear visible air gap between buttocks/pelvis and mat, realistic torso-thigh proportions and continuous hip/knee joints. All of head, complete arms/hands, BOTH bent knees, BOTH ankles and BOTH shoes must be visible, mat contact points clear. ONE static photograph only, no text, arrows, labels, numbers, collage, watermark or extra limbs.",
+      "input_paths": [
+        "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-746baee1-4e1a-4321-9b0f-439783a01551.png",
+      "selected": false,
+      "qa": "远侧手臂与手掌不可辨，返修。"
+    },
+    {
+      "attempt_key": "041-s02-r2",
+      "prompt": "Use case: scientific-educational. Precise pose correction to image 1, which currently mainly turns the head. KEEP everything below waist pixel-equivalent in placement: the identical stationary chair, pelvis, thighs, knees, flat white shoes, grey-blue background, camera and portrait framing. Keep exact same adult woman, face, ponytail, white T-shirt, charcoal pants, arms crossed and hands on opposite upper arms. REQUIRED CHANGE: rotate the ENTIRE ribcage, sternum, shoulders AND crossed arms together markedly toward the woman's ANATOMICAL LEFT (image RIGHT). Her seated hips and knees still point forward, but her chest now points diagonally toward image RIGHT at about 45 degrees relative to her pelvis. Make this a clearly visible SEATED THORACIC TWIST, not just neck rotation. The upper body should show a three-quarter side view toward image RIGHT, with visibly narrower projected chest and both crossed forearms rotated rigidly WITH the chest; the right shoulder comes forward, the left shoulder travels backward. White shirt torso folds must show axial rotation above a fixed forward-facing waistband. Head naturally follows the turned sternum, neck unstrained. Upright balanced trunk, no bending, no lateral tilt, no lumbar arch, no pulling chair, buttocks stay seated. Complete head, both hands, both knees and both shoes. Both soles stay flat. One pose only, no text/arrows/labels/collage/watermark. The chest rotation should be unmistakable when compared with unchanged forward-facing knees.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-97da0173-5ae0-43c1-91af-41a2664df04b.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-3d7290f6-318f-4df0-865e-9e9422310f4d.png",
+      "selected": true,
+      "qa": "人物与参考一致；抱胸肩胸整体向本人左转可辨；头随胸口，髋膝、双足和固定椅位保持；完整头、手、足可见。"
+    },
+    {
+      "attempt_key": "041-s03-r2",
+      "prompt": "Use case: scientific-educational. Correct image 1 so the chest visibly rotates WITH the head. Preserve exact woman, face, ponytail, clothing, white shoes, background, chair, lighting, camera and portrait full-body composition. KEEP the seated pelvis, thighs, knees and shoes in their EXACT existing forward-facing positions, chair fixed. REQUIRED CHANGE: rotate the whole ribcage, sternum, shoulders AND crossed arms together toward her ANATOMICAL RIGHT, which is image LEFT in this view. Chest must point diagonally toward image LEFT at a clearly visible comfortable twist of about 45 degrees RELATIVE to her fixed forward-facing pelvis/knees. Head and sternum face the SAME image-left direction, not head left while sternum faces the camera. This must visibly be a torso rotation. Give the upper torso a three-quarter side view facing image LEFT: left shoulder advances forward, right shoulder travels backward, both crossed forearms and hands move WITH that shoulder girdle, white shirt wrinkles show rotation above the unchanged forward-facing waistband. Hands remain on opposite upper arms, no uncrossing or grabbing chair. Upright spine and level shoulders, no lateral lean or forward/backward bending. Buttocks stay seated, both soles flat. Full head, complete hands and shoes in frame, anatomically natural. No text, arrows, motion trails, panel, collage or watermark.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-d81fbe6c-6fb6-46b4-b964-6fc337a9eaee.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-0b4f3645-ee8b-4cd2-9dc5-4d48c09340e6.png",
+      "selected": false,
+      "qa": "再次复核肩胸转向教学区分仍弱；返修为胸口与抱胸肩带整体相反方向。"
+    },
+    {
+      "attempt_key": "078-s02-r2",
+      "prompt": "Use case: scientific-educational. Edit image 1, the raised two-foot glute bridge photograph. Image 2 is the matching START photograph and fixes exact location of both arms/hands; images 3–5 fix identity/style. Make ONLY one repair: RESTORE the missing FAR-SIDE ARM AND HAND. Place her farther arm naturally straight beside the torso on the mat, matching image 2: the far arm emerges from its white short sleeve, lies diagonally toward the image upper-right along the mat, and its complete forearm, wrist and open hand with five natural fingers are clearly visible ABOVE the silhouette of her raised torso. Far palm is down flat on the mat near its original position, around the upper middle part of the photo, well separated from the hip. Both arms are real continuous limbs, the far shoulder connects under the sleeve, not a detached hand. Keep the near arm and hand EXACTLY unchanged. Keep EVERYTHING else in image 1: moderate elevated bilateral bridge pelvis, neutral back without arch, head/neck/shoulder blades supported on mat, both knees bent, both complete white shoe soles flat at same locations, woman/face/ponytail/white T-shirt/dark trousers, grey mat, lighting, oblique camera and full-body landscape composition. Do not lower pelvis, alter feet or move camera. Both full hands MUST visibly rest on mat, no arm hidden behind torso. Exactly two arms/two legs/two shoes. Single pose, no labels/text/arrows/collage/watermark.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-746baee1-4e1a-4321-9b0f-439783a01551.png",
+        "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-1902ea96-0c93-4007-aec4-2db2e5daa9b5.png",
+      "selected": false,
+      "qa": "远手接触位置含糊，似位于垫外/腰骨盆边，返修。"
+    },
+    {
+      "attempt_key": "041-s03-r3",
+      "prompt": "Edit image 1 into the OPPOSITE seated torso-twist direction, 041-s03. Image 2 is the fixed forward-facing lower body baseline. Keep exact person, clothing, chair, background, lighting, camera, head-to-shoes portrait framing, entire lower body and shoes unchanged. Rotate the WHOLE UPPER TORSO, shoulders, sternum, ribcage and crossed arms to face image LEFT, showing a clearly side-facing THREE-QUARTER view of the chest. The left shoulder and elbow advance toward camera and the right shoulder and elbow recede, opposite to image 1. Head faces image LEFT along the SAME direction as sternum. Chest faces leftward, NOT frontally at camera. Both hands remain on opposite upper arms and arms stay crossed across chest. Pelvis, thighs, knees and feet still face their ORIGINAL forward direction from image 2; this is a comfortable thoracic rotation relative to still hips. Keep shoulders level, spine upright, buttocks firmly seated, both shoe soles flat on floor. No side bend, neck-only turn or whole-chair rotation. Make upper torso pose unmistakably opposite image 1, with chest and crossed arms turning together, anatomically proportioned. No text, arrows, watermark or collage.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-3d7290f6-318f-4df0-865e-9e9422310f4d.png",
+        "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-90846643-e6c4-4737-bfee-5648b8517102.png",
+      "selected": true,
+      "qa": "肩带、胸面和抱胸手臂整体向本人右转，与s02方向明确区分；双足/髋膝/椅位保持，单帧比例自然。"
+    },
+    {
+      "attempt_key": "078-s02-r3",
+      "prompt": "Edit image 1, the raised bilateral glute bridge. Image 2 is the START and shows the missing far arm and hand in the correct original resting position. Restore that far arm: copy its original anatomical location from image 2, FAR PALM flat DOWN ON THE GREY MAT (around x760 y365 in this 1536x1024 composition), and the distal forearm and complete five-finger hand clearly visible resting on mat beside the farther hip. The far arm extends comfortably from the far shoulder along the mat, in same location as image 2. Some proximal upper-arm occlusion by the raised torso is naturally allowed, but the full hand and wrist must be visible ON the mat, not on the hip or in air. Do NOT place the hand above or outside the mat's far diagonal edge. Keep everything else in image 1 unchanged: pelvis raised into moderate bridge, head neck shoulder blades supported on mat, neutral back, both knees bent, both soles flat with exact foot positions, near arm and hand unchanged, same woman face ponytail clothes shoes grey mat lighting camera full-body landscape framing. Exactly two natural continuous arms, no detached hand, no floating limb. No text, arrows, labels, collage or watermark.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-746baee1-4e1a-4321-9b0f-439783a01551.png",
+        "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-074f79a8-08a7-4f08-b849-dc3124392423.png",
+      "selected": false,
+      "qa": "远手未清楚落垫，位于腰骨盆边，弃用并改同组双手腹前摆位。"
+    },
+    {
+      "attempt_key": "078-s01-v2",
+      "prompt": "Use case: scientific-educational. Edit image 1, bilateral bridge START photograph, as a matched revised START 078-s01_v2. Keep EXACT woman face ponytail white short-sleeve T-shirt dark charcoal trousers white shoes, grey mat, grey-blue background/floor, lighting, oblique high side camera, full-body landscape composition, head on image LEFT feet image RIGHT. Keep supine body, head/neck/back/buttocks resting on mat, both knees bent and both complete shoe soles flat at EXACT same positions. Change ONLY arm placement to make both complete hands visible: bend BOTH elbows naturally with elbows resting comfortably on mat beside torso, and place BOTH hands separately and lightly on the front of the white T-shirt over the upper abdomen/lower ribs. Each palm rests lightly on its own side of the abdomen; hands do not overlap or interlace. Both full five-finger hands and BOTH wrists must be fully visible on white shirt, separated left/right by several centimeters. Forearms naturally connect the mat-supported elbows to abdomen. No hand on hip, thigh, neck or chest center, no crossed hands or hidden hand, no duplicated hands. Neutral relaxed supine START with pelvis on mat, no bridge lift, no back arch. No text arrows labels collage watermark.",
+      "input_paths": [
+        "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-f09d22ee-f935-425b-bc42-72b7b0b682e9.png",
+      "selected": true,
+      "qa": "补充配套准备图，原s01保留；双手分开放腹前，骨盆落垫，双足全掌落稳，头颈平放，机位与最终s02一致。"
+    },
+    {
+      "attempt_key": "078-s02-r4",
+      "prompt": "Use case: scientific-educational. Edit this exact revised bilateral glute bridge START into the raised END, 078 T-LOW-011 s02. Keep EXACT woman face ponytail white T-shirt charcoal long trousers white shoes, grey nonslip mat, grey-blue background, soft lighting, high oblique side camera, full-body landscape framing, head image LEFT feet image RIGHT. KEEP BOTH HANDS separated lightly resting on the white shirt over upper abdomen/lower ribs, same finger/wrist arrangement as input, both elbows resting comfortably on mat. Hands naturally move WITH the abdomen and remain FULLY visible on shirt, no hidden or extra hands. Change ONLY pelvis and hip extension: slowly raise buttocks/pelvis off mat into a moderate bridge, shoulder–hip–knee approximately a straight diagonal. Neutral lower back, no large arch, ribs not flared, pelvis level. Head and neck flat and relaxed on mat; upper shoulder blades stay supported on mat. BOTH complete white shoe soles remain fully flat on mat at exact same coordinates and spacing, both knees flexed and aligned, no heel lifting or foot sliding. Clearly show pelvis raised with visible gap under buttocks. Arms bend naturally while hands stay on belly, elbows supported. Full body and full shoes, all wrists/fingers and both knees visible, continuous natural joints. Single static pose only, no text, arrows, labels, collage or watermark.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-f09d22ee-f935-425b-bc42-72b7b0b682e9.png"
+      ],
+      "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-5215a6ad-a9a4-400e-9642-03c132a5d0f2.png",
+      "selected": true,
+      "qa": "由配套s01_v2编辑；双手分开放腹前、手腕手指可见；骨盆抬起，头颈与肩背落垫，两足全掌固定，无明显腰后仰；同人物垫机位足位。"
+    },
+    {
+      "attempt_key": "041-s03-r3-network-failed",
+      "prompt": "Edit image 1 into the OPPOSITE seated torso-twist direction, 041-s03. Image 2 is the fixed forward-facing lower body baseline. Keep exact person, clothing, chair, background, lighting, camera, head-to-shoes portrait framing, entire lower body and shoes unchanged. Rotate the WHOLE UPPER TORSO, shoulders, sternum, ribcage and crossed arms to face image LEFT, showing a clearly side-facing THREE-QUARTER view of the chest. The left shoulder and elbow advance toward camera and the right shoulder and elbow recede, opposite to image 1. Head faces image LEFT along the SAME direction as sternum. Chest faces leftward, NOT frontally at camera. Both hands remain on opposite upper arms and arms stay crossed across chest. Pelvis, thighs, knees and feet still face their ORIGINAL forward direction from image 2; this is a comfortable thoracic rotation relative to still hips. Keep shoulders level, spine upright, buttocks firmly seated, both shoe soles flat on floor. No side bend, neck-only turn or whole-chair rotation. Make upper torso pose unmistakably opposite image 1, with chest and crossed arms turning together, anatomically proportioned. No text, arrows, watermark or collage.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-3d7290f6-318f-4df0-865e-9e9422310f4d.png",
+        "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": null,
+      "selected": false,
+      "qa": "内置生成网络请求失败；随后使用同参数重试成功，无文件交付。"
+    },
+    {
+      "attempt_key": "078-s02-r3-network-failed",
+      "prompt": "Edit image 1, the raised bilateral glute bridge. Image 2 is the START and shows the missing far arm and hand in the correct original resting position. Restore that far arm: copy its original anatomical location from image 2, FAR PALM flat DOWN ON THE GREY MAT (around x760 y365 in this 1536x1024 composition), and the distal forearm and complete five-finger hand clearly visible resting on mat beside the farther hip. The far arm extends comfortably from the far shoulder along the mat, in same location as image 2. Some proximal upper-arm occlusion by the raised torso is naturally allowed, but the full hand and wrist must be visible ON the mat, not on the hip or in air. Do NOT place the hand above or outside the mat's far diagonal edge. Keep everything else in image 1 unchanged: pelvis raised into moderate bridge, head neck shoulder blades supported on mat, neutral back, both knees bent, both soles flat with exact foot positions, near arm and hand unchanged, same woman face ponytail clothes shoes grey mat lighting camera full-body landscape framing. Exactly two natural continuous arms, no detached hand, no floating limb. No text, arrows, labels, collage or watermark.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-746baee1-4e1a-4321-9b0f-439783a01551.png",
+        "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "output_path": null,
+      "selected": false,
+      "qa": "内置生成网络请求失败；随后使用同参数重试成功，无文件交付。"
+    }
+  ],
+  "final_images": [
+    {
+      "id": "041-s02-r2",
+      "action": "041",
+      "action_id": "E-AXU-008",
+      "step": "s02",
+      "file": "assess/steps/041_E-AXU-008_s02.png",
+      "qa": "人物与参考一致；抱胸肩胸整体向本人左转可辨；头随胸口，髋膝、双足和固定椅位保持；完整头、手、足可见。",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-3d7290f6-318f-4df0-865e-9e9422310f4d.png",
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s02.png",
+      "sha256": "CBBF56F11311B318B9BF8C6434487912F2BC30D13C85CC050F1A90009D6CDAD3",
+      "source_sha256": "CBBF56F11311B318B9BF8C6434487912F2BC30D13C85CC050F1A90009D6CDAD3",
+      "bytes": 1682045,
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "id": "041-s03-r3",
+      "action": "041",
+      "action_id": "E-AXU-008",
+      "step": "s03",
+      "file": "assess/steps/041_E-AXU-008_s03.png",
+      "qa": "肩带、胸面和抱胸手臂整体向本人右转，与s02方向明确区分；双足/髋膝/椅位保持，单帧比例自然。",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-90846643-e6c4-4737-bfee-5648b8517102.png",
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s03.png",
+      "sha256": "923175D9585EDE07A140C78A97B67C3E30A2AFBFB603F3F13200EE2A9DF81716",
+      "source_sha256": "923175D9585EDE07A140C78A97B67C3E30A2AFBFB603F3F13200EE2A9DF81716",
+      "bytes": 1671037,
+      "width": 1122,
+      "height": 1402
+    },
+    {
+      "id": "078-s02-r4",
+      "action": "078",
+      "action_id": "T-LOW-011",
+      "step": "s02",
+      "file": "train/steps/078_T-LOW-011_s02.png",
+      "qa": "由配套s01_v2编辑；双手分开放腹前、手腕手指可见；骨盆抬起，头颈与肩背落垫，两足全掌固定，无明显腰后仰；同人物垫机位足位。",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-5215a6ad-a9a4-400e-9642-03c132a5d0f2.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s02.png",
+      "sha256": "BD92614DA50D2147B180F699A8BF492B4A306E044A7D1475137CF2487C953008",
+      "source_sha256": "BD92614DA50D2147B180F699A8BF492B4A306E044A7D1475137CF2487C953008",
+      "bytes": 1848078,
+      "width": 1536,
+      "height": 1024
+    },
+    {
+      "id": "078-s01-v2",
+      "action": "078",
+      "action_id": "T-LOW-011",
+      "step": "s01_v2",
+      "file": "train/steps/078_T-LOW-011_s01_v2.png",
+      "qa": "补充配套准备图，原s01保留；双手分开放腹前，骨盆落垫，双足全掌落稳，头颈平放，机位与最终s02一致。",
+      "supplemental": true,
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-f09d22ee-f935-425b-bc42-72b7b0b682e9.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01_v2.png",
+      "sha256": "D22D0AB980B4ECDE58CA00BE7BBD1324D368954A9726E1E4333BD56D68A13C19",
+      "source_sha256": "D22D0AB980B4ECDE58CA00BE7BBD1324D368954A9726E1E4333BD56D68A13C19",
+      "bytes": 1842188,
+      "width": 1536,
+      "height": 1024
+    }
+  ]
+}

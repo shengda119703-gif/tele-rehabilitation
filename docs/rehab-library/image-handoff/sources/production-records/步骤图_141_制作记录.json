@@ -1,0 +1,253 @@
+{
+  "schema_version": "1.0",
+  "created_date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "action_number": "141",
+  "action_id": "T-AXU-019",
+  "action_name": "单侧手提箱行走",
+  "version": "基础右手单只轻壶铃",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "tool_mode": "built-in image_gen__imagegen; one image per call; edits with referenced_image_paths; no CLI",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "skill": "C:/Users/Administrator/.codex/skills/.system/imagegen/SKILL.md",
+  "status": "4/4 generated, visually inspected using view_image, accepted and copied non-destructively",
+  "attempts": [
+    {
+      "step": "s01",
+      "attempt": 1,
+      "prompt": "Use case: scientific-educational. Asset type: ONE standalone rehabilitation exercise demonstration photograph, 4:5 portrait, full body.\nInput images 1–3 are supporting references only: match this exact East Asian adult woman, her face, age, skin, proportions, black ponytail, plain white short-sleeved T-shirt and dark charcoal long straight trousers, photographic texture, soft studio light, cool muted gray-blue seamless background. Do not copy their raised-arm poses. Extend her clothing with plain unbranded white low-top athletic shoes.\nCreate step 141 T-AXU-019 s01, single-side suitcase carry preparation. She has already lifted the weight and now stands still naturally upright facing toward image-right along a clear level walking route. BOTH feet flat planted shoulder-width, knees natural. Her anatomical RIGHT hand, on the camera-facing side, firmly wraps the curved handle of exactly ONE small lightweight matte-black kettlebell hanging vertically close beside her right outer thigh, with several centimeters clearance from the trousers. Anatomical LEFT hand is EMPTY and relaxed by her far side, visibly empty. Both arms hang naturally. Level relaxed shoulders, neutral trunk, no side lean. Show realistic fingers wrapping the handle, right wrist neutral, no lifting swing.\nFixed set for all four frames: cool gray-blue floor continuous with backdrop, no floor markings; one stable dark charcoal rectangular placement platform with a light gray flat top at about 60–65 cm from floor sits toward image-right and slightly behind the walking route, fully in frame and clear of her feet. Platform has a solid stable base, no wheels, no lettering; large enough to set this small kettlebell on it. Kettlebell is in her right hand, NOT on platform in this frame.\nComposition: fixed eye-level camera approximately true right-side profile with a slight forward angle so her right hand and both feet are clear. Full head, both complete hands, both complete shoes, entire kettlebell and entire platform in frame, generous margins. Woman occupies about 72 percent of image height, platform about 28 percent height, natural proportions. Soft floor shadows, clean restrained clinical demonstration studio photography, detailed skin and cloth, realistic anatomy. This is ONE pose in ONE photograph. No labels, no numbers, no arrows, no text, no logos, no watermark, no collage, no inset, no border.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "status": "calling cell cancelled after approximately ten minutes without output; not proof that backend generation failed",
+      "metadata": null
+    },
+    {
+      "step": "s01",
+      "attempt": 2,
+      "prompt": "Use case: scientific-educational. Asset type: ONE standalone rehabilitation exercise demonstration photograph, 4:5 portrait, full body.\nInput images 1–3 are supporting references only: match this exact East Asian adult woman, her face, age, skin, proportions, black ponytail, plain white short-sleeved T-shirt and dark charcoal long straight trousers, photographic texture, soft studio light, cool muted gray-blue seamless background. Do not copy their raised-arm poses. Extend her clothing with plain unbranded white low-top athletic shoes.\nCreate step 141 T-AXU-019 s01, single-side suitcase carry preparation. She has already lifted the weight and now stands still naturally upright facing toward image-right along a clear level walking route. BOTH feet flat planted shoulder-width, knees natural. Her anatomical RIGHT hand, on the camera-facing side, firmly wraps the curved handle of exactly ONE small lightweight matte-black kettlebell hanging vertically close beside her right outer thigh, with several centimeters clearance from the trousers. Anatomical LEFT hand is EMPTY and relaxed by her far side, visibly empty. Both arms hang naturally. Level relaxed shoulders, neutral trunk, no side lean. Show realistic fingers wrapping the handle, right wrist neutral, no lifting swing.\nFixed set for all four frames: cool gray-blue floor continuous with backdrop, no floor markings; one stable dark charcoal rectangular placement platform with a light gray flat top at about 60–65 cm from floor sits toward image-right and slightly behind the walking route, fully in frame and clear of her feet. Platform has a solid stable base, no wheels, no lettering; large enough to set this small kettlebell on it. Kettlebell is in her right hand, NOT on platform in this frame.\nComposition: fixed eye-level camera approximately true right-side profile with a slight forward angle so her right hand and both feet are clear. Full head, both complete hands, both complete shoes, entire kettlebell and entire platform in frame, generous margins. Woman occupies about 72 percent of image height, platform about 28 percent height, natural proportions. Soft floor shadows, clean restrained clinical demonstration studio photography, detailed skin and cloth, realistic anatomy. This is ONE pose in ONE photograph. No labels, no numbers, no arrows, no text, no logos, no watermark, no collage, no inset, no border.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-3e37c75c-5059-4632-9626-2c9ec1096bb0.png",
+      "status": "generated; anatomy/pose passed; revise low platform height",
+      "metadata": {
+        "path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-3e37c75c-5059-4632-9626-2c9ec1096bb0.png",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1706055,
+        "sha256": "114BF320521A4C3D7856564F5A2A0CDCFF105459B969797B62D2347A53BC2359"
+      }
+    },
+    {
+      "step": "s01",
+      "attempt": 3,
+      "prompt": "Use case: precise-object-edit. Edit target: the supplied 141 s01 photograph. Make ONE targeted change only: increase the height of the stable gray rectangular placement platform on image-right so it is a practical 60–65 cm tall platform. Keep its footprint, floor contact position, light gray top material, charcoal base, width, depth, perspective and shadow direction identical. Raise its upper surface approximately 160 image pixels above its current location, so the top is at the woman's mid-thigh visual level when she approaches it; extend the same solid charcoal base down to its existing floor-contact baseline. Do not resize or move the woman or kettlebell.\nPreserve exactly the same East Asian woman identity, face, black ponytail, white short-sleeved T-shirt, dark gray long trousers, white low-top shoes; same static upright profile pose, anatomical RIGHT hand camera-facing holding one small matte black kettlebell at her side, anatomical LEFT hand empty; both feet flat planted. Same fixed camera, framing, 4:5 portrait image, gray-blue seamless background/floor, soft studio lighting and full-body margins. No text, no arrows, no logo, no watermarks. ONE photograph, no collage.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-3e37c75c-5059-4632-9626-2c9ec1096bb0.png"
+      ],
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-3fbc7525-daf0-4f5a-a896-940852b5f56b.png",
+      "status": "passed; fixed practical-height platform anchor",
+      "metadata": {
+        "path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-3fbc7525-daf0-4f5a-a896-940852b5f56b.png",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1677082,
+        "sha256": "7245169545330F6C9A86A3F27D0F5985E9D915E04639934D1840277D0403F00F"
+      }
+    },
+    {
+      "step": "s02",
+      "attempt": 1,
+      "prompt": "Use case: identity-preserve. Edit target Image 1: the supplied accepted 141 s01 photograph. Create 141 T-AXU-019 s02: natural short-step straight suitcase carry.\nChange only the woman's walking pose and a small forward location shift toward image-right. Preserve exact woman identity, clothing, shoes, black ponytail, matte-black kettlebell size and shape, fixed camera, lens, image dimensions, lighting, seamless gray-blue background and floor. Preserve the platform's screen-space position, dimensions, corners, appearance and floor contact EXACTLY as the reference; do not move, shrink or reshape it.\nWoman faces image-right and makes a modest natural forward step, no lunge: left far leg forward with heel touching floor, right nearer leg slightly behind pushing off naturally with forefoot supported and heel slightly raised, both knees soft. Step length about 25 cm, not wide or athletic. Both full shoes and legs clearly visible. Her anatomical RIGHT camera-facing hand still firmly grips exactly ONE kettlebell hanging vertically beside her right thigh with clearance from the leg, no swing. Anatomical LEFT hand remains visibly empty and has a small natural relaxed counter-swing; left hand never grips equipment. Trunk upright, level relaxed shoulders, no side lean, no lifting or running.\nFull head, both hands, both feet and entire kettlebell in frame with similar generous margins. Keep platform fully visible at right rear, clear of her walking feet, unchanged. ONE independent 4:5 portrait photograph; realistic joints and grip, studio rehabilitation demonstration. No text, numbers, arrows, logos, watermark, collage, insets or border.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-3fbc7525-daf0-4f5a-a896-940852b5f56b.png"
+      ],
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-70c20ac1-a275-4d72-894d-d043ff9c71ed.png",
+      "status": "pose/hand/scene correct; stride is too long, shorten",
+      "metadata": {
+        "path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-70c20ac1-a275-4d72-894d-d043ff9c71ed.png",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1681872,
+        "sha256": "07382A26E97AD272F5C9EA55678EF0A0143266B2B2797B9C79511942AD7D6616"
+      }
+    },
+    {
+      "step": "s02",
+      "attempt": 2,
+      "prompt": "Use case: identity-preserve. Edit target: the supplied 141 s02 walking photograph. Change only the legs and foot placement to shorten the walking stride by about HALF. This is a gentle small step in a rehabilitation teaching photo, approximately 20–25 cm stride. Bring the rear RIGHT near-camera shoe forward beneath the right hip, with its forefoot on the floor and its heel slightly lifted; bring the leading LEFT far shoe a little backward so it is only a short distance in front of the hip. The feet should have a clearly visible but small fore-aft separation, not a lunge, not a wide stride, legs almost vertical with soft knees. Keep both shoes fully visible, separate, and anatomically correct.\nPreserve the woman above the hips exactly, facial identity, body proportions, empty left hand, RIGHT hand firmly holding exactly one matte-black kettlebell close by her right thigh, clothing and shoes. Do not change the kettlebell, camera, backdrop, floor, lighting, image size, platform screen bounding box, platform position and geometry. Full body remains in frame. Same 4:5 independent photograph, no text, arrows, numbers, logos, watermark or collage.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-70c20ac1-a275-4d72-894d-d043ff9c71ed.png"
+      ],
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-0ee1cdf9-aea2-4046-9744-6c7208624cab.png",
+      "status": "passed; modest short forward step, correct single-side carry",
+      "metadata": {
+        "path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-0ee1cdf9-aea2-4046-9744-6c7208624cab.png",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1658033,
+        "sha256": "651641AD045CB7B7193CF4EF07ECDF8A2F4FA242F22A5499D4036E0EA0D0855D"
+      }
+    },
+    {
+      "step": "s03",
+      "attempt": 1,
+      "prompt": "Use case: identity-preserve. Edit target Image 1: accepted 141 s01 scene anchor. Create 141 T-AXU-019 s03: a gentle small-stepping turn during a single-side suitcase carry.\nChange only the woman from static image-right profile to a three-quarter direction about 45 degrees TOWARD the camera, turning by modest steps. Whole head, shoulders, pelvis and legs orient coherently in the new direction. Show a turning step: her nearer anatomical RIGHT foot has stepped a small distance to the new diagonal direction and is lightly planted, left far foot is close behind with the heel subtly lifting to follow. Both shoes fully visible and physically separated, NO leg crossing, NO pivot on a fixed planted foot, NO sharply twisted knee; feet point in their respective natural stepping directions. This frame should be visibly a step-turn intermediate, not simply standing still facing the camera.\nHer anatomical RIGHT hand remains the only weighted hand: exactly one same matte black small kettlebell firmly held beside her right outer thigh, close to body with no swing. The empty LEFT hand stays visible and relaxed by her other side. Upright neutral trunk, level relaxed shoulders, no side lean.\nPreserve exact facial identity and ponytail, white T-shirt, charcoal long trousers, unbranded white low-top shoes, realistic body proportions. Keep fixed camera, framing, floor, background, lighting, platform geometry and screen position EXACTLY like anchor. Platform remains right rear clear of feet. Person may move a modest distance along the route; do not move camera or platform. Full head, full hands, both complete shoes, entire kettlebell visible. ONE independent 4:5 portrait realistic rehabilitation demonstration photograph. No text, numbers, arrows, logos, watermark, collage, insets or border.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-3fbc7525-daf0-4f5a-a896-940852b5f56b.png"
+      ],
+      "source_path": null,
+      "status": "image generation failed: network error: error sending request",
+      "metadata": null
+    },
+    {
+      "step": "s03",
+      "attempt": 2,
+      "prompt": "Use case: identity-preserve. Edit target Image 1: accepted 141 s01 scene anchor. Create 141 T-AXU-019 s03: a gentle small-stepping turn during a single-side suitcase carry.\nChange only the woman from static image-right profile to a three-quarter direction about 45 degrees TOWARD the camera, turning by modest steps. Whole head, shoulders, pelvis and legs orient coherently in the new direction. Show a turning step: her nearer anatomical RIGHT foot has stepped a small distance to the new diagonal direction and is lightly planted, left far foot is close behind with the heel subtly lifting to follow. Both shoes fully visible and physically separated, NO leg crossing, NO pivot on a fixed planted foot, NO sharply twisted knee; feet point in their respective natural stepping directions. This frame should be visibly a step-turn intermediate, not simply standing still facing the camera.\nHer anatomical RIGHT hand remains the only weighted hand: exactly one same matte black small kettlebell firmly held beside her right outer thigh, close to body with no swing. The empty LEFT hand stays visible and relaxed by her other side. Upright neutral trunk, level relaxed shoulders, no side lean.\nPreserve exact facial identity and ponytail, white T-shirt, charcoal long trousers, unbranded white low-top shoes, realistic body proportions. Keep fixed camera, framing, floor, background, lighting, platform geometry and screen position EXACTLY like anchor. Platform remains right rear clear of feet. Person may move a modest distance along the route; do not move camera or platform. Full head, full hands, both complete shoes, entire kettlebell visible. ONE independent 4:5 portrait realistic rehabilitation demonstration photograph. No text, numbers, arrows, logos, watermark, collage, insets or border.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-3fbc7525-daf0-4f5a-a896-940852b5f56b.png"
+      ],
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-5de453cc-737c-4264-bea2-6b89458eb669.png",
+      "status": "identity/turn direction correct; legs appear crossed in projection, revise feet",
+      "metadata": {
+        "path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-5de453cc-737c-4264-bea2-6b89458eb669.png",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1673781,
+        "sha256": "F73EF9B0CBE97E62EA62EACEFE5152E5E24EFA00F7C8BF7F5D6D3CC263018159"
+      }
+    },
+    {
+      "step": "s03",
+      "attempt": 3,
+      "prompt": "Use case: identity-preserve. Edit target: supplied 141 s03 turning photograph. Correct only the lower-body pose: remove the crossed-leg appearance completely. She is taking a tiny step to turn, NOT doing a crossover step. Keep each leg on its own side of the pelvis throughout, with daylight separating both trouser legs from thigh through ankle. Her anatomical RIGHT leg under the kettlebell is on image-left: knee almost straight and relaxed, right shoe planted at lower image-left around x=330–480, y=1240–1295 in this 1122×1402 frame, pointing diagonally image-right/toward camera. Her anatomical LEFT leg remains on image-right, knee softly bent, left shoe close but separated around x=490–635, y=1200–1250, heel slightly lifted while forefoot contacts floor. Feet have a short fore-aft stagger plus 15–20 cm lateral separation. No foot or leg crosses the body centerline. Both full shoes visible, natural hips and knees, no twisting on a fixed foot.\nKeep the accepted upper body, three-quarter 45-degree turned direction, head and face, exact identity, hairstyle, T-shirt, body proportions, empty LEFT hand, anatomical RIGHT hand holding the same one kettlebell exactly. Keep background, floor, lighting, fixed camera, image dimensions, platform geometry and screen coordinates identical. One full-body 4:5 photograph, no text, arrows, logos or collage.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-5de453cc-737c-4264-bea2-6b89458eb669.png"
+      ],
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-5879849c-fb25-47cc-8033-8053016de584.png",
+      "status": "passed; separate uncrossed feet, small step-turn, right-hand single load",
+      "metadata": {
+        "path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-5879849c-fb25-47cc-8033-8053016de584.png",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1639649,
+        "sha256": "7D906196A51E71BB72588A92BC9C49639C73085AB8932EB59EB7C3AF50FFA229"
+      }
+    },
+    {
+      "step": "s04",
+      "attempt": 1,
+      "prompt": "Use case: identity-preserve. Edit target Image 1: accepted 141 s01 scene anchor. Create step 141 T-AXU-019 s04, controlled return of the one kettlebell onto the same platform.\nABSOLUTE SCENE INVARIANTS: preserve the exact fixed camera, 1122×1402 4:5 framing, gray-blue background and floor, soft lighting. The charcoal placement platform MUST remain exactly where it is in the reference, with unchanged light gray top, solid base, geometry and screen bounding rectangle approximately x=635–1055 and y=674–1107. DO NOT move or resize the platform. Do NOT move its front face closer to camera or cover either foot.\nChange the woman’s position and pose only: she has walked back beside the platform’s image-left edge, slightly farther from camera than her initial foreground position, so a modest natural reduction of her projected body scale is permitted. Woman stands on the floor left of the platform with both full legs, both shoes and both floor contacts visible outside the platform silhouette. Body close enough to placement edge, facing image-right in side profile. Anatomical RIGHT hand remains on camera-facing side and firmly closed around the exact same small matte-black kettlebell curved handle. Her right arm reaches a modest distance forward and down toward platform. The kettlebell has been gently set upright onto the platform's light gray top near its left edge: bottom of the kettlebell MUST clearly touch the top surface with a small contact shadow, no visible air gap, no floating, no throwing, no released handle. Right hand still grasps handle with realistic fingers and neutral wrist. LEFT hand EMPTY and relaxed, fully visible away from the kettlebell. Only ONE kettlebell.\nNatural stable feet with soft knees, comfortable small hip hinge if needed and straight natural spine, no large sidebend or twisted knees. Preserve exact same East Asian female facial identity, black ponytail, white short-sleeved T-shirt, charcoal long trousers, white unbranded low-top athletic shoes. Show full head, both complete hands, both complete shoes, entire kettlebell and platform. Use the physical placement contact as the visual focus. ONE independent realistic rehabilitation studio photo, no text, arrows, numbers, logos, watermark, collage, insets or border.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-3fbc7525-daf0-4f5a-a896-940852b5f56b.png"
+      ],
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-c60470f9-e081-453f-b301-4001f6b7c8bd.png",
+      "status": "passed; right hand grips handle; bell bottom contacts platform top; both complete shoes visible; same camera/platform",
+      "metadata": {
+        "path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-c60470f9-e081-453f-b301-4001f6b7c8bd.png",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1687442,
+        "sha256": "A91F04ABDE07D2D2CBB2915F3F2609B5133E40B773EB589FDABBF7204BB95DB1"
+      }
+    }
+  ],
+  "final_images": [
+    {
+      "step": "s01",
+      "target_pose": "按已掌握方式提起壶铃后静止站稳，右手提铃于身侧，左手空着，躯干自然。",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/141_T-AXU-019_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-3fbc7525-daf0-4f5a-a896-940852b5f56b.png",
+      "reused_existing_image": false,
+      "check_result": "通过",
+      "visual_check": "静立双脚接地，右手近镜握单只黑色轻壶铃，左手可见为空；人物比例自然，器械完整。",
+      "person_background_check": "面部年龄感、肤色、黑马尾、白短袖、深灰长裤及白低帮鞋同组一致；灰蓝棚拍背景和柔光一致",
+      "proportion_joint_check": "全身、头部、双手、双鞋与铃完整；关节连续、握持和人体比例可辨",
+      "metadata": {
+        "path": "E:/git冲突问题/rehab image/train/steps/141_T-AXU-019_s01.png",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1677082,
+        "sha256": "7245169545330F6C9A86A3F27D0F5985E9D915E04639934D1840277D0403F00F",
+        "format": "Png"
+      }
+    },
+    {
+      "step": "s02",
+      "target_pose": "右手仍提壶铃于身侧，沿直线路径小步行走，两腿处于自然迈步姿态。",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/141_T-AXU-019_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-0ee1cdf9-aea2-4046-9744-6c7208624cab.png",
+      "reused_existing_image": false,
+      "check_result": "通过",
+      "visual_check": "修订步距后为短小自然迈步，右手持续单铃，左手空且自然摆动，脚和铃完整，躯干不侧倾。",
+      "person_background_check": "面部年龄感、肤色、黑马尾、白短袖、深灰长裤及白低帮鞋同组一致；灰蓝棚拍背景和柔光一致",
+      "proportion_joint_check": "全身、头部、双手、双鞋与铃完整；关节连续、握持和人体比例可辨",
+      "metadata": {
+        "path": "E:/git冲突问题/rehab image/train/steps/141_T-AXU-019_s02.png",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1658033,
+        "sha256": "651641AD045CB7B7193CF4EF07ECDF8A2F4FA242F22A5499D4036E0EA0D0855D",
+        "format": "Png"
+      }
+    },
+    {
+      "step": "s03",
+      "target_pose": "行至转向处，以小步改变方向，双脚不交叉、不以固定单足猛扭，壶铃由右手稳握。",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/141_T-AXU-019_s03.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-5879849c-fb25-47cc-8033-8053016de584.png",
+      "reused_existing_image": false,
+      "check_result": "通过",
+      "visual_check": "双脚分开且各留本侧，微错步呈现约45度转向，右手握铃未外甩；头肩髋与脚方向协调。",
+      "person_background_check": "面部年龄感、肤色、黑马尾、白短袖、深灰长裤及白低帮鞋同组一致；灰蓝棚拍背景和柔光一致",
+      "proportion_joint_check": "全身、头部、双手、双鞋与铃完整；关节连续、握持和人体比例可辨",
+      "metadata": {
+        "path": "E:/git冲突问题/rehab image/train/steps/141_T-AXU-019_s03.png",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1639649,
+        "sha256": "7D906196A51E71BB72588A92BC9C49639C73085AB8932EB59EB7C3AF50FFA229",
+        "format": "Png"
+      }
+    },
+    {
+      "step": "s04",
+      "target_pose": "回到固定放置台旁，右手仍握提把，壶铃底已受控接触台面。",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/141_T-AXU-019_s04.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-7a0e-7763-ac43-f9a1fe833398/exec-c60470f9-e081-453f-b301-4001f6b7c8bd.png",
+      "reused_existing_image": false,
+      "check_result": "通过",
+      "visual_check": "人物靠近同台并随景深略缩小，右手仍环握把，铃底接浅灰台面有接触阴影；双鞋可见。",
+      "person_background_check": "面部年龄感、肤色、黑马尾、白短袖、深灰长裤及白低帮鞋同组一致；灰蓝棚拍背景和柔光一致",
+      "proportion_joint_check": "全身、头部、双手、双鞋与铃完整；关节连续、握持和人体比例可辨",
+      "metadata": {
+        "path": "E:/git冲突问题/rehab image/train/steps/141_T-AXU-019_s04.png",
+        "width": 1122,
+        "height": 1402,
+        "bytes": 1687442,
+        "sha256": "A91F04ABDE07D2D2CBB2915F3F2609B5133E40B773EB589FDABBF7204BB95DB1",
+        "format": "Png"
+      }
+    }
+  ],
+  "limitations": [
+    "四张为独立静态姿势图；小步调整的完整时间过程和实际负荷不能由静态照片证明。",
+    "生成图非真实摄影记录；视觉验收确认画面姿势和器械接触，未进行临床动作有效性认证。",
+    "固定机位与平台外观、位置保持同组一致；s04因人物走到后方台旁，人物投影尺度略减小；平台边缘存在约10像素生成差异。",
+    "平台高度是根据相对人体比例与放置姿势作图，不是测量结果。"
+  ],
+  "tooling_notes": [
+    "s01首次调用等待约10分钟后取消无输出的exec cell；取消不是后端失败证明。随后重建已丢失的store变量，首次重试脚本在调用工具前因undefined停止，修正后相同工具参数重试成功。",
+    "s03首次调用返回明确network error: error sending request；相同提示与参考重试成功。",
+    "未覆盖现有单图、其他进度JSON或任何仓库文件；默认generated_images源图保留。"
+  ]
+}

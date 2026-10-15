@@ -1,0 +1,58 @@
+{
+  "batch": "第11批",
+  "scope": "108-110",
+  "tool": "built-in image_gen",
+  "action_library": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "reference_image_paths": [
+    "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-d62371e8-5f6e-4310-a6d6-2068c4297c1c.png",
+    "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-0b2bd155-fd46-4bad-b86b-225571201214.png",
+    "C:/Users/ADMINI~1/AppData/Local/Temp/codex-clipboard-44810b7e-2888-45c9-9d35-20a18476d62e.png"
+  ],
+  "generated_at": "2026-10-14",
+  "records": [
+    {
+      "number": 108,
+      "action_id": "T-LOW-052",
+      "action_name": "半跪位踝背屈活动：不用牵引带",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-0ebe-7552-b1cd-ef5b43c949c3/exec-54fb5284-8050-4fd4-8c8a-2f4442c2482e.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/108_T-LOW-052_半跪位踝背屈活动：不用牵引带.png",
+      "prompt": "Use case: scientific-educational.\nCreate ONE separate photorealistic rehabilitation exercise photograph, action 108 T-LOW-052 半跪位踝背屈活动：不用牵引带. Do not put action number or title anywhere on the image.\nThe three provided images are strict reference images for the SAME woman, SAME photographic style, SAME muted light gray-blue studio background and soft lighting. Preserve her exact recognizable face, black/dark brown ponytail, white short-sleeve fitted crewneck T-shirt, charcoal/dark-gray long pants, skin tone, apparent age and normal adult body proportions. Real human anatomy, normal hands with five fingers, exactly two arms and two legs.\nPose: a right-facing true side view, full body, doing a supported half-kneeling ankle dorsiflexion mobilization. Her LEFT rear knee rests securely on a small thick gray kneeling pad on the floor; her RIGHT front foot is fully flat on the floor and points directly forward. Both bare feet and toes are naturally anatomical and fully visible. The FRONT heel stays firmly on the floor. The FRONT knee slowly moves forward along the line of the toes, with the shin leaning moderately forward; show the comfortable held forward position, not an extreme lunge. The pelvis remains over the rear knee, torso naturally upright with only mild forward inclination. Both hands hold a stable minimal fixed gray support rail at comfortable height in front of her. The support rail is an actual secure fixed handrail, and its footprint is fully within frame. The front foot, heel, ankle, knee and kneeling-pad contact must be clearly unobstructed.\nComposition: vertical 4:5 canvas about 1122 by 1402, full head-to-feet and whole support visible with clear margins, camera level and far enough away to prevent foreshortening, normal proportions, side profile face like the references. Seamless unchanged light gray-blue backdrop and same-color matte floor, no room decor.\nSingle woman, one held pose, no second figure, no split panels, no collage, no inset, no arrows, no printed text, no logos, no watermark. No traction band, no strap, no resistance band, no assistant, no lifted front heel, no collapsed knee, no extra limbs.\nCritical pose correction: The front tibia MUST clearly slope forward toward the right: the center of the FRONT knee is horizontally 10–15 cm farther RIGHT than the center of the FRONT ankle. The front knee sits over the toes, not over the heel. The whole FRONT foot including heel stays fully on the ground. Bend the front knee enough and advance the pelvis a little so the ankle is visibly dorsiflexed. This is the forward mobilized position and must not look like an upright 90-degree half-kneeling starting pose. Keep the upright torso, rear knee supported on pad and gentle hand support.",
+      "review": "通过逐张 view_image 审查：人物、白短袖/深灰长裤、灰蓝背景与三张原参考一致；正常比例；后膝软垫接触，前膝向前、前胫骨向前倾，前脚全掌足跟接地，双手扶稳，无牵引带；全身、双足及扶手完整。",
+      "discarded_variant": "C:/Users/Administrator/.codex/generated_images/01a137f0-0ebe-7552-b1cd-ef5b43c949c3/exec-9019f262-3a7f-4e12-aa03-dbf764a27a48.png",
+      "discard_reason": "前胫骨近垂直，前移动作不够清晰。",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "SHA256": "453BE635B2B60E969F40DAE39E871D9C6A75F6AF9D6F1B92B7669C1C0DF725BF"
+    },
+    {
+      "number": 109,
+      "action_id": "T-LOW-033",
+      "action_name": "直膝小腿牵伸",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-0ebe-7552-b1cd-ef5b43c949c3/exec-937525b0-dfe2-4e00-97d1-8925688272eb.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/109_T-LOW-033_直膝小腿牵伸.png",
+      "prompt": "Use case: scientific-educational.\nCreate ONE separate photorealistic rehabilitation exercise photograph, action 109 T-LOW-033 直膝小腿牵伸. No title or number in the image.\nInput images: all three are strict reference photographs for the SAME woman and visual style. Keep the same recognizable Asian woman's face, dark ponytail, white fitted short-sleeve crewneck T-shirt, charcoal dark-gray long pants, natural skin texture and NORMAL adult human proportions. Match the original light gray-blue background color and soft photographic studio lighting very closely.\nFull-body right-facing SIDE view, showing a gentle straight-knee calf stretch against a plain vertical gray-blue wall at the right edge. Both palms are clearly placed flat on the wall at shoulder height, elbows relaxed. She stands in a moderate front-to-back split stance, both bare feet pointing forward toward the wall and spaced sideways naturally at hip width. The rear LEFT leg is the stretching leg: rear knee almost straight, comfortable and not hyperextended, rear heel and whole sole firmly on the floor; no lifted rear heel. The front RIGHT knee bends gently over the foot as the body inclines slightly forward from the ankles. Clearly separate the legs enough in camera view to reveal both knees, both ankles, both heels and all toes. Keep the rear leg long and visibly nearly straight with a normal calf and ankle. Her pelvis, trunk and head form a natural balanced slight forward lean. Calm mild smile matching the references, gaze forward.\nComposition: portrait 4:5 canvas approximately 1122 by 1402, her complete head, arms, torso, legs and both bare feet fit with clean margins, no cropping; accurate normal anatomical proportions, no exaggerated length, no wide-angle distortion. The wall and seamless studio floor exactly harmonize with the original light gray-blue reference background; no extra room scenery or decorations.\nSingle person, one held position, one photo. No split screens, panels, drawings, collage, extra limbs or fingers, arrows, labels, logos, watermark, training bands, therapist, special apparatus. Important: rear stretching knee must remain visibly close to straight; FRONT knee bends. Whole rear heel must remain flat on the floor.",
+      "review": "通过逐张 view_image 审查：人物衣着与灰蓝摄影背景一致，比例正常；双手扶墙，前后分腿、后腿近直无硬锁，前膝屈、身体微前倾；后脚尖朝前及足跟接地，双足可见、全身不裁切。",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "SHA256": "F1871B5DC3493ACB3A84451B33FF4F3C4DAB01248389E8B6B7D8D2AB42F7677A"
+    },
+    {
+      "number": 110,
+      "action_id": "T-LOW-034",
+      "action_name": "屈膝小腿牵伸",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-0ebe-7552-b1cd-ef5b43c949c3/exec-491b0167-7884-4c33-b4cc-ffb4e47ea173.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/110_T-LOW-034_屈膝小腿牵伸.png",
+      "prompt": "Use case: scientific-educational.\nCreate ONE separate photorealistic rehabilitation exercise photograph, action 110 T-LOW-034 屈膝小腿牵伸. No text, title or action number anywhere in the image.\nAll THREE supplied photographs are strict references for the same exact woman, face, hair, clothes, studio photography, soft lighting and background color. Preserve her recognizable Asian woman's face and dark ponytail, white fitted crewneck short-sleeve T-shirt, charcoal dark-gray long pants, normal adult height, limb lengths and proportions, natural realistic skin texture. Absolutely maintain the original muted light gray-blue background palette.\nPose: a full-body right-facing side-profile photograph of a supported BENT-KNEE calf stretch facing a plain vertical wall at the right. Both hands press gently flat against the wall near chest/shoulder height with relaxed elbows. She takes a SHORT front-to-back staggered stance, around one foot-length between heel positions, with feet hip-width apart sideways. Both bare feet point straight forward toward the wall, whole soles and both heels fully on the floor. The LEFT rear leg is the stretching leg and its knee MUST be clearly visibly BENT, with a gentle knee flexion around 25–35 degrees; do not show the rear leg straight. The front RIGHT knee is also comfortably bent. Show the held gentle pose in which her hips have lowered a little and shifted slightly forward, both shins inclined toward the wall, the REAR knee clearly forward of the REAR ankle while the REAR heel remains grounded. This is a small supported movement, not a deep squat, not a long lunge, not standing on tiptoe. Torso is balanced and nearly upright with mild forward inclination, face peaceful like the references.\nBoth knees and both whole feet must be clearly readable, anatomically correct and unobstructed. The rear leg should have an unmistakable gentle bend that visually distinguishes this from a straight-knee calf stretch. Normal human anatomy: exactly two legs, two feet, two arms, five fingers per hand, five toes per foot.\nComposition: portrait 4:5 canvas about 1122 by 1402; complete head-to-feet with comfortable clear margins, no clipped hands, head or feet; level side camera, normal lens with no distorted or stretched proportions. Plain light gray-blue studio backdrop, matching gray-blue floor and wall, soft shadows and reference-like natural studio photograph.\nOnly one woman and one pose. No collage, no panels, no second person, no inset, no arrows, no diagram, no numbers, no labels, no logo or watermark. No lifted heel, no overly long stride, no locked straight rear knee, no deep squat, no extra equipment, no therapist, no elastic bands.",
+      "review": "通过逐张 view_image 审查：人物衣着与灰蓝摄影背景一致，正常比例；双手扶墙、站距较109更短，后侧牵伸膝明显弯曲，双膝轻屈且全掌足跟接地，身体微向前下，清晰区分直膝牵伸。",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "SHA256": "598B766DB1EF4EB752D7DF578F3D222E6E9E6230632CB88B4522F5CDAB7B9592"
+    }
+  ]
+}

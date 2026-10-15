@@ -146,5 +146,6 @@ def test_concurrent_single_use_and_additive_v4_migration(setup):
     setup[1].migrate()
     with setup[1].engine.connect() as con:
         assert before==[dict(r) for r in con.execute(select(accounts)).mappings()]
-        assert con.scalar(select(schema.c.version))==5
+        from cloud_service.database import SCHEMA_VERSION
+        assert con.scalar(select(schema.c.version))==SCHEMA_VERSION
         assert len(con.execute(select(links)).all())==2

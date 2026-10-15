@@ -21,6 +21,43 @@ def parser():
     item.add_argument('--baseline', type=Path, required=True)
     item = sub.add_parser('resolve', help='Resolve official metadata and record license/access blockers')
     item.add_argument('--registry', type=Path, default=ROOT / 'configs/rehab_ml/datasets.yaml')
+    item = sub.add_parser('resolve-dataverse', help='Pin read-only released metadata; no terms acceptance, data download or training')
+    item.add_argument('--dataset', choices=['mobiphysio', 'sumedipose'], required=True)
+    item = sub.add_parser('fetch-dataverse-metadata', help='Fetch one or two verified CC0 documentation/score files, not videos or training data')
+    item.add_argument('--audit-run', type=Path, required=True)
+    item.add_argument('--file-ids', type=int, nargs='+', required=True)
+    item = sub.add_parser('index-mobiphysio-scores', help='Reconcile verified video-level therapist scores with the pinned inventory; no video download or training')
+    item.add_argument('--metadata-manifest', type=Path, required=True)
+    item.add_argument('--audit-run', type=Path, required=True)
+    item = sub.add_parser('plan-mobiphysio-rgb', help='Freeze the scored E01 front/full-light cohort and participant splits before pose extraction')
+    item.add_argument('--index-run', type=Path, required=True)
+    item.add_argument('--audit-run', type=Path, required=True)
+    item = sub.add_parser('fetch-mobiphysio-rgb', help='Bounded official CC0 RGB download for an explicit immutable E01 research plan')
+    item.add_argument('--plan', type=Path, required=True)
+    item = sub.add_parser('extract-mobiphysio-rgb', help='Original owned YOLO on the complete verified RGB cohort; predictions are not pose ground truth')
+    item.add_argument('--receipt', type=Path, required=True)
+    item = sub.add_parser('replay-mobiphysio-temporal', help='Original RGB/YOLO/protocol execution with actual trace; no human-label prefill or product activation')
+    item.add_argument('--receipt', type=Path, required=True)
+    item.add_argument('--split', choices=['val', 'test'], required=True)
+    item.add_argument('--side', choices=['left', 'right'], required=True,
+                      help='Predeclared analyzed anatomical side, never an inferred affected side')
+    item.add_argument('--output-dir', type=Path, required=True)
+    item = sub.add_parser('train-mobiphysio-quality', help='Train and compare video-level EAAQ regression on the frozen person split; no phase, pose fine-tuning or product activation')
+    item.add_argument('--extraction', type=Path, required=True)
+    item = sub.add_parser('prepare-annotations', help='Score-free independent human review forms for the verified fixed CC0 RGB cohort; no labels or training')
+    item.add_argument('--receipt', type=Path, required=True)
+    item.add_argument('--output-dir', type=Path, required=True)
+    for name in ('validate-annotations', 'import-annotations'):
+        item = sub.add_parser(name, help='Check independent temporal labels and professional resolution; never auto-activate')
+        item.add_argument('--bundle', type=Path, required=True)
+        item.add_argument('--output-dir', type=Path, required=True)
+    item = sub.add_parser('evaluate-annotations', help='Compare independently reviewed counts and boundary events; no invented labels, product activation or dose changes')
+    item.add_argument('--reference', type=Path, required=True)
+    item.add_argument('--predictions', type=Path, required=True)
+    item.add_argument('--split', choices=['val', 'test'], required=True)
+    item.add_argument('--event-tolerance-s', type=float, default=.25,
+                      help='Predeclare before independent test; recorded and hashed with evaluation policy')
+    item.add_argument('--output-dir', type=Path, required=True)
     for name in ('fetch', 'verify'):
         item = sub.add_parser(name, help=name.capitalize() + ' a licensed, pinned official dataset')
         item.add_argument('--dataset', choices=['intellirehabds'], required=True)
@@ -109,6 +146,52 @@ def main(argv=None):
             from tools.rehab_ml.inventory import doctor, inventory, verify_scope
             value = (doctor() if args.command == 'doctor' else inventory()
                      if args.command == 'inventory' else verify_scope(args.baseline))
+        elif args.command == 'resolve-dataverse':
+            from tools.rehab_ml.dataverse import audit_dataverse
+            value = audit_dataverse(args.dataset)
+            # Full public metadata is stored in the explicit run, not printed.
+            value = {key: item for key, item in value.items() if key != 'published'}
+        elif args.command == 'fetch-dataverse-metadata':
+            from tools.rehab_ml.dataverse import fetch_metadata
+            value = fetch_metadata(args.audit_run, args.file_ids)
+        elif args.command == 'index-mobiphysio-scores':
+            from tools.rehab_ml.mobiphysio import index_scores
+            value = index_scores(args.metadata_manifest, args.audit_run)
+        elif args.command == 'plan-mobiphysio-rgb':
+            from tools.rehab_ml.mobiphysio_rgb import plan_cohort
+            value = plan_cohort(args.index_run, args.audit_run)
+        elif args.command == 'fetch-mobiphysio-rgb':
+            from tools.rehab_ml.mobiphysio_rgb import fetch_cohort
+            value = fetch_cohort(args.plan)
+            if value['status'] != 'verified_rgb_download':
+                print(json.dumps(dict(ok=False, command=args.command, result=value), ensure_ascii=False, allow_nan=False))
+                return 1
+        elif args.command == 'extract-mobiphysio-rgb':
+            from tools.rehab_ml.mobiphysio_pose import extract_cohort
+            value = extract_cohort(args.receipt)
+            # Full private frame details remain in the explicit owned run.
+            value = {key: item for key, item in value.items() if key != 'samples'}
+            if value['status'] != 'completed_pose_extraction':
+                print(json.dumps(dict(ok=False, command=args.command, result=value), ensure_ascii=False, allow_nan=False))
+                return 1
+        elif args.command == 'train-mobiphysio-quality':
+            from tools.rehab_ml.mobiphysio_quality import train_quality
+            value = train_quality(args.extraction)
+        elif args.command in ('prepare-annotations', 'validate-annotations', 'import-annotations'):
+            from tools.rehab_ml.professional_annotations import build_bundle, validate_bundle, import_reviewed
+            value = (build_bundle(args.receipt, args.output_dir) if args.command == 'prepare-annotations'
+                     else validate_bundle(args.bundle, args.output_dir) if args.command == 'validate-annotations'
+                     else import_reviewed(args.bundle, args.output_dir))
+        elif args.command == 'evaluate-annotations':
+            from tools.rehab_ml.temporal_evaluation import evaluate
+            value = evaluate(args.reference, args.predictions, args.output_dir, split=args.split,
+                             tolerance_s=args.event_tolerance_s)
+        elif args.command == 'replay-mobiphysio-temporal':
+            from tools.rehab_ml.temporal_replay import replay
+            value = replay(args.receipt, args.output_dir, split=args.split, side=args.side)
+            if value['status'] != 'completed':
+                print(json.dumps(dict(ok=False, command=args.command, result=value), ensure_ascii=False, allow_nan=False))
+                return 1
         elif args.command == 'visual-audit':
             from tools.rehab_ml.visual_audit import render
             value = render(args.output_dir)
@@ -143,7 +226,7 @@ def main(argv=None):
             output = ROOT / 'reports/rehab_backend/pose_supervision_blocker.json'
             write_json(output, dict(status, requested_command=args.command,
                 implemented='reference_conversion_and_evaluation_available_pose_training_refused'))
-            raise RuntimeError('Pose training refused: verified target RGB permission and independent 2D/visibility labels missing; '+str(output))
+            raise RuntimeError('Pose training refused: qualified pose supervision with independent 2D/visibility labels missing; video-level scores are not pose reference; '+str(output))
         elif args.command == 'extract-mediapipe-video':
             from tools.rehab_ml.mediapipe_video import extract_mediapipe
             value = extract_mediapipe(args.video, args.exercise, args.side,

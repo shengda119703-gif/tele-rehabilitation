@@ -1,0 +1,1144 @@
+{
+  "batch": "补缺_041_078_111-114",
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "status": "complete",
+  "requested_count": 10,
+  "supplemental_count": 1,
+  "selected_png_count": 11,
+  "method": "内置 image_gen__imagegen；每张独立生成/编辑；PNG原字节复制，未裁切、缩放、再编码。",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "acceptance": "逐张实际图片审查，并做独立复核；仅画面呈现验收，不用于推断真实发力、负荷或测试有效性。",
+  "notes": [
+    "078建议使用本次s01_v2与s02配套；原s01保留。双手分开放腹前以显示完整手部；源卡未要求手撑垫。",
+    "114延续既有s02/s03赤足近景与固定扶手，只补s01；111/112/113各组为白鞋。",
+    "各帧保存到清单建议的assess/steps或train/steps；现有单图、旧步骤、旧进度文件未覆盖。",
+    "本轮仅制作外部图片资料，没有修改正式应用或仓库文件；不涉及程序版本更新。"
+  ],
+  "protected_start_assets": [
+    {
+      "path": "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s01.png",
+      "sha256": "196BA4EC930259131CEC32ACD74260A438DECC523BBB937F253D507F15F7B4B2"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+      "sha256": "51B2D3F0BDFE12EB3334765E281966253C3C168E7E0DBAE51D560289B4E65EA9"
+    }
+  ],
+  "final_images": [
+    {
+      "action": "041",
+      "action_id": "E-AXU-008",
+      "step": "s02",
+      "label": "坐位抱胸向本人左转胸",
+      "role": "requested",
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s02.png",
+      "relative_path": "assess/steps/041_E-AXU-008_s02.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-3d7290f6-318f-4df0-865e-9e9422310f4d.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1682045,
+      "sha256": "CBBF56F11311B318B9BF8C6434487912F2BC30D13C85CC050F1A90009D6CDAD3",
+      "qa": "pass",
+      "qa_detail": "人物与参考一致；抱胸肩胸整体向本人左转可辨；头随胸口，髋膝、双足和固定椅位保持；完整头、手、足可见。",
+      "raw_png_copy_verified": true
+    },
+    {
+      "action": "041",
+      "action_id": "E-AXU-008",
+      "step": "s03",
+      "label": "坐位抱胸向本人右转胸",
+      "role": "requested",
+      "final_path": "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s03.png",
+      "relative_path": "assess/steps/041_E-AXU-008_s03.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-90846643-e6c4-4737-bfee-5648b8517102.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1671037,
+      "sha256": "923175D9585EDE07A140C78A97B67C3E30A2AFBFB603F3F13200EE2A9DF81716",
+      "qa": "pass",
+      "qa_detail": "肩带、胸面和抱胸手臂整体向本人右转，与s02方向明确区分；双足/髋膝/椅位保持，单帧比例自然。",
+      "raw_png_copy_verified": true
+    },
+    {
+      "action": "078",
+      "action_id": "T-LOW-011",
+      "step": "s02",
+      "label": "双脚桥式：抬髋终点",
+      "role": "requested",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s02.png",
+      "relative_path": "train/steps/078_T-LOW-011_s02.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-5215a6ad-a9a4-400e-9642-03c132a5d0f2.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1848078,
+      "sha256": "BD92614DA50D2147B180F699A8BF492B4A306E044A7D1475137CF2487C953008",
+      "qa": "pass",
+      "qa_detail": "由配套s01_v2编辑；双手分开放腹前、手腕手指可见；骨盆抬起，头颈与肩背落垫，两足全掌固定，无明显腰后仰；同人物垫机位足位。",
+      "raw_png_copy_verified": true
+    },
+    {
+      "action": "111",
+      "action_id": "T-LOW-035",
+      "step": "s01",
+      "label": "扶稳双脚提踵：全掌落地",
+      "role": "requested",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/111_T-LOW-035_s01.png",
+      "relative_path": "train/steps/111_T-LOW-035_s01.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-6f96f3f1-c149-45cc-8084-2621bd4ff20f.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1640749,
+      "sha256": "C94EA70B48A0C40D842E1E1AA3DD995707F0F9D0AB2852828915503CEE7F40C4",
+      "qa": "pass",
+      "qa_detail": "pass",
+      "raw_png_copy_verified": true
+    },
+    {
+      "action": "111",
+      "action_id": "T-LOW-035",
+      "step": "s02",
+      "label": "扶稳双脚提踵：双跟抬起",
+      "role": "requested",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/111_T-LOW-035_s02.png",
+      "relative_path": "train/steps/111_T-LOW-035_s02.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-cb625521-c180-45f2-aa92-e2b6b1e61c90.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1594903,
+      "sha256": "25B559A21DC0B892FF662F3BF5A3FA7304AE0B343E711DF771F5253394E8D1D8",
+      "qa": "pass",
+      "qa_detail": "pass",
+      "raw_png_copy_verified": true
+    },
+    {
+      "action": "112",
+      "action_id": "T-LOW-050",
+      "step": "s01",
+      "label": "屈膝站姿提踵：轻屈膝、全掌落地",
+      "role": "requested",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/112_T-LOW-050_s01.png",
+      "relative_path": "train/steps/112_T-LOW-050_s01.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-27062a67-b207-4367-bff7-9f5f5e740728.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1618099,
+      "sha256": "A37262FB9023B21A4A9DE7DFA459B97C8CF4E37D9BC802D620078A2A5AA53603",
+      "qa": "pass",
+      "qa_detail": "pass",
+      "raw_png_copy_verified": true
+    },
+    {
+      "action": "112",
+      "action_id": "T-LOW-050",
+      "step": "s02",
+      "label": "屈膝站姿提踵：保持屈膝、双跟抬起",
+      "role": "requested",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/112_T-LOW-050_s02.png",
+      "relative_path": "train/steps/112_T-LOW-050_s02.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-6ab3641d-15bc-47ab-889a-397c604d66e0.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1599939,
+      "sha256": "157C1A46113960AF7CD1F73E27EEB3C1DA1718A9A870B603F0728DDF7AF6AAB0",
+      "qa": "pass",
+      "qa_detail": "pass",
+      "raw_png_copy_verified": true
+    },
+    {
+      "action": "113",
+      "action_id": "T-LOW-036",
+      "step": "s01",
+      "label": "扶稳单脚提踵：训练足全掌落地",
+      "role": "requested",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/113_T-LOW-036_s01.png",
+      "relative_path": "train/steps/113_T-LOW-036_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-7f05b9ab-4ebd-4652-b9c5-1c28a9dfb51b.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1645025,
+      "sha256": "BA027BD195057FE75D5F4F444676E876275DA170213E4338C27D72F38B839255",
+      "qa": "pass",
+      "qa_detail": {
+        "result": "pass",
+        "review_method": "Full image viewed with tools.view_image",
+        "checks": [
+          "Same female white T-shirt dark charcoal trousers and white athletic shoes",
+          "Side full-body complete head hands and shoes",
+          "Near left training foot visibly full sole flat on floor",
+          "Far right foot clearly raised behind, visible floor clearance",
+          "One hand naturally on fixed floor-supported gray rail",
+          "Free hand empty; no weights or steps",
+          "Anatomical proportions and fingers natural",
+          "Single photograph no text arrows watermark"
+        ]
+      },
+      "raw_png_copy_verified": true
+    },
+    {
+      "action": "113",
+      "action_id": "T-LOW-036",
+      "step": "s02",
+      "label": "扶稳单脚提踵：训练足抬跟",
+      "role": "requested",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/113_T-LOW-036_s02.png",
+      "relative_path": "train/steps/113_T-LOW-036_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-47b73900-3d90-4a94-a5c4-23a18cec1e92.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1620691,
+      "sha256": "7F77623E496E862709352621061882683C940E1EB108CE12B02CF932BE37096E",
+      "qa": "pass",
+      "qa_detail": {
+        "result": "pass",
+        "review_method": "Generated output visually inspected and full image viewed with tools.view_image",
+        "checks": [
+          "Accepted s01 edited; woman rail lighting composition and clothing preserved",
+          "Training forefoot visibly contacts floor, heel raised with clear triangular floor gap",
+          "Same far nontraining shoe clearly above floor",
+          "Natural upright torso and hand-to-rail relation",
+          "Complete white athletic shoes hands full-body margins",
+          "Single frame no text arrows watermark equipment or steps"
+        ]
+      },
+      "raw_png_copy_verified": true
+    },
+    {
+      "action": "114",
+      "action_id": "T-LOW-051",
+      "step": "s01",
+      "label": "双上单下提踵：双脚全掌起点",
+      "role": "requested",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s01.png",
+      "relative_path": "train/steps/114_T-LOW-051_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-26907779-a5a9-4503-a586-c62fc1d3bf6c.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1562504,
+      "sha256": "C852994CFF80F95EA5338347FFCCC746CA588F83911D98919E090CB30E0E36AC",
+      "qa": "pass",
+      "qa_detail": {
+        "result": "pass",
+        "review_method": "Full image viewed with tools.view_image and compared to existing s02/s03",
+        "checks": [
+          "Exact existing barefoot 114 sequence chosen rather than independent white-shoe composition",
+          "Both heels lowered to level floor with both forefeet grounded",
+          "Both knees naturally nearly straight, no backward locking",
+          "Same hand-to-fixed-rail relation, rail geometry base camera crop and gray-blue studio",
+          "Both bare feet anatomically natural and fully in frame",
+          "Single frame no text arrows watermark weights or steps"
+        ],
+        "note": "Selected barefoot flat-ground version to preserve consistency with pre-existing 114 s02/s03; unselected white-shoe candidate retained in generation history."
+      },
+      "raw_png_copy_verified": true
+    },
+    {
+      "action": "078",
+      "action_id": "T-LOW-011",
+      "step": "s01_v2",
+      "label": "桥式配套准备图 v2：双手分开放腹前",
+      "role": "supplemental",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01_v2.png",
+      "relative_path": "train/steps/078_T-LOW-011_s01_v2.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-f09d22ee-f935-425b-bc42-72b7b0b682e9.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1842188,
+      "sha256": "D22D0AB980B4ECDE58CA00BE7BBD1324D368954A9726E1E4333BD56D68A13C19",
+      "qa": "pass",
+      "qa_detail": "补充配套准备图，原s01保留；双手分开放腹前，骨盆落垫，双足全掌落稳，头颈平放，机位与最终s02一致。",
+      "raw_png_copy_verified": true
+    }
+  ],
+  "subrecord_files": [
+    "补缺_041_078_111-114_041-078_子记录.json",
+    "补缺_041_078_111-114_111-112_子记录.json",
+    "补缺_041_078_111-114_113-114_子记录.json"
+  ],
+  "full_generation_records": [
+    {
+      "batch": "补缺_041_078_111-114",
+      "date": "2026-10-14",
+      "status": "parent_frames_complete",
+      "requested_count": 10,
+      "parent_requested_count": 3,
+      "supplemental_count": 1,
+      "method": "内置 image_gen__imagegen；每帧独立调用，姿势返修同样内置；最终PNG原字节复制，不裁切缩放或再编码。",
+      "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "source_card": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+      "selected_version_notes": [
+        "041按本人左右方向命名，头随胸口；每个终点独立由中立准备图出发，椅、髋膝与双足固定。",
+        "078继承已有高斜侧俯视横图；源卡未限制手撑地，为解决远手遮挡选择双手分开放腹前，配套新增s01_v2，原s01保留。",
+        "111/112/113为白运动鞋；114沿用另一会话已生成赤足组的近景机位、扶手和双足位置，保持本动作组一致。"
+      ],
+      "protected_start_assets": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s01.png",
+          "sha256": "196BA4EC930259131CEC32ACD74260A438DECC523BBB937F253D507F15F7B4B2"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+          "sha256": "51B2D3F0BDFE12EB3334765E281966253C3C168E7E0DBAE51D560289B4E65EA9"
+        }
+      ],
+      "attempts": [
+        {
+          "attempt_key": "041-s02",
+          "prompt": "Use case: scientific-educational. Edit image 1 into ONE matching rehabilitation demonstration photograph for action 041 E-AXU-008 step s02. Images 2–4 are identity/style references only. Preserve image 1's exact adult East Asian woman, face, age, black ponytail, white short-sleeve T-shirt, dark charcoal long pants, white sneakers, grey stationary armless chair, grey-blue seamless studio floor and background, soft diffuse lighting, camera position, portrait framing, subject size and entire head-to-shoes composition. Change ONLY the seated upper torso posture: with both arms still crossed naturally across the chest, hands visible on opposite upper arms, turn the CHEST and shoulders comfortably about 35 degrees toward HER OWN ANATOMICAL LEFT; the head follows the chest naturally with a relaxed neutral neck. Her anatomical left is toward the image RIGHT because she is viewed from the front, slightly oblique. This should turn her upper chest further toward image RIGHT, away from the fixed forward direction of her knees. Pelvis stays seated level and facing forward; BOTH thighs, knees and feet stay at their original locations pointing forward and both complete soles remain flat on floor. Chair remains EXACTLY stationary, not rotated. Keep upright spine, no backward arch, no side leaning. Make thoracic rotation obvious by the shoulder line and sternum orientation relative to unchanged knees. Crossed arms move WITH chest, do not pull chair or uncross. Natural anatomy, continuous joints, exactly two arms and two legs, proper visible fingers. ONE static pose, not a collage. No text, number, label, arrows, watermark or extra people.",
+          "input_paths": [
+            "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-97da0173-5ae0-43c1-91af-41a2664df04b.png",
+          "selected": false,
+          "qa": "胸口旋转不足，主要是转头；返修。"
+        },
+        {
+          "attempt_key": "041-s03",
+          "prompt": "Use case: scientific-educational. Edit image 1 into ONE matching rehabilitation demonstration photograph for action 041 E-AXU-008 step s03. Images 2–4 are identity/style references only. Preserve image 1's exact adult East Asian woman, face, age, black ponytail, white short-sleeve T-shirt, dark charcoal long pants, white sneakers, grey stationary armless chair, grey-blue studio background/floor, soft diffuse lighting, camera/lens/portrait framing and complete head-to-shoes composition. Change ONLY the seated upper torso posture to the opposite direction: with BOTH arms naturally crossed across the chest, hands visible on opposite upper arms, turn the CHEST and shoulders comfortably about 35 degrees toward HER OWN ANATOMICAL RIGHT. Anatomical RIGHT points toward image LEFT for this front-oblique view. Her upper chest and face therefore turn toward image LEFT while both knees still point toward the same original slightly image-right forward direction. Head follows chest naturally, neutral neck. Pelvis remains seated level and forward, BOTH thighs, knees and feet stay at their exact original locations facing forward. Both soles fully flat on floor. Chair must remain exactly stationary, not rotated. No forward bending, backward arch, side leaning or arm pulling. Make opposite thoracic rotation clearly visible by shoulder/sternum orientation relative to fixed knees. Natural proportions and continuous joints; exactly two arms, two legs and two complete shoes, fingers natural. Single static pose, no text, labels, number, arrows, watermark, collage, duplicate person.",
+          "input_paths": [
+            "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-d81fbe6c-6fb6-46b4-b964-6fc337a9eaee.png",
+          "selected": false,
+          "qa": "胸口旋转不足，主要是转头；返修。"
+        },
+        {
+          "attempt_key": "078-s02",
+          "prompt": "Use case: scientific-educational. Edit image 1 into the matching END pose of action 078 T-LOW-011 step s02, bilateral glute bridge. Images 2–4 are woman identity/style references only. Keep image 1's EXACT woman, face, black ponytail, white short-sleeve T-shirt, dark charcoal full-length trousers, BOTH white sneakers, grey nonslip mat, grey-blue seamless studio floor/background, soft lighting, high oblique lateral camera, landscape framing, head on image LEFT and feet on image RIGHT. Keep the same head, shoulder, hand and shoe positions, whole person in frame with full hands and shoes. Change ONLY by raising pelvis and buttocks into a moderate controlled two-foot bridge, so shoulder–hip–knee form an approximately straight diagonal line. Head and neck relaxed on mat, upper shoulder blades remain supported on mat. BOTH arms remain relaxed beside torso, BOTH full hands palm-down on mat. BOTH shoe soles fully flat and stable at their original locations and comfortable spacing, no foot sliding, heel rising or floating shoe; both knees remain bent and aligned over their feet. Lift through hip extension, level pelvis; maintain neutral lumbar spine, gently engaged abdomen and no dramatic lower-back arch or rib flare. Show clear visible air gap between buttocks/pelvis and mat, realistic torso-thigh proportions and continuous hip/knee joints. All of head, complete arms/hands, BOTH bent knees, BOTH ankles and BOTH shoes must be visible, mat contact points clear. ONE static photograph only, no text, arrows, labels, numbers, collage, watermark or extra limbs.",
+          "input_paths": [
+            "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-746baee1-4e1a-4321-9b0f-439783a01551.png",
+          "selected": false,
+          "qa": "远侧手臂与手掌不可辨，返修。"
+        },
+        {
+          "attempt_key": "041-s02-r2",
+          "prompt": "Use case: scientific-educational. Precise pose correction to image 1, which currently mainly turns the head. KEEP everything below waist pixel-equivalent in placement: the identical stationary chair, pelvis, thighs, knees, flat white shoes, grey-blue background, camera and portrait framing. Keep exact same adult woman, face, ponytail, white T-shirt, charcoal pants, arms crossed and hands on opposite upper arms. REQUIRED CHANGE: rotate the ENTIRE ribcage, sternum, shoulders AND crossed arms together markedly toward the woman's ANATOMICAL LEFT (image RIGHT). Her seated hips and knees still point forward, but her chest now points diagonally toward image RIGHT at about 45 degrees relative to her pelvis. Make this a clearly visible SEATED THORACIC TWIST, not just neck rotation. The upper body should show a three-quarter side view toward image RIGHT, with visibly narrower projected chest and both crossed forearms rotated rigidly WITH the chest; the right shoulder comes forward, the left shoulder travels backward. White shirt torso folds must show axial rotation above a fixed forward-facing waistband. Head naturally follows the turned sternum, neck unstrained. Upright balanced trunk, no bending, no lateral tilt, no lumbar arch, no pulling chair, buttocks stay seated. Complete head, both hands, both knees and both shoes. Both soles stay flat. One pose only, no text/arrows/labels/collage/watermark. The chest rotation should be unmistakable when compared with unchanged forward-facing knees.",
+          "input_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-97da0173-5ae0-43c1-91af-41a2664df04b.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-3d7290f6-318f-4df0-865e-9e9422310f4d.png",
+          "selected": true,
+          "qa": "人物与参考一致；抱胸肩胸整体向本人左转可辨；头随胸口，髋膝、双足和固定椅位保持；完整头、手、足可见。"
+        },
+        {
+          "attempt_key": "041-s03-r2",
+          "prompt": "Use case: scientific-educational. Correct image 1 so the chest visibly rotates WITH the head. Preserve exact woman, face, ponytail, clothing, white shoes, background, chair, lighting, camera and portrait full-body composition. KEEP the seated pelvis, thighs, knees and shoes in their EXACT existing forward-facing positions, chair fixed. REQUIRED CHANGE: rotate the whole ribcage, sternum, shoulders AND crossed arms together toward her ANATOMICAL RIGHT, which is image LEFT in this view. Chest must point diagonally toward image LEFT at a clearly visible comfortable twist of about 45 degrees RELATIVE to her fixed forward-facing pelvis/knees. Head and sternum face the SAME image-left direction, not head left while sternum faces the camera. This must visibly be a torso rotation. Give the upper torso a three-quarter side view facing image LEFT: left shoulder advances forward, right shoulder travels backward, both crossed forearms and hands move WITH that shoulder girdle, white shirt wrinkles show rotation above the unchanged forward-facing waistband. Hands remain on opposite upper arms, no uncrossing or grabbing chair. Upright spine and level shoulders, no lateral lean or forward/backward bending. Buttocks stay seated, both soles flat. Full head, complete hands and shoes in frame, anatomically natural. No text, arrows, motion trails, panel, collage or watermark.",
+          "input_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-d81fbe6c-6fb6-46b4-b964-6fc337a9eaee.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-0b4f3645-ee8b-4cd2-9dc5-4d48c09340e6.png",
+          "selected": false,
+          "qa": "再次复核肩胸转向教学区分仍弱；返修为胸口与抱胸肩带整体相反方向。"
+        },
+        {
+          "attempt_key": "078-s02-r2",
+          "prompt": "Use case: scientific-educational. Edit image 1, the raised two-foot glute bridge photograph. Image 2 is the matching START photograph and fixes exact location of both arms/hands; images 3–5 fix identity/style. Make ONLY one repair: RESTORE the missing FAR-SIDE ARM AND HAND. Place her farther arm naturally straight beside the torso on the mat, matching image 2: the far arm emerges from its white short sleeve, lies diagonally toward the image upper-right along the mat, and its complete forearm, wrist and open hand with five natural fingers are clearly visible ABOVE the silhouette of her raised torso. Far palm is down flat on the mat near its original position, around the upper middle part of the photo, well separated from the hip. Both arms are real continuous limbs, the far shoulder connects under the sleeve, not a detached hand. Keep the near arm and hand EXACTLY unchanged. Keep EVERYTHING else in image 1: moderate elevated bilateral bridge pelvis, neutral back without arch, head/neck/shoulder blades supported on mat, both knees bent, both complete white shoe soles flat at same locations, woman/face/ponytail/white T-shirt/dark trousers, grey mat, lighting, oblique camera and full-body landscape composition. Do not lower pelvis, alter feet or move camera. Both full hands MUST visibly rest on mat, no arm hidden behind torso. Exactly two arms/two legs/two shoes. Single pose, no labels/text/arrows/collage/watermark.",
+          "input_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-746baee1-4e1a-4321-9b0f-439783a01551.png",
+            "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-1902ea96-0c93-4007-aec4-2db2e5daa9b5.png",
+          "selected": false,
+          "qa": "远手接触位置含糊，似位于垫外/腰骨盆边，返修。"
+        },
+        {
+          "attempt_key": "041-s03-r3",
+          "prompt": "Edit image 1 into the OPPOSITE seated torso-twist direction, 041-s03. Image 2 is the fixed forward-facing lower body baseline. Keep exact person, clothing, chair, background, lighting, camera, head-to-shoes portrait framing, entire lower body and shoes unchanged. Rotate the WHOLE UPPER TORSO, shoulders, sternum, ribcage and crossed arms to face image LEFT, showing a clearly side-facing THREE-QUARTER view of the chest. The left shoulder and elbow advance toward camera and the right shoulder and elbow recede, opposite to image 1. Head faces image LEFT along the SAME direction as sternum. Chest faces leftward, NOT frontally at camera. Both hands remain on opposite upper arms and arms stay crossed across chest. Pelvis, thighs, knees and feet still face their ORIGINAL forward direction from image 2; this is a comfortable thoracic rotation relative to still hips. Keep shoulders level, spine upright, buttocks firmly seated, both shoe soles flat on floor. No side bend, neck-only turn or whole-chair rotation. Make upper torso pose unmistakably opposite image 1, with chest and crossed arms turning together, anatomically proportioned. No text, arrows, watermark or collage.",
+          "input_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-3d7290f6-318f-4df0-865e-9e9422310f4d.png",
+            "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-90846643-e6c4-4737-bfee-5648b8517102.png",
+          "selected": true,
+          "qa": "肩带、胸面和抱胸手臂整体向本人右转，与s02方向明确区分；双足/髋膝/椅位保持，单帧比例自然。"
+        },
+        {
+          "attempt_key": "078-s02-r3",
+          "prompt": "Edit image 1, the raised bilateral glute bridge. Image 2 is the START and shows the missing far arm and hand in the correct original resting position. Restore that far arm: copy its original anatomical location from image 2, FAR PALM flat DOWN ON THE GREY MAT (around x760 y365 in this 1536x1024 composition), and the distal forearm and complete five-finger hand clearly visible resting on mat beside the farther hip. The far arm extends comfortably from the far shoulder along the mat, in same location as image 2. Some proximal upper-arm occlusion by the raised torso is naturally allowed, but the full hand and wrist must be visible ON the mat, not on the hip or in air. Do NOT place the hand above or outside the mat's far diagonal edge. Keep everything else in image 1 unchanged: pelvis raised into moderate bridge, head neck shoulder blades supported on mat, neutral back, both knees bent, both soles flat with exact foot positions, near arm and hand unchanged, same woman face ponytail clothes shoes grey mat lighting camera full-body landscape framing. Exactly two natural continuous arms, no detached hand, no floating limb. No text, arrows, labels, collage or watermark.",
+          "input_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-746baee1-4e1a-4321-9b0f-439783a01551.png",
+            "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-074f79a8-08a7-4f08-b849-dc3124392423.png",
+          "selected": false,
+          "qa": "远手未清楚落垫，位于腰骨盆边，弃用并改同组双手腹前摆位。"
+        },
+        {
+          "attempt_key": "078-s01-v2",
+          "prompt": "Use case: scientific-educational. Edit image 1, bilateral bridge START photograph, as a matched revised START 078-s01_v2. Keep EXACT woman face ponytail white short-sleeve T-shirt dark charcoal trousers white shoes, grey mat, grey-blue background/floor, lighting, oblique high side camera, full-body landscape composition, head on image LEFT feet image RIGHT. Keep supine body, head/neck/back/buttocks resting on mat, both knees bent and both complete shoe soles flat at EXACT same positions. Change ONLY arm placement to make both complete hands visible: bend BOTH elbows naturally with elbows resting comfortably on mat beside torso, and place BOTH hands separately and lightly on the front of the white T-shirt over the upper abdomen/lower ribs. Each palm rests lightly on its own side of the abdomen; hands do not overlap or interlace. Both full five-finger hands and BOTH wrists must be fully visible on white shirt, separated left/right by several centimeters. Forearms naturally connect the mat-supported elbows to abdomen. No hand on hip, thigh, neck or chest center, no crossed hands or hidden hand, no duplicated hands. Neutral relaxed supine START with pelvis on mat, no bridge lift, no back arch. No text arrows labels collage watermark.",
+          "input_paths": [
+            "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-f09d22ee-f935-425b-bc42-72b7b0b682e9.png",
+          "selected": true,
+          "qa": "补充配套准备图，原s01保留；双手分开放腹前，骨盆落垫，双足全掌落稳，头颈平放，机位与最终s02一致。"
+        },
+        {
+          "attempt_key": "078-s02-r4",
+          "prompt": "Use case: scientific-educational. Edit this exact revised bilateral glute bridge START into the raised END, 078 T-LOW-011 s02. Keep EXACT woman face ponytail white T-shirt charcoal long trousers white shoes, grey nonslip mat, grey-blue background, soft lighting, high oblique side camera, full-body landscape framing, head image LEFT feet image RIGHT. KEEP BOTH HANDS separated lightly resting on the white shirt over upper abdomen/lower ribs, same finger/wrist arrangement as input, both elbows resting comfortably on mat. Hands naturally move WITH the abdomen and remain FULLY visible on shirt, no hidden or extra hands. Change ONLY pelvis and hip extension: slowly raise buttocks/pelvis off mat into a moderate bridge, shoulder–hip–knee approximately a straight diagonal. Neutral lower back, no large arch, ribs not flared, pelvis level. Head and neck flat and relaxed on mat; upper shoulder blades stay supported on mat. BOTH complete white shoe soles remain fully flat on mat at exact same coordinates and spacing, both knees flexed and aligned, no heel lifting or foot sliding. Clearly show pelvis raised with visible gap under buttocks. Arms bend naturally while hands stay on belly, elbows supported. Full body and full shoes, all wrists/fingers and both knees visible, continuous natural joints. Single static pose only, no text, arrows, labels, collage or watermark.",
+          "input_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-f09d22ee-f935-425b-bc42-72b7b0b682e9.png"
+          ],
+          "output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-5215a6ad-a9a4-400e-9642-03c132a5d0f2.png",
+          "selected": true,
+          "qa": "由配套s01_v2编辑；双手分开放腹前、手腕手指可见；骨盆抬起，头颈与肩背落垫，两足全掌固定，无明显腰后仰；同人物垫机位足位。"
+        },
+        {
+          "attempt_key": "041-s03-r3-network-failed",
+          "prompt": "Edit image 1 into the OPPOSITE seated torso-twist direction, 041-s03. Image 2 is the fixed forward-facing lower body baseline. Keep exact person, clothing, chair, background, lighting, camera, head-to-shoes portrait framing, entire lower body and shoes unchanged. Rotate the WHOLE UPPER TORSO, shoulders, sternum, ribcage and crossed arms to face image LEFT, showing a clearly side-facing THREE-QUARTER view of the chest. The left shoulder and elbow advance toward camera and the right shoulder and elbow recede, opposite to image 1. Head faces image LEFT along the SAME direction as sternum. Chest faces leftward, NOT frontally at camera. Both hands remain on opposite upper arms and arms stay crossed across chest. Pelvis, thighs, knees and feet still face their ORIGINAL forward direction from image 2; this is a comfortable thoracic rotation relative to still hips. Keep shoulders level, spine upright, buttocks firmly seated, both shoe soles flat on floor. No side bend, neck-only turn or whole-chair rotation. Make upper torso pose unmistakably opposite image 1, with chest and crossed arms turning together, anatomically proportioned. No text, arrows, watermark or collage.",
+          "input_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-3d7290f6-318f-4df0-865e-9e9422310f4d.png",
+            "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "output_path": null,
+          "selected": false,
+          "qa": "内置生成网络请求失败；随后使用同参数重试成功，无文件交付。"
+        },
+        {
+          "attempt_key": "078-s02-r3-network-failed",
+          "prompt": "Edit image 1, the raised bilateral glute bridge. Image 2 is the START and shows the missing far arm and hand in the correct original resting position. Restore that far arm: copy its original anatomical location from image 2, FAR PALM flat DOWN ON THE GREY MAT (around x760 y365 in this 1536x1024 composition), and the distal forearm and complete five-finger hand clearly visible resting on mat beside the farther hip. The far arm extends comfortably from the far shoulder along the mat, in same location as image 2. Some proximal upper-arm occlusion by the raised torso is naturally allowed, but the full hand and wrist must be visible ON the mat, not on the hip or in air. Do NOT place the hand above or outside the mat's far diagonal edge. Keep everything else in image 1 unchanged: pelvis raised into moderate bridge, head neck shoulder blades supported on mat, neutral back, both knees bent, both soles flat with exact foot positions, near arm and hand unchanged, same woman face ponytail clothes shoes grey mat lighting camera full-body landscape framing. Exactly two natural continuous arms, no detached hand, no floating limb. No text, arrows, labels, collage or watermark.",
+          "input_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a1393b-d14c-71e2-bd6f-138f12c3417b/exec-746baee1-4e1a-4321-9b0f-439783a01551.png",
+            "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "output_path": null,
+          "selected": false,
+          "qa": "内置生成网络请求失败；随后使用同参数重试成功，无文件交付。"
+        }
+      ],
+      "final_images": [
+        {
+          "id": "041-s02-r2",
+          "action": "041",
+          "action_id": "E-AXU-008",
+          "step": "s02",
+          "file": "assess/steps/041_E-AXU-008_s02.png",
+          "qa": "人物与参考一致；抱胸肩胸整体向本人左转可辨；头随胸口，髋膝、双足和固定椅位保持；完整头、手、足可见。",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-3d7290f6-318f-4df0-865e-9e9422310f4d.png",
+          "final_path": "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s02.png",
+          "sha256": "CBBF56F11311B318B9BF8C6434487912F2BC30D13C85CC050F1A90009D6CDAD3",
+          "source_sha256": "CBBF56F11311B318B9BF8C6434487912F2BC30D13C85CC050F1A90009D6CDAD3",
+          "bytes": 1682045,
+          "width": 1122,
+          "height": 1402
+        },
+        {
+          "id": "041-s03-r3",
+          "action": "041",
+          "action_id": "E-AXU-008",
+          "step": "s03",
+          "file": "assess/steps/041_E-AXU-008_s03.png",
+          "qa": "肩带、胸面和抱胸手臂整体向本人右转，与s02方向明确区分；双足/髋膝/椅位保持，单帧比例自然。",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-90846643-e6c4-4737-bfee-5648b8517102.png",
+          "final_path": "E:/git冲突问题/rehab image/assess/steps/041_E-AXU-008_s03.png",
+          "sha256": "923175D9585EDE07A140C78A97B67C3E30A2AFBFB603F3F13200EE2A9DF81716",
+          "source_sha256": "923175D9585EDE07A140C78A97B67C3E30A2AFBFB603F3F13200EE2A9DF81716",
+          "bytes": 1671037,
+          "width": 1122,
+          "height": 1402
+        },
+        {
+          "id": "078-s02-r4",
+          "action": "078",
+          "action_id": "T-LOW-011",
+          "step": "s02",
+          "file": "train/steps/078_T-LOW-011_s02.png",
+          "qa": "由配套s01_v2编辑；双手分开放腹前、手腕手指可见；骨盆抬起，头颈与肩背落垫，两足全掌固定，无明显腰后仰；同人物垫机位足位。",
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-5215a6ad-a9a4-400e-9642-03c132a5d0f2.png",
+          "final_path": "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s02.png",
+          "sha256": "BD92614DA50D2147B180F699A8BF492B4A306E044A7D1475137CF2487C953008",
+          "source_sha256": "BD92614DA50D2147B180F699A8BF492B4A306E044A7D1475137CF2487C953008",
+          "bytes": 1848078,
+          "width": 1536,
+          "height": 1024
+        },
+        {
+          "id": "078-s01-v2",
+          "action": "078",
+          "action_id": "T-LOW-011",
+          "step": "s01_v2",
+          "file": "train/steps/078_T-LOW-011_s01_v2.png",
+          "qa": "补充配套准备图，原s01保留；双手分开放腹前，骨盆落垫，双足全掌落稳，头颈平放，机位与最终s02一致。",
+          "supplemental": true,
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393b-d14c-71e2-bd6f-138f12c3417b\\exec-f09d22ee-f935-425b-bc42-72b7b0b682e9.png",
+          "final_path": "E:/git冲突问题/rehab image/train/steps/078_T-LOW-011_s01_v2.png",
+          "sha256": "D22D0AB980B4ECDE58CA00BE7BBD1324D368954A9726E1E4333BD56D68A13C19",
+          "source_sha256": "D22D0AB980B4ECDE58CA00BE7BBD1324D368954A9726E1E4333BD56D68A13C19",
+          "bytes": 1842188,
+          "width": 1536,
+          "height": 1024
+        }
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "batch": "补缺_041_078_111-114",
+      "subtask": "111-112",
+      "date": "2026-10-14",
+      "timezone": "Asia/Shanghai",
+      "specification": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "scope": [
+        "111 T-LOW-035 s01",
+        "111 T-LOW-035 s02",
+        "112 T-LOW-050 s01",
+        "112 T-LOW-050 s02"
+      ],
+      "generation_mode": "built-in image_gen__imagegen; one requested asset or repair per call",
+      "image_processing": "没有使用 Python 或其他像素编辑；最终 PNG 从内置生成源逐字节复制，源文件保留。",
+      "common_invariants": [
+        "同一女性、白T、深灰裤、白运动鞋、灰蓝棚拍。",
+        "每组固定机位、支撑、人物尺度和足位；单帧无文字无箭头。",
+        "111 固定台面全身侧面；112 胸至足侧向近景含双膝和扶持。"
+      ],
+      "attempts": [
+        {
+          "attempt": 1,
+          "key": "111s01",
+          "asset": "111 T-LOW-035",
+          "step": "s01",
+          "prompt": "Use case: scientific-educational\nAsset type: 单动作康复训练步骤示范照片，111 T-LOW-035 s01，准备站姿\nInput images: reference-01, reference-02, reference-03 are reference images ONLY for the same woman's identity, clothing, and gray-blue studio look. Image 4 (111 original) is a pose-family reference only: do NOT copy its bare feet or elevated heels.\nPrimary request: Produce ONE photorealistic studio photograph of this same adult East Asian woman with dark low ponytail, plain white short-sleeved T-shirt, dark charcoal ankle-length training trousers, and simple white low-top athletic sneakers. She faces right in a side view and stands upright on level gray floor, lightly resting BOTH hands on the edge of a solid fixed waist-high table/counter to her right. Both feet are hip-width apart, parallel and comfortably aligned, with both entire sneaker soles flat on the floor, BOTH heels down. Knees naturally straight without locking; torso vertical; relaxed shoulders. This is the start position for supported bilateral heel raises.\nScene/backdrop: seamless softly lit light gray-blue studio wall and floor. Fixed stable table/counter with rectangular matte gray top and sturdy base, no wheels, no chair, no steps, no other objects.\nComposition/framing: Portrait 4:5 image, side view with a very slight three-quarter offset just enough to distinguish both legs and BOTH complete shoes. Show the woman from top of head to shoe soles with clear margin at top and bottom; fixed counter and natural hand contact visible. Feet comfortably separate; both shoes are fully visible and neither hides the other.\nLighting/style: neutral soft photographic studio light, natural skin, realistic anatomy and fabric texture, same photographic appearance as references.\nConstraints: Single person, single frame. This is FLAT HEELS DOWN position. Precisely two legs, two complete white sneakers, two arms with anatomically natural hands and finger joints. Hands lightly supported, not gripping awkwardly; fingers natural and resting on tabletop. No lettering, no diagrams, no arrows, no labels, no numbers, no watermark, no collage. No bare feet, no tiptoe, no heel lifting, no deep knee bend.",
+          "input_images": [
+            {
+              "order": 1,
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77",
+              "width": 1122,
+              "height": 1402,
+              "bytes": 1435890,
+              "role": "identity_and_style_reference"
+            },
+            {
+              "order": 2,
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094",
+              "width": 1122,
+              "height": 1402,
+              "bytes": 1486874,
+              "role": "identity_and_style_reference"
+            },
+            {
+              "order": 3,
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+              "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE",
+              "width": 1122,
+              "height": 1402,
+              "bytes": 1392350,
+              "role": "identity_and_style_reference"
+            },
+            {
+              "order": 4,
+              "path": "E:/git冲突问题/rehab image/train/111_T-LOW-035_扶稳双脚提踵.png",
+              "sha256": "A61CE9744BA35A26C4A1E6F023043CC0D35E7F3B848989884AEDD0AA0031EA0E",
+              "width": 1122,
+              "height": 1402,
+              "bytes": 1648878,
+              "role": "pose_family_reference"
+            }
+          ],
+          "output": {
+            "path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-6f96f3f1-c149-45cc-8084-2621bd4ff20f.png",
+            "sha256": "C94EA70B48A0C40D842E1E1AA3DD995707F0F9D0AB2852828915503CEE7F40C4",
+            "width": 1122,
+            "height": 1402,
+            "bytes": 1640749
+          },
+          "selected": true,
+          "qa": {
+            "status": "pass",
+            "viewed_with": "view_image",
+            "findings": [
+              "全身侧面，两足鞋完整可见。",
+              "双脚全掌接地、双足跟落地，平地无台阶。",
+              "双手轻扶固定矩形灰台面，手指自然。",
+              "同一女性白T、深灰裤、白运动鞋与灰蓝棚拍。",
+              "单帧无文字、箭头、水印。"
+            ]
+          },
+          "final": {
+            "key": "111s01",
+            "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-6f96f3f1-c149-45cc-8084-2621bd4ff20f.png",
+            "path": "E:/git冲突问题/rehab image/train/steps/111_T-LOW-035_s01.png",
+            "width": 1122,
+            "height": 1402,
+            "sha256": "C94EA70B48A0C40D842E1E1AA3DD995707F0F9D0AB2852828915503CEE7F40C4",
+            "source_sha256": "C94EA70B48A0C40D842E1E1AA3DD995707F0F9D0AB2852828915503CEE7F40C4",
+            "bytes": 1640749
+          }
+        },
+        {
+          "attempt": 2,
+          "key": "111s02",
+          "asset": "111 T-LOW-035",
+          "step": "s02",
+          "prompt": "Use case: scientific-educational\nAsset type: supported bilateral heel raise instruction photograph, 111 T-LOW-035 s02.\nInput image: The provided accepted s01 photograph is the EDIT TARGET and the strict camera, person, clothing, table, studio, and foot-location reference.\nPrimary request: Edit this image into the top position of a slow supported bilateral heel raise. Change only the woman's ankle plantarflexion, heel elevation, and the small anatomically necessary upward body displacement. BOTH white sneakers pivot onto their forefoot soles at the SAME floor contact points; BOTH heels and rear sole sections lift simultaneously about 5 cm clear of the floor. The front sole of EACH shoe stays in contact with the floor, clearly showing sustained support, never airborne. The two feet retain the exact same side-by-side comfortable spacing and orientation. BOTH heel gaps must be visible.\nKeep knees naturally straight as in s01, not locked and not newly bending. Keep torso vertical. Preserve both hands gently on exactly the same gray rectangular fixed tabletop; elbows adjust naturally to the slight body rise. The table, its legs, the floor, shadows, camera angle, crop, gray-blue background, lighting, identity, ponytail, T-shirt, trousers, and white sneakers are unchanged. Preserve full person from head to BOTH complete shoes, with natural realistic finger joints, two hands, two arms, two legs, two shoes.\nConstraints: single photorealistic frame. No step, no ledge, no bare feet, no jumping, no bending one leg, no foot sliding, no unilateral heel raise, no floating forefoot, no extended shoe toes. No words, numbers, arrows, outlines, diagrams, labels, logos or watermarks. Do not change to a different person, support, framing, viewing direction, or perspective.",
+          "input_images": [
+            {
+              "order": 1,
+              "path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-6f96f3f1-c149-45cc-8084-2621bd4ff20f.png",
+              "sha256": "C94EA70B48A0C40D842E1E1AA3DD995707F0F9D0AB2852828915503CEE7F40C4",
+              "width": 1122,
+              "height": 1402,
+              "bytes": 1640749,
+              "role": "edit_target"
+            }
+          ],
+          "output": {
+            "path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-cb625521-c180-45f2-aa92-e2b6b1e61c90.png",
+            "sha256": "25B559A21DC0B892FF662F3BF5A3FA7304AE0B343E711DF771F5253394E8D1D8",
+            "width": 1122,
+            "height": 1402,
+            "bytes": 1594903
+          },
+          "selected": true,
+          "qa": {
+            "status": "pass",
+            "viewed_with": "view_image",
+            "findings": [
+              "从已验收 s01 编辑，人物、机位、台面、尺度保持一致。",
+              "两足跟同步离地，前足鞋底保持接地，身体没有腾空。",
+              "双手持续轻扶，躯干自然站直，完整双鞋。",
+              "单帧无文字、箭头、水印。"
+            ]
+          },
+          "final": {
+            "key": "111s02",
+            "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-cb625521-c180-45f2-aa92-e2b6b1e61c90.png",
+            "path": "E:/git冲突问题/rehab image/train/steps/111_T-LOW-035_s02.png",
+            "width": 1122,
+            "height": 1402,
+            "sha256": "25B559A21DC0B892FF662F3BF5A3FA7304AE0B343E711DF771F5253394E8D1D8",
+            "source_sha256": "25B559A21DC0B892FF662F3BF5A3FA7304AE0B343E711DF771F5253394E8D1D8",
+            "bytes": 1594903
+          }
+        },
+        {
+          "attempt": 3,
+          "key": "112s01",
+          "asset": "112 T-LOW-050",
+          "step": "s01",
+          "prompt": "Use case: scientific-educational\nAsset type: rehabilitation exercise step photograph 112 T-LOW-050 s01, bent-knee supported bilateral heel raise START position.\nInput images: Image 1 (accepted 111 s01) is the same person, wardrobe, gray-blue studio and fixed rectangular gray table reference. Image 2 (original 112) is only a gentle knee-bend posture reference, do NOT copy its bare feet or heel elevation. Image 3 is only an identity/style reference.\nPrimary request: Create ONE photorealistic portrait photograph of this same adult East Asian woman with white T-shirt, dark charcoal trousers and simple white athletic sneakers, facing right. She lightly places BOTH hands naturally on the fixed rectangular gray waist-high table in front/right of her. BOTH knees are already comfortably bent about 20 to 25 degrees; both kneecaps slightly forward, hips slightly back, a gentle supported shallow bend rather than a deep squat. The torso stays upright. Both feet stand parallel hip-width on LEVEL floor, both entire white sneaker soles including BOTH HEELS remain FLAT on the floor, heel weight down. This is the START pose, absolutely NO raised heels.\nComposition/framing: side-oriented detail view framed from upper chest / shoulders at the TOP edge down to BOTH COMPLETE SHOES and visible floor margin below, portrait 4:5. Do NOT include the head. The camera is slightly three-quarter from the woman's left side, only enough to show BOTH softly bent knees, both legs and both full shoes separately, including rear heel sole contact. The legs/ankles/shoes are the main focus, while her hands and the stable tabletop they rest on remain clearly visible in the upper right. Keep adequate unobstructed space around both knees and feet. Rectangular tabletop and sturdy wheel-free table legs, identical gray table design to image 1.\nScene/style: same seamless pale gray-blue studio background and floor, neutral soft photographic light, real skin and fabric, natural proportions.\nConstraints: exactly one person, two legs, two arms, two anatomically natural hands with normal fingers, two white sneakers. Mild BENT KNEES visible at start; no knees locked, no standing straight, no tiptoe, no bare feet, no deep squat, no stair/step, no airborne shoe. Both soles lie flat. Single frame, no collage, no ghosting, no arrows, text, numbers, diagrams, labels or watermark.",
+          "input_images": [
+            {
+              "order": 1,
+              "path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-6f96f3f1-c149-45cc-8084-2621bd4ff20f.png",
+              "sha256": "C94EA70B48A0C40D842E1E1AA3DD995707F0F9D0AB2852828915503CEE7F40C4",
+              "width": 1122,
+              "height": 1402,
+              "bytes": 1640749,
+              "role": "same_person_wardrobe_table_reference"
+            },
+            {
+              "order": 2,
+              "path": "E:/git冲突问题/rehab image/train/112_T-LOW-050_扶稳屈膝站姿提踵.png",
+              "sha256": "F974AB1FC634D78615D344FC699D76CF5E481F47CED498F867144C14E6BA620D",
+              "width": 1122,
+              "height": 1402,
+              "bytes": 1646393,
+              "role": "gentle_knee_bend_pose_reference"
+            },
+            {
+              "order": 3,
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77",
+              "width": 1122,
+              "height": 1402,
+              "bytes": 1435890,
+              "role": "identity_and_style_reference"
+            }
+          ],
+          "output": {
+            "path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-289d7441-d5eb-4908-bf75-d5334b01df9b.png",
+            "sha256": "2DB8F61F6188F528E3706ADAF592C68B7832718B3660A9ACC898444E259AEC9A",
+            "width": 1122,
+            "height": 1402,
+            "bytes": 1684493
+          },
+          "selected": false,
+          "qa": {
+            "status": "rejected",
+            "viewed_with": "view_image",
+            "findings": [
+              "双鞋全掌接地与双手扶台清楚。",
+              "屈膝幅度偏大，姿态接近浅蹲；以 imagegen 返修减少屈膝。"
+            ],
+            "reason": "轻屈膝要求未充分满足，未选用，保留生成源。"
+          },
+          "final": null
+        },
+        {
+          "attempt": 4,
+          "key": "112s01repair",
+          "asset": "112 T-LOW-050",
+          "step": "s01",
+          "prompt": "Use case: scientific-educational\nAsset type: 112 T-LOW-050 s01 pose correction.\nInput image: edit target.\nPrimary request: Reduce ONLY the amount of knee flexion in this supported start position. Current pose is too squat-like. Raise her pelvis slightly and straighten both legs PARTWAY until each knee has only a GENTLE VISIBLE BEND of about 20 degrees, roughly HALF the current flexion. The thighs should be almost vertical, only mildly tilted forward; shins nearly vertical with knees only slightly forward of ankles. Do not fully straighten the knees: both must remain softly bent. Torso upright, pelvis only mildly back, not in a half squat. Both feet and BOTH heels stay FULLY FLAT on the floor. Both hands maintain exact natural support on the fixed tabletop.\nStrict invariants: Preserve camera angle, chest-to-feet crop, image dimensions, gray-blue studio background/floor, lighting, identity, white T-shirt, charcoal trousers, both complete white sneakers, exact foot floor positions and spacing, stable gray table, table legs, and natural hands. Only reduce knee bend and adjust hips/upper legs naturally. Single frame; no text, no arrows, no numbers, no labels, no watermark.",
+          "input_images": [
+            {
+              "order": 1,
+              "path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-289d7441-d5eb-4908-bf75-d5334b01df9b.png",
+              "sha256": "2DB8F61F6188F528E3706ADAF592C68B7832718B3660A9ACC898444E259AEC9A",
+              "width": 1122,
+              "height": 1402,
+              "bytes": 1684493,
+              "role": "edit_target"
+            }
+          ],
+          "output": {
+            "path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-27062a67-b207-4367-bff7-9f5f5e740728.png",
+            "sha256": "A37262FB9023B21A4A9DE7DFA459B97C8CF4E37D9BC802D620078A2A5AA53603",
+            "width": 1122,
+            "height": 1402,
+            "bytes": 1618099
+          },
+          "selected": true,
+          "qa": {
+            "status": "pass",
+            "viewed_with": "view_image",
+            "findings": [
+              "针对膝屈程度单项返修，两个膝盖保持可见轻屈。",
+              "胸部至完整双鞋近景，双脚全掌及双足跟接地。",
+              "双手扶固定台面可见，完整双膝和鞋。",
+              "保持原固定台面、机位、人物和尺度。",
+              "单帧无文字、箭头、水印。"
+            ]
+          },
+          "final": {
+            "key": "112s01repair",
+            "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-27062a67-b207-4367-bff7-9f5f5e740728.png",
+            "path": "E:/git冲突问题/rehab image/train/steps/112_T-LOW-050_s01.png",
+            "width": 1122,
+            "height": 1402,
+            "sha256": "A37262FB9023B21A4A9DE7DFA459B97C8CF4E37D9BC802D620078A2A5AA53603",
+            "source_sha256": "A37262FB9023B21A4A9DE7DFA459B97C8CF4E37D9BC802D620078A2A5AA53603",
+            "bytes": 1618099
+          }
+        },
+        {
+          "attempt": 5,
+          "key": "112s02",
+          "asset": "112 T-LOW-050",
+          "step": "s02",
+          "prompt": "Use case: scientific-educational\nAsset type: rehabilitation exercise step photograph 112 T-LOW-050 s02, supported BENT-KNEE bilateral heel raise.\nInput image: This accepted s01 photo is the EDIT TARGET and absolute reference for body, camera, crop, shoe locations, fixed gray table, lighting and studio.\nPrimary request: Change ONLY ankle plantarflexion and heel lifting to show the top of a slow, controlled BENT-KNEE heel raise. Preserve exactly the same GENTLE BEND of BOTH knees seen in s01. Both knees remain visibly bent, hips remain mildly back and torso upright. Do not extend either knee or straighten either leg to gain height. Keep knee bends and knee locations as close to s01 as anatomically possible.\nBOTH white shoes pivot up onto the front sole at their existing floor locations. The forefoot/toe portion of EACH sneaker stays firmly touching the flat floor; the rear sole / heel of EACH sneaker rises simultaneously about 4 cm clear of the floor, both heel gaps visible. Both feet stay side-by-side at exactly the same hip-width spacing, orientation and scale. The heels are lifted with ankle movement, without jumping. Natural small body displacement is allowed, but NO knee extension.\nPreserve both hands and natural fingers lightly resting on the exact same fixed gray tabletop, same table legs/floor/camera/crop/lighting/background. Keep chest-to-feet portrait framing with BOTH knees and BOTH complete white shoes visible. Exactly two arms, two legs and two shoes, natural proportions and natural joints. Same white T-shirt and charcoal trousers.\nConstraints: Single photographic frame; no words, no arrows, labels, lines, watermarks or collage. No standing with straight knees, no deepening squat, no stepping, no foot sliding, no floating forefoot, no jumping, no unilateral heel rise, no bare feet.",
+          "input_images": [
+            {
+              "order": 1,
+              "path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-27062a67-b207-4367-bff7-9f5f5e740728.png",
+              "sha256": "A37262FB9023B21A4A9DE7DFA459B97C8CF4E37D9BC802D620078A2A5AA53603",
+              "width": 1122,
+              "height": 1402,
+              "bytes": 1618099,
+              "role": "edit_target"
+            }
+          ],
+          "output": {
+            "path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-6ab3641d-15bc-47ab-889a-397c604d66e0.png",
+            "sha256": "157C1A46113960AF7CD1F73E27EEB3C1DA1718A9A870B603F0728DDF7AF6AAB0",
+            "width": 1122,
+            "height": 1402,
+            "bytes": 1599939
+          },
+          "selected": true,
+          "qa": {
+            "status": "pass",
+            "viewed_with": "view_image",
+            "findings": [
+              "从已验收轻屈膝 s01 编辑。",
+              "双膝仍轻屈，未靠伸膝把身体顶高，双手扶台持续。",
+              "双足跟同步抬起，前足鞋底持续接地，无跳跃。",
+              "胸至足构图、固定台面、双鞋、人物尺度保持一致。",
+              "单帧无文字、箭头、水印。"
+            ]
+          },
+          "final": {
+            "key": "112s02",
+            "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-6ab3641d-15bc-47ab-889a-397c604d66e0.png",
+            "path": "E:/git冲突问题/rehab image/train/steps/112_T-LOW-050_s02.png",
+            "width": 1122,
+            "height": 1402,
+            "sha256": "157C1A46113960AF7CD1F73E27EEB3C1DA1718A9A870B603F0728DDF7AF6AAB0",
+            "source_sha256": "157C1A46113960AF7CD1F73E27EEB3C1DA1718A9A870B603F0728DDF7AF6AAB0",
+            "bytes": 1599939
+          }
+        }
+      ],
+      "final_images": [
+        {
+          "key": "111s01",
+          "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-6f96f3f1-c149-45cc-8084-2621bd4ff20f.png",
+          "path": "E:/git冲突问题/rehab image/train/steps/111_T-LOW-035_s01.png",
+          "width": 1122,
+          "height": 1402,
+          "sha256": "C94EA70B48A0C40D842E1E1AA3DD995707F0F9D0AB2852828915503CEE7F40C4",
+          "source_sha256": "C94EA70B48A0C40D842E1E1AA3DD995707F0F9D0AB2852828915503CEE7F40C4",
+          "bytes": 1640749,
+          "qa": "pass",
+          "original_bytes_verified": true
+        },
+        {
+          "key": "111s02",
+          "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-cb625521-c180-45f2-aa92-e2b6b1e61c90.png",
+          "path": "E:/git冲突问题/rehab image/train/steps/111_T-LOW-035_s02.png",
+          "width": 1122,
+          "height": 1402,
+          "sha256": "25B559A21DC0B892FF662F3BF5A3FA7304AE0B343E711DF771F5253394E8D1D8",
+          "source_sha256": "25B559A21DC0B892FF662F3BF5A3FA7304AE0B343E711DF771F5253394E8D1D8",
+          "bytes": 1594903,
+          "qa": "pass",
+          "original_bytes_verified": true
+        },
+        {
+          "key": "112s01repair",
+          "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-27062a67-b207-4367-bff7-9f5f5e740728.png",
+          "path": "E:/git冲突问题/rehab image/train/steps/112_T-LOW-050_s01.png",
+          "width": 1122,
+          "height": 1402,
+          "sha256": "A37262FB9023B21A4A9DE7DFA459B97C8CF4E37D9BC802D620078A2A5AA53603",
+          "source_sha256": "A37262FB9023B21A4A9DE7DFA459B97C8CF4E37D9BC802D620078A2A5AA53603",
+          "bytes": 1618099,
+          "qa": "pass",
+          "original_bytes_verified": true
+        },
+        {
+          "key": "112s02",
+          "source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393d-476a-7ae2-b6a3-8c17933da72a\\exec-6ab3641d-15bc-47ab-889a-397c604d66e0.png",
+          "path": "E:/git冲突问题/rehab image/train/steps/112_T-LOW-050_s02.png",
+          "width": 1122,
+          "height": 1402,
+          "sha256": "157C1A46113960AF7CD1F73E27EEB3C1DA1718A9A870B603F0728DDF7AF6AAB0",
+          "source_sha256": "157C1A46113960AF7CD1F73E27EEB3C1DA1718A9A870B603F0728DDF7AF6AAB0",
+          "bytes": 1599939,
+          "qa": "pass",
+          "original_bytes_verified": true
+        }
+      ],
+      "verification": {
+        "selected_count": 4,
+        "generated_count": 5,
+        "repair_count": 1,
+        "all_selected_viewed": true,
+        "png_dimensions": "1122 × 1402",
+        "copy_sha256_all_match": true,
+        "existing_assets_overwritten": false
+      }
+    },
+    {
+      "schema_version": "1.0",
+      "created_local_date": "2026-10-14",
+      "timezone": "Asia/Shanghai",
+      "engine": "built-in image_gen",
+      "scope": [
+        "113-s01",
+        "113-s02",
+        "114-s01"
+      ],
+      "status": "complete",
+      "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "records": [
+        {
+          "action": "113",
+          "id": "T-LOW-036",
+          "step": "s01",
+          "attempt": 1,
+          "prompt": "Use case: scientific-educational.\nAsset type: rehabilitation exercise step photograph, 113 T-LOW-036 s01, start position for supported single-leg calf raise on a level floor.\nInput images: reference-01, reference-02 and reference-03 are identity, clothing and studio-style references. The existing 113 image is only a reference for identity, camera and fixed rail, NOT a pose or equipment reference. DO NOT copy its dumbbell or bare feet.\nCreate ONE photorealistic studio photograph. Preserve the same adult East Asian woman, dark ponytail, plain short-sleeve white T-shirt and dark charcoal straight athletic trousers as the references. She now wears ordinary unbranded white low-top athletic shoes, both complete and anatomically correct.\nScene: light gray-blue seamless studio background and level matte floor, gentle diffused studio lighting and soft natural contact shadows. A sturdy fixed gray horizontal waist-height handrail stands at the right, with a vertical column and floor attachment visible, no unstable furniture.\nPose: full-body true side view facing to image right. The camera-near LEFT leg is the TRAINING leg, aligned beneath her hip. This left training foot is completely flat on the level floor: heel and forefoot sole BOTH visibly contact the floor. The far RIGHT knee is bent back modestly, the complete right shoe held clearly 8–12 cm above the floor behind the planted ankle, with an unmistakable strip of background below the whole sole. The right foot does NOT touch the left leg or the floor. One hand reaches forward and rests naturally on the fixed handrail; the free hand hangs relaxed by her thigh and holds nothing. Torso upright, shoulders and pelvis stable, training knee naturally nearly straight without forced locking.\nComposition: portrait full body from hair through both complete shoes with generous margins, normal human proportions, accurate fingers visibly connected to the woman's arm, feet and knees unobscured. Eye-level side camera, natural 70 mm lens appearance. Both feet easy to distinguish.\nConstraints: single frame, no collage, no insets, no duplicate people, no ghost poses, no text, no numbers, no arrows, no graphic marks or logos, no watermark. NO dumbbell, NO weight, NO step or platform, NO barefoot person, NO raised training heel in this start frame.",
+          "inputs": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/train/113_T-LOW-036_扶稳单脚／负重提踵.png"
+          ],
+          "output_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-7f05b9ab-4ebd-4652-b9c5-1c28a9dfb51b.png",
+          "selected": true,
+          "qa": {
+            "result": "pass",
+            "review_method": "Full image viewed with tools.view_image",
+            "checks": [
+              "Same female white T-shirt dark charcoal trousers and white athletic shoes",
+              "Side full-body complete head hands and shoes",
+              "Near left training foot visibly full sole flat on floor",
+              "Far right foot clearly raised behind, visible floor clearance",
+              "One hand naturally on fixed floor-supported gray rail",
+              "Free hand empty; no weights or steps",
+              "Anatomical proportions and fingers natural",
+              "Single photograph no text arrows watermark"
+            ]
+          },
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-7f05b9ab-4ebd-4652-b9c5-1c28a9dfb51b.png",
+          "final_path": "E:/git冲突问题/rehab image/train/steps/113_T-LOW-036_s01.png",
+          "width": 1122,
+          "height": 1402,
+          "sha256": "BA027BD195057FE75D5F4F444676E876275DA170213E4338C27D72F38B839255",
+          "source_sha256": "BA027BD195057FE75D5F4F444676E876275DA170213E4338C27D72F38B839255",
+          "bytes": 1645025,
+          "tool_args": {
+            "prompt": "Use case: scientific-educational.\nAsset type: rehabilitation exercise step photograph, 113 T-LOW-036 s01, start position for supported single-leg calf raise on a level floor.\nInput images: reference-01, reference-02 and reference-03 are identity, clothing and studio-style references. The existing 113 image is only a reference for identity, camera and fixed rail, NOT a pose or equipment reference. DO NOT copy its dumbbell or bare feet.\nCreate ONE photorealistic studio photograph. Preserve the same adult East Asian woman, dark ponytail, plain short-sleeve white T-shirt and dark charcoal straight athletic trousers as the references. She now wears ordinary unbranded white low-top athletic shoes, both complete and anatomically correct.\nScene: light gray-blue seamless studio background and level matte floor, gentle diffused studio lighting and soft natural contact shadows. A sturdy fixed gray horizontal waist-height handrail stands at the right, with a vertical column and floor attachment visible, no unstable furniture.\nPose: full-body true side view facing to image right. The camera-near LEFT leg is the TRAINING leg, aligned beneath her hip. This left training foot is completely flat on the level floor: heel and forefoot sole BOTH visibly contact the floor. The far RIGHT knee is bent back modestly, the complete right shoe held clearly 8–12 cm above the floor behind the planted ankle, with an unmistakable strip of background below the whole sole. The right foot does NOT touch the left leg or the floor. One hand reaches forward and rests naturally on the fixed handrail; the free hand hangs relaxed by her thigh and holds nothing. Torso upright, shoulders and pelvis stable, training knee naturally nearly straight without forced locking.\nComposition: portrait full body from hair through both complete shoes with generous margins, normal human proportions, accurate fingers visibly connected to the woman's arm, feet and knees unobscured. Eye-level side camera, natural 70 mm lens appearance. Both feet easy to distinguish.\nConstraints: single frame, no collage, no insets, no duplicate people, no ghost poses, no text, no numbers, no arrows, no graphic marks or logos, no watermark. NO dumbbell, NO weight, NO step or platform, NO barefoot person, NO raised training heel in this start frame.",
+            "referenced_image_paths": [
+              "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+              "E:/git冲突问题/rehab image/train/113_T-LOW-036_扶稳单脚／负重提踵.png"
+            ],
+            "transparent_background": false
+          },
+          "input_metadata": [
+            {
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "width": 1122,
+              "height": 1402,
+              "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77",
+              "bytes": 1435890
+            },
+            {
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "width": 1122,
+              "height": 1402,
+              "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094",
+              "bytes": 1486874
+            },
+            {
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+              "width": 1122,
+              "height": 1402,
+              "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE",
+              "bytes": 1392350
+            },
+            {
+              "path": "E:/git冲突问题/rehab image/train/113_T-LOW-036_扶稳单脚／负重提踵.png",
+              "width": 1122,
+              "height": 1402,
+              "sha256": "DDE466612EBC46ADA150C0473A52A5D717C9B325AE6EFC01D6F8352EAE00EA94",
+              "bytes": 1642499
+            }
+          ],
+          "output_metadata": {
+            "path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-7f05b9ab-4ebd-4652-b9c5-1c28a9dfb51b.png",
+            "width": 1122,
+            "height": 1402,
+            "sha256": "BA027BD195057FE75D5F4F444676E876275DA170213E4338C27D72F38B839255",
+            "bytes": 1645025
+          }
+        },
+        {
+          "action": "113",
+          "id": "T-LOW-036",
+          "step": "s02",
+          "attempt": 1,
+          "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation exercise 113 T-LOW-036 s02, raised-heel phase of the SAME supported single-leg calf raise sequence.\nInput image: the accepted s01 photograph is the edit target. This is a precise pose edit to this image, not a new composition.\nKeep the same woman and her exact face, ponytail, white T-shirt, dark charcoal trousers, unbranded white shoes, natural body proportions; keep the identical gray-blue studio backdrop, floor, lighting, shadows, full-body framing, side-view camera direction facing image right, body scale, rail geometry and position, hand identity, hand-to-rail contact, free hand empty and relaxed.\nChange ONLY the single-leg calf raise phase: the camera-near LEFT training forefoot stays at precisely the same point on the level floor, but the LEFT heel lifts about 6–8 cm, visibly making the planted white shoe slope up from toe to heel. The training forefoot and ball of foot remain on the floor; create a clear visible triangular floor gap below the entire rear sole and heel. It must look like a real controlled heel raise, not walking, jumping, a floating whole shoe, or a flat shoe sitting on tiptoe. The ankle plantarflexes naturally while the training knee remains naturally nearly straight. Pelvis and torso rise only slightly with the heel raise, remain upright and steady. Keep the far RIGHT non-training leg bent behind in the same clear off-floor pose as s01, its entire shoe remains unmistakably above the floor and touches neither the floor nor the left leg. The woman's supporting hand stays on the same fixed rail with natural fingers.\nOne single clean photorealistic frame. Both shoes complete, floor contact and heel gap very legible. No text, arrows, graphic marks, logos, watermarks, collage, extra hands or legs, dumbbells, weights, platforms or barefoot feet.",
+          "inputs": [
+            "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-7f05b9ab-4ebd-4652-b9c5-1c28a9dfb51b.png"
+          ],
+          "output_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-47b73900-3d90-4a94-a5c4-23a18cec1e92.png",
+          "selected": true,
+          "qa": {
+            "result": "pass",
+            "review_method": "Generated output visually inspected and full image viewed with tools.view_image",
+            "checks": [
+              "Accepted s01 edited; woman rail lighting composition and clothing preserved",
+              "Training forefoot visibly contacts floor, heel raised with clear triangular floor gap",
+              "Same far nontraining shoe clearly above floor",
+              "Natural upright torso and hand-to-rail relation",
+              "Complete white athletic shoes hands full-body margins",
+              "Single frame no text arrows watermark equipment or steps"
+            ]
+          },
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-47b73900-3d90-4a94-a5c4-23a18cec1e92.png",
+          "final_path": "E:/git冲突问题/rehab image/train/steps/113_T-LOW-036_s02.png",
+          "width": 1122,
+          "height": 1402,
+          "sha256": "7F77623E496E862709352621061882683C940E1EB108CE12B02CF932BE37096E",
+          "source_sha256": "7F77623E496E862709352621061882683C940E1EB108CE12B02CF932BE37096E",
+          "bytes": 1620691,
+          "tool_args": {
+            "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation exercise 113 T-LOW-036 s02, raised-heel phase of the SAME supported single-leg calf raise sequence.\nInput image: the accepted s01 photograph is the edit target. This is a precise pose edit to this image, not a new composition.\nKeep the same woman and her exact face, ponytail, white T-shirt, dark charcoal trousers, unbranded white shoes, natural body proportions; keep the identical gray-blue studio backdrop, floor, lighting, shadows, full-body framing, side-view camera direction facing image right, body scale, rail geometry and position, hand identity, hand-to-rail contact, free hand empty and relaxed.\nChange ONLY the single-leg calf raise phase: the camera-near LEFT training forefoot stays at precisely the same point on the level floor, but the LEFT heel lifts about 6–8 cm, visibly making the planted white shoe slope up from toe to heel. The training forefoot and ball of foot remain on the floor; create a clear visible triangular floor gap below the entire rear sole and heel. It must look like a real controlled heel raise, not walking, jumping, a floating whole shoe, or a flat shoe sitting on tiptoe. The ankle plantarflexes naturally while the training knee remains naturally nearly straight. Pelvis and torso rise only slightly with the heel raise, remain upright and steady. Keep the far RIGHT non-training leg bent behind in the same clear off-floor pose as s01, its entire shoe remains unmistakably above the floor and touches neither the floor nor the left leg. The woman's supporting hand stays on the same fixed rail with natural fingers.\nOne single clean photorealistic frame. Both shoes complete, floor contact and heel gap very legible. No text, arrows, graphic marks, logos, watermarks, collage, extra hands or legs, dumbbells, weights, platforms or barefoot feet.",
+            "referenced_image_paths": [
+              "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-7f05b9ab-4ebd-4652-b9c5-1c28a9dfb51b.png"
+            ],
+            "transparent_background": false
+          },
+          "input_metadata": [
+            {
+              "path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-7f05b9ab-4ebd-4652-b9c5-1c28a9dfb51b.png",
+              "width": 1122,
+              "height": 1402,
+              "sha256": "BA027BD195057FE75D5F4F444676E876275DA170213E4338C27D72F38B839255",
+              "bytes": 1645025
+            }
+          ],
+          "output_metadata": {
+            "path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-47b73900-3d90-4a94-a5c4-23a18cec1e92.png",
+            "width": 1122,
+            "height": 1402,
+            "sha256": "7F77623E496E862709352621061882683C940E1EB108CE12B02CF932BE37096E",
+            "bytes": 1620691
+          }
+        },
+        {
+          "action": "114",
+          "id": "T-LOW-051",
+          "step": "s01",
+          "attempt": 1,
+          "prompt": "Use case: scientific-educational.\nAsset type: rehabilitation exercise step photograph, 114 T-LOW-051 s01, DOUBLE-FOOT start position before a calf raise.\nInput images: reference-01, reference-02 and reference-03 provide the exact woman's identity, white short-sleeve T-shirt, dark charcoal athletic trousers and gray-blue studio style. The existing 114 photograph provides ONLY person and rail appearance; do NOT copy its single-leg or bare-foot pose.\nGenerate ONE photorealistic educational studio photograph of this same woman, wearing ordinary unbranded white low-top athletic sneakers on BOTH feet.\nScene: clean light gray-blue seamless studio backdrop, level matte studio floor, soft diffused light. A sturdy gray fixed waist-height handrail in front of her at image right, visibly supported by a vertical floor-mounted column with fixed base. The woman's supporting hand and forearm must be visible, fingers naturally resting around/on the rail, visibly belonging to her. Her other hand relaxed empty near the thigh.\nPose: upright supported standing side view, facing image right, BOTH legs weight-bearing. BOTH feet must be completely FLAT on the level floor with BOTH heels and BOTH forefeet visibly in contact. Feet parallel facing forward and comfortably hip-width apart, with the camera-far foot slightly visually offset so both complete shoes and both heel-floor contacts are distinctly visible; do not make a forward lunge or staggered exercise. Both knees natural nearly straight, no locked backward bend, hips stable.\nComposition: a close SIDE view emphasizing feet, ankles, BOTH knees and thighs. Crop from just below shoulders/chest down to the floor, with the entire supporting forearm/hand-to-rail relation visible at the upper right and BOTH knees, both ankles and BOTH complete shoes clearly visible, generous margin under soles. Use near-side camera with a very slight front oblique angle only as needed to separate the two legs/shoes. Natural human proportions, no huge feet, no shortened shins, no fused legs. Keep the rail column and stable base in frame. Legs/feet are the main subject, not a full-body portrait.\nConstraints: one single frame, no inset, no split-screen, no text or arrows, no logos or watermarks. No raised heel, no hovering foot, no single-leg balance, no bare feet, no dumbbells or load, no steps/platforms, no extra limbs. The frame must clearly prove double-foot flat-ground starting posture and one-hand fixed support.",
+          "inputs": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/train/114_T-LOW-051_双脚上升—单脚缓降提踵.png"
+          ],
+          "output_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-483f923a-576a-4f61-9dfc-5510511932f0.png",
+          "selected": false,
+          "qa": {
+            "result": "reject",
+            "reason": "Individual target pose passed but generated white-shoe and chest-to-feet composition does not match subsequently discovered existing 114 s02/s03 barefoot waist-to-feet close-up; retain as unselected candidate.",
+            "review_method": "Full output and existing s02/s03 viewed with tools.view_image"
+          },
+          "tool_args": {
+            "prompt": "Use case: scientific-educational.\nAsset type: rehabilitation exercise step photograph, 114 T-LOW-051 s01, DOUBLE-FOOT start position before a calf raise.\nInput images: reference-01, reference-02 and reference-03 provide the exact woman's identity, white short-sleeve T-shirt, dark charcoal athletic trousers and gray-blue studio style. The existing 114 photograph provides ONLY person and rail appearance; do NOT copy its single-leg or bare-foot pose.\nGenerate ONE photorealistic educational studio photograph of this same woman, wearing ordinary unbranded white low-top athletic sneakers on BOTH feet.\nScene: clean light gray-blue seamless studio backdrop, level matte studio floor, soft diffused light. A sturdy gray fixed waist-height handrail in front of her at image right, visibly supported by a vertical floor-mounted column with fixed base. The woman's supporting hand and forearm must be visible, fingers naturally resting around/on the rail, visibly belonging to her. Her other hand relaxed empty near the thigh.\nPose: upright supported standing side view, facing image right, BOTH legs weight-bearing. BOTH feet must be completely FLAT on the level floor with BOTH heels and BOTH forefeet visibly in contact. Feet parallel facing forward and comfortably hip-width apart, with the camera-far foot slightly visually offset so both complete shoes and both heel-floor contacts are distinctly visible; do not make a forward lunge or staggered exercise. Both knees natural nearly straight, no locked backward bend, hips stable.\nComposition: a close SIDE view emphasizing feet, ankles, BOTH knees and thighs. Crop from just below shoulders/chest down to the floor, with the entire supporting forearm/hand-to-rail relation visible at the upper right and BOTH knees, both ankles and BOTH complete shoes clearly visible, generous margin under soles. Use near-side camera with a very slight front oblique angle only as needed to separate the two legs/shoes. Natural human proportions, no huge feet, no shortened shins, no fused legs. Keep the rail column and stable base in frame. Legs/feet are the main subject, not a full-body portrait.\nConstraints: one single frame, no inset, no split-screen, no text or arrows, no logos or watermarks. No raised heel, no hovering foot, no single-leg balance, no bare feet, no dumbbells or load, no steps/platforms, no extra limbs. The frame must clearly prove double-foot flat-ground starting posture and one-hand fixed support.",
+            "referenced_image_paths": [
+              "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+              "E:/git冲突问题/rehab image/train/114_T-LOW-051_双脚上升—单脚缓降提踵.png"
+            ],
+            "transparent_background": false
+          },
+          "input_metadata": [
+            {
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "width": 1122,
+              "height": 1402,
+              "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77",
+              "bytes": 1435890
+            },
+            {
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "width": 1122,
+              "height": 1402,
+              "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094",
+              "bytes": 1486874
+            },
+            {
+              "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+              "width": 1122,
+              "height": 1402,
+              "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE",
+              "bytes": 1392350
+            },
+            {
+              "path": "E:/git冲突问题/rehab image/train/114_T-LOW-051_双脚上升—单脚缓降提踵.png",
+              "width": 1122,
+              "height": 1402,
+              "sha256": "5BA316F89AB6D73CB5FBC40411C7D547D268F2AC3B350CF8D84F3597A7E5E1EB",
+              "bytes": 1574420
+            }
+          ],
+          "output_metadata": {
+            "path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-483f923a-576a-4f61-9dfc-5510511932f0.png",
+            "width": 1122,
+            "height": 1402,
+            "sha256": "F98D8D7228CD5CC6FDEE04C4F639A0C6AEDDC04EF2F473A66345F2FE90A38EB6",
+            "bytes": 1647381
+          }
+        },
+        {
+          "action": "114",
+          "id": "T-LOW-051",
+          "step": "s01",
+          "attempt": 2,
+          "prompt": "Use case: precise-object-edit.\nAsset type: rehabilitation educational step photograph, 114 T-LOW-051 s01, start/reset frame of the EXISTING barefoot two-up one-down calf-raise sequence.\nInput image: the already accepted and saved 114 s02 photograph is the precise edit target. It shows the same woman with both bare heels raised. Preserve this image's camera, crop, woman, trouser shape, waist and chest position, hand identity and hand-to-rail contact, rail horizontal bar/column/base geometry and location, gray-blue backdrop, lighting, foot identities and forefoot ground positions. Do NOT generate a new composition.\nSingle required change: lower BOTH bare heels all the way onto the LEVEL floor. BOTH left and right feet are now completely flat, from heel through ball/forefoot, with obvious realistic heel-to-floor contact and soft grounded contact shadows. The nearer LEFT foot remains nearest camera; the farther RIGHT foot remains in its existing behind-the-near-foot visual offset so each bare foot can be distinguished. Keep their forefoot/toe floor locations; lower the heels by naturally returning both ankles to flat-ground standing. Both knees remain naturally nearly straight and relaxed, body settled and steady, one hand still on the fixed gray rail. No shoe is to be added. Feet must look anatomically natural with complete toes, soles and heels, no stretched foot or rotated shoe-like shape.\nRetain the waist/chest-to-floor close-up framing, both knees, complete bare feet, supporting forearm and hand, stable gray rail and base. No caption, no arrows or graphic marks, no watermark, no inset, no split screen, no double exposure or duplicate limbs. No step, platform, weights or added props. The key proof in this s01 frame is TWO full-foot supports on the level floor, BOTH heels genuinely resting on floor, and the same fixed hand support as s02.",
+          "inputs": [
+            "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s02.png"
+          ],
+          "output_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-26907779-a5a9-4503-a586-c62fc1d3bf6c.png",
+          "selected": true,
+          "qa": {
+            "result": "pass",
+            "review_method": "Full image viewed with tools.view_image and compared to existing s02/s03",
+            "checks": [
+              "Exact existing barefoot 114 sequence chosen rather than independent white-shoe composition",
+              "Both heels lowered to level floor with both forefeet grounded",
+              "Both knees naturally nearly straight, no backward locking",
+              "Same hand-to-fixed-rail relation, rail geometry base camera crop and gray-blue studio",
+              "Both bare feet anatomically natural and fully in frame",
+              "Single frame no text arrows watermark weights or steps"
+            ],
+            "note": "Selected barefoot flat-ground version to preserve consistency with pre-existing 114 s02/s03; unselected white-shoe candidate retained in generation history."
+          },
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-26907779-a5a9-4503-a586-c62fc1d3bf6c.png",
+          "final_path": "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s01.png",
+          "width": 1122,
+          "height": 1402,
+          "sha256": "C852994CFF80F95EA5338347FFCCC746CA588F83911D98919E090CB30E0E36AC",
+          "source_sha256": "C852994CFF80F95EA5338347FFCCC746CA588F83911D98919E090CB30E0E36AC",
+          "bytes": 1562504,
+          "tool_args": {
+            "prompt": "Use case: precise-object-edit.\nAsset type: rehabilitation educational step photograph, 114 T-LOW-051 s01, start/reset frame of the EXISTING barefoot two-up one-down calf-raise sequence.\nInput image: the already accepted and saved 114 s02 photograph is the precise edit target. It shows the same woman with both bare heels raised. Preserve this image's camera, crop, woman, trouser shape, waist and chest position, hand identity and hand-to-rail contact, rail horizontal bar/column/base geometry and location, gray-blue backdrop, lighting, foot identities and forefoot ground positions. Do NOT generate a new composition.\nSingle required change: lower BOTH bare heels all the way onto the LEVEL floor. BOTH left and right feet are now completely flat, from heel through ball/forefoot, with obvious realistic heel-to-floor contact and soft grounded contact shadows. The nearer LEFT foot remains nearest camera; the farther RIGHT foot remains in its existing behind-the-near-foot visual offset so each bare foot can be distinguished. Keep their forefoot/toe floor locations; lower the heels by naturally returning both ankles to flat-ground standing. Both knees remain naturally nearly straight and relaxed, body settled and steady, one hand still on the fixed gray rail. No shoe is to be added. Feet must look anatomically natural with complete toes, soles and heels, no stretched foot or rotated shoe-like shape.\nRetain the waist/chest-to-floor close-up framing, both knees, complete bare feet, supporting forearm and hand, stable gray rail and base. No caption, no arrows or graphic marks, no watermark, no inset, no split screen, no double exposure or duplicate limbs. No step, platform, weights or added props. The key proof in this s01 frame is TWO full-foot supports on the level floor, BOTH heels genuinely resting on floor, and the same fixed hand support as s02.",
+            "referenced_image_paths": [
+              "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s02.png"
+            ],
+            "transparent_background": false
+          },
+          "input_metadata": [
+            {
+              "path": "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s02.png",
+              "width": 1122,
+              "height": 1402,
+              "sha256": "CD2342E36F8D30C3F22CA324EEC03D24FE12C52466C51004D564B4F9CBA12B7E",
+              "bytes": 1631055
+            }
+          ],
+          "output_metadata": {
+            "path": "C:/Users/Administrator/.codex/generated_images/01a1393d-81a9-7242-87c3-01f2ed82c369/exec-26907779-a5a9-4503-a586-c62fc1d3bf6c.png",
+            "width": 1122,
+            "height": 1402,
+            "sha256": "C852994CFF80F95EA5338347FFCCC746CA588F83911D98919E090CB30E0E36AC",
+            "bytes": 1562504
+          }
+        }
+      ],
+      "selected_final_paths": [
+        "E:/git冲突问题/rehab image/train/steps/113_T-LOW-036_s01.png",
+        "E:/git冲突问题/rehab image/train/steps/113_T-LOW-036_s02.png",
+        "E:/git冲突问题/rehab image/train/steps/114_T-LOW-051_s01.png"
+      ],
+      "sequence_consistency_notes": [
+        "113 chosen as unweighted flat-ground white-shoe single-leg version; s02 precisely edited from accepted s01.",
+        "114 chosen as barefoot flat-ground version matching pre-existing s02/s03. White-shoe independent candidate rejected during sequence review. Final s01 precisely edited from existing s02 by lowering both heels; existing s02/s03 untouched."
+      ],
+      "raw_png_policy": "Final selected images copied byte-for-byte from generated_images; source and final SHA256 equal; no image processing or re-encoding.",
+      "git_action": "No repository files edited and no Git commit by subagent."
+    }
+  ]
+}

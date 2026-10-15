@@ -24,7 +24,7 @@ def main():
  ssl_certificate /etc/letsencrypt/live/{host}/fullchain.pem;
  ssl_certificate_key /etc/letsencrypt/live/{host}/privkey.pem;
  ssl_protocols TLSv1.2 TLSv1.3;
- client_max_body_size 256k;
+ client_max_body_size 3m;
  client_body_timeout 10s;
  access_log off;
  add_header Strict-Transport-Security "max-age=604800" always;

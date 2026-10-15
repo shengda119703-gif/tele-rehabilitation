@@ -1,0 +1,147 @@
+{
+  "batch": "第07批",
+  "date": "2026-10-14",
+  "scope": "046-s02、047-s02、047-s03",
+  "count": 3,
+  "tool": "built-in image_gen",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "status": "visual_review_passed",
+  "files": [
+    {
+      "step": "046-s02",
+      "action_id": "E-AXU-010",
+      "intended_filename": "046_E-AXU-010_s02.png",
+      "actual_saved_path": "E:/git冲突问题/rehab image/assess/steps/046_E-AXU-010_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-8e26-78f3-bacb-f7657bd4b260/exec-087c3036-d834-4ebb-a247-d28b26008a1f.png",
+      "tool": "built-in image_gen",
+      "mode": "identity-preserve edit",
+      "reused": false,
+      "prompt": "Use case: identity-preserve\nAsset type: single raw rehabilitation step photograph, 046_E-AXU-010_s02, no graphic layout.\nPrimary request: Edit the FIRST image, the neutral seated front-facing woman, into ONE photograph of LEFT cervical lateral flexion, maintaining the first image's exact shot and identity.\nInput images: Image 1 is the edit target and exact composition anchor (046 s01). Image 2 is the opposite RIGHT lateral-flexion step (046 s03) for the modest tilt range and same group consistency; DO NOT copy its tilt direction. Images 3,4,5 are identity, clothing, photographic quality, gray-blue studio color reference ONLY; do not copy their standing or arm poses.\nTarget pose: The woman's OWN LEFT ear approaches her OWN LEFT shoulder (the shoulder on the VIEWER'S RIGHT). From this front camera the TOP of her head moves toward IMAGE RIGHT, and her chin naturally moves slightly toward IMAGE LEFT. Tilt her head about 20 degrees toward image right, with the face still oriented toward the camera: this is lateral bend only, NOT looking/rotating right. Eye line tilts with head. Do not force ear to touch shoulder. Her shoulders remain level, relaxed, low, exactly like neutral. Sternum and torso remain front-facing, upright, without sidebend. Both palms rest unchanged on thighs. No hand touching head.\nInvariants: Lock original face identity, age, natural skin, black ponytail, white short-sleeve T-shirt, dark-gray pants, gray upholstered chair, chair size/location, hands/fingers, original torso/shoulders/pelvis/knees, gray-blue seamless background and soft studio light. Lock front camera, focal-length feel, vertical aspect ratio 4:5, framing head to knees, seated person scale and center. Modify only head/neck orientation and plausible hair movement. Keep anatomy natural and neck attached continuously. Output one single high-quality photoreal frame with no text, numbers, arrows, labels, watermark, panels, extra objects or people.",
+      "references": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/steps/046_E-AXU-010_s01.png",
+          "role": "edit_target_composition_anchor"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/assess/steps/046_E-AXU-010_s03.png",
+          "role": "opposite_direction_same_group_reference"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "role": "identity_clothing_background_lighting_reference"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "role": "identity_clothing_background_lighting_reference"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "role": "identity_clothing_background_lighting_reference"
+        }
+      ],
+      "target_pose": "人物本人左侧屈（正面观看为画面右倾），左耳向左肩；面部仍朝前，肩不耸、躯干不侧弯，双手保持大腿，未手拉头。",
+      "visual_review": {
+        "status": "passed",
+        "method": "实际 view_image 逐张检查，与既有步骤及三张共同参考比较",
+        "findings": "已通过实际 view_image 检查：左侧屈方向清楚，面朝前；头颈连续、比例自然，肩胸仍正向镜头；白 T、深灰裤、灰布椅、手指、头至膝的尺度和柔和灰蓝背景与既有 s01/s03 保持一致。左右幅度为示意，未由图像测量。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1717276,
+      "sha256": "568FDC8ADDFF83F2DD58A2EC751E441B7EC00F8F4792D30394E810E317BED00A",
+      "unused_attempts": [],
+      "limitations": [
+        "保留同组现有头至膝构图，双足落地接触不在此局部镜头内，无法从该照片核验。",
+        "静态 AI 示范照片只确认可见姿势与外观；不证明实际运动范围、发力、负荷、时间或筛查效度。"
+      ]
+    },
+    {
+      "step": "047-s02",
+      "action_id": "E-AXU-011",
+      "intended_filename": "047_E-AXU-011_s02.png",
+      "actual_saved_path": "E:/git冲突问题/rehab image/assess/steps/047_E-AXU-011_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-8e26-78f3-bacb-f7657bd4b260/exec-864b18bc-7e10-4177-b7c5-eee1b660d475.png",
+      "tool": "built-in image_gen",
+      "mode": "identity-preserve edit",
+      "reused": false,
+      "prompt": "Use case: identity-preserve\nAsset type: a single raw rehabilitation step photograph, 047_E-AXU-011_s02.\nPrimary request: Edit ONLY the head and neck direction in the FIRST image into active LEFT neck rotation by the woman herself. Reproduce her same seated scene exactly.\nInput images: Image 1 is the neutral seated front-camera photograph and exact edit target. Images 2,3,4 are supporting identity, hair, white T-shirt, dark-gray trousers and gray-blue studio photography references only; do NOT use their body poses or side-view camera.\nTarget pose: From this unchanged FRONT camera, keep both shoulders, sternum, chest, arms and lap directly square to the lens. The woman's OWN LEFT is VIEWER RIGHT. She turns ONLY her head to her OWN LEFT, so her NOSE and FACE point toward IMAGE RIGHT at approximately 55-65 degrees from front, a clear three-quarter facial view tending toward right-facing profile. Her eyes look toward image right with her head. Head is upright vertically with NO lateral tilt and NO chin lift or lowering. Her neck smoothly twists relative to the entirely front-facing chest. Her shoulders stay level, relaxed, low; neither shoulder advances or rises. Both hands remain flat on thighs. Her whole body must not turn with the head.\nInvariants: preserve the target's exact woman's face identity, age, skin tone, natural anatomy and black low ponytail, plain white short-sleeve shirt, dark gray pants, both hands/fingers, seated gray upholstered armless chair, neutral upright body, lower crop at knees, gray-blue studio background and soft photography lighting. Front camera angle, portrait 4:5 aspect, focal length, position, size and crop stay exactly like image 1. Change only head/neck orientation and plausible hair position, with natural skin and continuous neck attachment. Output ONE photo, no text, arrows, labels, numbers, watermark, panels, extra people or objects.",
+      "references": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/steps/047_E-AXU-011_s01.png",
+          "role": "edit_target_composition_anchor"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "role": "identity_clothing_background_lighting_reference"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "role": "identity_clothing_background_lighting_reference"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "role": "identity_clothing_background_lighting_reference"
+        }
+      ],
+      "target_pose": "从中立位独立向人物本人左转头（脸朝画面右），头不侧倾；双肩和胸口仍朝镜头，手不变。",
+      "visual_review": {
+        "status": "passed",
+        "method": "实际 view_image 逐张检查，与既有步骤及三张共同参考比较",
+        "findings": "已通过实际 view_image 检查：本人左转与肩胸前方朝向区分明确；头保持竖直、下颌自然，肩胸未跟转；身份、服装、椅子、手与构图保持同组一致，关节和人体比例自然。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1719095,
+      "sha256": "351B116A56BFF189988F0457227B9D36908F008AF0BDBC109CFC462A9671767E",
+      "unused_attempts": [],
+      "limitations": [
+        "保留同组现有头至膝构图，双足落地接触不在此局部镜头内，无法从该照片核验。",
+        "静态 AI 示范照片只确认可见姿势与外观；不证明实际运动范围、发力、负荷、时间或筛查效度。"
+      ]
+    },
+    {
+      "step": "047-s03",
+      "action_id": "E-AXU-011",
+      "intended_filename": "047_E-AXU-011_s03.png",
+      "actual_saved_path": "E:/git冲突问题/rehab image/assess/steps/047_E-AXU-011_s03.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-8e26-78f3-bacb-f7657bd4b260/exec-ec752b42-56da-4af3-9351-d4123e86488d.png",
+      "tool": "built-in image_gen",
+      "mode": "identity-preserve edit",
+      "reused": false,
+      "prompt": "Use case: identity-preserve\nAsset type: one raw rehabilitation step photograph, 047_E-AXU-011_s03.\nPrimary request: Edit the FIRST image, the neutral front-camera seated woman, into active RIGHT neck rotation by the woman herself. Generate this independently from the neutral starting pose.\nInput images: Image 1 is the edit target and exact composition anchor (047 s01 neutral seated). Images 2,3,4 are supporting identity, hair, clothing and gray-blue photographic style only; they are NOT pose or camera references. Do NOT use their right-facing profile as the pose; target direction here is opposite.\nTarget pose: The woman's OWN RIGHT is VIEWER LEFT. Keep her whole seated body front-facing exactly as neutral. Turn ONLY her head toward her OWN RIGHT, so her nose and face look to IMAGE LEFT, approximately 55-65 degrees from front, clear three-quarter view tending toward LEFT-facing profile. Her eyes follow to IMAGE LEFT. Head upright vertically with NO lateral bend, NO neck extension, NO chin lowering. Chin level. Her neck rotates smoothly while the sternum, torso, pelvis, both shoulders and both arms remain directly square toward the lens, both shoulders relaxed at equal height. Her hands remain flat on thighs. Do not turn her torso or chair with her head, and do not mirror the whole person.\nInvariants: exact original woman's face identity, age, natural skin, black low ponytail, white short-sleeve T-shirt, dark gray pants, natural body proportions, both hands and fingers, gray upholstered armless chair, upright neutral body, soft gray-blue background and studio light. Retain original front camera, 4:5 portrait shape, focal-length impression, shot crop from top of head to knees, scale and framing. Change only head/neck orientation and plausible hair movement. Anatomically continuous neck and natural skin. Output ONE photograph, no writing, numbers, arrows, panels, labels, watermark, extra props or people.",
+      "references": [
+        {
+          "path": "E:/git冲突问题/rehab image/assess/steps/047_E-AXU-011_s01.png",
+          "role": "edit_target_composition_anchor"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "role": "identity_clothing_background_lighting_reference"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "role": "identity_clothing_background_lighting_reference"
+        },
+        {
+          "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+          "role": "identity_clothing_background_lighting_reference"
+        }
+      ],
+      "target_pose": "从中立位独立向人物本人右转头（脸朝画面左），头不侧倾；双肩和胸口仍朝镜头，手不变。",
+      "visual_review": {
+        "status": "passed",
+        "method": "实际 view_image 逐张检查，与既有步骤及三张共同参考比较",
+        "findings": "已通过实际 view_image 检查：本人右转方向清楚，与 s02 为相反独立方向；头保持竖直、未侧屈，肩胸正面未随转；身份、服装、椅子、手、构图和灰蓝光线与既有 s01 及新 s02 一致。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1719692,
+      "sha256": "AF2E600EE264B818EED9B9069E6DC86BEB4615B2DFBC5A3D50393E75AF7D98A4",
+      "unused_attempts": [],
+      "limitations": [
+        "保留同组现有头至膝构图，双足落地接触不在此局部镜头内，无法从该照片核验。",
+        "静态 AI 示范照片只确认可见姿势与外观；不证明实际运动范围、发力、负荷、时间或筛查效度。"
+      ]
+    }
+  ]
+}

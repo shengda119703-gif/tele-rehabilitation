@@ -1,0 +1,349 @@
+{
+  "batch": "第11批",
+  "scope": "101-103",
+  "created_date": "2026-10-14",
+  "generator": "内置image_gen.imagegen，逐资产独立调用；未用CLI/Python生成或编辑图片。",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "inspected_style_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "counts": {
+    "final_pngs": 9,
+    "new_generated_selected": 7,
+    "reused_existing": 2,
+    "imagegen_calls": 8,
+    "rejected_generated_attempts": 1
+  },
+  "selected_sequences": {
+    "101": "01→02→03→04→01；右脚先上、左脚先向后退下。",
+    "102": "01→02→复用01；左腿测试支撑、右脚前方脚跟点地。",
+    "103": "01→02→复用01→03→复用01；右地面/左点台，再左地面/右点台；仅交替点踏、不完整上台。"
+  },
+  "items": [
+    {
+      "name": "101_T-LOW-026_s01.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1613156,
+      "sha256": "D96C4377976491335C69BAD0128790CA9EAFCD42496B911117C6CF66A194D275",
+      "actual_save_path": "E:/git冲突问题/rehab image/train/steps/101_T-LOW-026_s01.png",
+      "action_index": 101,
+      "action_id": "T-LOW-026",
+      "step_number": "01",
+      "target_pose_cn": "双脚在台阶后方地面站稳，左手扶固定扶手，台面空。",
+      "selected_version": "首轮徒手固定台阶与扶手版",
+      "reused": false,
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-5b10-70e1-a7e9-ae26758c0382/exec-62ebda9b-f309-4828-a2c1-73125950c6fd.png",
+      "reused_from": null,
+      "input_reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/101_T-LOW-026_s02.png"
+      ],
+      "full_prompt": "Use case: scientific-educational. This is a targeted pose-only edit to the supplied image for action 101 step 01. FREEZE ALL EQUIPMENT PIXELS: keep the gray rectangular step at its exact current image coordinates, same height, width, black top plane, legs and edges. Freeze both metal rail posts, rail and floor background exactly. Keep woman's upper body, face, identity, hairstyle, clothes and body size. The woman is already standing on the floor with her left foot: now just lower her raised right foot OFF the step and place it on the floor beside the left shoe, both feet flat and side by side on the floor at screen-left of the step. Both knees near straight and torso upright. Keep her left hand on the same rail and right hand at side. Empty step top. Do not move, reshape, lower or raise the step. The subject remains near the screen-left side, no full-body translation onto the platform. Full head and both feet visible. One single preparation pose, no text, arrows, numbers, logo or watermark. Natural healthy proportions and continuous joints.",
+      "reused_original_generation_prompt": null,
+      "visual_review": {
+        "method": "逐张使用view_image检查实际最终PNG，并查看image_gen输出；静态画面人工目视核对。",
+        "identity_clothing_background": "女性脸型/年龄感/肤色/体形、黑马尾、白短袖/深灰长裤/白鞋与三张风格参考及组内锚点协调；灰蓝棚拍与柔光。",
+        "pose": "双脚在台阶后方地面站稳，左手扶固定扶手，台面空。",
+        "contact": "双鞋底完整接地、手扶固定扶手、固定低台阶空置。",
+        "proportion": "完整头手足可见；上下肢长度自然，髋膝踝和肩肘腕连接连续；无明显多肢、断肢、异常器械穿体。",
+        "single_pose_no_overlay": "一张只有一个姿势，未见文字、编号、箭头、拼图或水印。",
+        "camera_equipment": "各动作组沿同一侧向/斜侧全身构图；本组台阶、扶手外观与设置保持；AI编辑存在轻微材质与局部轮廓差异。",
+        "result": "通过静态呈现审核"
+      },
+      "review_limitations": [
+        "静态图不能证明受控速度、动态安全、真实发力或临床适用性。"
+      ]
+    },
+    {
+      "name": "101_T-LOW-026_s02.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1651420,
+      "sha256": "63A23CD7B5BE2A781A1DDA44F094E40E2124436CA2751A38C0CD831F279C2380",
+      "actual_save_path": "E:/git冲突问题/rehab image/train/steps/101_T-LOW-026_s02.png",
+      "action_index": 101,
+      "action_id": "T-LOW-026",
+      "step_number": "02",
+      "target_pose_cn": "近侧右脚全掌踩台，远侧左脚仍踩地，身体尚未站上台阶。",
+      "selected_version": "首轮徒手固定台阶与扶手版",
+      "reused": false,
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-5b10-70e1-a7e9-ae26758c0382/exec-e8e246d3-7907-4535-81e6-6f240f820b2c.png",
+      "reused_from": null,
+      "input_reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/101_T-LOW-026_s01.png"
+      ],
+      "full_prompt": "Use case: scientific-educational. Edit the provided photograph to make action 101 step 02, one raw rehabilitation demonstration photograph. The input is the strict pixel-layout anchor: preserve the camera, framing, fixed step POSITION AND SIZE, fixed metal rail POSITION AND SHAPE, studio floor, shadows, color and lighting. Preserve exactly the same woman, face, black ponytail, white short sleeve shirt, dark gray trousers and white shoes, body dimensions. Change only her lower-body pose: facing screen-right, put her anatomical RIGHT foot (near-camera leg) completely flat on the step top, toward the middle/left of the step, whole sole well inside the platform. Her LEFT foot (far-camera leg) remains flat on the FLOOR behind the step at the prior floor position. Right hip and knee flex to reach the low step, left leg remains grounded; she has NOT stood up onto the step yet and torso stays over her ground leg. Her left hand continues to gently grip the same rail, right arm remains relaxed. Keep both legs and their separate support surfaces very clear, no occlusion of the two shoe contacts. The platform must stay at exactly the input position, not move to accommodate her. Natural comfortable moderate knee angles. Head, both hands and two feet completely visible. One woman, one pose, no collage, no duplicate limbs, no words, numbers, arrows, watermarks or logos.",
+      "reused_original_generation_prompt": null,
+      "visual_review": {
+        "method": "逐张使用view_image检查实际最终PNG，并查看image_gen输出；静态画面人工目视核对。",
+        "identity_clothing_background": "女性脸型/年龄感/肤色/体形、黑马尾、白短袖/深灰长裤/白鞋与三张风格参考及组内锚点协调；灰蓝棚拍与柔光。",
+        "pose": "近侧右脚全掌踩台，远侧左脚仍踩地，身体尚未站上台阶。",
+        "contact": "右脚全掌在黑色台面内，左足地面支撑，左手扶手。",
+        "proportion": "完整头手足可见；上下肢长度自然，髋膝踝和肩肘腕连接连续；无明显多肢、断肢、异常器械穿体。",
+        "single_pose_no_overlay": "一张只有一个姿势，未见文字、编号、箭头、拼图或水印。",
+        "camera_equipment": "各动作组沿同一侧向/斜侧全身构图；本组台阶、扶手外观与设置保持；AI编辑存在轻微材质与局部轮廓差异。",
+        "result": "通过静态呈现审核"
+      },
+      "review_limitations": [
+        "静态图不能证明受控速度、动态安全、真实发力或临床适用性。"
+      ],
+      "input_file_snapshot_at_generation": "C:/Users/Administrator/.codex/generated_images/01a13855-5b10-70e1-a7e9-ae26758c0382/exec-e14d97a5-7297-4f6d-843c-3bfa784bde6b.png"
+    },
+    {
+      "name": "101_T-LOW-026_s03.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1632421,
+      "sha256": "018A1ACCF12215777D6C6F6052077835520D99CB99A305DCA3B731B087C0FC9B",
+      "actual_save_path": "E:/git冲突问题/rehab image/train/steps/101_T-LOW-026_s03.png",
+      "action_index": 101,
+      "action_id": "T-LOW-026",
+      "step_number": "03",
+      "target_pose_cn": "站稳台阶，双脚均在台面上。",
+      "selected_version": "首轮徒手固定台阶与扶手版",
+      "reused": false,
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-5b10-70e1-a7e9-ae26758c0382/exec-c6d03339-4a06-4aa8-a8d6-4e247e760da8.png",
+      "reused_from": null,
+      "input_reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/101_T-LOW-026_s02.png"
+      ],
+      "full_prompt": "Use case: scientific-educational. Edit the supplied photograph into action 101 step 03. Strictly keep the complete camera framing, gray-blue studio, lighting, rail and fixed rectangular step at the SAME position, size, shape and height. Preserve the same woman's identity, face, black ponytail, shirt, trousers and shoes with the same anatomical body dimensions. Now she has gently stepped up: anatomical RIGHT foot stays planted on the same place on the black step top; extend the right knee and hip to raise her torso by the step height, then bring anatomical LEFT foot from the floor onto the same step top just alongside/slightly behind the right foot. Both shoes are entirely within and touching the platform. Left foot lightly touches but heel can stay gently raised; right foot fully supported and planted. Upright stable posture, no jumping, not balancing on one foot in the air. She still faces screen-right, far-side left hand on the SAME rail, near-side right arm relaxed. Preserve the rail shape, its two posts and base, preserve step footprint. Raising her body naturally raises the head, retain complete head and ponytail within the frame. One woman, single pose, full body and complete hands/feet. No text, no numbers, arrows, watermark, logo, or composite panels. Natural continuous hip/knee/ankle anatomy.",
+      "reused_original_generation_prompt": null,
+      "visual_review": {
+        "method": "逐张使用view_image检查实际最终PNG，并查看image_gen输出；静态画面人工目视核对。",
+        "identity_clothing_background": "女性脸型/年龄感/肤色/体形、黑马尾、白短袖/深灰长裤/白鞋与三张风格参考及组内锚点协调；灰蓝棚拍与柔光。",
+        "pose": "站稳台阶，双脚均在台面上。",
+        "contact": "双足接触台面，固定扶手轻支持；无腾空跳跃姿态。",
+        "proportion": "完整头手足可见；上下肢长度自然，髋膝踝和肩肘腕连接连续；无明显多肢、断肢、异常器械穿体。",
+        "single_pose_no_overlay": "一张只有一个姿势，未见文字、编号、箭头、拼图或水印。",
+        "camera_equipment": "各动作组沿同一侧向/斜侧全身构图；本组台阶、扶手外观与设置保持；AI编辑存在轻微材质与局部轮廓差异。",
+        "result": "通过静态呈现审核"
+      },
+      "review_limitations": [
+        "静态图不能证明受控速度、动态安全、真实发力或临床适用性。"
+      ]
+    },
+    {
+      "name": "101_T-LOW-026_s04.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1657056,
+      "sha256": "B834FE0B2058E88EC20F095E280A6F4DD3FB9F3FE9101B7B4888BC97E0C621DB",
+      "actual_save_path": "E:/git冲突问题/rehab image/train/steps/101_T-LOW-026_s04.png",
+      "action_index": 101,
+      "action_id": "T-LOW-026",
+      "step_number": "04",
+      "target_pose_cn": "左脚先向后退下并落地，右脚暂留台面，右膝屈曲，继续扶稳。",
+      "selected_version": "首轮徒手固定台阶与扶手版",
+      "reused": false,
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-5b10-70e1-a7e9-ae26758c0382/exec-bde86282-622d-43f0-a447-1c66f96b5c0d.png",
+      "reused_from": null,
+      "input_reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/101_T-LOW-026_s03_new.png"
+      ],
+      "full_prompt": "Use case: scientific-educational. Make action 101 step 04 by editing the supplied photograph. Strict camera and equipment lock: keep the gray step exactly at this image's position and dimensions, rail at the same position, same studio, floor, lights and framing, same woman's identity, proportions and clothing. Depict a controlled step DOWN BACKWARDS from this same platform. Anatomical RIGHT foot (near-camera leg) stays fully flat on the step in its planted position. Anatomical LEFT foot (far-camera leg) has been lowered backward to the FLOOR on screen-left, behind the step, with the whole left sole touching the floor, outside the platform footprint. Her right knee gently bends to lower her torso, left leg reaches backward/down rather than forward. Torso remains facing screen-right, balanced slightly above the support leg, no jump and no twist. Left hand keeps a gentle fixed-rail support; near right hand rests at side. Clearly show one foot on the platform and the other foot on the floor behind it. Stable joint alignment; natural limb lengths and hand grip. Full head, hands, both feet and step contact points visible. A single pose only. No arrows, labels, numbers, text, logos or watermark.",
+      "reused_original_generation_prompt": null,
+      "visual_review": {
+        "method": "逐张使用view_image检查实际最终PNG，并查看image_gen输出；静态画面人工目视核对。",
+        "identity_clothing_background": "女性脸型/年龄感/肤色/体形、黑马尾、白短袖/深灰长裤/白鞋与三张风格参考及组内锚点协调；灰蓝棚拍与柔光。",
+        "pose": "左脚先向后退下并落地，右脚暂留台面，右膝屈曲，继续扶稳。",
+        "contact": "后方左脚地面支持、右足台面全掌接触、手扶固定扶手。",
+        "proportion": "完整头手足可见；上下肢长度自然，髋膝踝和肩肘腕连接连续；无明显多肢、断肢、异常器械穿体。",
+        "single_pose_no_overlay": "一张只有一个姿势，未见文字、编号、箭头、拼图或水印。",
+        "camera_equipment": "各动作组沿同一侧向/斜侧全身构图；本组台阶、扶手外观与设置保持；AI编辑存在轻微材质与局部轮廓差异。",
+        "result": "通过静态呈现审核"
+      },
+      "review_limitations": [
+        "静态图不能证明受控速度、动态安全、真实发力或临床适用性。"
+      ],
+      "input_file_snapshot_at_generation": "C:/Users/Administrator/.codex/generated_images/01a13855-5b10-70e1-a7e9-ae26758c0382/exec-c6d03339-4a06-4aa8-a8d6-4e247e760da8.png",
+      "input_file_current_path": "E:/git冲突问题/rehab image/train/steps/101_T-LOW-026_s03.png"
+    },
+    {
+      "name": "102_T-LOW-027_s01.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1661433,
+      "sha256": "EC1A1683FBD9DB93AD8A71D505ECB1A3421884B28078ED3BBD1D2867178E5372",
+      "actual_save_path": "E:/git冲突问题/rehab image/train/steps/102_T-LOW-027_s01.png",
+      "action_index": 102,
+      "action_id": "T-LOW-027",
+      "step_number": "01",
+      "target_pose_cn": "左测试脚支撑台面，右脚悬于台阶前方地面落点之上。",
+      "selected_version": "首轮徒手固定台阶与扶手版",
+      "reused": false,
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-5b10-70e1-a7e9-ae26758c0382/exec-a09c6caf-9533-4a09-b6ad-cc4f1d8f6a6e.png",
+      "reused_from": null,
+      "input_reference_paths": [
+        "E:/git冲突问题/rehab image/train/102_T-LOW-027_低台阶控制下落点地.png"
+      ],
+      "full_prompt": "Use case: scientific-educational. Edit the supplied rehabilitation photograph into action 102 step 01, the START of a controlled forward heel tap from a low step. Camera/equipment anchor: preserve exact step footprint, height, rail, floor, gray-blue studio, lighting, woman's identity, black ponytail, white t-shirt, dark gray trousers, white shoes, same body scale and complete head/foot framing. Her far-side anatomical LEFT foot remains fully planted on the step in the SAME location; she now stands tall on that left leg with left knee almost straight, not locked. Her near-side anatomical RIGHT foot is held forward of the step, in the same forward direction as the input photo, but is hovering a clearly visible small distance above the floor target, with NO floor contact. The right heel is approximately 5-8 cm above the floor, ankle lightly dorsiflexed, right knee naturally near-straight; full right shoe visible separated from the floor by a clear background gap. Pelvis and head slightly higher than input due left knee extension; natural proportions. Left hand keeps light fixed-rail grip, right arm relaxed. Single pose only, NOT split panel. Leave all equipment unchanged. No text, numbers, labels, arrows, logos or watermark.",
+      "reused_original_generation_prompt": null,
+      "visual_review": {
+        "method": "逐张使用view_image检查实际最终PNG，并查看image_gen输出；静态画面人工目视核对。",
+        "identity_clothing_background": "女性脸型/年龄感/肤色/体形、黑马尾、白短袖/深灰长裤/白鞋与三张风格参考及组内锚点协调；灰蓝棚拍与柔光。",
+        "pose": "左测试脚支撑台面，右脚悬于台阶前方地面落点之上。",
+        "contact": "左鞋完整踩台，右鞋底与地面有可见间隙，手扶固定扶手。",
+        "proportion": "完整头手足可见；上下肢长度自然，髋膝踝和肩肘腕连接连续；无明显多肢、断肢、异常器械穿体。",
+        "single_pose_no_overlay": "一张只有一个姿势，未见文字、编号、箭头、拼图或水印。",
+        "camera_equipment": "各动作组沿同一侧向/斜侧全身构图；本组台阶、扶手外观与设置保持；AI编辑存在轻微材质与局部轮廓差异。",
+        "result": "通过静态呈现审核"
+      },
+      "review_limitations": [
+        "静态图不能证明受控速度、动态安全、真实发力或临床适用性。"
+      ]
+    },
+    {
+      "name": "102_T-LOW-027_s02.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1717425,
+      "sha256": "2732D37B37F0CDE4217E344F5B27CA84D70EC358DF775699C872A58F4EE12705",
+      "actual_save_path": "E:/git冲突问题/rehab image/train/steps/102_T-LOW-027_s02.png",
+      "action_index": 102,
+      "action_id": "T-LOW-027",
+      "step_number": "02",
+      "target_pose_cn": "左测试膝屈曲，右非测试脚跟轻触前方地面，右前足抬起。",
+      "selected_version": "首轮徒手固定台阶与扶手版",
+      "reused": true,
+      "source_output_path": "E:/git冲突问题/rehab image/train/102_T-LOW-027_低台阶控制下落点地.png",
+      "reused_from": "E:/git冲突问题/rehab image/train/102_T-LOW-027_低台阶控制下落点地.png",
+      "input_reference_paths": [],
+      "full_prompt": null,
+      "reused_original_generation_prompt": "未提供既有单图的生成提示词；本轮为原始PNG逐字节复制，无新生成提示词。",
+      "visual_review": {
+        "method": "逐张使用view_image检查实际最终PNG，并查看image_gen输出；静态画面人工目视核对。",
+        "identity_clothing_background": "女性脸型/年龄感/肤色/体形、黑马尾、白短袖/深灰长裤/白鞋与三张风格参考及组内锚点协调；灰蓝棚拍与柔光。",
+        "pose": "左测试膝屈曲，右非测试脚跟轻触前方地面，右前足抬起。",
+        "contact": "左足完整留在同一台面位置，右脚后跟接地而前足抬起，手扶扶手。",
+        "proportion": "完整头手足可见；上下肢长度自然，髋膝踝和肩肘腕连接连续；无明显多肢、断肢、异常器械穿体。",
+        "single_pose_no_overlay": "一张只有一个姿势，未见文字、编号、箭头、拼图或水印。",
+        "camera_equipment": "各动作组沿同一侧向/斜侧全身构图；本组台阶、扶手外观与设置保持；AI编辑存在轻微材质与局部轮廓差异。",
+        "result": "通过静态呈现审核"
+      },
+      "review_limitations": [
+        "静态图不能证明受控速度、动态安全、真实发力或临床适用性。"
+      ]
+    },
+    {
+      "name": "103_T-LOW-055_s01.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1604849,
+      "sha256": "3AA5B15520E7A16C63891829B87AE3EA059B81294E4973D57B591DFC4C2F8DD2",
+      "actual_save_path": "E:/git冲突问题/rehab image/train/steps/103_T-LOW-055_s01.png",
+      "action_index": 103,
+      "action_id": "T-LOW-055",
+      "step_number": "01",
+      "target_pose_cn": "双脚在台阶前地面站稳，台面空。",
+      "selected_version": "首轮徒手固定台阶与扶手版",
+      "reused": false,
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-5b10-70e1-a7e9-ae26758c0382/exec-ecf4e9f6-f351-4258-9327-54676266bca6.png",
+      "reused_from": null,
+      "input_reference_paths": [
+        "E:/git冲突问题/rehab image/train/103_T-LOW-055_低台阶交替点踏与受控上落.png"
+      ],
+      "full_prompt": "Use case: scientific-educational. Action 103 step 01, single raw exercise photograph. Edit the supplied photo, using it as strict camera/equipment/identity anchor. Keep exactly the same square gray low step with black feet in the same place, same fixed silver handrail with its visible post and foot, same gray-blue studio, lens, lighting, woman's face, black ponytail, white short sleeve shirt, dark gray trousers, white shoes, same body dimensions and framing. Change ONLY the raised leg: gently bring her far-side anatomical LEFT foot off the step and down onto the FLOOR next to the already grounded right foot, both soles flat, side by side before the step, knees relaxed and nearly straight. The step is empty, and her body remains on the floor at the same location, facing screen-right. Left hand still lightly holds the rail, right arm relaxed at side. Both feet are entirely on floor to screen-left of the step, neither touches platform. Preserve body height/scale; do not move step to meet her foot. Clear whole head, both hands and both shoes. One woman and one pose, not a collage; no lettering, numbers, arrows, watermark or logo. Natural proportions, realistic shoe-floor contacts.",
+      "reused_original_generation_prompt": null,
+      "visual_review": {
+        "method": "逐张使用view_image检查实际最终PNG，并查看image_gen输出；静态画面人工目视核对。",
+        "identity_clothing_background": "女性脸型/年龄感/肤色/体形、黑马尾、白短袖/深灰长裤/白鞋与三张风格参考及组内锚点协调；灰蓝棚拍与柔光。",
+        "pose": "双脚在台阶前地面站稳，台面空。",
+        "contact": "双足均地面接触，左手轻扶固定扶手，台阶未移动。",
+        "proportion": "完整头手足可见；上下肢长度自然，髋膝踝和肩肘腕连接连续；无明显多肢、断肢、异常器械穿体。",
+        "single_pose_no_overlay": "一张只有一个姿势，未见文字、编号、箭头、拼图或水印。",
+        "camera_equipment": "各动作组沿同一侧向/斜侧全身构图；本组台阶、扶手外观与设置保持；AI编辑存在轻微材质与局部轮廓差异。",
+        "result": "通过静态呈现审核"
+      },
+      "review_limitations": [
+        "正侧视角与同色长裤使左右脚身份差异较小；通过近侧屈髋大腿与远侧腿遮挡关系核对两侧交换。",
+        "静态图不能证明动作时序、实际负荷或临床适用性。"
+      ]
+    },
+    {
+      "name": "103_T-LOW-055_s02.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1685849,
+      "sha256": "AFC8F24F48AA281833C04B10BDC2447E0A70C1CEDE0CED83DE5504CC32D032E0",
+      "actual_save_path": "E:/git冲突问题/rehab image/train/steps/103_T-LOW-055_s02.png",
+      "action_index": 103,
+      "action_id": "T-LOW-055",
+      "step_number": "02",
+      "target_pose_cn": "右脚地面支撑，远侧左脚抬起轻点台面，身体保持地面高度。",
+      "selected_version": "首轮徒手固定台阶与扶手版",
+      "reused": true,
+      "source_output_path": "E:/git冲突问题/rehab image/train/103_T-LOW-055_低台阶交替点踏与受控上落.png",
+      "reused_from": "E:/git冲突问题/rehab image/train/103_T-LOW-055_低台阶交替点踏与受控上落.png",
+      "input_reference_paths": [],
+      "full_prompt": null,
+      "reused_original_generation_prompt": "未提供既有单图的生成提示词；本轮为原始PNG逐字节复制，无新生成提示词。",
+      "visual_review": {
+        "method": "逐张使用view_image检查实际最终PNG，并查看image_gen输出；静态画面人工目视核对。",
+        "identity_clothing_background": "女性脸型/年龄感/肤色/体形、黑马尾、白短袖/深灰长裤/白鞋与三张风格参考及组内锚点协调；灰蓝棚拍与柔光。",
+        "pose": "右脚地面支撑，远侧左脚抬起轻点台面，身体保持地面高度。",
+        "contact": "近侧右脚全掌接地，远侧左足台面接触，左手扶稳。",
+        "proportion": "完整头手足可见；上下肢长度自然，髋膝踝和肩肘腕连接连续；无明显多肢、断肢、异常器械穿体。",
+        "single_pose_no_overlay": "一张只有一个姿势，未见文字、编号、箭头、拼图或水印。",
+        "camera_equipment": "各动作组沿同一侧向/斜侧全身构图；本组台阶、扶手外观与设置保持；AI编辑存在轻微材质与局部轮廓差异。",
+        "result": "通过静态呈现审核"
+      },
+      "review_limitations": [
+        "正侧视角与同色长裤使左右脚身份差异较小；通过近侧屈髋大腿与远侧腿遮挡关系核对两侧交换。",
+        "静态图不能证明动作时序、实际负荷或临床适用性。"
+      ]
+    },
+    {
+      "name": "103_T-LOW-055_s03.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1622585,
+      "sha256": "4766FF329DF1CA8B97E3568541C2AB5DCAA2374425363FF125019FFEA9450243",
+      "actual_save_path": "E:/git冲突问题/rehab image/train/steps/103_T-LOW-055_s03.png",
+      "action_index": 103,
+      "action_id": "T-LOW-055",
+      "step_number": "03",
+      "target_pose_cn": "左脚地面支撑，近侧右脚点同一台面，近侧屈髋大腿遮挡远侧支撑腿。",
+      "selected_version": "首轮徒手固定台阶与扶手版",
+      "reused": false,
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-5b10-70e1-a7e9-ae26758c0382/exec-2fd91cfe-9f95-4550-8726-46b24f1ecb9d.png",
+      "reused_from": null,
+      "input_reference_paths": [
+        "E:/git冲突问题/rehab image/train/103_T-LOW-055_低台阶交替点踏与受控上落.png"
+      ],
+      "full_prompt": "Use case: scientific-educational. Pose-only edit for rehabilitation action 103 step 03: alternate low-step toe tap. The provided photo shows LEFT leg raised and RIGHT leg grounded. SWAP THE LEG ROLES while keeping all else unchanged: the near-camera anatomical RIGHT leg now flexes at hip and knee, and its right shoe lightly touches the top of the same gray step. The far-camera anatomical LEFT leg is now straight and stays completely grounded on the FLOOR in front of the step, supporting the body. Her pelvis and whole torso remain at original floor-standing height, over the grounded leg; she has NOT stepped her body up onto the platform. Make the bent right thigh visibly in front of/occluding the far-side left thigh, so this is clearly the other leg from the supplied image. Near-side right arm still hangs at side, far-side left hand still lightly holds the very same fixed rail. Strictly preserve woman's identity, face, ponytail, white shirt, dark gray pants, white shoes, body proportions, full body framing, camera view and lens, gray-blue backdrop and light. Freeze the square gray platform, its position/shape/height/black feet, and the silver rail/post/base at the exact image coordinates. Both shoe contacts clear and separate: left floor, right step. One woman in one single pose, no composite, no duplicate limbs, no text, arrows, numbers, logos or watermark.",
+      "reused_original_generation_prompt": null,
+      "visual_review": {
+        "method": "逐张使用view_image检查实际最终PNG，并查看image_gen输出；静态画面人工目视核对。",
+        "identity_clothing_background": "女性脸型/年龄感/肤色/体形、黑马尾、白短袖/深灰长裤/白鞋与三张风格参考及组内锚点协调；灰蓝棚拍与柔光。",
+        "pose": "左脚地面支撑，近侧右脚点同一台面，近侧屈髋大腿遮挡远侧支撑腿。",
+        "contact": "远侧左脚全掌接地，近侧右脚轻点台面，身体未站上台阶，手扶稳。",
+        "proportion": "完整头手足可见；上下肢长度自然，髋膝踝和肩肘腕连接连续；无明显多肢、断肢、异常器械穿体。",
+        "single_pose_no_overlay": "一张只有一个姿势，未见文字、编号、箭头、拼图或水印。",
+        "camera_equipment": "各动作组沿同一侧向/斜侧全身构图；本组台阶、扶手外观与设置保持；AI编辑存在轻微材质与局部轮廓差异。",
+        "result": "通过静态呈现审核"
+      },
+      "review_limitations": [
+        "正侧视角与同色长裤使左右脚身份差异较小；通过近侧屈髋大腿与远侧腿遮挡关系核对两侧交换。",
+        "静态图不能证明动作时序、实际负荷或临床适用性。"
+      ]
+    }
+  ],
+  "attempts": [
+    {
+      "asset": "101_T-LOW-026_s01",
+      "selected": false,
+      "full_prompt": "Use case: scientific-educational. Asset: one raw rehabilitation demonstration photograph, action 101 step 01. Edit target and camera/equipment anchor: the provided existing photograph. Preserve exactly the same woman, face, black ponytail, white short-sleeve t-shirt, dark gray trousers and white shoes; same gray-blue seamless studio, lighting, lens perspective, full-body framing, same rectangular gray low step with black top and same fixed silver handrail position and design. Change ONLY her pose and resulting necessary position: she faces screen-right and is now standing on the FLOOR just BEFORE/BEHIND the step, on the screen-left end of the step. Both feet are completely flat on the floor, side by side and entirely outside/left of the step. One hand gently grips the same fixed rail, the other arm relaxed. Stand upright in preparation. Step top completely empty. Keep the entire head, hands, two feet and full step/support contacts visible. Since she is one step-height lower than the supplied photo her head should naturally be lower; do not resize her body or move/resize the step. Clear floor behind her for stepping backwards. One woman, one single pose, no collage, no duplicate body, no text, no numbers, no arrows, no logos, no watermark. Natural limb proportions, plausible fingers, unbroken joint connections.",
+      "source_output_path": "C:/Users/Administrator/.codex/generated_images/01a13855-5b10-70e1-a7e9-ae26758c0382/exec-e14d97a5-7297-4f6d-843c-3bfa784bde6b.png",
+      "reason": "第一尝试姿势正确，但台阶高度和横向位置与后续s02锚点存在漂移；使用s02进行定向修正，选用新生成s01。源输出保留在工具生成目录，最终steps规范名已对应修正图。"
+    }
+  ],
+  "intermediates": "开始曾复制旧101单图为s03候选，最终未复用；规范名已替换为新s03，本轮s03_new中间副本已移除；原有train单图和既有进度JSON未修改。",
+  "limitations": [
+    "审核仅为生成照片的视觉/姿势/接触/比例检查，未进行医疗专业验收、动态动作验证或像素级摄影配准。",
+    "与参考人物身份是视觉近似匹配，不能声明生物身份验证。",
+    "禁止文字与箭头要求按照片层核对；后续文字层另行排版。"
+  ]
+}

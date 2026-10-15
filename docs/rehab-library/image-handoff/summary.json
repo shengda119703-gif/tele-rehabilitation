@@ -1,0 +1,84 @@
+{
+  "package_version": "1.0",
+  "counts": {
+    "actions": 185,
+    "assessment": 63,
+    "training": 122,
+    "expected_steps": 471,
+    "selected_steps": 471,
+    "missing_steps": 0,
+    "selected_overviews": 185,
+    "source_image_files": 742,
+    "archived_candidates": 86,
+    "reference_images": 3
+  },
+  "missing": [],
+  "categories": [
+    {
+      "category": "mobility_balance",
+      "label": "步行、平衡与综合功能",
+      "actions": 16,
+      "steps": 53
+    },
+    {
+      "category": "hip",
+      "label": "髋与下肢后侧链",
+      "actions": 29,
+      "steps": 67
+    },
+    {
+      "category": "knee",
+      "label": "膝与坐站蹲起",
+      "actions": 26,
+      "steps": 63
+    },
+    {
+      "category": "ankle_foot",
+      "label": "踝足与小腿",
+      "actions": 22,
+      "steps": 55
+    },
+    {
+      "category": "lumbar_pelvis",
+      "label": "腰骨盆与躯干稳定",
+      "actions": 26,
+      "steps": 62
+    },
+    {
+      "category": "thoracic_trunk",
+      "label": "胸部与躯干活动",
+      "actions": 9,
+      "steps": 25
+    },
+    {
+      "category": "neck",
+      "label": "颈部",
+      "actions": 9,
+      "steps": 22
+    },
+    {
+      "category": "shoulder",
+      "label": "肩与肩带",
+      "actions": 30,
+      "steps": 81
+    },
+    {
+      "category": "elbow_forearm",
+      "label": "肘与前臂",
+      "actions": 7,
+      "steps": 15
+    },
+    {
+      "category": "wrist_hand",
+      "label": "腕与手",
+      "actions": 9,
+      "steps": 23
+    },
+    {
+      "category": "conditioning",
+      "label": "综合活动耐受与组合动作",
+      "actions": 2,
+      "steps": 5
+    }
+  ]
+}

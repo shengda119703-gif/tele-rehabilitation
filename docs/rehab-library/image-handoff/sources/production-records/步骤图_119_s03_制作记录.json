@@ -1,0 +1,16 @@
+{
+  "task": "119 T-LOW-041 支撑旁单腿触点平衡",
+  "step": "119-s03",
+  "created_date": "2026-10-14",
+  "method": "built-in image_gen__imagegen",
+  "reference_paths": [
+    "E:\\git冲突问题\\rehab image\\train\\steps\\119_T-LOW-041_s01.png"
+  ],
+  "prompt": "Use case: scientific-educational.\nAsset type: single photorealistic rehabilitation exercise step photograph, 119-s03 supported single-leg lateral target touch.\nEdit target: the supplied 119-s01 photograph. Preserve the SAME woman, face, black ponytail, white T-shirt, dark charcoal pants and bare feet, photography, lighting, gray-blue background, camera and full-body framing. Preserve the gray-blue background and the identical fixed metal handrail on image LEFT, with its two posts and bolted circular floor anchor bases, right hand holding/supporting on it, and left arm position. Preserve both circular floor targets EXACTLY at their original locations, size and color: cyan front target and blue lateral target on image right. Do not move the targets or support.\nPose change ONLY: keep her RIGHT leg (image-left leg) as the weight-bearing support leg, and its RIGHT FOOT firmly planted exactly at its original position near image x500. Keep her torso and pelvis centered over that RIGHT support foot, softly extended right knee, easy stable posture. Move only her non-weight-bearing LEFT leg (image-right leg) gently sideways toward HER LEFT, which is image RIGHT. Her LEFT bare foot extends toward and LIGHTLY TOUCHES the BLUE LATERAL nearby circular target at image right near x915,y1190. Place the relaxed LEFT toe/forefoot lightly on the blue dot while her LEFT heel is gently lifted; the reaching left leg carries no meaningful weight. Her left knee is naturally softly bent. This is a small supported side target touch and must not become a wide squat or weight-bearing lateral lunge. Do not shift her body sideways onto the reaching leg.\nKeep the original cyan FRONT target unoccupied and unchanged. Keep the RIGHT hand contact on the fixed support unchanged. Only ONE person and ONE static pose, with full hands and feet visible.\nNatural correct anatomy, relaxed toes. No text, no arrows, no labels, no inset, no montage, no watermark.",
+  "source_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-ab4b-7ef1-beab-02c7b5bcc0d5\\exec-234c3a52-1081-44ad-ad5d-e7eab8a5b436.png",
+  "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\119_T-LOW-041_s03.png",
+  "width": 1122,
+  "height": 1402,
+  "sha256": "15d03cd75bfe7b255a6e0d19af55140f0ce6348253ca8e34dbe67354e930c628",
+  "visible_pose_review": "已实际用 view_image 查看生成原图。人物右腿（画面左）足位保持 s01 原位并全掌支撑；右手轻扶相同的固定落地双柱扶手，螺栓锚定底座完整可见；左足向画面右侧伸及蓝色侧方近点并以前足轻触，左足跟抬起、左膝自然，重心和骨盆仍保持在右腿上方，未画成向左腿承重的侧弓步；青色前方点位未变；同人同机位同场景，无字箭头，完整手脚。通过。"
+}

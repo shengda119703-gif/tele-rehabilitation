@@ -1,0 +1,63 @@
+{
+  "source_md": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "date": "2026-10-14",
+  "method": "内置image_gen__imagegen编辑，每帧单独调用；仅复制真实工具输出，不程序编辑像素。",
+  "planned_frames": 2,
+  "selected_frames": 2,
+  "base_version": "右单手掌经同一薄灰毛巾接触墙面的全身站位版；不是前臂接触版本。",
+  "sequence_reuse": "01→02→01；下滑返回复用01。",
+  "identity_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "frames": [
+    {
+      "sequence": 53,
+      "id": "E-AXU-026",
+      "step": 1,
+      "prompt": "Use case: identity-preserve, one single rehabilitation key-position photo, wall hand slide frame01. Images1-3 fix EXACT same adult East Asian woman face, black ponytail, plain white short-sleeve T-shirt, dark charcoal gray trousers, normal real body proportions, soft studio light and original light gray-blue background palette. Image4 is ACTION reference for hand on a thin gray folded towel against wall (its crop and high-hand position are NOT frame01). Image5 is FULL-BODY scene to edit for camera, wall, floor, woman, shoe framing and standing feet. Keep that full-body composition and woman's recognizable identity: whole head through both white sneakers inside frame, natural upright torso facing wall, two feet comfortably planted and unchanged distance from wall. Remove image5's BALL entirely. In its place her RIGHT test hand palm presses a thin light-gray folded towel on the vertical gray-blue wall at a LOW starting position in front of shoulder, around chest level just below shoulder, elbow naturally bent. Show intact relaxed five fingers resting along towel, palm-towel-wall contact realistic; NO forearm contact with wall. The other arm hangs relaxed at side. This is standing hand-palm wall sliding, not ball circles. Keep ample space above hand for the next upward slide frame. No torso backward lean, no shoulder shrug, no unnatural elongated limbs or cropped shoes. One photoreal photograph, no text, arrows, labels, watermark, collage, extra hand/person or equipment.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/053_E-AXU-026_墙面滑手的抬举与代偿观察.png",
+        "E:/git冲突问题/rehab image/assess/steps/054_E-AXU-027_s01.png"
+      ],
+      "tool_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-27d2-76e3-86e8-1271fe8ab722\\exec-163d468a-07da-49d3-bde2-b5ee5a9e118b.png",
+      "output": "053_E-AXU-026_s01.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/053_E-AXU-026_s01.png",
+      "reuse": false,
+      "selected": true,
+      "hash": "7E58DCFF5ED07608820F49F8062453887854674AB8F8698970EAC49C4D08A267",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1712114,
+      "QA结论": "逐张view_image检查：同一女性和灰蓝棚拍风格，正常全身比例，头到双鞋完整；右测试手掌经薄灰毛巾与墙面低位接触、前臂未接墙，对侧臂自然下垂。",
+      "不足": "静态位置示范不代表测得的抬举角度或代偿量；细微衣褶变化属于图生编辑差异。"
+    },
+    {
+      "sequence": 53,
+      "id": "E-AXU-026",
+      "step": 2,
+      "prompt": "Use case: identity-preserve. Images1-3 fix the exact woman and style; image4 is the EXACT full-body standing wall-hand-slide frame01 to edit. Make ONE frame02. Keep image4's camera, framing, gray-blue wall/floor/backdrop colors, soft light, head/face/black ponytail, torso, hip, free relaxed left arm, dark charcoal trousers, both planted feet and white sneakers EXACTLY unchanged. Do NOT move feet or change standing distance, do NOT lean torso backward or forward. Change ONLY the active RIGHT arm/hand and its SAME THIN GRAY TOWEL position: slide her right palm and towel straight upward on the same wall to a comfortable higher target in front of and above her shoulder, comparable to the original wall sliding action, elbow naturally extending as arm elevates. Palm remains flat against towel against wall through the slide, full five fingers intact and visible, not gripping. Do not switch to forearm contact; forearm stays off wall. Wrist neutral comfortable, shoulder not shrugging, natural normal arm length. Leave generous top margin around hand and towel, include full head and both shoes as before. Only one hand active, other arm remains by side. Single photoreal photo, same recognizable woman white T-shirt dark trousers. No text, arrows, numbers, watermark, collage or added person/equipment.",
+      "source": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/assess/steps/053_E-AXU-026_s01.png"
+      ],
+      "tool_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13828-27d2-76e3-86e8-1271fe8ab722\\exec-546800b4-d77c-4119-b75f-4bbb2bba0b2f.png",
+      "output": "053_E-AXU-026_s02.png",
+      "path": "E:/git冲突问题/rehab image/assess/steps/053_E-AXU-026_s02.png",
+      "reuse": false,
+      "selected": true,
+      "hash": "38F655BA9E00EB28E829174B68817077A7A04ABE8CC58798C71BE6DEEC4CFD53",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1692661,
+      "QA结论": "逐张view_image检查：头、躯干、双脚站距和机位与01保持；同一测试手及同一薄灰毛巾沿墙上滑至较高位，掌毛巾墙接触持续，前臂未接墙；身体自然直立、无后仰，完整手指及双鞋可见。",
+      "不足": "静态位置示范不代表测得的抬举角度或代偿量；细微衣褶变化属于图生编辑差异。"
+    }
+  ]
+}

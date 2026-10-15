@@ -1,0 +1,133 @@
+{
+  "batch": "184/s01–s04",
+  "date": "2026-10-14",
+  "action_id": "T-AXU-040",
+  "action_name": "双手壶铃摆动：后期熟练者项目",
+  "method": "built-in image_gen, one generation call per requested image or revision",
+  "reference_check": "三张step-image-references已用view_image阅读；来源动作库卡T-AXU-040及制作清单action-184已阅读；既有单图已检查，不自动复用。",
+  "source_document": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md#action-184",
+  "reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "visual_review_method": "每次生成的完整图片预览逐张审查；保存后调用view_image，输出发生仅32像素缩略图显示的问题；s01额外用node_repl读取原PNG字节并emitImage完整复核。实际目视判断以完整生成预览及完整PNG显示为准。",
+  "group_consistency": "选用s01_v2与s03人物尺度和鞋位一致；s02斜侧角度及脚距稍有差异以显示两手；s04鞋底线约高2%画面高。四张相机为同一类安全斜侧机位、同画幅，生成输出不应宣称像素严格锁定。",
+  "global_limitations": "仅为来源卡既有胸前高度版本的关键姿势照片。静帧不证明技术熟练程度、髋驱动、实际负荷或安全资格，不替代原卡教学。未更改正式软件、制作清单、共享进度或旧单图。",
+  "images": [
+    {
+      "step": "s01",
+      "target": "进入摆动的身前低位，双脚踩稳、双手提柄。",
+      "path": "E:/git冲突问题/rehab image/train/steps/184_T-AXU-040_s01_v2.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-73cc-7e01-8c05-ac82aa204503/exec-93865543-61a2-45c6-9845-bb34472dce83.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: action 184 T-AXU-040 step s01, starting low-held position.\nInput images: image 1 is accepted s02 and fixes exact diagonal side camera, stance width, shoe coordinates, image scale, floor, light, woman's identity and compact kettlebell. Image 2 is previous s01 and illustrates ONLY the upright low-held posture. Create the upright s01 from image 1's fixed camera, not image 2's narrower angle.\nSame woman faces screen-right in the safe diagonal side view of image 1. Match her shoes and BOTH FEET POSITIONS EXACTLY to image 1, same comfortably wide stance on level floor. She is standing almost upright, hips and knees naturally near extension without locking, spine neutral, shoulders relaxed, no backwards lean. Both arms descend naturally in front of thighs. TWO separate hands firmly grip side-by-side ONE compact dark gray kettlebell's wide top handle, and the round bell hangs in front of the lower hips at thigh height, fully above the floor. Show both wrists, both closed hands and continuous handle-to-bell connection clearly. Same kettlebell shape and size as image 1. This is the low held starting position, not floor pickup, not chest position.\nWhite short-sleeve shirt, charcoal long pants, white athletic shoes, black low ponytail, natural calm face, softly mottled gray-blue studio background and matching floor, soft diffused photographic light. Portrait 4:5 same canvas and full-body camera distance as image 1, both shoe baselines and placement unchanged, enough headroom and all shoes, head, ponytail and bell inside margins. Natural normal proportions.\nNo text, labels, numbers, arrows, logos, watermark, multiple poses, extra limbs, duplicate objects or motion trails. One person, one coherent still posture and one small round kettlebell.",
+      "reused": false,
+      "review": {
+        "result": "accepted",
+        "identity": "同一女性、白短袖深灰裤黑马尾、灰蓝棚拍、白色运动鞋，面容自然",
+        "pose": "斜侧面朝右，两脚平地分开支持，身体中立直立，两手分辨且稳握单只壶铃，铃在身前低位。",
+        "proportion": "全身与铃完整，握柄连贯，未见多肢或器械穿模。",
+        "limitations": "生成图脚位与s02较接近但非像素严格一致，近鞋底线差约1%画面高；静态画面不能证实负荷和起铃技术。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1673591,
+      "sha256": "C9460E0E276382DB0560B0DE7A62C1F5894F8B8C641897630A2229AD34BA5070"
+    },
+    {
+      "step": "s02",
+      "target": "回摆关键位，髋后移膝自然弯、躯干中立髋铰链前倾，双手握柄。",
+      "path": "E:/git冲突问题/rehab image/train/steps/184_T-AXU-040_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-73cc-7e01-8c05-ac82aa204503/exec-edbf572c-1dd0-432a-a571-b9cace4ae37e.png",
+      "prompt": "Use case: scientific-educational. Create one photorealistic full-body educational studio photograph.\nReference image: identity, clothes, shoes, one compact dark gray kettlebell, gray-blue studio style only. Same East Asian woman, same black low ponytail, white T-shirt, charcoal pants, white athletic shoes.\nPrimary request: two-handed kettlebell swing BACKSWING. Both feet firmly planted slightly wider than shoulder width. Hips pushed backward; torso hinged forward from the hips about 45 degrees, straight neutral spine; knees mildly bent, hips high well above knees. Straight arms pass between thighs toward a rearward kettlebell. BOTH hands grip ONE broad rounded handle side-by-side, fingers closed firmly around it. Show both separate hand grips and the continuous handle in the open space BETWEEN HER LEGS without occlusion by either thigh. One compact bell swings backward between legs, suspended above floor behind knee line, no intersection with legs. Kettlebell is one round solid weight with single wide handle and a flat base, same compact size as reference, never a dumbbell.\nCAMERA: safe DIAGONAL SIDE VIEW, camera about 45 degrees in front of true side, outside swing path, woman still facing screen-right. The camera must look into the gap between the thighs to show BOTH hand grips on the same handle. Realistically space the legs so no hand or handle is hidden by near thigh. Both arms naturally connected from shoulders to two separate wrists and hands. Face is diagonal right profile. Show clear side shape of hip hinge, not straight front view. No deep squat.\nPortrait 4:5 approximately 1122 by 1402, full head, complete ponytail, both hands, one bell, both full shoes within ample margins; waist-height camera and normal adult proportions. Soft gray-blue studio floor and seamless backdrop, natural contact shadows. Neutral expression, relaxed shoulders. Neck neutral with gaze naturally forward/down. No words, arrows, labels, numbers, split panels, duplicate limbs, logos, watermark, blur or movement trail. One coherent single posture.",
+      "reused": false,
+      "review": {
+        "result": "accepted_pending_independent_QA",
+        "identity": "人物、服装、灰蓝背景一致。",
+        "pose": "髋后移且髋高于膝，膝自然屈曲，两臂入腿间，两手分别握同一铃柄，回摆器械悬于腿间未落地。",
+        "proportion": "全身完整，单只壶铃比例自然，完整两脚接地；未见铃穿身或铃体分裂。",
+        "limitations": "近侧腿仍自然遮挡少量铃柄左侧及铃体，但两手握持、右柄接铃体关系可辨；斜侧机位使回摆纵深仍需配合文字说明。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1707346,
+      "sha256": "7948C042E4FB83BA538E6CCACF9D47DD9D9FA3B589525D86B8238B0541CDF572"
+    },
+    {
+      "step": "s03",
+      "target": "髋伸展直立，双手传递壶铃至胸前高度，未后仰或过头。",
+      "path": "E:/git冲突问题/rehab image/train/steps/184_T-AXU-040_s03.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-73cc-7e01-8c05-ac82aa204503/exec-e6d38c36-32e0-43ba-b80b-e4a30f84fddb.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: independent rehabilitation step photograph, action 184 T-AXU-040 s03, TOP of a chest-height two-handed kettlebell swing.\nInput image: the supplied accepted s01 is the exact reference for the same woman, face, black ponytail, white short-sleeve shirt, charcoal pants, white trainers, gray-blue studio light, ONE compact dark-gray round kettlebell, fixed diagonal side camera, body scale, shoe positions and portrait 4:5 canvas.\nCreate the top swing phase from the SAME fixed camera. Match BOTH shoe positions, stance width, full floor contact and shoe baseline in reference. Woman remains facing screen-right and stands fully upright after hip extension, knees naturally near straight without locking, pelvis under ribs, neutral spine. No leaning backward and no lumbar arch. Head upright naturally.\nBOTH nearly straight arms extend forward toward screen-right at approximately horizontal LOWER-CHEST height, slightly below shoulder height. Both shoulders stay naturally relaxed, not shrugged. Her own TWO distinct hands firmly grip side-by-side the same wide rounded upper handle of the ONE compact round kettlebell. Wrists neutral. The kettlebell has reached chest-front height and is fully visible in open space ahead, well below head and never overhead. This is the upper swing posture, not overhead lifting, not biceps curl, not squat. Maintain same kettle shape, matte material and compact size.\nFrame all of head, ponytail, both complete shoes, both arms, hands and the bell with safe margins, including empty space beyond the bell at right. Maintain camera distance, normal adult proportions and the subject's overall scale. Softly mottled gray-blue background and level gray-blue floor, soft diffuse natural studio shadows. Single controlled posture.\nNo text, numbering, arrows, labels, logos, watermarks, graphic panels, extra fingers or limbs, multiple bells, motion trails or blur.",
+      "reused": false,
+      "review": {
+        "result": "accepted",
+        "identity": "同一女性、服装、灰蓝背景、白鞋与s01_v2一致。",
+        "pose": "髋膝恢复直立、身体未明显后仰，两臂近水平伸向身前，两手握柄且铃到胸前高度未过头，双脚完整踩地。",
+        "proportion": "人物全身、两鞋、前臂和整铃入镜，器械尺度与s01_v2一致。",
+        "limitations": "远侧手臂在真实斜侧机位部分重叠，双腕及两手持柄关系仍可辨；静帧不能证明髋驱动或肌肉发力。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1625681,
+      "sha256": "A44FAF28ED937ABAEE7FE2931170316E3BFA3E3DA162DFBF8E64C9662A905E28"
+    },
+    {
+      "step": "s04",
+      "target": "停铃且铃底放回地面，双手仍见于提把。",
+      "path": "E:/git冲突问题/rehab image/train/steps/184_T-AXU-040_s04.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-73cc-7e01-8c05-ac82aa204503/exec-2c4367bd-6c0f-4b0c-ad08-b35374f12708.png",
+      "prompt": "Use case: scientific-educational. Correct ONLY the composition consistency and kettlebell size of the stopped-on-floor photograph.\nInput images: image 1 is the fixed-camera s01 guide; image 2 is s04 to preserve its excellent stopped posture, two-handed grip and clear floor-supported bell.\nCreate corrected s04 with the same woman, face, hair, clothes, lighting, camera angle, body proportions, knee and hip hinge posture and clear two-hand grip as image 2. BOTH feet should occupy EXACTLY the same image positions as image 1. The image is 1122x1402, 4:5 portrait. Position near shoe sole at approximately y=1295, with the near shoe around x=430; far shoe sole approximately y=1205, far shoe around x=645. In image 2 both shoes are about 60 pixels too high; move the woman and floor-supported bell downward together by that amount, maintaining image 1's fixed-camera foot baseline. Keep full shoes and bell inside margins. Do not zoom out, do not rotate camera, do not shorten limbs.\nONE compact dark-gray kettlebell with round body and wide rounded handle must have the SAME SIZE AND SHAPE as image 1: a modestly small lightweight kettlebell, not a larger weight. Its FLAT BASE firmly contacts the floor just in front of the toes at screen-right, definite contact shadow and no air gap. Both hands visibly grip its upper handle side-by-side, wrists natural. The bell is upright and motionless on the floor, not hanging or swinging. Keep the photo of image 2's natural supported hip hinge: hips back and above knees, knees moderately flexed, spine long and neutral, arms down/forward reaching handle, both soles planted.\nScene identical gray-blue studio floor and seamless softly mottled backdrop, one woman and one kettlebell. Full head and ponytail, both arms and hands and both complete white shoes visible. No words, captions, arrows, numbers, logos, watermark, extra limbs, ghost frames or split panels. Preserve photorealism.",
+      "reused": false,
+      "review": {
+        "result": "accepted",
+        "identity": "同一女性、服装、白鞋、单壶铃、灰蓝棚拍一致。",
+        "pose": "髋后移和膝自然屈曲，双手持续握柄，单铃直立在脚前地面且平底贴地有接触影，无抛放或空中摆铃。",
+        "proportion": "全身、完整两鞋、双手和单铃入镜；铃体与s01/s03接近。",
+        "limitations": "近鞋底线仍比s01/s03高约2%画面高，机位构图接近但不能宣称像素锁定；图片只展示停铃姿态，不能替代已学提放技术。"
+      },
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1661218,
+      "sha256": "A787287491806DEC9F98AB9EFA2D2409024CB18F1A9FA1E3FBDEA9DF2EDBA912"
+    }
+  ],
+  "unselected_candidates": [
+    {
+      "step": "s01",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-73cc-7e01-8c05-ac82aa204503/exec-3ef0de4d-3117-458e-9459-08d0e2b50bb6.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/184_T-AXU-040_s01.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: independent rehabilitation step demonstration photograph, action 184 T-AXU-040, step s01, no graphic labels.\nInput images: reference-01, reference-02 and reference-03 are identity and photography references, not pose targets. Match exactly the same East Asian adult woman, natural face, black low ponytail, white short-sleeve T-shirt, dark charcoal full length pants. Preserve her natural average adult physique and calm expression.\nScene/backdrop: softly mottled light gray-blue seamless studio background and matching level nonslip studio floor, soft diffused studio light, natural gentle shadows. Plain clean white athletic shoes. One compact matte dark-gray cast-iron kettlebell with wide smooth rounded handle and a flat base; no other equipment.\nPrimary request: one still photograph of the starting LOW HELD POSITION of an established two-handed kettlebell swing. Woman standing facing screen-right in a near-side view, camera just sufficiently toward her front so BOTH forearms, BOTH hands and BOTH feet are separately discernible. Both feet planted shoulder-width on floor, knees relaxed slightly bent, hips and torso almost upright, spine neutral, head naturally in line. Arms descend almost straight just in front of the thighs. Her own left and right hands firmly grip side-by-side the same wide top handle of ONE light compact kettlebell. The bell hangs in front of and just below the hips, centered between the thighs but clearly in front of the body. It is NOT on the ground, NOT behind the legs, NOT held at chest height. Hands wrap around handle with normal fingers and wrists.\nComposition/framing: one full-body portrait photograph, approximately 4:5 canvas like reference images, about 1122 by 1402. Camera is fixed at waist level with normal 70 mm photographic perspective; enough distance to include entire head, ponytail, torso, both complete shoes and kettlebell with generous margins. Subject slightly left of center and clear empty space at screen-right for the later forward swing; shoe baseline around 91 percent image height. Keep normal natural limb lengths and equipment size.\nConstraints: one person, one coherent single pose, one kettlebell. Calm neutral shoulders, no backward lean, no raised heels, no squat, no overhead lift, no extra limbs. Hands and kettle handle physically connected and fully plausible. No text, numbers, captions, arrows, branding, watermark, composite panels, motion trails or motion blur. Photorealistic studio educational photograph, not illustration.",
+      "reason": "单帧姿势通过，但后续s02为了辨认握持改用较斜机位，本图机位不再最接近整组，保留不覆盖。"
+    },
+    {
+      "step": "s02",
+      "attempt": 1,
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-73cc-7e01-8c05-ac82aa204503/exec-d10a2433-09a7-4198-bd7d-31d0efd078ec.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: independent rehabilitation step demonstration photograph, 184 T-AXU-040 s02.\nInput image: the supplied completed s01 is the strict reference for woman's identity, outfit, light, background, exact camera position, scale, shoe locations, equipment shape and size. Create the next step photograph from the same fixed camera. Keep the same near-side view facing screen-right, same image canvas 4:5, same margin and shoe baseline. Do not crop or zoom.\nPrimary request: depict the KEY BACKSWING POSITION of a two-handed kettlebell swing. The woman remains on both fully planted feet, same shoulder-width foot spacing and same shoes in reference. She has pushed her hips BACK toward screen-left, flexing at hips so her neutral straight-spine torso inclines forward toward screen-right about 45 degrees from upright. Knees bend only moderately, shins remain close to vertical; hips stay well ABOVE knees. Head and neck naturally continue the neutral spine, gaze toward the floor in front. This is a hip hinge, not a deep squat, not rounded waist folding.\nBoth of her own arms reach downward and back between the upper legs together. BOTH forearms and both distinct gripping hands must be discernible. Both hands stay firmly side by side around the exact SAME wide rounded handle of ONE compact matte dark-gray kettlebell from reference. The bell has swung BACK between the legs, posterior to the line of the knees toward screen-left; its dark body is visible in the open space behind/between her legs below the pelvis, suspended ABOVE the floor. The handle and both hands have genuine uninterrupted contact, wrists neutral, no intersections with torso or thighs. The bell is in the rearward swing position, not hanging straight down in front of the knees, not placed on floor. Preserve the kettlebell's same shape and size and distinguish the two hands with the existing slight side-front camera angle.\nScene: identical softly mottled gray-blue seamless studio and floor, soft diffused light and natural shadow. One woman, one kettlebell and no other objects. Exact same white T-shirt, charcoal pants, black ponytail, plain white trainers.\nConstraints: photograph of one single clear controlled posture with normal adult head, arm, torso, leg and shoe proportions. Full head, ponytail, both shoes and complete bell within frame. No text, numbers, arrows, logos, watermark, diagrams, duplicate poses, motion blur or ghost limbs. No deep squat, no heel raise, no rounded lumbar spine, no arm duplication, no bell through body. Maintain same fixed camera and subject scale as reference; naturally head moves lower because of hinge.",
+      "reason": "铃柄及两手接触关系被近侧大腿遮挡较多。"
+    },
+    {
+      "step": "s02",
+      "attempt": 2,
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-73cc-7e01-8c05-ac82aa204503/exec-f36fd655-1bda-48c9-a5e9-6a154e97d3cf.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: corrected independent photograph of kettlebell swing backswing, action 184 T-AXU-040 s02.\nInput images: image 1 is the accepted s01 strict identity, camera, floor, shoes, scale, clothes and kettlebell reference. Image 2 is the draft s02 hip-hinge pose to correct. Create one photograph preserving image 1's fixed camera framing and the same woman's identity and equipment.\nPrimary request: CORRECT THE TWO-HAND GRIP VISIBILITY in draft image 2. Her near-side thigh currently hides the handle and grip. Use the already slight side-front view and a natural modestly wider shoulder-width stance so the gap between the legs exposes BOTH hands side-by-side around the wide handle, BOTH wrists and the handle bar. Her hands must visibly wrap and contact the same handle, not appear as one merged hand, and no thigh obscures the hand-handle connection. Lower the visible hand/handle assembly a little into the opening between the knees while retaining a rearward backswing, not directly downward hang or floor placement. ONE single rounded dark-gray bell must remain suspended above the ground behind/between the legs, posterior to knee line toward screen-left. The rear bell may project into the open space behind the thighs, but the entire wide handle must lead continuously from her two gripping hands to that bell, without body intersection.\nHer hips pushed back toward screen-left; torso inclines about 45 degrees from upright in a straight neutral hip hinge; knees only moderately flexed and hips high above knees, shins nearly vertical. Both arms descend diagonally backward in the gap between legs, with natural lengths, elbows almost straight. Head/neck continue spine, gaze slightly forward/down. Two full shoe soles planted on same gray-blue floor, no heel lift. Same white shirt, charcoal pants, black low ponytail, white trainers, soft light. Keep same 4:5 portrait full body canvas and waist-height camera, normal proportions and same subject scale.\nConstraints: clear two separate normal hands and two forearms, a visible continuous handle connected to one compact bell, no extra arms or fingers, no fused limbs. No deep squat, rounded back, bell through body, altered clothing or scene. No text, arrows, labels, watermark, composite panels or motion blur. Single controlled rearward swing pose, complete head, shoes, bell and all contact points visible with margins.",
+      "reason": "修握持时铃体生成疑似双球分裂/过宽，器械不合格。"
+    },
+    {
+      "step": "s02",
+      "attempt": 3,
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-73cc-7e01-8c05-ac82aa204503/exec-282e1ed9-3367-49f9-9aa4-bc1c1a23b90e.png",
+      "prompt": "Create ONE photorealistic educational photograph of the BACKSWING of a two-handed kettlebell swing, a hip hinge, not a squat.\nUse the supplied standing photograph strictly to preserve the identical woman, face, black ponytail, white short-sleeve shirt, charcoal pants, white shoes, ONE compact charcoal kettlebell, gray-blue studio light, portrait 4:5 canvas and full-body camera framing. Same camera and normal body scale. Woman faces screen-right in the same slightly front-side view, both feet shoulder-width on the floor.\nNow she pushes hips well backward toward screen-left while tipping her straight neutral-spine torso forward about 50 degrees from vertical. Hips remain much higher than the knees. Knees softly bend, shins remain near vertical, both soles stay down. Neck stays in line with spine. The movement is clearly hip hinge and not deep squat.\nThe kettlebell is at the REAR end of the swing BETWEEN the legs and above the floor. Both nearly straight arms angle DOWN AND BACK toward screen-left, passing between the thighs. Both hands grip the SAME wide upper handle side by side. Show BOTH gripping hands, BOTH wrists, the entire continuous rounded handle, and the one compact round bell with its flat base. Arrange this real rearward-swing moment so the hand-handle-bell assembly projects into the clear space at the REAR OF the near thigh toward screen-left, rather than being hidden by that thigh. The TWO HANDS are visible together around the upper handle, the ONE single round bell is visible just behind the knees. This is one solid kettlebell of exactly the same size as reference, NOT a dumbbell, not two balls, no object splitting, no doubled sphere, no handle through the leg.\nKeep all of both shoes, the head and ponytail, hands and whole kettlebell within the image with generous margins. Keep natural realistic limb lengths and normal fingers. Plain gray-blue studio floor and backdrop, no other equipment. No text, arrows, numbering, branding, watermarks, panels, motion blur or ghost images.",
+      "reason": "单铃恢复，但两手与铃柄仍被近侧腿遮挡明显，第四候选握持更可辨。"
+    },
+    {
+      "step": "s04",
+      "attempt": 1,
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-73cc-7e01-8c05-ac82aa204503/exec-f45b8796-104f-4ce1-874e-e53aa3ef2322.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: independent rehabilitation step photograph 184 T-AXU-040 s04, stopped kettlebell placed securely ON FLOOR.\nInput image: accepted s01 strict reference for identical woman, natural face, ponytail, white short sleeve shirt, charcoal pants, white trainers, compact dark gray round kettlebell, same fixed diagonal-side camera, lighting, gray-blue seamless backdrop and floor, image scale and full-body 4:5 canvas.\nCreate the final controlled STOPPED position after a two-handed kettlebell swing, with ONE compact kettlebell ALREADY RESTING FLAT ON THE GROUND just IN FRONT of her feet at screen-right. Both of her own hands remain clearly wrapped side-by-side around its upper handle. The kettlebell's FLAT BASE touches the gray-blue floor fully with a definite contact shadow and NO AIR GAP. It is upright and stable on its base, not tilted, not suspended, not behind the legs, not swinging, not falling.\nWoman faces screen-right at the same safe diagonal-side angle. Both feet stay fully planted at EXACTLY the same positions, shoe baseline and stance width as reference. Hips hinge backward and knees flex enough for both hands to reach the handle comfortably. Torso tips forward at hips with a long neutral straight spine and head/neck aligned, gaze down toward floor ahead. Hips stay above knees; no deeply rounded back. Both arms naturally extend DOWN AND FORWARD toward the low handle on the floor, almost straight elbows. The bell is placed about one shoe length in front of the toes, not between her shins. Her own two forearms, two hands, wide continuous handle, ONE compact round bell and floor contact must be visible and anatomically connected.\nKeep same compact kettle size and normal realistic arm/leg lengths so she can reach the ground through appropriate natural hip and knee bend. Natural skin and cloth texture, diffuse studio light and contact shadows. Complete head and ponytail, both complete shoes, both hands and entire kettlebell inside margins. Preserve full-body camera distance and scale.\nNo text, numbers, arrows, logos, watermark, multiple panels, motion blur, extra limbs or fingers, duplicated weights, floating kettlebell or bell penetrating floor. Single clear stationary stopped posture.",
+      "reason": "停铃地面支持与姿势通过，但鞋底线比s01/s03高约4%画面高，铃偏大；修订改善至约2%，且铃尺寸接近其他帧。"
+    }
+  ]
+}

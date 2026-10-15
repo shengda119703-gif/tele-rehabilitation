@@ -27,8 +27,9 @@ test('share identity not verified and views do not auto change plans',()=>{
  assert.match(script,/身份未核验/);assert.match(script,/留言不会自动修改训练计划/);
  assert.match(script,/撤销分享/);assert.match(script,/当前档案不会合并或删除/);
 });
-test('completed plan can create next round and upload freezes select fields',()=>{
+test('completed plan can create next round and upload captures immutable selectors without locking navigation',()=>{
  const app=fs.readFileSync(path.join(__dirname,'../static/app.js'),'utf8');
  assert.match(app,/!record \|\| progress.blocked \|\| !progress.next_key/);
- assert.match(app,/#app select/);assert.match(app,/DOMContentLoaded',init/);
+ assert.match(app,/exercise:state.selected,side:state.side/);assert.match(app,/xhr.send\(attempt.file\)/);
+ assert.doesNotMatch(app,/#app button, #app input, #app select/);assert.match(app,/DOMContentLoaded',init/);
 });

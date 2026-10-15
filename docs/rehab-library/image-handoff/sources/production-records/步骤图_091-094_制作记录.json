@@ -1,0 +1,328 @@
+{
+  "document_version": "v1.0",
+  "created_date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "tool": "built-in image_gen.imagegen",
+  "scope": "动作清单091–094首轮步骤图，共9张，外部素材目录，不修改正式软件仓库",
+  "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "reference_visual_reviewed": true,
+  "unified_style": "同一成年女性、黑色马尾、白色短袖、深灰长裤、白色运动鞋、写实柔光、灰蓝背景；独立单姿势原始照片；无拼图、文字、箭头或水印",
+  "qa_scope": "逐张查看生成图片进行人物/服装/画面/姿态/支撑/器械/组内一致性视觉核对，非医疗专业验证",
+  "assets": [
+    {
+      "sequence": "091",
+      "action_id": "T-LOW-016",
+      "action_name": "扶稳单腿罗马尼亚硬拉",
+      "step": "01",
+      "target_pose": "一手扶固定台面，重心转到左支持腿，另一脚可随时落地",
+      "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-82bffbb5-cb9f-4231-83a2-b30c418315a6.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/091_T-LOW-016_s01.png",
+      "reused_existing_asset": false,
+      "qa_status": "visual_pass",
+      "qa_observations": "通过视觉核对：同参考成年女性、黑马尾/白短袖/深灰裤/白鞋；完整双足和全身。左腿在前平踩支持，右腿在后以鞋尖轻触可落地；本人左掌接固定台面，右手空手下垂。固定桌腿和防滑底可见。桌面右端出画，但支持接触和固定结构清楚。仅视觉核对，非医疗验证。",
+      "sha256": "4555E9329B13344F10076ECB8E213196EEBBC3A3B4C008F79F2327B93CE0E721",
+      "width": 1122,
+      "height": 1402,
+      "attempts": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: scientific-educational. Create one independent photorealistic rehabilitation exercise demonstration photograph, a single person in one posture. The three input images are identity, clothing, hair, lighting and gray-blue studio background references only; do not copy their arm poses. Match the same adult East Asian woman with a black ponytail, plain white short-sleeve T-shirt, dark gray full-length pants, and plain white athletic shoes. Full body including both shoes, natural anatomy, soft studio light, matte gray-blue background and nonslip gray floor. Camera is a fixed oblique side view, she faces the right of frame. Step 01 of supported single-leg Romanian deadlift: she stands upright beside one stable fixed waist-high light gray worktop on her far side, left palm visibly resting on the top with authentic contact, left supporting leg bears the body weight with knee naturally unlocked and left foot firmly flat. Right foot is lightly resting beside and slightly behind the left foot in a position ready to lift backward; right arm hangs relaxed and empty at her side. Both legs and both shoes must be separately visible. The tabletop is fixed and solid with real legs, not a wheeled table. No weight or kettlebell. Keep the full tabletop support and full woman within frame with breathing room. One image, one posture, no panel layout, no labels, no text, no arrows, no watermark.",
+          "referenced_image_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-82bffbb5-cb9f-4231-83a2-b30c418315a6.png",
+          "status": "accepted",
+          "qa_type": "visual_review_only"
+        }
+      ]
+    },
+    {
+      "sequence": "091",
+      "action_id": "T-LOW-016",
+      "action_name": "扶稳单腿罗马尼亚硬拉",
+      "step": "02",
+      "target_pose": "左支持膝轻屈、髋后折、躯干前倾、右腿自然后伸，台面扶持保持",
+      "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-09d48c9a-6d18-4f4b-b41e-759d07751ea5.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/091_T-LOW-016_s02.png",
+      "reused_existing_asset": false,
+      "qa_status": "visual_pass",
+      "qa_observations": "通过视觉核对（第2次修订）：台面与s01固定位置/设计一致；同机位和人物尺度，前支持脚位置相近且平踩，支持膝轻屈；髋后折、躯干前倾、右腿自然后伸离地且与支持腿分开；左手保持台面支持，右手空手下垂，双足完整。初稿和第一次修订曾有台面横移，不采用。仅视觉核对，非医疗验证。",
+      "sha256": "3685B362F518016EEE4FFEB792220CD7DD5FC8DAC0ACCE27047EB54486E9CED8",
+      "width": 1122,
+      "height": 1402,
+      "attempts": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: scientific-educational. Create one independent photorealistic exercise demonstration photograph. Inputs 1–3 are references for the same adult East Asian woman, black ponytail, plain white T-shirt, dark gray full length trousers, white athletic shoes, gray-blue backdrop and soft lighting. Input 4 is the Step 01 companion frame and the required scene/composition anchor. Preserve exactly that woman's identity, clothes, white shoes, fixed light gray worktop design and its position, camera oblique side angle, gray-blue background, gray nonslip floor, full-body framing and scale. Change only the woman's posture to Step 02 of a supported single-leg Romanian deadlift: her LEFT foot remains flat at the exact front supporting foot spot, left knee gently flexed, left hip moves backward into a controlled hip hinge. Her trunk inclines forward moderately as one naturally aligned unit, spine neutral, pelvis facing the same direction. Her RIGHT leg lifts and extends naturally behind her, clearly separated from the supporting left leg, with right shoe off the floor. Left palm remains visibly on the identical fixed tabletop; right arm remains empty and relaxed downward, never reaching the ground. Allow a comfortable moderate hinge rather than extreme range. Real fingers, natural joint proportions, weight-support and distinct legs. Keep both shoes, head and table support fully visible. One image, one pose, no collage, no text, no arrows, no watermark, no handheld weights.",
+          "referenced_image_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+            "E:/git冲突问题/rehab image/train/steps/091_T-LOW-016_s01.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-75690310-dbc8-4950-b13e-d56cde4da436.png",
+          "status": "rejected_table_position_shift",
+          "qa_type": "visual_review_only"
+        },
+        {
+          "attempt": 2,
+          "prompt": "Use case: precise-object-edit. Input 1 is the FINAL Step 01 exercise photograph and must be the immutable background/composition anchor. Input 2 shows the desired single-leg hip-hinge pose but has shifted the table; use it only as pose guidance. Inputs 3–5 are the woman identity references. Create ONE edited photographic Step 02: edit only the woman's body posture in Input 1 into the supported single-leg Romanian deadlift shown in Input 2. Keep the original camera, framing, image scale, floor, background, and ALL FIXED TABLE pixels/edges/feet at exactly the same positions as Input 1. The supporting LEFT white shoe stays at exactly the same contact spot as Input 1. Her left knee is slightly flexed; pelvis moves back and trunk inclines forward in a neutral-spine hip hinge; right leg extends naturally backward in the air, separated from left leg; right hand is empty and relaxed down. Her left palm remains on the original tabletop contact area, a naturally bent left elbow may accommodate the posture without moving the table. Same adult East Asian woman, black ponytail, white T-shirt, charcoal long pants, white shoes. Keep her head, both feet, and fixed table legs visible. Do not move or change the table or crop/zoom; no weight. One single pose photo, no lettering, no arrows, no collage, no watermark.",
+          "referenced_image_paths": [
+            "E:/git冲突问题/rehab image/train/steps/091_T-LOW-016_s01.png",
+            "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-75690310-dbc8-4950-b13e-d56cde4da436.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-2683d4c5-d7b3-4991-aae8-fba86e65a750.png",
+          "status": "rejected_table_position_shift",
+          "qa_type": "visual_review_only"
+        },
+        {
+          "attempt": 3,
+          "prompt": "Use case: identity-preserve photo edit. Edit ONLY this supplied photograph to show the next exercise posture, leaving the fixed tabletop exactly where it already is. SAME camera and framing; do not reframe or move the table. The table's left edge must stay at the same horizontal image coordinate, not slide to the right. SAME supporting left white shoe at the same floor location. This is a single-leg Romanian deadlift with one-hand table support. The woman moves her hips backwards and gently flexes her left knee, inclining her torso forward about 30 degrees from upright. Her right leg lifts naturally backward into the space on the left of the frame, clearly off the floor and separate from the left support leg. Her left hand continues touching the identical tabletop point, with the left elbow bending if needed; right arm empty and relaxed downward. Keep pelvis facing the same direction, neutral spine, no twisting. Preserve same woman face, ponytail, white T-shirt, dark gray pants, white shoes, gray-blue background, floor and table. Both feet and the head fully visible. One photo of one pose. No text, arrows, watermark, collage or weights.",
+          "referenced_image_paths": [
+            "E:/git冲突问题/rehab image/train/steps/091_T-LOW-016_s01.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-09d48c9a-6d18-4f4b-b41e-759d07751ea5.png",
+          "status": "accepted",
+          "qa_type": "visual_review_only"
+        }
+      ]
+    },
+    {
+      "sequence": "092",
+      "action_id": "T-LOW-017",
+      "action_name": "分级坐站训练",
+      "step": "01",
+      "target_pose": "同一稳固扶手椅坐位，双脚接地，双手扶两侧扶手",
+      "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-a472e1cd-43f9-4168-9563-d6a37dcc10f5.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/092_T-LOW-017_s01.png",
+      "reused_existing_asset": false,
+      "qa_status": "visual_pass",
+      "qa_observations": "通过视觉核对（构图修订后）：同参考人物、衣服、白鞋和灰蓝背景；双手接同一固定椅双扶手，臀坐椅面，双足平踩，椅有稳定木腿和防滑底、无轮。起身右前方无障碍。上方留白用于站起帧保持统一机位尺度。初稿坐位构图过紧不采用。仅视觉核对，非医疗验证。",
+      "sha256": "47BBDC90ED82E25CC678F55F43273BC9C24733BD8263C7D5F363C0F32C2D2F77",
+      "width": 1122,
+      "height": 1402,
+      "attempts": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: scientific-educational. Create one independent photorealistic rehabilitation demonstration photograph of ONE posture. The three input images define the same adult East Asian woman with black ponytail, white plain short-sleeve T-shirt, dark gray full-length pants, white athletic shoes, soft studio illumination and clean gray-blue backdrop. Do not copy the arm poses in those references. Full-body strict side camera with a very slight front oblique offset so both hands and feet can be seen, woman facing the right of frame. Step 01 of supported sit-to-stand: she is seated upright near the front of a solid stationary gray upholstered chair with a medium-height back, TWO rigid wooden armrests at each side, four sturdy nonslip chair legs, NO wheels. Her hips visibly rest on the chair seat, knees naturally around right angles, both feet flat on the gray nonslip floor at a comfortable position a little behind the knees ready for standing. Each palm visibly rests on its own respective armrest, fingers anatomically realistic, no weights. Include the full head, chair, both shoes and all floor contact supports. Chair at the left of frame, clear empty standing space in front on the right. Make this the beginning of a coherent three-frame series; simple realistic light wood armrests, gray upholstered seat and back will remain in later frames. Natural proportions, patient instructional photography. One photo of one woman in one pose; no panels, no text, no arrows, no watermark.",
+          "referenced_image_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-71f3d57d-28d6-45b7-89a4-2c487332110d.png",
+          "status": "rejected_framing_too_tight_for_standing",
+          "qa_type": "visual_review_only"
+        },
+        {
+          "attempt": 2,
+          "prompt": "Use case: identity-preserve photo edit. Edit this seated sit-to-stand starting photograph by changing ONLY camera framing/zoom to prepare a coherent three-frame seated-to-standing series. Zoom out enough that this seated woman and the identical chair occupy the LOWER TWO THIRDS of the portrait image, with a broad EMPTY gray-blue area occupying the UPPER THIRD above her head. It is essential that a later image of her fully standing beside the same chair can fit inside this exact camera frame without changing the chair position or scale. Preserve her seated upright posture, both palms on the same two wooden armrests, hip support on gray chair seat, same two flat shoe support positions, same fixed chair design and full chair legs. Same woman face/black ponytail, white T-shirt, dark gray long pants, white shoes, realistic soft light, gray-blue background and nonslip gray floor. All the scene is visible with clear empty space in front of her to the right; chair lower-left, feet lower-middle/right. One photograph of one seated posture, no duplicated people or panels, no text, arrows or watermark.",
+          "referenced_image_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-71f3d57d-28d6-45b7-89a4-2c487332110d.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-a472e1cd-43f9-4168-9563-d6a37dcc10f5.png",
+          "status": "accepted",
+          "qa_type": "visual_review_only"
+        }
+      ]
+    },
+    {
+      "sequence": "092",
+      "action_id": "T-LOW-017",
+      "action_name": "分级坐站训练",
+      "step": "02",
+      "target_pose": "身体前移，借原扶手开始离椅，髋膝仍屈",
+      "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-10d0d9b9-6edd-470f-856f-b76995ae15f0.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/092_T-LOW-017_s02.png",
+      "reused_existing_asset": false,
+      "qa_status": "visual_pass",
+      "qa_observations": "通过视觉核对：固定椅设计、位置、尺度、双脚落地点与s01一致；身体前移，臀已明显离开椅面，髋膝仍屈曲，符合起身中段；近侧手接原扶手，远侧手接触扶手区域但有身体局部遮挡；脚跟仍落地，无迈步。仅视觉核对，非医疗验证。",
+      "sha256": "47A857DE8E0B150D6BB7EE71B976E07EC0D6C99D42E36E5EA6914649CE7423A6",
+      "width": 1122,
+      "height": 1402,
+      "attempts": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: identity-preserve photo edit. Edit ONLY this supplied seated starting photograph to create one independent Step 02 of supported sit-to-stand. All scene elements, the EXACT fixed gray upholstered chair with wooden armrests, chair feet and positions, two white shoes' floor contact locations, background, camera view, framing and scale must stay unchanged. Keep the broad empty gray-blue area above; do NOT zoom in. Change ONLY the woman's posture into a visible rising MIDPOINT: she leans her chest forward over her planted feet, presses both own palms against the same respective armrests, and begins to lift her hips roughly 10–15 cm above the gray chair seat. There must be a clear small gap between her buttocks and the chair seat; both hips and knees are still visibly flexed. Both feet remain completely flat in precisely their original places, heels down, no step. Her body is midway between sitting and standing, NOT fully upright and NOT still seated. Natural fingers and joints; both hands on real armrests, chair unmoved. Same adult woman, black ponytail, white T-shirt, dark gray long trousers, white shoes and soft photo lighting. Full head, both feet, chair and chair legs in frame. One single photographic posture only, no text, arrows, collage or watermark, no weights.",
+          "referenced_image_paths": [
+            "E:/git冲突问题/rehab image/train/steps/092_T-LOW-017_s01.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-10d0d9b9-6edd-470f-856f-b76995ae15f0.png",
+          "status": "accepted",
+          "qa_type": "visual_review_only"
+        }
+      ]
+    },
+    {
+      "sequence": "092",
+      "action_id": "T-LOW-017",
+      "action_name": "分级坐站训练",
+      "step": "03",
+      "target_pose": "髋膝恢复舒适站姿并站稳，原椅和足位不变",
+      "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-144982de-6877-4c65-a406-15e1639deeb5.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/092_T-LOW-017_s03.png",
+      "reused_existing_asset": false,
+      "qa_status": "visual_pass",
+      "qa_observations": "通过视觉核对：三帧椅形、位置、尺度和足位保持；终点髋膝舒适伸展、站稳，双足平踩无迈步；扶手在身旁，双手自然释放下垂；头与双足完整入镜。与坐位帧采用统一机位构图尺度。仅视觉核对，非医疗验证。",
+      "sha256": "0B754FCF9A03704B3B436863B2BEA6EAD4E94624B617E3FE2F1A7AE1EAA78AB5",
+      "width": 1122,
+      "height": 1402,
+      "attempts": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: identity-preserve photo edit. Edit ONLY this supplied Step 01 seated photograph into ONE Step 03 of supported sit-to-stand: the same woman has now stood upright and steady in front of the same unmoved chair. Her hips and knees have extended to a comfortable relaxed standing posture, torso upright and neutral, face toward the right of frame. Both feet remain flat in precisely the original shoe contact locations, with no step and no heel lift. Her two hands have naturally released the chair armrests and hang relaxed by her sides after standing steady; the same two armrests remain beside and behind her, visible and within reach. The gray upholstered fixed chair with wooden arms and nonslip feet must keep EXACT original shape, scale and floor position; do not move it. Preserve EXACT camera viewpoint, zoom, full portrait framing, gray-blue background, gray floor and lighting. The original empty upper region provides enough room for her standing head: full head and white shoes MUST be in frame. Same woman identity, black ponytail, white T-shirt, charcoal trousers and white athletic shoes. One photograph of one upright pose, no duplicated subjects, no text, no arrows, no collage, no watermark, no weights.",
+          "referenced_image_paths": [
+            "E:/git冲突问题/rehab image/train/steps/092_T-LOW-017_s01.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-144982de-6877-4c65-a406-15e1639deeb5.png",
+          "status": "accepted",
+          "qa_type": "visual_review_only"
+        }
+      ]
+    },
+    {
+      "sequence": "093",
+      "action_id": "T-LOW-018",
+      "action_name": "扶稳浅蹲/椅前目标蹲",
+      "step": "01",
+      "target_pose": "徒手扶固定扶手，自然分腿站稳，无椅前扩展",
+      "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-9553bd57-b530-4be1-944e-1011a37e9218.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/093_T-LOW-018_s01.png",
+      "reused_existing_asset": false,
+      "qa_status": "visual_pass",
+      "qa_observations": "通过视觉核对：同参考人物服装背景；固定扶手有真实支架螺栓与结构柱连接；双手轻扶，双足自然分开平踩，站位自然且后方无椅或其他障碍。全身和双鞋完整，徒手。生成首次调用网络失败，同prompt重试成功。仅视觉核对，非医疗验证。",
+      "sha256": "EAE7709808AE16D2C86B547CCCCCDB2D32B42560CEF9498C5461541595F2249A",
+      "width": 1122,
+      "height": 1402,
+      "attempts": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: scientific-educational. Create ONE independent photorealistic rehabilitation demonstration photograph, full body one person one pose. The three reference images define the same adult East Asian woman with black ponytail, white plain short-sleeve T-shirt, charcoal full-length trousers, and use plain white athletic shoes. Match her identity, soft studio lighting and gray-blue studio background. This is Step 01 of an UNWEIGHTED supported shallow squat: she stands naturally facing the right of frame, both feet flat on gray nonslip floor and comfortably separated, knees naturally unlocked, hips neutral, spine relaxed upright. She lightly holds a fixed horizontal sturdy waist-height gray support rail in front of her with both hands; both real palms/fingers clearly contact the rail. The rail is rigidly secured to a simple gray wall/support structure on the right, visibly fixed with brackets, NOT a walking aid and NOT a loose bar. No chair behind her and no weights in either hand. Strict side view with a slight oblique offset so both shoes and both hands are separately visible, complete head to shoes and fixed support visible, generous empty space behind her to the left for the shallow squat, clean unobstructed floor. White sneakers' entire soles are on the floor. This starting composition will be held for a second squat frame: stable eye-level side camera, natural body scale. One single photograph; no text, arrows, infographic graphics, panels, collage or watermark.",
+          "referenced_image_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "source_generation_path": null,
+          "status": "failed_network_error",
+          "qa_type": "visual_review_only"
+        },
+        {
+          "attempt": 2,
+          "prompt": "Use case: scientific-educational. Create ONE independent photorealistic rehabilitation demonstration photograph, full body one person one pose. The three reference images define the same adult East Asian woman with black ponytail, white plain short-sleeve T-shirt, charcoal full-length trousers, and use plain white athletic shoes. Match her identity, soft studio lighting and gray-blue studio background. This is Step 01 of an UNWEIGHTED supported shallow squat: she stands naturally facing the right of frame, both feet flat on gray nonslip floor and comfortably separated, knees naturally unlocked, hips neutral, spine relaxed upright. She lightly holds a fixed horizontal sturdy waist-height gray support rail in front of her with both hands; both real palms/fingers clearly contact the rail. The rail is rigidly secured to a simple gray wall/support structure on the right, visibly fixed with brackets, NOT a walking aid and NOT a loose bar. No chair behind her and no weights in either hand. Strict side view with a slight oblique offset so both shoes and both hands are separately visible, complete head to shoes and fixed support visible, generous empty space behind her to the left for the shallow squat, clean unobstructed floor. White sneakers' entire soles are on the floor. This starting composition will be held for a second squat frame: stable eye-level side camera, natural body scale. One single photograph; no text, arrows, infographic graphics, panels, collage or watermark.",
+          "referenced_image_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-9553bd57-b530-4be1-944e-1011a37e9218.png",
+          "status": "accepted",
+          "qa_type": "visual_review_only"
+        }
+      ]
+    },
+    {
+      "sequence": "093",
+      "action_id": "T-LOW-018",
+      "action_name": "扶稳浅蹲/椅前目标蹲",
+      "step": "02",
+      "target_pose": "足位和扶手接触保持，屈髋屈膝浅蹲，双脚跟着地",
+      "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-750801d5-b1eb-45ce-ba6c-c32d4e6bd707.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/093_T-LOW-018_s02.png",
+      "reused_existing_asset": false,
+      "qa_status": "visual_pass",
+      "qa_observations": "通过视觉核对：固定扶手、支架、结构柱与s01相同原位；双手接原扶手，双足原位平踩且脚跟未抬；髋膝屈曲、身体下降到浅蹲，臀未坐落，后方未加入椅；头脚完整，人物机位尺度一致。仅视觉核对，非医疗验证。",
+      "sha256": "DAB2569017D870193389492E2DFE178687B337A484A0C085F66FC3B6A1EBF5D3",
+      "width": 1122,
+      "height": 1402,
+      "attempts": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: identity-preserve photo edit. Edit only this photograph into Step 02 of the unweighted SUPPORTED SHALLOW SQUAT. Keep EXACT camera/framing/scale, gray-blue studio background, gray nonslip floor, structural support column, fixed gray handrail with identical brackets and bolts at their original locations. The same woman's two white shoes stay in precisely their original floor-contact positions; all of both soles remain flat, heels down. Both hands keep authentic contact with the exact same fixed handrail positions. Change only the body posture: slowly flex BOTH hips and BOTH knees to a comfortable clearly shallow squat (about 35–45 degrees knee flexion), hips lower and move slightly back, torso naturally inclines modestly forward with neutral spine. Her head moves downward naturally, gaze ahead, pelvis and feet keep their original facing. This is a small controlled squat, NOT deep squat, not sitting, not a heel raise, not merely bending the waist. Both legs must show flexed hip/knee mechanics distinctly. Same adult East Asian woman, black ponytail, plain white T-shirt, dark charcoal long trousers, plain white athletic shoes, empty hands except support rail, no chair. Full head, both shoes, rail support all in frame. One realistic photo of one pose, no text, arrows, panels, collage, watermark or weights.",
+          "referenced_image_paths": [
+            "E:/git冲突问题/rehab image/train/steps/093_T-LOW-018_s01.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-750801d5-b1eb-45ce-ba6c-c32d4e6bd707.png",
+          "status": "accepted",
+          "qa_type": "visual_review_only"
+        }
+      ]
+    },
+    {
+      "sequence": "094",
+      "action_id": "T-LOW-019",
+      "action_name": "哑铃/壶铃杯式深蹲",
+      "step": "01",
+      "target_pose": "站稳，双手持同一单只壶铃靠胸",
+      "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-c5e8c8f6-13e8-42c9-ba68-6ffb6de74706.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/094_T-LOW-019_s01.png",
+      "reused_existing_asset": false,
+      "qa_status": "visual_pass",
+      "qa_observations": "通过视觉核对：同参考人物与服装；侧前方全身，双足分开平踩，身体无转体。双手稳握单只黑色壶铃提把两侧，壶铃近胸，肘腕自然；壶铃与双鞋完整，场地无障碍且无其他器材。仅视觉核对，非医疗验证。",
+      "sha256": "877F08DACE31F448D91BF69CB9A37DADF934922B6DF9CB2084EFFA644ED8B8BF",
+      "width": 1122,
+      "height": 1402,
+      "attempts": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: scientific-educational. Create ONE independent photorealistic rehabilitation/fitness demonstration photograph of one adult woman in one posture. Use the three reference pictures for the same adult East Asian woman identity, black ponytail, plain white short-sleeve T-shirt, dark charcoal full-length trousers, soft light and simple gray-blue studio backdrop. Add plain white athletic shoes. Step 01 of a kettlebell GOBLET SQUAT: standing naturally and steady, comfortably hip-to-shoulder-width stance, both full soles flat on a gray nonslip floor, feet face a comfortable slightly outward direction kept consistent for the next frame. Both hands visibly and safely grip the two sides/horns of ONE small matte black kettlebell's loop handle in the classic goblet hold, rounded bell hangs under her hands close in front of the sternum/lower chest; fingers belong to the woman and authentically grasp the rigid handle. Wrists natural, elbows point down near body, kettlebell close to chest with breathing space. Trunk upright without twisting, hips/knees relaxed standing. Fixed true side camera with slight front oblique offset to distinguish BOTH arms and shoes, full-body including head, full kettlebell and both feet. Natural human and kettlebell proportions, no chair, rail or other props, clear surrounding space. One single photoreal photograph, not a composite, no panels, no labels, no text, no arrows, no logos or watermark. Never swap this kettlebell for a dumbbell.",
+          "referenced_image_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-c5e8c8f6-13e8-42c9-ba68-6ffb6de74706.png",
+          "status": "accepted",
+          "qa_type": "visual_review_only"
+        }
+      ]
+    },
+    {
+      "sequence": "094",
+      "action_id": "T-LOW-019",
+      "action_name": "哑铃/壶铃杯式深蹲",
+      "step": "02",
+      "target_pose": "持铃近胸，髋膝屈曲下降至选定深度，双足接地",
+      "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-2f22f5af-04be-4906-b46f-248b36eba0eb.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/094_T-LOW-019_s02.png",
+      "reused_existing_asset": false,
+      "qa_status": "visual_pass",
+      "qa_observations": "通过视觉核对（脚位构图修订后）：同壶铃/提把/双手持法和人物；髋膝屈曲、身体明确下降至适中深度，壶铃随身体下降且仍近胸，没有前伸或仅前倾。双足全鞋底着地，脚角/足距与s01保持，构图脚位修订后基本对齐，存在约20像素级生成差异；同机位尺度、头足完整。初稿双鞋整体偏上，不采用。仅视觉核对，非医疗验证。",
+      "sha256": "9DCBD02A8802BF4F32720F250BA010481BF0468EE6904167B1557331525041E4",
+      "width": 1122,
+      "height": 1402,
+      "attempts": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: identity-preserve photo edit. Edit ONLY this supplied starting photograph into Step 02 of the kettlebell GOBLET SQUAT. Preserve the EXACT woman identity/face/black ponytail, white T-shirt, dark charcoal long trousers, white shoes, gray-blue backdrop, nonslip gray floor, camera viewpoint, framing, scale and light. Both white shoes remain precisely in their original floor-contact locations and original foot angles, with BOTH entire soles flat and heels down. Keep the SAME single small matte black kettlebell, same rigid loop handle shape and same two hands' authentic grip on the handle horns/sides, held close to her lower chest with comfortable space. Change only body posture: she bends BOTH hips and BOTH knees and lowers her hips into a comfortable controlled goblet squat of moderate depth, thighs descending toward diagonal/near horizontal without forcing depth. Pelvis lowers clearly rather than only hinging forward; spine neutral, trunk inclines modestly, chest stays oriented the same way. The kettlebell travels DOWN with her body and remains close to her chest, never stretched forward, never pressed overhead. Knees track naturally in the direction of the toes; no twist, no jump, no chair. Full head, kettlebell, both legs and both shoes visible. One photoreal single posture only, no text, arrows, panels, collage or watermark; no added apparatus or people.",
+          "referenced_image_paths": [
+            "E:/git冲突问题/rehab image/train/steps/094_T-LOW-019_s01.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-b7aa4d89-f18c-42de-89d4-9682a97a63e7.png",
+          "status": "rejected_floor_contact_framing_shift",
+          "qa_type": "visual_review_only"
+        },
+        {
+          "attempt": 2,
+          "prompt": "Use case: identity-preserve photo edit. Make ONE precise framing correction to this goblet squat photograph. Preserve EXACT woman identity, all body proportions, squat posture, expression, ponytail, clothing, two hands' grips, small black kettlebell shape and chest distance, camera viewpoint, background and light. The entire woman including shoes needs to be placed slightly lower on this unchanged portrait background, by approximately 55 pixels in this 1122-by-1402 image, so the near white shoe toe is at about (535,1320) and far shoe toe about (730,1260). Keep exactly the same shoe angles and roughly the same width between feet; whole white soles stay flat on the floor with real natural shadows. This is a subtle subject placement correction matching the prior standing frame's shoe support positions. Do NOT alter the exercise pose, do NOT change zoom/scale, do NOT crop or cut any foot, do NOT make a new action. Full head, bell and both feet remain visible. Single photo of one posture, no text, arrows, collage or watermark.",
+          "referenced_image_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-b7aa4d89-f18c-42de-89d4-9682a97a63e7.png"
+          ],
+          "source_generation_path": "C:/Users/Administrator/.codex/generated_images/01a13855-679b-7482-94e1-111de93cc869/exec-2f22f5af-04be-4906-b46f-248b36eba0eb.png",
+          "status": "accepted",
+          "qa_type": "visual_review_only"
+        }
+      ]
+    }
+  ]
+}

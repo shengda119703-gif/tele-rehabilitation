@@ -1,0 +1,141 @@
+{
+  "schema_version": "1.0",
+  "created_date": "2026-10-14",
+  "action_index": 143,
+  "action_id": "T-AXU-021",
+  "action_name": "壶铃分腿位转胸：静态到弓步转体",
+  "selected_version": "首轮静态浅分腿位两个转胸方向；不包含后撤步、连续跨步、斜板或上举",
+  "tool": "built-in image_gen.imagegen",
+  "transparent_background": false,
+  "status": "三张生成且逐图实际视觉核对完成；供人工教学图审核",
+  "source_documents": [
+    "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md#action-143",
+    "E:/git冲突问题/安康_康复评估与分级训练动作库.md#t-axu-021"
+  ],
+  "reference_images": [
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "role": "人物身份、服装、摄影质感和背景共同基准",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "role": "人物身份、服装、摄影质感和背景共同基准",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "role": "人物身份、服装、摄影质感和背景共同基准",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ],
+  "sequence": [
+    "s01",
+    "s02",
+    "复用s01",
+    "s03",
+    "复用s01"
+  ],
+  "inspection_method": "逐张调用view_image查看最终PNG，因其返回application/octet-stream，渲染时只将data URL MIME标识改为image/png；未修改图片像素。比较单图及三张照片的机位、下肢、器械和方向。",
+  "limitations": [
+    "为AI生成的姿势教学画面，并非真实患者或真实动作测量。",
+    "照片不能直接判定膝旋转力矩、足底压力、真实胸腰分节旋转、负荷大小或组织耐受。",
+    "转胸角度仅供姿势辨认，不作为精确测量或个体许可。",
+    "人物身份一致性和下肢稳定为视觉核对，不宣称逐像素相同。",
+    "s01胸口朝向相对于其骨盆与脚方向为中立；相机为正面偏斜，因此人物朝向在画面中略向右。"
+  ],
+  "images": [
+    {
+      "step": "s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/143_T-AXU-021_s01.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1665831,
+      "sha256": "CBC81356200515F43F217F970DC7A65FFF4A8AFE36288EC18FDEB34EC832B788",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-2d71-7503-ab65-91a6fcfa667b/exec-875f369d-53f9-4563-bda4-c903daeff695.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/143_T-AXU-021_s01.png",
+      "mode": "reference-guided generation / identity-preserving reposing",
+      "prompt": "Use case: scientific-educational.\nAsset type: rehabilitation exercise demonstration photograph, single posture, action 143 T-AXU-021 step s01.\nInput images: images 1, 2 and 3 are supporting identity, clothing, studio background and photographic style references of the same adult East Asian woman. They are not exercise pose references. Repose this same woman while faithfully preserving her face, age impression, skin tone, physique and black ponytail, fitted plain white short sleeve shirt and charcoal full-length pants.\nPrimary request: full-body realistic photograph of this woman standing stably on a flat non-slip studio floor in a SHALLOW split stance and holding ONE small plain dark gray kettlebell with both hands close against the lower sternum. Chest and pelvis face straight forward in the neutral starting posture. Her own LEFT foot is modestly forward, her own RIGHT foot modestly back. The two feet retain clear side-to-side hip-width separation: not on a tightrope, not crossed. Both soles stably supported, knees softly bent only a little, no deep lunge or squat. Both kneecaps and toes face forward with no rotation. Upright neutral trunk, relaxed shoulders; elbows bent and near ribs; both hands grip the sides of the kettlebell handle in a realistic goblet hold, round bell below the handle resting close to the sternum, not at arm's length.\nScene/backdrop: seamless pale gray-blue studio backdrop and floor, soft natural contact shadows.\nStyle/medium: high-quality natural photorealistic educational studio photograph matching the references; neutral soft diffuse light, natural anatomy.\nComposition/framing: portrait 4:5, fixed full-body front view with just a slight 10-degree oblique angle, camera at lower chest level, normal lens perspective; entire head, both hands, entire feet and contact shadows in frame with useful margins. The modest front/back foot stagger and lateral width should both be readily visible. Woman fills about 80% of frame height.\nText: none.\nConstraints: one woman, one single posture, one kettlebell; natural proportions, anatomically accurate connected limbs and fingers. Entire feet visible, consistent gray athletic trainers with neutral plain styling. No print, no captions, no arrows, no numbers, no inset, no collage, no watermark, no extra equipment, no deep lunge, no chest rotation at this first step, no heavy weight markings. This is a stable static split-stance version only.",
+      "input_images": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "visual_inspection": {
+        "result": "通过本轮视觉核对",
+        "posture": "静态浅分腿、胸口与骨盆同向朝前的中立起点",
+        "direction": "中立；画面右脚为人物本人左前脚，画面左脚为本人右后脚",
+        "checks": [
+          "完整头、手、双脚及地面接触可见。",
+          "双脚有前后错步并保留清楚横向宽度，无窄直线或交叉步位；没有深蹲或深弓步。",
+          "膝盖方向跟随足尖，骨盆和胸口处于中立相对关系。",
+          "一只深灰壶铃由双手握柄，屈肘靠近胸口，没有伸臂远举。",
+          "人物、黑马尾、白短袖、深灰长裤、柔光灰蓝背景与参考相符；比例自然。",
+          "无文字、编号、箭头、拼图、水印或多余器械。"
+        ]
+      },
+      "revisions": 0
+    },
+    {
+      "step": "s02",
+      "path": "E:/git冲突问题/rehab image/train/steps/143_T-AXU-021_s02.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1604522,
+      "sha256": "A6BA0891C900E2EBD8162C81664D3D09083FCBD82DE9087A98F459FBF0E4AC05",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-2d71-7503-ab65-91a6fcfa667b/exec-674eecd3-9026-47a8-aa75-12a721abb8b7.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/143_T-AXU-021_s02.png",
+      "mode": "edit of accepted s01",
+      "prompt": "Use case: scientific-educational, precise-object-edit.\nAsset type: rehabilitation demonstration photograph, action 143 T-AXU-021 step s02.\nInput image: the sole image is the EDIT TARGET, the already accepted neutral starting photo s01. Preserve it with high fidelity.\nPrimary request: change ONLY the upper trunk, shoulders, bent elbows, hands, kettlebell and naturally accompanying head to show a small controlled chest rotation toward the woman's OWN LEFT. The direction is toward the RIGHT SIDE OF THE IMAGE, becoming slightly more of a right-facing profile. Rotate the chest/shoulder girdle only about 20 degrees farther toward image right relative to the unchanged pelvis, a visibly small and comfortable range. The chest-mounted kettlebell and both hands travel together with the chest and remain CLOSE AGAINST THE LOWER STERNUM. Elbows stay bent near the ribs; no reach away from chest. Natural anatomy, no extreme twist, no torso lean or side bend.\nInvariants: keep EXACT same woman and face identity, black ponytail, plain white short sleeve top, charcoal pants, gray shoes, small dark gray kettlebell design, studio background, diffuse light, ground shadows, camera position, focal length, subject scale, framing and image dimensions. Keep the ENTIRE PELVIS AND EVERYTHING BELOW THE WAIST visually unchanged: same stance, front foot and back foot at the same pixel positions, same toe directions, same both sole contacts, same knee bend and knee directions, same hip/pelvis orientation. The image-right left foot remains forward, image-left right foot remains back with lateral width. Both feet supported on flat floor. No step, no pivot, no turning either knee, no deeper lunge. All feet and head fully in frame.\nText: none. Single woman and single posture only. No labels, arrows, diagrams, inset, collage or watermark.",
+      "input_images": [
+        "E:/git冲突问题/rehab image/train/steps/143_T-AXU-021_s01.png"
+      ],
+      "reused": false,
+      "visual_inspection": {
+        "result": "通过本轮视觉核对",
+        "posture": "脚位不变，胸口小幅向本人左转，双手壶铃随胸",
+        "direction": "本人左，朝画面右侧；相对s01肩线、胸前铃位置转向画面右",
+        "checks": [
+          "与s01机位、构图、人物尺度、衣着、灰鞋和壶铃外观相同。",
+          "前后脚位置、支撑点和足尖方向视觉保持一致；膝部不追随转胸转向。",
+          "胸部、肩和持铃双手共同向画面右小幅转动，胸铃仍近身体；无跨步、深弓步或伸臂甩铃。",
+          "骨盆位置与下肢方向大致稳定。",
+          "完整头手脚仍可见，握持合理，人体比例自然。",
+          "无文字、箭头、拼图、水印。"
+        ]
+      },
+      "revisions": 0
+    },
+    {
+      "step": "s03",
+      "path": "E:/git冲突问题/rehab image/train/steps/143_T-AXU-021_s03.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1601311,
+      "sha256": "CC1228B6F92443DB74EF1648A2AD4C53414A649B0B0EEEF373E1334C282C4F21",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13940-2d71-7503-ab65-91a6fcfa667b/exec-6f06e961-b692-4dde-803d-69fc467eb1fa.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/143_T-AXU-021_s03.png",
+      "mode": "edit of accepted s01",
+      "prompt": "Use case: scientific-educational, precise-object-edit.\nAsset type: rehabilitation demonstration photograph, action 143 T-AXU-021 step s03.\nInput image: the sole image is the EDIT TARGET, the accepted NEUTRAL starting photo s01. Preserve it with high fidelity. This is the other rotation direction after returning through s01.\nPrimary request: change ONLY the upper trunk, shoulders, bent elbows, hands, kettlebell and naturally accompanying head to show a small controlled chest rotation toward the woman's OWN RIGHT, opposite to s02. The direction is toward the LEFT SIDE OF THE IMAGE, so her chest comes a little more front-on toward the camera from the current image-right-facing neutral orientation. Rotate the chest/shoulder girdle only about 20 degrees toward image left relative to the unchanged pelvis, a visibly small comfortable range; rotate the chest too, not just the head. Chest-mounted kettlebell and both hands travel together with the chest and remain CLOSE AGAINST THE LOWER STERNUM. Elbows stay bent near the ribs, realistic two-hand grip; no reach away from chest. Natural anatomy, no extreme twist, no torso lean or side bend. Head follows chest in relaxed alignment.\nInvariants: keep EXACT same woman and face identity, black ponytail, plain white short sleeve top, charcoal pants, gray shoes, small dark gray kettlebell design, studio background, diffuse light, ground shadows, camera position, focal length, subject scale, framing and image dimensions. Keep the ENTIRE PELVIS AND EVERYTHING BELOW THE WAIST visually unchanged: same stance, front foot and back foot at the same pixel positions, same toe directions, same both sole contacts, same knee bend and knee directions, same hip/pelvis orientation. The image-right left foot remains forward, image-left right foot remains back with lateral width. Both feet supported on flat floor. No step, no pivot, no turning either knee, no deeper lunge. All feet and head fully in frame.\nText: none. Single woman and single posture only. No labels, arrows, diagrams, inset, collage or watermark.",
+      "input_images": [
+        "E:/git冲突问题/rehab image/train/steps/143_T-AXU-021_s01.png"
+      ],
+      "reused": false,
+      "visual_inspection": {
+        "result": "通过本轮视觉核对",
+        "posture": "从s01中立起点向本人右转胸，双手壶铃继续靠胸",
+        "direction": "本人右，朝画面左侧；与s02相反",
+        "checks": [
+          "直接以s01为编辑目标，表示先回中立再进入另一方向，不把s02直接接成连续极限扭转。",
+          "胸部、肩线和胸前壶铃相对s01转向画面左；与s02为两个相反方向。",
+          "前后脚位置、足尖、浅屈膝程度和支撑点视觉保持一致，无脚膝扭转追胸幅。",
+          "骨盆大致稳定，壶铃仍双手近胸，没有远离身体。",
+          "机位、灰蓝背景、柔光、尺度和衣着一致；完整头手脚可见，比例自然。",
+          "无文字、箭头、拼图、水印。"
+        ]
+      },
+      "revisions": 0
+    }
+  ]
+}

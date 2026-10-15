@@ -1,0 +1,51 @@
+{
+  "png_count": 10,
+  "archive_entry_count": 13,
+  "archive_crc_pass": true,
+  "all_images_sha256_match": true,
+  "images": [
+    {
+      "file": "train/steps/148_T-AXU-010_s01.png",
+      "sha256_match": true
+    },
+    {
+      "file": "train/steps/148_T-AXU-010_s02.png",
+      "sha256_match": true
+    },
+    {
+      "file": "train/steps/149_T-AXU-011_s01.png",
+      "sha256_match": true
+    },
+    {
+      "file": "train/steps/149_T-AXU-011_s02.png",
+      "sha256_match": true
+    },
+    {
+      "file": "train/steps/149_T-AXU-011_s03.png",
+      "sha256_match": true
+    },
+    {
+      "file": "train/steps/150_T-AXU-012_s01.png",
+      "sha256_match": true
+    },
+    {
+      "file": "train/steps/150_T-AXU-012_s02.png",
+      "sha256_match": true
+    },
+    {
+      "file": "train/steps/150_T-AXU-012_s03.png",
+      "sha256_match": true
+    },
+    {
+      "file": "train/steps/151_T-AXU-013_s01.png",
+      "sha256_match": true
+    },
+    {
+      "file": "train/steps/151_T-AXU-013_s02.png",
+      "sha256_match": true
+    }
+  ],
+  "zip_path": "E:/git冲突问题/rehab image/步骤图_148-151_10张.zip",
+  "zip_bytes": 14682818,
+  "zip_sha256": "FEA6D434C89EBFEF6676030A12CBAC3C53D88516C8C87E99D4A9CB402BA5A675"
+}

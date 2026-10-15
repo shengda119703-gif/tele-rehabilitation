@@ -1,0 +1,170 @@
+{
+  "generation_mode": "built-in image_gen",
+  "intent": "new individual action photographs with original identity/style references",
+  "recorded_at": "2026-10-13T23:13:20+08:00",
+  "source_document_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+  "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+  "files": [
+    {
+      "number": "054",
+      "id": "E-AXU-027",
+      "title": "墙面持球小圈控制观察",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\054_E-AXU-027_墙面持球小圈控制观察.png",
+      "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-16bda26d-c04c-482f-9d39-86189f0f1a73.png",
+      "phase": "墙面持球小圈的起始稳定接触：单掌在肩前下方轻抵软球靠墙停住，准备小范围画圈。",
+      "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment demonstration photograph, action 054 E-AXU-027 墙面持球小圈控制观察.\nMandatory input references: Use ALL THREE original attached photographs for the SAME adult East Asian woman's exact identity, face and features, BLACK LOW PONYTAIL, normal adult proportions, plain white FITTED SHORT-SLEEVE tee, dark charcoal LONG FULL-LENGTH TROUSERS, and the ORIGINAL cool cloudy pale gray-blue studio background with soft photographic light. These are identity/style references, not an instruction to repeat their poses.\nPrimary request: one single photorealistic full-body photograph of this woman doing a gentle wall ball-circle control assessment, selecting the source card's initial low-load phase: lightly pressing a small plain light-gray SOFT BALL against a sturdy simple gray wall with ONE palm and pausing in stable contact before tracing small circles. Woman stands stable facing the wall, hands in front, no trunk side lean. The working hand is at shoulder-front height SLIGHTLY BELOW THE SHOULDER, on the outer side of the soft ball. The ball is visibly BETWEEN HER PALM AND THE WALL, lightly compressed into the wall, never floating. Wrist neutral, elbow softly unlocked, shoulder relaxed away from ear. Other arm hangs naturally by the hip, not holding the ball. Feet planted close enough to the wall to make the pressure gentle and controllable, not a maximal push.\nScene/backdrop: match the original cool CLOUDY softly mottled light gray-blue seamless photography background and gray floor. Only a simple matte gray support wall along the RIGHT side of the image, no room corner, gym, house, clinic or other furniture. Ball plain and unbranded.\nComposition/framing: portrait high-resolution photograph with whole woman, head, hand-ball-wall contact, elbow, wrist, hips and both feet entirely visible. Camera slightly oblique from her side/front, showing her natural facial profile like the original references while also revealing the working palm, ball and wall contact. Comfortable margins, normal adult anatomy. Flat plain WHITE low-top sneakers on both feet.\nConstraints: one woman, one scene, one representative phase. Exact same original adult face and low ponytail, fitted white short-sleeve tee, charcoal LONG trousers. No arrows or drawn circle, text, captions, labels, numbers, logos, watermark, collage, extra people, duplicate limbs, weights, large exercise ball, ball below waist, overhead arm, shoulder shrug, strong body lean, curled wrist, athletic gym scene or bare feet.",
+      "source_card_line": 3781,
+      "source_card_excerpt": "手在肩前下方或获准高度抵球，另一手可辅助摆位；站姿稳定。先轻抵墙停住。按小范围顺时针画圈，再停止。小圈慢做；不夹肩憋气；不为了稳球猛压墙。",
+      "visual_review": "Pass: same adult woman/profile and original wardrobe/background; single palm lightly holds a plain soft ball visibly between hand and wall below shoulder; relaxed shoulder and opposite arm; stable stance and complete full-body framing.",
+      "referenced_image_paths": [
+        "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+        "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+        "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+      ],
+      "references": [
+        {
+          "path": "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        }
+      ],
+      "attempts": 1,
+      "attempt_history": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment demonstration photograph, action 054 E-AXU-027 墙面持球小圈控制观察.\nMandatory input references: Use ALL THREE original attached photographs for the SAME adult East Asian woman's exact identity, face and features, BLACK LOW PONYTAIL, normal adult proportions, plain white FITTED SHORT-SLEEVE tee, dark charcoal LONG FULL-LENGTH TROUSERS, and the ORIGINAL cool cloudy pale gray-blue studio background with soft photographic light. These are identity/style references, not an instruction to repeat their poses.\nPrimary request: one single photorealistic full-body photograph of this woman doing a gentle wall ball-circle control assessment, selecting the source card's initial low-load phase: lightly pressing a small plain light-gray SOFT BALL against a sturdy simple gray wall with ONE palm and pausing in stable contact before tracing small circles. Woman stands stable facing the wall, hands in front, no trunk side lean. The working hand is at shoulder-front height SLIGHTLY BELOW THE SHOULDER, on the outer side of the soft ball. The ball is visibly BETWEEN HER PALM AND THE WALL, lightly compressed into the wall, never floating. Wrist neutral, elbow softly unlocked, shoulder relaxed away from ear. Other arm hangs naturally by the hip, not holding the ball. Feet planted close enough to the wall to make the pressure gentle and controllable, not a maximal push.\nScene/backdrop: match the original cool CLOUDY softly mottled light gray-blue seamless photography background and gray floor. Only a simple matte gray support wall along the RIGHT side of the image, no room corner, gym, house, clinic or other furniture. Ball plain and unbranded.\nComposition/framing: portrait high-resolution photograph with whole woman, head, hand-ball-wall contact, elbow, wrist, hips and both feet entirely visible. Camera slightly oblique from her side/front, showing her natural facial profile like the original references while also revealing the working palm, ball and wall contact. Comfortable margins, normal adult anatomy. Flat plain WHITE low-top sneakers on both feet.\nConstraints: one woman, one scene, one representative phase. Exact same original adult face and low ponytail, fitted white short-sleeve tee, charcoal LONG trousers. No arrows or drawn circle, text, captions, labels, numbers, logos, watermark, collage, extra people, duplicate limbs, weights, large exercise ball, ball below waist, overhead arm, shoulder shrug, strong body lean, curled wrist, athletic gym scene or bare feet.",
+          "referenced_image_paths": [
+            "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+            "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+            "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+          ],
+          "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-16bda26d-c04c-482f-9d39-86189f0f1a73.png",
+          "selected": true,
+          "review": "Pass: same adult woman/profile and original wardrobe/background; single palm lightly holds a plain soft ball visibly between hand and wall below shoulder; relaxed shoulder and opposite arm; stable stance and complete full-body framing."
+        }
+      ],
+      "source_document_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+      "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+      "sha256": "161B7F6EFCDBE0BDA5A1CC608DCE9D6CBAC30FF31C81FD43CFEC2FE4E49CA966",
+      "original_sha256": "161B7F6EFCDBE0BDA5A1CC608DCE9D6CBAC30FF31C81FD43CFEC2FE4E49CA966",
+      "width": 1122,
+      "height": 1402,
+      "byte_length": 1691695
+    },
+    {
+      "number": "055",
+      "id": "E-AXU-028",
+      "title": "俯卧I/Y/T/W上肢控制观察",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\055_E-AXU-028_俯卧I／Y／T／W上肢控制观察.png",
+      "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-ec13b0ad-5e31-47b5-9897-3764253dce7c.png",
+      "phase": "俯卧 I 路线低高度抬臂停留：双臂沿体侧向足方向轻抬，额头、胸腹、骨盆与腿保持支撑。",
+      "selected_route": "I",
+      "actual_caption": "俯卧 I 路线：额头支撑、双臂沿体侧轻抬",
+      "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment photograph, action 055 E-AXU-028 俯卧I/Y/T/W上肢控制观察, selected route I ONLY.\nMandatory input references: Use ALL THREE original attached photographs. They show the SAME adult East Asian woman. Match her EXACT original face/features, black LOW ponytail, normal ADULT proportions, plain white FITTED SHORT-SLEEVE tee and dark charcoal LONG FULL-LENGTH TROUSERS. Match the original soft photographic lighting and cool cloudy pale gray-blue studio backdrop. Do not copy their standing arm poses.\nPrimary request: one realistic single-scene full-body photograph of this same woman LYING PRONE on a simple gray exercise mat, demonstrating only the I route of a low-load prone upper-limb control assessment. BOTH ARMS extend straight ALONG HER BODY SIDES toward her feet, parallel to the torso, with natural straight elbows; both arms and hands lift only a few CENTIMETERS above the mat in a gentle brief hold, no weights. Hands remain near the sides of her thighs, not overhead and not spread in a T or Y. Her chest, abdomen, pelvis and legs remain settled on the mat. No trunk extension, no raised chest or lumbar arch. Legs straight and relaxed, bare feet.\nCrucial head support: her FOREHEAD rests naturally on a small soft PLAIN GRAY forehead cushion. Head and neck stay neutral in continuation of the spine, FACE DOWN, with no neck rotation and no lifted chin. The cushion supports only the forehead, leaving her nose and side facial profile unobstructed. Show her visible natural facial profile by choosing the CAMERA angle from the side and slightly above; do NOT twist her head sideways or lift her head to expose the face.\nScene/backdrop: EXACT original softly CLOUDY light gray-blue seamless studio photography backdrop and floor, original gentle light. Only simple gray exercise mat and small gray forehead pad. No gym, room corners, treatment bed, furnishings or extra equipment.\nComposition/framing: portrait high-resolution photograph, full body on the mat oriented naturally diagonally within the frame, head through both bare feet visible. Side/oblique slightly elevated camera at the near side of her head and shoulder, allowing her original cheek/nose profile, forehead cushion contact, trunk support and BOTH long straight I-position arms/hands and their small lift to be visible. The woman must have normal adult anatomy and proportions, not be compressed or elongated.\nConstraints: one woman, one action route I, one photo, no text or letter I in image. Preserve exact original woman, face, low ponytail, white fitted short-sleeve tee and charcoal LONG trousers. No arrows, captions, labels, numbers, logos, watermark, collage, multiple phases, extra people or limbs. No T/Y/W pose, hands overhead, elbows bent, unsupported or twisted head, looking up to camera, chest lift, body arch, crossed legs, shorts, cropped trousers, sneakers on mat, dumbbells or bands.",
+      "source_card_line": 3837,
+      "source_card_excerpt": "额头支撑、胸腹落垫；每次选一条路线：I双臂沿体侧、Y前外上方、T侧方、W屈肘外开。轻抬手臂，头颈与躯干留在支撑面。低高度即可；不抬头顶腰；路线分开保存。",
+      "visual_review": "Pass: same woman profile, low ponytail and original long-trouser wardrobe; prone I route with both arms extending along torso toward feet and gently lifted; forehead supported by gray cushion; chest/abdomen/legs supported; head naturally down rather than rotated up toward camera; original gray-blue studio photo style. Near-side arm visible fully, far arm partly occluded naturally by trunk. Landscape output accepted to retain complete prone body; no aspect-only retry.",
+      "referenced_image_paths": [
+        "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+        "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+        "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+      ],
+      "references": [
+        {
+          "path": "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        }
+      ],
+      "attempts": 1,
+      "attempt_history": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment photograph, action 055 E-AXU-028 俯卧I/Y/T/W上肢控制观察, selected route I ONLY.\nMandatory input references: Use ALL THREE original attached photographs. They show the SAME adult East Asian woman. Match her EXACT original face/features, black LOW ponytail, normal ADULT proportions, plain white FITTED SHORT-SLEEVE tee and dark charcoal LONG FULL-LENGTH TROUSERS. Match the original soft photographic lighting and cool cloudy pale gray-blue studio backdrop. Do not copy their standing arm poses.\nPrimary request: one realistic single-scene full-body photograph of this same woman LYING PRONE on a simple gray exercise mat, demonstrating only the I route of a low-load prone upper-limb control assessment. BOTH ARMS extend straight ALONG HER BODY SIDES toward her feet, parallel to the torso, with natural straight elbows; both arms and hands lift only a few CENTIMETERS above the mat in a gentle brief hold, no weights. Hands remain near the sides of her thighs, not overhead and not spread in a T or Y. Her chest, abdomen, pelvis and legs remain settled on the mat. No trunk extension, no raised chest or lumbar arch. Legs straight and relaxed, bare feet.\nCrucial head support: her FOREHEAD rests naturally on a small soft PLAIN GRAY forehead cushion. Head and neck stay neutral in continuation of the spine, FACE DOWN, with no neck rotation and no lifted chin. The cushion supports only the forehead, leaving her nose and side facial profile unobstructed. Show her visible natural facial profile by choosing the CAMERA angle from the side and slightly above; do NOT twist her head sideways or lift her head to expose the face.\nScene/backdrop: EXACT original softly CLOUDY light gray-blue seamless studio photography backdrop and floor, original gentle light. Only simple gray exercise mat and small gray forehead pad. No gym, room corners, treatment bed, furnishings or extra equipment.\nComposition/framing: portrait high-resolution photograph, full body on the mat oriented naturally diagonally within the frame, head through both bare feet visible. Side/oblique slightly elevated camera at the near side of her head and shoulder, allowing her original cheek/nose profile, forehead cushion contact, trunk support and BOTH long straight I-position arms/hands and their small lift to be visible. The woman must have normal adult anatomy and proportions, not be compressed or elongated.\nConstraints: one woman, one action route I, one photo, no text or letter I in image. Preserve exact original woman, face, low ponytail, white fitted short-sleeve tee and charcoal LONG trousers. No arrows, captions, labels, numbers, logos, watermark, collage, multiple phases, extra people or limbs. No T/Y/W pose, hands overhead, elbows bent, unsupported or twisted head, looking up to camera, chest lift, body arch, crossed legs, shorts, cropped trousers, sneakers on mat, dumbbells or bands.",
+          "referenced_image_paths": [
+            "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+            "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+            "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+          ],
+          "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-ec13b0ad-5e31-47b5-9897-3764253dce7c.png",
+          "selected": true,
+          "review": "Pass: same woman profile, low ponytail and original long-trouser wardrobe; prone I route with both arms extending along torso toward feet and gently lifted; forehead supported by gray cushion; chest/abdomen/legs supported; head naturally down rather than rotated up toward camera; original gray-blue studio photo style. Near-side arm visible fully, far arm partly occluded naturally by trunk. Landscape output accepted to retain complete prone body; no aspect-only retry."
+        }
+      ],
+      "source_document_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+      "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+      "sha256": "59835038AAD5188BD22805AF3B12E7AE2B440613577BA0358340D63D57BC0987",
+      "original_sha256": "59835038AAD5188BD22805AF3B12E7AE2B440613577BA0358340D63D57BC0987",
+      "width": 1536,
+      "height": 1024,
+      "byte_length": 1783384
+    },
+    {
+      "number": "056",
+      "id": "E-AXU-021",
+      "title": "墙面小幅推撑负荷耐受筛查",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\056_E-AXU-021_墙面小幅推撑负荷耐受筛查.png",
+      "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-ac64ae28-3ce8-4add-af96-a0953375d75d.png",
+      "phase": "墙面推撑的受控屈肘靠近阶段：双掌约肩高贴墙、双脚踩稳，身体整体直线前移后停留。",
+      "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment demonstration photograph, action 056 E-AXU-021 墙面小幅推撑负荷耐受筛查.\nMandatory references: use ALL THREE original attached photos for the SAME adult East Asian woman's EXACT FACE and features, black LOW ponytail, normal adult body proportions, plain WHITE FITTED SHORT-SLEEVE tee and dark charcoal LONG FULL-LENGTH TROUSERS. Also preserve the original cool CLOUDY pale gray-blue studio backdrop and soft photographic light. Their arm positions are identity/style references only.\nPrimary request: generate one realistic full-body photo of this woman performing a gentle low-load WALL PUSH-UP assessment, selecting the SMALL ELBOW-BEND approach phase. She faces a sturdy simple gray wall on the RIGHT side of the image with BOTH PALMS firmly touching the wall at approximately SHOULDER HEIGHT and slightly wider than shoulder width. Both elbows are flexed only mildly, about 25 to 40 degrees, so her straight body has moved only a small distance toward the wall. Palms stay flat and stable, fingers naturally upward, wrists anatomically normal. Shoulders stay relaxed away from ears.\nHer head, shoulders, hips and ankles form a SINGLE STRAIGHT line with a small whole-body forward incline toward wall, no independent sagging waist, no piking hips, no trunk rotation. Both feet are planted flat at a modest short distance from the wall, close enough for gentle low loading; knees softly unlocked but not squatting. She is calm and breathing naturally, not a maximal push or deep bend. Both hands, elbows, hips and feet must be visible.\nScene/backdrop: match ORIGINAL softly mottled cool cloudy light gray-blue seamless studio photograph and gray floor. The only prop is one simple matte gray vertical wall support plane on the right. No gym, room, clinic, home, furniture, equipment or mural.\nComposition/framing: portrait high-resolution photograph, SIDE/SLIGHT OBLIQUE SIDE full-body view showing her original natural facial profile, both hand-wall contacts, shoulder/elbow/wrist, pelvis and both feet, and the straight line from ankles to head. Entire head and feet unclipped with comfortable margins. Flat plain WHITE low-top sneakers on both feet.\nConstraints: single original woman, single scene, single small-range low-load phase. Exact face/low ponytail and white fitted short-sleeve tee/charcoal LONG trousers. No text, labels, arrows, numbers, captions, logo, watermark, collage, extra people or extra limbs. No fully locked elbows, deep push-up, shrug, lumbar sag, bent-waist posture, squatting, single-arm support, forearm-wall support, bare feet, short pants or athletic gym background.",
+      "source_card_line": 3893,
+      "source_card_excerpt": "双手置墙约肩高略宽于肩，双脚离墙适当距离；侧面拍到全身。屈肘让身体小幅靠近墙，躯干保持整体移动。手掌接触稳定，肩不耸到耳边。身体整体前后移动，避免腰单独塌下。",
+      "visual_review": "Pass: same original woman/profile, low ponytail, white short-sleeve tee, charcoal long trousers and cool gray-blue studio photo; both palms stable against wall near shoulder height, elbows flexed in wall approach phase; head/torso/hips/legs aligned in whole-body incline, no independent lumbar sag or hip pike; feet planted and full body visible.",
+      "referenced_image_paths": [
+        "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+        "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+        "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+      ],
+      "references": [
+        {
+          "path": "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+        },
+        {
+          "path": "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+        },
+        {
+          "path": "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+          "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+        }
+      ],
+      "attempts": 1,
+      "attempt_history": [
+        {
+          "attempt": 1,
+          "prompt": "Use case: scientific-educational.\nAsset type: one individual rehabilitation assessment demonstration photograph, action 056 E-AXU-021 墙面小幅推撑负荷耐受筛查.\nMandatory references: use ALL THREE original attached photos for the SAME adult East Asian woman's EXACT FACE and features, black LOW ponytail, normal adult body proportions, plain WHITE FITTED SHORT-SLEEVE tee and dark charcoal LONG FULL-LENGTH TROUSERS. Also preserve the original cool CLOUDY pale gray-blue studio backdrop and soft photographic light. Their arm positions are identity/style references only.\nPrimary request: generate one realistic full-body photo of this woman performing a gentle low-load WALL PUSH-UP assessment, selecting the SMALL ELBOW-BEND approach phase. She faces a sturdy simple gray wall on the RIGHT side of the image with BOTH PALMS firmly touching the wall at approximately SHOULDER HEIGHT and slightly wider than shoulder width. Both elbows are flexed only mildly, about 25 to 40 degrees, so her straight body has moved only a small distance toward the wall. Palms stay flat and stable, fingers naturally upward, wrists anatomically normal. Shoulders stay relaxed away from ears.\nHer head, shoulders, hips and ankles form a SINGLE STRAIGHT line with a small whole-body forward incline toward wall, no independent sagging waist, no piking hips, no trunk rotation. Both feet are planted flat at a modest short distance from the wall, close enough for gentle low loading; knees softly unlocked but not squatting. She is calm and breathing naturally, not a maximal push or deep bend. Both hands, elbows, hips and feet must be visible.\nScene/backdrop: match ORIGINAL softly mottled cool cloudy light gray-blue seamless studio photograph and gray floor. The only prop is one simple matte gray vertical wall support plane on the right. No gym, room, clinic, home, furniture, equipment or mural.\nComposition/framing: portrait high-resolution photograph, SIDE/SLIGHT OBLIQUE SIDE full-body view showing her original natural facial profile, both hand-wall contacts, shoulder/elbow/wrist, pelvis and both feet, and the straight line from ankles to head. Entire head and feet unclipped with comfortable margins. Flat plain WHITE low-top sneakers on both feet.\nConstraints: single original woman, single scene, single small-range low-load phase. Exact face/low ponytail and white fitted short-sleeve tee/charcoal LONG trousers. No text, labels, arrows, numbers, captions, logo, watermark, collage, extra people or extra limbs. No fully locked elbows, deep push-up, shrug, lumbar sag, bent-waist posture, squatting, single-arm support, forearm-wall support, bare feet, short pants or athletic gym background.",
+          "referenced_image_paths": [
+            "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+            "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+            "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+          ],
+          "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a135a2-d314-7031-a32a-6d6f0ea0bae0\\exec-ac64ae28-3ce8-4add-af96-a0953375d75d.png",
+          "selected": true,
+          "review": "Pass: same original woman/profile, low ponytail, white short-sleeve tee, charcoal long trousers and cool gray-blue studio photo; both palms stable against wall near shoulder height, elbows flexed in wall approach phase; head/torso/hips/legs aligned in whole-body incline, no independent lumbar sag or hip pike; feet planted and full body visible."
+        }
+      ],
+      "source_document_path": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+      "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+      "sha256": "78A4FAFE7C3A5AFF995198AFCCC40B0575CAB9678628A1AA168BF177B171420A",
+      "original_sha256": "78A4FAFE7C3A5AFF995198AFCCC40B0575CAB9678628A1AA168BF177B171420A",
+      "width": 1122,
+      "height": 1402,
+      "byte_length": 1703641
+    }
+  ]
+}

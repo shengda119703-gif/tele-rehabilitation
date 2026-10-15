@@ -1,0 +1,677 @@
+{
+  "batch": 2,
+  "batch_type": "steps",
+  "requested_ids": [
+    "006-s01",
+    "006-s02",
+    "007-s01",
+    "007-s02",
+    "008-s01",
+    "008-s02",
+    "008-s03",
+    "009-s01",
+    "009-s02",
+    "009-s03"
+  ],
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_checklist_sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+  "source_action_library": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "source_action_library_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+  "generation_mode": "built-in image_gen; one asset per call; no CLI",
+  "counts": {
+    "actions": 4,
+    "requested_frames": 10,
+    "selected_final_images": 10,
+    "new_generated_selected": 10,
+    "reused_existing": 0
+  },
+  "references": [
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ],
+  "groups": [
+    {
+      "serial": "006",
+      "action_id": "E-LOW-001",
+      "name": "扶稳站姿主动屈髋",
+      "order": "01 → 02 → 01",
+      "note": "侧面全身；人物左侧测试，右手扶稳，右脚支撑。",
+      "labels": [
+        "准备：双足站稳",
+        "主动屈髋：抬起左膝"
+      ],
+      "images": [
+        "assess/steps/006_E-LOW-001_s01.png",
+        "assess/steps/006_E-LOW-001_s02.png"
+      ]
+    },
+    {
+      "serial": "007",
+      "action_id": "E-LOW-002",
+      "name": "扶稳站姿主动髋后伸",
+      "order": "01 → 02 → 01",
+      "note": "侧面全身；人物右侧测试，左手扶稳，左脚支撑。",
+      "labels": [
+        "准备：双足站稳",
+        "主动髋后伸：右腿后移"
+      ],
+      "images": [
+        "assess/steps/007_E-LOW-002_s01.png",
+        "assess/steps/007_E-LOW-002_s02.png"
+      ]
+    },
+    {
+      "serial": "008",
+      "action_id": "E-LOW-003",
+      "name": "扶稳髋外展与小幅内收",
+      "order": "01 → 02 → 01 → 03 → 01",
+      "note": "正面全身；人物右侧（画面左）测试，左手扶稳、左脚支撑。内收方向按原卡许可条件。",
+      "labels": [
+        "中立准备",
+        "髋外展：测试腿向外",
+        "小幅髋内收：测试腿向中线"
+      ],
+      "images": [
+        "assess/steps/008_E-LOW-003_s01.png",
+        "assess/steps/008_E-LOW-003_s02.png",
+        "assess/steps/008_E-LOW-003_s03.png"
+      ]
+    },
+    {
+      "serial": "009",
+      "action_id": "E-LOW-004",
+      "name": "坐姿髋内旋与外旋",
+      "order": "01 → 02 → 01 → 03 → 01",
+      "note": "正面高椅坐位；人物右侧（画面左）测试，大腿受支持、双足悬空、同侧膝位保留。",
+      "labels": [
+        "中立：小腿下垂",
+        "髋内旋：小腿向外摆",
+        "髋外旋：小腿向内摆"
+      ],
+      "images": [
+        "assess/steps/009_E-LOW-004_s01.png",
+        "assess/steps/009_E-LOW-004_s02.png",
+        "assess/steps/009_E-LOW-004_s03.png"
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "logical_id": "006-s01",
+      "intended_filename": "006_E-LOW-001_s01.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/006_E-LOW-001_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-098c-7f80-845f-b4d19cbbedd1/exec-c202e028-fa6b-4be6-81f8-be856a794c66.png",
+      "reused": false,
+      "reused_from": null,
+      "prompt": "Use case: scientific-educational.\nAsset type: one independent unlabelled rehabilitation demonstration photograph, action 006 E-LOW-001 step s01 preparation. Produce exactly one single image, no panels.\nInput images: reference-01.png, reference-02.png and reference-03.png are identity, clothing, photographic quality, soft studio light and gray-blue color references ONLY; their arm poses are not the requested action.\nScene and subject: the very same adult East Asian woman from all three supplied references, identical face, age, skin tone, black low ponytail, plain white short-sleeve T-shirt and fitted dark charcoal-gray full-length pants. Bare feet. Seamless muted gray-blue studio background and floor, natural soft contact shadows, realistic educational studio photography.\nFraming: portrait 1024x1536 requested. Fixed left-side camera view, subject facing frame right, entire head, both hands, complete legs, both bare feet and all support contact visible with comfortable margins; natural perspective and body proportions. Subject occupies about 80% of image height. Soft even light and modest empty space.\nAction: quiet neutral standing start. Both knees comfortably straight, both feet flat on the floor at about hip width; feet point forward to frame right with a slight width separation so both foot contacts can be seen. Torso, pelvis and head naturally upright. Her RIGHT (far-side) hand lightly rests at waist height on one sturdy fixed matte light-gray metal exercise support rail positioned in front of and slightly to her right. Rail is firmly floor-mounted, with a horizontal grip and two visible vertical posts; it must look stable, and the hand must visibly touch the horizontal grip with plausible fingers. Her LEFT near-side arm hangs relaxed along the body; left hand is away from the legs and does not lift a leg. The left testing leg is the nearer leg; both feet are down in this preparation.\nRequirements: believable hip-knee-ankle alignment; anatomically correct continuous joints, arm lengths, leg lengths, hands with normal fingers and bare feet with normal toes. Preserve the woman's appearance faithfully. Use exactly one woman and only the necessary support rail. No lifted knee, no leaning, no stepping or pulling on the rail. No furniture unrelated to this action, no shoes, no mat, no text, numbers, arrows, diagrams, watermark or logo.",
+      "sha256": "E1543B67F937A7476EC35A4B0C11317274E1872B8A5F1B5E8BBBC8BF79D1BCCD",
+      "width": 1024,
+      "height": 1536,
+      "review": {
+        "view_image_completed": true,
+        "status": "passed",
+        "identity_clothing_background": "同参考人物外观；黑马尾、白短袖和深灰裤；灰蓝背景及柔和棚拍光。",
+        "pose": "侧面全身、面朝右，双足落地、膝自然伸直、躯干直立；右手轻扶固定扶手，左手自然下垂。",
+        "support_contact": "右手触及水平扶手；双足全足掌着地；双立柱底板及螺栓可见。",
+        "anatomy_proportion": "头躯干和四肢比例自然、关节连接连续、完整双手和双足可见。",
+        "no_text_or_arrow": true
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-098c-7f80-845f-b4d19cbbedd1/exec-c202e028-fa6b-4be6-81f8-be856a794c66.png",
+          "prompt": "Use case: scientific-educational.\nAsset type: one independent unlabelled rehabilitation demonstration photograph, action 006 E-LOW-001 step s01 preparation. Produce exactly one single image, no panels.\nInput images: reference-01.png, reference-02.png and reference-03.png are identity, clothing, photographic quality, soft studio light and gray-blue color references ONLY; their arm poses are not the requested action.\nScene and subject: the very same adult East Asian woman from all three supplied references, identical face, age, skin tone, black low ponytail, plain white short-sleeve T-shirt and fitted dark charcoal-gray full-length pants. Bare feet. Seamless muted gray-blue studio background and floor, natural soft contact shadows, realistic educational studio photography.\nFraming: portrait 1024x1536 requested. Fixed left-side camera view, subject facing frame right, entire head, both hands, complete legs, both bare feet and all support contact visible with comfortable margins; natural perspective and body proportions. Subject occupies about 80% of image height. Soft even light and modest empty space.\nAction: quiet neutral standing start. Both knees comfortably straight, both feet flat on the floor at about hip width; feet point forward to frame right with a slight width separation so both foot contacts can be seen. Torso, pelvis and head naturally upright. Her RIGHT (far-side) hand lightly rests at waist height on one sturdy fixed matte light-gray metal exercise support rail positioned in front of and slightly to her right. Rail is firmly floor-mounted, with a horizontal grip and two visible vertical posts; it must look stable, and the hand must visibly touch the horizontal grip with plausible fingers. Her LEFT near-side arm hangs relaxed along the body; left hand is away from the legs and does not lift a leg. The left testing leg is the nearer leg; both feet are down in this preparation.\nRequirements: believable hip-knee-ankle alignment; anatomically correct continuous joints, arm lengths, leg lengths, hands with normal fingers and bare feet with normal toes. Preserve the woman's appearance faithfully. Use exactly one woman and only the necessary support rail. No lifted knee, no leaning, no stepping or pulling on the rail. No furniture unrelated to this action, no shoes, no mat, no text, numbers, arrows, diagrams, watermark or logo.",
+          "selected": true,
+          "review_status": "passed"
+        }
+      ],
+      "action_id": "E-LOW-001",
+      "action_name": "扶稳站姿主动屈髋",
+      "label_for_layout_only": "准备：双足站稳",
+      "relative_path": "assess/steps/006_E-LOW-001_s01.png",
+      "selected": true,
+      "root_review": {
+        "status": "passed",
+        "method": "主代理逐张view_image复核完整原片",
+        "checked": [
+          "身份服装与摄影方向",
+          "对应动作方向",
+          "支撑和器械接触",
+          "躯干/骨盆和测试肢体位置",
+          "自然比例及完整手足",
+          "同组机位和构图"
+        ],
+        "note": "动作、接触和比例通过。"
+      }
+    },
+    {
+      "logical_id": "006-s02",
+      "intended_filename": "006_E-LOW-001_s02.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/006_E-LOW-001_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-098c-7f80-845f-b4d19cbbedd1/exec-7834dd4e-d140-4cc2-be78-8471e137d7ac.png",
+      "reused": false,
+      "reused_from": null,
+      "prompt": "Use case: scientific-educational.\nAsset type: single unlabelled rehabilitation demonstration photograph, action 006 E-LOW-001 step s02 active hip flexion.\nInput images: FIRST image is the approved step s01 preparation and is the exact scene/composition/identity reference. The following three images are original identity, white shirt, charcoal pants, black ponytail, photographic style and gray-blue background references. Produce exactly one independent image without panels.\nPrimary request: derive the second posture of this same photograph by changing only the LEFT near-camera leg from neutral standing to an actively raised bent knee. Preserve the woman, face, hair, plain white short-sleeve T-shirt, fitted charcoal-gray pants, bare feet, floor, gray-blue backdrop, soft studio lighting, shadows, full-body scale, 1024x1536 portrait framing, camera and the sturdy floor-bolted support rail from image 1.\nAction detail: the woman still faces frame right, fixed left-side full-body camera. Her RIGHT far-side hand lightly contacts exactly the same waist-height horizontal rail at the same location; no heavy pull and no change to the rail. Her LEFT near-side hand remains naturally lowered next to her trunk and does NOT touch or pull the leg. Her RIGHT support foot stays fully flat on the floor at exactly its original position, support knee comfortably straight. Slowly active LEFT hip flexion shown at a comfortable endpoint: bring the near LEFT knee forward and up, with the knee bent approximately 90 degrees, left thigh visibly lifted forward approximately 65–75 degrees from vertical, and the entire left bare foot clearly off the floor; lower leg hangs naturally down beneath the knee. The raised knee and foot must be clearly distinguishable from the planted leg.\nTorso, pelvis, shoulders and head remain naturally upright and aligned with no backward trunk lean or lumbar arch and no hip hike. Only one clear static endpoint. The pose is active knee lifting, no hands holding the knee. Show complete head, both hands, full raised and support feet, all joints and rail-ground contacts without crop.\nAnatomy and style: photorealistic studio educational photography, same adult East Asian woman as all input references, natural arm and leg lengths, anatomically continuous hip-knee-ankle connections, realistic hands with normal fingers, realistic toes, no duplicate limbs. No text, labels, numbers, arrows, motion trail, watermark, logos, shoes, socks or unrelated objects.",
+      "sha256": "5720920B4F0F90200DEA055CFD46062F145CA7CFFBD6F32244FC44B7800672FE",
+      "width": 1024,
+      "height": 1536,
+      "review": {
+        "view_image_completed": true,
+        "status": "passed",
+        "identity_clothing_background": "同s01人物、黑马尾、白短袖、深灰裤、灰蓝背景及柔光一致。",
+        "pose": "同侧面全身机位、面朝右；近侧左腿主动屈髋抬膝，膝屈约90度、测试足离地；躯干直立、无手抱拉。",
+        "support_contact": "右手持续轻扶同一水平扶手；右支撑足全足掌落地。与s01对照足部投影有小幅位置变化，接触与支撑姿态仍清楚；按可见姿势教学验收，未主张像素配准。",
+        "anatomy_proportion": "四肢比例自然、关节连接连续，支撑腿与抬腿可辨，完整双手及双足可见。",
+        "no_text_or_arrow": true,
+        "group_invariants": "人物尺度、相机、扶手、背景和躯干姿势保持一致。"
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-098c-7f80-845f-b4d19cbbedd1/exec-7834dd4e-d140-4cc2-be78-8471e137d7ac.png",
+          "prompt": "Use case: scientific-educational.\nAsset type: single unlabelled rehabilitation demonstration photograph, action 006 E-LOW-001 step s02 active hip flexion.\nInput images: FIRST image is the approved step s01 preparation and is the exact scene/composition/identity reference. The following three images are original identity, white shirt, charcoal pants, black ponytail, photographic style and gray-blue background references. Produce exactly one independent image without panels.\nPrimary request: derive the second posture of this same photograph by changing only the LEFT near-camera leg from neutral standing to an actively raised bent knee. Preserve the woman, face, hair, plain white short-sleeve T-shirt, fitted charcoal-gray pants, bare feet, floor, gray-blue backdrop, soft studio lighting, shadows, full-body scale, 1024x1536 portrait framing, camera and the sturdy floor-bolted support rail from image 1.\nAction detail: the woman still faces frame right, fixed left-side full-body camera. Her RIGHT far-side hand lightly contacts exactly the same waist-height horizontal rail at the same location; no heavy pull and no change to the rail. Her LEFT near-side hand remains naturally lowered next to her trunk and does NOT touch or pull the leg. Her RIGHT support foot stays fully flat on the floor at exactly its original position, support knee comfortably straight. Slowly active LEFT hip flexion shown at a comfortable endpoint: bring the near LEFT knee forward and up, with the knee bent approximately 90 degrees, left thigh visibly lifted forward approximately 65–75 degrees from vertical, and the entire left bare foot clearly off the floor; lower leg hangs naturally down beneath the knee. The raised knee and foot must be clearly distinguishable from the planted leg.\nTorso, pelvis, shoulders and head remain naturally upright and aligned with no backward trunk lean or lumbar arch and no hip hike. Only one clear static endpoint. The pose is active knee lifting, no hands holding the knee. Show complete head, both hands, full raised and support feet, all joints and rail-ground contacts without crop.\nAnatomy and style: photorealistic studio educational photography, same adult East Asian woman as all input references, natural arm and leg lengths, anatomically continuous hip-knee-ankle connections, realistic hands with normal fingers, realistic toes, no duplicate limbs. No text, labels, numbers, arrows, motion trail, watermark, logos, shoes, socks or unrelated objects.",
+          "selected": true,
+          "review_status": "passed_with_group_note",
+          "note": "支撑足与s01投影略有变化，已记录。"
+        },
+        {
+          "attempt": 2,
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-098c-7f80-845f-b4d19cbbedd1/exec-9c2f2ddb-116b-4bb3-b3e3-6a928fee1228.png",
+          "prompt": "Use case: scientific-educational.\nAsset type: one unlabelled rehabilitation demonstration photograph, 006 E-LOW-001 s02, precise correction.\nInput image 1: the raised-knee photograph is the edit target. Input image 2: the two-feet-standing photograph is the exact reference for the original SUPPORT FOOT POSITION and unchanged scene. Input images 3, 4, 5 are original woman identity and photographic style references.\nMake one targeted correction to input image 1: restore the planted RIGHT support leg and foot to the exact position of the FAR foot in image 2. At 1024x1536, that original far foot has its heel around x355,y1340, ankle around x395,y1308, toe-tip around x520,y1350, and entire sole flat on the same floor. Keep this right foot fixed there, pointing to frame right. The raised LEFT knee remains raised forward with about 90-degree knee bend and bare foot off the floor. Adjust the support leg naturally from hip to original support-foot anchor with continuous normal knee and ankle anatomy. It is a supported standing knee lift with the same support foot, NOT a step.\nKeep EVERYTHING else from image 1 invariant: same woman's face and body, black ponytail, white T-shirt, dark charcoal pants, the raised leg pose and free left hand, right hand lightly resting on identical bolted gray support rail, upright torso without backward lean, camera viewpoint, frame crop, body scale, gray-blue background, original rail position and lighting. One woman, full head/hands/feet/contact points visible, bare feet with normal toes, realistic anatomy and proportions, single photograph. No text, arrows, labels, numbers, watermark, logos or extra objects.",
+          "selected": false,
+          "view_image_completed": true,
+          "review_status": "not_selected",
+          "note": "针对支撑足原落点修订；画面接触正确，但落点未实质改变，相比初版无显著优势，未将修订另拷贝到交付目录。"
+        }
+      ],
+      "action_id": "E-LOW-001",
+      "action_name": "扶稳站姿主动屈髋",
+      "label_for_layout_only": "主动屈髋：抬起左膝",
+      "relative_path": "assess/steps/006_E-LOW-001_s02.png",
+      "selected": true,
+      "root_review": {
+        "status": "passed",
+        "method": "主代理逐张view_image复核完整原片",
+        "checked": [
+          "身份服装与摄影方向",
+          "对应动作方向",
+          "支撑和器械接触",
+          "躯干/骨盆和测试肢体位置",
+          "自然比例及完整手足",
+          "同组机位和构图"
+        ],
+        "note": "支撑足较准备位有轻微足部投影差异；全足持续着地，扶手、头躯干及主动抬膝姿势符合清单。"
+      }
+    },
+    {
+      "logical_id": "007-s01",
+      "action_id": "E-LOW-002",
+      "step": "s01",
+      "target_pose": "单手轻扶固定支撑，双脚自然站稳，测试腿位于身体下方，躯干直立",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/007_E-LOW-002_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-39ee-70f0-970d-9aaae9733f7e/exec-f91202b6-714a-46f6-aaf3-2953cced137a.png",
+      "reused": false,
+      "prompt": "Use case: scientific-educational.\nAsset type: one independent photorealistic rehabilitation assessment demonstration photograph, 007 E-LOW-002 s01, neutral starting position for supported standing hip extension. This identifier is metadata only; do not write it in the image.\nInput images: reference-01.png, reference-02.png, reference-03.png are reference images ONLY for the woman's identity, hairstyle, body build, white short-sleeved T-shirt, charcoal dark gray long trousers, soft realistic studio photography and blue-gray background. Their arm positions are NOT the requested movement.\nScene: seamless pale blue-gray studio wall and floor, soft even studio light, natural contact shadows. A simple stationary sturdy gray support countertop at about waist height is positioned in front of the woman, anchored to a broad nonmoving base visibly touching the floor. No other props.\nSubject: the same adult East Asian woman as all three identity references, identical face and age impression, skin tone, black low ponytail, white crew-neck short-sleeved T-shirt and charcoal fitted long trousers; barefoot.\nRequired pose: full-body side profile facing image-right, test RIGHT side closest to camera. Both feet rest flat on the floor, naturally hip-width apart but neither foot stepping forward or backward; right test leg is directly below the right hip, both knees naturally near-straight, not locked. Upright relaxed trunk, vertical head-shoulder-hip alignment, level pelvis, chest and pelvis face the same forward direction. Her LEFT hand gently rests naturally on the fixed countertop ahead of her, real hand-surface contact visible; no body weight collapse onto the support. Her RIGHT arm hangs relaxed alongside the near thigh with the entire hand visible. No hip extension yet.\nComposition: single pose, full body from crown to complete toes with all hands included. True side camera at roughly pelvis height, natural normal-lens perspective, no exaggerated foreshortening. Leave space behind her for a subsequent small backward leg movement, countertop and its fixed floor support fully in frame at image-right. Landscape 3:2 composition, approximately 1536 by 1024, moderate clean margin around body.\nConstraints: realistic continuous anatomy and natural limb proportions, two arms, two legs, correct fingers, no intersecting limbs, complete hand and foot contact regions readable. No text, no numbers, no arrows, no labels, no graphic overlays, no collage, no duplicate pose, no logos, no watermark.",
+      "input_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "sha256": "D5AF3EBDA908A6C5D057FF8D432751B27DAD863EE3FDB6C502A74DD4EFD12DA6",
+      "width": 1536,
+      "height": 1024,
+      "review": {
+        "status": "通过",
+        "review_method": "view_image逐张视觉检查，生成后再次核对保存原片",
+        "identity_clothing_background": "女性侧脸、黑马尾、白短袖、深灰长裤、灰蓝背景、柔和棚拍与三张共同基准一致；赤足",
+        "pose": "侧面朝右；右侧测试腿位于身体下方，双足平踩地面、尚未后伸；躯干直立，胸口骨盆朝向一致",
+        "support_contact": "左手轻触固定灰色台面，接触自然可见；稳定宽基座触地；完整支撑脚可见",
+        "anatomy_framing": "头、肩、髋、双膝、完整双足、完整双手可见；关节连续、肢体比例自然；侧面全身，相机与后续s02一致",
+        "text_free": true,
+        "limitations": "静态画面仅验收可见姿势和接触，不据图推断真实髋关节角度、腰骨盆贡献、肌力或临床有效性"
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "selected": true,
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-39ee-70f0-970d-9aaae9733f7e/exec-f91202b6-714a-46f6-aaf3-2953cced137a.png",
+          "prompt": "Use case: scientific-educational.\nAsset type: one independent photorealistic rehabilitation assessment demonstration photograph, 007 E-LOW-002 s01, neutral starting position for supported standing hip extension. This identifier is metadata only; do not write it in the image.\nInput images: reference-01.png, reference-02.png, reference-03.png are reference images ONLY for the woman's identity, hairstyle, body build, white short-sleeved T-shirt, charcoal dark gray long trousers, soft realistic studio photography and blue-gray background. Their arm positions are NOT the requested movement.\nScene: seamless pale blue-gray studio wall and floor, soft even studio light, natural contact shadows. A simple stationary sturdy gray support countertop at about waist height is positioned in front of the woman, anchored to a broad nonmoving base visibly touching the floor. No other props.\nSubject: the same adult East Asian woman as all three identity references, identical face and age impression, skin tone, black low ponytail, white crew-neck short-sleeved T-shirt and charcoal fitted long trousers; barefoot.\nRequired pose: full-body side profile facing image-right, test RIGHT side closest to camera. Both feet rest flat on the floor, naturally hip-width apart but neither foot stepping forward or backward; right test leg is directly below the right hip, both knees naturally near-straight, not locked. Upright relaxed trunk, vertical head-shoulder-hip alignment, level pelvis, chest and pelvis face the same forward direction. Her LEFT hand gently rests naturally on the fixed countertop ahead of her, real hand-surface contact visible; no body weight collapse onto the support. Her RIGHT arm hangs relaxed alongside the near thigh with the entire hand visible. No hip extension yet.\nComposition: single pose, full body from crown to complete toes with all hands included. True side camera at roughly pelvis height, natural normal-lens perspective, no exaggerated foreshortening. Leave space behind her for a subsequent small backward leg movement, countertop and its fixed floor support fully in frame at image-right. Landscape 3:2 composition, approximately 1536 by 1024, moderate clean margin around body.\nConstraints: realistic continuous anatomy and natural limb proportions, two arms, two legs, correct fingers, no intersecting limbs, complete hand and foot contact regions readable. No text, no numbers, no arrows, no labels, no graphic overlays, no collage, no duplicate pose, no logos, no watermark.",
+          "sha256": "D5AF3EBDA908A6C5D057FF8D432751B27DAD863EE3FDB6C502A74DD4EFD12DA6",
+          "width": 1536,
+          "height": 1024,
+          "review": {
+            "status": "通过",
+            "review_method": "view_image逐张视觉检查，生成后再次核对保存原片",
+            "identity_clothing_background": "女性侧脸、黑马尾、白短袖、深灰长裤、灰蓝背景、柔和棚拍与三张共同基准一致；赤足",
+            "pose": "侧面朝右；右侧测试腿位于身体下方，双足平踩地面、尚未后伸；躯干直立，胸口骨盆朝向一致",
+            "support_contact": "左手轻触固定灰色台面，接触自然可见；稳定宽基座触地；完整支撑脚可见",
+            "anatomy_framing": "头、肩、髋、双膝、完整双足、完整双手可见；关节连续、肢体比例自然；侧面全身，相机与后续s02一致",
+            "text_free": true,
+            "limitations": "静态画面仅验收可见姿势和接触，不据图推断真实髋关节角度、腰骨盆贡献、肌力或临床有效性"
+          }
+        }
+      ],
+      "action_name": "扶稳站姿主动髋后伸",
+      "label_for_layout_only": "准备：双足站稳",
+      "relative_path": "assess/steps/007_E-LOW-002_s01.png",
+      "selected": true,
+      "root_review": {
+        "status": "passed",
+        "method": "主代理逐张view_image复核完整原片",
+        "checked": [
+          "身份服装与摄影方向",
+          "对应动作方向",
+          "支撑和器械接触",
+          "躯干/骨盆和测试肢体位置",
+          "自然比例及完整手足",
+          "同组机位和构图"
+        ],
+        "note": "动作、接触和比例通过。"
+      }
+    },
+    {
+      "logical_id": "007-s02",
+      "action_id": "E-LOW-002",
+      "step": "s02",
+      "target_pose": "扶手接触和支撑脚不变，右测试腿小幅向后移，膝自然轻微屈曲，躯干直立",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/007_E-LOW-002_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-39ee-70f0-970d-9aaae9733f7e/exec-0cc26ab2-c343-4ce1-99e9-460c123be81d.png",
+      "reused": false,
+      "prompt": "Use case: identity-preserve.\nAsset type: corrected single photorealistic rehabilitation hip-extension demonstration photograph without text.\nInput image: the sole input is the edit target. Preserve all of it except the rear test foot position.\nPrecise small correction: the woman's backward-extended near-camera RIGHT LEG must be a freely raised leg. Rotate only the rear right ankle and foot into a neutral position so that the entire right foot, INCLUDING heel and ALL toes, is clearly lifted off the floor. Her rear right foot sole should be approximately horizontal, parallel to the studio floor, toes pointing image-right in the same natural forward direction as the support foot. Both heel and toes are about 5 to 10 centimeters above the floor, a clearly visible air gap under the entire rear foot. Anatomically correct relaxed ankle with no pointed-down toes. Do not place the rear toe on the floor; this is an actively raised leg, not a backward stepping pose.\nKeep exact current modest backward hip-extension amplitude and naturally nearly straight right knee; same right thigh and shin placement, same supported left foot flat on floor, no higher or bigger backward kick. Keep entire upper body and pelvis upright in the exact same position, no trunk lean or back arch. Keep her exact face, identity, black ponytail, white T-shirt, charcoal long trousers, bare feet, relaxed right arm and hand, left hand gently touching identical support countertop. Keep exact stationary support and its base, blue-gray backdrop, studio light, shadows, camera, body scale, landscape 1536 by 1024 framing, floor baseline. Same normal and natural body proportions and continuous joints.\nSingle full-body pose with complete head, hands and feet. No text, numbers, labels, arrows, logos, watermark, overlays, duplicate limbs, collage or additional people.",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a138e3-39ee-70f0-970d-9aaae9733f7e/exec-2bf2d010-3b81-4215-99f5-d96106e40cff.png"
+      ],
+      "sha256": "597DFA84473CE7CDE0AC4FCE354E9C92E96F830CDCF6DFBCE6AB3F7B278006A9",
+      "width": 1536,
+      "height": 1024,
+      "review": {
+        "status": "通过",
+        "review_method": "view_image逐张视觉检查，针对首两次输出修订后再次核对",
+        "identity_clothing_background": "女性身份、黑马尾、白短袖、深灰长裤、灰蓝背景与s01一致；赤足",
+        "pose": "右侧测试腿向后移并抬离地面；髋后伸幅度较温和，膝处自然轻微屈曲；不是大角度屈膝踢臀；躯干直立，无明显前倾、后仰或转体",
+        "support_contact": "左侧支撑足平踩原位置，左手仍轻触同一固定台面；测试足完整离地，完整接触区可见",
+        "anatomy_framing": "右足趾不再支地且踝位较自然；头部、完整手脚、肩髋膝踝可见，肢体比例与关节连接自然；机位、构图、人物尺度、器械位置与s01一致",
+        "text_free": true,
+        "limitations": "只登记可见姿势合格，不把提示词里的期望角度或距离当作测量结果；膝轻曲是所选自然版本"
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "selected": false,
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-39ee-70f0-970d-9aaae9733f7e/exec-7f5cce90-210f-43b5-992c-5e215b76c580.png",
+          "prompt": "Use case: identity-preserve.\nAsset type: one independent photorealistic rehabilitation assessment demonstration photograph, 007 E-LOW-002 s02, endpoint of supported standing active HIP EXTENSION. This identifier is metadata only, do not print it.\nInput images: Image 1 (007_E-LOW-002_s01.png) is the edit target and exact composition, identity, camera, lighting and equipment anchor. Images 2, 3, 4 (reference-01/02/03) are identity and style references only.\nEdit only the test RIGHT leg nearest the camera in Image 1: keeping its knee in the SAME naturally nearly straight position, move the entire right leg gently backward from the hip, toward image-left behind the body, about 15 degrees from vertical. The right thigh and shin remain a nearly continuous line, no bent-knee heel-to-buttock kick. Lift the right foot a small amount clear of the floor, with the foot naturally aligned and toes relaxed, clearly behind the planted support foot. The amplitude is modest and controlled, no dramatic high rear kick. Show one clear terminal pose only.\nAbsolute invariants: same woman, exact face, same black ponytail, white short-sleeved shirt, charcoal long trousers, bare feet; same side profile facing image-right; same 1536 by 1024 landscape canvas; same camera position and normal-lens feel, body scale, head and torso location, ground line and framing; same blue-gray studio background and soft shadow. Her LEFT support foot stays flat exactly where it is in Image 1, left support knee near straight. Her LEFT hand remains visibly in the same gentle contact with the same fixed gray support countertop. Her right arm and full hand stay relaxed at her side. Keep head, shoulder, torso and pelvis upright in their original vertical alignment, no forward trunk lean, no arched lower back or backward trunk lean, no torso or pelvis rotation. Keep equipment position, base, material and contact shadows unchanged.\nHuman anatomy must remain natural: two arms, two legs, correct continuous joints, realistic thigh/shin lengths, full hands and complete toes visible; the moved leg must connect anatomically to the same hip and not intersect the support leg. No text, numbers, arrows, labels, graphic overlays, logos, watermark, collage or duplicated pose.",
+          "input_paths": [
+            "E:/git冲突问题/rehab image/assess/steps/007_E-LOW-002_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "sha256": "A6C8C4E5A59D240173BAF3D276574FCD317BBC408CEE8F73CBFDE7549DF31449",
+          "width": 1536,
+          "height": 1024,
+          "review": {
+            "status": "返修",
+            "reason": "后伸幅度偏大，测试足尖明显下指；躯干、支撑脚及扶手接触已满足要求"
+          }
+        },
+        {
+          "attempt": 2,
+          "selected": false,
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-39ee-70f0-970d-9aaae9733f7e/exec-2bf2d010-3b81-4215-99f5-d96106e40cff.png",
+          "prompt": "Use case: identity-preserve.\nAsset type: one corrected photorealistic rehabilitation demonstration photograph, 007 E-LOW-002 s02, small supported active hip extension endpoint. Metadata only, no text.\nInput images: Image 1 is the edit target (the same woman currently extending her right leg backward); Image 2 is the approved s01 neutral starting pose and exact invariant reference.\nMake ONE targeted correction to Image 1: reduce the hip extension of the right test leg by roughly HALF. The right femur should be only about 12 to 15 degrees behind the vertical torso, a SMALL gentle hip extension, with the right foot only about 15 to 20 centimeters behind the supporting left heel, rather than the large backward reach currently shown. The test knee stays in the same naturally almost straight or very slightly flexed position. Keep the test heel only slightly above the floor, around 5 centimeters. The ankle and foot are neutral and relaxed, roughly parallel to the floor, rather than the exaggerated downward pointed toes. The entire near-camera right leg moves as one limb backward from its hip. This remains hip extension, not a bent-knee kick. The rear leg can visually separate from the support leg without a large gap.\nKeep EVERYTHING else unchanged: exact woman and face, black ponytail, white short-sleeved T-shirt, charcoal long trousers, bare feet; head, shoulders, spine, waist and pelvis location; vertical upright trunk with no forward lean or lower-back arch; original near-straight left support leg and planted left foot; left-hand contact on the identical gray stationary countertop; relaxed hanging right arm and full hand; identity, body scale, camera, framing, 1536 by 1024 landscape dimensions, soft studio light and blue-gray background, floor baseline, countertop and its floor base. Use Image 2 to keep the standing trunk and pelvis truly upright and unchanged.\nSingle pose, natural real anatomy, complete head and hands and feet visible, no clipping or duplicated limbs or disconnected joints. No text, numbers, arrows, labels, logos, watermark, overlays or collage.",
+          "input_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a138e3-39ee-70f0-970d-9aaae9733f7e/exec-7f5cce90-210f-43b5-992c-5e215b76c580.png",
+            "E:/git冲突问题/rehab image/assess/steps/007_E-LOW-002_s01.png"
+          ],
+          "sha256": "1CB2FD6898B08FFBEE500A05E2EA67083E51A25EB263A279B4FCC6F5D4147DCE",
+          "width": 1536,
+          "height": 1024,
+          "review": {
+            "status": "返修",
+            "reason": "后伸已减少，但测试足趾靠近或接触地面、足尖下指，需明确全足离地"
+          }
+        },
+        {
+          "attempt": 3,
+          "selected": true,
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-39ee-70f0-970d-9aaae9733f7e/exec-0cc26ab2-c343-4ce1-99e9-460c123be81d.png",
+          "prompt": "Use case: identity-preserve.\nAsset type: corrected single photorealistic rehabilitation hip-extension demonstration photograph without text.\nInput image: the sole input is the edit target. Preserve all of it except the rear test foot position.\nPrecise small correction: the woman's backward-extended near-camera RIGHT LEG must be a freely raised leg. Rotate only the rear right ankle and foot into a neutral position so that the entire right foot, INCLUDING heel and ALL toes, is clearly lifted off the floor. Her rear right foot sole should be approximately horizontal, parallel to the studio floor, toes pointing image-right in the same natural forward direction as the support foot. Both heel and toes are about 5 to 10 centimeters above the floor, a clearly visible air gap under the entire rear foot. Anatomically correct relaxed ankle with no pointed-down toes. Do not place the rear toe on the floor; this is an actively raised leg, not a backward stepping pose.\nKeep exact current modest backward hip-extension amplitude and naturally nearly straight right knee; same right thigh and shin placement, same supported left foot flat on floor, no higher or bigger backward kick. Keep entire upper body and pelvis upright in the exact same position, no trunk lean or back arch. Keep her exact face, identity, black ponytail, white T-shirt, charcoal long trousers, bare feet, relaxed right arm and hand, left hand gently touching identical support countertop. Keep exact stationary support and its base, blue-gray backdrop, studio light, shadows, camera, body scale, landscape 1536 by 1024 framing, floor baseline. Same normal and natural body proportions and continuous joints.\nSingle full-body pose with complete head, hands and feet. No text, numbers, labels, arrows, logos, watermark, overlays, duplicate limbs, collage or additional people.",
+          "input_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a138e3-39ee-70f0-970d-9aaae9733f7e/exec-2bf2d010-3b81-4215-99f5-d96106e40cff.png"
+          ],
+          "sha256": "597DFA84473CE7CDE0AC4FCE354E9C92E96F830CDCF6DFBCE6AB3F7B278006A9",
+          "width": 1536,
+          "height": 1024,
+          "review": {
+            "status": "通过",
+            "review_method": "view_image逐张视觉检查，针对首两次输出修订后再次核对",
+            "identity_clothing_background": "女性身份、黑马尾、白短袖、深灰长裤、灰蓝背景与s01一致；赤足",
+            "pose": "右侧测试腿向后移并抬离地面；髋后伸幅度较温和，膝处自然轻微屈曲；不是大角度屈膝踢臀；躯干直立，无明显前倾、后仰或转体",
+            "support_contact": "左侧支撑足平踩原位置，左手仍轻触同一固定台面；测试足完整离地，完整接触区可见",
+            "anatomy_framing": "右足趾不再支地且踝位较自然；头部、完整手脚、肩髋膝踝可见，肢体比例与关节连接自然；机位、构图、人物尺度、器械位置与s01一致",
+            "text_free": true,
+            "limitations": "只登记可见姿势合格，不把提示词里的期望角度或距离当作测量结果；膝轻曲是所选自然版本"
+          }
+        }
+      ],
+      "action_name": "扶稳站姿主动髋后伸",
+      "label_for_layout_only": "主动髋后伸：右腿后移",
+      "relative_path": "assess/steps/007_E-LOW-002_s02.png",
+      "selected": true,
+      "root_review": {
+        "status": "passed",
+        "method": "主代理逐张view_image复核完整原片",
+        "checked": [
+          "身份服装与摄影方向",
+          "对应动作方向",
+          "支撑和器械接触",
+          "躯干/骨盆和测试肢体位置",
+          "自然比例及完整手足",
+          "同组机位和构图"
+        ],
+        "note": "后伸方向清楚、膝自然位置、躯干直立；画面只表示选定终点，不认定准确角度。"
+      }
+    },
+    {
+      "logical_id": "008-s01",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/008_E-LOW-003_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e2-3c99-76d1-9e10-44571300550c/exec-7099d1c5-f49e-42a0-8573-81399da78d50.png",
+      "reused": false,
+      "width": 1122,
+      "height": 1402,
+      "sha256": "A801EE014EBEE27930095C195C28175782381758694212E0926E1BEB34F3620A",
+      "prompt": "Use case: scientific-educational\nAsset type: one single unlabelled rehabilitation assessment step photograph, image 008 E-LOW-003 s01, neutral starting stance.\nInput images: Images 1, 2 and 3 are identity, clothing, photographic lighting and grey-blue backdrop references of the SAME woman. Preserve this exact woman's East Asian face, age, natural build, skin tone, black ponytail, fitted plain white short-sleeve T-shirt and dark charcoal long pants. The reference arm positions are NOT target poses.\nPrimary request: Make a photorealistic full-body FRONT view of this woman standing at a fixed support, BEFORE performing hip abduction/adduction.\nScene/backdrop: plain seamless cool grey-blue studio background and grey-blue floor, soft natural shadows. At image RIGHT beside her anatomical LEFT side is a small fixed sturdy matte-grey horizontal handrail at waist level, with two floor-anchored metal uprights visible, so her left hand clearly rests lightly on the rail. Only this needed support, no other props.\nSubject pose: camera exactly front-on. Woman faces forward, pelvis and shoulders level and square to camera, torso naturally upright. BOTH bare feet fully flat on the floor, parallel pointing naturally toward the camera, hip-width apart, knees comfortably near straight. Anatomical RIGHT leg (image LEFT) is the test leg and is neutral under the right hip; her anatomical LEFT leg (image RIGHT) is the support leg. Her right arm hangs naturally at her right side. Left hand maintains light palm/finger contact with the waist-high rail without pulling. Natural calm expression.\nComposition/framing: portrait 4:5, entire head, ponytail, both hands, all fingers, both feet and support contact visible, generous empty space around both legs for later sideways movement, full handrail visible. Camera around hip height, about 70mm equivalent, no wide-angle distortion, natural body proportions.\nLighting/mood: soft diffused realistic studio photography, match references' grey-blue palette, quiet clinical instructional clarity, actual fabric/skin texture.\nText: none.\nConstraints: one woman, one posture, no collage, no labels, arrows, watermarks, logos or typography. No cropped extremities, extra limbs or fused hands. Do not bend, lift or cross either leg in this starting frame. Do not lean the torso or rotate pelvis. Keep the reference identity and outfit closely.",
+      "review": {
+        "status": "passed",
+        "actual_view_image": true,
+        "notes": "正面全身；双足全脚掌落地、膝自然近伸直，左手接触固定扶手，骨盆/肩带朝前。身份、服装、完整手足、比例及自然阴影通过。"
+      },
+      "action_id": "E-LOW-003",
+      "action_name": "扶稳髋外展与小幅内收",
+      "label_for_layout_only": "中立准备",
+      "relative_path": "assess/steps/008_E-LOW-003_s01.png",
+      "selected": true,
+      "root_review": {
+        "status": "passed",
+        "method": "主代理逐张view_image复核完整原片",
+        "checked": [
+          "身份服装与摄影方向",
+          "对应动作方向",
+          "支撑和器械接触",
+          "躯干/骨盆和测试肢体位置",
+          "自然比例及完整手足",
+          "同组机位和构图"
+        ],
+        "note": "动作、接触和比例通过。"
+      }
+    },
+    {
+      "logical_id": "008-s02",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/008_E-LOW-003_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e2-3c99-76d1-9e10-44571300550c/exec-da6fd885-51a3-4530-aa75-633630a01655.png",
+      "reused": false,
+      "width": 1122,
+      "height": 1402,
+      "sha256": "990CC992EC0D36CDE29E3B93F89054112CA86335F7F2A7EB2572877436D50915",
+      "prompt": "Use case: scientific-educational\nAsset type: single rehabilitation demonstration photograph, 008 E-LOW-003 s02, supported hip ABDUCTION endpoint.\nInput images: image 1 is the approved neutral START FRAME to edit; image 2 is the original woman identity reference. Preserve image 1's woman's identity, face, white short-sleeve T-shirt, dark charcoal pants, bare feet, black ponytail, grey-blue studio background, lighting, camera front view, exact framing, body scale, rail position and all unchanged support contacts.\nPrimary request: Change ONLY the anatomical RIGHT leg (the leg on image LEFT) from the neutral stance to a modest sideways hip abduction endpoint. The full leg moves straight OUT toward image LEFT away from her body's midline. Hip abduction around 20 degrees, knee comfortably near straight. Her right foot is raised about 10–15 cm above the floor and moved about 30–35 cm outward from the starting foot location; toes face naturally FORWARD toward camera, ankle neutral. No motion arrows or labels.\nKeep her anatomical LEFT leg (image RIGHT) in the EXACT same position with the entire left bare sole planted on the floor; pelvis level, shoulders level, torso vertical and upright, facing camera, no sideways bend, no hip hike. Left hand remains lightly resting on the rail at exactly the same place as image 1, right hand hangs naturally at her side. Show a clear gap between the abducted leg and the support leg, with the whole right foot visible.\nComposition: same portrait image as frame1, full head and both hands and both feet, complete floor-anchored handrail. Photorealistic clean instructional studio photograph, soft shadow below planted foot and believable subtle shadow under lifted foot.\nConstraints: one woman one pose. Keep reference appearance and natural anatomical proportions. No bent-knee side lunge, no trunk lean, no pelvic twist, no stepping onto the moved foot, no tiptoe on the support foot, no extra limbs or cropped extremities, no text, no typography, no watermark, no collage.",
+      "review": {
+        "status": "passed",
+        "actual_view_image": true,
+        "notes": "右侧测试腿朝画面左侧外展、测试足悬空、支撑左足全脚掌落地。躯干直立、骨盆基本水平、扶手接触保留；外展方向清楚，人体/完整手足通过。"
+      },
+      "action_id": "E-LOW-003",
+      "action_name": "扶稳髋外展与小幅内收",
+      "label_for_layout_only": "髋外展：测试腿向外",
+      "relative_path": "assess/steps/008_E-LOW-003_s02.png",
+      "selected": true,
+      "root_review": {
+        "status": "passed",
+        "method": "主代理逐张view_image复核完整原片",
+        "checked": [
+          "身份服装与摄影方向",
+          "对应动作方向",
+          "支撑和器械接触",
+          "躯干/骨盆和测试肢体位置",
+          "自然比例及完整手足",
+          "同组机位和构图"
+        ],
+        "note": "动作、接触和比例通过。"
+      }
+    },
+    {
+      "logical_id": "008-s03",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/008_E-LOW-003_s03.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e2-3c99-76d1-9e10-44571300550c/exec-169e4b9c-fd32-4712-aee8-20472cdac58f.png",
+      "reused": false,
+      "width": 1122,
+      "height": 1402,
+      "sha256": "A30901F4EF1F94E3CE6A97BC3DCE279F1C5EDFDCCBACD68AE5A8DE18AB48FE5F",
+      "prompt": "Use case: scientific-educational\nAsset type: single rehabilitation demonstration photograph, 008 E-LOW-003 s03, small supported hip ADDUCTION endpoint.\nInput images: image 1 is the approved neutral START FRAME to edit; image 2 is the original woman identity reference. Preserve image 1's woman's face and identity, white T-shirt, dark charcoal long pants, bare feet, black ponytail, grey-blue seamless studio and lighting, camera frontal view, exact framing, body scale, floor and rail position and unchanged support contacts.\nPrimary request: Change ONLY the anatomical RIGHT leg (the leg originally on image LEFT) to a SMALL inward hip adduction endpoint, approaching the body midline and just crossing it in FRONT of the stationary left shin. This is a modest crossing motion of the nearly straight entire leg from the hip, not a long cross-step. The anatomical right knee moves inward slightly as part of the leg, and the right bare foot is gently suspended 5–8 cm above the floor at image center, slightly to image RIGHT of the woman's midline but still LEFT of her stationary left support foot. Right toes naturally face FORWARD toward camera, ankle neutral; the crossing right shin is clearly distinguishable in front of left shin. Both feet entirely visible and separate, no fused feet. Right knee stays comfortably near straight and the test foot does not take weight.\nKeep anatomical LEFT leg (image RIGHT) in EXACT same position as image 1 with entire bare left sole planted on the floor. Left knee and foot remain visible, support stable. Pelvis level and forward, shoulders level, torso upright, facing camera. Left hand stays lightly contacting the rail exactly where it rests in image 1; right arm hangs naturally. Do not tilt or twist the trunk, hike pelvis, lean to the side, or make a deep/wide crossover step.\nComposition: same portrait, full head and complete hands/feet, complete floor-anchored handrail. Photorealistic studio instructional photo; natural skin/fabric/body proportions with soft grounded shadows.\nConstraints: one woman one posture. No text, numbering, labels, arrows, typography, collage, watermark or logos. No cut-off limbs, no extra fingers, no foot planted in front as a walking step, no large knee bend. Preserve original neutral frame setting and reference woman.",
+      "review": {
+        "status": "passed",
+        "actual_view_image": true,
+        "notes": "同侧右腿小幅向中线及略越过中线，位于支撑小腿前方，测试足悬空且不承重；左支撑足固定落地、躯干直立、骨盆朝前、扶手接触保留。不是远距离交叉步。完整手足和比例通过。"
+      },
+      "action_id": "E-LOW-003",
+      "action_name": "扶稳髋外展与小幅内收",
+      "label_for_layout_only": "小幅髋内收：测试腿向中线",
+      "relative_path": "assess/steps/008_E-LOW-003_s03.png",
+      "selected": true,
+      "root_review": {
+        "status": "passed",
+        "method": "主代理逐张view_image复核完整原片",
+        "checked": [
+          "身份服装与摄影方向",
+          "对应动作方向",
+          "支撑和器械接触",
+          "躯干/骨盆和测试肢体位置",
+          "自然比例及完整手足",
+          "同组机位和构图"
+        ],
+        "note": "动作、接触和比例通过。"
+      }
+    },
+    {
+      "logical_id": "009-s01",
+      "action_id": "E-LOW-004",
+      "label_for_layout_only": "中立：小腿下垂",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/009_E-LOW-004_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-73c3-7410-971c-44064cc18c59/exec-d36231a1-9929-4603-84dd-36d181166db5.png",
+      "prompt": "Use case: scientific-educational.\nCreate ONE independent photorealistic rehabilitation exercise demonstration photograph, neutral starting position for seated active hip internal/external rotation.\nInput images 1–3 are identity, wardrobe, hair, studio light and background references ONLY. Match the SAME adult East Asian woman, face and age impression, natural skin, body build, black ponytail, plain white short-sleeve fitted T shirt, dark charcoal gray long trousers. No need to copy the arm gestures.\nScene: seamless muted gray-blue studio backdrop and floor, soft diffuse studio lighting with natural shadows. Only a single sturdy unbranded straight-back dark gray chair with four widely planted legs, seat sufficiently high that BOTH BARE FEET hang freely several centimeters above the floor. This is a rehabilitation high chair, no wheels, no armrests, no footrest or crossbar under the shins, no wobbling. The thighs must rest on and be supported by the chair seat, their front ends level, almost horizontal; hips flexed about 90 degrees; knees flexed 90 degrees.\nPose s01: woman sits upright facing the camera, pelvis and torso level and centered, neutral relaxed expression, gaze forward. Knees at a comfortable fixed hip-width spacing. Both lower legs are vertical, ankles directly underneath their own knees. Bare feet hang with relaxed ankles, toes generally forward. Hands rest gently on the tops of each proximal thigh, away from kneecaps, without pushing. Do not spread the thighs widely, cross legs, point toes sideways or touch feet to floor.\nComposition: portrait photograph approximately 1024x1536, true symmetric straight-on front view, camera at seated abdomen height, natural mid-telephoto proportions. Include full head, torso, pelvis, both knees, full shins and both full bare feet and all four chair ground contacts. Woman centered with moderate gray-blue margin and feet clearly floating above floor. Sharp clear anatomical joint connections and natural fingers/toes. Accurate body proportions.\nNo text, labels, numbers, arrows, watermarks, collage, split panels or diagram. Single pose only. Real photography, not drawing.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "width": 1024,
+      "height": 1536,
+      "sha256": "7E9476EF34F84B719356E48C655181F22A563CD2977777EFCC1D2EF4F8D437B7",
+      "reused": false,
+      "attempt_count": 1,
+      "selected": true,
+      "review": {
+        "status": "passed",
+        "method": "逐张使用 view_image 实际查看原始输出后验收",
+        "identity": "女性面部、黑色马尾、白色短袖和深灰裤与三张参考的身份及服装方向一致",
+        "pose": "椅上稳坐，大腿受座面支持；双膝保持既定间距，双小腿垂直自然下垂，双足悬空",
+        "support": "高而稳固的四腿椅、坐骨及大腿支持可见，双足离地，椅腿触地",
+        "proportion": "头、躯干、大腿/小腿及手足比例自然，关节连接连续",
+        "framing": "正面全身；完整头部、双手、骨盆、双膝、完整小腿及双足可见",
+        "consistency": "作为 009 全组人物、机位、椅子与膝位基准",
+        "text": "无文字、编号、箭头或水印"
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-73c3-7410-971c-44064cc18c59/exec-d36231a1-9929-4603-84dd-36d181166db5.png"
+        }
+      ],
+      "action_name": "坐姿髋内旋与外旋",
+      "relative_path": "assess/steps/009_E-LOW-004_s01.png",
+      "root_review": {
+        "status": "passed",
+        "method": "主代理逐张view_image复核完整原片",
+        "checked": [
+          "身份服装与摄影方向",
+          "对应动作方向",
+          "支撑和器械接触",
+          "躯干/骨盆和测试肢体位置",
+          "自然比例及完整手足",
+          "同组机位和构图"
+        ],
+        "note": "动作、接触和比例通过。"
+      }
+    },
+    {
+      "logical_id": "009-s02",
+      "action_id": "E-LOW-004",
+      "label_for_layout_only": "髋内旋：小腿向外摆",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/009_E-LOW-004_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-73c3-7410-971c-44064cc18c59/exec-cb41e071-e393-4efa-9036-ac439b83effd.png",
+      "prompt": "Use case: scientific-educational, precise rehabilitation pose photograph.\nImage 1 is the EDIT TARGET and exact composition/identity/chair baseline. Images 2–4 are supporting references for the same woman's identity, white shirt, charcoal trousers, black ponytail and muted gray-blue studio photography.\nCreate one independent photograph by changing ONLY the woman's RIGHT lower leg (the lower leg on the LEFT side of the picture). Keep her head, face, torso, pelvis, hands, both thighs, both knee centers, left lower leg on picture-right, chair, light, camera and background exactly unchanged. Both thighs remain seated and supported, hips about 90 degrees flexed, knees about 90 degrees flexed and the same knee spacing as Image 1. Keep the right knee center at exactly its original image location.\nRequired s02 pose: seated RIGHT HIP INTERNAL ROTATION. From its neutral position underneath the fixed right knee, her right shin and ankle swing laterally OUTWARDS toward her own right side, which is picture LEFT. The right shin now makes a clear gentle diagonal descending from the FIXED picture-left knee toward picture-left ankle, about 25 degrees away from vertical. The entire lower leg changes direction together, not only the foot or ankle. The right foot remains connected naturally in line with the rotated lower leg, bare and completely visible. Her left shin on picture-right remains perfectly vertical and unchanged. Both feet hang freely above the floor, do not place either foot on the floor or chair.\nDo not slide the right thigh sideways or lift the knee. Do not abduct the whole thigh, spread knees or turn the whole pelvis. No hand assistance or pushing. Natural comfortable endpoint.\nPrecisely preserve one-pose portrait 1024x1536 full figure frontal photograph, head and feet uncropped, all chair legs and their ground contact intact, same image scale. Preserve natural proportions, knee and ankle connections, skin and fingers/toes.\nNO text, labels, numbers, arrows, watermarks, collage or split panels.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/009_E-LOW-004_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "width": 1024,
+      "height": 1536,
+      "sha256": "502A4A720A798D57689399DAE47827AE42770CAC7A30536AFA5D625FA6261121",
+      "reused": false,
+      "attempt_count": 1,
+      "selected": true,
+      "review": {
+        "status": "passed",
+        "method": "逐张使用 view_image 实际查看原始输出后验收",
+        "identity": "与 s01 人物面部、衣服、发型一致",
+        "pose": "人物右小腿（画面左）整段向身体外侧摆，足也随小腿外移；对应髋内旋",
+        "knee_and_pelvis": "同侧大腿和膝位无明显横向移位，双膝间距保留，骨盆未旋转，非整腿外展",
+        "support": "大腿有座面支持，双足悬空；无手推压",
+        "proportion": "膝、胫段及踝足连接连续，身体和手足比例自然",
+        "framing": "头、双手、骨盆、双膝、完整双足和椅腿接地可见",
+        "consistency": "s01 相同椅子、人物比例、相机、背景及光线，非活动侧保持竖直",
+        "text": "无文字、编号、箭头或水印"
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-73c3-7410-971c-44064cc18c59/exec-cb41e071-e393-4efa-9036-ac439b83effd.png"
+        }
+      ],
+      "action_name": "坐姿髋内旋与外旋",
+      "relative_path": "assess/steps/009_E-LOW-004_s02.png",
+      "root_review": {
+        "status": "passed",
+        "method": "主代理逐张view_image复核完整原片",
+        "checked": [
+          "身份服装与摄影方向",
+          "对应动作方向",
+          "支撑和器械接触",
+          "躯干/骨盆和测试肢体位置",
+          "自然比例及完整手足",
+          "同组机位和构图"
+        ],
+        "note": "动作、接触和比例通过。"
+      }
+    },
+    {
+      "logical_id": "009-s03",
+      "action_id": "E-LOW-004",
+      "label_for_layout_only": "髋外旋：小腿向内摆",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/009_E-LOW-004_s03.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-73c3-7410-971c-44064cc18c59/exec-bfbdbd81-db0b-4559-8c1c-fc750c25ed65.png",
+      "prompt": "Use case: scientific-educational, precise rehabilitation pose photograph.\nImage 1 is the EDIT TARGET and exact neutral composition/identity/chair baseline. Images 2–4 are supporting references for the same woman's identity, white shirt, charcoal trousers, black ponytail and muted gray-blue studio photography.\nCreate one independent photograph by changing ONLY the woman's RIGHT lower leg (the lower leg on the LEFT side of the picture). Keep her head, face, torso, pelvis, hands, both thighs, both knee centers, left lower leg on picture-right, chair, light, camera and background exactly unchanged. Both thighs remain seated and supported, hips about 90 degrees flexed, knees about 90 degrees flexed and the same knee spacing as Image 1. Keep the right knee center at exactly its original image location.\nRequired s03 pose: seated RIGHT HIP EXTERNAL ROTATION. From the neutral starting position underneath the fixed right knee, her RIGHT SHIN AND ANKLE swing medially INWARDS toward the body's midline, which is picture RIGHT. The right shin now makes a clear gentle diagonal descending from the FIXED picture-left knee towards the middle of the space BETWEEN her shins, around 15 degrees away from vertical. The right ankle should be just to the picture-left of the body's centerline, not crossing the opposite leg. The whole lower leg changes direction, not only the foot or ankle. Her right bare foot hangs below that inward-shifted ankle naturally in line with the rotated lower leg, fully visible and separated from the opposite bare foot. The left shin and foot on picture-right remain vertical and unchanged. Both feet hang freely above the floor.\nDo not move the right knee medially or slide the thigh inward. Do not adduct the whole thigh, bring knees together, rotate pelvis, cross legs or overlap the feet. No hand assistance or pushing. Comfortable small endpoint.\nPrecisely preserve one-pose portrait 1024x1536 full figure frontal photograph, head and feet uncropped, all chair legs and their ground contact intact, same image scale. Natural anatomy and continuous knee and ankle connections, same skin/fingers/toes.\nNO text, labels, numbers, arrows, watermarks, collage or split panels.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/009_E-LOW-004_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "width": 1024,
+      "height": 1536,
+      "sha256": "3CE8C058A69DD6AEC30C1C98733510696065F2474FC9FD5EAC8F159E79D151DD",
+      "reused": false,
+      "attempt_count": 1,
+      "selected": true,
+      "review": {
+        "status": "passed",
+        "method": "逐张使用 view_image 实际查看原始输出后验收",
+        "identity": "与 s01 人物面部、衣服、发型一致",
+        "pose": "人物右小腿（画面左）整段向中线摆，右足移近身体中线但不跨越对侧腿；对应髋外旋",
+        "knee_and_pelvis": "同侧膝位和大腿位置保留，双膝间距未明显收拢，骨盆未旋转；非整条大腿内收",
+        "support": "大腿有座面支持，双足悬空且分离；无手推压",
+        "proportion": "膝、胫段及踝足连接连续，身体和手足比例自然",
+        "framing": "头、双手、骨盆、双膝、完整双足和椅腿接地可见",
+        "consistency": "s01 相同椅子、人物比例、相机、背景及光线，非活动侧保持竖直",
+        "text": "无文字、编号、箭头或水印"
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-73c3-7410-971c-44064cc18c59/exec-bfbdbd81-db0b-4559-8c1c-fc750c25ed65.png"
+        }
+      ],
+      "action_name": "坐姿髋内旋与外旋",
+      "relative_path": "assess/steps/009_E-LOW-004_s03.png",
+      "root_review": {
+        "status": "passed",
+        "method": "主代理逐张view_image复核完整原片",
+        "checked": [
+          "身份服装与摄影方向",
+          "对应动作方向",
+          "支撑和器械接触",
+          "躯干/骨盆和测试肢体位置",
+          "自然比例及完整手足",
+          "同组机位和构图"
+        ],
+        "note": "动作、接触和比例通过。"
+      }
+    }
+  ],
+  "subrecords": [
+    "E:/git冲突问题/rehab image/步骤第02批_006_子记录.json",
+    "E:/git冲突问题/rehab image/步骤第02批_007_子记录.json",
+    "E:/git冲突问题/rehab image/步骤第02批_008_子记录.json",
+    "E:/git冲突问题/rehab image/步骤第02批_009_子记录.json"
+  ],
+  "deliverables": {
+    "archive": "E:/git冲突问题/rehab image/步骤第02批_006-009_10张.zip",
+    "preview": "E:/git冲突问题/rehab image/步骤第02批_006-009_预览.html",
+    "overview": "E:/git冲突问题/rehab image/步骤第02批_006-009_总览.jpg",
+    "image_list": "E:/git冲突问题/rehab image/步骤第02批_006-009_图片清单.txt",
+    "full_prompts": "每个frames[].prompt包含最终完整提示词；尝试详情保留在frames[].attempts及子记录。"
+  },
+  "review_scope": "制作代理实际查看，主代理亦逐张实际查看全部10张选定原片，核对可见姿势、人体、支撑与机位。原片无文字，图号/方向标签位于预览排版层。",
+  "limits": [
+    "生成式画面存在细微像素、布料及足部投影变化，不表示像素级摄影配准。",
+    "006/009为1024×1536；007为1536×1024；008为1122×1402。保留原始分辨率与比例。",
+    "静态生成照片只验收画面，不证明肌肉发力、测试速度、测量角度或临床有效性；原卡的适用/术后方向条件仍有效。"
+  ],
+  "scope": "外部图片交付；未修改应用、原制作清单、旧单图或共享进度JSON。",
+  "verification": {
+    "selected_frame_count": 10,
+    "file_sha256_matches": 10,
+    "dimensions_matches": 10,
+    "zip_entries": 10,
+    "zip_entry_sha256_matches": 10,
+    "archive_bytes": 14588414,
+    "archive_sha256": "2903D574D584C276D7BF4B3EBEF980F82A5221674317610D0DB00F892F660D9B",
+    "overview_viewed": true
+  }
+}

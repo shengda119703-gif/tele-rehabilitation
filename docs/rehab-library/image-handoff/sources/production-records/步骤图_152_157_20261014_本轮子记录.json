@@ -1,0 +1,45 @@
+{
+  "record_version": "1.0",
+  "created_date": "2026-10-14",
+  "batch": "152s01-157s01-root",
+  "generator": "built-in image_gen.imagegen",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "reference_paths": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "formal_repository_modified": false,
+  "images": [
+    {
+      "sequence": 152,
+      "action_id": "T-AXU-014",
+      "step": "01",
+      "qa_observation": "侧面坐稳，头颈中立、目视前方；本人一只手掌与额头实际接触，另一手放大腿。肩、下颌放松，没有头部位移、他人手或弹力带；人物衣着、灰蓝背景和比例与参考一致。",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/152_T-AXU-014_s01.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1759434,
+      "sha256": "56ED73A2C5B43D17E9550BF8B4BBF70342F2CA311057F25E1E7645668FAB2691",
+      "prompt": "Use case: scientific-educational.\nAsset type: one photorealistic rehabilitation demonstration photograph, action 152 T-AXU-014 s01, forehead-direction low-intensity neck isometric SETUP.\nInput images 1–3 are identity, clothing, lighting and backdrop references only. Match the SAME adult East Asian woman, same face, age, skin, natural body build and black ponytail, plain white short-sleeved T-shirt, charcoal gray long trousers. Do not copy their arm poses.\nScene: gray-blue studio background with soft diffuse light and natural shadows. The woman sits upright naturally and stably on a simple sturdy gray chair, facing to image RIGHT in true side profile.\nPose: her neck and head remain in a relaxed natural NEUTRAL position, face vertical, gaze level forward, chin neither jutting nor forced down. ONE of her OWN hands has its palm gently resting flat against her forehead, just above the eyebrows; the skin-facing palm makes clear actual contact, fingers point upward naturally. Her elbow is bent and the arm relaxed. Her other hand rests on her thigh. No push-induced head motion, no tilt, no neck flexion. Jaw and both shoulders relaxed and low.\nCamera/composition: landscape head-and-shoulder close view from the visible side at shoulder height, full head and ponytail, entire contacting hand and arm down to elbow, both shoulders, upper torso and partial lap/gray seat visible to establish stable sitting. Enough margin ahead of face. The palm–forehead contact and natural neck alignment must both be clearly readable in side profile.\nRealistic human proportions and correct five-finger hand anatomy, one woman, ONE posture, no helper hand or other person, no elastic band, no force arrow or movement trail. No text, numbering, watermark, panel, collage or border. This image illustrates contact setup; do not invent visible strain or claim to visually prove isometric force.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a82-06a6-7fa2-ac70-c88058a8f94d/exec-4dc5836d-dcf2-48b6-a724-44d02db52c0d.png",
+      "reused": false,
+      "qa_status": "pass"
+    },
+    {
+      "sequence": 157,
+      "action_id": "T-AXU-025",
+      "step": "01",
+      "qa_observation": "空手站稳，双脚完整落地，双臂在身侧略偏前的自然准备位；拇指随中立手腕自然偏前，肩放松、躯干直立。没有哑铃或抬臂终点；完整头手脚可见，姿势和比例自然。静态起点不能单独证明后续抬举轨迹。",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/157_T-AXU-025_s01.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1678290,
+      "sha256": "1D95840A1B35F8F9F42A97AE1814971C715B2E3CC3CEAC67B53DF51FD6CCEEC9",
+      "prompt": "Use case: scientific-educational.\nAsset type: single photorealistic rehabilitation step photograph, action 157 T-AXU-025 s01, empty-handed scaption STARTING position.\nInput images 1–3 are ONLY fixed identity, wardrobe and studio-style references. Match the exact same adult East Asian woman, face, skin, natural slim body build, age, black ponytail, white plain short-sleeve T-shirt and charcoal long trousers.\nScene: simple gray-blue seamless studio backdrop and matching matte floor, soft diffuse illumination, realistic contact shadows.\nPose: standing upright naturally, feet comfortably hip-width apart with both bare feet fully grounded, weight balanced, head neutral and gaze forward. Both shoulders relaxed low, trunk stable. BOTH arms are lowered comfortably beside the body, empty hands clearly visible beside the upper thighs. The hands have a neutral thumb-up / open-can orientation appropriate to the impending scaption path: palms naturally face inward, thumbs forward and slightly upward, wrists straight, no forced wrist twist. The upper arms are only very slightly forward of the exact side line, prepared to lift in the anterolateral scapular plane approximately 30 degrees FORWARD of the body's coronal plane. They are NOT raised to shoulder height; this is the relaxed preparation photograph. Elbows nearly straight with a soft bend, normal fingers.\nCamera: full-body landscape studio photograph, camera near chest height at an oblique frontal position about 25–30 degrees toward HER RIGHT side, so the right shoulder and arm orientation and both hands are visible. Modest perspective, natural limb proportions, full head, complete ponytail, both complete hands, hips and complete feet in frame with generous floor margin. A single clean pose, ample modest surrounding gray-blue space.\nConstraints: NO dumbbells, bands, weights, chairs, wall support, second person, text, arrows, step numbers, panels, collage, watermark or border. No pure front-raise or pure side-raise demonstration, no shrugging, no leaning torso, no clenched unnatural fist or distorted hands.",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a82-06a6-7fa2-ac70-c88058a8f94d/exec-65cf2412-63d9-4280-ae9a-f34ca5e9a042.png",
+      "reused": false,
+      "qa_status": "pass"
+    }
+  ]
+}

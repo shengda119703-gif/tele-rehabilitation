@@ -1,0 +1,99 @@
+{
+  "record_version": "1.0",
+  "date": "2026-10-14",
+  "action_id": "T-AXU-056",
+  "action_name": "下蹲—站稳—轻负重推举的分段组合",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md#action-183",
+  "source_card": "E:/game/health-care-software-main/docs/rehab-library/SOURCE_v1.0.md#t-axu-056",
+  "selected_version": "双手单只轻壶铃靠胸；受控浅蹲→站稳→过头推举；侧面面向右全身",
+  "generation_method": "内置image_gen，每张独立调用；参考图用于身份/服装/背景，首张合格生成图锁定组内机位。",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "records": [
+    {
+      "step": "s01",
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\183_T-AXU-056_s01.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13a85-19aa-7791-bb36-cb195caa19a2\\exec-77d3dd24-3c4c-48d1-92f1-bd31e20717e7.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1601734,
+      "sha256": "4E5BE62CD42BA43F5D5A08CAB0810835DCD893BAF428972B693C505FD458F84C",
+      "sequence": 183,
+      "action_id": "T-AXU-056",
+      "mode": "built-in image_gen",
+      "status": "visual_review_pass",
+      "prompt": "Use case: scientific-educational. Asset: photorealistic rehabilitation exercise step photograph, action 183 T-AXU-056, step s01, ready standing with one light kettlebell held at chest.\nInput images: all three are STRICT identity, clothing, background colour, and photographic style references for the SAME woman; they are not pose targets.\nPreserve this exact recognizable East Asian adult woman, age, face, natural skin, black ponytail, plain fitted white short-sleeve crew-neck T-shirt, dark charcoal full-length athletic trousers. Plain unbranded white low-profile athletic shoes. Exact soft pale cool gray-blue seamless studio background and same-colour floor, soft even neutral lighting, photorealistic texture.\nONE independent portrait photograph, 4:5 ratio approximately 1122x1402. Clear safe SIDE VIEW facing RIGHT, camera at waist-height and about 10 degrees toward her front so both hands and both feet read separately, natural normal-lens perspective. Full body including crown, fingers, complete kettlebell and both shoes with roomy margins. Camera distance should also leave clear space above her head to fit a future overhead press without changing camera or body scale.\nCurrent pose: both feet flat on level floor, comfortable hip-to-shoulder width, heels down, knees and hips comfortably extended, pelvis neutral, upright stable torso, relaxed neck and shoulders. Both hands firmly hold the two sides (horns) of the handle of ONE SMALL LIGHT MATTE CHARCOAL-GRAY KETTLEBELL at her upper chest. A compact realistic kettlebell, round body below handle, approximately 14 cm body diameter, comfortable lightweight size, not a giant heavy bell. Elbows bent and low in front of ribs, wrists straight, bell close to chest but not pressing the chest; realistic fingers around handle. No squat at this moment, no overhead lift, no ground pickup. Calm reference expression. Standard anatomical proportions.\nOnly one woman and one kettlebell. No text, numbers, labels, logos, watermark, arrow, motion trails, collage, split-panel, inset, other people, dumbbells, extra fingers or extra limbs.\nCRITICAL CAMERA FRAMING CORRECTION relative to generated reference: retain her exact pose, appearance, kettlebell and shoes, but MOVE CAMERA FARTHER BACK. Show same 4:5 portrait, much more empty backdrop above the woman's head. Her crown should sit about 25 percent of frame height from the TOP; soles about 93 percent down from top. Her entire standing body occupies only about 68 percent of total image height, so roughly the top quarter is EMPTY gray-blue backdrop for her upcoming overhead arm extension. Do not enlarge head or shorten legs to achieve this; physically zoom camera out. Full normal-sized woman shown smaller in a generous studio frame. One current standing chest-hold pose only.",
+      "target_pose": "双脚稳站、双手稳握单只轻壶铃靠胸，准备位。",
+      "visual_review": "通过呈现核对：同参考人物、白短袖深灰长裤、黑马尾、白鞋、浅灰蓝棚拍；双脚全掌落地、全身及单壶铃完整；膝髋接近伸展，铃靠胸，双手握柄可见；正常人体比例。人物缩小为画面高约68%，为s04预留顶部空间。",
+      "limitations": "静态照片不证明真实负荷、症状耐受、取放技能或动作安全资格。"
+    },
+    {
+      "step": "s02",
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\183_T-AXU-056_s02.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13a85-19aa-7791-bb36-cb195caa19a2\\exec-6f256059-314e-4e43-bde1-a90084986e2d.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1580439,
+      "sha256": "1553BE9E9D1C8F67779BCF4630D7EB8F32B47FA55D4CB8C6D18746D2F43C00F5",
+      "sequence": 183,
+      "action_id": "T-AXU-056",
+      "mode": "built-in image_gen",
+      "status": "visual_review_pass",
+      "prompt": "Use case: scientific-educational, photorealistic rehabilitation exercise step photograph. Action 183 T-AXU-056 s02: CONTROLLED SHALLOW SQUAT with single light kettlebell still at chest.\nInput reference: the generated standing s01 photo is STRICT reference for exact woman's identity, clothing, single gray kettlebell with her grip, full-body scale, camera position, facing direction, feet locations on floor, background, lighting, and shoe design. Generate the next single step; keep all these invariants. Same recognizable adult East Asian woman, black ponytail, plain white fitted short-sleeve T-shirt, dark charcoal full-length athletic pants, white unbranded athletic shoes; pale cool gray-blue seamless studio.\nChange ONLY her hips and knees from standing to a controlled shallow squat: hips travel moderately back and down, hips and knees both flex about 35–45 degrees, thighs remain well ABOVE horizontal. Small natural forward torso inclination with neutral long spine and chest open. Head remains aligned, gaze ahead to right. Both feet in SAME floor locations as reference, entirely planted including both heels, no jumping, no turning. Both hands keep the SAME compact matte gray kettlebell at upper chest, two hands firmly on sides of handle, elbows bent low near ribs, wrists straight, kettlebell still close to sternum and NOT moving upward or downward away from chest. No press yet.\nCRITICAL composition: 4:5 independent portrait photo approximately 1122x1402. Same SIDE camera facing right with slight 10-degree front oblique angle, same camera distance and natural lens. Full head, all fingers, kettlebell, and both shoes within frame. Standing reference crown is about 22 percent down from top, soles near 90 percent; in this squat pose crown naturally lowers a little but camera MUST NOT zoom or crop to follow her. Keep generous empty backdrop above and realistic body proportions.\nOne woman, one kettlebell, one current shallow squat phase only. No deep squat, no overhead lift, no dumbbells, no twisting, no backward arch, no text, numbers, labels, arrow, watermark, logo, movement ghosting, panels, other people, extra limbs or malformed hands.",
+      "target_pose": "双脚位置保持，受控浅蹲、髋膝屈曲，单壶铃继续靠胸。",
+      "visual_review": "通过呈现核对：髋向后下移，膝髋屈曲、股骨仍高于水平，非深蹲；双脚及脚跟落地；脊柱自然、胸部开放，单壶铃仍在胸前未推起；器械款式与大小和s01接近。人物尺度保持，脚底比s01约高10—15像素，属轻微生成漂移。",
+      "limitations": "静态照片不能验证下降速度、真实足底受力、膝髋疼痛或动态稳定。"
+    },
+    {
+      "step": "s03",
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\183_T-AXU-056_s03.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13a85-19aa-7791-bb36-cb195caa19a2\\exec-2b3ce0b0-77fb-4588-9fbb-7c497f56edaf.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1605334,
+      "sha256": "A889273755D3A1183F60E27ECDE97747950CFECB8AB1A3E96295BBED7CB693C8",
+      "sequence": 183,
+      "action_id": "T-AXU-056",
+      "mode": "built-in image_gen",
+      "status": "visual_review_pass",
+      "prompt": "Use case: scientific-educational. Photorealistic rehabilitation exercise step photograph, action 183 T-AXU-056, s03 STAND UP AND PAUSE STEADY BEFORE PRESS.\nInput 1: s01 is STRICT reference for identity, clothing, shoes, kettlebell design and size, camera, body scale, exact stable standing foot placements, background and lighting. Input 2: s02 squat is previous movement context only. Create a NEW independent photograph of s03, do not copy a previous bitmap.\nKeep exact same adult East Asian woman with recognizable face, black ponytail, plain white fitted short-sleeve T-shirt, full-length charcoal athletic pants, white unbranded low-profile athletic shoes, one compact matte charcoal-gray kettlebell. Pale cool gray-blue seamless studio and same floor, soft studio light.\nCurrent pose: she has risen from shallow squat and FIRST paused to become fully stable. Both hips and knees restored to comfortable extended standing position, feet still flat at same locations, knees soft and not forcefully locked. Torso upright and steady with neutral pelvis, spine, shoulders and neck; calm expression and gaze ahead right. Both hands STILL hold the same kettlebell close to upper chest by the sides of its handle, wrists straight, elbows bent low near ribs. No upward press yet, no jump, no momentum, no turning. Make the standing posture restful and composed; step teaches the pause before the next press. s03 may naturally resemble s01 because it is the explicit return to stable standing.\nCamera invariants: one 4:5 portrait approximately 1122x1402, same clear SIDE VIEW facing RIGHT with 10 degrees toward her front, same normal lens and camera distance, same full body size as input 1. Crown about 22 percent down frame, soles near 90 percent down frame, generous empty gray-blue backdrop above head for upcoming press. Full head, both hands, single kettle bell and both feet visible.\nNo text, number, arrow, label, logo, watermark, collage, panels, motion trail, other people, dumbbells, extra limbs or extra fingers.",
+      "target_pose": "浅蹲后恢复站立并先站稳，铃仍靠胸，强调推举前停稳阶段。",
+      "visual_review": "通过呈现核对：已恢复膝髋较伸展站立位，双脚落地、无跳起，铃仍胸前没有提前推举；头肩髋足构图与s01几乎一致；是独立image_gen调用产生的不同PNG与SHA256，保留独立步骤身份。",
+      "limitations": "s03形态与s01相近是清单要求；先站稳的时间过程须由配套步骤文字表达，不能从静态图验证。"
+    },
+    {
+      "step": "s04",
+      "path": "E:\\git冲突问题\\rehab image\\train\\steps\\183_T-AXU-056_s04.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13a85-19aa-7791-bb36-cb195caa19a2\\exec-39db6a37-facc-4a2c-aa90-1db2a201d5fc.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1571546,
+      "sha256": "7B7A9A4643E9BF152B01491CC0F1F8971199CF3A94BC6D2C2B021CB31926F814",
+      "sequence": 183,
+      "action_id": "T-AXU-056",
+      "mode": "built-in image_gen",
+      "status": "visual_review_pass",
+      "prompt": "Use case: scientific-educational. Photorealistic rehabilitation exercise step photograph. Action 183 T-AXU-056 s04: STABLE STANDING TWO-HAND LIGHT KETTLEBELL OVERHEAD PRESS ENDPOINT.\nInput 1 and 2 are s01 and s03 of this exact photo series. They are STRICT references for the same exact woman's identity, face, white short-sleeve T-shirt, charcoal full-length pants, ponytail, white shoes, single kettlebell geometry and size, body scale, camera view, fixed feet locations, pale cool gray-blue studio, and soft light. Same ONE compact matte charcoal gray kettlebell, same round body below loop handle, no change in weight, no duplicate bells.\nChange only both arms and single bell to selected overhead press endpoint, after she ALREADY stood stable. Both feet exactly as reference, both soles and heels stay entirely planted, comfortable extended hips and knees, neutral pelvis, upright trunk, ribs stacked over pelvis, no leaning backward, no torso rotation, no jump. Shoulders comfortable, no exaggerated shrug, neutral neck, looking forward to right, calm expression. Both hands continuously and firmly grip the SAME two sides of the handle in a close two-hand goblet hold, wrists aligned naturally with forearms. Both arms lift forward/up along safe press route, upper arms now alongside or slightly IN FRONT of ears, elbows comfortably almost straight but soft, not forcefully locked. Bell fully ABOVE head, separated from head, held controlled; the bulbous body hangs below its handle as gravity requires. Realistic two hands, fingers, handle contacts. Overhead endpoint must be clearly distinguished from chest hold, but no back arch or reaching beyond comfortable range.\nCRITICAL locked composition: ONE independent 4:5 portrait approximately 1122x1402. Same clear SIDE VIEW facing RIGHT with subtle front oblique angle of 10 degrees and natural normal lens. SAME camera distance and body scale as inputs: crown about 22 percent down frame (around y310 in 1402 px height), shoe soles near 90 percent (around y1250). Feet and head stay at same positions as standing inputs. The empty gray-blue upper quarter is AVAILABLE for the raised arms and bell. Do not zoom camera to fit movement. Full kettlebell and all hands overhead entirely in frame with margin, full head to both shoes. Correct ordinary anatomy and arm proportions.\nOne woman, one kettlebell, one current overhead press phase only. No squat, momentum, twist, lumbar extension, dumbbell, second kettlebell, text, numbers, labels, logo, watermark, arrows, movement trails, inset, panels, collage, extra people, extra limbs or malformed fingers.",
+      "target_pose": "保持站稳支持，双手将同一只轻壶铃推至选定过头终点。",
+      "visual_review": "通过呈现核对：同一女性、服装、相机尺度与足底线；单只小壶铃完整位于头顶上方，两手握同柄，双臂接近伸直但未见夸张锁肘；躯干基本直立、未明显后仰或转体，双脚全掌落地；头/手/壶铃与鞋均完整。",
+      "limitations": "静态照片不验证推举获准范围、重量、过程控制或真实握持力；肩位个体适用须沿用原卡条件。"
+    }
+  ],
+  "unselected_candidates": [
+    {
+      "path": "C:/Users/Administrator/.codex/generated_images/01a13a85-19aa-7791-bb36-cb195caa19a2/exec-52c46858-3267-4508-a195-ed77c61c87c9.png",
+      "prompt": "Use case: scientific-educational. Asset: photorealistic rehabilitation exercise step photograph, action 183 T-AXU-056, step s01, ready standing with one light kettlebell held at chest.\nInput images: all three are STRICT identity, clothing, background colour, and photographic style references for the SAME woman; they are not pose targets.\nPreserve this exact recognizable East Asian adult woman, age, face, natural skin, black ponytail, plain fitted white short-sleeve crew-neck T-shirt, dark charcoal full-length athletic trousers. Plain unbranded white low-profile athletic shoes. Exact soft pale cool gray-blue seamless studio background and same-colour floor, soft even neutral lighting, photorealistic texture.\nONE independent portrait photograph, 4:5 ratio approximately 1122x1402. Clear safe SIDE VIEW facing RIGHT, camera at waist-height and about 10 degrees toward her front so both hands and both feet read separately, natural normal-lens perspective. Full body including crown, fingers, complete kettlebell and both shoes with roomy margins. Camera distance should also leave clear space above her head to fit a future overhead press without changing camera or body scale.\nCurrent pose: both feet flat on level floor, comfortable hip-to-shoulder width, heels down, knees and hips comfortably extended, pelvis neutral, upright stable torso, relaxed neck and shoulders. Both hands firmly hold the two sides (horns) of the handle of ONE SMALL LIGHT MATTE CHARCOAL-GRAY KETTLEBELL at her upper chest. A compact realistic kettlebell, round body below handle, approximately 14 cm body diameter, comfortable lightweight size, not a giant heavy bell. Elbows bent and low in front of ribs, wrists straight, bell close to chest but not pressing the chest; realistic fingers around handle. No squat at this moment, no overhead lift, no ground pickup. Calm reference expression. Standard anatomical proportions.\nOnly one woman and one kettlebell. No text, numbers, labels, logos, watermark, arrow, motion trails, collage, split-panel, inset, other people, dumbbells, extra fingers or extra limbs.",
+      "status": "not_selected",
+      "reason": "姿势/壶铃/人物合格，但头顶余量约75 px，不能保持相同相机尺度容纳s04过头终点；仅用图像生成工具拉远相机重做s01构图。"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/train/183_T-AXU-056_下蹲—站稳—轻负重推举的分段组合.png",
+      "status": "not_selected_existing",
+      "reason": "现有原单图是双哑铃推举；本清单选定单只双手壶铃靠胸基础版本，因此不能作为本组s04复用。原图保持原位未覆盖。"
+    }
+  ],
+  "series_visual_review": "四张均1122×1402，人物身份/服装/棚拍/鞋一致；单只同款小壶铃、同一侧面镜头。s01与s03相近但独立生成；s02只下蹲未推举；s04站稳后推至过头。s02足底较s01约高10—15 px，s04上衣衣摆/肩位有自然及生成变化，未影响阶段辨识。无文字编号箭头，无拼图。审核为图片呈现检查，不是临床验收。"
+}

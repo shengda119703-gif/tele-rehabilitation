@@ -13,6 +13,12 @@ from app.rehab_v2.storage_boundary import StorageFault
 def install_rehab_v2(app, database, owner, small_json, plan_resolver, *, plan_reader=None, participant_provider=None):
     service = SessionService(database, plan_resolver, plan_reader=plan_reader, participant_provider=participant_provider)
     app.state.rehab_v2 = service
+    from .practice import install_formal_practice
+    try:
+        install_formal_practice(app, service, owner, small_json)
+    except Exception:
+        service.close()
+        raise
 
     @app.exception_handler(SessionError)
     async def session_error(request, error):

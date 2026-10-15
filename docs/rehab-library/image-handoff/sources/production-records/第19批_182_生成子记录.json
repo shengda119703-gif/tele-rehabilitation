@@ -1,0 +1,22 @@
+{
+  "actions": [
+    {
+      "sequence": 182,
+      "id": "T-AXU-061",
+      "name": "单臂轻哑铃过头肘伸",
+      "category": "train",
+      "filename": "182_T-AXU-061_单臂轻哑铃过头肘伸.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\182_T-AXU-061_单臂轻哑铃过头肘伸.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-9b39-7ce0-90e1-b272cded876d\\exec-9327fb3a-43ae-483f-95ab-b87632af825d.png",
+      "prompt": "Use case: photorealistic-natural.\nCreate ONE independent full-body rehabilitation exercise photograph for action 182, T-AXU-061 单臂轻哑铃过头肘伸 (single-arm light-dumbbell overhead elbow extension), showing the flexed-elbow starting position.\nINPUT REFERENCES: All THREE supplied photos are identity and style references of the SAME exact Asian adult woman, not pose targets. Strictly preserve her recognizable face, age, skin tone, dark brown low ponytail, healthy ordinary adult body proportions, plain white fitted crew-neck short-sleeve T-shirt and charcoal-gray full-length pants. Preserve the original cool pale gray-blue seamless photography backdrop, soft studio light, realistic skin and clothing textures. Simple white athletic shoes.\nPOSE: woman stands upright and balanced facing right, camera at a slightly oblique SIDE angle which shows her face and the working arm without head overlap. Feet hip-width, both complete feet planted flat. Her working near-side upper arm is lifted overhead almost VERTICAL beside her head, elbow clearly visible ABOVE head. Her working elbow is bent around 90 degrees: forearm folds backwards behind her head, holding ONE small lightweight dumbbell with secure natural grip. This is one-arm overhead triceps extension with a stable upper arm, NOT shoulder press. The single dumbbell is behind and above the head, with an obvious safe air gap from skull and ponytail, never touching the head. Her own OTHER hand lightly supports the working UPPER ARM near the triceps/below the elbow, not the dumbbell, not the wrist. Exactly two distinct anatomical arms and hands: one hand grips dumbbell, one hand supports upper arm. Shoulder stays natural and stable, upper arm not flared outward; elbow and wrist not hidden behind head. Torso upright, ribs and pelvis stacked, no backward lean or lumbar arch, neutral head and neck, calm face looking forward.\nCOMPOSITION: ONE vertical photoreal studio photo, 1122 x 1402 pixels or the same 4:5 portrait ratio. Entire full body from highest raised elbow and complete dumbbell to both complete shoes with generous outer margins. Normal human proportions, realistic arm/forearm lengths. No cropping at hands, elbow, dumbbell or feet. Face, both shoulder-to-hand connections, exact arm support contact and safe dumbbell-head air gap visibly clear. Gray-blue seamless studio floor and background unchanged; no scenery or furniture.\nCONSTRAINTS: same reference identity, hairstyle, clothes, background hue, photography style. One woman and ONE light small dumbbell only. No helper, no two-handed grip on dumbbell, no second dumbbell, no extreme bend, no giant muscles, no extra limbs, no distorted fingers, no visible text, captions, numbers, arrows, logos, watermarks, diagram, split panel or duplicated phases.",
+      "phase_zh": "站稳的过头肘伸屈肘起点：近侧上臂在头旁近竖直、肘约90°屈曲，前臂向头后，一手握轻哑铃与后脑留安全空隙，本人另一手轻支持动作上臂。",
+      "visual_review": "通过。已读取MD详细卡独立核对序号182与T-AXU-061对应。已使用view_image检查实际保存PNG：人物面貌、马尾、白色短袖、深灰长裤、灰蓝写实摄影背景与原参考一致，比例自然。单臂上举过头，上臂基本竖直、屈肘约90°、动作肘和腕清楚，轻哑铃与头发/后脑之间有明显空隙；另一手支持上臂而未握哑铃，躯干自然直立无明显仰腰，双脚站稳。单人单一姿态，整头、双肘手腕、哑铃及全身双足入镜，无文字箭头分镜。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1631702,
+      "sha256": "4130A2223EA50A543A904B098067B1622D1B5A3E3F69C3F24ACCB176750FFE99",
+      "status": "completed"
+    }
+  ]
+}
+

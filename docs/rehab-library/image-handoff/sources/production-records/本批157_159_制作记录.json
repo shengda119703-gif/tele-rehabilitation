@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "batch": "157/s02; 159/s01",
+  "date": "2026-10-14",
+  "generation_method": "built-in image_gen",
+  "list_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "assets": [
+    {
+      "action_id": 157,
+      "action_code": "T-AXU-025",
+      "step": "s02",
+      "final_file": "E:/git冲突问题/rehab image/train/steps/157_T-AXU-025_s02.png",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-51b2-7020-a9ca-326f4dd3497c/exec-aacfafa3-d118-494e-a886-29061d9cb611.png",
+      "sha256": "34D29D072770253FE41939C5B64324EEFF3E70DBD4C4499C9CE76A5538C4DD32",
+      "final_prompt": "Use case: precise-object-edit for an educational rehabilitation photograph.\nEdit the supplied full-body photograph. Preserve the SAME woman's identity, face, black ponytail, white T-shirt, charcoal trousers, bare feet, stable standing posture, three-quarter front camera view, gray-blue studio background, lighting, framing and all garment details.\nCHANGE ONLY THE HEIGHT OF BOTH ARMS: lower BOTH arms together so the shoulder-to-wrist segments slope gently DOWNWARDS from each shoulder toward each hand. BOTH wrists and fists must be visibly BELOW the corresponding shoulder joint. Set arms about 75 degrees of elevation, which means each long arm is about 15 degrees BELOW horizontal. For clarity, hands should be at the level of the upper chest / armpits, distinctly below shoulder height. The current arms are raised too high and hands near head level; remove that error.\nKeep bilateral scaption: arms remain forward and outward, 30 degrees in front of pure side abduction, broad forward V in overhead plan. Elbows almost straight, wrists neutral, both empty hands lightly closed with thumbs pointing up. Shoulders low without shrugging.\nNo changes to lower body or torso; chest and hips aligned forward, spine vertical, feet planted. No text, numbers, arrows, equipment, panels, watermark or extra anatomy. Full body and both hands and feet must remain complete in frame.",
+      "attempts": [
+        {
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-51b2-7020-a9ca-326f4dd3497c/exec-03f5a3c9-e945-4181-89cc-1b057337b9b7.png",
+          "prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation exercise demonstration photograph for action 157 T-AXU-025, step s02.\nReference roles: the three supplied reference photographs define the SAME adult East Asian woman, face, black ponytail, plain white short-sleeve T-shirt, dark charcoal full-length trousers, and soft realistic studio photography with a smooth gray-blue seamless background. Change her pose and widen framing to full body; preserve that visual identity. Do not copy the cropped framing or existing arm poses.\nPrimary request: demonstrate bilateral shoulder scaption with EMPTY hands at the raised endpoint.\nExact pose: she stands upright, relaxed, weight evenly distributed on two bare feet set hip-width apart, knees softly straight, chest and pelvis aligned forward, stable spine with no leaning or twisting. Both shoulders remain relaxed and low, away from the ears. BOTH arms are raised almost straight at approximately 75 to 80 degrees of shoulder elevation, with hands slightly BELOW shoulder height. Each arm points outward AND FORWARD in its own scapular plane, approximately 30 degrees anterior to the pure sideways plane; the hands are visibly in front of the torso, not behind it. The arms form a broad forward V when viewed from above, rather than straight sideways T or narrow straight-forward parallel reach. Elbows nearly straight with a very soft natural bend, wrists neutral. Hands gently closed but empty, BOTH thumbs clearly point upward toward the ceiling.\nCamera/composition: full-body three-quarter FRONT view at a small 25 to 30 degree diagonal angle, camera at chest height, far enough to show the entire person including hair, fingertips, both bare feet and floor shadow with generous margins. Show both arms separately and clearly so forward-outward direction is legible. The face may look in the torso's forward direction. Single woman, one pose, one image, no panels or montage.\nScene/style: minimal gray-blue seamless studio wall and floor, neutral soft even light, realistic skin and garment texture, calm instructional catalog photo consistent with references.\nConstraints: no dumbbells, no resistance bands, no other equipment, no jewelry emphasis, no typography, no numbering, no labels, no arrows, no diagram overlays, no watermark. Natural human anatomy with two arms, two hands, five normal digits per hand; complete hands and feet. No raised shoulders, no bent elbows held at 90 degrees, no pure lateral abduction, no pure front raise, no overhead endpoint.",
+          "qa": {
+            "status": "rejected",
+            "inspection": "actual view_image",
+            "reason": "双手及手腕超过肩高，终点过高。"
+          }
+        },
+        {
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-51b2-7020-a9ca-326f4dd3497c/exec-aacfafa3-d118-494e-a886-29061d9cb611.png",
+          "prompt": "Use case: precise-object-edit for an educational rehabilitation photograph.\nEdit the supplied full-body photograph. Preserve the SAME woman's identity, face, black ponytail, white T-shirt, charcoal trousers, bare feet, stable standing posture, three-quarter front camera view, gray-blue studio background, lighting, framing and all garment details.\nCHANGE ONLY THE HEIGHT OF BOTH ARMS: lower BOTH arms together so the shoulder-to-wrist segments slope gently DOWNWARDS from each shoulder toward each hand. BOTH wrists and fists must be visibly BELOW the corresponding shoulder joint. Set arms about 75 degrees of elevation, which means each long arm is about 15 degrees BELOW horizontal. For clarity, hands should be at the level of the upper chest / armpits, distinctly below shoulder height. The current arms are raised too high and hands near head level; remove that error.\nKeep bilateral scaption: arms remain forward and outward, 30 degrees in front of pure side abduction, broad forward V in overhead plan. Elbows almost straight, wrists neutral, both empty hands lightly closed with thumbs pointing up. Shoulders low without shrugging.\nNo changes to lower body or torso; chest and hips aligned forward, spine vertical, feet planted. No text, numbers, arrows, equipment, panels, watermark or extra anatomy. Full body and both hands and feet must remain complete in frame.",
+          "qa": {
+            "status": "passed",
+            "inspection": "actual view_image of saved final",
+            "checks": [
+              "同一女性黑马尾、白短袖、深灰长裤、灰蓝棚拍风格。",
+              "全身完整，双手和赤脚无裁切，无文字箭头编号或器材。",
+              "双臂沿前外侧抬举，斜前机位下近侧臂缩短透视可见，非纯正前举或纯侧举。",
+              "手位略低于肩高，肘基本直、双拇指朝上、肩未耸起。",
+              "躯干直立，胸髋稳定，双脚站稳。"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "action_id": 159,
+      "action_code": "T-AXU-055",
+      "step": "s01",
+      "final_file": "E:/git冲突问题/rehab image/train/steps/159_T-AXU-055_s01.png",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-51b2-7020-a9ca-326f4dd3497c/exec-c7737d0d-3a3a-4d47-869c-79d03f06f698.png",
+      "sha256": "D65E17BD816F3CA15D5C4F552F91BFD5652F07284B3CD8BFCB606053700DCEB9",
+      "final_prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation exercise demonstration photograph for action 159 T-AXU-055, step s01.\nReference roles: the supplied three reference photographs specify the SAME adult East Asian woman, facial identity, black ponytail, plain white short-sleeve T-shirt, dark charcoal full-length trousers, realistic skin, gray-blue studio backdrop and soft even lighting. Change to the exact pose below and widen the framing to full body. Do not reproduce their cropped framing or arm positions.\nPrimary request: starting pose for an EMPTY-HAND RIGHT-arm diagonal raise, BEFORE lifting.\nExact pose: FULLY FRONT-FACING woman standing steady, bare feet about hip-width apart, weight even, knees softly straight, spine upright, chest and pelvis both square to the camera. Her anatomical RIGHT arm (on the viewer's LEFT) crosses gently DOWN AND IN FRONT of her lower abdomen. Her RIGHT elbow remains nearly straight with a small natural bend. Her RIGHT hand lies just in front of the upper part of her anatomical LEFT thigh (the thigh on the viewer's RIGHT), below the hip crease. Clearly show that the arm begins at her RIGHT shoulder on viewer-left and crosses over to the OPPOSITE LEFT thigh on viewer-right. The right wrist stays neutral and fingers relaxed, palm loosely facing thigh, hand empty. This right hand must be in front of the left thigh, never on the same-side right thigh and never at the abdomen or chest.\nHer anatomical LEFT arm (viewer-right) hangs naturally beside the outer left hip and thigh, with its hand resting at the outside of the thigh, distinct from the crossed right hand. Both shoulders stay level and relaxed. Her head, chest and pelvis face forwards, without turning left toward the crossed hand. Calm neutral expression.\nComposition: straight-on frontal studio camera, eye/chest-level, full-body portrait with complete ponytail/head, both hands, both bare feet and soft floor shadow, generous margin around body. Two hands clearly distinguishable. One woman, one pose, one photograph, no panels.\nScene/style: smooth gray-blue seamless wall and floor, soft realistic studio lighting and photorealistic neutral instructional photography matching the references.\nConstraints: no dumbbell, no band, no weights or other equipment, no text, no numbers, no labels, no arrows, no overlays, no watermark. Natural anatomy and arm proportions, no torso rotation, no hip shift, no reaching upward, no gripping fingers around nonexistent props, no cropped feet or hands.",
+      "attempts": [
+        {
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-51b2-7020-a9ca-326f4dd3497c/exec-c7737d0d-3a3a-4d47-869c-79d03f06f698.png",
+          "prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation exercise demonstration photograph for action 159 T-AXU-055, step s01.\nReference roles: the supplied three reference photographs specify the SAME adult East Asian woman, facial identity, black ponytail, plain white short-sleeve T-shirt, dark charcoal full-length trousers, realistic skin, gray-blue studio backdrop and soft even lighting. Change to the exact pose below and widen the framing to full body. Do not reproduce their cropped framing or arm positions.\nPrimary request: starting pose for an EMPTY-HAND RIGHT-arm diagonal raise, BEFORE lifting.\nExact pose: FULLY FRONT-FACING woman standing steady, bare feet about hip-width apart, weight even, knees softly straight, spine upright, chest and pelvis both square to the camera. Her anatomical RIGHT arm (on the viewer's LEFT) crosses gently DOWN AND IN FRONT of her lower abdomen. Her RIGHT elbow remains nearly straight with a small natural bend. Her RIGHT hand lies just in front of the upper part of her anatomical LEFT thigh (the thigh on the viewer's RIGHT), below the hip crease. Clearly show that the arm begins at her RIGHT shoulder on viewer-left and crosses over to the OPPOSITE LEFT thigh on viewer-right. The right wrist stays neutral and fingers relaxed, palm loosely facing thigh, hand empty. This right hand must be in front of the left thigh, never on the same-side right thigh and never at the abdomen or chest.\nHer anatomical LEFT arm (viewer-right) hangs naturally beside the outer left hip and thigh, with its hand resting at the outside of the thigh, distinct from the crossed right hand. Both shoulders stay level and relaxed. Her head, chest and pelvis face forwards, without turning left toward the crossed hand. Calm neutral expression.\nComposition: straight-on frontal studio camera, eye/chest-level, full-body portrait with complete ponytail/head, both hands, both bare feet and soft floor shadow, generous margin around body. Two hands clearly distinguishable. One woman, one pose, one photograph, no panels.\nScene/style: smooth gray-blue seamless wall and floor, soft realistic studio lighting and photorealistic neutral instructional photography matching the references.\nConstraints: no dumbbell, no band, no weights or other equipment, no text, no numbers, no labels, no arrows, no overlays, no watermark. Natural anatomy and arm proportions, no torso rotation, no hip shift, no reaching upward, no gripping fingers around nonexistent props, no cropped feet or hands.",
+          "qa": {
+            "status": "passed",
+            "inspection": "actual view_image of saved final",
+            "checks": [
+              "同一女性黑马尾、白短袖、深灰长裤、灰蓝棚拍风格。",
+              "全身完整，双手和赤脚无裁切，无文字箭头编号或器材。",
+              "人物正面站稳，右臂由画面左侧肩横过身体，右手位于左大腿前方（画面右侧）。",
+              "左手自然垂于左侧外侧，与跨身右手清楚分开。",
+              "胸髋朝前未转向左侧，肩放松，躯干直立。"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

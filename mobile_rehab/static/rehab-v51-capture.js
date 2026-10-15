@@ -10,7 +10,7 @@ function rehabLibraryTitleV51(){
 }
 function actionDetailV51(){
   const ex=selected();
-  app.innerHTML=`<header class="rv-page-top"><button class="back" id="rv-library-back" aria-label="返回${esc(rehabLibraryTitleV51())}">‹</button><h1>动作详情</h1></header>${RehabV51.picture(ex.id,true,true)}<div class="rv-detail-name"><h2>${esc(ex.label)}</h2><span>${esc(ex.instructions.view_label)}</span></div><section class="card rv-intro"><h2>动作介绍</h2><p>专业介绍待完善</p><details><summary>已有动作文字与测量范围</summary><p>${esc(ex.instructions.start)}</p><p>${esc(ex.instructions.move)}</p><p>${esc(ex.instructions.return)}</p><p>${esc(ex.instructions.camera)}</p><p>${esc(ex.instructions.boundary)}</p><p>${esc(ex.instructions.count)}</p></details></section>${window.RehabCandidateImages?.gallery(ex.id)||''}<div class="rv-detail-foot"><button class="primary" id="rv-detail-start">${new URLSearchParams(location.search).get('guide')==='1'?'开始实时指导':'开始评估'}</button></div>`;
+  app.innerHTML=`<header class="rv-page-top"><button class="back" id="rv-library-back" aria-label="返回${esc(rehabLibraryTitleV51())}">‹</button><h1>动作详情</h1></header>${RehabV51.picture(ex.id,true,true)}<div class="rv-detail-name"><h2>${esc(ex.label)}</h2><span>${esc(ex.instructions.view_label)}</span></div><section class="card rv-intro"><h2>动作介绍</h2><p>${esc(ex.instructions.count)}</p><ol class="rl-task-instructions">${[ex.instructions.start,ex.instructions.move,ex.instructions.return].map(text=>`<li>${esc(text)}</li>`).join('')}</ol><details><summary>拍摄与测量说明</summary><p>${esc(ex.instructions.camera)}</p><p>${esc(ex.instructions.boundary)}</p><p>${esc(ex.instructions.count)}</p></details></section>${window.RehabCandidateImages?.gallery(ex.id)||''}<div class="rv-detail-foot"><button class="primary" id="rv-detail-start">${new URLSearchParams(location.search).get('guide')==='1'?'开始实时指导':'开始评估'}</button></div>`;
   $('#rv-library-back').onclick=()=>backToLibrary('assessment');
   $('#rv-detail-start').onclick=()=>{state.preparing=true;if(new URLSearchParams(location.search).get('guide')==='1')livePage();else{state.captureSource='REPLAY_FILE';assessment();}window.scrollTo(0,0);};
   frameRehabV51('detail');
@@ -48,7 +48,7 @@ function planEntryV51(record,progress,index){
   const entry=record.items[index],isNext=entry.key===progress.next_key&&!progress.blocked;
   app.innerHTML=`<header class="rv-page-top"><button class="back" id="rv-plan-back" aria-label="返回我的计划">‹</button><h1>计划详情</h1></header>${RehabV51.picture(entry.exercise_id,true)}<div class="rv-detail-name"><h2>${esc(label(entry.exercise_id))}</h2><span>本人${sideLabel(entry.side)}</span></div><section class="card"><h2>本次目标</h2><p>${entry.settings.target_reps}次 × ${entry.settings.target_sets}组</p>${Number.isFinite(entry.settings.target_angle_deg)?`<p>个人角度目标 ${number(entry.settings.target_angle_deg,'°')}</p>`:''}<p class="caption">版本 ${record.revision} · 来自已保存计划</p><p>${progress.items[index].done?'已完成':isNext?'下一项':progress.blocked||'按计划顺序进行'}</p></section>${isNext?'<button class="primary" id="rv-entry-start">开始训练</button>':''}`;
   $('#rv-plan-back').onclick=()=>navigate('plan');
-  if($('#rv-entry-start'))$('#rv-entry-start').onclick=()=>{state.captureSource='REPLAY_FILE';state.preparing=true;state.training={id:record.id,entry};state.selected=entry.exercise_id;state.side=entry.side;state.joint=selected().joint;state.tab='assess';state.detail=true;clearFile();assessment();window.scrollTo(0,0);};
+  if($('#rv-entry-start'))$('#rv-entry-start').onclick=()=>startPlanEntry(record,entry);
   frameRehabV51('detail');
 }
 function extrasRehabV51(){
@@ -63,12 +63,12 @@ function frameRehabV51(view){
   document.body.dataset.rehabView=view||(state.job?'result':state.training?'prepare':state.tab==='assess'?(state.detail?(state.preparing?'prepare':'detail'):'library'):state.tab);
   $('.bottom-nav').hidden=true;
   if(document.body.dataset.rehabView==='library'){const title=app.querySelector('.library-heading h1');if(title)title.textContent=rehabLibraryTitleV51();}
-  if(document.body.dataset.rehabView==='library'&&!app.querySelector('.rv-unverified')){const note=document.createElement('p');note.className='caption rv-unverified';note.textContent=window.RehabCandidateImages?.status()||'配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。';if(window.RehabCandidateImages?.enabled()){const link=document.createElement('a');link.href='/static/rehab-image-review.html?rehabImagePreview=1';link.textContent=' 查看公共素材185卡';link.target='_blank';link.rel='noopener';note.append(link);}app.querySelector('.library-toolbar')?.before(note);}
+  if(document.body.dataset.rehabView==='library'&&!app.querySelector('.rl-public')&&!app.querySelector('.rv-unverified')){const note=document.createElement('p');note.className='caption rv-unverified';note.textContent=window.RehabCandidateImages?.status()||'配图未核验，仅作视觉封面；动作文字与机位以现有说明为准。';if(window.RehabCandidateImages?.enabled()){const link=document.createElement('a');link.href='/static/rehab-image-review.html?rehabImagePreview=1';link.textContent=' 查看公共素材185卡';link.target='_blank';link.rel='noopener';note.append(link);}app.querySelector('.library-toolbar')?.before(note);}
   const isFocused=['prepare','detail','result','guidance'].includes(document.body.dataset.rehabView);
   if(!app.querySelector('.back')&&!isFocused){const back=document.createElement('button');back.className='back rv-back';back.textContent='‹ 返回康复';back.onclick=returnRehabV51;app.prepend(back);}
 }
 // Wrap rendered pages, retaining the original camera, upload, plan and result handlers.
-for(const name of ['assessment','actionLibrary','plan','history','fitnessPage','posturePage','bodyPage','devices','renderPostureReport','renderFitnessReport']){
+for(const name of ['assessment','actionLibrary','plan','renderHistory','fitnessPage','posturePage','bodyPage','devices','renderPostureReport','renderFitnessReport']){
   const original=window[name];window[name]=function(...args){const result=original(...args);frameRehabV51();if(state.shared&&name==='plan')app.querySelector('.page-head h1').textContent='我的计划';if(result&&typeof result.then==='function')result.then(()=>frameRehabV51(),()=>frameRehabV51());return result;};
 }
 const originalLivePageV51=livePage;
@@ -101,6 +101,6 @@ function initRehabV51Tools(){
 }
 
 // Resource loading may refresh browsing only; never training, capture or results.
-if(window.RehabCandidateImages)document.addEventListener('rehab-candidate-images-ready',()=>{
+if(window.RehabCandidateImages?.enabled())document.addEventListener('rehab-candidate-images-ready',()=>{
   if(state.shared&&state.tab==='assess'&&!state.training&&!state.preparing&&!state.job&&!state.upload&&state.catalog.length)assessment();
 });

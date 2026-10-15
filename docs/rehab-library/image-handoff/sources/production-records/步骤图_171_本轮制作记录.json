@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-14",
+  "sequence": 171,
+  "action_id": "T-AXU-058",
+  "action_name": "上斜凳轻哑铃胸推",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_library": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "mode": "内置image_gen；一图一调用；s02审核后复用；s01编辑生成",
+  "identity_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "group_review": "两张固定同一斜侧机位、人物尺度、地面基准、灰蓝背景与柔光；凳倾斜设置、座面靠背、灰色双轻哑铃、脚部位置保持一致。画面验收仅针对视觉呈现。",
+  "images": [
+    {
+      "step": "s01",
+      "status": "accepted",
+      "reused": false,
+      "path": "E:/git冲突问题/rehab image/train/steps/171_T-AXU-058_s01.png",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-14f7-7540-bcf8-c15db41b3b64/exec-9bf0aa93-66fa-43e2-aab8-eb9f9d375ef0.png",
+      "reused_source": null,
+      "edit_target": "E:/git冲突问题/rehab image/train/171_T-AXU-058_上斜凳轻哑铃胸推.png",
+      "prompt": "Use case: identity-preserve. Asset type: single rehabilitation exercise catalogue photograph, Action 171 T-AXU-058 incline light dumbbell chest press step s01 START POSITION.\nINPUT IMAGE ROLES: Image 1 is the EDIT TARGET: the existing upper push phase photograph of this same woman on a gray incline bench. Images 2, 3, 4 are STRICT ORIGINAL IDENTITY AND STYLE REFERENCES ONLY: same woman's exact face, age, skin tone, black low ponytail, white short-sleeved T-shirt, charcoal trousers, realistic body proportions, pale cool gray-blue backdrop and soft studio lighting.\nPrimary request: Change ONLY both arm positions in Image 1 from pushed-up endpoint to the controlled CHEST-LEVEL STARTING POSITION. Preserve EVERYTHING else from image 1: identical fixed front three-quarter SIDE camera, lens perspective and crop, head position and facial identity, torso posture, entire bench in its same fixed 45–60 degree incline setting, original seat/backrest/frame/base geometry, both feet and legs and grounded contact points, clothing, gray dumbbells of the same size and design, background/floor/shadows and soft lighting.\nPOSE CHANGE: She remains reclined against the long gray backrest, with back of head, upper back and pelvis supported; pelvis sits on the real separate short gray seat. Both knees remain bent and both white shoes flat on floor. Lower both matching light gray dumbbells in a controlled symmetric position beside the upper chest/shoulder line, one in each hand, palms oriented comfortably toward feet in the same press grip. Upper arms run down and outward about 30–45 degrees from the ribcage, elbows bent near 90 degrees in a comfortable controlled chest-press start, elbows not dropped deeply behind torso. Forearms almost vertical under the dumbbells, wrists straight, dumbbells visually immediately above upper chest level and near shoulders, with true secure finger grips. Both hands, elbows, wrists and both dumbbells must be readable and naturally connected, with no merged limbs or equipment.\nKeep head and shoulders supported and relaxed, no raised pelvis, no exaggerated arch at waist, no torso or leg movement. Keep bench exactly same as Image 1. This is the bent-elbow START of an incline chest press, not a fly, curl, seated upright shoulder press or unloaded pose.\nComposition: same single continuous portrait photograph at approximately 1122x1402, 4:5. Complete head, both dumbbells, both hands, both shoes, whole bench and its support base visible with natural adult proportions. Same woman, same camera distance and scale. No text, numbers, arrows, logos, watermark, labels, inset, collage, extra people or new props.",
+      "review": "已用view_image以original分辨率复核保存图。双哑铃位于胸肩前起点，双肘屈曲约90°、前臂近垂直、腕部自然，双手握持真实；头、上背与臀部均有凳面支持，双足落地；真实座面与靠背完整且与s02一致；无抬臀或夸张仰腰。人物、衣服和发型符合三张原参考，头手脚与凳完整入镜；正常人体比例，无文字箭头或拼图。接受。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1709632,
+      "sha256": "6C54FD5CF4F2159D383F76D50D6EA3550F73505AFE0C42015ABAD15F6E5A84AB",
+      "revisions": []
+    },
+    {
+      "step": "s02",
+      "status": "accepted",
+      "reused": true,
+      "path": "E:/git冲突问题/rehab image/train/steps/171_T-AXU-058_s02.png",
+      "generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ee-8197-74f1-88e0-a6654c4ae47c\\exec-80b9d414-8e06-4250-98c0-83ad5204ed6c.png",
+      "reused_source": "E:/git冲突问题/rehab image/train/171_T-AXU-058_上斜凳轻哑铃胸推.png",
+      "source_record": "E:/git冲突问题/rehab image/第18批_171-173_分工记录.json",
+      "prompt": "Use case: scientific-educational. One photorealistic rehabilitation exercise catalogue photograph.\nInput images 1, 2 and 3 are STRICT references for the SAME woman's identity, wardrobe, skin tone, photographic style, studio lighting and background. Depict precisely this woman: identical East Asian face and age, natural skin complexion, dark low ponytail, white fitted short-sleeved crewneck T-shirt and charcoal dark-gray long athletic trousers. Preserve normal realistic adult head-to-body ratio, body build and limb proportions; realistic hands with five fingers each, no extra or fused limbs. Plain white unbranded athletic shoes may complete the cropped reference outfit.\nPreserve the EXACT softly mottled pale cool gray-blue seamless studio backdrop, extending onto a flat studio floor in the same color. Same even soft studio lighting, natural skin and clothing texture, photographic realism, subdued color palette. Exercise equipment must be restrained neutral-gray only and correctly constructed. Do not add a gym, room decor, different background, different woman or different clothing.\nComposition: one continuous portrait photograph at 1122:1402 aspect ratio; whole woman, head, hands, feet and required equipment fully in view with comfortable edge margins. Camera from the specified angle to show correct motion plane and key support contacts; normal lens perspective, no distorted foreshortening, giant hands or oversized head. Single frozen action phase. No collage, inset, overlays, arrows, labels, text, numbers, logos, watermark, cartoon, other people or imaginary equipment connections.\nAction 171 T-AXU-058 上斜凳轻哑铃胸推.\nExercise pose: controlled LIGHT DUMBBELL INCLINE CHEST PRESS at upper push phase. A stable gray adjustable incline bench with backrest locked at 45 degrees to horizontal and a properly joined short seat. Woman reclines on it with head, upper back and hips SUPPORTED against the cushion, feet apart FLAT on the floor, no arched lower back or raised hips. Both hands securely hold matching small light gray dumbbells, one each. Hands pushed upwards above upper chest, arms angled up and slightly forward relative to reclined torso, elbows still gently flexed about 15–25 degrees, wrists straight and aligned with forearms. Dumbbells at about shoulder-width spacing, palms generally toward her feet in a comfortable press grip, not sideways fly and not vertical upright overhead seated shoulder press. Camera front three-quarter SIDE so bench incline, head support, both dumbbells, both arms and grounded feet are all clearly visible. Head rests naturally and face identity visible; look softly upward in direction of push. Frame whole bench and woman in portrait with natural body proportions.",
+      "review": "已逐张view_image复核原图及最终保存图，画面符合本清单s02。双轻哑铃向胸上方推出，肘保留微屈而未猛锁；头、上背、臀贴凳，双足落地；真实倾斜靠背、独立座面及稳定脚架完整可见；无明显抬臀或夸张仰腰。人物身份、白短袖深灰裤白鞋、灰蓝摄影背景与原参考一致；全身、双哑铃及完整凳入镜；正常人体比例，无文字箭头或拼图。以原文件字节直接非覆盖复制复用，接受。",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1747777,
+      "sha256": "27F455BD7F860764B90F1094B1AEB6F24F87B48B3CDA767AC2EF8C80E154BC2A",
+      "revisions": []
+    }
+  ]
+}

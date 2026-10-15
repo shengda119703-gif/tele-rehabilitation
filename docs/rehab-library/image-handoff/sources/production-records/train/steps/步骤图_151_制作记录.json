@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "制作日期": "2026-10-14",
+  "动作序号": 151,
+  "动作ID": "T-AXU-013",
+  "动作名称": "轻柔下巴回收与点头控制",
+  "清单": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md#action-151",
+  "版本": "首轮坐位下巴回收基础版",
+  "工具": "built-in image_gen（s02局部姿势编辑）；s01为既有合格中立姿势原像素复用",
+  "输入参考": [
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "role": "已人工查看的人物身份、服装和背景参考；没有作为s02工具输入",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "role": "已人工查看的人物身份、服装和背景参考；没有作为s02工具输入",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "role": "已人工查看的人物身份、服装和背景参考；没有作为s02工具输入",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ],
+  "步骤": [
+    {
+      "图号": "s01",
+      "目标姿势": "靠背坐稳，耳部自然位于肩上方附近，平视、下颌放松，双肩自然",
+      "保存路径": "E:/git冲突问题/rehab image/train/steps/151_T-AXU-013_s01.png",
+      "source": "E:/git冲突问题/rehab image/train/steps/147_T-AXU-009_s01.png",
+      "reused": true,
+      "prompt": null,
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "439B5370E0B07177746FEB22E31F59356CB1E2C2E323CDB31749E4413B8B95BB",
+      "bytes": 1715068,
+      "qa": {
+        "status": "通过",
+        "review_method": "实际原图与最终文件人工视觉审查",
+        "人物背景": "同参考女性，白色短袖、黑裤、马尾、灰蓝背景",
+        "比例关节": "头肩比例自然，耳靠近肩上方，平视且下颌放松，没有刻意前伸",
+        "支撑器械": "稳定灰色靠背椅支持，双手在膝上，双肩自然下垂",
+        "画面": "完整头部、马尾、肩部；侧面方向清楚，无遮挡、文字、箭头"
+      }
+    },
+    {
+      "图号": "s02",
+      "目标姿势": "上身保持，头整体轻向后水平回收一点，形成很小双下巴，视线仍大致平视",
+      "保存路径": "E:/git冲突问题/rehab image/train/steps/151_T-AXU-013_s02.png",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a13a84-015c-7351-a817-19cdc2644515/exec-31f066bc-9531-4e1e-af39-7a876cf065bb.png",
+      "reused": false,
+      "edit_target": "E:/git冲突问题/rehab image/train/steps/151_T-AXU-013_s01.png",
+      "prompt": "Use case: identity-preserve.\nAsset type: one photorealistic rehabilitation step demonstration, action 151 T-AXU-013, step 02, gentle seated chin retraction.\nInput image: the attached seated side-profile photograph is the sole edit target. Preserve its person, identity, hairstyle/ponytail, white T-shirt, black trousers, gray backed chair, relaxed shoulders, trunk, hands on thighs, seat contact, camera, exact framing, dimensions 1536x1024, light and blue-gray background.\nChange ONLY the head and its local neck transition: the whole head slides horizontally backward toward the left of the image by a small 1–2 cm, while the face continues looking to the right with eyes at approximately the same horizontal level. This is cervical retraction, a tiny horizontal chin glide; the chin makes a small soft double-chin fold. Keep the nose and eye direction essentially horizontal, preserving approximately the original head orientation. Ear, nose, jaw and whole skull translate posteriorly together; do not rotate the face downward or upward. The movement is gentle and barely a little visible, with a naturally proportioned comfortable neck.\nKeep the entire crown, ponytail and shoulders in frame. The back continues resting naturally by the same chair back; never press the head against a wall or forcefully into a chair. Keep shoulders lowered and trunk completely unchanged. One posture, no text, no arrows, no diagrams, no ghost outlines, no split panels, no new props. Avoid neck flexion, nodding, bowing the head, looking down, looking up, exaggerated chin tucking, overcompression or extreme head retraction.",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "0ACE87796AD2857F2FCF388E22F8A25296653D64EE154E9457E941B0FD7942FD",
+      "bytes": 1681425,
+      "qa": {
+        "status": "通过",
+        "review_method": "实际生成输出及复制后最终文件人工视觉审查，并与s01比较",
+        "人物背景": "人物身份、马尾、服装、灰蓝背景和光线保持",
+        "比例关节": "耳鼻下颌整头后移约30像素可辨；眼部高度基本不变，鼻脸方向近水平，小双下巴可见。没有低头、抬头或大幅点头",
+        "支撑器械": "肩和躯干基本保持，双手仍安放在膝上，背靠椅支持，不靠墙、不强顶椅背",
+        "画面": "完整头部、马尾、双肩；无字箭头，无多帧叠影，未混入仰卧点头",
+        "限制": "1–2厘米为生成提示的轻幅意图；照片没有标尺，实际物理位移不能据图精确测定"
+      }
+    }
+  ],
+  "播放顺序": "s01 → s02保持 → 复用s01完全放松；点头不是该基础版必做下一阶段",
+  "修订": "首次s02输出符合本清单，未进行二次编辑",
+  "改动范围": "仅外部图片目录，未改软件仓库、全局制作进度或正式UI"
+}

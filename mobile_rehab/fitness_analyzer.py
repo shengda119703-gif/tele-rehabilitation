@@ -2,10 +2,12 @@
 import json
 from pathlib import Path
 import time
+import cv2
 
 from .core import CORE  # initialize the existing core import path
 from .fitness import FitnessEngine, EXERCISES, VERSION
 from .barbell import BarTracker
+from .automatic_motion import AutomaticTracker
 from .analyzer import write_json
 from app.camera_manager import CameraManager
 from app.vision import VisionWorker
@@ -19,6 +21,8 @@ def analyze(job_path):
     folder = job_path.parent
     engine = FitnessEngine(job['exercise'], job['side'])
     bar = BarTracker(job['barbell_calibration']) if job.get('barbell_calibration') else None
+    automatic = AutomaticTracker(job['side']) if bar is None else None
+    equipment_error = None
     camera, vision = CameraManager(), VisionWorker(start_thread=False)
     context = Context(1, 'fitness', job['id'], 'REPLAY_FILE', 'SELF_USE', job['id'])
     last_frame, last_progress = time.monotonic(), 0.
@@ -47,6 +51,12 @@ def analyze(job_path):
             if bar is not None:
                 bar.consume(packet.image, packet.time_s)
             pose = vision.infer(packet, backend='yolo', side=job['side'])
+            if automatic is not None:
+                try:
+                    automatic.consume(packet.image, packet.time_s, pose)
+                except (ValueError, cv2.error):
+                    equipment_error = '自动轨迹暂不可用，动作分析已保留。'
+                    automatic = None
             model_id = pose.model_manifest_id
             engine.consume(pose)
             worker.acknowledge(packet.seq)
@@ -59,10 +69,20 @@ def analyze(job_path):
                 last_progress = time.monotonic()
         if engine.frames < 3:
             raise ValueError('视频太短，请重新录制一组完整动作。')
+        trajectory = None
+        if bar is not None:
+            trajectory = bar.report()
+        elif automatic is not None:
+            try:
+                trajectory = automatic.report()
+            except Exception:
+                # Optional trajectory failure must not discard anatomical results.
+                equipment_error = '自动轨迹暂不可用，动作分析已保留。'
         write_json(folder / 'result.json', dict(kind='fitness', exercise=job['exercise'], side=job['side'],
             rule_version=VERSION, source_kind='REPLAY_FILE', usage_context='SELF_USE',
             finished_at=utc_now(), summary=engine.summary(), repetitions=engine.repetitions,
-            barbell=bar.report() if bar is not None else None,
+            barbell=trajectory,
+            equipment_analysis=dict(mode='legacy_marked' if bar is not None else 'automatic', error=equipment_error),
             series=engine.series, spec=EXERCISES[job['exercise']], processed_frames=engine.frames,
             input_timing=timing,
             conditions=dict(view='sagittal_user_selected', size=size, schema='coco17-v1',

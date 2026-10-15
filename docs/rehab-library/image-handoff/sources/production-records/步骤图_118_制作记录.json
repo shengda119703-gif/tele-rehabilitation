@@ -1,0 +1,50 @@
+{
+  "task": "118 T-LOW-040 扶稳抬前足",
+  "checklist": "E:\\git冲突问题\\rehab image\\动作分步骤示范图制作清单_v1.0.md",
+  "method": "built-in image_gen__imagegen, one call per asset or correction",
+  "created_date": "2026-10-14",
+  "reference_paths": [
+    "E:\\git冲突问题\\rehab image\\step-image-references\\reference-01.png",
+    "E:\\git冲突问题\\rehab image\\step-image-references\\reference-02.png",
+    "E:\\git冲突问题\\rehab image\\step-image-references\\reference-03.png"
+  ],
+  "outputs": [
+    {
+      "step": "118-s01",
+      "prompt": "Use case: scientific-educational.\nAsset type: single photorealistic rehabilitation exercise step photograph, 118-s01 supported bilateral forefoot raise STARTING POSITION.\nInput image: reference-01.png is the identity, clothes, photography, lighting and background reference only. Use the same East Asian adult woman with black ponytail, plain white short-sleeve T-shirt, dark charcoal ankle-length pants. She is barefoot.\nScene: uncluttered gray-blue studio rehabilitation environment, gray floor and gray-blue wall, soft natural studio lighting, realistic photographic skin and clothing texture.\nComposition: one portrait photograph with only one person and one static posture, near side view facing right, camera about 20 degrees in front of her side so that BOTH separate feet and both heels and toe ends are clearly visible. Show her entire body including head, hand support and BOTH feet with comfortable margin. Feet prominent, not obscured by trousers, legs or equipment.\nFixed support: a sturdy wall-mounted horizontal metal handrail at her hip/waist height on the right, visibly fixed by brackets to the right wall. Her right hand lightly rests on this rail; left arm relaxes at her side. Make the contact and rail fixation unmistakable.\nPose: she stands comfortably upright, knees soft, both feet parallel, hip-width apart. BOTH heels remain on the floor and BOTH entire soles including forefoot and toe pads rest flat on the floor. The ankle is neutral. Toes are relaxed and straight, not clawing. This is the relaxed initial stance before raising the forefeet.\nConstraints: no heel raise, no standing on tiptoe, no raised toes or forefoot in this starting frame, no elastic band, no arrows, no text, no labels, no watermark, no comparison panels, no inset, no multiple poses. Natural correct anatomy. Preserve the reference identity and soft gray-blue photographic style.",
+      "source_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-ab4b-7ef1-beab-02c7b5bcc0d5\\exec-c6e2aa9b-3cc5-45d9-a127-f0c2ce164cc2.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\118_T-LOW-040_s01.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "9514166ea02d37be542812f273c8c965bce5c5b2edce700186ee1467864af898",
+      "visible_pose_review": "实际用 view_image 查看：女性同人白T深灰裤黑马尾赤足；右手轻扶墙面固定扶手，墙装托架明确；双脚平行，全掌和双足跟稳定接地，脚趾放松；前足及脚跟完整可见；单姿势，无字、无箭头。通过。"
+    },
+    {
+      "step": "118-s02",
+      "prompt": "Use case: scientific-educational.\nEdit target: the supplied rehabilitation demonstration photograph. Keep the exact same person, clothes, camera, lighting, background, fixed rail and hand contact completely unchanged.\nCorrect ONLY the two foot poses. Both HEEL pads stay firmly planted in exactly the original floor contact positions. Rotate EACH WHOLE FOOT gently upward about its grounded heel by 12 degrees through ankle dorsiflexion. The balls of the feet (metatarsal heads, not just the toes) must rise about 2-3 cm above the floor; the toe pads about 3-4 cm above the floor. Show visible empty floor gaps under BOTH entire forefeet. Each foot is a shallow straight wedge from grounded heel to elevated toe pads. Toes stay softly relaxed and nearly straight as a natural continuation of the elevated forefoot. Do not hinge the toes upward at the toe knuckles, do not make hooked toe tips.\nIt must clearly show supported BILATERAL FOREFOOT RAISING, not lifting only the toes, and not heel raising. Heels DOWN, metatarsal heads and toes UP. Maintain an easy stable upright stance. Single posture photograph, no text or arrows or panels.",
+      "source_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-ab4b-7ef1-beab-02c7b5bcc0d5\\exec-b6cd9cb9-476b-426f-97f3-51756a4a5b57.png",
+      "final_path": "E:\\git冲突问题\\rehab image\\train\\steps\\118_T-LOW-040_s02.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "51ab2e7ca05afef43fd571a00ddc2b9de2dc07baeeb463f9eb5154afb70cbc38",
+      "visible_pose_review": "实际用 view_image 查看最终图：双足跟保留地面接触，双前足整体抬起，前足下空隙可见；脚趾近似沿前足斜线自然延续，无夸张钩状上卷；躯干稳定、手扶固定墙装扶手；同人同构图与 s01 连贯。远侧跟部有部分被近脚遮挡，但贴地关系及踝背屈姿势可辨。通过。",
+      "iterations": [
+        {
+          "prompt": "Use case: scientific-educational.\nAsset type: photorealistic rehabilitation exercise step photograph, 118-s02 supported bilateral forefoot raise.\nEdit target: the provided 118-s01 photograph. Preserve the SAME East Asian woman, same face, black ponytail, white T-shirt, dark charcoal ankle-length trousers, barefoot, unchanged body proportions and gray-blue studio photography. Preserve the exact camera angle, framing, wall, fixed wall-mounted handrail, right-hand rail contact, left arm, both heel locations, parallel hip-width feet and foot identity. One person, one static posture.\nChange only the posture of BOTH bare feet at the ankles: keep BOTH heel pads firmly planted on the floor in their original locations and raise BOTH entire forefeet, balls of feet and all toes gently off the floor by dorsiflexing at the ankles. Show a believable 15-20 degree upward slope from each grounded heel to each raised toe tip, with a CLEAR small air gap underneath BOTH forefeet. Heels are the pivots and stay DOWN. This is bilateral forefoot lifting, NOT a calf raise. Do not raise the heels. Do not curl or overextend individual toes; each group of toes stays relaxed and approximately aligned with its own raised forefoot. Her knees remain softly extended and trunk remains upright and stable with the right hand lightly supporting on the unchanged fixed rail.\nRequirements: both heel-floor contacts visible, both forefoot-floor gaps visible, natural ankle anatomy and ten relaxed toes. Foot pose should be the only change from the source photo. Single portrait photo. No inset, no collage, no comparison panels, no text, no arrows, no labels, no watermark, no elastic band.",
+          "source_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-ab4b-7ef1-beab-02c7b5bcc0d5\\exec-ee437160-d340-43de-9316-4c4604bc25a1.png",
+          "review": "方向正确，双跟贴地及双前足抬起，但脚趾尖偏上翘，未选为最终。"
+        },
+        {
+          "prompt": "Use case: scientific-educational. Edit the supplied rehabilitation photo with ONE precise anatomical correction.\nKeep the exact woman, face, clothes, ponytail, hand contact, fixed handrail, gray-blue wall and floor, lighting, camera framing, body position, leg position, both firmly grounded heels and current forefoot air gaps completely unchanged.\nCorrect ONLY the toes of BOTH feet: relax the toes, removing their current pronounced upward bend at the toe joints. Each group of toes must extend naturally approximately along the straight diagonal line of its raised forefoot. Dorsiflexion is at the ankle; the foot rises as one unit from the grounded heel pivot. The toe joints stay relaxed, neither curling upward nor gripping downward. In particular, flatten the upturned tip of the far foot so it is a gently sloping relaxed continuation of the forefoot rather than a hook.\nBoth heels MUST stay in contact with the floor. Both metatarsal heads and toe pads MUST still be visibly raised with a clear air gap. Only the toe bend should change. Single photographic pose, natural correct anatomy, no text, labels, arrows, inset or watermark.",
+          "source_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-ab4b-7ef1-beab-02c7b5bcc0d5\\exec-7a50fb4f-e0a2-4636-ab77-9bd5f5c4b071.png",
+          "review": "脚趾放松改善，但前足抬起变化偏小，未选为最终。"
+        },
+        {
+          "prompt": "Use case: scientific-educational.\nEdit target: the supplied rehabilitation demonstration photograph. Keep the exact same person, clothes, camera, lighting, background, fixed rail and hand contact completely unchanged.\nCorrect ONLY the two foot poses. Both HEEL pads stay firmly planted in exactly the original floor contact positions. Rotate EACH WHOLE FOOT gently upward about its grounded heel by 12 degrees through ankle dorsiflexion. The balls of the feet (metatarsal heads, not just the toes) must rise about 2-3 cm above the floor; the toe pads about 3-4 cm above the floor. Show visible empty floor gaps under BOTH entire forefeet. Each foot is a shallow straight wedge from grounded heel to elevated toe pads. Toes stay softly relaxed and nearly straight as a natural continuation of the elevated forefoot. Do not hinge the toes upward at the toe knuckles, do not make hooked toe tips.\nIt must clearly show supported BILATERAL FOREFOOT RAISING, not lifting only the toes, and not heel raising. Heels DOWN, metatarsal heads and toes UP. Maintain an easy stable upright stance. Single posture photograph, no text or arrows or panels.",
+          "source_generated_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-ab4b-7ef1-beab-02c7b5bcc0d5\\exec-b6cd9cb9-476b-426f-97f3-51756a4a5b57.png",
+          "review": "双前足整体抬起的空隙清楚，脚趾放松，选为最终。"
+        }
+      ]
+    }
+  ]
+}

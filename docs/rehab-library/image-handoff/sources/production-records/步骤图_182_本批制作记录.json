@@ -1,0 +1,82 @@
+{
+  "record_version": "1.0",
+  "created_date": "2026-10-14",
+  "action_number": 182,
+  "action_id": "T-AXU-061",
+  "title": "单臂轻哑铃过头肘伸",
+  "generator": "built-in image_gen.imagegen",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_library": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "sequence": "s01 → s02 → 复用 s01受控屈肘",
+  "qa_scope": "目视核对所列姿势、比例、关节连续、本人支撑、哑铃完整与间距、组内机位；不能由静态图证明负荷、肌肉发力和临床适用性。",
+  "items": [
+    {
+      "step": "s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/182_T-AXU-061_s01_v2.png",
+      "reused": false,
+      "reused_source": null,
+      "prompt": "Use case: scientific-educational. Edit the provided full-body overhead triceps starting pose photograph ONLY to provide a farther camera framing for a consistent two-frame exercise sequence. Preserve exactly the woman, pose, face, ponytail, white T shirt, charcoal long pants, white sneakers, small gray dumbbell, blue-gray studio lighting/background. The RIGHT upper arm is vertical overhead, RIGHT elbow bent and small dumbbell behind the head without touching it, own LEFT hand gently supporting the right upper arm across the chest. Keep her neutral standing trunk, two feet fixed on the floor, natural joints, clear grip and the complete dumbbell. Zoom the camera OUT so the woman's STANDING stature measured from top of HEAD to floor is only about 70% of total canvas HEIGHT, not 88%. Keep the shoes baseline at about 94% of image height; head top should therefore be near 24% of image height, not near the upper edge. The bent elbow is allowed a little above her head, but there MUST be large empty blue-gray space over her raised elbow and weight to permit subsequent straight-arm extension overhead with at least 8% top margin. The normal human height and limb lengths must remain proportional: achieve this through camera distance, never by shortening the head or legs. Keep original near-right-side three-quarter perspective and the same single bent elbow starting pose. Single full-body 4:5 portrait image. No text, labels, panels, arrows, logos, second person or extra objects. Do not change the exercise to an extended elbow yet.",
+      "target": "右臂过头屈肘，轻哑铃在头后，左手轻支持右上臂",
+      "visual_check": {
+        "identity_clothing_background": "与3张人物参考一致",
+        "pose": "右臂过头屈肘哑铃在头后，与头部无接触；本人左手支持右上臂",
+        "support": "两肩肘腕连接正常，双足完整落地",
+        "composition": "统一拉远构图，头顶约355px，足底约1280px，留出伸肘所需上方空间"
+      },
+      "status": "visual_pass",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a83-bef9-75e2-9cab-92505fc27c8f/exec-e1312fc4-e3a8-41e5-a845-5ddfafe8a57a.png"
+    },
+    {
+      "step": "s02",
+      "path": "E:/git冲突问题/rehab image/train/steps/182_T-AXU-061_s02_v2.png",
+      "reused": false,
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a83-bef9-75e2-9cab-92505fc27c8f/exec-dacbf48b-8f59-477d-8395-2fb23eaa9254.png",
+      "prompt": "Use case: scientific-educational. Precisely edit the attached photograph from step 01 to step 02 of supported right-arm overhead elbow extension. MODIFY ONLY the RIGHT forearm, right wrist/right hand, and the small gray dumbbell so that the RIGHT ELBOW extends from its bent position to a near straight position, moving the hand and dumbbell UPWARD above that elbow. Keep the RIGHT UPPER ARM in its exact existing position, almost vertical, shoulder and elbow centers unchanged. Her OWN LEFT hand gently supports the same right upper arm at the exact current contact point. All other regions must be identical to the reference: head and face top at the same height, neck, shoulders, support arm and fingers, white shirt, torso, hips, legs, white shoes in the EXACT same position and size, feet on the EXACT same floor baseline, blue-gray background, shadows and original 4:5 canvas size. Do NOT zoom, resize, reframe, shift the person downward or change standing posture. The existing reference has ample empty space above the bent elbow; use this space for the extended forearm and dumbbell, retaining at least 6% empty image height above the dumbbell. Keep natural upper-arm/forearm lengths and neutral right wrist, grip the same small gray dumbbell centrally, both gray ends fully visible. Calm right-facing gaze, ribs and pelvis upright, no leaning back. This is single-joint elbow extension with unchanged shoulder position, never a shoulder press. Preserve full-body composition with both soles grounded. Single pose, no panels, text, arrows, logos or watermark.",
+      "target": "上臂位置基本保持，右肘伸展举哑铃，左手支持不变，躯干直立",
+      "visual_check": {
+        "identity_clothing_background": "与v2 s01一致",
+        "pose": "右肘伸展且上臂位置保持；本人左手仍支持上臂，躯干不后仰",
+        "support": "双足完整落地，握持及肘腕连接连续",
+        "composition": "头肩髋足的尺度位置与v2 s01基本固定，哑铃顶约155px充分入镜"
+      },
+      "status": "visual_pass"
+    }
+  ],
+  "selection_note": "原准备图单帧动作符合清单，但其近景构图容不下同尺度的伸肘终点。两帧统一以更远机位重制_v2，首轮候选保留但不选入本批10张。",
+  "discarded_candidates": [
+    {
+      "step": "s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/182_T-AXU-061_s01.png",
+      "reused": true,
+      "reused_source": "E:/git冲突问题/rehab image/train/182_T-AXU-061_单臂轻哑铃过头肘伸.png",
+      "prompt": null,
+      "target": "右臂过头屈肘，轻哑铃在头后，左手轻支持右上臂",
+      "visual_check": {
+        "identity_clothing_background": "通过",
+        "pose": "右上臂近垂直，屈肘前臂向后；哑铃完整，与头部无接触",
+        "support": "左手属于本人，接触右上臂；双足完整落地",
+        "anatomy": "两肩肘腕连接连续，手指与握柄可辨认，身材比例自然",
+        "composition": "头肩肘腕哑铃双足完整，侧斜位镜头"
+      },
+      "status": "not_selected",
+      "group_qa_rejection": "与伸肘终点无法在旧紧构图中保持同尺度；改用统一拉远v2"
+    },
+    {
+      "step": "s02",
+      "path": "E:/git冲突问题/rehab image/train/steps/182_T-AXU-061_s02.png",
+      "reused": false,
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a83-bef9-75e2-9cab-92505fc27c8f/exec-aafb3ca1-6cc8-433e-99f4-4fa94b5a2ed8.png",
+      "prompt": "Use case: scientific-educational. Asset: one standalone realistic rehabilitation demonstration photograph, step 02 of a supported right-arm overhead triceps elbow extension. Image 1 is the precise scene/composition/identity and step 01 pose reference; images 2-4 are the same person's identity and studio style references. Modify image 1 to the end of elbow extension while preserving the exact woman, face, black ponytail, white short-sleeved T-shirt, dark gray long pants, white trainers, light gray-blue seamless studio floor and background, soft shadows, three-quarter right-facing side camera, camera distance, framing and body scale. Show one woman standing on both planted feet, torso upright neutral, pelvis and ribs stacked, no arching or leaning. Keep the RIGHT upper arm in the SAME near vertical overhead position and the LEFT hand gently supporting the same right upper arm near its lower portion. Straighten the RIGHT elbow so the forearm extends upward in line with the near-vertical upper arm; the right hand firmly grips the SAME small gray dumbbell by its middle handle above the right elbow and above the head. This is elbow extension, not a shoulder press: the shoulder/upper arm position must remain almost fixed while the bent forearm in image 1 rotates upward. The support arm is her OWN left arm connected naturally to her left shoulder across her chest, and the left hand stays at the same upper arm contact. Right wrist neutral, elbow visually continuous; show the complete dumbbell and both ends clearly with plenty of room at the top. Head looks calmly forward right. Full-body 4:5 vertical composition showing all fingers, full shoes and floor contacts with natural anatomy and limb proportions. One single pose only; no panels, labels, text, arrows, logos or watermark. Do not add any other person or equipment. Do not crop the raised dumbbell. Preserve the grayscale dumbbell's size and shape from image 1.",
+      "target": "上臂位置基本保持，右肘伸展举哑铃，左手支持不变，躯干直立",
+      "visual_check": {
+        "identity_clothing_background": "与s01一致",
+        "pose": "右肘伸直，上臂仍过头；主要变化为前臂绕肘转上，未变为从胸前肩推",
+        "support": "本人左手仍支持右上臂；双足踩稳",
+        "anatomy": "肘腕连接连续，握持清楚，手指和全鞋完整可见",
+        "composition": "与s01人物尺度地面相机一致，哑铃顶端完整未裁切"
+      },
+      "status": "not_selected",
+      "group_qa_rejection": "初版伸肘图较s01人物缩小约8%，且哑铃距顶边太近"
+    }
+  ]
+}

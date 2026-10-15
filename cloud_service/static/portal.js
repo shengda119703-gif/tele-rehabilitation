@@ -4,6 +4,17 @@
   const base = '/api/cloud/v1', main = document.getElementById('content');
   const logout = document.getElementById('logout');
   const doctorEntry = location.pathname === '/care';
+  const aiSettings = document.createElement('button');
+  aiSettings.id = 'ai-settings'; aiSettings.type = 'button'; aiSettings.className = 'quiet';
+  aiSettings.textContent = '智能服务'; aiSettings.hidden = true;
+  const aiUsage = document.createElement('button');
+  aiUsage.id = 'ai-usage'; aiUsage.type = 'button'; aiUsage.className = 'quiet';
+  aiUsage.textContent = '用量汇总'; aiUsage.hidden = true;
+  aiUsage.onclick = () => showUsageSummary();
+  if (doctorEntry) {
+    const actions = document.createElement('div'); actions.className = 'cloud-header-actions';
+    logout.before(actions); actions.append(aiUsage, aiSettings, logout);
+  }
   document.body.classList.add(doctorEntry ? 'doctor-portal' : 'patient-portal');
   document.getElementById('portal-name').textContent = doctorEntry ? '医生工作台' : '联系康复医师';
   document.querySelector('header .brand').href = doctorEntry ? '/care' : '/account';
@@ -82,13 +93,15 @@
   }
   function showAuth(register = false) {
     ++generation; account = null; csrf = ''; liveView = null; actionNames = Object.create(null); logout.hidden = true;
+    aiSettings.hidden = true; clearAIKey();
+    aiUsage.hidden = true;
     const doctor = doctorEntry;
     main.innerHTML = `${doctor?'':`<div class="cloud-contact-heading"><h1>康复医师</h1><button id="connect-account" class="quiet" aria-expanded="${register}" aria-controls="contact-auth">连接安康账号</button></div><section id="contact-welcome" class="cloud-support-chat" ${register?'hidden':''}><div class="cloud-empty"><p>连接安康账号后，即可查看对话并联系医师。</p></div><textarea rows="2" disabled aria-label="给医师留言" placeholder="请输入你想咨询的问题…"></textarea><div class="cloud-toolbar"><button disabled>发送</button><button disabled class="quiet">发送报告</button></div></section>`}<section id="contact-auth" class="cloud-form" ${!doctor&&!register?'hidden':''}>${doctor?'<h1>医生工作台</h1>':''}<h2>${register ? '开通患者身份' : doctor ? '医生登录' : '连接安康账号'}</h2>
       <form id="account-form"><label>账号<input name="username" autocomplete="username" maxlength="64" required></label>
       ${register ? '<label>姓名<input name="display_name" autocomplete="name" maxlength="80"></label>' : ''}
       <label>密码<input name="password" type="password" autocomplete="${register ? 'new-password' : 'current-password'}" maxlength="128" required></label>
       <p class="cloud-error" role="alert"></p><button class="primary" type="submit">${register ? '创建账号' : '登录'}</button></form>
-      <div class="cloud-toolbar">${doctor ? '<a href="/account">进入患者端</a>' : `<button id="switch-auth" class="quiet">${register ? '已有账号，去登录' : '首次使用，开通身份'}</button>`}</div></section>`;
+      <div class="cloud-toolbar">${doctor ? '<a href="/account">进入患者端</a>' : `<button id="switch-auth" class="quiet">${register ? '已有账号，去登录' : '首次使用，开通身份'}</button>`}<a href="/download">下载App</a></div></section>`;
     document.getElementById('connect-account')?.addEventListener('click', event => {
       const panel = document.getElementById('contact-auth'); panel.hidden = !panel.hidden;
       document.getElementById('contact-welcome').hidden = !panel.hidden;
@@ -110,6 +123,8 @@
   }
   async function showHome() {
     const own = ++generation; logout.hidden = false;
+    aiSettings.hidden = !canConfigureAI();
+    aiUsage.hidden = !canConfigureAI();
     liveView = null;
     if (account.role === 'DOCTOR_ADMIN') {
       if (doctorEntry) return showPatients(0);
@@ -162,6 +177,116 @@
     });
     await showMessages(ident,own);
   }
+  function canConfigureAI() { return doctorEntry && account?.role === 'DOCTOR_ADMIN'; }
+  function clearAIKey() {
+    const input = document.getElementById('ai-key'); if (input) input.value = '';
+  }
+  async function showAISettings() {
+    if (!canConfigureAI()) return;
+    clearAIKey();
+    const own = ++generation; liveView = null;
+    main.innerHTML = `<section class="cloud-form cloud-ai-settings"><button id="ai-back" class="quiet" type="button">返回患者列表</button><h1>智能服务</h1><h2>DeepSeek 设置</h2>
+      <p id="ai-summary" role="status">正在读取配置…</p><dl id="ai-details" class="cloud-metrics"></dl>
+      <form id="ai-form" autocomplete="off"><label for="ai-key">API 密钥</label><input id="ai-key" name="key" type="password" autocomplete="new-password" maxlength="256" spellcheck="false" autocapitalize="none" aria-describedby="ai-key-help" disabled>
+      <p id="ai-key-help" class="muted">留空保留已有密钥；输入新密钥后点击保存。密钥不会回显或保存在浏览器中。</p>
+      <label for="ai-model">模型</label><select id="ai-model" name="model" required disabled><option value="" disabled selected>请选择模型</option><option value="deepseek-flash">deepseek-flash</option><option value="deepseek-v4-pro">deepseek-v4-pro</option></select>
+      <details><summary>计价单价</summary><p class="muted">按官方控制台单价填写，每百万 token 计价。留空不改；更换模型后请重新核对。统计费用须与官方账单核对。</p><label>计价版本<input id="ai-price-version" maxlength="80" placeholder="例如 2026-10-15 手工核对"></label><label>币种<select id="ai-price-currency"><option value="CNY">人民币</option><option value="USD">美元</option></select></label><label>输入缓存命中<input id="ai-price-hit" type="number" min="0" max="10000" step="any"></label><label>输入缓存未命中<input id="ai-price-miss" type="number" min="0" max="10000" step="any"></label><label>输出<input id="ai-price-output" type="number" min="0" max="10000" step="any"></label></details>
+      <p id="ai-writable" class="muted"></p><button id="ai-save" class="primary" type="submit" disabled>保存配置</button></form>
+      <div class="cloud-toolbar"><button id="ai-check" type="button" disabled>校验模型</button><button id="ai-clear" type="button" disabled>清除配置</button><button id="ai-refresh" type="button" disabled>刷新状态</button></div>
+      <p class="muted">校验仅检查已保存密钥的模型列表与所选模型是否可用，不发起实际问答。</p><p id="ai-status" role="status"></p><p class="cloud-error" role="alert"></p></section>`;
+    const input = document.getElementById('ai-key'), model = document.getElementById('ai-model');
+    const save = document.getElementById('ai-save'), check = document.getElementById('ai-check');
+    const clear = document.getElementById('ai-clear'), refresh = document.getElementById('ai-refresh');
+    const status = document.getElementById('ai-status');
+    const models = ['deepseek-flash','deepseek-v4-pro'];
+    let settings = null, pending = false;
+    let priceEdited = false;
+    for (const id of ['version','currency','hit','miss','output']) document.getElementById('ai-price-'+id).addEventListener('input',()=>{priceEdited=true;});
+    const active = () => own === generation && canConfigureAI();
+    function controls() {
+      const writable = settings?.configuration_writable === true;
+      input.disabled = model.disabled = save.disabled = pending || !writable;
+      for (const id of ['version','currency','hit','miss','output']) document.getElementById('ai-price-'+id).disabled = pending || !writable;
+      check.disabled = pending || settings?.configured !== true;
+      clear.disabled = pending || !writable || settings?.configured !== true;
+      refresh.disabled = pending;
+    }
+    function render(result) {
+      // Only allowlisted labels/numbers reach the DOM; even provider messages may echo a key.
+      settings = {configured:result.configured === true, configuration_writable:result.configuration_writable === true};
+      model.value = models.includes(result.model) ? result.model : '';
+      const price = result.tariff || {};
+      for (const [id, name] of [['version','version'],['hit','cache_hit'],['miss','cache_miss'],['output','output']]) document.getElementById('ai-price-'+id).value = typeof price[name] === 'string' || typeof price[name] === 'number' ? price[name] : '';
+      document.getElementById('ai-price-currency').value = price.currency === 'USD' ? 'USD' : 'CNY';
+      priceEdited = false;
+      const sources = {SERVER_FILE:'服务器配置文件',ENVIRONMENT:'服务器环境',DISABLED:'已停用'};
+      const connections = {MODELS_VERIFIED:'模型列表校验通过（实际问答未测试）',CHAT_VERIFIED:'实际问答已接通',FAILED:'最近一次连接未完成',NOT_VERIFIED:'尚未校验',UNCONFIGURED:'尚未配置'};
+      const source = typeof result.source === 'string' && Object.hasOwn(sources,result.source.toUpperCase()) ? sources[result.source.toUpperCase()] : '服务器配置';
+      const connection = Object.hasOwn(connections,result.provider_connection) ? connections[result.provider_connection] : '尚未确认';
+      const number = value => typeof value === 'number' && Number.isSafeInteger(value) && value >= 0 ? value.toLocaleString('zh-CN') : '未知';
+      const time = typeof result.last_checked_at === 'number' ? result.last_checked_at * 1000 : typeof result.last_checked_at === 'string' ? Date.parse(result.last_checked_at) : NaN;
+      const checked = Number.isFinite(time) && Number.isFinite(new Date(time).getTime()) ? new Date(time).toLocaleString('zh-CN') : '尚无记录';
+      document.getElementById('ai-summary').textContent = settings.configured ? '已配置 DeepSeek' : 'DeepSeek 未启用';
+      document.getElementById('ai-details').innerHTML = [['配置来源',source],['模型状态',connection],['上次校验',checked],['每月 token 上限',number(result.monthly_tokens)],['每月请求上限',number(result.monthly_calls)],['单次输出 token 上限',number(result.max_output_tokens)]].map(([label,value])=>`<div><dt>${label}</dt><dd>${escape(value)}</dd></div>`).join('');
+      document.getElementById('ai-writable').textContent = settings.configuration_writable ? '' : '当前服务器配置只读，可校验；修改或停用请联系服务器管理员。';
+    }
+    async function request(path, method = 'GET', data, action = 'load') {
+      if (!active() || pending) { input.value = ''; return; }
+      pending = true; input.value = ''; controls(); error(''); status.textContent = '正在处理…';
+      try {
+        const response = api(path,method,data);
+        if (data) delete data.key; // api() serializes synchronously; keep no key in a retained payload.
+        const result = await response;
+        if (!active()) return;
+        render(result);
+        status.textContent = '';
+        if (action === 'check') {
+          status.textContent = result.provider_connection === 'MODELS_VERIFIED' ? '模型列表校验通过；实际问答尚未测试。'
+            : result.provider_connection === 'FAILED' ? '模型列表校验失败，请核对密钥和所选模型后重试。'
+            : result.message ? '服务返回了校验提示，尚未确认模型可用，请核对配置后重试。' : '尚未取得模型校验结果，请稍后重试。';
+        } else if (action === 'save') status.textContent = settings.configured ? '配置已保存，请校验模型。' : '设置已保存；尚未配置密钥，DeepSeek 未启用。';
+        else if (action === 'clear') status.textContent = settings.configured ? '服务器仍有生效配置，请核对配置来源。' : '配置已清除，DeepSeek 已停用。';
+      } catch (e) {
+        if (!active()) return;
+        status.textContent = '';
+        // Retain existing auth/error handling without exposing raw server/provider error text.
+        failed({status:e.status, message:e.status === 403 ? '当前账号没有智能服务设置权限，请重新登录医生账号。' : action === 'save' || action === 'clear' ? '未能确认配置已保存，请刷新状态核对后重试。' : action === 'check' ? '模型校验未完成，请稍后重试。' : '无法读取智能服务配置，请刷新状态重试。'},own);
+      } finally {
+        if (data) delete data.key;
+        input.value = ''; pending = false;
+        if (active()) controls();
+      }
+    }
+    document.getElementById('ai-back').onclick = () => {
+      if (!active()) return;
+      input.value = '';
+      const response = showPatients(0), listGeneration = generation;
+      response.catch(e=>failed(e,listGeneration));
+    };
+    document.getElementById('ai-form').onsubmit = event => {
+      event.preventDefault();
+      if (!active() || pending || !settings?.configuration_writable) { input.value = ''; return; }
+      if (!models.includes(model.value)) { input.value = ''; error('请选择支持的模型。'); return; }
+      const data = {model:model.value};
+      if (priceEdited) {
+        const get = id => document.getElementById('ai-price-'+id).value.trim();
+        if (!get('version') || ['hit','miss','output'].some(id=>get(id)==='' || !Number.isFinite(Number(get(id))) || Number(get(id))<0)) {input.value='';error('请填写完整的计价版本和三项单价。');return;}
+        data.tariff = {version:get('version'),currency:get('currency'),cache_hit:get('hit'),cache_miss:get('miss'),output:get('output')};
+      }
+      if (input.value.trim()) data.key = input.value.trim();
+      input.value = ''; // Clear in the submit turn, before request handling can yield or fail.
+      request('/care/ai/settings','PUT',data,'save');
+    };
+    check.onclick = () => { if (settings?.configured) request('/care/ai/check','POST',{},'check'); };
+    clear.onclick = () => {
+      input.value = '';
+      if (!active() || pending || !settings?.configuration_writable || !settings?.configured) return;
+      if (confirm('清除服务器保存的密钥并停用 DeepSeek？患者智能问答将暂时不可用。')) request('/care/ai/settings','PUT',{key:''},'clear');
+    };
+    refresh.onclick = () => request('/care/ai/settings');
+    await request('/care/ai/settings');
+  }
+  aiSettings.onclick = showAISettings;
   async function showRecords(ident, own, offset = 0) {
     const result = await api(`/patients/${ident}/records?offset=${offset}&limit=10`);
     if (own !== generation) return;
@@ -192,12 +317,13 @@
       liveView = {ident,own,doctor:true,tab:'info'};
       main.innerHTML = `<button id="back" class="quiet">返回患者列表</button><h1>${escape(profile.display_name)}</h1>
         <nav class="cloud-patient-tabs" role="tablist" aria-label="患者详情"><button id="tab-info" role="tab" data-patient-tab="info" aria-selected="true" aria-controls="patient-info">患者信息</button><button id="tab-chat" role="tab" data-patient-tab="chat" aria-selected="false" aria-controls="patient-chat" tabindex="-1">沟通 <span id="unread-count" class="cloud-badge"></span></button><button id="tab-usage" role="tab" data-patient-tab="usage" aria-selected="false" aria-controls="patient-usage" tabindex="-1">API 用量</button></nav>
-        <section id="patient-info" role="tabpanel" aria-labelledby="tab-info"><h2>患者信息</h2><div id="rehab-summary"></div><div id="patient-reports"></div><section><div class="cloud-section-title"><h2>康复计划</h2><button id="new-plan">制定计划</button></div><div id="plans"></div><div id="plan-editor"></div></section><details><summary>历史记录</summary><div id="records"></div></details></section>
+        <section id="patient-info" role="tabpanel" aria-labelledby="tab-info"><h2>患者信息</h2><div id="rehab-summary"></div><div id="patient-reports"></div><details><summary>候选方案审核</summary><button id="load-candidates" type="button">读取候选方案</button><div id="candidate-review"></div></details><section><div class="cloud-section-title"><h2>康复计划</h2><button id="new-plan">制定计划</button></div><div id="plans"></div><div id="plan-editor"></div></section><details><summary>历史记录</summary><div id="records"></div></details></section>
         <section id="patient-chat" class="cloud-support-chat" role="tabpanel" aria-labelledby="tab-chat" hidden><div class="cloud-chat-actions"><button id="load-messages" class="quiet">刷新对话</button></div><div id="conversation"></div><form id="message-form"><label>发送给患者<textarea name="text" rows="2" maxlength="4000" required placeholder="请输入回复…"></textarea></label><div class="cloud-toolbar"><button class="primary" type="submit">发送消息</button><span id="message-status" role="status"></span></div></form></section>
         <section id="patient-usage" role="tabpanel" aria-labelledby="tab-usage" hidden><h2>API 用量</h2><p>正在读取…</p></section><p class="cloud-error" role="alert"></p>`;
       document.getElementById('back').onclick = () => showPatients(0).catch(e => error(e.message));
       document.getElementById('load-messages').onclick = () => showMessages(ident,own).catch(e=>failed(e,own));
       document.getElementById('new-plan').onclick = () => editPlan(ident,own).catch(e=>failed(e,own));
+      document.getElementById('load-candidates').onclick = () => showCandidates(ident,own).catch(e=>failed(e,own));
       bindMessageForm(ident,own);
       const tabs = [...main.querySelectorAll('[data-patient-tab]')];
       for (const button of tabs) {
@@ -218,14 +344,157 @@
       await Promise.all([showRecords(ident, own),showSavedSummary(ident,own),showPlans(ident,own),showReports(document.getElementById('patient-reports'),ident,own,true),messageStatus(ident,own)]);
     } catch(e) { if (own === generation) {liveView=null;main.innerHTML = `<h1>无法打开档案</h1><p>${escape(e.message)}</p><button id="back">返回患者列表</button>`;document.getElementById('back').onclick=()=>showPatients(0).catch(e=>error(e.message));} }
   }
-  async function showPatientUsage(ident,own) {
-    const result = await api(`/patients/${ident}/ai/usage`);
+  async function showPatientUsage(ident,own,period = usageMonth(),offset = 0,notice = '') {
     if (own !== generation) return;
-    const usage = result.usage;
-    const prices = Object.entries(usage.estimated_cost_by_currency).map(([currency,value])=>`${escape(currency)} ${escape(value)}`).join('；');
-    const tokens = value => escape(value) + (usage.uncertain_calls ? '（已确认部分）' : '');
-    const money = prices ? prices + (usage.unpriced_calls ? '（已计价部分）' : '') : usage.uncertain_calls ? '待核对' : usage.calls ? '未计价' : '暂无用量';
-    document.getElementById('patient-usage').innerHTML = `<h2>API 用量 · ${escape(result.period)}</h2><dl class="cloud-usage"><div><dt>AI 请求</dt><dd>${escape(usage.calls)} 次</dd></div><div><dt>输入 token</dt><dd>${tokens(usage.prompt_tokens)}</dd></div><div><dt>输出 token</dt><dd>${tokens(usage.completion_tokens)}</dd></div><div><dt>费用估算</dt><dd>${money}</dd></div></dl>${usage.uncertain_calls?`<p>${escape(usage.uncertain_calls)} 次请求的用量待核对</p>`:''}${usage.unpriced_calls?`<p>${escape(usage.unpriced_calls)} 次请求尚未计价</p>`:''}<p class="muted">${result.enabled?'费用按模型回执和配置单价估算。':'尚未连接统一 AI 服务。'}${usage.calls?' 估算不等于供应商账单。':''}</p>`;
+    const area = document.getElementById('patient-usage');
+    if (!area) return;
+    const request = {}; area.usageRequest = request;
+    const active = () => own === generation && document.getElementById('patient-usage') === area && area.usageRequest === request;
+    area.innerHTML = `<h2>API 用量</h2>${usageMonthForm(period)}<p id="usage-loading" role="status">正在读取用量…</p>`;
+    const monthForm = area.querySelector?.('#usage-month-form');
+    if (monthForm) {
+      error('');
+      monthForm.onsubmit = event => {
+        event.preventDefault(); if (!active()) return;
+        const month = monthForm.elements.period.value;
+        if (validUsageMonth(month)) showPatientUsage(ident,own,month);
+      };
+    }
+    try {
+      const result = await api(`/patients/${encodeURIComponent(ident)}/ai/usage?period=${encodeURIComponent(period)}&offset=${offset}`);
+      if (!active()) return;
+      const usage = result.usage || {}, items = Array.isArray(result.items) ? result.items : [];
+      const groups = (rows,key) => Array.isArray(rows) ? rows.map(row=>`<details class="cloud-record"><summary>${escape(key === 'purpose' ? usagePurpose(row[key]) : row[key])} · ${usageNumber(row.usage?.calls)} 次 · ${usageNumber(row.usage?.total_tokens)} token</summary>${usageMetrics(row.usage)}</details>`).join('') || '<p class="muted">暂无用量记录。</p>' : '<p class="muted">未知，服务尚未提供此明细。</p>';
+      area.innerHTML = `<h2>API 用量 · ${escape(result.period)}</h2>${usageMonthForm(period)}
+        <section aria-label="月度用量">${usageMetrics(usage,true)}<h3>每月额度与所选月份剩余</h3>${usageQuotas(result)}<p class="muted">预留 token 仅用于额度控制，不是已计量或已计费 token。月份和日期按北京时间统计。</p></section>
+        <section aria-label="今日用量"><h3>今日用量${result.today?.date ? ' · '+escape(result.today.date) : ''}</h3>${usageMetrics(result.today?.usage)}<p class="muted">今日数值限所选月份；选择其他月份时，今日为 0。</p></section>
+        <section aria-label="按用途统计"><h3>按用途统计</h3>${groups(result.by_purpose,'purpose')}</section>
+        <details><summary>每日用量</summary>${groups(result.days,'date')}</details>
+        <section aria-label="请求回执"><h3>请求回执</h3><p class="muted">展开查看用途、模型、实际 token、状态、时间及完整回执；未知用量和费用不会按 0 计费。费用按回执单价估算，不等于供应商账单。</p>${items.map(usageReceipt).join('') || '<p class="muted">这一页暂无请求回执。</p>'}
+          <div class="cloud-toolbar"><button id="usage-previous" type="button" ${offset === 0 ? 'disabled' : ''}>上一页回执</button><span>第 ${Math.floor(offset/30)+1} 页 · 共 ${usageNumber(result.total)} 条</span><button id="usage-next" type="button" ${!Number.isSafeInteger(result.total) || offset+30 >= result.total ? 'disabled' : ''}>下一页回执</button></div></section>
+        <div id="usage-budget-slot"></div><p class="muted">${result.enabled === false ? '尚未连接统一 AI 服务。' : ''}用量仅展示云端返回的实际计量；费用估算不等于供应商账单。</p>`;
+      const form = area.querySelector?.('#usage-month-form');
+      if (form) form.onsubmit = event => { event.preventDefault(); if (active() && validUsageMonth(form.elements.period.value)) showPatientUsage(ident,own,form.elements.period.value); };
+      for (const [id,next] of [['usage-previous',Math.max(0,offset-30)],['usage-next',offset+30]]) {
+        const button = area.querySelector?.('#'+id);
+        if (button) button.onclick = () => { if (active() && !button.disabled) showPatientUsage(ident,own,period,next); };
+      }
+      const slot = area.querySelector?.('#usage-budget-slot');
+      if (slot && canConfigureAI()) {
+        const initial = (value,max) => Number.isSafeInteger(value) && value >= 1 && value <= max ? value : '';
+        slot.innerHTML = `<details class="cloud-account-settings" ${notice ? 'open' : ''}><summary>调整每月额度</summary><form id="usage-budget-form"><p>设置该患者每月 AI 请求与 token 上限。</p><label>每月 token 上限<input name="monthly_tokens" type="number" min="1" max="100000000" step="1" required value="${initial(result.quota_tokens,100000000)}"></label><label>每月请求上限<input name="monthly_calls" type="number" min="1" max="100000" step="1" required value="${initial(result.quota_calls,100000)}"></label><button type="submit">保存额度</button><p id="usage-budget-status" role="status">${escape(notice)}</p></form></details>`;
+        const budget = slot.querySelector('form'), status = slot.querySelector('#usage-budget-status');
+        let pending = false;
+        budget.onsubmit = async event => {
+          event.preventDefault(); if (!active() || pending || !canConfigureAI()) return;
+          const data = {};
+          for (const [key,max] of [['monthly_tokens',100000000],['monthly_calls',100000]]) {
+            const value = budget.elements[key].value;
+            if (!/^\d+$/.test(value) || !Number.isSafeInteger(Number(value)) || Number(value) < 1 || Number(value) > max) { status.textContent = '请填写范围内的正整数：token 1–100000000，请求 1–100000。'; return; }
+            data[key] = Number(value);
+          }
+          pending = true; status.textContent = '正在保存额度…';
+          const controls = [...budget.querySelectorAll('input,button')]; controls.forEach(control=>control.disabled=true);
+          try {
+            const saved = await api(`/patients/${encodeURIComponent(ident)}/ai/budget`,'PUT',data);
+            if (!active()) return;
+            // This response contains budget fields only; never treat it as a patient profile.
+            budget.elements.monthly_tokens.value = initial(saved.monthly_tokens,100000000);
+            budget.elements.monthly_calls.value = initial(saved.monthly_calls,100000);
+            await showPatientUsage(ident,own,period,offset,'每月额度已保存。');
+          } catch (e) {
+            if (!active()) return;
+            status.textContent = '未能确认额度已保存，请重新读取用量核对后重试。';
+            failed(e,own);
+          } finally { pending = false; if (active()) controls.forEach(control=>control.disabled=false); }
+        };
+      }
+    } catch (e) {
+      if (!active()) return;
+      const status = area.querySelector?.('#usage-loading');
+      if (status) status.textContent = notice ? notice+' 用量刷新失败，请重新查询。' : '无法读取用量，请重新查询。';
+      failed(e,own);
+    }
+  }
+  function usageMonth() {
+    const parts = new Intl.DateTimeFormat('en',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit'}).formatToParts(new Date());
+    return parts.find(p=>p.type==='year').value+'-'+parts.find(p=>p.type==='month').value;
+  }
+  function validUsageMonth(value) { return /^\d{4}-(0[1-9]|1[0-2])$/.test(value) && !value.startsWith('0000-'); }
+  function usageMonthForm(period) {
+    return `<form id="usage-month-form" class="cloud-toolbar"><label>统计月份<input type="month" name="period" required value="${escape(period)}"></label><button type="submit">查询用量</button></form>`;
+  }
+  function usageNumber(value) { return Number.isSafeInteger(value) && value >= 0 ? value.toLocaleString('zh-CN') : '未知'; }
+  function usageDecimal(value) { return (typeof value === 'string' && /^\d+(\.\d+)?$/.test(value)) || (typeof value === 'number' && Number.isFinite(value) && value >= 0) ? escape(value) : '未知'; }
+  function usagePurpose(value) {
+    const names = {CHAT:'普通问答',RESULT_EXPLANATION:'结果解释',CANDIDATE_PLAN:'方案建议',ASSESSMENT_GUIDANCE:'评估指引',REASSESSMENT:'复评建议',LEGACY:'其他'};
+    return Object.hasOwn(names,value) ? names[value] : value ? '未知用途（'+value+'）' : '其他';
+  }
+  function usageFields(fields,kind = 'cloud-metrics') { return `<dl class="${kind}">${fields.map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join('')}</dl>`; }
+  function usageMetrics(usage = {},primary = false) {
+    usage = usage || {};
+    const partial = usage.uncertain_calls > 0 ? '（已确认部分）' : '';
+    const tokens = value => usageNumber(value)+(Number.isSafeInteger(value) ? partial : '');
+    const prices = Object.entries(usage.estimated_cost_by_currency || {}).map(([currency,value])=>`${escape(currency)} ${usageDecimal(value)}`).join('；');
+    const money = prices ? prices+(usage.unpriced_calls > 0 ? '（已计价部分）' : '') : usage.uncertain_calls > 0 ? '待核对' : usage.calls === 0 ? '暂无用量' : '未知（未计价）';
+    const fields = [['AI 请求',usageNumber(usage.calls)+' 次'],['输入 token',tokens(usage.prompt_tokens)],['输出 token',tokens(usage.completion_tokens)],['费用估算',money]];
+    const extra = [['总 token',tokens(usage.total_tokens)],['缓存命中 token',tokens(usage.cache_hit_tokens)],['缓存未命中 token',tokens(usage.cache_miss_tokens)]];
+    return usageFields(primary ? fields : [...fields,...extra],primary ? 'cloud-usage' : 'cloud-metrics')+(primary ? usageFields(extra) : '')+(usage.uncertain_calls > 0 ? `<p>${usageNumber(usage.uncertain_calls)} 次请求的用量待核对，未知部分不作为 0 用量或 0 费用。</p>` : '')+(usage.unpriced_calls > 0 ? `<p>${usageNumber(usage.unpriced_calls)} 次请求尚未计价</p>` : '');
+  }
+  function usageQuotas(result) {
+    return usageFields([['每月 token 上限',usageNumber(result.quota_tokens)],['所选月份剩余 token',usageNumber(result.remaining_tokens)],['每月请求上限',usageNumber(result.quota_calls)],['所选月份剩余请求',usageNumber(result.remaining_calls)],['额度预留 token',usageNumber(result.usage?.reserved_tokens)]]);
+  }
+  function usageTime(value) {
+    const time = typeof value === 'number' ? value*1000 : typeof value === 'string' && value ? Date.parse(value) : NaN;
+    return Number.isFinite(time) && Number.isFinite(new Date(time).getTime()) ? escape(new Date(time).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'}))+'（北京时间）' : '未知';
+  }
+  function usageReceipt(item) {
+    const usage = item.usage || {}, pricing = item.pricing || {};
+    const states = {SUCCEEDED:'已完成',RUNNING:'处理中',UNKNOWN:'结果待核对',UNMETERED:'用量未知'};
+    const state = Object.hasOwn(states,item.state) ? states[item.state] : item.state || '未知';
+    const text = value => escape(value ?? '未知');
+    const money = item.estimated_cost == null || !pricing.currency ? '未知' : escape(pricing.currency)+' '+usageDecimal(item.estimated_cost);
+    return `<article class="cloud-record"><details><summary>${usageTime(item.created_at)} · ${escape(usagePurpose(item.purpose))} · ${text(item.model)} · ${escape(state)}</summary>${usageFields([
+      ['回执编号',text(item.id)],['操作编号',text(item.operation_id)],['供应商回执编号',text(item.provider_id)],['用途',escape(usagePurpose(item.purpose))],['模型',text(item.model)],['状态',escape(state)],['请求时间',usageTime(item.created_at)],['完成时间',usageTime(item.completed_at)],
+      ['输入 token',usageNumber(usage.prompt_tokens)],['输出 token',usageNumber(usage.completion_tokens)],['总 token',usageNumber(usage.total_tokens)],['缓存命中 token',usageNumber(usage.prompt_cache_hit_tokens)],['缓存未命中 token',usageNumber(usage.prompt_cache_miss_tokens)],['费用估算（非账单）',money]
+    ])}<details><summary>模型单价（每百万 token）</summary>${usageFields([['价格版本',text(pricing.version)],['币种',text(pricing.currency)],['缓存命中单价',usageDecimal(pricing.cache_hit)],['缓存未命中单价',usageDecimal(pricing.cache_miss)],['输出单价',usageDecimal(pricing.output)]])}</details><details><summary>完整回执</summary><pre>${escape(JSON.stringify(item,null,2))}</pre></details></details></article>`;
+  }
+  async function showUsageSummary(period = usageMonth(),offset = 0) {
+    if (!canConfigureAI()) return;
+    clearAIKey(); const own = ++generation; liveView = null;
+    main.innerHTML = `<button id="usage-back" class="quiet" type="button">返回患者列表</button><h1>用量汇总</h1>${usageMonthForm(period)}<p class="muted">费用为模型回执与配置单价的估算，不等于供应商账单。打开患者档案仍需患者授权。</p><div id="usage-overview"><p role="status">正在读取用量…</p></div><div id="usage-patients"></div><p class="cloud-error" role="alert"></p>`;
+    document.getElementById('usage-back').onclick = () => { if (own !== generation) return; const response = showPatients(0), next = generation; response.catch(e=>failed(e,next)); };
+    const form = document.getElementById('usage-month-form');
+    form.onsubmit = event => { event.preventDefault(); if (own === generation && validUsageMonth(form.elements.period.value)) showUsageSummary(form.elements.period.value); };
+    try {
+      const result = await api(`/care/ai/usage?period=${encodeURIComponent(period)}&offset=${offset}&limit=50`);
+      if (own !== generation) return;
+      document.getElementById('usage-overview').innerHTML = `<h2>${escape(result.period)} · 月度用量</h2>${usageMetrics(result.usage,true)}`;
+      const start = Number.isSafeInteger(result.offset) && result.offset >= 0 ? result.offset : offset;
+      const limit = Number.isSafeInteger(result.limit) && result.limit > 0 ? result.limit : 50;
+      document.getElementById('usage-patients').innerHTML = `<h2>注册用户 · ${usageNumber(result.total)} 位</h2>${result.items.map(item=>`<article class="cloud-record"><div class="cloud-section-title"><h3>${escape(item.display_name || item.username)}</h3><button type="button" data-usage-patient="${escape(item.patient_id)}">打开患者档案</button></div><p class="cloud-preserve">账号：${escape(item.username)}</p>${usageMetrics(item.usage)}${usageQuotas(item)}</article>`).join('') || '<p class="muted">这一页暂无注册用户。</p>'}<div class="cloud-toolbar"><button id="usage-users-previous" type="button" ${start === 0 ? 'disabled' : ''}>上一页用户</button><span>第 ${Math.floor(start/limit)+1} 页</span><button id="usage-users-next" type="button" ${!Number.isSafeInteger(result.total) || start+limit >= result.total ? 'disabled' : ''}>下一页用户</button></div>`;
+      for (const [id,next] of [['usage-users-previous',Math.max(0,start-limit)],['usage-users-next',start+limit]]) document.getElementById(id).onclick = event => { if (own === generation && !event.currentTarget.disabled) showUsageSummary(period,next); };
+      main.querySelectorAll('[data-usage-patient]').forEach(button=>button.onclick=()=>{ if (own !== generation) return; const response = openPatient(button.dataset.usagePatient), next = generation; response.catch(e=>failed(e,next)); });
+    } catch (e) {
+      if (own !== generation) return;
+      document.getElementById('usage-overview').innerHTML = '<p role="status">无法读取用量汇总，请重新查询。</p>';
+      failed(e,own);
+    }
+  }
+  async function showCandidates(ident,own) {
+    const result=await api(`/patients/${ident}/rehab-candidates`);if(own!==generation)return;
+    const area=document.getElementById('candidate-review');
+    const states={PENDING_REVIEW:'待审核',REVIEWED:'已核对',REJECTED:'已退回'};
+    area.innerHTML=result.items.map((row,index)=>`<article><h3>候选方案 · ${escape(states[row.state]||'状态待核对')}</h3><p>${escape(row.document?.profile?.goal||'')}</p><p>规则：${escape(row.document?.engine||'未登记')} · 本人资料版本 ${escape(row.document?.profile_version??'未知')}</p>${(row.document?.cards||[]).map(c=>`<details><summary>${escape(c.id)} · ${escape(c.name)}</summary><p>起始条件：${escape(c.startConditions||'请核对原文')}</p><p>源剂量范围：${escape(c.sourceDose||'需人工填写')}</p><p>停止条件：${escape(c.stopConditions||'请核对原文')}</p><p>来源：${escape((c.sourceRefs||[]).join('、'))} · ${escape(c.version||'')}</p></details>`).join('')}<p>核对不等于发布处方。正式方案须从已支持动作选择，填写实际安排，再单独发布。</p><div class="cloud-toolbar">${row.state==='PENDING_REVIEW'?`<button data-review-candidate="${index}" data-decision="REVIEWED">核对通过</button><button data-review-candidate="${index}" data-decision="REJECTED">退回候选</button>`:''}${row.state==='REVIEWED'?`<button data-plan-candidate="${index}">制定正式方案</button>`:''}</div></article>`).join('')||'<p>暂无待审核候选方案。</p>';
+    for(const button of area.querySelectorAll('[data-review-candidate]'))button.onclick=async()=>{
+      const row=result.items[Number(button.dataset.reviewCandidate)],decision=button.dataset.decision;
+      if(!confirm(decision==='REVIEWED'?'已核对患者资料、评估、适用条件和源剂量？这一步不会发布或启用训练。':'退回此候选方案？原内容将保留。'))return;
+      button.disabled=true;try{await api(`/patients/${ident}/rehab-candidates/${row.id}/review`,'POST',{decision});if(own===generation)await showCandidates(ident,own);}catch(e){failed(e,own);button.disabled=false;}
+    };
+    for(const button of area.querySelectorAll('[data-plan-candidate]'))button.onclick=()=>{
+      const row=result.items[Number(button.dataset.planCandidate)];
+      editPlan(ident,own,{title:'康复训练安排',summary:`候选参考 ${row.id}；规则 ${row.document?.engine||'未登记'}。\n${row.document?.profile?.goal||''}`,items:[]}).catch(e=>failed(e,own));
+    };
   }
   async function showReports(panel,ident,own,doctor){
     const result=await api(`/patients/${ident}/reports`);if(own!==generation)return;
@@ -405,6 +674,7 @@
     area.scrollIntoView({behavior:'smooth',block:'start'});
   }
   logout.onclick = async () => {
+    clearAIKey();
     logout.disabled = true;
     try { await api('/auth/logout', 'POST', {}); showAuth(); }
     catch(e) { error(e.message); }
@@ -416,9 +686,9 @@
   })();
   // Recheck authorization on return and periodically; leave unsaved forms intact.
   async function checkVisibleView(){
-    const view=liveView;if(document.hidden)return;
-    if(!view){if(account){try{const latest=await api('/auth/me');if(latest.account_id!==account.account_id){account=latest;csrf=latest.csrf_token;await showHome();}}catch(e){if(e.status===401)showAuth();}}return;}
-    try{const identity=await api('/auth/me');if(view.own!==generation)return;if(identity.account_id!==account.account_id){account=identity;csrf=identity.csrf_token;await showHome();return;}const profile=await api(`/patients/${view.ident}`);if(view.own!==generation)return;if(!view.doctor && profile.doctor_access!==view.doctorAccess){await showHome();return;}const latest=await messageStatus(view.ident,view.own);if(view.own===generation && latest && latest.next_cursor>(view.chatCursor||0) && chatVisible())await showMessages(view.ident,view.own);}
+    const view=liveView,own=generation;if(document.hidden)return;
+    if(!view){if(account){try{const latest=await api('/auth/me');if(own!==generation||!account)return;if(latest.account_id!==account.account_id||latest.role!==account.role){clearAIKey();account=latest;csrf=latest.csrf_token;await showHome();}}catch(e){if(own===generation&&e.status===401)showAuth();}}return;}
+    try{const identity=await api('/auth/me');if(view.own!==generation)return;if(identity.account_id!==account.account_id||identity.role!==account.role){account=identity;csrf=identity.csrf_token;await showHome();return;}const profile=await api(`/patients/${view.ident}`);if(view.own!==generation)return;if(!view.doctor && profile.doctor_access!==view.doctorAccess){await showHome();return;}const latest=await messageStatus(view.ident,view.own);if(view.own===generation && latest && latest.next_cursor>(view.chatCursor||0) && chatVisible())await showMessages(view.ident,view.own);}
     catch(e){failed(e,view.own);}
   }
   addEventListener('focus',checkVisibleView);

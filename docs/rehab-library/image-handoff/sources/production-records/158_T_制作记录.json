@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "batch": "158 T 路线 s05–s06",
+  "date": "2026-10-14",
+  "action_id": "T-AXU-050",
+  "action_name": "俯卧I/Y/T/W分路线抬臂",
+  "group": "T 路线",
+  "generation_tool": "built-in image_gen.imagegen",
+  "generation_intent": "edit",
+  "source_documents": [
+    "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+    "E:/git冲突问题/安康_康复评估与分级训练动作库.md"
+  ],
+  "approved_mother_image": {
+    "path": "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s01.png",
+    "generated_original": "C:/Users/Administrator/.codex/generated_images/01a13a82-4b38-7480-b27d-60e721c2bd48/exec-fd50c675-ef55-4506-a009-89e56681e9ae.png",
+    "sha256": "A2A0061EDD5F2FB4E837F4DB969FF34E5F82EBA23C12077C1F6D94A30D4B0F06"
+  },
+  "assets": [
+    {
+      "step": "s05",
+      "route": "T",
+      "phase": "起点：双臂侧展并落支撑面",
+      "planned_filename": "158_T-AXU-050_s05.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s05.png",
+      "sha256": "F12DC4AF9C6E533118839D89194450B643D8B2AF3E7E7CDFF81BF665FF0C64F0",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a82-f07f-7ff0-83e6-370e7fef4c12/exec-87e488df-6873-417d-bbda-2fa07030ef61.png",
+      "prompt": "Use case: identity-preserve. Asset type: one photorealistic rehabilitation exercise step photo. Input image 1 is the EDIT TARGET, the approved prone I-route mother photo. Edit only the woman's two arms and their local contact shadows to make a prone T-route START position. Keep the same woman, black ponytail, white short-sleeve shirt, dark gray trousers, bare feet, forehead resting on the exact same small gray soft pad, torso, chest, abdomen, pelvis, legs and feet supported in exactly their existing positions. Keep the wide gray-blue exercise mat, background, studio lighting, shadows, camera elevation, perspective, scale, framing and head-at-bottom/feet-at-top composition unchanged. The only pose change: move BOTH arms straight outward to the left and right sides from the shoulders, about 90 degrees shoulder abduction, making an unmistakable capital T across the body axis. Both elbows are comfortably straight, not bent into W; arms do not point diagonally toward the head as in Y. The upper arms, elbows, forearms, wrists and empty hands are entirely resting on the mat at this START position; absolutely no visible raised arm gap. Both entire arms and both natural five-finger hands are visible, symmetrically spread laterally at shoulder level. No dumbbells or other equipment. Do not move the body, rotate the camera, turn or raise the head, lift the chest, arch the waist, resize the mat, or crop hands or feet. Single photo only, no text, letters, arrows, numbers, watermark, diagram or collage.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s01.png"
+      ],
+      "transparent_background": false,
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "reused_existing": false,
+      "qa": {
+        "status": "passed",
+        "review_method": "直接检查内置生成工具展示的完整画面，并调用 view_image 检查保存图；文件 SHA256 验证原图复制一致",
+        "identity_clothing_background": "与批准母图一致：同一人物/黑马尾/白短袖/深灰裤/赤脚；宽灰蓝垫、灰蓝背景与柔和光线保持",
+        "camera_composition": "机位、头下脚上方向、身体位置、尺度及画幅与母图一致",
+        "route_pose": "两臂从肩向身体两侧展开，肘自然近伸直，形成清楚 T 路线；不是 Y 或 W",
+        "support_contact": "上臂、肘、前臂、腕和双手落在支撑面；額头由原软垫支持；胸腹、骨盆、腿和足保持落垫",
+        "anatomy_visibility": "双侧肩肘腕手完整可见，手指及关节连接自然，完整双足在画面内",
+        "equipment": "空手，无负重器械",
+        "text_overlay": "无文字、编号、箭头或拼图",
+        "limitations": "本图仅核对可见姿态与接触关系，不由照片确认肌肉发力或临床有效性"
+      }
+    },
+    {
+      "step": "s06",
+      "route": "T",
+      "phase": "动作：保持 T 方向轻抬双臂",
+      "planned_filename": "158_T-AXU-050_s06.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s06.png",
+      "sha256": "845FB77804ED9341219C46F52A0888EEE14260AA02D572A1B9A2764EE5B1AD3E",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a82-f07f-7ff0-83e6-370e7fef4c12/exec-2aaabef0-8169-47ed-ac96-b12e4d7c5d61.png",
+      "prompt": "Use case: identity-preserve. Asset type: one photorealistic rehabilitation exercise step photo. Input image 1 is the EDIT TARGET: the approved prone T-route START photo. Make only one precise change: gently lift BOTH straight lateral arms, from the upper arms through elbows, forearms, wrists and empty hands, approximately 5–8 cm off the mat, while keeping the exact same T direction at about 90 degrees shoulder abduction. Show a small believable air gap under both whole arms and detached soft natural shadows on the mat, so this is visually distinct from the arms-resting START photo. BOTH elbows, forearms, wrists and hands must be off the support surface together. Keep the T arm shape horizontal across the body axis in the image, with comfortably straight elbows; do not swing them toward the head into Y or bend them into W. Keep every non-arm feature unchanged: same woman, black ponytail, white short-sleeve shirt, dark gray trousers, bare feet, same forehead soft pad, forehead resting on the pad, head and neutral neck not lifted, chest, abdomen, pelvis, legs and feet supported in exactly their original positions. Keep the wide gray-blue mat, background, lighting, camera position, elevation, perspective, framing, body size and head-at-bottom/feet-at-top composition identical. Shoulders stay relaxed; do not lift chest, arch back, raise forehead or shrug toward ears. Both complete hands and feet stay visible, natural anatomy and five fingers per hand. Single photo only, no dumbbells, no text, numbers, letters, arrows, watermark, collage or diagram.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s05.png"
+      ],
+      "transparent_background": false,
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "reused_existing": false,
+      "qa": {
+        "status": "passed",
+        "review_method": "直接检查内置生成工具展示的完整画面，并调用 view_image 检查保存图；文件 SHA256 验证原图复制一致",
+        "identity_clothing_background": "人物、服装、马尾、宽灰蓝垫、额头软垫、背景与光線沿用 s05",
+        "camera_composition": "身体位置、头下脚上方向、机位、尺度及画幅与 s05 一致",
+        "route_pose": "双臂保持原 T 方向，双肘近伸直；上臂、肘、前臂、腕及双手共同轻抬，没有变成 Y 或 W",
+        "support_contact": "双臂下方间隙与离散柔和阴影可辨；額头仍接软垫，胸腹、骨盆、腿与双足留在垫上；没有抬头、抬胸或伸腰借力",
+        "anatomy_visibility": "双手与双足完整，肘腕连接及人体比例自然",
+        "equipment": "空手，无负重器械",
+        "text_overlay": "无文字、编号、箭头或拼图",
+        "limitations": "提示词目标为约 5–8 cm 轻抬；照片只能核对小幅离垫外观，不声明从画面测得精确高度、发力或临床有效性"
+      }
+    }
+  ],
+  "discarded_attempts": [],
+  "notes": [
+    "每张独立内置生成调用，保留所有默认生成原件；未使用 CLI、拼图、后处理或正式仓库代码修改。",
+    "两张均首稿通过本批逐图外观 QA；最终是否纳入总批完成登记由主代理独立复核。",
+    "非覆盖保存；本批未修改其他进度 JSON 或制作清单。"
+  ]
+}

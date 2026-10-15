@@ -1,0 +1,102 @@
+{
+  "date": "2026-10-14",
+  "scope": "168/s01-s02; 169/s01-s02",
+  "source_list": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_action_library": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "source_sections": [
+    "T-AXU-030",
+    "T-AXU-031"
+  ],
+  "mode": "built-in image_gen only, one tool call per generated asset",
+  "summary": {
+    "requested": 4,
+    "final": 4,
+    "generated": 2,
+    "reused": 2,
+    "revisions": 0
+  },
+  "non_destructive": true,
+  "review_method": "Each reference and edit target viewed before generation; each final PNG viewed with view_image; PNG header, byte length and SHA256 verified",
+  "entries": [
+    {
+      "path": "E:/git冲突问题/rehab image/train/steps/168_T-AXU-030_s01.png",
+      "sha256": "39E3A76E280262FD7602B9D08F1A694941CD76A7B89E9DAE3E146A063899FA0E",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1682195,
+      "action": "168 T-AXU-030",
+      "step": "s01",
+      "method": "built-in image_gen; edit from s02 with identity reference images",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-ceec-7ce1-9915-6e0c18d25689/exec-e8836385-c3f6-468b-947d-496660a7c8a4.png",
+      "edit_target": "E:/git冲突问题/rehab image/train/steps/168_T-AXU-030_s02.png",
+      "references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "prompt": "Use case: identity-preserve.\nAsset type: one single photorealistic rehabilitation step demonstration photograph, 168 T-AXU-030 s01, portrait 4:5, output approximately 1122 x 1402 pixels.\nInput images: Image 1 (168_T-AXU-030_s02.png) is the EDIT TARGET and exact invariant composition/equipment/environment/body-position source. Images 2, 3, 4 (reference-01.png, reference-02.png, reference-03.png) are supporting IDENTITY REFERENCES for the same adult Asian woman, facial identity, hair, build and clothing. Do not reproduce the reference arm poses.\nPrimary request: edit ONLY both arms and both matching light grey dumbbells from the overhead finish position to the shoulder-level starting position of a seated shoulder press.\nExact new posture: remain seated firmly on the identical stable upholstered grey backrest chair, identical feet flat on the ground, hips and pelvis and torso in the same position, back upright supported near the chair back, no lumbar arch, chest natural. Both hands hold the same two light grey dumbbells beside her shoulders at about ear/shoulder height; elbows bent approximately 90 degrees, located comfortably forward-outside the torso rather than spread far backward; forearms close to vertical, wrists natural/neutral, secure anatomically correct closed grips. The dumbbells are held slightly anterior to the shoulder line and are not resting on her shoulders. This is a clean static starting frame.\nInvariants: lock the exact camera, perspective, figure scale, chair location/design, lighting, grey-blue seamless background and floor, face, ponytail, white short-sleeve T-shirt, charcoal trousers, white sneakers, sitting position, leg/foot position from image 1. The frame must remain the same portrait 4:5 full body image. Keep all hands, elbows, dumbbells, chair legs and both shoes within the canvas.\nStyle: realistic medical exercise instructional studio photography with natural anatomy and soft even light.\nAvoid: standing, empty hands, a second person, extra hands/fingers/limbs, floating dumbbells, joint deformities, motion blur, exercise machines, labels, numbers, text, watermarks, arrows, collage, split panels. Produce exactly ONE single image.",
+      "reuse_source": null,
+      "review": "已用view_image逐图审查，通过。稳定靠背椅坐位、双脚踩地、灰色轻哑铃肩旁、肘屈约90度并位于舒适前外侧、腕握持自然；躯干无明显后仰。与s02人物身份、尺度、机位、椅子、下肢和背景一致。单张完整全身、无文字箭头拼图。"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/train/steps/168_T-AXU-030_s02.png",
+      "sha256": "4618D33C7456C8AC85CEE4921341C98D216B3D826A76CC96097B6ADD72A03629",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1700638,
+      "action": "168 T-AXU-030",
+      "step": "s02",
+      "method": "approved existing single image copied without modifications",
+      "generated_path": null,
+      "edit_target": null,
+      "references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "prompt": null,
+      "reuse_source": "E:/git冲突问题/rehab image/train/168_T-AXU-030_坐位／站位哑铃过头推举.png",
+      "review": "已用view_image审查原图与最终复制图，通过复用。稳定靠背椅坐位，双脚落地，双哑铃过头可控终点，躯干保持直立无明显腰部后仰，肘腕及哑铃自然，手臂与器械完整入镜。与三张参考人物身份一致。"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/train/steps/169_T-AXU-031_s01.png",
+      "sha256": "AF9F8364D746485073534F1C05D02CAB46CC9AF4F5A617A157F93B06339021CC",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1671009,
+      "action": "169 T-AXU-031",
+      "step": "s01",
+      "method": "built-in image_gen; edit from s02 with identity reference images",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a84-ceec-7ce1-9915-6e0c18d25689/exec-bd8cc8ab-eef8-43b1-b5a5-0fc95809e74c.png",
+      "edit_target": "E:/git冲突问题/rehab image/train/steps/169_T-AXU-031_s02.png",
+      "references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "prompt": "Use case: identity-preserve.\nAsset type: one single photorealistic rehabilitation step demonstration photograph, 169 T-AXU-031 s01, portrait 4:5 approximately 1122 x 1402 pixels.\nInput images: Image 1 (169_T-AXU-031_s02.png) is the EDIT TARGET and exact invariant composition/environment/equipment source. Images 2, 3, 4 (reference-01.png, reference-02.png, reference-03.png) are supporting IDENTITY REFERENCES locking the same adult Asian woman's face, ponytail, build and white short sleeve T-shirt/charcoal trousers.\nPrimary request: edit ONLY the woman's two arm/hand positions and the corresponding grey elastic resistance tubes to depict the STARTING raised-arm position of a seated front lat pulldown. Keep all other pixels/composition as invariant as possible.\nExact new posture: seated securely at the identical location on the identical stable grey chair, hips, knees and both feet identical, both soles flat on the floor, torso upright, neutral head looking forward. Raise both arms forward and upward from her upper chest toward the visible high anchor into a comfortable starting overhead/upper-front position. Hands remain securely gripping the SAME TWO triangular black handles, about 25 to 35 cm above head height and just forward of the forehead, shoulders relaxed, elbows slightly bent rather than locked, wrists neutral, comfortable shoulder-width grip. This is the top/starting frame before bending elbows to bring the handles down toward the upper chest.\nEquipment requirements: preserve the exact steel stand and its complete high strap/carabiner anchor, upper beam, vertical upright, and floor base. Both elastic grey resistance tubes must connect logically and directly from the SAME reliable high anchor to their own SAME handles, with shorter visible lengths and mild pre-tension appropriate to the starting pose. The tubes run in FRONT of her body/face plane and never behind her neck; do not replace the tubes with ropes, chains or a bar. The two hands and handles should be clearly separated rather than overlapping each other or the anchor.\nInvariants: preserve camera angle and perspective, woman scale and identity, face/hair, clothes/shoes, exact chair position/design, leg and foot positions, steel stand position and design, blue-grey seamless studio background and floor, soft even lighting. Keep full figure, both hands, both handles, high anchor, complete stand and both shoes inside the same 4:5 canvas.\nAvoid: posterior-neck pulldown, leaning backward, standing, shrugging, forceful terminal shoulder elevation, broken or disconnected tubing, floating handles, extra limbs/fingers, distorted hands, text, numbers, labels, arrows, watermark, collage, split panels. Produce exactly ONE single photograph.",
+      "reuse_source": null,
+      "review": "已用view_image逐图审查，通过。稳定椅坐位双脚着地，双手在胸前上方舒适起始抬臂位握双柄，双肘轻屈；高位锚点、支架底座与两条弹力带到手柄的连接完整可见，带走身体前方。与s02人物身份、机位尺度、椅子支架下肢背景一致，躯干稳且无颈后路径。无文字箭头拼图。"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/train/steps/169_T-AXU-031_s02.png",
+      "sha256": "F2279A9A7258F3F84248FA43C20012193ECD00A793A939D36E3EC506E021F256",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1685512,
+      "action": "169 T-AXU-031",
+      "step": "s02",
+      "method": "approved existing single image copied without modifications",
+      "generated_path": null,
+      "edit_target": null,
+      "references": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "prompt": null,
+      "reuse_source": "E:/git冲突问题/rehab image/train/169_T-AXU-031_胸前下拉：器械或弹力带.png",
+      "review": "已用view_image审查原图与最终复制图，通过复用。稳定椅坐位双脚落地，高位钢架锚点与弹力带到握柄关系完整，屈肘将柄拉到上胸前，肘未硬拉躯干后方，头与躯干自然，无大幅后仰或颈后拉。与三张参考人物身份一致。"
+    }
+  ]
+}

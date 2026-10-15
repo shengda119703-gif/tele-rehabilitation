@@ -5,3 +5,4 @@
 *.json text eol=lf
 *.ps1 text eol=crlf
 *.cmd text eol=crlf
+mobile_rehab/static/automatic-motion.js text eol=lf

@@ -1,0 +1,457 @@
+{
+  "version": "1.0",
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "range": "136-s01～s03；137-s01～s02；138-s01～s03；139-s01～s02",
+  "tool": "内置 image_gen",
+  "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_library_path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "output_root": "E:/git冲突问题/rehab image",
+  "selected_image_count": 10,
+  "actions": [
+    {
+      "sequence": 136,
+      "action_id": "T-AXU-044",
+      "action_name": "高位平板支撑交替抬腿",
+      "play_sequence": "s01 → s02 → 复用 s01 重置 → s03 → 复用 s01"
+    },
+    {
+      "sequence": 137,
+      "action_id": "T-AXU-017",
+      "action_name": "屈膝侧桥",
+      "play_sequence": "s01 → s02 保持 → 复用 s01 慢放下"
+    },
+    {
+      "sequence": 138,
+      "action_id": "T-AXU-046",
+      "action_name": "侧桥结合上侧髋外展",
+      "play_sequence": "s01 → s02 → s03 → 复用 s02 上腿回落 → 复用 s01 骨盆落垫"
+    },
+    {
+      "sequence": 139,
+      "action_id": "T-AXU-018",
+      "action_name": "Pallof 胸前推",
+      "play_sequence": "s01 → s02 → 复用 s01"
+    }
+  ],
+  "assets": [
+    {
+      "sequence": 136,
+      "action_id": "T-AXU-044",
+      "step": "s01",
+      "filename": "136_T-AXU-044_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/136_T-AXU-044_s01.png",
+      "zip_entry": "images/136_T-AXU-044_s01.png",
+      "pose": "双手撑固定高台，双脚分开踩地。",
+      "reused": false,
+      "review_method": "生成后view_image读取保存的实际PNG；主代理再逐图核对",
+      "review_status": "通过本轮视觉核对",
+      "anatomical_side_review": "略前侧侧面镜头，近侧右腿/远侧左腿；s02抬左、s03抬右。",
+      "source_record": "train/steps/136_T-AXU-044_制作记录_v1.0.md",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "88829282BD7EED811300E801E4210C796EC24714C2D1B483B8A92002BB26E678",
+      "bytes": 1734948
+    },
+    {
+      "sequence": 136,
+      "action_id": "T-AXU-044",
+      "step": "s02",
+      "filename": "136_T-AXU-044_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/136_T-AXU-044_s02.png",
+      "zip_entry": "images/136_T-AXU-044_s02.png",
+      "pose": "左脚小幅后伸离地；双手与右脚支撑。",
+      "reused": false,
+      "review_method": "生成后view_image读取保存的实际PNG；主代理再逐图核对",
+      "review_status": "通过本轮视觉核对",
+      "anatomical_side_review": "略前侧侧面镜头，近侧右腿/远侧左腿；s02抬左、s03抬右。",
+      "source_record": "train/steps/136_T-AXU-044_制作记录_v1.0.md",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "55925A82E13841E52AA5FE9C5BEBF216C85620B199BD2D4534C2F58C3972B483",
+      "bytes": 1662046
+    },
+    {
+      "sequence": 136,
+      "action_id": "T-AXU-044",
+      "step": "s03",
+      "filename": "136_T-AXU-044_s03.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/136_T-AXU-044_s03.png",
+      "zip_entry": "images/136_T-AXU-044_s03.png",
+      "pose": "重置后右脚小幅后伸离地；双手与左脚支撑。",
+      "reused": false,
+      "review_method": "生成后view_image读取保存的实际PNG；主代理再逐图核对",
+      "review_status": "通过本轮视觉核对",
+      "anatomical_side_review": "略前侧侧面镜头，近侧右腿/远侧左腿；s02抬左、s03抬右。",
+      "source_record": "train/steps/136_T-AXU-044_制作记录_v1.0.md",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "1F6CA750F8D18D23E7A976C512BF4C21E016D2F47AA818B135663EB488D88987",
+      "bytes": 1665709
+    },
+    {
+      "sequence": 137,
+      "action_id": "T-AXU-017",
+      "step": "s01",
+      "filename": "137_T-AXU-017_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/137_T-AXU-017_s01.png",
+      "zip_entry": "images/137_T-AXU-017_s01.png",
+      "pose": "左侧卧屈膝，左前臂接垫，骨盆落垫，右手身前辅助。",
+      "reused": false,
+      "review_method": "生成后view_image读取保存的实际PNG；主代理再逐图核对",
+      "review_status": "通过本轮视觉核对",
+      "anatomical_side_review": "胸前向镜头，头与支撑肘在画面右、双足向左；左前臂和左膝支撑。",
+      "source_record": "train/steps/137_T-AXU-017_制作记录_2026-10-14.md",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "AE0426D622015E4BE23A7AA5720C7265227A539F763A8B3F918AC0047566457D",
+      "bytes": 1803527
+    },
+    {
+      "sequence": 137,
+      "action_id": "T-AXU-017",
+      "step": "s02",
+      "filename": "137_T-AXU-017_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/137_T-AXU-017_s02.png",
+      "zip_entry": "images/137_T-AXU-017_s02.png",
+      "pose": "左前臂与下侧膝支撑，骨盆抬起；双膝保持屈曲。",
+      "reused": false,
+      "review_method": "生成后view_image读取保存的实际PNG；主代理再逐图核对",
+      "review_status": "通过本轮视觉核对",
+      "anatomical_side_review": "胸前向镜头，头与支撑肘在画面右、双足向左；左前臂和左膝支撑。",
+      "source_record": "train/steps/137_T-AXU-017_制作记录_2026-10-14.md",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "C2037DC45E1282053C766D9337AD624F11CC04130F8B0873E750E31C845C123B",
+      "bytes": 1768036
+    },
+    {
+      "sequence": 138,
+      "action_id": "T-AXU-046",
+      "step": "s01",
+      "filename": "138_T-AXU-046_s01_v2.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s01_v2.png",
+      "zip_entry": "images/138_T-AXU-046_s01_v2.png",
+      "pose": "左侧卧，下侧左膝屈曲，上侧右腿伸直低位准备，骨盆落垫。",
+      "reused": false,
+      "review_method": "生成后view_image读取保存的实际PNG；主代理再逐图核对",
+      "review_status": "通过本轮视觉核对",
+      "anatomical_side_review": "胸前向镜头，头与支撑肘在画面右、双足向左；左前臂和左膝支撑。",
+      "source_record": "步骤图_138_制作记录.json",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "84C6F2FCF2AD09959DEF63C592B1247AB14A0122EE0E4A215A89733EC56F2124",
+      "bytes": 1730805
+    },
+    {
+      "sequence": 138,
+      "action_id": "T-AXU-046",
+      "step": "s02",
+      "filename": "138_T-AXU-046_s02_v2.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s02_v2.png",
+      "zip_entry": "images/138_T-AXU-046_s02_v2.png",
+      "pose": "左前臂和左膝支撑，先抬骨盆建立低幅侧桥。",
+      "reused": false,
+      "review_method": "生成后view_image读取保存的实际PNG；主代理再逐图核对",
+      "review_status": "通过本轮视觉核对",
+      "anatomical_side_review": "胸前向镜头，头与支撑肘在画面右、双足向左；左前臂和左膝支撑。",
+      "source_record": "步骤图_138_制作记录.json",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "458375CB93738DA04B2402E408D9C25C98B0CCCDB48812A5076585E97464049B",
+      "bytes": 1691499
+    },
+    {
+      "sequence": 138,
+      "action_id": "T-AXU-046",
+      "step": "s03",
+      "filename": "138_T-AXU-046_s03_v2.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s03_v2.png",
+      "zip_entry": "images/138_T-AXU-046_s03_v2.png",
+      "pose": "骨盆保持，右腿小幅向上外展；不向后翻。",
+      "reused": false,
+      "review_method": "生成后view_image读取保存的实际PNG；主代理再逐图核对",
+      "review_status": "通过本轮视觉核对",
+      "anatomical_side_review": "胸前向镜头，头与支撑肘在画面右、双足向左；左前臂和左膝支撑。",
+      "source_record": "步骤图_138_制作记录.json",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "0D7445B2793BE0E7ED375432771A3A3B1CC19D9F61AD61FFAED0859A9E9C2A38",
+      "bytes": 1690412
+    },
+    {
+      "sequence": 139,
+      "action_id": "T-AXU-018",
+      "step": "s01",
+      "filename": "139_T-AXU-018_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/139_T-AXU-018_s01.png",
+      "zip_entry": "images/139_T-AXU-018_s01.png",
+      "pose": "站位侧对胸高锚点；双手在胸前握柄，带由侧方牵引。",
+      "reused": false,
+      "review_method": "生成后view_image读取保存的实际PNG；主代理再逐图核对",
+      "review_status": "通过本轮视觉核对",
+      "anatomical_side_review": "身体侧对画面左胸高锚点；双手朝胸口既定正前方推出。",
+      "source_record": "步骤图_139_制作记录.json",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "AA55F056769F0F6402A0994C5ECF71A3B16FA344A1C05BDE94DABF886FB9DECB",
+      "bytes": 1747487
+    },
+    {
+      "sequence": 139,
+      "action_id": "T-AXU-018",
+      "step": "s02",
+      "filename": "139_T-AXU-018_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/139_T-AXU-018_s02.png",
+      "zip_entry": "images/139_T-AXU-018_s02.png",
+      "pose": "双手沿身体前方推出，脚位和胸口朝向保持。",
+      "reused": false,
+      "review_method": "生成后view_image读取保存的实际PNG；主代理再逐图核对",
+      "review_status": "通过本轮视觉核对",
+      "anatomical_side_review": "身体侧对画面左胸高锚点；双手朝胸口既定正前方推出。",
+      "source_record": "步骤图_139_制作记录.json",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "3D3D5EABAE39CF6BFD7076635181FC9DF2ED23C0F43237B3FA67E08A09AB3E5C",
+      "bytes": 1679444
+    }
+  ],
+  "source_records": [
+    {
+      "number": 136,
+      "path": "train/steps/136_T-AXU-044_制作记录_v1.0.md",
+      "format": "markdown",
+      "sha256": "363BAE195871500217DF6D81E26730D5D45D0C8A545CD7B907D7B72734D3C395",
+      "full_record": "# 136 T-AXU-044 分步骤示范图制作记录\n\n制作日期：2026-10-14。依据：E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md，第136项高位/地面平板支撑交替抬腿。首轮选定固定高台版，共3张独立原始照片，不包含地面手掌或前臂扩展版本。\n\n制作方式：built-in image_gen。三张均为1536 × 1024 PNG，未使用CLI/API fallback、拼图或Python图像编辑。首次文件不存在，保存时未覆盖已有图。默认生成源文件保留于CODEX_HOME生成目录，成品复制到train/steps。s02及s03均使用已检查s01作为构图/人物/台面锚点。\n\n## 基准与侧别\n\n人物、白色短袖T恤、深灰长裤、黑马尾、肤色和灰蓝棚拍背景以step-image-references/reference-01.png至03.png为参考；已先用view_image检查全部参考。动作姿势按清单136，不使用参考的抬臂姿势。\n\n实际照片面向画面右，镜头略在身体前侧；近镜头、较大且画面较低的鞋属于解剖学右腿，远镜头、较小且画面较高的鞋属于解剖学左腿。审核根据画面实际侧别执行，不能只据prompt标签判断。\n\ns01初始生成prompt曾把近侧写成LEFT，属于镜头侧别文字误写；s01要求双脚落地，其动作姿态不受该误写影响。最终s02/s03已在prompt与实际照片中明确近右/远左并逐图核对。\n\n## 保存与逐图审核\n\n| 图号 | 姿势 | 最终文件 | 尺寸 | 结果 |\n|---|---|---|---|---|\n| s01 | 双手双脚支持的固定高台起始位 | train/steps/136_T-AXU-044_s01.png | 1536 × 1024 | 视觉审核通过 |\n| s02 | 远侧解剖学左脚轻离地后伸；双手与近侧右脚支持 | train/steps/136_T-AXU-044_s02.png | 1536 × 1024 | 视觉审核通过 |\n| s03 | 从s01重置后，近侧解剖学右脚轻离地后伸；双手与远侧左脚支持 | train/steps/136_T-AXU-044_s03.png | 1536 × 1024 | 视觉审核通过 |\n\n### s01\n\n- 默认生成源：`C:/Users/Administrator/.codex/generated_images/01a1393f-45dd-74b2-b568-30dc7accc4fc/exec-a34bb127-3665-427d-999e-2d49fa4c8e68.png`\n- 最终保存路径：`E:/git冲突问题/rehab image/train/steps/136_T-AXU-044_s01.png`\n- SHA256：`88829282BD7EED811300E801E4210C796EC24714C2D1B483B8A92002BB26E678`\n- 复用：未复用旧单图；s02/s03只以s01作编辑参考。\n- 人物、比例、关节、完整手脚及支撑审核：通过：同一女性白T/深灰裤/黑马尾与灰蓝棚拍；双手分别接触台面，双足分开落地；头手脚完整；桌面与框架稳定；躯干整体斜线可辨，比例和关节连接自然。\n\n### s02\n\n- 默认生成源：`C:/Users/Administrator/.codex/generated_images/01a1393f-45dd-74b2-b568-30dc7accc4fc/exec-570fe836-b661-4495-846a-2b94a8ec1a31.png`\n- 最终保存路径：`E:/git冲突问题/rehab image/train/steps/136_T-AXU-044_s02.png`\n- SHA256：`55925A82E13841E52AA5FE9C5BEBF216C85620B199BD2D4534C2F58C3972B483`\n- 复用：未复用旧单图；s02/s03只以s01作编辑参考。\n- 人物、比例、关节、完整手脚及支撑审核：通过：远侧左腿离地后伸，近侧较大右鞋仍在s01原位落地；抬起鞋与地面有清楚间隙；双手原位支持；胸髋仍朝向台面，无明显转髋、腰部上顶或高踢；全身、两脚和台面完整。\n\n### s03\n\n- 默认生成源：`C:/Users/Administrator/.codex/generated_images/01a1393f-45dd-74b2-b568-30dc7accc4fc/exec-faffc452-07ba-406c-8279-d70caa3f6584.png`\n- 最终保存路径：`E:/git冲突问题/rehab image/train/steps/136_T-AXU-044_s03.png`\n- SHA256：`1F6CA750F8D18D23E7A976C512BF4C21E016D2F47AA818B135663EB488D88987`\n- 复用：未复用旧单图；s02/s03只以s01作编辑参考。\n- 人物、比例、关节、完整手脚及支撑审核：通过：近侧右腿离地后伸，远侧较小左鞋保持s01原位落地；双脚没有同时悬空；双手原位支持；体干方向稳定，低幅后伸，未见明显转髋或腰部上顶；完整脚与支撑关系可见。\n\n\n## 原始生成提示词\n\n### s01实际提交prompt\n\n```text\nUse case: scientific-educational. Asset type: one independent raw rehabilitation exercise demonstration photograph, not a collage.\nPrimary request: create action 136 T-AXU-044 step s01, the starting position for a HIGH FIXED COUNTERTOP SUPPORTED INCLINE PLANK with alternating small leg lifts.\nInput images: all three supplied photographs are identity, clothing, skin tone, ponytail, photography and gray-blue backdrop references only. Their arm pose is NOT a pose reference.\nSubject: precisely the same adult East Asian woman as references: natural face, black ponytail, plain white short-sleeve T-shirt, dark charcoal full-length athletic trousers. Complete hands and feet visible. Plain low-profile white athletic shoes.\nScene: gray-blue seamless studio background and floor, soft professional lighting and natural floor shadows. One sturdy fixed high rectangular worktop about waist height, pale light-gray top and substantial charcoal metal legs with stable crossbar, no wheels. It is on the right side of the woman. No other props.\nPose: woman faces screen right, slightly angled toward camera so her anatomical LEFT side is nearer camera and her RIGHT side is farther. BOTH palms flat on the fixed countertop shoulder-width apart; show each separate palm and wrist resting on top, fingers natural. Arms long and nearly straight without locked elbows. Both feet planted on the floor shoulder-width apart behind her, toes toward the table, with BOTH shoes and ground contacts separately visible. Body forms a gentle controlled diagonal line from shoulders through hips to ankles, about 45 degrees above floor, head and neck neutral. Abdomen stable, natural neutral spine, no sagging low back and no high-arching buttocks.\nComposition: landscape photograph, desired 1536 x 1024 pixels. Full body, whole countertop support and both feet entirely inside frame with modest margin. Camera fixed approximately side-on but 15 degrees from the woman's front, lens normal perspective, same scale suitable for a three-image sequence. Woman occupies left-center, counter right. Show both legs distinctly with near left shoe slightly lower in the image and far right shoe slightly higher to reflect depth, NOT a stepping stance.\nConstraints: anatomically correct continuous joints and proportionate head, arms, forearms, thighs and shins; exactly two arms, two legs, two hands and two shoes. Each foot fully grounded for this start frame. Keep familiar reference identity. No text, numbers, logos, arrows, diagrams, watermark or panel layout.\n```\n\n### s02最终实际提交prompt\n\n```text\nUse case: scientific-educational. Make one independent raw photorealistic rehabilitation demonstration photograph for 136 T-AXU-044 s02.\nImage 1 is the approved first step and reference for everything: preserve this same East Asian woman, identity, black ponytail, white T-shirt, charcoal long trousers, white shoes, fixed gray high table with charcoal frame, gray-blue studio backdrop and floor, soft light, full-body landscape composition, exact camera angle and scale. No mirroring.\nThe woman faces screen right and her anatomical RIGHT side is closest to camera. Her near anatomical RIGHT leg is the one with the larger lower-left shoe. Her far anatomical LEFT leg ends in the smaller farther shoe.\nKeep both palms in their original table contact points and keep the near RIGHT leg and larger near RIGHT shoe planted in their exact original floor location. Lift ONLY the far LEFT leg, extending it slightly backward toward screen left. The far LEFT shoe must be clearly visible about 8 to 12 cm above floor, behind and slightly above the right planted shoe. Do not lift the right foot. Two distinct leg outlines with natural perspective, not merged trousers.\nTorso position, pelvis orientation and neutral spinal line remain unchanged. Small low controlled leg extension, no back arch, no high leg kick, no hip rotation. Complete head, both hands, both feet and full support table in frame. Single pose only; no text, arrows, numbers, panels or watermark. Desired landscape 1536 x 1024.\n```\n\n### s03最终实际提交prompt\n\n```text\nUse case: scientific-educational. Make one independent raw photorealistic rehabilitation demonstration photograph for 136 T-AXU-044 s03.\nImage 1 is the approved first step, the composition and identity anchor. Preserve exactly this same woman, black ponytail, face, white T-shirt, charcoal full-length trousers, plain white athletic shoes, fixed gray high tabletop and charcoal stable frame, gray-blue studio floor and backdrop, soft light and natural shadows, exact full-body landscape camera framing, angle, perspective and scale. No mirroring. Desired 1536 x 1024.\nThe woman faces screen right with her anatomical RIGHT side closest to camera. Her near anatomical RIGHT leg is the one ending in the larger shoe at lower left in image 1. Her far anatomical LEFT leg ends in the smaller, farther shoe.\nStart from the both-feet-down position in image 1. Keep the far LEFT leg and its smaller far LEFT shoe planted in their ORIGINAL floor position and supporting the body. Keep both palms in their original separate table contact positions. Move ONLY the near anatomical RIGHT leg slightly backward toward screen left and lift its RIGHT shoe about 8 to 12 cm above the floor. The near RIGHT foot has a clear small gap below it, and is farther back than the planted far LEFT shoe. The near right leg is naturally near straight with only a small controlled hip extension. Exactly one foot raised, exactly one foot grounded; clearly separate both legs and both complete shoes.\nTorso position, shoulders and pelvis stay facing the same direction; neutral spine and controlled straight incline body line. No hip rotation, no buttock hiking, no low-back arch, no high kick. Full head, both hands, BOTH feet and entire fixed table in frame. Single pose only; no text, arrows, numbers, panels, logos or watermark.\n```\n\n## 中断与限制\n\n一次s02早期built-in调用长时间没有返回，未提供结果或保存路径，停止了挂起exec后以same built-in重新调用；没有把未返回结果登记为成品，没有切换CLI。最终s02/s03正常返回并检查。\n\n清单播放顺序：s01 → s02 → 复用s01 → s03 → 复用s01。s03由s01独立生成，教学排版应明确两侧之间先恢复双足落地，不把s02→s03直接并列成腾空换脚。\n\n这是按清单核对的静态视觉审核；静态照片不能证明真实肌肉发力、负荷或连续动作的动态控制。原始照片未加入编号、箭头或文字，相关信息在后续排版层提供。\n\n",
+      "zip_entry": "records/136_T-AXU-044_制作记录_v1.0.md"
+    },
+    {
+      "number": 137,
+      "path": "train/steps/137_T-AXU-017_制作记录_2026-10-14.md",
+      "format": "markdown",
+      "sha256": "E008487415399CB51B507C60BE70CE5A3E65B3BC6F1F830CCEE9556FFCF44B97",
+      "full_record": "# 137 T-AXU-017 制作记录\n\n日期：2026-10-14。版本依据：动作分步骤示范图制作清单_v1.0.md，首轮屈膝左侧桥2张。制作工具：built-in image_gen，一张一次调用；没有拼图、Python或其他像素编辑。\n\n## 成品\n\n| 图号 | 文件 | 尺寸 | 生成原件 | 逐张审查 |\n|---|---|---|---|---|\n| s01 | 137_T-AXU-017_s01.png | 1536×1024 PNG | C:/Users/Administrator/.codex/generated_images/01a1393f-8190-7e90-a2c2-3a1cba8315d3/exec-a10ae7d8-cf0d-4360-8040-a73f12af45b9.png | 已用view_image查看。左侧卧（胸前向镜头、头在画面右）、左前臂接垫且肘近肩下、左骨盆落垫、双膝屈曲、右手身前。头手脚完整、人物及背景匹配参考。 |\n| s02 | 137_T-AXU-017_s02.png | 1536×1024 PNG | C:/Users/Administrator/.codex/generated_images/01a1393f-8190-7e90-a2c2-3a1cba8315d3/exec-352b8714-2c7d-47e9-b7ba-9130292a5bec.png | 已用view_image查看。左前臂与下侧左膝支持保持；骨盆离垫有明显间隙；肩、髋、下侧膝形成整体线；双膝仍屈曲，右手仍身前。与s01人物、垫子、尺度、机位和构图一致。 |\n\n审查范围：按清单核对可见体位、支撑接触、解剖学左右、服装背景、关节连续、全身完整及分步骤差异。没有文字、编号、箭头、水印或拼图。双膝屈曲受前方略斜机位投影影响，不能从照片确认精确膝角；照片也不能证明肌肉发力或负荷强度。顺序为s01→s02保持→复用s01下降。\n\n## 参考\n\n- E:/git冲突问题/rehab image/step-image-references/reference-01.png\n- E:/git冲突问题/rehab image/step-image-references/reference-02.png\n- E:/git冲突问题/rehab image/step-image-references/reference-03.png\n\n三张均在生成前用view_image检查，仅固定人物身份、服装、摄影质感与背景，不将其抬臂动作作为本组动作。\n\n## 最终提示词\n\n### s01\n\nUse case: scientific-educational. Asset type: single standalone rehabilitation demonstration photograph, T-AXU-017 step 01, LEFT side lying modified side plank PREPARATION with pelvis still on mat.\nReference images 1-3 fix identity, clothing and photographic style: precisely the same adult East Asian woman, face, age, skin, natural body proportions and black ponytail, white short-sleeve T-shirt and charcoal full-length trousers.\nScene: cool gray-blue seamless studio wall and floor, soft photographic lighting, natural shadows and one plain blue-gray exercise mat.\nMandatory anatomical orientation: the woman lies on her own LEFT side, chest facing camera; her HEAD AND LEFT SHOULDER ARE ON THE RIGHT SIDE OF THE IMAGE and her bent legs are on the LEFT. Her anatomically LEFT arm is the lower supporting arm on the right of the picture. Left elbow is below her left shoulder, flexed about 90 degrees; left forearm rests fully on the mat. Her left lower hip/pelvis rests visibly on the mat. Her anatomically RIGHT arm is the upper arm and her right palm is planted on the mat in front of her abdomen for light stability. Both hands are visible and naturally connected.\nBoth knees are clearly FLEXED about 90 degrees, stacked with left knee underneath on the mat and right knee above it. Thighs lie toward the left, and both shins are folded backward toward the rear edge of the mat, feet pulled back near the hip level rather than extending in a straight line past the knees. Both feet entirely visible. This is the SHORT LEVER knees-bent version. Pelvis remains low in contact with mat, torso propped comfortably on the lower left forearm, shoulders stacked over each other. Natural head neck alignment and relaxed expression.\nCamera: from the FRONT of her chest, slightly oblique, low waist-height natural 50mm perspective showing the front of her torso, both bent knee joints and the left elbow/left hip contact. Full body, horizontal 3:2 landscape, head at right, feet toward left, adequate margins around all limbs and whole mat.\nConstraints: anatomically left side on mat (head right), two arms two legs with realistic lengths, no joint disconnection, five natural fingers, no extra limbs; not straight-leg side plank, do not lift pelvis. One photograph only; no labels, numbers, text, arrows, watermark, panels or collage.\n\n### s02\n\nUse case: scientific-educational. Asset type: one standalone photorealistic rehabilitation photograph, T-AXU-017 step 02, raised LEFT modified side plank with both knees bent.\nInput image 1 is the accepted step 01 camera, identity and scene anchor. Create its immediate next frame, preserving the SAME woman, face, black ponytail, white T-shirt, dark charcoal trousers, bare feet, blue-gray mat, seamless cool gray-blue backdrop, lighting, camera location, low frontal slightly oblique 50mm perspective, horizontal 3:2 framing, same full-body size and all limb endpoints in the frame. HEAD and LEFT supporting elbow stay on the RIGHT side of the image, legs to LEFT, chest facing camera. This is anatomically LEFT side down.\nChange only the exercise phase: she presses into the LOWER LEFT FOREARM and LOWER LEFT KNEE and lifts her pelvis off the mat to a controlled knees-bent side bridge. Left elbow stays below left shoulder and left forearm fully touches mat. The lower left knee remains on the mat as the distal main support. Shoulder, hip/pelvis and lower left knee now lie on ONE straight diagonal line without hip sagging. Clearly visible natural air gap and shadow under the left hip/pelvis; the pelvis is raised, not resting on mat. Both knees remain bent in the short-lever version, the shins folded backwards and feet relaxed, right knee stacked on left knee. Her RIGHT palm remains lightly planted on the mat in front of the abdomen, same stabilizing spot as step 01, naturally connected through bent upper arm. Head naturally aligned with spine and shoulders/hips stacked. No torso rolling, no shoulder-only lift, no back extension, no straight-leg plank.\nFull head, complete feet and both hands visible, clear left forearm and left knee contact points, natural anatomy and adult proportions. Exactly one woman, two arms two legs, natural fingers. One photographic frame only, no texts, arrows, numbers, graphics, watermark, collage or panels.\n\n## 排除的初稿与异常调用\n\n- 初稿原件：C:/Users/Administrator/.codex/generated_images/01a1393f-8190-7e90-a2c2-3a1cba8315d3/exec-2d511b75-11e7-4846-b118-4938300c110a.png。不作成品：胸向镜头且头在画面左，实际属于右侧卧；屈膝投影较浅。未复制到步骤成品目录。\n- 屈膝修正编辑调用等待超过12分钟没有返回，经主代理同意终止挂起的exec。没有将未知结果作为产物。随后重新生成上述正确解剖学左侧卧s01并据其生成s02。\n\n### 初稿提示词（排除）\n\nUse case: scientific-educational. Asset type: one standalone photorealistic rehabilitation exercise photograph, 137 T-AXU-017 step 01 (modified left side plank, knees bent).\nInput images 1-3 are identity and styling references ONLY. Reproduce exactly the same adult East Asian woman, facial appearance, age impression, body proportions, warm light skin, black ponytail, plain white short sleeve crew-neck T-shirt and dark charcoal full-length trousers. No jewelry or logo.\nScene: seamless cool gray-blue studio background and floor matching the references, soft diffused studio light with natural shadows, one simple thin neutral blue-gray exercise mat.\nPose: woman lies on her LEFT side on the mat, with her head on the LEFT of the frame and her feet on the RIGHT. Her chest faces toward the camera, with a slightly oblique frontal view allowing the LEFT support elbow, knees and hip contact to be seen. Both hips and knees remain bent in the short-lever version, knees stacked and knees approximately 90 degrees, lower legs folded comfortably behind the knees. LEFT forearm is fully on the mat, LEFT elbow bent about 90 degrees directly under the left shoulder; her lower left hip/pelvis clearly rests on the mat. Her head is upright in natural alignment, gaze gently forward. Her RIGHT hand is planted palm-down on the mat IN FRONT OF her abdomen for light stabilizing support, connected naturally to the right upper arm and bent right elbow. This is the lowered preparation pose, not an elevated side plank.\nComposition: horizontal 3:2, full body head-to-toe with all hands and feet inside the image, mat and each support contact visible, enough breathing room, camera at low waist height with natural 50mm lens perspective, no cropping. The pose occupies the lower middle of frame, head at left, bent feet at right. This image will be the camera/composition anchor for step 02.\nConstraints: exactly one woman, two anatomically sound arms and two legs, five natural fingers per hand, no disembodied limbs; shoulders and hips stacked, no backward torso rolling; knees bent, pelvis stays down. One photo only, no collage, no panels, no text, numbers, arrows, captions or watermark.\n\n### 未返回修正调用提示词（排除）\n\nundefined\n\n",
+      "zip_entry": "records/137_T-AXU-017_制作记录_2026-10-14.md"
+    },
+    {
+      "number": 138,
+      "path": "步骤图_138_制作记录.json",
+      "format": "json",
+      "sha256": "471A27BD4AF979CD64A0F0E8E2087C8AD3AF4913AFA92A67B83F6A97A2FAA9EF",
+      "full_record": {
+        "action_number": 138,
+        "action_id": "T-AXU-046",
+        "action_name": "侧桥结合上侧髋外展",
+        "date": "2026-10-14",
+        "method": "built-in image_gen__imagegen，逐图调用；未使用 CLI/API、Python 或像素编辑",
+        "selected_version": "屈膝短杠杆左侧桥，上侧右腿伸直，空手无弹力环；全组固定同一版本",
+        "reference_files": [
+          "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+          "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+          "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+        ],
+        "sequence": "s01 → s02 → s03 → 复用 s02 表示上腿回落 → 复用 s01 表示骨盆落地",
+        "images": [
+          {
+            "step": "s01",
+            "prompt": "Use case: precise-object-edit, anatomy-side correction. Edit the supplied single reference photograph by horizontally mirroring the ENTIRE photographed composition. Final image must show the woman's HEAD AT IMAGE RIGHT, feet pointing toward IMAGE LEFT, and supporting forearm/elbow AT IMAGE RIGHT. She faces the camera with her chest front, therefore the arm supporting on the mat at the RIGHT side of the image is now her anatomical LEFT arm; lower bent support knee is her LEFT knee, upper straight low leg is her RIGHT leg. This exact left-sided anatomy is crucial. Preserve the identical woman, identity, clothing, plain white T-shirt, dark charcoal leggings, bare feet, body proportions, facial expression, soft gray-blue studio background, muted blue-gray mat, lighting and framing. Keep the exact grounded preparation pose from source: left hip/pelvis visibly RESTING ON mat, left elbow/forearm on mat, lower left knee bent, upper right leg straight and low, right hand on right hip, both feet visible. Do not raise pelvis or top leg. Only mirror composition/pose to correct anatomical laterality. Full head and feet, all supporting hand/elbow/knee contacts in frame; same landscape 1536x1024. One standalone photograph, no text, labels, arrow, collage, watermark, extra limbs or equipment.",
+            "version": "v2",
+            "selected": true,
+            "output_file": "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s01_v2.png",
+            "generated_source_file": "C:/Users/Administrator/.codex/generated_images/01a1393f-c336-7703-b64a-c6570546284d/exec-7362a7d7-a12e-4a5b-8aea-32d5dfec2f1d.png",
+            "input_reference_files": [
+              "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s01.png"
+            ],
+            "width": 1536,
+            "height": 1024,
+            "sha256": "84C6F2FCF2AD09959DEF63C592B1247AB14A0122EE0E4A215A89733EC56F2124",
+            "review_method": "已使用 view_image 逐张查看最终落地文件，并复核面向镜头时解剖学左/右",
+            "review_status": "通过本轮视觉复核，最终选用",
+            "review_notes": "头在画面右、足向左，胸前朝镜头，支撑臂为解剖学左臂；左侧卧骨盆落垫，下侧左膝屈起，上侧右腿低位伸直准备。"
+          },
+          {
+            "step": "s02",
+            "prompt": "Use case: precise-object-edit, anatomy-side correction. Edit the supplied single reference photograph by horizontally mirroring the ENTIRE photographed composition. Final image must show the woman's HEAD AT IMAGE RIGHT, feet pointing toward IMAGE LEFT, and supporting forearm/elbow AT IMAGE RIGHT. She faces the camera with her chest front, therefore the arm supporting on the mat at the RIGHT side of the image is now her anatomical LEFT arm; lower bent support knee is her LEFT knee, upper straight low leg is her RIGHT leg. This exact left-sided anatomy is crucial. Preserve identical woman, identity, clothing, white T-shirt, charcoal leggings, bare feet, body proportions, expression, soft gray-blue studio background, blue-gray mat, lighting and framing. Keep EXACT low side bridge posture from reference: left elbow/forearm and bent lower LEFT knee support on mat, left shin folded with foot visible, PELVIS clearly raised OFF mat modestly, upper RIGHT leg still straight and low, heel near mat, upper right hand on hip. Do NOT lower pelvis to mat. Do NOT raise the upper straight right leg into abduction yet. Step 2 ONLY establishes pelvis lift with stable torso. Only mirror composition/pose to correct laterality. Full head and both feet, supporting elbow/knee contacts in frame, landscape 1536x1024. One standalone photo, no text, arrows, collage, watermark, equipment or extra limbs.",
+            "version": "v2",
+            "selected": true,
+            "output_file": "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s02_v2.png",
+            "generated_source_file": "C:/Users/Administrator/.codex/generated_images/01a1393f-c336-7703-b64a-c6570546284d/exec-8848a81f-c43f-44e4-96c2-6f54a939ab3a.png",
+            "input_reference_files": [
+              "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s02.png"
+            ],
+            "width": 1536,
+            "height": 1024,
+            "sha256": "458375CB93738DA04B2402E408D9C25C98B0CCCDB48812A5076585E97464049B",
+            "review_method": "已使用 view_image 逐张查看最终落地文件，并复核面向镜头时解剖学左/右",
+            "review_status": "通过本轮视觉复核，最终选用",
+            "review_notes": "头与左前臂支点在画面右、足向左，左膝屈起接垫；骨盆离垫形成低幅左侧桥，上侧右腿仍低位未外展。"
+          },
+          {
+            "step": "s03",
+            "prompt": "Use case: precise-object-edit, anatomy-side correction. Edit supplied single reference photograph by horizontally mirroring the ENTIRE photographed composition. Final image must show woman's HEAD AT IMAGE RIGHT, feet pointing IMAGE LEFT, supporting forearm/elbow AT IMAGE RIGHT. She faces the camera with chest front, so supporting arm at RIGHT of image is her anatomical LEFT arm; lower bent supporting knee is LEFT knee, upper straight raised leg is RIGHT leg. This precise LEFT side bridge/right hip abduction anatomy is crucial. Preserve identical woman identity, white short-sleeve T-shirt, charcoal gray leggings, bare feet, proportions, expression, gray-blue studio background, blue-gray mat, soft lighting, full-body landscape 1536x1024 framing. Keep EXACT step 3 low supported side-bridge posture from reference: pelvis modestly raised off mat, left forearm and lower bent left knee on mat, left shin folded with foot visible, chest and hips forward toward camera, right hand on right hip. Upper STRAIGHT RIGHT leg stays gently raised a SMALL amount in hip abduction, heel around 15-20 cm off mat, foot near or a little below hip level, distinct modest gap from lower left knee/leg. Do NOT change pelvic elevation, do NOT lower upper leg, do NOT lift leg high, do NOT roll torso backward. Only mirror composition and pose to correct anatomical side. Full head, both feet and supporting elbow/knee in frame with margins. One standalone photograph; no text, labels, arrow, collage, watermark, elastic loop, equipment or extra limbs.",
+            "version": "v2",
+            "selected": true,
+            "output_file": "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s03_v2.png",
+            "generated_source_file": "C:/Users/Administrator/.codex/generated_images/01a1393f-c336-7703-b64a-c6570546284d/exec-47891ba6-43a8-4610-a563-8bb84228b5f4.png",
+            "input_reference_files": [
+              "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s03.png"
+            ],
+            "width": 1536,
+            "height": 1024,
+            "sha256": "0D7445B2793BE0E7ED375432771A3A3B1CC19D9F61AD61FFAED0859A9E9C2A38",
+            "review_method": "已使用 view_image 逐张查看最终落地文件，并复核面向镜头时解剖学左/右",
+            "review_status": "通过本轮视觉复核，最终选用",
+            "review_notes": "维持 s02 低幅左侧桥、骨盆位置及左前臂/左屈膝支点；上侧右腿小幅外展，双腿双足清楚，躯干未向后翻。"
+          }
+        ],
+        "group_review": "最终选用三张 _v2：胸前向镜头，头和支撑左肘在画面右、双足向左，因此左前臂/下侧左膝撑、上侧右腿外展。人物、白 T、深灰裤、裸足、灰蓝背景、垫子及机位构图一致；每张独立照片，完整头脚、肘膝支点可见，无文字水印和环带。",
+        "limitations": "视觉核对不提供实测关节角度或运动负荷；小幅抬腿按画面相对变化核对。",
+        "discarded_images": [
+          {
+            "step": "s01",
+            "prompt": "Use case: scientific-educational. Asset: one photorealistic rehabilitation exercise demonstration photo, no panel/collage. Identity/style references: supplied three photos show the SAME East Asian adult woman with black ponytail, plain white short-sleeve T-shirt, dark charcoal gray leggings, natural neutral face, soft gray-blue studio background. Match her identity, clothes, proportions and light. Create step 1 of a 3-photo fixed-camera sequence, modified left knee side bridge followed by right hip abduction, NO resistance band. Landscape 1536x1024 preferred, full head-to-toes figure and entire left elbow/forearm, left knee and both feet in frame with safe margins; camera chest-height slightly above ground, facing her front side so her torso and each leg are identifiable. A muted blue-gray mat lies horizontally across a plain studio floor; head at image left, feet to image right. Exact step 1 pose: she is resting on her anatomical LEFT side, left hip and pelvis visibly CONTACT the mat, NOT raised. Her LEFT elbow is beneath the left shoulder, left forearm and relaxed palm on mat extending toward camera/right; upright propped upper torso, neutral neck, calm face toward camera. Lower LEFT knee is bent about 90 degrees and rests on mat, with lower shin folded back behind her and its bare foot visibly distinct. Upper RIGHT leg is STRAIGHT and low, extending right from her upper hip, right heel resting near mat, knees and ankles anatomically natural. Right hand rests on right hip, no extra hands. Keep a clear silhouette: exactly two legs, lower bent left knee visibly separated from the upper straight right leg, both bare feet visible. Shoulder and hip stacked vertically without rolling backwards. This is the grounded preparation step, NOT side plank yet and NOT top leg lifting. Real skin and fabric texture, soft even lighting, anatomical realism. No text, labels, arrows, logos, watermark, equipment or bystanders.",
+            "output_file": "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s01.png",
+            "generated_source_file": "C:/Users/Administrator/.codex/generated_images/01a1393f-c336-7703-b64a-c6570546284d/exec-150bd46f-d4cb-4fec-a4a0-3475b4f21d34.png",
+            "input_reference_files": [
+              "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+            ],
+            "width": 1536,
+            "height": 1024,
+            "sha256": "94E8E7EA4C08DCDA466D3A058C3A764E4E2C44FAD068DD08AB560A3889551701",
+            "review_method": "已使用 view_image 逐张查看最终落地文件",
+            "review_status": "未选用：复审发现解剖学左右与清单不符",
+            "review_notes": "人物胸前朝镜头且支撑臂在画面左，实际是右侧卧/右侧支撑。旧图留存未覆盖，最终改用 v2。",
+            "selected": false
+          },
+          {
+            "step": "s02",
+            "prompt": "Use case: scientific-educational. Generate ONE photorealistic exercise photo as step 2 in an existing 3-step sequence. Image 1 is the exact composition/identity reference and prior step, NOT a collage. Preserve the SAME woman, face, black ponytail, plain white short-sleeve T-shirt, charcoal gray leggings, bare feet, muted blue-gray exercise mat, plain gray-blue seamless studio backdrop and lighting. Preserve landscape 1536x1024 framing, head at image left and feet at image right, same camera, same full-body scale with full head, feet, left elbow, left forearm and knee visible. Exact pose change from reference: she now pushes through her anatomical LEFT forearm and bent lower LEFT knee to raise her PELVIS visibly OFF the mat by a modest amount, forming a low modified kneeling LEFT SIDE PLANK. The left outer knee stays visibly on the mat in the same location, left lower shin remains folded and its foot stays visible, left elbow beneath left shoulder with entire forearm and palm on mat. A visible air gap separates her left hip/pelvis from the mat. Her trunk is lengthened with shoulders, hips and supporting knee making a natural stable line; chest continues to face the camera, hips stacked, spine neutral, no backwards rotation. Upper RIGHT leg remains STRAIGHT and low, in line with her torso direction from right hip toward image right; its foot may lightly contact the mat as needed, but do NOT raise that top leg into abduction yet. Right hand remains on right hip. Exactly two anatomically correct legs: distinguish the bent supporting lower left leg from the extended top right leg. This photo teaches the intermediate stage: establish pelvis lift FIRST, no further top-leg lift. Only change torso/pelvis elevation needed for the supported side bridge, retain all scene and identity invariants. No text, arrows, labels, equipment, elastic loop, collage, logos or watermark.",
+            "output_file": "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s02.png",
+            "generated_source_file": "C:/Users/Administrator/.codex/generated_images/01a1393f-c336-7703-b64a-c6570546284d/exec-b58d3da8-70d7-4914-a7f3-5068f42929b3.png",
+            "input_reference_files": [
+              "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s01.png"
+            ],
+            "width": 1536,
+            "height": 1024,
+            "sha256": "2F9B06428AC1034836A4D8E86F7F05298A52B31BBC7C932A9A0324C7D8320AF3",
+            "review_method": "已使用 view_image 逐张查看最终落地文件",
+            "review_status": "未选用：复审发现解剖学左右与清单不符",
+            "review_notes": "人物胸前朝镜头且支撑臂在画面左，实际是右侧卧/右侧支撑。旧图留存未覆盖，最终改用 v2。",
+            "selected": false
+          },
+          {
+            "step": "s03",
+            "prompt": "Use case: scientific-educational. Create ONE photorealistic rehabilitation exercise demonstration photograph, step 3 of a 3-step sequence. Image 1 is exact prior-step composition/identity reference. Keep the same adult East Asian woman, same face and ponytail, white T-shirt and charcoal gray leggings, bare feet, gray-blue studio backdrop, soft light, blue-gray exercise mat, landscape 1536x1024 framing, fixed camera, same full-body scale and head-left feet-right placement. Everything outside the upper RIGHT leg must remain the same. Preserve the exact low LEFT kneeling side-bridge body position from reference: left elbow and forearm fully on mat with elbow beneath left shoulder, lower LEFT knee bent and supported on mat, left shin folded and left foot visible, pelvis already raised OFF mat with a clear small air gap, right hand on right hip. Chest and pelvis keep facing camera, shoulders and hips stacked, no rolling backwards. The only new action is a SMALL right HIP ABDUCTION: the upper STRAIGHT RIGHT leg gently opens upward away from the lower bent left leg by about 10-15 degrees compared with prior image. Keep knee straight naturally, heel lifted approximately 15-20 cm above the mat, foot only a little below or near hip level; NO high leg lift. A clear modest gap between upper straight leg and lower bent support leg must be visible. Maintain prior pelvis elevation, left knee and forearm contact locations, trunk and head pose. Leg lift comes from upper right hip without changing pelvis. Exactly two anatomical legs and two feet with natural joints. Full head, all fingers, elbow, both knees and both feet visible with frame margin. This teaches pelvis remains stable while the top leg lifts a SMALL amount. No resistance band, equipment, arrow, labels, text, collage, logo or watermark.",
+            "output_file": "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s03.png",
+            "generated_source_file": "C:/Users/Administrator/.codex/generated_images/01a1393f-c336-7703-b64a-c6570546284d/exec-e881a8b9-f7fb-4388-baf0-9001d8cfba5a.png",
+            "input_reference_files": [
+              "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s02.png"
+            ],
+            "width": 1536,
+            "height": 1024,
+            "sha256": "D5CEA646DB8D6F9AB9BED9882F03B8F1F22630414A8D1B3199C5C292BE44FFB0",
+            "review_method": "已使用 view_image 逐张查看最终落地文件",
+            "review_status": "未选用：复审发现解剖学左右与清单不符",
+            "review_notes": "人物胸前朝镜头且支撑臂在画面左，实际是右侧卧/右侧支撑。旧图留存未覆盖，最终改用 v2。",
+            "selected": false
+          }
+        ],
+        "selected_files": [
+          "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s01_v2.png",
+          "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s02_v2.png",
+          "E:/git冲突问题/rehab image/train/steps/138_T-AXU-046_s03_v2.png"
+        ],
+        "revision_reason": "首轮图头在画面左、胸前向镜头，支撑臂实际为右臂。采用 built-in image_gen 逐张编辑镜像构图修订成清单要求的左侧卧/左侧桥，保存 _v2，不覆盖旧图。"
+      },
+      "zip_entry": "records/步骤图_138_制作记录.json"
+    },
+    {
+      "number": 139,
+      "path": "步骤图_139_制作记录.json",
+      "format": "json",
+      "sha256": "4D5BF7ABF47191EE8518027EA41F98F8C49731EBFECD94A9452E32F2BA7171D7",
+      "full_record": {
+        "version": "1.0",
+        "date": "2026-10-14",
+        "tool": "内置 image_gen",
+        "scope": "139 T-AXU-018 s01-s02",
+        "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+        "review": "生成后逐张读取实际PNG视觉审查",
+        "selected_version": "站位侧对胸高固定锚点，蓝色弹力带，一只黑色握柄由双手共同握持；图组相机、足位及锚点固定。清单未指定锚点左右侧，以画面左侧为本组固定侧。",
+        "assets": [
+          {
+            "filename": "139_T-AXU-018_s01.png",
+            "path": "E:/git冲突问题/rehab image/train/steps/139_T-AXU-018_s01.png",
+            "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-2f98-7543-b661-21d63860552a\\exec-9a9cc7a8-a982-4087-8206-257b9a9ab60d.png",
+            "reused": false,
+            "prompt": "Use case: scientific-educational.\nAsset: rehabilitation step demonstration photo 139_T-AXU-018_s01, a single full body photograph, no text.\nInput images 1-3 are reference images for exact female identity, face, black ponytail, skin, plain white short sleeve T-shirt, charcoal dark grey long pants, realistic studio photography and cool grey-blue seamless background. Their arm poses are not pose targets.\nPrimary request: create the starting pose of a STANDING PALLOF PRESS. Same middle-aged East Asian woman, barefoot, standing upright feet hip width both planted, soft knees, neutral head neck, shoulders level, chest and pelvis facing straight ahead. Body is SIDE-ON to a dependable rigid wall/post anchor positioned at her LEFT SIDE at lower sternum/chest height, visible at the left edge of frame. The anchor is at the same front-to-back depth as her chest, thus truly lateral, not in front. It is a closed metal eye bolted securely into a solid vertical structural column; no wheeled object. A simple blue flat resistance band runs in a straight lightly taut continuous line from this lateral anchor to both hands holding ONE black padded grip at the midline of her sternum. Both hands clasp the grip together at chest level, elbows bent tucked gently down; the band connects to the LEFT side of the grip, with an anatomically believable hold, not passing through fingers/body. She does NOT face or rotate toward the anchor. The band must be physically connected at both ends.\nComposition: portrait frame approx 1024x1536. Fixed three-quarter front view, camera somewhat in front of her right shoulder so her forward direction and left side anchor are distinguishable. Full head, both entire hands, legs, all feet and contact shadows visible with generous margins. Woman centered slightly right, post visible left. Camera at approximately lower chest, normal 50mm perspective. White T shirt and long dark grey trousers; no added colored outfit, jewelry or gloves. Photorealistic same woman as all references with natural anatomical proportions and believable five-finger hands. Soft neutral studio light, matte grey-blue floor blending into background, subtle natural shadows.\nConstraints: single person, single starting pose. No arrows, lettering, watermark, inset, collage, border, illustration, logo. Do not show pushed-out arms; hands at sternum for s01.",
+            "references": [
+              "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+              "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+            ],
+            "review_status": "视觉核对通过",
+            "checks": [
+              "胸口朝前、身体侧对锚点",
+              "双脚完整稳定踩地",
+              "双手在胸前握同一柄，肘屈曲",
+              "带从侧方锚点连续连接到握柄",
+              "面貌服装背景相符，手脚关节比例自然"
+            ]
+          },
+          {
+            "filename": "139_T-AXU-018_s02.png",
+            "path": "E:/git冲突问题/rehab image/train/steps/139_T-AXU-018_s02.png",
+            "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a1393e-2f98-7543-b661-21d63860552a\\exec-c4fbb9ea-855a-47df-a627-120e3b653708.png",
+            "reused": false,
+            "prompt": "Use case: scientific-educational. Asset: single photographic rehabilitation step 139_T-AXU-018_s02, standing Pallof press pushed forward endpoint.\nEDIT Image 1, the accepted s01 photo. Keep exact same woman face, black ponytail, white short sleeved T shirt, dark grey long trousers, bare feet, overall human proportions, head gaze, pelvis, torso direction, feet stance and both contact points, grey-blue studio set, soft shadows, rigid column, bolted ring anchor position and height, camera view/focal perspective, framing, size, scale and light unchanged.\nChange only the arm position and consequent resistance band angle to a forward Pallof press: both hands continue clasping the SAME SINGLE black vertical padded grip with believable five-finger anatomy. Move the clasped hands and grip STRAIGHT FORWARD AWAY FROM HER STERNUM, in the direction her chest already faces (toward the right side of this frame, slightly toward viewer), at sternum height. Both elbows are now comfortably extended almost straight, arms parallel and level or slightly below shoulder, not locked or stretched up. The grip is roughly 40-50cm in front of her chest. The blue band remains taut and continuously attached at the SAME stationary frame-left chest-high bolted ring and to the left edge of the same black grip; this forms a diagonal from the lateral anchor to the forward hands. It must remain visible without passing through arms, torso or hands. Do not change or move the anchor to match the hands. Chest and pelvis do not rotate toward the anchor, she resists the sideways pull while looking straight ahead. Both feet remain planted at their exact original positions. No side bend, leaning backward or lumbar arch. Full body with intact feet and hands, no additional person, collage, border, text, numbers or arrows. This is the forward push endpoint, not a sideways pull or rowing movement.",
+            "references": [
+              "E:/git冲突问题/rehab image/train/steps/139_T-AXU-018_s01.png"
+            ],
+            "review_status": "视觉核对通过",
+            "checks": [
+              "双手在胸前朝前推出，肘近伸直",
+              "双脚位置、胸口髋部朝向和锚点保持",
+              "带从侧方连续牵引，无明显穿插",
+              "同一人物机位和光线，完整头脚和双手可见"
+            ]
+          }
+        ],
+        "sequence": "s01→s02→复用s01",
+        "limitations": "画面审核记录只确认可见姿势、比例和器材关系，无法从照片确认实际阻力或肌肉发力。"
+      },
+      "zip_entry": "records/步骤图_139_制作记录.json"
+    }
+  ],
+  "reference_images": [
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ],
+  "revision_notes": [
+    "138初稿为解剖学右侧支撑未选用，三张旧图保留；最终采用各s01/s02/s03_v2左侧支撑。",
+    "136与137各有一个图像调用长时间未返回，已终止挂起调用并在同一built-in工具重新制作；提示词与异常记录保留于各组记录。"
+  ],
+  "review_notes": [
+    "同组人物、服装、背景、光线、器材与机位一致，完整手脚和必要支点可见。",
+    "136每次单腿离地，交替前复用s01重置；137保持屈膝短杠杆；138先建立侧桥再小幅抬上侧右腿；139不随侧向牵引转胸。",
+    "139另外经独立子代理视觉复审，未发现需要返修的明确可见缺陷。"
+  ],
+  "review_limits": "仅核对可见姿势、支撑接触、步骤差异与比例，未从照片推定真实阻力、肌肉发力或精确关节角度。",
+  "preview_path": "E:/git冲突问题/rehab image/步骤图_136-139_预览.html",
+  "zip_path": "E:/git冲突问题/rehab image/步骤图_136-139_10张.zip",
+  "created_at": "2026-10-14T16:03:46.9131288+08:00",
+  "checklist_sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+  "source_library_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138"
+}

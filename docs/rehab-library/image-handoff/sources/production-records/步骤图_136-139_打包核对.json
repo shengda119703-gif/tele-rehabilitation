@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-14",
+  "zip_path": "E:\\git冲突问题\\rehab image\\步骤图_136-139_10张.zip",
+  "zip_sha256": "1CE122AD3BC88F332D45EF9A84BC3E63165E5DB040FD2A20FCCC5518DAF7F40D",
+  "zip_bytes": 15058163,
+  "selected_png_count": 10,
+  "total_entries": 17,
+  "images_identical_to_selected_files": true,
+  "results": [
+    {
+      "filename": "136_T-AXU-044_s01.png",
+      "sha256": "88829282BD7EED811300E801E4210C796EC24714C2D1B483B8A92002BB26E678",
+      "identical": true
+    },
+    {
+      "filename": "136_T-AXU-044_s02.png",
+      "sha256": "55925A82E13841E52AA5FE9C5BEBF216C85620B199BD2D4534C2F58C3972B483",
+      "identical": true
+    },
+    {
+      "filename": "136_T-AXU-044_s03.png",
+      "sha256": "1F6CA750F8D18D23E7A976C512BF4C21E016D2F47AA818B135663EB488D88987",
+      "identical": true
+    },
+    {
+      "filename": "137_T-AXU-017_s01.png",
+      "sha256": "AE0426D622015E4BE23A7AA5720C7265227A539F763A8B3F918AC0047566457D",
+      "identical": true
+    },
+    {
+      "filename": "137_T-AXU-017_s02.png",
+      "sha256": "C2037DC45E1282053C766D9337AD624F11CC04130F8B0873E750E31C845C123B",
+      "identical": true
+    },
+    {
+      "filename": "138_T-AXU-046_s01_v2.png",
+      "sha256": "84C6F2FCF2AD09959DEF63C592B1247AB14A0122EE0E4A215A89733EC56F2124",
+      "identical": true
+    },
+    {
+      "filename": "138_T-AXU-046_s02_v2.png",
+      "sha256": "458375CB93738DA04B2402E408D9C25C98B0CCCDB48812A5076585E97464049B",
+      "identical": true
+    },
+    {
+      "filename": "138_T-AXU-046_s03_v2.png",
+      "sha256": "0D7445B2793BE0E7ED375432771A3A3B1CC19D9F61AD61FFAED0859A9E9C2A38",
+      "identical": true
+    },
+    {
+      "filename": "139_T-AXU-018_s01.png",
+      "sha256": "AA55F056769F0F6402A0994C5ECF71A3B16FA344A1C05BDE94DABF886FB9DECB",
+      "identical": true
+    },
+    {
+      "filename": "139_T-AXU-018_s02.png",
+      "sha256": "3D3D5EABAE39CF6BFD7076635181FC9DF2ED23C0F43237B3FA67E08A09AB3E5C",
+      "identical": true
+    }
+  ],
+  "entries": [
+    "images/136_T-AXU-044_s01.png",
+    "images/136_T-AXU-044_s02.png",
+    "images/136_T-AXU-044_s03.png",
+    "images/137_T-AXU-017_s01.png",
+    "images/137_T-AXU-017_s02.png",
+    "images/138_T-AXU-046_s01_v2.png",
+    "images/138_T-AXU-046_s02_v2.png",
+    "images/138_T-AXU-046_s03_v2.png",
+    "images/139_T-AXU-018_s01.png",
+    "images/139_T-AXU-018_s02.png",
+    "records/136_T-AXU-044_制作记录_v1.0.md",
+    "records/137_T-AXU-017_制作记录_2026-10-14.md",
+    "records/步骤图_138_制作记录.json",
+    "records/步骤图_139_制作记录.json",
+    "制作总记录.json",
+    "图片清单.txt",
+    "预览.html"
+  ]
+}

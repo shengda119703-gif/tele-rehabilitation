@@ -1,0 +1,200 @@
+{
+  "batch": "018–020",
+  "created_date": "2026-10-14",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "mode": "built-in image_gen; one call per image or revision",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "summary": {
+    "selected_images": 6,
+    "new_selected_images": 4,
+    "reused_selected_images": 2,
+    "retained_unselected_drafts": 2,
+    "successful_imagegen_calls": 6,
+    "failed_imagegen_calls": 1
+  },
+  "source_safety": "原动作单图、源清单、共用进度及项目仓库均未修改。",
+  "entries": [
+    {
+      "number": "018",
+      "cardID": "E-LOW-023",
+      "name": "扶稳分腿蹲控制观察",
+      "step": "01",
+      "target": "一手扶固定支撑，前后脚分开站稳，两脚掌落地，双脚不交叉。",
+      "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13868-26ab-7cf3-b55f-a1c7e31336f9/exec-8e5d8421-54ce-42d3-9486-c7e1dab3f047.png",
+      "edit_target": "E:/git冲突问题/rehab image/assess/018_E-LOW-023_扶稳分腿蹲控制观察.png",
+      "full_prompt": "Use case: identity-preserve. Asset type: single rehabilitation demonstration photograph, starting frame of a 2-frame supported split squat, card E-LOW-023. Input image 1 is the EDIT TARGET: existing split-squat photograph. Input images 2-4 are identity/style references only. Make one single portrait photograph, 1122 by 1402, no text, no collage.\nChange ONLY the woman's pose from a lowered split stance to its UPRIGHT START POSITION. Preserve her exact identity, age, face, black ponytail, white short-sleeved shirt, dark charcoal trousers and plain white trainers. Keep the existing full-body oblique side camera, focal length, subject scale, blue-gray seamless background, soft studio light, floor marks, fixed metal handrail geometry and positions absolutely unchanged.\nHer forward planted shoe must stay at exactly its current floor position above the front floor marker; its entire sole and heel contact the floor. The rear toes stay at exactly the existing rear position above the rear marker, but LOWER THE REAR HEEL gently to the floor so the entire rear sole contacts the floor in the start frame. The feet remain front-and-back with no crossing, not drawn together. Raise the pelvis and torso into tall stable split-stance standing, both hips and knees comfortably nearly extended, no lunge descent, no step. One far-side hand continues to hold the rail at precisely the same rail contact position; the arm can adjust its elbow naturally. Near-side hand rests at the side. Upright neutral torso and relaxed shoulders. Both complete feet, hands, head, and all support contact points remain visible. Normal adult head-to-body ratio, continuous joints, anatomically plausible limb lengths and hands. Do not alter props, shoe styles, floor, background or facial identity. No arrows, no labels, no extra people.",
+      "revisions": [
+        {
+          "reason": "初始起始图后脚前掌比原终点前移；局部修正后脚。",
+          "prompt": "Use case: identity-preserve, precise localized edit. Input image 1 is the starting split-stance photograph to correct; input image 2 is its endpoint continuity reference. Produce one portrait photo, same 1122x1402.\nMake one small correction ONLY: reposition the REAR FOOT and its connecting lower leg slightly farther back so its front toe contact corresponds exactly to the rear toe ground contact in image 2. In image 2 the rear sneaker toe tip is approximately x373 y1204; in image 1 it wrongly moved to x437. The corrected rear sneaker toe must land at approximately x373 y1204 with its sole horizontal and entire heel flat on the floor. This should restore a slightly longer front-to-back split stance. Adjust only the rear ankle, rear knee and rear lower-leg chain as anatomically needed, keeping both legs nearly straight in the UPRIGHT START POSITION. Do not bend down into image 2's squat. Both soles on floor in this start image.\nPreserve ALL other details of input image 1, including exact face, proportions, head height, upright torso/pelvis, foreground support shoe location, handrail, exact holding hand location, free hand, camera, background, lighting, white t-shirt and dark gray pants and white sneakers. The forward shoe does NOT move. Keep fixed rail and floor markers at precisely their current coordinates. No text or arrows. The only intended change is restoring rear foot toe floor position for same-foot-position sequence.",
+          "source": "C:/Users/Administrator/.codex/generated_images/01a13868-26ab-7cf3-b55f-a1c7e31336f9/exec-5cb74705-1f38-4ef0-b9e2-5f0ff91def0c.png",
+          "result": "C:/Users/Administrator/.codex/generated_images/01a13868-26ab-7cf3-b55f-a1c7e31336f9/exec-8e5d8421-54ce-42d3-9486-c7e1dab3f047.png",
+          "draft_path": "E:/git冲突问题/rehab image/assess/steps/018_E-LOW-023_s01.png",
+          "qa": "修正图符合直立准备位；后脚位置仍与原单图有差异，因此不复用原单图终点，以修正起始图重生成s02。",
+          "failure_before_retry": "首次局部修正调用遇网络错误，原参数重试内置imagegen成功。"
+        }
+      ],
+      "visual_qa": {
+        "status": "passed",
+        "method": "最终保存文件经view_image逐张检视并与s02及三张外观参考比较。",
+        "identity_style": "同女性、黑马尾、白短袖、深灰裤、白鞋；灰蓝背景与柔光一致。",
+        "pose": "前后分腿站稳，一手扶杆，前后脚全掌支持，躯干直立，完整头手脚入镜。",
+        "proportion": "正常成人比例、腿部关节连接连续，手指自然。",
+        "continuity": "相同固定扶杆位置、前脚基准、人物头部大小和机位；以本图为s02生成基准，后脚位置为同一分腿区域，存在少量生成轮廓变化，不表现迈步。"
+      },
+      "path": "E:/git冲突问题/rehab image/assess/steps/018_E-LOW-023_s01_v2.png",
+      "sha256": "821A624991306E117967D7196E761BBD794C9698F4AEDFF80E64F3A8DD2306F3",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "selected": true
+    },
+    {
+      "number": "018",
+      "cardID": "E-LOW-023",
+      "name": "扶稳分腿蹲控制观察",
+      "step": "02",
+      "target": "固定前后脚位和扶持，屈髋屈膝下降，前脚跟留地。",
+      "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13868-26ab-7cf3-b55f-a1c7e31336f9/exec-b7a695f6-0474-4daa-8f21-92e370dff77e.png",
+      "edit_target": "E:/git冲突问题/rehab image/assess/steps/018_E-LOW-023_s01_v2.png",
+      "full_prompt": "Use case: identity-preserve. Asset type: endpoint frame of a supported split squat, E-LOW-023. Input image 1 is the EDIT TARGET and establishes the fixed camera, identity, foot positions and all prop geometry. Input image 2 is only an example of the kind of shallow split-squat descent; do not copy its different rear foot location.\nProduce one full-body portrait photograph 1122x1402. Change ONLY the woman's hip and knee posture to LOWER INTO A SHALLOW FIXED-STANCE SPLIT SQUAT. Lower her pelvis about 8-10 cm directly downward with a stable upright torso. Both knees visibly bend in the same front-to-back split stance: front knee about 40 degrees flexion, rear knee gently bent toward the floor, no kneeling. The forward planted white sneaker remains exactly where it appears in image 1, entire sole and heel on floor. CRITICAL: the rear forefoot and toes must stay at exactly image 1's rear contact point, rear toe tip around x425 y1195; do not move this rear toe left or right, and do not bring feet together. Only rear heel may lift naturally while its same forefoot stays on the ground. No stepping or foot sliding. The rear knee bends a little instead of the rear foot repositioning. Her holding hand stays at image 1's exact handrail contact point, arm adjusts elbow naturally; free near-side hand relaxed beside her thigh.\nPreserve image 1's same woman and realistic proportions, face, hairstyle, white t-shirt, charcoal pants, white trainers, exact rail geometry and screen positions, foreground planted foot, camera and crop, floor markers, blue gray background and studio lighting. Her head moves lower only as dictated by whole-body descent, same head size. Full head, both feet and both hands visible. No text, arrows, ghost limbs or extra people. Normal adult anatomy.",
+      "revisions": [
+        {
+          "reason": "不复用原018单图终点，因编辑后的起始后脚位置与原终点不完全一致；按合格起始图机位和脚位重做下降帧。",
+          "excluded_reuse_source": "E:/git冲突问题/rehab image/assess/018_E-LOW-023_扶稳分腿蹲控制观察.png"
+        }
+      ],
+      "visual_qa": {
+        "status": "passed",
+        "method": "最终保存文件经view_image检查并与s01对照。",
+        "identity_style": "女性、服装、灰蓝背景、柔光与s01一致。",
+        "pose": "原地分腿下降，双髋膝明显屈曲、前脚跟全掌留地，扶手接触正确，无并脚或迈步。",
+        "proportion": "头部大小与起始一致，躯干随下降降低，膝髋和手臂关节连续。",
+        "continuity": "杆的两立柱及脚座位置一致，前脚全掌位置相同，后前掌处同一分腿接触区域；后鞋轮廓有轻微生成变化，仍清楚表达固定足位浅蹲。"
+      },
+      "path": "E:/git冲突问题/rehab image/assess/steps/018_E-LOW-023_s02.png",
+      "sha256": "0641EEC12C413089AA04E891C3E623314EAB262B459DCF8CAB0A8104466A24DC",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "selected": true
+    },
+    {
+      "number": "019",
+      "cardID": "E-LOW-024",
+      "name": "椅前目标单腿浅蹲观察",
+      "step": "01",
+      "target": "目标椅前一手扶稳，支撑脚留地，另一脚离地，单腿站立起始。",
+      "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13868-26ab-7cf3-b55f-a1c7e31336f9/exec-db79dc70-58cb-4dab-9928-ba2a75c3fd62.png",
+      "edit_target": "E:/git冲突问题/rehab image/assess/019_E-LOW-024_椅前目标单腿浅蹲观察.png",
+      "full_prompt": "Use case: identity-preserve. Asset type: single rehabilitation demonstration photograph, starting frame of supported single-leg shallow squat in front of a target chair, E-LOW-024. Input image 1 is the EDIT TARGET: existing shallow single-leg squat endpoint. Images 2-4 lock the same woman's identity and photographic style. One portrait photograph, 1122 by 1402, no collage, arrows, text or labels.\nChange ONLY the woman's posture to an UPRIGHT SINGLE-LEG START POSITION. Preserve exact blue-gray seamless background and floor, lighting, camera angle, focal length, body scale, face and age, black ponytail, white short sleeve top, dark charcoal trousers and white trainers. Keep gray chair behind her and the fixed metal rail at precisely the same screen positions, sizes and shapes.\nThe support shoe (the planted lower shoe) stays exactly in its current floor position with sole flat on floor. Extend its hip and knee into tall standing with a gentle natural soft knee, pelvis and torso rising upright directly over that foot. Her other knee may remain lightly flexed in front, but lower the lifted knee from the current high bent position; that NON-SUPPORT SHOE must stay visibly off the floor by a small clear gap of about 5 cm. Weight is carried by one leg only. Keep one hand on the exact same rail contact point, with natural elbow flexion as torso rises. Free near-side hand relaxed by her hip. The chair remains behind the pelvis and is unused; do not sit, touch, lean on or move the chair. Preserve the planted foot, props and ground line identically for continuity with the endpoint frame. Anatomically realistic lengths, feet and hands. Head, both shoes, both hands, chair seat and pelvis entirely visible.",
+      "revisions": [],
+      "visual_qa": {
+        "status": "passed",
+        "method": "最终文件view_image检查，并与原终点比较。",
+        "identity_style": "女性、面容、服装、柔光与灰蓝背景一致。",
+        "pose": "支撑腿较伸展、躯干直立，另一脚保持明显离地，扶杆正确，椅在身后未使用。",
+        "proportion": "头身比例正常，完整鞋、手、头入镜，无异常手脚或腿长。",
+        "continuity": "支撑鞋、椅面、椅腿、扶手杆位置及握点固定；两帧头部大小接近，机位一致。"
+      },
+      "path": "E:/git冲突问题/rehab image/assess/steps/019_E-LOW-024_s01.png",
+      "sha256": "2A503E1BA36B9CB7C3E077DB03DC36F4BF38904072271A4811CC022868EF26AE",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "selected": true
+    },
+    {
+      "number": "019",
+      "cardID": "E-LOW-024",
+      "name": "椅前目标单腿浅蹲观察",
+      "step": "02",
+      "target": "扶持和支撑脚位置保持，支撑腿屈髋屈膝浅蹲；另一脚离地，臀不坐椅。",
+      "reuse_source": "E:/git冲突问题/rehab image/assess/019_E-LOW-024_椅前目标单腿浅蹲观察.png",
+      "full_prompt": null,
+      "revisions": [],
+      "visual_qa": {
+        "status": "passed",
+        "method": "原单图与复制后最终文件均经view_image实际检查，未仅凭存在复用。",
+        "identity_style": "与三张参考同一女性、服装和摄影背景风格。",
+        "pose": "支撑腿屈髋屈膝浅蹲、非支撑鞋全程离地；臀高于并位于椅座前方，未坐到椅面。",
+        "proportion": "完整头、双手双足、椅面骨盆可见，比例正常。",
+        "continuity": "与s01椅、扶杆、支撑足位置和握点一致，无换器械或双脚承重。"
+      },
+      "path": "E:/git冲突问题/rehab image/assess/steps/019_E-LOW-024_s02.png",
+      "sha256": "C3500A13875B908B20E9CDCE2E123B316968C3ED25CA35A463EEC6B25BA23DC3",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "selected": true
+    },
+    {
+      "number": "020",
+      "cardID": "E-LOW-025",
+      "name": "单腿髋铰链够取与回正观察",
+      "step": "01",
+      "target": "一手扶固定支撑，支撑膝自然微屈，另一脚轻离地，够取目标可触及。",
+      "generation_source": "C:/Users/Administrator/.codex/generated_images/01a13868-26ab-7cf3-b55f-a1c7e31336f9/exec-e932f1b1-db4d-4de0-b8b6-15bdd55a36a7.png",
+      "edit_target": "E:/git冲突问题/rehab image/assess/020_E-LOW-025_单腿髋铰链够取与回正观察.png",
+      "full_prompt": "Use case: identity-preserve. Asset type: single rehabilitation demonstration photograph, starting frame of a supported single-leg hip-hinge reaching task, E-LOW-025. Input image 1 is the EDIT TARGET: existing hip-hinge endpoint photograph. Images 2-4 are only identity/style references. Produce one portrait photograph 1122 by 1402. No collage, text, arrows or labels.\nChange ONLY the woman's pose to the UPRIGHT SINGLE-LEG START POSITION before hinging. Preserve the identical middle-aged East Asian woman, facial identity and age, black ponytail, white short sleeved shirt, charcoal trousers and white sneakers, soft studio photography and blue-gray seamless floor/background. Keep camera, focal length, body scale, ground line and ALL props fixed: the handrail remains exactly where it is, the reachable gray target table remains exactly where it is with exactly its same height and shape.\nHer supporting shoe stays precisely at its existing screen and floor coordinates, the whole sole planted and knee naturally slightly bent. Raise pelvis and neutral straight torso upright, balanced over this support foot. Bring the rear extended leg back toward her body: knee relaxed, the non-support foot hovering 4 to 5 cm clear of the floor behind/adjacent to the support leg. It remains non-weight-bearing. Her far-side support hand MUST continue resting/gripping exactly the existing contact point on the handrail; elbow flexes naturally. Her near-side free reaching hand is now relaxed at her side, well away from the table. The SAME gray table target remains visibly in front at reachable height. The movement is a return from the displayed hip hinge, not stepping to a new place. Keep head, both hands, both feet, rail and target table in the frame and anatomically realistic. Natural continuous shoulders, hips, knees and wrists. Do not move or change the support foot or rail/table.",
+      "revisions": [
+        {
+          "reason": "初始起始图扶持手在杆上后移，修正回原终点在立柱右侧的握点。",
+          "prompt": "Use case: identity-preserve precise-object-edit. Input image 1 is the edit target. Input image 2 is the endpoint frame for matching the handrail grip. One portrait photo same dimensions and all scene details.\nONLY correct the FAR-SIDE SUPPORT ARM AND HAND so it contacts exactly the same handrail point as in image 2: MOVE THE HOLDING HAND ALONG THE EXISTING RAIL 6 CM TO THE RIGHT in the photo, so its fingertips are near x876 at y598 and palm near x823 at y609. In image 1 the hand incorrectly rests directly above the vertical post; it must instead rest on the horizontal rail TO THE RIGHT OF THE POST, separated from the post by about one palm width, matching image 2. Reach the support arm naturally a little farther forward while keeping the shoulder location and upright torso fixed. Fingers and palm must visibly contact the rail with an anatomically normal wrist. There are exactly two hands, this is only relocation of the existing support hand.\nPreserve the entire remainder of input image 1 unchanged: exact same woman, face, body proportions, upright single-leg pose, planted foot at same floor coordinates, raised non-support foot, near-side relaxed free arm/hand, camera, light, blue gray background, clothing, sneakers, handrail geometry and target table location/height. No text, diagrams, arrows or other objects. Do not move the handrail. Do not alter the support foot.",
+          "source": "C:/Users/Administrator/.codex/generated_images/01a13868-26ab-7cf3-b55f-a1c7e31336f9/exec-1384f63a-7230-49d7-a551-5fe47e488d2e.png",
+          "result": "C:/Users/Administrator/.codex/generated_images/01a13868-26ab-7cf3-b55f-a1c7e31336f9/exec-e932f1b1-db4d-4de0-b8b6-15bdd55a36a7.png",
+          "draft_path": "E:/git冲突问题/rehab image/assess/steps/020_E-LOW-025_s01.png",
+          "qa": "握点已移回立柱右侧，与s02匹配。"
+        }
+      ],
+      "visual_qa": {
+        "status": "passed",
+        "method": "最终保存文件view_image实际审查，与s02和三张人物参考对照。",
+        "identity_style": "同女性、黑马尾、白上衣深灰裤、白鞋及灰蓝柔光背景。",
+        "pose": "单脚稳立、支撑膝自然软膝，另一脚小幅悬空在身体后方；一手扶杆，另一手放体侧，目标台可见。",
+        "proportion": "完整头手脚，成人头身和四肢比例自然，扶手腕指连接正常。",
+        "continuity": "支撑脚、扶杆立柱、杆高、目标台高度和位置固定；握点已修至s02同一段杆，头部大小一致。"
+      },
+      "path": "E:/git冲突问题/rehab image/assess/steps/020_E-LOW-025_s01_v2.png",
+      "sha256": "000923D14D0E6A1201561D4876A553A774E16CA1640655460431CD455D76F518",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "selected": true
+    },
+    {
+      "number": "020",
+      "cardID": "E-LOW-025",
+      "name": "单腿髋铰链够取与回正观察",
+      "step": "02",
+      "target": "髋部俯身，非支撑腿向后伸，另一手轻触目标，支撑膝微屈。",
+      "reuse_source": "E:/git冲突问题/rehab image/assess/020_E-LOW-025_单腿髋铰链够取与回正观察.png",
+      "full_prompt": null,
+      "revisions": [],
+      "visual_qa": {
+        "status": "passed",
+        "method": "原图和复制后保存图均经view_image实际检查并与s01对照。",
+        "identity_style": "同参考女性、白短袖深灰裤、马尾、柔光灰蓝背景。",
+        "pose": "髋铰链前倾、躯干保持连续，非支撑腿后伸离地；支撑膝自然屈，一手扶杆另一手指轻触目标台面。",
+        "proportion": "正常关节连续与四肢长度，全头手脚、扶杆和目标台同框。",
+        "continuity": "支撑鞋和器材位置与s01保持，手扶在同一横杆段，目标台无移动。"
+      },
+      "path": "E:/git冲突问题/rehab image/assess/steps/020_E-LOW-025_s02.png",
+      "sha256": "F88275080F33FB3DD1B480B307289EF9AB6EEBF85C62E2E1ABEB9A05FD016B45",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "selected": true
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "created_date": "2026-10-14",
+  "scope": "120-s01～s02；123-s01",
+  "tool": "内置 image_gen",
+  "refs": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "reuse": false,
+  "files": [
+    {
+      "filename": "120_T-LOW-042_s01.png",
+      "number": "120-s01",
+      "pose": "自然交替迈步",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393c-e00e-7da1-9960-a0c93a23873a/exec-1b122d5a-4052-46ea-bf0c-d5bd5a3c5f08.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation exercise step photograph, 120_T-LOW-042_s01, portrait 4:5.\nPrimary request: create the WALKING phase of a two-frame comfortable short-route walking exercise.\nInput images: the three supplied files are identity, wardrobe, studio photography and backdrop references only. Match the exact same adult East Asian woman, natural proportions, black ponytail, plain white short-sleeve T-shirt and dark charcoal long trousers. The raised-arm poses of the references are not the requested pose.\nScene/backdrop: clean grey-blue seamless studio wall and flat non-slip grey-blue floor, soft broad studio lighting and realistic contact shadows. This represents a plain familiar short flat route without extra scenery or equipment. No walking aid is selected for this whole two-frame set.\nSubject/action: she faces image-right and walks naturally at a comfortable pace, left leg taking a modest step forwards, left heel touching the floor and rear right foot in late stance with its forefoot still contacting the floor, natural small opposite arm swing, upright relaxed trunk and level gaze. Normal modest stride length; not lunging, running or marching. Both hands relaxed with natural fingers. Wear simple unbranded light-grey flat comfortable walking shoes.\nComposition/framing: full head-to-shoes view from the woman's left side with a very small frontal angle, about a 15-degree oblique side view, camera at hip height, natural 70mm lens appearance. Entire body, hands, all shoes and floor contacts visible, generous floor margin and some free background. Single woman in a single pose, centered; portrait 4:5, keep this camera height, floor baseline, scale, wardrobe and shoe model for the subsequent stopped frame.\nConstraints: realistic head, torso, thigh and calf lengths, continuous joints, shoes not fused, both hands intact. No chair, no walking aid, no measurement device, no weights, no platform.\nText: none. Avoid any lettering, labels, numbers, arrows, watermark, collage, multiple panels, ghost limbs or motion trails.",
+      "qa": [
+        "自然适中步幅，躯干直立",
+        "前脚跟着地、后足处于支撑期，行走阶段可辨",
+        "头、双手、鞋和支撑点完整",
+        "同一女性白短袖深灰裤，灰蓝柔光",
+        "无文字箭头或无关器材"
+      ],
+      "final_path": "E:/git冲突问题/rehab image/train/steps/120_T-LOW-042_s01.png",
+      "visual_review": "通过画面要求核对；AI生成静态示意，不据此证明动态控制或训练启用资格"
+    },
+    {
+      "filename": "120_T-LOW-042_s02.png",
+      "number": "120-s02",
+      "pose": "双足停稳休息",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393c-e00e-7da1-9960-a0c93a23873a/exec-0ee2c591-4a28-4ab5-945a-3795576dd76d.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation step photo, 120_T-LOW-042_s02, portrait 4:5.\nPrimary request: make the STOPPED REST phase of the walking exercise by editing image 1. Image 1 is the accepted walking frame. Images 2–4 are the original identity and visual-style references.\nChange only the walking pose to a comfortable fully stopped upright standing posture: both feet are parallel about hip-width apart at the same forward/back position, BOTH COMPLETE SOLES flat and stable on the ground; no foot raised, no heel lifted, no stride. Arms rest naturally down beside the body, hands relaxed. She has stopped at the planned point to rest, her relaxed face and level gaze still face image-right.\nInvariants: exactly the same East Asian woman and recognizable face, black ponytail, white short-sleeve T-shirt, charcoal long trousers, light-grey comfortable walking shoes from image 1. Keep the same left-side slight frontal oblique camera angle, camera height and lens, portrait framing, approximate hip and torso position, head height, grey-blue seamless backdrop and floor, soft light and shadows. Natural body proportions with complete head, hands and shoes visible, matching her size in image 1; no zoom change.\nScene: empty flat familiar route represented by studio floor, no walking aid selected for this pair. No chair, measurement apparatus, weights, platform or other props.\nOne woman and one unambiguous stopped posture only. No lettering, numbers, arrows, collage, motion trails or watermark.",
+      "qa": [
+        "两足完整落地、脚位并列，无继续迈步",
+        "手臂自然下垂、站稳休息",
+        "与s01人物身份、服装、鞋、机位、背景和尺度一致",
+        "头手足均完整，人体比例自然"
+      ],
+      "final_path": "E:/git冲突问题/rehab image/train/steps/120_T-LOW-042_s02.png",
+      "visual_review": "通过画面要求核对；AI生成静态示意，不据此证明动态控制或训练启用资格"
+    },
+    {
+      "filename": "123_T-AXU-001_s01.png",
+      "number": "123-s01",
+      "pose": "椅前自然坐直，双手大腿",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393c-e00e-7da1-9960-a0c93a23873a/exec-5d120d68-923a-41c6-ad8d-e587c25cc02b.png",
+      "prompt": "Use case: scientific-educational. Asset type: corrected 123_T-AXU-001_s01 preparation photograph.\nEdit image 1 with one targeted change: seat this woman clearly on the FRONT PART of the chair seat. Keep her exact upright body posture, face, hair, clothes, hands touching thighs, knee angles, both flat planted shoes, camera and frame unchanged. Shift the entire chair slightly backwards toward image-left relative to the unchanged woman, about 10 cm in real space, so there is a visibly clear gap of approximately 10–15 cm between her lower back/buttocks and the backrest. The back part of the seat behind her should be visibly empty. Keep enough front seat area directly underneath both buttocks and upper thighs for secure comfortable support; she must not be balancing on an edge. Her legs and hands should not move.\nKeep the same stable matte-grey armless four-leg chair, all four legs grounded with appropriate contact shadows, and continuous seat geometry. Retain the exact grey-blue backdrop and floor, soft light, single-pose full-body portrait, natural anatomy. No other changes, no text, numbers, arrows, watermark or extra props.",
+      "initial_prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation step photograph, 123_T-AXU-001_s01, portrait 4:5.\nPrimary request: show ONLY the natural upright seated PREPARATION position for supported small trunk forward flexion.\nInput images: the three references identify the exact same East Asian adult woman and her black ponytail, white short-sleeve T-shirt, charcoal trousers, photography, grey-blue background and soft lighting. Reference raised arms are not the requested action.\nScene/backdrop: clean seamless grey-blue studio backdrop and flat grey-blue floor, soft diffused studio light with realistic contact shadows.\nSubject and posture: the same woman sits securely on the FRONT PART of the flat seat of a sturdy plain matte-grey armless four-leg chair with a modest backrest. Sufficient buttock/thigh contact with the seat, do not perch on a tiny edge. She faces image-right. Trunk naturally upright above pelvis, relaxed shoulders, neutral head and level gaze. Both knees are comfortably bent around 90 degrees, lower legs nearly vertical. BOTH feet are fully planted on the floor at hip width, wearing plain unbranded light-grey flat comfortable shoes. Both hands gently rest with relaxed fingers on the upper/mid thighs, one on each thigh; elbows naturally bent, hands actually touch trousers. No leaning or forward flexion yet.\nComposition: clear true left-side view with a tiny frontal angle to make both knees, hands and feet visible, full body from top of ponytail to complete shoes, entire chair and four stable ground-contact legs visible. Shoulders, hips, knees and chair-seat contact must be unobstructed. Natural 70mm lens, no perspective distortion, portrait 4:5 with usable blank background around subject.\nConstraints: one single pose of one woman, realistic face and natural head/torso/limb proportions, anatomically continuous arms and legs, natural hands/fingers, no floating feet or buttocks. Stable seated support, no armrests, no table, no cushion, no exercise device, no weights. No text, labels, numbers, arrows, logo, watermark, collage, multiple frames or motion trail.",
+      "rejected_draft": "C:/Users/Administrator/.codex/generated_images/01a1393c-e00e-7da1-9960-a0c93a23873a/exec-5a677168-1087-4c27-82be-b19a76e79a68.png",
+      "revision_reason": "首稿坐位距椅背过近，定向调整椅子后移，保留人物坐直、膝位、手与足位置。",
+      "qa": [
+        "臀部坐在椅面前部，椅背后方间隙明确",
+        "臀与上大腿有足够椅面支撑、椅腿接地",
+        "上身自然坐直，双手轻放大腿，两足完整踩地",
+        "肩髋膝完整可见，未做用户未请求s02"
+      ],
+      "final_path": "E:/git冲突问题/rehab image/train/steps/123_T-AXU-001_s01.png",
+      "visual_review": "通过画面要求核对；AI生成静态示意，不据此证明动态控制或训练启用资格"
+    }
+  ]
+}

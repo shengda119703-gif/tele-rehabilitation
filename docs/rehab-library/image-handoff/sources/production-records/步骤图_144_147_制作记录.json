@@ -1,0 +1,74 @@
+{
+  "record_version": "1.0",
+  "batch": "actions-144-and-147",
+  "created_date": "2026-10-14",
+  "user_source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "generator": "built-in image_gen.imagegen",
+  "final_output_count": 3,
+  "source_assets_preserved": true,
+  "formal_repository_modified": false,
+  "qa_scope": "逐张实际画面视觉核对；不代表呼吸生理或临床验收。",
+  "images": [
+    {
+      "sequence": 144,
+      "action_id": "T-AXU-047",
+      "step": "01",
+      "prompt": "Use case: scientific-educational.\nAsset type: single photorealistic rehabilitation step photograph, action 144 T-AXU-047 s01.\nInput images 1–3 are the SAME woman's identity and photographic-style references; use the exact adult East Asian woman, same face, skin, age, natural build and black ponytail, plain white short-sleeve T-shirt and dark charcoal long trousers.\nMake one landscape-format studio photograph with soft lighting, gray-blue seamless backdrop and natural contact shadows. A thin muted gray-blue exercise mat rests flat on the floor.\nPose: she lies SUPINE on her BACK, head at image left, feet at image right, both knees bent comfortably with BOTH bare feet flat on the mat, feet hip-width, no weights or equipment. Head and neck comfortably supported by a small low light-gray pillow, shoulders, upper back and pelvis relaxed against the mat. One hand rests LIGHTLY on her upper chest; the other hand rests LIGHTLY on her abdomen. Hands do not press. Jaw and shoulders relaxed, quiet neutral expression, abdomen looks natural.\nCamera: slightly elevated lateral full-body view from the woman's right side, only modest frontal obliquity sufficient to see both palms and both knees and feet. Entire head, both hands, both knees and complete bare feet visible, enough floor margin. Natural anatomical proportions and clearly correct mat contact. Subject fully in frame.\nConstraints: exactly one pose and one woman, realistic fingers, relaxed breathing placement only, no forced belly expansion or sucking in, no sit-up or bridge, no text, numbers, arrows, diagram, collage, border, watermark or other person. Reference shoulder poses do not apply.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a1393e-aa59-7042-aad9-eee91931a67e/exec-75b5effe-4e05-4047-ad63-93ec9660e79d.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/144_T-AXU-047_s01.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_observation": "仰卧屈双膝，双足踩垫；低枕支持头颈，头肩背与骨盆自然落垫；一手轻放胸前，一手腹部，面部下颌放松，未画夸张吸腹或鼓腹；头、手、膝、完整脚均可见，同参考人物衣着与灰蓝棚拍。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "910290F45E850E2C0995523461D4BB1DC1F1544D892A8DB33EC18B6BA7197974",
+      "bytes": 1803802
+    },
+    {
+      "sequence": 147,
+      "action_id": "T-AXU-009",
+      "step": "01",
+      "prompt": "Use case: scientific-educational.\nAsset type: single photorealistic rehabilitation step photograph, action 147 T-AXU-009 s01 neutral sitting.\nInput images 1–3 are the same woman's identity and photography-style references. Match the same adult East Asian woman, face, age, skin, proportions, black ponytail, white plain short-sleeve T-shirt and dark charcoal trousers.\nScene: soft studio photography on a gray-blue background and matching matte floor. She is sitting stably on a plain sturdy gray chair, facing image RIGHT in true side profile. Her torso is upright naturally, shoulders lowered and relaxed, both hands rest naturally on her thighs. Neutral cervical posture and level forward gaze, jaw relaxed, natural neck length, without chin jutting or exaggerated chin tuck.\nComposition: landscape head-and-shoulder/upper torso close-up including complete head and ponytail, BOTH shoulders and upper torso down to the lap and hands, with a visible piece of the gray chair seat/back to establish seated posture. Camera at shoulder height, exact right-facing side profile, eye-level relaxed neutral gaze. Keep enough empty gray-blue space in front of her face to show later neck flexion.\nOne clear pose, realistic anatomy, no text, numbers, arrows, panels, borders, collage, watermark, added equipment or other people. Do not mimic the arm raised in reference; arms remain relaxed on thighs.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a1393e-aa59-7042-aad9-eee91931a67e/exec-2cf999eb-95bf-413a-a036-ae6fe4924fcf.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/147_T-AXU-009_s01.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_observation": "侧面椅坐，头平视中立，颈长比例自然，肩自然放松，双手大腿上，完整头、马尾、双肩与椅支持可见。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "439B5370E0B07177746FEB22E31F59356CB1E2C2E323CDB31749E4413B8B95BB",
+      "bytes": 1715068
+    },
+    {
+      "sequence": 147,
+      "action_id": "T-AXU-009",
+      "step": "02",
+      "prompt": "Use case: identity-preserve.\nAsset type: one single rehabilitation step photograph, 147 T-AXU-009 s02 comfortable ACTIVE cervical flexion.\nInput image 1 is the EXACT scene and identity edit target. Input images 2–4 are identity and photographic-style references only.\nChange ONLY the HEAD and cervical posture: in the same right-facing seated profile, she slowly flexes her NECK FORWARD and lowers her head about 30–35 degrees so her chin moves toward her upper chest, eyes gaze diagonally down. It is a comfortable small endpoint, with a clearly visible gap between chin and chest; chin must NOT press onto chest. Head stays the same natural size and facial identity; ponytail follows naturally.\nKeep ALL other elements unchanged: camera position, landscape canvas and crop, woman scale, white shirt, charcoal trousers, chair, gray-blue background, soft lighting, relaxed level shoulders, upright thoracic torso, pelvis, both hands resting on the same thigh spots. Torso does not round or bend forward. No hand assists or presses on head. Exactly one clear pose.\nPreserve normal continuous neck anatomy, complete head/hair/shoulders in frame. No text, numbers, arrows, borders, collage, ghost poses or watermark.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/147_T-AXU-009_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a1393e-aa59-7042-aad9-eee91931a67e/exec-b49bfbf2-3074-4c74-bc68-f35c81c5ab33.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/147_T-AXU-009_s02.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_observation": "同机位、椅子、躯干与双手位置；仅颈头向前低，下巴向胸前移动但留间隙，未弯整个上身、未手施压；头肩完整，颈部连接自然。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "0FCA7D195E287EA17D5A6C6CBBEBC71111D713B08EB6314BEE79EBED84E101D8",
+      "bytes": 1684524
+    }
+  ]
+}

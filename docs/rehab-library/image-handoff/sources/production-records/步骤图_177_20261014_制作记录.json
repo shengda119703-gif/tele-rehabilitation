@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-14",
+  "action_number": "177",
+  "action_id": "T-AXU-036",
+  "action_name": "前臂支撑的负重腕掌屈",
+  "instruction_source": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "mode": "built-in image_gen",
+  "reference_paths": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "sequence": "s01→s02→复用s01缓慢放回",
+  "images": [
+    {
+      "step": "s01",
+      "planned_filename": "177_T-AXU-036_s01.png",
+      "target_pose": "右前臂支桌，掌心向上握轻小哑铃，接近中立的低起点，负荷握于掌中。",
+      "reused": false,
+      "reuse_source": null,
+      "input_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "prompt": "Use case: scientific-educational.\nAsset type: one photoreal rehabilitation exercise demonstration photo, exercise 177 T-AXU-036, first pose only. No typography.\nInput images: all three supplied images are identity, wardrobe, gray-blue background, skin texture, lighting and photographic style references; their raised-arm poses are NOT the requested pose.\nPrimary request: Create a clear SIDE VIEW close-up of a seated woman demonstrating the LOW STARTING POSITION of a supported RIGHT WRIST CURL, PALM UP. Same East Asian adult woman with black ponytail, plain white short-sleeved T-shirt and dark gray trousers as the reference. She is seated facing image right beside a simple stable matte light-gray table. Her right elbow is flexed about 90 degrees, her complete right forearm rests HORIZONTALLY along the table, and her right wrist and hand project just beyond the right table edge. The UNDERSIDE/back of the SUPINATED forearm rests on the tabletop, with the front/inner forearm facing upward and her RIGHT PALM visibly facing upward. Her right hand securely grasps a small light dumbbell with neutral gray hexagonal ends and short metal handle, held across the middle of her palm with fingers fully wrapped and thumb opposed. The dumbbell cannot roll into the fingertips. Starting wrist is slightly extended, about 15–20 degrees below forearm level, with the closed palm-up hand and dumbbell just a little lower than the horizontal forearm. The right elbow and the entire right forearm remain supported; only hand and wrist hang beyond edge. Left hand is relaxed in her lap away from the working wrist.\nComposition/framing: horizontal close-up from the woman's right side at table height, slightly above so upward-facing palm and finger grip are readable. Include her white sleeve, upper arm, complete right elbow, full forearm, right wrist, entire right hand and both dumbbell ends, plus visible table support and edge. Include some torso/dark-gray lap on the left for body context; focus on right wrist and support. The frame must show an unbroken natural elbow–forearm–wrist–hand chain, normal forearm length, proportionate right hand with five anatomically correct fingers. The whole exercise area must have generous crop margins. Stable gray-blue seamless studio background, soft reference-matched light, natural shadows and realistic texture.\nConstraints: one woman, one small dumbbell, single pose, single photograph; no composite, inset, arrows, numbers, labels, logos or watermark. Palm UP wrist curl, never palm-down wrist extension. No forearm hovering, no elbow lifted, no assistance by other hand.",
+      "original_output": "C:/Users/Administrator/.codex/generated_images/01a13a85-034f-7dd2-9bd9-48ed365ab4e5/exec-59035b5d-ce3f-4882-8d83-ac8a592d2bc2.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/177_T-AXU-036_s01.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "qa": {
+        "method": "逐张view_image并与参考图及同组对照",
+        "result": "通过",
+        "identity_wardrobe_background": "同一参考女性、黑色马尾、白T恤与深灰裤，灰蓝背景和柔和棚光一致。",
+        "pose": "掌心向上，右腕接近中立低起点，适合作为掌屈起点。",
+        "support_equipment": "右肘与右前臂连续接触桌面，右腕位于桌边、手与哑铃在桌外；灰色小哑铃握于掌中，未滚至指尖；左手在腿上。",
+        "anatomy_crop": "完整右肘、前臂、腕、手和哑铃可见，关节连接连续、握持清晰。",
+        "text_check": "无文字、编号、箭头、拼图。"
+      }
+    },
+    {
+      "step": "s02",
+      "planned_filename": "177_T-AXU-036_s02.png",
+      "target_pose": "前臂继续接桌，右腕向掌侧弯起，手掌与同一哑铃一起移动。",
+      "reused": false,
+      "reuse_source": null,
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a85-034f-7dd2-9bd9-48ed365ab4e5/exec-59035b5d-ce3f-4882-8d83-ac8a592d2bc2.png"
+      ],
+      "prompt": "Use case: precise-object-edit.\nAsset type: second pose in one photographic rehabilitation exercise pair, supported RIGHT wrist PALMAR FLEXION (palm-up wrist curl).\nInput image: the supplied photograph is the first pose and edit target.\nPerform one LOCAL edit ONLY beyond the wrist crease. In the 1536×1024 input, the right wrist crease is approximately at x1085, y635. Keep this hinge point in place, and preserve the entire forearm LEFT of x1080, both its top and bottom contours and contact shadow, exactly unchanged. Keep the right elbow in place. Do not shorten the forearm.\nBend the right hand and the same securely grasped small gray hexagonal dumbbell UPWARD about 40 degrees, rotating around the actual WRIST HINGE at x1085,y635. The new fist and dumbbell should be roughly at x1165,y575, not pulled back toward the elbow. The palm stays SUPINATED, facing upward and now slightly toward her inner forearm. The right hand curls toward the palm side; only wrist angle changes. Maintain the identical full-finger, thumb-opposed palm grip. Both dumbbell ends remain visible and anatomically sensible. The hand must remain outside the table edge, wrist directly above the right edge rather than inland over the table.\nSTRICTLY LOCK: same image composition, woman face, ponytail, white T-shirt, dark-gray trousers, left hand on lap, right upper arm and elbow angle, right elbow and full forearm support, the complete right forearm length and position, table and right table edge, chair, background, lighting, crop and camera. Edit just right wrist articulation, right hand, dumbbell, and the tiny immediate background exposed by their movement. Preserve the natural forearm taper, continuous joint connection and realistic five-finger hand anatomy.\nSingle photograph and one pose. No text, arrows, numbers, logos, watermark, inset or collage. Never turn palm down, never lift forearm or elbow, never flex elbow, never shift the wrist hinge left.",
+      "original_output": "C:/Users/Administrator/.codex/generated_images/01a13a85-034f-7dd2-9bd9-48ed365ab4e5/exec-99dc658d-9fcc-45ea-a173-a477251b992a.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/177_T-AXU-036_s02.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "qa": {
+        "method": "逐张view_image并与s01并列对照；重试后选择最终图",
+        "result": "通过",
+        "identity_wardrobe_background": "人物、服装、灰蓝背景、桌椅、光线与构图一致。",
+        "pose": "保持旋后握持，右腕向掌侧上弯，手与哑铃明显高于s01，方向为掌心向上腕掌屈。",
+        "support_equipment": "右肘位置与桌面支撑保持，前臂主体继续贴桌；未画成抬整条前臂或甩肘；同一灰色哑铃仍为掌中闭合握持。",
+        "anatomy_crop": "右肘至右手连续，完整握持及两端哑铃可见；最终版腕部转折较首次尝试更接近原起点，保留自然手腕连接。",
+        "text_check": "无文字、编号、箭头、拼图。",
+        "pair_consistency": "保持同机位、桌边、肘支持与人物尺度；变化集中于右腕、手及哑铃。"
+      }
+    }
+  ],
+  "discarded_attempts": [
+    {
+      "step": "s02",
+      "input_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a85-034f-7dd2-9bd9-48ed365ab4e5/exec-59035b5d-ce3f-4882-8d83-ac8a592d2bc2.png"
+      ],
+      "prompt": "Use case: precise-object-edit.\nAsset type: second photograph of the SAME rehabilitation demonstration pair, exercise 177 T-AXU-036 supported palm-up right wrist curl.\nInput image: the supplied photograph is the edit target, lock its subject, composition, camera and all objects.\nPrimary request: Change ONLY the RIGHT WRIST and its tightly gripping RIGHT HAND with the same small gray hexagonal dumbbell, to show the endpoint of a PALM-UP WRIST CURL. Keep her right elbow and entire right forearm resting in exactly the same horizontal position on the table. Keeping the forearm completely still and SUPINATED, bend ONLY the right wrist UPWARD toward the PALMAR side by about 40–45 degrees. The right palm is still up, but now curls up toward her inner forearm; the knuckles and small dumbbell rise clearly above forearm level around the wrist joint. Keep her fingers and thumb securely encircling the same handle in the middle of the palm throughout. The small dumbbell moves and rotates with her hand, preserving both gray hexagonal weights and its shape. The result must visibly differ from the low/neutral start by an upward WRIST ONLY curl.\nInvariants: retain absolutely the same woman, facial identity, ponytail, white T-shirt, gray trousers, left hand on lap, seated body position, right shoulder, upper arm, right elbow angle, full right forearm on table, table geometry and support locations, chair, photographic crop, perspective, gray-blue seamless background, shadows, lighting, camera distance and position. The forearm must stay horizontal with its full underside supported on the tabletop and the wrist projecting beyond the edge, with no lifted elbow and no forearm lift. Preserve natural hand anatomy, five fingers, realistic thumb and closed secure grip.\nConstraints: one woman, one small dumbbell, one pose, single photograph. No arrows, text, labels, numbers, logo, watermark, panels or inset. Do not turn the palm down. This is palmar wrist flexion from supination, not palm-down wrist extension. Do not raise the entire forearm or change the elbow.",
+      "original_output": "C:/Users/Administrator/.codex/generated_images/01a13a85-034f-7dd2-9bd9-48ed365ab4e5/exec-540ca119-8ff6-42b5-b9cd-1639bc432442.png",
+      "selected": false,
+      "qa": "腕部转折点相对s01向近端偏移，需更严格锁定腕关节与前臂长度；已重试并保留此原始输出。"
+    }
+  ],
+  "changes_scope": "仅复制177两张新图并新增本独立记录；未覆盖已有图、未修改既有进度JSON、仓库、快捷方式或其他记录。"
+}

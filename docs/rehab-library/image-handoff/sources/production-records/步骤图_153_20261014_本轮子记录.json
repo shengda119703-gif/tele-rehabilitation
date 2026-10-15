@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "created_date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "action_number": 153,
+  "action_id": "T-AXU-022",
+  "action_name": "肩桌面滑手到墙面滑手",
+  "selected_version": "桌面滑手基础版（坐位、右臂）",
+  "tool": "built-in image_gen.imagegen",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_card_text": "E:/game/health-care-software-main/docs/rehab-library/SOURCE_v1.0.md",
+  "existing_card_image": "E:/git冲突问题/rehab image/train/153_T-AXU-022_肩桌面滑手到墙面滑手.png",
+  "identity_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "reference_inspection": "已使用 view_image 检查三个固定人物参考及153原卡。原卡只用于核对既有照片风格；生成提示词使用固定人物参考，独立制作新步骤帧。",
+  "steps": [
+    {
+      "step": "s01",
+      "target_pose": "坐稳、双脚踩地，右前臂和手自然置于桌面毛巾上，肩处于自然低位。",
+      "prompt": "Use case: scientific-educational. Create ONE single photorealistic rehabilitation exercise demonstration photograph for action T-AXU-022 tabletop towel slide, STARTING POSITION step s01. Reference images 1–3 are identity, clothing, anatomy, lighting and backdrop references only: preserve the SAME East Asian adult woman, black ponytail, plain white short-sleeve T-shirt and dark charcoal slim exercise trousers. Do not copy their standing poses. Scene: quiet light grey-blue seamless studio floor and background, soft even photographic light, white athletic shoes. Stable normal-size grey armless chair with backrest, stable normal-size matte grey rectangular table in front of her; table top height should naturally support her right elbow and forearm while her right shoulder is relaxed down. Camera: fixed near-side view of her RIGHT side, woman facing image right, slightly front oblique so both shoes and the tabletop contact are clearly visible; whole person seated, entire head, hips, chair, both feet and enough table within the portrait 4:5 frame, consistent realistic anatomical proportions. Exact starting posture: she is sitting upright and stable on the chair, both soles flat on the studio floor, hips supported, shoulders relaxed. Her right upper arm rests naturally close to her torso and her right elbow is bent approximately 90 degrees; her right forearm points forward along the tabletop. A folded light grey towel is beneath the ENTIRE right forearm from just below elbow through wrist and beneath her palm and fingers, and both the forearm and the palm visibly rest on the towel on the table, with actual contact and no gaps. Place forearm and hand comfortably near the near edge of the table so this is clearly a short-distance starting position with plenty of clear tabletop beyond the hand. Right palm faces down, natural open fingers. Left hand rests on her left thigh, visible as her own hand. Calm neutral attentive expression. The table does not cut through her body. Show clear right shoulder, elbow, wrist, hips and tabletop. One person, one frozen starting posture only. No labels, text, numerals, arrows, inset, collage, duplicate limbs, motion trails, diagrams, watermark or decorative objects. Forearm and hand MUST both be supported, NOT held in the air; never depict wall slides, overhead reaching or arm lifting. High fidelity clinical teaching photograph.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-0af0-76e1-b062-e2a637a1dad8/exec-f549f6fa-2364-4316-8a3d-9f08a9cb5a87.png",
+      "save_path": "E:\\git冲突问题\\rehab image\\train\\steps\\153_T-AXU-022_s01.png",
+      "sha256": "7F12F5D92A281D6D48226B4EBF14A36DCC66FA826AE1E9C8CBA779EAE2B68423",
+      "bytes": 1856970,
+      "visual_review": {
+        "status": "通过",
+        "method": "view_image 目视核对生成原图",
+        "identity_clothing_background": "与参考一致：同一东亚成年女性、黑色马尾、白色短袖、深灰裤、白鞋、灰蓝棚拍。",
+        "support_equipment": "右前臂、手掌和手指实际接触折叠毛巾；毛巾位于桌面。椅座承托臀部、双足落地可见；桌椅比例自然。",
+        "anatomy_pose": "右上臂近身、屈肘起点明确，肩颈放松，左手属于本人并置于大腿，无额外肢体。",
+        "composition": "单人单姿势、头肩肘腕髋和脚完整可见，无字箭头、水印或拼图。",
+        "notes": "图片视觉检查可核对接触关系及姿势，不能据照片判定实际支撑重量或主动/被动贡献。"
+      }
+    },
+    {
+      "step": "s02",
+      "target_pose": "同机位同家具，右手与前臂沿桌面向前滑远、毛巾随手前移，躯干小幅前倾，臀脚稳定。",
+      "prompt": "Use case: scientific-educational. Produce ONE photorealistic rehabilitation teaching photograph, action T-AXU-022 tabletop towel slide FORWARD END POSITION step s02. Image 1 is the prior s01 STARTING FRAME and is the primary scene/identity/composition reference. Images 2–4 reinforce the exact same woman, clothing and grey-blue studio photography. KEEP the woman's identity, white T-shirt, dark charcoal trousers, white sneakers, ponytail, studio lighting and grey-blue background; keep the identical grey fabric armless chair, matte grey rectangular table, their exact dimensions and positions, tabletop height, camera position, portrait 4:5 framing and view from her RIGHT side facing image right. Change only the tabletop slide posture and towel position. She stays seated on the same chair with hips supported and both feet planted in the same spots. Her RIGHT hand, wrist AND forearm have slid FORWARD away from her torso along the TABLETOP toward image right by roughly 20–25 cm. The folded grey towel travels with her right hand and forearm and still lies flat under her whole right forearm through wrist and palm; show unmistakable continuous forearm/towel/table contact. Her right elbow opens comfortably to an obtuse angle, around 130–145 degrees, with her upper arm gently angled forward and down; right forearm remains horizontal along the tabletop. Her palm is down with natural extended fingers. Her torso inclines modestly forward about 10 degrees to assist the slide while her hips stay on the chair; shoulder remains relaxed away from ear and head remains naturally aligned. Her left hand remains on her left thigh. The hand is farther across the SAME table than in image 1, but NOT raised: the right forearm, wrist and palm all stay touching the grey towel on the tabletop, no arm floating or active forward arm lift. The table top supports the arm at a normal relaxed low shoulder height, unchanged from the starting frame. Entire head, hips, chair, both shoes, right arm and tabletop contact visible in the same camera crop. One person, one frozen end posture only. Accurate anatomy and realistic limb and furniture proportions. No text, arrows, labels, numerals, inset, duplicate figures, collage, motion trails, extra limbs, watermark, other people or wall. High fidelity clinical demonstration photo.",
+      "referenced_image_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a83-0af0-76e1-b062-e2a637a1dad8/exec-f549f6fa-2364-4316-8a3d-9f08a9cb5a87.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-0af0-76e1-b062-e2a637a1dad8/exec-e296290e-6fe6-4a9e-aae8-887cc53368a5.png",
+      "save_path": "E:\\git冲突问题\\rehab image\\train\\steps\\153_T-AXU-022_s02.png",
+      "sha256": "B53C710F612DB5DC99D3E794028C2FFFA6F80C41462666989F7A34D55E572878",
+      "bytes": 1802538,
+      "visual_review": {
+        "status": "通过",
+        "method": "view_image 目视核对生成原图并与s01比对",
+        "identity_clothing_background": "保持s01人物、服装、马尾、白鞋、灰蓝背景与光线。",
+        "support_equipment": "右手、腕与前臂继续接触同类毛巾和桌面，毛巾较s01明显向前滑远；同一桌椅尺度和位置，双足原处落地、臀部仍在椅座。",
+        "anatomy_pose": "右肘舒适打开，右前臂仍近水平支桌；躯干小幅前倾助力，肩未强耸，没有变成悬空主动抬臂。",
+        "composition": "机位和取景延续s01，单人单姿势，无文字箭头、水印、拼图。",
+        "notes": "手和毛巾向前位移清楚，可用于s01→s02→复用s01滑回。"
+      }
+    }
+  ],
+  "file_policy": "生成工具源文件保留；保存前检测目标文件存在则递增_v2等后缀。此次两个标准目标文件不存在，均以标准名称新建。未修改业务、UI或仓库文件。"
+}

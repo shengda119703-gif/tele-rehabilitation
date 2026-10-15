@@ -1,0 +1,216 @@
+{
+  "record_version": "1.0",
+  "record_date": "2026-10-14",
+  "scope": "021–030分步骤示范图，本子任务025–027",
+  "source_checklist": "E:\\git冲突问题\\rehab image\\动作分步骤示范图制作清单_v1.0.md",
+  "reference_images": [
+    "E:\\git冲突问题\\rehab image\\step-image-references\\reference-01.png",
+    "E:\\git冲突问题\\rehab image\\step-image-references\\reference-02.png",
+    "E:\\git冲突问题\\rehab image\\step-image-references\\reference-03.png"
+  ],
+  "total_final_images": 6,
+  "final_files": [
+    "E:\\git冲突问题\\rehab image\\assess\\steps\\025_E-LOW-011_s01.png",
+    "E:\\git冲突问题\\rehab image\\assess\\steps\\025_E-LOW-011_s02.png",
+    "E:\\git冲突问题\\rehab image\\assess\\steps\\026_E-LOW-012_s01.png",
+    "E:\\git冲突问题\\rehab image\\assess\\steps\\026_E-LOW-012_s02.png",
+    "E:\\git冲突问题\\rehab image\\assess\\steps\\027_E-LOW-028_s01.png",
+    "E:\\git冲突问题\\rehab image\\assess\\steps\\027_E-LOW-028_s02.png"
+  ],
+  "old_single_image_review": [
+    {
+      "path": "E:\\git冲突问题\\rehab image\\assess\\025_E-LOW-011_扶稳双脚提踵功能观察.png",
+      "decision": "not_reused",
+      "reason": "旧图使用椅背支持，未展示固定扶手条件；重新制作两帧，保证双脚接触和固定支持一致。"
+    },
+    {
+      "path": "E:\\git冲突问题\\rehab image\\assess\\026_E-LOW-012_扶稳单脚提踵耐力表现.png",
+      "decision": "not_reused",
+      "reason": "旧终点单图动作基本符合，但为保持本轮机位、固定扶手与同鞋履完整配对，两帧新制。"
+    },
+    {
+      "path": "E:\\git冲突问题\\rehab image\\assess\\027_E-LOW-028_扶稳屈膝站姿提踵观察.png",
+      "decision": "not_reused",
+      "reason": "旧终点单图屈膝与提踵可见，但缺严格匹配起点，选择两帧新制。"
+    }
+  ],
+  "group_review": [
+    {
+      "sequence": "025",
+      "status": "pass",
+      "comparison": "侧面略偏前机位、人物尺度、灰蓝背景、白鞋、扶手位置和外观保持一致；01两跟接地→02两跟同时抬起，两前足始终留地。"
+    },
+    {
+      "sequence": "026",
+      "status": "pass",
+      "comparison": "两帧同机位、同扶手、同鞋履；同一近侧测试脚01全底落地→02前足接地跟抬起；远侧屈膝脚始终离地，仅两腿两鞋。"
+    },
+    {
+      "sequence": "027",
+      "status": "pass",
+      "comparison": "两帧同机位、同扶手、同鞋履；双膝始终保持舒适屈曲；01两跟接地→02两跟抬起，双前足留地，未伸膝站起。"
+    }
+  ],
+  "images": [
+    {
+      "sequence": "025",
+      "action_id": "E-LOW-011",
+      "action_name": "扶稳双脚提踵功能观察",
+      "step": "01",
+      "version": "首轮基础版",
+      "target_pose": "双脚平行站稳，两侧脚跟与前足均接地，一手轻扶固定扶手。",
+      "saved_path": "E:\\git冲突问题\\rehab image\\assess\\steps\\025_E-LOW-011_s01.png",
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13859-9116-7280-af53-b3bc4556afb9\\exec-3684f16b-c696-4215-b6e3-4221c22f1357.png",
+      "reused_source": null,
+      "mode": "built-in image_gen",
+      "prompt": "Use case: scientific-educational. Generate ONE independent photorealistic rehabilitation demonstration photograph, portrait 1122 x 1402, no collage.\nThe three input images are strictly IDENTITY / CLOTHING / STYLE / BACKGROUND references: preserve the exact same adult East Asian woman, black low ponytail, natural friendly face, white plain short-sleeve T-shirt and dark charcoal fitted long trousers, normal adult proportions. Preserve their softly lit plain cool gray-blue studio background and floor, photographic realism.\nRequested frame: action 025 E-LOW-011, step 01, supported bilateral heel raise START position. Full body from head to complete shoes, side view facing right with a slight front-side angle so both feet and their separate ground contacts are visible. She stands naturally upright, spine neutral and BOTH knees comfortably extended without forceful locking. BOTH feet parallel hip-width apart on flat floor, both white plain low-profile trainers FULLY FLAT: both heels and both forefeet touching ground. Both shoes complete and separated visibly. One hand rests LIGHTLY on a stable fixed matte-gray rehabilitation handrail in front/right, the other arm hangs naturally. The handrail has a horizontal rail at waist height and vertical metal posts visibly fixed to the floor with circular bolt plates. Only one woman and the minimal fixed handrail.\nComposition: woman slightly left of center, enough empty space above and floor margin below both shoes, whole head and both hands visible. Neutral studio eye-level 70mm-looking full-body photograph; prevent wide-angle limb distortion. Feet are parallel with NO forward step, NO heel rise yet. This is the baseline before tiptoe raising.\nAvoid: chair, walker, change of identity, extra limbs or fingers, altered white T-shirt or trousers, stretched torso/short legs/long arms, toe walking, jumping, one foot off floor, text, arrows, labels, numbers, logos, watermark, inset, diptych.",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "490A97BBE94B5253D3588FA4DE37BF53C8651E27C15304C3B2C2D9150C23BEAD",
+      "bytes": 1664819,
+      "visual_review": {
+        "status": "pass",
+        "identity_background": "与3张原始身份风格参考核对通过：同一东亚女性、低马尾、白T深灰裤、灰蓝棚拍背景；同组白鞋一致。",
+        "anatomy_proportions": "逐张view_image审查，两臂两腿、正常人体比例，完整头部双手与双鞋入镜。",
+        "support_equipment": "一手轻扶灰色固定横扶手，立柱底部圆形螺栓板可见；鞋底和地面接触关系符合该步骤。",
+        "pose_result": "双脚平行站稳，两侧脚跟与前足均接地，一手轻扶固定扶手。"
+      }
+    },
+    {
+      "sequence": "025",
+      "action_id": "E-LOW-011",
+      "action_name": "扶稳双脚提踵功能观察",
+      "step": "02",
+      "version": "首轮基础版",
+      "target_pose": "两侧脚跟同时离地，两侧前足留地，双膝舒适伸展、身体随踝动作上升。",
+      "saved_path": "E:\\git冲突问题\\rehab image\\assess\\steps\\025_E-LOW-011_s02.png",
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13859-9116-7280-af53-b3bc4556afb9\\exec-2de2b948-b3eb-4046-8685-f35d0f904e19.png",
+      "reused_source": null,
+      "mode": "built-in image_gen",
+      "prompt": "Use case: scientific-educational. Create ONE independent portrait photorealistic rehabilitation demonstration photograph, 1122 x 1402. This is action 025 E-LOW-011 step 02.\nInput image 1 is the EXACT composition/identity/wardrobe/background/equipment/foot-position baseline (step 01). Input images 2–4 are identity and original photographic style references. STRICTLY keep image 1 camera angle, framing, subject scale, same woman's facial identity, ponytail, white T-shirt, charcoal trousers, identical pair of white low-profile trainers, cool gray-blue seamless background and floor, identical fixed handrail with bolted circular floor plates at the same positions. Keep same hand resting lightly on same place on rail and other arm naturally down.\nChange ONLY posture from bilateral flat-foot standing to BILATERAL HEEL RAISE endpoint: simultaneously lift BOTH heels about 5–7 cm above floor while BOTH shoe forefeet and toes stay firmly touching the floor at the SAME positions. BOTH shoes tilt down toward their forefoot contact, a visible floor gap under BOTH heel soles. Show the woman's body elevated naturally by ankle plantarflexion; head/torso moves slightly up, spine vertical, both knees retain comfortable extension. Two parallel feet, BOTH heels off ground, not one leg balancing. Slight front-side view from baseline makes two white shoe heel gaps readable separately. No whole foot floating.\nKeep normal adult body proportions, natural arms and two anatomically correct legs, all head/hands/shoes fully within frame with floor margin. No extra objects, no text, no arrows, no collage. Avoid: one heel flat, one raised foot, jumping, bent-knee squat, forward stepping, increased rail height, equipment shifting, camera change, background hue drift, changed shoes or person, distorted joints.",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "EDFF583257C2482135B712844E980B796880D2A28F0368808411C12FDA4B51CC",
+      "bytes": 1647861,
+      "visual_review": {
+        "status": "pass",
+        "identity_background": "与3张原始身份风格参考核对通过：同一东亚女性、低马尾、白T深灰裤、灰蓝棚拍背景；同组白鞋一致。",
+        "anatomy_proportions": "逐张view_image审查，两臂两腿、正常人体比例，完整头部双手与双鞋入镜。",
+        "support_equipment": "一手轻扶灰色固定横扶手，立柱底部圆形螺栓板可见；鞋底和地面接触关系符合该步骤。",
+        "pose_result": "两侧脚跟同时离地，两侧前足留地，双膝舒适伸展、身体随踝动作上升。"
+      }
+    },
+    {
+      "sequence": "026",
+      "action_id": "E-LOW-012",
+      "action_name": "扶稳单脚提踵耐力表现",
+      "step": "01",
+      "version": "首轮基础版",
+      "target_pose": "近机位测试脚全脚接地承担支撑，远侧脚屈膝向后离地，手轻扶固定扶手。",
+      "saved_path": "E:\\git冲突问题\\rehab image\\assess\\steps\\026_E-LOW-012_s01.png",
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13859-9116-7280-af53-b3bc4556afb9\\exec-de42f6b0-15c7-4a3f-953a-68cf78172a3c.png",
+      "reused_source": null,
+      "mode": "built-in image_gen",
+      "prompt": "Edit the first photograph to correct the anatomy for supported single-leg balance START. The input has an extra leg/shoe: there are incorrectly TWO white shoes on the floor plus a lifted white shoe. Remove the ENTIRE farther floor-touching white shoe (the upper-right ground shoe around x 460–624 y 1160–1250) and its extra trousered shin. The woman must have EXACTLY TWO LEGS and EXACTLY TWO SHOES in the whole photograph: ONE near/camera-side support leg from hip to knee to ankle to the lowest white shoe FULLY FLAT on floor, and ONE far leg bending backwards at its own knee to the single white shoe suspended to the left at y 900–1070. The lifted far leg must connect naturally to her hip and knee behind the near support thigh. No third calf, ankle, shoe, foot or duplicated leg.\nKeep the near supporting foot ALL FLAT (heel and forefoot on floor), far foot entirely AIRBORNE and clearly separated. Retain image camera, crop, face, ponytail, white shirt, charcoal trousers, normal proportions, gray-blue floor/background, fixed gray rail and hand contact. The second reference is identity/style only. Full head, both hands and TWO complete shoes visible. Photorealistic, no text/collage.",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "8E4E43F944D6B5BE5B6BB89D1B637DA216C36A7E719EA37EEE1C487EC73F3B6F",
+      "bytes": 1648280,
+      "visual_review": {
+        "status": "pass",
+        "identity_background": "与3张原始身份风格参考核对通过：同一东亚女性、低马尾、白T深灰裤、灰蓝棚拍背景；同组白鞋一致。",
+        "anatomy_proportions": "逐张view_image审查，两臂两腿、正常人体比例，完整头部双手与双鞋入镜。",
+        "support_equipment": "一手轻扶灰色固定横扶手，立柱底部圆形螺栓板可见；鞋底和地面接触关系符合该步骤。",
+        "pose_result": "近机位测试脚全脚接地承担支撑，远侧脚屈膝向后离地，手轻扶固定扶手。"
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "rejected",
+          "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13859-9116-7280-af53-b3bc4556afb9\\exec-d0ffd5a7-c6cf-4426-b790-2e531b3d4864.png",
+          "prompt": "Use case: scientific-educational. Create ONE independent portrait photograph, 1122 x 1402, action 026 E-LOW-012 step 01, supported SINGLE-LEG heel raise start.\nInput image 1 is the strict setup template: retain exact camera angle and framing, same full-body scale, same woman identity, black low ponytail, white T-shirt, charcoal trousers, identical white plain trainers, cool gray-blue seamless studio background/floor, same fixed gray rehabilitation rail with two posts and bolted floor plates unchanged. The 3 other input images are original identity/style references.\nChange posture for single-leg support: the NEAR/CAMERA-SIDE leg is the TEST leg, comfortably extended without locking, its shoe completely FLAT on floor: test heel and forefoot both grounded. The FAR leg bends back at knee, its shoe suspended clearly 15–20 cm off floor behind her; whole far shoe including toe visibly NOT touching ground. Body is balanced upright over the near/test foot, not tilted. Same one hand lightly touching same place on rail, other arm naturally down. Near support foot stays on its original position in image 1. The far lifted foot must be spatially separate from the support shoe so airborne condition is obvious.\nFull head, both hands, both complete shoes in frame. Natural adult proportions and correct anatomy. Studio portrait photograph in same lighting, not a medical illustration. Only one woman and fixed rail, no other objects. No text, arrows, numbers, logos, watermark, split screen. Do not raise the TEST heel yet: this is start with test foot all flat. Do not let the other foot touch ground, do not squat, do not stretch legs unnaturally or change outfit/equipment.",
+          "reason": "首候选错误保留原双脚落地并增加离地脚，出现3只鞋/重复小腿；未放入最终步骤目录。"
+        },
+        {
+          "attempt": 2,
+          "status": "accepted",
+          "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13859-9116-7280-af53-b3bc4556afb9\\exec-de42f6b0-15c7-4a3f-953a-68cf78172a3c.png",
+          "prompt": "Edit the first photograph to correct the anatomy for supported single-leg balance START. The input has an extra leg/shoe: there are incorrectly TWO white shoes on the floor plus a lifted white shoe. Remove the ENTIRE farther floor-touching white shoe (the upper-right ground shoe around x 460–624 y 1160–1250) and its extra trousered shin. The woman must have EXACTLY TWO LEGS and EXACTLY TWO SHOES in the whole photograph: ONE near/camera-side support leg from hip to knee to ankle to the lowest white shoe FULLY FLAT on floor, and ONE far leg bending backwards at its own knee to the single white shoe suspended to the left at y 900–1070. The lifted far leg must connect naturally to her hip and knee behind the near support thigh. No third calf, ankle, shoe, foot or duplicated leg.\nKeep the near supporting foot ALL FLAT (heel and forefoot on floor), far foot entirely AIRBORNE and clearly separated. Retain image camera, crop, face, ponytail, white shirt, charcoal trousers, normal proportions, gray-blue floor/background, fixed gray rail and hand contact. The second reference is identity/style only. Full head, both hands and TWO complete shoes visible. Photorealistic, no text/collage.",
+          "reason": "返修去除额外落地脚及小腿，最终仅两腿两鞋：测试脚全底接地、另一脚向后离地。"
+        }
+      ]
+    },
+    {
+      "sequence": "026",
+      "action_id": "E-LOW-012",
+      "action_name": "扶稳单脚提踵耐力表现",
+      "step": "02",
+      "version": "首轮基础版",
+      "target_pose": "同一测试脚跟抬起，测试前足留地；另一脚全过程离地，仍保持原单腿支撑版本。",
+      "saved_path": "E:\\git冲突问题\\rehab image\\assess\\steps\\026_E-LOW-012_s02.png",
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13859-9116-7280-af53-b3bc4556afb9\\exec-2238db5e-93f8-4ff5-984d-9e40bd895bb3.png",
+      "reused_source": null,
+      "mode": "built-in image_gen",
+      "prompt": "Use case: scientific-educational. Create ONE independent portrait photorealistic rehabilitation photograph, 1122 x 1402, action 026 E-LOW-012 step 02. The FIRST input image is strict baseline (correct step 01), other references are woman's identity/style only.\nRetain exact baseline camera angle/crop/framing, subject scale and appearance, same face and ponytail, white T-shirt, charcoal trousers, TWO identical white shoes, gray-blue studio background and floor, fixed gray rail with posts/bolted floor plates at exact same locations, same hand lightly resting on rail and other hand naturally down.\nChange ONLY the SUPPORTING TEST ankle to single-leg heel raise: the only foot on floor (near/camera-side test foot) lifts its HEEL 5–7 cm so a clear gap is visible under heel sole. Its FOREFOOT and TOES stay pressing the floor at the original position, shoe tilted down toward toes. The near test knee remains comfortably extended. The trunk/head rises naturally a little with ankle plantarflexion, no backward lean. The far knee remains bent back and its far shoe remains entirely AIRBORNE behind her, clearly separated and never touching floor.\nAnatomy: EXACTLY TWO LEGS, EXACTLY TWO SHOES total, connected correctly to the two hips. ONE support shoe with forefoot on ground/heel raised and ONE suspended shoe behind at bent knee. Do not add a second grounded foot, extra calf, third shoe or ghost limb. No bilateral heel raise, no jump, no tip of lifted shoe touching floor. Normal adult proportions, full head/hands/two shoes in frame. No text, arrows, inset, logo or collage. Preserve same calm photographic lighting and cool gray-blue hue.",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "335F4CEA21466D0DE0D1024163850E21085FDC6B3BC172644ED039DC31058789",
+      "bytes": 1641143,
+      "visual_review": {
+        "status": "pass",
+        "identity_background": "与3张原始身份风格参考核对通过：同一东亚女性、低马尾、白T深灰裤、灰蓝棚拍背景；同组白鞋一致。",
+        "anatomy_proportions": "逐张view_image审查，两臂两腿、正常人体比例，完整头部双手与双鞋入镜。",
+        "support_equipment": "一手轻扶灰色固定横扶手，立柱底部圆形螺栓板可见；鞋底和地面接触关系符合该步骤。",
+        "pose_result": "同一测试脚跟抬起，测试前足留地；另一脚全过程离地，仍保持原单腿支撑版本。"
+      }
+    },
+    {
+      "sequence": "027",
+      "action_id": "E-LOW-028",
+      "action_name": "扶稳屈膝站姿提踵观察",
+      "step": "01",
+      "version": "首轮基础版",
+      "target_pose": "双膝在舒适浅屈曲位，两脚并行、两侧脚跟与前足均接地，一手轻扶固定扶手。",
+      "saved_path": "E:\\git冲突问题\\rehab image\\assess\\steps\\027_E-LOW-028_s01.png",
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13859-9116-7280-af53-b3bc4556afb9\\exec-7c4ae041-ccc1-487d-bc0c-d2097125d58b.png",
+      "reused_source": null,
+      "mode": "built-in image_gen",
+      "prompt": "Use case: scientific-educational. Create ONE independent portrait photorealistic rehabilitation photograph, 1122 x 1402, action 027 E-LOW-028 step 01 supported BENT-KNEE bilateral heel raise START.\nInput image 1 is the strict scene/identity/equipment template: same camera angle/crop, same woman and normal full-body proportions, exact facial identity and low ponytail, white T-shirt/charcoal long trousers, identical TWO white trainers, cool gray-blue seamless studio background and floor, exact fixed gray handrail at same coordinates with bolted floor plates. Other three inputs are original identity and photographic style references.\nRequested posture change: BOTH FEET remain parallel hip-width apart, BOTH shoes fully flat on floor (BOTH heels AND forefeet grounded), visible separately. She bends BOTH KNEES together comfortably approximately 25–30 degrees in a small shallow squat. Both knees distinctly flexed, hips sit back a little, trunk stays upright and neutral, no deep squat. One hand still lightly rests at same place on rail for support, the other arm down. Feet stay at template positions, do not lift heels yet. Full-body side/slight front-side view clearly shows flexed knee silhouette plus both flat white shoe soles on floor. Keep natural ankle and knee anatomy, exactly TWO legs/two shoes.\nThis establishes a selected comfortable bent-knee posture which will be held for the next heel-rise frame. Portrait photographic realism, soft same studio light, whole head/hands/shoes in frame with floor margin. No text/arrows/insets/collage. Avoid: straight knees, deep squat, one-leg stance, one raised foot, lifted heel, changed rail positions or camera or clothes, distorted limbs.",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "27A7A572512F7BC9E5FD293F0D5754C6A93B9205A09D481F0B73E1692D09E4F0",
+      "bytes": 1650198,
+      "visual_review": {
+        "status": "pass",
+        "identity_background": "与3张原始身份风格参考核对通过：同一东亚女性、低马尾、白T深灰裤、灰蓝棚拍背景；同组白鞋一致。",
+        "anatomy_proportions": "逐张view_image审查，两臂两腿、正常人体比例，完整头部双手与双鞋入镜。",
+        "support_equipment": "一手轻扶灰色固定横扶手，立柱底部圆形螺栓板可见；鞋底和地面接触关系符合该步骤。",
+        "pose_result": "双膝在舒适浅屈曲位，两脚并行、两侧脚跟与前足均接地，一手轻扶固定扶手。"
+      }
+    },
+    {
+      "sequence": "027",
+      "action_id": "E-LOW-028",
+      "action_name": "扶稳屈膝站姿提踵观察",
+      "step": "02",
+      "version": "首轮基础版",
+      "target_pose": "保持原屈膝位，双脚跟缓慢抬起、双前足留地，不伸膝站起。",
+      "saved_path": "E:\\git冲突问题\\rehab image\\assess\\steps\\027_E-LOW-028_s02.png",
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13859-9116-7280-af53-b3bc4556afb9\\exec-83bd998d-2516-4405-a030-3ef59383384c.png",
+      "reused_source": null,
+      "mode": "built-in image_gen",
+      "prompt": "Use case: scientific-educational. ONE portrait photorealistic rehabilitation photograph, 1122 x 1402, action 027 E-LOW-028 step 02. Input image 1 is the exact BENT-KNEE baseline step 01; other images identity/style only.\nSTRICTLY retain the same selected BENT KNEE ANGLE in BOTH knees, same shallow crouched stance and hip flexion, same posture silhouette except slight upward body displacement caused by heel rise. DO NOT STRAIGHTEN EITHER KNEE. Both knees remain visibly flexed to the same comfortable angle as image 1 throughout.\nChange ONLY both ankles into bilateral heel raise: simultaneously elevate BOTH white trainer heels 5–7 cm off floor, BOTH forefeet/toes continuously grounded at SAME positions. BOTH shoes tip forward onto their forefeet, visible ground clearance beneath BOTH heel soles. Slight front-side camera shows both heel rises separately. Raise body naturally a little from ankle action while maintaining knee flexion; one hand still LIGHTLY rests on same fixed gray rail, other arm down.\nRetain exact camera angle/crop/framing, woman identity/face/black low ponytail, white T-shirt, charcoal trousers and white trainers, normal adult proportions, gray-blue seamless background/floor and photographic soft lighting, fixed rail at same location and same bolted floor plates.\nEXACTLY TWO legs/two shoes, no jumping, no whole foot off floor, no single-leg balancing, no deep squat, no knee extension or stand-up motion, no altered handrail or camera angle. Full head/hands/both shoes in frame. No labels, arrows, text, logo, watermark, split screen or inset.",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "8E0D77E3E454861C7AE3637087B967FEE524680FEADF52354C5B743F2312F963",
+      "bytes": 1628886,
+      "visual_review": {
+        "status": "pass",
+        "identity_background": "与3张原始身份风格参考核对通过：同一东亚女性、低马尾、白T深灰裤、灰蓝棚拍背景；同组白鞋一致。",
+        "anatomy_proportions": "逐张view_image审查，两臂两腿、正常人体比例，完整头部双手与双鞋入镜。",
+        "support_equipment": "一手轻扶灰色固定横扶手，立柱底部圆形螺栓板可见；鞋底和地面接触关系符合该步骤。",
+        "pose_result": "保持原屈膝位，双脚跟缓慢抬起、双前足留地，不伸膝站起。"
+      }
+    }
+  ]
+}

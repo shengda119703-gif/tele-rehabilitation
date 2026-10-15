@@ -1,0 +1,115 @@
+{
+  "batch": "第05批",
+  "subset": "031-s01、031-s02、032-s01、032-s02",
+  "date": "2026-10-14",
+  "workflow": "Built-in image_gen, one image per call; file copied unchanged from generated source. No Python/image editing, no original asset overwrite.",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "records": [
+    {
+      "step": "031-s01",
+      "action_id": "E-LOW-020",
+      "filename": "031_E-LOW-020_s01.png",
+      "source": "exec-f55651c0-4497-4bc5-97b9-7d520403b296.png",
+      "sha256": "C6CEF24FEE578BA0CEEAC777423A8BE0E104F2832D96528CE8565697129BA2CB",
+      "bytes": 1693902,
+      "prompts": [
+        "Use case: scientific-educational.\nAsset type: one single rehabilitation assessment step photograph, 031 E-LOW-020 s01, seated relaxed medial foot arch appearance. Generate ONE image only, no panels.\nInput images: reference-01, reference-02, reference-03 are identity, clothing, lighting and backdrop references, NOT pose references. Match the same adult East Asian woman with natural skin, black ponytail, plain white short-sleeved T-shirt and dark charcoal gray straight training trousers.\nScene/backdrop: seamless desaturated gray-blue studio background and floor, gentle studio light with natural soft contact shadows. Plain stable chair with light neutral seat and simple dark legs.\nPrimary request: she is seated steadily on the chair, knees bent approximately 90 degrees, thighs visibly supported by the seat; BOTH bare feet resting naturally flat on the floor, relaxed toes with no gripping and no deliberate short-foot contraction. Show the INNER/MEDIAL side of the near/test foot from heel to entire forefoot and toes, a natural relaxed arch above the floor. The other foot is visible slightly deeper in the frame, also resting flat.\nComposition/framing: landscape 1536x1024 photograph, fixed low horizontal camera at ankle height, accurate medial side profile of test foot, toes pointing to picture right. Keep complete heel, arch, toes and clear floor contact, the ankle, calf and bent knee in frame; include enough of the seated upper thigh and chair seat on upper left to make seated posture unmistakable. Close clinical detail view, foot large and clearly legible, body above the waist may be cropped. Reserve modest clean background space. Camera is exactly perpendicular to the foot medial plane, no extreme wide-angle distortion.\nAnatomy: natural adult foot proportions, one ankle connects continuously to one lower leg, five anatomically connected relaxed toes, heel and ball contact ground, no floating heel; barefoot trousers end above ankles. No enlarged or deformed toes. Neutral natural foot alignment.\nConstraints: this is the seated comparator for later standing image; keep test foot at an easily repeatable floor position, heel lower-left region and toes lower-right. No rulers, no marker sticker, no overlaid text, no arrows, no diagram, no watermark, no collage. Identity and clothing match references; single exact physical pose.",
+        "Use case: precise-object-edit.\nEdit target: input photograph is 031 E-LOW-020 s01 seated posture. Keep the entire photograph identical except correct the anatomical orientation of the foreground/test bare foot so the camera clearly sees its INNER MEDIAL side.\nThe test foot must be a RIGHT foot seen from its LEFT/INNER side, with the BIG TOE closest to the camera, and smaller toes behind it farther from the camera. Show a clear but natural relaxed medial longitudinal arch between heel and first-metatarsal ball; heel and ball of foot naturally contact the floor. This is NOT the little-toe/lateral border view. Correct foreground foot anatomy accordingly, same heel and toe location, same foot size, neutral relaxed five toes, same calf/ankle position.\nDo not change seated thigh, knee, chair, hand, clothes, gray-blue backdrop, lighting, camera position, framing, far foot floor location or shadow character. The woman remains seated on the chair with knees around 90 degrees, both feet flat and relaxed. No short-foot activation, no deliberate gripping, no rulers or stickers, no text or arrows. Retain 1536x1024 landscape composition."
+      ],
+      "qa": "通过。椅坐面、受支撑大腿与约90度屈膝确认坐位；双足放松落地。返修后测试足拇趾侧朝向镜头，完整足跟、自然内侧足弓与前足可见；足趾不抓地。踝小腿连续，比例自然。面部不在局部近景裁切中，人物来源沿用三张统一参考。",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/031_E-LOW-020_s01.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-994b-73c1-aeee-a4a219c17b25/exec-f55651c0-4497-4bc5-97b9-7d520403b296.png",
+      "reuse": false,
+      "reuse_original": null,
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "tool": "built-in image_gen",
+      "qa_status": "passed",
+      "view_image_checked": true
+    },
+    {
+      "step": "031-s02",
+      "action_id": "E-LOW-020",
+      "filename": "031_E-LOW-020_s02.png",
+      "source": "exec-3cf30149-25ce-4e5f-aedb-a215e8894077.png",
+      "sha256": "CBE92D83E693582136B8849ACE196AC8A214F1AC3A9C94658D325D16E25F6F9A",
+      "bytes": 1650353,
+      "prompts": [
+        "Use case: precise-object-edit.\nEdit target: input is accepted 031 E-LOW-020 s01, seated relaxed foot comparison photograph. Create its companion step 031 s02: the same woman has risen into NATURAL TWO-FOOT STANDING. ONE photograph only.\nChange only leg posture and seated clothing/body parts needed for standing. Both lower legs must extend upward nearly straight and vertically through the top edge, knees extended naturally without hyperextension; no bent seated knees, no thigh remains resting on chair, no hand remains on a seated thigh. The chair stays unoccupied at exactly the same background left location. Her upper body may remain cropped because this is a foot detail task.\nFoot/camera invariants: BOTH feet stay exactly on their previous floor positions, complete tested near foot heel/arch/big toe profile stays same location and same size. Camera remains low and horizontal and perpendicular to the medial foot plane, same lens, composition, floor baseline, studio lighting and gray-blue background. Use the correct accepted INNER/MEDIAL side of the foreground test foot, big toe camera side and lesser toes behind; maintain relaxed toes, heel and forefoot flat in contact, do not grip ground, no tiptoe, no active arch contraction. Under natural bodyweight any arch difference must be subtle and realistic rather than exaggerated. Anatomically continuous ankle and calf. Both bare feet clearly support natural equal two-leg standing.\nSame adult East Asian woman's skin and dark charcoal gray long trousers. No ruler, no stickers, no text, no arrows, no collage. Keep landscape 1536x1024 and make standing condition legible from vertical legs and empty chair."
+      ],
+      "qa": "通过。双腿向上直立与空椅确认双脚自然站位；双足足跟和前足接地。与s01同侧内侧轮廓、脚位置、1536×1024构图、相机尺度和地面基准保持一致。自然足弓，无主动收紧示意；完整测试足和踝小腿可見，比例自然。",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/031_E-LOW-020_s02.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-994b-73c1-aeee-a4a219c17b25/exec-3cf30149-25ce-4e5f-aedb-a215e8894077.png",
+      "reuse": false,
+      "reuse_original": null,
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "tool": "built-in image_gen",
+      "qa_status": "passed",
+      "view_image_checked": true
+    },
+    {
+      "step": "032-s01",
+      "action_id": "E-LOW-021",
+      "filename": "032_E-LOW-021_s01.png",
+      "source": "exec-15cfc6e2-544f-431c-9fae-ef8d4bb38c7d.png",
+      "sha256": "1463DBD405EA681BD4C2BBE6AEB6E1707ECBD0CBF7E0CBA1E531151E2BB3D6AA",
+      "bytes": 1695962,
+      "prompts": [
+        "Use case: precise-object-edit.\nEdit target: accepted seated 031 E-LOW-020 s01 photograph. Make 032 E-LOW-021 s01, showing the same already-confirmed medial foot marker with a physical ruler for the seated comparator. ONE photograph.\nKeep all pixels and composition as stable as possible: same woman seated with knees approximately 90 degrees and thigh visibly supported by the stable chair, same white T-shirt and charcoal trousers, same two relaxed bare feet locations, same foreground medial foot profile and big toe, same soft lighting gray-blue floor/backdrop, same low horizontal camera position, scale, shadows, and 1536x1024 landscape.\nAdd ONLY these physical assessment items:\n1. One small circular matte blue skin marker sticker already present at the professionally confirmed medial-midfoot landmark, on the foreground foot's skin just anterior/inferior to the medial ankle, above the peak of the inner longitudinal arch. A single clearly visible approximately 5 mm dot. This dot depicts a pre-existing confirmed landmark, not a self-location tutorial; no hands marking the foot.\n2. One small rigid physical metric ruler standing truly vertical on the floor on a discreet stable base, to the right of the entire foreground foot, clear of the toes and without hiding any heel/arch/forefoot. The ruler face lies in the same vertical image/measurement plane as the medial skin marker (not the back foot plane), ruler zero starts at the floor. White or brushed pale metal face with simple black millimeter tick marks, modest believable size about 10 cm high relative to the foot. Tick marks are merely visual aids, do not emphasize or invent a diagnostic height value. Keep ruler a real three-dimensional object with soft contact shadow, not an overlaid scale. \nThe near foot remains relaxed, full heel and first metatarsal ball on the floor, toes not gripping. No muscle contraction changes, no arrows, no text captions, no diagnosis, no additional marker dots, no collage."
+      ],
+      "qa": "通过。稳固坐位背景与足放松落地清楚；唯一蓝色皮肤贴点清晰，实体竖直标尺与足同框，底座落在与测试足相同近景地面基准。标尺置于足趾右侧，不遮挡足弓。机位、足尺度沿用031-s01。点表示事前已确认的情境，照片本身不能证明临床确认，也不用于指导自行找点。尺面数值只辅助显示器材，不按读数或差值验收。",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/032_E-LOW-021_s01.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-994b-73c1-aeee-a4a219c17b25/exec-15cfc6e2-544f-431c-9fae-ef8d4bb38c7d.png",
+      "reuse": false,
+      "reuse_original": null,
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "tool": "built-in image_gen",
+      "qa_status": "passed",
+      "view_image_checked": true
+    },
+    {
+      "step": "032-s02",
+      "action_id": "E-LOW-021",
+      "filename": "032_E-LOW-021_s02.png",
+      "source": "exec-3171ba1f-4370-4f2a-b228-2f5601ebfa47.png",
+      "sha256": "DA2E66724900E6C0AACCC99ABCD8E4F996DA6AB3FF7298400BCA944E0FB8B6A8",
+      "bytes": 1663429,
+      "prompts": [
+        "Use case: precise-object-edit.\nInput image 1: EDIT TARGET 032 E-LOW-021 s01 seated foot photograph with an already-confirmed blue medial skin marker and physical ruler.\nInput image 2: SUPPORTING pose/composition reference 031 E-LOW-020 s02 natural two-foot standing from the same fixed camera.\nCreate ONE companion photograph 032 E-LOW-021 s02. Change only image 1's seated body/leg posture to natural TWO-FOOT STANDING matching image 2: both lower legs extend straight and nearly vertical upward out of the upper edge, unoccupied chair at left. Remove the bent seated thigh and seated hand from frame. Same charcoal gray trousers and woman's skin.\nAbsolute invariants from image 1: the single circular BLUE marker stays glued on EXACTLY THE SAME SKIN LOCATION with identical diameter, color and location relative to ankle, heel and foot anatomy; DO NOT REMOVE, ADD, REDRAW IN A DIFFERENT POSITION, or relocate any marker. It represents a confirmed pre-existing landmark. Physical vertical metric ruler on its discreet base remains exactly at image 1's location and orientation, same tick marks and size, zero at floor, in the same medial measurement plane. Do not introduce a readout, connecting line or diagnostic value.\nBoth bare feet remain at the same floor positions as image 1, same tested inner/medial side profile, foreground big toe nearest camera with other toes behind, full heel, arch and forefoot visible, neutral relaxed toes, heel and ball flat. Bodyweight standing can cause only subtle natural arch appearance change. No tiptoe or gripping.\nCamera, framing, lens, gray-blue studio backdrop/floor, chair, lighting, foot scale, floor baseline and soft shadows remain the same. Standing is legible from the vertical double legs and vacant chair. Retain single landscape 1536x1024. No words except tiny existing physical ruler markings, no overlay, no arrows, no collage."
+      ],
+      "qa": "通过。双脚站位，空椅与直立双腿身份明确；脚不挪位，蓝色贴点相对踝、足跟和足弓位置一致，没有新增或移点。实体标尺、底座、拍摄机位与尺度一致，保持水平足内侧近景。自然足部比例与接触关系通过。实体同平面为画面可见摆设意图，不把生成图当作经校准实测图；不作数值高度或差值判定。",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/032_E-LOW-021_s02.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-994b-73c1-aeee-a4a219c17b25/exec-3171ba1f-4370-4f2a-b228-2f5601ebfa47.png",
+      "reuse": false,
+      "reuse_original": null,
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "tool": "built-in image_gen",
+      "qa_status": "passed",
+      "view_image_checked": true
+    }
+  ],
+  "discarded_attempts": [
+    {
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-994b-73c1-aeee-a4a219c17b25/exec-ac2c2b50-e40d-48c6-9228-7997895be314.png",
+      "reason": "前景足呈现外侧/小趾侧，未通过内侧机位QA；已用内置工具定向返修。",
+      "prompt": "Use case: scientific-educational.\nAsset type: one single rehabilitation assessment step photograph, 031 E-LOW-020 s01, seated relaxed medial foot arch appearance. Generate ONE image only, no panels.\nInput images: reference-01, reference-02, reference-03 are identity, clothing, lighting and backdrop references, NOT pose references. Match the same adult East Asian woman with natural skin, black ponytail, plain white short-sleeved T-shirt and dark charcoal gray straight training trousers.\nScene/backdrop: seamless desaturated gray-blue studio background and floor, gentle studio light with natural soft contact shadows. Plain stable chair with light neutral seat and simple dark legs.\nPrimary request: she is seated steadily on the chair, knees bent approximately 90 degrees, thighs visibly supported by the seat; BOTH bare feet resting naturally flat on the floor, relaxed toes with no gripping and no deliberate short-foot contraction. Show the INNER/MEDIAL side of the near/test foot from heel to entire forefoot and toes, a natural relaxed arch above the floor. The other foot is visible slightly deeper in the frame, also resting flat.\nComposition/framing: landscape 1536x1024 photograph, fixed low horizontal camera at ankle height, accurate medial side profile of test foot, toes pointing to picture right. Keep complete heel, arch, toes and clear floor contact, the ankle, calf and bent knee in frame; include enough of the seated upper thigh and chair seat on upper left to make seated posture unmistakable. Close clinical detail view, foot large and clearly legible, body above the waist may be cropped. Reserve modest clean background space. Camera is exactly perpendicular to the foot medial plane, no extreme wide-angle distortion.\nAnatomy: natural adult foot proportions, one ankle connects continuously to one lower leg, five anatomically connected relaxed toes, heel and ball contact ground, no floating heel; barefoot trousers end above ankles. No enlarged or deformed toes. Neutral natural foot alignment.\nConstraints: this is the seated comparator for later standing image; keep test foot at an easily repeatable floor position, heel lower-left region and toes lower-right. No rulers, no marker sticker, no overlaid text, no arrows, no diagram, no watermark, no collage. Identity and clothing match references; single exact physical pose.",
+      "reused": false
+    }
+  ],
+  "group_qa": "031/032各坐位与站位为体位对照。无运动箭头、无主动收紧暗示。背景、服装、椅、灯光、测试足位置和低机位匹配；032贴点与标尺从同一坐位源图锁定继承。局部裁切无法核验面部身份；生成图不能确认临床贴点身份、真实负荷或测试有效性。"
+}

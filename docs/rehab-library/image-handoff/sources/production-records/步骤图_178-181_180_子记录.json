@@ -1,0 +1,37 @@
+{
+  "action_id": "T-AXU-039",
+  "action_number": 180,
+  "version": "固定高台支持基础版",
+  "tool": "built-in image_gen",
+  "reviewed_date": "2026-10-14",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "images": [
+    {
+      "step": "s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/180_T-AXU-039_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-71a8-7481-8b17-7587b1e9f316/exec-6b59b304-a012-4ba3-a877-19c4412d57eb.png",
+      "prompt": "Use case: scientific-educational. Asset type: one raw rehabilitation exercise demonstration photograph, action 180 T-AXU-039, step s01. Input images: the three provided reference photos are identity, clothing, studio lighting, and gray-blue background references only; do not copy their poses or cropping. Subject: exactly the same East Asian adult woman with black ponytail, same face, skin tone and natural slim build, wearing a plain white short-sleeve T-shirt and dark charcoal long trousers. Create one photorealistic studio photograph, no collage. A sturdy fixed rectangular high support table approximately waist height stands to the woman's right in the image; thick plain light-gray tabletop and stable dark-gray legs, no wheels. Woman faces right, camera is true side with a very slight front oblique angle so BOTH forearms, palms and feet are visible. Show her entire head, both shoulders, elbows, wrists, complete fingers, body and complete bare feet, floor and support table. This is the LOW INITIAL LOAD support position: both palms flat on the tabletop near its left edge, shoulder-width apart, fingers naturally spread and pointing forward over the table; wrists naturally extended, both elbows nearly straight without locking. Her body is fairly upright with a modest forward lean as one aligned head-trunk-hips line, shoulders relaxed. Both feet are flat on the floor at hip-width, a short distance back from the table, heels firmly down, knees soft, stable. The feet are close enough to permit a small forward body weight shift later without lifting them. Tabletop approximately level with her waist, hands below shoulders. Frame as a clear side-view near full-body medical teaching photo, landscape 3:2 composition with generous safe margins and natural realistic anatomy. Soft even studio lighting, clean matte gray-blue seamless wall and floor, subtle natural shadows. One static pose only. No text, numbers, arrows, logos, watermark, labels or colored instructional marks. Avoid bent-elbow push-up pose, deep leaning plank, knees on ground, foot lift, floating fingers, obscured hand contacts, cropped feet.",
+      "review": "逐张 view_image 审查通过。女性人物、白短袖深灰长裤、灰蓝棚拍背景与参考一致；头、双手腕肘肩、全脚与台面完整可见；双掌真实贴稳固定腰高台面，手指自然分开；双脚全掌落地，近直肘，身体较直，符合低初始负荷支持姿态。手部略有侧面重叠但两手掌、腕与前臂可辨。",
+      "sha256": "94CA4F3033FA1BEFE214159370D58F2DC52FE498CD050AC37C78EF56C024FC26",
+      "width": 1536,
+      "height": 1024,
+      "status": "accepted"
+    },
+    {
+      "step": "s02",
+      "path": "E:/git冲突问题/rehab image/train/steps/180_T-AXU-039_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-71a8-7481-8b17-7587b1e9f316/exec-0fe0bea0-1881-4fd2-ab1d-164b4656402e.png",
+      "prompt": "Use case: scientific-educational. Asset type: raw rehabilitation photograph action 180 T-AXU-039 step s02. Edit target: the provided photograph is the accepted s01 start pose. Make ONLY the small controlled forward body weight shift toward the supporting hands. Preserve the exact woman and facial identity, black ponytail, white short-sleeve T-shirt, dark charcoal trousers, camera angle, 3:2 framing, person scale, background, soft studio lighting, floor, fixed waist-high table and all its legs. BOTH palms and every fingertip must remain at EXACTLY the same tabletop positions. BOTH complete bare feet, heels and toes must remain at EXACTLY the same floor positions, both soles flat, no foot slide or lift. Change only her connected head-neck-shoulders-trunk-pelvis pose by a modest controlled forward lean toward her palms: shoulders and chest advance approximately 8 cm toward the right (toward the table), the upper body comes visibly a little closer to the table, hips follow naturally a little forward. Keep the body fairly aligned and relatively upright; this is a small weight transfer, not a deep incline plank. Crucially BOTH elbows must remain ALMOST FULLY STRAIGHT, with no bent-elbow push-up. Arms rotate naturally slightly closer to vertical as shoulders move forward above the fixed hands. Small knee softness is permissible while feet stay fixed; do not squat. Head stays neutral with the trunk, no shrug, no back arch. Keep wrist and palm contact anatomically natural, fingers spread. Entire head, both shoulders, elbows, wrists, all fingers, both complete feet and table contacts remain visible. Exactly one static pose. No text, arrows, numbers, labels, collage, watermark or logos. Do not change table height, support locations, clothing, bare feet, lighting, camera or crop.",
+      "edit_reference": "C:/Users/Administrator/.codex/generated_images/01a13a85-71a8-7481-8b17-7587b1e9f316/exec-6b59b304-a012-4ba3-a877-19c4412d57eb.png",
+      "review": "逐张 view_image 审查通过，并与 s01 对照。相机、背景、台面、人物服装尺度、双掌及双脚支点保持；肩胸与躯干小幅向手侧前移，上身靠近支持台面；双肘仍基本伸直，未画成俯卧撑；双脚脚跟仍落地、未跪地；全身与手脚、关节和支撑接触完整可见。",
+      "sha256": "436F0864893282F90A4E76185127919BC9D70F821D5B3E0A60436D573AB81E9E",
+      "width": 1536,
+      "height": 1024,
+      "status": "accepted"
+    }
+  ]
+}

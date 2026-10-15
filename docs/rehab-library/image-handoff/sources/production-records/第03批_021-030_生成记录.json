@@ -1,0 +1,491 @@
+{
+  "batch": 3,
+  "sequences": "021-030",
+  "date": "2026-10-13",
+  "generation_mode": "built-in image_gen",
+  "source": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+  "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+  "identity_references": [
+    "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+    "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+    "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+  ],
+  "files": [
+    {
+      "sequence": 21,
+      "id": "E-LOW-016",
+      "name": "低台阶上落功能观察",
+      "category": "assess",
+      "filename": "021_E-LOW-016_低台阶上落功能观察.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\021_E-LOW-016_低台阶上落功能观察.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "798D1C6B8AAA04241228398E6B748CFC96E795299EB41069F99E9BD2AE28FAD1",
+      "phase": "上阶阶段：一脚整足踩稳低台，另一脚留在地面，轻扶支撑",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "021",
+        "id": "E-LOW-016",
+        "title": "低台阶上落功能观察",
+        "phase": "上阶阶段：一脚整足踩稳低台，另一脚留在地面，轻扶支撑",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\021_E-LOW-016_低台阶上落功能观察.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a134ff-8818-7f93-b8db-d4f3efb26af7\\exec-e2a88456-8a6f-4576-89db-41d268d293cd.png",
+        "prompt": "Use case: scientific-educational.\nAsset: realistic rehabilitation assessment photograph, 021 E-LOW-016 低台阶上落功能观察.\nAll three input photos are references of the SAME EXACT WOMAN and photographic style, rather than arm poses to copy. Preserve the original adult East Asian woman's exact face, black low ponytail, natural skin and calm expression, ordinary body build, fitted plain white crewneck short-sleeve t-shirt and dark charcoal long trousers. Match the original cool light gray-blue subtly cloudy studio backdrop, seamless matching floor, soft lighting, and real skin and fabric texture.\nAction: a controlled LOW STEP-UP, viewed from the oblique side, facing right like the original face. A broad, stable plain neutral-gray low step about10–15 cm high in front of her. Her leading bare foot is placed COMPLETELY on top of the step, entire heel and all toes supported with extra platform margin; leading knee moderately bent and aligned with foot. The other bare foot remains just behind on the lower floor at the start of controlled ascent. Torso upright, level pelvis, shoulders relaxed, one hand lightly rests on a sturdy fixed neutral-gray rail beside her for balance, other arm naturally relaxed. Clearly show two different floor levels and both feet, not a high box or athletic jump.\nComposition: one woman in one single photo, portrait4:5 matching1122×1402 reference set. Full head-to-toe body, both feet, rail and low step entirely readable with comfortable margins. Normal adult proportions approximately7–8 heads, coherent hands, hips, knees and ankles. BARE feet for this foot-focused batch, same trouser hems naturally just above ankles.\nConstraints: lock woman identity, hair, shirt, trousers, background color and soft photo style to the originals. No text, numbers, arrows, labels, montage, watermark, other people, weights, room or gym equipment. No cropped toes, foot hanging over step edge, deep lunge, high knee march, jumping or stretched limbs.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "quality_review": "已检查原人物和服装、灰蓝背景、正常人体比例与关键动作方向；单幅真实照片，无文字或箭头。"
+      }
+    },
+    {
+      "sequence": 22,
+      "id": "E-LOW-008",
+      "name": "坐姿踝背屈与跖屈",
+      "category": "assess",
+      "filename": "022_E-LOW-008_坐姿踝背屈与跖屈.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\022_E-LOW-008_坐姿踝背屈与跖屈.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "6C2C3849789D220A915E4301DEA5CBFDCA30EE644EF018BEA87295540F577614",
+      "phase": "背屈阶段：小腿有支撑，脚悬空，前足主动向上抬",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "022",
+        "id": "E-LOW-008",
+        "title": "坐姿踝背屈与跖屈",
+        "phase": "背屈阶段：小腿有支撑，脚悬空，前足主动向上抬",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\022_E-LOW-008_坐姿踝背屈与跖屈.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a134ff-8818-7f93-b8db-d4f3efb26af7\\exec-a4caec2c-72eb-469c-a2cc-956c49487fd4.png",
+        "prompt": "Use case: scientific-educational.\nAsset: realistic rehabilitation assessment photo, 022 E-LOW-008 坐姿踝背屈与跖屈, showing the active dorsiflexion phase.\nUse all three original inputs to preserve the SAME EXACT adult East Asian woman, exact facial identity, low black ponytail, ordinary body proportions, natural skin and gentle expression. Preserve her fitted plain white crewneck short-sleeve t-shirt, dark charcoal long trousers, original cool light gray-blue subtly cloudy backdrop, seamless matching floor, soft photographic lighting and real textures. Bare feet for ankle movement visibility, trouser hems naturally above ankles.\nPose: SIDE PROFILE facing right. Sit upright on a sturdy simple neutral-gray chair with backrest, hips and thighs supported, torso relaxed and level. Non-tested leg bends naturally and its bare sole rests on floor. Tested leg reaches forward with knee slightly bent; the LOWER CALF rests on a small sturdy plain neutral-gray padded low stool, keeping the shin still. The tested HEEL and entire FOOT project beyond stool front edge so the foot is suspended freely without ground contact. Actively dorsiflex this ANKLE: move the entire forefoot upward toward shin to a comfortable near90-degree foot-shin angle, not just extending toes. Toes relaxed and natural. Keep thigh/shin still, no hand touching foot, both hands rest lightly on chair seat beside hips. Clearly distinguish the elevated freely-moving bare foot from the grounded opposite foot.\nComposition: one person, one single photo, portrait4:5 like1122×1402 original set. Full head, torso, knees, calf support, both feet all visible with margins. Correct ordinary head/body/leg/foot size and coherent joints; foot is detailed enough to read ankle position but not exaggerated in size. Recognizable original right-facing facial profile.\nAvoid: shoes/socks over foot, foot resting on stool, support placed under toes, foot on floor, whole lower-leg swinging, extreme plantarflexion or twisting, text/numbers/arrows/labels/watermark/montage, other people, room/gym props.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "quality_review": "已检查原人物和服装、灰蓝背景、正常人体比例与关键动作方向；单幅真实照片，无文字或箭头。"
+      }
+    },
+    {
+      "sequence": 23,
+      "id": "E-LOW-009",
+      "name": "坐姿踝内翻与外翻方向观察",
+      "category": "assess",
+      "filename": "023_E-LOW-009_坐姿踝内翻与外翻方向观察.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\023_E-LOW-009_坐姿踝内翻与外翻方向观察.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "67FCC6E5A0DC4A989DEB22A3A7B18FC9259FF2F63970474BDD2669C954444F23",
+      "phase": "内翻阶段：小腿支撑固定，足跟和脚部悬空，足底小幅朝内转",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "023",
+        "id": "E-LOW-009",
+        "title": "坐姿踝内翻与外翻方向观察",
+        "phase": "内翻阶段：小腿支撑固定，足跟和脚部悬空，足底小幅朝内转",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\023_E-LOW-009_坐姿踝内翻与外翻方向观察.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a134ff-8818-7f93-b8db-d4f3efb26af7\\exec-ed02e228-ac57-46d7-8ebe-03d2d031fee5.png",
+        "prompt": "Photorealistic single rehabilitation assessment image023 E-LOW-009, SMALL ACTIVE ANKLE INVERSION. Strictly reproduce the SAME EXACT woman in all three attached originals, especially her original face/right-facing profile, black low ponytail, white fitted short-sleeve crewneck tee, charcoal long trousers and original light cloudy cool gray-blue studio background and soft lighting. Bare feet, anatomically normal adult proportions, no distortion. Portrait4:5 like1122×1402, one woman entire body and both feet visible. Neutral-gray chair and foot support only.\nShe sits upright, torso and pelvis square toward the camera, face turned30degrees to frame-right. Her RIGHT foot at frame-left rests flat on ground. Her LEFT leg at frame-right extends FORWARD, knee almost straight; left CALF rests horizontally on a gray padded support AT CHAIR SEAT HEIGHT. The support is under CALF ONLY and ends BEFORE ankle: her entire LEFT heel and foot extend beyond its front edge and hang FREE. The sole faces generally toward the camera, toes pointing UP with ankle approximately90degrees to the horizontal shin. The foot is NOT pointed downward. Head-to-foot perspective should be natural, never an oversized foot.\nCRITICAL ANKLE POSE: rotate ONLY her LEFT foot20degrees into INVERSION about the shin/foot longitudinal axis. Its SOLE turns INWARD toward her other leg/frame-left. The BIG-TOE/MEDIAL EDGE at frame-left must be clearly HIGHER than the LITTLE-TOE/LATERAL EDGE at frame-right. Thus the raised toes form a clear diagonal HIGHER at frame-left and LOWER at frame-right, with a portion of the plantar sole visible. Keep the knee, thigh and calf fixed facing straight forward, no hip rotation. Moderate comfortable inversion, no painful extreme twist. All five toes relaxed and correct. Hands rest on chair sides, never grab the foot.\nNo shoes, socks, arrows, labels, numbers, text, watermark, collage, gym, extra people or limbs. Preserve exact original woman/clothes/background colors; show clear inward sole orientation while calf stays supported stationary.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "quality_review": "已检查原人物和服装、灰蓝背景、正常人体比例与关键动作方向；单幅真实照片，无文字或箭头。",
+        "attempts": [
+          {
+            "number": 1,
+            "prompt": "Use case: scientific-educational.\nAsset: realistic rehabilitation assessment photograph, 023 E-LOW-009 坐姿踝内翻与外翻方向观察, showing a SMALL ACTIVE ANKLE INVERSION phase.\nAll3 original photos reference the SAME EXACT adult East Asian woman, her original face and body identity, black low ponytail, calm natural skin/expression, fitted plain white crewneck short-sleeve t-shirt and dark charcoal LONG trousers. Preserve exact original cool light gray-blue subtly cloudy studio backdrop and seamless matching floor, soft lighting and real photographic texture. Bare feet for ankle visibility. Long trouser hems naturally end only a few centimeters above ankles, no shorts or capri trousers.\nPose: seated upright on a sturdy simple neutral-gray chair with backrest, FRONT/very slight oblique front camera so ankle rotation can be seen. Head turned comfortably30–40degrees toward frame-right to match original facial identity. Pelvis square, BOTH thighs and knees point straight forward. Non-test bare foot rests naturally flat on floor. Tested lower CALF rests on a plain neutral-gray padded low stool in front, supporting shin while tested heel/wholefoot projects beyond stool edge and hangs freely. NO rotation of thigh, knee or shin, NO lateral movement of knee. Only tested ANKLE turns slightly into INVERSION: sole turns a small comfortable15degree amount toward the body's midline/other foot, MEDIAL INNER EDGE rises slightly and LATERAL OUTER EDGE lowers; foot remains aligned along shin longitudinally, no exaggerated twist. All5 toes relaxed and natural. Hands rest on chair sides, never grasp or push foot.\nMake the supported stationary lower leg and sole direction readable in one realistic photo. One person, portrait4:5 like1122×1402 set, whole head/body and BOTH bare feet plus stool visible with comfortable margins, normal adult proportions, coherent ankle/foot/toes and joints.\nAvoid: whole-leg hip rotation as in seated hip rotation, knee moving outward, hands twisting foot, extreme ankle roll, foot ground contact, shoes/socks, text/numbers/arrows/labels/watermarks/montage, extra people, room/gym, short or oversized limbs.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ],
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a134ff-8818-7f93-b8db-d4f3efb26af7\\exec-9b809323-460c-4298-a180-1b145d4b1f12.png",
+            "selected": false,
+            "review": "小腿有支撑，足部悬空但内翻方向不清楚。"
+          },
+          {
+            "number": 2,
+            "prompt": "Edit the first referenced image, using the other three original references to keep the woman's exact identity. Preserve her face, head orientation, ponytail, white short-sleeve shirt, long charcoal trousers, natural body proportions, chair, padded stool, framing, lighting, and exact gray-blue background. Change ONLY the ankle posture of her LEFT bare foot, the foot suspended in front of the stool at frame-right. This photo must show a modest clear ACTIVE ANKLE INVERSION, NOT eversion: raise the MEDIAL/BIG-TOE EDGE (the image-left side of this foot, facing toward her other foot), and lower the LATERAL/LITTLE-TOE EDGE (image-right side). Tilt the sole approximately 20 degrees toward her other foot/body midline; make a little of the sole's medial side visible. Five relaxed anatomically correct toes, normal foot proportions. Keep the left knee and supported shin exactly stationary facing forward, no hip or thigh rotation. Keep whole foot and heel suspended beyond stool, no support or floor contact. Maintain realistic comfortable motion. Do not modify the other grounded foot, person, props, color, background or clothes. No words, graphics, arrows, montage.",
+            "referenced_image_paths": [
+              "C:\\Users\\Administrator\\.codex\\generated_images\\01a134ff-8818-7f93-b8db-d4f3efb26af7\\exec-9b809323-460c-4298-a180-1b145d4b1f12.png",
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ],
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a134ff-8818-7f93-b8db-d4f3efb26af7\\exec-acca3832-1793-4dd8-ba95-57081d3b4d70.png",
+            "selected": false,
+            "review": "足部方向仍接近中立或轻度外翻，未选用。"
+          },
+          {
+            "number": 3,
+            "prompt": "Photorealistic single rehabilitation assessment image023 E-LOW-009, SMALL ACTIVE ANKLE INVERSION. Strictly reproduce the SAME EXACT woman in all three attached originals, especially her original face/right-facing profile, black low ponytail, white fitted short-sleeve crewneck tee, charcoal long trousers and original light cloudy cool gray-blue studio background and soft lighting. Bare feet, anatomically normal adult proportions, no distortion. Portrait4:5 like1122×1402, one woman entire body and both feet visible. Neutral-gray chair and foot support only.\nShe sits upright, torso and pelvis square toward the camera, face turned30degrees to frame-right. Her RIGHT foot at frame-left rests flat on ground. Her LEFT leg at frame-right extends FORWARD, knee almost straight; left CALF rests horizontally on a gray padded support AT CHAIR SEAT HEIGHT. The support is under CALF ONLY and ends BEFORE ankle: her entire LEFT heel and foot extend beyond its front edge and hang FREE. The sole faces generally toward the camera, toes pointing UP with ankle approximately90degrees to the horizontal shin. The foot is NOT pointed downward. Head-to-foot perspective should be natural, never an oversized foot.\nCRITICAL ANKLE POSE: rotate ONLY her LEFT foot20degrees into INVERSION about the shin/foot longitudinal axis. Its SOLE turns INWARD toward her other leg/frame-left. The BIG-TOE/MEDIAL EDGE at frame-left must be clearly HIGHER than the LITTLE-TOE/LATERAL EDGE at frame-right. Thus the raised toes form a clear diagonal HIGHER at frame-left and LOWER at frame-right, with a portion of the plantar sole visible. Keep the knee, thigh and calf fixed facing straight forward, no hip rotation. Moderate comfortable inversion, no painful extreme twist. All five toes relaxed and correct. Hands rest on chair sides, never grab the foot.\nNo shoes, socks, arrows, labels, numbers, text, watermark, collage, gym, extra people or limbs. Preserve exact original woman/clothes/background colors; show clear inward sole orientation while calf stays supported stationary.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ],
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a134ff-8818-7f93-b8db-d4f3efb26af7\\exec-ed02e228-ac57-46d7-8ebe-03d2d031fee5.png",
+            "selected": true,
+            "review": "改为伸膝位支撑小腿，脚部悬空，足底和内侧缘抬起方向清楚。"
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 24,
+      "id": "E-LOW-010",
+      "name": "膝顶墙负重背屈",
+      "category": "assess",
+      "filename": "024_E-LOW-010_膝顶墙负重背屈.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\024_E-LOW-010_膝顶墙负重背屈.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "87ADAA009E731024851370ADDAA2CB3085186C69AAF2DFF88FD8FBF82614BEBB",
+      "phase": "脚跟贴地，膝沿前足方向碰墙，脚趾与墙保持可见距离",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "024",
+        "id": "E-LOW-010",
+        "title": "膝顶墙负重背屈",
+        "phase": "assess",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\024_E-LOW-010_膝顶墙负重背屈.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-d934d00d-60d8-4eca-af53-46c464499af4.png",
+        "prompt": "Targeted photo correction. Images 1–3 are exact woman identity and studio-style references; image 4 is the target to edit. Keep target's face, hair, torso, hand, white T-shirt, charcoal trousers, cool cloudy gray-blue seamless studio, lighting, whole-body portrait 4:5 framing, and rear foot exactly unchanged.\nEdit ONLY the FRONT test foot and ankle/lower-shin geometry. At 1122x1402 target size, the current front barefoot toe tip is roughly x866 near the wall-floor edge x879. Translate the ENTIRE FRONT bare foot LEFT by about 65 pixels, placing the toe tip near x800; preserve its natural size and all toes. There must be a distinct bare floor gap roughly 70–80 pixels wide between the FRONT TOES and the wall. This is about 5–7 cm in the scene, a substantial visible gap, NOT a tiny crack. Front toes point right. Front sole and HEEL completely FLAT on floor. Keep the front KNEE at the wall and move front ankle left with foot, causing front shin to slope diagonally forward-right to the knee. Bend the ankle naturally; no foot sliding illusion. The knee is ahead of the toes; only knee and the lightly resting hand touch the wall, neither foot touches the wall. Preserve coherent natural anatomy and five toes per foot. No text or marks.",
+        "initial_prompt": "Use case: photorealistic-natural. Asset type: one photograph for a rehabilitation movement card. All THREE input images are identity and studio-style references of the SAME adult East Asian woman. Preserve her exact recognizable facial identity, realistic adult body identity, black low ponytail, natural skin and calm slight smile. She wears the same fitted white crew-neck short-sleeve T-shirt and dark charcoal long trousers; hems end naturally just above the ankles. BARE FEET, no shoes or socks, so ankle and heel mechanics are unambiguous.\nMatch the exact original cool light gray-blue subtly cloudy seamless studio backdrop and matching floor from the references; softly diffused photographic lighting, believable fabric and skin texture. Never change the backdrop to white, warm beige, or a room. Natural adult 7-to-8-head body proportions, realistic coherent anatomy, five fingers per hand and natural feet.\nPortrait aspect ratio 4:5, matching reference framing style but now full-body, entire head, both feet and action prop visible with generous margins. Single person, single coherent photograph. Right-facing strict side profile, recognizable face close to original. No text, labels, numbers, arrows, watermark, montage, extra people, gym or room. Props only when essential, neutral gray.\nMovement E-LOW-010, knee-to-wall weight-bearing ankle dorsiflexion. A plain vertical wall plane is on the RIGHT, colored the same cool gray-blue as the studio. The woman faces right in true side profile in a comfortable short split stance. The front test foot points straight toward the wall, its toes about FIVE CENTIMETERS from the wall, with its ENTIRE sole including heel completely FLAT on the floor. Front knee is flexed and gently TOUCHES the wall, aligned over the toes; the front shin inclines forward visibly. Behind her the other foot is flat naturally for balance, in a short comfortable stagger rather than a deep athletic lunge. One open hand lightly touches the wall for balance, other arm relaxed. Torso comfortable and fairly upright. Critical: front HEEL must remain fully on floor, no heel elevation, no foot turned out. Both barefoot soles contact the floor. A thin flat unmarked tape strip can lie near the front foot, but NO marks, letters or digits. Show the decisive moment where knee touches wall while heel stays down.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+          "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-7cd8b1fb-be01-4782-a8af-56500763a130.png"
+        ],
+        "identity_reference_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "attempts": 4,
+        "rejected_output_paths": [
+          "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-727d73b7-addd-43b9-b3ad-1ea7248dfea3.png",
+          "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-dc1e719d-494b-4845-a1f3-db51e0df30ca.png",
+          "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-7cd8b1fb-be01-4782-a8af-56500763a130.png"
+        ],
+        "inspection": "Accepted: same reference woman and cool gray-blue studio; full body and both bare feet visible; knee touches wall, visibly forward-sloping shin, entire front heel flat, visible comfortable toe-wall gap.",
+        "width": 1122,
+        "height": 1402,
+        "sha256": "87ADAA009E731024851370ADDAA2CB3085186C69AAF2DFF88FD8FBF82614BEBB",
+        "verified_byte_identical_to_original": true
+      }
+    },
+    {
+      "sequence": 25,
+      "id": "E-LOW-011",
+      "name": "扶稳双脚提踵功能观察",
+      "category": "assess",
+      "filename": "025_E-LOW-011_扶稳双脚提踵功能观察.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\025_E-LOW-011_扶稳双脚提踵功能观察.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "93AD14ECF3229B7E5FA9E835648F5F5847DC737610410BEA793D3D4A4DAACA96",
+      "phase": "双脚提踵上升阶段：双前足着地，双脚跟离地，膝近直，轻扶椅背",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "025",
+        "id": "E-LOW-011",
+        "title": "扶稳双脚提踵功能观察",
+        "phase": "assess",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\025_E-LOW-011_扶稳双脚提踵功能观察.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-7bde340b-285a-42fd-8ebe-b25d835350db.png",
+        "prompt": "Use images 1–3 for exact woman identity/style; image 4 is edit target. Keep all target content unchanged except ankle/feet height. In image 4 the heels are too close to floor and appear flat. Raise BOTH HEELS slightly by roughly TWO CENTIMETERS from their current target positions, creating a visible small air gap of 3–4cm under both heels. Raise the body naturally with straight knees by the same small amount. Keep ALL forefoot pads and toes planted, feet parallel at hip width, torso upright, one hand light on gray chair. The final heel raise should be BETWEEN the flat-foot position and high tiptoe: low but clearly elevated with a visible strip of gray-blue floor underneath both heels. At 1122x1402, floor/toes are near y1280; lowest heel skin should be near y1258, giving roughly 22-pixel air gap. Bare foot length around 160pixels, so this is only 1/7 foot length. Do not exceed 25pixel heel gap or flatten heels back onto floor. Natural ankle plantar flexion, natural adult anatomy, exactly same reference woman/white tee/charcoal trousers/gray-blue cloudy studio, full body portrait. No text.",
+        "initial_prompt": "Use case: photorealistic-natural. Asset type: one photograph for a rehabilitation movement card. All THREE input images are identity and studio-style references of the SAME adult East Asian woman. Preserve her exact recognizable facial identity, realistic adult body identity, black low ponytail, natural skin and calm slight smile. She wears the same fitted white crew-neck short-sleeve T-shirt and dark charcoal long trousers; hems end naturally just above the ankles. BARE FEET, no shoes or socks, so ankle and heel mechanics are unambiguous.\nMatch the exact original cool light gray-blue subtly cloudy seamless studio backdrop and matching floor from the references; softly diffused photographic lighting, believable fabric and skin texture. Never change the backdrop to white, warm beige, or a room. Natural adult 7-to-8-head body proportions, realistic coherent anatomy, five fingers per hand and natural feet.\nPortrait aspect ratio 4:5, matching reference framing style but now full-body, entire head, both feet and action prop visible with generous margins. Single person, single coherent photograph. Right-facing strict side profile, recognizable face close to original. No text, labels, numbers, arrows, watermark, montage, extra people, gym or room. Props only when essential, neutral gray.\nMovement E-LOW-011: supported DOUBLE-LEG heel raise functional observation. The woman faces right in true side profile. She stands erect with torso vertical, pelvis neutral, BOTH knees nearly straight and BOTH bare feet parallel, about hip-width apart. One hand rests very lightly on a sturdy plain neutral-gray chair back to her right, the chair having no wheels; other hand relaxed beside her body. Capture a still controlled calf raise: BOTH HEELS are raised moderately about 3–4cm above the matching gray-blue floor, with BOTH forefeet and toes planted on the floor. Clear visible air gaps beneath both heels. The feet remain close side-by-side in hip-width stance, never front-back in a stride; show the farther heel slightly offset so BOTH raised heels can be read while camera remains a side view. Natural toes gently extend at metatarsal joints, no extreme tiptoe/ballet, no knee bend, squat, jump, bouncing or pulling through hand. The chair's back support is light balance only. Entire head, whole body, both bare heels and toes plus chair in frame with margins.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+          "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-1228958a-0701-4fdc-9be3-97ea47a0fe6a.png"
+        ],
+        "identity_reference_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "attempts": 4,
+        "rejected_output_paths": [
+          "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-2fb1daf8-86b8-487b-a64e-7c20da0eb1a9.png",
+          "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-e8bd4b27-6d0f-4e72-ab8c-44dd4c9d9477.png",
+          "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-1228958a-0701-4fdc-9be3-97ea47a0fe6a.png"
+        ],
+        "inspection": "Accepted: same reference woman and cool gray-blue studio; whole body and chair visible; both knees nearly straight, light hand support, both forefeet planted and both heels moderately raised with visible gaps; normal anatomy.",
+        "width": 1122,
+        "height": 1402,
+        "sha256": "93AD14ECF3229B7E5FA9E835648F5F5847DC737610410BEA793D3D4A4DAACA96",
+        "verified_byte_identical_to_original": true
+      }
+    },
+    {
+      "sequence": 26,
+      "id": "E-LOW-012",
+      "name": "扶稳单脚提踵耐力表现",
+      "category": "assess",
+      "filename": "026_E-LOW-012_扶稳单脚提踵耐力表现.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\026_E-LOW-012_扶稳单脚提踵耐力表现.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "4AED51A329841BFF1F16EE6DE09500D671BD5FE05A449B1AF39AB6F3BFDC5688",
+      "phase": "单脚提踵上升阶段：支撑前足着地、脚跟离地，另一足悬空，轻扶扶手",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "026",
+        "id": "E-LOW-012",
+        "title": "扶稳单脚提踵耐力表现",
+        "phase": "assess",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\026_E-LOW-012_扶稳单脚提踵耐力表现.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-92785c9e-e4a5-48a2-b52e-3077bc89f406.png",
+        "prompt": "Target image 4 is still too high on tiptoe. Edit only standing heel/ankle and natural matching body height; preserve every other detail including exact original reference woman from images 1–3, face, hair, outfit, studio, airborne bent leg, rail, right-facing profile and 4:5 crop.\nMake standing heel LOW, only a LITTLE above floor. Reduce current standing heel air gap by approximately TWO THIRDS. Desired skin-to-floor gap is 3cm, about 20pixels at this scale. Current heel underside is near y1238 while planted toes are near y1290. Move heel underside DOWN to y1268, leaving just a 22pixel visible floor gap. Do not leave it at the current high position; do not put heel flat on ground. The standing bare foot should be almost horizontal, only about 10degrees tilted, a shallow supported single-leg calf raise. Standing forefoot and toes stay exactly planted, standing knee remains nearly straight, torso upright. The other foot is completely airborne and does not touch ground. Lower body naturally with lowered heel, no shortened limbs, no deformation. No text.",
+        "initial_prompt": "Use case: photorealistic-natural. Asset type: one photograph for a rehabilitation movement card. All THREE input images are identity and studio-style references of the SAME adult East Asian woman. Preserve her exact recognizable facial identity, realistic adult body identity, black low ponytail, natural skin and calm slight smile. She wears the same fitted white crew-neck short-sleeve T-shirt and dark charcoal long trousers; hems end naturally just above the ankles. BARE FEET, no shoes or socks, so ankle and heel mechanics are unambiguous.\nMatch the exact original cool light gray-blue subtly cloudy seamless studio backdrop and matching floor from the references; softly diffused photographic lighting, believable fabric and skin texture. Never change the backdrop to white, warm beige, or a room. Natural adult 7-to-8-head body proportions, realistic coherent anatomy, five fingers per hand and natural feet.\nPortrait aspect ratio 4:5, matching reference framing style but now full-body, entire head, both feet and action prop visible with generous margins. Single person, single coherent photograph. Right-facing strict side profile, recognizable face close to original. No text, labels, numbers, arrows, watermark, montage, extra people, gym or room. Props only when essential, neutral gray.\nMovement E-LOW-012: supported SINGLE-LEG heel raise functional endurance demonstration. In TRUE right-facing side view, she stands erect, pelvis neutral, torso vertical. ONE hand rests very lightly on a fixed sturdy plain neutral-gray support rail at waist level to her right, other hand hangs relaxed. The near test leg is almost straight and bears all weight. Its ONE standing bare foot has forefoot pads and toes planted, heel raised LOW and moderately only 3–4cm above the floor, about one-seventh of a foot length. Standing foot's sole has a shallow 10–15 degree upward slope, never high ballet tiptoe. Clearly visible small air gap under this ONE standing heel.\nThe OTHER leg's knee is bent comfortably so its entire bare foot is suspended behind her, COMPLETELY OFF THE FLOOR by at least 10cm, with visibly empty floor below it. This other foot is relaxed and does NOT push the floor. Both feet must be clearly separately visible: exactly ONE grounded forefoot and ONE completely airborne foot. Do not make both feet touch the ground. Show one-leg calf raise, not stepping or jumping. Neutral pelvis and upright torso, standing knee nearly straight, light balance hand not pulling. Entire head, body, both bare feet and fixed gray rail in frame with margins.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+          "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-4c23d84a-6a95-4ebd-b509-630f2fad058d.png"
+        ],
+        "identity_reference_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "attempts": 3,
+        "rejected_output_paths": [
+          "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-ccf754c1-8650-410f-ad37-5eb91b1f34e5.png",
+          "C:\\Users\\Administrator\\.codex\\generated_images\\01a13551-c412-77c0-b56b-0d6f484f5da7\\exec-4c23d84a-6a95-4ebd-b509-630f2fad058d.png"
+        ],
+        "inspection": "Accepted: same reference woman and cool gray-blue studio; full head/body/both bare feet visible; standing knee nearly straight, shallow moderately raised standing heel with planted forefoot; other foot wholly airborne with comfortably bent knee; light fixed rail support and upright torso.",
+        "width": 1122,
+        "height": 1402,
+        "sha256": "4AED51A329841BFF1F16EE6DE09500D671BD5FE05A449B1AF39AB6F3BFDC5688",
+        "verified_byte_identical_to_original": true
+      }
+    },
+    {
+      "sequence": 27,
+      "id": "E-LOW-028",
+      "name": "扶稳屈膝站姿提踵观察",
+      "category": "assess",
+      "filename": "027_E-LOW-028_扶稳屈膝站姿提踵观察.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\027_E-LOW-028_扶稳屈膝站姿提踵观察.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "3BBA7FC0E3EFC0F2E3BF874D23A8354742BECF7F19489FEC169018DC6A460AC9",
+      "phase": "固定小幅屈膝双足提踵顶点",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "027",
+        "id": "E-LOW-028",
+        "title": "扶稳屈膝站姿提踵观察",
+        "phase": "固定小幅屈膝双足提踵顶点",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\027_E-LOW-028_扶稳屈膝站姿提踵观察.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13553-0aa6-7872-90d6-a9b58255ac09\\exec-7f7ee354-f49d-4bfc-b2ca-41efda35ffa4.png",
+        "prompt": "Create ONE full body rehabilitation photograph from original reference images 1–3. Use EXACT SAME East Asian adult woman, face profile, black low ponytail, fitted white crewneck short-sleeve T-shirt, dark charcoal long trousers. Same cool light gray-blue subtly cloudy seamless backdrop with matching floor, soft studio lighting, realistic skin/fabric. Bare feet, pants naturally end just above ankles. Portrait 4:5 with whole head/body/both feet visible and margins, natural adult 7–8 heads tall.\nSIDE PROFILE facing RIGHT, only one hand lightly on a sturdy fixed neutral gray waist-height handrail, free arm hangs down. Two parallel feet hip-width, toes pointing right; tiny camera offset lets both feet be seen. Both knees are flexed about 25 degrees, clearly fixed mildly bent, pelvis only slightly back, trunk nearly upright.\nCRITICAL FOOT POSITION: a VERY LOW partial heel raise, not standing on tiptoes. BOTH heels are ALMOST on the floor, lifted only about 3 cm, just one finger-width of shadow gap visible below the heels. Each foot's sole slopes very GENTLY, about 8–10 degrees from level, with BOTH balls of feet and ALL toes staying FLAT on the floor. Back half of foot only slightly raised, ankles only mildly plantarflexed. Do NOT make steep foot angles or high heels. This is a small controlled supported bent-knee heel raise; the knees remain mildly bent 25 degrees. Do not straighten knees, squat deeply, jump, lift only one heel, haul on the rail, or go up onto toe tips. Natural calm stable pose.\nSingle photo/single person, essential gray fixed rail only, no other props, no shoes/socks, no text/numbers/arrows/watermarks, no room/gym, no collage. Coherent normal hands/feet/limbs.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "attempts": [
+          {
+            "attempt": 1,
+            "prompt": "Use case: photorealistic-natural.\nAsset: one clinical rehabilitation exercise demonstration photo, sequence 027 E-LOW-028 扶稳屈膝站姿提踵观察, with NO visible writing.\nAll THREE attached original photos are identity, clothing, photography and backdrop references. Reproduce the SAME exact adult East Asian woman, identical facial features and body identity, black low ponytail, natural skin and calm faint smile. Identical fitted white crewneck short-sleeve T-shirt and dark charcoal long trousers; the trousers end naturally just above the ankles, she is BAREFOOT to show heels and ankles.\nMake a NEW single full-body studio photograph. Exact reference cool light gray-blue subtly cloudy seamless studio background and matching floor, soft diffuse photo lighting, natural fabric and skin texture. Portrait 4:5 matching the references, whole head, torso, arms, legs and BOTH bare feet fully visible, generous margins above head/below feet, adult natural 7–8 head body proportions. Same camera photographic realism, no stylization.\nPose: true SIDE PROFILE facing RIGHT. One hand rests lightly on a sturdy fixed neutral gray handrail beside/in front of her at waist height, other arm relaxed down. BOTH feet point right, parallel and hip-width apart. Show both feet with a tiny viewpoint offset only, so neither heel is hidden. BOTH knees are gently bent about 20–30 degrees, and STAY bent in this raised-heel position: femurs tilt slightly forward and shins tilt forward, hips slightly back, torso nearly erect with only natural slight forward inclination. BOTH heels raised a moderate 3–4 cm from the floor, BOTH balls of feet and toes firmly contact floor. This is the TOP position of a small bent-knee calf raise, NOT a deep squat, NOT straight knees, NOT jumping, NOT one-legged, no repeated crouching. Heel clearance and bent knee profile must be visually clear together. Calm balanced controlled posture, handrail supports balance without hauling body upward.\nConstraints: only one person, only essential neutral gray fixed rail prop; no shoes/socks, no text, labels, arrows, numbers, clock, watermark, collage, extra people, gym or room. Realistic coherent knees, ankles, hands and five toes per foot, no exaggerated calf raise height. Do not crop anything.",
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13553-0aa6-7872-90d6-a9b58255ac09\\exec-39a931bf-a70a-4759-84a8-c4c23c138431.png",
+            "accepted": false,
+            "reason": "Heel raise higher than requested.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ]
+          },
+          {
+            "attempt": 2,
+            "prompt": "Targeted pose correction of image 4. Images 1–3 are original identity, outfit, backdrop and photo-style references; image 4 is the current photo to correct. Preserve all of image 4's person identity, facial profile, ponytail, clothing, lighting, cool light gray-blue cloudy seamless backdrop/floor, hand lightly on fixed gray rail, framing and bent-knee posture. Change ONLY both ankle angles and heel clearance: LOWER BOTH heels from their currently too-high tiptoe position to a SMALL 3–4 cm heel lift, about half the current height. Both entire forefeet including balls of feet and toes remain firmly grounded; heels have a small visible air gap, feet slope gently rather than pointing down steeply. Keep BOTH knees gently bent 20–30 degrees exactly as they are. Show a realistic supported BENT-KNEE small calf raise with near erect torso. Same whole-body portrait 4:5, head/both bare feet visible with margins, normal adult anatomy. No new elements, no text/numbers/arrows/watermarks, no montage.",
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13553-0aa6-7872-90d6-a9b58255ac09\\exec-0d4e34be-6260-4f4e-b6d0-fb2b1b43d25f.png",
+            "accepted": false,
+            "reason": "Targeted ankle correction insufficient.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+              "C:\\Users\\Administrator\\.codex\\generated_images\\01a13553-0aa6-7872-90d6-a9b58255ac09\\exec-39a931bf-a70a-4759-84a8-c4c23c138431.png"
+            ]
+          },
+          {
+            "attempt": 3,
+            "prompt": "Create ONE full body rehabilitation photograph from original reference images 1–3. Use EXACT SAME East Asian adult woman, face profile, black low ponytail, fitted white crewneck short-sleeve T-shirt, dark charcoal long trousers. Same cool light gray-blue subtly cloudy seamless backdrop with matching floor, soft studio lighting, realistic skin/fabric. Bare feet, pants naturally end just above ankles. Portrait 4:5 with whole head/body/both feet visible and margins, natural adult 7–8 heads tall.\nSIDE PROFILE facing RIGHT, only one hand lightly on a sturdy fixed neutral gray waist-height handrail, free arm hangs down. Two parallel feet hip-width, toes pointing right; tiny camera offset lets both feet be seen. Both knees are flexed about 25 degrees, clearly fixed mildly bent, pelvis only slightly back, trunk nearly upright.\nCRITICAL FOOT POSITION: a VERY LOW partial heel raise, not standing on tiptoes. BOTH heels are ALMOST on the floor, lifted only about 3 cm, just one finger-width of shadow gap visible below the heels. Each foot's sole slopes very GENTLY, about 8–10 degrees from level, with BOTH balls of feet and ALL toes staying FLAT on the floor. Back half of foot only slightly raised, ankles only mildly plantarflexed. Do NOT make steep foot angles or high heels. This is a small controlled supported bent-knee heel raise; the knees remain mildly bent 25 degrees. Do not straighten knees, squat deeply, jump, lift only one heel, haul on the rail, or go up onto toe tips. Natural calm stable pose.\nSingle photo/single person, essential gray fixed rail only, no other props, no shoes/socks, no text/numbers/arrows/watermarks, no room/gym, no collage. Coherent normal hands/feet/limbs.",
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13553-0aa6-7872-90d6-a9b58255ac09\\exec-7f7ee354-f49d-4bfc-b2ca-41efda35ffa4.png",
+            "accepted": true,
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ]
+          }
+        ],
+        "qa": {
+          "identity": true,
+          "reference_backdrop_style": true,
+          "full_body_margins": true,
+          "natural_adult_proportions": true,
+          "pose": "Both gently flexed knees retained; both forefeet/toes grounded; lower controlled heel lift; single light rail contact.",
+          "reviewed": true
+        },
+        "sha256": "3BBA7FC0E3EFC0F2E3BF874D23A8354742BECF7F19489FEC169018DC6A460AC9",
+        "original_retained": true,
+        "copy_verified": true
+      }
+    },
+    {
+      "sequence": 28,
+      "id": "E-LOW-029",
+      "name": "扶稳提踵短时保持观察",
+      "category": "assess",
+      "filename": "028_E-LOW-029_扶稳提踵短时保持观察.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\028_E-LOW-029_扶稳提踵短时保持观察.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "6EEAF9D6ADC4F38B64D13C6100F3AF21BCDD450E0E84E369BC9F6CB0AA783715",
+      "phase": "双足低至中等提踵高度稳定保持",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "028",
+        "id": "E-LOW-029",
+        "title": "扶稳提踵短时保持观察",
+        "phase": "双足低至中等提踵高度稳定保持",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\028_E-LOW-029_扶稳提踵短时保持观察.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13553-0aa6-7872-90d6-a9b58255ac09\\exec-4a3c5386-d40f-42c0-8dae-b85b55c7177b.png",
+        "prompt": "Use case: photorealistic-natural. Generate ONE new rehabilitation demonstration studio photograph for E-LOW-029 supported short heel-raise HOLD. Images 1–3 are all original references: preserve the exact SAME adult East Asian woman's face, body identity, black low ponytail, calm soft smile, natural skin. Same fitted white crewneck short-sleeve T-shirt, same dark charcoal long trousers ending naturally just above ankle, BARE FEET. Exact original cool light gray-blue subtly cloudy seamless studio backdrop with matching floor and soft photo lighting, natural fabric/skin texture.\nPortrait 4:5 like reference 1122×1402. Whole head/body/both bare feet fully visible, ample margins. Realistic normal adult 7–8-head proportions and coherent hands/feet. Slight THREE-QUARTER SIDE VIEW, woman facing RIGHT, profile face visible close to reference angle.\nPose: standing very calmly with knees near straight but not locked, upright trunk and level pelvis. BOTH feet parallel hip-width and pointing right. She is HOLDING a low moderate BILATERAL heel raise at 3–4 cm, both heels a small distance clear of floor. Both forefeet (balls plus toes) remain FLAT and securely planted. Feet slope gently about 10–15 degrees from level, do NOT stand steeply on toe tips or lift heels to maximum. Heel clearance on BOTH feet must be visible. ONE hand softly rests on sturdy fixed neutral gray handrail at waist height beside/in front; free arm relaxes down. Hand does not pull or grip hard. Calm stable controlled hold, no effort or strain, natural breathing and relaxed shoulders. No knee bending, no squat, no one-legged balance, no jumping, no walking.\nOne person/one photo, essential neutral gray handrail only. No shoes/socks, room/gym, extra people, stopwatch, timer, text/labels/numbers/arrows/watermarks, diagrams, collage or montage. No medical claim visuals.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "attempts": [
+          {
+            "attempt": 1,
+            "prompt": "Use case: photorealistic-natural. Generate ONE new rehabilitation demonstration studio photograph for E-LOW-029 supported short heel-raise HOLD. Images 1–3 are all original references: preserve the exact SAME adult East Asian woman's face, body identity, black low ponytail, calm soft smile, natural skin. Same fitted white crewneck short-sleeve T-shirt, same dark charcoal long trousers ending naturally just above ankle, BARE FEET. Exact original cool light gray-blue subtly cloudy seamless studio backdrop with matching floor and soft photo lighting, natural fabric/skin texture.\nPortrait 4:5 like reference 1122×1402. Whole head/body/both bare feet fully visible, ample margins. Realistic normal adult 7–8-head proportions and coherent hands/feet. Slight THREE-QUARTER SIDE VIEW, woman facing RIGHT, profile face visible close to reference angle.\nPose: standing very calmly with knees near straight but not locked, upright trunk and level pelvis. BOTH feet parallel hip-width and pointing right. She is HOLDING a low moderate BILATERAL heel raise at 3–4 cm, both heels a small distance clear of floor. Both forefeet (balls plus toes) remain FLAT and securely planted. Feet slope gently about 10–15 degrees from level, do NOT stand steeply on toe tips or lift heels to maximum. Heel clearance on BOTH feet must be visible. ONE hand softly rests on sturdy fixed neutral gray handrail at waist height beside/in front; free arm relaxes down. Hand does not pull or grip hard. Calm stable controlled hold, no effort or strain, natural breathing and relaxed shoulders. No knee bending, no squat, no one-legged balance, no jumping, no walking.\nOne person/one photo, essential neutral gray handrail only. No shoes/socks, room/gym, extra people, stopwatch, timer, text/labels/numbers/arrows/watermarks, diagrams, collage or montage. No medical claim visuals.",
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13553-0aa6-7872-90d6-a9b58255ac09\\exec-81b5c73f-633d-44ee-832a-4610814b9e7c.png",
+            "accepted": false,
+            "reason": "Heel height needed lowering.",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ]
+          },
+          {
+            "attempt": 2,
+            "prompt": "EDIT image 4 only. Images 1–3 provide the original woman identity, clothing and studio photo style; keep the exact same woman and those properties. In image 4 the heels are currently much TOO HIGH and feet point steeply downward. Correct only the ankles and feet to a VERY LOW partial heel raise while keeping the near-straight knees and whole upright body pose unchanged. Rotate the feet flatter: both heels should be just 3 cm above their local floor, and only the rear one-third of each foot is suspended. The sole from midfoot through forefoot looks almost horizontal; both metatarsal balls and all toe pads firmly contact the floor. Only a SMALL finger-width air gap under each heel. In image space, make the heel clearance approximately one THIRD of its current clearance. This is a relaxed bilateral partial heel raise held quietly, not a full tiptoe position. Both toes point right, both feet remain parallel at hip width. Do not add props under heels.\nKeep face/profile identical, black low ponytail, white short-sleeve shirt, charcoal ankle trousers, barefoot, one hand lightly resting on fixed gray rail and free arm down, studio seamless cool gray-blue cloudy backdrop/floor, soft lighting, photographic texture, normal adult proportions, portrait 4:5 full head/body/both feet visible. No text, labels, arrows, timer, watermark, collage or extra people.",
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13553-0aa6-7872-90d6-a9b58255ac09\\exec-4a3c5386-d40f-42c0-8dae-b85b55c7177b.png",
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png",
+              "C:\\Users\\Administrator\\.codex\\generated_images\\01a13553-0aa6-7872-90d6-a9b58255ac09\\exec-81b5c73f-633d-44ee-832a-4610814b9e7c.png"
+            ],
+            "accepted": true
+          }
+        ],
+        "qa": {
+          "identity": true,
+          "reference_backdrop_style": true,
+          "full_body_margins": true,
+          "natural_adult_proportions": true,
+          "pose": "Near straight knees, erect calm bilateral heel raise hold; both balls/toes grounded, lower heel clearance; one light rail contact.",
+          "reviewed": true
+        },
+        "sha256": "6EEAF9D6ADC4F38B64D13C6100F3AF21BCDD450E0E84E369BC9F6CB0AA783715",
+        "original_retained": true,
+        "copy_verified": true
+      }
+    },
+    {
+      "sequence": 29,
+      "id": "E-LOW-018",
+      "name": "窄基底与串联站立",
+      "category": "assess",
+      "filename": "029_E-LOW-018_窄基底与串联站立.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\029_E-LOW-018_窄基底与串联站立.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "6A79CAC8C3A536E4AD536FB68D842F8B25567EEBB8DC169E6239E32572E02108",
+      "phase": "睁眼半串联无扶手接触稳定站立",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "029",
+        "id": "E-LOW-018",
+        "title": "窄基底与串联站立",
+        "phase": "睁眼半串联无扶手接触稳定站立",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\029_E-LOW-018_窄基底与串联站立.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13553-0aa6-7872-90d6-a9b58255ac09\\exec-9a498ee5-6d2a-4902-a3df-3198c8c59e20.png",
+        "prompt": "Use case: photorealistic-natural. Create ONE rehabilitation demonstration studio photograph for E-LOW-018 narrow base / semi-tandem standing. Images 1, 2, 3 are ORIGINAL identity, clothing, backdrop, lighting references. Preserve the EXACT SAME adult East Asian woman and facial identity, natural skin, black low ponytail, calm faint smile. SAME fitted white crewneck short-sleeve T-shirt and dark charcoal long trousers naturally ending just above ankles. She is BAREFOOT to display foot placement.\nExact original COOL light gray-blue subtly cloudy seamless studio backdrop and matching floor, soft diffused photographic lighting and realistic fabric/skin. Portrait 4:5 reference aspect, WHOLE head/body/both bare feet visible with clear margins, normal adult 7–8-head body proportions, realistic anatomy.\nComposition: FRONT whole-body view, shoulders and pelvis square toward camera. Her head turned comfortably about 30 degrees toward IMAGE RIGHT, eyes OPEN calmly looking at fixed point to right, preserving the reference's facial features. Trunk upright and level, both arms naturally relaxed down alongside hips.\nFoot pose is SEMI-TANDEM standing, deliberately narrow base: one bare foot is a SHORT step ahead of the other and slightly laterally offset. The FORWARD HEEL is next to/beside the REAR foot's BIG TOE, at approximately the same fore-aft level. Both feet point toward camera, parallel. Each whole sole including heel lies FLAT on floor, neither heel raised. Not feet touching side-by-side, NOT full heel-directly-in-front-of-toe tandem, NOT crossed feet, NOT broad stance, not walking mid-step. Weight comfortably through both flat feet, knees straight and relaxed, pelvis level. Both feet/toes clearly visible and separate, with the short front/back offset legibly shown from front and camera slightly above foot level.\nA sturdy neutral gray fixed rail stands to one side within easy arm reach; it is present as accessible support, but BOTH hands remain down, NOT touching or gripping it in this selected unassisted steady standing phase. Calm steady balance pose, no exertion or dramatic tilt.\nOne person/one single photo, essential gray rail only, no extra people, shoes, socks, room/gym, no text/labels/numbers/arrows/watermarks, no collage/montage. Coherent realistic hands, feet and toes.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "attempts": [
+          {
+            "attempt": 1,
+            "prompt": "Use case: photorealistic-natural. Create ONE rehabilitation demonstration studio photograph for E-LOW-018 narrow base / semi-tandem standing. Images 1, 2, 3 are ORIGINAL identity, clothing, backdrop, lighting references. Preserve the EXACT SAME adult East Asian woman and facial identity, natural skin, black low ponytail, calm faint smile. SAME fitted white crewneck short-sleeve T-shirt and dark charcoal long trousers naturally ending just above ankles. She is BAREFOOT to display foot placement.\nExact original COOL light gray-blue subtly cloudy seamless studio backdrop and matching floor, soft diffused photographic lighting and realistic fabric/skin. Portrait 4:5 reference aspect, WHOLE head/body/both bare feet visible with clear margins, normal adult 7–8-head body proportions, realistic anatomy.\nComposition: FRONT whole-body view, shoulders and pelvis square toward camera. Her head turned comfortably about 30 degrees toward IMAGE RIGHT, eyes OPEN calmly looking at fixed point to right, preserving the reference's facial features. Trunk upright and level, both arms naturally relaxed down alongside hips.\nFoot pose is SEMI-TANDEM standing, deliberately narrow base: one bare foot is a SHORT step ahead of the other and slightly laterally offset. The FORWARD HEEL is next to/beside the REAR foot's BIG TOE, at approximately the same fore-aft level. Both feet point toward camera, parallel. Each whole sole including heel lies FLAT on floor, neither heel raised. Not feet touching side-by-side, NOT full heel-directly-in-front-of-toe tandem, NOT crossed feet, NOT broad stance, not walking mid-step. Weight comfortably through both flat feet, knees straight and relaxed, pelvis level. Both feet/toes clearly visible and separate, with the short front/back offset legibly shown from front and camera slightly above foot level.\nA sturdy neutral gray fixed rail stands to one side within easy arm reach; it is present as accessible support, but BOTH hands remain down, NOT touching or gripping it in this selected unassisted steady standing phase. Calm steady balance pose, no exertion or dramatic tilt.\nOne person/one single photo, essential gray rail only, no extra people, shoes, socks, room/gym, no text/labels/numbers/arrows/watermarks, no collage/montage. Coherent realistic hands, feet and toes.",
+            "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13553-0aa6-7872-90d6-a9b58255ac09\\exec-9a498ee5-6d2a-4902-a3df-3198c8c59e20.png",
+            "accepted": true,
+            "referenced_image_paths": [
+              "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+              "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+              "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+            ]
+          }
+        ],
+        "qa": {
+          "identity": true,
+          "reference_backdrop_style": true,
+          "full_body_margins": true,
+          "natural_adult_proportions": true,
+          "pose": "Front body, head right, eyes open. Short semi-tandem offset with forward heel beside rear big toe; both soles flat, both arms relaxed, rail nearby ungripped.",
+          "reviewed": true
+        },
+        "sha256": "6A79CAC8C3A536E4AD536FB68D842F8B25567EEBB8DC169E6239E32572E02108",
+        "original_retained": true,
+        "copy_verified": true
+      }
+    },
+    {
+      "sequence": 30,
+      "id": "E-LOW-019",
+      "name": "支撑旁睁眼单脚站立",
+      "category": "assess",
+      "filename": "030_E-LOW-019_支撑旁睁眼单脚站立.png",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\030_E-LOW-019_支撑旁睁眼单脚站立.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "F33DDF3585B19A4928FF68BF4940C86E2CED8851DCA73D714152F19633FA354D",
+      "phase": "睁眼轻扶单脚站立：支撑足平放，另一脚离地，骨盆和躯干保持稳定",
+      "visual_review": "已逐张检查原人物、服装、灰蓝背景、人体比例及动作关键阶段",
+      "generation_record": {
+        "number": "030",
+        "id": "E-LOW-019",
+        "title": "支撑旁睁眼单脚站立",
+        "phase": "睁眼轻扶单脚站立：支撑足平放，另一脚离地，骨盆和躯干保持稳定",
+        "path": "E:\\git冲突问题\\rehab image\\assess\\030_E-LOW-019_支撑旁睁眼单脚站立.png",
+        "original_output_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a134ff-8818-7f93-b8db-d4f3efb26af7\\exec-e465411b-43c2-41ee-9a20-950e4543b75d.png",
+        "prompt": "Use case: scientific-educational rehabilitation action photograph. Asset030 E-LOW-019 支撑旁睁眼单脚站立. Use all three supplied original photos as strict identity/style references: the SAME EXACT adult East Asian woman with original face, black low ponytail, fitted white crewneck short-sleeve tee, dark charcoal LONG trousers. Keep original cloudy cool light gray-blue studio backdrop, matching seamless floor, soft lighting and photorealistic skin/fabric. Normal adult head/body/limb proportions. Bare feet consistent with this ankle/balance batch; trouser hems naturally just above ankles.\nShow one single-phase OPEN-EYES SINGLE-LEG STAND beside a fixed simple neutral-gray horizontal rail on frame-right. Camera front whole-body, woman standing square to camera, head turned comfortably30 degrees toward frame-right matching reference profile, eyes OPEN looking at a fixed point. Her LEFT supporting leg (frame-right) is upright, knee softly straight, entire bare foot planted FLAT on floor, no heel raise. Her RIGHT foot (frame-left) is raised ONLY5–8cm above the floor with a softly bent knee and modestly flexed hip; foot hangs relaxed just beside supporting leg, does not touch floor or other leg, no high knee lift. Pelvis nearly level, shoulders relaxed, torso vertical. Her left fingertips lightly touch rail at hip/waist height for balance, not gripping/pushing heavily; right arm relaxed at side. Stable rail and both feet clearly visible. One person, portrait4:5 like1122×1402, full head and both feet with margins.\nNo gym/room, shoes/socks, elevated supporting heel, deep squat, high-knee march, crossed feet, eyes closed, extra people/limbs, text, arrows, numbers, watermarks or collage.",
+        "referenced_image_paths": [
+          "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+          "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+          "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+        ],
+        "quality_review": "已检查原人物和服装、灰蓝背景、正常人体比例与关键动作方向；单幅真实照片，无文字或箭头。"
+      }
+    }
+  ]
+}

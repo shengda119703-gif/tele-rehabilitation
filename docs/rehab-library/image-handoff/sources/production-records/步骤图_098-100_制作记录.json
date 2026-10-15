@@ -1,0 +1,298 @@
+{
+  "record_version": "1.0",
+  "batch": "actions-098-100",
+  "user_source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "created_date": "2026-10-14",
+  "generator": "built-in image_gen.imagegen",
+  "final_output_count": 9,
+  "qa_scope": "Visual examination only. Not clinical or medical validation.",
+  "source_assets_preserved": true,
+  "formal_repository_modified": false,
+  "notes": [
+    "All nine final destination names were absent before this task began.",
+    "099 step 02 was revised after generation to match finalized step 03 foot contacts. Only this task's own freshly created image was replaced after a SHA256 ownership check. Initial step 02 also preserved in train/steps/099_T-LOW-024_s02_draft_v1.png; final manifest should adopt the canonical s02.",
+    "100 actual chosen front leg is right. The checklist does not prescribe laterality. The final step 03 rotates chest toward that front right leg while retaining support and lower body.",
+    "Within each action, camera, framing, equipment, clothing and person remain visually consistent. Small natural textile and lighting variation is present.",
+    "All rejected generated candidates remain at their original generated source paths; no cropping, compositing or non-imagegen image editing was used."
+  ],
+  "images": [
+    {
+      "sequence": 98,
+      "action_id": "T-LOW-023",
+      "step": "01",
+      "prompt": "Use case: photorealistic-natural. Asset type: single rehabilitation exercise step photograph, action 098 T-LOW-023, preparation phase.\nUse all three input photos only as identity and visual-style references. Same adult East Asian woman with black ponytail, plain white short-sleeve fitted T-shirt, dark charcoal trousers, and plain white athletic sneakers. Soft photorealistic studio image with gray-blue wall and matte nonslip floor. One woman only.\nMake one full-body photograph, landscape framing, head to both whole shoes visible with floor margin. Camera at her right-front oblique side, about 30 degrees from side view, woman facing image right, head neutral. Fixed waist-high stainless handrail bolted securely to wall along her LEFT side, left hand resting gripping it naturally; right hand empty relaxed by right thigh. A stable LOW bench (about 25 cm high) with soft dark gray padded top stands behind her right foot, firmly against wall, all legs visibly supported by floor.\nPose for this image only: she stands upright and balanced with BOTH FEET FLAT ON FLOOR, left foot in front and right foot a modest step behind. Right rear foot is still on FLOOR immediately in front of the bench, not on the bench, ready for subsequent lifting. Left foot complete sole on floor. Comfortable split stance, knees softly straight, pelvis and chest neutral. Bench and rear-foot pathway unobstructed, equipment and contacts completely clear.\nConstraints: standalone one pose photo, no collage, no panels, no text, no numbering, no symbols, no arrows, no watermark, no weights or kettlebells, no extra people. Anatomy realistic. Match reference face, hair, clothes and gray-blue background.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-c111ad4a-d78d-416b-b258-e17105440216.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/098_T-LOW-023_s01.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_scope": "visual review only, not medical validation",
+      "qa_observation": "同参考成年女性人物、衣着与灰蓝背景；斜侧全身、白鞋完整；双足均接触地面，左手接固定墙扶手；软垫低凳靠墙、凳脚有地面支持、后脚通道明确；无文字箭头拼图。",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "C13CAFC83354AD5E6D053183E831C80E342B07E3C5552D598F8C38880D063CB4",
+      "bytes": 1955138,
+      "transparent_background": false,
+      "tool": "built-in image_gen.imagegen",
+      "references_are_reused_for_identity": true,
+      "existing_image_reused_as_output": false
+    },
+    {
+      "sequence": 98,
+      "action_id": "T-LOW-023",
+      "step": "02",
+      "prompt": "Use case: identity-preserve. Asset type: one standalone rehabilitation photograph, action 098 T-LOW-023, rear-foot placement phase.\nInput image 1 is the exact scene and identity edit target. Keep the same woman, face, black ponytail, plain white short-sleeve shirt, charcoal trousers, white sneakers; keep gray-blue wall and floor, soft lighting, full-body camera angle, framing, image scale, fixed wall-mounted rail and padded low bench EXACTLY unchanged. Images 2–4 are identity/style references only.\nChange ONLY the leg configuration for this step: her left front foot stays FLAT ON THE FLOOR in the EXACT same front-foot spot, facing image right. Her RIGHT rear knee is flexed so the RIGHT foot is lifted BACK and placed on top of the SAME low bench dark cushion. The TOP OF THE RIGHT SHOE (shoelaces / dorsal shoe surface) rests physically on the top cushion, with the right toes pointing down/back and the sole facing mostly upward/back. Show real contact and slight cushion compression. Her rear foot must be on the bench, not on floor and not floating. She has already adjusted and stopped in balanced upright rear-foot-elevated split stance; front knee softly straight, rear knee bent, chest upright neutral, no squat yet. LEFT hand retains the SAME fixed handrail grip point; empty right hand hangs naturally. Do not move bench or front foot.\nOne woman, one pose only. No collage, panels, text, numbers, symbols, arrows, watermarks, weights, kettlebells, extra people, distorted anatomy. Entire head and both shoes visible.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/098_T-LOW-023_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-274db790-5bc3-4937-9d6d-9070ce7b8a82.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/098_T-LOW-023_s02.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_scope": "visual review only, not medical validation",
+      "qa_observation": "相同机位人物尺度、前脚位置、扶手握点和靠墙低凳；前足全掌踩地，后鞋脚背/鞋面与凳软垫有可见接触，后膝屈起已停稳而未下蹲；无负重、文字或箭头。",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "3E5C38173A9DBB8D19AE9628B21B023313E4BCDC79D20A18048D13353314F68E",
+      "bytes": 1864078,
+      "transparent_background": false,
+      "tool": "built-in image_gen.imagegen",
+      "references_are_reused_for_identity": true,
+      "existing_image_reused_as_output": false
+    },
+    {
+      "sequence": 98,
+      "action_id": "T-LOW-023",
+      "step": "03",
+      "prompt": "Use case: identity-preserve. Asset type: one standalone rehabilitation step photograph, action 098 T-LOW-023, controlled descent phase.\nInput image 1 is the exact scene edit target. Image 2 shows the same scene at preparation and is a geometry reference. Keep this same woman, face, black ponytail, plain white short-sleeve shirt, charcoal trousers, white sneakers; keep gray-blue wall and floor, soft lighting, full-body camera angle, framing, scale, fixed wall-mounted rail, left-hand rail grip point, and padded low bench EXACTLY unchanged.\nChange ONLY from the upright split stance into a modest controlled split-squat descent: her LEFT front shoe remains flat on the floor in exactly the same location as input 1, pointing image right, while LEFT hip and knee flex, front knee naturally following front foot direction. Lower hips a small controlled amount, approximately 15–20 cm, not a deep squat. Her RIGHT rear knee bends downward. The TOP OF THE RIGHT SHOE remains physically resting on the SAME bench soft cushion at the EXACT same cushion spot as input 1, with visible real continuous contact and slight cushion compression. Rear foot cannot float above cushion, pass into bench, or switch to toe-sole support. Preserve a small lateral width between the front and rear feet, not a tightrope stance. Left hand retains same fixed rail grip; empty right hand remains at thigh. Torso neutral and upright with slight natural hip flexion, face relaxed.\nSingle full-body photo, one woman, one pose. No collage, panels, text, numbers, arrows, watermarks, weights or kettlebells. Entire head, both shoes, bench legs and handrail supports visible.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/098_T-LOW-023_s02.png",
+        "E:/git冲突问题/rehab image/train/steps/098_T-LOW-023_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-67c2772a-6f14-4135-ad0d-79de8ef35757.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/098_T-LOW-023_s03.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_scope": "visual review only, not medical validation",
+      "qa_observation": "相同靠墙低凳、扶手握点、前鞋踩地位置和机位；髋膝屈曲、身体下降可比较，后鞋鞋面仍接触软垫无悬空；前膝与前脚方向对应，躯干自然、无负重。",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "12278226A6F501417FBA024E648759C059D0C2B1D42F11E190EF22F90C04CDB8",
+      "bytes": 1885295,
+      "transparent_background": false,
+      "tool": "built-in image_gen.imagegen",
+      "references_are_reused_for_identity": true,
+      "existing_image_reused_as_output": false
+    },
+    {
+      "sequence": 99,
+      "action_id": "T-LOW-024",
+      "step": "01",
+      "prompt": "Use case: photorealistic-natural. Asset type: one standalone rehabilitation step photograph, action 099 T-LOW-024, preparation for supported lateral lunge.\nInput images are only identity and visual-style references: match the SAME adult East Asian woman with black ponytail, plain white short-sleeve fitted T-shirt, dark charcoal trousers, and plain white athletic sneakers. Soft even photorealistic studio lighting, gray-blue wall, matte nonslip gray floor, realistic proportions and facial identity.\nFull-body LANDSCAPE photo, near FRONTAL camera with only slight oblique angle (10 degrees), entire head and both white shoes plus floor margins in view. She faces camera, standing balanced upright, feet about hip-width apart, both complete soles flat on floor, both toes point forward in the same natural direction. Knees softly straight, chest and pelvis square forwards.\nA fixed waist-high stainless horizontal handrail is securely bolted to the gray-blue wall at her RIGHT side (viewer LEFT). Show mounting brackets and real wall support. Her RIGHT hand rests on and naturally grips rail at that side within comfortable reach. Her LEFT hand is empty and relaxed near front of abdomen, elbow comfortably bent. Side stepping space on her LEFT (viewer RIGHT) is spacious and clear, with no floor mat, furniture or obstacle. This is the initial narrow stance before any lateral step; no squat, no weight shift.\nOne woman, one pose, one original photograph. No collage or panels, no text or numbering, no symbols or arrows, no watermarks, no weights or kettlebells, no extra people. Support hand and feet contacts clearly visible.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-94d5891a-0b5f-4323-a902-72c4800315bb.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/099_T-LOW-024_s01.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_scope": "visual review only, not medical validation",
+      "qa_observation": "同参考人物马尾白衫深灰裤白鞋；正面全身、双足全掌稳定落地、脚尖朝前；固定扶手有墙安装支架且右手握持；左侧侧迈空间清空无滑动地垫；无文字箭头负重。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "C84AFA3108C08C6C838AD413F2FCD0C0908C9E27A22A15B95B16AD251EAACB2C",
+      "bytes": 1840408,
+      "transparent_background": false,
+      "tool": "built-in image_gen.imagegen",
+      "references_are_reused_for_identity": true,
+      "existing_image_reused_as_output": false
+    },
+    {
+      "sequence": 99,
+      "action_id": "T-LOW-024",
+      "step": "02",
+      "prompt": "Use case: identity-preserve. Asset type: one standalone supported lateral-lunge preparatory photograph, middle step AFTER sideways foot landing BEFORE lunge.\nImage 1 is the exact edit target. The woman has taken a small side step with her LEFT foot (viewer RIGHT). BOTH WHITE SHOES in image 1 are in the CORRECT final planted locations: preserve both shoes exactly where they are, same orientation, flat sole-floor contact. Preserve the right hand's fixed wall handrail grip point, camera, scene and framing.\nONLY reverse her current shallow lunge to a TALL, UPRIGHT STANDING posture at this same wider foot spacing: straighten her LEFT hip and LEFT knee to softly straight; stand hips and chest tall, weight centered between feet, no side weight shift and no squat. Her right leg is also softly straight, no locked knees. Chest and pelvis face forwards. The left empty hand remains near abdomen. This is the middle teaching frame 'side foot has landed and stopped, not yet bending'. Keep all leg connections realistic WITHOUT MOVING THE SHOES.\nPreserve same woman face, black ponytail, plain white short-sleeve shirt, charcoal trousers, white sneakers, gray-blue walls and floor, rail and brackets, soft light, full-body camera and person scale. One woman, one pose, one full-body photograph. No collage, panels, text, numbers, arrows, watermarks or added objects.",
+      "reference_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-8a91f0eb-9480-4965-9c4b-f44962c62c0e.png"
+      ],
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-d1055d07-93f7-439d-9cf8-0ac3a3298313.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/099_T-LOW-024_s02.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_scope": "visual review only, not medical validation",
+      "qa_observation": "相同场景和固定握点；左脚小步侧迈后落稳，双腿近伸、重心居中未移向左腿。最终02以最终03为足位参考恢复直立，使02/03两足落点和朝向保持；足位均完整踩地，无负重。",
+      "generation_attempts": [
+        {
+          "prompt": "Use case: identity-preserve. Asset type: one standalone rehabilitation step photograph, action 099 T-LOW-024, lateral step landed before weight shift.\nInput image 1 is the exact scene and identity edit target. Preserve the SAME woman, face, hair, white shirt, charcoal trousers, white sneakers, gray-blue walls, matte nonslip floor, fixed rail and wall brackets, soft light, frontal camera, landscape crop and person scale.\nOnly change this pose to the next step: her LEFT foot (viewer RIGHT) has made a SMALL lateral step, about 30 cm farther to her LEFT (viewer RIGHT), and is now completely flat and stable on floor. Her RIGHT foot (viewer LEFT) stays in its EXACT initial floor spot. Increased side-to-side stance width, no forward or backward step. BOTH shoes still point forward in the SAME natural direction as initial frame; do not rotate a foot out.\nShe remains standing TALL and upright, torso and pelvis centered between feet, both knees softly straight and not yet squatting or moving weight onto the stepped leg. This photograph must show 'foot landed, no lateral lunge yet'. RIGHT hand maintains exact same fixed rail grip point. LEFT empty hand stays near front abdomen; no weight or other object.\nSingle woman, one full-body pose photograph; no collage, panels, text, numbers, arrows, symbols, watermarks, extra people. Both complete shoe soles touch floor.",
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/train/steps/099_T-LOW-024_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-dc92ab28-d67d-4c9a-83dc-11438f6580f4.png",
+          "selected": false,
+          "reason": "生成03时侧迈足向外漂移，为保证连续足位，以03保持足位恢复直立制作最终02；初稿保存在原生成路径。",
+          "preserved_output_path": "E:/git冲突问题/rehab image/train/steps/099_T-LOW-024_s02_draft_v1.png"
+        }
+      ],
+      "width": 1536,
+      "height": 1024,
+      "sha256": "C7E025D23D45837324A305F9549156A6FE43C9C8B736C36458A3C63BAFA76A04",
+      "bytes": 1711352,
+      "transparent_background": false,
+      "tool": "built-in image_gen.imagegen",
+      "references_are_reused_for_identity": true,
+      "existing_image_reused_as_output": false
+    },
+    {
+      "sequence": 99,
+      "action_id": "T-LOW-024",
+      "step": "03",
+      "prompt": "Create one next-step exercise photo by editing this exact input photograph. It is the middle step of a supported lateral lunge, with the left foot already stepped sideways and planted.\nTreat BOTH WHITE SHOES as LOCKED OBJECTS. Do not redraw, resize, shift or rotate either shoe. Exact current shoe positions and angles are essential to the sequence. In the 1536 x 1024 input, viewer-right shoe center is approximately x=808, and viewer-left shoe center approximately x=545. Preserve these exact shoe positions and the existing floor underneath them.\nChange ONLY the posture ABOVE THE ANKLES: shift body weight toward the woman's LEFT leg (viewer RIGHT), flex her left hip and left knee to a shallow supported lateral lunge, keeping her right opposite leg nearly straight with a soft unlocked knee. Her hips move to viewer right and down slightly, left knee bends in the same forward direction as left toes; no centered two-leg squat. Torso neutral, chest still forward, face relaxed. Right hand remains on the same rail grip, left empty hand near abdomen. All body connections anatomically natural.\nEverything else exactly unchanged: this same woman, face, black ponytail, white shirt, charcoal trousers, white sneakers, camera, full-body scale, composition, gray-blue walls, rail and brackets, floor, soft light. Single standalone photorealistic pose; no new objects, no text, numbers, arrows, panels or collage.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/099_T-LOW-024_s02.png"
+      ],
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-8a91f0eb-9480-4965-9c4b-f44962c62c0e.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/099_T-LOW-024_s03.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_scope": "visual review only, not medical validation",
+      "qa_observation": "最终02/03两鞋落点、朝向与扶手位置保持，左侧迈腿髋膝屈曲和向左移重可辨，另一腿近伸而未反锁；两足均接触地面，胸廓自然朝前，无负重。",
+      "generation_attempts": [
+        {
+          "prompt": "Use case: identity-preserve. Asset type: one standalone rehabilitation step photograph, action 099 T-LOW-024, lateral weight shift after left foot has landed.\nInput image 1 is the exact scene and identity edit target at wide stance; image 2 is preparation for geometry comparison. Keep this SAME woman, face, hair, clothes, shoes, gray-blue walls, floor, mounted side rail, grip point, soft light, frontal camera, framing and scale.\nChange ONLY her body position into a shallow supported lateral lunge toward her LEFT leg (viewer RIGHT), the leg that stepped out in image 1. BOTH SHOES stay COMPLETELY flat in the EXACT same floor locations and orientations as image 1. No new step, no foot pivot. Both toes remain naturally forward.\nHer body weight and pelvis visibly shift sideways to her LEFT (viewer RIGHT), over the stepped-out LEFT foot. LEFT hip and knee clearly bend in a modest shallow lunge, with that knee tracking in the SAME forward direction as the left shoe. Right opposite leg lengthens and stays nearly straight with a SOFT unlocked knee; do not bend both knees equally, do not squat centrally. Torso neutral, chest forwards, slight natural hip hinge, head comfortable. RIGHT hand still grips the exact SAME fixed rail point at viewer LEFT, arm may extend naturally for support. LEFT empty hand stays near abdomen. Keep feet, ankles and knees anatomically plausible and do not collapse a knee inward.\nSingle full-body original photograph, one woman and one pose; no collage, panels, text, numbers, symbols, arrows, watermarks, weights or extra people. Feet and support contact clearly visible.",
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/train/steps/099_T-LOW-024_s02.png",
+            "E:/git冲突问题/rehab image/train/steps/099_T-LOW-024_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-3571a296-c5da-481a-bbe6-c3005babe75b.png",
+          "selected": false,
+          "reason": "侧迈足较02向侧漂移。"
+        },
+        {
+          "prompt": "Use case: precise-object-edit. Correct one positional continuity error in an exercise step photograph.\nImage 1 is the EDIT TARGET, the shallow lateral lunge. Image 2 is the FOOT POSITION REFERENCE, the standing wide stance before the lunge.\nEdit ONLY the stepped LEFT shoe and connected lower left leg (viewer RIGHT in the image): restore that WHITE SHOE to the EXACT SAME floor spot and orientation it occupies in image 2, moving it roughly 4 centimeters/image pixels to the viewer LEFT compared with image 1. Keep its sole flat. This prevents an extra second sideways step between teaching frames. Preserve the already flexed LEFT hip and knee and the body's lateral shift toward this LEFT leg. Adjust only the lower-leg connection naturally to retain realistic anatomy. Knee stays aligned with the forward toes. The opposite right shoe (viewer LEFT) is already correct and MUST NOT MOVE.\nPreserve EVERYTHING ELSE from image 1 unchanged: same woman and face, black ponytail, white shirt, charcoal trousers, chest position, hands, rail grip and exact handrail geometry, wall brackets, gray-blue walls, floor, lighting, framing, dimensions and camera. Preserve opposite nearly straight leg with unlocked knee. Do not increase stance width.\nOne single full-body photo of the existing one pose; no collage, panels, text, numbers, arrows, watermarks or extra objects.",
+          "reference_paths": [
+            "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-3571a296-c5da-481a-bbe6-c3005babe75b.png",
+            "E:/git冲突问题/rehab image/train/steps/099_T-LOW-024_s02.png"
+          ],
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-27b22078-5e80-4937-afa9-674b393b4a02.png",
+          "selected": false,
+          "reason": "修足位响应不足。"
+        }
+      ],
+      "width": 1536,
+      "height": 1024,
+      "sha256": "E40145DD80C780E83509677EDEE8A1FF9DA3768FC9B22D4413EA671E6A96EE39",
+      "bytes": 1703259,
+      "transparent_background": false,
+      "tool": "built-in image_gen.imagegen",
+      "references_are_reused_for_identity": true,
+      "existing_image_reused_as_output": false
+    },
+    {
+      "sequence": 100,
+      "action_id": "T-LOW-025",
+      "step": "01",
+      "prompt": "Use case: photorealistic-natural. Asset type: one standalone rehabilitation step photograph, action 100 T-LOW-025, preparation before shallow split stance and chest rotation.\nThe input photos are ONLY references for the exact SAME adult East Asian woman and visual style: same black ponytail, plain white short-sleeve fitted T-shirt, dark charcoal trousers and plain white athletic sneakers. Soft realistic studio lighting, gray-blue wall and matte nonslip gray floor.\nFull-body landscape photograph from a FRONT-LEFT OBLIQUE camera (about 30 degrees to woman's left of frontal), her torso and pelvis face forwards diagonally toward image RIGHT, so a three-quarter front view of chest is visible. Entire head, both full shoes and floor margin in frame.\nPose: upright stable neutral standing, feet about hip width APART SIDE TO SIDE with BOTH SOLES fully flat on floor. Both shoes point in the same forwards direction as her pelvis and knees. Not yet in split stance or lunge.\nA fixed waist-high stainless horizontal handrail is firmly bolted to wall along her RIGHT SIDE with visible mounting brackets. Her RIGHT hand naturally grips this fixed rail within reach, using one hand for support. Her LEFT hand is empty and naturally resting against upper chest/sternum, elbow softly bent. No weights anywhere. Head neutral in body's forward direction, shoulder neck relaxed, chest and pelvis neutral.\nOnly one woman, one pose, one original photorealistic photograph. No kettlebell, dumbbell or other weights. No collage, panels, text, numbering, arrows, symbols, watermark or extra people. All feet and hand-support contacts clearly visible.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-4614152c-c6d0-4e35-b3c4-47166a3514a8.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/100_T-LOW-025_s01.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_scope": "visual review only, not medical validation",
+      "qa_observation": "同参考人物衣着灰蓝背景，斜前全身；双足稳定全掌落地同向、身体朝前，右手扶固定墙扶手、左手自然置胸前；无壶铃等负重，无文字箭头拼图。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "B70EEA08DBC5CBD8D67A09FC08E1412837B1C5D0AAB66058D29A0A05E69EE220",
+      "bytes": 1876990,
+      "transparent_background": false,
+      "tool": "built-in image_gen.imagegen",
+      "references_are_reused_for_identity": true,
+      "existing_image_reused_as_output": false
+    },
+    {
+      "sequence": 100,
+      "action_id": "T-LOW-025",
+      "step": "02",
+      "prompt": "Use case: identity-preserve. Make a single targeted posture correction to this exact photograph for action 100 T-LOW-025: bend the knees into a clearly visible SHALLOW LUNGE.\nPreserve the existing split FOOT POSITIONS and FOOT ORIENTATIONS exactly. In this photo the FRONT foot is the white shoe at viewer RIGHT; the REAR foot is the white shoe at viewer LEFT. Do not move or rotate either shoe. Both soles remain grounded.\nONLY change from nearly straight knees to a stable SHALLOW split lunge: bend FRONT knee approximately 25–30 degrees and rear knee approximately 20 degrees, lower pelvis modestly about 8–12 cm. Front knee tracks the same direction as forward shoe. No deep lunge. Torso remains upright and neutral, pelvis and chest retain the SAME current middle forward orientation. This phase is stopped and stable, NO chest rotation yet. Same right hand holds exact rail point; same empty left hand touches chest. Shoulders and elbows adjust naturally only to keep grip and chest hand while pelvis lowers.\nKeep same woman face, black ponytail, white shirt, charcoal trousers, white shoes, camera angle, composition, gray-blue wall, floor, handrail and brackets, lighting. One single original full-body photorealistic photograph. No kettlebells, weights, added objects, collage, panels, text, numbers, arrows or watermark.",
+      "reference_paths": [
+        "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-e2a861e2-f270-48ee-9780-7b243d8e54c8.png"
+      ],
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-636d9d2b-ab37-4e60-bd71-d6c4f7d18a5e.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/100_T-LOW-025_s02.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_scope": "visual review only, not medical validation",
+      "qa_observation": "修订后同机位同扶手握点、徒手胸前；前后足保持同向接地并有侧向宽度，前后膝小幅屈曲的浅分腿弓步可辨；胸廓保持中间未转，躯干自然，无壶铃。实际采用前腿为人物右腿。",
+      "generation_attempts": [
+        {
+          "prompt": "Use case: identity-preserve. Asset type: one standalone rehabilitation step photograph, action 100 T-LOW-025, shallow split stance stabilized BEFORE turning chest.\nInput image 1 is the exact scene and identity edit target. Keep same woman face, black ponytail, white short-sleeve shirt, charcoal trousers, white sneakers, gray-blue wall, matte floor, wall-mounted handrail and brackets, right-hand rail grip point, left hand on sternum, soft light, full-body oblique camera, framing and image scale.\nChange ONLY her legs from neutral standing into a small LEFT-FOOT-FORWARD split stance: the LEFT leg nearest the camera becomes the FRONT leg, with its complete white shoe planted a short comfortable distance ahead toward her facing direction (toward image RIGHT), and laterally separated from the right rear leg, no tightrope stance. RIGHT foot becomes the REAR foot, remains grounded, and continues pointing in the same forwards direction. Both knees and hips bend modestly to a SHALLOW split squat / shallow lunge and she has already stopped and stabilized. Both shoes and knees face the same natural forwards direction; all foot-floor contacts realistic. Do not jump or show a dynamic wide stride.\nIMPORTANT upper body is NOT YET ROTATED: pelvis and CHEST still face the same original forward middle orientation toward image right as input 1. Neutral upright chest, no backwards lean. RIGHT hand remains on exact same rail grip, LEFT hand stays at chest, completely empty.\nOne full-body original photo of one woman and one pose only. No kettlebell, dumbbell or weights, no collage, panels, text, numbering, arrows, symbols, watermark or extra people.",
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/train/steps/100_T-LOW-025_s01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-e2a861e2-f270-48ee-9780-7b243d8e54c8.png",
+          "selected": false,
+          "reason": "分腿姿势已建立，但膝屈曲不够明确；实际前腿为右腿，符合未指定左右侧的清单。"
+        }
+      ],
+      "width": 1536,
+      "height": 1024,
+      "sha256": "0352A56067922DD192660E1636391E7E23290A68297B96BD7A3CAB64380FCF32",
+      "bytes": 1735843,
+      "transparent_background": false,
+      "tool": "built-in image_gen.imagegen",
+      "references_are_reused_for_identity": true,
+      "existing_image_reused_as_output": false
+    },
+    {
+      "sequence": 100,
+      "action_id": "T-LOW-025",
+      "step": "03",
+      "prompt": "Use case: identity-preserve. Asset type: one standalone rehabilitation photograph, action 100 T-LOW-025, slight chest turn while stable shallow lunge.\nInput image 1 is the EXACT EDIT TARGET. Keep everything BELOW THE WAIST EXACTLY UNCHANGED: same pelvis location and orientation, same hips, both bent knees, front and rear leg positions, both whole white shoes in identical floor spots and identical toe angles, same shallow lunge depth. The FRONT leg is the woman's RIGHT leg, seen at viewer RIGHT in this photo. No new step, no foot pivot, no knee twisting.\nChange ONLY the CHEST / ribcage orientation: gently rotate her upper chest about 15–20 degrees toward her RIGHT SIDE, the side of that FRONT RIGHT LEG and the handrail. In this FRONT-LEFT oblique camera view, turning right means the chest turns a little farther toward image RIGHT and slightly AWAY FROM THE CAMERA, so her near LEFT shoulder comes gently forwards and the chest appears a little more side-on. This must be a visible SMALL chest rotation, not simply turning the head. Shoulder line and shirt neckline rotate with ribcage; her empty LEFT hand remains naturally resting on the sternum and follows the rotated chest. Her head may follow chest gently with neutral neck.\nRIGHT supporting hand MUST stay at the exact SAME fixed wall handrail grip point, with a natural elbow. Keep pelvic trouser waistband oriented as before; pelvis and feet do NOT turn along with chest. Same stabilized shallow lunge, no collapse or leaning backwards.\nPreserve same woman face and ponytail, white shirt, charcoal trousers, shoes, gray-blue wall and floor, rail and mounting brackets, soft lighting, camera, composition and full-body scale. One woman, one pose, single photorealistic photograph. No kettlebell or weights, no text, numbering, arrows, watermark, panels or collage.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/train/steps/100_T-LOW-025_s02.png",
+        "E:/git冲突问题/rehab image/train/steps/100_T-LOW-025_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_source": "C:\\Users\\Administrator\\.codex\\generated_images\\01a13855-fbfb-7713-9ff2-05f6c3639157\\exec-2c7003cc-4a8b-4092-a71f-711eaa19f317.png",
+      "output_path": "E:/git冲突问题/rehab image/train/steps/100_T-LOW-025_s03.png",
+      "reused": false,
+      "qa_status": "pass",
+      "qa_scope": "visual review only, not medical validation",
+      "qa_observation": "保持02同浅分腿屈膝、扶手握点、足位和膝方向；胸廓/肩线朝右前腿侧小幅转动、胸前左手随胸廓，骨盆、足膝未跟随明显扭转。右手真实接扶手，徒手无壶铃；无文字箭头。",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "23CA2FAACEC959FF2892E661A53DD22AD19512BD03DE5B9BDB727A79249CCAEF",
+      "bytes": 1720112,
+      "transparent_background": false,
+      "tool": "built-in image_gen.imagegen",
+      "references_are_reused_for_identity": true,
+      "existing_image_reused_as_output": false
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "document_version": "v1.0",
+  "batch": "第03批",
+  "action_index": "014",
+  "action_id": "E-LOW-026",
+  "action_name": "仰卧单腿桥式控制观察",
+  "production_date": "2026-10-14",
+  "generation_mode": "built-in image_gen",
+  "reused": false,
+  "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "identity_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "images": [
+    {
+      "step": "s01",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-0f5b-72e3-8aca-d77bc44f9b95/exec-c42ddd41-37d0-4934-8dd2-01601d1162df.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/014_E-LOW-026_s01.png",
+      "dimensions": {
+        "height": 1024,
+        "width": 1536
+      },
+      "sha256": "8CD34018EA7A94280C86CEFC9353FCFA4C8014AE62125CEC141DE297A1A3FB05",
+      "planned_filename": "014_E-LOW-026_s01.png",
+      "reused": false,
+      "reused_source": null,
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: precise-object-edit.\nInput 1 is the selected supine one-legged bridge preparation photograph. Correct only far-side mat width and far-side arm support. Retain all identity, face, near arm/hand, both legs, both shoe positions, pelvis resting down, clothes, proportions, grey-blue background and lighting, image dimensions and framing exactly.\nExtend the far side of the thin dark-grey mat deeper into the image, so its far long edge runs across the image above the far arm and palm. It should be a generously wide clinical floor exercise mat, with grey mat surface clearly underneath the whole far-side arm and hand. Maintain the mat's near edge and left/right corners.\nReposition the existing far-side arm modestly diagonally outward at 45 degrees from her torso: shoulder remains anatomically attached behind the upper torso, upper arm, elbow and forearm are naturally extended away across the far side of the mat, with palm and complete fingers placed on the mat in the empty region ABOVE her torso's silhouette and to the right of the shoulder. The whole far arm is straight and relaxed and supported by mat, not held aloft, not lying on chest, not reduced to a detached hand. Its forearm and hand should lie outside the torso silhouette so raising pelvis in the next photo will not hide it. Far palm visibly contacts the grey mat and has a grounded contact shadow. Exactly two arms; near arm remains unchanged.\nThe current legs and pelvis are exactly correct: one bent supporting leg full sole down, one bent non-supporting leg whole shoe clear of mat, pelvis and buttocks down. Do not change those.\nNo text, numbers, arrows, logo, watermark, extra person or extra limb. Preserve natural realistic soft studio photography.",
+      "target_pose": "仰卧准备；近側支撑膝屈曲整脚落垫，远侧屈髋屈膝且整个鞋底离垫，骨盆臀部仍落垫。",
+      "qa": {
+        "status": "passed_self_review",
+        "identity_background": "与三参考女模特面部、肤色、体形、黑马尾相符，白短袖和深灰长裤一致，白无标薄底鞋，灰蓝柔光棚拍与自然阴影。",
+        "anatomy": "头、躯干、大腿小腿比例自然，两腿区分清楚；远近两臂均连续接肩肘腕，双手与两鞋完整入镜，无多指、多肢和关节断裂。",
+        "support": "头、肩、背与臀部落于薄深灰垫；两掌落垫且有接触阴影；近侧鞋整底留垫，远侧鞋跟和前足均明显离垫，非双脚准备。",
+        "pair_consistency": "最终s02依据最终s01直接做低桥；相机斜侧机位、人物头左脚右方向、画布1536×1024、垫子远近边、头、双手、近侧支撑脚位置基本一致。远腿保持屈髋屈膝，抬髋是两图主要变化。",
+        "no_overlays": "每图只有一名人物与单一姿势，无文字、编号、箭头、拼图、水印或logo。",
+        "limitations": "照片仅核对外观姿势与可见接触关系，不据此证明肌肉发力、负荷、测试有效性或临床结果。"
+      }
+    },
+    {
+      "step": "s02",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-0f5b-72e3-8aca-d77bc44f9b95/exec-3985f524-f5b3-4727-9beb-2792fbd2bfeb.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/014_E-LOW-026_s02.png",
+      "dimensions": {
+        "height": 1024,
+        "width": 1536
+      },
+      "sha256": "1669B4BA8C557FB86AFC67B93780F77B33B93243A830F39F6D4271272B34366B",
+      "planned_filename": "014_E-LOW-026_s02.png",
+      "reused": false,
+      "reused_source": null,
+      "tool": "image_gen.imagegen",
+      "prompt": "Use case: identity-preserve.\nEDIT IMAGE 1, the APPROVED s01 photo, into s02. IMAGE 2 is only a target low-single-leg-bridge POSE reference.\nKeep IMAGE 1's canvas, camera, broad thin grey mat, every mat edge and corner, woman identity, clothing, head and ponytail, both arms and both hands at exactly their existing positions, and supporting shoe at its exact existing mat position. Keep the mat far long edge at its Image 1 location. Far hand must remain exactly at its Image 1 location and shape, resting on the mat. No camera or equipment change.\nMake just the single-leg bridge movement: raise the pelvis/buttocks about 12–15 cm off the mat, resulting in the low bridge shape shown in image 2. Shoulder blades and head remain on mat, chest-to-pelvis gentle slope, no lumbar hyperextension. Both arms and palm locations remain exactly unchanged, because they are resting on the mat. Near-side leg continues as planted support, its whole sole remains flat in exactly the Image 1 place. Far-side leg remains flexed at hip and knee and its whole shoe remains airborne well clear of the mat. Exactly ONE planted foot and a clearly visible air gap under the raised pelvis. Do not straighten the airborne leg and do not plant the airborne foot.\nKeep Image 1's unchanged regions pixel-consistent as much as possible; only lower torso, pelvis and associated leg shape move to complete the bridge. Anatomically connected limbs, realistic proportions, no extra hands. One person and one pose. No text, digits, arrows, labels, logos, watermark or added props. Preserve soft realistic studio photography.",
+      "target_pose": "相同单脚支持位低幅抬髋；头、肩与双臂留垫，支撑脚整底留垫，另一脚继续悬空，骨盆臀部明显离垫。",
+      "qa": {
+        "status": "passed_self_review",
+        "identity_background": "与三参考女模特面部、肤色、体形、黑马尾相符，白短袖和深灰长裤一致，白无标薄底鞋，灰蓝柔光棚拍与自然阴影。",
+        "anatomy": "头、躯干、大腿小腿比例自然，两腿区分清楚；远近两臂均连续接肩肘腕，双手与两鞋完整入镜，无多指、多肢和关节断裂。",
+        "support": "头、肩、上背、两臂与双掌留垫；臀部及下躯干下方可见明显空隙与影子；近侧鞋完整鞋底接垫，远侧鞋跟和前足持续离垫，确为单腿低橋。",
+        "pair_consistency": "最终s02依据最终s01直接做低桥；相机斜侧机位、人物头左脚右方向、画布1536×1024、垫子远近边、头、双手、近侧支撑脚位置基本一致。远腿保持屈髋屈膝，抬髋是两图主要变化。",
+        "no_overlays": "每图只有一名人物与单一姿势，无文字、编号、箭头、拼图、水印或logo。",
+        "limitations": "照片仅核对外观姿势与可见接触关系，不据此证明肌肉发力、负荷、测试有效性或临床结果。"
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "id": "014-s01-initial",
+      "step": "s01",
+      "prompt": "Use case: scientific-educational.\nAsset type: single rehabilitation assessment demonstration photograph, action 014 E-LOW-026, preparation pose s01. One standalone wide landscape photo, about 1536 by 1024 pixels. No labels.\nInput images 1, 2 and 3 are identity, clothing, studio style and background references only. Depict the exact same adult East Asian woman, same facial features, age, build, skin tone and black ponytail, wearing the same plain white short-sleeve T-shirt and charcoal grey full-length trousers. Add plain white unbranded thin-soled closed-toe shoes.\nScene: a seamless grey-blue studio backdrop and grey-blue floor, a single thin dark-charcoal nonslip exercise mat laid flat. Soft diffuse studio lighting, natural contact shadows, realistic photograph. No other props.\nComposition: full body from a low side view slightly oblique enough to separate and clearly see both thighs, both knees and both shoes. Head on the left, feet toward the right, the mat spanning left to right. Whole head including ponytail, both complete arms and hands, both complete shoes and all contact points inside frame, generous margin and moderate empty space above. Do not crop body or mat edges. Neutral calm expression, eyes open looking upward.\nThe woman is supine, face upward, head, upper back, shoulders, pelvis and buttocks resting on the mat. Both straight relaxed arms beside her torso with both palms on the mat, arms not holding the legs. Near-camera leg is the SUPPORTING leg: its knee is bent around a right angle, entire sole including heel and forefoot lies flat on the mat to the right of the pelvis, clear full shoe-mat contact. Far-camera leg is the NON-SUPPORTING leg: hip and knee gently flexed, knee slightly higher and closer to torso than the supporting knee, ankle and entire shoe hovering approximately 12 cm above the mat. There must be a clearly visible air gap and separate shadow underneath that non-supporting shoe. Its toes and heel both stay off the mat; it does not touch the other shoe. The pelvis is DOWN on the mat in this preparation pose. Both legs have natural continuous hip-knee-ankle anatomy and visibly distinct knees and feet.\nThis is single-foot preparation for a single-leg bridge, NOT a two-feet-on-floor bridge setup. Anatomical proportions natural, no extra limbs, no merged shoes, no impossible joints. Only one person and one pose. No text, digits, arrows, diagram overlays, borders, logos or watermark.",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-0f5b-72e3-8aca-d77bc44f9b95/exec-5975cef6-b7fd-4b4a-ba0f-452f681a4aff.png",
+      "selected": false,
+      "qa": "骨盆和腿脚关系通过，远手被躯干遮挡较多，未选用。"
+    },
+    {
+      "id": "014-s01-arm-repair",
+      "step": "s01",
+      "prompt": "Use case: identity-preserve.\nEdit target: image 1 is the generated supine single-leg-bridge preparation photograph. Images 2–4 are the same woman identity references.\nKeep the exact woman, face, black ponytail, white shirt, dark grey trousers, plain white shoes, lighting, grey-blue studio, thin grey mat, head left / feet right framing, supporting leg flat sole, non-supporting leg bent and shoe visibly hovering, and pelvis resting on the mat unchanged.\nChange only the far-side arm placement to reveal its whole hand: extend that arm diagonally away from her torso on the far side of the mat at a modest 30-degree angle, forearm and palm resting on the mat beside the far edge of her waist. Its entire palm, thumb and all five fingers should be clearly visible beyond the upper silhouette of her torso, separated naturally from the body; allow enough mat width on the far side. It must be her anatomically connected far-side arm, not an extra hand. Preserve the near-side arm and hand already fully visible on the mat. The woman still has exactly two natural arms and two hands, both palms resting on the mat.\nOnly one person, one pose, a single standalone photo. No text, number, arrow, watermark or logo. Anatomically continuous joints and natural proportions.",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-0f5b-72e3-8aca-d77bc44f9b95/exec-dec4b41e-1ba0-4a4a-bc69-0f1b8454f490.png",
+      "selected": false,
+      "qa": "远手被补至躯干上方背景，未能证明落垫且前臂遮挡，弃用。"
+    },
+    {
+      "id": "014-s01-oblique-camera",
+      "step": "s01",
+      "prompt": "Use case: scientific-educational.\nCreate one new corrected full-body clinical demonstration photo based on image 1; images 2-4 are identity references. The woman must be the same adult East Asian woman, facial features, age, build, black ponytail, white short-sleeve shirt, dark charcoal long trousers, plain white logo-free thin-soled shoes.\nThe pose in image 1 is correct and must be retained: supine preparation for a single-leg bridge, head on left feet on right; pelvis and buttocks resting DOWN on mat; near leg bent with whole foot flat on mat; far leg hip and knee flexed with entire shoe elevated and a visible air gap below it. Exactly one foot touches mat, the other does not touch mat or the supporting shoe.\nCorrected camera and mat: move the camera a little higher, looking down at approximately 30 degrees from an oblique side view, allowing the far side of the mat and both arms to be clearly seen. Keep the body left-to-right horizontally across the image. Use a broad but THIN dark-grey nonslip exercise mat long enough for entire body, wide enough that both arms can rest with their complete forearms and palms on it, at a natural gentle outward angle about 25 degrees from the body. Both shoulders, upper arms, elbows, forearms, wrists, palms and fingers anatomically continuous and visible; far arm is lying behind the body on the exposed far side of the broad mat, not floating in background and not lying on her chest. Near arm similarly relaxed and supported, both palms on mat.\nThe head and upper back remain comfortably on the mat. Ponytail rests beside head naturally. Neutral upward gaze. Supporting sole flat, pelvis down, lifted shoe clearly off mat. Natural limb proportions.\nGrey-blue seamless studio and floor, soft diffuse natural photographic lighting and shadow. Full head, both hands, both shoes and all mat corners within frame. Landscape photo 1536 x 1024. No other props, no text, no digits, no arrows, no labels, no watermark, no logos, one person and one single pose.",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-0f5b-72e3-8aca-d77bc44f9b95/exec-d7d54709-b87f-40a0-ba8e-6d6df09b33b0.png",
+      "selected": false,
+      "qa": "斜侧机位显示完整远手，但手位越出垫子远边，需扩大垫面并自然外移完整远臂。"
+    },
+    {
+      "id": "014-s02-initial",
+      "step": "s02",
+      "prompt": "Use case: scientific-educational.\nAsset type: single rehabilitation assessment demonstration photograph, action 014 E-LOW-026, raised single-leg bridge end pose s02.\nInput image 1 is the selected s01 preparation photo: use it as the composition, equipment, scale, leg identity, supporting-foot position and camera reference. Images 2-4 are the woman's identity references.\nProduce ONE standalone continuation photograph, the exact same woman and same photo setup as image 1. Same face, age, skin, black ponytail, white plain short-sleeve T-shirt, charcoal full-length trousers, plain white thin-soled unbranded shoes. Keep the same wide thin dark-grey nonslip mat, seamless grey-blue studio floor/background, diffuse studio lighting, natural shadows and landscape 1536 x 1024 framing. Camera remains at the identical elevated oblique side angle; head at left, feet at right; same body and mat scale and image position. Entire head, both hands and shoes and all mat corners inside frame.\nChange the pose to a LOW SINGLE-LEG BRIDGE: the near-camera supporting leg is still bent, and its ENTIRE shoe sole remains flat exactly at its s01 position on the mat; do not move that supporting foot. Her pelvis and buttocks now lift clearly approximately 12 to 15 cm off the mat in a controlled low bridge. There is a visible air gap and natural shadow directly beneath her buttocks and lower trunk. Her shoulders, upper back and head still stay in contact with the mat, ponytail still lying on mat; both relaxed arms stay in their same s01 gently outward positions, both complete palms rest on the mat. Neck remains neutral and supported. Lower ribs and pelvis form a gentle continuous slope without excessive lumbar arch, no exaggerated hip thrust and no head lifting.\nThe far-camera NON-SUPPORTING leg remains flexed at hip and knee as in s01, its whole shoe continues hovering well above the mat with visible empty space beneath it; both heel and forefoot remain OFF mat. There is exactly ONE planted foot. The raised foot never contacts mat, the supporting shoe or the other leg; both distinct knees and both feet clearly visible. Supporting hip extends to raise pelvis; the raised leg keeps its bent-knee shape and does not straighten out. Anatomically natural thigh lengths, joints and muscles.\nSingle person, single pose, no montage. No text, digits, arrows, diagram overlays, watermark, logos or props. This is a SINGLE-leg bridge, never a double-foot bridge.",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-0f5b-72e3-8aca-d77bc44f9b95/exec-fbdc2c15-a330-4fbc-ae2d-b5a2459b81f8.png",
+      "selected": false,
+      "qa": "低桥、单脚支撑和另一脚悬空通过，但远手被抬起躯干遮挡，未选用。"
+    },
+    {
+      "id": "014-s01-final",
+      "step": "s01",
+      "prompt": "Use case: precise-object-edit.\nInput 1 is the selected supine one-legged bridge preparation photograph. Correct only far-side mat width and far-side arm support. Retain all identity, face, near arm/hand, both legs, both shoe positions, pelvis resting down, clothes, proportions, grey-blue background and lighting, image dimensions and framing exactly.\nExtend the far side of the thin dark-grey mat deeper into the image, so its far long edge runs across the image above the far arm and palm. It should be a generously wide clinical floor exercise mat, with grey mat surface clearly underneath the whole far-side arm and hand. Maintain the mat's near edge and left/right corners.\nReposition the existing far-side arm modestly diagonally outward at 45 degrees from her torso: shoulder remains anatomically attached behind the upper torso, upper arm, elbow and forearm are naturally extended away across the far side of the mat, with palm and complete fingers placed on the mat in the empty region ABOVE her torso's silhouette and to the right of the shoulder. The whole far arm is straight and relaxed and supported by mat, not held aloft, not lying on chest, not reduced to a detached hand. Its forearm and hand should lie outside the torso silhouette so raising pelvis in the next photo will not hide it. Far palm visibly contacts the grey mat and has a grounded contact shadow. Exactly two arms; near arm remains unchanged.\nThe current legs and pelvis are exactly correct: one bent supporting leg full sole down, one bent non-supporting leg whole shoe clear of mat, pelvis and buttocks down. Do not change those.\nNo text, numbers, arrows, logo, watermark, extra person or extra limb. Preserve natural realistic soft studio photography.",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-0f5b-72e3-8aca-d77bc44f9b95/exec-c42ddd41-37d0-4934-8dd2-01601d1162df.png",
+      "selected": true,
+      "qa": "扩展薄灰垫的远边，远臂自然斜离躯干并连续接肩肘腕；完整双手实际落垫。其余准备位正确，选用。"
+    },
+    {
+      "id": "014-s02-mat-repair",
+      "step": "s02",
+      "prompt": "Use case: precise-object-edit.\nImage 1 is the single-leg-bridge raised pose s02 EDIT TARGET. Image 2 is the approved preparation pose s01 and is the equipment, camera and arm-position reference.\nKeep image 1's exact woman, face, head and shoulders resting on mat, raised pelvis and low controlled bridge, natural neutral lumbar curve, near-side supporting foot in its original flat position, bent far-side leg with entire shoe clearly suspended, near-side arm, clothing, ponytail, photography, grey-blue backdrop and image dimensions unchanged. Core movement is already correct. Preserve exactly one planted foot, other foot above mat, visible air gap beneath buttocks.\nChange only the far-side mat extent and far-side arm to match image 2. Expand the thin dark-grey mat's far side upward/deeper in the image until its top long edge is at the same place as image 2. Mat texture, thickness, near edge and left/right corners should match image 2. Place the existing far arm at the same 45-degree outward diagonal position as image 2, relaxed and supported on this expanded mat, anatomically attached to her far shoulder behind torso, with complete upper arm, elbow, forearm, wrist, whole palm and fingers visible in the empty region ABOVE the upper torso silhouette. Entire far arm rests on the mat, not floating and not covered by the raised body. Far arm joints and hand natural, exactly two arms total. Match far hand location to image 2 so both steps form a consistent pair.\nHead stays on the left and both shoes on right; full body and all mat corners in frame, camera and person scale identical. Single person, one pose. No text, labels, digits, arrows, logos, watermark or added props.",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-0f5b-72e3-8aca-d77bc44f9b95/exec-da6cabd7-ad0e-46c2-95f1-20613e6f9aef.png",
+      "selected": false,
+      "qa": "全部支持关系正确，但相对s01垫子远边和远手上移，未选用为正式成组图。"
+    },
+    {
+      "id": "014-s02-final",
+      "step": "s02",
+      "prompt": "Use case: identity-preserve.\nEDIT IMAGE 1, the APPROVED s01 photo, into s02. IMAGE 2 is only a target low-single-leg-bridge POSE reference.\nKeep IMAGE 1's canvas, camera, broad thin grey mat, every mat edge and corner, woman identity, clothing, head and ponytail, both arms and both hands at exactly their existing positions, and supporting shoe at its exact existing mat position. Keep the mat far long edge at its Image 1 location. Far hand must remain exactly at its Image 1 location and shape, resting on the mat. No camera or equipment change.\nMake just the single-leg bridge movement: raise the pelvis/buttocks about 12–15 cm off the mat, resulting in the low bridge shape shown in image 2. Shoulder blades and head remain on mat, chest-to-pelvis gentle slope, no lumbar hyperextension. Both arms and palm locations remain exactly unchanged, because they are resting on the mat. Near-side leg continues as planted support, its whole sole remains flat in exactly the Image 1 place. Far-side leg remains flexed at hip and knee and its whole shoe remains airborne well clear of the mat. Exactly ONE planted foot and a clearly visible air gap under the raised pelvis. Do not straighten the airborne leg and do not plant the airborne foot.\nKeep Image 1's unchanged regions pixel-consistent as much as possible; only lower torso, pelvis and associated leg shape move to complete the bridge. Anatomically connected limbs, realistic proportions, no extra hands. One person and one pose. No text, digits, arrows, labels, logos, watermark or added props. Preserve soft realistic studio photography.",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a138e4-0f5b-72e3-8aca-d77bc44f9b95/exec-3985f524-f5b3-4727-9beb-2792fbd2bfeb.png",
+      "selected": true,
+      "qa": "直接从最终s01只改变低桥，保留垫边、双手、近脚、头部位置与人物尺寸；支撑关系通过，选用。"
+    }
+  ]
+}

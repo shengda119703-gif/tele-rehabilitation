@@ -36,6 +36,7 @@ from app.automatic_plans import generate_proposal, create_automatic_plan, progra
 MAX_BYTES = 256 * 1024 * 1024
 MAX_STORED = 2 * 1024 * 1024 * 1024
 ACTIVE = {'uploading', 'queued', 'analyzing'}
+UPLOAD_OPERATION = re.compile(r'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}')
 
 
 def now():
@@ -74,8 +75,11 @@ class Jobs:
             item.update(values)
             save(self.folder(item) / 'job.json', item)
 
-    def reserve(self, owner, exercise, side):
+    def reserve(self, owner, exercise, side, *, upload_operation='', metadata=None):
         with self.lock:
+            if upload_operation and any(j['owner'] == owner and j.get('upload_operation') == upload_operation
+                                        for j in self.items.values()):
+                raise HTTPException(409, '这次上传已有接收记录，请按原上传编号核对。')
             if any(j['owner'] == owner and j['state'] in ACTIVE for j in self.items.values()):
                 raise HTTPException(409, '你已有一段录像正在处理，请先到“我的记录”查看。')
             if self.closed or sum(j['state'] in ACTIVE for j in self.items.values()) >= 3:
@@ -86,10 +90,21 @@ class Jobs:
                 raise HTTPException(507, '录像存储空间不足，请在记录页删除不需要的录像。')
             item = dict(id=uuid4().hex, owner=owner, exercise=exercise, side=side,
                         state='uploading', created_at=now(), consent_at=now(), message='正在接收录像')
+            item.update(metadata or {})
+            if upload_operation:
+                item['upload_operation'] = upload_operation
             item.update(self.shared_context)
             self.folder(item).mkdir(parents=True)
+            save(self.folder(item) / 'job.json', item)
             self.items[item['id']] = item
-            self.update(item['id'])
+            return item.copy()
+
+    def upload_receipt(self, operation, owner):
+        with self.lock:
+            item = next((j for j in self.items.values()
+                         if j['owner'] == owner and j.get('upload_operation') == operation), None)
+            if not item:
+                raise HTTPException(404, '尚未找到这次上传的接收记录。')
             return item.copy()
 
     def get(self, jid, owner):
@@ -207,6 +222,8 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
             yield
         finally:
             watcher.cancel()
+            if getattr(app.state, 'wearables', None) is not None:
+                await asyncio.to_thread(app.state.wearables.close)
             if hasattr(app.state, 'rehab_v2'):
                 await asyncio.to_thread(app.state.rehab_v2.close)
             await asyncio.to_thread(app.state.live.close)
@@ -217,9 +234,16 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
     app.state.jobs = jobs
     app.state.pair_key = pair_key
 
+    # Independent page reads may reach one brand-new legacy database together.
+    # Serialize ONLY original writer initialization so one constructor cannot
+    # observe another constructor's schema with a stale user_version=0.
+    # Keep all migration/version checks inside the unchanged original Storage.
+    store_initialization_lock = threading.Lock()
+
     @contextmanager
     def store_for(uid):
-        store = Storage(shared.backend.data_dir / 'home_rehab.sqlite3' if shared else jobs.root / uid / 'assessments.sqlite3')
+        with store_initialization_lock:
+            store = Storage(shared.backend.data_dir / 'home_rehab.sqlite3' if shared else jobs.root / uid / 'assessments.sqlite3')
         try:
             yield store
         finally:
@@ -259,10 +283,15 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
             raise HTTPException(401, '请先输入电脑上显示的连接码')
         return uid
 
+    from .wearables.api import install_wearables
+    install_wearables(app, data_dir, owner)
+
     from .care import install_care
     install_care(app, data_dir, jobs, owner, sign, small_json)
     from .live import install_live
     install_live(app, owner, small_json)
+    from .practice import install_practice
+    install_practice(app, owner, store_for, small_json, lambda uid: shared.owner if shared else uid)
     if rehab_v2:
         from .rehab_v2.api import install_rehab_v2
         from app.training_plans import prepare_training_plan, validate_saved_binding
@@ -369,7 +398,9 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
         allowed_hosts = os.environ.get('REHAB_ALLOWED_HOSTS', '').split(',')
         if allowed_hosts != [''] and request.url.hostname not in allowed_hosts:
             return JSONResponse({'detail':'访问地址不正确'}, status_code=400)
-        if request.method not in ('GET', 'HEAD') and request.headers.get('x-rehab-client') != 'mobile-v1':
+        vendor_notification = (request.method == 'POST' and request.url.path in (
+            '/callbacks/xiaomi/healthkit/notifications', '/callbacks/huawei/healthkit/notifications'))
+        if request.method not in ('GET', 'HEAD') and not vendor_notification and request.headers.get('x-rehab-client') != 'mobile-v1':
             return JSONResponse({'detail': '请从本机康复网页操作'}, status_code=403)
         response = await call_next(request)
         response.headers.update({'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer',
@@ -411,8 +442,20 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
 
     @app.get('/api/catalog')
     def get_catalog(request: Request):
-        owner(request)
-        return dict(exercises=catalog(), max_bytes=MAX_BYTES, max_seconds=120,
+        uid = owner(request)
+        formal = None
+        if rehab_v2:
+            from app.rehab_v2.protocols import PROTOCOLS
+            # Read-only capability, not an eligibility grant or feature toggle.
+            formal = dict(provider='hosted-rehab-v2-1', owner_scope=uid,
+                participant_id=shared.owner if shared else uid,
+                source_context='LIVE_CAMERA:SELF_USE',
+                guided_practice=dict(provider='hosted-rehab-v2-guided-1',
+                    policy_version='formal-arrangement-guided-1', base_path='/rehab/v2/practice'),
+                protocols=[dict(exercise_id=eid, view=p['view']) for eid, p in PROTOCOLS.items()])
+        return dict(exercises=catalog(), max_bytes=MAX_BYTES, max_seconds=120, practice_recording=True,
+                    manual_practice_arrangements=True,
+                    formal_measurement=formal,
                     shared=bool(shared), fitness=fitness_catalog(),
                     posture=posture_catalog(),
                     network_camera=dict(connected=False, supported=True, message='在设备页测试已配置的 RTSP 摄像头。'))
@@ -476,6 +519,13 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
     def get_job(jid: str, request: Request):
         return jobs.public(jobs.get(jid, owner(request)))
 
+    @app.get('/api/uploads/{operation}')
+    def get_upload_receipt(operation: str, request: Request):
+        uid = owner(request)
+        if not UPLOAD_OPERATION.fullmatch(operation):
+            raise HTTPException(400, '上传编号无效')
+        return jobs.public(jobs.upload_receipt(operation, uid))
+
     @app.post('/api/jobs')
     async def upload(request: Request, exercise: str, side: str, consent: str = '',
                      mode: str = 'assessment', plan_id: str = '', entry_key: str = ''):
@@ -512,9 +562,12 @@ def create_app(data_dir=None, pair_key=None, runner=None, *, shared=None, rehab_
         if request.headers.get('content-type', '').split(';')[0] not in (
                 'video/mp4', 'video/quicktime', 'video/webm', 'video/x-matroska', 'application/octet-stream'):
             raise HTTPException(415, '请选择手机录像文件（MP4 / MOV / WebM）')
-        item = jobs.reserve(uid, exercise, side)
-        jobs.update(item['id'], mode=mode, plan_id=plan_id if mode == 'training' else '',
-                    entry_key=entry_key if mode == 'training' else '', barbell_calibration=calibration)
+        operation = request.headers.get('x-rehab-upload-operation', '')
+        if operation and not UPLOAD_OPERATION.fullmatch(operation):
+            raise HTTPException(400, '上传编号无效')
+        item = jobs.reserve(uid, exercise, side, upload_operation=operation, metadata=dict(
+            mode=mode, plan_id=plan_id if mode == 'training' else '',
+            entry_key=entry_key if mode == 'training' else '', barbell_calibration=calibration))
         folder = jobs.folder(item)
         part = folder / 'upload.part'
         size = 0

@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "version": "v1.0",
+  "created_date": "2026-10-14",
+  "production_tool": "built-in image_gen.imagegen",
+  "action_index": "166",
+  "action_id": "T-AXU-045",
+  "action_name": "高位俯卧撑支撑交替抬手",
+  "sequence": "s01 → s02 → 复用 s01 → s03 → 复用 s01",
+  "selected_version": "固定高台直臂支持，轻抬手基础版；不混入触肩或俯卧撑",
+  "left_right_mapping": "人物本人右手为画面左侧近景手，左手为画面右侧远景手",
+  "sources": [
+    {
+      "path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "section": "166 T-AXU-045；共同视觉要求与逐帧验收",
+      "sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991"
+    },
+    {
+      "path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+      "section": "T-AXU-045 原卡",
+      "sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138"
+    }
+  ],
+  "identity_references": [
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "role": "身份、服装、棚拍光线与灰蓝背景参考；逐张已 view_image 查看",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "role": "身份、服装、棚拍光线与灰蓝背景参考；逐张已 view_image 查看",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "role": "身份、服装、棚拍光线与灰蓝背景参考；逐张已 view_image 查看",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ],
+  "images": [
+    {
+      "step": "s01",
+      "filename": "166_T-AXU-045_s01.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/166_T-AXU-045_s01.png",
+      "caption": "双手撑固定高台，双脚稍分开，保持直臂整体支持。",
+      "prompt": "Use case: scientific-educational.\nAsset type: ONE single photorealistic rehabilitation demonstration photograph, action 166 T-AXU-045 step s01 (both hands on a FIXED HIGH COUNTER).\nInput images: the three provided photos are identity, clothing, studio lighting and grey-blue background references ONLY. They are not pose references.\nCreate the SAME adult East Asian woman in the references, same facial identity, age, skin tone and body proportions, black ponytail, plain white short sleeve T-shirt, dark grey full-length trousers, bare feet. Soft diffused studio photography, grey-blue seamless backdrop and floor, natural contact shadows, realistic anatomy.\nPose: an INCLINED STRAIGHT-ARM SUPPORT on a stable fixed countertop at approximately waist height. Both palms planted flat on the top of the counter, hands shoulder-width apart and fingers directed forward naturally. Both elbows nearly straight without hyperextension. Both bare feet on the floor behind her, slightly apart around hip width, toes forward, soles firmly planted. The shoulder-to-hip-to-ankle line stays long and straight in a gentle inclined plank, no folded waist, no sagging lower back, no twisted trunk. Her chest faces the counter, head and neck aligned naturally with the torso and gaze toward the support surface. This is only holding support, not doing a push-up.\nEquipment: one heavy fixed high counter with a flat pale grey top and a solid built-in rectangular base visibly attached to floor/wall, no wheels, no narrow freestanding legs, no stool, no chair. Hands rest on its near edge. The counter must be wide enough for both separated hands and visually stable. Show both wrists and full palms clearly.\nCamera and composition: fixed horizontal camera, three-quarter FRONT OBLIQUE full-body view, about 45 degrees to her forward-facing direction, looking slightly toward her chest/front and allowing BOTH separate arms, hands and hand-to-counter contacts to be clearly readable. At the same time show the overall straight shoulder-hip-ankle inclined support line. Her anatomical RIGHT arm is the nearer foreground arm on IMAGE LEFT, anatomical LEFT arm is the farther arm on IMAGE RIGHT. Feet slightly apart and both entirely visible. Full head, ponytail, BOTH entire hands, BOTH entire feet and floor contacts inside a square frame with generous margins. Natural perspective, no strong wide-angle distortion. This s01 will anchor two subsequent tiny alternating hand lifts, so keep camera and support contacts unambiguous.\nConstraints: ONE woman and ONE pose, realistic complete fingers and toes, correct continuous limb proportions. No bent-elbow pushup, no shoulder tap, no torso rotation. No words, numbering, labels, arrows, ghost limbs, movement trails, collage, logos or watermarks. No unrelated equipment. Preserve reference appearance faithfully.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "source_generated_image": "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-158678d6-fbdf-4264-a5dc-fa9bd26f00eb.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-158678d6-fbdf-4264-a5dc-fa9bd26f00eb.png",
+      "reused": false,
+      "status": "accepted_after_visual_review",
+      "version": 1,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1768935,
+      "sha256": "C5A3024DDD6996B2BE9371EB77E6AB9F538021FFBD13AB1AC4BA7587B9C9C763",
+      "review": {
+        "identity_clothing_background": "同一女性、黑马尾、白短袖、深灰长裤和灰蓝柔光棚拍一致",
+        "pose": "两手分开平撑高台、肘近伸直，双脚稍分开，全身倾斜支持线稳定",
+        "support_equipment": "整体固定柜式台面与实体底座，非椅凳、无轮；双脚地面接触可见，支持手接触清楚",
+        "anatomy_and_framing": "头部、双手、完整双脚均在画面内，手指脚趾与肢段连续，人体比例和透视自然",
+        "group_consistency": "s02、s03 均直接编辑自 s01；相机、台面、地面、脚位、身形尺度一致",
+        "text_overlay": "单一静态姿势，无文字、箭头、编号、拼图或水印",
+        "source_and_saved_review": "生成源图和实际保存定稿均已逐张 view_image 审查"
+      }
+    },
+    {
+      "step": "s02",
+      "filename": "166_T-AXU-045_s02.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/166_T-AXU-045_s02.png",
+      "caption": "右手与双脚继续支持，左手仅轻离台面，不触肩。",
+      "prompt": "Use case: identity-preserve.\nAsset type: ONE photorealistic rehabilitation demonstration photo, action 166 T-AXU-045 step s02, a TINY LEFT-HAND lift from approved s01.\nInput image: edit target and exact scene anchor. Preserve the camera, counter, woman and all support geometry.\nChange ONLY her ANATOMICAL LEFT HAND, the FARTHER HAND ON IMAGE RIGHT currently planted farther back on the counter: lift that palm and all five fingers approximately 4 centimetres directly above its previous counter contact, showing a clearly visible small air gap. The hand remains palm-down, relaxed, close to its original place immediately over the countertop, NOT moving toward any shoulder. Its forearm moves only as needed for this tiny lift, its elbow stays nearly straight, no large bend. Her ANATOMICAL RIGHT HAND, the NEAR FOREGROUND HAND ON IMAGE LEFT, remains planted flat at EXACTLY the same countertop location, complete palm and fingers in contact.\nKeep both feet and all lower body pixels as unchanged as possible: both bare feet remain at the identical floor positions and orientation, slightly apart, soles planted; ankles, knees, hips and pelvis remain in the identical positions. Keep the shoulder-hip-ankle inclined support line stable and straight, chest still facing the counter, with NO trunk rotation, no shoulder swinging open, no sag, no folded waist, no lowering like a push-up. Tiny weight transfer to the planted right hand is allowed without visible body rotation.\nPreserve the exact same woman's face, black ponytail, white short sleeve T-shirt, dark grey trousers, natural anatomy, entire head and complete hands and feet. Preserve exact counter top and solid fixed base, its floor attachment, background, floor, shadows, soft studio lighting, full-body square crop, camera angle and subject scale. Both hands must be visible and distinct: near right hand on counter, far left hand hovering a few centimetres above. One single still frame. No shoulder touch, no simultaneous two-hand lift, no bent-elbow push-up, no text, labels, numbering, arrows, ghost hands, motion trails, collage, logos, watermark, added people or objects.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-158678d6-fbdf-4264-a5dc-fa9bd26f00eb.png"
+      ],
+      "source_generated_image": "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-e169fd2c-5e66-403b-8982-d8a3f9783cbb.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-e169fd2c-5e66-403b-8982-d8a3f9783cbb.png",
+      "reused": false,
+      "status": "accepted_after_visual_review",
+      "version": 1,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1701972,
+      "sha256": "A33AD6CB633AED22CC70B66480829673A69C90C3D6233253A8F0A1B3B89A64E4",
+      "review": {
+        "identity_clothing_background": "同一女性、黑马尾、白短袖、深灰长裤和灰蓝柔光棚拍一致",
+        "pose": "远侧左手仅离台少量，近侧右手仍平撑；未触肩，胸口继续朝台",
+        "support_equipment": "整体固定柜式台面与实体底座，非椅凳、无轮；双脚地面接触可见，支持手接触清楚",
+        "anatomy_and_framing": "头部、双手、完整双脚均在画面内，手指脚趾与肢段连续，人体比例和透视自然",
+        "group_consistency": "s02、s03 均直接编辑自 s01；相机、台面、地面、脚位、身形尺度一致",
+        "text_overlay": "单一静态姿势，无文字、箭头、编号、拼图或水印",
+        "source_and_saved_review": "生成源图和实际保存定稿均已逐张 view_image 审查"
+      }
+    },
+    {
+      "step": "s03",
+      "filename": "166_T-AXU-045_s03.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/166_T-AXU-045_s03.png",
+      "caption": "先复用 s01 重置双手支持，再右手轻离台面，左手与双脚继续支持。",
+      "prompt": "Use case: identity-preserve.\nAsset type: ONE photorealistic rehabilitation demonstration photo, action 166 T-AXU-045 step s03, a TINY RIGHT-HAND lift after resetting to both-hands-on-counter s01.\nInput image is the approved s01 BOTH-HANDS-SUPPORT anchor, not the preceding lifted-left-hand frame. Keep its scene and all support geometry identical.\nChange ONLY her ANATOMICAL RIGHT HAND, the NEAR FOREGROUND HAND ON IMAGE LEFT: lift that entire palm and all five fingers approximately 4 centimetres directly above its original near-edge counter contact, showing a clear small air gap underneath. Keep it palm-down and relaxed, close to its former location directly above the counter. Forearm moves only enough to lift a few centimetres and elbow stays nearly straight, no large elbow bend. Her ANATOMICAL LEFT HAND, the FARTHER HAND ON IMAGE RIGHT, must remain fully replanted flat at EXACTLY its s01 counter location with full palm and fingers touching the top. This represents s01 reset, then right-hand lift; never two hands off at once.\nKeep both bare feet at identical floor positions and orientation with soles planted, slightly apart. Freeze all lower-body placement: ankles, knees, hips, pelvis and trousers remain as in s01. Preserve the same stable straight inclined shoulder-hip-ankle support line and chest facing the counter, no visible trunk rotation, no shoulder opening, no sag or folded waist, no body lowering. A minimal controlled weight shift toward the planted left hand is acceptable without rotation.\nPreserve EXACT same woman, face, ponytail, white short sleeve shirt, dark grey full-length trousers, entire head and complete hands/feet, realistic anatomy and proportions. Preserve same fixed high countertop with solid built-in base, background/floor, lighting and shadows, camera angle, perspective, square full-body crop and scale. Both arms and hands remain separately visible; near right hand hovers just above counter, far left hand is clearly in contact.\nNo shoulder tap or touch, no bent-elbow push-up, no simultaneous two-hand lift, no added people/equipment. Single still pose, no text, numbering, labels, arrows, motion trails, ghost limbs, collage, logo or watermark.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-158678d6-fbdf-4264-a5dc-fa9bd26f00eb.png"
+      ],
+      "source_generated_image": "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-c04642eb-7d59-402c-b0c3-46e262eb4384.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a84-a429-7872-8405-02e2be549204/exec-c04642eb-7d59-402c-b0c3-46e262eb4384.png",
+      "reused": false,
+      "status": "accepted_after_visual_review",
+      "version": 1,
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1684424,
+      "sha256": "8A01C90478FE4F9C5D6947C3534017BA9231C77395047FF27F8BBB01845215F9",
+      "review": {
+        "identity_clothing_background": "同一女性、黑马尾、白短袖、深灰长裤和灰蓝柔光棚拍一致",
+        "pose": "近侧右手仅离台少量，远侧左手恢复平撑；未同时离双手，未触肩",
+        "support_equipment": "整体固定柜式台面与实体底座，非椅凳、无轮；双脚地面接触可见，支持手接触清楚",
+        "anatomy_and_framing": "头部、双手、完整双脚均在画面内，手指脚趾与肢段连续，人体比例和透视自然",
+        "group_consistency": "s02、s03 均直接编辑自 s01；相机、台面、地面、脚位、身形尺度一致",
+        "text_overlay": "单一静态姿势，无文字、箭头、编号、拼图或水印",
+        "source_and_saved_review": "生成源图和实际保存定稿均已逐张 view_image 审查"
+      }
+    }
+  ],
+  "validation_note": "核对静态姿势、左右手、支持点、器材、完整手脚和组内一致性。仅记录图片可见内容，不以图像声称确认承重力、抗旋转力矩或肩结构稳定。保留原始生成图；未改动原清单、全局进度 JSON 或正式应用仓库。"
+}

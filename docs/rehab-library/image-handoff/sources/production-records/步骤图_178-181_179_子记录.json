@@ -1,0 +1,53 @@
+{
+  "document": "动作分步骤示范图制作清单_v1.0.md",
+  "created_local_date": "2026-10-14",
+  "action": "179",
+  "action_id": "T-AXU-038",
+  "name": "前臂旋前/旋后：空手到短杠杆",
+  "mode": "built-in image_gen",
+  "variant": "首轮空手中立/旋后/旋前",
+  "reference_paths": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "sequence": "s01→s02→复用s01→s03→复用s01",
+  "assets": [
+    {
+      "step": 1,
+      "path": "E:/git冲突问题/rehab image/train/steps/179_T-AXU-038_s01.png",
+      "sha256": "6CF5849734E30ED242331F6A83A01F80FB58758778BA386651D02348C5351622",
+      "width": 1122,
+      "height": 1402,
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-1dad-7143-bb7d-2cffd86829d4/exec-ed8f681b-c374-4e1e-9826-03c1e305e690.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: one photorealistic rehabilitation exercise step photo, action 179 T-AXU-038, neutral forearm rotation.\nInput images: the three supplied images are identity, clothing, studio photography and gray-blue backdrop references only. They do not define the exercise pose.\nMake one new single-pose photograph of exactly the same East Asian adult woman as the references: same face and age, natural skin, black ponytail, plain white short-sleeve tee and dark charcoal gray trousers. Soft studio lighting and seamless gray-blue background, natural shadows, no graphics.\n\nShe is seated upright beside a simple stable pale-gray rehabilitation table, facing toward image-right. Her anatomical RIGHT arm is the near arm. Right upper arm hangs vertically beside her torso; right elbow is bent approximately 90 degrees and visibly rests on the table close to her body. The proximal right forearm lies on the tabletop for clear support; the forearm extends horizontally forward toward image-right, with her wrist and hand slightly beyond the front table edge. The entire forearm and wrist stay straight in a neutral alignment. Her empty right hand is in the neutral forearm position, thumb side UP like a relaxed handshake; fingers are softly extended forward together, palm vertical rather than facing up or down. No fist, no weight or rod. Thumb visible distinctly above fingers. Left hand rests naturally on her left thigh and cannot obscure the right arm.\n\nCamera: front-right oblique medium close-up from the woman's anatomical right side, enough front angle to see the near right elbow, forearm, complete wrist and palm/thumb direction clearly. Frame her complete head, torso and upper thighs with dark trousers showing, plus full right hand and tabletop supporting the elbow/forearm. Arms neither oversized nor foreshortened; natural proportions. Right arm must be visually unmistakable and physically connected. Leave modest clear space near the hand. No split screen or collage.\nConstraints: single still pose; anatomically correct five-finger right hand; wrist neutral with no flexion, extension or side bending; elbow truly contacting the table; shoulder relaxed and upper arm close to trunk. No text, numbers, captions, arrows, motion trails, watermarks, extra people or floating objects.",
+      "review": "通过逐张 view_image 审查：同一参考女性、白短袖、深灰长裤、灰蓝棚拍；右上臂靠身，右肘屈曲约 90 度且与桌面明确接触，前臂向前并有桌面支持；空手拇指向上、掌面近垂直，腕沿前臂自然中立。完整头部、右肘腕手及躯干参考可见，无文字箭头。",
+      "status": "passed_visual_review",
+      "reused": false
+    },
+    {
+      "step": 2,
+      "path": "E:/git冲突问题/rehab image/train/steps/179_T-AXU-038_s02.png",
+      "sha256": "72DE930CDEB509A1C8D7042AE9FD5317118CB1D0B874FF3266A7A4A79B8D640B",
+      "width": 1122,
+      "height": 1402,
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-1dad-7143-bb7d-2cffd86829d4/exec-24942361-79f4-4ff9-b8a2-bb32825fd74c.png",
+      "prompt": "Use case: scientific-educational. Edit target: the supplied rehabilitation exercise photograph.\nCreate the second separate step photo for forearm supination by making ONLY this anatomical pose change: rotate the woman's RIGHT forearm around its unchanged horizontal long axis until the RIGHT PALM FACES UPWARD toward the ceiling. Clearly show the softly extended fingers and natural palm creases facing upward; the thumb now lies naturally to the woman's outward/right side of the hand. The back of the hand faces the tabletop. Fingertips keep pointing image-right. This is an empty hand, no object. It is forearm axial supination, not wrist bending. The wrist remains straight and exactly in line with the forearm, no extension/flexion or side deviation.\n\nKeep the original right elbow resting at the same place on the tabletop, right upper arm close to the torso, elbow flexion approximately 90 degrees, shoulder down, forearm horizontal and supported on the same tabletop along its proximal portion. Don't move the elbow, shoulder, chest, head or whole arm to achieve the palm rotation. Maintain the same arm length and hand size, anatomical five fingers.\nPreserve EXACTLY the same woman, face, ponytail, white short sleeve tee, dark gray trousers, seated torso position, left hand on thigh, chair, table shape and height and location, gray-blue backdrop, soft light, camera position, crop and subject scale from the target. Complete hand stays visible. Same single portrait composition and one pose only. No text, numbering, arrows, motion trails, captions, watermark or collage.",
+      "review": "通过逐张 view_image 审查：由中立图作同机位编辑，人物、桌椅、躯干、上臂及肘接触位置与 s01 保持；右掌面与掌纹朝上，旋后方向清楚，手指自然，腕无额外明显侧偏；肘和近侧前臂保持支持，没有肩带动整臂翻转。照片是静态终点，旋转过程须后续步骤说明。",
+      "status": "passed_visual_review",
+      "reused": false
+    },
+    {
+      "step": 3,
+      "path": "E:/git冲突问题/rehab image/train/steps/179_T-AXU-038_s03.png",
+      "sha256": "95D78583A050D61FC60CFCA1E083E825BBA8E3B8DD9CEF977473A2F517AE9015",
+      "width": 1122,
+      "height": 1402,
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a85-1dad-7143-bb7d-2cffd86829d4/exec-2725be7d-9030-4ef5-bf44-c9671e41736a.png",
+      "prompt": "Use case: scientific-educational. Edit target: the supplied rehabilitation exercise photograph with an upright thumb (the neutral starting frame).\nCreate the third separate step photo for forearm pronation by making ONLY this anatomical pose change: rotate the woman's anatomical RIGHT forearm around its unchanged horizontal long axis until the RIGHT PALM FACES DOWNWARD toward the tabletop and the BACK OF THE RIGHT HAND faces upward toward the ceiling. Four fingers softly extended forward together toward image-right, their dorsal knuckles and fingernails naturally visible from slightly above; thumb lies naturally at the inner/medial side of the hand. Empty hand with no tool. Keep the wrist straight, exactly in line with the forearm, no extra wrist flexion, extension or side bending. The hand lies nearly horizontal, hovering naturally just above the table or lightly touching it. This is a clear pronation endpoint opposite to palm-up supination, achieved by axial forearm rotation alone.\n\nKeep the original right elbow at exactly the same tabletop contact place near her body, right upper arm close to torso, right elbow bent approximately 90 degrees, shoulder down, forearm horizontal and visibly supported along the same table. Do not swing the entire arm or turn the shoulder/chest to achieve palm down. Maintain the same arm length and hand size; anatomically correct five fingers.\nPreserve EXACTLY the same woman, face, ponytail, white tee, dark gray trousers, seated torso posture, left hand on thigh, chair, stable table shape/height/position, gray-blue background, soft studio lighting, camera and crop, subject scale as the supplied target. Complete hand stays visible. Same single portrait photograph, one pose only, no text, numbering, arrows, motion trails, captions, watermark or collage.",
+      "review": "通过逐张 view_image 审查：由中立图作同机位编辑，右掌朝下、手背及指甲朝上，旋前方向与 s02 相反；上臂、屈肘支桌及前臂轴线保持，腕自然平直，手掌轻触桌面无扭折；同人物服装背景和构图，无文字箭头。",
+      "status": "passed_visual_review",
+      "reused": false
+    }
+  ]
+}

@@ -31,7 +31,7 @@ $apkStage = if ($StagingRoot) { $StagingRoot } else { Join-Path $env:LOCALAPPDAT
 $apkRun = Join-Path $apkStage ([guid]::NewGuid().ToString('N'))
 foreach ($apkDirectory in @($apkRun,$apkOutput,$apkSigning)) { New-Item -ItemType Directory -Force $apkDirectory | Out-Null }
 Invoke-ApkTool $Python @((Join-Path $PSScriptRoot 'prepare_assets.py'))
-Invoke-ApkTool $Python @((Join-Path $PSScriptRoot 'prepare_lin_profile.py'))
+# Public updates retain installed records but do not seed fictitious patient histories.
 Invoke-ApkTool 'node' @((Join-Path $PSScriptRoot 'bundle_product.cjs'))
 Copy-Item -LiteralPath (Join-Path $apkProject 'res') -Destination (Join-Path $apkRun 'res') -Recurse
 Copy-Item -LiteralPath (Join-Path $apkProject 'AndroidManifest.xml') -Destination (Join-Path $apkRun 'AndroidManifest.xml')

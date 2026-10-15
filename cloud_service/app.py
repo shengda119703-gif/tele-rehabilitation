@@ -22,6 +22,7 @@ from .browser import install_public_web
 from .config import Settings
 from .database import Database, accounts, grants, patients, records, sessions
 from .dossier import validate_dossier
+from .downloads import install_downloads
 from .security import (
     DomainError, audited, csrf, digest, password, password_hash,
     throttle, username, verify_password,
@@ -101,7 +102,8 @@ class LimitedBody:
         return await self.app(scope, replay, send)
 
 
-def create_app(settings: Settings, database=None, *, web_assets=None, ai_config=None, ai_dispatch=None):
+def create_app(settings: Settings, database=None, *, web_assets=None, ai_config=None, ai_dispatch=None, download_assets=None,
+               ai_settings_path=None, ai_probe=None):
     db = database or Database(settings.database_url)
     app = FastAPI(title="安康工作台", version=__version__, docs_url=None, redoc_url=None,
                   openapi_url=BASE + "/openapi.json")
@@ -212,15 +214,22 @@ def create_app(settings: Settings, database=None, *, web_assets=None, ai_config=
 
     @app.get(BASE + "/capabilities")
     def capabilities():
+        ai = app.state.text_ai_settings.status()
+        providers = {name: {"enabled": False, "available": False, "execution_location": "DISABLED"}
+                     for name in ("llm", "asr", "tts", "ocr", "sms", "push")}
+        providers["llm"] = {"enabled": ai["configured"],
+                            "available": ai["provider_connection"] in {"MODELS_VERIFIED", "CHAT_VERIFIED"},
+                            "execution_location": "CLOUD_GATEWAY" if ai["configured"] else "DISABLED"}
         return {"version": __version__, "registration": "public_password", "password_complexity": False,
             "doctor_identity": "shared_admin", "mfa_required": False, "server_models": False,
-            "providers": {name: {"enabled": False, "available": False, "execution_location": "DISABLED"}
-                for name in ("llm", "asr", "tts", "ocr", "sms", "push")},
-            "account_family": True, "family_link_grants_access": False,
+            "providers": providers,
             "plans": True, "text_messages": True, "workbench": True,
+            "personal_assistant": True, "assistant_conversation_sync": True, "health_context_consent_required": True,
+            "assistant_assessment_plans": True, "assistant_dialogue_protocol": "rehab-dialogue-3",
+            "account_family": True, "family_link_grants_access": False,
             "voice_messages": False, "calls": False, "incremental_sync": False,
-            "text_ai_gateway": {"configured": app.state.text_ai_configured, "usage_accounted": True,
-                                "provider_connection": "NOT_VERIFIED", "medical_files_sent": False},
+            "text_ai_gateway": {"configured": ai["configured"], "usage_accounted": True,
+                                "provider_connection": ai["provider_connection"], "medical_files_sent": False},
             "public_user_web": app.state.public_web, "browser_analysis": "LOCAL_CPU" if app.state.public_web else None}
 
     @app.post(BASE + "/auth/register", status_code=201)
@@ -448,7 +457,7 @@ def create_app(settings: Settings, database=None, *, web_assets=None, ai_config=
     from .workbench import install_workbench
     install_workbench(app, db, caller, patient_scope, BASE)
     from .ai_usage import install_ai_usage
-    install_ai_usage(app, db, caller, patient_scope, BASE, ai_config, ai_dispatch)
+    install_ai_usage(app, db, caller, patient_scope, BASE, ai_config, ai_dispatch, ai_settings_path, ai_probe)
     from .care_queue import install_queue
     install_queue(app, db, caller, patient_scope, BASE)
     from .reports import install_reports
@@ -457,6 +466,8 @@ def create_app(settings: Settings, database=None, *, web_assets=None, ai_config=
     install_programmes(app, db, caller, patient_scope, BASE)
     from .rehab_workflow import install_workflow
     install_workflow(app, db, caller, patient_scope, BASE)
+    from .assistant import install_assistant
+    install_assistant(app, db, caller, patient_scope, BASE)
     from .family import install_family
     install_family(app, db, caller, patient_scope, BASE, settings.secret)
 
@@ -473,10 +484,15 @@ def create_app(settings: Settings, database=None, *, web_assets=None, ai_config=
                 raise DomainError(401, "AUTH_REQUIRED", "请在网页登录")
             return public_account(connection, actor)
 
-    app.state.public_web = install_public_web(app, Path(web_assets) if web_assets is not None else ROOT / "public_web" / "build", browser_account)
+    # Isolated unit tests must not accidentally inspect mutable release assets
+    # or an in-progress APK/web build. Browser QA opts in with an explicit path.
+    if settings.environment != "test" or web_assets is not None:
+        app.state.public_web = install_public_web(app, Path(web_assets) if web_assets is not None else ROOT / "public_web" / "build", browser_account)
     for name in (() if app.state.public_web else ("unified.css", "unified-polish.css", "controls.css", "icon.svg")):
         app.add_api_route("/static/" + name, fixed_static(name), methods=["GET"], include_in_schema=False)
     app.mount("/cloud-static", StaticFiles(directory=ROOT / "cloud_service" / "static"), name="cloud-static")
+    install_downloads(app, Path(download_assets) if download_assets is not None else ROOT / "cloud_service" / "static",
+                      ROOT / "cloud_service" / "static")
 
     @app.get("/account", include_in_schema=False)
     @app.get("/care", include_in_schema=False)

@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-14",
+  "requested_png_count": 10,
+  "actual_png_count": 10,
+  "zip_png_count": 10,
+  "zip_entry_count": 17,
+  "all_zip_image_hashes_match": true,
+  "all_source_files_exist": true,
+  "all_dimensions_match_records": true,
+  "zip_path": "E:\\git冲突问题\\rehab image\\步骤图_178-181_10张.zip",
+  "zip_sha256": "AAA3D1696A9D0558A28CA7250DF2767A1139A38A2FA6CB172CE967F773E26E5A",
+  "zip_bytes": 14796509,
+  "preview_path": "E:\\git冲突问题\\rehab image\\步骤图_178-181_预览.html",
+  "record_path": "E:\\git冲突问题\\rehab image\\步骤图_178-181_制作总记录.json"
+}

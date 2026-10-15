@@ -4,6 +4,14 @@
 
 ## 实际入口
 
+专业相位／完成／质量参考使用`prepare-annotations`、`validate-annotations`、`import-annotations`，均要求显式来源与新输出目录。已核验CC0录像只生成无评分／预测预填的双人独立JSONL及第三人复核表、真实PTS表，不复制原片；空监督拒绝导入，已审核部分可导入但待标／排除与固定全队列保留，不变成阴性。旧视频EAAQ研究范围不变，新参考不提供pose监督或启用模型。填写与独立复核要求见[专业标注工作流](../../docs/development/REHAB_PROFESSIONAL_ANNOTATION.md)。`verify_professional_annotations.py --receipt <明确下载回执>`实际核对完整24人队列、空监督拒绝及三种TEST篡改；不是人体准确性验收。
+
+`evaluate-annotations --reference <已专业复核导入的reference.json> --predictions <独立后端导出manifest> --split val|test --output-dir <新目录>`接可观察计数与逐边界评价。未知不当负例，失败预测不补0，按同种边界一对一最大匹配／最小时间误差；完整原队列、待标／排除及每人分母保留。预测出处只是声明，不证明真实执行；当前无真实专业GT、不接产品。见[计次／相位评价工作流](../../docs/development/REHAB_TEMPORAL_EVALUATION.md)。
+
+默认磁盘不满足真实空间门时，`verify_storage_recheck.py --failed-summary <明确原失败summary> --output-dir <新的仓库外TEST目录>`默认重验pose工程模块／旧手机subset；另增`--suite full`，复用verify_all全部四组，另存storage_full_regression.json，不覆盖原E盘失败或此前子集记录。新目录须实际空间充足，保持原阈值、源数据及正常库。外盘完整通过也不表示默认生产存储恢复；实际结果见[本轮验收](../../docs/validation/REHAB_TEMPORAL_EVALUATION_2026-10-12.md)。
+
+官方RGB候选核验使用`resolve-dataverse --dataset mobiphysio`，显式固定数字发布版，不取草稿。`fetch-dataverse-metadata --audit-run <明确run> --file-ids 13453294 13453292`仅下载已校验CC0的小说明／评分文件，拒绝MP4；`index-mobiphysio-scores --audit-run <明确run> --metadata-manifest <明确manifest>`核对两行表头、三治疗师／数值／视频清单，保留缺标和隔离，不下载视频或训练。实际本机README／CSV551744字节，肩外展380个整视频评分／24人；SUMedi完整审计超时且NC-SA资格未确认。见[方法与复现](../../docs/development/REHAB_DATAVERSE_METADATA.md)及[本机验收](../../docs/validation/REHAB_DATAVERSE_2026-10-11.md)，后者区分真实数据与30项TEST契约。原数据／评分／索引继续忽略，未作为模型上线、逐帧标注或产品历史。
+
 产品后端解释器：`rehab_codex_single_camera_v2_1/.venv/Scripts/python.exe`。
 
 离线训练解释器：`.runtime/rehab_ml/venv/Scripts/python.exe`。本机训练环境继承系统 site-packages，实际版本与 GPU 见实验 `environment.lock.txt`、`provenance.json`，不能当成产品环境。迁移到其他机器应依据该锁文件建立独立环境。
@@ -42,9 +50,9 @@
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -B tools/rehab_ml/verify_timing_comparison.py
 ```
 
-2026-10-11 最新完整`verify_all`为`verification-6fbb8b9c`，实际383项新后端、12项旧康复、19项旧手机接口通过及1308保护变化0。新增7项生命周期专项为383子集，另有预声明3轮×3原生用例；Windows匿名不可继承Job与启动门保证绑定后才运行原目标，创建／绑定失败拒绝，不凭旧PID清理。工作流见[所属子进程保护](../../docs/development/REHAB_NATIVE_HOST_LIFETIME.md)，命令、日志／hash、原始失败及平台边界见[本机验证](../../docs/validation/REHAB_NATIVE_HOST_LIFETIME_2026-10-11.md)。当前专项命令为`python -X utf8 -B tools/rehab_ml/verify_native_parent.py`；不会启停用户服务／相机、分析真人原片或训练。
+2026-10-11最新完整`verify_all`为`verification-e726e3db`，实际416项新后端、12项旧康复、19项旧手机接口通过及1308保护变化0；新20项Dataverse＋10项评分TEST为416子集，真实文件／评分索引另见[本次数据验收](../../docs/validation/REHAB_DATAVERSE_2026-10-11.md)。此前`verification-6fe7c7c8`386项含3项socket契约，预声明三轮各22条件走原create_app／Uvicorn／配对／cookie／原JPEG与报告、TCP RST丢响应、第二实际服务与SQL对账，不称本轮重跑专项。见[真实HTTP恢复](../../docs/development/REHAB_SOCKET_RECOVERY.md)与[原验收](../../docs/validation/REHAB_SOCKET_RECOVERY_2026-10-11.md)。其入口`python -X utf8 -B tools/rehab_ml/verify_socket_recovery.py`只用临时本机端口与TEST库，不启停用户8765／1396服务／相机或分析私人录像／训练。
 
-此前376／372／364／357／340及更早阶段不相加；[异步结束恢复](../../docs/development/REHAB_ASYNC_RECOVERY.md)、[时间验收](../../docs/validation/REHAB_TIMING_COMPARISON_2026-10-11.md)、[原安排验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)、[续训验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)及[多轮验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)保留原证据。工程通过不等于临床准确率、全平台保证或手机实机验收；OS Process.start仍无硬截止，完整P7尚未完成。
+此前383／376／372／364／357／340及更早阶段不相加；[Windows所属生命周期](../../docs/development/REHAB_NATIVE_HOST_LIFETIME.md)、[异步结束恢复](../../docs/development/REHAB_ASYNC_RECOVERY.md)、[时间验收](../../docs/validation/REHAB_TIMING_COMPARISON_2026-10-11.md)、[原安排验收](../../docs/validation/REHAB_BACKEND_PLANS_2026-10-11.md)、[续训验收](../../docs/validation/REHAB_POSE_RESUME_2026-10-11.md)及[多轮验收](../../docs/validation/REHAB_POSE_TRAINING_2026-10-11.md)保留原证据。工程通过不等于临床准确率、手机／LAN／TLS或全平台验收；OS Process.start仍无硬截止，完整P7尚未完成。
 
 `RehabStorageBoundary`只适配v2的原Storage owning thread，不增加连接或写入器。实际SQLite结果码分为capacity／readonly／busy／corrupt／io／unavailable；初始化后的锁等待250ms不等于整个HTTP硬截止。错误返回`commit_state=not_confirmed_by_this_error`；恢复存储后先查询权威提交，再以原键重试。损坏文件保留，禁止自动删库或重建。运行态`last_storage_fault`是最后观察记录，不是当前健康探针。真实只读、外部写锁、SQLite容量上限和TEST文件头损坏已测，未占满物理硬盘或验证介质损坏／断电；已知一致备份只恢复备份内已有事实。
 
@@ -116,6 +124,14 @@ CPU离线训练使用明确的SiLU／卷积梯度double中间精度与显式Adam
 `python -m tools.rehab_ml.sampling_audit --result <明确原提取result.json> [--publish]`只接受忽略run中已声明分析授权／未授权训练、COCO17原像素和媒体PTS的原YOLO缓存。九条件预声明；每个条件重新走原因果滤波和协议，完全不用已滤波指标、不推理或训练、不写正常记录。私有轨迹留忽略目录，`--publish`只更新聚合报告。
 
 本机专项实际命令、两缓存hash、17项TEST及18次真实缓存重放见 [采样工作流](../../docs/development/REHAB_SAMPLING_SENSITIVITY.md) 和 [验收](../../docs/validation/REHAB_SAMPLING_2026-10-11.md)。每6帧肩／深蹲相对原采样的p95差异9.707°／17.331°不是金标准误差；深蹲后者只有7共同有效帧。两片所有条件均无稳定准备基线、均0确认次，不能用同计数宣称稳健。人群采样、真实网络／曝光及手机性能未验证，生产参数不变。
+
+## 原RGB到实际计次预测
+
+`replay-mobiphysio-temporal --receipt <固定已校验下载> --split val|test --side left|right --output-dir <新的专用run>`重新跑原YOLO所属进程、原adapter／协议，保留完整人／框／轨迹、真实PTS和逐帧阶段；从实际确认导出预测文件，不读人工表／不使用视频总分。不猜患侧、不用固定假track或补框复用旧特征缓存。
+
+`verify_temporal_replay.py --receipt ... --pending-bundle ...`实际跑两个split，再从保存原姿态重算指标／协议并对账采样、计次、事件和最终结果。初始准备和峰区起止不导出；未知边界null，已实现无事件[]，失败计数null。配置在推理前冻结；不自动选侧、放宽门、训练、启用权重或写正常历史。
+
+本轮10段1161采样帧均未成立准备基线，全部0确认次；保存重放一致不是人体精度成功。原C盘无空间的9项TEST失败保留，外盘重验不恢复默认容量。实际日志、SHA及数据链见[工作流](../../docs/development/REHAB_TEMPORAL_REPLAY.md)和[本机记录](../../docs/validation/REHAB_TEMPORAL_REPLAY_2026-10-12.md)。
 
 ## 骨架审核图
 

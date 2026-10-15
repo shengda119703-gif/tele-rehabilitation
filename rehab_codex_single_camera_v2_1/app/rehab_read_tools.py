@@ -27,7 +27,20 @@ class RehabReadTools:
 
     def desktop_snapshot(self):
         """Full scoped UI readers; keep Agent argument contracts and result limits unchanged."""
-        return {name: self._read(name, {}, desktop=True) for name in TOOLS}
+        result = {name: self._read(name, {}, desktop=True) for name in TOOLS}
+        practices = []
+        if self.database.is_file():
+            from .guided_practice import records
+            with_store = Storage(self.database, readonly=True)
+            try:
+                practices = with_store._call(lambda c: records(c, self.scope))
+            finally:
+                with_store.close()
+        # Separate type, no old summary/assessment/plan-progress rewrite. This
+        # key is UI-only: original Agent tools and family sharing stay unchanged.
+        result['guided_practice'] = dict(scope=dict(self.scope), provider='qt-local-1',
+                                       read_only=True, records=practices)
+        return result
 
     def _read(self, name, arguments, *, desktop=False):
         if name not in TOOLS or not isinstance(arguments, dict) or set(arguments) - {'exercise_id', 'joint'}:
@@ -69,6 +82,12 @@ class RehabReadTools:
                                         'available', 'availability_reason')) for i in view['items']],
                         progress=progress, has_next=bool(next_item), next_available=ready,
                         availability_reason=reason))
+                    if desktop and next_item and plan.get('record_origin', 'manual') == 'manual':
+                        from .guided_practice import decision, flow_enabled
+                        checked = store._call(lambda conn: decision(conn, self.scope, plan['id'],
+                                                  plan['revision'], next_item['key'], {}))
+                        result['records'][-1]['guided_available'] = flow_enabled() and checked['category'] == 'MISSING_INPUT'
+                        result['records'][-1]['guided_decision'] = checked
             elif name == TOOLS[1]:
                 profile = build_body_profile(sessions, **self.scope)
                 items = [i for i in profile['items'] if i.get('session_id')

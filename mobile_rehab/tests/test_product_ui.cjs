@@ -8,7 +8,7 @@ const staticDir=path.resolve(__dirname,'../static');
 function harness(){
   let html='',rendered=[];
   const fixed=new Map();
-  function parse(v){return [...v.matchAll(/<(?:button|input|select|textarea|h1|h2|h3|div|form|section|p|a)\b([^>]*)>/g)].map(m=>node(m[1]));}
+  function parse(v){return [...v.matchAll(/<(?:button|input|select|textarea|progress|video|h1|h2|h3|div|form|section|p|a)\b([^>]*)>/g)].map(m=>node(m[1]));}
   function node(attrs=''){
     let content='';
     const e={dataset:{},textContent:'',value:'',hidden:false,disabled:false,
@@ -23,13 +23,14 @@ function harness(){
   const nav=['plan','assess','fitness','history','more'].map(x=>node(`data-tab="${x}"`));
   function query(s){
     if(s==='#app')return root;
+    if(s==='#file-area video'){if(!fixed.has(s))fixed.set(s,node());return fixed.get(s);}
     if(s.startsWith('#'))return rendered.find(e=>e.id===s.slice(1))||fixed.get(s)||null;
     if(!fixed.has(s))fixed.set(s,node());return fixed.get(s);
   }
   const all=s=>s==='[data-tab]'?nav:s.startsWith('[data-')?rendered.filter(e=>Object.hasOwn(e.dataset,s.slice(6,-1).replace(/-([a-z])/g,(_,x)=>x.toUpperCase()))):[];
   const c={document:{querySelector:query,querySelectorAll:all,createElement:()=>node(),addEventListener(){}},
     window:{addEventListener(){},scrollTo(){}},location:{hash:'',host:'localhost'},URL:{revokeObjectURL(){}},
-    setTimeout,clearTimeout,console,AbortController,TypeError,URLSearchParams,confirm:()=>true};
+    setTimeout,clearTimeout,console,AbortController,TypeError,URLSearchParams,history:{replaceState(){}},confirm:()=>true};
   vm.createContext(c);
   for(const file of ['app.js','fitness.js','barbell.js','extensions.js','health.js'])vm.runInContext(fs.readFileSync(path.join(staticDir,file),'utf8'),c);
   const instructions={view_label:'正面拍摄',camera:'保持肩肘入镜',start:'双臂自然下垂',move:'缓慢抬起手臂',return:'放下手臂',boundary:'测试说明',count:'回位计一次'};
@@ -47,6 +48,17 @@ test('landing is training and mobile nav is short text, not decorative symbols',
   const h=harness();assert.equal(h.run('state.tab'),'plan');
   const html=fs.readFileSync(path.join(staticDir,'index.html'),'utf8');
   assert.match(html,/data-tab="plan" class="active">训练/);assert.doesNotMatch(html,/◎|▤|↗|◷|▣/);
+});
+
+test('capture assistant retains server assessment-plan actions as links to My Plans',()=>{
+ const h=harness();vm.runInContext(fs.readFileSync(path.join(staticDir,'assessment-plans.js'),'utf8'),h.c);
+ h.c.message={role:'agent',text:'TEST saved assessment',actions:[{kind:'assessment_plan',plan_id:'11111111-1111-4111-8111-111111111111'}]};
+ h.run("assistantPage({snapshot:{state:{chat:[message],tasks:[]}}})");
+ assert.match(h.html,/查看评估计划/);assert.match(h.html,/tab=plan&amp;assessmentPlan=/);assert.doesNotMatch(h.html,/id="camera-btn"/);
+});
+
+test('history page controller does not replace the browser History API needed for journey restoration',()=>{
+ const h=harness();assert.equal(typeof h.c.history,'object');assert.equal(typeof h.c.history.replaceState,'function');assert.equal(typeof h.c.renderHistory,'function');
 });
 test('assessment list, category, search, detail and return are distinct interactive states',()=>{
   const h=harness();h.run("state.tab='assess';assessment()");
@@ -81,10 +93,10 @@ test('training detail keeps instructions, dose, fixed side and training navigati
   assert.match(h.get('#training-dose').innerHTML,/40°/);assert.equal(h.run("state.training.id"),'plan');
   h.run('syncNavigation()');assert.equal(h.run('state.training.entry.side'),'left');
 });
-test('switching tabs resets detail and search, upload still prevents navigation',()=>{
+test('switching tabs resets detail and search without waiting for a background upload',()=>{
   const h=harness();h.run("state.tab='assess';state.detail=true;state.search='肩';navigate('fitness')");
   assert.equal(h.run('state.detail'),false);assert.equal(h.run('state.search'),'');
-  h.run("toast=()=>{};state.upload={};navigate('assess')");assert.equal(h.run('state.tab'),'fitness');
+  h.run("toast=()=>{};state.upload={};navigate('assess')");assert.equal(h.run('state.tab'),'assess');
 });
 test('week strip uses actual local date across month/year edges',()=>{
   const h=harness();const html=h.run('weekStrip(new Date(2026,0,1))');
@@ -104,8 +116,103 @@ test('plan candidate explanations are folded and real consent fields remain',asy
   const html=h.get('#plan-content').innerHTML;assert.match(html,/<details><summary>动作安排与依据/);assert.doesNotMatch(html,/<details open/);
   assert.match(html,/id="activity-ok"/);assert.match(html,/id="support-ok"/);assert.match(html,/使用这份计划/);
 });
+
+test('restoring an original formal page detaches both late legacy plan outcomes',async t=>{
+  for(const failed of [false,true])await t.test(failed?'failed read':'successful read',async()=>{
+    const h=harness();let resolve,reject;const messages=[];
+    h.c.api=()=>new Promise((ok,no)=>{resolve=ok;reject=no;});h.c.toast=x=>messages.push(x);
+    h.run("mountFormalPlans=()=>{app.innerHTML='<section id=\"formal-area\">TEST original restored page</section>';};state.tab='plan';plan()");
+    assert.equal(h.get('#plan-content'),null);
+    if(failed)reject(Error('TEST late legacy read'));
+    else resolve({proposal:{candidates:[],excluded:[]},plan:null,progress:{}});
+    await new Promise(done=>setImmediate(done));
+    assert.match(h.html,/TEST original restored page/);assert.equal(h.get('#reload-plan'),null);assert.deepEqual(messages,[]);
+  });
+});
 test('network mounting no longer removes phone card',()=>{
   const script=fs.readFileSync(path.join(staticDir,'extensions.js'),'utf8');assert.doesNotMatch(script,/layout > \.card/);
+});
+
+// Controlled transport tests execute the production upload/navigation handlers.
+// They are not media analysis or physical browser/phone acceptance.
+function uploadHarness(){
+  const h=harness(),requests=[],queries=[],shown=[],revoked=[];
+  h.c.crypto=globalThis.crypto;h.c.Uint8Array=Uint8Array;
+  h.c.URL.createObjectURL=()=> 'blob:TEST-original';h.c.URL.revokeObjectURL=url=>revoked.push(url);
+  h.c.XMLHttpRequest=class{
+    constructor(){this.upload={};this.headers={};requests.push(this);}
+    open(method,url){this.method=method;this.url=url;}
+    setRequestHeader(k,v){this.headers[k]=v;}
+    send(file){this.file=file;}
+    abort(){this.onabort?.();}
+  };
+  h.c.api=async route=>{queries.push(route);if(route==='/jobs?brief=true')return[];throw Object.assign(Error('TEST missing receipt'),{status:404});};
+  h.c.showJob=id=>shown.push(id);
+  h.c.originalFile={name:'TEST-original.mp4',size:400,type:'video/mp4'};
+  h.run("state.tab='assess';state.detail=true;state.file=originalFile;state.url='blob:TEST-original';assessment()");
+  h.get('#consent').checked=true;
+  return Object.assign(h,{requests,queries,shown,revoked});
+}
+const tick=()=>new Promise(resolve=>setImmediate(resolve));
+test('scope switch clears formal capability and a late catalog cannot restore the old owner',async()=>{
+ const h=harness();let resolve;h.c.fetch=()=>new Promise(r=>resolve=r);h.run("state.formalMeasurement={provider:'hosted-rehab-v2-1',owner_scope:'TEST-old'}");const pending=h.run("api('/catalog')");h.run('invalidateUploadScope()');assert.equal(h.run('state.formalMeasurement'),null);resolve({ok:true,json:async()=>({formal_measurement:{provider:'hosted-rehab-v2-1',owner_scope:'TEST-old'},practice_recording:true})});await pending;assert.equal(h.run('state.formalMeasurement'),null);
+});
+test('a late initial catalog cannot replace the page after a scope switch',async()=>{
+ const h=harness();let resolve;h.c.fetch=()=>new Promise(r=>resolve=r);h.c.location.hash='';const pending=h.run('init()');h.run('invalidateUploadScope()');h.get('#app').innerHTML='TEST current-owner page';resolve({ok:true,json:async()=>({exercises:h.c.fixture,fitness:[],posture:[]})});await pending;assert.equal(h.html,'TEST current-owner page');
+});
+test('an old authorization failure cannot reopen pairing over the new owner page',async()=>{
+ const h=harness();let resolve,pairings=0;h.c.fetch=()=>new Promise(r=>resolve=r);h.c.pairPage=()=>pairings++;const pending=h.run("api('/catalog')");h.run('invalidateUploadScope()');resolve({ok:false,status:401,json:async()=>({detail:'TEST old authorization'})});await assert.rejects(pending);assert.equal(pairings,0);
+});
+test('upload intent binds one UUID, original file, side and explicit consent across double clicks',()=>{
+  const h=uploadHarness();h.run('upload();upload()');assert.equal(h.requests.length,1);
+  assert.equal(h.requests[0].file,h.c.originalFile);assert.match(h.requests[0].headers['X-Rehab-Upload-Operation'],/^[a-f0-9-]{36}$/);
+  h.run("state.side='right'");assert.match(h.requests[0].url,/side=left/);assert.equal(h.run('state.fileConsent'),true);
+  assert.equal(h.get('#upload-btn').disabled,true);assert.equal(h.get('#consent').disabled,true);
+});
+test('HTTP LAN browsers use cryptographic fallback rather than requiring camera HTTPS for uploads',()=>{
+  const h=uploadHarness();h.c.crypto={getRandomValues:globalThis.crypto.getRandomValues.bind(globalThis.crypto)};
+  h.run('upload()');assert.equal(h.requests.length,1);assert.match(h.requests[0].headers['X-Rehab-Upload-Operation'],/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/);
+});
+test('timeout queries the original upload and missing receipt never blindly creates another job',async()=>{
+  const h=uploadHarness();h.run('upload()');const key=h.requests[0].headers['X-Rehab-Upload-Operation'];
+  h.requests[0].ontimeout();await tick();assert.deepEqual(h.queries,['/uploads/'+key]);
+  assert.equal(h.run('state.file'),h.c.originalFile);assert.equal(h.run('state.fileConsent'),true);
+  assert.equal(h.get('#upload-btn').disabled,true);assert.equal(h.get('#cancel-upload').textContent,'核对接收状态');
+  h.run('upload()');await tick();assert.equal(h.requests.length,1);assert.equal(h.queries.length,2);
+});
+test('lost reply resolves to the same owned job, not a second upload or inferred saved assessment',async()=>{
+  const h=uploadHarness();h.run('upload()');const key=h.requests[0].headers['X-Rehab-Upload-Operation'];
+  h.c.api=async route=>{h.queries.push(route);return{id:'actual-receipt-job',upload_operation:key,exercise:'shoulder_abduction',side:'left',mode:'assessment',state:'queued',video_available:true};};
+  h.requests[0].onerror();await tick();assert.deepEqual(h.shown,['actual-receipt-job']);assert.equal(h.requests.length,1);
+  assert.equal(h.run('state.file'),null);assert.equal(h.run('state.uploadRecovery'),null);
+});
+test('navigation does not cancel upload and a late success cannot replace the page or clear a newer file',async()=>{
+  const h=uploadHarness();h.run("upload();navigate('history')");await tick();
+  assert.equal(h.run('state.tab'),'history');assert.match(h.html,/我的活动记录/);assert(h.get('#resume-upload'));
+  h.c.newFile={name:'TEST-new.mp4',size:500,type:'video/mp4'};h.run("state.file=newFile;state.url='blob:TEST-new'");
+  const xhr=h.requests[0];xhr.status=200;xhr.responseText=JSON.stringify({id:'background-job'});xhr.onload();
+  assert.equal(h.run('state.tab'),'history');assert.equal(h.run('state.file'),h.c.newFile);assert.deepEqual(h.shown,[]);
+  h.run('restoreUpload()');assert.deepEqual(h.shown,['background-job']);
+});
+test('returning from history restores original file, side, action and per-file consent',async()=>{
+  const h=uploadHarness();h.run("upload();navigate('history')");await tick();h.requests[0].onabort();await tick();
+  h.run('restoreUpload()');assert.equal(h.run('state.tab'),'assess');assert.equal(h.run('state.file'),h.c.originalFile);
+  assert.equal(h.run('state.side'),'left');assert.equal(h.run('state.selected'),'shoulder_abduction');assert.equal(h.get('#consent').checked,true);
+  assert.equal(h.get('#upload-btn').disabled,true);assert.equal(h.revoked.includes('blob:TEST-original'),false);
+});
+test('definitive rejection keeps the original video and consent for explicit retry',()=>{
+  const h=uploadHarness();h.run('upload()');const xhr=h.requests[0];xhr.status=415;xhr.responseText=JSON.stringify({detail:'TEST unsupported container'});xhr.onload();
+  assert.equal(h.run('state.file'),h.c.originalFile);assert.equal(h.run('state.fileConsent'),true);assert.equal(h.get('#upload-btn').disabled,false);
+  h.run('upload()');assert.equal(h.requests.length,2);assert.notEqual(h.requests[0].headers['X-Rehab-Upload-Operation'],h.requests[1].headers['X-Rehab-Upload-Operation']);
+});
+test('owner change prevents reconciliation, file reuse and late job navigation across profiles',async()=>{
+  const h=uploadHarness();h.run('upload();invalidateUploadScope()');await tick();
+  assert.equal(h.run('state.file'),null);assert.equal(h.queries.length,0);h.run('restoreUpload()');assert.equal(h.run('state.file'),null);
+  const xhr=h.requests[0];xhr.status=200;xhr.responseText=JSON.stringify({id:'old-owner-job'});xhr.onload();assert.deepEqual(h.shown,[]);
+});
+test('a late query with mismatched operation or action is not accepted as a receipt',async()=>{
+  const h=uploadHarness();h.run('upload()');h.c.api=async()=>({id:'wrong-job',upload_operation:crypto.randomUUID(),exercise:'elbow_flexion',side:'right',mode:'assessment',video_available:true});
+  h.requests[0].onerror();await tick();assert.deepEqual(h.shown,[]);assert.equal(h.get('#upload-btn').disabled,true);assert.equal(h.run('state.file'),h.c.originalFile);
 });
 
 function healthFixture(){return {needs_profile:false,metrics:[['weight','体重','kg']],categories:['其他资料'],snapshot:{profile:{profile:{name:'TEST <img>',age:65,conditions:[],medicationRecords:[{id:'m1',name:'TEST medicine',dose:'医嘱剂量',times:'早餐后',status:'active'}]}},state:{healthData:{measurements:[{metric:'weight',value:60,unit:'kg',timestamp:'2026-10-05T01:00:00Z'}]},chat:[{role:'elder',text:'<script>TEST</script>',persisted:false}],tasks:[{id:'t1',title:'核对用药',description:'TEST',kind:'medication_check',status:'pending'}]},attachments:[],history:{report:{sections:[],rangeText:'TEST'}}}};}

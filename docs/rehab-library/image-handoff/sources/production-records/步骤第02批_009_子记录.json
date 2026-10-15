@@ -1,0 +1,136 @@
+{
+  "batch": "第02批",
+  "subtask": "009 E-LOW-004 坐姿髋内旋与外旋",
+  "date": "2026-10-14",
+  "tool": "内置 image_gen.imagegen",
+  "skill": "C:/Users/Administrator/.codex/skills/.system/imagegen/SKILL.md",
+  "scope": "仅外部图片目录；未修改项目仓库",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_action_library": "E:/git冲突问题/安康_康复评估与分级训练动作库.md#e-low-004",
+  "identity_reference_sha256": [
+    "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77",
+    "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094",
+    "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+  ],
+  "active_side": "人物右侧（画面左侧）",
+  "group_order": "s01→s02→s01→s03→s01",
+  "note": "标签只记录于本 JSON / 后续排版层，原始照片无文字；视觉验收是画面核对，不代表临床测量效度或准确股骨旋转角。提示词中的角度仅作生成构图指导。",
+  "status": "3/3 passed",
+  "images": [
+    {
+      "logical_id": "009-s01",
+      "action_id": "E-LOW-004",
+      "label_for_layout_only": "中立准备",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/009_E-LOW-004_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-73c3-7410-971c-44064cc18c59/exec-d36231a1-9929-4603-84dd-36d181166db5.png",
+      "prompt": "Use case: scientific-educational.\nCreate ONE independent photorealistic rehabilitation exercise demonstration photograph, neutral starting position for seated active hip internal/external rotation.\nInput images 1–3 are identity, wardrobe, hair, studio light and background references ONLY. Match the SAME adult East Asian woman, face and age impression, natural skin, body build, black ponytail, plain white short-sleeve fitted T shirt, dark charcoal gray long trousers. No need to copy the arm gestures.\nScene: seamless muted gray-blue studio backdrop and floor, soft diffuse studio lighting with natural shadows. Only a single sturdy unbranded straight-back dark gray chair with four widely planted legs, seat sufficiently high that BOTH BARE FEET hang freely several centimeters above the floor. This is a rehabilitation high chair, no wheels, no armrests, no footrest or crossbar under the shins, no wobbling. The thighs must rest on and be supported by the chair seat, their front ends level, almost horizontal; hips flexed about 90 degrees; knees flexed 90 degrees.\nPose s01: woman sits upright facing the camera, pelvis and torso level and centered, neutral relaxed expression, gaze forward. Knees at a comfortable fixed hip-width spacing. Both lower legs are vertical, ankles directly underneath their own knees. Bare feet hang with relaxed ankles, toes generally forward. Hands rest gently on the tops of each proximal thigh, away from kneecaps, without pushing. Do not spread the thighs widely, cross legs, point toes sideways or touch feet to floor.\nComposition: portrait photograph approximately 1024x1536, true symmetric straight-on front view, camera at seated abdomen height, natural mid-telephoto proportions. Include full head, torso, pelvis, both knees, full shins and both full bare feet and all four chair ground contacts. Woman centered with moderate gray-blue margin and feet clearly floating above floor. Sharp clear anatomical joint connections and natural fingers/toes. Accurate body proportions.\nNo text, labels, numbers, arrows, watermarks, collage, split panels or diagram. Single pose only. Real photography, not drawing.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "width": 1024,
+      "height": 1536,
+      "sha256": "7E9476EF34F84B719356E48C655181F22A563CD2977777EFCC1D2EF4F8D437B7",
+      "reused": false,
+      "attempt_count": 1,
+      "selected": true,
+      "review": {
+        "status": "passed",
+        "method": "逐张使用 view_image 实际查看原始输出后验收",
+        "identity": "女性面部、黑色马尾、白色短袖和深灰裤与三张参考的身份及服装方向一致",
+        "pose": "椅上稳坐，大腿受座面支持；双膝保持既定间距，双小腿垂直自然下垂，双足悬空",
+        "support": "高而稳固的四腿椅、坐骨及大腿支持可见，双足离地，椅腿触地",
+        "proportion": "头、躯干、大腿/小腿及手足比例自然，关节连接连续",
+        "framing": "正面全身；完整头部、双手、骨盆、双膝、完整小腿及双足可见",
+        "consistency": "作为 009 全组人物、机位、椅子与膝位基准",
+        "text": "无文字、编号、箭头或水印"
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-73c3-7410-971c-44064cc18c59/exec-d36231a1-9929-4603-84dd-36d181166db5.png"
+        }
+      ]
+    },
+    {
+      "logical_id": "009-s02",
+      "action_id": "E-LOW-004",
+      "label_for_layout_only": "髋内旋：小腿外摆",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/009_E-LOW-004_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-73c3-7410-971c-44064cc18c59/exec-cb41e071-e393-4efa-9036-ac439b83effd.png",
+      "prompt": "Use case: scientific-educational, precise rehabilitation pose photograph.\nImage 1 is the EDIT TARGET and exact composition/identity/chair baseline. Images 2–4 are supporting references for the same woman's identity, white shirt, charcoal trousers, black ponytail and muted gray-blue studio photography.\nCreate one independent photograph by changing ONLY the woman's RIGHT lower leg (the lower leg on the LEFT side of the picture). Keep her head, face, torso, pelvis, hands, both thighs, both knee centers, left lower leg on picture-right, chair, light, camera and background exactly unchanged. Both thighs remain seated and supported, hips about 90 degrees flexed, knees about 90 degrees flexed and the same knee spacing as Image 1. Keep the right knee center at exactly its original image location.\nRequired s02 pose: seated RIGHT HIP INTERNAL ROTATION. From its neutral position underneath the fixed right knee, her right shin and ankle swing laterally OUTWARDS toward her own right side, which is picture LEFT. The right shin now makes a clear gentle diagonal descending from the FIXED picture-left knee toward picture-left ankle, about 25 degrees away from vertical. The entire lower leg changes direction together, not only the foot or ankle. The right foot remains connected naturally in line with the rotated lower leg, bare and completely visible. Her left shin on picture-right remains perfectly vertical and unchanged. Both feet hang freely above the floor, do not place either foot on the floor or chair.\nDo not slide the right thigh sideways or lift the knee. Do not abduct the whole thigh, spread knees or turn the whole pelvis. No hand assistance or pushing. Natural comfortable endpoint.\nPrecisely preserve one-pose portrait 1024x1536 full figure frontal photograph, head and feet uncropped, all chair legs and their ground contact intact, same image scale. Preserve natural proportions, knee and ankle connections, skin and fingers/toes.\nNO text, labels, numbers, arrows, watermarks, collage or split panels.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/009_E-LOW-004_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "width": 1024,
+      "height": 1536,
+      "sha256": "502A4A720A798D57689399DAE47827AE42770CAC7A30536AFA5D625FA6261121",
+      "reused": false,
+      "attempt_count": 1,
+      "selected": true,
+      "review": {
+        "status": "passed",
+        "method": "逐张使用 view_image 实际查看原始输出后验收",
+        "identity": "与 s01 人物面部、衣服、发型一致",
+        "pose": "人物右小腿（画面左）整段向身体外侧摆，足也随小腿外移；对应髋内旋",
+        "knee_and_pelvis": "同侧大腿和膝位无明显横向移位，双膝间距保留，骨盆未旋转，非整腿外展",
+        "support": "大腿有座面支持，双足悬空；无手推压",
+        "proportion": "膝、胫段及踝足连接连续，身体和手足比例自然",
+        "framing": "头、双手、骨盆、双膝、完整双足和椅腿接地可见",
+        "consistency": "s01 相同椅子、人物比例、相机、背景及光线，非活动侧保持竖直",
+        "text": "无文字、编号、箭头或水印"
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-73c3-7410-971c-44064cc18c59/exec-cb41e071-e393-4efa-9036-ac439b83effd.png"
+        }
+      ]
+    },
+    {
+      "logical_id": "009-s03",
+      "action_id": "E-LOW-004",
+      "label_for_layout_only": "髋外旋：小腿内摆",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/009_E-LOW-004_s03.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-73c3-7410-971c-44064cc18c59/exec-bfbdbd81-db0b-4559-8c1c-fc750c25ed65.png",
+      "prompt": "Use case: scientific-educational, precise rehabilitation pose photograph.\nImage 1 is the EDIT TARGET and exact neutral composition/identity/chair baseline. Images 2–4 are supporting references for the same woman's identity, white shirt, charcoal trousers, black ponytail and muted gray-blue studio photography.\nCreate one independent photograph by changing ONLY the woman's RIGHT lower leg (the lower leg on the LEFT side of the picture). Keep her head, face, torso, pelvis, hands, both thighs, both knee centers, left lower leg on picture-right, chair, light, camera and background exactly unchanged. Both thighs remain seated and supported, hips about 90 degrees flexed, knees about 90 degrees flexed and the same knee spacing as Image 1. Keep the right knee center at exactly its original image location.\nRequired s03 pose: seated RIGHT HIP EXTERNAL ROTATION. From the neutral starting position underneath the fixed right knee, her RIGHT SHIN AND ANKLE swing medially INWARDS toward the body's midline, which is picture RIGHT. The right shin now makes a clear gentle diagonal descending from the FIXED picture-left knee towards the middle of the space BETWEEN her shins, around 15 degrees away from vertical. The right ankle should be just to the picture-left of the body's centerline, not crossing the opposite leg. The whole lower leg changes direction, not only the foot or ankle. Her right bare foot hangs below that inward-shifted ankle naturally in line with the rotated lower leg, fully visible and separated from the opposite bare foot. The left shin and foot on picture-right remain vertical and unchanged. Both feet hang freely above the floor.\nDo not move the right knee medially or slide the thigh inward. Do not adduct the whole thigh, bring knees together, rotate pelvis, cross legs or overlap the feet. No hand assistance or pushing. Comfortable small endpoint.\nPrecisely preserve one-pose portrait 1024x1536 full figure frontal photograph, head and feet uncropped, all chair legs and their ground contact intact, same image scale. Natural anatomy and continuous knee and ankle connections, same skin/fingers/toes.\nNO text, labels, numbers, arrows, watermarks, collage or split panels.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/assess/steps/009_E-LOW-004_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "width": 1024,
+      "height": 1536,
+      "sha256": "3CE8C058A69DD6AEC30C1C98733510696065F2474FC9FD5EAC8F159E79D151DD",
+      "reused": false,
+      "attempt_count": 1,
+      "selected": true,
+      "review": {
+        "status": "passed",
+        "method": "逐张使用 view_image 实际查看原始输出后验收",
+        "identity": "与 s01 人物面部、衣服、发型一致",
+        "pose": "人物右小腿（画面左）整段向中线摆，右足移近身体中线但不跨越对侧腿；对应髋外旋",
+        "knee_and_pelvis": "同侧膝位和大腿位置保留，双膝间距未明显收拢，骨盆未旋转；非整条大腿内收",
+        "support": "大腿有座面支持，双足悬空且分离；无手推压",
+        "proportion": "膝、胫段及踝足连接连续，身体和手足比例自然",
+        "framing": "头、双手、骨盆、双膝、完整双足和椅腿接地可见",
+        "consistency": "s01 相同椅子、人物比例、相机、背景及光线，非活动侧保持竖直",
+        "text": "无文字、编号、箭头或水印"
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "status": "passed",
+          "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-73c3-7410-971c-44064cc18c59/exec-bfbdbd81-db0b-4559-8c1c-fc750c25ed65.png"
+        }
+      ]
+    }
+  ]
+}

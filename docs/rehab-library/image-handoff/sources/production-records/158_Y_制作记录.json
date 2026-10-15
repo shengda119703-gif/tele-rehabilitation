@@ -1,0 +1,60 @@
+{
+  "batch": "158 Y路线 s03–s04",
+  "date": "2026-10-14",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "action_id": "T-AXU-050",
+  "method": "内置 image_gen 独立编辑调用；未使用 CLI、代码绘制或拼图",
+  "common_mother": {
+    "path": "C:/Users/Administrator/.codex/generated_images/01a13a82-4b38-7480-b27d-60e721c2bd48/exec-fd50c675-ef55-4506-a009-89e56681e9ae.png",
+    "sha256": "A2A0061EDD5F2FB4E837F4DB969FF34E5F82EBA23C12077C1F6D94A30D4B0F06",
+    "role": "EDIT TARGET"
+  },
+  "assets": [
+    {
+      "step": "s03",
+      "route": "Y",
+      "stage": "准备",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s03.png",
+      "sha256": "5549D7DF046FEE1BDD247D0E97723AA552BD8D242756E1E9069B049C62994FD5",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a89-35d0-7581-9fc2-9122bcd92442/exec-84de8290-9e51-47d5-a24d-cda8fc5b4b17.png",
+      "edit_target": "C:/Users/Administrator/.codex/generated_images/01a13a82-4b38-7480-b27d-60e721c2bd48/exec-fd50c675-ef55-4506-a009-89e56681e9ae.png",
+      "prompt": "Use case: identity-preserve\nAsset type: scientific-educational rehabilitation exercise step photograph, card 158 T-AXU-050 s03 Y-route start.\nInput image 1 is the EDIT TARGET, not a style reference. Edit the supplied photograph locally: change ONLY the woman's two arms from resting by her torso into the Y preparation position. The woman remains exactly in the same location and scale, prone on this same mat with her feet towards the TOP of the frame and her head towards the BOTTOM. The same white short-sleeved T-shirt, dark gray trousers, bare feet, black ponytail, age, skin, body and identity are preserved.\nArm change: both elbows are straight but relaxed. Spread both arms forward and diagonally outward beyond her head to form a clear symmetric Y relative to the torso. Because her head is at the bottom of this photograph, the left hand ends down-left and the right hand ends down-right of the head in the image. Each upper arm and forearm forms one continuous straight diagonal, roughly 40 degrees out from the forward centerline. The complete upper arms, elbows, forearms and empty hands all REST FLAT on the broad mat in this START frame. Hands relaxed, neutral wrists, natural fingers, no equipment.\nSTRICT INVARIANTS: preserve the exact camera viewpoint, perspective, wide rectangular canvas, crop, focal length, woman's body/leg/head coordinates and scale, mat shape and its corners, background, soft studio lighting and natural photographic texture. Forehead stays gently supported on the same small soft gray pad; her neck stays neutral; chest, abdomen, pelvis, legs and feet stay resting on the mat. Do not lift the torso or head. Do not shift or rotate the subject or camera. Enough broad mat already exists for both arms; keep the complete hands in frame.\nReturn ONE photorealistic photograph. No text, digits, arrows, watermark, inset, collage or border. Anatomically plausible proportion and joints; symmetric Y shape, never T or I.",
+      "reused": false,
+      "qa": {
+        "status": "通过",
+        "review": "实际审查生成工具返回的完整图像；本机 view_image 显示极小，未以文件存在代替图片验收",
+        "direction": "头朝画面下、双直臂朝下前外方向展开成对称Y",
+        "support": "额头在灰色软垫；胸腹骨盆腿脚支持稳定；双臂和手落在宽垫",
+        "identity": "同一白短袖、深灰裤、黑马尾、赤脚女性，摄影光线背景一致",
+        "composition": "共同母图机位、画幅、垫子四角、人物尺度与位置保留",
+        "anatomy": "双臂连续、左右比例自然，完整手脚入镜",
+        "content": "空手；无文字、箭头或拼图"
+      }
+    },
+    {
+      "step": "s04",
+      "route": "Y",
+      "stage": "轻抬",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/158_T-AXU-050_s04.png",
+      "sha256": "430012B2D0EE23F2EFE6B3217BBCD4E8512CEE6D3E1272A600BFDAD0EBB8FCCF",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13a89-35d0-7581-9fc2-9122bcd92442/exec-17b6c083-b583-47e4-8502-e0d441a05f3a.png",
+      "edit_target": "C:/Users/Administrator/.codex/generated_images/01a13a89-35d0-7581-9fc2-9122bcd92442/exec-84de8290-9e51-47d5-a24d-cda8fc5b4b17.png",
+      "prompt": "Use case: identity-preserve\nAsset type: scientific-educational rehabilitation exercise photograph, card 158 T-AXU-050 s04 Y-route gentle lift.\nInput image 1 is the EDIT TARGET: the Y-route starting photograph. Make one narrowly scoped change: gently lift BOTH COMPLETE STRAIGHT ARMS away from the mat by approximately 5 to 8 cm while preserving their exact existing symmetrical diagonal Y directions. Keep elbows straight, hands empty, wrists neutral and shoulders relaxed. Both arms rise together as complete connected limbs from upper arm through elbow, forearm, wrist and fingertips: show clear small air gaps and subtle detached soft shadows beneath BOTH upper arms, BOTH elbows, BOTH forearms and BOTH hands. The shoulders remain attached normally to the supported torso; no disconnected arm illusion. This is a low gentle lift, not a high maximal lift.\nPreserve the EXACT woman's identity and everything outside the arm lift: same white short-sleeved shirt, dark gray trousers, black ponytail, bare feet, skin tone and natural proportions; same head at the bottom and feet at the top; same exact body location and scale. Keep her forehead firmly supported on the same soft gray head pad, neck neutral, chest and abdomen entirely resting on the mat, pelvis and both legs and feet supported. No raised head, no lifted chest, no arched lower back.\nDo not move, rotate, zoom, crop or change the camera, canvas, perspective, mat corners, mat size, background or lighting. Keep the entire original broad gray-blue mat and original wide composition exactly. Arms retain the original s03 image diagonal Y layout with hands down-left and down-right of the head, equal lengths, realistic joints and all fingers visible. Only a small vertical lift with realistic separation shadows distinguishes this image from the start.\nReturn ONE photorealistic photograph. No text, arrows, digits, border, watermark, montage, inset, props or weights.",
+      "reused": false,
+      "qa": {
+        "status": "通过",
+        "review": "实际审查生成工具返回的完整图像",
+        "direction": "保持s03对称Y路线及直肘，双臂低幅离垫",
+        "support": "额头在软垫；胸腹骨盆腿脚保留支持；未抬头抬胸或明显伸腰",
+        "arm_clearance": "两侧上臂、肘、前臂、手均可见小间隙及自然离垫阴影，轻抬区别可辨；5–8cm为提示目标，照片无法精确量化",
+        "identity": "同一人物、衣装、黑马尾、赤脚、光线背景一致",
+        "composition": "母图机位、画幅、垫四角、身体位置和尺度保留",
+        "anatomy": "双臂关节连续，完整手脚，肘腕比例自然",
+        "content": "空手；无文字、箭头或拼图"
+      }
+    }
+  ],
+  "discarded": [],
+  "mutations": "只新增这两张步骤图及本记录；未修改正式仓库、清单或其他进度JSON",
+  "record_path": "E:/git冲突问题/rehab image/158_Y_制作记录.json"
+}

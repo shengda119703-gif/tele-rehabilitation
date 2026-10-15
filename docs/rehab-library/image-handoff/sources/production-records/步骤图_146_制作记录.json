@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "created_date": "2026-10-14",
+  "production_tool": "built-in image_gen.imagegen",
+  "action_index": "146",
+  "action_id": "T-AXU-049",
+  "action_name": "半跪位小幅转胸",
+  "selected_direction": "s02 向人物本人右侧转胸；在本组画面表现为向画面左侧转动",
+  "sequence": "s01→s02→复用s01；换前脚先重置半跪支持",
+  "sources": [
+    {
+      "path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+      "section": "146 T-AXU-049；第3节共同视觉要求；第4节命名与验收",
+      "sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991"
+    },
+    {
+      "path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+      "section": "T-AXU-049 原卡",
+      "sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138"
+    }
+  ],
+  "identity_references": [
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+      "role": "共同人物、服装、摄影质感、背景；已view_image查看",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+      "role": "共同人物、服装、摄影质感、背景；已view_image查看",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+      "role": "共同人物、服装、摄影质感、背景；已view_image查看",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ],
+  "files": [
+    {
+      "step": "s01",
+      "proposed_filename": "146_T-AXU-049_s01.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/146_T-AXU-049_s01.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13940-aa48-76b2-8ca2-436481de0c28/exec-03b2b6ac-5dc1-4e8b-a13b-c1793805f4be.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1711564,
+      "sha256": "420459B0CF5601741B8C54C76A62D100C94967A55B4C25610DA3427B280EE247",
+      "reused_existing_image": false,
+      "status": "accepted_after_visual_review",
+      "review": {
+        "identity_clothing_background": "同一女性外观、黑马尾、白短袖深灰长裤、灰蓝棚拍光线一致",
+        "pose": "人物右前足在画面左前踩稳，左后膝在画面右后跪蓝色软垫，上身中立，双手胸前",
+        "support_equipment": "前足与后膝接触清楚；固定扶手在侧可触及，两立柱底座与螺栓可见，比例合理",
+        "anatomy_and_framing": "头、双手、双脚、前后支点完整；肢段连续、人体比例自然，手指握合无显著错误",
+        "text_overlay": "单画面，无文字、编号、箭头、拼图",
+        "group_consistency": "供s02编辑的定稿基图"
+      },
+      "prompts": [
+        {
+          "attempt": 1,
+          "type": "generate_with_identity_references",
+          "prompt": "Use case: scientific-educational.\nAsset type: single photorealistic rehabilitation movement demonstration, action 146 T-AXU-049, step s01.\nInput images: all three input images are identity/clothing/photography/background reference images only, NOT pose targets.\nCreate one coherent full-body studio photo of the SAME adult East Asian woman shown in the three reference photos: matching face, age, skin tone, body proportions, black ponytail, plain white short-sleeve T-shirt and dark gray full-length trousers. Soft gray-blue seamless studio backdrop and floor, soft diffused studio light, realistic mild contact shadows.\nPose: stable half-kneeling, HER LEFT knee resting on a small rectangular soft foam knee pad and HER RIGHT foot planted flat on the floor forward, both at separate clear support positions. Left lower leg extends behind her with natural relaxed foot; right knee bent roughly a right angle. Torso and pelvis upright and neutral, no lean, no twist. Both elbows bent, hands lightly together in front of the center of the chest, relaxed natural fingers. Head upright, calm neutral expression, gazing along her body's forward direction.\nA single fixed handrail is to her side within comfortable reach, without blocking her body. It is an appropriately sized horizontal grab bar fixed to two floor-mounted vertical posts, with mounting bases firmly anchored on the floor. Both anchor bases and complete knee pad visible. She is not holding the handrail in this frame, both hands remain at her chest.\nCamera: fixed three-quarter front oblique view, about 35 degrees off her forward direction, at torso level, horizontal lens, natural perspective. Full head, both hands, full legs and both bare feet, right foot-floor support and left knee-pad support ALL fully inside the frame with margins. Clear separation of foreground right leg and rear left knee. Use a square image with ample space for the full kneeling subject, pad and handrail; no excessive wide-angle distortion.\nConstraints: one woman, one still pose, natural anatomy and accurate left/right sides. Hands must not reach floor. No kettlebell or other weights, no therapy bands, no chair, no extra equipment. No words, labels, numbering, arrows, lines, logos or watermarks, no collage, no duplicated limb or person. Preserve the reference appearance faithfully.",
+          "reference_paths": [
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ],
+          "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13940-aa48-76b2-8ca2-436481de0c28/exec-366061e9-9fe2-44c1-ba79-40cbc1e83160.png",
+          "selection": "discarded",
+          "reason": "机位偏侧，左右支点辨读不够明确"
+        },
+        {
+          "attempt": 2,
+          "type": "edit",
+          "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation demonstration 146 T-AXU-049 s01, revision to make correct left/right half-kneeling support unambiguous.\nInput image: edit target, preserve exactly the same woman, facial identity, black ponytail, white short-sleeve shirt, dark gray trousers, bare feet, blue knee pad, stainless-steel rail and gray-blue studio photo style.\nChange the staging and camera into a clear THREE-QUARTER FRONT view: camera only 25 degrees to the woman's anatomical RIGHT of her straight-ahead line (closer to frontal than the current side view).\nCritical anatomical pose: HER RIGHT LEG is the FORWARD leg, so her right bent knee and her right flat bare foot must appear at the LEFT FOREGROUND side of the image. HER LEFT KNEE is the REAR kneeling support, resting on the soft blue pad at the RIGHT REAR side of the image; her left lower leg and bare foot extend naturally behind from that knee. This is a half-kneel, not two knees or standing. Show separate complete foreground right foot and rear left knee-pad support. Right knee roughly 90 degrees, front foot aligned forward and flat. Torso and pelvis upright and facing straight ahead with NO twist. Both hands lightly together at the center of the chest; elbows bent; head upright.\nKeep the stainless rail off to her side, comfortably reachable, with BOTH floor-mounted support posts and both bolted anchor plates completely visible. Do not let the rail obscure either leg support. Frame the entire head, both hands, full legs and both feet with comfortable margins. Square full-body image, stable horizontal camera, realistic proportions, soft studio lighting.\nNo text, labels, numbers, arrows, logos, watermark, collage, extra people, duplicated limbs, weights or other equipment. One single still pose.",
+          "reference_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a13940-aa48-76b2-8ca2-436481de0c28/exec-366061e9-9fe2-44c1-ba79-40cbc1e83160.png"
+          ],
+          "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13940-aa48-76b2-8ca2-436481de0c28/exec-03b2b6ac-5dc1-4e8b-a13b-c1793805f4be.png",
+          "selection": "accepted"
+        }
+      ]
+    },
+    {
+      "step": "s02",
+      "proposed_filename": "146_T-AXU-049_s02.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/146_T-AXU-049_s02.png",
+      "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13940-aa48-76b2-8ca2-436481de0c28/exec-793aebe7-de99-4455-b3db-7c1cb78b5d8c.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1652430,
+      "sha256": "636C628E96798D710A561D90A4E3CE6FBA6EDD2D311A658AC2A308760610DFC4",
+      "reused_existing_image": false,
+      "status": "accepted_after_visual_review",
+      "review": {
+        "identity_clothing_background": "人物外观与s01一致，白短袖、深灰裤、黑马尾及棚拍背景一致",
+        "pose": "胸口与肩带小幅向人物本人右侧／画面左侧转动，双手随胸部转动并仍在胸前；未伸手追地",
+        "support_equipment": "右前足与左后跪膝保留s01的位置和朝向，无明显足膝扭转；软垫、扶手与两固定底座保持同一设置",
+        "anatomy_and_framing": "头、完整双手双脚及支点全部可见，肢段连续，比例自然",
+        "text_overlay": "单画面，无文字、编号、箭头、拼图",
+        "group_consistency": "同机位、焦距感、人物尺度、地面基准与器材；画面仅上身转动，非临床角度测量"
+      },
+      "prompts": [
+        {
+          "attempt": 1,
+          "type": "edit_from_s01",
+          "prompt": "Use case: identity-preserve.\nAsset type: action 146 T-AXU-049 rehabilitation step s02, a small chest turn from the provided s01.\nInput image: the edit target is the approved s01 half-kneeling studio photograph.\nChange ONLY the upper torso pose: rotate the woman's CHEST and both shoulders gently about 15-20 degrees toward HER OWN ANATOMICAL RIGHT, which is toward IMAGE LEFT in this photograph. Her clasped hands follow the chest rotation but stay directly in front of the sternum, at the same chest height with both elbows bent. Her head may naturally follow the modest chest turn, with no extreme neck turn. The pose must show a small controlled thorax turn, not a reach, no leaning, no backward bend.\nLOCK EVERYTHING BELOW THE WAIST to the input s01: her RIGHT front foot at image lower left stays perfectly flat at EXACTLY the same floor position and orientation; her right bent knee stays at the same position; her LEFT rear knee remains planted at exactly the same place on the same blue pad at image lower right; her left lower leg and rear foot stay unchanged. Pelvis remains square and upright without rotation. Do not twist or pivot either foot or the rear knee.\nPreserve all other invariants exactly: same woman and face, black ponytail, natural body proportions, plain white short-sleeve T-shirt and dark gray full-length trousers, bare feet, same complete knee pad, same stainless horizontal handrail with both posts and both floor anchor bases fixed at identical positions, same gray-blue studio backdrop, floor, shadows, light, camera position and angle, perspective, subject scale and square crop.\nFull head, complete hands, both full feet, front foot-floor and rear knee-pad contact points, plus both rail anchor plates must stay visible with the same margins. One single pose, no text, labels, numbers, arrows, logos, watermark, collage, extra people, extra equipment, duplicated limbs or hands reaching to the floor.",
+          "reference_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a13940-aa48-76b2-8ca2-436481de0c28/exec-03b2b6ac-5dc1-4e8b-a13b-c1793805f4be.png"
+          ],
+          "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13940-aa48-76b2-8ca2-436481de0c28/exec-4e45b6d2-4eb9-41dc-adca-a59a39c9afc0.png",
+          "selection": "discarded",
+          "reason": "胸口实际更正对相机，与所选本人右转方向相反"
+        },
+        {
+          "attempt": 2,
+          "type": "edit_from_s01",
+          "prompt": "Use case: identity-preserve.\nAsset type: 146 T-AXU-049 s02, small chest rotation, correcting the rotation direction.\nEdit the provided s01 image. Preserve the exact scene and ALL lower-body positions.\nThe woman's straight-ahead neutral orientation in the input already angles toward IMAGE LEFT. For s02 her CHEST, sternum, BOTH SHOULDERS and clasped hands must turn a little FARTHER TOWARD IMAGE LEFT, i.e. toward her anatomical RIGHT, away from the rail. The chest should become SLIGHTLY MORE SIDE-ON / LESS FRONT-FACING to the camera than in the input. Do not make the shoulders more front-facing. The hands must move gently to image left, staying in front of the turning sternum at the same chest height; do NOT shift the hands to image right. This is about 15 degrees of comfortable chest rotation, no big twist.\nHer face and gaze may follow the chest slightly farther left, becoming a little more profile. Neck remains comfortable, no independently exaggerated head turn. Both elbows stay bent and both hands lightly clasped at her chest, no reaching, no lean.\nLOCK the right planted FRONT foot at image lower left, right bent front knee, pelvis, left REAR kneeling knee on blue pad, rear left leg and foot. No lower-body rotation, no position change, no foot or knee pivot. LOCK camera angle, full-body crop, scale, rail with its two floor-fixed anchor bases, knee pad, floor, light and background.\nKeep exactly the same woman, face, black ponytail, white short sleeve shirt, dark gray trousers, bare feet and realistic soft gray-blue studio photography. Full head, hands, legs and feet visible as in the input. One still pose, no text, numbers, arrows, labels, watermark, collage, duplicated limbs, additional objects or people.",
+          "reference_paths": [
+            "C:/Users/Administrator/.codex/generated_images/01a13940-aa48-76b2-8ca2-436481de0c28/exec-03b2b6ac-5dc1-4e8b-a13b-c1793805f4be.png"
+          ],
+          "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13940-aa48-76b2-8ca2-436481de0c28/exec-793aebe7-de99-4455-b3db-7c1cb78b5d8c.png",
+          "selection": "accepted"
+        }
+      ]
+    }
+  ],
+  "validation_note": "已分别使用view_image检查生成源图与实际保存定稿。核对静态姿势、完整手脚、支点、器材固定表现与组内一致性；不从图片声称已确认肌肉发力、真实胸椎独立旋转角或膝扭矩。未改动其他进度文件或正式应用仓库。"
+}

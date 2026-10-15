@@ -1,0 +1,125 @@
+{
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "range": "116-s06～s08",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "generation_mode": "built-in image_gen; one asset per call; no CLI",
+  "reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "count": 3,
+  "group_note": "s06为内翻终点，使用另一批新保存s05作为同组构图参考；s07↔s08是独立外翻组，不可排成s06→s07→s08连续练习。",
+  "images": [
+    {
+      "step": "s06",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393c-9ab9-7152-bd1b-b05a1f3bcc47/exec-5a4c2b5b-ea88-4277-a4fe-ba0766cffe45.png",
+      "bytes": 1752727,
+      "sha256": "20F63BC25556E5B02E5A8E3DCD039181A62FE8454B174A6BB69A8D4DDCD56D6A",
+      "phase": "内翻组终点；右足外侧锚点，右前足向身体中线，足底略内倾。",
+      "filename": "116_T-LOW-038_s06_v2.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s06_v2.png",
+      "width": 1122,
+      "height": 1402,
+      "reused": false,
+      "prompt": "Use case: identity-preserve / scientific-educational. Image 1 is the EDIT TARGET and approved neighboring preparation frame 116-s05. Produce its matching 116-s06 ENDPOINT for gentle resisted RIGHT ankle INVERSION. Keep EXACT same close diagonal studio camera and crop, woman long-sitting on thin gray mat, same lower torso white T shirt, hands resting on thighs, charcoal pants, both straight legs, low rectangular gray soft cushion under the foreground RIGHT calf, same free heel and ankle just beyond cushion. Her anatomical RIGHT foot is the large foreground banded foot at lower right; left foot is farther away at upper right. The teal band wraps around right ball of foot, and its OUTSIDE anchor is the weighted floor-mounted round gray eye-anchor at bottom LEFT of photograph. Keep that SAME OUTSIDE anchor, base position, band setup, right calf, knee and shin fixed, not changed. Preserve background, lighting, exact scene, correct anatomy and relative size.\nMake ONLY one gentle ankle pose change: the RIGHT foreground forefoot now actively moves a small amount INWARD toward the body's midline / toward the OTHER unbanded left foot that is farther away at upper right in this perspective. Forefoot shifts slightly away from the outside anchor against its pull. Roll its sole gently to face more toward that other foot, a small 12 to 15 degree INVERSION. The medial/big-toe border is lightly raised relative to the outer/small-toe border. The visible broad sole should therefore be slightly less front-facing and subtly face toward the other foot. Heel and distal shin stay at same support position; toes stay relaxed rather than curled or clawing. This should be a visibly small true ankle/foot inward tilt, not plantarflexion, not dorsiflexion alone, not rotating or moving the entire leg. Do not exaggerate, do not dislocate the ankle.\nBand stays broadly at forefoot metatarsal region BELOW toe roots, not pinching toes. Two continuous taut band strands remain connected to SAME outer round floor anchor bottom-left and deform naturally with the small foot movement. Keep entire working foot, toes, adjacent leg, low support and anchor clearly visible. Single continuous realistic raw photograph, portrait 1122x1402, no text, arrows, numbers, additional panels or inset.",
+      "visual_check": {
+        "passed": true,
+        "reviewer": "root; actual generated photo inspected",
+        "items": [
+          "s05相同斜前近景、矩形小腿软垫、灰色垫面和圆形外侧锚点。",
+          "同一右前足向另一足的身体中线小幅收拢，足底可见内向翻转变化，小腿及膝位置稳定。",
+          "带绕前足跖骨区且不勒趾；脚趾保持放松，完整右足、邻近左足和支撑入镜。",
+          "白上衣、深灰裤、手放大腿、灰蓝背景及摄影质感与s05一致。"
+        ]
+      },
+      "composition_reference": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s05.png",
+      "revision_reason": "另一批新保存s05后，重做s06以匹配同组准备帧的近景机位、软垫和外侧锚点。",
+      "discarded_candidate": {
+        "step": "s06",
+        "source": "C:/Users/Administrator/.codex/generated_images/01a1393c-9ab9-7152-bd1b-b05a1f3bcc47/exec-486e2448-0fd0-4031-8619-fd3fccb4f441.png",
+        "bytes": 1823244,
+        "sha256": "31CF4B3A66F537222B2F66AB7F3911695652A7ED51D47896E61B902B01837619",
+        "phase": "内翻组终点；右足外侧锚点，右前足向身体中线，足底略内倾。",
+        "filename": "116_T-LOW-038_s06.png",
+        "path": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s06.png",
+        "width": 1122,
+        "height": 1402,
+        "reused": false,
+        "prompt": "Use case: identity-preserve / scientific-educational. Image 1 is the scene and identity reference: previous neutral RIGHT ankle frame. Create ONE matching photograph for 116 T-LOW-038 s06: RIGHT ankle INVERSION endpoint. Preserve same woman, white short sleeve T shirt, charcoal pants, hair, normal proportions, gray-blue seamless photographic background, mat, exact foot-end elevated camera, body/hands, two straight knees and shins, gray calf bolster, left leg and foot. Right test foot is the foot on VIEWER LEFT. Long sitting on mat, no chair.\nThe ONLY apparatus change is switching the teal resistance band's fixed anchor to the OUTER side of her RIGHT foot, well to VIEWER LEFT of that foot, outside both legs. REMOVE the existing anchor between feet entirely and instead have one identical floor-bolted dark metal anchor at viewer LEFT beside the right forefoot, fully in frame near the mat's left edge. It must be physically present and attached to floor, not floating. Both taut continuous band strands now run from the RIGHT ball of foot out to this one external anchor on viewer LEFT; NO band or anchor between feet, NO loop around toes or ankle. Ball-of-foot wide comfortable band position unchanged.\nRIGHT ankle is now in a small gentle INVERSION endpoint, opposite to eversion: the RIGHT forefoot moves toward the body MIDLINE / toward the LEFT foot / VIEWER RIGHT, away from the outer anchor. Top of right foot and five relaxed toes tilt gently to viewer RIGHT by about 12–15 degrees, with the heel at its original place and supported shin unmoved. The right SOLE turns a little toward the other foot / body's midline. Slightly lift the MEDIAL/big-toe side while lowering the small-toe/lateral border, natural ankle inversion. Small controlled motion, no excessive twist, no toe grasping, no whole lower leg sliding, no hip rotation.\nShow both complete feet, right calf bolster and the new OUTSIDE anchor and intact safe band path clearly. Same subject scale, same lens and geometry. One continuous photoreal studio photograph, portrait 4:5 PNG, no words, arrows, markings, inset or extra frames.",
+        "visual_check": {
+          "passed": true,
+          "reviewer": "root; generated image actually inspected",
+          "items": [
+            "长坐灰垫；右小腿低软垫承托；两侧小腿和完整足部可见。",
+            "画面左足为人物右足；锚点的内外侧可按另一足位置辨认。",
+            "弹力带绕右前足跖骨区，未勒趾，完整带路径和锚点可见。",
+            "内翻组终点；右足外侧锚点，右前足向身体中线，足底略内倾。",
+            "女性人物、白短袖、深灰长裤、灰蓝背景和柔和摄影光线一致；三帧机位基本一致。",
+            "无文字、箭头、拼图；未出现明显额外趾、肢体断接或异常小腿平移。"
+          ]
+        }
+      },
+      "composition_reference_sha256": "A36F948E93F00BA96B15820CCEE764A30804445764BD90303E14FF4C9B92AF9F"
+    },
+    {
+      "step": "s07",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393c-9ab9-7152-bd1b-b05a1f3bcc47/exec-734094dd-c9ed-45b8-ae54-c2cb819c9070.png",
+      "bytes": 1853910,
+      "sha256": "C08E5404D30E83DA8A35743B5C335F89837F30357870CBE981C57C9A19832FAB",
+      "phase": "外翻组中立起点；右足内侧锚点，在两足之间，右踝自然中立。",
+      "filename": "116_T-LOW-038_s07.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s07.png",
+      "width": 1122,
+      "height": 1402,
+      "reused": false,
+      "prompt": "Use case: scientific-educational. Create ONE raw photographic rehabilitation step asset, 116 T-LOW-038 s07, resisted RIGHT ankle EVERSION setup, NEUTRAL start. Input reference 1-3 lock the SAME adult East Asian woman's identity, normal adult proportions, skin, dark charcoal long athletic pants, plain white short sleeve T shirt, black ponytail, soft real photographic lighting, pale subtly mottled cool gray-blue seamless studio background and floor. References are appearance guides; this exercise has a NEW long-sitting floor setup, NOT standing and NOT seated on a chair. Output one single continuous photograph, portrait 4:5, no text, no letters, no numbers, no arrows, no montage.\nScene: woman long-sitting on a thin matte gray floor exercise mat with BOTH knees straight and both legs extending toward the camera. Camera is slightly elevated at the FOOT END looking back toward her, framing from lower waist / hands at top through full knees, shins and both COMPLETE bare feet in lower half; close enough to clearly inspect ankle and elastic band. Her anatomical RIGHT leg is on viewer LEFT, her anatomical LEFT leg is on viewer RIGHT. Natural correct two-leg anatomy. Right distal calf rests on a low gray soft foam bolster; heel and foot project just beyond bolster and are free to move. Left leg rests beside it, slightly farther to viewer RIGHT leaving room between legs. Keep all foot and anchor edges inside frame.\nRIGHT foot starts upright relaxed neutral at the ankle, toes pointing gently upward, sole facing the foot-end camera, relaxed five toes. Shin is stationary and foot is NOT tilted inward or outward. A flat muted teal resistance band wraps broadly and safely around RIGHT FOREFOOT at metatarsal/ball level, below toes, never around ankle or pinching toe tips. Its two continuous taut strands travel sideways to a visible secure low anchor on the MEDIAL / INNER SIDE of the right foot, BETWEEN her two feet, viewer RIGHT of her right foot. A simple dark matte floor-mounted anchor block with an eye at the forefoot's mid-height is securely attached to the floor; band tied to that eye. Both strands go to SAME inner anchor, no band toward body, hands or face, no outside anchor. Leave a clearly visible straight lateral span of band between forefoot and anchor, not hidden behind foot.\nConstraints: Same woman and attire, gray-blue studio photo. Correct ankle anatomy and natural shins/feet size, smooth joint continuity. One neutral foot pose. Low calf support visible. Inner anchor unmistakably between feet. No shoes, extra limbs, dislocated joints, straps at toes, labels or graphics.",
+      "visual_check": {
+        "passed": true,
+        "reviewer": "root; generated image actually inspected",
+        "items": [
+          "长坐灰垫；右小腿低软垫承托；两侧小腿和完整足部可见。",
+          "画面左足为人物右足；锚点的内外侧可按另一足位置辨认。",
+          "弹力带绕右前足跖骨区，未勒趾，完整带路径和锚点可见。",
+          "外翻组中立起点；右足内侧锚点，在两足之间，右踝自然中立。",
+          "女性人物、白短袖、深灰长裤、灰蓝背景和柔和摄影光线一致；三帧机位基本一致。",
+          "无文字、箭头、拼图；未出现明显额外趾、肢体断接或异常小腿平移。"
+        ]
+      }
+    },
+    {
+      "step": "s08",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393c-9ab9-7152-bd1b-b05a1f3bcc47/exec-5517637c-0581-4a09-8b1e-8f62da2316a7.png",
+      "bytes": 1759465,
+      "sha256": "67BBD4F7E78ACCC23EC0749586C6C3B12A22F6C6C51753F4D76ECA9CEA7A6F8B",
+      "phase": "外翻组终点；同一内侧锚点，右前足向身体外侧，足底略外倾。",
+      "filename": "116_T-LOW-038_s08.png",
+      "path": "E:/git冲突问题/rehab image/train/steps/116_T-LOW-038_s08.png",
+      "width": 1122,
+      "height": 1402,
+      "reused": false,
+      "prompt": "Use case: identity-preserve / scientific-educational. Image 1 is the EDIT TARGET / previous NEUTRAL frame 116-s07. Produce its matching 116-s08, the RIGHT ankle EVERSION endpoint. Preserve the EXACT photograph: same woman and face, white shirt, dark gray trousers, normal anatomy, long sitting, hands on mat, two knees/shins in identical locations, right calf on gray low bolster, left leg and foot unchanged, gray-blue light and background, full framing, scale and camera. Keep the SAME muted teal band loop at RIGHT ball of foot and the SAME floor-mounted INNER anchor BETWEEN feet at viewer-right of her right foot. Never move that anchor or calf/heel. No new anchor.\nChange ONLY the woman's RIGHT ankle/foot in the foreground on viewer LEFT: rotate it a SMALL controlled amount into EVERSION, about 12 to 15 degrees at the ankle. At this foot-end camera, right forefoot and toes now shift and tilt toward the OUTSIDE of her body, VIEWER LEFT, AWAY from the anchor between feet. The top of that foot tilts to viewer LEFT while the heel position and supported shin remain stationary. The sole rolls slightly to face the anatomical right outer side / VIEWER LEFT, the MEDIAL/big-toe border becomes gently lower and the small-toe outer border gently higher. Toe joints stay relaxed, five natural toes, no toe curling or pointing down. No hip rotation and no entire shin moved to left. It must look naturally connected at ankle, not twisted or dislocated.\nThe band stretches from this outward-moving forefoot to the same inner anchor, continuous realistic tension, with length slightly increased by the small outward movement. Keep complete foot, neighboring left foot and calf support visible. Preserve photographic realism and all unrelated pixels as closely as possible. ONE pose, portrait 4:5 PNG. No text, numbers, arrows, graphics, comparison panels or inset.",
+      "visual_check": {
+        "passed": true,
+        "reviewer": "root; generated image actually inspected",
+        "items": [
+          "长坐灰垫；右小腿低软垫承托；两侧小腿和完整足部可见。",
+          "画面左足为人物右足；锚点的内外侧可按另一足位置辨认。",
+          "弹力带绕右前足跖骨区，未勒趾，完整带路径和锚点可见。",
+          "外翻组终点；同一内侧锚点，右前足向身体外侧，足底略外倾。",
+          "女性人物、白短袖、深灰长裤、灰蓝背景和柔和摄影光线一致；三帧机位基本一致。",
+          "无文字、箭头、拼图；未出现明显额外趾、肢体断接或异常小腿平移。"
+        ]
+      }
+    }
+  ],
+  "selected_revision": {
+    "s06": "116_T-LOW-038_s06_v2.png"
+  },
+  "limits": [
+    "审核只判断可见姿势、比例、支撑和器材连接。",
+    "s06与新保存s05匹配斜前近景；独立外翻组s07/s08保持足端略高机位，保留双腿作方向参照。",
+    "生成照片无像素级配准，不能从图中量化真实张力或证明实际发力。"
+  ]
+}

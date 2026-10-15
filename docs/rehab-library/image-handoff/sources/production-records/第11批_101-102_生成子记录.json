@@ -1,0 +1,38 @@
+{
+  "actions": [
+    {
+      "sequence": 101,
+      "id": "T-LOW-026",
+      "name": "低台阶上台阶：扶稳至持哑铃",
+      "category": "train",
+      "filename": "101_T-LOW-026_低台阶上台阶：扶稳至持哑铃.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\101_T-LOW-026_低台阶上台阶：扶稳至持哑铃.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ed-fdba-7742-9ef2-2ab7fd33637e\\exec-55151d35-5030-465a-a59d-b04c5ffe7dc0.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1694647,
+      "sha256": "4651472AAFA5EA3A4FBA40422E8E816E758EB568B4599D8C5A96F78CB520611D",
+      "prompt": "Use case: scientific-educational photorealistic rehabilitation exercise photo, identity-preserve reposing.\nInput images 1–3 are strict identity, clothing, photographic style and background-color references of the SAME woman. Repose that exact woman only. Keep her same face and age, East Asian features, natural skin texture, dark ponytail, fitted plain white short-sleeve crewneck T-shirt and dark charcoal full-length athletic trousers. Preserve EXACT cool light gray-blue seamless studio background hue from the references, continuous same-color floor, soft diffused neutral studio light and realistic photographic texture. Normal adult anatomy and proportions, natural head-to-body ratio and equal normal leg lengths, no distortion. Unbranded white low-profile athletic shoes as used in preceding standing exercise images.\nSpecific action: 101 / T-LOW-026 / 低台阶上台阶：扶稳至持哑铃. Show the BASIC UNWEIGHTED supported STEP-UP, final stable arrival phase, not toe-tapping from ground. One sturdy rectangular low gray rehabilitation step about 12 cm high with nonslip top. Woman facing image right, useful near-side three-quarter side view. Leading foot is entirely planted on the step; leading knee and hip extended comfortably to lift the whole body above the step. The other foot has JUST FOLLOWED and lightly touches the same step top with its toe, heel slightly elevated, knees almost extended. Neither foot is on the ground at this instant: both feet located on top of step, most weight on the leading flat foot. Torso upright, shoulders level, hips forward over supported leg, relaxed head. One hand lightly grips a reliable long horizontal fixed support rail at waist height, rail attached by visible sturdy posts with flat wide bases next to step. Free arm relaxed. No dumbbells at this basic phase. Stable controlled posture, no jumping, no exaggerated high stair.\nComposition: one woman, one phase, one independent portrait photograph 1122x1402, aspect ratio 4:5; entire head, hands, BOTH feet, full step and rail visible with margins, natural perspective without foreshortening or wide-angle lens, camera level at a suitable full-body height. Props understated neutral gray, background remains the original gray-blue studio. No text, numbers, logos, watermark, arrows, diagrams, inset, collage, ghosting, other people, extra limbs or fake anatomy.",
+      "phase_zh": "徒手扶栏上台后的站稳阶段：一脚完整承重踩在台面，另一脚尖轻触台面。",
+      "visual_review": "通过：原参考人物/衣着/灰蓝背景一致；全身比例自然，台阶上单脚主要承重、另一脚尖接触，扶栏可见。",
+      "status": "completed"
+    },
+    {
+      "sequence": 102,
+      "id": "T-LOW-027",
+      "name": "低台阶控制下落点地",
+      "category": "train",
+      "filename": "102_T-LOW-027_低台阶控制下落点地.png",
+      "path": "E:\\git冲突问题\\rehab image\\train\\102_T-LOW-027_低台阶控制下落点地.png",
+      "source_path": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137ed-fdba-7742-9ef2-2ab7fd33637e\\exec-9e8de17b-f54a-432f-aa71-78e974c3567f.png",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1717425,
+      "sha256": "2732D37B37F0CDE4217E344F5B27CA84D70EC358DF775699C872A58F4EE12705",
+      "prompt": "Use case: scientific-educational photorealistic rehabilitation exercise photo, identity-preserve reposing.\nInput images 1–3 are strict identity, clothing, photographic style and background-color references of the SAME woman. Repose that exact woman only. Keep her same face and age, East Asian features, natural skin texture, dark ponytail, fitted plain white short-sleeve crewneck T-shirt and dark charcoal full-length athletic trousers. Preserve EXACT cool light gray-blue seamless studio background hue from the references, continuous same-color floor, soft diffused neutral studio light and realistic photographic texture. Normal adult anatomy and proportions, natural head-to-body ratio and two normal equal-length legs with distinct feet. Unbranded white low-profile athletic shoes as used in preceding standing exercise images.\nSpecific action: 102 / T-LOW-027 / 低台阶控制下落点地. A BASIC UNWEIGHTED eccentric STEP-DOWN heel-touch position. A single sturdy gray rectangular low nonslip step about 12 cm high. She faces image right, photographed from a useful near-side three-quarter side view so the feet do not overlap. One support foot is entirely planted on top of the step, its heel and toes remain on step. Support knee and hip BEND slightly to LOWER her pelvis slowly. The OTHER leg reaches FORWARD past the step edge toward image right, mostly straight, its HEEL lightly touches the floor in front of step, toes lifted, clearly not taking body weight. Her weight and pelvis remain above the bent step-supporting leg; she does not transfer body weight onto reaching foot or turn into a lunge. Torso near upright with a small natural hip hinge, knees tracking foot direction, spine neutral, calm expression. One hand lightly holds a reliable horizontal fixed support rail attached to sturdy visible floor posts next to the step, other arm relaxed, no weights. Show unmistakable difference between the bent support foot on the step and the extended foot's heel gently on the lower floor. No jumping, no dropped pelvis or collapsed knee.\nComposition: one woman, one phase, one independent portrait photograph 1122x1402, aspect ratio 4:5; entire head, hands, both feet, full step and relevant rail in frame with comfortable margins, natural lens perspective without foreshortening or wide-angle distortion. Props understated neutral gray against original gray-blue studio. No text, numbers, logos, watermark, arrows, insets, collage, ghosted phases, other people, extra limbs or fake anatomy.",
+      "phase_zh": "扶栏低台阶下落点地终点：支撑脚留台面、支撑膝屈曲，另一脚跟轻触地面且前足抬起。",
+      "visual_review": "通过：原参考人物/衣着/灰蓝背景一致；双腿和足部接触清楚，支撑膝屈曲、另一脚跟点地而非坠落，比例自然。",
+      "status": "completed"
+    }
+  ]
+}

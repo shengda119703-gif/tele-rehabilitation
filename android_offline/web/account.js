@@ -5,17 +5,24 @@ const pending=new Map(),pageNonce=crypto.randomUUID();let sequence=0,uploading=n
 function identity(){if(root.AnkangBrowserAccount)return root.AnkangBrowserAccount.identity();const text=root.OfflineAndroid?.accountIdentity?.();return text?JSON.parse(text):null;}
 function login(){return root.AnkangBrowserAccount?root.AnkangBrowserAccount.login():root.OfflineAndroid.accountLogin();}
 function validateIdentity(value){if(!value||value.origin!==ORIGIN||value.role!=='PATIENT'||!UUID.test(value.patient_id)||!UUID.test(value.account_id)||typeof value.username!=='string')throw Error('请重新登录云账号');return value;}
-async function activate(value){
+async function activate(value,{openContact=true}={}){
  validateIdentity(value);const old=root.PhoneLocal?.store;if(root.PhoneMotion?.active)throw Error('请先结束当前分析');if(old)await old.tail;
  // Existing personal records remain where they are. Binding requires a separate explicit confirmation.
  const key=PS.CLOUD_PREFIX+value.patient_id,store=new PS.Store(localStorage,key);
- store.change(v=>{if(v.fixture||v.owner!==value.patient_id||v.cloudIdentity&&(v.cloudIdentity.patient_id!==value.patient_id||v.cloudIdentity.account_id!==value.account_id))throw Error('原档案归属不一致');v.cloudIdentity=structuredClone(value);});localStorage.setItem(PS.ACTIVE_KEY,key);localStorage.setItem('ankang-contact-open','yes');if(root.location)root.location.href='/';
+ store.change(v=>{if(v.fixture||v.cloudIdentity&&(v.cloudIdentity.patient_id!==value.patient_id||v.cloudIdentity.account_id!==value.account_id)||v.cloudBinding&&(v.cloudBinding.patient_id!==value.patient_id||v.cloudBinding.owner!==v.owner))throw Error('原云档案归属不一致，未替换身份或记录');v.cloudIdentity=structuredClone(value);});localStorage.setItem(PS.ACTIVE_KEY,key);if(openContact)localStorage.setItem('ankang-contact-open','yes');else localStorage.removeItem('ankang-contact-open');if(root.location)root.location.href='/';
 }
 function scope(store,requireConsent=false){
  store.assertCurrent?.();
  const value=validateIdentity(identity()),v=store.value,b=v.cloudBinding;
  if(v.fixture||!b||b.patient_id!==value.patient_id||b.owner!==v.owner||v.cloudIdentity?.account_id!==value.account_id||PS.cloudKey(store.key)&&store.key!==PS.CLOUD_PREFIX+value.patient_id)throw Error('请确认当前本人档案与云账号绑定，展示档案不上传');
  if(requireConsent&&!v.cloudConsent)throw Error('本人康复记录自动同步尚未开启');return value;
+}
+function aiScope(store){
+ // Submitted text only; this does not grant access to local records or sharing.
+ store.assertCurrent?.();
+ const value=validateIdentity(identity()),v=store.value,b=v.cloudBinding;
+ if(v.fixture||v.cloudIdentity?.account_id!==value.account_id||v.cloudIdentity?.patient_id!==value.patient_id||PS.cloudKey(store.key)&&store.key!==PS.CLOUD_PREFIX+value.patient_id||b&&(b.patient_id!==value.patient_id||b.owner!==v.owner))throw Error('请确认当前本人档案与云账号身份，展示档案不能使用云端问答');
+ return value;
 }
 async function bind(store,enabled=true){const value=validateIdentity(identity());await store.serial(()=>store.change(v=>{if(v.fixture||v.cloudBinding&&v.cloudBinding.patient_id!==value.patient_id)throw Error('该本机档案属于其他云账号，请打开独立本人档案');v.cloudIdentity=structuredClone(value);v.cloudBinding={patient_id:value.patient_id,owner:v.owner};v.cloudConsent=enabled;}));return value;}
 function request(action,value,body={}){
@@ -91,13 +98,119 @@ async function adopt(store,plan,currentRevision){
 }
 function schedule(store){if(autoRunning||scheduled||!store.value.cloudBinding)return;scheduled=setTimeout(async()=>{scheduled=null;autoRunning=true;try{if(store.value.cloudConsent)await publish(store);await syncMessages(store);root.dispatchEvent?.(new Event('workbench-updated'));}catch{/* queue and original local facts remain durable */}finally{autoRunning=false;}},1500);}
 async function askAI(store,text=null){
- const value=scope(store);let pending=store.value.cloudAiPending;
- if(pending&&pending.patient_id!==value.patient_id)throw Error('原提问不属于当前本人账号');
- if(pending&&text!==null&&text.trim()!==pending.text)throw Error('原提问回执仍待核对，请先重试原提问，避免重复付费');
- if(!pending){if(typeof text!=='string'||!text.trim()||text.length>12000)throw Error('请填写问题');pending={patient_id:value.patient_id,operation_id:crypto.randomUUID(),text:text.trim()};await store.serial(()=>store.change(v=>{scope(store);v.cloudAiPending=pending;}));}
- const result=await request('aiAsk',value,{operation_id:pending.operation_id,text:pending.text});
- if(['SUCCEEDED','UNMETERED','UNKNOWN'].includes(result.state))await store.serial(()=>store.change(v=>{scope(store);if(v.cloudAiPending?.operation_id===pending.operation_id)delete v.cloudAiPending;}));
+ const value={...aiScope(store)};let pending=store.value.cloudAiPending;
+ function currentScope(){const current=aiScope(store);if(current.patient_id!==value.patient_id||current.account_id!==value.account_id)throw Error('账号已变化，旧回复未显示，请重新打开联系康复医师');}
+ function checkPending(row){if(row&&row.patient_id!==value.patient_id)throw Error('原提问不属于当前本人账号');if(row&&text!==null&&text.trim()!==row.text)throw Error('原提问回执仍待核对，请先重试原提问，避免重复付费');}
+ checkPending(pending);
+ if(!pending){
+  if(typeof text!=='string'||!text.trim()||text.length>12000)throw Error('请填写问题');
+  await store.serial(()=>store.change(v=>{currentScope();pending=v.cloudAiPending;checkPending(pending);if(!pending)v.cloudAiPending=pending={patient_id:value.patient_id,operation_id:crypto.randomUUID(),text:text.trim()};}));
+ }
+ const operation=pending.operation_id;
+ const clearPending=()=>store.serial(()=>store.change(v=>{currentScope();if(v.cloudAiPending?.patient_id===value.patient_id&&v.cloudAiPending.operation_id===operation)delete v.cloudAiPending;}));
+ let result;
+ try{result=await request('aiAsk',value,{operation_id:operation,text:pending.text});}
+ catch(error){
+  // These codes guarantee no model dispatch; uncertain failures keep the original operation.
+  if(['AI_NOT_CONFIGURED','AI_BUSY','AI_QUOTA_EXHAUSTED','AI_REJECTED'].includes(error.code))await clearPending();
+  throw error;
+ }
+ if(['SUCCEEDED','UNMETERED','UNKNOWN','REJECTED'].includes(result.state))await clearPending();
  return result;
+}
+function assistantPrivate(text,privateTurn=false){return privateTurn===true||/(不要|别).{0,4}(记录|记下来|保存)|(?:不要|别|不想|不希望|不愿意|不愿|不需要).{0,4}(告诉|让|通知).{0,3}(孩子|女儿|儿子|家人|他|她|他们|她们)|(?:不想|不希望|不愿意|不愿|不需要).{0,2}(?:让|叫)?(?:孩子|女儿|儿子|家人).{0,3}(?:知道|看见)/.test(text);}
+async function assistantRequest(store,action,body={}){
+ const value={...aiScope(store)},result=await request(action,value,body),current=aiScope(store);
+ if(current.account_id!==value.account_id||current.patient_id!==value.patient_id)throw Error('账号已变化，旧管家回复未显示');
+ return result;
+}
+function assistantPreferences(store,document){
+ if(document!==undefined&&(!Number.isSafeInteger(document.expected_version)||document.expected_version<0||typeof document.health_context!=='boolean'))throw Error('请重新读取管家授权设置');
+ return assistantRequest(store,'assistantPreferences',document===undefined?{}:{expected_version:document.expected_version,health_context:document.health_context});
+}
+async function assessmentPlanRequest(store,action,body={}){
+ const value={...aiScope(store)},owner=store.value.owner,key=store.key;
+ const check=()=>{
+  const current=aiScope(store);
+  if(root.PhoneLocal&&root.PhoneLocal.store!==store||store.value.owner!==owner||store.key!==key||PS.cloudKey(key)&&localStorage.getItem(PS.ACTIVE_KEY)!==key||current.patient_id!==value.patient_id||current.account_id!==value.account_id)throw Error('账号已变化，请重新读取评估计划');
+  if(root.navigator?.onLine===false)throw Error('当前离线，无法读取或取消云端评估计划');
+ };
+ check();const result=await request(action,value,{...body,account_id:value.account_id});check();return result;
+}
+function assessmentPlans(store){return assessmentPlanRequest(store,'assessmentPlans');}
+function assessmentPlanCancel(store,plan_id){
+ if(!UUID.test(plan_id))return Promise.reject(Error('评估计划编号无效'));
+ return assessmentPlanRequest(store,'assessmentPlanCancel',{plan_id});
+}
+function assessmentPlanResult(store,plan_id,item_index,record_id){
+ if(!UUID.test(plan_id)||!UUID.test(record_id)||!Number.isSafeInteger(item_index)||item_index<0||item_index>52)return Promise.reject(Error('评估项目或记录编号无效'));
+ return assessmentPlanRequest(store,'assessmentPlanResult',{plan_id,item_index,record_id});
+}
+async function assistantConversation(store,after=0){
+ if(!Number.isSafeInteger(after)||after<0||after>2147483647)throw Error('对话查询范围无效');
+ const original={...aiScope(store)},items=new Map();let result;
+ for(let page=0;page<20;page++){
+  const current=aiScope(store);if(current.account_id!==original.account_id||current.patient_id!==original.patient_id)throw Error('账号已变化，旧管家对话未显示');
+  result=await assistantRequest(store,'assistantConversation',{after,limit:30});
+  if(!Array.isArray(result.items))throw Error('管家对话尚未读取');
+  for(const row of result.items)items.set(row.id,row);
+  if(!result.has_more)break;
+  if(!Number.isSafeInteger(result.next_after)||result.next_after<=after)throw Error('管家对话游标无效');
+  after=result.next_after;
+ }
+ const current=aiScope(store);if(current.account_id!==original.account_id||current.patient_id!==original.patient_id)throw Error('账号已变化，旧管家对话未显示');
+ const rows=[...items.values()].sort((a,b)=>a.sequence-b.sequence);
+ // A lost HTTP reply must not leave a completed question locked on this device.
+ // Conversation reads do not dispatch the provider or create a new charge.
+ if(assistantPending(store).some(intent=>rows.some(row=>completedAssistant(row,intent)))){
+  await store.serial(()=>store.change(v=>{
+   const active=aiScope(store);if(active.account_id!==original.account_id||active.patient_id!==original.patient_id)throw Error('账号已变化，旧管家对话未显示');
+   saveAssistantPending(v,assistantPending(store).filter(intent=>!rows.some(row=>completedAssistant(row,intent))));
+  }));
+ }
+ return {...result,items:rows};
+}
+function assistantPending(store){
+ const value=aiScope(store),saved=store.value,rows=new Map();
+ if(saved.cloudAssistantQueue!==undefined&&!Array.isArray(saved.cloudAssistantQueue))throw Error('待回复提问无法读取，原记录保留');
+ for(const row of [...(saved.cloudAssistantQueue||[]),...(saved.cloudAssistantPending?[saved.cloudAssistantPending]:[])]){
+  if(row.patient_id!==value.patient_id||row.account_id!==value.account_id)throw Error('原管家提问不属于当前账号');
+  if(!UUID.test(row.operation_id)||typeof row.text!=='string'||!row.text.trim())throw Error('待回复提问无法读取，原记录保留');
+  const prior=rows.get(row.operation_id);if(prior&&prior.text!==row.text)throw Error('原提问内容不一致，原记录保留');
+  rows.set(row.operation_id,row);
+ }
+ return [...rows.values()];
+}
+function saveAssistantPending(value,rows){
+ if(rows.length){value.cloudAssistantQueue=rows;value.cloudAssistantPending=rows[0];}
+ else{delete value.cloudAssistantQueue;delete value.cloudAssistantPending;}
+}
+function completedAssistant(row,intent){
+ return row&&UUID.test(row.id)&&row.operation_id===intent.operation_id&&row.text===intent.text&&typeof row.answer==='string'&&['LOCAL','SUCCEEDED','UNMETERED','UNKNOWN'].includes(row.state);
+}
+async function assistantTurn(store,text=null,retryOperation=null){
+ const value={...aiScope(store)};let intent;
+ if(text!==null&&(typeof text!=='string'||!text.trim()||text.length>1900))throw Error('请填写1–1900字的问题');
+ if(text!==null&&assistantPrivate(text))throw Error('私密或不记录的对话仅在本机处理');
+ const check=()=>{const current=aiScope(store);if(current.account_id!==value.account_id||current.patient_id!==value.patient_id)throw Error('账号已变化，旧管家回复未显示');};
+ await store.serial(()=>store.change(v=>{
+  check();const rows=assistantPending(store);
+  if(retryOperation!==null&&!UUID.test(retryOperation))throw Error('提问编号无效');
+  intent=retryOperation!==null?rows.find(row=>row.operation_id===retryOperation):text===null?rows[0]:rows.find(row=>row.text===text.trim());
+  if(retryOperation!==null&&(!intent||text!==null&&text.trim()!==intent.text))throw Error('找不到这条待回复提问，请同步对话');
+  if(!intent){
+   if(text===null)throw Error('暂无待重试的管家提问');
+   if(rows.length>=50)throw Error('待回复问题较多，请先同步对话');
+   intent={patient_id:value.patient_id,account_id:value.account_id,operation_id:crypto.randomUUID(),text:text.trim(),created_at:new Date().toISOString()};rows.push(intent);
+  }
+  saveAssistantPending(v,rows);
+ }));
+ const operation=intent.operation_id,clear=()=>store.serial(()=>store.change(v=>{check();saveAssistantPending(v,assistantPending(store).filter(row=>row.operation_id!==operation));}));
+ let result;
+ try{result=await assistantRequest(store,'assistantTurn',{operation_id:operation,text:intent.text});}
+ catch(error){if(['AI_NOT_CONFIGURED','AI_BUSY','AI_QUOTA_EXHAUSTED','AI_REJECTED'].includes(error.code))await clear();throw error;}
+ if(!completedAssistant(result.turn,intent))throw Error('回复尚未收到，问题已保留，可以继续提问');
+ await clear();return result;
 }
 let contactUI=null;
 function contactView(){
@@ -116,5 +229,5 @@ if(root.document)document.addEventListener('DOMContentLoaded',()=>{
  root.addEventListener?.('workbench-updated',badge);root.PhoneLocal?.ready.then(()=>{badge();schedule(root.PhoneLocal.store);if(localStorage.getItem('ankang-contact-open')==='yes'){localStorage.removeItem('ankang-contact-open');open();}});
  root.addEventListener?.('online',()=>schedule(root.PhoneLocal.store));root.setInterval?.(()=>{if(document.visibilityState!=='hidden'&&root.PhoneLocal?.store)schedule(root.PhoneLocal.store);},20000);
 });
-root.PhoneAccount={ORIGIN,identity,login,validateIdentity,activate,bind,scope,request,reply,jobPayload,queue,sync,publish,send,syncMessages,messages,markRead,adopt,validateTrainingStart,schedule,open,askAI};if(typeof module!=='undefined')module.exports=root.PhoneAccount;
+root.PhoneAccount={ORIGIN,identity,login,validateIdentity,activate,bind,scope,aiScope,request,reply,jobPayload,queue,sync,publish,send,syncMessages,messages,markRead,adopt,validateTrainingStart,schedule,open,askAI,assistantPrivate,assistantPreferences,assistantConversation,assistantPending,assistantTurn,assessmentPlans,assessmentPlanCancel,assessmentPlanResult};if(typeof module!=='undefined')module.exports=root.PhoneAccount;
 })(globalThis);

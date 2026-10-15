@@ -6,18 +6,18 @@ function catalog(){return catalogPromise??=fetchAsset('/catalog.json').then(r=>{
 async function spec(id){const c=await catalog(),s=[...c.rehab,...c.fitness,...c.posture].find(s=>s.id===id);if(!s)throw Error('动作不存在');return s;}
 class Model{
  constructor(){this.urls=[];this.pending=new Map();this.sequence=0;this.stopped=false;}
- async init(s,calibration=null){
+ async init(s,calibration=null,automatic=null){
   const mode=s.joint==='finger'?'hand':s.joint==='wrist'?'wrist':'pose';
   const load=async(path,binary=false)=>{const r=await fetchAsset(path);if(!r.ok)throw Error('安装包模型资源不完整');return binary?r.arrayBuffer():r.text();};
-  const [vision,barbell,workerCode,sj,nj,sw,nw,pose,hand,manifest]=await Promise.all([
-   load('/vendor/vision_bundle.js'),load('/local/barbell.js'),load('/local/worker.js'),load('/vendor/wasm/vision_wasm_internal.js'),load('/vendor/wasm/vision_wasm_nosimd_internal.js'),load('/vendor/wasm/vision_wasm_internal.wasm',true),load('/vendor/wasm/vision_wasm_nosimd_internal.wasm',true),mode==='hand'?null:load('/models/pose_landmarker_full.task',true),mode==='pose'?null:load('/models/hand_landmarker.task',true),load('/models/manifest.json')]);
+  const [vision,barbell,workerCode,sj,nj,sw,nw,pose,hand,manifest,autoCode]=await Promise.all([
+   load('/vendor/vision_bundle.js'),load('/local/barbell.js'),load('/local/worker.js'),load('/vendor/wasm/vision_wasm_internal.js'),load('/vendor/wasm/vision_wasm_nosimd_internal.js'),load('/vendor/wasm/vision_wasm_internal.wasm',true),load('/vendor/wasm/vision_wasm_nosimd_internal.wasm',true),mode==='hand'?null:load('/models/pose_landmarker_full.task',true),mode==='pose'?null:load('/models/hand_landmarker.task',true),load('/models/manifest.json'),load('/static/automatic-motion.js')]);
   if(this.stopped)throw Error('已停止');
   const url=(data,type)=>{const u=URL.createObjectURL(new Blob([data],{type}));this.urls.push(u);return u;};
-  this.worker=new Worker(url('self.exports={};\n'+vision+'\n'+barbell+'\n'+workerCode,'text/javascript'));
+  this.worker=new Worker(url('self.exports={};\n'+vision+'\n'+barbell+'\n'+autoCode+'\n'+workerCode,'text/javascript'));
   this.worker.onmessage=({data})=>{const p=this.pending.get(data.id);if(!p)return;clearTimeout(p.timer);this.pending.delete(data.id);data.ok?p.resolve(data):p.reject(Error(data.error));};
   this.worker.onerror=event=>{this.close('本地模型启动失败：'+event.message);};
   const files=(js,wasm)=>({wasmLoaderPath:url(js,'text/javascript'),wasmBinaryPath:url(wasm,'application/wasm')});
-  return this.call('init',{mode,calibration,simd:files(sj,sw),noSimd:files(nj,nw),poseModel:pose,handModel:hand,modelInfo:JSON.parse(manifest)},[pose,hand].filter(Boolean));
+  return this.call('init',{mode,calibration,automatic,simd:files(sj,sw),noSimd:files(nj,nw),poseModel:pose,handModel:hand,modelInfo:JSON.parse(manifest)},[pose,hand].filter(Boolean));
  }
  call(type,params={},transfer=[]){if(this.stopped||!this.worker)return Promise.reject(Error('模型已停止'));return new Promise((resolve,reject)=>{const id=++this.sequence,timer=setTimeout(()=>{this.pending.delete(id);reject(Error('本地分析超时，请重试'));},type==='init'?90000:30000);this.pending.set(id,{resolve,reject,timer});this.worker.postMessage({id,type,...params},transfer);});}
  close(message='已停止'){this.stopped=true;this.worker?.terminate();for(const p of this.pending.values()){clearTimeout(p.timer);p.reject(Error(message));}this.pending.clear();for(const u of this.urls)URL.revokeObjectURL(u);this.urls=[];}
@@ -63,8 +63,9 @@ async function analyze(store,job,file,calibration=null){
   video=document.createElement('video');video.muted=true;video.playsInline=true;video.preload='auto';url=URL.createObjectURL(file);
   await event(video,'loadeddata',()=>{video.src=url;video.load();});if(!E.finite(video.duration)||video.duration<=0||video.duration>120.1)throw Error('请选择 120 秒以内的录像');
   const bar=calibration?{points:[calibration.target,calibration.reference_a,calibration.reference_b],meters:calibration.length_m,kg:calibration.mass_kg}:null;
-  const models=await model.init(s,bar);update(store,job.id,{message:'正在手机上分析动作'});
-  const samples=[],fitnessFrames=[],engine=new E.Engine(s,job.side,goal?.settings.target_angle_deg??null),end=video.duration;let size=[0,0],width=calibration?480:640,step=.12,slow=0;
+  const automatic=s.id.startsWith('fitness_')&&!bar?{side:job.side,exercise:s.id}:null;
+  const models=await model.init(s,bar,automatic);update(store,job.id,{message:'正在手机上分析动作'});
+  const samples=[],fitnessFrames=[],engine=new E.Engine(s,job.side,goal?.settings.target_angle_deg??null),end=video.duration;let size=[0,0],width=calibration||automatic?480:640,step=automatic?.08:.12,slow=0;
   for(let target=0;target<end-.04;target+=step){
    if(token.cancelled)throw Error('分析已停止，原录像保留');
    if(video.readyState<2||Math.abs(video.currentTime-target)>.001)await event(video,'seeked',()=>video.currentTime=target);
@@ -77,9 +78,10 @@ async function analyze(store,job,file,calibration=null){
    update(store,job.id,{progress:{analyzed_seconds:t,processed_frames:samples.length},performance:{width,sample_interval_s:step,inference_ms:elapsed}});
    await new Promise(r=>setTimeout(r,0));
   }
-  const report=E.analyzeReplay(s,job.side,samples,goal?.settings.target_angle_deg??null),barbell=calibration?(await model.call('barbell-report')).report:null;
+  const report=E.analyzeReplay(s,job.side,samples,goal?.settings.target_angle_deg??null),trajectory=calibration||automatic?await model.call('barbell-report'):null,barbell=trajectory?.report;
   const final=s.id.startsWith('fitness_')?fitnessResult(s,job.side,fitnessFrames,size):result(s,report,size,goal);
-  if(barbell)final.barbell=barReport(barbell,calibration);
+  if(barbell)final.barbell=barbell.automatic?barbell:barReport(barbell,calibration);
+  if(automatic)final.equipment_analysis={mode:'automatic',error:trajectory?.automatic_error||null};
   update(store,job.id,{state:'done',message:'分析完成',result:final,model_info:models.models,measurement_version:E.VERSION,finished_at:new Date().toISOString()});
  }catch(e){try{update(store,job.id,{state:'failed',message:e.message,finished_at:new Date().toISOString()});}catch(storageError){errors.set(job.id,'手机存储不足，本次结果未保存。请导出已有记录后清理空间。');}}
  finally{model.close();video?.pause();if(video){video.removeAttribute('src');video.load();}if(url)URL.revokeObjectURL(url);active=null;}

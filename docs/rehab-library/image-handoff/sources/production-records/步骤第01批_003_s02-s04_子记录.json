@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0",
+  "batch": "步骤第01批_003_s02-s04",
+  "date": "2026-10-14",
+  "source_document": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_sha256": "99C9FFCA886366F92AE65643F4DF59950D8178199074640E1A134A856F79E991",
+  "tool": "内置 image_gen",
+  "generation_calls": 3,
+  "scope": "本次指定10张中的003-s02、003-s03、003-s04；接续已完成003-s01，未改动既有图片或总记录。",
+  "scene_base": "E:/git冲突问题/rehab image/assess/steps/003_E-GEN-003_s01.png",
+  "references": [
+    "E:/git冲突问题/rehab image/assess/steps/003_E-GEN-003_s01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "completed_photos": 3,
+  "sequence_note": "003图组顺序：s01→s02→s01→s03→s01→s04→s01；每个方向先回准备位，非连续甩腿。",
+  "generation_notes": "每张单独调用一次内置image_gen，以同一003-s01为编辑目标并附原始身份参考；逐张实际看图确认后另存，不覆盖原图。",
+  "items": [
+    {
+      "photo_sequence": 11,
+      "action_sequence": 3,
+      "id": "E-GEN-003",
+      "step": "s02",
+      "phase_zh": "左手扶栏、左脚支撑不移位，右脚向前点足尖轻触。",
+      "prompt": "Use case: identity-preserve.\nAsset type: scientific-educational, realistic rehabilitation STEP photograph for E-GEN-003 supported multidirectional ground toe touches.\nINPUT IMAGES: Image 1 is the exact scene and camera EDIT TARGET: existing step 003-s01. Images 2–4 are strict identity/clothing/lighting references of the SAME adult East Asian woman. Preserve this same face, age, body build, black low ponytail, white short-sleeved T-shirt, charcoal full-length trousers, and white unbranded low-top shoes.\nINVARIANTS: Preserve image 1's entire landscape 1536x1024 3:2 frame, camera viewpoint, lens, subject scale, head/torso position, gray-blue seamless studio background and floor, soft lighting and subtle shadows, and the EXACT gray metal fixed handrail on viewer RIGHT with two bolted supports. Her anatomical LEFT hand stays in the SAME visible real contact with the rail; left forearm stays natural. Her anatomical LEFT SUPPORT FOOT is the viewer-right shoe near pixel (816,875): keep it firmly planted in the EXACT same floor location, supporting her weight. Right arm remains relaxed by her side. Only re-pose the anatomical RIGHT TEST LEG (viewer-left leg) with minimal natural support-knee adjustment; do not move the left shoe, relocate body or rail, change camera or scale.\nFLOOR MARKERS: Keep exactly the SAME THREE dark-gray flat circular floor dots at their original positions. Approximate centers in image 1: front dot (681,961), diagonal-right-forward dot (557,921), lateral-right dot (520,873). These screen coordinates only identify original objects, never add printed coordinates or labels. Do not draw lines/connectors/arrows or add marks; maintain three dots even if one is partially covered by touching toe. All remain in the same physical ground plane.\nBody has coherent normal anatomy, two arms/two legs, natural hands, continuous hip/knee/ankle connections. Entire head, hands, rail, both complete shoes and targets visible. Single still pose only; no collage/inset, ghost motion, text, labels, numbers, arrows or watermark. Toe touch means ONLY the FRONT TOE of the testing shoe gently contacts the floor target with HEEL visibly elevated; bodyweight stays over planted left support foot. No full-sole step or weight transfer to test foot, no lunge, high kick, squat, crossed legs or unstable knee.\nSTEP 003-s02, FORWARD TOE TOUCH: From the ready stance in image 1, extend her anatomical RIGHT leg modestly straight FORWARD to the ORIGINAL NEAREST FRONT dot at (681,961), directly in front of her original right shoe along her body's forward axis (toward image foreground, not sideways). Her right knee may bend softly; the RIGHT TOE clearly touches that FRONT dot, heel lifted about 4–8 cm, sole tilted down at toe. The other two dots at diagonal and lateral positions remain unobstructed. Upright calm torso, eyes forward, left hand on rail and left foot supporting exactly as in base. This must read as supported forward toe-reach, not walking onto the target.",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e2-70ed-7b80-90b6-2ef461f57905/exec-c9406029-135a-475c-8527-2afe29a29b38.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/003_E-GEN-003_s02.png",
+      "references": [
+        "E:/git冲突问题/rehab image/assess/steps/003_E-GEN-003_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "QA": {
+        "passed": true,
+        "observations": "已实际看图：同一女性外貌/黑马尾/白T深灰裤白鞋，灰蓝背景柔光一致；全身、双鞋、左手扶栏接触完整。右测试腿向前伸，鞋前端轻触前点、鞋身抬起；左脚保持原位接地，斜前与侧点位置不变且可见。相机、栏杆、三点、人物尺度与s01保持；无文字、箭头或连接线。"
+      },
+      "name": "地面多方向触点动态平衡：非标准化功能观察",
+      "category": "assess",
+      "filename": "003_E-GEN-003_s02.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "bytes": 1608180,
+      "sha256": "79388C8799619C81CCB39843E75D96301F7B1549B1A9241EDFA31CB22DCF21EC",
+      "status": "completed",
+      "correction_prompt": null
+    },
+    {
+      "photo_sequence": 12,
+      "action_sequence": 3,
+      "id": "E-GEN-003",
+      "step": "s03",
+      "phase_zh": "回起点后，右脚伸向斜前方标记足尖轻触，左脚位置不变。",
+      "prompt": "Use case: identity-preserve.\nAsset type: scientific-educational, realistic rehabilitation STEP photograph for E-GEN-003 supported multidirectional ground toe touches.\nINPUT IMAGES: Image 1 is the exact scene and camera EDIT TARGET: existing step 003-s01. Images 2–4 are strict identity/clothing/lighting references of the SAME adult East Asian woman. Preserve this same face, age, body build, black low ponytail, white short-sleeved T-shirt, charcoal full-length trousers, and white unbranded low-top shoes.\nINVARIANTS: Preserve image 1's entire landscape 1536x1024 3:2 frame, camera viewpoint, lens, subject scale, head/torso position, gray-blue seamless studio background and floor, soft lighting and subtle shadows, and the EXACT gray metal fixed handrail on viewer RIGHT with two bolted supports. Her anatomical LEFT hand stays in the SAME visible real contact with the rail; left forearm stays natural. Her anatomical LEFT SUPPORT FOOT is the viewer-right shoe near pixel (816,875): keep it firmly planted in the EXACT same floor location, supporting her weight. Right arm remains relaxed by her side. Only re-pose the anatomical RIGHT TEST LEG (viewer-left leg) with minimal natural support-knee adjustment; do not move the left shoe, relocate body or rail, change camera or scale.\nFLOOR MARKERS: Keep exactly the SAME THREE dark-gray flat circular floor dots at their original positions. Approximate centers in image 1: front dot (681,961), diagonal-right-forward dot (557,921), lateral-right dot (520,873). These screen coordinates only identify original objects, never add printed coordinates or labels. Do not draw lines/connectors/arrows or add marks; maintain three dots even if one is partially covered by touching toe. All remain in the same physical ground plane.\nBody has coherent normal anatomy, two arms/two legs, natural hands, continuous hip/knee/ankle connections. Entire head, hands, rail, both complete shoes and targets visible. Single still pose only; no collage/inset, ghost motion, text, labels, numbers, arrows or watermark. Toe touch means ONLY the FRONT TOE of the testing shoe gently contacts the floor target with HEEL visibly elevated; bodyweight stays over planted left support foot. No full-sole step or weight transfer to test foot, no lunge, high kick, squat, crossed legs or unstable knee.\nSTEP 003-s03, DIAGONALLY FORWARD-RIGHT TOE TOUCH: Begin after returning to ready stance image 1. Her anatomical RIGHT TEST LEG (viewer-left) extends out diagonally FORWARD and RIGHT from her hip to the ORIGINAL middle DIAGONAL dot at (557,921), towards image lower-left. RIGHT TOE gently touches the CENTER/near edge of that diagonal dot, with right heel clearly raised and knee softly extended. This reach is between the straight-forward and side directions, NOT directly forward to bottom dot and NOT purely lateral to far-left dot. Original front dot (681,961) and lateral dot (520,873) remain visible/unobstructed. Left foot remains exact base planted position, left hand continuously on rail. Upright pelvis and torso supporting over left foot, modest comfortable reach, no crossing legs, no weight transfer or full-sole plant.",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e2-70ed-7b80-90b6-2ef461f57905/exec-266ad651-9ea3-432b-aa38-a84e0c52db59.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/003_E-GEN-003_s03.png",
+      "references": [
+        "E:/git冲突问题/rehab image/assess/steps/003_E-GEN-003_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "QA": {
+        "passed": true,
+        "observations": "已实际看图：右测试腿向画面左下方的斜前点伸出，足尖轻触标点边缘、鞋后部抬起；左脚在原支撑位置不变、左手仍真实搭扶栏。前点与侧点可见，三点与栏杆固定，躯干自然直立。人物、衣裤、背景、柔光、相机尺度与s01一致，全身及完整双鞋可见；无明显比例或关节异常、额外线条/文字。"
+      },
+      "name": "地面多方向触点动态平衡：非标准化功能观察",
+      "category": "assess",
+      "filename": "003_E-GEN-003_s03.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "bytes": 1625669,
+      "sha256": "1F2FF17FA2BCB4CA265E3BEE9046771B9A75837E6AC42370A00B1671380EF123",
+      "status": "completed",
+      "correction_prompt": null
+    },
+    {
+      "photo_sequence": 13,
+      "action_sequence": 3,
+      "id": "E-GEN-003",
+      "step": "s04",
+      "phase_zh": "回起点后，右脚伸向侧方标记足尖轻触，左手扶栏与左脚支撑不变。",
+      "prompt": "Use case: identity-preserve.\nAsset type: scientific-educational, realistic rehabilitation STEP photograph for E-GEN-003 supported multidirectional ground toe touches.\nINPUT IMAGES: Image 1 is the exact scene and camera EDIT TARGET: existing step 003-s01. Images 2–4 are strict identity/clothing/lighting references of the SAME adult East Asian woman. Preserve this same face, age, body build, black low ponytail, white short-sleeved T-shirt, charcoal full-length trousers, and white unbranded low-top shoes.\nINVARIANTS: Preserve image 1's entire landscape 1536x1024 3:2 frame, camera viewpoint, lens, subject scale, head/torso position, gray-blue seamless studio background and floor, soft lighting and subtle shadows, and the EXACT gray metal fixed handrail on viewer RIGHT with two bolted supports. Her anatomical LEFT hand stays in the SAME visible real contact with the rail; left forearm stays natural. Her anatomical LEFT SUPPORT FOOT is the viewer-right shoe near pixel (816,875): keep it firmly planted in the EXACT same floor location, supporting her weight. Right arm remains relaxed by her side. Only re-pose the anatomical RIGHT TEST LEG (viewer-left leg) with minimal natural support-knee adjustment; do not move the left shoe, relocate body or rail, change camera or scale.\nFLOOR MARKERS: Keep exactly the SAME THREE dark-gray flat circular floor dots at their original positions. Approximate centers in image 1: front dot (681,961), diagonal-right-forward dot (557,921), lateral-right dot (520,873). These screen coordinates only identify original objects, never add printed coordinates or labels. Do not draw lines/connectors/arrows or add marks; maintain three dots even if one is partially covered by touching toe. All remain in the same physical ground plane.\nBody has coherent normal anatomy, two arms/two legs, natural hands, continuous hip/knee/ankle connections. Entire head, hands, rail, both complete shoes and targets visible. Single still pose only; no collage/inset, ghost motion, text, labels, numbers, arrows or watermark. Toe touch means ONLY the FRONT TOE of the testing shoe gently contacts the floor target with HEEL visibly elevated; bodyweight stays over planted left support foot. No full-sole step or weight transfer to test foot, no lunge, high kick, squat, crossed legs or unstable knee.\nSTEP 003-s04, PURE LATERAL RIGHT TOE TOUCH: Begin after returning to ready stance image 1. Extend her anatomical RIGHT TEST LEG directly SIDEWAYS to her anatomical RIGHT, toward image LEFT, to the ORIGINAL LATERAL dot centered (520,873), at the same floor depth as her support-foot plane. This is PURE hip abduction/lateral reach, NOT forward-diagonal reaching. RIGHT TOE touches center/near edge of that far-left lateral dot and right heel is visibly elevated about 4–8 cm, with shoe sole tilted down at toe. Right knee softly extended, natural lower leg and hip connection. Original front dot (681,961) and diagonal dot (557,921) remain visible and untouched. Keep original left support shoe planted at (816,875) and original left hand steady on rail, shoulders/pelvis facing original direction, torso upright with minimal natural balance adjustment. Testing foot does NOT carry bodyweight. Complete right shoe and toe-contact relationship visible, not cropped.",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a138e2-70ed-7b80-90b6-2ef461f57905/exec-3e61f383-a676-44cd-8881-ae579de75052.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/003_E-GEN-003_s04.png",
+      "references": [
+        "E:/git冲突问题/rehab image/assess/steps/003_E-GEN-003_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "reused": false,
+      "QA": {
+        "passed": true,
+        "observations": "已实际看图：右测试腿明确向身体右侧（画面左方）伸出，鞋前端轻触侧方点、鞋后部抬起，未交叉或整脚承重。左脚保持原支撑点、左手持续自然扶栏。前点与斜前点仍可见，侧点位置未移动，相机、栏杆、人物尺度、服装、背景柔光与s01一致，全身和完整双鞋可见，比例/关节自然；无文字、箭头、连线。"
+      },
+      "name": "地面多方向触点动态平衡：非标准化功能观察",
+      "category": "assess",
+      "filename": "003_E-GEN-003_s04.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "bytes": 1589378,
+      "sha256": "BE95395A47D0FDFA4F28ADE6174FD2B271AD167FC5CBB244D661AE6E8EA6045A",
+      "status": "completed",
+      "correction_prompt": null
+    }
+  ]
+}

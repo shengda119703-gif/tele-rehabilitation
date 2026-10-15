@@ -172,6 +172,9 @@ def test_unsupported_stale_wrong_scope_and_new_failed_assessment_block_adoption(
     failed_at = datetime.now(timezone.utc)
     failed = {**old, 'id': 'TEST-latest-failed', 'end_utc': failed_at.isoformat(), 'start_utc': (failed_at-timedelta(seconds=1)).isoformat(), 'summary': {'valid_ratio': 0, 'valid_sample_count': 0}}
     store.save_session(failed)
+    latest = build_body_profile(store.list_sessions(), **SCOPE)
+    selected = next(item for item in latest['items'] if item['exercise_id'] == 'shoulder_abduction' and item['side'] == 'left')
+    assert selected['session_id'] == failed['id'] and selected['status'] == 'UNAVAILABLE'
     with pytest.raises(ValueError, match='有效评估'):
         account.adopt(plan, 0, OWNER, SCOPE, store)
     assert store.list_training_plans(SCOPE) == []

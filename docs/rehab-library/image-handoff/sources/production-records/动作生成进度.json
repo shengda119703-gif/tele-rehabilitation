@@ -1,0 +1,1868 @@
+{
+  "source": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+  "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+  "total": 185,
+  "assess_total": 63,
+  "train_total": 122,
+  "batch_size": 10,
+  "identity_references": [
+    "E:\\git冲突问题\\4bad4f8da3e312c050c826806ed65675.png",
+    "E:\\git冲突问题\\064d7a2b0c10b221a0486bec8a7dac35.png",
+    "E:\\git冲突问题\\ebfdb0125da87440d15e7d19dbd8973c.png"
+  ],
+  "completed": 175,
+  "next_sequence": 151,
+  "actions": [
+    {
+      "sequence": 1,
+      "batch": 1.0,
+      "category": "assess",
+      "id": "E-GEN-001",
+      "name": "家庭短距离自然步行观察",
+      "planned_filename": "001_E-GEN-001_家庭短距离自然步行观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\001_E-GEN-001_家庭短距离自然步行观察.png"
+    },
+    {
+      "sequence": 2,
+      "batch": 1.0,
+      "category": "assess",
+      "id": "E-GEN-002",
+      "name": "标准3 m起立行走计时：TUG",
+      "planned_filename": "002_E-GEN-002_标准3 m起立行走计时：TUG.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\002_E-GEN-002_标准3米起立行走计时TUG.png"
+    },
+    {
+      "sequence": 3,
+      "batch": 1.0,
+      "category": "assess",
+      "id": "E-GEN-003",
+      "name": "地面多方向触点动态平衡：非标准化功能观察",
+      "planned_filename": "003_E-GEN-003_地面多方向触点动态平衡：非标准化功能观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\003_E-GEN-003_地面多方向触点动态平衡（非标准化功能观察）.png"
+    },
+    {
+      "sequence": 4,
+      "batch": 1.0,
+      "category": "assess",
+      "id": "E-GEN-004",
+      "name": "前向弓步分段控制观察",
+      "planned_filename": "004_E-GEN-004_前向弓步分段控制观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\004_E-GEN-004_前向弓步分段控制观察.png"
+    },
+    {
+      "sequence": 5,
+      "batch": 1.0,
+      "category": "assess",
+      "id": "E-LOW-017",
+      "name": "4米常速步行",
+      "planned_filename": "005_E-LOW-017_4米常速步行.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\005_E-LOW-017_4米常速步行.png"
+    },
+    {
+      "sequence": 6,
+      "batch": 1.0,
+      "category": "assess",
+      "id": "E-LOW-001",
+      "name": "扶稳站姿主动屈髋",
+      "planned_filename": "006_E-LOW-001_扶稳站姿主动屈髋.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\006_E-LOW-001_扶稳站姿主动屈髋.png"
+    },
+    {
+      "sequence": 7,
+      "batch": 1.0,
+      "category": "assess",
+      "id": "E-LOW-002",
+      "name": "扶稳站姿主动髋后伸",
+      "planned_filename": "007_E-LOW-002_扶稳站姿主动髋后伸.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\007_E-LOW-002_扶稳站姿主动髋后伸.png"
+    },
+    {
+      "sequence": 8,
+      "batch": 1.0,
+      "category": "assess",
+      "id": "E-LOW-003",
+      "name": "扶稳髋外展与小幅内收",
+      "planned_filename": "008_E-LOW-003_扶稳髋外展与小幅内收.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\008_E-LOW-003_扶稳髋外展与小幅内收.png"
+    },
+    {
+      "sequence": 9,
+      "batch": 1.0,
+      "category": "assess",
+      "id": "E-LOW-004",
+      "name": "坐姿髋内旋与外旋",
+      "planned_filename": "009_E-LOW-004_坐姿髋内旋与外旋.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\009_E-LOW-004_坐姿髋内旋与外旋.png"
+    },
+    {
+      "sequence": 10,
+      "batch": 1.0,
+      "category": "assess",
+      "id": "E-LOW-005",
+      "name": "仰卧主动直腿抬高功能观察",
+      "planned_filename": "010_E-LOW-005_仰卧主动直腿抬高功能观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\010_E-LOW-005_仰卧主动直腿抬高功能观察.png"
+    },
+    {
+      "sequence": 11,
+      "batch": 2.0,
+      "category": "assess",
+      "id": "E-LOW-027",
+      "name": "仰卧屈髋位主动伸膝范围观察",
+      "planned_filename": "011_E-LOW-027_仰卧屈髋位主动伸膝范围观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\011_E-LOW-027_仰卧屈髋位主动伸膝范围观察.png"
+    },
+    {
+      "sequence": 12,
+      "batch": 2.0,
+      "category": "assess",
+      "id": "E-LOW-006",
+      "name": "仰卧滑跟屈膝活动观察",
+      "planned_filename": "012_E-LOW-006_仰卧滑跟屈膝活动观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\012_E-LOW-006_仰卧滑跟屈膝活动观察.png"
+    },
+    {
+      "sequence": 13,
+      "batch": 2.0,
+      "category": "assess",
+      "id": "E-LOW-007",
+      "name": "坐姿主动伸膝活动观察",
+      "planned_filename": "013_E-LOW-007_坐姿主动伸膝活动观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\013_E-LOW-007_坐姿主动伸膝活动观察.png"
+    },
+    {
+      "sequence": 14,
+      "batch": 2.0,
+      "category": "assess",
+      "id": "E-LOW-026",
+      "name": "仰卧单腿桥式控制观察",
+      "planned_filename": "014_E-LOW-026_仰卧单腿桥式控制观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\014_E-LOW-026_仰卧单腿桥式控制观察.png"
+    },
+    {
+      "sequence": 15,
+      "batch": 2.0,
+      "category": "assess",
+      "id": "E-LOW-013",
+      "name": "五次坐站：固定坐回终点版",
+      "planned_filename": "015_E-LOW-013_五次坐站：固定坐回终点版.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\015_E-LOW-013_五次坐站：固定坐回终点版.png"
+    },
+    {
+      "sequence": 16,
+      "batch": 2.0,
+      "category": "assess",
+      "id": "E-LOW-014",
+      "name": "30秒坐站：标准及扶手改良分轨",
+      "planned_filename": "016_E-LOW-014_30秒坐站：标准及扶手改良分轨.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\016_E-LOW-014_30秒坐站：标准及扶手改良分轨.png"
+    },
+    {
+      "sequence": 17,
+      "batch": 2.0,
+      "category": "assess",
+      "id": "E-LOW-015",
+      "name": "自选深度康复下蹲",
+      "planned_filename": "017_E-LOW-015_自选深度康复下蹲.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\017_E-LOW-015_自选深度康复下蹲.png"
+    },
+    {
+      "sequence": 18,
+      "batch": 2.0,
+      "category": "assess",
+      "id": "E-LOW-023",
+      "name": "扶稳分腿蹲控制观察",
+      "planned_filename": "018_E-LOW-023_扶稳分腿蹲控制观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\018_E-LOW-023_扶稳分腿蹲控制观察.png"
+    },
+    {
+      "sequence": 19,
+      "batch": 2.0,
+      "category": "assess",
+      "id": "E-LOW-024",
+      "name": "椅前目标单腿浅蹲观察",
+      "planned_filename": "019_E-LOW-024_椅前目标单腿浅蹲观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\019_E-LOW-024_椅前目标单腿浅蹲观察.png"
+    },
+    {
+      "sequence": 20,
+      "batch": 2.0,
+      "category": "assess",
+      "id": "E-LOW-025",
+      "name": "单腿髋铰链够取与回正观察",
+      "planned_filename": "020_E-LOW-025_单腿髋铰链够取与回正观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\020_E-LOW-025_单腿髋铰链够取与回正观察.png"
+    },
+    {
+      "sequence": 21,
+      "batch": 3.0,
+      "category": "assess",
+      "id": "E-LOW-016",
+      "name": "低台阶上落功能观察",
+      "planned_filename": "021_E-LOW-016_低台阶上落功能观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\021_E-LOW-016_低台阶上落功能观察.png"
+    },
+    {
+      "sequence": 22,
+      "batch": 3.0,
+      "category": "assess",
+      "id": "E-LOW-008",
+      "name": "坐姿踝背屈与跖屈",
+      "planned_filename": "022_E-LOW-008_坐姿踝背屈与跖屈.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\022_E-LOW-008_坐姿踝背屈与跖屈.png"
+    },
+    {
+      "sequence": 23,
+      "batch": 3.0,
+      "category": "assess",
+      "id": "E-LOW-009",
+      "name": "坐姿踝内翻与外翻方向观察",
+      "planned_filename": "023_E-LOW-009_坐姿踝内翻与外翻方向观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\023_E-LOW-009_坐姿踝内翻与外翻方向观察.png"
+    },
+    {
+      "sequence": 24,
+      "batch": 3.0,
+      "category": "assess",
+      "id": "E-LOW-010",
+      "name": "膝顶墙负重背屈",
+      "planned_filename": "024_E-LOW-010_膝顶墙负重背屈.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\024_E-LOW-010_膝顶墙负重背屈.png"
+    },
+    {
+      "sequence": 25,
+      "batch": 3.0,
+      "category": "assess",
+      "id": "E-LOW-011",
+      "name": "扶稳双脚提踵功能观察",
+      "planned_filename": "025_E-LOW-011_扶稳双脚提踵功能观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\025_E-LOW-011_扶稳双脚提踵功能观察.png"
+    },
+    {
+      "sequence": 26,
+      "batch": 3.0,
+      "category": "assess",
+      "id": "E-LOW-012",
+      "name": "扶稳单脚提踵耐力表现",
+      "planned_filename": "026_E-LOW-012_扶稳单脚提踵耐力表现.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\026_E-LOW-012_扶稳单脚提踵耐力表现.png"
+    },
+    {
+      "sequence": 27,
+      "batch": 3.0,
+      "category": "assess",
+      "id": "E-LOW-028",
+      "name": "扶稳屈膝站姿提踵观察",
+      "planned_filename": "027_E-LOW-028_扶稳屈膝站姿提踵观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\027_E-LOW-028_扶稳屈膝站姿提踵观察.png"
+    },
+    {
+      "sequence": 28,
+      "batch": 3.0,
+      "category": "assess",
+      "id": "E-LOW-029",
+      "name": "扶稳提踵短时保持观察",
+      "planned_filename": "028_E-LOW-029_扶稳提踵短时保持观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\028_E-LOW-029_扶稳提踵短时保持观察.png"
+    },
+    {
+      "sequence": 29,
+      "batch": 3.0,
+      "category": "assess",
+      "id": "E-LOW-018",
+      "name": "窄基底与串联站立",
+      "planned_filename": "029_E-LOW-018_窄基底与串联站立.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\029_E-LOW-018_窄基底与串联站立.png"
+    },
+    {
+      "sequence": 30,
+      "batch": 3.0,
+      "category": "assess",
+      "id": "E-LOW-019",
+      "name": "支撑旁睁眼单脚站立",
+      "planned_filename": "030_E-LOW-019_支撑旁睁眼单脚站立.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\030_E-LOW-019_支撑旁睁眼单脚站立.png"
+    },
+    {
+      "sequence": 31,
+      "batch": 4.0,
+      "category": "assess",
+      "id": "E-LOW-020",
+      "name": "足弓外观与负重变化初筛",
+      "planned_filename": "031_E-LOW-020_足弓外观与负重变化初筛.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\031_E-LOW-020_足弓外观与负重变化初筛.png"
+    },
+    {
+      "sequence": 32,
+      "batch": 4.0,
+      "category": "assess",
+      "id": "E-LOW-021",
+      "name": "已确认标志点的足弓高度变化",
+      "planned_filename": "032_E-LOW-021_已确认标志点的足弓高度变化.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\032_E-LOW-021_已确认标志点的足弓高度变化.png"
+    },
+    {
+      "sequence": 33,
+      "batch": 4.0,
+      "category": "assess",
+      "id": "E-LOW-022",
+      "name": "许可后的低跳与落地能力观察",
+      "planned_filename": "033_E-LOW-022_许可后的低跳与落地能力观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\033_E-LOW-022_许可后的低跳与落地能力观察.png"
+    },
+    {
+      "sequence": 34,
+      "batch": 4.0,
+      "category": "assess",
+      "id": "E-AXU-001",
+      "name": "仰卧主动直腿抬高：腰骨盆功能代理",
+      "planned_filename": "034_E-AXU-001_仰卧主动直腿抬高：腰骨盆功能代理.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\034_E-AXU-001_仰卧主动直腿抬高：腰骨盆功能代理.png"
+    },
+    {
+      "sequence": 35,
+      "batch": 4.0,
+      "category": "assess",
+      "id": "E-AXU-002",
+      "name": "扶持重心转移与小幅原地抬脚",
+      "planned_filename": "035_E-AXU-002_扶持重心转移与小幅原地抬脚.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\035_E-AXU-002_扶持重心转移与小幅原地抬脚.png"
+    },
+    {
+      "sequence": 36,
+      "batch": 4.0,
+      "category": "assess",
+      "id": "E-AXU-003",
+      "name": "站立躯干主动前屈/后伸筛查",
+      "planned_filename": "036_E-AXU-003_站立躯干主动前屈／后伸筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\036_E-AXU-003_站立躯干主动前屈／后伸筛查.png"
+    },
+    {
+      "sequence": 37,
+      "batch": 4.0,
+      "category": "assess",
+      "id": "E-AXU-004",
+      "name": "站立躯干左右侧屈筛查",
+      "planned_filename": "037_E-AXU-004_站立躯干左右侧屈筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\037_E-AXU-004_站立躯干左右侧屈筛查.png"
+    },
+    {
+      "sequence": 38,
+      "batch": 4.0,
+      "category": "assess",
+      "id": "E-AXU-005",
+      "name": "坐位骨盆相对稳定的躯干旋转筛查",
+      "planned_filename": "038_E-AXU-005_坐位骨盆相对稳定的躯干旋转筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\038_E-AXU-005_坐位骨盆相对稳定的躯干旋转筛查.png"
+    },
+    {
+      "sequence": 39,
+      "batch": 4.0,
+      "category": "assess",
+      "id": "E-AXU-006",
+      "name": "坐位屈背/伸胸功能筛查",
+      "planned_filename": "039_E-AXU-006_坐位屈背／伸胸功能筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\039_E-AXU-006_坐位屈背／伸胸功能筛查.png"
+    },
+    {
+      "sequence": 40,
+      "batch": 4.0,
+      "category": "assess",
+      "id": "E-AXU-007",
+      "name": "坐位上躯干左右侧屈筛查",
+      "planned_filename": "040_E-AXU-007_坐位上躯干左右侧屈筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\040_E-AXU-007_坐位上躯干左右侧屈筛查.png"
+    },
+    {
+      "sequence": 41,
+      "batch": 5.0,
+      "category": "assess",
+      "id": "E-AXU-008",
+      "name": "坐位抱胸转胸筛查",
+      "planned_filename": "041_E-AXU-008_坐位抱胸转胸筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\041_E-AXU-008_坐位抱胸转胸筛查.png"
+    },
+    {
+      "sequence": 42,
+      "batch": 5.0,
+      "category": "assess",
+      "id": "E-AXU-025",
+      "name": "四点跪位后坐活动观察",
+      "planned_filename": "042_E-AXU-025_四点跪位后坐活动观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\042_E-AXU-025_四点跪位后坐活动观察.png"
+    },
+    {
+      "sequence": 43,
+      "batch": 5.0,
+      "category": "assess",
+      "id": "E-AXU-023",
+      "name": "轻阻力Pallof抗旋转任务筛查",
+      "planned_filename": "043_E-AXU-023_轻阻力Pallof抗旋转任务筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\043_E-AXU-023_轻阻力Pallof抗旋转任务筛查.png"
+    },
+    {
+      "sequence": 44,
+      "batch": 5.0,
+      "category": "assess",
+      "id": "E-AXU-024",
+      "name": "低负荷侧向支撑耐受筛查",
+      "planned_filename": "044_E-AXU-024_低负荷侧向支撑耐受筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\044_E-AXU-024_低负荷侧向支撑耐受筛查.png"
+    },
+    {
+      "sequence": 45,
+      "batch": 5.0,
+      "category": "assess",
+      "id": "E-AXU-009",
+      "name": "颈部主动屈曲/伸展筛查",
+      "planned_filename": "045_E-AXU-009_颈部主动屈曲／伸展筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\045_E-AXU-009_颈部主动屈曲／伸展筛查.png"
+    },
+    {
+      "sequence": 46,
+      "batch": 5.0,
+      "category": "assess",
+      "id": "E-AXU-010",
+      "name": "颈部主动左右侧屈筛查",
+      "planned_filename": "046_E-AXU-010_颈部主动左右侧屈筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\046_E-AXU-010_颈部主动左右侧屈筛查.png"
+    },
+    {
+      "sequence": 47,
+      "batch": 5.0,
+      "category": "assess",
+      "id": "E-AXU-011",
+      "name": "颈部主动左右旋转筛查",
+      "planned_filename": "047_E-AXU-011_颈部主动左右旋转筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\047_E-AXU-011_颈部主动左右旋转筛查.png"
+    },
+    {
+      "sequence": 48,
+      "batch": 5.0,
+      "category": "assess",
+      "id": "E-AXU-012",
+      "name": "肩主动前举/后伸活动筛查",
+      "planned_filename": "048_E-AXU-012_肩主动前举／后伸活动筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\048_E-AXU-012_肩主动前举／后伸活动筛查.png"
+    },
+    {
+      "sequence": 49,
+      "batch": 5.0,
+      "category": "assess",
+      "id": "E-AXU-013",
+      "name": "肩主动外展/回收内收筛查",
+      "planned_filename": "049_E-AXU-013_肩主动外展／回收内收筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\049_E-AXU-013_肩主动外展／回收内收筛查.png"
+    },
+    {
+      "sequence": 50,
+      "batch": 5.0,
+      "category": "assess",
+      "id": "E-AXU-014",
+      "name": "肘靠身的肩主动内旋/外旋筛查",
+      "planned_filename": "050_E-AXU-014_肘靠身的肩主动内旋／外旋筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\050_E-AXU-014_肘靠身的肩主动内旋／外旋筛查.png"
+    },
+    {
+      "sequence": 51,
+      "batch": 6.0,
+      "category": "assess",
+      "id": "E-AXU-015",
+      "name": "肩水平内收/水平外展功能筛查",
+      "planned_filename": "051_E-AXU-015_肩水平内收／水平外展功能筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\051_E-AXU-015_肩水平内收／水平外展功能筛查.png"
+    },
+    {
+      "sequence": 52,
+      "batch": 6.0,
+      "category": "assess",
+      "id": "E-AXU-016",
+      "name": "梳头/够后腰功能够取",
+      "planned_filename": "052_E-AXU-016_梳头／够后腰功能够取.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\052_E-AXU-016_梳头／够后腰功能够取.png"
+    },
+    {
+      "sequence": 53,
+      "batch": 6.0,
+      "category": "assess",
+      "id": "E-AXU-026",
+      "name": "墙面滑手的抬举与代偿观察",
+      "planned_filename": "053_E-AXU-026_墙面滑手的抬举与代偿观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\053_E-AXU-026_墙面滑手的抬举与代偿观察.png"
+    },
+    {
+      "sequence": 54,
+      "batch": 6.0,
+      "category": "assess",
+      "id": "E-AXU-027",
+      "name": "墙面持球小圈控制观察",
+      "planned_filename": "054_E-AXU-027_墙面持球小圈控制观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\054_E-AXU-027_墙面持球小圈控制观察.png"
+    },
+    {
+      "sequence": 55,
+      "batch": 6.0,
+      "category": "assess",
+      "id": "E-AXU-028",
+      "name": "俯卧I/Y/T/W上肢控制观察",
+      "planned_filename": "055_E-AXU-028_俯卧I／Y／T／W上肢控制观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\055_E-AXU-028_俯卧I／Y／T／W上肢控制观察.png"
+    },
+    {
+      "sequence": 56,
+      "batch": 6.0,
+      "category": "assess",
+      "id": "E-AXU-021",
+      "name": "墙面小幅推撑负荷耐受筛查",
+      "planned_filename": "056_E-AXU-021_墙面小幅推撑负荷耐受筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\056_E-AXU-021_墙面小幅推撑负荷耐受筛查.png"
+    },
+    {
+      "sequence": 57,
+      "batch": 6.0,
+      "category": "assess",
+      "id": "E-AXU-017",
+      "name": "肘主动屈曲/伸展ROM筛查",
+      "planned_filename": "057_E-AXU-017_肘主动屈曲／伸展ROM筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\057_E-AXU-017_肘主动屈曲／伸展ROM筛查.png"
+    },
+    {
+      "sequence": 58,
+      "batch": 6.0,
+      "category": "assess",
+      "id": "E-AXU-018",
+      "name": "前臂主动旋前/旋后筛查",
+      "planned_filename": "058_E-AXU-018_前臂主动旋前／旋后筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\058_E-AXU-018_前臂主动旋前／旋后筛查.png"
+    },
+    {
+      "sequence": 59,
+      "batch": 6.0,
+      "category": "assess",
+      "id": "E-AXU-019",
+      "name": "腕主动掌屈/背伸ROM筛查",
+      "planned_filename": "059_E-AXU-019_腕主动掌屈／背伸ROM筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\059_E-AXU-019_腕主动掌屈／背伸ROM筛查.png"
+    },
+    {
+      "sequence": 60,
+      "batch": 6.0,
+      "category": "assess",
+      "id": "E-AXU-020",
+      "name": "腕主动尺偏/桡偏ROM筛查",
+      "planned_filename": "060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\060_E-AXU-020_腕主动尺偏／桡偏ROM筛查.png"
+    },
+    {
+      "sequence": 61,
+      "batch": 7.0,
+      "category": "assess",
+      "id": "E-AXU-022",
+      "name": "已知轻负荷弯举功能任务",
+      "planned_filename": "061_E-AXU-022_已知轻负荷弯举功能任务.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\061_E-AXU-022_已知轻负荷弯举功能任务.png"
+    },
+    {
+      "sequence": 62,
+      "batch": 7.0,
+      "category": "assess",
+      "id": "E-AXU-029",
+      "name": "已知轻物握持与提放功能观察",
+      "planned_filename": "062_E-AXU-029_已知轻物握持与提放功能观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\062_E-AXU-029_已知轻物握持与提放功能观察.png"
+    },
+    {
+      "sequence": 63,
+      "batch": 7.0,
+      "category": "assess",
+      "id": "E-AXU-030",
+      "name": "墙面手掌承重的腕背伸观察",
+      "planned_filename": "063_E-AXU-030_墙面手掌承重的腕背伸观察.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\063_E-AXU-030_墙面手掌承重的腕背伸观察.png"
+    },
+    {
+      "sequence": 64,
+      "batch": 7.0,
+      "category": "train",
+      "id": "T-LOW-001",
+      "name": "股四头肌等长收缩",
+      "planned_filename": "064_T-LOW-001_股四头肌等长收缩.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\064_T-LOW-001_股四头肌等长收缩.png"
+    },
+    {
+      "sequence": 65,
+      "batch": 7.0,
+      "category": "train",
+      "id": "T-LOW-002",
+      "name": "滑跟屈膝",
+      "planned_filename": "065_T-LOW-002_滑跟屈膝.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\065_T-LOW-002_滑跟屈膝.png"
+    },
+    {
+      "sequence": 66,
+      "batch": 7.0,
+      "category": "train",
+      "id": "T-LOW-003",
+      "name": "坐姿伸膝：徒手至轻负荷",
+      "planned_filename": "066_T-LOW-003_坐姿伸膝：徒手至轻负荷.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\066_T-LOW-003_坐姿伸膝：徒手至轻负荷.png"
+    },
+    {
+      "sequence": 67,
+      "batch": 7.0,
+      "category": "train",
+      "id": "T-LOW-004",
+      "name": "仰卧直腿抬高",
+      "planned_filename": "067_T-LOW-004_仰卧直腿抬高.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\067_T-LOW-004_仰卧直腿抬高.png"
+    },
+    {
+      "sequence": 68,
+      "batch": 7.0,
+      "category": "train",
+      "id": "T-LOW-045",
+      "name": "扶稳站姿屈膝：徒手至弹力带",
+      "planned_filename": "068_T-LOW-045_扶稳站姿屈膝：徒手至弹力带.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\068_T-LOW-045_扶稳站姿屈膝：徒手至弹力带.png"
+    },
+    {
+      "sequence": 69,
+      "batch": 7.0,
+      "category": "train",
+      "id": "T-LOW-048",
+      "name": "臀桥位腘绳肌滑动：双腿到单腿离心",
+      "planned_filename": "069_T-LOW-048_臀桥位腘绳肌滑动：双腿到单腿离心.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\069_T-LOW-048_臀桥位腘绳肌滑动：双腿到单腿离心.png"
+    },
+    {
+      "sequence": 70,
+      "batch": 7.0,
+      "category": "train",
+      "id": "T-LOW-053",
+      "name": "仰卧带辅助温和后侧链牵伸",
+      "planned_filename": "070_T-LOW-053_仰卧带辅助温和后侧链牵伸.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\070_T-LOW-053_仰卧带辅助温和后侧链牵伸.png"
+    },
+    {
+      "sequence": 71,
+      "batch": 8.0,
+      "category": "train",
+      "id": "T-LOW-058",
+      "name": "短幅反向北欧挺：专业确认后启用",
+      "planned_filename": "071_T-LOW-058_短幅反向北欧挺：专业确认后启用.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\071_T-LOW-058_短幅反向北欧挺：专业确认后启用.png"
+    },
+    {
+      "sequence": 72,
+      "batch": 8.0,
+      "category": "train",
+      "id": "T-LOW-005",
+      "name": "扶稳站姿交替抬膝",
+      "planned_filename": "072_T-LOW-005_扶稳站姿交替抬膝.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\072_T-LOW-005_扶稳站姿交替抬膝.png"
+    },
+    {
+      "sequence": 73,
+      "batch": 8.0,
+      "category": "train",
+      "id": "T-LOW-006",
+      "name": "扶稳站姿髋外展：徒手至弹力带",
+      "planned_filename": "073_T-LOW-006_扶稳站姿髋外展：徒手至弹力带.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\073_T-LOW-006_扶稳站姿髋外展：徒手至弹力带.png"
+    },
+    {
+      "sequence": 74,
+      "batch": 8.0,
+      "category": "train",
+      "id": "T-LOW-007",
+      "name": "扶稳站姿髋后伸：徒手至弹力带",
+      "planned_filename": "074_T-LOW-007_扶稳站姿髋后伸：徒手至弹力带.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\074_T-LOW-007_扶稳站姿髋后伸：徒手至弹力带.png"
+    },
+    {
+      "sequence": 75,
+      "batch": 8.0,
+      "category": "train",
+      "id": "T-LOW-008",
+      "name": "侧卧髋外展",
+      "planned_filename": "075_T-LOW-008_侧卧髋外展.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\075_T-LOW-008_侧卧髋外展.png"
+    },
+    {
+      "sequence": 76,
+      "batch": 8.0,
+      "category": "train",
+      "id": "T-LOW-009",
+      "name": "侧卧蚌式：徒手至弹力带",
+      "planned_filename": "076_T-LOW-009_侧卧蚌式：徒手至弹力带.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\076_T-LOW-009_侧卧蚌式：徒手至弹力带.png"
+    },
+    {
+      "sequence": 77,
+      "batch": 8.0,
+      "category": "train",
+      "id": "T-LOW-010",
+      "name": "坐姿髋内外旋控制",
+      "planned_filename": "077_T-LOW-010_坐姿髋内外旋控制.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\077_T-LOW-010_坐姿髋内外旋控制.png"
+    },
+    {
+      "sequence": 78,
+      "batch": 8.0,
+      "category": "train",
+      "id": "T-LOW-011",
+      "name": "双脚桥式",
+      "planned_filename": "078_T-LOW-011_双脚桥式.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\078_T-LOW-011_双脚桥式.png"
+    },
+    {
+      "sequence": 79,
+      "batch": 8.0,
+      "category": "train",
+      "id": "T-LOW-047",
+      "name": "单腿臀桥：双侧过渡到单侧",
+      "planned_filename": "079_T-LOW-047_单腿臀桥：双侧过渡到单侧.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\079_T-LOW-047_单腿臀桥：双侧过渡到单侧.png"
+    },
+    {
+      "sequence": 80,
+      "batch": 8.0,
+      "category": "train",
+      "id": "T-LOW-012",
+      "name": "稳定长凳髋推：徒手至哑铃/杠铃",
+      "planned_filename": "080_T-LOW-012_稳定长凳髋推：徒手至哑铃／杠铃.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\080_T-LOW-012_稳定长凳髋推：徒手至哑铃／杠铃.png"
+    },
+    {
+      "sequence": 81,
+      "batch": 9.0,
+      "category": "train",
+      "id": "T-LOW-028",
+      "name": "仰卧/坐位髋内收轻夹垫",
+      "planned_filename": "081_T-LOW-028_仰卧／坐位髋内收轻夹垫.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\081_T-LOW-028_仰卧／坐位髋内收轻夹垫.png"
+    },
+    {
+      "sequence": 82,
+      "batch": 9.0,
+      "category": "train",
+      "id": "T-LOW-029",
+      "name": "侧卧下侧腿内收抬起",
+      "planned_filename": "082_T-LOW-029_侧卧下侧腿内收抬起.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\082_T-LOW-029_侧卧下侧腿内收抬起.png"
+    },
+    {
+      "sequence": 83,
+      "batch": 9.0,
+      "category": "train",
+      "id": "T-LOW-030",
+      "name": "短杠杆哥本哈根内收支撑",
+      "planned_filename": "083_T-LOW-030_短杠杆哥本哈根内收支撑.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\083_T-LOW-030_短杠杆哥本哈根内收支撑.png"
+    },
+    {
+      "sequence": 84,
+      "batch": 9.0,
+      "category": "train",
+      "id": "T-LOW-031",
+      "name": "长杠杆哥本哈根内收支撑",
+      "planned_filename": "084_T-LOW-031_长杠杆哥本哈根内收支撑.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\084_T-LOW-031_长杠杆哥本哈根内收支撑.png"
+    },
+    {
+      "sequence": 85,
+      "batch": 9.0,
+      "category": "train",
+      "id": "T-LOW-044",
+      "name": "弹力带侧向行走",
+      "planned_filename": "085_T-LOW-044_弹力带侧向行走.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\085_T-LOW-044_弹力带侧向行走.png"
+    },
+    {
+      "sequence": 86,
+      "batch": 9.0,
+      "category": "train",
+      "id": "T-LOW-049",
+      "name": "扶稳单腿站立加对侧髋外展顶墙",
+      "planned_filename": "086_T-LOW-049_扶稳单腿站立加对侧髋外展顶墙.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\086_T-LOW-049_扶稳单腿站立加对侧髋外展顶墙.png"
+    },
+    {
+      "sequence": 87,
+      "batch": 9.0,
+      "category": "train",
+      "id": "T-LOW-054",
+      "name": "扶稳半跪位髋前侧温和牵伸",
+      "planned_filename": "087_T-LOW-054_扶稳半跪位髋前侧温和牵伸.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\087_T-LOW-054_扶稳半跪位髋前侧温和牵伸.png"
+    },
+    {
+      "sequence": 88,
+      "batch": 9.0,
+      "category": "train",
+      "id": "T-LOW-013",
+      "name": "髋铰链触墙练习",
+      "planned_filename": "088_T-LOW-013_髋铰链触墙练习.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\088_T-LOW-013_髋铰链触墙练习.png"
+    },
+    {
+      "sequence": 89,
+      "batch": 9.0,
+      "category": "train",
+      "id": "T-LOW-014",
+      "name": "哑铃/壶铃罗马尼亚硬拉",
+      "planned_filename": "089_T-LOW-014_哑铃／壶铃罗马尼亚硬拉.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\089_T-LOW-014_哑铃／壶铃罗马尼亚硬拉.png"
+    },
+    {
+      "sequence": 90,
+      "batch": 9.0,
+      "category": "train",
+      "id": "T-LOW-015",
+      "name": "杠铃罗马尼亚硬拉",
+      "planned_filename": "090_T-LOW-015_杠铃罗马尼亚硬拉.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\090_T-LOW-015_杠铃罗马尼亚硬拉.png"
+    },
+    {
+      "sequence": 91,
+      "batch": 10.0,
+      "category": "train",
+      "id": "T-LOW-016",
+      "name": "扶稳单腿罗马尼亚硬拉",
+      "planned_filename": "091_T-LOW-016_扶稳单腿罗马尼亚硬拉.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\091_T-LOW-016_扶稳单腿罗马尼亚硬拉.png"
+    },
+    {
+      "sequence": 92,
+      "batch": 10.0,
+      "category": "train",
+      "id": "T-LOW-017",
+      "name": "分级坐站训练",
+      "planned_filename": "092_T-LOW-017_分级坐站训练.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\092_T-LOW-017_分级坐站训练.png"
+    },
+    {
+      "sequence": 93,
+      "batch": 10.0,
+      "category": "train",
+      "id": "T-LOW-018",
+      "name": "扶稳浅蹲/椅前目标蹲",
+      "planned_filename": "093_T-LOW-018_扶稳浅蹲／椅前目标蹲.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\093_T-LOW-018_扶稳浅蹲／椅前目标蹲.png"
+    },
+    {
+      "sequence": 94,
+      "batch": 10.0,
+      "category": "train",
+      "id": "T-LOW-019",
+      "name": "哑铃/壶铃杯式深蹲",
+      "planned_filename": "094_T-LOW-019_哑铃／壶铃杯式深蹲.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\094_T-LOW-019_哑铃／壶铃杯式深蹲.png"
+    },
+    {
+      "sequence": 95,
+      "batch": 10.0,
+      "category": "train",
+      "id": "T-LOW-020",
+      "name": "杠铃背蹲：已有技术者的受控版本",
+      "planned_filename": "095_T-LOW-020_杠铃背蹲：已有技术者的受控版本.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\095_T-LOW-020_杠铃背蹲：已有技术者的受控版本.png"
+    },
+    {
+      "sequence": 96,
+      "batch": 10.0,
+      "category": "train",
+      "id": "T-LOW-021",
+      "name": "扶稳分腿蹲：徒手至哑铃",
+      "planned_filename": "096_T-LOW-021_扶稳分腿蹲：徒手至哑铃.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\096_T-LOW-021_扶稳分腿蹲：徒手至哑铃.png"
+    },
+    {
+      "sequence": 97,
+      "batch": 10.0,
+      "category": "train",
+      "id": "T-LOW-022",
+      "name": "反向弓步：徒手至哑铃",
+      "planned_filename": "097_T-LOW-022_反向弓步：徒手至哑铃.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\097_T-LOW-022_反向弓步：徒手至哑铃.png"
+    },
+    {
+      "sequence": 98,
+      "batch": 10.0,
+      "category": "train",
+      "id": "T-LOW-023",
+      "name": "后脚抬高分腿蹲：徒手至哑铃",
+      "planned_filename": "098_T-LOW-023_后脚抬高分腿蹲：徒手至哑铃.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\098_T-LOW-023_后脚抬高分腿蹲：徒手至哑铃.png"
+    },
+    {
+      "sequence": 99,
+      "batch": 10.0,
+      "category": "train",
+      "id": "T-LOW-024",
+      "name": "侧弓步：徒手至杯式负荷",
+      "planned_filename": "099_T-LOW-024_侧弓步：徒手至杯式负荷.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\099_T-LOW-024_侧弓步：徒手至杯式负荷.png"
+    },
+    {
+      "sequence": 100,
+      "batch": 10.0,
+      "category": "train",
+      "id": "T-LOW-025",
+      "name": "小幅弓步转体",
+      "planned_filename": "100_T-LOW-025_小幅弓步转体.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\100_T-LOW-025_小幅弓步转体.png"
+    },
+    {
+      "sequence": 101,
+      "batch": 11.0,
+      "category": "train",
+      "id": "T-LOW-026",
+      "name": "低台阶上台阶：扶稳至持哑铃",
+      "planned_filename": "101_T-LOW-026_低台阶上台阶：扶稳至持哑铃.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\101_T-LOW-026_低台阶上台阶：扶稳至持哑铃.png"
+    },
+    {
+      "sequence": 102,
+      "batch": 11.0,
+      "category": "train",
+      "id": "T-LOW-027",
+      "name": "低台阶控制下落点地",
+      "planned_filename": "102_T-LOW-027_低台阶控制下落点地.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\102_T-LOW-027_低台阶控制下落点地.png"
+    },
+    {
+      "sequence": 103,
+      "batch": 11.0,
+      "category": "train",
+      "id": "T-LOW-055",
+      "name": "低台阶交替点踏与受控上落",
+      "planned_filename": "103_T-LOW-055_低台阶交替点踏与受控上落.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\103_T-LOW-055_低台阶交替点踏与受控上落.png"
+    },
+    {
+      "sequence": 104,
+      "batch": 11.0,
+      "category": "train",
+      "id": "T-LOW-056",
+      "name": "坐站结合扶稳提踵：分段版",
+      "planned_filename": "104_T-LOW-056_坐站结合扶稳提踵：分段版.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\104_T-LOW-056_坐站结合扶稳提踵：分段版.png"
+    },
+    {
+      "sequence": 105,
+      "batch": 11.0,
+      "category": "train",
+      "id": "T-LOW-059",
+      "name": "扶稳直线弓步走：分段版",
+      "planned_filename": "105_T-LOW-059_扶稳直线弓步走：分段版.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\105_T-LOW-059_扶稳直线弓步走：分段版.png"
+    },
+    {
+      "sequence": 106,
+      "batch": 11.0,
+      "category": "train",
+      "id": "T-LOW-060",
+      "name": "轻负荷常规杠铃硬拉：地面起落",
+      "planned_filename": "106_T-LOW-060_轻负荷常规杠铃硬拉：地面起落.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\106_T-LOW-060_轻负荷常规杠铃硬拉：地面起落.png"
+    },
+    {
+      "sequence": 107,
+      "batch": 11.0,
+      "category": "train",
+      "id": "T-LOW-032",
+      "name": "膝顶墙背屈活动训练",
+      "planned_filename": "107_T-LOW-032_膝顶墙背屈活动训练.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\107_T-LOW-032_膝顶墙背屈活动训练.png"
+    },
+    {
+      "sequence": 108,
+      "batch": 11.0,
+      "category": "train",
+      "id": "T-LOW-052",
+      "name": "半跪位踝背屈活动：不用牵引带",
+      "planned_filename": "108_T-LOW-052_半跪位踝背屈活动：不用牵引带.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\108_T-LOW-052_半跪位踝背屈活动：不用牵引带.png"
+    },
+    {
+      "sequence": 109,
+      "batch": 11.0,
+      "category": "train",
+      "id": "T-LOW-033",
+      "name": "直膝小腿牵伸",
+      "planned_filename": "109_T-LOW-033_直膝小腿牵伸.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\109_T-LOW-033_直膝小腿牵伸.png"
+    },
+    {
+      "sequence": 110,
+      "batch": 11.0,
+      "category": "train",
+      "id": "T-LOW-034",
+      "name": "屈膝小腿牵伸",
+      "planned_filename": "110_T-LOW-034_屈膝小腿牵伸.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\110_T-LOW-034_屈膝小腿牵伸.png"
+    },
+    {
+      "sequence": 111,
+      "batch": 12.0,
+      "category": "train",
+      "id": "T-LOW-035",
+      "name": "扶稳双脚提踵",
+      "planned_filename": "111_T-LOW-035_扶稳双脚提踵.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\111_T-LOW-035_扶稳双脚提踵.png"
+    },
+    {
+      "sequence": 112,
+      "batch": 12.0,
+      "category": "train",
+      "id": "T-LOW-050",
+      "name": "扶稳屈膝站姿提踵",
+      "planned_filename": "112_T-LOW-050_扶稳屈膝站姿提踵.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\112_T-LOW-050_扶稳屈膝站姿提踵.png"
+    },
+    {
+      "sequence": 113,
+      "batch": 12.0,
+      "category": "train",
+      "id": "T-LOW-036",
+      "name": "扶稳单脚/负重提踵",
+      "planned_filename": "113_T-LOW-036_扶稳单脚／负重提踵.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\113_T-LOW-036_扶稳单脚／负重提踵.png"
+    },
+    {
+      "sequence": 114,
+      "batch": 12.0,
+      "category": "train",
+      "id": "T-LOW-051",
+      "name": "双脚上升—单脚缓降提踵",
+      "planned_filename": "114_T-LOW-051_双脚上升—单脚缓降提踵.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\114_T-LOW-051_双脚上升—单脚缓降提踵.png"
+    },
+    {
+      "sequence": 115,
+      "batch": 12.0,
+      "category": "train",
+      "id": "T-LOW-037",
+      "name": "坐位提踵：徒手至膝上负荷",
+      "planned_filename": "115_T-LOW-037_坐位提踵：徒手至膝上负荷.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\115_T-LOW-037_坐位提踵：徒手至膝上负荷.png"
+    },
+    {
+      "sequence": 116,
+      "batch": 12.0,
+      "category": "train",
+      "id": "T-LOW-038",
+      "name": "弹力带踝四方向：按许可单独启用",
+      "planned_filename": "116_T-LOW-038_弹力带踝四方向：按许可单独启用.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\116_T-LOW-038_弹力带踝四方向：按许可单独启用.png"
+    },
+    {
+      "sequence": 117,
+      "batch": 12.0,
+      "category": "train",
+      "id": "T-LOW-039",
+      "name": "短足练习：坐位至站位",
+      "planned_filename": "117_T-LOW-039_短足练习：坐位至站位.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\117_T-LOW-039_短足练习：坐位至站位.png"
+    },
+    {
+      "sequence": 118,
+      "batch": 12.0,
+      "category": "train",
+      "id": "T-LOW-040",
+      "name": "扶稳抬前足",
+      "planned_filename": "118_T-LOW-040_扶稳抬前足.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\118_T-LOW-040_扶稳抬前足.png"
+    },
+    {
+      "sequence": 119,
+      "batch": 12.0,
+      "category": "train",
+      "id": "T-LOW-041",
+      "name": "支撑旁单腿触点平衡",
+      "planned_filename": "119_T-LOW-041_支撑旁单腿触点平衡.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\119_T-LOW-041_支撑旁单腿触点平衡.png"
+    },
+    {
+      "sequence": 120,
+      "batch": 12.0,
+      "category": "train",
+      "id": "T-LOW-042",
+      "name": "分段渐进步行",
+      "planned_filename": "120_T-LOW-042_分段渐进步行.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\120_T-LOW-042_分段渐进步行.png"
+    },
+    {
+      "sequence": 121,
+      "batch": 13.0,
+      "category": "train",
+      "id": "T-LOW-043",
+      "name": "受控落地到原地低跳进阶",
+      "planned_filename": "121_T-LOW-043_受控落地到原地低跳进阶.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\121_T-LOW-043_受控落地到原地低跳进阶.png"
+    },
+    {
+      "sequence": 122,
+      "batch": 13.0,
+      "category": "train",
+      "id": "T-LOW-046",
+      "name": "坐姿踝主动背屈与跖屈：无外阻",
+      "planned_filename": "122_T-LOW-046_坐姿踝主动背屈与跖屈：无外阻.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\122_T-LOW-046_坐姿踝主动背屈与跖屈：无外阻.png"
+    },
+    {
+      "sequence": 123,
+      "batch": 13.0,
+      "category": "train",
+      "id": "T-AXU-001",
+      "name": "坐位支持下的小幅躯干前屈",
+      "planned_filename": "123_T-AXU-001_坐位支持下的小幅躯干前屈.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\123_T-AXU-001_坐位支持下的小幅躯干前屈.png"
+    },
+    {
+      "sequence": 124,
+      "batch": 13.0,
+      "category": "train",
+      "id": "T-AXU-002",
+      "name": "扶持站位的小幅躯干后伸",
+      "planned_filename": "124_T-AXU-002_扶持站位的小幅躯干后伸.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\124_T-AXU-002_扶持站位的小幅躯干后伸.png"
+    },
+    {
+      "sequence": 125,
+      "batch": 13.0,
+      "category": "train",
+      "id": "T-AXU-003",
+      "name": "扶持躯干左右侧屈活动",
+      "planned_filename": "125_T-AXU-003_扶持躯干左右侧屈活动.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\125_T-AXU-003_扶持躯干左右侧屈活动.png"
+    },
+    {
+      "sequence": 126,
+      "batch": 13.0,
+      "category": "train",
+      "id": "T-AXU-004",
+      "name": "仰卧屈膝小幅左右摆膝",
+      "planned_filename": "126_T-AXU-004_仰卧屈膝小幅左右摆膝.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\126_T-AXU-004_仰卧屈膝小幅左右摆膝.png"
+    },
+    {
+      "sequence": 127,
+      "batch": 13.0,
+      "category": "train",
+      "id": "T-AXU-005",
+      "name": "坐位轻柔屈背与后侧胸廓呼吸",
+      "planned_filename": "127_T-AXU-005_坐位轻柔屈背与后侧胸廓呼吸.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\127_T-AXU-005_坐位轻柔屈背与后侧胸廓呼吸.png"
+    },
+    {
+      "sequence": 128,
+      "batch": 13.0,
+      "category": "train",
+      "id": "T-AXU-006",
+      "name": "椅背支持的坐位伸胸",
+      "planned_filename": "128_T-AXU-006_椅背支持的坐位伸胸.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\128_T-AXU-006_椅背支持的坐位伸胸.png"
+    },
+    {
+      "sequence": 129,
+      "batch": 13.0,
+      "category": "train",
+      "id": "T-AXU-007",
+      "name": "坐位上躯干侧屈活动",
+      "planned_filename": "129_T-AXU-007_坐位上躯干侧屈活动.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\129_T-AXU-007_坐位上躯干侧屈活动.png"
+    },
+    {
+      "sequence": 130,
+      "batch": 13.0,
+      "category": "train",
+      "id": "T-AXU-008",
+      "name": "侧卧开书式转胸",
+      "planned_filename": "130_T-AXU-008_侧卧开书式转胸.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\130_T-AXU-008_侧卧开书式转胸.png"
+    },
+    {
+      "sequence": 131,
+      "batch": 14.0,
+      "category": "train",
+      "id": "T-AXU-041",
+      "name": "四点跪位后坐髋屈活动",
+      "planned_filename": "131_T-AXU-041_四点跪位后坐髋屈活动.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\131_T-AXU-041_四点跪位后坐髋屈活动.png"
+    },
+    {
+      "sequence": 132,
+      "batch": 14.0,
+      "category": "train",
+      "id": "T-AXU-042",
+      "name": "四点跪位猫式与舒适伸展",
+      "planned_filename": "132_T-AXU-042_四点跪位猫式与舒适伸展.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\132_T-AXU-042_四点跪位猫式与舒适伸展.png"
+    },
+    {
+      "sequence": 133,
+      "batch": 14.0,
+      "category": "train",
+      "id": "T-AXU-015",
+      "name": "死虫式：脚跟滑动到对侧伸展",
+      "planned_filename": "133_T-AXU-015_死虫式：脚跟滑动到对侧伸展.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\133_T-AXU-015_死虫式：脚跟滑动到对侧伸展.png"
+    },
+    {
+      "sequence": 134,
+      "batch": 14.0,
+      "category": "train",
+      "id": "T-AXU-016",
+      "name": "鸟狗式：单肢到对侧手脚",
+      "planned_filename": "134_T-AXU-016_鸟狗式：单肢到对侧手脚.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\134_T-AXU-016_鸟狗式：单肢到对侧手脚.png"
+    },
+    {
+      "sequence": 135,
+      "batch": 14.0,
+      "category": "train",
+      "id": "T-AXU-043",
+      "name": "四点支撑膝微离地保持",
+      "planned_filename": "135_T-AXU-043_四点支撑膝微离地保持.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\135_T-AXU-043_四点支撑膝微离地保持.png"
+    },
+    {
+      "sequence": 136,
+      "batch": 14.0,
+      "category": "train",
+      "id": "T-AXU-044",
+      "name": "高位/地面平板支撑交替抬腿",
+      "planned_filename": "136_T-AXU-044_高位／地面平板支撑交替抬腿.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\136_T-AXU-044_高位／地面平板支撑交替抬腿.png"
+    },
+    {
+      "sequence": 137,
+      "batch": 14.0,
+      "category": "train",
+      "id": "T-AXU-017",
+      "name": "侧桥：屈膝支撑到长杠杆",
+      "planned_filename": "137_T-AXU-017_侧桥：屈膝支撑到长杠杆.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\137_T-AXU-017_侧桥：屈膝支撑到长杠杆.png"
+    },
+    {
+      "sequence": 138,
+      "batch": 14.0,
+      "category": "train",
+      "id": "T-AXU-046",
+      "name": "侧桥结合上侧髋外展",
+      "planned_filename": "138_T-AXU-046_侧桥结合上侧髋外展.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\138_T-AXU-046_侧桥结合上侧髋外展.png"
+    },
+    {
+      "sequence": 139,
+      "batch": 14.0,
+      "category": "train",
+      "id": "T-AXU-018",
+      "name": "Pallof胸前推：抗旋转训练",
+      "planned_filename": "139_T-AXU-018_Pallof胸前推：抗旋转训练.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\139_T-AXU-018_Pallof胸前推：抗旋转训练.png"
+    },
+    {
+      "sequence": 140,
+      "batch": 14.0,
+      "category": "train",
+      "id": "T-AXU-057",
+      "name": "稳定地面高跪位Pallof抗旋转",
+      "planned_filename": "140_T-AXU-057_稳定地面高跪位Pallof抗旋转.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\140_T-AXU-057_稳定地面高跪位Pallof抗旋转.png"
+    },
+    {
+      "sequence": 141,
+      "batch": 15.0,
+      "category": "train",
+      "id": "T-AXU-019",
+      "name": "单侧手提箱行走",
+      "planned_filename": "141_T-AXU-019_单侧手提箱行走.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\141_T-AXU-019_单侧手提箱行走.png"
+    },
+    {
+      "sequence": 142,
+      "batch": 15.0,
+      "category": "train",
+      "id": "T-AXU-020",
+      "name": "双侧农夫行走",
+      "planned_filename": "142_T-AXU-020_双侧农夫行走.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\142_T-AXU-020_双侧农夫行走.png"
+    },
+    {
+      "sequence": 143,
+      "batch": 15.0,
+      "category": "train",
+      "id": "T-AXU-021",
+      "name": "壶铃分腿位转胸：静态到弓步转体",
+      "planned_filename": "143_T-AXU-021_壶铃分腿位转胸：静态到弓步转体.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\143_T-AXU-021_壶铃分腿位转胸：静态到弓步转体.png"
+    },
+    {
+      "sequence": 144,
+      "batch": 15.0,
+      "category": "train",
+      "id": "T-AXU-047",
+      "name": "仰卧屈膝呼吸控制",
+      "planned_filename": "144_T-AXU-047_仰卧屈膝呼吸控制.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\144_T-AXU-047_仰卧屈膝呼吸控制.png"
+    },
+    {
+      "sequence": 145,
+      "batch": 15.0,
+      "category": "train",
+      "id": "T-AXU-048",
+      "name": "仰卧手抵膝的屈髋等长控制",
+      "planned_filename": "145_T-AXU-048_仰卧手抵膝的屈髋等长控制.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\145_T-AXU-048_仰卧手抵膝的屈髋等长控制.png"
+    },
+    {
+      "sequence": 146,
+      "batch": 15.0,
+      "category": "train",
+      "id": "T-AXU-049",
+      "name": "半跪位小幅转胸",
+      "planned_filename": "146_T-AXU-049_半跪位小幅转胸.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\146_T-AXU-049_半跪位小幅转胸.png"
+    },
+    {
+      "sequence": 147,
+      "batch": 15.0,
+      "category": "train",
+      "id": "T-AXU-009",
+      "name": "颈部舒适范围主动低头",
+      "planned_filename": "147_T-AXU-009_颈部舒适范围主动低头.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\147_T-AXU-009_颈部舒适范围主动低头.png"
+    },
+    {
+      "sequence": 148,
+      "batch": 15.0,
+      "category": "train",
+      "id": "T-AXU-010",
+      "name": "颈部舒适范围主动抬头",
+      "planned_filename": "148_T-AXU-010_颈部舒适范围主动抬头.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\148_T-AXU-010_颈部舒适范围主动抬头.png"
+    },
+    {
+      "sequence": 149,
+      "batch": 15.0,
+      "category": "train",
+      "id": "T-AXU-011",
+      "name": "颈部主动左右侧屈",
+      "planned_filename": "149_T-AXU-011_颈部主动左右侧屈.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\149_T-AXU-011_颈部主动左右侧屈.png"
+    },
+    {
+      "sequence": 150,
+      "batch": 15.0,
+      "category": "train",
+      "id": "T-AXU-012",
+      "name": "颈部主动左右转头",
+      "planned_filename": "150_T-AXU-012_颈部主动左右转头.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\150_T-AXU-012_颈部主动左右转头.png"
+    },
+    {
+      "sequence": 151,
+      "batch": 16.0,
+      "category": "train",
+      "id": "T-AXU-013",
+      "name": "轻柔下巴回收与点头控制",
+      "planned_filename": "151_T-AXU-013_轻柔下巴回收与点头控制.png",
+      "status": "pending",
+      "path": null
+    },
+    {
+      "sequence": 152,
+      "batch": 16.0,
+      "category": "train",
+      "id": "T-AXU-014",
+      "name": "低强度多方向颈部等长",
+      "planned_filename": "152_T-AXU-014_低强度多方向颈部等长.png",
+      "status": "pending",
+      "path": null
+    },
+    {
+      "sequence": 153,
+      "batch": 16.0,
+      "category": "train",
+      "id": "T-AXU-022",
+      "name": "肩桌面滑手到墙面滑手",
+      "planned_filename": "153_T-AXU-022_肩桌面滑手到墙面滑手.png",
+      "status": "pending",
+      "path": null
+    },
+    {
+      "sequence": 154,
+      "batch": 16.0,
+      "category": "train",
+      "id": "T-AXU-051",
+      "name": "墙天使：舒适范围滑动",
+      "planned_filename": "154_T-AXU-051_墙天使：舒适范围滑动.png",
+      "status": "pending",
+      "path": null
+    },
+    {
+      "sequence": 155,
+      "batch": 16.0,
+      "category": "train",
+      "id": "T-AXU-023",
+      "name": "弹力带肩外旋",
+      "planned_filename": "155_T-AXU-023_弹力带肩外旋.png",
+      "status": "pending",
+      "path": null
+    },
+    {
+      "sequence": 156,
+      "batch": 16.0,
+      "category": "train",
+      "id": "T-AXU-024",
+      "name": "弹力带肩内旋",
+      "planned_filename": "156_T-AXU-024_弹力带肩内旋.png",
+      "status": "pending",
+      "path": null
+    },
+    {
+      "sequence": 157,
+      "batch": 16.0,
+      "category": "train",
+      "id": "T-AXU-025",
+      "name": "肩胛平面抬举：空手到哑铃",
+      "planned_filename": "157_T-AXU-025_肩胛平面抬举：空手到哑铃.png",
+      "status": "pending",
+      "path": null
+    },
+    {
+      "sequence": 158,
+      "batch": 16.0,
+      "category": "train",
+      "id": "T-AXU-050",
+      "name": "俯卧I/Y/T/W分路线抬臂",
+      "planned_filename": "158_T-AXU-050_俯卧I／Y／T／W分路线抬臂.png",
+      "status": "pending",
+      "path": null
+    },
+    {
+      "sequence": 159,
+      "batch": 16.0,
+      "category": "train",
+      "id": "T-AXU-055",
+      "name": "单臂斜向抬举：徒手至轻哑铃",
+      "planned_filename": "159_T-AXU-055_单臂斜向抬举：徒手至轻哑铃.png",
+      "status": "pending",
+      "path": null
+    },
+    {
+      "sequence": 160,
+      "batch": 16.0,
+      "category": "train",
+      "id": "T-AXU-026",
+      "name": "支撑单臂哑铃/壶铃划船",
+      "planned_filename": "160_T-AXU-026_支撑单臂哑铃／壶铃划船.png",
+      "status": "pending",
+      "path": null
+    },
+    {
+      "sequence": 161,
+      "batch": 17.0,
+      "category": "train",
+      "id": "T-AXU-054",
+      "name": "固定锚点弹力带划船",
+      "planned_filename": "161_T-AXU-054_固定锚点弹力带划船.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\161_T-AXU-054_固定锚点弹力带划船.png"
+    },
+    {
+      "sequence": 162,
+      "batch": 17.0,
+      "category": "train",
+      "id": "T-AXU-027",
+      "name": "哑铃/壶铃地板卧推",
+      "planned_filename": "162_T-AXU-027_哑铃／壶铃地板卧推.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\162_T-AXU-027_哑铃／壶铃地板卧推.png"
+    },
+    {
+      "sequence": 163,
+      "batch": 17.0,
+      "category": "train",
+      "id": "T-AXU-028",
+      "name": "地雷杆斜向推举",
+      "planned_filename": "163_T-AXU-028_地雷杆斜向推举.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\163_T-AXU-028_地雷杆斜向推举.png"
+    },
+    {
+      "sequence": 164,
+      "batch": 17.0,
+      "category": "train",
+      "id": "T-AXU-029",
+      "name": "推撑阶梯：墙面→固定台面→地面俯卧撑",
+      "planned_filename": "164_T-AXU-029_推撑阶梯：墙面→固定台面→地面俯卧撑.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\164_T-AXU-029_推撑阶梯：墙面→固定台面→地面俯卧撑.png"
+    },
+    {
+      "sequence": 165,
+      "batch": 17.0,
+      "category": "train",
+      "id": "T-AXU-053",
+      "name": "Push-up Plus：墙面到固定高台",
+      "planned_filename": "165_T-AXU-053_Push-up Plus：墙面到固定高台.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\165_T-AXU-053_Push-up Plus：墙面到固定高台.png"
+    },
+    {
+      "sequence": 166,
+      "batch": 17.0,
+      "category": "train",
+      "id": "T-AXU-045",
+      "name": "高位俯卧撑支撑交替抬手",
+      "planned_filename": "166_T-AXU-045_高位俯卧撑支撑交替抬手.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\166_T-AXU-045_高位俯卧撑支撑交替抬手.png"
+    },
+    {
+      "sequence": 167,
+      "batch": 17.0,
+      "category": "train",
+      "id": "T-AXU-052",
+      "name": "墙面持球小圈与短时支持",
+      "planned_filename": "167_T-AXU-052_墙面持球小圈与短时支持.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\167_T-AXU-052_墙面持球小圈与短时支持.png"
+    },
+    {
+      "sequence": 168,
+      "batch": 17.0,
+      "category": "train",
+      "id": "T-AXU-030",
+      "name": "坐位/站位哑铃过头推举",
+      "planned_filename": "168_T-AXU-030_坐位／站位哑铃过头推举.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\168_T-AXU-030_坐位／站位哑铃过头推举.png"
+    },
+    {
+      "sequence": 169,
+      "batch": 17.0,
+      "category": "train",
+      "id": "T-AXU-031",
+      "name": "胸前下拉：器械或弹力带",
+      "planned_filename": "169_T-AXU-031_胸前下拉：器械或弹力带.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\169_T-AXU-031_胸前下拉：器械或弹力带.png"
+    },
+    {
+      "sequence": 170,
+      "batch": 17.0,
+      "category": "train",
+      "id": "T-AXU-032",
+      "name": "弹力带胸前水平展开",
+      "planned_filename": "170_T-AXU-032_弹力带胸前水平展开.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\170_T-AXU-032_弹力带胸前水平展开.png"
+    },
+    {
+      "sequence": 171,
+      "batch": 18.0,
+      "category": "train",
+      "id": "T-AXU-058",
+      "name": "上斜凳轻哑铃胸推",
+      "planned_filename": "171_T-AXU-058_上斜凳轻哑铃胸推.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\171_T-AXU-058_上斜凳轻哑铃胸推.png"
+    },
+    {
+      "sequence": 172,
+      "batch": 18.0,
+      "category": "train",
+      "id": "T-AXU-060",
+      "name": "单臂绳索或弹力带侧平举",
+      "planned_filename": "172_T-AXU-060_单臂绳索或弹力带侧平举.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\172_T-AXU-060_单臂绳索或弹力带侧平举.png"
+    },
+    {
+      "sequence": 173,
+      "batch": 18.0,
+      "category": "train",
+      "id": "T-AXU-062",
+      "name": "站姿绳索或弹力带胸前飞鸟",
+      "planned_filename": "173_T-AXU-062_站姿绳索或弹力带胸前飞鸟.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\173_T-AXU-062_站姿绳索或弹力带胸前飞鸟.png"
+    },
+    {
+      "sequence": 174,
+      "batch": 18.0,
+      "category": "train",
+      "id": "T-AXU-033",
+      "name": "哑铃/弹力带肘屈曲",
+      "planned_filename": "174_T-AXU-033_哑铃／弹力带肘屈曲.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\174_T-AXU-033_哑铃／弹力带肘屈曲.png"
+    },
+    {
+      "sequence": 175,
+      "batch": 18.0,
+      "category": "train",
+      "id": "T-AXU-034",
+      "name": "弹力带/绳索肘伸下压",
+      "planned_filename": "175_T-AXU-034_弹力带／绳索肘伸下压.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\175_T-AXU-034_弹力带／绳索肘伸下压.png"
+    },
+    {
+      "sequence": 176,
+      "batch": 18.0,
+      "category": "train",
+      "id": "T-AXU-035",
+      "name": "前臂支撑的负重腕背伸",
+      "planned_filename": "176_T-AXU-035_前臂支撑的负重腕背伸.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\176_T-AXU-035_前臂支撑的负重腕背伸.png"
+    },
+    {
+      "sequence": 177,
+      "batch": 18.0,
+      "category": "train",
+      "id": "T-AXU-036",
+      "name": "前臂支撑的负重腕掌屈",
+      "planned_filename": "177_T-AXU-036_前臂支撑的负重腕掌屈.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\177_T-AXU-036_前臂支撑的负重腕掌屈.png"
+    },
+    {
+      "sequence": 178,
+      "batch": 18.0,
+      "category": "train",
+      "id": "T-AXU-037",
+      "name": "腕尺偏/桡偏轻负荷控制",
+      "planned_filename": "178_T-AXU-037_腕尺偏／桡偏轻负荷控制.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\178_T-AXU-037_腕尺偏／桡偏轻负荷控制.png"
+    },
+    {
+      "sequence": 179,
+      "batch": 18.0,
+      "category": "train",
+      "id": "T-AXU-038",
+      "name": "前臂旋前/旋后：空手到短杠杆",
+      "planned_filename": "179_T-AXU-038_前臂旋前／旋后：空手到短杠杆.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\179_T-AXU-038_前臂旋前／旋后：空手到短杠杆.png"
+    },
+    {
+      "sequence": 180,
+      "batch": 18.0,
+      "category": "train",
+      "id": "T-AXU-039",
+      "name": "桌面到四点跪的手掌承重转移",
+      "planned_filename": "180_T-AXU-039_桌面到四点跪的手掌承重转移.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\180_T-AXU-039_桌面到四点跪的手掌承重转移.png"
+    },
+    {
+      "sequence": 181,
+      "batch": 19.0,
+      "category": "train",
+      "id": "T-AXU-059",
+      "name": "哑铃锤式弯举",
+      "planned_filename": "181_T-AXU-059_哑铃锤式弯举.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\181_T-AXU-059_哑铃锤式弯举.png"
+    },
+    {
+      "sequence": 182,
+      "batch": 19.0,
+      "category": "train",
+      "id": "T-AXU-061",
+      "name": "单臂轻哑铃过头肘伸",
+      "planned_filename": "182_T-AXU-061_单臂轻哑铃过头肘伸.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\182_T-AXU-061_单臂轻哑铃过头肘伸.png"
+    },
+    {
+      "sequence": 183,
+      "batch": 19.0,
+      "category": "train",
+      "id": "T-AXU-056",
+      "name": "下蹲—站稳—轻负重推举的分段组合",
+      "planned_filename": "183_T-AXU-056_下蹲—站稳—轻负重推举的分段组合.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\183_T-AXU-056_下蹲—站稳—轻负重推举的分段组合.png"
+    },
+    {
+      "sequence": 184,
+      "batch": 19.0,
+      "category": "train",
+      "id": "T-AXU-040",
+      "name": "双手壶铃摆动：后期熟练者项目",
+      "planned_filename": "184_T-AXU-040_双手壶铃摆动：后期熟练者项目.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\184_T-AXU-040_双手壶铃摆动：后期熟练者项目.png"
+    },
+    {
+      "sequence": 185,
+      "batch": 19.0,
+      "category": "train",
+      "id": "T-LOW-057",
+      "name": "固定自行车的分段活动耐受训练",
+      "planned_filename": "185_T-LOW-057_固定自行车的分段活动耐受训练.png",
+      "status": "completed",
+      "path": "E:\\git冲突问题\\rehab image\\train\\185_T-LOW-057_固定自行车的分段活动耐受训练.png"
+    }
+  ],
+  "last_completed_batch": "081-090"
+}

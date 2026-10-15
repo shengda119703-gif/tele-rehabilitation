@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "produced_on": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "action_id": "T-LOW-039",
+  "action_number": "117",
+  "action_name": "短足练习：坐位至站位",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_action_library": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "method": "内置 image_gen；逐张生成与实际画面审查；选定图原样复制，未修改像素。",
+  "version": "首轮坐位赤足版；左足内侧近景；同构图两帧",
+  "reference_images": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "delivered_images": [
+    {
+      "frame": "117-s01",
+      "target_filename": "117_T-LOW-039_s01.png",
+      "target_pose": "坐位赤足自然准备，足趾放松，足跟与前足轻接地。",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-7f48-76a0-b2c0-812749cc32a0/exec-5d09d30c-81ad-4f2f-b02d-a3a97ccf42a3.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/117_T-LOW-039_s01.png",
+      "prompt": "Photorealistic rehabilitation training photograph, SHORT FOOT EXERCISE, step 01 RELAXED seated starting pose.\nReference images specify the same woman's skin tone and deep gray long pants, white short-sleeve shirt, gray-blue seamless studio, soft light. Use them only for appearance and photography style.\nClose MEDIAL / INNER SIDE view of her LEFT bare foot; the woman is seated facing IMAGE LEFT, and the toes point IMAGE LEFT. The camera is positioned between her legs at ankle height, looking squarely toward the medial surface of her LEFT foot. Only the left leg and foot are in frame, the other leg is outside the crop. This is the BIG TOE SIDE of the foot, not the little-toe side. The visible closest toe is the broad big toe; the other toes are hidden behind it. Clearly show medial malleolus, inner arch, heel and big-toe ball in a low side profile. The inner midfoot arch has its subtle normal curve above the floor.\nThe left knee is bent 90 degrees with the lower leg vertical, entire foot resting naturally on floor. Heel and both inner/outer forefoot ball remain lightly grounded, toes relaxed and straight resting on floor. The arch is relaxed, not contracted or exaggerated. Include knee, lower thigh and edge of stable chair seat with chair leg to prove seated posture, white shirt hem near top; upper torso and face need not show. Both heel and all toe tips fit comfortably in the picture, no close edge crops. True life foot-to-shin proportions.\nNo toe curling, no toe gripping, no rolled or inverted foot, no heel lift, no front foot lift, no band, no tools, no text, no labels, no arrows, no watermark, no collage. One photo, one relaxed pose.",
+      "reused": false,
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1744905,
+      "sha256": "4E2D9F3A22BB77CBDF5C7200E9467C73945BB753EFD52B33EB171AF91A0898A3",
+      "pose_review": {
+        "status": "通过画面审查",
+        "inspection": "检查内置工具生成原图，并使用 view_image 检查已复制的交付文件。",
+        "checks": [
+          "左足大脚趾侧与内踝、内侧足弓清楚，脚趾指向画面左。",
+          "膝屈约90度、小腿相邻关节与椅座椅腿可见，确为坐位。",
+          "脚跟及前足接地，脚趾自然伸展，没有蜷趾抓地。",
+          "足弓为放松自然小弧度，没有主动夸大拱起或翻起足外侧。",
+          "白衣、深灰长裤、肤色、灰蓝棚拍和柔和阴影与参考一致；足腿比例自然。",
+          "一张纯摄影单姿势，无文字、编号、箭头、拼图。"
+        ],
+        "visibility_limit": "精确内侧近景中第五跖骨头在足远侧，无法由单张照片直接证明其压力；足未侧翻，前足与地面总体接触关系可见。"
+      }
+    },
+    {
+      "frame": "117-s02",
+      "target_filename": "117_T-LOW-039_s02_v2.png",
+      "target_pose": "保持坐位和跟/前足接地，前脚掌轻向跟收近，内侧足弓小幅收拢，趾保持放松。",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-7f48-76a0-b2c0-812749cc32a0/exec-fb8be16e-307a-4fc2-807c-69b053e92f6e.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/117_T-LOW-039_s02_v2.png",
+      "prompt": "Use case: scientific-educational\nEdit target: attached 117 s01 relaxed seated bare left foot medial view.\nRequired edit for s02: show a VISIBLY SMALL SHORT-FOOT CONTRACTION in the inner midfoot. The current relaxed midfoot arch is too flat to distinguish a contraction. Reshape only the middle of the foot: gently bring the ball of the foot a few millimeters toward the heel and gather the arch upward into a smooth slightly higher curve. At the CENTER of the inner arch, between grounded heel and grounded ball, the underside should sit about 1 cm above the floor (a natural small arch gap, not exaggerated). This must be a clear but modest change from s01. The forefoot shifts only a little toward the heel, shortening footprint slightly.\nKeep the heel resting on the ground and the big-toe ball/front pad firmly on the ground. Keep the big toe and other toes LONG, STRAIGHT, RELAXED with toe pads resting on the floor. Absolutely do not bend or claw the toes to create the arch. Keep ankle and shin vertical and still, no foot tilting or rolling outward.\nAll surroundings and composition unchanged: same camera medial side, same seated body and chair, same skin and clothing, left-facing foot, same scale, gray-blue studio. Update the gentle contact shadow consistently with the tiny increased arch clearance.\nOne photorealistic still pose. No arrows, no text, no symbols, no diagram, no comparison panel, no collage, no watermark.",
+      "composition_reference": "E:/git冲突问题/rehab image/train/steps/117_T-LOW-039_s01.png",
+      "reused": false,
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1666711,
+      "sha256": "22014E76FBFA01F0FE8ED70B16D75BB0A5C769825F46024DFB624F94FB85067C",
+      "pose_review": {
+        "status": "通过画面审查",
+        "inspection": "检查内置工具生成原图，并使用 view_image 检查已复制的交付文件。",
+        "checks": [
+          "与s01同左足内侧机位、同尺度、同椅子、同腿位、同背景和光线。",
+          "内侧中足弧度较s01小幅收拢提高，前足略向脚跟收近，变化可辨但未夸张成高弓。",
+          "足跟和前足仍接地，趾保持长而放松，无蜷趾或抓地。",
+          "未抬起整片前足、脚跟或翻起足外侧；小腿未移动。",
+          "保留坐位邻近关节与椅座椅腿；比例自然。",
+          "单一纯摄影姿势，无文字、箭头或拼图。"
+        ],
+        "visibility_limit": "照片只能审查姿态，不直接证明内在肌激活、足底压力或结构矫正；第五跖骨头在远侧。"
+      }
+    }
+  ],
+  "rejected_attempts": [
+    {
+      "frame": "117-s01",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-7f48-76a0-b2c0-812749cc32a0/exec-ffbacf4c-c64d-449e-b8a6-51a292a2fc0f.png",
+      "final_path": null,
+      "prompt": "Use case: scientific-educational\nAsset type: 安康康复动作分步骤照片，117_T-LOW-039_s01，坐位短足练习自然准备位。\nInput images: 所附三张 reference-01、02、03 只用于固定同一女性人物的肤色、体形、白色短袖、深灰长裤和灰蓝棚拍风格，不沿用参考站立或手臂姿势。\nPrimary request: 生成一张写实康复教学摄影，女性坐稳在无轮稳固椅上，双膝约90度、双小腿自然垂直，双脚赤足接地，脚趾完全放松平伸。重点清楚展示右足的内侧足弓，脚跟、第一跖骨头附近、第五跖骨头附近均轻贴地。右足处于自然准备位，不主动缩短、不绷脚、不蜷趾抓地。\nComposition/framing: 横向足部近景，以低机位从右足内侧稍偏前方拍摄。完整右脚从脚跟至五个脚趾清楚入镜，完整右踝与小腿、膝和足够椅子座面/椅腿及坐位大腿依据入镜；另一只脚在后方自然踩地但不遮挡主脚。右脚趾指向画面右侧，内侧足弓轮廓清楚。人物足与小腿比例自然，视觉重点在足，不需脸部。\nScene/backdrop: 同参考的柔和灰蓝无缝摄影棚背景和灰蓝地面，自然接触阴影，无无关道具。\nLighting/style: 真实高清摄影，柔和均匀棚拍，真实皮肤纹理，和参考图同色调。\nConstraints: 单一自然准备姿势，一张照片，无拼图，无插图，无标注，无文字，无数字，无箭头，无水印。没有弹力带。脚跟及整个前足贴地，足外侧不翻起；放松的五个脚趾有自然解剖比例，没有额外脚趾。椅子稳固无轮，确为坐位。",
+      "reason": "主脚偏外侧；内侧足弓不够明确，未交付。"
+    },
+    {
+      "frame": "117-s01",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-7f48-76a0-b2c0-812749cc32a0/exec-c236035e-6756-4df0-be6e-1ff7a6c0b9f2.png",
+      "final_path": null,
+      "prompt": "Use case: scientific-educational\nEdit target: attached image 1, rehabilitation short-foot preparation photo.\nPrimary request: Improve the camera viewpoint so the INNER medial arch of ONE foreground foot is clearly visible in an almost exact low side profile, instead of its outer lateral edge. Keep this a seated barefoot relaxed starting posture. The big toe and its first metatarsal inner edge must be on the visible near side; the little toe is on the far side. Make the photographed foreground foot the woman's LEFT foot, viewed from its inner side. The entire foot including heel, natural inner arch, first metatarsal head and relaxed uncurled big toe are visible. Foot points to the right of the picture. The other foot stays naturally grounded behind it, separated and never blocking the foreground arch.\nComposition: move the camera to a low position on the medial side of the left foot, closer crop from the seated thighs and chair seat down to the floor, foot remains at a realistic size relative to shin. Include the bent knee, adjacent lower leg and stable chair seat/legs as clear seated evidence. Soft light allows the slight natural arch gap to be seen without an exaggerated arch.\nKeep: same woman/skin/clothing, white short sleeve and deep gray long trousers, gray-blue studio, stable chair, seated knees about 90 degrees, feet relaxed flat on ground with heels and first/fifth metatarsal heads lightly contacting it, natural shadows and realistic anatomy.\nConstraints: This is s01 natural relaxed posture, not active short foot. All toes are relaxed and long on the ground, not clawed. Heel and forefoot grounded, no supination or rolled outer edge, no bands. Single photographic posture, no text, no arrows, no labels, no collage.",
+      "reason": "修改后机位仍偏外侧，未交付。"
+    },
+    {
+      "frame": "117-s01",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-7f48-76a0-b2c0-812749cc32a0/exec-382fb8d6-353c-4f15-a6a0-c972f542a969.png",
+      "final_path": null,
+      "prompt_summary": "单足坐位内侧近景、脚趾朝右，要求大脚趾在近侧。",
+      "reason": "主脚仍呈小脚趾侧，未交付；最终改为脚趾朝左的明确内侧面。"
+    },
+    {
+      "frame": "117-s02",
+      "generation_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-7f48-76a0-b2c0-812749cc32a0/exec-14d55e5c-9205-41e6-8a0b-5e31ab220a74.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/117_T-LOW-039_s02.png",
+      "prompt": "Use case: scientific-educational\nEdit target: attached image is approved 117_T-LOW-039_s01, seated relaxed LEFT foot viewed from the INNER medial side.\nPrimary request: Make ONLY the small active short-foot change for step s02. Keep heel firmly at the exact original ground location. Gently draw the BALL / forefoot a few millimeters toward the heel, so the INNER MIDFOOT ARCH subtly lifts and shortens, with only about 3–5 mm more midfoot clearance. This is a gentle short-foot exercise, a SMALL believable change; the foot length shortens just slightly. The big-toe metatarsal ball and fifth metatarsal ball stay resting on the floor. The broad big toe stays long, loose, uncurled and resting on floor, exactly as relaxed as s01; do not claw any toes. Ankle and lower leg remain still. Only slight inward gathering in the middle of the arch; no whole-foot inversion or turned outer edge.\nInvariants: preserve exact camera, composition, foot size and same LEFT leg and medial side facing camera, toes point image left; seated knee/thigh position, dark gray trousers, white shirt hem, chair appearance and location, heel-floor contact, forefoot-floor contact, skin identity and light, gray-blue background and all shadows. The other foot remains outside crop. Single close-up photographic pose.\nAvoid: exaggerated high arch or dramatically shorter foot; any toe curling, gripping, knuckling, toe flexion or lifting; heel or entire forefoot lift; whole-leg movement; supination/foot rolling; added objects; text, arrows, symbols, collage, watermark. Do not add a second frame.",
+      "sha256": "95B9371117565670CE2AD6627840E5BFF859134BBB80B06838E688F3169C77BA",
+      "width": 1122,
+      "height": 1402,
+      "reason": "与准备位变化太小，不能清楚表达短足收拢；保留候选文件，交付选用 s02_v2。"
+    }
+  ],
+  "changed_files": [
+    "E:/git冲突问题/rehab image/train/steps/117_T-LOW-039_s01.png",
+    "E:/git冲突问题/rehab image/train/steps/117_T-LOW-039_s02.png",
+    "E:/git冲突问题/rehab image/train/steps/117_T-LOW-039_s02_v2.png",
+    "E:/git冲突问题/rehab image/步骤图_117_制作记录.json"
+  ],
+  "untouched": "未改清单、现有单图、旧进度JSON或项目仓库。"
+}

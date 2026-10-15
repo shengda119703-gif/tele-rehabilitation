@@ -1,0 +1,53 @@
+{
+  "batch": "第09批",
+  "action_id": "076",
+  "action_code": "T-LOW-009",
+  "action_name": "侧卧蚌式：徒手至弹力带",
+  "date": "2026-10-14",
+  "mode": "built-in imagegen edit + validated original reuse",
+  "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_card_path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "references_reviewed": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "group_review": {
+    "status": "passed",
+    "method": "逐张 view_image 检查保存文件，并对照两帧",
+    "findings": "同一人物、白短袖、深灰长裤、白袜、灰蓝背景、灰色垫和小枕保持；头、脚、上手及关键膝髋均完整入镜，下侧手臂自然随枕遮挡。两帧仅上侧膝从合拢转为打开，骨盆与躯干朝向一致，双足保持接触；无弹力带。s01 可复用于合拢回程。"
+  },
+  "images": [
+    {
+      "image_id": "076-s01",
+      "step": "s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/076_T-LOW-009_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e6-e526-7591-bd02-e9e0ef0b5a4a/exec-a7c1d7ed-4c5c-48b0-8add-a8941e62eef2.png",
+      "edit_source_path": "E:/git冲突问题/rehab image/train/076_T-LOW-009_侧卧蚌式：徒手至弹力带.png",
+      "prompt": "Use case: scientific-educational. Asset type: single-frame rehabilitation exercise demonstration photograph, action 076 T-LOW-009 s01, plain studio photo with no words.\nInput image 1 is the EDIT TARGET and identity / style / composition reference. Produce one new edited photograph, not a collage.\nPrimary request: Change ONLY the upper leg from the currently open clamshell to the closed starting position: the woman lies steadily on her side, both hips and knees comfortably bent, the upper knee gently resting directly on the lower knee, BOTH feet continuing to touch one another exactly where they are in the original. Lower leg remains fully supported on the mat. Show two natural overlapping bent legs with realistic knees, shins, ankles and feet, not a straightened leg.\nKeep unchanged: this exact same woman's face, hair and body proportions, white short-sleeve shirt, charcoal gray trousers, white socks, full-body framing, head and neck supported on the small gray pillow, lower arm tucked naturally beneath pillow, top hand resting on mat in front of torso, neutral steady side-lying torso and pelvis with no backward roll, gray non-slip mat, gray-blue studio background and floor, camera angle, distances, exposure and soft light. Head, hands, all knees and both complete feet must stay in frame. Preserve the blank space and portrait canvas composition.\nNo resistance band, no weights, no extra equipment, no motion arrows, no text, no logos, no watermark. Do not change the room, pillow, mat, body orientation or camera framing. Only close the upper knee to make the clamshell starting posture.",
+      "reuse": false,
+      "attempts": 1,
+      "visual_review": {
+        "status": "passed",
+        "method": "view_image saved file",
+        "findings": "稳定侧卧，头颈由小枕承托，双膝舒适屈曲合拢、双足接触，底腿落垫；骨盆和躯干稳定，身体比例与关键关节自然，无文字、箭头、弹力带或新增器材。"
+      },
+      "group_review": "passed；由 s02 原图仅编辑上侧腿闭膝，人物、机位、器材、背景和尺度连续。"
+    },
+    {
+      "image_id": "076-s02",
+      "step": "s02",
+      "path": "E:/git冲突问题/rehab image/train/steps/076_T-LOW-009_s02.png",
+      "source_path": "E:/git冲突问题/rehab image/train/076_T-LOW-009_侧卧蚌式：徒手至弹力带.png",
+      "prompt": "复用通过检查的原单图：徒手侧卧蚌式打开姿态，下侧腿落垫，双足继续接触，上侧膝打开，骨盆与躯干稳定，无明显后滚。",
+      "reuse": true,
+      "attempts": 0,
+      "visual_review": {
+        "status": "passed",
+        "method": "view_image original and copied saved file",
+        "findings": "原图符合第二帧：头颈有小枕支撑，下腿落垫，上侧膝打开且双足保持轻靠；骨盆未明显向后翻，脚和膝完整可见，无带、负重或文字。"
+      },
+      "group_review": "passed；作为本组基准帧，与编辑后的 s01 保持一致。"
+    }
+  ]
+}

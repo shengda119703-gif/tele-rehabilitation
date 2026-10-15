@@ -1,0 +1,155 @@
+{
+  "record_version": "1.0",
+  "date": "2026-10-14",
+  "generator_mode": "内置 image_gen__imagegen；无 CLI/API",
+  "scope": "155/T-AXU-023 s01–s02；156/T-AXU-024 s01–s02；共4张独立步骤照片",
+  "plan_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_card_path": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "original_card_images": [
+    "E:/git冲突问题/rehab image/train/155_T-AXU-023_弹力带肩外旋.png",
+    "E:/git冲突问题/rehab image/train/156_T-AXU-024_弹力带肩内旋.png"
+  ],
+  "fixed_identity_references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "reviewed_with": "view_image，逐张及成对目视核对",
+  "writes_outside_repo": true,
+  "assets": [
+    {
+      "action_number": 155,
+      "action_id": "T-AXU-023",
+      "step": "s01",
+      "target_pose": "弹力带肩外旋起点：本人右肘屈约90°贴身，右手握带位于舒适腹前起点；锚点在本人左侧。",
+      "prompt": "Use case: scientific-educational. Asset type: ONE photorealistic rehabilitation exercise demonstration photograph, step 155 T-AXU-023 s01.\nInput reference images 1–3 define the SAME adult East Asian woman, tied-back dark ponytail, plain white short-sleeved T-shirt, dark charcoal slim athletic trousers, white trainers, and softly lit seamless cool gray-blue studio. Reference 4 defines the resistance-band equipment and the correct anatomical RIGHT action arm; do not copy its end-position pose.\nCreate one new independent portrait photograph showing the START position for RIGHT SHOULDER EXTERNAL ROTATION with a light resistance band. She stands comfortably with feet hip-width, chest and pelvis facing straight forward, relaxed neck, no shrug. Her own RIGHT arm is on the viewer's LEFT, and her left arm hangs relaxed on viewer's RIGHT. The right upper arm hangs vertically tucked against her right ribs, right elbow at approximately 90 degrees remains immediately beside her right waist. A thin rolled gray towel between right upper arm and ribs stays visible. The right forearm is horizontal at elbow height, gently rotated inward across the front of the abdomen; right fist holding one black D-handle is in front of the navel, comfortable abdomen-front start position, NOT out to the side. Wrist perfectly neutral and aligned with the forearm, thumb uppermost, natural five-finger grip.\nA single gray resistance band connects the right-hand handle to a clearly visible secure clamp on a dark metal post positioned on HER LEFT side, at viewer's RIGHT edge, at elbow height. Post has a heavy stable base. The band runs freely across IN FRONT of the abdomen with a visible air gap, never through her body, never behind her waist, taut lightly and logically attached to the handle and clamp. Keep her left arm out of the band path.\nCamera is a slightly elevated oblique-front viewpoint, approximately 15 degrees looking down and 10 degrees from her right side, so the right elbow angle, horizontal forearm, abdomen, band path and anchor are plainly visible. Composition includes head, torso, both feet, hand and the full fixed post with base. Wide enough portrait framing, realistic anatomy, studio teaching-photo clarity, uncluttered soft shadows, no text, no labels, no arrows, no logo, no watermark, no duplicate figure, no montage. Show exactly ONE posture. Do not extend the action elbow, do not abduct shoulder, do not rotate torso.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/train/155_T-AXU-023_弹力带肩外旋.png"
+      ],
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-96f5-76d1-924d-928584e9fb02/exec-9483f2d8-d23f-4fb4-abda-08a595013a88.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/155_T-AXU-023_s01.png",
+      "sha256": "35C06278A005E7008DFDA22D613A47F87AA6E942D4C247F3F4C1F570FD5D72E4",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "visual_review": {
+        "status": "通过",
+        "identity_background": "与三张固定参考同女性、白T、深灰裤、白鞋、灰蓝棚拍。",
+        "anatomy_pose": "本人右手在观众左；上臂贴身，薄灰毛巾夹于上臂和躯干，右肘屈起，右手在腹前，腕自然。",
+        "equipment": "锚点在本人左侧/画面右；重底座立柱和固定夹可见，带从腹前经过，未穿身体。",
+        "composition": "头至脚及锚点底座完整可见，肘、手腕、躯干和带线清晰；无文字、箭头。"
+      }
+    },
+    {
+      "action_number": 155,
+      "action_id": "T-AXU-023",
+      "step": "s02",
+      "target_pose": "右肘原位贴身，右前臂向本人右外侧转，右手远离腹前；锚点与带设置延续s01。",
+      "prompt": "Use case: scientific-educational. Asset type: ONE photorealistic rehabilitation exercise demonstration photograph, step 155 T-AXU-023 s02. The FIRST image is the already approved START photograph and the exact composition, camera, woman, clothes, light, anatomy, feet, towel, anchor post and band apparatus to preserve. The other three are identity references for the same woman. Make a single new standalone photograph for the END pose of RIGHT SHOULDER EXTERNAL ROTATION, keeping all scene and body invariants from the first reference.\nChange ONLY the right shoulder rotation: her anatomical right arm is on the viewer's LEFT. Keep the right upper arm vertical against her right ribs, the rolled gray towel in place, and the right elbow at the exact same near-waist point, bent about 90 degrees. Rotate the right forearm OUTWARD, away from the abdomen and toward her own right side (toward viewer's LEFT), so the right black D-handle and fist are now well LEFT of the elbow in the image rather than in front of her abdomen. The forearm remains approximately horizontal at elbow height; natural comfortable external rotation, clearly distinct from the abdomen-front pose in reference 1. Keep the elbow beside the torso, NOT out to the side, and never draw a side-raise or elbow-extension exercise. The right wrist is straight in line with her forearm, thumb uppermost, natural grasp with normal fingers.\nHer left arm remains down naturally on viewer's RIGHT, chest, head and hips orientation exactly unchanged, shoulders relaxed, no torso twist or lean. Both feet still planted in same locations.\nKeep the heavy fixed metal anchor post in exactly the same viewer-right position, HER LEFT side. The gray resistance band connects securely from its elbow-height clamp to the right-hand black handle, follows an unobstructed continuous path across the FRONT of her abdomen, visibly separated from body, with natural light tension; never pass it through the torso or behind her. Band length and stretch reflect the moved hand, apparatus design unchanged.\nExact same portrait framing and elevated oblique-front teaching-photo camera as reference 1, full body and post base in frame, realistic facial identity and normal limb proportions, plain white T-shirt, charcoal pants, white shoes, cool gray-blue seamless studio, soft lighting. Exactly one person in one posture, no text, no arrows, no labels, no collage, no motion blur, no watermarks.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a83-96f5-76d1-924d-928584e9fb02/exec-9483f2d8-d23f-4fb4-abda-08a595013a88.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-96f5-76d1-924d-928584e9fb02/exec-25bd1b6b-3a00-41cf-acc5-704b6a63c93a.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/155_T-AXU-023_s02.png",
+      "sha256": "F3BA9E1CB7F4AA3EE0685957EF520D084D192AF07B8E03B980C27BB855A6A2FF",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "visual_review": {
+        "status": "通过",
+        "identity_background": "人物、服装、鞋、灰毛巾、灰蓝背景与s01一致。",
+        "anatomy_pose": "右手已移至画面左侧、明显位于右肘外侧；上臂和肘仍靠身，腕中立，胸口与脚位未转动。",
+        "equipment": "同立柱、固定夹和重底座；锚点仍在本人左侧，带延长向外侧右手连接，带走身体前方。",
+        "composition": "组内同机位及构图，姿势差异清楚，无文字箭头。"
+      }
+    },
+    {
+      "action_number": 156,
+      "action_id": "T-AXU-024",
+      "step": "s01",
+      "target_pose": "肩内旋外侧起点：本人右手在右肘外侧，右上臂和肘贴身；锚点位于本人右侧。",
+      "prompt": "Use case: identity-preserve. Correct one rehabilitation exercise photo, ONE standalone photo, 156 T-AXU-024 s01.\nImage 1 is the EDIT TARGET. It has correct subject, face, shirt, trousers, shoes, towel, chest direction, camera, gray-blue studio and anchor post on VIEWER LEFT, but its right fist is incorrectly in front of the abdomen. Image 2 is ONLY a pose reference for the right forearm pointing toward viewer LEFT. Do not copy or mirror its post.\nChange ONLY the right forearm/fist/black D-handle and attached band in image 1. Rotate her anatomical RIGHT shoulder outward so the right hand is now in the OPEN GRAY SPACE on the VIEWER LEFT of her right elbow, closer to the viewer-left anchor. The right fist must be fully outside the silhouette of her abdomen, to the LEFT of the tucked elbow, at approximately the same height as elbow. In image 1 the right elbow is near horizontal coordinate 580 of the 1122-width picture; preserve that elbow point, but move the right fist from near x690 to near x440, exactly the outside starting pose. Her horizontal forearm extends LEFT from the elbow into the empty studio area, NOT rightward across the shirt. Reference 2 shows the needed forearm-left direction. Forearm natural length, right elbow remains bent about 90 degrees in 3D, upper arm stays vertical against ribs with the same rolled towel. Wrist straight, thumb uppermost.\nKeep the left-side post and its heavy floor base fixed exactly as image 1. The band now connects directly from that left post clamp to the moved black handle in the open gap; one short taut gray band, naturally attached on the handle's viewer-left side. No band across the torso and no band on viewer right.\nEvery other part of image 1 remains unchanged: facial identity, head and chest direction, upper arm and elbow, left arm hanging, stance, feet, towel, clothing, lighting, composition and camera. Full portrait photo, exactly one person and one posture, no text, no arrows, no watermark. This is an OUTSIDE start position for subsequent shoulder internal rotation toward the abdomen; do not retain the original abdomen-front right hand.",
+      "reference_paths": [
+        "C:/Users/Administrator/.codex/generated_images/01a13a83-96f5-76d1-924d-928584e9fb02/exec-2affc4a7-0405-4e50-b8d7-8baafa8dc2d5.png",
+        "C:/Users/Administrator/.codex/generated_images/01a13a83-96f5-76d1-924d-928584e9fb02/exec-25bd1b6b-3a00-41cf-acc5-704b6a63c93a.png"
+      ],
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-96f5-76d1-924d-928584e9fb02/exec-37dddf70-b40a-4afa-83ee-92861fbcbb01.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/156_T-AXU-024_s01.png",
+      "sha256": "E422DE5D6D73033FEA369A73AEEEEB16CC0D0C7DD415BC8752CA4AA6E990EC04",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "generation_note": "首张候选生成成腹前姿势，不符s01，追加一次只修正前臂/手/握把/带线的内置编辑；首张按实际姿势重新选作s02，详见s02。",
+      "visual_review": {
+        "status": "通过",
+        "identity_background": "女性身份、白T、深灰裤、白鞋与固定参考一致；与s02同人物、灰毛巾和棚拍。",
+        "anatomy_pose": "本人右手及前臂从贴身肘朝画面左外侧伸入灰蓝空区，属于舒适外侧起点；肘仍靠身、腕自然、躯干稳。",
+        "equipment": "锚点正确改在本人右侧/画面左，立柱重底座和固定夹清楚，带只在动作侧空区连接握把，不穿躯干。",
+        "composition": "完整头脚及锚点底座；右肘、腕与躯干清楚，无文字箭头。"
+      }
+    },
+    {
+      "action_number": 156,
+      "action_id": "T-AXU-024",
+      "step": "s02",
+      "target_pose": "内旋終点：右肘原位靠身，右前臂内转使右手位于腹前，胸口和锚点方向不变。",
+      "prompt": "Use case: scientific-educational. Asset type: ONE standalone photorealistic rehabilitation teaching photograph, step 156 T-AXU-024 s01, RIGHT SHOULDER INTERNAL ROTATION start position.\nReference images 1–3 identify the SAME adult East Asian woman with dark tied-back ponytail, white short-sleeve T-shirt and charcoal trousers, soft seamless gray-blue studio. Reference 4 establishes her full-body stance, white trainers, neutral right wrist grip, rolled gray towel and right-arm comfortable OUTSIDE start pose; use that woman and pose, BUT the secure anchor MUST be on the opposite side of the scene for this new exercise.\nShe stands upright, feet hip width flat on floor, chest and pelvis facing forward, relaxed shoulders. Her anatomical RIGHT arm is on viewer's LEFT. Right upper arm is vertical and pressed gently alongside her right ribs, gray rolled towel between the upper arm and ribs; right elbow bent about 90 degrees beside her right waist, not displaced outward. Right forearm approximately horizontal at elbow height, rotated to a comfortable outward position: right fist and black D-handle to HER RIGHT (toward viewer's LEFT of elbow), well outside the abdomen. Straight natural wrist aligned with forearm, thumb uppermost, normal fingers wrapped around the handle. Her left arm simply rests down on viewer's RIGHT. No shoulder abduction, elbow straightening, torso rotation or leaning.\nCRITICAL equipment setting: one fixed dark metal anchor post is on HER RIGHT side, at VIEWER'S LEFT edge, with heavy stable floor base. It is approximately 60 cm lateral to her right hand, a clear gap. Secure gray resistance band firmly attaches to a visible clamp on this post at the same elbow/hand height. The band goes directly from VIEWER-LEFT post across the open space to her right black handle, a short horizontal taut path completely on the RIGHT anatomical side, without crossing the torso. There is NO post at viewer's right and NO band extending toward viewer's right. The band never enters, wraps around, or passes behind the body.\nSlightly elevated oblique-front camera, 15-degree downward view, about 10 degrees from her right side, clear right elbow, forearm, wrist, chest and complete anchor. Broad portrait frame head to feet and full post base, subject slightly right of centre so left-side post is visible. Soft accurate studio light, realistic skin and clothing texture, good photographic anatomy and proportional limbs, a single person, one single static posture. Absolutely no text, no arrows, no labels, no watermark, no collage.",
+      "reference_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "C:/Users/Administrator/.codex/generated_images/01a13a83-96f5-76d1-924d-928584e9fb02/exec-25bd1b6b-3a00-41cf-acc5-704b6a63c93a.png"
+      ],
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-96f5-76d1-924d-928584e9fb02/exec-2affc4a7-0405-4e50-b8d7-8baafa8dc2d5.png",
+      "saved_path": "E:/git冲突问题/rehab image/train/steps/156_T-AXU-024_s02.png",
+      "sha256": "B008501886B73EB247FCF2B08CB34CB13557CA8EC3A37D3A5A399900810BE192",
+      "dimensions": {
+        "width": 1122,
+        "height": 1402
+      },
+      "generation_note": "此图独立内置生成时原意为s01；其实际右手位于腹前，与清单s02目标相符。s01经一次内置编辑得到外侧起点后，成对核对胸口、脚位、锚点和毛巾一致，将本图依实际姿势选作s02。未复制另一动作的图片、未镜像、未拼图。",
+      "visual_review": {
+        "status": "通过",
+        "identity_background": "与s01同人物、衣裤鞋、灰毛巾、灰蓝棚拍。",
+        "anatomy_pose": "右手由s01外侧转向腹前，右肘和上臂仍近身、腕自然，胸口及骨盆方向保持。",
+        "equipment": "锚点仍为本人右侧/画面左；带从侧方前空间连接腹前握把，没有穿身体，方向符合内旋抗阻。",
+        "composition": "组内同机位与器材设置，独立一姿势，无文字箭头。"
+      }
+    }
+  ],
+  "generation_calls": [
+    {
+      "call": "155_s01",
+      "prompt_key": "assets[0].prompt",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-96f5-76d1-924d-928584e9fb02/exec-9483f2d8-d23f-4fb4-abda-08a595013a88.png",
+      "result": "选用155 s01"
+    },
+    {
+      "call": "155_s02",
+      "prompt_key": "assets[1].prompt",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-96f5-76d1-924d-928584e9fb02/exec-25bd1b6b-3a00-41cf-acc5-704b6a63c93a.png",
+      "result": "选用155 s02"
+    },
+    {
+      "call": "156_first_candidate",
+      "prompt_key": "assets[3].prompt",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-96f5-76d1-924d-928584e9fb02/exec-2affc4a7-0405-4e50-b8d7-8baafa8dc2d5.png",
+      "result": "不符s01外侧起点；按实际腹前内旋终点选用156 s02"
+    },
+    {
+      "call": "156_s01_pose_repair",
+      "prompt_key": "assets[2].prompt",
+      "generated_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-96f5-76d1-924d-928584e9fb02/exec-37dddf70-b40a-4afa-83ee-92861fbcbb01.png",
+      "result": "选用156 s01"
+    }
+  ]
+}

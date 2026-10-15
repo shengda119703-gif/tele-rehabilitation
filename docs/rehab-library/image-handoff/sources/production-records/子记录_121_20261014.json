@@ -1,0 +1,95 @@
+{
+  "record_version": "1.0",
+  "created_date": "2026-10-14",
+  "agent": "jump_121",
+  "tool_mode": "built-in image_gen",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "action": "121 T-LOW-043",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "source_retained": true,
+  "reused_existing": false,
+  "delegated_later_steps": "s03/s04 由 parent 另行分配并行制作，本记录仅登记 s01/s02。",
+  "assets": [
+    {
+      "step": "s01",
+      "prompt": "Use case: scientific-educational.\nAsset type: one standalone rehabilitation exercise step photograph, 121 T-LOW-043 step 01, portrait 1024x1536.\nInput images 1, 2, 3 are identity, wardrobe, skin tone, body proportion, photographic lighting, and gray-blue background references. Preserve the same adult East Asian woman, same recognizable face and age, black low ponytail, plain white short-sleeve T-shirt and dark charcoal gray long trousers. Do not copy the reference arm positions.\nPrimary request: a single clear full-body PREPARATION pose for a very low two-foot vertical hop in place. Both feet are planted flat on a matte nonslip level studio floor, at a comfortable hip-width distance. She bends both hips and knees a SMALL amount, around 20-25 degrees of knee flexion, hips gently back, torso only slightly leaning forward with a neutral spine. Knees track forward over the feet. Both arms are relaxed naturally close to her sides, elbows slightly bent, hands loosely held near the front outer thighs. Feet remain firmly supported, no elevation or platform. Plain white low-profile closed-toe athletic shoes with simple soles, identical pair; no visible brands.\nCamera: fixed eye-level three-quarter side view, approximately 25 degrees from her right-side profile toward the front, woman facing screen right, both feet and knees visible with true perspective. Natural 70mm lens feel without distortion, full head, ponytail, complete hands and both complete shoes visible. Subject centered, generous modest empty space on both sides and above; feet on a fixed floor baseline about 88% down the portrait. This camera and scale will be reused unchanged across a 4-frame group.\nScene: seamless cool muted gray-blue studio background and matching matte gray-blue floor, soft broad studio lighting and realistic gentle foot contact shadows.\nConstraints: one woman, ONE pose and one photograph only. No text, labels, numbers, arrows, motion trails, collage, border, watermark, equipment, high platform, weights or furniture. Anatomically plausible limb lengths and joints, five natural fingers per hand, no disconnected feet. This is a small ready dip, not a deep squat, single-leg exercise, large jump, running, or arm raise. Preserve reference identity and realistic photographic texture.",
+      "original_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-dae9-7b73-a2d9-e79bd938540c/exec-4fe9e2e8-2957-4079-8792-c9a00e7af721.png",
+      "final_saved_path": "E:/git冲突问题/rehab image/train/steps/121_T-LOW-043_s01.png",
+      "width": 1024,
+      "height": 1536,
+      "sha256": "E5ECF4FA4BF23C6CBC836E9BD4E24CA4C082AA2210E182BA42149603CB23977B",
+      "visual_qa": {
+        "status": "accepted",
+        "identity_clothing_background": "与三张参考一致的成年东亚女性、黑色低马尾、白色短袖、深灰长裤；白鞋；灰蓝背景柔光写实。",
+        "pose": "双脚平地站稳，小幅屈髋屈膝、髋轻后移，躯干轻前倾，双手低位自然。",
+        "contact": "双脚完整足底接地，无单腿、高台或器材。",
+        "anatomy_visibility": "头部、完整手脚、膝髋踝清楚；肢体比例与连接自然，鞋子成对一致。",
+        "camera": "朝画面右，三分之四斜侧全身；无字、箭头或拼图。",
+        "revision_required": false,
+        "limitations": "静态画面不证明训练启用条件或动态控制。"
+      },
+      "revisions": []
+    },
+    {
+      "step": "s02",
+      "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation exercise standalone step photograph, 121 T-LOW-043 step 02, portrait 1024x1536.\nImage 1 is the accepted step-01 photograph and is the PRIMARY edit target and continuity reference. Images 2-4 are original identity/wardrobe/style references. Preserve Image 1 camera position, lens perspective, gray-blue seamless backdrop and matte floor, lighting, framing, woman identity, ponytail, white T-shirt, dark charcoal trousers, white athletic shoes and body size exactly.\nChange only the body pose to the small airborne phase of ONE extremely low TWO-FOOT vertical hop in place. Both complete shoes are simultaneously airborne, their lowest sole points only about 2-3 centimeters above the SAME original floor. Show a narrow but UNAMBIGUOUS visible band of background floor under BOTH shoes, with separate soft shadows immediately below each shoe. Neither heel nor toe touches the floor. This must read as a very low controlled vertical hop, not a heel raise.\nHer hips and knees have nearly gently extended out of the preparatory dip, retaining natural slight knee softness; feet still parallel and hip-width, toes point in the same direction as Image 1, body remains over the same landing position. Torso upright and controlled, head calm, hands low beside her hips, elbows slightly bent, no overhead arm swing. Natural anatomy and balanced perspective with both legs, both hands and both shoes fully visible.\nDo not increase hop height or crop/zoom/reposition camera. No tuck jump, bent-up legs, run, single-leg stance, lateral movement, deep squat, platform, equipment or motion effects. One woman and one pose only; no text, arrows, labels, border, collage or watermark. Keep the reference woman recognizable, realistic photographic skin and fabric, and full-body continuity.",
+      "input_images": [
+        "C:/Users/Administrator/.codex/generated_images/01a1393d-dae9-7b73-a2d9-e79bd938540c/exec-4fe9e2e8-2957-4079-8792-c9a00e7af721.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "status": "accepted",
+      "original_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-dae9-7b73-a2d9-e79bd938540c/exec-7d297818-c98d-4e21-b3ec-a9e79a152e61.png",
+      "final_saved_path": "E:/git冲突问题/rehab image/train/steps/121_T-LOW-043_s02.png",
+      "visual_qa": {
+        "status": "accepted",
+        "identity_clothing_background": "人物身份、黑色低马尾、白T、深灰裤、白鞋及灰蓝背景与 s01 及原参考一致。",
+        "pose": "双脚同时轻微离地，髋膝近伸展但保留自然轻屈，躯干控制，双手保持低位；为单次原地低跳。",
+        "contact": "双只鞋底与地面均有清楚的小幅间隙，鞋下有对应柔和阴影，脚跟与脚尖均未接地。",
+        "anatomy_visibility": "完整头手脚可见，腿长、关节与鞋子自然，未屈腿上收或单腿腾空。",
+        "camera": "沿用 s01 的斜侧朝右视角、人物尺度、画面宽度与地面位置；无文字、编号、箭头、拼图。",
+        "revision_required": false,
+        "limitations": "鞋底间隙视觉上为很低的数厘米；二维静态照片不能精确测量厘米高度，不能证明动作许可条件。"
+      },
+      "revisions": [],
+      "generation_attempts": [
+        {
+          "attempt": 1,
+          "status": "terminated_after_no_response",
+          "reason": "内置 imagegen 超过 12 分钟仍无返回；按 parent 指示终止 exec cell 7 后重试一次。",
+          "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation exercise standalone step photograph, 121 T-LOW-043 step 02, portrait 1024x1536.\nImage 1 is the accepted step-01 photograph and is the PRIMARY edit target and continuity reference. Images 2-4 are original identity/wardrobe/style references. Preserve Image 1 camera position, lens perspective, gray-blue seamless backdrop and matte floor, lighting, framing, woman identity, ponytail, white T-shirt, dark charcoal trousers, white athletic shoes and body size exactly.\nChange only the body pose to the small airborne phase of ONE extremely low TWO-FOOT vertical hop in place. Both complete shoes are simultaneously airborne, their lowest sole points only about 2-3 centimeters above the SAME original floor. Show a narrow but UNAMBIGUOUS visible band of background floor under BOTH shoes, with separate soft shadows immediately below each shoe. Neither heel nor toe touches the floor. This must read as a very low controlled vertical hop, not a heel raise.\nHer hips and knees have nearly gently extended out of the preparatory dip, retaining natural slight knee softness; feet still parallel and hip-width, toes point in the same direction as Image 1, body remains over the same landing position. Torso upright and controlled, head calm, hands low beside her hips, elbows slightly bent, no overhead arm swing. Natural anatomy and balanced perspective with both legs, both hands and both shoes fully visible.\nDo not increase hop height or crop/zoom/reposition camera. No tuck jump, bent-up legs, run, single-leg stance, lateral movement, deep squat, platform, equipment or motion effects. One woman and one pose only; no text, arrows, labels, border, collage or watermark. Keep the reference woman recognizable, realistic photographic skin and fabric, and full-body continuity.",
+          "input_images": [
+            "C:/Users/Administrator/.codex/generated_images/01a1393d-dae9-7b73-a2d9-e79bd938540c/exec-4fe9e2e8-2957-4079-8792-c9a00e7af721.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+            "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+          ]
+        },
+        {
+          "attempt": 2,
+          "status": "completed_and_accepted",
+          "elapsed_seconds": 55.5,
+          "prompt": "Use case: identity-preserve.\nAsset type: rehabilitation exercise standalone step photograph, 121 T-LOW-043 step 02, portrait 1024x1536.\nImage 1 is the accepted step-01 photograph and is the PRIMARY edit target and continuity reference. Images 2-4 are original identity/wardrobe/style references. Preserve Image 1 camera position, lens perspective, gray-blue seamless backdrop and matte floor, lighting, framing, woman identity, ponytail, white T-shirt, dark charcoal trousers, white athletic shoes and body size exactly.\nChange only the body pose to the small airborne phase of ONE extremely low TWO-FOOT vertical hop in place. Both complete shoes are simultaneously airborne, their lowest sole points only about 2-3 centimeters above the SAME original floor. Show a narrow but UNAMBIGUOUS visible band of background floor under BOTH shoes, with separate soft shadows immediately below each shoe. Neither heel nor toe touches the floor. This must read as a very low controlled vertical hop, not a heel raise.\nHer hips and knees have nearly gently extended out of the preparatory dip, retaining natural slight knee softness; feet still parallel and hip-width, toes point in the same direction as Image 1, body remains over the same landing position. Torso upright and controlled, head calm, hands low beside her hips, elbows slightly bent, no overhead arm swing. Natural anatomy and balanced perspective with both legs, both hands and both shoes fully visible.\nDo not increase hop height or crop/zoom/reposition camera. No tuck jump, bent-up legs, run, single-leg stance, lateral movement, deep squat, platform, equipment or motion effects. One woman and one pose only; no text, arrows, labels, border, collage or watermark. Keep the reference woman recognizable, realistic photographic skin and fabric, and full-body continuity.",
+          "original_generated_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-dae9-7b73-a2d9-e79bd938540c/exec-7d297818-c98d-4e21-b3ec-a9e79a152e61.png",
+          "note": "原提示词重试；不是视觉修订。"
+        }
+      ],
+      "width": 1024,
+      "height": 1536,
+      "sha256": "9FBF7A31A9B3A3318489A9AD0FBC4A1E85EEA8BD8ABC86447A79E57D08DE5A4A"
+    }
+  ],
+  "completed_steps": [
+    "s01",
+    "s02"
+  ],
+  "pending_by_other_agent": [
+    "s03",
+    "s04"
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "batch": "127s02_128-130_131s01",
+  "subset": "127s02_131s01",
+  "date": "2026-10-14",
+  "checklist_path": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "request_interpretation": "清单只有001—185，用户1127-s02按127-s02处理，已在生成前说明。",
+  "generation_mode": "内置 image_gen，每资产独立调用；最终输出原样复制，未用Python/CLI生成或编辑。",
+  "counts": {
+    "final_images": 2,
+    "new_generated_final_images": 2,
+    "reused_images": 0,
+    "builtin_calls": 4
+  },
+  "limitations": [
+    "验收针对图片可见姿势、支撑、比例和连续性，不证明呼吸、真实受力、医学适用性或具体角度。"
+  ],
+  "discarded_candidates": [
+    {
+      "intended": "127s02",
+      "path": "C:/Users/Administrator/.codex/generated_images/01a1393d-a7ef-7d51-97a2-ad9a68dba628/exec-a7e02868-da2a-42b6-90b9-cf99a6f21362.png",
+      "prompt": "Use case: scientific-educational. Asset type: one single photorealistic rehabilitation exercise step photograph. Create checklist 127 T-AXU-005 step s02, gentle seated upper-back rounding. References 1-3 lock the same East Asian adult woman identity, face, black ponytail, natural body proportions, plain white short-sleeve T-shirt, dark charcoal long trousers, soft studio lighting and grey-blue seamless background. Reference 4 locks grey armless stable chair, white athletic shoes, side camera facing right, subject scale and full body composition. Change the pose as follows: woman remains securely seated with BOTH buttocks on chair seat, both feet fully flat on ground, thighs nearly horizontal and knees roughly right angles. Both hands now REST LIGHTLY FLAT ON THEIR RESPECTIVE THIGHS, not crossed or hugging, both hands naturally visible. UPPER back and ribcage gently round forward, shoulders gently move forward but stay relaxed and not shrugged. Upper torso has a small visible convex thoracic curve, lower trunk and pelvis remain stable. Neck follows smoothly with only slight comfortable downward gaze, no forceful chin-to-chest flexion. Avoid exaggerating breath or painting anatomical effects. Retain whole head, ponytail, both hands, full chair seat, chair legs and both complete shoes; no cropped feet. Clean full-body side view, natural joint connections and hand anatomy. No text, labels, numbers, arrows, borders, collage or watermark. One pose only, no other people or equipment.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/train/127_T-AXU-005_坐位轻柔屈背与后侧胸廓呼吸.png"
+      ],
+      "reason": "首次基于旧单图生成，随后发现相邻批已生成127s01，其椅子不同；为连续性按相邻s01再做。未作为最终图交付。"
+    },
+    {
+      "intended": "131s01",
+      "path": "C:/Users/Administrator/.codex/generated_images/01a1393d-a7ef-7d51-97a2-ad9a68dba628/exec-abddc195-3f77-43eb-bba7-6699faf19528.png",
+      "prompt": "Use case: scientific-educational. Asset type: one single photorealistic rehabilitation exercise step photograph. Create checklist 131 T-AXU-041 step s01 STARTING quadruped position, not rocking back. References 1-3 lock the same East Asian adult woman identity, face, black ponytail, natural human proportions, white short-sleeve T-shirt, dark charcoal full-length trousers, studio photographic quality, soft lighting and grey-blue background. Reference 4 locks the grey floor mat, white socks, woman facing screen right, and same side-view setting. CHANGE THE POSE to neutral hands-and-knees: both palms fully flat and fingers naturally spread on mat, wrists directly underneath shoulders, elbows straight but relaxed; both knees contact a thin soft grey knee pad on the mat, knees directly underneath hips, thighs nearly vertical. Buttocks elevated directly over knees, well away from heels. Neutral approximately horizontal spine, head and neck in a natural extension of the trunk, gaze down toward the mat ahead of hands. Both lower legs laid naturally behind knees with both socked feet relaxed on mat; no shoes, no crossed legs. Camera: almost true side profile but offset slightly toward the woman's front (about 10 degrees) to allow BOTH hands and BOTH knee contact regions to be visible distinctly; same eye-height feel as reference 4. Full figure entire head, both hands, both knees, both feet and mat margins in frame. Human limb proportions anatomically natural, especially upper arm/forearm and thighs/shins, exactly two arms and two legs. No pelvis traction belt or equipment, no labels, text, arrows, watermarks, collage. One posture only.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png",
+        "E:/git冲突问题/rehab image/train/131_T-AXU-041_四点跪位后坐髋屈活动.png"
+      ],
+      "reason": "首次参考旧单图为向右/竖图/袜子，且未清晰出现独立膝软垫。随后发现相邻131s02为向左/横图/赤足，按s02重新生成配套s01。未作为最终图交付。"
+    }
+  ],
+  "entries": [
+    {
+      "filename": "127_T-AXU-005_s02.png",
+      "action_number": 127,
+      "action_id": "T-AXU-005",
+      "step": 2,
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-a7ef-7d51-97a2-ad9a68dba628/exec-1d28f919-a0be-48e2-948f-1fb40cb13092.png",
+      "actual_saved_path": "E:/git冲突问题/rehab image/train/steps/127_T-AXU-005_s02.png",
+      "reused": false,
+      "generation_mode": "builtin image_gen",
+      "prompt": "Use case: scientific-educational. Edit reference image 1 into checklist 127 T-AXU-005 step s02, gentle seated UPPER-BACK ROUNDING. Reference 1 is the locked s01 starting image from the adjacent production batch; references 2-4 confirm the same woman identity and photographic styling. Preserve EXACT camera viewpoint, framing, image proportions, face identity, ponytail, white short-sleeve shirt, charcoal trousers, white shoes, grey chair INCLUDING metal legs and chair back/seat shape, lighting, grey-blue backdrop. Preserve buttock position on chair, pelvis position, thigh/shin positions, both flat feet positions. Both palms remain lightly resting on respective thighs with fingers naturally extended. CHANGE ONLY upper-back/ribcage posture into a clearly visible yet GENTLE rounded curve: upper thoracic spine bends forward about 10-15 degrees, shoulders settle slightly forward and chest gently relaxes inward; thoracic back contour becomes softly convex compared with the upright starting image. Keep lower back and pelvis steady, no deep waist bending, no forward seat sliding. Neck follows the upper torso smoothly, gaze comfortably downward, chin kept away from chest, no forced low head or shrugged shoulders. Full head, complete hands, chair support and both complete shoes in frame. Natural continuous joints and limb proportions. One single posture only. No text, numbers, arrows, decorative symbols, collage, watermark or additional objects.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/train/steps/127_T-AXU-005_s01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "visual_check": {
+        "result": "pass",
+        "posture": "上背呈柔和圆起、肩向前放松，双手轻放大腿；头颈自然跟随无强低头。",
+        "support": "臀部在椅面、双脚全掌落地，未见前滑。",
+        "continuity": "与本轮过程中发现的相邻批127s01匹配人物、椅子、机位、尺度与地面。",
+        "proportions": "肢段、关节连续和手脚比例目视自然；手脚完整入镜。"
+      },
+      "sha256": "B2FCF5DE30AC019C2F7E41C5A560E5787E418E7A56C66378CD7032209DF48299",
+      "bytes": 1671480
+    },
+    {
+      "filename": "131_T-AXU-041_s01.png",
+      "action_number": 131,
+      "action_id": "T-AXU-041",
+      "step": 1,
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-a7ef-7d51-97a2-ad9a68dba628/exec-a78c6d5e-48a4-4738-9961-9eaf072aa1a2.png",
+      "actual_saved_path": "E:/git冲突问题/rehab image/train/steps/131_T-AXU-041_s01.png",
+      "reused": false,
+      "generation_mode": "builtin image_gen",
+      "prompt": "Use case: scientific-educational. Edit reference image 1 into checklist 131 T-AXU-041 step s01 STARTING NEUTRAL QUADRUPED position. Reference 1 is the locked s02 rocking-back endpoint from adjacent production, references 2-4 confirm face identity and style. Preserve exact landscape aspect ratio and framing, camera angle, woman facing LEFT, same face and black ponytail, plain white short-sleeve shirt, charcoal trousers, BARE FEET, grey floor mat, thin dark-grey soft knee pad under BOTH knees, lighting and grey-blue seamless studio backdrop. Keep BOTH palm contact positions and BOTH knee contact positions EXACTLY fixed on the mat and pad; keep feet naturally relaxed behind knees. CHANGE ONLY from rocking back to the starting hands-and-knees posture: bring hips forward until hip joints directly above knees and thighs nearly vertical; bring shoulders forward until shoulder joints directly above wrists and both arms nearly vertical, elbows straight relaxed. Spine approximately horizontal, natural neutral curve without sagging lumbar extension or cat arch. Head and neck align naturally with trunk, gaze down just ahead of hands. Buttocks clearly raised and well away from heels. Both palms and both knees support body on their fixed contacts, all four supports distinguishable at this slight side/front camera angle. Preserve complete head, both hands, both knees, both bare feet and whole mat margins. Anatomically natural upper arms/forearms/thighs/shins. No traction bands, no weights. No text, labels, arrows, numbers, borders, watermark or collage, one posture only.",
+      "referenced_image_paths": [
+        "E:/git冲突问题/rehab image/train/steps/131_T-AXU-041_s02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "visual_check": {
+        "result": "pass",
+        "posture": "四点跪中立起点；双臂和大腿近垂直，臀在膝上方远离足跟，头颈自然，赤足自然放置。",
+        "support": "双掌与双膝接触清楚，双膝有灰色软垫。",
+        "continuity": "与相邻批131s02保持向左側面机位、横向构图、赤足、地垫与软垫；四支点位置基本一致，但手掌落点略偏右、垫前缘略高，不声明像素级固定。",
+        "proportions": "手臂、大腿、小腿目视比例自然，头手膝足完整入镜。"
+      },
+      "sha256": "43D30EF38DE7ED26F64D061ACA8F759B79C719DBDEA4F072DE8E27FB3E495F81",
+      "bytes": 1697312
+    }
+  ],
+  "independent_review": "make_128 已从最终磁盘路径查看127与131各两帧；无必须修订点，131轻微构图/手掌落点差异已记录。"
+}

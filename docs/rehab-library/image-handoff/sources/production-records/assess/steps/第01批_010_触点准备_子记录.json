@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "batch": "第01批_010_触点准备",
+  "tool": "内置 image_gen",
+  "generation_calls": 2,
+  "source_document": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "references": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "scope": "按顺序前十张中的第10张，仅动作003 E-GEN-003 s01准备位，未生成后续触点步骤",
+  "items": [
+    {
+      "photo_sequence": 10,
+      "action_sequence": 3,
+      "id": "E-GEN-003",
+      "step": "s01",
+      "step_number": 1,
+      "phase_zh": "左手扶固定支撑、双脚在起始位置站稳，右脚前方、斜前方、侧方三枚平面触点均可见",
+      "prompt": "Use case: scientific-educational, photorealistic rehabilitation demonstration photo.\nCreate ONE standalone photograph for E-GEN-003 step 01: initial ready position for supported multidirectional ground toe touches. This is only the ready stance, no reaching foot movement.\nINPUT IMAGES: three strict references of the SAME East Asian adult woman, original face, black low ponytail, plain white short-sleeve T-shirt, fitted charcoal-gray full-length trousers; preserve her identity, clothing colors, realistic skin and cloth. Plain white low-top athletic shoes without branding.\nSCENE/STYLE: exact reference soft diffuse studio photography and cool gray-blue seamless background; matching flat cool gray-blue floor. Normal adult proportions, natural face and hands, no fisheye or exaggerated joints.\nCOMPOSITION: landscape 3:2, 1536 by 1024 look; side-front three-quarter full-body camera viewpoint, complete head and both shoes, arm and stable hand support in frame, all THREE flat floor targets clearly visible with margin. Woman in center, slightly facing camera and forward, camera is sufficiently high to see the floor marks.\nSUPPORT: a single sturdy fixed gray metal horizontal support rail at her anatomical LEFT side (toward viewer RIGHT). Rail at her waist height, mounted securely on TWO vertical posts with real bolted feet to the floor, no wheels, no instability. Her LEFT hand visibly grips/rests on top of this fixed rail, elbow slightly bent, palm and fingers naturally contacting rail. Right arm naturally relaxed at her side, no rail contact.\nREADY POSE: upright torso, eyes ahead, shoulders relaxed, BOTH feet fully and firmly flat on floor in a comfortable hip-width starting stance. Her anatomical RIGHT foot (viewer LEFT) is intended as the later testing foot but is currently still in the same stable starting stance; neither foot is lifted or touching a target. LEFT foot will later be support foot. Only one standing pose.\nTHREE FLOOR TARGETS: exactly THREE small flat dark-gray circular tape dots on floor, distinct and clearly visible, NOT upright cones or objects. All placed within a comfortable short toe-reach radius of her RIGHT foot (around 25–40 cm), not distant. Arrange in a fan on her anatomical RIGHT side of starting stance: dot 1 directly FORWARD of right toes (toward foreground), dot 2 diagonally RIGHT-FORWARD of right foot (toward foreground and viewer LEFT), dot 3 directly LATERAL RIGHT of right foot (toward viewer LEFT, beside foot at similar depth). The lateral dot is not behind her and not on her left-foot/support-rail side. Three separate visible dots, no start dot under feet, no extra markers, no ruler, no writing.\nAll hand-to-rail, both shoe-to-floor and dots-to-floor contact realistic. Full body and feet are NOT cut off. No text, numbers, symbols, labels, arrows, ghost poses, panels, collage, border, watermark, extra people/limbs, chair, cones or other equipment.",
+      "correction_prompt": "Use case: precise-object-edit. Edit only a few fine unwanted lines on floor in image 1.\nImage 1 is the exact complete photo edit target. Images 2–4 are original woman/style references, preserve image 1 identity and all content strictly.\nRemove ONLY the three very thin gray straight connector lines running between the three circular floor dots and the woman's right shoe in lower-left/center foreground. Replace these narrow line pixels with seamless matching gray-blue floor texture.\nPreserve ALL THREE dark flat circular dots at their exact existing locations, sizes and shades; three separate circles only, NO connectors or lines of any kind. Do not alter or move her feet, shoes or shadows. Do not add floor markings. The woman must remain in the identical upright ready stance with BOTH feet flat, LEFT hand touching the fixed rail on viewer-right, same face/black ponytail/white T-shirt/charcoal trousers, and exact same normal proportions.\nKeep exact full fixed rail geometry and its bolted posts, camera position, landscape 3:2 framing, image composition, gray-blue backdrop and lighting. No pose change, no resizing/reframing, no text, arrow, label, collage or watermark. This is a local floor cleanup only.",
+      "original_path": "C:/Users/Administrator/.codex/generated_images/01a13857-5634-79c0-9bee-94dd9e07179a/exec-99a0ca47-d5d0-4c08-8e44-d25a2b3848b1.png",
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/003_E-GEN-003_s01.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "sha256": "309164f9d6f9cc7c63071f801dede6d0ba9a39359f50a6581af8ce71935a426d",
+      "bytes": 1610192,
+      "QA": {
+        "passed": true,
+        "observations": "同一原参考女性、白T恤深灰长裤黑马尾、灰蓝棚拍背景与柔光，普通白鞋；正常人体比例与自然双手。左手明确接触固定灰栏，支架底座与地面连接可见，双足落地还未伸向目标。右脚前方、右斜前、右侧三枚深灰平面点清楚且在短距离可及范围；全身与三点、支撑均不裁切，无文字箭头拼图、连接线和额外标记。",
+        "rejected_original": "C:/Users/Administrator/.codex/generated_images/01a13857-5634-79c0-9bee-94dd9e07179a/exec-7d05eb05-015a-41d5-bd9f-fcf5ca317fbf.png",
+        "rejected_reason": "初版自行出现极细的触点连接线，仅局部移除，原图保留未删除。"
+      }
+    }
+  ]
+}

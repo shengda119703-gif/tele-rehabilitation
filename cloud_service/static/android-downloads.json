@@ -1,0 +1,64 @@
+{
+  "schema": "ankang-android-downloads-1",
+  "default": "0.5.9",
+  "published_on": "2026-10-15",
+  "support_wechat": "AK2452409",
+  "releases": [
+    {
+      "version": "0.5.9",
+      "file": "ankang-0.5.9.apk",
+      "bytes": 54911962,
+      "sha256": "4FF7D2949AE5A820D1DE573680D9623851D3840B38DB0955E1ED1F175EAA02FE",
+      "description": "管家减少追问、优先线上评估；评估安排保存到我的计划，支持跨端查看和取消。"
+    },
+    {
+      "version": "0.5.8",
+      "file": "ankang-0.5.8.apk",
+      "bytes": 54907787,
+      "sha256": "34690393F7D808B5080CB79C9540E51E064DEA6D6B11DEAC9581BD2C983B2C69",
+      "description": "家人邀请码接入登录账号，支持跨手机与网页关联及独立共享权限；保留现有界面。"
+    },
+    {
+      "version": "0.5.7",
+      "file": "ankang-0.5.7.apk",
+      "bytes": 54903691,
+      "sha256": "D74B11B5AE835BA37E70F52D8A68D9C65371720A8CB7B34CDE65D0C8C2A27702",
+      "description": "管家旧提问恢复与逐条重试，不再阻止新问题；保留登录首页和完整动作图文。"
+    },
+    {
+      "version": "0.5.6",
+      "file": "ankang-0.5.6.apk",
+      "bytes": 54903691,
+      "sha256": "D3DE1C049F3D86137A8283E566368C411BE1047FDA0781EA4BDF35DA690C7EB4",
+      "description": "登录与注册首页、康复管家云端连接修复，185项动作图文与完整步骤图。"
+    },
+    {
+      "version": "0.5.4",
+      "file": "ankang-0.5.4.apk",
+      "bytes": 22470177,
+      "sha256": "9DBBFE44F5C0C90C3675EA9FF92717D2CE170CDBEDEA6DB6ECC628CCA4A7BB80",
+      "description": "个人康复管家、云端对话同步与医疗工作台联动；测量继续在手机本地运行。"
+    },
+    {
+      "version": "0.5.3",
+      "file": "ankang-0.5.3.apk",
+      "bytes": 22466081,
+      "sha256": "7F8CE426BB0A3B9C07518D5F49DB30563957E6F688F83B94DC018D28A8388442",
+      "description": "新版界面，支持手机本地分析、云账号与医患沟通。"
+    },
+    {
+      "version": "0.4.1",
+      "file": "ankang-0.4.1.apk",
+      "bytes": 21652734,
+      "sha256": "482A9509290F9E0914D81A04CD0243DAB909BA82BA1EFF81A53AF98C31961D50",
+      "description": "历史版本0.4.1，保留下载；更新前请先备份。"
+    },
+    {
+      "version": "0.3.1",
+      "file": "ankang-0.3.1.apk",
+      "bytes": 28124579,
+      "sha256": "DAE4918F8078A9D80ED7596808FE94122D6491D54DB4892C0AC0155B06923B08",
+      "description": "现有公网云账号兼容版；较高版本不能直接降级安装。"
+    }
+  ]
+}

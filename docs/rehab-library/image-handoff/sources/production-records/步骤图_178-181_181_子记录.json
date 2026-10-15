@@ -1,0 +1,36 @@
+{
+  "batch": "178-181",
+  "date": "2026-10-14",
+  "action": "181",
+  "action_id": "T-AXU-059",
+  "name": "哑铃锤式弯举",
+  "method": "built-in image_gen",
+  "reused_existing": false,
+  "images": [
+    {
+      "step": "s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/181_T-AXU-059_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-8a6d-7841-a5ca-405f2dc8a870/exec-33365778-7614-4da8-baa4-fb2ccd05dfb6.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: a single photorealistic rehabilitation exercise demonstration photograph, action 181 T-AXU-059 hammer curl, start posture s01.\nInput images 1, 2, 3 are ONLY identity/clothing/photographic-style/background references. Recompose the same East Asian adult woman, preserve her face, age, skin tone, natural body shape, black ponytail, plain white short-sleeve T-shirt and dark charcoal long trousers.\nScene: clean seamless soft gray-blue studio background and floor, gentle studio lighting and subtle natural shadows, no clutter.\nCompose a vertical near-full-body photograph of the woman at a front three-quarter oblique angle, head and both complete feet fully visible, both elbows wrists hands and dumbbells unobstructed. Camera at lower chest height with natural proportions, enough separation to see both arms. Small staggered stance, both feet planted securely, upright neutral trunk, head forward, shoulders relaxed.\nExact posture: starting position of a bilateral simultaneous neutral-grip HAMMER CURL. Both upper arms close against her sides, elbows nearly extended comfortably; each hand holds one identical small lightweight matte-gray dumbbell beside the thigh. Both palms face INWARD toward the body, thumbs oriented forward/up naturally with knuckles outward; the two dumbbell handle axes run front-to-back in the sagittal plane, NOT left-to-right like a supinated curl. Hands wrap securely around handles, wrist straight and aligned with forearm. Dumbbells clear of thigh so neutral grip is visibly readable.\nNo curled arm in this first photograph. No text, labels, numbers, arrows, panels, watermark or logo. One woman, one pose, two dumbbells, natural connected anatomy and five fingers on each hand. Keep photographic realism of the references. Footwear: plain low-profile light-gray athletic shoes, unchanged for the matching end image.",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "A342D17ACAF50D0B9C0BA67D7596718C7A2EEC002C2A389412003843F03EC902",
+      "status": "visual_review_passed",
+      "review": "小分腿站稳，双脚完整可见；同款轻哑铃分别置于体侧，掌心向内中立握；上臂近体侧，腕自然；人物服装与灰蓝棚拍背景符合参考。"
+    },
+    {
+      "step": "s02",
+      "path": "E:/git冲突问题/rehab image/train/steps/181_T-AXU-059_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a13a83-8a6d-7841-a5ca-405f2dc8a870/exec-dec7e4fa-111c-4c98-a196-709fd3e07cfc.png",
+      "prompt": "Use case: identity-preserve. Asset type: single photorealistic rehabilitation demonstration photograph, action 181 T-AXU-059 hammer curl END posture s02.\nInput image 1 is the precise edit target/start image. Edit ONLY the flexion of both elbows and consequent position of the forearms, hands and dumbbells. Preserve the identical woman, face, black ponytail, skin, white T-shirt, dark charcoal trousers, light gray sneakers, exact foot placement/stagger, body proportions, neutral upright torso, shoulders, upper arms close to sides, background, floor, shadows, camera position, lens, image crop, scale, and the two identical compact gray dumbbells.\nRequired end posture: BOTH elbows flex simultaneously to approximately 95–105 degrees. Upper arms stay vertically close to the ribcage in the SAME position. Both forearms incline modestly upward in front of the lower ribs, hands roughly in front of the lower chest, elbows below the hands. BOTH wrists remain straight, with neutral HAMMER grip: palms STILL face each other inward toward the body midline, no supination, thumbs uppermost on the grips, backs of hands facing laterally. The handles/long axes of both dumbbells should now be near vertical, as expected when hammer-curl elbows are flexed, with one weight head above and one below each wrapped hand. Two hands and two identical dumbbells visibly separated and fully readable. No raising elbows/shoulders, no upper-arm forward swing, no trunk sway or back arch.\nAnatomy realistic: connected natural elbows and wrists, five fingers per hand gripping the handles naturally. Exactly one subject and one posture. No text, numbers, arrows, panels, watermark, logo. Keep all scene invariants, feet planted, full head and both feet within frame.",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "E2CAD75E736AB2907C426B3E2376051C7E0DD9CEFFF1AF9D8D7CE2C80559A7BE",
+      "status": "visual_review_passed",
+      "review": "双肘同步屈曲，双掌仍向内，哑铃轴近竖直呈锤式握法；上臂近体侧、躯干直立无明显仰腰；脚位、相机、服装器材与s01一致。"
+    }
+  ],
+  "scope": "仅制作清单指定首轮同步双臂站姿，无交替臂与坐姿扩展版本。",
+  "sequence": "s01→s02→复用s01缓慢伸肘",
+  "review_type": "逐张人工视觉核对，非临床动作或负荷验证"
+}

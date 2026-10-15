@@ -1,0 +1,65 @@
+{
+  "batch": "第03批",
+  "production_date": "2026-10-14",
+  "tool_mode": "built-in image_gen",
+  "records": [
+    {
+      "action_id": "E-LOW-007",
+      "action_index": "013",
+      "step_id": "s01",
+      "intended_file_name": "013_E-LOW-007_s01.png",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-cceb-70f3-9984-448b9c387747/exec-3b2f2537-b654-4b54-acd2-741ff0c80169.png",
+      "prompt": "Use case: scientific-educational. Asset type: an individual raw photographic rehabilitation demonstration image, action 013 E-LOW-007, step s01 preparation.\nInput images: reference-01.png, reference-02.png and reference-03.png are visual identity / clothing / studio aesthetic references ONLY, not pose references.\nCreate exactly ONE realistic photograph of the SAME adult East Asian woman as all three references: matching facial features, age, natural light skin, build, black ponytail, plain white short-sleeved crew-neck T-shirt, dark charcoal-gray long trousers. Wear plain white thin-soled closed athletic shoes, no visible logo, no thick platform sole.\nScene: seamless cool gray-blue studio backdrop and matching matte floor, soft diffuse studio illumination and natural contact shadows, like the references. No distracting objects.\nComposition: landscape 1536 x 1024 feel, fixed camera from a true side profile, woman facing RIGHT. Camera at about knee-to-waist height, medium-long focal length with very little foreshortening. Entire head including ponytail, BOTH hands, BOTH shoes, whole chair and floor contacts must be inside frame. Place chair and woman slightly left of center and leave sufficient empty space on the RIGHT for a subsequently extended lower leg. This is one unlabelled photograph, no split screen.\nRequired pose: woman seated securely on a simple stable four-legged armless chair with a small straight backrest, a dark flat seat and simple dark legs, no wheels. The seat is at appropriate height so BOTH feet rest flat on the floor. Torso comfortably upright without leaning backward. Pelvis remains on the seat. BOTH thighs lie approximately horizontal and are genuinely supported by the chair seat; knees at the front edge, both knees bent about 90 degrees. BOTH lower legs hang naturally straight down. The near-camera foot is only slightly forward of the far foot so the two feet and natural two-leg anatomy remain identifiable. BOTH hands rest naturally, relaxed fingers on the upper thighs, away from the knee joint. No table blocking the knees. Facial expression calm, gaze forward to the right. Natural anatomically correct limb lengths and continuous hip/knee/ankle alignment.\nConstraints: no knee extension in this preparation image, no leg raised, no thigh lifted, no knee hidden by table. The knees, thigh-to-seat support, shin length, shoe-to-floor contact and torso are clear. Only one person, one pose, one chair. No text, arrows, numerals, labels, diagram overlay, watermark, brand or collage. Do not reproduce the arm poses in the identity references.",
+      "reused": false,
+      "reuse_source": null,
+      "target_pose": "坐稳椅上、双大腿由椅面承托、小腿下垂、双足落地",
+      "qa": {
+        "result": "pass",
+        "observation": [
+          "参考人物面部与黑马尾、白短袖、深灰长裤一致；灰蓝背景和柔光自然。",
+          "侧面朝右，躯干坐直，骨盆在椅面；双膝约90度，小腿下垂，双鞋平放地面。",
+          "大腿后段到近膝部由椅面支持；无桌面遮膝，膝与小腿清晰。",
+          "头、马尾、双手、双鞋和整椅完整；双手叠放大腿，手指自然。",
+          "稳固四腿无轮无扶手椅，椅脚接地、人体比例与关节连续。",
+          "单人单姿势，无文字编号箭头或水印。"
+        ],
+        "limits": "仅作照片姿态和画面验收，不据照片证明真实活动范围或评估结果。"
+      },
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/013_E-LOW-007_s01.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "SHA256": "7CD9F10EC89CEA820FDA1E3582F7178C8203F6789EBD781D05CE69802E7635AC"
+    },
+    {
+      "action_id": "E-LOW-007",
+      "action_index": "013",
+      "step_id": "s02",
+      "intended_file_name": "013_E-LOW-007_s02.png",
+      "source_generated_path": "C:/Users/Administrator/.codex/generated_images/01a138e3-cceb-70f3-9984-448b9c387747/exec-87463fe0-301e-48b2-97cf-cd5a1c4a07ba.png",
+      "prompt": "Use case: scientific-educational. Asset type: individual raw rehabilitation demonstration photograph, action 013 E-LOW-007, step s02 active seated knee extension.\nInput images: Image 1 (exec-3b2f2537-b654-4b54-acd2-741ff0c80169.png) is the step-01 scene and continuity reference / edit target. Images 2-4 reference-01/02/03.png are the same woman's identity, clothing, studio color and lighting references only.\nCreate ONE separate follow-on photograph of this exact woman in this exact scene. Preserve image 1's camera angle, lens perspective, full-body composition, scale, head/pelvis position, same chair type and exact chair position, backdrop, floor line, light direction and natural shadows. Keep her face, black ponytail, plain white T-shirt, charcoal-gray trousers, plain white thin-soled shoes and calm gaze facing RIGHT. Keep both relaxed hands in the same position on her upper thighs, fingers natural.\nChange only the near-camera leg's KNEE joint from the step-01 90-degree flexion to clearly extended about 165-175 degrees: the thigh MUST remain approximately horizontal on the existing chair seat, pelvis remains seated, and the near-camera knee stays at the same image coordinates beside the front edge of the seat. The near-camera lower leg rotates forward toward the RIGHT into a nearly horizontal position, its white shoe rises to approximately knee height, leg and shoe fully inside the frame, natural shin length and normal ankle. Only the lower leg moves; do NOT lift the thigh off the chair. The far leg stays in its original bent-knee seated posture with its complete white shoe flat on the floor.\nKeep torso upright at its original position with no leaning backward or twisting, hips and both thighs clearly supported by the same stable armless four-legged chair. Natural limb lengths; extended leg aligns continuously from stationary knee through shin to ankle. Make extension unambiguous and clearly distinguish it from hip flexion or straight-leg raise.\nThis image is a single realistic photo of one woman in one single endpoint posture. Full head/ponytail, both hands, both complete shoes, all chair legs and floor contacts visible. Soft gray-blue studio aesthetic. No text, numerals, arrows, pose ghosting, labels, grids, split screen, collage, watermark or brand.",
+      "reused": false,
+      "reuse_source": null,
+      "target_pose": "坐姿大腿留椅面，近相机膝伸展开，小腿向前抬起；远腿足部留地",
+      "qa": {
+        "result": "pass",
+        "observation": [
+          "人物身份、服装、光线与背景保持s01一致；相机、椅位与头躯干尺度延续。",
+          "近相机膝伸展清楚，小腿向右前抬至近水平，前足完整且明显离地。",
+          "近侧大腿仍水平由椅面承托，膝在椅前缘，未把整大腿抬离椅面。",
+          "骨盆在原椅面，躯干直立无明显后仰；远侧腿屈膝下垂，远鞋继续地面支撑。",
+          "髋膝踝衔接自然，双手姿势保持，头和整椅、完整双鞋可见。",
+          "单人单姿势，无文字编号箭头或水印。"
+        ],
+        "limits": "仅作照片姿态和画面验收，不据照片证明真实主动发力或评估结果。"
+      },
+      "actual_path": "E:/git冲突问题/rehab image/assess/steps/013_E-LOW-007_s02.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "SHA256": "E982CBE335EDED84AA11BC1EF36D169E2759E2AC86ACAFF44669CEA6DBB3FBCD"
+    }
+  ]
+}

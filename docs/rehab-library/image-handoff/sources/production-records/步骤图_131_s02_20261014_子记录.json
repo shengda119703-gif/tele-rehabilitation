@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "generation_mode": "built-in image_gen",
+  "checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "records": [
+    {
+      "sequence": 131,
+      "action_id": "T-AXU-041",
+      "step": "s02",
+      "filename": "131_T-AXU-041_s02.png",
+      "final_path": "E:/git冲突问题/rehab image/train/steps/131_T-AXU-041_s02.png",
+      "generated_source_path": "C:/Users/Administrator/.codex/generated_images/01a1393d-ef25-78b2-9697-79e8800c07f8/exec-d3e40768-149d-44cf-a896-3b39c882e234.png",
+      "reused_existing_image": false,
+      "prompt": "Use case: scientific-educational / identity-preserve.\nAsset type: one photorealistic rehabilitation step photograph, 131 T-AXU-041 s02 quadruped hip rock-back.\nInput images 1–3 are original reference images of the SAME woman. Preserve exact facial identity, age, East Asian features, natural skin, black ponytail, fitted plain white short sleeve crew neck T-shirt, charcoal full length athletic trousers, normal body proportions and soft gray-blue seamless studio background with soft photographic light.\nCreate a SINGLE clear photograph, landscape 1536x1024, full body and both palms and both knees and both bare feet visible with comfortable margins, no text, arrows, collage, borders, watermark or motion ghosts.\nNeutral gray non-slip cushioned exercise mat on gray-blue studio floor. The woman faces image LEFT in nearly true side view with only a 10-degree oblique angle to separate the two limbs. Hands in the left half, feet in the right half. Fixed camera, natural 70mm perspective.\nPose: the comfortable BACKWARD ROCK of a hands-and-knees quadruped exercise. Both palms stay flat at their original shoulder-width places, both knees stay at their original hip-width places on the cushioned mat, with a thin soft knee cushion under BOTH knees. Her hips have moved backward partway toward her heels, increasing hip flexion. Buttocks remain clearly ABOVE and IN FRONT OF the heels by about 15–20 centimeters: not sitting on the feet or heels. Thighs slope diagonally backward from knees to hips, NOT upright quadruped and NOT child pose. Arms reach diagonally forward toward the planted palms, elbows nearly straight. Torso moves back with the pelvis; spine remains natural and comfortable, not heavily rounded or deeply arched. Head follows spine with gaze down toward hands. Shins and relaxed tops of both bare feet rest on mat behind knees.\nShow BOTH hands, BOTH knees, BOTH lower legs and whole bare feet, no missing or extra limbs. Anatomically normal limb proportions, realistic contact shadows, exactly two arms and two legs. Small range hip rock back, no traction band, no helper or other props.",
+      "reference_images": [
+        "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+        "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+      ],
+      "visual_review": "主代理已查看本地生成文件：双手双膝稳固接垫，膝部软垫可见，臀部后移且明显离足跟；双脚自然放置，肢体完整、比例自然；人物、白T深灰裤及灰蓝背景符合参考。",
+      "status": "accepted_visual",
+      "width": 1536,
+      "height": 1024
+    }
+  ]
+}

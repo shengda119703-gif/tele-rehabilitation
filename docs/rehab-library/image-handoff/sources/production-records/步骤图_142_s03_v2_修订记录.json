@@ -1,0 +1,33 @@
+{
+  "action_id": "T-AXU-020",
+  "sequence": "142",
+  "step": "s03",
+  "revision": "v2",
+  "date": "2026-10-14",
+  "mode": "built-in image_gen edit",
+  "source_edit_target": "C:/Users/Administrator/.codex/generated_images/01a1393f-46cf-7433-b662-3db989b8787e/exec-c96847ff-c24c-4f5e-a015-db2025e7e43d.png",
+  "generated_source": "C:/Users/Administrator/.codex/generated_images/01a13946-2d7f-7342-a30f-b34997ddda9b/exec-0e66495a-7d0e-4d3b-b9b2-eb5f3813370a.png",
+  "saved_path": "E:/git冲突问题/rehab image/train/steps/142_T-AXU-020_s03_v2.png",
+  "prompt": "Use case: identity-preserve / scientific-educational rehabilitation demonstration photo.\nInput image 1 is the ONLY EDIT TARGET, not a loose inspiration. Make one single 4:5 portrait photograph of action 142 T-AXU-020, step s03: a controlled small-step turning midpoint while carrying two kettlebells.\nCRITICAL FIXED SCENE: Preserve the entire unoccupied grey-blue studio background, floor, camera location, lens/perspective, soft lighting and shadows from the edit target. Preserve the grey rectangular placement pedestal EXACTLY in the same image pixel location, same size, shape, front/right face angles, top surface, height, material, floor contact, and cast shadow. Its top left front corner is around x 653 y 732 in this 1122 x 1402 image, its front/right edge around x 913 y 744, rightmost edge around x 997 y 718, base around y 1150. Do not move, rotate, stretch, resize, relight or redesign this pedestal. Leave the pedestal empty, because its kettlebells move into the woman's hands.\nONLY EDIT THE WOMAN'S POSE AND THE TWO KETTLEBELL POSITIONS. Preserve the SAME woman, exact facial identity/age/skin tone, black ponytail, white short-sleeve t-shirt, dark grey trousers and white sneakers. Preserve her original real human proportions: head size, torso length, upper arm/forearm, thigh and shin lengths. Do not enlarge or shrink her or camera scale. Raising her head naturally as she stands upright is expected.\nPOSE: She has stood upright to the LEFT of the pedestal and is midway through a gentle turn made with small steps. Rotate her chest, pelvis, knees and feet together approximately 40 degrees from the source's front-right-facing direction, so her chest and pelvis are now nearly facing the camera. Natural vertical spine, shoulders down, no trunk side lean or backward arch. Her two arms hang naturally nearly straight down at her sides. Each hand still firmly wraps around one of the SAME two matching black kettlebell handles, one bell per hand. Bells hang at her sides close to but clearly outside her thighs, physically free of the legs, vertical and still with no outward swing.\nFEET: Both complete white shoes remain visible on the FLOOR entirely to the LEFT of the pedestal. Maintain a natural hip-width base, with each leg on its own side and no crossing. Show a small turning step midpoint: the front supporting foot is flat on the floor facing the same new direction as its knee and pelvis; the rear foot is slightly behind and on its own side, with the heel just mildly raised and the forefoot touching the floor. Both feet follow the new direction, no planted foot twisted against its knee, no wide lunge, no racing stride. Show full head, both hands, two whole kettlebells and both complete feet within the frame.\nThe scene must retain a photorealistic rehab studio style and the exact target framing. No text, numbering, arrows, logos, watermark, extra objects or extra people. Do not make a collage. Do not change the pedestal to accommodate the pose; change the woman's pose only.",
+  "file": {
+    "format": "PNG",
+    "width": 1122,
+    "height": 1402,
+    "bytes": 1644602,
+    "sha256": "0E944D99FC64E473D5D9E658E57E791014DBE00ED2BBC3D5E71BA2E8A1E31886"
+  },
+  "review": {
+    "method": "view_image of source and generated output",
+    "verdict": "通过视觉验收",
+    "checks": {
+      "single_frame": "单张4:5人像照片，无文本或拼图。",
+      "identity": "同一女性，黑马尾、白短袖、深灰长裤、白鞋，灰蓝棚拍背景匹配。",
+      "pose": "站起直立，胸髋向近正面转向，双脚各在本侧，后足跟微抬且前足接地，前足完整接地；膝脚同向，无交叉急扭。",
+      "grip_and_bells": "双手各持一只同型黑色壶铃，握把接触可信，双铃自然垂于体侧，无外甩与碰腿。",
+      "proportion": "头、躯干、四肢长度自然，完整头手铃鞋入镜，双脚均在灰台左侧。",
+      "scene_invariants": "灰台的目视位置、大小、朝向和地面接触与来源一致，无明显平台漂移；相机与背景灯光稳定。"
+    },
+    "limits": "视觉检查不等于逐像素无差异，静帧不证明动态控制或肌肉发力。"
+  },
+  "preservation": "原s03和来源候选均保留；没有改142总记录或仓库文件。"
+}

@@ -1,0 +1,70 @@
+{
+  "batch": "第09批",
+  "action": "071",
+  "action_id": "T-LOW-058",
+  "title": "短幅反向北欧挺：专业确认后启用",
+  "source_checklist": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "source_card": "E:/git冲突问题/安康_康复评估与分级训练动作库.md",
+  "method": "built-in image_gen, one asset per call; file copying only, no CLI or Python image editing",
+  "frames": [
+    {
+      "id": "071-s01",
+      "path": "E:/git冲突问题/rehab image/train/steps/071_T-LOW-058_s01.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e5-f55a-7080-a7aa-93848a7c18b8/exec-a9bf30b4-b12f-43e1-b26a-8a627ac557da.png",
+      "edit_target": "E:/git冲突问题/rehab image/train/071_T-LOW-058_短幅反向北欧挺：专业确认后启用.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: one isolated rehabilitation exercise step photograph, 071 T-LOW-058 s01.\nEdit target: Image 1 is the existing 071 reverse Nordic photograph; images 2–4 are identity and clothing references only. Edit the first image to show the START position: high kneeling upright on the same thick gray knee pad. Change only the woman's knees-to-head orientation from the small backward lean to vertical upright high kneeling. Her shoulder, hip and knees should be approximately one vertical line, with hips extended and pelvis directly above the knees. Do NOT sit the hips back toward the heels; do NOT fold at the hips; do NOT arch or collapse the low back. Keep the high kneeling height.\nInvariants: Preserve the exact same Asian adult woman, ponytail, white short sleeve shirt, dark gray trousers, white socks, neutral facial expression, folded arms and both hands at the chest. Preserve the exact original right-facing true side-profile camera angle, image aspect ratio, lens, framing, woman scale, original gray-blue seamless studio background, lighting, full hands and feet, thick gray rectangular pad position and dimensions. Both knees must remain at the same points on the same pad. Keep both shins and socked feet on the pad in the exact same configuration. Only rotate the coherent thighs-torso-head segment forward into upright high kneeling, pivoting around the knees; keep pelvis and rib cage controlled as one aligned segment. Maintain enough clear margin around head and all extremities, and visible ground. A single static pose only, no motion overlays, no second figure.\nNo text, labels, arrows, watermark, assistance band, added equipment or helper. Do not add numbers or angle measurements. Clinical educational photography, realistic anatomy and natural clothing.",
+      "reuse": false,
+      "visual_review": {
+        "status": "pass",
+        "tool": "view_image",
+        "checks": [
+          "高跪直立，髋伸展，没有坐回脚跟或屈髋跪坐",
+          "躯干与大腿大致同线",
+          "双膝接触厚膝垫，小腿和双足完整可见",
+          "正侧机位含肩髋膝及地面，人物与参考白短袖灰裤灰蓝背景一致",
+          "手脚完整，无辅助带、文字、箭头、水印"
+        ]
+      },
+      "group_review": {
+        "status": "pass",
+        "checks": [
+          "作为组内最终基准帧",
+          "相同人物、服装、正侧机位、厚灰膝垫与灰蓝背景；双手交叉胸前固定"
+        ]
+      }
+    },
+    {
+      "id": "071-s02",
+      "path": "E:/git冲突问题/rehab image/train/steps/071_T-LOW-058_s02.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e5-f55a-7080-a7aa-93848a7c18b8/exec-e4a42fe3-7649-4b33-a8c5-fb6512a8c0ca.png",
+      "edit_target": "E:/git冲突问题/rehab image/train/steps/071_T-LOW-058_s01.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: 071 T-LOW-058 s02, ONE static reverse Nordic photograph.\nEdit the provided upright high-kneeling s01 photograph. The woman faces RIGHT; therefore her backward movement is toward LEFT in the image. For s02, her knees remain fixed on the pad, but her HIPS must move visibly LEFT of their s01 starting position, not remain above the knees. Her SHOULDERS and HEAD move further LEFT as part of the same lean. BOTH the thighs AND the torso tilt backwards together. This is a coherent straight knee-to-hip-to-shoulder segment rotating backwards around the two knees, with the hip angle staying extended. The thighs must visibly slant back from knees toward pelvis, and the torso must continue that same slant; shoulders–hips–knees approximately lie on ONE diagonal line. Make it a small controlled lean, not a deep layback, and never fold at the hips or arch the back. Do NOT bend only the waist or chest while the thighs remain upright. Do NOT move the pelvis forward to the right. Do NOT sit the buttocks towards the heels.\nPreserve EXACT same canvas dimensions, camera and right-facing pure side view, framing, floor and gray-blue studio background, thick gray rectangular pad position and shape, both knee contact points, both shins and both socked feet resting on the pad. Knees are the motion pivot; no shifting or sliding of knees. Preserve identity, ponytail, white short sleeve shirt, gray pants, white socks, light, folded arms and hands on chest. Full head, hands, feet, knees, pad visible with margin. The only changing region is knees-to-head pose; all other objects stay fixed.\nOne pose, one woman. No text, labels, arrows, angle measurements, bands, extra equipment, helper, overlays, watermarks. Anatomically realistic educational photograph.",
+      "reuse": false,
+      "visual_review": {
+        "status": "pass",
+        "tool": "view_image",
+        "checks": [
+          "从高跪起点整体小幅后倾，大腿与躯干均向后倾",
+          "肩髋膝大致同线，髋不折回，未坐脚跟",
+          "双膝仍接触同一厚膝垫，小腿与双足继续落垫",
+          "正侧机位、手脚完整、无辅助带和文字",
+          "第一候选仅躯干后仰而大腿倾斜不足，已弃用并重新编辑"
+        ]
+      },
+      "group_review": {
+        "status": "pass",
+        "checks": [
+          "与s01同人物、服装、手臂姿势、正侧机位、厚灰膝垫及灰蓝背景",
+          "s01直立与s02整段后倾差别清楚，支撑及器材设置一致"
+        ],
+        "limitation": "生成编辑的膝垫及下腿在画面内有轻微纵向位移，未做到像素级固定；动作与接触设置保持一致，已逐图并排查看。"
+      }
+    }
+  ],
+  "discarded": [
+    {
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a138e5-f55a-7080-a7aa-93848a7c18b8/exec-0d465447-f8fd-4b4f-992a-4b42f64f65ec.png",
+      "reason": "躯干后仰但大腿后倾不足，未保存为交付资产。"
+    }
+  ]
+}

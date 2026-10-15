@@ -1,0 +1,195 @@
+{
+  "batch": 7,
+  "range": "061–070",
+  "date": "2026-10-14",
+  "source": "E:\\git冲突问题\\安康_康复评估与分级训练动作库.md",
+  "mode": "内置 image_gen",
+  "reference_role": "三张原人物、服装、摄影风格和背景色参考",
+  "reference_paths": [
+    "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-db026e54-a343-4867-80c1-5934b83ef697.png",
+    "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-53facc44-2a2b-4dd8-ae77-6fcf50cef7d3.png",
+    "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-2555800f-5022-48a9-9772-091ca3fc56a2.png"
+  ],
+  "constraints": "保持参考女性人物、白色短袖、深灰长裤、灰蓝背景和写实摄影风格；正常比例；每个动作独立单张PNG，无拼图、文字、箭头和水印。",
+  "progress_reconciliation": "初次核对实际001–060存在，而共享动作生成进度.json停在050。本批完成061–070。保存过程中071之后有新图片出现，故不覆盖共享进度文件，以本批独立生成记录为准；其他照片和图解进度未修改。",
+  "images": [
+    {
+      "sequence": 61,
+      "id": "E-AXU-022",
+      "name": "已知轻负荷弯举功能任务",
+      "category": "assess",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\061_E-AXU-022_已知轻负荷弯举功能任务.png",
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-93960181-19e8-4023-9224-7d4d966fe30d.png",
+      "shown_stage": "站位单侧轻哑铃弯举的屈肘阶段：上臂靠身、腕自然，另一手不帮助。",
+      "prompt": "Use case: scientific-educational.\nCreate ONE standalone photorealistic rehabilitation demonstration photo for action 061 E-AXU-022 已知轻负荷弯举功能任务.\nInput images 1, 2, 3 are identity and style references, not poses to copy. Strictly retain exactly the same adult East Asian woman: same face, age, natural skin, black low ponytail, white short-sleeve crewneck T-shirt and dark charcoal fitted trousers. Match the SAME cool light gray-blue studio seamless background color, soft even photographic lighting and realistic photo texture as all three references. Natural normal human proportions, no elongated arms or legs. \nShow a single near-side arm light dumbbell biceps curl in its comfortable upper-middle phase. Standing upright in side profile facing right, near-side upper arm kept vertical against her side, elbow bent about 105–115 degrees, forearm lifted so the small plain dumbbell approaches the shoulder but does not touch it. Palm upward, wrist neutral and aligned with forearm, fingers correctly wrapped around the single small dumbbell handle. Other arm relaxed down by her thigh. Shoulders down, no body sway, no backward lean, no assisting hand. Dumbbell must be visibly small and lightweight with no text.\nPortrait photo matching the reference composition and aspect ratio 4:5, frame from above her hair to below her knees, her entire active shoulder, elbow, wrist and dumbbell fully visible with room around the hand. Camera at torso level perpendicular to the flexion plane. Keep same head size relative to body as references, no wide-angle distortion. Only one woman, one moment, no collage, no ghost limbs, no movement arrows, no anatomical overlays, no lettering, no number, no watermark. Naming and numbering will be stored outside the image.",
+      "visual_review": "已实际审图：人物、服装、背景与比例；关键姿势及支撑接触",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "EC4242B166D181C7847A3770039F719248441467FBCEFACBAF2FAD345B53C8F0",
+      "bytes": 1655789
+    },
+    {
+      "sequence": 62,
+      "id": "E-AXU-029",
+      "name": "已知轻物握持与提放功能观察",
+      "category": "assess",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\062_E-AXU-029_已知轻物握持与提放功能观察.png",
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-86a27e8a-c6e2-4452-9d98-82fab1282693.png",
+      "shown_stage": "坐位单手握把轻抬物体离桌并短暂停留：腕自然、肩不耸起。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Pose specification: Action 62 E-AXU-029 已知轻物握持与提放功能观察. Seated light-object grasp-and-lift observation. Woman sitting upright on a sturdy simple gray chair beside a plain waist-height gray table, viewed from a front-side three-quarter angle that clearly shows her same face, active hand, wrist, elbow, shoulder and tabletop. Her near-side hand grips the comfortable vertical handle of a small plain lightweight unbreakable cup with all fingers actually wrapping the handle and thumb in a natural grip. Lift the cup only 3–5 centimeters above the tabletop. Cup bottom visibly separated from table with a little realistic shadow; forearm approximately horizontal, elbow close to her torso, wrist neutral. Shoulder relaxed, no shrugging, torso upright. Other hand relaxed on her thigh, no assistance. Frame from above her hair to below her knees, table occupying only the lower foreground without obscuring active hand or elbow. No high biceps curl, no lifting cup to face, no writing on cup.",
+      "visual_review": "已实际审图：人物、服装、背景与比例；关键姿势及支撑接触",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "8F0D0B1CA81673BCB3843CA85A01BEFF601F2DBC37ACDFE38D7B9CA1393864F9",
+      "bytes": 1748369
+    },
+    {
+      "sequence": 63,
+      "id": "E-AXU-030",
+      "name": "墙面手掌承重的腕背伸观察",
+      "category": "assess",
+      "path": "E:\\git冲突问题\\rehab image\\assess\\063_E-AXU-030_墙面手掌承重的腕背伸观察.png",
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-e01bc5d6-c745-470e-a6d5-60ec5f2377cf.png",
+      "shown_stage": "面墙轻承重阶段：双掌贴墙、肘轻弯，身体小幅靠近；展示墙面腕背伸。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Pose specification: Action 63 E-AXU-030 墙面手掌承重的腕背伸观察. Low-load wall-palm weight-bearing wrist-extension observation. Woman standing facing right toward a plain vertical wall surface at frame right in the SAME light gray-blue color as reference studio backdrop. Clear near-side profile view from above her head to below her knees. Both palms flat against the wall at chest height, fingers naturally pointing up, wrists gently extended. The near palm heel and fingertips visibly contact the wall, not just fingers. Her elbows slightly bent in a controlled comfortable position; near elbow, wrist and hand must be entirely unobstructed. Body inclines only slightly toward wall, feet close to wall rather than a deep wall push-up. Shoulders down, head neck neutral, torso remains straight. Camera perpendicular to near forearm/wrist sagittal plane so neutral forearm and wrist bend are clear. No back-of-hand contact, no clenched fists, no forced end range, no bands.",
+      "visual_review": "已实际审图：人物、服装、背景与比例；关键姿势及支撑接触",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "CBBF2C7495973511A6D1E50E8463A7F51FC28FC429F20323C7A4AC5536B4E95A",
+      "bytes": 1699359
+    },
+    {
+      "sequence": 64,
+      "id": "T-LOW-001",
+      "name": "股四头肌等长收缩",
+      "category": "train",
+      "path": "E:\\git冲突问题\\rehab image\\train\\064_T-LOW-001_股四头肌等长收缩.png",
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-ccd84746-979c-4e34-a689-f694dc85acfa.png",
+      "shown_stage": "仰卧舒适伸膝的等长练习体位：近侧膝下薄毛巾、脚跟着垫、后脑薄垫支撑。静态图片仅展示体位，不能证明肌肉有效收缩。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Pose specification: Action 64 T-LOW-001 股四头肌等长收缩. Supine quadriceps isometric setup, NOT a leg raise. Entire woman lying on her back on a thin neutral gray exercise mat, in an elevated near-side view with her face recognizable, head toward frame left and feet toward frame right. Both legs resting long and comfortably extended on the mat, a small THIN folded gray towel beneath the near-side knee with knee almost straight. Near heel resting on mat, knee back gently approaching the towel, pelvis and shoulders resting down. Natural relaxed arms alongside her body, hands open, head supported naturally, no craning neck. Bare feet, toes relaxed. All of her full body, including head, hands and feet, fit with generous margin; fit the portrait canvas by stepping the camera back rather than foreshortening or distorting limb length. Seamless reference gray-blue backdrop continues down into floor. No visible raised leg, no bent knee exercise, no bridge, no exaggerated muscle bulge. This still photograph shows the correct setup and cannot visually prove muscle activation.",
+      "visual_review": "已实际审图：人物、服装、背景与比例；关键姿势及支撑接触",
+      "revision_history": [
+        {
+          "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-d78265a3-79ab-4099-8e7a-1f14e082c73f.png",
+          "status": "discarded",
+          "reason": "头颈未充分支撑，需修正"
+        },
+        {
+          "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-ccd84746-979c-4e34-a689-f694dc85acfa.png",
+          "status": "selected",
+          "prompt": "Use case: identity-preserve. Edit input image 1 (the existing generated quadriceps photo). Images 2,3,4 are the original identity and exact studio background/style references. Keep the same woman, white T-shirt, charcoal trousers, same gray-blue photographic backdrop and floor, same 4:5 portrait composition, same mat and straight resting legs, natural normal body proportions.\nCorrect only the head/neck resting posture and knee towel. Place a small THIN neutral gray head cushion directly beneath the BACK OF HER HEAD so her occiput rests on it; neck relaxed in line with trunk, face naturally oriented toward ceiling with chin not tucked, head must NOT lift to look toward feet. Both shoulders, back and pelvis remain down on mat. No abdominal curl. Make knee towel thin and centered beneath the near-side knee crease, with both heels still touching the mat, both legs nearly straight, no leg lift. This is a relaxed supine quadriceps isometric setup. Preserve the original identity and soft realistic photography, no extra people, no text, no arrows or overlays.",
+          "reason": "头颈加薄垫支撑，膝下毛巾变薄"
+        }
+      ],
+      "width": 1122,
+      "height": 1402,
+      "sha256": "4D96AB843FE8941EBC31E0BCF05D7A88B3EE13159C5A28903CBDD6E3E7A62DBD",
+      "bytes": 1572940
+    },
+    {
+      "sequence": 65,
+      "id": "T-LOW-002",
+      "name": "滑跟屈膝",
+      "category": "train",
+      "path": "E:\\git冲突问题\\rehab image\\train\\065_T-LOW-002_滑跟屈膝.png",
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-245f7755-d96e-4409-bc66-e8d362cf09ea.png",
+      "shown_stage": "仰卧单侧滑跟的屈膝阶段：脚跟保持贴面，另一腿舒适伸展，双手不拉膝。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Pose specification: Action 65 T-LOW-002 滑跟屈膝. Supine single-leg heel slide in its comfortable midway bend. Entire woman on her back on a thin neutral gray exercise mat, head toward frame left feet toward right, camera elevated slightly and near-side so same face and knee/heel are all visible. Far leg remains extended resting on mat. Near-side knee bent comfortably about 70 degrees, near heel stays touching a small flat gray sliding cloth on the mat and has slid toward buttocks; no heel or foot floating. Pelvis, shoulders and back resting on mat, head neck natural. Both hands relaxed along body without pulling knee, no hands on leg. Bare feet. Show the entire naturally proportioned body including both feet and head with margins; step camera back so portrait format does not distort body. Same gray-blue seamless background/floor. Only near knee bends, not a knees-to-chest pose or airborne hip-flexion. Use a small thin gray cushion under occiput so head and neck remain fully supported, NOT lifted.",
+      "visual_review": "已实际审图：人物、服装、背景与比例；关键姿势及支撑接触",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "9EC540BC4B60FD840201BCAF4F2B793AFFC91FE1FC13C8A02E8CC0E351F8A51E",
+      "bytes": 1633868
+    },
+    {
+      "sequence": 66,
+      "id": "T-LOW-003",
+      "name": "坐姿伸膝：徒手至轻负荷",
+      "category": "train",
+      "path": "E:\\git冲突问题\\rehab image\\train\\066_T-LOW-003_坐姿伸膝：徒手至轻负荷.png",
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-f0ca0de3-4cc3-4f9e-b1c9-c1d9ed33abde.png",
+      "shown_stage": "坐姿无外阻伸膝阶段：大腿受椅面支持、另一脚着地，躯干直立。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Pose specification: Action 66 T-LOW-003 坐姿伸膝：徒手至轻负荷. Seated knee extension, initial unweighted version. The same woman seated upright on a sturdy simple neutral gray armless chair facing right, near-side profile with slight angle to show both legs separately and her face. Both thighs stay firmly supported horizontally by chair seat. Near knee extends comfortably, near lower leg lifted toward almost horizontal but knee not forcefully locked or hyperextended; bare foot fully visible. The far leg remains bent about 90 degrees, far foot firmly planted on the floor. Relaxed hands resting on thighs, shoulders down, back upright, pelvis stays on seat. Full body including chair, head, hands and BOTH feet within frame; realistic thigh-to-shin lengths, normal proportions. Same cool gray-blue studio background. No weights, no band, no raised thigh, no kicking gesture.",
+      "visual_review": "已实际审图：人物、服装、背景与比例；关键姿势及支撑接触",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "CEE296FB5D51ABFDFE67C484551F00222A314553D9DDFDD245B3FA7EF6D430A0",
+      "bytes": 1717746
+    },
+    {
+      "sequence": 67,
+      "id": "T-LOW-004",
+      "name": "仰卧直腿抬高",
+      "category": "train",
+      "path": "E:\\git冲突问题\\rehab image\\train\\067_T-LOW-004_仰卧直腿抬高.png",
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-85667a75-fcff-4dca-b180-1fd991e580a6.png",
+      "shown_stage": "仰卧单侧小幅直腿抬高阶段：对侧屈膝、脚掌着垫，头颈支撑。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Pose specification: Action 67 T-LOW-004 仰卧直腿抬高. Supine straight-leg raise, comfortable low lift. Entire woman lying on her back on thin neutral gray exercise mat with head left and feet right. Near-side working leg raised only about 25 degrees above mat, near knee stays naturally straight without hyperextension, heel and toes in neutral relaxed position. Far non-working knee bent about 80–90 degrees with far foot flat on mat, both legs visibly distinct. Pelvis and back stay resting down on mat, no exaggerated lumbar arch. Arms resting by her sides, no hands helping leg. Head neck natural, same face recognizable from slightly elevated near-side camera. Bare feet, no added weights. Include full body, both feet, head, hands and mat with margins, use sufficient camera distance to preserve normal body lengths within 4:5 portrait. Reference gray-blue background continues into studio floor. NOT both legs raised, NOT a vertical high raise. A thin neutral gray cushion supports the occiput; head and neck resting and face towards ceiling, no lifted head.",
+      "visual_review": "已实际审图：人物、服装、背景与比例；关键姿势及支撑接触",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "E581761E0D7CF89C522D777F78B6F1EB773FE899E76F01E908661627D4497FE9",
+      "bytes": 1641811
+    },
+    {
+      "sequence": 68,
+      "id": "T-LOW-045",
+      "name": "扶稳站姿屈膝：徒手至弹力带",
+      "category": "train",
+      "path": "E:\\git冲突问题\\rehab image\\train\\068_T-LOW-045_扶稳站姿屈膝：徒手至弹力带.png",
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-691a10a9-d16d-448c-ba20-4468d84d51c4.png",
+      "shown_stage": "扶稳站位徒手屈膝阶段：大腿基本向下、脚跟向后抬，支撑脚稳定。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Pose specification: Action 68 T-LOW-045 扶稳站姿屈膝：徒手至弹力带. Supported standing knee flexion / hamstring curl, initial unweighted version. Full body side profile facing right, hand comfortably holding a firmly fixed simple gray waist-height handrail in front/at side for support. Torso upright and neutral, far supporting leg vertical and planted, bare support foot on floor. Near-side thigh remains vertical under hip pointing downward and next to the supporting thigh; ONLY near knee bends about 80–90 degrees so the shin swings backward toward frame left and heel rises behind her toward buttocks. Near knee stays under hip and is not lifted forward. Correct hip-knee-ankle geometry, only two legs, naturally separated silhouette. Free hand relaxed, shoulders down, no backward lean. Bare feet. Entire hair-to-feet body and handrail contact shown with margins, realistic proportions, same gray-blue studio backdrop and floor. No weights or bands for this initial version, no straight-leg hip extension, no front knee lift.",
+      "visual_review": "已实际审图：人物、服装、背景与比例；关键姿势及支撑接触",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "36A02775AB0BC43CB4FD539FB43D0B0555A9C2B2CF8752F54EB7700DACC4C408",
+      "bytes": 1653508
+    },
+    {
+      "sequence": 69,
+      "id": "T-LOW-048",
+      "name": "臀桥位腘绳肌滑动：双腿到单腿离心",
+      "category": "train",
+      "path": "E:\\git冲突问题\\rehab image\\train\\069_T-LOW-048_臀桥位腘绳肌滑动：双腿到单腿离心.png",
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-01a06dc1-120f-46cf-9e38-c4f3db2a8124.png",
+      "shown_stage": "双腿低幅臀桥滑片版本的短幅滑出阶段：肩背着垫、髋小幅抬起、两脚跟分别接触滑片，膝仍弯曲。单腿离心进阶未在本图展示。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Pose specification: Action 69 T-LOW-048 臀桥位腘绳肌滑动：双腿到单腿离心. Supine hamstring slider in LOW bridge, DOUBLE-LEG beginner version. Same woman on thin neutral gray mat, head left feet right, elevated near-side camera to show face and both legs distinctly. Shoulders and upper back remain on mat, arms beside body palms on mat for stability, head neck naturally resting. Pelvis lifted only a modest 10–15 cm above floor with neutral trunk, not an exaggerated high arch. BOTH knees remain partly bent about 40–55 degrees (longer leg position than a normal bridge) after BOTH heels slide a short distance away from buttocks. Each heel rests physically on its own small flat plain gray sliding disc on smooth floor beside mat; toes gently raised and forefeet not bearing load. Both heels/discs and shoulder-hip-knee-ankle chain all unobstructed. Full body framed naturally with head, hands and two feet plus discs in view, normal lengths, enough camera distance within portrait. Reference gray-blue backdrop and matching floor. No single-leg version, no fully straight knees, no high hip bridge, no floating heels, no third leg. The back of her head rests on a thin gray head cushion; do not lift head or tuck chin.",
+      "visual_review": "已实际审图：人物、服装、背景与比例；关键姿势及支撑接触",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "E44A60565B8AEB45C000D15231A34A6EAA8A6E7029A3964B91F1692104BB870C",
+      "bytes": 1669484
+    },
+    {
+      "sequence": 70,
+      "id": "T-LOW-053",
+      "name": "仰卧带辅助温和后侧链牵伸",
+      "category": "train",
+      "path": "E:\\git冲突问题\\rehab image\\train\\070_T-LOW-053_仰卧带辅助温和后侧链牵伸.png",
+      "source_image": "C:\\Users\\Administrator\\.codex\\generated_images\\01a137da-7dd9-7850-a0f7-543cec9329c0\\exec-ae83e8dd-97b5-4a65-beed-ceac2a630e68.png",
+      "shown_stage": "仰卧非弹性带辅助牵伸阶段：带绕前足、双手握带，抬腿膝微屈、头颈自然支撑；另一腿舒适伸展。",
+      "prompt": "Use case: scientific-educational. Create ONE standalone photorealistic rehabilitation demonstration photograph.\nInput images 1, 2 and 3 are strict identity, clothing, photo style and background references. Use exactly the SAME adult East Asian woman from these three photographs: identical face, age, natural skin texture, black low ponytail, white short-sleeve crewneck T-shirt, dark charcoal fitted trousers. Match the SAME cool light gray-blue seamless studio backdrop COLOR and the same soft even studio lighting, realistic skin and fabric detail. Preserve her natural normal adult body proportions and normal head-to-body size; no shortened legs, elongated limbs, oversize head, or wide angle distortions. Exactly one woman with two anatomically correct arms and legs, natural hands with five fingers each. Necessary equipment only, all plain neutral gray and unbranded. Single moment, one pose, no collage or panels, no ghost limbs or motion copies, no arrows, diagrams, overlays, anatomical illustration, text, labels, number, watermark or decorative elements. All naming is outside the image. 4:5 portrait photo. Keep relevant joints, hands, feet and necessary props fully inside the frame. Pose specification: Action 70 T-LOW-053 仰卧带辅助温和后侧链牵伸. Supine strap-assisted gentle posterior-chain stretch. Same woman lying on her back on a thin neutral gray exercise mat, head left feet right, elevated near-side view with identical face recognizable. Far leg resting comfortably extended along mat. Near-side leg lifted comfortably about 55–60 degrees at hip, knee slightly bent about 15–20 degrees, ankle natural without forced dorsiflexion. A single plain gray NON-elastic stretching strap loops securely around the ball of this raised foot, not around toes; two strap ends extend in a clear continuous path to her two hands which hold them lightly near lower chest/abdomen, elbows comfortably bent. Realistic grip and strap tension, no other people. Head, neck, shoulders, pelvis and back resting on mat, no neck flexion or excessive low-back arch. Bare feet. Show entire body, raised foot, strap, both hands and floor foot all within frame with margins, natural limb ratios, same gray-blue studio background and floor. No maximal straight vertical leg, no aggressive pull, no labels. Small thin gray support under back of head, face toward ceiling, no looking at feet. Strap loop must go UNDER and AROUND the ball of raised foot with contact on sole, never a strap attached magically to the ankle. Show both ends held by two natural hands.",
+      "visual_review": "已实际审图：人物、服装、背景与比例；关键姿势及支撑接触",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "614F9BDFBFEBA3E1CEA73EEE684948BA551FBE8B8D45400BD15205213B0FDC45",
+      "bytes": 1654509
+    }
+  ],
+  "source_sha256": "4D0164623D410DCD8AECAA51C5606FA57C739334A51CD0929C47292207FBD138",
+  "reference_hashes": [
+    {
+      "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-db026e54-a343-4867-80c1-5934b83ef697.png",
+      "sha256": "30EDA4E7F82C73F3C39C434CE75A359064CD6B418C581082C293D3539F57FA77"
+    },
+    {
+      "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-53facc44-2a2b-4dd8-ae77-6fcf50cef7d3.png",
+      "sha256": "51E57D2FC41F04C65AD08E95132FE903DA1227ACF7E3457FD1F5059297152094"
+    },
+    {
+      "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\codex-clipboard-2555800f-5022-48a9-9772-091ca3fc56a2.png",
+      "sha256": "15AB4E4B5D448F7D105FB5CADC988A8FC4B447B6C0F7D37EFE8CA36E0F5E48EE"
+    }
+  ]
+}

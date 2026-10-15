@@ -1,0 +1,102 @@
+{
+  "action_id": "T-LOW-046",
+  "sequence": "122",
+  "title": "坐姿踝主动背屈与跖屈：无外阻",
+  "date": "2026-10-14",
+  "manifest": "E:/git冲突问题/rehab image/动作分步骤示范图制作清单_v1.0.md",
+  "output_directory": "E:/git冲突问题/rehab image/train/steps",
+  "reference_paths": [
+    "E:/git冲突问题/rehab image/step-image-references/reference-01.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-02.png",
+    "E:/git冲突问题/rehab image/step-image-references/reference-03.png"
+  ],
+  "global_qa": "三张为独立照片，每张一个姿态；同侧面机位、同人物服装、灰蓝背景柔光、同椅和软垫凳、同膝与小腿支持位置。测试足赤足伸出承托边缘，无外阻、无手掰、无箭头文字。只在外部指定目录保存，没有改仓库或共用进度。",
+  "files": [
+    {
+      "step": "s01",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-74c70667-25a1-4571-aa9d-8ee67a37d4da.png",
+      "saved_path": "E:\\git冲突问题\\rehab image\\train\\steps\\122_T-LOW-046_s01.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "002BD48859401D22DC027272F25210A212E2B668589B887941AB55962585FD4E",
+      "bytes": 1774628,
+      "target": "坐姿小腿支撑，中立踝",
+      "source_key": "122source02",
+      "prompt_key": "122prompt02",
+      "qa": "近景水平小腿由灰软垫凳承托，膝位固定，踝和足伸出支撑边缘完全自由；足跟在下、脚尖朝上，足纵轴近垂直于水平小腿，为中立位。保持参考白T、深灰裤及灰蓝柔光；局部裁切上半面，保留相邻膝、完整足和坐位支持。第二次输出实际达到中立，将该输出用于s01，不沿用原调用的s02意图。",
+      "prompt": "Use case: scientific-educational, precise-object-edit. Edit the supplied photograph to create action 122 T-LOW-046 step 02: active ankle DORSIFLEXION. The supplied image is the exact scene to preserve, not merely a style reference. Keep the same seated woman, white T-shirt, charcoal trousers with same hem, body and hands, chair, gray padded footstool, calf support contact, neutral gray-blue studio, shadows, camera angle, dimensions, crop, knee, shin position and heel position. Change ONLY the tested bare ankle and foot angle, preserving anatomically continuous skin. The tested leg remains horizontal and points to camera-right; the calf must stay fully in its exact supported position. Rotate the tested foot gently at the ankle about 15 degrees TOWARD THE SHIN relative to the starting right-angle neutral foot. Pull the whole FOREFOOT toward the lower leg, not merely lifting or curling the toes. In this side view that means the relaxed toe/forefoot endpoint shifts camera-left and slightly upward toward the shin; the ankle-front angle between shin and top of foot becomes smaller than in the input. Normal comfortable dorsiflexion, toes stay long and relaxed, no clawing, no toe extension substitute. Heel and ankle remain airborne beyond the stool edge, entire bare foot clear of support and floor. Preserve the foot's natural length and five toes. Keep all other visible objects and body locations unchanged. Only ONE static dorsiflexed foot in the final photograph. No arrows, text, numbering, collage, duplicate positions, bands, weights, therapist hands, braces, or watermarks.",
+      "generation_method": "built-in image_gen",
+      "visual_qa": "passed"
+    },
+    {
+      "step": "s02",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-f59a7219-d30f-4660-b8e7-b8cc8a16e05f.png",
+      "saved_path": "E:\\git冲突问题\\rehab image\\train\\steps\\122_T-LOW-046_s02.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "CD9949CB0117854DCEECFCFDCD2C13E3C35DF2846C1F8DE0FC8B87163E11FA43",
+      "bytes": 1759017,
+      "target": "同支撑下踝背屈",
+      "source_key": "122source02final",
+      "prompt_key": "122prompt02final",
+      "qa": "相对s01，整前足向小腿方向（画面左上）回倾，足背与小腿前侧夹角减小；足跟在下、脚趾放松，未变成单纯抬趾。小腿、膝、椅、凳、衣服、构图和背景保持一致。肉眼方向审查通过，未从生成像素推定实际临床角度。",
+      "prompt": "Use case: scientific-educational. Edit target supplied photo to create action 122 T-LOW-046 step 02, GENTLE ANKLE DORSIFLEXION. The entire scene is already correct: preserve exact woman, white shirt, charcoal trousers, hands, chair, padded stool, horizontal supported calf, grounded other shoe, gray-blue background, light, shadows, crop, image dimensions, camera and scale. The supported right shin runs left-to-right horizontally. Its ankle, heel and foot are free in air beyond the stool. The input foot is close to neutral: heel below, toes above.\nChange ONLY this free bare ankle/foot, rotating the whole foot backward TOWARD THE SHIN by about 15 degrees from the input, so the toes and forefoot now lean diagonally UPPER-LEFT toward the woman's knee. The big toe endpoint must visibly shift LEFT of its input location, closer to the knee, and the foot's dorsum/front-to-shin angle must decrease. The heel remains down, toes remain up; never flip the foot upside down or put toes below the heel. Preserve ankle center and calf positions, preserve natural foot length. The movement is at the ankle, NOT isolated toe lifting: all toes and forefoot move together as one relaxed foot. Toes stay comfortably long and relaxed. The horizontal calf stays in contact with exactly the same pad with no leg lift. Bare foot stays wholly unsupported, with every toe visible, realistic anatomy. Single static pose. No arrows, labels, words, numbers, bands, weights, manipulation, duplicate feet, collage or watermark.",
+      "generation_method": "built-in image_gen",
+      "visual_qa": "passed"
+    },
+    {
+      "step": "s03",
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-b8d214d9-75f0-4849-96a4-cc87841583fc.png",
+      "saved_path": "E:\\git冲突问题\\rehab image\\train\\steps\\122_T-LOW-046_s03.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "06436DA177E4F200ACC97938D3870F6E79E5D269E210BF8907D79AC780DCA5FF",
+      "bytes": 1774349,
+      "target": "同支撑下踝跖屈",
+      "source_key": "122source03final",
+      "prompt_key": "122prompt03revision",
+      "qa": "相对s01，整前足向远离小腿方向（画面右方）前倾，足纵轴从近垂直变为右上斜，踝前夹角增大；脚尖仍高于足跟，未倒翻或极端垂足。与s02方向相反。小腿、膝、椅、凳、衣服、构图和背景一致。脚趾自然且完整。",
+      "prompt": "Use case: scientific-educational. This is an exact photo edit for seated ankle step 03. Preserve every part of the supplied neutral image except the free right foot. Use the same fixed horizontal right shin supported by the gray padded stool, same knee position, white T-shirt/charcoal trousers, chair, other shoe on floor, gray-blue backdrop, hands, soft light, crop and scale.\nMake a SMALL TO MODERATE plantarflexion, approximately 30 degrees away from this vertical neutral foot. IMPORTANT TARGET GEOMETRY: the whole bare foot must slope UPWARD TOWARD THE RIGHT from heel to toes, like a diagonal slash /. Heel stays at the lower-left end of this diagonal, and toes are at the upper-right end. The relaxed toe tips remain CLEARLY HIGHER in the image than the heel. Starting input toe tips are near x=1180, y=410 on this 1536x1024 canvas; put edited toe tips around x=1260, y=455, and keep the heel near x=1150, y=590. These approximate locations express a gentle forward pointing of the whole foot, NOT a foot flopping down. This gentle ankle plantarflexion lowers the forefoot slightly and moves it farther right compared to the vertical neutral input. Do NOT aim the toes below the heel. Do NOT make a horizontal foot. Do NOT make a ballet point or 90-degree plantarflexion. Rotate at the ankle only. Retain natural foot length and shape, relaxed five toes, and realistic calf-ankle continuity. Support and ankle location stay fixed; the ankle and foot remain beyond the stool edge in air. Exact same scene. No text, arrows, labels, number, collage, duplicate limb, strap, external resistance or watermark.",
+      "generation_method": "built-in image_gen",
+      "visual_qa": "passed"
+    }
+  ],
+  "iterations": [
+    {
+      "attempt": 1,
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-013fb922-98a4-4211-ac50-26a60d3a341e.png",
+      "prompt": "Use case: scientific-educational. Create one realistic studio rehabilitation demonstration photograph, action 122 T-LOW-046, step 01, seated ankle active motion with NO external resistance. The three attached images are ONLY identity, clothing, skin tone, photographic style, lighting, and gray-blue background references; they are not pose references. Same adult East Asian woman with black ponytail, plain white short-sleeve T-shirt and charcoal-gray long trousers.\nScene and composition: side-on close view at knee and ankle height, woman seated stably on a simple gray upholstered chair facing camera-right. Her tested right leg is extended forward, knee naturally almost straight, lower leg horizontal. A separate stable low rectangular gray upholstered footstool with a soft gray pad directly supports the entire calf from below. The distal calf is supported, while the ankle, heel, and entire bare tested foot project past the pad's right edge and are entirely free in air with obvious clearance. The stool stops BEFORE the ankle, never under the heel or sole. The other leg is bent and its shoe rests on the studio floor behind; keep it visually secondary and distinguishable. Roll the tested trouser hem slightly above the ankle to make the ankle anatomy clear; all other reference clothing remains. Her hands rest passively on thighs away from the ankle.\nStep 01 target pose: tested ankle in neutral middle position; with the shin horizontal pointing to the right, the bare foot hangs naturally downward approximately at a right angle to the shin. Relaxed naturally extended toes, no clawing. Anatomically accurate continuous knee-calf-ankle-foot, normal foot size. Show the whole tested knee, shin, ankle, heel and every toe, the calf-to-pad contact, and enough lower torso plus chair seat to establish sitting; upper face may be outside this detail crop. Use a consistent medium-close landscape photo composition, not an isolated floating foot. Leave some gray-blue negative space. Soft natural studio light and realistic floor shadow, match references.\nConstraints: one person, one static posture, no split panels, no montage, no duplicate foot positions. No arrows, letters, numbers, labels, watermarks or logos. No band, resistance weight, therapist hand, ankle brace or force applied to the foot. Realistic anatomically correct foot with five toes. Bare tested foot and calf support must be unmistakable.",
+      "status": "rejected",
+      "finding": "中立位生成成脚尖过度向下的足角，无法作为可信中立示范，未复制到交付目录。"
+    },
+    {
+      "attempt": 2,
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-74c70667-25a1-4571-aa9d-8ee67a37d4da.png",
+      "prompt": "Use case: scientific-educational, precise-object-edit. Edit the supplied photograph to create action 122 T-LOW-046 step 02: active ankle DORSIFLEXION. The supplied image is the exact scene to preserve, not merely a style reference. Keep the same seated woman, white T-shirt, charcoal trousers with same hem, body and hands, chair, gray padded footstool, calf support contact, neutral gray-blue studio, shadows, camera angle, dimensions, crop, knee, shin position and heel position. Change ONLY the tested bare ankle and foot angle, preserving anatomically continuous skin. The tested leg remains horizontal and points to camera-right; the calf must stay fully in its exact supported position. Rotate the tested foot gently at the ankle about 15 degrees TOWARD THE SHIN relative to the starting right-angle neutral foot. Pull the whole FOREFOOT toward the lower leg, not merely lifting or curling the toes. In this side view that means the relaxed toe/forefoot endpoint shifts camera-left and slightly upward toward the shin; the ankle-front angle between shin and top of foot becomes smaller than in the input. Normal comfortable dorsiflexion, toes stay long and relaxed, no clawing, no toe extension substitute. Heel and ankle remain airborne beyond the stool edge, entire bare foot clear of support and floor. Preserve the foot's natural length and five toes. Keep all other visible objects and body locations unchanged. Only ONE static dorsiflexed foot in the final photograph. No arrows, text, numbering, collage, duplicate positions, bands, weights, therapist hands, braces, or watermarks.",
+      "status": "accepted_as_s01",
+      "finding": "修订使足跟在下、脚尖朝上、足纵轴近垂直于水平小腿。实际是中立位，改编为s01。"
+    },
+    {
+      "attempt": 3,
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-f59a7219-d30f-4660-b8e7-b8cc8a16e05f.png",
+      "prompt": "Use case: scientific-educational. Edit target supplied photo to create action 122 T-LOW-046 step 02, GENTLE ANKLE DORSIFLEXION. The entire scene is already correct: preserve exact woman, white shirt, charcoal trousers, hands, chair, padded stool, horizontal supported calf, grounded other shoe, gray-blue background, light, shadows, crop, image dimensions, camera and scale. The supported right shin runs left-to-right horizontally. Its ankle, heel and foot are free in air beyond the stool. The input foot is close to neutral: heel below, toes above.\nChange ONLY this free bare ankle/foot, rotating the whole foot backward TOWARD THE SHIN by about 15 degrees from the input, so the toes and forefoot now lean diagonally UPPER-LEFT toward the woman's knee. The big toe endpoint must visibly shift LEFT of its input location, closer to the knee, and the foot's dorsum/front-to-shin angle must decrease. The heel remains down, toes remain up; never flip the foot upside down or put toes below the heel. Preserve ankle center and calf positions, preserve natural foot length. The movement is at the ankle, NOT isolated toe lifting: all toes and forefoot move together as one relaxed foot. Toes stay comfortably long and relaxed. The horizontal calf stays in contact with exactly the same pad with no leg lift. Bare foot stays wholly unsupported, with every toe visible, realistic anatomy. Single static pose. No arrows, labels, words, numbers, bands, weights, manipulation, duplicate feet, collage or watermark.",
+      "status": "accepted_as_s02",
+      "finding": "锁定中立底图，仅将整前足向小腿方向回倾，清楚呈现背屈方向。"
+    },
+    {
+      "attempt": 4,
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-53d8ca89-f516-46e1-8cb7-685f0fcbe5b1.png",
+      "prompt": "Use case: scientific-educational. Edit supplied neutral-ankle photograph for action 122 T-LOW-046 step 03: gentle active ankle PLANTARFLEXION without external resistance. The supplied image is the exact scene to preserve. Keep the woman, lower torso, white T-shirt, charcoal trousers and folded hem, hands on thighs, gray chair, gray padded stool, horizontally supported right calf and knee, grounded other shoe, studio background, soft light, shadows, camera angle, framing, dimensions, and scale IDENTICAL. Change only the tested bare ankle/foot posture, using a realistic rotation around the fixed ankle center.\nThe supplied bare foot has its heel down and toes up at neutral. Rotate the whole bare foot gently AWAY FROM THE SHIN by about 25 to 30 degrees, lowering the forefoot and pointing its toes diagonally camera-right/up, farther away from the knee. In this right-facing horizontal-leg side view, the toe endpoint moves RIGHT and DOWN compared with the input, while staying ABOVE the heel. The foot is now a natural diagonal approximately 55 to 60 degrees above horizontal, rather than vertical. Smooth comfortable plantarflexion, no forced ballet pointe, no extreme floppy foot, never flip toes below the heel. The calf remains firmly supported on the same pad; heel and ankle stay free beyond the stool's edge, bare foot entirely in air. Toes follow the forefoot as a relaxed unit, not curled or clawed. Foot length, five toes, anatomy and skin continuity remain natural. This must visibly be the opposite direction from pulling the toes back toward the shin. One single static pose. No arrows, text, labels, numbers, duplicate feet, split panels, band, ankle weight, hands manipulating foot, brace or watermark.",
+      "status": "rejected",
+      "finding": "跖屈被生成成过度前下指足，脚尖降到足跟下方且角度过大，不符合轻轻向下的选定温和终点。"
+    },
+    {
+      "attempt": 5,
+      "source": "C:/Users/Administrator/.codex/generated_images/01a1393e-27aa-7891-b55f-dc39666c7e5c/exec-b8d214d9-75f0-4849-96a4-cc87841583fc.png",
+      "prompt": "Use case: scientific-educational. This is an exact photo edit for seated ankle step 03. Preserve every part of the supplied neutral image except the free right foot. Use the same fixed horizontal right shin supported by the gray padded stool, same knee position, white T-shirt/charcoal trousers, chair, other shoe on floor, gray-blue backdrop, hands, soft light, crop and scale.\nMake a SMALL TO MODERATE plantarflexion, approximately 30 degrees away from this vertical neutral foot. IMPORTANT TARGET GEOMETRY: the whole bare foot must slope UPWARD TOWARD THE RIGHT from heel to toes, like a diagonal slash /. Heel stays at the lower-left end of this diagonal, and toes are at the upper-right end. The relaxed toe tips remain CLEARLY HIGHER in the image than the heel. Starting input toe tips are near x=1180, y=410 on this 1536x1024 canvas; put edited toe tips around x=1260, y=455, and keep the heel near x=1150, y=590. These approximate locations express a gentle forward pointing of the whole foot, NOT a foot flopping down. This gentle ankle plantarflexion lowers the forefoot slightly and moves it farther right compared to the vertical neutral input. Do NOT aim the toes below the heel. Do NOT make a horizontal foot. Do NOT make a ballet point or 90-degree plantarflexion. Rotate at the ankle only. Retain natural foot length and shape, relaxed five toes, and realistic calf-ankle continuity. Support and ankle location stay fixed; the ankle and foot remain beyond the stool edge in air. Exact same scene. No text, arrows, labels, number, collage, duplicate limb, strap, external resistance or watermark.",
+      "status": "accepted_as_s03",
+      "finding": "以固定底图增加明确足跟到脚尖的右上斜目标，最终跖屈角温和，足跟在下、脚尖在右上，方向与背屈相反。"
+    }
+  ],
+  "limitations": "图像用于动作姿势示范；视觉审查不能确认真实主动发力、负荷或患者适用性。提示词目标角度只用于生成控制，未记录为像素测量或临床活动范围。"
+}

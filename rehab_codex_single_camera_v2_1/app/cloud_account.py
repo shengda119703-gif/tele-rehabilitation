@@ -93,7 +93,7 @@ class TokenVault:
 
 def transport(path, method='GET', body=None, token=None):
     # No arbitrary URL/redirect: bearer credentials only go to this exact host.
-    if not re.fullmatch(r'/auth/(register|password/login|refresh|me|logout)|/patients/[a-f0-9-]{36}(?:/(?:rehab-workflow(?:/profile)?|rehab-candidates|ai/(?:usage|requests)|reports|record-events|records(?:/latest)?(?:\?offset=\d+&limit=\d+)?|doctor-access|messages(?:/read|\?after=\d+&limit=50&latest=true|\?before=\d+&limit=50)?|plans(?:\?offset=\d+&limit=5|/current|/[a-f0-9-]{36}/accept)?))?', path):
+    if not re.fullmatch(r'/auth/(register|password/login|refresh|me|logout)|/patients/[a-f0-9-]{36}(?:/(?:rehab-workflow(?:/profile)?|rehab-candidates|assistant/(?:preferences|turns|conversation(?:\?after=\d+&limit=\d+)?)|ai/(?:usage|requests)|reports|record-events|records(?:/latest)?(?:\?offset=\d+&limit=\d+)?|doctor-access|messages(?:/read|\?after=\d+&limit=50&latest=true|\?before=\d+&limit=50)?|plans(?:\?offset=\d+&limit=5|/current|/[a-f0-9-]{36}/accept)?))?', path):
         raise CloudError('云接口地址无效')
     headers = {'Content-Type': 'application/json', 'X-Ankang-Client': 'native'}
     if token:
@@ -104,7 +104,7 @@ def transport(path, method='GET', body=None, token=None):
             return None
     try:
         with urllib.request.build_opener(NoRedirect()).open(
-                urllib.request.Request(ORIGIN + BASE + path, data=data, method=method, headers=headers), timeout=35 if path.endswith('/ai/requests') else 12) as reply:
+                urllib.request.Request(ORIGIN + BASE + path, data=data, method=method, headers=headers), timeout=35 if path.endswith(('/ai/requests', '/assistant/turns')) else 12) as reply:
             raw = reply.read(512 * 1024 + 1)
             if len(raw) > 512 * 1024:
                 raise CloudError('云回复过大，请稍后重试')
@@ -147,6 +147,7 @@ class CloudAccount:
             db.execute('CREATE TABLE IF NOT EXISTS message_cache(patient_id TEXT, sequence INTEGER, document TEXT, PRIMARY KEY(patient_id,sequence))')
             db.execute('CREATE TABLE IF NOT EXISTS plan_acceptance(patient_id TEXT, cloud_id TEXT, cloud_version INTEGER, local_id TEXT, document TEXT, receipt TEXT, PRIMARY KEY(patient_id,cloud_id,cloud_version))')
             db.execute('CREATE TABLE IF NOT EXISTS ai_pending(patient_id TEXT PRIMARY KEY, operation_id TEXT NOT NULL, text TEXT NOT NULL)')
+            db.execute('CREATE TABLE IF NOT EXISTS assistant_pending(patient_id TEXT PRIMARY KEY, account_id TEXT NOT NULL, operation_id TEXT NOT NULL, text TEXT NOT NULL)')
             db.execute('PRAGMA user_version=2')
 
     @contextmanager
@@ -381,8 +382,8 @@ class CloudAccount:
     def save_workflow_profile(self, document):
         return self.patient_call('/rehab-workflow/profile', 'PUT', document)
 
-    def candidate(self, kind):
-        return self.patient_call('/rehab-candidates', 'POST', {'operation_id': str(uuid4()), 'kind': kind})
+    def candidate(self, kind, operation_id=None):
+        return self.patient_call('/rehab-candidates', 'POST', {'operation_id': str(UUID(operation_id)) if operation_id else str(uuid4()), 'kind': kind})
 
     def ai_question(self, text, operation_id):
         return self.patient_call('/ai/requests', 'POST', {'text': text, 'operation_id': str(UUID(operation_id))})
@@ -390,6 +391,16 @@ class CloudAccount:
     def ask_ai(self, text=None):
         with self.lock:
             patient = self.me()['patient_id']
+            account = self.session()['account_id']
+
+            def clear_pending():
+                with self.token_lock:
+                    current = self.session()
+                    if not current or current['patient_id'] != patient or current['account_id'] != account:
+                        raise CloudError('账号已变化，请重新打开当前本人工作台')
+                    with self.db() as db:
+                        db.execute('DELETE FROM ai_pending WHERE patient_id=? AND operation_id=?', (patient, operation))
+
             with self.db() as db:
                 pending = db.execute('SELECT operation_id,text FROM ai_pending WHERE patient_id=?', (patient,)).fetchone()
                 if pending is None:
@@ -402,10 +413,114 @@ class CloudAccount:
                     if text is not None and text.strip() != pending['text']:
                         raise CloudError('原提问回执仍待核对，请先点击“重试原提问”，避免重复付费调用')
                     operation, text = pending['operation_id'], pending['text']
-            result = self.ai_question(text, operation)
-            if result.get('state') in {'SUCCEEDED', 'UNMETERED', 'UNKNOWN'}:
+            try:
+                result = self.ai_question(text, operation)
+            except CloudError as exc:
+                # Only definitive no-dispatch errors retire the durable retry intent.
+                if exc.code in {'AI_NOT_CONFIGURED', 'AI_BUSY', 'AI_QUOTA_EXHAUSTED', 'AI_REJECTED'}:
+                    clear_pending()
+                raise
+            if result.get('state') in {'SUCCEEDED', 'UNMETERED', 'UNKNOWN', 'REJECTED'}:
+                clear_pending()
+            return result
+
+    @staticmethod
+    def assistant_private(text, private=False):
+        return private is True or bool(re.search(
+            r'(不要|别).{0,4}(记录|记下来|保存)|(?:不要|别|不想|不希望|不愿意|不愿|不需要).{0,4}(告诉|让|通知).{0,3}(孩子|女儿|儿子|家人|他|她|他们|她们)|(?:不想|不希望|不愿意|不愿|不需要).{0,2}(?:让|叫)?(?:孩子|女儿|儿子|家人).{0,3}(?:知道|看见)', text))
+
+    def assistant_preferences(self, document=None):
+        if document is not None:
+            if type(document.get('expected_version')) is not int or document['expected_version'] < 0 or type(document.get('health_context')) is not bool:
+                raise CloudError('请重新读取管家授权设置')
+            return self.patient_call('/assistant/preferences', 'PUT',
+                {key: document[key] for key in ('expected_version', 'health_context')})
+        return self.patient_call('/assistant/preferences')
+
+    def assistant_assessment_plans(self, owner, patient_id, account_id, plan_id=None, *, cancel=False):
+        """Bound-account transport only; the server owns plan and record status."""
+        if cancel and (not isinstance(plan_id, str) or not re.fullmatch(r'[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}', plan_id)):
+            raise CloudError('评估计划编号无效')
+        with self.lock:
+            def check():
+                session = self.session()
                 with self.db() as db:
-                    db.execute('DELETE FROM ai_pending WHERE patient_id=? AND operation_id=?', (patient, operation))
+                    binding = db.execute('SELECT patient_id FROM bindings WHERE local_id=?', (owner,)).fetchone()
+                if not session or not binding or binding[0] != patient_id or (session['patient_id'], session['account_id']) != (patient_id, account_id):
+                    raise CloudError('账号或本人档案已变化，请重新读取评估计划')
+            check()
+            identity = self.me()
+            if (identity.get('patient_id'), identity.get('account_id')) != (patient_id, account_id):
+                raise CloudError('账号已变化，请重新登录')
+            check()
+            suffix = '/assistant/assessment-plans' + ('/' + plan_id + '/cancel' if cancel else '')
+            result = self.call('/patients/' + patient_id + suffix, 'POST' if cancel else 'GET', {} if cancel else None)
+            check()
+            return result
+
+    def assistant_conversation(self, after=0):
+        if type(after) is not int or not 0 <= after <= 2147483647:
+            raise CloudError('对话查询范围无效')
+        with self.lock:
+            original = self.session()
+            if not original:
+                raise CloudError('请先登录云账号')
+            identity = (original['patient_id'], original['account_id'])
+            items = {}
+            for _ in range(20):
+                result = self.patient_call('/assistant/conversation?after=' + str(after) + '&limit=30')
+                current = self.session()
+                if not current or (current['patient_id'], current['account_id']) != identity:
+                    raise CloudError('账号已变化，旧管家对话未显示')
+                for row in result['items']:
+                    items[row['id']] = row
+                if not result.get('has_more'):
+                    break
+                cursor = result.get('next_after')
+                if type(cursor) is not int or cursor <= after:
+                    raise CloudError('管家对话游标无效')
+                after = cursor
+            return {**result, 'items': sorted(items.values(), key=lambda row: row['sequence'])}
+
+    def assistant_turn(self, text=None):
+        with self.lock:
+            patient = self.me()['patient_id']
+            account = self.session()['account_id']
+            if text is not None and (not isinstance(text, str) or not 1 <= len(text.strip()) <= 1900):
+                raise CloudError('请填写1–1900字的问题')
+            if text is not None and self.assistant_private(text):
+                raise CloudError('私密或不记录的对话仅在本机处理')
+            with self.db() as db:
+                row = db.execute('SELECT * FROM assistant_pending WHERE patient_id=?', (patient,)).fetchone()
+                if row:
+                    if row['account_id'] != account or text is not None and row['text'] != text.strip():
+                        raise CloudError('原管家提问仍待核对，请重试原提问')
+                    operation, text = row['operation_id'], row['text']
+                else:
+                    if text is None:
+                        raise CloudError('暂无待重试的管家提问')
+                    operation, text = str(uuid4()), text.strip()
+                    db.execute('INSERT INTO assistant_pending VALUES (?,?,?,?)', (patient, account, operation, text))
+
+            def clear():
+                with self.token_lock:
+                    current = self.session()
+                    if not current or current['patient_id'] != patient or current['account_id'] != account:
+                        raise CloudError('账号已变化，旧管家回复未显示')
+                    with self.db() as db:
+                        db.execute('DELETE FROM assistant_pending WHERE patient_id=? AND account_id=? AND operation_id=?', (patient, account, operation))
+
+            try:
+                result = self.patient_call('/assistant/turns', 'POST', {'operation_id': operation, 'text': text})
+            except CloudError as exc:
+                if exc.code in {'AI_NOT_CONFIGURED', 'AI_BUSY', 'AI_QUOTA_EXHAUSTED', 'AI_REJECTED'}:
+                    clear()
+                raise
+            turn = result.get('turn')
+            if not isinstance(turn, dict) or not isinstance(turn.get('answer'), str):
+                raise CloudError('管家回复尚未核对，请重试原提问')
+            UUID(turn['id'])
+            clear()
             return result
 
     def share_report(self, filename, data, mime, operation_id):

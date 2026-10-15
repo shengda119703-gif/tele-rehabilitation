@@ -1,0 +1,27 @@
+{
+  "actions": [
+    {
+      "sequence": 184,
+      "id": "T-AXU-040",
+      "name": "双手壶铃摆动：后期熟练者项目",
+      "category": "train",
+      "filename": "184_T-AXU-040_双手壶铃摆动：后期熟练者项目.png",
+      "path": "E:/git冲突问题/rehab image/train/184_T-AXU-040_双手壶铃摆动：后期熟练者项目.png",
+      "source_path": "C:/Users/Administrator/.codex/generated_images/01a137f0-58c5-7e72-8685-4e889dae8e92/exec-acbfe0da-60eb-435e-b584-6aa21b5f2564.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: one independent rehabilitation exercise library photograph, 184 T-AXU-040 双手壶铃摆动：后期熟练者项目.\nInput images: the three supplied pictures are strict reference images for the same woman's identity, photographic style, clothing and backdrop. Preserve exactly her face and natural facial proportions, East Asian appearance, black low ponytail, white fitted short sleeve T-shirt, dark charcoal full length pants, and same softly mottled gray-blue studio background. Add simple plain white sports shoes consistent with full-body photos.\nPrimary request: depict the TOP PHASE of an established two-handed kettlebell swing to lower-chest height. Show one woman facing right at a slight side-front angle, head to shoes visible. Her feet are planted about shoulder width apart, both entire soles flat on a stable nonslip floor. Her hips have extended, so she is standing upright with pelvis beneath ribs, a neutral spine and natural comfortably near-straight knees. She does not lean backward or arch her lower back. Both hands firmly enclose the handle of ONE compact light dark-gray kettlebell, side by side; wrists neutral and grip clearly plausible. Both arms extend forward together naturally with nearly straight elbows toward lower chest height, slightly lower than horizontal shoulder height. The kettlebell floats forward at the controlled top of the swing, its whole compact bell and handle visible, definitely below the shoulders and never overhead. Shoulders relaxed down, chest natural, no shrugging or exaggerated proud chest, no deep squat. Her expression remains calm and neutral as in references.\nScene/backdrop: exactly the reference softly mottled gray-blue studio background with matching gray-blue floor, soft even studio light and natural skin/fabric texture. No gym scenery, decor, furniture, rail, helper or extra equipment. Keep ample empty space ahead of the kettlebell.\nComposition: full-body portrait canvas 1122 by 1402, same ratio as all references. Anatomically normal adult body proportions, normal head size, realistic torso/leg lengths and shoe sizes, correct arms and hands. Both shoes, face and entire kettlebell fit within the image with safe margins and no cropping.\nConstraints: one single coherent pose, one woman, one kettlebell. Identical woman/face/hair/white T-shirt/charcoal pants/gray-blue backdrop/photorealism as references. No text, labels, number, captions, logo, watermark, arrows, split panels, ghost limbs, motion trails or blur. Do not change to illustration, render or cartoon. No extra limbs or distorted fingers. This single still shows the upper phase, not a multistage sequence.",
+      "phase_zh": "双手壶铃摆动至胸前高度的上端阶段：髋伸展站直，双脚完整落稳，双臂自然近伸直前伸，双手牢握一只壶铃，壶铃低于肩且不过头。",
+      "visual_review": {
+        "result": "accepted",
+        "method": "生成结果完整预览；view_image目标文件调用出现缩略图异常后，使用node_repl直接读取保存PNG原始字节并emitImage完整显示，逐项审查。",
+        "identity_style_background": "人物脸、马尾、白短袖T、深灰裤、灰蓝背景与写实摄影风格保持一致；身体比例正常，全身与完整壶铃可见。",
+        "pose": "双脚约肩宽且双全掌落稳；髋伸展站直，膝自然接近伸直；双手握同一壶铃把手，双臂胸前近伸直，肩放松；未见过度后仰或过头；无文字、箭头、分镜或动态残影。",
+        "limitations": "本图仅展示摆动上端单一姿态，不能表示完整轨迹或证实熟练程度。"
+      },
+      "status": "completed",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 1667027,
+      "sha256": "599B78A5DA98660C7F52B85DCB6972CEFDBC748002F34764A650E4AC2F9FB844"
+    }
+  ]
+}

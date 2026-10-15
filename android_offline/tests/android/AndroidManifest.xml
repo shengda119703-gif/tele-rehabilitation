@@ -5,4 +5,5 @@
     <instrumentation android:name=".CameraSmoke" android:targetPackage="cn.tele.rehabilitation.offline" android:label="Emulated camera lifecycle" />
     <instrumentation android:name=".CloudSmoke" android:targetPackage="cn.tele.rehabilitation.offline" android:label="TEST cloud companion" />
     <instrumentation android:name=".LinSmoke" android:targetPackage="cn.tele.rehabilitation.offline" android:label="TEST Lin product history" />
+    <instrumentation android:name=".MotionSmoke" android:targetPackage="cn.tele.rehabilitation.offline" android:label="TEST phone sensor lifecycle" />
 </manifest>
