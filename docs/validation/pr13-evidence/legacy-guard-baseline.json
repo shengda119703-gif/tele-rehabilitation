@@ -1,0 +1,21 @@
+{
+  "baseline": "d791650a7ca72b66ac4e6171841fc6ced4a0b9da",
+  "guardSourceUnchanged": true,
+  "questions": [
+    {
+      "text": "我今天练什么？",
+      "baselineAllowed": true,
+      "currentAllowed": true
+    },
+    {
+      "text": "我最近肩膀怎么样？",
+      "baselineAllowed": false,
+      "currentAllowed": false
+    },
+    {
+      "text": "我上次训练完成得怎么样？",
+      "baselineAllowed": false,
+      "currentAllowed": false
+    }
+  ]
+}
