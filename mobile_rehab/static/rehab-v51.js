@@ -8,7 +8,11 @@
     return artwork[id]?`<figure class="rv-photo ${large?'rv-photo-large':''}"><img src="/static/assets/rehab-v51/${artwork[id]}.jpg" alt="待审核视觉封面" loading="lazy"><figcaption>视觉示例 · 未核验，不作为示教</figcaption></figure>`:`<div class="rv-photo rv-no-photo ${large?'rv-photo-large':''}">动作图片待核验</div>`;
   }
   function thumb(id,candidatePreview=false){const preview=candidatePreview&&root.RehabCandidateImages?.thumb(id);if(preview)return preview;return artwork[id]?`<img class="rv-thumb" src="/static/assets/rehab-v51/${artwork[id]}.jpg" alt="未核验视觉封面" loading="lazy">`:'<span class="rv-thumb rv-placeholder" aria-hidden="true">—</span>';}
-  function order(items){return items.slice().sort((a,b)=>{const ids=Object.keys(artwork),rank=id=>ids.includes(id)?ids.indexOf(id):ids.length;return rank(a.id)-rank(b.id);});}
+  function order(items){
+    const ids=Object.keys(artwork),rank=id=>ids.includes(id)?ids.indexOf(id):ids.length;
+    const pictured=new Set(items.filter(x=>artwork[x.id]||root.RehabCandidateImages?.thumb(x.id)).map(x=>x.id));
+    return items.slice().sort((a,b)=>Number(pictured.has(b.id))-Number(pictured.has(a.id))||rank(a.id)-rank(b.id));
+  }
   function context(source,day){return ['LIVE_CAMERA','REPLAY_FILE'].includes(source)&&/^\d{4}-\d{2}-\d{2}$/.test(day||'')?`rehabSource=${source}&rehabDay=${day}`:'';}
   function hero(m){const t=m.task;
     return `<section class="rv-hero" aria-label="当前康复任务"><svg class="rv-streaks" viewBox="0 0 350 205" preserveAspectRatio="none" aria-hidden="true"><polygon points="185,150 196,128 350,5 350,21 205,139 190,153" class="sport-band"/><path d="M173 206 350 87" class="sport-line"/></svg><img class="rv-athlete" src="/static/assets/home-v36/athlete-cutout.png" alt="" aria-hidden="true"><svg class="rv-streak-front" viewBox="0 0 350 205" preserveAspectRatio="none" aria-hidden="true"><polygon points="240,185 254,169 350,99 350,103 263,169" class="sport-cut"/></svg><div class="rv-task-copy"><span>${escape(t.label)}</span><h2 class="${t.title.length>4?'rv-long':''}">${escape(t.title)}</h2><p>${escape(t.meta)}</p><button id="rehab-primary" ${t.disabled?'disabled':''}>${escape(t.button)} <b aria-hidden="true">→</b></button></div>${t.index?`<small class="rv-task-index">${String(t.index).padStart(2,'0')} / ${String(t.total).padStart(2,'0')}</small>`:''}</section>`;
