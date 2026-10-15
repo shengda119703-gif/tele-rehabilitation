@@ -1,0 +1,79 @@
+/* Stage 5.3: only the five primary-page containers consume these roles. */
+:is(.home-v36,.rehab-home,.health-home,.medication-home,.family-home){
+  --primary-mid:#e3e8df;
+  --primary-mid-soft:#eef1e8;
+  --primary-mid-line:#cdd6c7;
+  --primary-mid-ink:#253222;
+  --primary-highlight:#dfff36;
+}
+
+/* Keep the approved athlete between the rear ribbon and the small front cut. */
+body[data-page="home"] .home-streaks .sport-band,
+body[data-page="rehab"] .rehab-home .rv-streaks .sport-band{fill:#dfff36;stroke:none}
+body[data-page="home"] .home-streaks .sport-line,
+body[data-page="rehab"] .rehab-home .rv-streaks .sport-line{fill:none;stroke:#dfff36;stroke-width:1.4;opacity:.85}
+body[data-page="home"] .home-streak-front,
+body[data-page="rehab"] .rehab-home .rv-streak-front{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+body[data-page="home"] .home-streak-front .sport-cut,
+body[data-page="rehab"] .rehab-home .rv-streak-front .sport-cut{fill:#dfff36;opacity:.65}
+body[data-page="home"] .home-task-copy,
+body[data-page="rehab"] .rehab-home .rv-task-copy{z-index:3}
+body[data-page="rehab"] .rehab-home .rv-task-copy h2.rv-long{font-size:22px;text-wrap:balance}
+
+/* A neutral middle tone connects the dark task to the lighter information. */
+body[data-page="home"] .home-shortcuts>button,
+body[data-page="rehab"] .rehab-home .rv-featured>button{background:var(--primary-mid);border-color:var(--primary-mid-line)}
+body[data-page="home"] .home-shortcuts>a,
+body[data-page="rehab"] .rehab-home .rv-featured>a{background:var(--primary-mid-soft);border-color:var(--primary-mid-line)}
+body[data-page="home"] .home-mini-calendar{background:#d8e0d1;border-color:#b7c2af}
+body[data-page="home"] .home-mini-calendar:before{border-color:#78886e}
+body[data-page="home"] .home-mini-calendar i{background:#b5c1a9}
+body[data-page="home"] .home-mini-calendar i:nth-child(4){background:var(--primary-highlight)}
+body[data-page="home"] .home-mini-chart{opacity:1}
+body[data-page="home"] .home-mini-chart i{background:#718169}
+body[data-page="home"] .home-mini-chart i:nth-child(4){background:var(--primary-highlight)}
+body[data-page="rehab"] .rehab-home .rv-plan-art{background:#d8e0d1;border-color:#b7c2af}
+body[data-page="rehab"] .rehab-home .rv-plan-art i{background:#91a184}
+body[data-page="rehab"] .rehab-home .rv-plan-art i:first-child{background:var(--primary-highlight)}
+
+body[data-page^="health"] .health-home .weekly-cover{background:var(--primary-mid);border-color:var(--primary-mid-line);box-shadow:none}
+body[data-page^="health"] .health-home .weekly-copy{padding-top:16px;padding-bottom:16px}
+body[data-page^="health"] .health-home .weekly-copy strong{color:var(--primary-mid-ink)}
+body[data-page^="health"] .health-home .tools-grid .tool-tile{background:var(--primary-mid-soft);border-color:var(--primary-mid-line);box-shadow:none}
+body[data-page^="health"] .health-home .tool-tile h3{font-size:16px;font-weight:800}
+body[data-page^="health"] .health-home .health-card-primary,
+body[data-page^="health"] .health-home .health-card-secondary{height:44px}
+body[data-page^="health"] .health-home .health-carousel-viewport{min-height:210px}
+
+body[data-page="medication"] .medication-home .tool.design-med{background:var(--primary-mid);border-color:var(--primary-mid-line);box-shadow:none}
+body[data-page="medication"] .medication-home .tool.design-record{background:var(--primary-mid-soft);border-color:var(--primary-mid-line);box-shadow:none}
+body[data-page="medication"] .medication-home .tool .tool-copy b{font-size:15px;font-weight:800}
+body[data-page="medication"] .medication-home .tool .tool-copy .tool-desc{font-size:11px;line-height:1.4}
+body[data-page="medication"] .medication-home .hero .dose-control .bigpill,
+body[data-page="medication"] .medication-home .hero .dose-control .side-btn{min-height:44px;height:44px}
+body[data-page="medication"] .medication-home .dose-swipe .slot-name,
+body[data-page="medication"] .medication-home .dose-swipe .slot-meta,
+body[data-page="medication"] .medication-home .dosebody b,
+body[data-page="medication"] .medication-home .dosebody span{white-space:normal;overflow:visible;overflow-wrap:anywhere;text-overflow:clip}
+body[data-page="medication"] .medication-home .notice{border:0;font-size:11px;color:#68715f}
+
+body[data-page="family"] .family-home .permission-box{border-color:var(--primary-mid-line);box-shadow:none}
+body[data-page="family"] .family-home .permission-box.accent{background:var(--primary-mid-soft)}
+body[data-page="family"] .family-home .tool-card{background:#fff;border-color:var(--primary-mid-line);box-shadow:none;min-height:99px;height:auto}
+body[data-page="family"] .family-home .tool-card:first-child{background:var(--primary-mid)}
+body[data-page="family"] .family-home .tool-card:nth-child(2){background:var(--primary-mid-soft)}
+body[data-page="family"] .family-home .tool-txt b{font-size:16px;font-weight:800}
+body[data-page="family"] .family-home .tool-txt small{font-size:11px;line-height:1.4;color:#68715f}
+body[data-page="family"] .family-home .permission-box .minor{font-size:11px;color:#68715f}
+body[data-page="family"] .family-home .feature .main-btn,
+body[data-page="family"] .family-home .feature .secondary-btn{min-height:44px}
+
+@media(max-width:340px){
+  body[data-page="rehab"] .rehab-home .rv-task-copy h2.rv-long{font-size:18px}
+  body[data-page^="health"] .health-home .tool-tile h3{font-size:15px}
+  body[data-page="family"] .family-home .tool-txt b{font-size:15px}
+}
+@media(forced-colors:active){
+  body[data-page="home"] .home-streak-front,
+  body[data-page="rehab"] .rehab-home .rv-streak-front{display:none}
+}

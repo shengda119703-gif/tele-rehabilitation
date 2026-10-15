@@ -1,0 +1,2464 @@
+{
+  "shoulder_abduction": {
+    "exercise_id": "shoulder_abduction",
+    "label": "肩外展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "049_E-AXU-013_s01",
+        "public_action_id": "E-AXU-013",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；源卡中本人侧别未结构化确认。  相关替代/容易混淆卡：157,172（各自条件另核对）。",
+          "候选；源卡中本人侧别未结构化确认。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：157,172（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "049_E-AXU-013_s02",
+        "public_action_id": "E-AXU-013",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；源卡中本人侧别未结构化确认。  相关替代/容易混淆卡：157,172（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；源卡中本人侧别未结构化确认。  相关替代/容易混淆卡：157,172（各自条件另核对）。",
+      "候选；源卡中本人侧别未结构化确认。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：157,172（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "sit_to_stand": {
+    "exercise_id": "sit_to_stand",
+    "label": "居家坐站",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "092_T-LOW-017_s01",
+        "public_action_id": "T-LOW-017",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；s02为起立中间位，s03才是站稳。扶手使用须与当次计划一致；不得导入五次坐站或30秒协议。  相关替代/容易混淆卡：015,016（各自条件另核对）。",
+          "候选；s02为起立中间位，s03才是站稳。扶手使用须与当次计划一致；不得导入五次坐站或30秒协议。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：015,016（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "092_T-LOW-017_s03",
+        "public_action_id": "T-LOW-017",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；s02为起立中间位，s03才是站稳。扶手使用须与当次计划一致；不得导入五次坐站或30秒协议。  相关替代/容易混淆卡：015,016（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；s02为起立中间位，s03才是站稳。扶手使用须与当次计划一致；不得导入五次坐站或30秒协议。  相关替代/容易混淆卡：015,016（各自条件另核对）。",
+      "候选；s02为起立中间位，s03才是站稳。扶手使用须与当次计划一致；不得导入五次坐站或30秒协议。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：015,016（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "shoulder_flexion": {
+    "exercise_id": "shoulder_flexion",
+    "label": "肩前屈",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "048_E-AXU-012_s01",
+        "public_action_id": "E-AXU-012",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；站姿须对应已确认支撑安排，左右测试侧待核对。  相关替代/容易混淆卡：153,157（各自条件另核对）。",
+          "候选；站姿须对应已确认支撑安排，左右测试侧待核对。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：153,157（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "048_E-AXU-012_s02",
+        "public_action_id": "E-AXU-012",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；站姿须对应已确认支撑安排，左右测试侧待核对。  相关替代/容易混淆卡：153,157（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；站姿须对应已确认支撑安排，左右测试侧待核对。  相关替代/容易混淆卡：153,157（各自条件另核对）。",
+      "候选；站姿须对应已确认支撑安排，左右测试侧待核对。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：153,157（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "elbow_flexion": {
+    "exercise_id": "elbow_flexion",
+    "label": "肘屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "057_E-AXU-017_s01",
+        "public_action_id": "E-AXU-017",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "阻断直接复用：源图站姿，仓库提示坐稳；需核对或补坐位图。 ",
+          "阻断直接复用：源图站姿，仓库提示坐稳；需核对或补坐位图。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。"
+        ]
+      },
+      {
+        "slot_id": "057_E-AXU-017_s02",
+        "public_action_id": "E-AXU-017",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "阻断直接复用：源图站姿，仓库提示坐稳；需核对或补坐位图。 "
+        ]
+      }
+    ],
+    "issues": [
+      "阻断直接复用：源图站姿，仓库提示坐稳；需核对或补坐位图。 ",
+      "阻断直接复用：源图站姿，仓库提示坐稳；需核对或补坐位图。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "resource_library_only"
+  },
+  "knee_extension": {
+    "exercise_id": "knee_extension",
+    "label": "坐位膝屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "013_E-LOW-007_s01",
+        "public_action_id": "E-LOW-007",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；坐位大腿承托、本人侧别与回位复用须确认。  相关替代/容易混淆卡：066（各自条件另核对）。",
+          "候选；坐位大腿承托、本人侧别与回位复用须确认。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：066（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "013_E-LOW-007_s02",
+        "public_action_id": "E-LOW-007",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；坐位大腿承托、本人侧别与回位复用须确认。  相关替代/容易混淆卡：066（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；坐位大腿承托、本人侧别与回位复用须确认。  相关替代/容易混淆卡：066（各自条件另核对）。",
+      "候选；坐位大腿承托、本人侧别与回位复用须确认。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：066（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "hip_abduction": {
+    "exercise_id": "hip_abduction",
+    "label": "髋外展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "008_E-LOW-003_s01",
+        "public_action_id": "E-LOW-003",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；固定扶手、支撑腿与测试腿不能互换。  相关替代/容易混淆卡：073,075（各自条件另核对）。",
+          "候选；固定扶手、支撑腿与测试腿不能互换。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：073,075（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "008_E-LOW-003_s02",
+        "public_action_id": "E-LOW-003",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；固定扶手、支撑腿与测试腿不能互换。  相关替代/容易混淆卡：073,075（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；固定扶手、支撑腿与测试腿不能互换。  相关替代/容易混淆卡：073,075（各自条件另核对）。",
+      "候选；固定扶手、支撑腿与测试腿不能互换。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：073,075（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "shoulder_adduction": {
+    "exercise_id": "shoulder_adduction",
+    "label": "肩内收回位",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "049_E-AXU-013_s02",
+        "public_action_id": "E-AXU-013",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "阻断自动映射：仓库从舒适外展起点收回再抬回；与外展任务起点相反。本行是待审核的反向组合，不能按s01起点套用。 ",
+          "阻断自动映射：仓库从舒适外展起点收回再抬回；与外展任务起点相反。本行是待审核的反向组合，不能按s01起点套用。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。"
+        ]
+      },
+      {
+        "slot_id": "049_E-AXU-013_s01",
+        "public_action_id": "E-AXU-013",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "阻断自动映射：仓库从舒适外展起点收回再抬回；与外展任务起点相反。本行是待审核的反向组合，不能按s01起点套用。 "
+        ]
+      }
+    ],
+    "issues": [
+      "阻断自动映射：仓库从舒适外展起点收回再抬回；与外展任务起点相反。本行是待审核的反向组合，不能按s01起点套用。 ",
+      "阻断自动映射：仓库从舒适外展起点收回再抬回；与外展任务起点相反。本行是待审核的反向组合，不能按s01起点套用。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "resource_library_only"
+  },
+  "elbow_extension": {
+    "exercise_id": "elbow_extension",
+    "label": "肘伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "057_E-AXU-017_s02",
+        "public_action_id": "E-AXU-017",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "阻断直接复用：仓库从屈肘起点伸展，阶段反向且源图站位与仓库坐位不同。 ",
+          "阻断直接复用：仓库从屈肘起点伸展，阶段反向且源图站位与仓库坐位不同。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。"
+        ]
+      },
+      {
+        "slot_id": "057_E-AXU-017_s01",
+        "public_action_id": "E-AXU-017",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "阻断直接复用：仓库从屈肘起点伸展，阶段反向且源图站位与仓库坐位不同。 "
+        ]
+      }
+    ],
+    "issues": [
+      "阻断直接复用：仓库从屈肘起点伸展，阶段反向且源图站位与仓库坐位不同。 ",
+      "阻断直接复用：仓库从屈肘起点伸展，阶段反向且源图站位与仓库坐位不同。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "resource_library_only"
+  },
+  "knee_flexion": {
+    "exercise_id": "knee_flexion",
+    "label": "膝屈曲",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "068_T-LOW-045_s01",
+        "public_action_id": "T-LOW-045",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "条件候选：源图扶稳站姿，仅在当前已确认支撑姿势允许该变式时复核；不能自动替换为仰卧滑跟065。  相关替代/容易混淆卡：012,065（各自条件另核对）。",
+          "条件候选：源图扶稳站姿，仅在当前已确认支撑姿势允许该变式时复核；不能自动替换为仰卧滑跟065。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：012,065（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "068_T-LOW-045_s02",
+        "public_action_id": "T-LOW-045",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "条件候选：源图扶稳站姿，仅在当前已确认支撑姿势允许该变式时复核；不能自动替换为仰卧滑跟065。  相关替代/容易混淆卡：012,065（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "条件候选：源图扶稳站姿，仅在当前已确认支撑姿势允许该变式时复核；不能自动替换为仰卧滑跟065。  相关替代/容易混淆卡：012,065（各自条件另核对）。",
+      "条件候选：源图扶稳站姿，仅在当前已确认支撑姿势允许该变式时复核；不能自动替换为仰卧滑跟065。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：012,065（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "shoulder_extension": {
+    "exercise_id": "shoulder_extension",
+    "label": "肩后伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "048_E-AXU-012_s01",
+        "public_action_id": "E-AXU-012",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；s03是后伸终点，不能按第3图当回位。 ",
+          "候选；s03是后伸终点，不能按第3图当回位。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。"
+        ]
+      },
+      {
+        "slot_id": "048_E-AXU-012_s03",
+        "public_action_id": "E-AXU-012",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；s03是后伸终点，不能按第3图当回位。 "
+        ]
+      }
+    ],
+    "issues": [
+      "候选；s03是后伸终点，不能按第3图当回位。 ",
+      "候选；s03是后伸终点，不能按第3图当回位。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "hip_flexion": {
+    "exercise_id": "hip_flexion",
+    "label": "髋屈曲",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "006_E-LOW-001_s01",
+        "public_action_id": "E-LOW-001",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；单手扶持与本人测试侧待核对。072的s02左膝、s03右膝是另一种交替版本，不能跨组自动替换。  相关替代/容易混淆卡：072（各自条件另核对）。",
+          "候选；单手扶持与本人测试侧待核对。072的s02左膝、s03右膝是另一种交替版本，不能跨组自动替换。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：072（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "006_E-LOW-001_s02",
+        "public_action_id": "E-LOW-001",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；单手扶持与本人测试侧待核对。072的s02左膝、s03右膝是另一种交替版本，不能跨组自动替换。  相关替代/容易混淆卡：072（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；单手扶持与本人测试侧待核对。072的s02左膝、s03右膝是另一种交替版本，不能跨组自动替换。  相关替代/容易混淆卡：072（各自条件另核对）。",
+      "候选；单手扶持与本人测试侧待核对。072的s02左膝、s03右膝是另一种交替版本，不能跨组自动替换。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：072（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "hip_extension": {
+    "exercise_id": "hip_extension",
+    "label": "髋后伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "007_E-LOW-002_s01",
+        "public_action_id": "E-LOW-002",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；躯干、支撑脚、扶手与机位须整组一致。  相关替代/容易混淆卡：074（各自条件另核对）。",
+          "候选；躯干、支撑脚、扶手与机位须整组一致。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：074（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "007_E-LOW-002_s02",
+        "public_action_id": "E-LOW-002",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；躯干、支撑脚、扶手与机位须整组一致。  相关替代/容易混淆卡：074（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；躯干、支撑脚、扶手与机位须整组一致。  相关替代/容易混淆卡：074（各自条件另核对）。",
+      "候选；躯干、支撑脚、扶手与机位须整组一致。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：074（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "hip_adduction": {
+    "exercise_id": "hip_adduction",
+    "label": "髋内收",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "008_E-LOW-003_s02",
+        "public_action_id": "E-LOW-003",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "阻断自动映射：仓库要求外展起点收腿；源卡s03从中立小幅越中线，与仓库起点不同。本行仅提出外展图回中立的人工组合。 ",
+          "阻断自动映射：仓库要求外展起点收腿；源卡s03从中立小幅越中线，与仓库起点不同。本行仅提出外展图回中立的人工组合。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。"
+        ]
+      },
+      {
+        "slot_id": "008_E-LOW-003_s01",
+        "public_action_id": "E-LOW-003",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "阻断自动映射：仓库要求外展起点收腿；源卡s03从中立小幅越中线，与仓库起点不同。本行仅提出外展图回中立的人工组合。 "
+        ]
+      }
+    ],
+    "issues": [
+      "阻断自动映射：仓库要求外展起点收腿；源卡s03从中立小幅越中线，与仓库起点不同。本行仅提出外展图回中立的人工组合。 ",
+      "阻断自动映射：仓库要求外展起点收腿；源卡s03从中立小幅越中线，与仓库起点不同。本行仅提出外展图回中立的人工组合。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "resource_library_only"
+  },
+  "wrist_flexion": {
+    "exercise_id": "wrist_flexion",
+    "label": "腕屈曲",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "059_E-AXU-019_s01",
+        "public_action_id": "E-AXU-019",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；桌面支持、侧面机位、掌屈方向待核对；不得以177负重图替换无外阻观察。  相关替代/容易混淆卡：177（各自条件另核对）。",
+          "候选；桌面支持、侧面机位、掌屈方向待核对；不得以177负重图替换无外阻观察。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：177（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "059_E-AXU-019_s02",
+        "public_action_id": "E-AXU-019",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；桌面支持、侧面机位、掌屈方向待核对；不得以177负重图替换无外阻观察。  相关替代/容易混淆卡：177（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；桌面支持、侧面机位、掌屈方向待核对；不得以177负重图替换无外阻观察。  相关替代/容易混淆卡：177（各自条件另核对）。",
+      "候选；桌面支持、侧面机位、掌屈方向待核对；不得以177负重图替换无外阻观察。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：177（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "wrist_extension": {
+    "exercise_id": "wrist_extension",
+    "label": "腕伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "059_E-AXU-019_s01",
+        "public_action_id": "E-AXU-019",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；s03是背伸终点，不能被统一当回位；176握哑铃版本不是本任务默认图。  相关替代/容易混淆卡：176（各自条件另核对）。",
+          "候选；s03是背伸终点，不能被统一当回位；176握哑铃版本不是本任务默认图。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：176（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "059_E-AXU-019_s03",
+        "public_action_id": "E-AXU-019",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；s03是背伸终点，不能被统一当回位；176握哑铃版本不是本任务默认图。  相关替代/容易混淆卡：176（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；s03是背伸终点，不能被统一当回位；176握哑铃版本不是本任务默认图。  相关替代/容易混淆卡：176（各自条件另核对）。",
+      "候选；s03是背伸终点，不能被统一当回位；176握哑铃版本不是本任务默认图。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：176（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "wrist_radial_deviation": {
+    "exercise_id": "wrist_radial_deviation",
+    "label": "腕桡偏",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "060_E-AXU-020_s01",
+        "public_action_id": "E-AXU-020",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "阻断直接复用：登记上方近景，实际图为斜前机位；拇指侧方向与前臂参考须人工复核。178拇指朝上变式不自动替代。  相关替代/容易混淆卡：178（各自条件另核对）。",
+          "阻断直接复用：登记上方近景，实际图为斜前机位；拇指侧方向与前臂参考须人工复核。178拇指朝上变式不自动替代。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：178（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "060_E-AXU-020_s02",
+        "public_action_id": "E-AXU-020",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "阻断直接复用：登记上方近景，实际图为斜前机位；拇指侧方向与前臂参考须人工复核。178拇指朝上变式不自动替代。  相关替代/容易混淆卡：178（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "阻断直接复用：登记上方近景，实际图为斜前机位；拇指侧方向与前臂参考须人工复核。178拇指朝上变式不自动替代。  相关替代/容易混淆卡：178（各自条件另核对）。",
+      "阻断直接复用：登记上方近景，实际图为斜前机位；拇指侧方向与前臂参考须人工复核。178拇指朝上变式不自动替代。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：178（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "resource_library_only"
+  },
+  "wrist_ulnar_deviation": {
+    "exercise_id": "wrist_ulnar_deviation",
+    "label": "腕尺偏",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "060_E-AXU-020_s01",
+        "public_action_id": "E-AXU-020",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "阻断直接复用：登记上方近景，实际斜前机位；尺偏方向、侧别及回中立须复核。  相关替代/容易混淆卡：178（各自条件另核对）。",
+          "阻断直接复用：登记上方近景，实际斜前机位；尺偏方向、侧别及回中立须复核。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：178（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "060_E-AXU-020_s03",
+        "public_action_id": "E-AXU-020",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "阻断直接复用：登记上方近景，实际斜前机位；尺偏方向、侧别及回中立须复核。  相关替代/容易混淆卡：178（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "阻断直接复用：登记上方近景，实际斜前机位；尺偏方向、侧别及回中立须复核。  相关替代/容易混淆卡：178（各自条件另核对）。",
+      "阻断直接复用：登记上方近景，实际斜前机位；尺偏方向、侧别及回中立须复核。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：178（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "resource_library_only"
+  },
+  "ankle_dorsiflexion": {
+    "exercise_id": "ankle_dorsiflexion",
+    "label": "踝背屈",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "122_T-LOW-046_s01",
+        "public_action_id": "T-LOW-046",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；稳定坐位、小腿支持和踝动作待核对。116有弹力带、四独立设置，不能替代无外阻图。  相关替代/容易混淆卡：022,116（各自条件另核对）。",
+          "候选；稳定坐位、小腿支持和踝动作待核对。116有弹力带、四独立设置，不能替代无外阻图。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：022,116（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "122_T-LOW-046_s02",
+        "public_action_id": "T-LOW-046",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；稳定坐位、小腿支持和踝动作待核对。116有弹力带、四独立设置，不能替代无外阻图。  相关替代/容易混淆卡：022,116（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；稳定坐位、小腿支持和踝动作待核对。116有弹力带、四独立设置，不能替代无外阻图。  相关替代/容易混淆卡：022,116（各自条件另核对）。",
+      "候选；稳定坐位、小腿支持和踝动作待核对。116有弹力带、四独立设置，不能替代无外阻图。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：022,116（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "ankle_plantarflexion": {
+    "exercise_id": "ankle_plantarflexion",
+    "label": "踝跖屈",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "122_T-LOW-046_s01",
+        "public_action_id": "T-LOW-046",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；s03跖屈终点不是回位；不能用站立提踵图代替坐位足部活动。  相关替代/容易混淆卡：022,116（各自条件另核对）。",
+          "候选；s03跖屈终点不是回位；不能用站立提踵图代替坐位足部活动。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：022,116（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "122_T-LOW-046_s03",
+        "public_action_id": "T-LOW-046",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；s03跖屈终点不是回位；不能用站立提踵图代替坐位足部活动。  相关替代/容易混淆卡：022,116（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；s03跖屈终点不是回位；不能用站立提踵图代替坐位足部活动。  相关替代/容易混淆卡：022,116（各自条件另核对）。",
+      "候选；s03跖屈终点不是回位；不能用站立提踵图代替坐位足部活动。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：022,116（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "thumb_mcp_flexion": {
+    "exercise_id": "thumb_mcp_flexion",
+    "label": "拇指掌指关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "thumb_mcp_extension": {
+    "exercise_id": "thumb_mcp_extension",
+    "label": "拇指掌指关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "thumb_ip_flexion": {
+    "exercise_id": "thumb_ip_flexion",
+    "label": "拇指指间关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "thumb_ip_extension": {
+    "exercise_id": "thumb_ip_extension",
+    "label": "拇指指间关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "index_mcp_flexion": {
+    "exercise_id": "index_mcp_flexion",
+    "label": "食指掌指关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "index_mcp_extension": {
+    "exercise_id": "index_mcp_extension",
+    "label": "食指掌指关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "index_pip_flexion": {
+    "exercise_id": "index_pip_flexion",
+    "label": "食指近端指间关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "index_pip_extension": {
+    "exercise_id": "index_pip_extension",
+    "label": "食指近端指间关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "index_dip_flexion": {
+    "exercise_id": "index_dip_flexion",
+    "label": "食指远端指间关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "index_dip_extension": {
+    "exercise_id": "index_dip_extension",
+    "label": "食指远端指间关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "middle_mcp_flexion": {
+    "exercise_id": "middle_mcp_flexion",
+    "label": "中指掌指关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "middle_mcp_extension": {
+    "exercise_id": "middle_mcp_extension",
+    "label": "中指掌指关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "middle_pip_flexion": {
+    "exercise_id": "middle_pip_flexion",
+    "label": "中指近端指间关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "middle_pip_extension": {
+    "exercise_id": "middle_pip_extension",
+    "label": "中指近端指间关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "middle_dip_flexion": {
+    "exercise_id": "middle_dip_flexion",
+    "label": "中指远端指间关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "middle_dip_extension": {
+    "exercise_id": "middle_dip_extension",
+    "label": "中指远端指间关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "ring_mcp_flexion": {
+    "exercise_id": "ring_mcp_flexion",
+    "label": "无名指掌指关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "ring_mcp_extension": {
+    "exercise_id": "ring_mcp_extension",
+    "label": "无名指掌指关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "ring_pip_flexion": {
+    "exercise_id": "ring_pip_flexion",
+    "label": "无名指近端指间关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "ring_pip_extension": {
+    "exercise_id": "ring_pip_extension",
+    "label": "无名指近端指间关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "ring_dip_flexion": {
+    "exercise_id": "ring_dip_flexion",
+    "label": "无名指远端指间关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "ring_dip_extension": {
+    "exercise_id": "ring_dip_extension",
+    "label": "无名指远端指间关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "pinky_mcp_flexion": {
+    "exercise_id": "pinky_mcp_flexion",
+    "label": "小指掌指关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "pinky_mcp_extension": {
+    "exercise_id": "pinky_mcp_extension",
+    "label": "小指掌指关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "pinky_pip_flexion": {
+    "exercise_id": "pinky_pip_flexion",
+    "label": "小指近端指间关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "pinky_pip_extension": {
+    "exercise_id": "pinky_pip_extension",
+    "label": "小指近端指间关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "pinky_dip_flexion": {
+    "exercise_id": "pinky_dip_flexion",
+    "label": "小指远端指间关节屈伸",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "pinky_dip_extension": {
+    "exercise_id": "pinky_dip_extension",
+    "label": "小指远端指间关节伸展",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [],
+    "issues": [],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "neck_lateral_flexion": {
+    "exercise_id": "neck_lateral_flexion",
+    "label": "头颈侧屈观察",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "046_E-AXU-010_s01",
+        "public_action_id": "E-AXU-010",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；左向move为s02、右向move为s03，须核对本人侧别，不按屏幕左右认定。  相关替代/容易混淆卡：149（各自条件另核对）。",
+          "候选；左向move为s02、右向move为s03，须核对本人侧别，不按屏幕左右认定。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：149（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "046_E-AXU-010_s02",
+        "public_action_id": "E-AXU-010",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；左向move为s02、右向move为s03，须核对本人侧别，不按屏幕左右认定。  相关替代/容易混淆卡：149（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "046_E-AXU-010_s03",
+        "public_action_id": "E-AXU-010",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；左向move为s02、右向move为s03，须核对本人侧别，不按屏幕左右认定。  相关替代/容易混淆卡：149（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；左向move为s02、右向move为s03，须核对本人侧别，不按屏幕左右认定。  相关替代/容易混淆卡：149（各自条件另核对）。",
+      "候选；左向move为s02、右向move为s03，须核对本人侧别，不按屏幕左右认定。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：149（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "neck_flexion": {
+    "exercise_id": "neck_flexion",
+    "label": "头颈前屈观察",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "147_T-AXU-009_s01",
+        "public_action_id": "T-AXU-009",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；侧面稳定坐位。left/right表示拍摄测试侧，不是低头方向；图中测试侧待确认。  相关替代/容易混淆卡：045（各自条件另核对）。",
+          "候选；侧面稳定坐位。left/right表示拍摄测试侧，不是低头方向；图中测试侧待确认。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：045（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "147_T-AXU-009_s02",
+        "public_action_id": "T-AXU-009",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；侧面稳定坐位。left/right表示拍摄测试侧，不是低头方向；图中测试侧待确认。  相关替代/容易混淆卡：045（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；侧面稳定坐位。left/right表示拍摄测试侧，不是低头方向；图中测试侧待确认。  相关替代/容易混淆卡：045（各自条件另核对）。",
+      "候选；侧面稳定坐位。left/right表示拍摄测试侧，不是低头方向；图中测试侧待确认。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：045（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "neck_extension": {
+    "exercise_id": "neck_extension",
+    "label": "头颈后伸观察",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "148_T-AXU-010_s01",
+        "public_action_id": "T-AXU-010",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；侧面稳定坐位、小幅抬头。left/right是拍摄侧，不可生成两种后仰方向。  相关替代/容易混淆卡：045（各自条件另核对）。",
+          "候选；侧面稳定坐位、小幅抬头。left/right是拍摄侧，不可生成两种后仰方向。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：045（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "148_T-AXU-010_s02",
+        "public_action_id": "T-AXU-010",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；侧面稳定坐位、小幅抬头。left/right是拍摄侧，不可生成两种后仰方向。  相关替代/容易混淆卡：045（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；侧面稳定坐位、小幅抬头。left/right是拍摄侧，不可生成两种后仰方向。  相关替代/容易混淆卡：045（各自条件另核对）。",
+      "候选；侧面稳定坐位、小幅抬头。left/right是拍摄侧，不可生成两种后仰方向。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：045（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "trunk_lateral_flexion": {
+    "exercise_id": "trunk_lateral_flexion",
+    "label": "躯干侧屈观察",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "040_E-AXU-007_s01",
+        "public_action_id": "E-AXU-007",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；坐位、骨盆支持保留，左向s02右向s03。037站位不能替代坐位。  相关替代/容易混淆卡：037,125,129（各自条件另核对）。",
+          "候选；坐位、骨盆支持保留，左向s02右向s03。037站位不能替代坐位。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：037,125,129（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "040_E-AXU-007_s02",
+        "public_action_id": "E-AXU-007",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；坐位、骨盆支持保留，左向s02右向s03。037站位不能替代坐位。  相关替代/容易混淆卡：037,125,129（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "040_E-AXU-007_s03",
+        "public_action_id": "E-AXU-007",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；坐位、骨盆支持保留，左向s02右向s03。037站位不能替代坐位。  相关替代/容易混淆卡：037,125,129（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；坐位、骨盆支持保留，左向s02右向s03。037站位不能替代坐位。  相关替代/容易混淆卡：037,125,129（各自条件另核对）。",
+      "候选；坐位、骨盆支持保留，左向s02右向s03。037站位不能替代坐位。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：037,125,129（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "trunk_flexion": {
+    "exercise_id": "trunk_flexion",
+    "label": "躯干前屈观察",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "123_T-AXU-001_s01",
+        "public_action_id": "T-AXU-001",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "候选；稳定椅坐位、双手大腿支持，幅度与当次条件须复核。  相关替代/容易混淆卡：036,039（各自条件另核对）。",
+          "候选；稳定椅坐位、双手大腿支持，幅度与当次条件须复核。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：036,039（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "123_T-AXU-001_s02",
+        "public_action_id": "T-AXU-001",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "候选；稳定椅坐位、双手大腿支持，幅度与当次条件须复核。  相关替代/容易混淆卡：036,039（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "候选；稳定椅坐位、双手大腿支持，幅度与当次条件须复核。  相关替代/容易混淆卡：036,039（各自条件另核对）。",
+      "候选；稳定椅坐位、双手大腿支持，幅度与当次条件须复核。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：036,039（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "internal_candidate"
+  },
+  "trunk_extension": {
+    "exercise_id": "trunk_extension",
+    "label": "躯干后伸观察",
+    "review_status": "pending",
+    "patient_enabled": false,
+    "candidate_images": [
+      {
+        "slot_id": "124_T-AXU-002_s01",
+        "public_action_id": "T-AXU-002",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "start"
+          },
+          {
+            "side": "left",
+            "phase": "return"
+          },
+          {
+            "side": "right",
+            "phase": "start"
+          },
+          {
+            "side": "right",
+            "phase": "return"
+          }
+        ],
+        "issues": [
+          "阻断直接复用：源图站立扶骨盆，仓库要求稳定坐位小幅后移；039坐位伸胸也不等于整体躯干后移。  相关替代/容易混淆卡：036,039,128（各自条件另核对）。",
+          "阻断直接复用：源图站立扶骨盆，仓库要求稳定坐位小幅后移；039坐位伸胸也不等于整体躯干后移。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：036,039,128（各自条件另核对）。"
+        ]
+      },
+      {
+        "slot_id": "124_T-AXU-002_s02",
+        "public_action_id": "T-AXU-002",
+        "side": null,
+        "phase": null,
+        "review_status": "pending",
+        "proposed_targets": [
+          {
+            "side": "left",
+            "phase": "move"
+          },
+          {
+            "side": "right",
+            "phase": "move"
+          }
+        ],
+        "issues": [
+          "阻断直接复用：源图站立扶骨盆，仓库要求稳定坐位小幅后移；039坐位伸胸也不等于整体躯干后移。  相关替代/容易混淆卡：036,039,128（各自条件另核对）。"
+        ]
+      }
+    ],
+    "issues": [
+      "阻断直接复用：源图站立扶骨盆，仓库要求稳定坐位小幅后移；039坐位伸胸也不等于整体躯干后移。  相关替代/容易混淆卡：036,039,128（各自条件另核对）。",
+      "阻断直接复用：源图站立扶骨盆，仓库要求稳定坐位小幅后移；039坐位伸胸也不等于整体躯干后移。 回位复用同一任务起点图，仅表述待审关系，不能把静止图当动作轨迹证据。 相关替代/容易混淆卡：036,039,128（各自条件另核对）。"
+    ],
+    "phase_slots": {
+      "left": {
+        "start": null,
+        "move": null,
+        "return": null
+      },
+      "right": {
+        "start": null,
+        "move": null,
+        "return": null
+      }
+    },
+    "preview_scope": "resource_library_only"
+  }
+}

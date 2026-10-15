@@ -1,0 +1,3 @@
+# Provenance snapshots: preserve exact original bytes for SHA256 verification.
+*.csv -text -diff
+cards/*.md -text

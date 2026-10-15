@@ -47,7 +47,7 @@ function syncNavigation(){
 }
 function libraryRows(items,mode){
   if(mode!=='fitness' && window.RehabV51&&state.shared)items=window.RehabV51.order(items);
-  return items.length?items.map(x=>`<button class="action-row" data-action="${esc(x.id)}">${mode!=='fitness'&&(window.RehabV51&&state.shared)?window.RehabV51.thumb(x.id):''}<span><strong>${esc(x.label)}</strong><small>${esc(mode==='fitness'?x.group:x.joint_label)} · ${mode==='fitness'||x.view==='sagittal'?'侧面':'正面'}拍摄</small></span><span class="row-link">查看</span></button>`).join(''):'<p class="library-empty" role="status">没有找到这个动作，试试其他名称或部位。</p>';
+  return items.length?items.map(x=>`<button class="action-row" data-action="${esc(x.id)}">${mode!=='fitness'&&(window.RehabV51&&state.shared)?window.RehabV51.thumb(x.id,true):''}<span><strong>${esc(x.label)}</strong><small>${esc(mode==='fitness'?x.group:x.joint_label)} · ${mode==='fitness'||x.view==='sagittal'?'侧面':'正面'}拍摄</small></span><span class="row-link">查看</span></button>`).join(''):'<p class="library-empty" role="status">没有找到这个动作，试试其他名称或部位。</p>';
 }
 function filteredActions(items,mode){
   return items.filter(x=>(mode==='fitness'?(state.fitnessGroup==='all'||x.group===state.fitnessGroup):(state.joint==='all'||x.joint===state.joint))&&(state.viewFilter==='all'||(mode==='fitness'?'sagittal':x.view)===state.viewFilter)&&(!state.search||x.label.toLowerCase().includes(state.search.toLowerCase())));
