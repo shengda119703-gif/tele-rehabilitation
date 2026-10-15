@@ -74,3 +74,16 @@ test('existing presentation defaults, plan and preparation do not opt into candi
 test('candidate images are contained and overlays cannot cover anatomy',()=>{
  const css=fs.readFileSync(path.join(root,'rehab-candidate-images.css'),'utf8');assert.doesNotMatch(css,/object-fit\s*:\s*cover|scaleX|rotate|!important/);assert.match(css,/object-fit:contain/);assert.match(css,/rv-candidate-thumb img\{width:100%;height:auto/);assert.doesNotMatch(css,/grid-template-rows:minmax\(0,1fr\) 22px/);assert.match(css,/figcaption\{position:static/);
 });
+
+// Sorting is a catalogue view only: neither the input nor plan execution order changes.
+test('pictured actions precede text-only actions without dropping IDs or changing group order',async()=>{
+ const w=context('example.com',false,'');await w.RehabCandidateImages.load();
+ const c={window:w};vm.createContext(c);vm.runInContext(fs.readFileSync(path.join(root,'rehab-v51.js'),'utf8'),c);
+ const items=[{id:'index_mcp_flexion'},{id:'elbow_extension'},{id:'hip_flexion'},{id:'shoulder_abduction'},{id:'ankle_dorsiflexion'}],before=JSON.stringify(items);
+ assert.deepEqual(Array.from(w.RehabV51.order(items),x=>x.id),['shoulder_abduction','hip_flexion','ankle_dorsiflexion','index_mcp_flexion','elbow_extension']);
+ assert.equal(JSON.stringify(items),before);
+ const all=Object.keys(mapping).map(id=>({id})),ordered=Array.from(w.RehabV51.order(all));
+ assert.equal(ordered.length,53);assert.equal(new Set(ordered.map(x=>x.id)).size,53);
+ assert.ok(ordered.slice(0,18).every(x=>w.RehabV51.thumb(x.id,true).includes('<img')));
+ assert.ok(ordered.slice(18).every(x=>!w.RehabV51.thumb(x.id,true).includes('<img')));
+});
