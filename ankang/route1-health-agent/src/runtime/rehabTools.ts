@@ -25,8 +25,8 @@ export interface RehabToolPort {
   describe(text: string, result: RehabResult): Promise<string>;
 }
 
-export async function prepareRehabReply(port: RehabToolPort, text: string, check = () => {}) {
-  const call = await port.select(text);
+export async function prepareRehabReply(port: RehabToolPort, text: string, check = () => {}, suggestedCall: RehabCall | null = null) {
+  const call = suggestedCall ?? await port.select(text);
   check();
   if (call === null) return null;
   if (
