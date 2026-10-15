@@ -216,6 +216,7 @@ def create_app(settings: Settings, database=None, *, web_assets=None, ai_config=
             "doctor_identity": "shared_admin", "mfa_required": False, "server_models": False,
             "providers": {name: {"enabled": False, "available": False, "execution_location": "DISABLED"}
                 for name in ("llm", "asr", "tts", "ocr", "sms", "push")},
+            "account_family": True, "family_link_grants_access": False,
             "plans": True, "text_messages": True, "workbench": True,
             "voice_messages": False, "calls": False, "incremental_sync": False,
             "text_ai_gateway": {"configured": app.state.text_ai_configured, "usage_accounted": True,
@@ -456,6 +457,8 @@ def create_app(settings: Settings, database=None, *, web_assets=None, ai_config=
     install_programmes(app, db, caller, patient_scope, BASE)
     from .rehab_workflow import install_workflow
     install_workflow(app, db, caller, patient_scope, BASE)
+    from .family import install_family
+    install_family(app, db, caller, patient_scope, BASE, settings.secret)
 
     # Models are public browser assets only; never import a server execution API.
     shared = ROOT / "mobile_rehab" / "static"

@@ -16,12 +16,16 @@ const ready=store.serial(async()=>{
  // Interrupted jobs are explicitly failed, not silently counted as successful.
  store.change(v=>v.jobs.forEach(j=>{if(['queued','analyzing','uploading'].includes(j.state)){j.state='failed';j.message='上次分析被中断，原录像保留，请重新分析。';}}));
 });
-let cloudState={familyMembers:[],grants:{},at:0},cloudBusy=false;
-async function cloudRefresh(){
- if(cloudBusy||!PhoneCloud.configured())return;cloudBusy=true;
- try{const state=await PhoneCloud.request('/v1/family');cloudState={...state,at:Date.now()};await PhoneCloud.publish(root.PhoneLocal);if(typeof ui!=='undefined'&&ui.page==='family'&&!ui.busy&&typeof load==='function')load();}
- catch(e){cloudState={familyMembers:[],grants:{},at:Date.now(),unavailable:true};if(typeof ui!=='undefined'&&ui.page==='family'&&!ui.busy&&typeof load==='function')load();}
- finally{cloudBusy=false;}
+let cloudState={familyMembers:[],grants:{},at:0},cloudReading=null,cloudRevision=0;
+async function cloudRefresh(notify=true,strict=false){
+ if(!(PhoneCloud.familyConfigured?.()??PhoneCloud.configured()))return;
+ if(cloudReading){try{await cloudReading;}catch(e){if(strict)throw e;}return;}
+ const revision=cloudRevision;
+ cloudReading=(async()=>{const state=await PhoneCloud.request('/v1/family');if(revision!==cloudRevision)return;cloudState={...state,at:Date.now()};try{await PhoneCloud.publish(root.PhoneLocal);}catch{/* A summary failure cannot undo a confirmed relationship. */}})();
+ try{await cloudReading;}
+ catch(e){cloudState={familyMembers:[],grants:{},at:Date.now(),unavailable:true};if(strict)throw e;}
+ finally{cloudReading=null;}
+ if(notify&&typeof ui!=='undefined'&&ui.page==='family'&&!ui.busy&&typeof load==='function')load();
 }
 function publicJob(j,brief=false){const out=copy(j);if(PM.errors.has(j.id)){out.state='failed';out.message=PM.errors.get(j.id);}if(brief)delete out.result;return out;}
 function findJob(id){const j=store.value.jobs.find(j=>j.id===id);if(!j)throw Error('找不到这项记录');return j;}
@@ -53,7 +57,8 @@ async function snapshot(){const s=await domain.request('snapshot',owner,{},now()
  const jobs=store.value.jobs.filter(j=>j.state==='done');
  const plan=p?{...p,progress,items:p.items.map(i=>({...i,exercise_label:c.rehab.find(s=>s.id===i.exercise_id)?.label||i.exercise_id}))}:null;
  s.dailyProduct=copy(store.value.daily);s.familyMembers=PhoneLin.family(store);
- if(PhoneCloud.configured()){
+ if(PhoneCloud.familyConfigured?.()??PhoneCloud.configured()){
+  s.familyMembers=[];s.dailyProduct.grants={};
   if(Date.now()-cloudState.at<60000){s.familyMembers=copy(cloudState.familyMembers);s.dailyProduct.grants=copy(cloudState.grants);}
   if(Date.now()-cloudState.at>20000)setTimeout(cloudRefresh,0);
  }
@@ -73,6 +78,12 @@ async function request(path,opts={}){
   PM.stopLive();return{stopped:true};
  }
  if(route==='/live'){const p=await jsonBody(opts);if(p.consent!==true)failure('请确认本次相机分析');return PM.startLive(await PM.spec(p.exercise),p.side);}
+ // A family-page refresh must revalidate relationship and grants at the server,
+ // not label the short-lived local cache as a fresh authorization check.
+ if(route==='/unified'&&typeof ui!=='undefined'&&ui.page==='family'&&!PhoneLin.isLin(store)){
+  if(PS.cloudKey(store.key)&&!PhoneCloud.familyConfigured())failure('请先登录当前本人账号，再管理家人关联',401);
+  if(PhoneCloud.familyConfigured?.()??PhoneCloud.configured())await cloudRefresh(false,true);
+ }
  return store.serial(async()=>{
   const payload=opts.body instanceof Blob?null:await jsonBody(opts);
   if(route==='/pair')return{ok:true,local:true};
@@ -99,7 +110,7 @@ async function request(path,opts={}){
    if(operation.startsWith('family')){
     if(PhoneLin.isLin(store))return PhoneLin.familyOperation(store,operation,payload);
     const action=({familyInvite:'invite',familyBind:'bind',familyGrant:'grant',familyUnbind:'unbind'})[operation];if(!action)failure('家庭操作无效');
-    const r=await PhoneCloud.request('/v1/family/'+action,'POST',payload);cloudState={...await PhoneCloud.request('/v1/family'),at:Date.now()};await PhoneCloud.publish(root.PhoneLocal);return r;
+    const r=await PhoneCloud.request('/v1/family/'+action,'POST',payload);cloudRevision++;cloudState={...await PhoneCloud.request('/v1/family'),at:Date.now()};try{await PhoneCloud.publish(root.PhoneLocal);}catch{/* Keep the committed relationship/permission receipt. */}return r;
    }
    return PS.applyDaily(store,operation,payload,profile());
   }

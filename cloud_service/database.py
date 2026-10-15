@@ -7,6 +7,7 @@ from sqlalchemy import (
 )
 
 metadata = MetaData()
+SCHEMA_VERSION = 5
 schema = Table("cloud_schema", metadata, Column("version", Integer, primary_key=True))
 accounts = Table("accounts", metadata,
     Column("id", String(36), primary_key=True),
@@ -109,19 +110,20 @@ class Database:
         from . import reports  # noqa: F401
         from . import plan_programmes  # noqa: F401
         from . import rehab_workflow  # noqa: F401
+        from . import family  # noqa: F401
         with self.engine.begin() as connection:
             if self.engine.dialect.name == "postgresql":
                 connection.exec_driver_sql("SELECT pg_advisory_xact_lock(74321001)")
             version = connection.scalar(select(schema.c.version)) if inspect(connection).has_table(schema.name) else None
-            if version not in {None, 1, 2, 3}:
+            if version not in {None, 1, 2, 3, 4, SCHEMA_VERSION}:
                 raise RuntimeError("Unsupported cloud schema version")
             metadata.create_all(connection)
             if version is None:
-                connection.execute(schema.insert().values(version=3))
-            elif version in {1, 2}:
-                connection.execute(update(schema).where(schema.c.version == version).values(version=3))
+                connection.execute(schema.insert().values(version=SCHEMA_VERSION))
+            elif version != SCHEMA_VERSION:
+                connection.execute(update(schema).where(schema.c.version == version).values(version=SCHEMA_VERSION))
 
     def ready(self):
         with self.engine.connect() as connection:
-            return connection.scalar(select(schema.c.version)) == 3 and bool(connection.scalar(
+            return connection.scalar(select(schema.c.version)) == SCHEMA_VERSION and bool(connection.scalar(
                 select(accounts.c.id).where(accounts.c.role == "DOCTOR_ADMIN", accounts.c.active.is_(True))))

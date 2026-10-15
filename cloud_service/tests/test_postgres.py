@@ -39,6 +39,26 @@ def native_patient(app):
     return patient, signed
 
 
+def test_family_invite_single_use_across_workers_and_private_defaults(postgres_app):
+    app=postgres_app
+    clients=[]
+    for name in ("qa-family-a","qa-family-b","qa-family-c"):
+        c=TestClient(app,headers={"X-Ankang-Client":"native"})
+        ident=c.post(BASE+"/auth/register",json={"username":name,"password":"1"}).json()["patient_id"]
+        signed=c.post(BASE+"/auth/password/login",json={"username":name,"password":"1","client_kind":"APK"}).json()
+        c.headers["Authorization"]="Bearer "+signed["access_token"]
+        clients.append((c,BASE+"/patients/"+ident+"/family"))
+    a,ap=clients[0]
+    code=a.post(ap+"/invite",json={}).json()["code"]
+    with ThreadPoolExecutor(2) as pool:
+        statuses=list(pool.map(lambda pair:pair[0].post(pair[1]+"/bind",json={"code":code}).status_code,clients[1:]))
+    assert sorted(statuses)==[200,400]
+    state=a.get(ap).json()
+    assert len(state["familyMembers"])==1
+    assert all(row==[] for row in state["grants"].values())
+    assert state["familyMembers"][0]["categories"]==[]
+
+
 def test_concurrent_native_refresh_only_once(postgres_app):
     _, signed = native_patient(postgres_app)
     def attempt(_):

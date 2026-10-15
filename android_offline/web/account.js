@@ -8,8 +8,8 @@ function validateIdentity(value){if(!value||value.origin!==ORIGIN||value.role!==
 async function activate(value){
  validateIdentity(value);const old=root.PhoneLocal?.store;if(root.PhoneMotion?.active)throw Error('请先结束当前分析');if(old)await old.tail;
  // Existing personal records remain where they are. Binding requires a separate explicit confirmation.
- const key=old&&old.key===PS.KEY&&!old.value.fixture?PS.KEY:PS.CLOUD_PREFIX+value.patient_id,store=new PS.Store(localStorage,key);
- store.change(v=>{v.cloudIdentity=structuredClone(value);});localStorage.setItem(PS.ACTIVE_KEY,key);localStorage.setItem('ankang-contact-open','yes');if(root.location)root.location.href='/';
+ const key=PS.CLOUD_PREFIX+value.patient_id,store=new PS.Store(localStorage,key);
+ store.change(v=>{if(v.fixture||v.owner!==value.patient_id||v.cloudIdentity&&(v.cloudIdentity.patient_id!==value.patient_id||v.cloudIdentity.account_id!==value.account_id))throw Error('原档案归属不一致');v.cloudIdentity=structuredClone(value);});localStorage.setItem(PS.ACTIVE_KEY,key);localStorage.setItem('ankang-contact-open','yes');if(root.location)root.location.href='/';
 }
 function scope(store,requireConsent=false){
  store.assertCurrent?.();

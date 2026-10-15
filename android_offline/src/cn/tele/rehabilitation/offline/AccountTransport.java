@@ -22,7 +22,7 @@ import org.json.JSONObject;
 public final class AccountTransport {
     private static final String ORIGIN="https://139.224.216.18", PREFIX="/api/cloud/v1", ALIAS="ankang-account-v1";
     private final SharedPreferences preferences;
-    private JSONObject session;
+    private volatile JSONObject session;
     public static final class Reply { public final int status;public final String body;Reply(int s,String b){status=s;body=b;} }
     public AccountTransport(Context context){preferences=context.getSharedPreferences("account-v1",Context.MODE_PRIVATE);}
     private SecretKey key() throws Exception {
@@ -87,7 +87,7 @@ public final class AccountTransport {
         value.put("origin",ORIGIN);try{save(value);}catch(Exception e){http("/auth/logout","POST",new JSONObject(),value.getString("access_token"));throw e;}
         return identity();
     }
-    public synchronized JSONObject identity() throws Exception {
+    public JSONObject identity() throws Exception {
         JSONObject value=session();return new JSONObject().put("account_id",value.getString("account_id")).put("patient_id",value.getString("patient_id"))
             .put("username",value.getString("username")).put("origin",ORIGIN).put("role","PATIENT");
     }
@@ -107,6 +107,12 @@ public final class AccountTransport {
         if(action.equals("aiAsk"))return authorized("/patients/"+patient+"/ai/requests","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("text",data.getString("text")));
         if(action.equals("reports"))return authorized("/patients/"+patient+"/reports","GET",null);
         if(action.equals("shareReport"))return authorized("/patients/"+patient+"/reports","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("filename",data.getString("filename")).put("mime",data.getString("mime")).put("data",data.getString("data")).put("shared",data.getBoolean("shared")));
+        if(action.equals("family"))return authorized("/patients/"+patient+"/family","GET",null);
+        if(action.equals("familyInvite"))return authorized("/patients/"+patient+"/family/invite","POST",new JSONObject());
+        if(action.equals("familyBind"))return authorized("/patients/"+patient+"/family/bind","POST",new JSONObject().put("code",data.getString("code")));
+        if(action.equals("familyUnbind"))return authorized("/patients/"+patient+"/family/unbind","POST",new JSONObject().put("member",data.getString("member")));
+        if(action.equals("familyGrant"))return authorized("/patients/"+patient+"/family/grant","POST",new JSONObject().put("member",data.getString("member")).put("categories",data.getJSONArray("categories")));
+        if(action.equals("familySummary")){JSONObject document=new JSONObject(data.toString());document.remove("patient_id");return authorized("/patients/"+patient+"/family/summary","PUT",document);}
         if(action.equals("records")){
             int offset=data.optInt("offset",0);if(offset<0)throw new Exception("查询范围无效");
             return authorized("/patients/"+patient+"/records/latest?offset="+offset+"&limit=30","GET",null);

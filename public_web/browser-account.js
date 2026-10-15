@@ -37,6 +37,12 @@ async function check(){
 async function request(action,value,body={}){
  assertScope();if(value.patient_id!==identity.patient_id||value.account_id!==identity.account_id)throw Error('记录不属于当前账号');
  await check();const patient='/patients/'+identity.patient_id;
+ if(action==='family')return api(patient+'/family');
+ if(action==='familyInvite')return api(patient+'/family/invite','POST',{});
+ if(action==='familyBind')return api(patient+'/family/bind','POST',{code:body.code});
+ if(action==='familyGrant')return api(patient+'/family/grant','POST',{member:body.member,categories:body.categories});
+ if(action==='familyUnbind')return api(patient+'/family/unbind','POST',{member:body.member});
+ if(action==='familySummary')return api(patient+'/family/summary','PUT',body);
  if(action==='records')return api(patient+'/records?offset=0&limit=10');
  if(action==='append')return api(patient+'/record-events','POST',body.document);
  if(action==='profile')return api(patient);

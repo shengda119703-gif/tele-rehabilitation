@@ -19,7 +19,8 @@ def main():
     database = Database(settings.database_url)
     if args.command == "migrate":
         database.migrate()
-        print("Cloud workbench schema v2 ready")
+        from .database import SCHEMA_VERSION
+        print(f"Cloud workbench schema v{SCHEMA_VERSION} ready")
     elif args.command == "bootstrap-doctor":
         plain = args.password_file.read_text(encoding="utf-8").rstrip("\r\n") if args.password_file else getpass.getpass("医生共用账号密码：")
         try:

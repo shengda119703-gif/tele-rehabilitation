@@ -49,3 +49,11 @@ test('workbench requests remain bound to current patient and require CSRF for wr
  await assert.rejects(api.request('messages',f.identity,{before:'../../other'}));await assert.rejects(api.request('accept',f.identity,{plan_id:'../../other'}));
  assert(![...f.memory.values()].join('').includes('待发送原文'),'Transport does not cache private conversation; patient outbox owns persistence');
 });
+
+test('family uses self account, CSRF and narrowly shaped mutation bodies',async()=>{
+ const f=fixture();await f.context.AnkangBrowserAccount.ready;const api=f.context.AnkangBrowserAccount;
+ for(const [action,tail,body,method] of [['family','',{},'GET'],['familyInvite','/invite',{},'POST'],['familyBind','/bind',{code:'1234ABCD'},'POST'],['familyGrant','/grant',{member:account,categories:[]},'POST'],['familyUnbind','/unbind',{member:account},'POST'],['familySummary','/summary',{name:'TEST',health:[],rehab:[],doses:[]},'PUT']]){
+  await api.request(action,f.identity,body);const call=f.calls.at(-1);assert(call.url.endsWith('/patients/'+patient+'/family'+tail));assert.equal(call.options.method,method);
+  if(method!=='GET'){assert.equal(call.options.headers['X-CSRF-Token'],'memory-only');assert.deepEqual(JSON.parse(call.options.body),body);}
+ }
+});
