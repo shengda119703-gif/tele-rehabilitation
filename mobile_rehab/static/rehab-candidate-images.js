@@ -16,24 +16,37 @@
   }
   function status(){return error?'配图加载失败，继续使用原文字说明。':!index?'配图正在读取…':'配图待审核，动作文字与机位以现有说明为准。';}
   function imageTag(image,cls=''){
-    return `<img class="${cls}" src="${escape(image.url)}" alt="${escape(image.action_name)} · 待审核素材" width="${image.display_width}" height="${image.display_height}" loading="lazy" decoding="async">`;
+    return `<img class="${cls}" src="${escape(image.url)}" alt="${escape(image.action_name)} · 待审核素材" width="${image.display_width}" height="${image.display_height}" loading="lazy" decoding="async" draggable="false">`;
   }
   function thumb(id){
     const rows=candidates(id),first=rows.find(r=>r.image.slot_id===catalog?.covers[id])||rows[0];if(!first||mappings[id].preview_scope==='resource_library_only')return '';
     return `<span class="rv-thumb rv-candidate-thumb">${imageTag(first.image)}<small>待审核</small></span>`;
   }
   function picture(id,large){
-    const rows=candidates(id),first=rows.find(r=>r.image.slot_id===catalog?.covers[id])||rows[0];if(!first||mappings[id].preview_scope==='resource_library_only')return '';
-    return `<figure class="rv-photo ${large?'rv-photo-large':''} rv-candidate-photo">${imageTag(first.image)}<figcaption>待审核 · 侧别、阶段未确认</figcaption></figure>`;
+    const rows=candidates(id);if(!rows.length||mappings[id].preview_scope==='resource_library_only')return '';
+    const current=Math.max(0,rows.findIndex(r=>r.image.slot_id===catalog?.covers[id]));
+    return `<section class="rv-photo ${large?'rv-photo-large':''} rv-candidate-photo rv-carousel" data-photo-start="${current}" role="region" aria-label="动作配图" aria-roledescription="轮播图"><div class="rv-carousel-track" tabindex="0" aria-label="左右滑动查看动作配图">${rows.map(({image},i)=>`<figure class="rv-carousel-slide" role="group" aria-label="图片 ${i+1} / ${rows.length}"><button type="button" data-candidate-open="${escape(image.slot_id)}" aria-label="放大图片 ${i+1}">${imageTag(image)}</button></figure>`).join('')}</div><div class="rv-carousel-controls"><button type="button" data-photo-prev aria-label="上一张图片" ${current===0?'disabled':''}>‹</button><output aria-live="polite">${current+1} / ${rows.length}</output><button type="button" data-photo-next aria-label="下一张图片" ${current===rows.length-1?'disabled':''}>›</button><span>配图待审核</span></div></section>`;
   }
-  function gallery(id){
-    const rows=candidates(id);if(!rows.length)return '';
-    const entry=mappings[id];
-    return `<section class="rv-candidate-materials"><details><summary>待审核素材（${rows.length}张）</summary><p>${entry.preview_scope==='resource_library_only'?'存在明确映射冲突，仅作资源审阅。':''}不作为准确动作步骤或患者教学依据。本人侧别、动作阶段和适用条件须独立核验。</p><details class="rv-candidate-issues"><summary>映射限制</summary>${entry.issues.map(t=>`<p>${escape(t)}</p>`).join('')}</details>${rows.map(({binding,image})=>{
-      const confirmed=binding.review_status==='approved'&&['left','right'].includes(binding.side)&&['start','move','return'].includes(binding.phase);
-      const label=confirmed?`${binding.side==='left'?'本人左侧':'本人右侧'} · ${({start:'准备',move:'动作',return:'回位'})[binding.phase]}`:'侧别、阶段未确认';
-      return `<figure><button type="button" data-candidate-open="${escape(image.slot_id)}" aria-label="放大 ${escape(image.slot_id)} 待审核图片">${imageTag(image)}</button><figcaption><strong>${escape(label)} · 待审核</strong><span>${escape(image.slot_id)} · ${escape(image.group_id||'overview')}</span><span>${escape(image.frame_description||'公共卡概览，非动作起点')}</span></figcaption></figure>`;
-    }).join('')}</details></section>`;
+  function mount(scope=root.document){
+    scope.querySelectorAll('.rv-carousel').forEach(box=>{
+      const track=box.querySelector('.rv-carousel-track'),slides=Array.from(track.children);
+      const previous=box.querySelector('[data-photo-prev]'),next=box.querySelector('[data-photo-next]'),counter=box.querySelector('output');
+      let current=Number(box.dataset.photoStart)||0;
+      const update=()=>{
+        current=Math.max(0,Math.min(slides.length-1,Math.round(track.scrollLeft/Math.max(1,track.clientWidth))));
+        const label=`${current+1} / ${slides.length}`;if(counter.textContent!==label)counter.textContent=label;
+        previous.disabled=current===0;next.disabled=current===slides.length-1;
+        slides.forEach((slide,i)=>slide.querySelector('button').tabIndex=i===current?0:-1);
+      };
+      const go=i=>track.scrollTo({left:Math.max(0,Math.min(slides.length-1,i))*track.clientWidth,behavior:root.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+      track.addEventListener('scroll',update,{passive:true});
+      previous.onclick=()=>go(current-1);next.onclick=()=>go(current+1);
+      track.onkeydown=e=>{
+        if(e.target!==track||!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
+        e.preventDefault();go(e.key==='Home'?0:e.key==='End'?slides.length-1:current+(e.key==='ArrowRight'?1:-1));
+      };
+      track.scrollLeft=current*track.clientWidth;update();
+    });
   }
   async function load(){
     try{
@@ -48,7 +61,7 @@
     }catch(e){index=null;mappings=null;catalog=null;error='unavailable';return false;}
     finally{root.document?.dispatchEvent(new Event('rehab-candidate-images-ready'));}
   }
-  root.RehabCandidateImages={enabled,candidates,thumb,picture,gallery,status,load,getIndex:()=>index,getMappings:()=>mappings};
+  root.RehabCandidateImages={enabled,candidates,thumb,picture,mount,status,load,getIndex:()=>index,getMappings:()=>mappings};
   if(typeof module!=='undefined')module.exports=root.RehabCandidateImages;
   if(root.document){
     root.document.addEventListener('error',e=>{

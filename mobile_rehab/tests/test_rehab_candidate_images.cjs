@@ -12,7 +12,7 @@ test('ordinary catalogue shows declared pictures without an internal marker or q
   const w=context(...args),P=w.RehabCandidateImages;assert.equal(P.enabled(),false);assert.equal(await P.load(),true);
   assert.match(P.thumb('shoulder_abduction'),/049_E-AXU-013_s02/);
   assert.equal(Object.keys(mapping).filter(id=>P.thumb(id)).length,18);
-  assert.equal(P.gallery('elbow_flexion'),'');assert.equal(P.thumb('index_mcp_flexion'),'');
+  assert.equal(P.picture('elbow_flexion',true),'');assert.equal(P.thumb('index_mcp_flexion'),'');
  }
 });
 test('catalogue covers are explicitly selected from exact candidates, not clinical bindings',()=>{
@@ -45,8 +45,8 @@ test('53 IDs preserve sides and phases with 25 candidate and 28 empty entries',(
 test('candidate HTML is exact ID scoped, lazy, visibly pending and unknown',async()=>{
  const w=context();await w.RehabCandidateImages.load();const P=w.RehabCandidateImages;
  assert.match(P.thumb('shoulder_abduction'),/049_E-AXU-013_s02/);assert.doesNotMatch(P.thumb('shoulder_abduction'),/057_E-AXU-017/);
- assert.match(P.gallery('elbow_extension'),/阻断直接复用/);assert.equal(P.thumb('elbow_extension'),'');assert.equal(P.picture('elbow_extension',true),'');assert.equal(Object.values(mapping).filter(m=>m.preview_scope==='resource_library_only').length,7);assert.match(P.picture('shoulder_abduction',true),/侧别、阶段未确认/);
- assert.match(P.gallery('shoulder_abduction'),/loading="lazy"/);assert.match(P.thumb('shoulder_abduction'),/width="959" height="1200"/);assert.equal(P.thumb('index_mcp_flexion'),'');assert.equal(P.gallery('__wrong'), '');
+ assert.match(mapping.elbow_extension.issues.join(' '),/阻断直接复用/);assert.equal(P.thumb('elbow_extension'),'');assert.equal(P.picture('elbow_extension',true),'');assert.equal(Object.values(mapping).filter(m=>m.preview_scope==='resource_library_only').length,7);assert.match(P.picture('shoulder_abduction',true),/配图待审核/);
+ assert.match(P.picture('shoulder_abduction',true),/loading="lazy"/);assert.match(P.thumb('shoulder_abduction'),/width="959" height="1200"/);assert.equal(P.thumb('index_mcp_flexion'),'');assert.equal(P.picture('__wrong',true), '');
 });
 test('loading failure leaves the original picture and instruction fallback',async()=>{
  const w=context('127.0.0.1',true,'?rehabImagePreview=1',true);assert.equal(await w.RehabCandidateImages.load(),false);assert.equal(w.RehabCandidateImages.picture('shoulder_abduction',true),'');assert.match(w.RehabCandidateImages.status(),/加载失败/);
@@ -72,7 +72,7 @@ test('existing presentation defaults, plan and preparation do not opt into candi
  assert.doesNotMatch(fs.readFileSync(path.join(root,'index.html'),'utf8'),/__ANKANG_INTERNAL_IMAGE_PREVIEW__\s*=/);
 });
 test('candidate images are contained and overlays cannot cover anatomy',()=>{
- const css=fs.readFileSync(path.join(root,'rehab-candidate-images.css'),'utf8');assert.doesNotMatch(css,/object-fit\s*:\s*cover|scaleX|rotate|!important/);assert.match(css,/object-fit:contain/);assert.match(css,/rv-candidate-thumb img\{width:100%;height:auto/);assert.doesNotMatch(css,/grid-template-rows:minmax\(0,1fr\) 22px/);assert.match(css,/figcaption\{position:static/);
+ const css=fs.readFileSync(path.join(root,'rehab-candidate-images.css'),'utf8');assert.doesNotMatch(css,/object-fit\s*:\s*cover|scaleX|rotate|!important/);assert.match(css,/object-fit:contain/);assert.match(css,/rv-candidate-thumb img\{width:100%;height:auto/);assert.doesNotMatch(css,/grid-template-rows:minmax\(0,1fr\) 22px/);assert.doesNotMatch(css,/position:absolute/);assert.match(css,/scroll-snap-type:x mandatory/);
 });
 
 // Sorting is a catalogue view only: neither the input nor plan execution order changes.
@@ -86,4 +86,36 @@ test('pictured actions precede text-only actions without dropping IDs or changin
  assert.equal(ordered.length,53);assert.equal(new Set(ordered.map(x=>x.id)).size,53);
  assert.ok(ordered.slice(0,18).every(x=>w.RehabV51.thumb(x.id,true).includes('<img')));
  assert.ok(ordered.slice(18).every(x=>!w.RehabV51.thumb(x.id,true).includes('<img')));
+});
+
+test('each catalogue cover is the last mapped picture and all 38 pictures live in the main carousel',async()=>{
+ const w=context('example.com',false,'');await w.RehabCandidateImages.load();let total=0;
+ for(const [id,slot] of Object.entries(catalog.covers)){
+  const bindings=mapping[id].candidate_images;
+  assert.equal(slot,bindings.at(-1).slot_id);
+  const html=w.RehabCandidateImages.picture(id,true);
+  assert.deepEqual(Array.from(html.matchAll(/data-candidate-open="([^"]+)"/g),m=>m[1]),bindings.map(b=>b.slot_id));
+  assert.match(html,new RegExp('data-photo-start="'+(bindings.length-1)+'"'));
+  assert.doesNotMatch(html,/<details|rv-candidate-materials/);
+  total+=bindings.length;
+ }
+ assert.equal(total,38);
+ const capture=fs.readFileSync(path.join(root,'rehab-v51-capture.js'),'utf8');
+ assert.doesNotMatch(capture,/\.gallery\(/);assert.match(capture,/\.mount\?\.\(app\)/);
+});
+test('main image navigation starts at the cover, supports boundaries, keyboard and reduced motion',()=>{
+ const w=context(),buttons=Array.from({length:3},()=>({tabIndex:0}));let onscroll,lastBehavior;
+ const track={clientWidth:320,scrollLeft:0,children:buttons.map(b=>({querySelector:()=>b})),addEventListener:(_name,fn)=>onscroll=fn,
+  scrollTo({left,behavior}){this.scrollLeft=left;lastBehavior=behavior;onscroll();}};
+ const previous={},next={},output={},parts={'.rv-carousel-track':track,'[data-photo-prev]':previous,'[data-photo-next]':next,output};
+ w.RehabCandidateImages.mount({querySelectorAll:()=>[{dataset:{photoStart:'2'},querySelector:key=>parts[key]}]});
+ assert.equal(track.scrollLeft,640);assert.equal(output.textContent,'3 / 3');assert.equal(next.disabled,true);
+ previous.onclick();assert.equal(track.scrollLeft,320);assert.equal(output.textContent,'2 / 3');assert.equal(next.disabled,false);
+ let prevented=0;track.onkeydown({target:track,key:'Home',preventDefault(){prevented++;}});
+ assert.equal(output.textContent,'1 / 3');assert.equal(previous.disabled,true);assert.equal(prevented,1);
+ next.onclick();assert.equal(output.textContent,'2 / 3');
+ w.matchMedia=()=>({matches:true});track.onkeydown({target:track,key:'End',preventDefault(){}});
+ assert.equal(output.textContent,'3 / 3');assert.equal(lastBehavior,'auto');
+ track.scrollLeft=0;onscroll();assert.equal(output.textContent,'1 / 3');
+ assert.deepEqual(buttons.map(b=>b.tabIndex),[0,-1,-1]);
 });
