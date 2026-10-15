@@ -1,0 +1,6 @@
+# Preserve CSV embedded newlines and byte-identical source snapshots on every host.
+*.csv -text
+sources/** -text
+*.json text eol=lf
+*.md text eol=lf
+cards/** text eol=lf
