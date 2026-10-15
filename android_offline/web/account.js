@@ -90,12 +90,14 @@ async function adopt(store,plan,currentRevision){
  await store.serial(()=>store.change(v=>{scope(store);v.plans.find(p=>p.id===local.id).status='ACTIVE';}));return {...r,local_status:'ACTIVE'};
 }
 function schedule(store){if(autoRunning||scheduled||!store.value.cloudBinding)return;scheduled=setTimeout(async()=>{scheduled=null;autoRunning=true;try{if(store.value.cloudConsent)await publish(store);await syncMessages(store);root.dispatchEvent?.(new Event('workbench-updated'));}catch{/* queue and original local facts remain durable */}finally{autoRunning=false;}},1500);}
-async function askAI(store,text=null){
+async function askAI(store,text=null,purpose='reply'){
+ if(!['reply','understanding'].includes(purpose))throw Error('问答任务无效');
  const value=scope(store);let pending=store.value.cloudAiPending;
  if(pending&&pending.patient_id!==value.patient_id)throw Error('原提问不属于当前本人账号');
  if(pending&&text!==null&&text.trim()!==pending.text)throw Error('原提问回执仍待核对，请先重试原提问，避免重复付费');
- if(!pending){if(typeof text!=='string'||!text.trim()||text.length>12000)throw Error('请填写问题');pending={patient_id:value.patient_id,operation_id:crypto.randomUUID(),text:text.trim()};await store.serial(()=>store.change(v=>{scope(store);v.cloudAiPending=pending;}));}
- const result=await request('aiAsk',value,{operation_id:pending.operation_id,text:pending.text});
+ if(pending&&text!==null&&purpose!==(pending.purpose??'reply'))throw Error('原提问回执仍待核对，不能改变问答任务');
+ if(!pending){if(typeof text!=='string'||!text.trim()||text.length>12000)throw Error('请填写问题');pending={patient_id:value.patient_id,operation_id:crypto.randomUUID(),text:text.trim(),...(purpose==='understanding'?{purpose}:{})};await store.serial(()=>store.change(v=>{scope(store);v.cloudAiPending=pending;}));}
+ const result=await request('aiAsk',value,{operation_id:pending.operation_id,text:pending.text,...(pending.purpose==='understanding'?{purpose:'understanding'}:{})});
  if(['SUCCEEDED','UNMETERED','UNKNOWN'].includes(result.state))await store.serial(()=>store.change(v=>{scope(store);if(v.cloudAiPending?.operation_id===pending.operation_id)delete v.cloudAiPending;}));
  return result;
 }

@@ -164,9 +164,9 @@ class ProductBackend:
                     self.bridge.cloud_conversation = cloud_client is not None
                     def host_tools(name, arguments):
                         if name == 'conversation.cloud_reply':
-                            if cloud_client is None or set(arguments) != {'text'} or not isinstance(arguments['text'], str):
+                            if cloud_client is None or not {'text'} <= set(arguments) <= {'text', 'purpose'} or not isinstance(arguments['text'], str) or arguments.get('purpose', 'reply') not in {'reply', 'understanding'}:
                                 raise ValueError('请先绑定本人云账号，再使用统一问答')
-                            return cloud_client.ask_ai(arguments['text'])
+                            return cloud_client.ask_ai(arguments['text'], purpose=arguments['purpose']) if 'purpose' in arguments else cloud_client.ask_ai(arguments['text'])
                         if name.startswith('care.'):
                             from .care_host import CareHost
                             return CareHost(self.data_dir, self.daily, owner, scope)(name, arguments)

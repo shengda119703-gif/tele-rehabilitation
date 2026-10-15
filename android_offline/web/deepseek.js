@@ -17,11 +17,12 @@ function reply(id,ok,body){
  try{item.resolve(JSON.parse(body));}catch{item.reject(Error('DeepSeek 返回格式无效'));}
 }
 function conversationModel(){
- if(cloudConfigured())return {async reply({messages}){if(!Array.isArray(messages)||!messages.length||messages.some(m=>!['user','assistant'].includes(m.role)||typeof m.content!=='string')||messages.reduce((n,m)=>n+m.content.length,0)>12000)throw Error('问答内容无效');const r=await root.PhoneAccount.askAI(root.PhoneLocal.store,messages.map(m=>m.role+'：'+m.content).join('\n'));if(!['SUCCEEDED','UNMETERED'].includes(r.state)||!r.answer)throw Error('云端问答结果待核对');return r.answer;}};
+ if(cloudConfigured())return {async reply({messages,purpose='reply'}){if(!['reply','understanding'].includes(purpose)||!Array.isArray(messages)||!messages.length||messages.some(m=>!['user','assistant'].includes(m.role)||typeof m.content!=='string')||messages.reduce((n,m)=>n+m.content.length,0)>12000)throw Error('问答内容无效');const r=await root.PhoneAccount.askAI(root.PhoneLocal.store,messages.map(m=>m.role+'：'+m.content).join('\n'),purpose);if(!['SUCCEEDED','UNMETERED'].includes(r.state)||!r.answer)throw Error('云端问答结果待核对');return r.answer;}};
  if(!configured())return undefined;
- return {async reply({messages}){
+ return {async reply({messages,purpose='reply'}){
+  if(!['understanding','reply'].includes(purpose))throw Error('问答任务无效');
   if(!Array.isArray(messages)||!messages.length||messages.length>16||messages.at(-1).role!=='user'||messages.some(m=>!['user','assistant'].includes(m.role)||typeof m.content!=='string'||!m.content.trim())||messages.reduce((n,m)=>n+m.content.length,0)>12000)throw Error('对话上下文无效');
-  const result=await request({temperature:0.7,messages:[{role:'system',content:root.AnkangConversationSystem},...messages]});
+  const result=await request({purpose,temperature:purpose==='understanding'?0:0.7,...(purpose==='understanding'?{response_format:{type:'json_object'}}:{}),messages:[{role:'system',content:purpose==='understanding'?root.AnkangUnderstandingSystem:root.AnkangConversationSystem},...messages]});
   const choice=result.choices?.[0],message=choice?.message;
   if(!message||message.tool_calls?.length||choice.finish_reason!=='stop'||typeof message.content!=='string'||!message.content.trim()||message.content.length>6000)throw Error('DeepSeek 未返回完整回复');
   return message.content.trim();

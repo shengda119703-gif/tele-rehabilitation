@@ -2,6 +2,15 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const source=fs.readFileSync(__dirname+'/browser-account.js','utf8');
 const patient='11111111-1111-4111-8111-111111111111',account='22222222-2222-4222-8222-222222222222';
+
+test('browser AI purpose is validated and passed without caller system instructions',async()=>{
+ const f=fixture();await f.context.AnkangBrowserAccount.ready;
+ await f.context.AnkangBrowserAccount.request('aiAsk',f.identity,{operation_id:'TEST',text:'TEST',purpose:'understanding',system:'FORGED'});
+ const body=JSON.parse(f.calls.at(-1).options.body);assert.equal(body.purpose,'understanding');assert.equal(body.system,undefined);
+ const count=f.calls.filter(c=>c.url.endsWith('/ai/requests')).length;
+ await assert.rejects(f.context.AnkangBrowserAccount.request('aiAsk',f.identity,{text:'TEST',purpose:'execute'}));
+ assert.equal(f.calls.filter(c=>c.url.endsWith('/ai/requests')).length,count);
+});
 function fixture(){
  const memory=new Map(),listeners={},calls=[],redirects=[];
  const identity={patient_id:patient,account_id:account,username:'alice',role:'PATIENT'};

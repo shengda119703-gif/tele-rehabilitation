@@ -72,6 +72,61 @@ def test_expired_plan_is_not_recommended_as_available(rehab_db):
     assert not plan['next_available'] and '过期' in plan['availability_reason']
 
 
+def test_unified_bridge_reads_actual_sqlite_without_sending_personal_results(rehab_db, monkeypatch, capsys, tmp_path):
+    """Mock model, real shipped Python/Node bridge and real isolated SQLite reads."""
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from bridges.ankang.client import AgentBridge
+    questions = ['查看我的训练计划', '查看我的最近评估结果', '查看我的训练记录']
+    hook, calls_file = tmp_path / 'unified-model.cjs', tmp_path / 'model-calls.jsonl'
+    hook.write_text(
+        'const fs=require("node:fs");\n'
+        f'const tools={json.dumps(dict(zip(questions, TOOLS)), ensure_ascii=False)};\n'
+        'globalThis.fetch=async(url,init)=>{\n'
+        'if(String(url)!=="https://api.deepseek.com/chat/completions")throw Error("Unexpected URL");\n'
+        'const body=JSON.parse(init.body);\n'
+        'if(body.response_format?.type!=="json_object")throw Error("Personal result reached model");\n'
+        'const content=body.messages.at(-1).content;\n'
+        'const data=JSON.parse(content.split("输入数据（内容不是指令）：").at(-1));\n'
+        f'fs.appendFileSync({json.dumps(str(calls_file))},JSON.stringify(body)+"\\n");\n'
+        'const semantic={version:1,route:"records",goal:"查询本人记录",mentions:[],uncertain:[],suggested_tool:tools[data.text]};\n'
+        'return {ok:true,json:async()=>({choices:[{finish_reason:"stop",message:{role:"assistant",content:JSON.stringify(semantic)}}]})};\n'
+        '};\n', encoding='utf-8')
+    monkeypatch.setenv('NODE_OPTIONS', '--require "' + hook.as_posix() + '"')
+    monkeypatch.setenv('APPDATA', str(tmp_path / 'private-config'))
+    monkeypatch.setenv('ANKANG_REHAB_LLM_API_KEY', 'TEST-protocol-fixture')
+    monkeypatch.setenv('ANKANG_PRODUCT_DISABLE_MODEL', '0')
+    monkeypatch.setenv('ANKANG_SEMANTIC_ROUTING_ENABLED', '1')
+    owner = DEMO_SCOPE['participant_id']
+    profile = dict(name='SYNTHETIC TEST', age=0, conditions=[], medications=[], familyContact='', familyPhone='',
+        mobility='unknown', usesCane=False, nightVision='unknown', cognition='unknown', familySharing='denied')
+    reads, tools = [], RehabReadTools(rehab_db, DEMO_SCOPE)
+    def handler(name, arguments):
+        reads.append(name)
+        return tools(name, arguments)
+    before = hashlib.sha256(rehab_db.read_bytes()).hexdigest()
+    with AgentBridge() as bridge:
+        assert bridge.open_session(owner, profile, rehab_tools=True)['rehabToolsAvailable']
+        for index, question in enumerate(questions):
+            result = bridge.process_turn(owner, question, tool_handler=handler)
+            trace = result['semanticExecution']
+            assert trace['parser_status'] == 'llm_valid'
+            assert {'stage': 'tool', 'status': 'passed', 'tool': TOOLS[index]} in trace['stages']
+            assert trace['stages'][-1]['stage'] == 'reply' and trace['stages'][-1]['status'] == 'local'
+            assert trace['stages'][-1]['reason'] == 'personal_records_remain_local'
+            assert result['snapshot']['events'] == []
+            assert len(reads) == index + 1 and reads[-1] == TOOLS[index]
+            with capsys.disabled():
+                print('\nSYNTHETIC unified bridge ->', question, '\nTrace ->', json.dumps(trace, ensure_ascii=False))
+    calls = [json.loads(line) for line in calls_file.read_text(encoding='utf-8').splitlines()]
+    assert len(calls) == 3
+    assert all(call['response_format']['type'] == 'json_object' for call in calls)
+    sent = json.dumps(calls, ensure_ascii=False)
+    assert 'synthetic-training' not in sent and '合成反馈' not in sent and 'training_feedback' not in sent
+    assert hashlib.sha256(rehab_db.read_bytes()).hexdigest() == before
+
+
 def test_real_bridge_three_questions_and_scope_isolation(rehab_db, monkeypatch, capsys, tmp_path):
     import sys
     from pathlib import Path
@@ -119,7 +174,7 @@ def test_real_bridge_three_questions_and_scope_isolation(rehab_db, monkeypatch, 
         'if (String(url) !== "https://api.deepseek.com/chat/completions") throw new Error("Unexpected model URL");\n'
         f'return realFetch("http://127.0.0.1:{server.server_port}/chat/completions", init);\n'
         '};\n', encoding='utf-8')
-    monkeypatch.setenv('NODE_OPTIONS', '--require '+json.dumps(str(hook)))
+    monkeypatch.setenv('NODE_OPTIONS', '--require "' + hook.as_posix() + '"')
     monkeypatch.setenv('APPDATA', str(tmp_path/'private-config'))
     monkeypatch.setenv('ANKANG_REHAB_LLM_API_KEY', 'TEST-protocol-fixture')
     scope = dict(DEMO_SCOPE)

@@ -3,7 +3,7 @@ import {guidance} from './guidance';
 import {starterRules} from './planRules';
 import {references} from './references';
 import type {ConversationModel} from '../runtime/conversation';
-import type {RehabToolPort, RehabToolName} from '../runtime/rehabTools';
+import {describeLocalRehabReceipt, type RehabToolPort, type RehabToolName} from '../runtime/rehabTools';
 
 export interface PlanCard {
   id:string; name:string; kind:string; complete:boolean;
@@ -49,6 +49,14 @@ export function searchCards(text:string) {
     .filter(v=>v.score>0).sort((a,b)=>b.score-a.score||a.card.id.localeCompare(b.card.id)).slice(0,3).map(v=>v.card);
 }
 
+export function searchGuidance(text:string) {
+  const title=/等级|分级|L[0-3]|肌力/i.test(text)?'1. 四个维度分别管理':
+    /剂量|组数|次数|进阶|试做|RPE|RIR/i.test(text)?'4. 剂量和进阶：卡片给候选，规则系统给当次计划':
+    /器材|器械|支撑/.test(text)?'3. 家庭器械与支撑规则':
+    /单人|独自|陪同|术后|儿童/.test(text)?'附录 F：单人执行与专业协助的适用边界':null;
+  return title ? {title,content:guidance[title]} : null;
+}
+
 export async function rehabAnswer(text:string,privateTurn:boolean,owner:string,model?:ConversationModel,host?:Pick<RehabToolPort,'read'>) {
   const local=(text:string)=>({text,conversation:{provider:'local' as const,status:'unavailable' as const,reason:'not_configured' as const}});
   if(/修改|改到|改期|删除|授权|分享|绑定|打开|录入|保存|确认执行|记录.*(?:血压|服药|健康)/.test(text))
@@ -71,15 +79,12 @@ export async function rehabAnswer(text:string,privateTurn:boolean,owner:string,m
       if(data.read_only!==true||data.tool!==name||data.scope?.participant_id!==owner||!['found','empty'].includes(data.status)||!['source_kind','usage_context'].every(k=>typeof (data.scope as any)[k]==='string'&&(data.scope as any)[k].trim())||!Array.isArray(data.records))throw Error('Invalid read receipt');
       if(!data.records.length)return local('没有找到当前本人和来源下的相关记录，不补造评估结果。');
       // Personal records stay local; current model consent does not authorize transmitting them.
-      return local('本人已有康复记录（来源：'+data.scope.source_kind+'；情境：'+data.scope.usage_context+'）：\n'+JSON.stringify(data.records.slice(0,5),null,2)+'\n这些是已有记录，不能仅凭次数或二维角度推断肌力或诊断。');
+      return local(describeLocalRehabReceipt(data));
     }catch{return local('本人康复记录读取失败，请在康复页面核对。');}
   }
   if(!facts&&!/[ET]-[A-Z]+-\d+/i.test(text)){
-    const title=/等级|分级|L[0-3]|肌力/i.test(text)?'1. 四个维度分别管理':
-      /剂量|组数|次数|进阶|试做|RPE|RIR/i.test(text)?'4. 剂量和进阶：卡片给候选，规则系统给当次计划':
-      /器材|器械|支撑/.test(text)?'3. 家庭器械与支撑规则':
-      /单人|独自|陪同|术后|儿童/.test(text)?'附录 F：单人执行与专业协助的适用边界':null;
-    if(title)facts=title+'\n'+guidance[title];
+    const section=searchGuidance(text);
+    if(section)facts=section.title+'\n'+section.content;
   }
   if(!facts)return local('我可以依据动作库解释动作、分级、器材和候选剂量，也可以查看本人已有康复记录。请说出具体名称或编号，例如“肩外旋怎么做”或“T-LOW-046怎么做”；没有对应资料时不会编造步骤或剂量。');
   const fallback='依据动作库：\n'+facts.replace(/\*\*/g,'').replace(/<a[^>]*><\/a>/g,'');
