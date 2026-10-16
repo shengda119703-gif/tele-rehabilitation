@@ -34,6 +34,7 @@ const product = productRoot ? new ProductService(new ProductLocalStore(productRo
     voice: nativeVoice,
   }, undefined, undefined,
     owner => ({read:call=>readFromPython(owner,call)}),
+    owner => ({call:(name,args)=>readFromPython(owner,{name,arguments:args})}),
     owner => cloudModel(owner) ?? (semanticRoutingEnabled && process.env.ANKANG_PRODUCT_DISABLE_MODEL!=='1' ? createConversationModel() : undefined),
     {semanticRoutingEnabled}) : null;
 const pending = new Map();
@@ -44,7 +45,7 @@ function readFromPython(sessionId, call) {
     const id = ++sequence;
     const timer = setTimeout(() => {
       pending.delete(id);
-      reject(new Error('Rehab host read timed out'));
+      reject(new Error('Rehab host tool timed out'));
     }, call.name.startsWith('voice.') ? 135000 : call.name==='conversation.cloud_reply' ? 45000 : 15000);
     pending.set(id, { resolve, reject, timer });
     send({ toolCall: { id, sessionId, ...call } });
@@ -74,6 +75,9 @@ async function main() {
             profile: request.profile,
             now: new Date(request.now),
             rehabTools,
+            rehabOperations: request.rehabTools
+              ? {call:(name,args)=>readFromPython(request.sessionId,{name,arguments:args})}
+              : undefined,
             conversationModel:process.env.ANKANG_PRODUCT_DISABLE_MODEL==='1'?undefined:createConversationModel(),
             semanticRoutingEnabled,
           });
