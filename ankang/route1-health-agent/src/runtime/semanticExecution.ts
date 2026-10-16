@@ -134,6 +134,10 @@ export async function executeSemanticTurn(input: {
       trace.stages.push({stage:'tool',status:'blocked',reason:'rehab_operation_preview_rejected'});
       return {plan:withReply(plan,renderOperationPreview(operation.plan,operation.previews)),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
     }
+    if (operation.plan.uncertainties.length) {
+      trace.stages.push({stage:'tool',status:'blocked',reason:'rehab_operation_uncertainty'});
+      return {plan:withReply(plan,renderOperationPreview(operation.plan,operation.previews)),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
+    }
     input.setPendingRehabOperation?.({proposal:operation.plan,previews:operation.previews,createdAt:Date.now()});
     trace.stages.push({stage:'tool',status:'passed',reason:'rehab_operation_preview_ready_for_confirmation'});
     return {plan:withReply(plan,renderOperationPreview(operation.plan,operation.previews)),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
