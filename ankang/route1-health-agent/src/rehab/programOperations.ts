@@ -61,7 +61,7 @@ function stringArray(value: unknown, maxItems = 20, maxChars = 160): value is st
 export function parseRehabProgramPlan(raw: string): RehabProgramPlan | null {
   const value = json(raw);
   if (!record(value) || value.version !== 1 || value.requires_confirmation !== true ||
-      !text(value.summary, 800) || !Array.isArray(value.operations) || value.operations.length > 4 ||
+      !text(value.summary, 800) || !Array.isArray(value.operations) || value.operations.length > 1 ||
       !stringArray(value.uncertainties, 12, 300)) return null;
   const operations: RehabProgramOperation[] = [];
   for (const item of value.operations) {
@@ -153,7 +153,7 @@ const PROGRAM_SYSTEM = [
   '允许：rehab.plan.change（修改本人已保存康复计划：名称、已有动作参数、删除动作、添加动作）；',
   'rehab.schedule.upsert（新增或修改本人康复计划的训练安排时间）；',
   'rehab.schedule.remove（删除本人康复安排）。',
-  '永远输出 requires_confirmation=true；用户确认前绝不写入。',
+  '永远输出 requires_confirmation=true；用户确认前绝不写入。一次只提出一个程序写操作。',
   'plan_id、revision、key 必须来自真实工具结果，禁止猜。',
   '不得修改 participant_id、record_origin、doctor_publication 等系统字段。',
   '训练参数只能使用计划支持的字段；添加动作只能使用已知真实 exercise_id。',
@@ -166,7 +166,7 @@ async function buildPlan(model: ConversationModel, semantic: SemanticTurn, userT
   toolResults: {name:string;data:unknown}[], check: () => void): Promise<RehabProgramPlan | null> {
   const payload = JSON.stringify({
     semantic: {route:semantic.route,goal:semantic.goal,intents:semantic.intents??[],mentions:semantic.mentions,events:semantic.events,relations:semantic.relations,uncertain:semantic.uncertain},
-    user_text:userText, tool_results:toolResults,
+    user_text:userText, tool_results:toolResults, rehab_context:rehabContext ?? null,
   });
   if (payload.length > 30000) return null;
   try {
@@ -185,6 +185,7 @@ export async function previewRehabProgramOperation(input: {
   userText: string;
   reads?: Pick<RehabToolPort,'read'>;
   operations?: RehabOperationPort;
+  rehabContext?: unknown;
   check?: () => void;
 }): Promise<{plan:RehabProgramPlan|null;previews:unknown[];toolResults:{name:string;data:unknown}[]}> {
   const check=input.check??(()=>{});
@@ -205,7 +206,7 @@ export async function previewRehabProgramOperation(input: {
       toolResults.push({name:call.name,data:{status:'failed',reason:'tool_execution_failed'}});
     }
   }
-  const plan=await buildPlan(input.model,input.semantic,input.userText,toolResults,check);
+  const plan=await buildPlan(input.model,input.semantic,input.userText,toolResults,check,input.rehabContext);
   if(!plan || !plan.operations.length) return {plan,previews:[],toolResults};
   const previews=[];
   for(const operation of plan.operations){
@@ -229,6 +230,21 @@ export function renderOperationPreview(plan: RehabProgramPlan | null, previews: 
     return '这项修改暂时不能执行：'+String(reason ?? '当前计划或安排已经发生变化，请刷新后再试。');
   }
   return '我准备这样修改：\n'+plan.summary+'\n\n如果确认，我才会真正修改你的康复计划或训练安排。';
+}
+
+export async function commitRehabProgramOperation(input: {
+  pending: PendingRehabOperation;
+  operations: RehabOperationPort;
+  check?: () => void;
+}): Promise<unknown[]> {
+  const check=input.check??(()=>{});
+  const results: unknown[]=[];
+  for (const operation of input.pending.proposal.operations) {
+    check();
+    results.push(await input.operations.call(operation.name,{...operation.arguments,commit:true}));
+    check();
+  }
+  return results;
 }
 
 export function renderOperationResult(result: unknown): string {
