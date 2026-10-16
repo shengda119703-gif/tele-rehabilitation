@@ -57,12 +57,12 @@ class RehabOperationTools:
             'records': entries[-50:],
         }
 
-    def _open_plan(self, plan_id, expected_revision):
+    def _open_plan(self, plan_id, expected_revision, *, readonly=True):
         if not isinstance(plan_id, str) or not re.fullmatch(r'[0-9a-f]{32}', plan_id):
             raise ValueError('计划编号无效')
         if type(expected_revision) is not int or expected_revision < 0:
             raise ValueError('计划版本无效')
-        store = Storage(self.database, readonly=False)
+        store = Storage(self.database, readonly=readonly)
         try:
             current = store.get_training_plan(plan_id)
             if not current or scope_key(current) != self.scope:
@@ -153,7 +153,7 @@ class RehabOperationTools:
         }
 
     def _plan_change(self, args):
-        store, current = self._open_plan(args.get('plan_id'), args.get('expected_revision'))
+        store, current = self._open_plan(args.get('plan_id'), args.get('expected_revision'), readonly=args.get('commit') is not True)
         try:
             candidate = self._patch_plan(current, args.get('patch'))
             preview = {
@@ -178,7 +178,7 @@ class RehabOperationTools:
             store.close()
 
     def _validate_schedule_plan(self, plan_id, plan_revision):
-        store, current = self._open_plan(plan_id, plan_revision)
+        store, current = self._open_plan(plan_id, plan_revision, readonly=True)
         store.close()
         return current
 
