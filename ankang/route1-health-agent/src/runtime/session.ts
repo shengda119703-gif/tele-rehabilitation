@@ -18,6 +18,7 @@ import {understandSemanticTurn, type SemanticTurn, type SemanticContextMessage} 
 import {executeSemanticTurn, readOnlyPlan, isUserFacingSemanticReply, type SemanticExecutionTrace} from './semanticExecution';
 import type { ProductAgent, AgentResult } from '../product/ProductAgent';
 import {conversationMessages,isOperationalConversation,localConversation,type ConversationModel} from './conversation';
+import {previewRehabProgramOperation,commitRehabProgramOperation,isConfirmation,isCancellation,renderOperationPreview,renderOperationResult,type PendingRehabOperation, type RehabOperationPort} from '../rehab/programOperations';
 
 const copy = <T>(value: T): T => structuredClone(value);
 const emptyHealth = (): HealthRecordSnapshot => ({ events: [], familyEvents: [], chat: [] });
@@ -48,6 +49,7 @@ export interface OpenSessionOptions {
   /** Opt-in first-pass LLM JSON routing; off until integration tests pass. */
   semanticRoutingEnabled?: boolean;
   rehabReads?: Pick<RehabToolPort, 'read'>;
+  rehabOperations?: RehabOperationPort;
   participantId?: string;
   rehabAssistant?:(text:string,privateTurn:boolean)=>Promise<{text:string;conversation:ChatMessage["conversation"]}>;
 }
@@ -86,6 +88,7 @@ class Session {
   private idSeed = 0;
   // Original user text already permitted for this model context; never tool results.
   private semanticHistory: (SemanticContextMessage & {context:string})[] = [];
+  private pendingRehabOperation: PendingRehabOperation | null = null;
   constructor(private readonly options: OpenSessionOptions) {}
 
   async initialize() {
@@ -206,6 +209,9 @@ class Session {
         const result = await executeSemanticTurn({semantic,text:captured.text,context:semanticContext,plan,
           readOnly:Boolean(this.options.rehabAssistant),model:this.options.conversationModel,
           reads:this.options.rehabReads??this.options.rehabTools,participantId:this.options.participantId??this.options.sessionId,
+          rehabOperations:this.options.rehabOperations,
+          pendingRehabOperation:this.pendingRehabOperation,
+          setPendingRehabOperation:(pending)=>{this.pendingRehabOperation=pending;},
           check:()=>this.check(generation),trace:semanticExecution});
         this.check(generation);
         plan=result.plan;conversation=result.conversation;
