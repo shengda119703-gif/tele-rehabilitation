@@ -216,6 +216,19 @@ export async function previewRehabProgramOperation(input: {
   return {plan,previews,toolResults};
 }
 
+
+export function isRehabProgramIntent(semantic: SemanticTurn): boolean {
+  const hasProgram = semantic.intents?.some(i => i.type === 'program_operation' || i.type === 'plan_change') ?? false;
+  if (!hasProgram) return false;
+  if (semantic.route === 'rehab') return true;
+  const evidence = [
+    semantic.goal,
+    ...semantic.mentions.map(m => m.text),
+    ...semantic.intents!.filter(i => i.type === 'program_operation' || i.type === 'plan_change').map(i => i.evidence),
+  ].join(' ');
+  return /康复|训练|锻炼|动作|计划|训练时间|训练安排/.test(evidence);
+}
+
 export function isConfirmation(text: string): boolean {
   return /^(?:好|好的|可以|可以的|行|行的|没问题|确认|确认执行|确定|同意|就这样|按这个来|执行吧|改吧|保存吧)[。！!，,\s]*$/i.test(text.trim());
 }
