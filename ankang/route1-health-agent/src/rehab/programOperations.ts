@@ -215,7 +215,7 @@ export async function previewRehabProgramOperation(input: {
       // Bind the preview's observed schedule state to the pending proposal.
       // The host checks it again on commit to avoid overwriting a newer schedule.
       if (record(result) && (operation.name === 'rehab.schedule.upsert' || operation.name === 'rehab.schedule.remove')) {
-        operation.arguments.expected_existing = result.previous ?? result.schedule ?? null;
+        operation.arguments.expected_existing = operation.name === 'rehab.schedule.upsert' ? (result.previous ?? null) : (result.schedule ?? null);
       }
       previews.push({name:operation.name,result});
     } catch(error) { previews.push({name:operation.name,result:{status:'rejected',reason:String(error)}}); }
