@@ -99,7 +99,8 @@ export async function executeSemanticTurn(input: {
   }
 
   if (!input.readOnly && input.rehabOperations && isRehabProgramIntent(semantic)) {
-    let rehabContext: unknown = null;
+    let rehabContext: any = null;
+    let rehabReply = '';
     if (semantic.route === 'rehab') {
       const rehabResult = await runRehabWorkflow({
         model,
@@ -115,6 +116,11 @@ export async function executeSemanticTurn(input: {
         candidate: rehabResult.validation.plan,
         algorithm_result: rehabResult.validation.algorithm_result ?? null,
       } : null;
+      rehabReply = renderRehabDraft(rehabResult.validation);
+      if (rehabResult.validation?.status === 'rejected') {
+        trace.stages.push({stage:'tool',status:'blocked',reason:'rehab_analysis_rejected_before_program_operation'});
+        return {plan:withReply(plan,rehabReply),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
+      }
     }
     const operation = await previewRehabProgramOperation({
       model,
@@ -125,22 +131,24 @@ export async function executeSemanticTurn(input: {
       rehabContext,
       check,
     });
+    const operationReply = operation.plan ? renderOperationPreview(operation.plan,operation.previews) : '我还不能确定要修改哪一项康复计划或训练安排。请告诉我具体要改哪个动作、次数或时间。';
     if (!operation.plan) {
       trace.stages.push({stage:'tool',status:'failed',reason:'rehab_operation_plan_unavailable'});
-      return local('我还不能确定要修改哪一项康复计划或训练安排。请告诉我具体要改哪个动作、次数或时间。', 'rehab_operation_plan_unavailable');
+      return {plan:withReply(plan,rehabReply ? rehabReply+'\\n\\n'+operationReply : operationReply),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
     }
     const blocked = operation.previews.some(item => isRejectedPreview(item));
     if (blocked) {
       trace.stages.push({stage:'tool',status:'blocked',reason:'rehab_operation_preview_rejected'});
-      return {plan:withReply(plan,renderOperationPreview(operation.plan,operation.previews)),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
+      return {plan:withReply(plan,rehabReply ? rehabReply+'\\n\\n'+operationReply : operationReply),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
     }
     if (operation.plan.uncertainties.length) {
       trace.stages.push({stage:'tool',status:'blocked',reason:'rehab_operation_uncertainty'});
-      return {plan:withReply(plan,renderOperationPreview(operation.plan,operation.previews)),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
+      return {plan:withReply(plan,rehabReply ? rehabReply+'\\n\\n'+operationReply : operationReply),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
     }
     input.setPendingRehabOperation?.({proposal:operation.plan,previews:operation.previews,createdAt:Date.now()});
     trace.stages.push({stage:'tool',status:'passed',reason:'rehab_operation_preview_ready_for_confirmation'});
-    return {plan:withReply(plan,renderOperationPreview(operation.plan,operation.previews)),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
+    const combinedReply = rehabReply ? rehabReply+'\\n\\n另外，我准备这样调整：\\n'+operationReply.replace(/^我准备这样修改：\\n?/, '') : operationReply;
+    return {plan:withReply(plan,combinedReply),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
   }
 
   // Rehab is a separate analysis workflow: LLM tool planning -> host tools/algorithm -> LLM candidate -> program validation.
