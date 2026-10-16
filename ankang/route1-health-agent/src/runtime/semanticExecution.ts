@@ -7,6 +7,7 @@ import type { ConversationModel } from './conversation';
 import { canUseModuleTools } from './operationalIntent';
 import { readRehabReceipt, describeLocalRehabReceipt, type RehabToolPort, type RehabCall } from './rehabTools';
 import type { SemanticTurn, SemanticContextMessage } from './semanticRouter';
+import { runRehabWorkflow, renderRehabDraft } from '../rehab/workflow';
 
 export interface SemanticStage {
   stage: 'understanding' | 'tool' | 'reply';
@@ -60,6 +61,30 @@ export async function executeSemanticTurn(input: {
     return { plan: withReply(plan, reply), conversation: { provider: 'local' as const, status: 'unavailable' as const, reason: 'not_configured' as const } };
   };
   // The existing clinical planner and durable-write guards retain authority.
+  // Rehab is a separate analysis workflow: LLM tool planning -> host tools/algorithm -> LLM candidate -> program validation.
+  // It deliberately stops before any plan persistence or module operation.
+  if (semantic.route === 'rehab') {
+    const result = await runRehabWorkflow({
+      model,
+      semantic,
+      userText: text,
+      reads: input.reads,
+      participantId: input.participantId,
+      check,
+    });
+    if (!result.candidate || !result.validation) {
+      trace.stages.push({ stage: 'tool', status: 'failed', reason: 'rehab_workflow_unavailable_or_invalid' });
+      return local('康复分析暂时没有形成可验证的候选方案。请补充具体目标、部位或当前训练情况。', 'rehab_workflow_failed');
+    }
+    trace.stages.push({ stage: 'tool', status: 'passed', reason: 'rehab_tools_and_algorithm_completed' });
+    trace.stages.push({
+      stage: 'reply',
+      status: result.validation.status === 'passed' ? 'passed' : 'blocked',
+      reason: result.validation.status === 'passed' ? 'rehab_plan_validated' : result.validation.reasons.join(';'),
+    });
+    return { plan: withReply(plan, renderRehabDraft(result.validation)), conversation: { provider: 'deepseek', status: 'replied' } };
+  }
+
   if (input.plan.safetyAction || (!input.readOnly && (input.plan.correction || input.plan.eventsToAppend.length ||
       input.plan.familyEventsToAppend.length || input.plan.sharingAuditEntries.length || input.plan.medicationMissed ||
       input.plan.shareFindingIds.length || input.plan.shareFamilyEventIds.length))) {
