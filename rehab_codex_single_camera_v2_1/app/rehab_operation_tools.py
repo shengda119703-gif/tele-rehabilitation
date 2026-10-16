@@ -207,6 +207,8 @@ class RehabOperationTools:
         }
         snapshot = self.daily.snapshot(self.owner, self.scope)
         existing = next((e for e in snapshot.get('schedules', []) if e.get('id') == schedule_id), None) if schedule_id else None
+        if 'expected_existing' in args and args.get('expected_existing') != existing:
+            raise ValueError('训练安排已变化，请重新读取后操作')
         preview = {
             'status': 'preview',
             'operation': 'rehab.schedule.upsert',
@@ -226,6 +228,8 @@ class RehabOperationTools:
         existing = next((e for e in snapshot.get('schedules', []) if e.get('id') == schedule_id), None)
         if not existing:
             raise ValueError('安排不存在或已经变化')
+        if 'expected_existing' in args and args.get('expected_existing') != existing:
+            raise ValueError('训练安排已变化，请重新读取后操作')
         preview = {'status': 'preview', 'operation': 'rehab.schedule.remove', 'schedule': existing}
         if args.get('commit') is not True:
             return preview
