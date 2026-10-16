@@ -1,8 +1,7 @@
 import { catalogue } from './catalogue';
-import { guidance } from './guidance';
 import { localPlan, type PlanInput } from './assistant';
 import { searchCards, searchGuidance } from './assistant';
-import { describeLocalRehabReceipt, readRehabReceipt, type RehabToolPort, type RehabCall, rehabToolNames } from '../runtime/rehabTools';
+import { readRehabReceipt, type RehabToolPort, type RehabCall, rehabToolNames } from '../runtime/rehabTools';
 import type { ConversationModel } from '../runtime/conversation';
 import type { SemanticTurn } from '../runtime/semanticRouter';
 
@@ -88,7 +87,7 @@ function stringArray(value: unknown, maxItems = 20, maxChars = 160): value is st
 }
 function json(raw: string): unknown {
   try {
-    const cleaned = raw.trim().replace(/^\`\`\`(?:json)?\\s*/i, '').replace(/\\s*\`\`\`$/, '');
+    const cleaned = raw.trim().replace(/^\`\`\`(?:json)?\s*/i, '').replace(/\s*\`\`\`$/, '');
     return JSON.parse(cleaned);
   } catch { return null; }
 }
@@ -156,7 +155,7 @@ export async function selectRehabTools(
   userText: string,
   check = () => {},
 ): Promise<RehabToolSelection | null> {
-  const prompt = TOOL_SYSTEM + '\\n第一轮语义：' + JSON.stringify({
+  const prompt = TOOL_SYSTEM + '\n第一轮语义：' + JSON.stringify({
     route: semantic.route, goal: semantic.goal, intents: semantic.intents ?? [],
     mentions: semantic.mentions, events: semantic.events, relations: semantic.relations,
     uncertain: semantic.uncertain, user_text: userText,
@@ -307,7 +306,7 @@ export async function generateRehabCandidate(
   });
   if (payload.length > 30000) return null;
   try {
-    const raw=await model.reply({purpose:'understanding',messages:[{role:'user',content:ANALYSIS_SYSTEM+'\\n'+payload}]});
+    const raw=await model.reply({purpose:'understanding',messages:[{role:'user',content:ANALYSIS_SYSTEM+'\n'+payload}]});
     check();
     return parseCandidate(raw);
   } catch { check(); return null; }
@@ -335,7 +334,36 @@ export async function runRehabWorkflow(input: {
   }
   const candidate=await generateRehabCandidate(input.model,input.semantic,input.userText,toolResults,check);
   if(!candidate) return {candidate:null,validation:null,toolResults,selection};
-  const validation=validateRehabPlan(candidate);
+
+  // The deterministic algorithm is authoritative when the LLM explicitly requested it.
+  // The model may propose inputs, but the host owns execution and the returned result.
+  const algorithmResult = toolResults.find(r => r.name === 'rehab.run_plan_algorithm')?.data as ReturnType<typeof localPlan> | undefined;
+  let validation=validateRehabPlan(candidate);
+  if (algorithmResult) {
+    validation = { ...validation, algorithm_result: algorithmResult };
+    const algorithmIds = new Set((algorithmResult.items ?? []).map(item => item.id));
+    if (candidate.candidate_actions.some(action => !algorithmIds.has(action.exercise_id))) {
+      validation = {
+        ...validation,
+        status: 'rejected',
+        reasons: [...validation.reasons, 'candidate_action_not_returned_by_algorithm'],
+      };
+    }
+    if (algorithmResult.status === 'no_match' && candidate.candidate_actions.length) {
+      validation = {
+        ...validation,
+        status: 'rejected',
+        reasons: [...validation.reasons, 'algorithm_no_match'],
+      };
+    }
+    if (algorithmResult.status === 'needs_review') {
+      validation = {
+        ...validation,
+        status: validation.status === 'rejected' ? 'rejected' : 'needs_review',
+        reasons: [...validation.reasons, 'algorithm_requires_review'],
+      };
+    }
+  }
   return {candidate,validation,toolResults,selection};
 }
 
