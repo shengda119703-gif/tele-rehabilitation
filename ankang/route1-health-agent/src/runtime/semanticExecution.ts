@@ -8,6 +8,7 @@ import { canUseModuleTools } from './operationalIntent';
 import { readRehabReceipt, describeLocalRehabReceipt, type RehabToolPort, type RehabCall } from './rehabTools';
 import type { SemanticTurn, SemanticContextMessage } from './semanticRouter';
 import { runRehabWorkflow, renderRehabDraft } from '../rehab/workflow';
+import { previewRehabProgramOperation, commitRehabProgramOperation, isConfirmation, isCancellation, isRehabProgramIntent, renderOperationPreview, renderOperationResult, type PendingRehabOperation, type RehabOperationPort } from '../rehab/programOperations';
 
 export interface SemanticStage {
   stage: 'understanding' | 'tool' | 'reply';
@@ -39,6 +40,15 @@ function withReply(plan: ElderTurnPlan, text: string): ElderTurnPlan {
 }
 
 /** Presentation validation supplements (and does not replace) the existing safety rules. */
+function privacyNone(text: string): boolean {
+  return !/(?:不要记录|别记录|不记录|私密|隐私|不要保存|不保存)/.test(text);
+}
+function isRejectedPreview(value: unknown): boolean {
+  return typeof value === 'object' && value !== null && 'result' in value &&
+    typeof (value as any).result === 'object' && (value as any).result !== null &&
+    (value as any).result.status === 'rejected';
+}
+
 export function isUserFacingSemanticReply(raw: unknown): raw is string {
   if (typeof raw !== 'string' || !raw.trim() || raw.length > 6000) return false;
   if (/^\s*[\[{]|```|<\/?(?:think|system|tool)>|\b(?:suggested_tool|tool_requests|source_message_id|routing_hint|exercise_id|participant_id|ownerId|arguments)\b|rehab\.[a-z_]+|你是安康应用的第一轮语义解析器/.test(raw)) return false;
@@ -51,8 +61,10 @@ export function isUserFacingSemanticReply(raw: unknown): raw is string {
 export async function executeSemanticTurn(input: {
   semantic: SemanticTurn; text: string; context: SemanticContextMessage[];
   plan: ElderTurnPlan; readOnly: boolean; model: ConversationModel;
-  reads?: Pick<RehabToolPort, 'read'>; participantId: string; check: () => void;
-  trace: SemanticExecutionTrace;
+  reads?: Pick<RehabToolPort, 'read'>; participantId: string; rehabOperations?: RehabOperationPort;
+  pendingRehabOperation?: PendingRehabOperation | null;
+  setPendingRehabOperation?: (pending: PendingRehabOperation | null) => void;
+  check: () => void; trace: SemanticExecutionTrace;
 }): Promise<{ plan: ElderTurnPlan; conversation: ChatMessage['conversation'] }> {
   const { semantic, text, context, model, check, trace } = input;
   let plan = input.readOnly ? readOnlyPlan(input.plan) : input.plan;
@@ -65,6 +77,66 @@ export async function executeSemanticTurn(input: {
       input.plan.familyEventsToAppend.length || input.plan.sharingAuditEntries.length || input.plan.medicationMissed ||
       input.plan.shareFindingIds.length || input.plan.shareFamilyEventIds.length))) {
     return local(plan.replyText, 'existing_safety_or_health_workflow');
+  }
+
+  if (input.pendingRehabOperation && input.rehabOperations && privacyNone(input.text)) {
+    if (isCancellation(input.text)) {
+      input.setPendingRehabOperation?.(null);
+      return local('好的，这次康复计划修改先不执行。', 'rehab_operation_cancelled');
+    }
+    if (isConfirmation(input.text)) {
+      try {
+        const results = await commitRehabProgramOperation({pending:input.pendingRehabOperation,operations:input.rehabOperations,check});
+        input.setPendingRehabOperation?.(null);
+        trace.stages.push({stage:'tool',status:'passed',reason:'rehab_operation_committed_after_confirmation'});
+        return {plan:withReply(plan, renderOperationResult(results[0])),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
+      } catch {
+        input.setPendingRehabOperation?.(null);
+        trace.stages.push({stage:'tool',status:'failed',reason:'rehab_operation_commit_failed'});
+        return local('这次修改没有执行成功，当前计划可能已经发生变化，请重新查看后再操作。', 'rehab_operation_commit_failed');
+      }
+    }
+  }
+
+  if (input.rehabOperations && isRehabProgramIntent(semantic)) {
+    let rehabContext: unknown = null;
+    if (semantic.route === 'rehab') {
+      const rehabResult = await runRehabWorkflow({
+        model,
+        semantic,
+        userText: text,
+        reads: input.reads,
+        participantId: input.participantId,
+        check,
+      });
+      rehabContext = rehabResult.validation ? {
+        status: rehabResult.validation.status,
+        reasons: rehabResult.validation.reasons,
+        candidate: rehabResult.validation.plan,
+        algorithm_result: rehabResult.validation.algorithm_result ?? null,
+      } : null;
+    }
+    const operation = await previewRehabProgramOperation({
+      model,
+      semantic,
+      userText: text,
+      reads: input.reads,
+      operations: input.rehabOperations,
+      rehabContext,
+      check,
+    });
+    if (!operation.plan) {
+      trace.stages.push({stage:'tool',status:'failed',reason:'rehab_operation_plan_unavailable'});
+      return local('我还不能确定要修改哪一项康复计划或训练安排。请告诉我具体要改哪个动作、次数或时间。', 'rehab_operation_plan_unavailable');
+    }
+    const blocked = operation.previews.some(item => isRejectedPreview(item));
+    if (blocked) {
+      trace.stages.push({stage:'tool',status:'blocked',reason:'rehab_operation_preview_rejected'});
+      return {plan:withReply(plan,renderOperationPreview(operation.plan,operation.previews)),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
+    }
+    input.setPendingRehabOperation?.({proposal:operation.plan,previews:operation.previews,createdAt:Date.now()});
+    trace.stages.push({stage:'tool',status:'passed',reason:'rehab_operation_preview_ready_for_confirmation'});
+    return {plan:withReply(plan,renderOperationPreview(operation.plan,operation.previews)),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
   }
 
   // Rehab is a separate analysis workflow: LLM tool planning -> host tools/algorithm -> LLM candidate -> program validation.
