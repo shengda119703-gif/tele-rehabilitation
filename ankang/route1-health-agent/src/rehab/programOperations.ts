@@ -210,8 +210,15 @@ export async function previewRehabProgramOperation(input: {
   if(!plan || !plan.operations.length) return {plan,previews:[],toolResults};
   const previews=[];
   for(const operation of plan.operations){
-    try { previews.push({name:operation.name,result:await input.operations.call(operation.name,{...operation.arguments,commit:false})}); }
-    catch(error) { previews.push({name:operation.name,result:{status:'rejected',reason:String(error)}}); }
+    try {
+      const result = await input.operations.call(operation.name,{...operation.arguments,commit:false});
+      // Bind the preview's observed schedule state to the pending proposal.
+      // The host checks it again on commit to avoid overwriting a newer schedule.
+      if (record(result) && (operation.name === 'rehab.schedule.upsert' || operation.name === 'rehab.schedule.remove')) {
+        operation.arguments.expected_existing = result.previous ?? result.schedule ?? null;
+      }
+      previews.push({name:operation.name,result});
+    } catch(error) { previews.push({name:operation.name,result:{status:'rejected',reason:String(error)}}); }
   }
   return {plan,previews,toolResults};
 }
