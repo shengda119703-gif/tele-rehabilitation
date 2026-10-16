@@ -15,8 +15,8 @@ export function localPlan(input:PlanInput,cards:readonly PlanCard[]=catalogue) {
   if(!input||typeof input.goal!=='string'||!input.goal.trim()||typeof input.region!=='string'||!input.region.trim()||
     !Array.isArray(input.equipment)||!Array.isArray(input.restrictions)||
     [...input.equipment,...input.restrictions].some(v=>typeof v!=='string')||
-    !Number.isInteger(input.level)||input.level<0||input.level>3||input.screeningConfirmed!==true)
-    throw Error('请填写目标、部位、器材、限制及当前等级，并确认已完成适用性核对。');
+    !Number.isInteger(input.level)||input.level<0||input.level>3||typeof input.screeningConfirmed!=='boolean')
+    throw Error('请填写目标、部位、器材、限制及当前等级，并提供适用性核对状态。');
   // Free-text medical restrictions cannot be proven compatible by substring matching.
   // A generic checkbox is not evidence of individual clinical clearance or trial results.
   const rules=input.restrictions.some(v=>v.trim())?[]:starterRules.filter(r=>
