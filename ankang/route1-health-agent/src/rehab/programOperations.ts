@@ -163,7 +163,7 @@ const PROGRAM_SYSTEM = [
 ].join('\n');
 
 async function buildPlan(model: ConversationModel, semantic: SemanticTurn, userText: string,
-  toolResults: {name:string;data:unknown}[], check: () => void): Promise<RehabProgramPlan | null> {
+  toolResults: {name:string;data:unknown}[], check: () => void, rehabContext?: unknown): Promise<RehabProgramPlan | null> {
   const payload = JSON.stringify({
     semantic: {route:semantic.route,goal:semantic.goal,intents:semantic.intents??[],mentions:semantic.mentions,events:semantic.events,relations:semantic.relations,uncertain:semantic.uncertain},
     user_text:userText, tool_results:toolResults, rehab_context:rehabContext ?? null,
