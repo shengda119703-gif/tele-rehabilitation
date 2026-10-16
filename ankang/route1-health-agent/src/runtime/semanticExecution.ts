@@ -76,7 +76,7 @@ export async function executeSemanticTurn(input: {
     return local(plan.replyText, 'existing_safety_or_health_workflow');
   }
 
-  if (input.pendingRehabOperation && input.rehabOperations) {
+  if (!input.readOnly && input.pendingRehabOperation && input.rehabOperations) {
     if (isCancellation(input.text)) {
       input.setPendingRehabOperation?.(null);
       return local('好的，这次康复计划修改先不执行。', 'rehab_operation_cancelled');
@@ -98,7 +98,7 @@ export async function executeSemanticTurn(input: {
     input.setPendingRehabOperation?.(null);
   }
 
-  if (input.rehabOperations && isRehabProgramIntent(semantic)) {
+  if (!input.readOnly && input.rehabOperations && isRehabProgramIntent(semantic)) {
     let rehabContext: unknown = null;
     if (semantic.route === 'rehab') {
       const rehabResult = await runRehabWorkflow({
