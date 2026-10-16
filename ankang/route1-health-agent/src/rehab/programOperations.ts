@@ -233,7 +233,10 @@ export function isRehabProgramIntent(semantic: SemanticTurn): boolean {
     ...semantic.mentions.map(m => m.text),
     ...semantic.intents!.filter(i => i.type === 'program_operation' || i.type === 'plan_change').map(i => i.evidence),
   ].join(' ');
-  return /康复|训练|锻炼|动作|计划|训练时间|训练安排/.test(evidence);
+  // Navigation/query requests stay on the existing module/records path.
+  if (/^(?:打开|进入|查看|看看|跳转|返回|关闭)/.test(semantic.goal.trim())) return false;
+  return /修改|更改|调整|增加|删除|移除|减少|暂停|恢复|安排|时间|计划/.test(evidence) &&
+    /康复|训练|锻炼|动作|计划/.test(evidence);
 }
 
 export function isConfirmation(text: string): boolean {
