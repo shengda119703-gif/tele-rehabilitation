@@ -264,7 +264,7 @@ async function executeCall(
     const a = call.arguments;
     const input: PlanInput = {
       goal:a.goal!, region:normalizeRegion(a.region!), equipment:a.equipment!, restrictions:a.restrictions!,
-      level:a.level!, screeningConfirmed:a.screening_confirmed!,
+      level:a.level!, screeningConfirmed:false,
     };
     try { return {name:call.name,data:localPlan(input)}; }
     catch (error) { return {name:call.name,data:{status:'needs_review',error:String(error)}}; }
