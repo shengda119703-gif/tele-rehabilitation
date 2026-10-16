@@ -40,9 +40,6 @@ function withReply(plan: ElderTurnPlan, text: string): ElderTurnPlan {
 }
 
 /** Presentation validation supplements (and does not replace) the existing safety rules. */
-function privacyNone(text: string): boolean {
-  return !/(?:不要记录|别记录|不记录|私密|隐私|不要保存|不保存)/.test(text);
-}
 function isRejectedPreview(value: unknown): boolean {
   return typeof value === 'object' && value !== null && 'result' in value &&
     typeof (value as any).result === 'object' && (value as any).result !== null &&
@@ -79,7 +76,7 @@ export async function executeSemanticTurn(input: {
     return local(plan.replyText, 'existing_safety_or_health_workflow');
   }
 
-  if (input.pendingRehabOperation && input.rehabOperations && privacyNone(input.text)) {
+  if (input.pendingRehabOperation && input.rehabOperations) {
     if (isCancellation(input.text)) {
       input.setPendingRehabOperation?.(null);
       return local('好的，这次康复计划修改先不执行。', 'rehab_operation_cancelled');
@@ -96,6 +93,9 @@ export async function executeSemanticTurn(input: {
         return local('这次修改没有执行成功，当前计划可能已经发生变化，请重新查看后再操作。', 'rehab_operation_commit_failed');
       }
     }
+    // Any non-confirmation/cancellation message supersedes the old proposal.
+    // This prevents a later unrelated “好” from applying a stale operation.
+    input.setPendingRehabOperation?.(null);
   }
 
   if (input.rehabOperations && isRehabProgramIntent(semantic)) {
