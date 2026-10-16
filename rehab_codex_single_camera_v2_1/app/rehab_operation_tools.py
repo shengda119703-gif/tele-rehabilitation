@@ -28,6 +28,8 @@ class RehabOperationTools:
     def __init__(self, database, scope, daily: DailyStore, owner: str):
         self.database = database
         self.scope = scope_key(scope)
+        if self.scope.get('participant_id') != owner:
+            raise ValueError('康复操作用户范围不一致')
         self.daily = daily
         self.owner = owner
 
