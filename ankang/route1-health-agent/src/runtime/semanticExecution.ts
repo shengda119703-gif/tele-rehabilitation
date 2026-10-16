@@ -99,7 +99,7 @@ export async function executeSemanticTurn(input: {
   }
 
   if (!input.readOnly && input.rehabOperations && isRehabProgramIntent(semantic)) {
-    let rehabContext: any = null;
+    let rehabContext: unknown = null;
     let rehabReply = '';
     if (semantic.route === 'rehab') {
       const rehabResult = await runRehabWorkflow({
