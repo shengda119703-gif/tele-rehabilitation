@@ -61,6 +61,12 @@ export async function executeSemanticTurn(input: {
     return { plan: withReply(plan, reply), conversation: { provider: 'local' as const, status: 'unavailable' as const, reason: 'not_configured' as const } };
   };
   // The existing clinical planner and durable-write guards retain authority.
+  if (input.plan.safetyAction || (!input.readOnly && (input.plan.correction || input.plan.eventsToAppend.length ||
+      input.plan.familyEventsToAppend.length || input.plan.sharingAuditEntries.length || input.plan.medicationMissed ||
+      input.plan.shareFindingIds.length || input.plan.shareFamilyEventIds.length))) {
+    return local(plan.replyText, 'existing_safety_or_health_workflow');
+  }
+
   // Rehab is a separate analysis workflow: LLM tool planning -> host tools/algorithm -> LLM candidate -> program validation.
   // It deliberately stops before any plan persistence or module operation.
   if (semantic.route === 'rehab') {
@@ -83,12 +89,6 @@ export async function executeSemanticTurn(input: {
       reason: result.validation.status === 'passed' ? 'rehab_plan_validated' : result.validation.reasons.join(';'),
     });
     return { plan: withReply(plan, renderRehabDraft(result.validation)), conversation: { provider: 'deepseek', status: 'replied' } };
-  }
-
-  if (input.plan.safetyAction || (!input.readOnly && (input.plan.correction || input.plan.eventsToAppend.length ||
-      input.plan.familyEventsToAppend.length || input.plan.sharingAuditEntries.length || input.plan.medicationMissed ||
-      input.plan.shareFindingIds.length || input.plan.shareFamilyEventIds.length))) {
-    return local(plan.replyText, 'existing_safety_or_health_workflow');
   }
 
   const requests = semantic.tool_requests !== undefined ? semantic.tool_requests : semantic.suggested_tool
