@@ -27,6 +27,7 @@ import {rehabAnswer,localPlan} from '../rehab/assistant';
 import {catalogue} from '../rehab/catalogue';
 import type {ProductAgentModel} from './ProductAgent';
 import type {ConversationModel} from '../runtime/conversation';
+import type {RehabOperationPort} from '../rehab/programOperations';
 
 export interface ProductLocalPort {
   read<T>(key: string): T | null;
@@ -59,6 +60,7 @@ export class ProductService {
     _retiredAgentModel?: (owner:string)=>ProductAgentModel|undefined,
     private rehabReads?: (owner:string)=>Pick<RehabToolPort,'read'>|undefined,
     private conversationModel?: (owner:string)=>ConversationModel|undefined,
+    private rehabOperations?: (owner:string)=>RehabOperationPort|undefined,
     private runtimeOptions: {semanticRoutingEnabled?:boolean} = {}) {}
   private syncs = new Map<string, {port:SyncPort; inbox:unknown[]; unsubscribe:() => void}>();
   private sync(owner:string) {
@@ -217,6 +219,7 @@ export class ProductService {
           return model.reply(input);
         }}:undefined,
         rehabReads:this.rehabReads?.(owner)??this.rehab?.(owner),
+        rehabOperations:this.rehabOperations?.(owner),
         rehabAssistant:(text,privateTurn)=>rehabAnswer(text,privateTurn,owner,this.conversationModel?.(owner),this.rehabReads?.(owner)??this.rehab?.(owner))});
       this.open.add(owner);
       this.modelAvailability.set(owner,modelAvailable);
