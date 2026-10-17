@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { catalogue } from '../src/rehab/catalogue';
 import { mapKnowledgeActionToApp } from '../src/rehab/exerciseMapping';
-import { parseRehabToolSelection, selectRehabTools, validateRehabPlan, rehabAnswerTask, runRehabReadOnlyAnswer, type RehabCandidatePlan } from '../src/rehab/workflow';
+import { parseRehabToolSelection, selectRehabTools, runRehabWorkflow, validateRehabPlan, rehabAnswerTask, runRehabReadOnlyAnswer, type RehabCandidatePlan } from '../src/rehab/workflow';
 
 test('rehab tool selection accepts only registered tools', () => {
   const ok = parseRehabToolSelection(JSON.stringify({
@@ -135,4 +135,28 @@ test('only explicitly reviewed knowledge cards map to executable app movements',
   assert.equal(mapKnowledgeActionToApp('T-LOW-002'),null);
   assert.equal(mapKnowledgeActionToApp('T-AXU-022'),null);
   assert.equal(mapKnowledgeActionToApp('T-LOW-046'),null);
+});
+
+test('plan generation rejects knowledge actions that have no executable app mapping', async () => {
+  const semantic = {
+    version:1 as const, route:'rehab' as const, goal:'生成居家康复计划',
+    mentions:[], events:[], relations:[], uncertain:[], suggested_tool:null,
+    intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'生成居家康复计划',evidence:'制定一套居家训练计划'}],
+  };
+  let call = 0;
+  const model = {reply:async()=>{
+    call++;
+    if(call===1) return JSON.stringify({version:1,calls:[
+      {name:'rehab.search_knowledge',arguments:{query:'滑跟屈膝'},reason:'查找动作卡'},
+    ],uncertainties:[]});
+    return JSON.stringify({
+      version:1,goal:'居家康复计划',summary:'候选',
+      algorithm_input:{goal:'居家康复计划',region:'膝',equipment:['硬床','滑布'],restrictions:[],level:0,screening_confirmed:false},
+      candidate_actions:[{exercise_id:'T-LOW-002',reason:'动作库返回'}],
+      doctor_review_required:false,doctor_review_reasons:[],uncertainties:[],
+    });
+  }};
+  const result = await runRehabWorkflow({model,semantic,userText:'制定一套居家训练计划',participantId:'SYNTHETIC'});
+  assert.equal(result.validation?.status,'rejected');
+  assert.ok(result.validation?.reasons.includes('candidate_action_not_mapped_to_executable_app_movement'));
 });
