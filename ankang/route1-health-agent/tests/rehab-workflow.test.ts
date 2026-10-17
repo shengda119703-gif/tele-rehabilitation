@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { catalogue } from '../src/rehab/catalogue';
-import { parseRehabToolSelection, validateRehabPlan, rehabAnswerTask, runRehabReadOnlyAnswer, type RehabCandidatePlan } from '../src/rehab/workflow';
+import { parseRehabToolSelection, selectRehabTools, validateRehabPlan, rehabAnswerTask, runRehabReadOnlyAnswer, type RehabCandidatePlan } from '../src/rehab/workflow';
 
 test('rehab tool selection accepts only registered tools', () => {
   const ok = parseRehabToolSelection(JSON.stringify({
@@ -109,4 +109,21 @@ test('missing search query without any grounded fallback is rejected', () => {
     uncertainties:[],
   }));
   assert.equal(parsed,null);
+});
+
+test('tool planner integration fills an omitted query before host execution', async () => {
+  const semantic = {
+    version:1 as const, route:'rehab' as const, goal:'制定腰椎居家训练计划',
+    mentions:[{kind:'body_region' as const,text:'腰椎',evidence:'腰椎'}],
+    events:[], relations:[], uncertain:[], suggested_tool:null,
+    intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'制定居家训练计划',evidence:'制定一套在家的训练计划'}],
+  };
+  const model = {reply:async()=>JSON.stringify({
+    version:1,
+    calls:[{name:'rehab.search_guidance',arguments:{},reason:'需要训练原则'}],
+    uncertainties:['缺少个人筛查信息'],
+  })};
+  const selected = await selectRehabTools(model,'dummy' as never,'我有腰椎间盘突出，帮我制定一套在家的训练计划。');
+  assert.equal(selected?.calls[0].name,'rehab.search_guidance');
+  assert.match(selected?.calls[0].arguments.query ?? '',/腰椎|训练计划/);
 });
