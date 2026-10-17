@@ -16,19 +16,22 @@ export interface ScopeFallback {
  * an application operation that is not registered with the host.
  */
 export function resolveScopeFallback(semantic: SemanticTurn, userText: string): ScopeFallback | null {
-  if (semantic.route !== 'other') return null;
-
   const intentEvidence = (semantic.intents ?? [])
     .map(intent => [intent.type ?? '', intent.goal, intent.evidence].join(' '))
     .join(' ');
   const context = [semantic.goal, intentEvidence, userText].join(' ').slice(0, 10000);
+  const clinicalBoundary = /(?:诊断|确诊|开药|处方|调整用药|停药|换药|手术方案|治疗方案|检查结果.{0,12}(?:怎么办|怎么处理|严重吗)|医生.{0,12}(?:判断|诊断|开药)|咨询医生|看医生|转诊)/.test(context);
 
-  if (/(?:诊断|确诊|开药|处方|调整用药|停药|换药|手术方案|治疗方案|检查结果.{0,12}(?:怎么办|怎么处理|严重吗)|医生.{0,12}(?:判断|诊断|开药)|咨询医生|看医生|转诊)/.test(context)) {
+  // Explicit requests for diagnosis/treatment decisions are escalated even when
+  // the first router labels them as health or rehab rather than "other".
+  if (clinicalBoundary && ['other', 'health', 'rehab'].includes(semantic.route)) {
     return {
       kind: 'clinical_handoff',
       reply: '这件事需要医生结合病史、查体和必要检查作出判断。我可以帮你整理症状、既往情况和想问医生的问题，但不能替医生诊断、开药或决定治疗。如果症状正在明显加重，或你觉得情况紧急，请及时联系当地医疗服务；我没有替你联系医生或完成预约。',
     };
   }
+
+  if (semantic.route !== 'other') return null;
 
   if (/(?:打开|进入|跳转|设置提醒|发提醒|预约|挂号|联系医生|打电话|呼叫救护车|发送转诊|替我联系|帮我联系)/.test(context)) {
     return {
