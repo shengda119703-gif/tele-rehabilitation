@@ -45,12 +45,14 @@ test('negated clinical and external-operation mentions do not trigger handoff or
 
 test('disease-specific plan generation is not routed to generic activity-plan adoption', () => {
   const request = '我有腰椎间盘突出，帮我制定一套在家的训练计划';
-  const turn = {
-    ...semantic('rehab','制定腰椎间盘突出居家训练计划'),
-    intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'制定居家训练计划',evidence:request}],
-    mentions:[{kind:'other' as const,text:'腰椎间盘突出',evidence:request}],
-  };
-  const result = resolveScopeFallback(turn,request);
-  assert.equal(result?.kind,'clinical_handoff');
-  assert.match(result?.reply ?? '',/不能据此生成腰椎间盘突出|专业人员/);
+  for (const route of ['rehab','health','other'] as const) {
+    const turn = {
+      ...semantic(route,'制定腰椎间盘突出居家训练计划'),
+      intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'制定居家训练计划',evidence:request}],
+      mentions:[{kind:'other' as const,text:'腰椎间盘突出',evidence:request}],
+    };
+    const result = resolveScopeFallback(turn,request);
+    assert.equal(result?.kind,'clinical_handoff',route);
+    assert.match(result?.reply ?? '',/不能据此生成腰椎间盘突出|专业人员/);
+  }
 });
