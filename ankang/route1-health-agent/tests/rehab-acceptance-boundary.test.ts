@@ -62,18 +62,19 @@ test('actual local personal reads remain outside every candidate model request',
   const reads: RehabCall[] = [];
   const result = await runRehabWorkflow({model,semantic,userText:'SYNTHETIC TEST 生成计划',participantId:'SYNTHETIC_TEST',
     reads:{async read(call){reads.push(call);return receipt(call);}}});
-  assert.equal(reads.length,1);
-  assert.equal(result.toolResults.length,2);
+  assert.equal(reads.length,3,'plan generation checks current plan, history and recent assessments locally');
+  assert.equal(result.toolResults.length,5,'three local reads plus action and guidance searches');
   assert.equal(result.validation?.status,'needs_review');
   assert.doesNotMatch(JSON.stringify(calls),/SYNTHETIC_STORED_MARKER|SYNTHETIC_PRIVATE_NOTES|SYNTHETIC_TEST/);
   assert.match(calls[1].messages[0].content,/T-LOW-003/);
 });
 
-test('a valid card not returned by executed tools is rejected', async () => {
-  const {model} = queuedModel([{version:1,calls:[],uncertainties:[]},candidate()]);
-  const result = await runRehabWorkflow({model,semantic,userText:'SYNTHETIC TEST',participantId:'SYNTHETIC_TEST'});
-  assert.equal(result.validation?.status,'rejected');
-  assert.ok(result.validation?.reasons.includes('candidate_action_not_retrieved'));
+test('a valid card not returned by executed tools never reaches candidate generation', async () => {
+  const {model,calls} = queuedModel([{version:1,calls:[],uncertainties:[]},candidate()]);
+  const result = await runRehabWorkflow({model,semantic,userText:'SYNTHETIC_NO_MATCH_937421',participantId:'SYNTHETIC_TEST'});
+  assert.equal(result.candidate,null);
+  assert.equal(result.validation,null);
+  assert.equal(calls.length,1,'empty action search must stop before candidate-generation LLM');
 });
 
 test('algorithm cannot borrow a model screening flag as trusted individual eligibility', async () => {
