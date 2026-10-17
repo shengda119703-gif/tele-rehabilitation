@@ -474,3 +474,24 @@ test('semantic runtime: other route never claims a real clinician handoff', asyn
   assert.equal(operations, 0);
   await runtime.closeSession(owner);
 });
+
+test('explicit treatment decisions do not reach program operations even with a program intent', async () => {
+  const text = '请替我诊断并决定治疗方案，再修改康复计划';
+  const { model, calls } = recordingModel(base('rehab', {
+    intents: [
+      {type:'rehab_question',route:'rehab',goal:'医疗判断',evidence:'请替我诊断并决定治疗方案'},
+      {type:'program_operation',route:'module',goal:'修改康复计划',evidence:'修改康复计划'},
+    ],
+  }));
+  let reads = 0, writes = 0;
+  const runtime = await open({conversationModel:model,
+    rehabReads:{async read(call){reads++; return receipt(call.name);}},
+    rehabOperations:{async call(){writes++; return {status:'applied'};}},
+  });
+  const turn = await runtime.processTurn(owner,{text,now});
+  assert.match(turn.reply.text,/需要医生|不能替医生诊断/);
+  assert.equal(reads,0);
+  assert.equal(writes,0);
+  assert.equal(calls.length,1);
+  await runtime.closeSession(owner);
+});
