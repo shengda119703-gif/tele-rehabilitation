@@ -469,7 +469,7 @@ test('semantic runtime: other route never claims a real clinician handoff', asyn
   const runtime = await open({ conversationModel: model,
     rehabOperations: { async call() { operations++; return {status:'applied'}; } } });
   const turn = await runtime.processTurn(owner, { text: '请帮我联系医生', now });
-  assert.match(turn.reply.text, /没有替你联系医生|不能替医生/);
+  assert.match(turn.reply.text, /还没有执行|不在已接通的康复助手操作范围内/);
   assert.doesNotMatch(turn.reply.text, /已经帮你联系医生/);
   assert.equal(operations, 0);
   await runtime.closeSession(owner);
