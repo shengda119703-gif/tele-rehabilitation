@@ -1,6 +1,7 @@
 """One serialized worker for the existing TypeScript bridge, never an LLM client."""
 import queue
 import json
+import os
 import sys
 import threading
 from pathlib import Path
@@ -21,6 +22,9 @@ class ProductBackend:
         self.stop_event = threading.Event()
         self.bridge = None
         self.assistant_cache = {}
+        self.semantic_routing_enabled = os.environ.get('ANKANG_SEMANTIC_ROUTING_ENABLED') == '1'
+        self.bridge_environment = {'ANKANG_PRODUCT_DISABLE_MODEL': '0' if self.semantic_routing_enabled else '1',
+                                   'ANKANG_SEMANTIC_ROUTING_ENABLED': '1' if self.semantic_routing_enabled else '0'}
         self.factory = bridge_factory
         from .daily_store import DailyStore
         self.daily = DailyStore(self.data_dir)
@@ -121,7 +125,7 @@ class ProductBackend:
                                 raise CloudError('请先在本机保存本人康复记录')
                             if operation == 'workbench.sync':
                                 if self.bridge is None:
-                                    self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150,env={'ANKANG_PRODUCT_DISABLE_MODEL':'1'})
+                                    self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150,env=self.bridge_environment)
                                 client.queue_product(owner, self.bridge.product('snapshot', owner, {}))
                                 with self._workbench_store(readonly=True) as store:
                                     client.queue_rehab(owner, store)
@@ -167,8 +171,12 @@ class ProductBackend:
                         else:
                             payload['bytes'] = list(data)
                     if self.bridge is None:
-                        self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150,env={'ANKANG_PRODUCT_DISABLE_MODEL':'1'})
+                        self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150,env=self.bridge_environment)
                     tools = RehabReadTools(self.data_dir/'home_rehab.sqlite3', scope) if scope else None
+                    operation_tools = None
+                    if scope:
+                        from ..rehab_operation_tools import RehabOperationTools
+                        operation_tools = RehabOperationTools(self.data_dir/'home_rehab.sqlite3', scope, self.daily, owner)
                     cloud_client = None
                     cloud_directory = self.data_dir / 'cloud-account'
                     if (cloud_directory / 'cloud-outbox-v1.sqlite3').exists():
@@ -179,17 +187,20 @@ class ProductBackend:
                             binding = connection.execute('SELECT patient_id FROM bindings WHERE local_id=?', (owner,)).fetchone()
                         if session and binding and binding[0] == session['patient_id']:
                             cloud_client = candidate
-                    # Submitted public text is sent directly below. Local/private
-                    # product turns never select a native model or a cloud tool.
-                    self.bridge.cloud_conversation = False
+                    # Default public chat uses the deployed assistant. Opt-in
+                    # semantic chat can only select the bound metered account.
+                    private_turn = cloud_client.assistant_private(payload.get('text', ''), payload.get('private')) if cloud_client else True
+                    self.bridge.cloud_conversation = self.semantic_routing_enabled and cloud_client is not None and not private_turn
                     def host_tools(name, arguments):
                         if name == 'conversation.cloud_reply':
-                            if cloud_client is None or set(arguments) != {'text'} or not isinstance(arguments['text'], str):
+                            if cloud_client is None or not {'text'} <= set(arguments) <= {'text', 'purpose'} or not isinstance(arguments['text'], str) or arguments.get('purpose', 'reply') not in {'reply', 'understanding'}:
                                 raise ValueError('请先绑定本人云账号，再使用统一问答')
-                            return cloud_client.ask_ai(arguments['text'])
+                            return cloud_client.ask_ai(arguments['text'], purpose=arguments['purpose']) if 'purpose' in arguments else cloud_client.ask_ai(arguments['text'])
                         if name.startswith('care.'):
                             from .care_host import CareHost
                             return CareHost(self.data_dir, self.daily, owner, scope)(name, arguments)
+                        if operation_tools and (name == 'rehab.get_schedule' or name.startswith('rehab.plan.') or name.startswith('rehab.schedule.')):
+                            return operation_tools(name, arguments)
                         if tools:
                             return tools(name, arguments)
                         raise ValueError('当前请求没有本人康复工具范围。')
@@ -208,7 +219,7 @@ class ProductBackend:
                         result = self.daily.apply(owner, operation, payload, scope)
                         self._deliver((operation, owner, token, result, None))
                         continue
-                    if operation == 'chat' and cloud_client is not None and not cloud_client.assistant_private(payload.get('text', ''), payload.get('private')):
+                    if operation == 'chat' and cloud_client is not None and not private_turn and not self.semantic_routing_enabled:
                         response = cloud_client.assistant_turn(payload['text'])
                         metadata = {'provider': response['source'], 'status': 'replied'}
                         result = {'turn': {**response['turn'], 'reply': {'text': response['turn']['answer'], 'persisted': True},

@@ -7,9 +7,10 @@ function request(){return Promise.reject(Error('智能问答统一通过云账�
 function reply(){} // Ignore late native callbacks from retired personal-key requests.
 function conversationModel(){
  if(!cloudConfigured())return undefined;
- return {async reply({messages}){
+ return {async reply({messages,purpose='reply'}){
+  if(!['reply','understanding'].includes(purpose))throw Error('问答任务无效');
   if(!Array.isArray(messages)||!messages.length||messages.length>16||messages.at(-1).role!=='user'||messages.some(m=>!['user','assistant'].includes(m.role)||typeof m.content!=='string'||!m.content.trim())||messages.reduce((n,m)=>n+m.content.length,0)>12000)throw Error('对话上下文无效');
-  const r=await root.PhoneAccount.askAI(root.PhoneLocal.store,messages.map(m=>m.role+'：'+m.content).join('\n'));
+  const r=await root.PhoneAccount.askAI(root.PhoneLocal.store,messages.map(m=>m.role+'：'+m.content).join('\n'),purpose);
   if(!['SUCCEEDED','UNMETERED'].includes(r.state)||typeof r.answer!=='string'||!r.answer.trim())throw Error('云端问答结果待核对');
   return r.answer;
  }};

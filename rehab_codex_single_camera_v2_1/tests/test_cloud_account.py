@@ -60,6 +60,27 @@ def setup(tmp_path):
     return client, api, vault
 
 
+def test_ai_retry_preserves_understanding_purpose_and_operation(tmp_path):
+    account, _, _ = setup(tmp_path)
+    sent = []
+    def question(text, operation, purpose='reply'):
+        sent.append((text, operation, purpose))
+        if len(sent) == 1:
+            raise CloudError('TEST response lost')
+        return {'state': 'SUCCEEDED', 'answer': '{"version":1}'}
+    account.ai_question = question
+    with pytest.raises(CloudError):
+        account.ask_ai('TEST schema', purpose='understanding')
+    with pytest.raises(CloudError, match='不能改变问答任务'):
+        account.ask_ai('TEST schema', purpose='reply')
+    assert len(sent) == 1
+    assert account.ask_ai()['state'] == 'SUCCEEDED'
+    assert sent[0] == sent[1] and sent[1][2] == 'understanding'
+    with account.db() as db:
+        assert db.execute('SELECT * FROM ai_pending').fetchone() is None
+        assert db.execute("SELECT * FROM meta WHERE key LIKE 'ai-purpose:%'").fetchone() is None
+
+
 def test_two_resolved_directory_instances_serialize_expired_token_rotation(tmp_path):
     """Fictitious tokens in a shared memory vault; no real credential or server."""
     account, server, vault = setup(tmp_path)

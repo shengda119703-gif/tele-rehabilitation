@@ -1,0 +1,61 @@
+{
+  "code_commit": "6c1a7771e020526b82dacf2d0185d16577a0cd02",
+  "node": "24.20.0",
+  "npm": "11.19.0",
+  "python": "3.12",
+  "ci": {
+    "product_pass": 34,
+    "security_scan": "PASS",
+    "bridge_build": "PASS",
+    "typecheck": "PASS",
+    "status": "PASS",
+    "unit_integration_pass": 530
+  },
+  "python_tests": {
+    "remaining_failure": "test_real_bridge_three_questions_and_scope_isolation",
+    "status": "FAIL",
+    "pass": 30,
+    "fail": 1,
+    "classification": "Existing permission grammar rejects two colloquial questions; original safety assertions retained"
+  },
+  "targeted_android_web": {
+    "pass": 24,
+    "status": "PASS"
+  },
+  "full_android_web": {
+    "classification": "Missing generated assets: catalog.json, ui-lock.json, lin-profile.json. Not an APK acceptance",
+    "status": "FAIL",
+    "pass": 42,
+    "fail": 14
+  },
+  "android_domain_bundle": {
+    "modules": 66,
+    "status": "PASS",
+    "default_flag": false
+  },
+  "live_model": {
+    "direct_config_found": false,
+    "calls": 0,
+    "status": "UNVERIFIED",
+    "custom_data_directories_checked": false,
+    "default_cloud_session_found": false
+  },
+  "logs": [
+    {
+      "sha256": "09882cce35ec9bb85664de85017e9d2ab5618aaebaf9d0ff9caaa37ef1a48bc9",
+      "name": "final-ci-verified.log"
+    },
+    {
+      "sha256": "dea77be025a38052a4cb77acce5c437e6e6ef1f93f74f9d3a6768bb89c6ebbe2",
+      "name": "final-python-tests.log"
+    },
+    {
+      "sha256": "d7270b38aeccc56ea56f621b44f38e6ad07b1cad28720ce3a376b80988f1342f",
+      "name": "final-host-web-tests.log"
+    },
+    {
+      "sha256": "f1bb48923d0f2e17cfa42b7cfed6b062118ec6f36da4b7307e2a940d4cee50ca",
+      "name": "final-web-tests.log"
+    }
+  ]
+}

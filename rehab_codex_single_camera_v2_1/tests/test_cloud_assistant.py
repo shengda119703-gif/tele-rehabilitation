@@ -187,6 +187,32 @@ def test_product_worker_bypasses_local_chat_for_public_questions_and_deduplicate
         backend.close()
 
 
+def test_semantic_opt_in_selects_the_bound_account_bridge_not_the_old_turn_endpoint(assistant, monkeypatch):
+    monkeypatch.setenv('ANKANG_SEMANTIC_ROUTING_ENABLED', '1')
+    _, cloud, _ = assistant
+    backend, bridge = worker(assistant, monkeypatch)
+    try:
+        backend.call('chat', 'TEST-owner', {'text': 'TEST semantic request'})
+        assert bridge.cloud_conversation is True
+        assert any(operation == 'chat' for operation, _ in bridge.calls)
+        assert not any(path.endswith('/assistant/turns') for path, _, _ in cloud.calls)
+    finally:
+        backend.close()
+
+
+@pytest.mark.parametrize('payload', [{'text': 'TEST private', 'private': True}, {'text': '不要记录我的训练结果'}])
+def test_semantic_opt_in_still_keeps_private_turns_local(assistant, monkeypatch, payload):
+    monkeypatch.setenv('ANKANG_SEMANTIC_ROUTING_ENABLED', '1')
+    _, cloud, _ = assistant
+    backend, bridge = worker(assistant, monkeypatch)
+    try:
+        backend.call('chat', 'TEST-owner', payload)
+        assert bridge.cloud_conversation is False
+        assert not any(path.endswith(('/assistant/turns', '/ai/requests')) for path, _, _ in cloud.calls)
+    finally:
+        backend.close()
+
+
 @pytest.mark.parametrize('payload', [{'text': 'TEST private', 'private': True}, {'text': '不要记录我的训练结果'}, {'text': '不要告诉家人我的训练'}])
 def test_product_private_path_never_sends_text_to_assistant_server(assistant, monkeypatch, payload):
     _, cloud, _ = assistant

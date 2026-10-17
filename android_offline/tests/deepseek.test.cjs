@@ -8,6 +8,24 @@ test('A legacy phone key never enables anonymous provider calls or tool planning
  const h=harness(false);assert.equal(h.models.configured(),false);assert.equal(h.models.conversationModel(),undefined);assert.equal(h.models.agentModel(),undefined);
  await assert.rejects(h.models.request({}),/云账号/);assert.equal(h.native.length,0);
 });
+
+test('phone local API passes semantic options to the runtime options argument',()=>{
+ let captured;const stop=new Error('constructor inspected');
+ const context={fetch(){},localStorage:{},PhoneMotion:{},AnkangSemanticRoutingEnabled:true,
+  PhoneStore:{selectedKey(){return 'TEST';},Store:class{constructor(){this.value={owner:'SYNTHETIC_TEST'};}}},
+  AnkangDomain:{ProductService:class{constructor(...args){captured=args;throw stop;}}}};
+ vm.createContext(context);
+ assert.throws(()=>vm.runInContext(fs.readFileSync('android_offline/web/local-api.js','utf8'),context),e=>e===stop);
+ assert.equal(captured[8],undefined);assert.equal(captured[9].semanticRoutingEnabled,true);
+});
+
+test('understanding purpose uses the same metered account gateway and never the native key',async()=>{
+ const h=harness();let args;
+ h.c.PhoneAccount.askAI=async(...a)=>{args=a;return {state:'SUCCEEDED',answer:'{"version":1}'};};
+ assert.equal(await h.models.conversationModel().reply({purpose:'understanding',messages:[{role:'user',content:'TEST input'}]}),'{"version":1}');
+ assert.equal(args[2],'understanding');assert.equal(h.native.length,0);
+ await assert.rejects(h.models.conversationModel().reply({purpose:'execute',messages:[{role:'user',content:'TEST'}]}));
+});
 test('Authenticated ordinary context uses the metered server, never a native key or profile payload',async()=>{
  const h=harness();assert.equal(h.models.configured(),true);
  assert.equal(await h.models.conversationModel().reply({messages:[{role:'user',content:'TEST 一般问题'}],profile:{secret:'MUST_NOT_SEND'}}),'TEST 云端答复');

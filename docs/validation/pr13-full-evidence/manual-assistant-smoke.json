@@ -1,0 +1,28 @@
+{
+  "http": 200,
+  "scope": "SYNTHETIC/TEST",
+  "model": {
+    "provider": "deepseek",
+    "status": "replied"
+  },
+  "semantic": {
+    "parser_status": "llm_valid",
+    "stages": [
+      {
+        "stage": "understanding",
+        "status": "passed"
+      },
+      {
+        "stage": "reply",
+        "status": "passed"
+      }
+    ]
+  },
+  "reply": "你好！我是安康软件的康复管家，主要可以：\n\n- 陪你日常聊天，听你说说今天的状态或烦心事\n- 做一般健康科普，比如康复常识、作息饮食等常见问题\n- 在你情绪低落时给一些支持\n\n需要说明的是，我是AI，不是医生，不做诊断、不开处方，也不替你决定训练方案。涉及软件里的具体功能操作，需要你在软件相应入口自行查看和确认。\n\n有什么想聊的，直接说就行。",
+  "not_apk": true,
+  "url": "http://127.0.0.1:8873/#assistant",
+  "runtime_hashes": {
+    "runtime/semanticRouter.js": "5421ec4bf0bcafb587ae7db470429ffbff4960f7ff1732dfa36e780cee02a815",
+    "rehab/workflow.js": "0b2c5ac6145b55e697ae97a8e4523c3b9164edb6d5ea4a19dabac2cdab3ed225"
+  }
+}

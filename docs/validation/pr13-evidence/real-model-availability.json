@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-15T11:21:04.429Z",
+  "mode": "REAL_DEEPSEEK",
+  "status": "UNVERIFIED",
+  "input_origin": "All user utterances are synthetic acceptance fixtures.",
+  "model_configuration": "Existing createConversationModel private host configuration; credentials omitted.",
+  "personal_tool_backend": "SYNTHETIC_MOCK_HOST in both modes; no actual patient database is read.",
+  "knowledge_backend": "Actual repository catalogue and guidance, retrieved by AgentRuntime.",
+  "runtime_contract": "Product-style read-only assistant; no health event, permission or plan writes.",
+  "limitation": "Personal records remain local under existing consent. Mock host receipts do not prove production database integration. Generated wording requires human clinical review.",
+  "real_llm_acceptance": "UNVERIFIED",
+  "production_personal_database_acceptance": "UNVERIFIED",
+  "planned_scenarios": 17,
+  "source_sha256": {
+    "src/runtime/session.ts": "708f142f01fc38e514cbf2bb5793cb5342b9f433cf08c2959a0d8967a335d1e9",
+    "src/runtime/semanticRouter.ts": "79e3ab91dc8b268496e75b2ee7bcabd69712901c1dc72c7335fd6a0584383e38",
+    "src/runtime/semanticExecution.ts": "41db25165118ed62efc9ef25b9934a8d15e32176ca82139890543e076102c3af",
+    "src/runtime/rehabTools.ts": "e4b2126ab83f9cb81ac7b9239655f1d9af8269f35b38af28b4891e9be69d5e82",
+    "src/rehab/assistant.ts": "f237721fba5a52238adea2bc1574dbadf4d0265f0077d14ca633e98b8bc825ad",
+    "src/rehab/catalogue.ts": "348620e88f3f306f29cff61c09f86aa0bd6756b7edd4c44b493d28c3aadb625b",
+    "src/rehab/guidance.ts": "a1df206b4ae2dd4cb95c05b3b5e069062f54c39f023c9d4ed9ddd847e0fd44d4",
+    "scripts/chat-model.cjs": "fa00eab7cc4a15605bb8c4af8e597fdfc75a77c454cd7b814eb37661f53d5ac9"
+  },
+  "cases": [
+    {
+      "id": "ordinary_chat",
+      "category": "普通聊天",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "rehab_card",
+      "category": "康复知识问答",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "rehab_levels",
+      "category": "公共分级说明",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "training_plan",
+      "category": "本人计划查询",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "training_history_empty",
+      "category": "训练记录查询（空）",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "recent_assessments",
+      "category": "本人评估查询",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "ambiguous_symptom",
+      "category": "模糊口语",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "multiple_symptoms",
+      "category": "多个症状",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "negated_symptom",
+      "category": "否定表达",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "hypothetical_symptom",
+      "category": "假设表达",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "uncertain_symptom",
+      "category": "不确定表达",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "correction_followup",
+      "category": "多轮纠正与指代",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "multiple_intents",
+      "category": "一句多个意图",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "private_no_record",
+      "category": "隐私门控",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "host_failure",
+      "category": "工具失败",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "host_wrong_owner",
+      "category": "个人数据隔离",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    },
+    {
+      "id": "urgent_safety",
+      "category": "必要安全处置",
+      "status": "UNVERIFIED",
+      "model_calls": 0,
+      "call_chain": []
+    }
+  ],
+  "build_sha256": "9f952ea8e6f7ce309a8780b458ac26f52c18249f104f3036f5382010a780ce5e",
+  "reason": "No existing usable model configuration was found; no model request was sent.",
+  "totals": {
+    "scenarios": 17,
+    "pass": 0,
+    "fail": 0,
+    "unverified": 17,
+    "model_calls": 0
+  }
+}

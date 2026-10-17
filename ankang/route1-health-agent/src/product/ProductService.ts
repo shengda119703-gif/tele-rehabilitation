@@ -25,8 +25,9 @@ import type { RehabToolPort } from '../runtime/rehabTools';
 import type {CarePort} from '../care/CareCoordinator';
 import {rehabAnswer,localPlan} from '../rehab/assistant';
 import {catalogue} from '../rehab/catalogue';
-import type {ProductAgentModel} from './ProductAgent';
+import {ProductAgent, type ProductAgentModel} from './ProductAgent';
 import type {ConversationModel} from '../runtime/conversation';
+import type {RehabOperationPort} from '../rehab/programOperations';
 
 export interface ProductLocalPort {
   read<T>(key: string): T | null;
@@ -51,13 +52,16 @@ type ProductProfile = StoredProfile & { rehabGoal?: string; currentState?: strin
 export class ProductService {
   private runtime = new AgentRuntime();
   private open = new Set<string>();
+  private modelAvailability = new Map<string,boolean>();
   private families = new Map<string, FamilyService>();
   private notifications = new Map<string, NotificationService>();
   constructor(private port: ProductLocalPort, private rehab?: (owner: string) => RehabToolPort | undefined,
     _retiredVision?: unknown, private extensions: ProductExtensions = {}, _retiredCareHost?: (owner:string)=>CarePort|undefined,
     _retiredAgentModel?: (owner:string)=>ProductAgentModel|undefined,
     private rehabReads?: (owner:string)=>Pick<RehabToolPort,'read'>|undefined,
-    private conversationModel?: (owner:string)=>ConversationModel|undefined) {}
+    private conversationModel?: (owner:string)=>ConversationModel|undefined,
+    private rehabOperations?: (owner:string)=>RehabOperationPort|undefined,
+    private runtimeOptions: {semanticRoutingEnabled?:boolean} = {}) {}
   private syncs = new Map<string, {port:SyncPort; inbox:unknown[]; unsubscribe:() => void}>();
   private sync(owner:string) {
     if (!this.syncs.has(owner)) {
@@ -198,15 +202,28 @@ export class ProductService {
   }
   private async close(owner: string) {
     if (this.open.delete(owner)) await this.runtime.closeSession(scopeKey(this.scope(owner)));
+    this.modelAvailability.delete(owner);
   }
   private async session(owner: string, now: Date): Promise<SessionSnapshot> {
     const scope = this.scope(owner), id = scopeKey(scope);
+    const modelAvailable=Boolean(this.conversationModel?.(owner));
+    if (this.open.has(owner) && this.modelAvailability.get(owner)!==modelAvailable) await this.close(owner);
     if (this.open.has(owner) && this.runtime.readSnapshot(id).today !== this.day(now)) await this.close(owner);
     if (!this.open.has(owner)) {
       const profile = {...this.profile(owner).profile, familySharing: this.family(owner).readState().familySharing};
       await this.runtime.openSession({sessionId: id, profile, now, persistence: this.persistence(owner),
+        participantId:owner, semanticRoutingEnabled:this.runtimeOptions.semanticRoutingEnabled===true,
+        conversationModel:modelAvailable?{reply:input=>{
+          const model=this.conversationModel?.(owner);
+          if(!model)throw Error('智能服务当前未配置');
+          return model.reply(input);
+        }}:undefined,
+        rehabReads:this.rehabReads?.(owner)??this.rehab?.(owner),
+        rehabOperations:this.rehabOperations?.(owner),
+        productTools:this.runtimeOptions.semanticRoutingEnabled?new ProductAgent([]):undefined,
         rehabAssistant:(text,privateTurn)=>rehabAnswer(text,privateTurn,owner,this.conversationModel?.(owner),this.rehabReads?.(owner)??this.rehab?.(owner))});
       this.open.add(owner);
+      this.modelAvailability.set(owner,modelAvailable);
       const history = this.port.read<CareTask[]>(this.key(owner, 'tasks')) ?? [];
       for (const task of this.runtime.readSnapshot(id).tasks) {
         const saved = history.find(t => t.id === task.id && t.dueDate === task.dueDate);

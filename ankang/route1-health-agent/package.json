@@ -15,7 +15,7 @@
     "verify:llm": "node scripts/verify-llm-understanding.mjs",
     "proxy": "node scripts/local-llm-proxy.mjs",
     "ci": "npm run build && npm test && npm run test:product && npm run security:check",
-    "test:product": "npm run build:bridge && node --test tests/product-desktop.test.cjs tests/product-extensions.test.cjs tests/simple-rehab-assistant.test.cjs",
+    "test:product": "npm run build:bridge && node --test tests/product-desktop.test.cjs tests/product-extensions.test.cjs tests/simple-rehab-assistant.test.cjs tests/conversation-model.test.cjs tests/semantic-host-wiring.test.cjs",
     "healthkit:bridge": "node scripts/healthkit-bridge.mjs",
     "test:healthkit": "node scripts/test-healthkit.mjs"
   },

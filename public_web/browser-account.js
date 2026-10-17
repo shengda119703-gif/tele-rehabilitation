@@ -49,7 +49,10 @@ async function request(action,value,body={}){
  if(action==='append')return api(patient+'/record-events','POST',body.document);
  if(action==='profile')return api(patient);
  if(action==='aiUsage')return api(patient+'/ai/usage');
- if(action==='aiAsk')return api(patient+'/ai/requests','POST',{operation_id:body.operation_id,text:body.text});
+ if(action==='aiAsk'){
+  const purpose=body.purpose??'reply';if(!['reply','understanding'].includes(purpose))throw Error('问答任务无效');
+  return api(patient+'/ai/requests','POST',{operation_id:body.operation_id,text:body.text,...(purpose==='understanding'?{purpose}:{})});
+ }
  if(action==='assistantPreferences')return body.health_context===undefined?api(patient+'/assistant/preferences'):api(patient+'/assistant/preferences','PUT',{expected_version:body.expected_version,health_context:body.health_context});
  if(action==='assistantConversation'){
   const after=body.after??0,limit=body.limit??30;

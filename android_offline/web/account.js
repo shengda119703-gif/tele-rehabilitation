@@ -97,19 +97,20 @@ async function adopt(store,plan,currentRevision){
  await store.serial(()=>store.change(v=>{scope(store);v.plans.find(p=>p.id===local.id).status='ACTIVE';}));return {...r,local_status:'ACTIVE'};
 }
 function schedule(store){if(autoRunning||scheduled||!store.value.cloudBinding)return;scheduled=setTimeout(async()=>{scheduled=null;autoRunning=true;try{if(store.value.cloudConsent)await publish(store);await syncMessages(store);root.dispatchEvent?.(new Event('workbench-updated'));}catch{/* queue and original local facts remain durable */}finally{autoRunning=false;}},1500);}
-async function askAI(store,text=null){
+async function askAI(store,text=null,purpose='reply'){
+ if(!['reply','understanding'].includes(purpose))throw Error('问答任务无效');
  const value={...aiScope(store)};let pending=store.value.cloudAiPending;
  function currentScope(){const current=aiScope(store);if(current.patient_id!==value.patient_id||current.account_id!==value.account_id)throw Error('账号已变化，旧回复未显示，请重新打开联系康复医师');}
- function checkPending(row){if(row&&row.patient_id!==value.patient_id)throw Error('原提问不属于当前本人账号');if(row&&text!==null&&text.trim()!==row.text)throw Error('原提问回执仍待核对，请先重试原提问，避免重复付费');}
+ function checkPending(row){if(row&&row.patient_id!==value.patient_id)throw Error('原提问不属于当前本人账号');if(row&&text!==null&&text.trim()!==row.text)throw Error('原提问回执仍待核对，请先重试原提问，避免重复付费');if(row&&text!==null&&purpose!==(row.purpose??'reply'))throw Error('原提问回执仍待核对，不能改变问答任务');}
  checkPending(pending);
  if(!pending){
   if(typeof text!=='string'||!text.trim()||text.length>12000)throw Error('请填写问题');
-  await store.serial(()=>store.change(v=>{currentScope();pending=v.cloudAiPending;checkPending(pending);if(!pending)v.cloudAiPending=pending={patient_id:value.patient_id,operation_id:crypto.randomUUID(),text:text.trim()};}));
+  await store.serial(()=>store.change(v=>{currentScope();pending=v.cloudAiPending;checkPending(pending);if(!pending)v.cloudAiPending=pending={patient_id:value.patient_id,operation_id:crypto.randomUUID(),text:text.trim(),...(purpose==='understanding'?{purpose}:{})};}));
  }
  const operation=pending.operation_id;
  const clearPending=()=>store.serial(()=>store.change(v=>{currentScope();if(v.cloudAiPending?.patient_id===value.patient_id&&v.cloudAiPending.operation_id===operation)delete v.cloudAiPending;}));
  let result;
- try{result=await request('aiAsk',value,{operation_id:operation,text:pending.text});}
+ try{result=await request('aiAsk',value,{operation_id:operation,text:pending.text,...(pending.purpose==='understanding'?{purpose:'understanding'}:{})});}
  catch(error){
   // These codes guarantee no model dispatch; uncertain failures keep the original operation.
   if(['AI_NOT_CONFIGURED','AI_BUSY','AI_QUOTA_EXHAUSTED','AI_REJECTED'].includes(error.code))await clearPending();

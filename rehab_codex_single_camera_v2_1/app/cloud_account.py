@@ -385,10 +385,15 @@ class CloudAccount:
     def candidate(self, kind, operation_id=None):
         return self.patient_call('/rehab-candidates', 'POST', {'operation_id': str(UUID(operation_id)) if operation_id else str(uuid4()), 'kind': kind})
 
-    def ai_question(self, text, operation_id):
-        return self.patient_call('/ai/requests', 'POST', {'text': text, 'operation_id': str(UUID(operation_id))})
+    def ai_question(self, text, operation_id, purpose='reply'):
+        if purpose not in {'reply', 'understanding'}:
+            raise CloudError('问答任务无效')
+        return self.patient_call('/ai/requests', 'POST', {'text': text, 'operation_id': str(UUID(operation_id)),
+            **({'purpose': purpose} if purpose != 'reply' else {})})
 
-    def ask_ai(self, text=None):
+    def ask_ai(self, text=None, purpose='reply'):
+        if purpose not in {'reply', 'understanding'}:
+            raise CloudError('问答任务无效')
         with self.lock:
             patient = self.me()['patient_id']
             account = self.session()['account_id']
@@ -400,6 +405,7 @@ class CloudAccount:
                         raise CloudError('账号已变化，请重新打开当前本人工作台')
                     with self.db() as db:
                         db.execute('DELETE FROM ai_pending WHERE patient_id=? AND operation_id=?', (patient, operation))
+                        db.execute('DELETE FROM meta WHERE key=?', ('ai-purpose:' + operation,))
 
             with self.db() as db:
                 pending = db.execute('SELECT operation_id,text FROM ai_pending WHERE patient_id=?', (patient,)).fetchone()
@@ -409,12 +415,18 @@ class CloudAccount:
                     operation = str(uuid4())
                     text = text.strip()
                     db.execute('INSERT INTO ai_pending VALUES (?,?,?)', (patient, operation, text))
+                    db.execute('INSERT OR REPLACE INTO meta VALUES (?,?)', ('ai-purpose:' + operation, purpose))
                 else:
+                    stored_purpose = db.execute('SELECT value FROM meta WHERE key=?', ('ai-purpose:' + pending['operation_id'],)).fetchone()
+                    original_purpose = stored_purpose[0] if stored_purpose else 'reply'
+                    if text is not None and purpose != original_purpose:
+                        raise CloudError('原提问回执仍待核对，不能改变问答任务')
+                    purpose = original_purpose
                     if text is not None and text.strip() != pending['text']:
                         raise CloudError('原提问回执仍待核对，请先点击“重试原提问”，避免重复付费调用')
                     operation, text = pending['operation_id'], pending['text']
             try:
-                result = self.ai_question(text, operation)
+                result = self.ai_question(text, operation, purpose) if purpose != 'reply' else self.ai_question(text, operation)
             except CloudError as exc:
                 # Only definitive no-dispatch errors retire the durable retry intent.
                 if exc.code in {'AI_NOT_CONFIGURED', 'AI_BUSY', 'AI_QUOTA_EXHAUSTED', 'AI_REJECTED'}:

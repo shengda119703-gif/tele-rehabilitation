@@ -1,0 +1,147 @@
+{
+  "source_commit": "59c5226c82f482eccacd71424060540b45663254",
+  "timezone": "Asia/Shanghai",
+  "runs": [
+    {
+      "id": "T",
+      "command": "npm test (ankang/route1-health-agent)",
+      "exit_code": 0,
+      "result": "561 passed / 0 failed",
+      "raw_log_sha256": "5758db353aa4f4a7e83ae37fb27ca3c61e0f7ad40ccf23506e10c5d3453203c5",
+      "failed_tests": []
+    },
+    {
+      "id": "CI/P",
+      "command": "npm run ci (build, TypeScript, product, security)",
+      "exit_code": 0,
+      "result": "build/typecheck/security PASS; TS 560 passed before final additional parser regression; product 35 passed",
+      "raw_log_sha256": "ca0d62e797afff21475691199b0f08935291786509851b23fbf6342cda8b3e75",
+      "failed_tests": []
+    },
+    {
+      "id": "H",
+      "command": "pytest test_rehab_operation_tools.py test_daily_store.py test_care_host.py test_saved_training_plans.py",
+      "exit_code": 0,
+      "result": "64 passed; overlaps Y",
+      "raw_log_sha256": "73dbde3378a86cf812b16962b22ae02fe10a6d4dc355043fb907ac83cb1d6bd1",
+      "failed_tests": []
+    },
+    {
+      "id": "Y",
+      "command": "pytest test_rehab_read_tools.py test_cloud_account.py test_saved_training_plans.py test_daily_store.py test_automatic_plans.py test_product_window.py test_rehab_operation_tools.py",
+      "exit_code": 1,
+      "result": "227 passed / 1 failed",
+      "raw_log_sha256": "116865dfd7d2d406366f2ac0ec9c4efcfa0fe1846596d5ae5090f0f15fd93882",
+      "failed_tests": [
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_rehab_read_tools.py::test_real_bridge_three_questions_and_scope_isolation"
+      ]
+    },
+    {
+      "id": "C",
+      "command": "pytest cloud_service/tests -q",
+      "exit_code": 0,
+      "result": "75 passed / 4 skipped",
+      "raw_log_sha256": "74e435a68210a3e5fdea71a8392d35acc5a8dcda3a912a64176d2e354f10cc0f",
+      "failed_tests": []
+    },
+    {
+      "id": "W",
+      "command": "node --test public_web/*.test.cjs mobile_rehab/tests/*.cjs",
+      "exit_code": 0,
+      "result": "129 passed",
+      "raw_log_sha256": "992214b3d0f86c076f2731e388f9f60b16c94ef5211326f97fa2b7b1aea82baf",
+      "failed_tests": []
+    },
+    {
+      "id": "A",
+      "command": "node --test android_offline/tests/*.test.cjs",
+      "exit_code": 0,
+      "result": "85 passed",
+      "raw_log_sha256": "939f69b867ea0d1381ae635981ad689943c98cf16d174fb818373b88af6f3ff4",
+      "failed_tests": []
+    },
+    {
+      "id": "Q",
+      "command": "pytest all test_product_*.py",
+      "exit_code": 1,
+      "result": "129 passed / 18 failed / 2 skipped; overlaps Y",
+      "raw_log_sha256": "04062e98bc12cc562f8893087cc944464aaab7da6d984a78394d21c9237bce9f",
+      "failed_tests": [
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_visual.py::test_published_116_button_contract_and_native_connections",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_ux.py::test_live_turn_receipt_and_keyboard_send_preserve_next_draft",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_ux.py::test_quick_question_does_not_erase_unsent_draft_and_no_record_receipt_is_honest",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_ux.py::test_navigation_marker_settles_after_rapid_keyboard_navigation",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_module_paths.py::test_health_metric_details_save_back_refresh_and_clear_on_owner_switch",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_module_paths.py::test_today_medication_detail_operations_use_original_task_and_chat",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_completion.py::test_paths_5_7_member_permissions_notification_detail_business",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_completion.py::test_loading_duplicate_error_empty_disabled_and_button_audit",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_care_controls.py::test_visible_confirmation_performs_no_write_until_click_and_returns_actual_receipt",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_care_controls.py::test_cancel_and_scope_change_cannot_execute_old_controls",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_care_controls.py::test_agent_module_navigation_uses_existing_gate_and_does_not_command_runtime",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_care_controls.py::test_completed_receipt_does_not_promote_another_pending_operation",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_care_controls.py::test_scope_switch_immediately_closes_confirmation_and_refreshes_current_scope[source_kind-REPLAY_FILE]",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_care_controls.py::test_scope_switch_immediately_closes_confirmation_and_refreshes_current_scope[usage-TEST]",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_care_controls.py::test_confirmation_dialog_labels_receive_central_theme_palette[light]",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_care_controls.py::test_confirmation_dialog_labels_receive_central_theme_palette[dark]",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_assistant.py::test_medication_shortcut_edits_draft_only_and_explicit_send_keeps_privacy",
+        "FAILED rehab_codex_single_camera_v2_1/tests/test_product_assistant.py::test_conversation_chrome_keeps_errors_receipts_and_contextual_assistant"
+      ]
+    },
+    {
+      "id": "M",
+      "command": "pytest mobile_rehab/tests -q",
+      "exit_code": 1,
+      "result": "121 passed / 4 failed / 2 skipped",
+      "raw_log_sha256": "f6cf8a06ce76db47d1478b6433c89bce6942ab93caf9fbd6b82eae1216d14726",
+      "failed_tests": [
+        "FAILED mobile_rehab/tests/test_extensions.py::test_real_local_model_live_empty_frame_no_false_counts",
+        "FAILED mobile_rehab/tests/test_mobile.py::test_fitness_mode_real_model_empty_video",
+        "FAILED mobile_rehab/tests/test_mobile.py::test_real_capture_model_and_empty_report",
+        "FAILED mobile_rehab/tests/test_unified.py::test_real_blank_video_saves_under_desktop_owner_and_keeps_source"
+      ]
+    },
+    {
+      "id": "Mock",
+      "command": "node scripts/verify-semantic-acceptance.cjs --output ../../docs/validation/pr13-full-evidence/mock-20261017.json",
+      "exit_code": 0,
+      "result": "21/21 scenarios; 32 Mock model calls; Mock Host",
+      "raw_log_sha256": "61c51526cf977322b06d204945ad6b6827b8f6c9ca34c8445afdfaa23ed73d3f",
+      "failed_tests": []
+    },
+    {
+      "id": "APK resources",
+      "command": "python android_offline/tools/prepare_assets.py",
+      "exit_code": 1,
+      "result": "pose_landmarker_full.task missing; partial assets only, no successful APK build",
+      "raw_log_sha256": "dce8305a171078d7cb949f78f65fd0e3ab5740ffa2dd7579d54771e40ae5b85f",
+      "failed_tests": []
+    }
+  ],
+  "counts_are_not_additive": true,
+  "real_model": {
+    "cases": 22,
+    "pass": 0,
+    "partial": 19,
+    "fail": 3,
+    "understanding_pass": 19,
+    "model_calls": 42,
+    "host_reads": 12
+  },
+  "real_model_turns": 28,
+  "first_layer_model_turns": 27,
+  "first_layer_valid_turns": 23,
+  "real_host_read_calls": 13,
+  "real_host_write_calls_in_live": 0,
+  "live_home_database_unchanged": true,
+  "no_patient_data": true,
+  "node_counts": {
+    "PARTIAL": 14,
+    "PASS": 37,
+    "FAIL": 4,
+    "NOT IMPLEMENTED": 17,
+    "UNVERIFIED": 5
+  },
+  "local_source_commit": "e4539938788f6c8217fa9011bba8f6d82e5d6dd5",
+  "source_tree": "3ece460e7726e8b2cdc209e039d00cf93734724c",
+  "publication_map": "git-publication.json"
+}

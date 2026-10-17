@@ -64,6 +64,9 @@ final class DeepSeekTransport {
         if(key.isEmpty())throw new Exception("尚未配置 DeepSeek");
         if(body==null||body.length()>32000)throw new Exception("请求过长");
         JSONObject data=new JSONObject(body);JSONArray messages=data.getJSONArray("messages");
+        String purpose=data.optString("purpose","reply");
+        if(!purpose.equals("reply")&&!purpose.equals("understanding"))throw new Exception("问答任务无效");
+        data.remove("purpose");
         if(messages.length()<2||messages.length()>17)throw new Exception("对话上下文无效");
         int length=0;
         for(int i=0;i<messages.length();i++){
@@ -73,7 +76,7 @@ final class DeepSeekTransport {
         }
         if(length>16000||!messages.getJSONObject(messages.length()-1).getString("role").equals("user"))throw new Exception("对话上下文无效");
         // The endpoint and provider parameters are owned by native code.
-        data.put("model","deepseek-flash").put("stream",false).put("max_tokens",700)
+        data.put("model","deepseek-flash").put("stream",false).put("max_tokens",purpose.equals("understanding")?1600:700)
             .put("thinking",new JSONObject().put("type","disabled"));
         synchronized(this){requestCount++;lastFailure="";}
         HttpURLConnection c=(HttpURLConnection)new URL("https://api.deepseek.com/chat/completions").openConnection();
