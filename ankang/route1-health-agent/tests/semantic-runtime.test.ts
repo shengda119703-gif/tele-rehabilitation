@@ -11,7 +11,7 @@ const profile = { ...demoProfile, name: 'SYNTHETIC TEST', medications: [], famil
 const owner = 'SEMANTIC_TEST_A';
 const base = (route = 'chat', extra: Record<string, unknown> = {}) => ({
   version: 1, route, goal: '回答当前问题', mentions: [], events: [], relations: [], uncertain: [],
-  suggested_tool: null, intents: [], tool_requests: [], ...extra,
+  suggested_tool: null, intents: [], ...extra,
 });
 type ModelInput = Parameters<ConversationModel['reply']>[0];
 function recordingModel(semantic: unknown = base(), answer = '可以呀，今天想聊点什么？') {
