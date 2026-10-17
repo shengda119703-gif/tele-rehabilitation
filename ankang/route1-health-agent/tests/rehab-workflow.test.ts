@@ -123,7 +123,7 @@ test('tool planner integration fills an omitted query before host execution', as
     calls:[{name:'rehab.search_guidance',arguments:{},reason:'需要训练原则'}],
     uncertainties:['缺少个人筛查信息'],
   })};
-  const selected = await selectRehabTools(model,'dummy' as never,'我有腰椎间盘突出，帮我制定一套在家的训练计划。');
+  const selected = await selectRehabTools(model,semantic,'我有腰椎间盘突出，帮我制定一套在家的训练计划。');
   assert.equal(selected?.calls[0].name,'rehab.search_guidance');
   assert.match(selected?.calls[0].arguments.query ?? '',/腰椎|训练计划/);
 });
