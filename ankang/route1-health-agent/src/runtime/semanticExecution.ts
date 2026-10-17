@@ -192,6 +192,16 @@ export async function executeSemanticTurn(input: {
       check,
     });
     if (!result.candidate || !result.validation) {
+      const knowledge = result.toolResults.find(item => item.name === 'rehab.search_knowledge');
+      const algorithm = result.toolResults.find(item => item.name === 'rehab.run_plan_algorithm');
+      const algorithmData = algorithm?.data;
+      const algorithmItems = typeof algorithmData === 'object' && algorithmData !== null &&
+        'items' in algorithmData && Array.isArray((algorithmData as {items?:unknown[]}).items)
+        ? (algorithmData as {items:unknown[]}).items : [];
+      if (Array.isArray(knowledge?.data) && knowledge.data.length === 0 && algorithmItems.length === 0) {
+        trace.stages.push({ stage: 'tool', status: 'empty', reason: 'no_matching_registered_rehab_actions' });
+        return local('现有动作知识库没有找到与这次目标匹配、且可供程序验证的训练动作，因此我不会编造动作或生成一份看似完整的计划。可以补充医生/康复治疗师给出的具体训练动作，或先核实适用的训练范围。当前计划没有被修改。', 'rehab_no_matching_actions');
+      }
       trace.stages.push({ stage: 'tool', status: 'failed', reason: 'rehab_workflow_unavailable_or_invalid' });
       return local('康复分析暂时没有形成可验证的候选方案。请补充具体目标、部位或当前训练情况。', 'rehab_workflow_failed');
     }
