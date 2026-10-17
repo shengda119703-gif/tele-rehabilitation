@@ -387,7 +387,8 @@ export async function runRehabWorkflow(input: {
   if (planGeneration) {
     const knowledge = toolResults.find(result => result.name === 'rehab.search_knowledge');
     const algorithm = toolResults.find(result => result.name === 'rehab.run_plan_algorithm');
-    const algorithmItems = record(algorithm?.data) && Array.isArray(algorithm.data.items) ? algorithm.data.items : [];
+    const algorithmData = algorithm?.data;
+    const algorithmItems = record(algorithmData) && Array.isArray(algorithmData.items) ? algorithmData.items : [];
     // Do not ask a model to invent a plan when no real action card or algorithm
     // candidate exists. An empty search is a valid result, not a prompt to guess.
     if (!knowledge || !Array.isArray(knowledge.data) || (knowledge.data.length === 0 && algorithmItems.length === 0)) {
