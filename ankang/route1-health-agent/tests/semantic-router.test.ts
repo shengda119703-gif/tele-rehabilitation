@@ -223,3 +223,24 @@ test('invalid model output fails closed without retrying or forwarding internal 
   assert.equal(await understandSemanticTurn({ reply: async () => { calls++; return '{broken'; } }, '你好'), null);
   assert.equal(calls, 1);
 });
+
+test('self-referential correction edges are dropped without rejecting current-turn evidence', () => {
+  const text = '我说错了，刚才疼的是左膝，不是右膝';
+  const value = {
+    ...base,
+    route: 'rehab',
+    goal: '更正疼痛位置为左膝',
+    mentions: [
+      {kind:'body_region',text:'左膝',evidence:text},
+      {kind:'symptom',text:'疼',evidence:text,status:'occurred',subject:'self'},
+    ],
+    events: [{type:'symptom_report',description:'用户更正疼痛位置为左膝',evidence:text,status:'occurred',subject:'self'}],
+    relations: [{type:'correction_of',from_event:0,to_event:0,evidence:text}],
+    intents: [{type:'rehab_question',route:'rehab',goal:'更正疼痛位置',evidence:text}],
+  };
+  const parsed = parseSemanticTurn(JSON.stringify(value), {text,context:[{id:'m1',text:'我右膝疼'}]});
+  assert.ok(parsed);
+  assert.equal(parsed?.mentions.find(m=>m.kind==='body_region')?.text,'左膝');
+  assert.equal(parsed?.relations.length,0);
+  assert.ok(parsed?.uncertain.includes('无法可靠解析更正前后的事件关系'));
+});
