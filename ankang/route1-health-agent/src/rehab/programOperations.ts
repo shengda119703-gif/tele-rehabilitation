@@ -249,8 +249,9 @@ export function isCancellation(text: string): boolean {
 export function renderOperationPreview(plan: RehabProgramPlan | null, previews: unknown[]): string {
   if (!plan || !plan.operations.length) return '我还无法确定要修改哪一项康复计划或安排。请告诉我具体要改哪个动作、次数或时间。';
   if (plan.uncertainties.length) return '我还缺少确认这项修改所需的信息：'+plan.uncertainties.join('；');
-  if (previews.some(item => record(item) && record(item.result) && item.result.status === 'rejected')) {
-    const reason = previews.find(item => record(item) && record(item.result) && item.result.status === 'rejected')?.result?.reason;
+  const rejected = previews.find(item => record(item) && record(item.result) && item.result.status === 'rejected');
+  if (rejected) {
+    const reason = record(rejected) && record(rejected.result) ? rejected.result.reason : undefined;
     return '这项修改暂时不能执行：'+String(reason ?? '当前计划或安排已经发生变化，请刷新后再试。');
   }
   return '我准备这样修改：\n'+plan.summary+'\n\n如果确认，我才会真正修改你的康复计划或训练安排。';
