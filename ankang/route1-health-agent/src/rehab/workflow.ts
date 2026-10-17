@@ -367,6 +367,55 @@ export async function runRehabWorkflow(input: {
   return {candidate,validation,toolResults,selection};
 }
 
+/** Read-only rehabilitation explanations do not need a fake training plan. */
+export type RehabAnswerTask = 'exercise_guidance' | 'progress_analysis' | 'rehab_question' | 'plan_generation';
+
+export function rehabAnswerTask(semantic: SemanticTurn): RehabAnswerTask {
+  const intents = new Set((semantic.intents ?? []).map(i => i.type));
+  if (intents.has('plan_generation')) return 'plan_generation';
+  if (intents.has('exercise_guidance')) return 'exercise_guidance';
+  if (intents.has('records_query') || intents.has('plan_query')) return 'progress_analysis';
+  return 'rehab_question';
+}
+
+/** Public exercise/guidance answers use verified local sources; private receipts stay local. */
+export async function runRehabReadOnlyAnswer(input: {
+  semantic: SemanticTurn;
+  userText: string;
+  reads?: Pick<RehabToolPort,'read'>;
+  participantId: string;
+  check?: () => void;
+}): Promise<{text: string; source_ids: string[]; status: 'found' | 'missing'}> {
+  const check = input.check ?? (() => {});
+  const task = rehabAnswerTask(input.semantic);
+  if (task === 'progress_analysis') {
+    if (!input.reads) return {text:'当前没有连接本人的康复记录，暂时无法分析个人训练变化。',source_ids:[],status:'missing'};
+    const outputs: string[] = [];
+    for (const name of ['rehab.get_training_plan','rehab.get_training_history','rehab.get_recent_assessments'] as const) {
+      try {
+        const data = await readRehabReceipt(input.reads,{name,arguments:{}},input.participantId,check);
+        // Deliberately no external LLM call: user's health record is not model context.
+        outputs.push(name + '：' + (data.records.length ? JSON.stringify(data.records).slice(0,2000) : '无已保存记录'));
+      } catch {
+        outputs.push(name + '：读取失败或未授权');
+      }
+    }
+    return {text:'已在本地读取以下范围内的本人资料；未将个人记录发送给云端模型。\\n'+outputs.join('\\n')+
+      '\\n目前不能单凭这些记录判断康复是否有效；请对照相同条件下的评估结果。',source_ids:[],status:'found'};
+  }
+  const references = searchCards(input.userText);
+  const section = searchGuidance(input.userText);
+  const ids = references.map(card=>card.id);
+  if (!references.length && !section) {
+    return {text:'现有动作知识库或指导资料没有找到匹配内容。请告诉我动作名称、编号或具体训练问题；不会编造动作和剂量。',source_ids:[],status:'missing'};
+  }
+  const blocks = references.map(card =>
+    card.id+'｜'+card.name+'\\n'+card.content.slice(0,2600)+
+    '\\n开始条件：'+card.startConditions+'\\n停止条件：'+card.stopConditions);
+  if (section) blocks.push(section.title+'\\n'+section.content.slice(0,2600));
+  return {text:blocks.join('\\n\\n'),source_ids:ids,status:'found'};
+}
+
 /** Safe user-facing rendering of a validated draft; it is not persistence. */
 export function renderRehabDraft(result: RehabPlanValidation | null): string {
   if(!result) return '康复分析暂时没有形成可验证的候选方案。请补充具体目标、部位或当前训练情况。';
