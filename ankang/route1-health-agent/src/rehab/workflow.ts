@@ -109,7 +109,7 @@ export function parseRehabToolSelection(raw: string, fallbackQuery = ''): RehabT
     const args = item.arguments;
     const allowed = ['query','exercise_id','joint','goal','region','equipment','restrictions','level','screening_confirmed'];
     if (Object.keys(args).some(k => !allowed.includes(k))) return null;
-    if (args.query !== undefined && args.query !== null && !text(args.query, 400)) return null;
+    if (args.query !== undefined && args.query !== null && (typeof args.query !== 'string' || args.query.length > 400)) return null;
     if (args.exercise_id !== undefined && !/^[A-Za-z0-9_-]{1,80}$/.test(String(args.exercise_id))) return null;
     if (args.joint !== undefined && (!text(args.joint, 40) || !JOINTS.has(args.joint))) return null;
     if (args.goal !== undefined && !text(args.goal, 300)) return null;
