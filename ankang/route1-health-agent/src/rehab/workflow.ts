@@ -179,7 +179,27 @@ export async function selectRehabTools(
       ...semantic.mentions.map(mention => mention.text),
       userText,
     ].filter(Boolean).join(' ').slice(0, 400);
-    return parseRehabToolSelection(raw, fallbackQuery);
+    const parsed = parseRehabToolSelection(raw, fallbackQuery);
+    if (!parsed) return null;
+
+    // Plan generation has minimum data dependencies. The LLM may request extra
+    // tools, but omission of the knowledge/guidance search must not abort the flow.
+    const planGeneration = (semantic.intents ?? []).some(intent => intent.type === 'plan_generation');
+    if (!planGeneration) return parsed;
+    const required: RehabToolCall[] = [
+      {name:'rehab.search_knowledge',arguments:{query:fallbackQuery},reason:'计划生成必须检索真实动作卡'},
+      {name:'rehab.search_guidance',arguments:{query:fallbackQuery},reason:'计划生成必须检索适用原则与停止条件'},
+    ];
+    const calls: RehabToolCall[] = [];
+    const seen = new Set<string>();
+    for (const call of [...required, ...parsed.calls]) {
+      const key = call.name + JSON.stringify(call.arguments);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      calls.push(call);
+      if (calls.length >= MAX_TOOL_CALLS) break;
+    }
+    return {...parsed,calls};
   } catch {
     check();
     return null;
