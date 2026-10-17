@@ -124,9 +124,11 @@ export async function executeSemanticTurn(input: {
         algorithm_result: rehabResult.validation.algorithm_result ?? null,
       } : null;
       rehabReply = renderRehabDraft(rehabResult.validation);
-      if (rehabResult.validation?.status === 'rejected') {
-        trace.stages.push({stage:'tool',status:'blocked',reason:'rehab_analysis_rejected_before_program_operation'});
-        return {plan:withReply(plan,rehabReply),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
+      // A user confirmation is not clinical approval. A proposed exercise addition
+      // based on this analysis must not be treated as adopted while review is pending.
+      if (!rehabResult.validation || rehabResult.validation.status !== 'passed') {
+        trace.stages.push({stage:'tool',status:'blocked',reason:'rehab_analysis_not_approved_for_plan_write'});
+        return {plan:withReply(plan,rehabReply+'\\n\\n康复分析尚未满足方案采用条件；这次不会直接修改训练处方。'),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
       }
     }
     const operation = await previewRehabProgramOperation({
