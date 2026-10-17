@@ -555,7 +555,8 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
                 if operation in ('chat','voice.input'):
                     if isinstance(result.get('turn'),dict):refresh_record_review(self,result['turn'])
                     destination=result.get('turn',{}).get('agent',{}).get('navigation')
-                    if destination:self.navigate(destination,refresh=False)
+                    if destination=='automatic_plan':self._automatic_plan()
+                    elif destination:self.navigate(destination,refresh=False)
                     for key,view in (('chat',self.chat_input),('dock',self.dock_input)):
                         sent=(token or {}).get('drafts',{}).get(key)
                         if sent is not None and view.toPlainText()==sent:view.clear()
