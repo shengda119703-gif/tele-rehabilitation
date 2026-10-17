@@ -49,12 +49,27 @@ export function searchCards(text:string) {
     .filter(v=>v.score>0).sort((a,b)=>b.score-a.score||a.card.id.localeCompare(b.card.id)).slice(0,3).map(v=>v.card);
 }
 
-export function searchGuidance(text:string) {
-  const title=/等级|分级|L[0-3]|肌力/i.test(text)?'1. 四个维度分别管理':
-    /剂量|组数|次数|进阶|试做|RPE|RIR/i.test(text)?'4. 剂量和进阶：卡片给候选，规则系统给当次计划':
-    /器材|器械|支撑/.test(text)?'3. 家庭器械与支撑规则':
-    /单人|独自|陪同|术后|儿童/.test(text)?'附录 F：单人执行与专业协助的适用边界':null;
-  return title ? {title,content:guidance[title]} : null;
+export function searchGuidance(query:string) {
+  const keywords: Record<string,string[]> = {
+    '1. 四个维度分别管理':['等级','分级','L0','L1','L2','L3','肌力','当前能力'],
+    '2. 选择动作时先看需求，再看器材':['选择动作','动作选择','怎么选','目标','需求','匹配'],
+    '3. 家庭器械与支撑规则':['器材','器械','扶手','椅子','支撑','站稳','辅助'],
+    '4. 剂量和进阶：卡片给候选，规则系统给当次计划':['剂量','组数','次数','进阶','退阶','疲劳','休息','恢复','酸痛','RPE','RIR','强度'],
+    '5. 评估与训练复用动作，但不混用协议':['评估','复测','训练结果','历史比较','基线'],
+    '6. 纯视觉实现与流畅体验规则':['摄像头','视频','机位','识别','姿态','视觉'],
+    '7. 力学估计的使用边界':['力学','负荷估计','受力','关节力','测量误差'],
+    '12. 单人摄像头评估与训练成果协议':['单人','一个人','独自','操作流程','训练反馈'],
+    '附录 F：单人执行与专业协助的适用边界':['术后','陪同','协助','专业','不适','禁忌','停止','危险'],
+  };
+  const q=query.toLowerCase().trim();
+  if (!q || q.length>400) return null;
+  const scored = Object.entries(keywords).map(([title,words])=>({
+    title,
+    score:words.reduce((n,word)=>n+(q.includes(word.toLowerCase()) ? Math.max(2,word.length):0),0),
+  })).sort((a,b)=>b.score-a.score);
+  const best=scored[0];
+  return best && best.score>0 && guidance[best.title as keyof typeof guidance]
+    ? {title:best.title,content:guidance[best.title as keyof typeof guidance]} : null;
 }
 
 export async function rehabAnswer(text:string,privateTurn:boolean,owner:string,model?:ConversationModel,host?:Pick<RehabToolPort,'read'>) {
