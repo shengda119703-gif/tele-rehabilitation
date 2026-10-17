@@ -96,7 +96,7 @@ function json(raw: string): unknown {
  * LLM #2 only decides which registered read/search/algorithm tools are useful.
  * The host executes them. Tool names never grant authorization.
  */
-export function parseRehabToolSelection(raw: string): RehabToolSelection | null {
+export function parseRehabToolSelection(raw: string, fallbackQuery = ''): RehabToolSelection | null {
   const value = json(raw);
   if (!record(value) || value.version !== 1 || !Array.isArray(value.calls) ||
       value.calls.length > MAX_TOOL_CALLS || !stringArray(value.uncertainties, 12, 200)) return null;
@@ -107,7 +107,7 @@ export function parseRehabToolSelection(raw: string): RehabToolSelection | null 
     const args = item.arguments;
     const allowed = ['query','exercise_id','joint','goal','region','equipment','restrictions','level','screening_confirmed'];
     if (Object.keys(args).some(k => !allowed.includes(k))) return null;
-    if (args.query !== undefined && !text(args.query, 400)) return null;
+    if (args.query !== undefined && args.query !== null && !text(args.query, 400)) return null;
     if (args.exercise_id !== undefined && !/^[A-Za-z0-9_-]{1,80}$/.test(String(args.exercise_id))) return null;
     if (args.joint !== undefined && (!text(args.joint, 40) || !JOINTS.has(args.joint))) return null;
     if (args.goal !== undefined && !text(args.goal, 300)) return null;
@@ -116,8 +116,16 @@ export function parseRehabToolSelection(raw: string): RehabToolSelection | null 
     if (args.restrictions !== undefined && !stringArray(args.restrictions, 12, 200)) return null;
     if (args.level !== undefined && (typeof args.level !== 'number' || !Number.isInteger(args.level) || args.level < 0 || args.level > 3)) return null;
     if (args.screening_confirmed !== undefined && typeof args.screening_confirmed !== 'boolean') return null;
+    const normalizedArgs = { ...args };
     if (item.name === 'rehab.search_knowledge' || item.name === 'rehab.search_guidance') {
-      if (!text(args.query, 400)) return null;
+      // Real models occasionally omit a search query despite selecting a search tool.
+      // Recover deterministically from the current user request instead of rejecting
+      // the entire tool plan; never invent a body region or clinical condition.
+      if (!text(normalizedArgs.query, 400)) {
+        const safeFallback = fallbackQuery.trim().slice(0, 400);
+        if (!safeFallback) return null;
+        normalizedArgs.query = safeFallback;
+      }
     }
     if (item.name === 'rehab.run_plan_algorithm') {
       if (!text(args.goal, 300) || !text(args.region, 100) || !Array.isArray(args.equipment) ||
@@ -126,7 +134,7 @@ export function parseRehabToolSelection(raw: string): RehabToolSelection | null 
     }
     calls.push({
       name: item.name as RehabWorkflowTool,
-      arguments: args as RehabToolCall['arguments'],
+      arguments: normalizedArgs as RehabToolCall['arguments'],
       reason: item.reason,
     });
   }
@@ -163,7 +171,13 @@ export async function selectRehabTools(
   try {
     const raw = await model.reply({ purpose: 'understanding', messages: [{ role: 'user', content: prompt }] });
     check();
-    return parseRehabToolSelection(raw);
+    const fallbackQuery = [
+      semantic.goal,
+      ...((semantic.intents ?? []).map(intent => intent.goal)),
+      ...semantic.mentions.map(mention => mention.text),
+      userText,
+    ].filter(Boolean).join(' ').slice(0, 400);
+    return parseRehabToolSelection(raw, fallbackQuery);
   } catch {
     check();
     return null;
