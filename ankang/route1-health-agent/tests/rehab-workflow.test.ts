@@ -161,3 +161,23 @@ test('plan generation rejects knowledge actions that have no executable app mapp
   assert.equal(result.validation?.status,'rejected');
   assert.ok(result.validation?.reasons.includes('candidate_action_not_mapped_to_executable_app_movement'));
 });
+
+test('plan generation does not ask the model to invent actions after an empty knowledge search', async () => {
+  const semantic = {
+    version:1 as const, route:'rehab' as const, goal:'制定罕见目标的居家训练计划',
+    mentions:[], events:[], relations:[], uncertain:[], suggested_tool:null,
+    intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'制定训练计划',evidence:'制定居家训练计划'}],
+  };
+  let calls = 0;
+  const model = {reply:async()=>{
+    calls++;
+    return JSON.stringify({version:1,calls:[
+      {name:'rehab.search_knowledge',arguments:{query:'SYNTHETIC_NO_MATCH_937421'},reason:'查询动作库'},
+      {name:'rehab.search_guidance',arguments:{query:'SYNTHETIC_NO_MATCH_937421'},reason:'查询指导资料'},
+    ],uncertainties:[]});
+  }};
+  const result = await runRehabWorkflow({model,semantic,userText:'制定罕见目标的居家训练计划',participantId:'SYNTHETIC'});
+  assert.equal(result.candidate,null);
+  assert.equal(result.validation,null);
+  assert.equal(calls,1,'candidate-generation LLM must not run with zero registered actions');
+});
