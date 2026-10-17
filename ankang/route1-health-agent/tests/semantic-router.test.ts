@@ -169,6 +169,14 @@ test('a correction identifies its prior evidence without claiming a record chang
   assert.equal(parseSemanticTurn(JSON.stringify({ ...value, correction_of: { source_message_id: 'm1', text: '我胸痛' } }), source), null);
 });
 
+test('current correction evidence cannot be attached to a different historical message',()=>{
+  const source={text:'我说错了，刚才疼的是左膝，不是右膝。',context:[{id:'m1',text:'我今天右膝疼。'}]};
+  const current={type:'symptom_report',description:'更正为左膝',evidence:source.text,subject:'self',status:'occurred',mention_texts:[]};
+  const value={...base,route:'health',events:[current],relations:[],correction_of:{source_message_id:'m1',text:source.context[0].text}};
+  assert.ok(parseSemanticTurn(JSON.stringify(value),source));
+  assert.equal(parseSemanticTurn(JSON.stringify({...value,events:[{...current,source_message_id:'m1'}]}),source),null);
+});
+
 test('privacy gate prevents model calls even if understandSemanticTurn is called directly', async () => {
   let calls = 0;
   const model = { reply: async () => { calls++; return JSON.stringify(base); } };

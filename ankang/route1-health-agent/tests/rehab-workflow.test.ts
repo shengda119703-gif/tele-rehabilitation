@@ -24,6 +24,19 @@ test('rehab tool selection accepts only registered tools', () => {
   assert.equal(bad, null);
 });
 
+test('search planning without a sourced fallback requires a nonempty bounded query',()=>{
+  for(const name of ['rehab.search_knowledge','rehab.search_guidance']){
+    const selection=(args:Record<string,unknown>)=>parseRehabToolSelection(JSON.stringify({version:1,
+      calls:[{name,arguments:args,reason:'查询公共资料'}],uncertainties:[]}));
+    assert.equal(selection({}),null);
+    assert.equal(selection({query:''}),null);
+    assert.equal(selection({query:'a'.repeat(401)}),null);
+    assert.ok(selection({query:'居家训练原则与休息'}));
+  }
+  assert.ok(parseRehabToolSelection(JSON.stringify({version:1,calls:[{
+    name:'rehab.get_training_plan',arguments:{},reason:'读取本人当前计划'}],uncertainties:[]})));
+});
+
 test('rehab candidate rejects an action that is not a real training card', () => {
   const candidate: RehabCandidatePlan = {
     version: 1,

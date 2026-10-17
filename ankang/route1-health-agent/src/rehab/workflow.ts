@@ -145,11 +145,11 @@ export function parseRehabToolSelection(raw: string, fallbackQuery = ''): RehabT
 
 const TOOL_SYSTEM = `你是安康康复分析阶段的工具规划器。你已经收到第一轮语义 JSON。你的任务不是回答用户，也不是生成康复方案，只决定为了分析当前问题需要读取哪些已注册工具。
 可用工具：
-- rehab.get_training_plan：读取本人当前康复计划
-- rehab.get_training_history：读取本人训练历史
-- rehab.get_recent_assessments：读取本人近期评估
-- rehab.search_knowledge：查询动作知识库；只能查询已存在动作/动作条件/停止条件
-- rehab.search_guidance：查询康复指导资料；用于训练原则、剂量/进阶、单人执行等
+- rehab.get_training_plan：读取本人当前康复计划，arguments为{}
+- rehab.get_training_history：读取本人训练历史，arguments可为{}，只按明确来源提供exercise_id或joint
+- rehab.get_recent_assessments：读取本人近期评估，arguments可为{}，只按明确来源提供exercise_id或joint
+- rehab.search_knowledge：查询动作知识库；只能查询已存在动作/动作条件/停止条件，arguments必须为{"query":"非空搜索词"}，query最长400字
+- rehab.search_guidance：查询康复指导资料；用于训练原则、剂量/进阶、单人执行等，arguments必须为{"query":"非空搜索词"}，query最长400字
 - rehab.run_plan_algorithm：运行确定性本地计划筛选算法；只有在目标、部位、器材、限制、等级和 screening_confirmed 都有明确来源时才能调用
 规则：
 1. 只选择真正需要的工具，可以一次选择多个；最多8个。
@@ -157,7 +157,8 @@ const TOOL_SYSTEM = `你是安康康复分析阶段的工具规划器。你已�
 3. 不诊断，不判断医学安全许可；如果信息不足写入 uncertainties。
 4. run_plan_algorithm 的 screening_confirmed 不得根据“看起来安全”猜测；没有明确数据时不要调用。
 5. 个人工具只能读取当前本人数据，不能选择 participant_id。
-6. 输出且仅输出 JSON：{"version":1,"calls":[{"name":"...","arguments":{},"reason":"..."}],"uncertainties":[]}`;
+6. 搜索工具不可省略query或给arguments:{}；不能确定搜索词时省略该调用并写入uncertainties。
+7. 输出且仅输出 JSON。格式示例（仅展示参数契约，不要求每轮照抄这些调用）：{"version":1,"calls":[{"name":"rehab.get_training_plan","arguments":{},"reason":"读取本人当前计划"},{"name":"rehab.search_guidance","arguments":{"query":"居家训练原则与休息"},"reason":"查询公共训练原则"}],"uncertainties":[]}`;
 
 export async function selectRehabTools(
   model: ConversationModel,
