@@ -383,7 +383,6 @@ export async function runRehabWorkflow(input: {
     try { toolResults.push(await executeCall(call,input.reads,input.participantId,check)); }
     catch { toolResults.push({name:call.name,data:{status:'failed',reason:'tool_execution_failed'}}); }
   }
-  const planGeneration = (input.semantic.intents ?? []).some(intent => intent.type === 'plan_generation');
   if (planGeneration) {
     const knowledge = toolResults.find(result => result.name === 'rehab.search_knowledge');
     const algorithm = toolResults.find(result => result.name === 'rehab.run_plan_algorithm');
