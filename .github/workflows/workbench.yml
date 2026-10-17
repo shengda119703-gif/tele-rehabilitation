@@ -39,3 +39,15 @@ jobs:
         with:
           node-version: '22'
       - run: node --test public_web/browser-account.test.cjs tools/cloud/portal.test.cjs
+
+  agent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: ankang/route1-health-agent/package-lock.json
+      - run: npm ci --prefix ankang/route1-health-agent
+      - run: npm run ci --prefix ankang/route1-health-agent
