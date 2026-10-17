@@ -436,3 +436,40 @@ test('semantic runtime: reset during understanding discards late JSON and does n
   assert.deepEqual(reset.chat, []);
   assert.deepEqual(reset.events, []);
 });
+
+
+test('semantic runtime: explicit other route uses scope fallback instead of generic model claims', async () => {
+  for (const [text, expected] of [
+    ['我想让你诊断一下这个问题', /需要医生|不能替医生诊断/],
+    ['帮我预约医生', /没有执行|不在已接通/],
+    ['帮我写一个股票交易机器人', /超出安康康复助手当前的功能范围/],
+  ] as const) {
+    const { model, calls } = recordingModel(base('other'), '已为你预约成功');
+    let reads = 0, writes = 0;
+    const runtime = await open({ conversationModel: model,
+      rehabReads: { async read(call) { reads++; return receipt(call.name); } },
+      rehabOperations: { async call() { writes++; return {status:'applied'}; } },
+    });
+    const turn = await runtime.processTurn(owner, { text, now });
+    assert.match(turn.reply.text, expected, text);
+    assert.doesNotMatch(turn.reply.text, /已为你预约成功|已经联系医生|已经执行/, text);
+    assert.equal(calls.filter(call => call.purpose === 'reply').length, 0, text);
+    assert.equal(reads, 0, text);
+    assert.equal(writes, 0, text);
+    assert.equal(turn.semanticExecution?.stages.some(stage => stage.reason === 'scope_fallback'), true, text);
+    assert.deepEqual(turn.snapshot.events, [], text);
+    await runtime.closeSession(owner);
+  }
+});
+
+test('semantic runtime: other route never claims a real clinician handoff', async () => {
+  const { model } = recordingModel(base('other'), '我已经帮你联系医生了');
+  let operations = 0;
+  const runtime = await open({ conversationModel: model,
+    rehabOperations: { async call() { operations++; return {status:'applied'}; } } });
+  const turn = await runtime.processTurn(owner, { text: '请帮我联系医生', now });
+  assert.match(turn.reply.text, /没有替你联系医生|不能替医生/);
+  assert.doesNotMatch(turn.reply.text, /已经帮你联系医生/);
+  assert.equal(operations, 0);
+  await runtime.closeSession(owner);
+});
