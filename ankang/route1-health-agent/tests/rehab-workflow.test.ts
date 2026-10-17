@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { catalogue } from '../src/rehab/catalogue';
-import { parseRehabToolSelection, validateRehabPlan, type RehabCandidatePlan } from '../src/rehab/workflow';
+import { parseRehabToolSelection, validateRehabPlan, rehabAnswerTask, runRehabReadOnlyAnswer, type RehabCandidatePlan } from '../src/rehab/workflow';
 
 test('rehab tool selection accepts only registered tools', () => {
   const ok = parseRehabToolSelection(JSON.stringify({
@@ -68,4 +68,22 @@ test('rehab candidate remains reviewable before screening confirmation', () => {
   const result = validateRehabPlan(candidate, catalogue);
   assert.equal(result.status, 'needs_review');
   assert.ok(result.reasons.includes('screening_not_confirmed'));
+});
+
+test('exercise guidance returns registered references without generating a plan', async () => {
+  const semantic = {version:1 as const,route:'rehab' as const,goal:'肩外旋怎么做',
+    mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null,
+    intents:[{type:'exercise_guidance' as const,route:'rehab' as const,goal:'肩外旋怎么做',evidence:'肩外旋怎么做'}]};
+  assert.equal(rehabAnswerTask(semantic),'exercise_guidance');
+  const answer = await runRehabReadOnlyAnswer({semantic,userText:'肩外旋怎么做',participantId:'TEST'});
+  assert.equal(answer.status,'found');
+  assert.ok(answer.source_ids.length>0);
+  assert.match(answer.text,/开始条件|停止条件/);
+});
+
+test('plan generation is distinct from ordinary rehab questions', () => {
+  const semantic = {version:1 as const,route:'rehab' as const,goal:'生成计划',
+    mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null,
+    intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'生成计划',evidence:'生成计划'}]};
+  assert.equal(rehabAnswerTask(semantic),'plan_generation');
 });
