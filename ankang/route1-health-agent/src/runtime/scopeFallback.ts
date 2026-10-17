@@ -16,10 +16,6 @@ export interface ScopeFallback {
  * an application operation that is not registered with the host.
  */
 export function resolveScopeFallback(semantic: SemanticTurn, userText: string): ScopeFallback | null {
-  const intentEvidence = (semantic.intents ?? [])
-    .map(intent => [intent.type ?? '', intent.goal, intent.evidence].join(' '))
-    .join(' ');
-  const context = [semantic.goal, intentEvidence, userText].join(' ').slice(0, 10000);
   const clauses = userText.split(/[，,。；;！？!?]/).map(value => value.trim()).filter(Boolean);
   const clinicalBoundary = clauses.some(clause => {
     const negated = /(?:不想|不需要|无需|不用|不要|别|不希望|不打算).{0,10}(?:诊断|确诊|开药|处方|调整用药|停药|换药|治疗方案|咨询医生|看医生|转诊)/.test(clause);
