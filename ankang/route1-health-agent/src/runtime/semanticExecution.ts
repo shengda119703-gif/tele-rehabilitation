@@ -99,6 +99,12 @@ export async function executeSemanticTurn(input: {
     input.setPendingRehabOperation?.(null);
   }
 
+  const scopeFallback = resolveScopeFallback(semantic, text);
+  if (scopeFallback) {
+    trace.stages.push({stage:'reply',status:'blocked',reason:scopeFallback.kind});
+    return local(scopeFallback.reply, 'scope_fallback');
+  }
+
   if (input.rehabOperations && isRehabProgramIntent(semantic)) {
     let rehabContext: unknown = null;
     let rehabReply = '';
@@ -150,12 +156,6 @@ export async function executeSemanticTurn(input: {
     trace.stages.push({stage:'tool',status:'passed',reason:'rehab_operation_preview_ready_for_confirmation'});
     const combinedReply = rehabReply ? rehabReply+'\\n\\n另外，我准备这样调整：\\n'+operationReply.replace(/^我准备这样修改：\\n?/, '') : operationReply;
     return {plan:withReply(plan,combinedReply),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
-  }
-
-  const scopeFallback = resolveScopeFallback(semantic, text);
-  if (scopeFallback) {
-    trace.stages.push({stage:'reply',status:'blocked',reason:scopeFallback.kind});
-    return local(scopeFallback.reply, 'scope_fallback');
   }
 
   // Rehab is a separate analysis workflow: LLM tool planning -> host tools/algorithm -> LLM candidate -> program validation.
