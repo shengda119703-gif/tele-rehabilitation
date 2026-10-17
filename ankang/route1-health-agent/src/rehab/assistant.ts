@@ -15,7 +15,7 @@ export function localPlan(input:PlanInput,cards:readonly PlanCard[]=catalogue) {
   if(!input||typeof input.goal!=='string'||!input.goal.trim()||typeof input.region!=='string'||!input.region.trim()||
     !Array.isArray(input.equipment)||!Array.isArray(input.restrictions)||
     [...input.equipment,...input.restrictions].some(v=>typeof v!=='string')||
-    !Number.isInteger(input.level)||input.level<0||input.level>3||typeof input.screeningConfirmed!=='boolean')
+    !Number.isInteger(input.level)||input.level<0||input.level>3||input.screeningConfirmed!==true)
     throw Error('请填写目标、部位、器材、限制及当前等级，并提供适用性核对状态。');
   // Free-text medical restrictions cannot be proven compatible by substring matching.
   // A generic checkbox is not evidence of individual clinical clearance or trial results.
@@ -54,7 +54,7 @@ export function searchGuidance(query:string) {
     '1. 四个维度分别管理':['等级','分级','L0','L1','L2','L3','肌力','当前能力'],
     '2. 选择动作时先看需求，再看器材':['选择动作','动作选择','怎么选','目标','需求','匹配'],
     '3. 家庭器械与支撑规则':['器材','器械','扶手','椅子','支撑','站稳','辅助'],
-    '4. 剂量和进阶：卡片给候选，规则系统给当次计划':['剂量','组数','次数','进阶','退阶','疲劳','休息','恢复','酸痛','RPE','RIR','强度'],
+    '4. 剂量和进阶：卡片给候选，规则系统给当次计划':['剂量','组数','次数','进阶','退阶','疲劳','休息','恢复','酸痛','疼痛','疼','痛','RPE','RIR','强度'],
     '5. 评估与训练复用动作，但不混用协议':['评估','复测','训练结果','历史比较','基线'],
     '6. 纯视觉实现与流畅体验规则':['摄像头','视频','机位','识别','姿态','视觉'],
     '7. 力学估计的使用边界':['力学','负荷估计','受力','关节力','测量误差'],

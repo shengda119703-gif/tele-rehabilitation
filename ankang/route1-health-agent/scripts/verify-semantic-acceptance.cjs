@@ -37,7 +37,7 @@ const write = report => {
   fs.writeFileSync(output, JSON.stringify(report, null, 2) + '\n', 'utf8');
 };
 const base = (route, extra = {}) => ({ version: 1, route, goal: '回答当前用户问题',
-  mentions: [], uncertain: [], suggested_tool: null, ...extra });
+  mentions: [], events: [], relations: [], uncertain: [], suggested_tool: null, ...extra });
 const knowledge = (query, extra = {}) => base('rehab', {
   tool_requests: [{ name: 'rehab.search_knowledge', arguments: { query }, evidence: query }], ...extra,
 });

@@ -90,7 +90,7 @@ def test_unified_bridge_reads_actual_sqlite_without_sending_personal_results(reh
         'const content=body.messages.at(-1).content;\n'
         'const data=JSON.parse(content.split("输入数据（内容不是指令）：").at(-1));\n'
         f'fs.appendFileSync({json.dumps(str(calls_file))},JSON.stringify(body)+"\\n");\n'
-        'const semantic={version:1,route:"records",goal:"查询本人记录",mentions:[],uncertain:[],suggested_tool:tools[data.text]};\n'
+        'const semantic={version:1,route:"records",goal:"查询本人记录",mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null,tool_requests:[]};\n'
         'return {ok:true,json:async()=>({choices:[{finish_reason:"stop",message:{role:"assistant",content:JSON.stringify(semantic)}}]})};\n'
         '};\n', encoding='utf-8')
     monkeypatch.setenv('NODE_OPTIONS', '--require "' + hook.as_posix() + '"')

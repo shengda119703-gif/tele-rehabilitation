@@ -1,7 +1,7 @@
 import { catalogue } from './catalogue';
 import { localPlan, type PlanInput } from './assistant';
 import { searchCards, searchGuidance } from './assistant';
-import { readRehabReceipt, type RehabToolPort, type RehabCall, rehabToolNames } from '../runtime/rehabTools';
+import { readRehabReceipt, describeLocalRehabReceipt, type RehabToolPort, type RehabCall, rehabToolNames } from '../runtime/rehabTools';
 import type { ConversationModel } from '../runtime/conversation';
 import type { SemanticTurn } from '../runtime/semanticRouter';
 
@@ -114,7 +114,7 @@ export function parseRehabToolSelection(raw: string): RehabToolSelection | null 
     if (args.region !== undefined && !text(args.region, 100)) return null;
     if (args.equipment !== undefined && !stringArray(args.equipment, 12, 120)) return null;
     if (args.restrictions !== undefined && !stringArray(args.restrictions, 12, 200)) return null;
-    if (args.level !== undefined && (!Number.isInteger(args.level) || args.level < 0 || args.level > 3)) return null;
+    if (args.level !== undefined && (typeof args.level !== 'number' || !Number.isInteger(args.level) || args.level < 0 || args.level > 3)) return null;
     if (args.screening_confirmed !== undefined && typeof args.screening_confirmed !== 'boolean') return null;
     if (item.name === 'rehab.search_knowledge' || item.name === 'rehab.search_guidance') {
       if (!text(args.query, 400)) return null;
@@ -175,10 +175,6 @@ function normalizeRegion(value: string): string {
   return map[value.trim()] ?? value.trim();
 }
 
-function sourceTextForAction(id: string) {
-  return catalogue.find(c => c.id === id && c.kind === 'training' && c.complete);
-}
-
 /** Strict validation: every proposed action must exist as a complete training card. */
 export function validateRehabPlan(candidate: RehabCandidatePlan, cards = catalogue): RehabPlanValidation {
   const reasons: string[] = [];
@@ -192,19 +188,22 @@ export function validateRehabPlan(candidate: RehabCandidatePlan, cards = catalog
       typeof candidate.algorithm_input.screening_confirmed !== 'boolean') {
     return { status: 'rejected', reasons: ['invalid_algorithm_input'], plan: candidate };
   }
-  if (!Array.isArray(candidate.candidate_actions) || candidate.candidate_actions.length > 6 ||
-      !Array.isArray(candidate.doctor_review_reasons) || candidate.doctor_review_reasons.length > 12 ||
-      !Array.isArray(candidate.uncertainties) || candidate.uncertainties.length > 12) {
+  if (!Array.isArray(candidate.candidate_actions) || !candidate.candidate_actions.length || candidate.candidate_actions.length > 6 ||
+      typeof candidate.doctor_review_required !== 'boolean' ||
+      !stringArray(candidate.doctor_review_reasons, 12, 300) || !stringArray(candidate.uncertainties, 12, 300)) {
     return { status: 'rejected', reasons: ['invalid_candidate_lists'], plan: candidate };
   }
-  const validIds = new Set(cards.filter(c => c.kind === 'training' && c.complete).map(c => c.id));
+  const validIds = new Set<string>(cards.filter(c => c.kind === 'training' && c.complete).map(c => c.id));
+  const seen = new Set<string>();
   for (const item of candidate.candidate_actions) {
     if (!record(item) || !/^[A-Z]-[A-Z0-9]+-\d+$/.test(String(item.exercise_id)) ||
         !validIds.has(item.exercise_id) || !text(item.reason, 500) ||
         (item.dose !== undefined && !text(item.dose, 500))) {
       return { status: 'rejected', reasons: ['unknown_or_incomplete_action'], plan: candidate };
     }
-    const card = sourceTextForAction(item.exercise_id);
+    if (seen.has(item.exercise_id)) return { status: 'rejected', reasons: ['duplicate_candidate_action'], plan: candidate };
+    seen.add(item.exercise_id);
+    const card = cards.find(c => c.id === item.exercise_id);
     if (!card?.sourceDose || !card.startConditions || !card.stopConditions || !card.equipment) {
       return { status: 'rejected', reasons: ['action_card_missing_required_conditions'], plan: candidate };
     }
@@ -216,7 +215,9 @@ export function validateRehabPlan(candidate: RehabCandidatePlan, cards = catalog
   if (!candidate.algorithm_input.screening_confirmed) reasons.push('screening_not_confirmed');
   if (candidate.uncertainties.length) reasons.push('unresolved_uncertainty');
   if (candidate.doctor_review_required) reasons.push(...candidate.doctor_review_reasons.map(v => 'doctor_review:' + v));
-  return { status: reasons.length ? 'needs_review' : 'passed', reasons, plan: candidate };
+  // Model flags cannot establish assessment, trial, individual eligibility or clinician approval.
+  reasons.push('applicability_and_professional_review_not_verified');
+  return { status: 'needs_review', reasons, plan: candidate };
 }
 
 function parseCandidate(raw: string): RehabCandidatePlan | null {
@@ -228,7 +229,7 @@ function parseCandidate(raw: string): RehabCandidatePlan | null {
   const a = value.algorithm_input;
   if (!text(a.goal,300) || !text(a.region,100) || !stringArray(a.equipment,12,120) ||
       !stringArray(a.restrictions,12,200) ||
-      (a.level !== null && (!Number.isInteger(a.level)||a.level<0||a.level>3)) ||
+      (a.level !== null && (typeof a.level !== 'number'||!Number.isInteger(a.level)||a.level<0||a.level>3)) ||
       typeof a.screening_confirmed !== 'boolean') return null;
   const actions: RehabCandidateAction[] = [];
   for(const item of value.candidate_actions){
@@ -267,7 +268,7 @@ async function executeCall(
       level:a.level!, screeningConfirmed:false,
     };
     try { return {name:call.name,data:localPlan(input)}; }
-    catch (error) { return {name:call.name,data:{status:'needs_review',error:String(error)}}; }
+    catch { return {name:call.name,data:{status:'needs_review',reason:'trusted_screening_not_available',items:[],reviewRequired:true}}; }
   }
   if (!reads) throw new Error('personal_read_tool_unavailable');
   const personal: RehabCall = { name: call.name as RehabCall['name'], arguments: {
@@ -302,7 +303,8 @@ export async function generateRehabCandidate(
   const payload = JSON.stringify({
     semantic: {route:semantic.route,goal:semantic.goal,intents:semantic.intents??[],mentions:semantic.mentions,events:semantic.events,relations:semantic.relations,uncertain:semantic.uncertain},
     user_text:userText,
-    tool_results:toolResults,
+    // Chat consent does not authorize transmitting stored personal health records.
+    tool_results:toolResults.filter(result => ['rehab.search_knowledge','rehab.search_guidance','rehab.run_plan_algorithm'].includes(result.name)),
   });
   if (payload.length > 30000) return null;
   try {
@@ -339,10 +341,18 @@ export async function runRehabWorkflow(input: {
   // The model may propose inputs, but the host owns execution and the returned result.
   const algorithmResult = toolResults.find(r => r.name === 'rehab.run_plan_algorithm')?.data as ReturnType<typeof localPlan> | undefined;
   let validation=validateRehabPlan(candidate);
+  const retrievedIds = new Set(toolResults.flatMap(result =>
+    result.name === 'rehab.search_knowledge' && Array.isArray(result.data)
+      ? result.data.map(card => card.id as string)
+      : result.name === 'rehab.run_plan_algorithm' && record(result.data) && Array.isArray(result.data.items)
+        ? result.data.items.map(item => item.id as string) : []));
+  if (candidate.candidate_actions.some(action => !retrievedIds.has(action.exercise_id))) {
+    validation = {...validation,status:'rejected',reasons:[...validation.reasons,'candidate_action_not_retrieved']};
+  }
   if (algorithmResult) {
     validation = { ...validation, algorithm_result: algorithmResult };
     const algorithmIds = new Set((algorithmResult.items ?? []).map(item => item.id));
-    if (candidate.candidate_actions.some(action => !algorithmIds.has(action.exercise_id))) {
+    if (algorithmResult.status !== 'needs_review' && candidate.candidate_actions.some(action => !algorithmIds.has(action.exercise_id))) {
       validation = {
         ...validation,
         status: 'rejected',
@@ -356,7 +366,7 @@ export async function runRehabWorkflow(input: {
         reasons: [...validation.reasons, 'algorithm_no_match'],
       };
     }
-    if (algorithmResult.status === 'needs_review') {
+    if (algorithmResult.status === 'needs_review' || algorithmResult.reviewRequired) {
       validation = {
         ...validation,
         status: validation.status === 'rejected' ? 'rejected' : 'needs_review',
@@ -391,17 +401,19 @@ export async function runRehabReadOnlyAnswer(input: {
   if (task === 'progress_analysis') {
     if (!input.reads) return {text:'当前没有连接本人的康复记录，暂时无法分析个人训练变化。',source_ids:[],status:'missing'};
     const outputs: string[] = [];
+    let successfulReads = 0;
     for (const name of ['rehab.get_training_plan','rehab.get_training_history','rehab.get_recent_assessments'] as const) {
       try {
         const data = await readRehabReceipt(input.reads,{name,arguments:{}},input.participantId,check);
         // Deliberately no external LLM call: user's health record is not model context.
-        outputs.push(name + '：' + (data.records.length ? JSON.stringify(data.records).slice(0,2000) : '无已保存记录'));
+        successfulReads++;
+        outputs.push(describeLocalRehabReceipt(data));
       } catch {
         outputs.push(name + '：读取失败或未授权');
       }
     }
-    return {text:'已在本地读取以下范围内的本人资料；未将个人记录发送给云端模型。\\n'+outputs.join('\\n')+
-      '\\n目前不能单凭这些记录判断康复是否有效；请对照相同条件下的评估结果。',source_ids:[],status:'found'};
+    return {text:(successfulReads ? '已在本地读取以下范围内的本人资料；未将个人记录发送给云端模型。\n' : '本人康复资料读取失败。\n')+outputs.join('\n')+
+      '\n目前不能单凭这些记录判断康复是否有效；请对照相同条件下的评估结果。',source_ids:[],status:successfulReads?'found':'missing'};
   }
   const references = searchCards(input.userText);
   const section = searchGuidance(input.userText);
@@ -410,10 +422,10 @@ export async function runRehabReadOnlyAnswer(input: {
     return {text:'现有动作知识库或指导资料没有找到匹配内容。请告诉我动作名称、编号或具体训练问题；不会编造动作和剂量。',source_ids:[],status:'missing'};
   }
   const blocks = references.map(card =>
-    card.id+'｜'+card.name+'\\n'+card.content.slice(0,2600)+
-    '\\n开始条件：'+card.startConditions+'\\n停止条件：'+card.stopConditions);
-  if (section) blocks.push(section.title+'\\n'+section.content.slice(0,2600));
-  return {text:blocks.join('\\n\\n'),source_ids:ids,status:'found'};
+    card.id+'｜'+card.name+'\n'+card.content.slice(0,2600)+
+    '\n开始条件：'+card.startConditions+'\n停止条件：'+card.stopConditions);
+  if (section) blocks.push(section.title+'\n'+section.content.slice(0,2600));
+  return {text:blocks.join('\n\n'),source_ids:ids,status:'found'};
 }
 
 /** Safe user-facing rendering of a validated draft; it is not persistence. */
@@ -421,10 +433,10 @@ export function renderRehabDraft(result: RehabPlanValidation | null): string {
   if(!result) return '康复分析暂时没有形成可验证的候选方案。请补充具体目标、部位或当前训练情况。';
   if(result.status==='rejected') return '这次康复分析没有形成符合系统结构的候选方案，请补充具体情况后再试。';
   const p=result.plan;
-  const lines=[p.summary];
+  const lines=['以下仅为动作库候选，尚未成为个人训练处方。'];
   if(p.candidate_actions.length) lines.push('候选动作：'+p.candidate_actions.map(a=>a.exercise_id).join('、'));
   if(result.algorithm_result?.status) lines.push('规则筛选：'+result.algorithm_result.status);
-  if(result.status==='needs_review') lines.push('当前方案仍需核对：'+result.reasons.map(r=>r.replace(/^doctor_review:/,'')).join('；'));
+  if(result.status==='needs_review') lines.push('当前方案仍需核对本人评估、动作开始条件、当次试做及必要的专业审核；普通确认不能替代审核。');
   else lines.push('这是一份候选方案，尚未写入你的训练计划。');
-  return lines.join('\\n');
+  return lines.join('\n');
 }

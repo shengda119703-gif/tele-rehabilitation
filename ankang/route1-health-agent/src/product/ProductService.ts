@@ -25,7 +25,7 @@ import type { RehabToolPort } from '../runtime/rehabTools';
 import type {CarePort} from '../care/CareCoordinator';
 import {rehabAnswer,localPlan} from '../rehab/assistant';
 import {catalogue} from '../rehab/catalogue';
-import type {ProductAgentModel} from './ProductAgent';
+import {ProductAgent, type ProductAgentModel} from './ProductAgent';
 import type {ConversationModel} from '../runtime/conversation';
 import type {RehabOperationPort} from '../rehab/programOperations';
 
@@ -220,6 +220,7 @@ export class ProductService {
         }}:undefined,
         rehabReads:this.rehabReads?.(owner)??this.rehab?.(owner),
         rehabOperations:this.rehabOperations?.(owner),
+        productTools:this.runtimeOptions.semanticRoutingEnabled?new ProductAgent([]):undefined,
         rehabAssistant:(text,privateTurn)=>rehabAnswer(text,privateTurn,owner,this.conversationModel?.(owner),this.rehabReads?.(owner)??this.rehab?.(owner))});
       this.open.add(owner);
       this.modelAvailability.set(owner,modelAvailable);

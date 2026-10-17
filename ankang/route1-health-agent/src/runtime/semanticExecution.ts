@@ -5,8 +5,9 @@ import { searchCards, searchGuidance } from '../rehab/assistant';
 import { guidance } from '../rehab/guidance';
 import type { ConversationModel } from './conversation';
 import { canUseModuleTools } from './operationalIntent';
-import { readRehabReceipt, describeLocalRehabReceipt, type RehabToolPort, type RehabCall } from './rehabTools';
-import type { SemanticTurn, SemanticContextMessage } from './semanticRouter';
+import { readRehabReceipt, describeLocalRehabReceipt, type RehabToolPort, type RehabCall, type RehabToolName } from './rehabTools';
+import type { SemanticTurn, SemanticContextMessage, SemanticToolRequest } from './semanticRouter';
+import type { ProductAgent, AgentResult } from '../product/ProductAgent';
 import { runRehabWorkflow, renderRehabDraft, rehabAnswerTask, runRehabReadOnlyAnswer } from '../rehab/workflow';
 import { previewRehabProgramOperation, commitRehabProgramOperation, isConfirmation, isCancellation, isRehabProgramIntent, renderOperationPreview, renderOperationResult, type PendingRehabOperation, type RehabOperationPort } from '../rehab/programOperations';
 import { resolveScopeFallback } from './scopeFallback';
@@ -60,10 +61,11 @@ export async function executeSemanticTurn(input: {
   semantic: SemanticTurn; text: string; context: SemanticContextMessage[];
   plan: ElderTurnPlan; readOnly: boolean; model: ConversationModel;
   reads?: Pick<RehabToolPort, 'read'>; participantId: string; rehabOperations?: RehabOperationPort;
+  productTools?: Pick<ProductAgent, 'replyToText'>; now?: Date;
   pendingRehabOperation?: PendingRehabOperation | null;
   setPendingRehabOperation?: (pending: PendingRehabOperation | null) => void;
   check: () => void; trace: SemanticExecutionTrace;
-}): Promise<{ plan: ElderTurnPlan; conversation: ChatMessage['conversation'] }> {
+}): Promise<{ plan: ElderTurnPlan; conversation: ChatMessage['conversation']; agent?: AgentResult }> {
   const { semantic, text, context, model, check, trace } = input;
   let plan = input.readOnly ? readOnlyPlan(input.plan) : input.plan;
   const local = (reply: string, reason: string) => {
@@ -74,6 +76,7 @@ export async function executeSemanticTurn(input: {
   if (input.plan.safetyAction || (!input.readOnly && (input.plan.correction || input.plan.eventsToAppend.length ||
       input.plan.familyEventsToAppend.length || input.plan.sharingAuditEntries.length || input.plan.medicationMissed ||
       input.plan.shareFindingIds.length || input.plan.shareFamilyEventIds.length))) {
+    input.setPendingRehabOperation?.(null);
     return local(plan.replyText, 'existing_safety_or_health_workflow');
   }
 
@@ -105,10 +108,20 @@ export async function executeSemanticTurn(input: {
     return local(scopeFallback.reply, 'scope_fallback');
   }
 
+  if (semantic.route === 'module' && input.productTools && canUseModuleTools(text) && /打开|进入|切到/.test(text)) {
+    const agent = await input.productTools.replyToText(text, input.now ?? new Date(), check);
+    check();
+    if (agent?.navigation) {
+      trace.stages.push({stage:'tool',status:'passed',tool:'open_module'});
+      return {...local(agent.reply,'module_navigation'),agent};
+    }
+  }
+
   if (input.rehabOperations && isRehabProgramIntent(semantic)) {
     let rehabContext: unknown = null;
     let rehabReply = '';
-    if (semantic.route === 'rehab') {
+    if (semantic.route === 'rehab' || semantic.route === 'health' ||
+        semantic.intents?.some(intent => intent.route === 'rehab' || intent.type === 'health_consultation')) {
       const rehabResult = await runRehabWorkflow({
         model,
         semantic,
@@ -162,14 +175,14 @@ export async function executeSemanticTurn(input: {
 
   // Rehab is a separate analysis workflow: LLM tool planning -> host tools/algorithm -> LLM candidate -> program validation.
   // It deliberately stops before any plan persistence or module operation.
-  if (semantic.route === 'rehab') {
-    if (rehabAnswerTask(semantic) !== 'plan_generation') {
+  if (semantic.route === 'rehab' && rehabAnswerTask(semantic) === 'progress_analysis') {
       const explained = await runRehabReadOnlyAnswer({
         semantic, userText:text, reads:input.reads, participantId:input.participantId, check,
       });
       trace.stages.push({stage:'tool',status:explained.status === 'found'?'passed':'empty',reason:'rehab_read_only_answer'});
       return local(explained.text,'rehab_read_only_answer');
-    }
+  }
+  if (semantic.route === 'rehab' && rehabAnswerTask(semantic) === 'plan_generation') {
     const result = await runRehabWorkflow({
       model,
       semantic,
@@ -191,9 +204,18 @@ export async function executeSemanticTurn(input: {
     return { plan: withReply(plan, renderRehabDraft(result.validation)), conversation: { provider: 'deepseek', status: 'replied' } };
   }
 
-  const requests = semantic.tool_requests !== undefined ? semantic.tool_requests : semantic.suggested_tool
+  const requests: SemanticToolRequest[] = semantic.tool_requests?.length ? [...semantic.tool_requests] : semantic.suggested_tool
     ? [{ name: semantic.suggested_tool, arguments: {}, evidence: text }]
-    : semantic.route === 'rehab' ? [{ name: 'rehab.search_knowledge' as const, arguments: { query: text }, evidence: text }] : [];
+    : semantic.route === 'rehab' ? [{name:'rehab.search_knowledge',arguments:{query:text},evidence:text}] : [];
+  if (!requests.length && (semantic.route === 'records' || semantic.intents?.some(intent => intent.route === 'records'))) {
+    // The business layer chooses reads; the first semantic pass only describes the request.
+    const recordTools: [RehabToolName, RegExp][] = [
+      ['rehab.get_training_plan', /(?:康复|训练)?计划/],
+      ['rehab.get_training_history', /(?:训练|康复)(?:记录|历史)|训练情况/],
+      ['rehab.get_recent_assessments', /评估|复测/],
+    ];
+    for (const [name, pattern] of recordTools) if (pattern.test(text)) requests.push({name,arguments:{},evidence:text});
+  }
   const unique = new Set<string>();
   const localResults: string[] = [];
   const knowledge: ReturnType<typeof searchCards> = [];

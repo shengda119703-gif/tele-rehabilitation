@@ -20,7 +20,7 @@ def test_five_module_public_resources_include_nested_visuals_and_exclude_private
     monkeypatch.setattr(builder, "SOURCE", source)
     monkeypatch.setattr(builder, "OUTPUT", tmp_path / "public")
     builder.build()
-    manifest = json.loads((builder.OUTPUT / "web-manifest.json").read_text())
+    manifest = json.loads((builder.OUTPUT / "web-manifest.json").read_text(encoding='utf-8'))
     required = [
         "assets/home-v36/athlete-cutout.png",
         "assets/rehab-v51/abduction.jpg",
@@ -39,4 +39,4 @@ def test_five_module_public_resources_include_nested_visuals_and_exclude_private
     assert manifest["fixture_data_included"] is False
     for name in ("home-v36", "rehab-v51", "health-v131", "medication-v121", "family-v10"):
         assert "/static/" + name + ".js" in manifest["assets"]
-    assert '/web/browser-account.js' in (builder.OUTPUT / "index.html").read_text()
+    assert '/web/browser-account.js' in (builder.OUTPUT / "index.html").read_text(encoding='utf-8')

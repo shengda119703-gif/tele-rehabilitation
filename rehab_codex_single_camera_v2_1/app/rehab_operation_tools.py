@@ -82,6 +82,8 @@ class RehabOperationTools:
             raise ValueError('计划修改内容无效')
         if set(patch) - {'name', 'add', 'update', 'remove'}:
             raise ValueError('计划修改字段无效')
+        if current.get('doctor_publication') and any(patch.get(k) for k in ('add', 'update', 'remove')):
+            raise ValueError('医生方案的动作与剂量须由医生重新审核发布，不能由本人确认修改')
         candidate = copy.deepcopy(current)
         if 'name' in patch:
             name = patch['name']
@@ -217,8 +219,9 @@ class RehabOperationTools:
         }
         if args.get('commit') is not True:
             return preview
-        result = self.daily.apply(self.owner, 'daily.schedule', payload, self.scope)
-        return {'status': 'applied', 'operation': 'rehab.schedule.upsert', 'schedule': result}
+        result = self.daily.apply(self.owner, 'daily.schedule', payload, self.scope,
+                                  **({'expected_existing': args['expected_existing']} if 'expected_existing' in args else {}))
+        return {'status': 'applied', 'operation': 'rehab.schedule.upsert', 'schedule': result['schedule']}
 
     def _schedule_remove(self, args):
         schedule_id = args.get('id')
@@ -233,5 +236,6 @@ class RehabOperationTools:
         preview = {'status': 'preview', 'operation': 'rehab.schedule.remove', 'schedule': existing}
         if args.get('commit') is not True:
             return preview
-        self.daily.apply(self.owner, 'daily.unschedule', {'id': schedule_id}, self.scope)
+        self.daily.apply(self.owner, 'daily.unschedule', {'id': schedule_id}, self.scope,
+                         **({'expected_existing': args['expected_existing']} if 'expected_existing' in args else {}))
         return {'status': 'applied', 'operation': 'rehab.schedule.remove', 'schedule': existing}

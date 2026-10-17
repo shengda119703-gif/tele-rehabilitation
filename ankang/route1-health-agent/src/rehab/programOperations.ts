@@ -3,7 +3,7 @@ import type { RehabToolPort } from '../runtime/rehabTools';
 import type { SemanticTurn } from '../runtime/semanticRouter';
 
 export interface RehabOperationPort {
-  call(name: string, arguments: Record<string, unknown>): Promise<unknown>;
+  call(name: string, args: Record<string, unknown>): Promise<unknown>;
 }
 
 export type RehabProgramOperationName =
@@ -75,7 +75,7 @@ export function parseRehabProgramPlan(raw: string): RehabProgramPlan | null {
         : ['id'];
     if (Object.keys(args).some(k => !allowed.includes(k))) return null;
     if (item.name === 'rehab.plan.change') {
-      if (!text(args.plan_id, 80) || !Number.isInteger(args.expected_revision) ||
+      if (!text(args.plan_id, 80) || typeof args.expected_revision !== 'number' || !Number.isInteger(args.expected_revision) ||
           args.expected_revision < 0 || !record(args.patch)) return null;
       const patch = args.patch;
       if (Object.keys(patch).some(k => !['name', 'add', 'update', 'remove'].includes(k))) return null;
@@ -97,7 +97,7 @@ export function parseRehabProgramPlan(raw: string): RehabProgramPlan | null {
       }
     } else if (item.name === 'rehab.schedule.upsert') {
       if (args.id !== undefined && !text(args.id, 160)) return null;
-      if (!text(args.plan_id, 80) || !Number.isInteger(args.plan_revision) || args.plan_revision < 1 ||
+      if (!text(args.plan_id, 80) || typeof args.plan_revision !== 'number' || !Number.isInteger(args.plan_revision) || args.plan_revision < 1 ||
           !text(args.date, 20) || !/^\d{4}-\d{2}-\d{2}$/.test(args.date) ||
           !text(args.time, 10) || !/^\d{2}:\d{2}$/.test(args.time) ||
           (args.name !== undefined && !text(args.name, 100))) return null;
@@ -147,38 +147,6 @@ async function selectReads(model: ConversationModel, semantic: SemanticTurn, use
   }
 }
 
-const PROGRAM_SYSTEM = [
-  '你是安康应用的康复程序操作规划器。你已经收到 Johnson 第一轮语义和程序只读工具的真实结果。',
-  '现在只把用户明确要求转换成候选程序操作，不执行、不回答、不诊断。',
-  '允许：rehab.plan.change（修改本人已保存康复计划：名称、已有动作参数、删除动作、添加动作）；',
-  'rehab.schedule.upsert（新增或修改本人康复计划的训练安排时间）；',
-  'rehab.schedule.remove（删除本人康复安排）。',
-  '永远输出 requires_confirmation=true；用户确认前绝不写入。一次只提出一个程序写操作。',
-  'plan_id、revision、key 必须来自真实工具结果，禁止猜。',
-  '不得修改 participant_id、record_origin、doctor_publication 等系统字段。',
-  '训练参数只能使用计划支持的字段；添加动作只能使用已知真实 exercise_id。',
-  '康复问题与程序操作同时出现时，只提出待确认的程序修改，不自动执行。',
-  '如果无法确定目标，operations=[]，把缺失信息写入 uncertainties。',
-  '输出且仅输出 JSON：{"version":1,"operations":[{"name":"rehab.plan.change|rehab.schedule.upsert|rehab.schedule.remove","arguments":{},"evidence":"用户原话片段"}],"requires_confirmation":true,"summary":"给用户看的变更摘要","uncertainties":[]}'
-].join('\n');
-
-async function buildPlan(model: ConversationModel, semantic: SemanticTurn, userText: string,
-  toolResults: {name:string;data:unknown}[], check: () => void, rehabContext?: unknown): Promise<RehabProgramPlan | null> {
-  const payload = JSON.stringify({
-    semantic: {route:semantic.route,goal:semantic.goal,intents:semantic.intents??[],mentions:semantic.mentions,events:semantic.events,relations:semantic.relations,uncertain:semantic.uncertain},
-    user_text:userText, tool_results:toolResults, rehab_context:rehabContext ?? null,
-  });
-  if (payload.length > 30000) return null;
-  try {
-    const raw = await model.reply({purpose:'understanding',messages:[{role:'user',content:PROGRAM_SYSTEM+'\n'+payload}]});
-    check();
-    return parseRehabProgramPlan(raw);
-  } catch {
-    check();
-    return null;
-  }
-}
-
 export async function previewRehabProgramOperation(input: {
   model: ConversationModel;
   semantic: SemanticTurn;
@@ -199,28 +167,17 @@ export async function previewRehabProgramOperation(input: {
     unique.add(call.name);
     try {
       if(call.name==='rehab.get_training_plan' && input.reads)
-        toolResults.push({name:call.name,data:await input.reads.read('rehab.get_training_plan',{})});
+        toolResults.push({name:call.name,data:await input.reads.read({name:'rehab.get_training_plan',arguments:{}})});
       else if(call.name==='rehab.get_schedule')
         toolResults.push({name:call.name,data:await input.operations.call(call.name,{})});
     } catch {
       toolResults.push({name:call.name,data:{status:'failed',reason:'tool_execution_failed'}});
     }
+    check();
   }
-  const plan=await buildPlan(input.model,input.semantic,input.userText,toolResults,check,input.rehabContext);
-  if(!plan || !plan.operations.length) return {plan,previews:[],toolResults};
-  const previews=[];
-  for(const operation of plan.operations){
-    try {
-      const result = await input.operations.call(operation.name,{...operation.arguments,commit:false});
-      // Bind the preview's observed schedule state to the pending proposal.
-      // The host checks it again on commit to avoid overwriting a newer schedule.
-      if (record(result) && (operation.name === 'rehab.schedule.upsert' || operation.name === 'rehab.schedule.remove')) {
-        operation.arguments.expected_existing = operation.name === 'rehab.schedule.upsert' ? (result.previous ?? null) : (result.schedule ?? null);
-      }
-      previews.push({name:operation.name,result});
-    } catch(error) { previews.push({name:operation.name,result:{status:'rejected',reason:String(error)}}); }
-  }
-  return {plan,previews,toolResults};
+  // Stored plan/schedule data has no external-model consent or local intent resolver yet.
+  return {plan:{version:1,operations:[],requires_confirmation:true,summary:'这次修改尚未执行。',
+    uncertainties:['当前未授权把已保存的个人计划和训练安排发送给外部模型，请在康复页面手动修改。']},previews:[],toolResults};
 }
 
 
@@ -247,8 +204,8 @@ export function isCancellation(text: string): boolean {
 }
 
 export function renderOperationPreview(plan: RehabProgramPlan | null, previews: unknown[]): string {
+  if (plan?.uncertainties.length) return '这次修改尚未执行：'+plan.uncertainties.join('；');
   if (!plan || !plan.operations.length) return '我还无法确定要修改哪一项康复计划或安排。请告诉我具体要改哪个动作、次数或时间。';
-  if (plan.uncertainties.length) return '我还缺少确认这项修改所需的信息：'+plan.uncertainties.join('；');
   const rejected = previews.find(item => record(item) && record(item.result) && item.result.status === 'rejected');
   if (rejected) {
     const reason = record(rejected) && record(rejected.result) ? rejected.result.reason : undefined;

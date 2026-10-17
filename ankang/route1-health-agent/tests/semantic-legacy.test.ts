@@ -17,7 +17,7 @@ function request(text: string): Omit<ElderTurnRequest, 'understanding'> {
     receivedAt: today + 'T12:00:00', sourceMessageId: 'SYNTHETIC:semantic:1', idSeed: 100 };
 }
 function semantic(mentions: SemanticMention[]): SemanticTurn {
-  return { version: 1, route: 'health', goal: '理解症状', mentions, uncertain: [], suggested_tool: null };
+  return { version: 1, route: 'health', goal: '理解症状', mentions, events: [], relations: [], uncertain: [], suggested_tool: null };
 }
 const symptom = (text: string, evidence: string, status: SemanticMention['status'], subject: SemanticMention['subject'] = 'self'): SemanticMention =>
   ({ kind: 'symptom', text, evidence, status, subject });

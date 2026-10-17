@@ -5,6 +5,17 @@ function harness(enabled=true){
 }
 const response=content=>JSON.stringify({choices:[{finish_reason:'stop',message:{role:'assistant',content}}]});
 
+test('phone local API passes semantic options to the runtime options argument',()=>{
+ let captured;const stop=new Error('constructor inspected');
+ const context={fetch(){},localStorage:{},PhoneMotion:{},AnkangSemanticRoutingEnabled:true,
+  PhoneStore:{selectedKey(){return 'TEST';},Store:class{constructor(){this.value={owner:'SYNTHETIC_TEST'};}}},
+  AnkangDomain:{ProductService:class{constructor(...args){captured=args;throw stop;}}}};
+ vm.createContext(context);
+ assert.throws(()=>vm.runInContext(fs.readFileSync('android_offline/web/local-api.js','utf8'),context),e=>e===stop);
+ assert.equal(captured[8],undefined);
+ assert.equal(captured[9].semanticRoutingEnabled,true);
+});
+
 test('Android understanding selects JSON task and cloud forwards its purpose',async()=>{
  const h=harness();h.c.AnkangUnderstandingSystem='JSON understanding policy';
  const pending=h.models.conversationModel().reply({purpose:'understanding',messages:[{role:'user',content:'TEST input'}]});

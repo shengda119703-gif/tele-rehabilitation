@@ -24,6 +24,16 @@ test('model failure returns null for legacy fallback', async () => {
   assert.equal(r,null);
 });
 
+test('schedule time must be an exact original substring and optional time cannot be null',()=>{
+  const source={text:'把明天的康复训练改到晚上八点。'};
+  const value={version:1,route:'module',goal:'修改训练时间',mentions:[],relations:[],uncertain:[],suggested_tool:null,
+    events:[{type:'plan_change',description:'修改时间',evidence:source.text,time:'晚上八点'}]};
+  assert.ok(parseSemanticTurn(JSON.stringify(value),source));
+  for(const time of ['明天晚上八点',null]){
+    assert.equal(parseSemanticTurn(JSON.stringify({...value,events:[{...value.events[0],time}]}),source),null);
+  }
+});
+
 test('ambiguous symptoms preserve uncertainty instead of inventing a diagnosis', () => {
   const r=parseSemanticTurn(JSON.stringify({version:1,route:'health',goal:'报告不适',mentions:[{kind:'symptom',text:'有点不舒服'}],events:[],relations:[],uncertain:['不适部位','症状性质'],suggested_tool:null}));
   assert.deepEqual(r?.uncertain,['不适部位','症状性质']);

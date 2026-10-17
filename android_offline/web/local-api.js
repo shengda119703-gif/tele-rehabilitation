@@ -7,7 +7,7 @@ const metrics=[['steps','活动步数','步'],['walkSpeed','步行速度','m/s']
 const categories=['体检报告','就诊记录','检验检查','影像资料','病历资料','其他资料'];
 const profile=()=>store.read('profile:'+owner)?.profile;
 const domain=new AnkangDomain.ProductService({read:k=>store.read(k),write:(k,v)=>store.write(k,v),remove:k=>store.remove(k),profiles:()=>store.profiles(),attachments:{list:s=>PS.attachments(owner).list(s),put:(s,a)=>PS.attachments(owner).put(s,a),clear:s=>PS.attachments(owner).clear(s),setTrash:(s,id,at)=>PS.attachments(owner).setTrash(s,id,at)}},undefined,undefined,{},participant=>PS.createCarePort(store,participant,careRehabFacts),
- ()=>root.PhoneDeepSeek?.agentModel(),participant=>({read:call=>rehabRead(participant,call)}),()=>root.PhoneDeepSeek?.conversationModel(),{semanticRoutingEnabled:root.AnkangSemanticRoutingEnabled===true});
+ ()=>root.PhoneDeepSeek?.agentModel(),participant=>({read:call=>rehabRead(participant,call)}),()=>root.PhoneDeepSeek?.conversationModel(),undefined,{semanticRoutingEnabled:root.AnkangSemanticRoutingEnabled===true});
 const ready=store.serial(async()=>{
  await PhoneLin.initialize(store,nativeFetch);
  owner=store.value.owner;

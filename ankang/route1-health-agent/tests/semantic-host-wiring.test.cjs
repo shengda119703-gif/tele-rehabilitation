@@ -6,14 +6,14 @@ const {spawn}=require('node:child_process');
 const {createInterface}=require('node:readline');
 const {ProductService}=require('../.bridge-build/product/ProductService.js');
 const profile={name:'SYNTHETIC TEST',age:40,conditions:[],medications:[],mobility:'unknown',usesCane:false,nightVision:'unknown',cognition:'unknown',familySharing:'denied'};
-const parsed={version:1,route:'chat',goal:'普通聊天',mentions:[],uncertain:[],suggested_tool:null};
+const parsed={version:1,route:'chat',goal:'普通聊天',mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null};
 function port(){const values=new Map();return {read:k=>structuredClone(values.get(k)??null),write:(k,v)=>values.set(k,structuredClone(v)),remove:k=>values.delete(k),profiles:()=>[],attachments:{list:async()=>[],clear:async()=>{}}};}
 
 test('ProductService opt-in reaches understanding then reply, preserves owner and private boundary',async()=>{
  const calls=[];let configured=true;
  const service=new ProductService(port(),undefined,undefined,{},undefined,undefined,undefined,
    owner=>configured?{reply:async input=>{calls.push({owner,...input});return input.purpose==='understanding'?JSON.stringify(parsed):'今天想聊些什么？';}}:undefined,
-   {semanticRoutingEnabled:true});
+   undefined,{semanticRoutingEnabled:true});
  const now=new Date('2026-10-15T12:00:00+08:00');
  await service.request('profile.save','TEST_SELF',{profile},now);
  const result=await service.request('chat','TEST_SELF',{text:'你好，想聊聊天'},now);
@@ -30,6 +30,21 @@ test('ProductService default-off never invokes new understanding even with a mod
  const now=new Date('2026-10-15T12:00:00+08:00');await service.request('profile.save','TEST_SELF',{profile},now);
  await service.request('chat','TEST_SELF',{text:'你好'},now);
  assert.equal(calls.some(c=>c.purpose==='understanding'),false);
+});
+
+test('opt-in navigation returns the existing patient UI navigation receipt',async()=>{
+ const calls=[];
+ const service=new ProductService(port(),undefined,undefined,{},undefined,undefined,undefined,
+ ()=>({reply:async input=>{calls.push(input);return JSON.stringify({...parsed,route:'module',goal:'打开康复计划页面',tool_requests:[],intents:[{type:'program_operation',route:'module',goal:'打开康复计划页面',evidence:'打开康复计划页面'}]});}}),
+ undefined,{semanticRoutingEnabled:true});
+ const now=new Date('2026-10-15T12:00:00+08:00');await service.request('profile.save','TEST_SELF',{profile},now);
+ for(const text of ['帮我打开康复计划页面','帮我打开康复计划页面。']) {
+  const result=await service.request('chat','TEST_SELF',{text},now);
+  assert.equal(result.turn.agent.navigation,'rehab');
+  assert.deepEqual(result.turn.agent.steps.map(step=>step.name),['open_module']);
+  assert.deepEqual(result.turn.snapshot.events,[]);
+ }
+ assert.equal(calls.length,2);
 });
 
 // Exercise the shipped process entry, real adapter and ProductService together.

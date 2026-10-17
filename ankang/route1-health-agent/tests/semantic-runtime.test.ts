@@ -111,6 +111,87 @@ test('semantic runtime: all three record tools execute once with host identity a
   }
 });
 
+test('record intents execute host-selected reads when the first layer correctly proposes no tools', async () => {
+  for (const [tool, text] of [
+    ['rehab.get_training_plan', '查看我的康复计划'],
+    ['rehab.get_training_history', '查看我的训练历史'],
+    ['rehab.get_recent_assessments', '查看我的最近评估结果'],
+  ] as const) {
+    const {model,calls} = recordingModel(base('records', {tool_requests:[],intents:[{
+      type:tool==='rehab.get_training_plan'?'plan_query':'records_query',route:'records',goal:text,evidence:text,
+    }]}));
+    const reads: unknown[] = [];
+    const runtime = await open({conversationModel:model,rehabReads:{async read(call){
+      reads.push(call);return receipt(call.name);
+    }}});
+    const turn = await runtime.processTurn(owner,{text,now});
+    assert.deepEqual(reads,[{name:tool,arguments:{}}]);
+    assert.equal(calls.length,1);
+    assert.match(turn.reply.text,/PERSONAL_RECORD_MUST_STAY_LOCAL/);
+    assert.doesNotMatch(JSON.stringify(calls),/PERSONAL_RECORD_MUST_STAY_LOCAL/);
+    await runtime.closeSession(owner);
+  }
+});
+
+test('host-selected record reads retain ownership, negation and hypothesis gates', async () => {
+  for (const text of ['查看张三的康复计划','不要查看我的训练历史','如果查看我的评估结果会怎样']) {
+    const {model} = recordingModel(base('records',{tool_requests:[]}));
+    let reads=0;
+    const runtime = await open({conversationModel:model,rehabReads:{async read(call){reads++;return receipt(call.name);}}});
+    await runtime.processTurn(owner,{text,now});
+    assert.equal(reads,0,text);
+    await runtime.closeSession(owner);
+  }
+});
+
+test('old pending modifications expire on topic, privacy, parser failure, safety, source change and reset', async () => {
+  for (const scenario of ['immediate','topic','private','invalid-json','safety','source','reset'] as const) {
+    let commits=0;
+    const model:ConversationModel={async reply(input){
+      if(input.purpose!=='understanding')return '我们可以聊聊花园。';
+      if(scenario==='invalid-json' && input.messages[0].content.includes('花园'))return '{invalid';
+      return JSON.stringify(base('chat',{tool_requests:[]}));
+    }};
+    const runtime=await open({conversationModel:model,
+      rehabAssistant:async()=>({text:'本地只读回复',conversation:undefined}),
+      rehabOperations:{async call(_name,args){if(args.commit===true)commits++;return {status:'applied'};}}});
+    // Simulate an already queued proposal; new proposals are currently blocked by the privacy gate.
+    const session=(runtime as unknown as {sessions:Map<string,{pendingRehabOperation:unknown}>}).sessions.get(owner)!;
+    session.pendingRehabOperation={context:'SYNTHETIC:TEST',createdAt:now.getTime(),previews:[],proposal:{
+      version:1,operations:[{name:'rehab.plan.change',arguments:{plan_id:'SYNTHETIC_OLD_PLAN',expected_revision:1,patch:{name:'旧方案'}},evidence:'修改计划名称'}],
+      requires_confirmation:true,summary:'旧方案修改',uncertainties:[],
+    }};
+    if(scenario==='reset')await runtime.resetSession(owner,now);
+    else if(!['immediate','source'].includes(scenario))await runtime.processTurn(owner,{
+      text:scenario==='private'?'不要记录，聊聊花园':scenario==='safety'?'我胸口痛，喘不过气':'聊聊花园',
+      now,conversationContext:'SYNTHETIC:TEST',
+    });
+    await runtime.processTurn(owner,{text:'确认',now,conversationContext:scenario==='source'?'SYNTHETIC:OTHER':'SYNTHETIC:TEST'});
+    assert.equal(commits,scenario==='immediate'?1:0,scenario);
+    await runtime.closeSession(owner);
+  }
+});
+
+test('mixed rehabilitation requests cannot bypass analysis by using a module or health primary route', async () => {
+  for (const route of ['module','health'] as const) {
+    const text='我膝盖有点不舒服，帮我调整康复计划';
+    const {model,calls}=recordingModel(base(route,{tool_requests:[],intents:[
+      {type:'rehab_question',route:'rehab',goal:'核对膝盖训练',evidence:'我膝盖有点不舒服'},
+      {type:'program_operation',route:'module',goal:'调整康复计划',evidence:'帮我调整康复计划'},
+    ]}));
+    let operations=0;
+    const runtime=await open({conversationModel:model,
+      rehabAssistant:async()=>({text:'本地回复',conversation:undefined}),
+      rehabOperations:{async call(){operations++;return {status:'applied'};}}});
+    const turn=await runtime.processTurn(owner,{text,now});
+    assert.equal(operations,0,route);
+    assert.equal(calls.length,2,route);
+    assert.equal(turn.semanticExecution?.stages.some(stage=>stage.reason==='rehab_analysis_not_approved_for_plan_write'),true,route);
+    assert.doesNotMatch(turn.reply.text,/已经.*更新|修改成功/);
+    await runtime.closeSession(owner);
+  }
+});
+
 test('semantic runtime: model record suggestions cannot authorize another person, negation or hypothesis', async () => {
   for (const text of ['查看张三的训练记录', '不要查看我的训练计划', '如果查看我的训练计划会怎样', '查看我妈妈的训练记录']) {
     const { model } = recordingModel(base('records', { suggested_tool: 'rehab.get_training_plan' }));

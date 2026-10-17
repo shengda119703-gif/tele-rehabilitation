@@ -18,7 +18,7 @@ import {understandSemanticTurn, type SemanticTurn, type SemanticContextMessage} 
 import {executeSemanticTurn, readOnlyPlan, isUserFacingSemanticReply, type SemanticExecutionTrace} from './semanticExecution';
 import type { ProductAgent, AgentResult } from '../product/ProductAgent';
 import {conversationMessages,isOperationalConversation,localConversation,type ConversationModel} from './conversation';
-import {previewRehabProgramOperation,commitRehabProgramOperation,isConfirmation,isCancellation,renderOperationPreview,renderOperationResult,type PendingRehabOperation, type RehabOperationPort} from '../rehab/programOperations';
+import {isConfirmation,isCancellation,type PendingRehabOperation, type RehabOperationPort} from '../rehab/programOperations';
 
 const copy = <T>(value: T): T => structuredClone(value);
 const emptyHealth = (): HealthRecordSnapshot => ({ events: [], familyEvents: [], chat: [] });
@@ -88,7 +88,7 @@ class Session {
   private idSeed = 0;
   // Original user text already permitted for this model context; never tool results.
   private semanticHistory: (SemanticContextMessage & {context:string})[] = [];
-  private pendingRehabOperation: PendingRehabOperation | null = null;
+  private pendingRehabOperation: (PendingRehabOperation & {context: string}) | null = null;
   constructor(private readonly options: OpenSessionOptions) {}
 
   async initialize() {
@@ -168,12 +168,16 @@ class Session {
       };
       this.idSeed = Math.max(this.idSeed + 1, captured.now.getTime());
       const privacyBeforeRouting = parsePrivacyIntent(captured.text);
+      const conversationContext = captured.conversationContext ?? 'local';
+      if (this.pendingRehabOperation && (this.pendingRehabOperation.context !== conversationContext ||
+          (!isConfirmation(captured.text) && !isCancellation(captured.text)))) this.pendingRehabOperation = null;
       const semanticContext = this.semanticHistory.filter(m => m.context === (captured.conversationContext ?? 'local')).slice(-4)
         .map(({id,text}) => ({id,text}));
       const semantic: SemanticTurn | null = this.options.semanticRoutingEnabled &&
         this.options.conversationModel && privacyBeforeRouting === 'none'
         ? await understandSemanticTurn(this.options.conversationModel, captured.text, {context:semanticContext}) : null;
       this.check(generation);
+      if (!semantic) this.pendingRehabOperation = null;
       const semanticExecution: SemanticExecutionTrace | undefined = this.options.semanticRoutingEnabled ? {
         parser_status: semantic ? 'llm_valid' : this.options.conversationModel ? 'local_fallback' : 'unavailable',
         stages: [{stage:'understanding',status:semantic?'passed':privacyBeforeRouting!=='none'?'blocked':'failed',
@@ -199,6 +203,7 @@ class Session {
         semantic,
       );
       this.check(generation);
+      if (plan.safetyAction) this.pendingRehabOperation = null;
       const privacyIntent = parsePrivacyIntent(captured.text);
       let rehab: Awaited<ReturnType<typeof prepareRehabReply>> = null;
       let care: Awaited<ReturnType<CareCoordinator['replyToText']>> = null;
@@ -210,11 +215,12 @@ class Session {
           readOnly:Boolean(this.options.rehabAssistant),model:this.options.conversationModel,
           reads:this.options.rehabReads??this.options.rehabTools,participantId:this.options.participantId??this.options.sessionId,
           rehabOperations:this.options.rehabOperations,
+          productTools:this.options.productTools,now:captured.now,
           pendingRehabOperation:this.pendingRehabOperation,
-          setPendingRehabOperation:(pending)=>{this.pendingRehabOperation=pending;},
+          setPendingRehabOperation:(pending)=>{this.pendingRehabOperation=pending?{...pending,context:conversationContext}:null;},
           check:()=>this.check(generation),trace:semanticExecution});
         this.check(generation);
-        plan=result.plan;conversation=result.conversation;
+        plan=result.plan;conversation=result.conversation;agent=result.agent??null;
       } else {
       if (!this.options.rehabAssistant && this.options.careTools && privacyIntent === 'none' && !plan.safetyAction && !plan.correction &&
         !plan.medicationMissed && !plan.eventsToAppend.length && !plan.familyEventsToAppend.length &&
@@ -434,6 +440,7 @@ class Session {
     const captured = new Date(now);
     wallClock(captured);
     const generation = ++this.generation; // Immediately invalidate planning and already queued turns.
+    this.pendingRehabOperation = null;
     return this.queue.enqueue(async () => {
       this.check(generation);
       this.state = this.initial(emptyHealth(), captured, this.state.revision + 1);
