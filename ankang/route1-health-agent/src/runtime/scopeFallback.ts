@@ -38,7 +38,11 @@ export function resolveScopeFallback(semantic: SemanticTurn, userText: string): 
 
   if (semantic.route !== 'other') return null;
 
-  if (/(?:打开|进入|跳转|设置提醒|发提醒|预约|挂号|联系医生|打电话|呼叫救护车|发送转诊|替我联系|帮我联系)/.test(context)) {
+  const unsupportedOperation = clauses.some(clause => {
+    if (/(?:不要|别|不需要|不用|无需|不想|不打算).{0,10}(?:打开|进入|跳转|设置提醒|发提醒|预约|挂号|联系医生|打电话|呼叫救护车|发送转诊|替我联系|帮我联系)/.test(clause)) return false;
+    return /(?:打开|进入|跳转|设置提醒|发提醒|预约|挂号|联系医生|打电话|呼叫救护车|发送转诊|替我联系|帮我联系)/.test(clause);
+  });
+  if (unsupportedOperation) {
     return {
       kind: 'unsupported_operation',
       reply: '这个请求目前不在已接通的康复助手操作范围内，我还没有执行它，也不会假装已经完成。你可以在应用对应页面手动操作；如果你告诉我想完成的目标，我可以帮你整理下一步。',
