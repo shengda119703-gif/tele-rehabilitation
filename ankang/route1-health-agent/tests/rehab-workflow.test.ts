@@ -87,3 +87,26 @@ test('plan generation is distinct from ordinary rehab questions', () => {
     intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'生成计划',evidence:'生成计划'}]};
   assert.equal(rehabAnswerTask(semantic),'plan_generation');
 });
+
+test('real-model tool selection may omit a search query; host fills it from the user request', () => {
+  const parsed = parseRehabToolSelection(JSON.stringify({
+    version: 1,
+    calls: [
+      {name:'rehab.search_guidance',arguments:{},reason:'需要相关训练原则'},
+      {name:'rehab.search_knowledge',arguments:{query:''},reason:'查找动作卡'},
+    ],
+    uncertainties: [],
+  }), '腰椎间盘突出 居家训练计划');
+  assert.equal(parsed?.calls.length,2);
+  assert.equal(parsed?.calls[0].arguments.query,'腰椎间盘突出 居家训练计划');
+  assert.equal(parsed?.calls[1].arguments.query,'腰椎间盘突出 居家训练计划');
+});
+
+test('missing search query without any grounded fallback is rejected', () => {
+  const parsed = parseRehabToolSelection(JSON.stringify({
+    version:1,
+    calls:[{name:'rehab.search_guidance',arguments:{},reason:'查资料'}],
+    uncertainties:[],
+  }));
+  assert.equal(parsed,null);
+});
