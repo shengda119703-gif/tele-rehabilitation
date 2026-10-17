@@ -576,3 +576,18 @@ test('explicit treatment decisions do not reach program operations even with a p
   assert.equal(calls.length,1);
   await runtime.closeSession(owner);
 });
+
+test('generic plan-generation intent opens the existing assessment-screened app plan flow', async () => {
+  const text = '帮我制定一套在家的训练计划';
+  const {model,calls} = recordingModel(base('rehab',{
+    goal:'生成居家训练计划',
+    intents:[{type:'plan_generation',route:'rehab',goal:'生成居家训练计划',evidence:text}],
+  }));
+  const runtime = await open({conversationModel:model,productTools:{async replyToText(){return null;}}});
+  const turn = await runtime.processTurn(owner,{text,now});
+  assert.equal(turn.agent?.navigation,'automatic_plan');
+  assert.match(turn.reply.text,/本地候选计划流程|有效评估/);
+  assert.equal(calls.filter(call=>call.purpose==='reply').length,0);
+  assert.deepEqual(turn.snapshot.events,[]);
+  await runtime.closeSession(owner);
+});
