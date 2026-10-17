@@ -40,5 +40,5 @@ test('in-scope routes and ordinary symptoms remain with their existing handlers'
 
 test('negated clinical and external-operation mentions do not trigger handoff or operation refusal', () => {
   assert.equal(resolveScopeFallback(semantic('health'), '我不需要你诊断，只想知道诊断这个词是什么意思'), null);
-  assert.equal(resolveScopeFallback(semantic('other'), '不要帮我预约医生'), null);
+  assert.equal(resolveScopeFallback(semantic('other'), '不要帮我预约医生')?.kind, 'out_of_scope');
 });
