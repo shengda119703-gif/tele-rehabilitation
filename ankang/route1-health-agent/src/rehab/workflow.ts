@@ -2,6 +2,7 @@ import { catalogue } from './catalogue';
 import { localPlan, type PlanInput } from './assistant';
 import { searchCards, searchGuidance } from './assistant';
 import { readRehabReceipt, describeLocalRehabReceipt, type RehabToolPort, type RehabCall, rehabToolNames } from '../runtime/rehabTools';
+import { mapKnowledgeActionToApp, type ExecutableActionMapping } from './exerciseMapping';
 import type { ConversationModel } from '../runtime/conversation';
 import type { SemanticTurn } from '../runtime/semanticRouter';
 
@@ -64,6 +65,7 @@ export interface RehabPlanValidation {
   reasons: string[];
   plan: RehabCandidatePlan;
   algorithm_result?: ReturnType<typeof localPlan>;
+  app_mappings?: (ExecutableActionMapping | null)[];
 }
 
 const WORKFLOW_TOOLS = new Set<RehabWorkflowTool>([
@@ -363,6 +365,15 @@ export async function runRehabWorkflow(input: {
   if (candidate.candidate_actions.some(action => !retrievedIds.has(action.exercise_id))) {
     validation = {...validation,status:'rejected',reasons:[...validation.reasons,'candidate_action_not_retrieved']};
   }
+  const appMappings = candidate.candidate_actions.map(action => mapKnowledgeActionToApp(action.exercise_id));
+  validation = {...validation,app_mappings:appMappings};
+  if (appMappings.some(mapping => mapping === null)) {
+    validation = {
+      ...validation,
+      status:'rejected',
+      reasons:[...validation.reasons,'candidate_action_not_mapped_to_executable_app_movement'],
+    };
+  }
   if (algorithmResult) {
     validation = { ...validation, algorithm_result: algorithmResult };
     const algorithmIds = new Set((algorithmResult.items ?? []).map(item => item.id));
@@ -445,7 +456,12 @@ export async function runRehabReadOnlyAnswer(input: {
 /** Safe user-facing rendering of a validated draft; it is not persistence. */
 export function renderRehabDraft(result: RehabPlanValidation | null): string {
   if(!result) return '康复分析暂时没有形成可验证的候选方案。请补充具体目标、部位或当前训练情况。';
-  if(result.status==='rejected') return '这次康复分析没有形成符合系统结构的候选方案，请补充具体情况后再试。';
+  if(result.status==='rejected') {
+    if (result.reasons.includes('candidate_action_not_mapped_to_executable_app_movement')) {
+      return '动作库中存在当前康复 App 尚不能执行的动作，因此不能把这份候选直接生成到你的计划里。需要先补齐动作映射；本次没有修改任何计划。';
+    }
+    return '这次康复分析没有形成符合系统结构的候选方案，请补充具体情况后再试。';
+  }
   const p=result.plan;
   const lines=['以下仅为动作库候选，尚未成为个人训练处方。'];
   if(p.candidate_actions.length) lines.push('候选动作：'+p.candidate_actions.map(a=>a.exercise_id).join('、'));
