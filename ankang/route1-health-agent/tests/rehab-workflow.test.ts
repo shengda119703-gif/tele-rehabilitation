@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { catalogue } from '../src/rehab/catalogue';
+import { mapKnowledgeActionToApp } from '../src/rehab/exerciseMapping';
 import { parseRehabToolSelection, selectRehabTools, validateRehabPlan, rehabAnswerTask, runRehabReadOnlyAnswer, type RehabCandidatePlan } from '../src/rehab/workflow';
 
 test('rehab tool selection accepts only registered tools', () => {
@@ -126,4 +127,12 @@ test('tool planner integration fills an omitted query before host execution', as
   const selected = await selectRehabTools(model,semantic,'我有腰椎间盘突出，帮我制定一套在家的训练计划。');
   assert.equal(selected?.calls[0].name,'rehab.search_guidance');
   assert.match(selected?.calls[0].arguments.query ?? '',/腰椎|训练计划/);
+});
+
+test('only explicitly reviewed knowledge cards map to executable app movements', () => {
+  assert.equal(mapKnowledgeActionToApp('T-LOW-003')?.app_exercise_id,'knee_extension');
+  assert.equal(mapKnowledgeActionToApp('T-LOW-017')?.app_exercise_id,'sit_to_stand');
+  assert.equal(mapKnowledgeActionToApp('T-LOW-002'),null);
+  assert.equal(mapKnowledgeActionToApp('T-AXU-022'),null);
+  assert.equal(mapKnowledgeActionToApp('T-LOW-046'),null);
 });
