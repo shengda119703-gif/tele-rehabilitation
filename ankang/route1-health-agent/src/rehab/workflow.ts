@@ -190,14 +190,11 @@ export async function selectRehabTools(
       {name:'rehab.search_knowledge',arguments:{query:fallbackQuery},reason:'计划生成必须检索真实动作卡'},
       {name:'rehab.search_guidance',arguments:{query:fallbackQuery},reason:'计划生成必须检索适用原则与停止条件'},
     ];
-    const calls: RehabToolCall[] = [];
-    const seen = new Set<string>();
-    for (const call of [...required, ...parsed.calls]) {
-      const key = call.name + JSON.stringify(call.arguments);
-      if (seen.has(key)) continue;
-      seen.add(key);
-      calls.push(call);
+    const calls: RehabToolCall[] = [...parsed.calls];
+    for (const requiredCall of required) {
+      if (calls.some(call => call.name === requiredCall.name)) continue;
       if (calls.length >= MAX_TOOL_CALLS) break;
+      calls.push(requiredCall);
     }
     return {...parsed,calls};
   } catch {
