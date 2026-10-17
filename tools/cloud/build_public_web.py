@@ -41,7 +41,7 @@ def build():
     copy(ROOT / "public_web" / "browser-account.js", "web/browser-account.js")
     adapters = ["/local/engine.js", "/local/product.js", "/local/store.js", "/web/browser-account.js",
                 "/local/motion.js", "/local/lin-profile.js", "/local/practice.js", "/local/model-policy.js",
-                "/local/deepseek.js", "/local/cloud.js", "/local/account.js", "/local/local-api.js"]
+                "/local/deepseek.js", "/local/cloud.js", "/local/account.js", "/local/assessment-run.js", "/local/local-api.js"]
     scripts = "".join('<script src="' + name + '"></script>' for name in adapters)
     pages = {}
     for name, output in (("unified.html", "index.html"), ("index.html", "capture.html")):

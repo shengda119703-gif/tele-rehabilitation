@@ -69,6 +69,8 @@ test('assistant transport preserves original text, explicit preferences and boun
  await assert.rejects(api.request('assistantTurn',f.identity,{operation_id:account,text:'TEST incognito',private:true}));
  await api.request('assistantTurn',f.identity,{operation_id:account,text:'查看我已有的肩部结果',owner:'WRONG'});
  assert.deepEqual(JSON.parse(f.calls.at(-1).options.body),{operation_id:account,text:'查看我已有的肩部结果'});
+ await api.request('assistantTurn',f.identity,{operation_id:account,text:'安排肩部评估',assessment_contract:'ordered-video-1'});
+ assert.equal(JSON.parse(f.calls.at(-1).options.body).assessment_contract,'ordered-video-1');
  assert(![...f.memory.values()].join('').includes('查看我已有的肩部结果'));
 });
 

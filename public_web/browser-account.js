@@ -59,7 +59,7 @@ async function request(action,value,body={}){
   if(!Number.isSafeInteger(after)||after<0||after>2147483647||!Number.isSafeInteger(limit)||limit<1||limit>100)throw Error('对话查询范围无效');
   return api(patient+'/assistant/conversation?after='+after+'&limit='+limit);
  }
- if(action==='assistantTurn'){if(body.private===true)throw Error('本次不记录的对话仅在本机处理');return api(patient+'/assistant/turns','POST',{operation_id:body.operation_id,text:body.text});}
+ if(action==='assistantTurn'){if(body.private===true)throw Error('本次不记录的对话仅在本机处理');return api(patient+'/assistant/turns','POST',{operation_id:body.operation_id,text:body.text,...(body.assessment_contract?{assessment_contract:body.assessment_contract}:{})});}
  if(action==='assessmentPlans'||action==='assessmentPlanCancel'||action==='assessmentPlanResult'){
   if(root.navigator?.onLine===false)throw Error('当前离线，无法读取或取消云端评估计划');
   const uuid=/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;

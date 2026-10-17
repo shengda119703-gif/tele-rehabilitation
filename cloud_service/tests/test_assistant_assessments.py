@@ -11,9 +11,13 @@ from sqlalchemy import func, select, update
 from cloud_service import assistant, assistant_assessments as appointments, assistant_dialogue as dialogue
 from cloud_service.database import records
 from cloud_service.rehab_workflow import candidates
-from cloud_service.tests.test_assistant import setup, forbid_external_requests, body, post, configured, upload, provider_answer
+from cloud_service.tests.test_assistant import setup, forbid_external_requests, body as legacy_body, post, configured, upload, provider_answer
 from cloud_service.tests.test_workbench import people, path
 from cloud_service.tests.test_accounts import client, login
+
+
+def body(text="今天练什么", **options):
+    return legacy_body(text, assessment_contract="ordered-video-1", **options)
 
 
 def listing(c, ident):
@@ -32,10 +36,11 @@ def test_one_followup_schedules_online_assessment_and_no_training_or_measurement
     assert "线下" not in second["turn"]["answer"]
     plans = listing(alice, aid)
     assert len(plans) == 1 and plans[0]["status"] == "PLANNED"
-    assert [item["exercise_id"] for item in plans[0]["items"]] == ["sit_to_stand"]
+    assert [item["exercise_id"] for item in plans[0]["items"]] == ["sit_to_stand", "knee_extension"]
+    assert plans[0]["routing_version"] == appointments.VERSION
     assert plans[0]["items"][0]["record_id"] is None
     assert plans[0]["id"] == second["turn"]["actions"][0]["plan_id"]
-    assert post(alice, aid, {"operation_id":second["turn"]["operation_id"], "text":second["turn"]["text"]}) == second
+    assert post(alice, aid, {"operation_id":second["turn"]["operation_id"], "text":second["turn"]["text"], "assessment_contract":"ordered-video-1"}) == second
     assert len(listing(alice, aid)) == 1
     for outsider in (bob, doctor):
         assert outsider.get(path(aid, "/assistant/assessment-plans")).status_code == 404
@@ -103,10 +108,12 @@ def test_private_turn_and_unrelated_chat_never_schedule_or_inherit_old_region(se
     assert dialogue.protocol("三分", "CHAT", old)["mode"] != "SYMPTOM"
 
 
-def test_only_real_subsequent_matching_completed_assessments_finish_appointment(setup):
+def test_legacy_only_real_subsequent_matching_completed_assessments_finish_appointment(setup):
     aid, _, alice, _, _ = people(setup)
-    post(alice, aid, body("安排左膝评估"))
+    post(alice, aid, legacy_body("安排左膝评估"))
     plan = listing(alice, aid)[0]
+    assert plan["routing_version"] == "online-assessment-routing-1"
+    assert len(plan["items"]) == 1
     assert plan["items"][0]["exercise_id"] == "knee_extension"
     def result(exercise="knee_extension", side="left", at=None, count=1):
         return {"exercise_id":exercise,"side":side,"end_utc":at or datetime.now(timezone.utc).isoformat(), "summary":{"completed":count}}
@@ -118,6 +125,45 @@ def test_only_real_subsequent_matching_completed_assessments_finish_appointment(
     upload(alice, aid, key="TEST-real", result=result())
     completed = listing(alice, aid)[0]
     assert completed["status"] == "COMPLETED" and completed["items"][0]["record_id"]
+
+
+def test_current_ordered_assessment_requires_real_account_result_and_idempotent_link(setup):
+    aid, _, alice, bob, doctor = people(setup)
+    post(alice, aid, body("安排左膝评估"))
+    plan = listing(alice, aid)[0]
+    assert [i["exercise_id"] for i in plan["items"]] == ["knee_extension", "knee_flexion"]
+    endpoint = path(aid, "/assistant/assessment-plans/"+plan["id"]+"/results")
+    def save(exercise, **changes):
+        facts = {"exercise_id":exercise, "side":"left", "analysis_state":"done",
+                 "measurement_version":"android-local-projection-1",
+                 "end_utc":datetime.now(timezone.utc).isoformat(),
+                 "summary":{"completed":2,"valid_ratio":.9,"motion_range":{"max_deg":80,"min_deg":10,"range_deg":70}}, **changes}
+        key = "TEST-ordered-"+str(uuid4())
+        upload(alice, aid, key=key, result=facts)
+        with setup[1].engine.connect() as c:
+            return next(r.id for r in c.execute(select(records.c.id,records.c.payload)) if r.payload.get("record_key")==key)
+    invalid = save("knee_extension", analysis_state="analyzing")
+    assert alice.post(endpoint,json={"item_index":0,"record_id":invalid}).status_code == 422
+    second = save("knee_flexion")
+    assert alice.post(endpoint,json={"item_index":1,"record_id":second}).status_code == 409
+    first = save("knee_extension")
+    assert listing(alice,aid)[0]["status"] == "PLANNED"  # Upload alone never claims plan completion.
+    value = {"item_index":0,"record_id":first}
+    for outsider in (bob,doctor):
+        assert outsider.post(endpoint,json=value).status_code == 404
+    assert alice.post(endpoint,json=value,headers={"X-CSRF-Token":"wrong"}).status_code == 403
+    for _ in range(2):
+        receipt=alice.post(endpoint,json=value)
+        assert receipt.is_success, receipt.text
+        assert receipt.json()["plan"]["next_index"] == 1
+    assert alice.post(endpoint,json={"item_index":0,"record_id":second}).status_code == 409
+    done=alice.post(endpoint,json={"item_index":1,"record_id":second})
+    assert done.is_success, done.text
+    assert done.json()["plan"]["status"] == "COMPLETED"
+    assert done.json()["plan"]["items"][0]["result"]["range_deg"] == 70
+    assert listing(alice,aid)[0]["status"] == "COMPLETED"
+    with setup[1].engine.connect() as c:
+        assert c.scalar(select(func.count()).select_from(candidates)) == 0
 
 
 def test_concurrent_different_operations_reuse_one_pending_appointment(setup):

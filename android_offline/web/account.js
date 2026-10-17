@@ -34,7 +34,7 @@ function request(action,value,body={}){
 function reply(id,status,text){const call=pending.get(id);if(!call)return;pending.delete(id);clearTimeout(call.timer);try{const raw=identity(),loggedOut=call.action==='logout'&&status>=200&&status<300&&raw===null,current=loggedOut?null:validateIdentity(raw);if(!loggedOut&&(current.patient_id!==call.patient_id||current.account_id!==call.account_id))throw Error('账号已变化，旧回复未显示，请重新打开联系康复医师');const result=JSON.parse(text);if(status<200||status>=300){const error=Error(result.message||'云操作未完成');error.status=status;error.code=result.code;throw error;}call.resolve(result);}catch(e){call.reject(e);}}
 function canonical(v){if(v===null||typeof v!=='object')return JSON.stringify(v);if(Array.isArray(v))return '['+v.map(canonical).join(',')+']';return '{'+Object.keys(v).sort().filter(k=>v[k]!==undefined).map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}';}
 async function hash(text){const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));return [...new Uint8Array(bytes)].map(x=>x.toString(16).padStart(2,'0')).join('');}
-function jobPayload(job,label=null){const report=job.result?.local_report;if(job.state!=='done'||job.measurement_version!=='android-local-projection-1'||!report||job.synthetic||job.fixture||job.result.synthetic||job.result.fixture||report.synthetic||report.fixture)throw Error('仅上传已保存本人评估和训练结果');return {title:label||job.result.spec?.label||job.exercise,kind:job.mode,result:{id:job.id,exercise_id:job.exercise,side:job.side,measurement_version:job.measurement_version,source_kind:'REPLAY_FILE',usage_context:'SELF_USE',end_utc:job.created_at,summary:job.result.summary,conditions:job.result.conditions,feedback:job.feedback||null,plan_id:job.plan_id||null,entry_key:job.entry_key||null,limitations:job.result.limitations,measurement_contract:report.measurement_contract||job.result.spec?.measurement_contract||null}};}
+function jobPayload(job,label=null){const report=job.result?.local_report;if(job.state!=='done'||job.measurement_version!=='android-local-projection-1'||!report||job.synthetic||job.fixture||job.result.synthetic||job.result.fixture||report.synthetic||report.fixture)throw Error('仅上传已保存本人评估和训练结果');return {title:label||job.result.spec?.label||job.exercise,kind:job.mode,result:{id:job.id,exercise_id:job.exercise,side:job.side,measurement_version:job.measurement_version,analysis_state:job.state,source_kind:'REPLAY_FILE',usage_context:'SELF_USE',end_utc:job.finished_at||job.created_at,summary:job.result.summary,conditions:job.result.conditions,feedback:job.feedback||null,plan_id:job.plan_id||null,entry_key:job.entry_key||null,limitations:job.result.limitations,measurement_contract:report.measurement_contract||job.result.spec?.measurement_contract||null}};}
 async function queue(store){
  const value=scope(store,true),v=structuredClone(store.value),entries=[];
  const p=v.kv['profile:'+v.owner];if(!p||p.ownerId!==v.owner||p.dataMode!=='personal')throw Error('请选择本人真实康复档案');
@@ -202,13 +202,13 @@ async function assistantTurn(store,text=null,retryOperation=null){
   if(!intent){
    if(text===null)throw Error('暂无待重试的管家提问');
    if(rows.length>=50)throw Error('待回复问题较多，请先同步对话');
-   intent={patient_id:value.patient_id,account_id:value.account_id,operation_id:crypto.randomUUID(),text:text.trim(),created_at:new Date().toISOString()};rows.push(intent);
+   intent={patient_id:value.patient_id,account_id:value.account_id,operation_id:crypto.randomUUID(),text:text.trim(),created_at:new Date().toISOString(),...(root.PhoneAssessmentRun?{assessment_contract:'ordered-video-1'}:{})};rows.push(intent);
   }
   saveAssistantPending(v,rows);
  }));
  const operation=intent.operation_id,clear=()=>store.serial(()=>store.change(v=>{check();saveAssistantPending(v,assistantPending(store).filter(row=>row.operation_id!==operation));}));
  let result;
- try{result=await assistantRequest(store,'assistantTurn',{operation_id:operation,text:intent.text});}
+ try{result=await assistantRequest(store,'assistantTurn',{operation_id:operation,text:intent.text,...(intent.assessment_contract?{assessment_contract:intent.assessment_contract}:{})});}
  catch(error){if(['AI_NOT_CONFIGURED','AI_BUSY','AI_QUOTA_EXHAUSTED','AI_REJECTED'].includes(error.code))await clear();throw error;}
  if(!completedAssistant(result.turn,intent))throw Error('回复尚未收到，问题已保留，可以继续提问');
  await clear();return result;

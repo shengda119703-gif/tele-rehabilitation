@@ -82,6 +82,7 @@ class TurnInput(BaseModel):
     text: str = Field(min_length=1, max_length=1900)
     private: bool = False
     purpose: Purpose | None = None
+    assessment_contract: Literal["ordered-video-1"] | None = None
 
 
 def compact(value):
@@ -517,7 +518,10 @@ def install_assistant(app, db, caller, patient_scope, base):
     def submit(ident: str, value: TurnInput, request: Request):
         if not value.text.strip():
             raise DomainError(422,"VALIDATION_ERROR","请输入问题")
-        fingerprint = digest(compact(value.model_dump(mode="json")))
+        fingerprint_value = value.model_dump(mode="json")
+        if value.assessment_contract is None:
+            fingerprint_value.pop("assessment_contract")  # Preserve old pending-operation fingerprints.
+        fingerprint = digest(compact(fingerprint_value))
         with db.transaction() as connection:
             actor = authorize(connection,request,ident,True)
             pref = preference_document(connection,ident)
@@ -558,7 +562,14 @@ def install_assistant(app, db, caller, patient_scope, base):
                 if (context.get("workflow") or {}).get("restrictions") and spec["assessment_ready"]:
                     spec.update(assessment_ready=False, intake_stage="ONLINE_REVIEW", missing_questions=[], max_questions=0,
                                 workflow_next_step="已有活动限制，先通过App内康复医师核对，再安排合适的线上评估。")
-                spec["assessment_routing_version"] = assistant_assessments.VERSION
+                # Older APKs/desktop do not have the explicit result-link outbox.
+                # Keep their frozen v1 appointments functional during rolling updates.
+                if value.assessment_contract is None:
+                    spec["version"] = "rehab-dialogue-3"
+                    spec["assessment_routing_version"] = "online-assessment-routing-1"
+                else:
+                    spec["assessment_routing_version"] = assistant_assessments.VERSION
+                versions["dialogue_protocol"] = spec["version"]
                 spec["assessment_items"] = assistant_assessments.appointment_items(spec, value.text) if spec["assessment_ready"] else []
                 prompt = frozen_prompt(value.text, purpose, context, [] if value.private else history, guidelines, spec)
                 facts = saved_facts(context, enabled, spec["mode"])

@@ -39,7 +39,8 @@ async function begin(store,plan,index,side,consented=false){
   runs.push(value);return value.id;
  });
 }
-async function prepareUpload(store,id,index,exercise,side){
+async function prepareUpload(store,id,index,exercise,side,operation=crypto.randomUUID()){
+ if(!UUID.test(operation))throw Error('上传编号无效');
  const expected=scope(store),saved=run(store,id,expected),plan=await serverPlan(store,expected,saved.plan_id);pending(plan,index);
  const item=plan.items[index];if(!item||item.exercise_id!==exercise||!['left','right'].includes(side)||['left','right'].includes(item.side)&&item.side!==side)throw Error('本次录像动作或侧别与计划不符');
  return change(store,expected,v=>{
@@ -48,7 +49,7 @@ async function prepareUpload(store,id,index,exercise,side){
   const previous=v.jobs.find(j=>j.id===step.job_id);
   if(previous&&['queued','analyzing','uploading'].includes(previous.state))throw Error('本项视频仍在分析，请等待结果');
   if(previous?.state==='done'){try{validJob(previous,r,index);throw Error('本项结果已保存，请先核对上传');}catch(error){if(error.message==='本项结果已保存，请先核对上传')throw error;}}
-  step.side=side;step.upload_operation=crypto.randomUUID();step.job_id=null;step.last_error='';
+  step.side=side;step.upload_operation=operation;step.job_id=null;step.last_error='';
   return {run_id:id,item_index:index,upload_operation:step.upload_operation};
  });
 }

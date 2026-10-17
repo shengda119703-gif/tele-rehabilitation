@@ -1,9 +1,16 @@
 {
   "schema": "ankang-android-downloads-1",
-  "default": "0.5.9",
-  "published_on": "2026-10-15",
+  "default": "0.5.10",
+  "published_on": "2026-10-18",
   "support_wechat": "AK2452409",
   "releases": [
+    {
+      "version": "0.5.10",
+      "file": "ankang-0.5.10.apk",
+      "bytes": 54948902,
+      "sha256": "7F261D0A9925E7921BA46FE09B37DA3C3052DF6E58481E01FDA64A7934C6D71B",
+      "description": "融合新版动作库与管家接口；逐项录像评估、结果入档和断网恢复，保留原账号与界面。"
+    },
     {
       "version": "0.5.9",
       "file": "ankang-0.5.9.apk",

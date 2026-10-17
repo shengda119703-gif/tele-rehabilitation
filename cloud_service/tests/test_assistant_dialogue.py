@@ -16,9 +16,10 @@ def output(**changes):
                        "advice":[],"next_step":"先补充必要信息，再安排线上评估。",**changes}, ensure_ascii=False)
 
 
-def test_formatted_symptom_answer_has_real_questions_without_generic_preface(setup):
+@pytest.mark.parametrize("contract", [None,"ordered-video-1"])
+def test_formatted_symptom_answer_has_real_questions_without_generic_preface(setup, contract):
     _, calls, (aid, _, alice, _, _) = configured(setup, lambda *_: provider_answer(output()))
-    result = post(alice, aid, body("我健身后腰疼"))
+    result = post(alice, aid, body("我健身后腰疼", **({"assessment_contract":contract} if contract else {})))
     answer = result["turn"]["answer"]
     assert result["source"] == "deepseek" and len(calls) == 1
     assert "先确认" in answer and dialogue.SCALE_QUESTION in answer and "需要留意" not in answer
@@ -26,7 +27,7 @@ def test_formatted_symptom_answer_has_real_questions_without_generic_preface(set
     assert result["turn"]["actions"] == []
     payload = json.loads(calls[0].split("\n", 1)[1])
     assert payload["dialogue"]["mode"] == "SYMPTOM" and payload["authorized_context"] == {}
-    assert result["turn"]["context_versions"]["dialogue_protocol"] == dialogue.VERSION
+    assert result["turn"]["context_versions"]["dialogue_protocol"] == (dialogue.VERSION if contract else "rehab-dialogue-3")
     assert result["receipt"]["usage"]["total_tokens"] == 150
 
 

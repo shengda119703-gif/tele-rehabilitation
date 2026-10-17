@@ -10,6 +10,8 @@ function applyAssistantAssessment(){
   if(!exercise)return false;
   state.tab='assess';state.selected=exercise.id;state.joint=exercise.joint;state.detail=true;state.training=null;state.preparing=false;
   if(['left','right'].includes(query.get('side')))state.side=query.get('side');
+  const run=query.get('assessmentRun'),index=Number(query.get('assessmentIndex'));
+  if(/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(run||'')&&query.has('assessmentIndex')&&Number.isSafeInteger(index)&&index>=0&&index<4)state.assessmentBinding={run,index,exercise:exercise.id,side:state.side};
   return true;
 }
 const automaticUploadReconciliation=new URLSearchParams(location.search).get('experience')!=='legacy';
@@ -187,7 +189,9 @@ function upload(){
   const previous=state.uploadRecovery;if(previous?.url&&previous.url!==state.url)URL.revokeObjectURL(previous.url);
   const attempt={operationId,ownerGeneration:state.uploadOwnerGeneration||0,autoReconcile:automaticUploadReconciliation,file:state.file,url:state.url,exercise:state.selected,side:state.side,tab:state.tab,training:state.training,calibration,mode,area:$('#file-area'),xhr,status:'UPLOADING',progress:0,message:'正在上传，可先查看其他页面。'};
   state.uploadRecovery=attempt;state.upload=xhr;transferControls(attempt);
-  const binding=state.tab==='posture'?'&mode=posture':state.tab==='fitness'?'&mode=fitness':state.training?`&mode=training&plan_id=${state.training.id}&entry_key=${encodeURIComponent(state.training.entry.key)}`:'';
+  let binding=state.tab==='posture'?'&mode=posture':state.tab==='fitness'?'&mode=fitness':state.training?`&mode=training&plan_id=${state.training.id}&entry_key=${encodeURIComponent(state.training.entry.key)}`:'';
+  const assessment=state.assessmentBinding;
+  if(mode==='assessment'&&assessment&&assessment.exercise===state.selected&&assessment.side===state.side)binding+=`&assessment_run=${assessment.run}&assessment_index=${assessment.index}`;
   xhr.open('POST',`/api/jobs?exercise=${encodeURIComponent(state.selected)}&side=${state.side}&consent=yes${binding}`);
   xhr.setRequestHeader('Content-Type',state.file.type||'application/octet-stream');xhr.setRequestHeader('X-Rehab-Client','mobile-v1');xhr.timeout=180000;
   xhr.setRequestHeader('X-Rehab-Upload-Operation',attempt.operationId);
@@ -250,6 +254,10 @@ function renderJob(j){
       if(window.RehabV51&&state.shared){box.id='rv-feedback';box.hidden=true;const entry=document.createElement('button');entry.className='primary';entry.id='rv-open-feedback';entry.textContent='记录疼痛与疲劳';entry.onclick=()=>feedbackViewV51(box,entry);area.insertBefore(entry,box);}
       $('#feedback-form').onsubmit=async e=>{e.preventDefault();const submit=e.currentTarget.querySelector('button.primary');if(submit.disabled)return;if($('#pain').value===''||$('#fatigue').value===''){toast('请选择真实疼痛与疲劳程度');return;}submit.disabled=true;try{const pain=Number($('#pain').value),fatigue=Number($('#fatigue').value);await api('/jobs/'+j.id+'/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pain,fatigue,reason:pain>0?'discomfort':fatigue>=5?'fatigue':'completed',revision:f.revision||0})});navigate('plan');}catch(e){toast(e.message);}finally{submit.disabled=false;}};
     }
+  }
+  if(j.mode==='assessment'&&j.state==='done'&&window.PhoneLocal&&window.PhoneAssessmentRun){
+    const step=PhoneAssessmentRun.forJob(PhoneLocal.store,j.id);
+    if(step){const box=document.createElement('section');box.className='card';box.innerHTML='<h3>评估计划</h3><p role="status">'+esc(step.linked?'本项已保存到本人档案':step.last_error||'正在核对本项保存结果')+'</p><a class="primary" href="'+esc(AssessmentPlans.planURL(step.plan_id))+'">返回评估计划，继续下一项</a>';area.appendChild(box);}
   }
   if(j.video_available&&!['uploading','queued','analyzing'].includes(j.state)){
     const box=document.createElement('section');box.className='card';box.innerHTML=`<h3>回看本次录像</h3><video class="report-video" controls playsinline preload="metadata" ${typeof PhoneLocal==='undefined'?'src':'data-local-video-src'}="/api/jobs/${j.id}/video"></video><button class="danger" id="delete-video">${j.state==='done'?'删除原始录像，保留结果':'删除本次原始录像'}</button>`;area.appendChild(box);

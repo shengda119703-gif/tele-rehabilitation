@@ -33,7 +33,7 @@ if not private_generated.resolve().is_relative_to(OUTPUT.resolve()) or not OUTPU
     raise SystemExit('Generated asset cleanup escaped the Android project')
 shutil.rmtree(private_generated, ignore_errors=True)
 (OUTPUT / 'lin-profile.json').unlink(missing_ok=True)
-adapters = ''.join('<script src="' + path + '"></script>' for path in ['/local/engine.js','/local/product.js','/local/model-policy.js','/local/deepseek.js','/local/store.js','/local/motion.js','/local/lin-profile.js','/local/practice.js','/local/cloud.js','/local/account.js','/local/local-api.js'])
+adapters = ''.join('<script src="' + path + '"></script>' for path in ['/local/engine.js','/local/product.js','/local/model-policy.js','/local/deepseek.js','/local/store.js','/local/motion.js','/local/lin-profile.js','/local/practice.js','/local/cloud.js','/local/account.js','/local/assessment-run.js','/local/local-api.js'])
 for source, target in [('unified.html', 'index.html'), ('index.html', 'capture.html')]:
     html = (static / source).read_text(encoding='utf-8').replace('<head>', '<head>' + adapters)
     (OUTPUT / target).write_text(html, encoding='utf-8')

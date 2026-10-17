@@ -97,6 +97,12 @@ async function request(path,opts={}){
   if(PS.cloudKey(store.key)&&!PhoneCloud.familyConfigured())failure('请先登录当前本人账号，再管理家人关联',401);
   if(PhoneCloud.familyConfigured?.()??PhoneCloud.configured())await cloudRefresh(false,true);
  }
+ let assessmentBinding=null;
+ if(route==='/jobs'&&method==='POST'&&q.has('assessment_run')){
+  const index=Number(q.get('assessment_index'));
+  if(!q.has('assessment_index')||!Number.isSafeInteger(index)||index<0||index>=4||q.get('mode')&&q.get('mode')!=='assessment')failure('评估计划项目无效');
+  assessmentBinding=await root.PhoneAssessmentRun.prepareUpload(store,q.get('assessment_run'),index,q.get('exercise'),q.get('side'),new Headers(opts.headers||{}).get('X-Rehab-Upload-Operation')||'');
+ }
  return store.serial(async()=>{
   const payload=opts.body instanceof Blob?null:await jsonBody(opts);
   if(route==='/pair')return{ok:true,local:true};
@@ -170,9 +176,9 @@ async function request(path,opts={}){
    const id=crypto.randomUUID(),job={id,exercise:s.id,side,mode,state:'analyzing',created_at:now().toISOString(),message:'正在加载手机模型',video_available:true,plan_id:p?.id||null,entry_key:entry?.key||null};
    if(operation)job.upload_operation=operation;
    await PS.files.put('video:'+id,{kind:'video',ownerId:owner,blob:opts.body});
-   try{store.change(v=>v.jobs.push(job));}catch(e){await PS.files.remove('video:'+id);throw e;}
+   try{store.change(v=>{if(assessmentBinding)root.PhoneAssessmentRun.bindJobValue(store,v,job,assessmentBinding);v.jobs.push(job);});}catch(e){await PS.files.remove('video:'+id);throw e;}
    let calibration=null;const headers=new Headers(opts.headers||{}),raw=headers.get('X-Fitness-Calibration');if(raw)calibration=JSON.parse(raw);
-   setTimeout(()=>PM.analyze(store,job,opts.body,calibration).catch(e=>{store.change(v=>{const j=v.jobs.find(x=>x.id===id);j.state='failed';j.message=e.message;});}),0);return{id};
+   setTimeout(()=>PM.analyze(store,job,opts.body,calibration).then(()=>root.PhoneAssessmentRun?.onSaved(store,id)).catch(e=>{store.change(v=>{const j=v.jobs.find(x=>x.id===id);if(j.state!=='done'){j.state='failed';j.message=e.message;}});}),0);return{id};
   }
   if(route==='/jobs')return store.value.jobs.map(j=>publicJob(j,q.get('brief')==='true')).reverse();
   if(route.startsWith('/uploads/')&&method==='GET'){
@@ -279,4 +285,5 @@ document.addEventListener('click',async e=>{const a=e.target.closest?.('a[href^=
 root.offlinePause=()=>{speechPending=false;root.RehabGuidance?.app.cancelAll();if(typeof pausePractice==='function')pausePractice();PM.pause();if(typeof stopLive==='function')stopLive();};
 root.offlineBack=()=>{const d=document.querySelector('dialog[open]');if(d){d.close();return true;}if(PM.active){if(confirm('结束本次分析？原录像保留。'))PM.pause();return true;}if(location.pathname==='/capture'){location.href='/';return true;}if(location.hash&&location.hash!=='#home'){location.hash='#home';return true;}return false;};
 root.PhoneLocal={store,domain,ready,request,snapshot,proposal,body,planProgress,backup,restore,exportBackup,cloudBackup,cloudRestore,cloudRefresh,speechResult,selectProfile:async key=>{if(![PS.KEY,PS.LIN_KEY].includes(key))throw Error('档案位置无效');if(PM.active)throw Error('请先结束当前分析');await store.tail;root.OfflineAndroid?.motionBind?.('',false);return PhoneLin.select(store,key);},get cloudState(){return cloudState;}};
+void ready.then(()=>root.PhoneAssessmentRun?.resume(store)).catch(()=>{});
 })(globalThis);

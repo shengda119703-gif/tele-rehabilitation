@@ -51,6 +51,7 @@ function failed(ctx,error){
 async function currentItem(ctx,planId,index){
  const rows=valid(await request(ctx,'list')),plan=rows.find(p=>p.id===planId),item=plan?.items[index];
  if(!plan||plan.status!=='PLANNED'||!item||item.record_id!==null)throw Error('这项评估安排已变化，请重新读取');
+ if(plan.routing_version==='online-assessment-routing-2'&&plan.items.findIndex(i=>i.record_id===null)!==index)throw Error('请先完成上一项评估并保存结果');
  const original=ctx.rows.find(p=>p.id===planId)?.items[index];
  if(!original||original.exercise_id!==item.exercise_id||original.side!==item.side)throw Error('评估项目已变化，请重新读取');
  if(!state.catalog.some(ex=>ex.id===item.exercise_id&&ex.available!==false))throw Error('此评估动作在当前设备不可用，请查看动作库或联系康复医师。');
@@ -67,6 +68,12 @@ async function openItem(ctx,planId,index,side){
   const selectedSide=['left','right'].includes(item.side)?item.side:side;
   if(!['left','right'].includes(selectedSide))throw Error('请选择本次测量侧');
   const query=new URLSearchParams({tab:'assess',entry:'assistant',exercise:item.exercise_id,side:selectedSide});
+  if(ctx.scope.store&&root.PhoneAssessmentRun){
+   const plan=ctx.rows.find(p=>p.id===planId);
+   if(!root.PhoneAssessmentRun.localStep(ctx.scope.store,planId,index)&&!root.confirm('将本次评估视频的分析结果保存到本人云端档案，并更新这份评估计划？原始视频保留在本机。'))return;
+   const run=await root.PhoneAssessmentRun.begin(ctx.scope.store,plan,index,selectedSide,true);assertView(ctx);
+   query.set('assessmentRun',run);query.set('assessmentIndex',String(index));
+  }
   root.location.assign('/capture?'+query.toString());
  }catch(error){failed(ctx,error);}
 }
@@ -89,7 +96,7 @@ async function load(ctx){
 async function mount(){
  const area=document.querySelector('#assessment-plans');if(!area||state.tab!=='plan')return;
  const ctx={area,generation:++generation,ownerGeneration:state.uploadOwnerGeneration||0,scope:null,rows:[]};
- try{await load(ctx);}catch(error){failed(ctx,error);}
+ try{if(root.PhoneLocal&&root.PhoneAssessmentRun){await root.PhoneLocal.ready;await root.PhoneAssessmentRun.resume(root.PhoneLocal.store);}await load(ctx);}catch(error){failed(ctx,error);}
 }
 root.AssessmentPlans={mount,planURL,actionHTML};
 })(window);
