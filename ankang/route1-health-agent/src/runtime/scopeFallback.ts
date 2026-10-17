@@ -20,7 +20,12 @@ export function resolveScopeFallback(semantic: SemanticTurn, userText: string): 
     .map(intent => [intent.type ?? '', intent.goal, intent.evidence].join(' '))
     .join(' ');
   const context = [semantic.goal, intentEvidence, userText].join(' ').slice(0, 10000);
-  const clinicalBoundary = /(?:诊断|确诊|开药|处方|调整用药|停药|换药|手术方案|治疗方案|检查结果.{0,12}(?:怎么办|怎么处理|严重吗)|医生.{0,12}(?:判断|诊断|开药)|咨询医生|看医生|转诊)/.test(context);
+  const clauses = userText.split(/[，,。；;！？!?]/).map(value => value.trim()).filter(Boolean);
+  const clinicalBoundary = clauses.some(clause => {
+    const negated = /(?:不想|不需要|无需|不用|不要|别|不希望|不打算).{0,10}(?:诊断|确诊|开药|处方|调整用药|停药|换药|治疗方案|咨询医生|看医生|转诊)/.test(clause);
+    if (negated) return false;
+    return /(?:咨询医生|看医生|转诊|就医|检查结果.{0,12}(?:怎么办|怎么处理|严重吗)|(?:帮我|请|能不能|可不可以|替我|给我|想让你|需要你|你能|你帮我).{0,12}(?:诊断|确诊|开药|开处方|调整用药|停药|换药|决定治疗方案|制定治疗方案)|(?:要不要|是否需要|该不该|需不需要).{0,10}(?:咨询医生|看医生|就医|诊断|调整用药|停药|换药))/.test(clause);
+  });
 
   // Explicit requests for diagnosis/treatment decisions are escalated even when
   // the first router labels them as health or rehab rather than "other".
