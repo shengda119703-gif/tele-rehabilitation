@@ -171,14 +171,14 @@ export function parseSemanticTurn(raw: string, source?: SemanticParseSource): Se
       const original = sourceText(item, source, context);
       if (!validEvidence(item, original, true)) return null;
       if (item.from_event === item.to_event) {
-        // A model sometimes represents a correction as an event related to itself.
-        // Drop only that invalid edge and retain the current-turn claims, explicitly
-        // marking the missing relation rather than rejecting the entire user turn.
-        if (item.type === 'correction_of' || item.type === 'refers_to') {
-          relationWarnings.push('无法可靠解析更正前后的事件关系');
-          continue;
-        }
-        return null;
+        // A self-edge carries no usable relationship, regardless of its label.
+        // Drop only the invalid edge and retain source-validated current-turn claims.
+        relationWarnings.push(
+          item.type === 'correction_of' || item.type === 'refers_to'
+            ? '无法可靠解析更正前后的事件关系'
+            : '已忽略无效的自引用事件关系'
+        );
+        continue;
       }
       relations.push(item as unknown as SemanticRelation);
     }
