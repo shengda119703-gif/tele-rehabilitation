@@ -127,6 +127,7 @@ test('tool planner integration fills an omitted query before host execution', as
   const selected = await selectRehabTools(model,semantic,'我有腰椎间盘突出，帮我制定一套在家的训练计划。');
   assert.equal(selected?.calls[0].name,'rehab.search_guidance');
   assert.match(selected?.calls[0].arguments.query ?? '',/腰椎|训练计划/);
+  assert.ok(selected?.calls.some(call=>call.name==='rehab.search_knowledge'));
 });
 
 test('only explicitly reviewed knowledge cards map to executable app movements', () => {
