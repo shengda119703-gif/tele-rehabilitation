@@ -1,7 +1,7 @@
 import type {ChatMessage} from '../types';
 
 export interface ConversationModel {
-  reply(input:{messages:{role:'user'|'assistant';content:string}[]}):Promise<string>;
+  reply(input:{messages:{role:'user'|'assistant';content:string}[];purpose?:'understanding'|'reply'}):Promise<string>;
 }
 
 /** Operations outside the registered host grammar must never become invented receipts. */

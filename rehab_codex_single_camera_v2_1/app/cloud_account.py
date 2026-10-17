@@ -384,10 +384,15 @@ class CloudAccount:
     def candidate(self, kind):
         return self.patient_call('/rehab-candidates', 'POST', {'operation_id': str(uuid4()), 'kind': kind})
 
-    def ai_question(self, text, operation_id):
-        return self.patient_call('/ai/requests', 'POST', {'text': text, 'operation_id': str(UUID(operation_id))})
+    def ai_question(self, text, operation_id, purpose='reply'):
+        if purpose not in {'reply', 'understanding'}:
+            raise CloudError('问答任务无效')
+        return self.patient_call('/ai/requests', 'POST', {'text': text, 'operation_id': str(UUID(operation_id)),
+            **({'purpose': purpose} if purpose != 'reply' else {})})
 
-    def ask_ai(self, text=None):
+    def ask_ai(self, text=None, purpose='reply'):
+        if purpose not in {'reply', 'understanding'}:
+            raise CloudError('问答任务无效')
         with self.lock:
             patient = self.me()['patient_id']
             with self.db() as db:
@@ -398,14 +403,21 @@ class CloudAccount:
                     operation = str(uuid4())
                     text = text.strip()
                     db.execute('INSERT INTO ai_pending VALUES (?,?,?)', (patient, operation, text))
+                    db.execute('INSERT OR REPLACE INTO meta VALUES (?,?)', ('ai-purpose:' + operation, purpose))
                 else:
+                    stored_purpose = db.execute('SELECT value FROM meta WHERE key=?', ('ai-purpose:' + pending['operation_id'],)).fetchone()
+                    original_purpose = stored_purpose[0] if stored_purpose else 'reply'
+                    if text is not None and purpose != original_purpose:
+                        raise CloudError('原提问回执仍待核对，不能改变问答任务')
+                    purpose = original_purpose
                     if text is not None and text.strip() != pending['text']:
                         raise CloudError('原提问回执仍待核对，请先点击“重试原提问”，避免重复付费调用')
                     operation, text = pending['operation_id'], pending['text']
-            result = self.ai_question(text, operation)
+            result = self.ai_question(text, operation, purpose) if purpose != 'reply' else self.ai_question(text, operation)
             if result.get('state') in {'SUCCEEDED', 'UNMETERED', 'UNKNOWN'}:
                 with self.db() as db:
                     db.execute('DELETE FROM ai_pending WHERE patient_id=? AND operation_id=?', (patient, operation))
+                    db.execute('DELETE FROM meta WHERE key=?', ('ai-purpose:' + operation,))
             return result
 
     def share_report(self, filename, data, mime, operation_id):

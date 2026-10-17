@@ -104,7 +104,13 @@ public final class AccountTransport {
         if(action.equals("workflow"))return authorized("/patients/"+patient+"/rehab-workflow","GET",null);
         if(action.equals("workflowProfile")){JSONObject document=new JSONObject(data.toString());document.remove("patient_id");return authorized("/patients/"+patient+"/rehab-workflow/profile","PUT",document);}
         if(action.equals("candidate"))return authorized("/patients/"+patient+"/rehab-candidates","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("kind",data.getString("kind")));
-        if(action.equals("aiAsk"))return authorized("/patients/"+patient+"/ai/requests","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("text",data.getString("text")));
+        if(action.equals("aiAsk")){
+            String purpose=data.optString("purpose","reply");
+            if(!purpose.equals("reply")&&!purpose.equals("understanding"))throw new Exception("问答任务无效");
+            JSONObject question=new JSONObject().put("operation_id",data.getString("operation_id")).put("text",data.getString("text"));
+            if(purpose.equals("understanding"))question.put("purpose",purpose);
+            return authorized("/patients/"+patient+"/ai/requests","POST",question);
+        }
         if(action.equals("reports"))return authorized("/patients/"+patient+"/reports","GET",null);
         if(action.equals("shareReport"))return authorized("/patients/"+patient+"/reports","POST",new JSONObject().put("operation_id",data.getString("operation_id")).put("filename",data.getString("filename")).put("mime",data.getString("mime")).put("data",data.getString("data")).put("shared",data.getBoolean("shared")));
         if(action.equals("records")){

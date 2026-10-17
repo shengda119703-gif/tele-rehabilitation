@@ -270,3 +270,15 @@ def test_medication_history_filter_and_restored_silver_entrance(desktop, monkeyp
     assert calls==[w.owner] and w.active_page=='rehab'
     w.interface_buttons['settingsDevices'].click()
     assert w.active_page=='health' and w.health_tabs.tabText(w.health_tabs.currentIndex())=='设备'
+
+
+def test_structured_assistant_navigation_opens_registered_automatic_plan_flow(desktop, monkeypatch):
+    w, app = desktop
+    calls = []
+    monkeypatch.setattr(w, '_automatic_plan', lambda: calls.append('automatic_plan'))
+    monkeypatch.setattr(w, 'navigate', lambda destination, refresh=True: calls.append((destination, refresh)))
+    w._dispatch_agent_navigation('automatic_plan')
+    assert calls == ['automatic_plan']
+    calls.clear()
+    w._dispatch_agent_navigation('health')
+    assert calls == [('health', False)]

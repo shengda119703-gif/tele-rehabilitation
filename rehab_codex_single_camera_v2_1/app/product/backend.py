@@ -151,6 +151,10 @@ class ProductBackend:
                     if self.bridge is None:
                         self.bridge = self.factory() if self.factory else AgentBridge(data_dir=self.data_dir/'product',voice_host=self.voice,timeout=150)
                     tools = RehabReadTools(self.data_dir/'home_rehab.sqlite3', scope) if scope else None
+                    operation_tools = None
+                    if scope:
+                        from ..rehab_operation_tools import RehabOperationTools
+                        operation_tools = RehabOperationTools(self.data_dir/'home_rehab.sqlite3', scope, self.daily, owner)
                     cloud_client = None
                     cloud_directory = self.data_dir / 'cloud-account'
                     if (cloud_directory / 'cloud-outbox-v1.sqlite3').exists():
@@ -164,12 +168,14 @@ class ProductBackend:
                     self.bridge.cloud_conversation = cloud_client is not None
                     def host_tools(name, arguments):
                         if name == 'conversation.cloud_reply':
-                            if cloud_client is None or set(arguments) != {'text'} or not isinstance(arguments['text'], str):
+                            if cloud_client is None or not {'text'} <= set(arguments) <= {'text', 'purpose'} or not isinstance(arguments['text'], str) or arguments.get('purpose', 'reply') not in {'reply', 'understanding'}:
                                 raise ValueError('请先绑定本人云账号，再使用统一问答')
-                            return cloud_client.ask_ai(arguments['text'])
+                            return cloud_client.ask_ai(arguments['text'], purpose=arguments['purpose']) if 'purpose' in arguments else cloud_client.ask_ai(arguments['text'])
                         if name.startswith('care.'):
                             from .care_host import CareHost
                             return CareHost(self.data_dir, self.daily, owner, scope)(name, arguments)
+                        if operation_tools and (name == 'rehab.get_schedule' or name.startswith('rehab.plan.') or name.startswith('rehab.schedule.')):
+                            return operation_tools(name, arguments)
                         if tools:
                             return tools(name, arguments)
                         raise ValueError('当前请求没有本人康复工具范围。')

@@ -4,6 +4,29 @@ function harness(enabled=true){
  vm.createContext(c);vm.runInContext(fs.readFileSync('android_offline/web/deepseek.js','utf8'),c);return {c,calls,models:c.PhoneDeepSeek};
 }
 const response=content=>JSON.stringify({choices:[{finish_reason:'stop',message:{role:'assistant',content}}]});
+
+test('phone local API passes semantic options to the runtime options argument',()=>{
+ let captured;const stop=new Error('constructor inspected');
+ const context={fetch(){},localStorage:{},PhoneMotion:{},AnkangSemanticRoutingEnabled:true,
+  PhoneStore:{selectedKey(){return 'TEST';},Store:class{constructor(){this.value={owner:'SYNTHETIC_TEST'};}}},
+  AnkangDomain:{ProductService:class{constructor(...args){captured=args;throw stop;}}}};
+ vm.createContext(context);
+ assert.throws(()=>vm.runInContext(fs.readFileSync('android_offline/web/local-api.js','utf8'),context),e=>e===stop);
+ assert.equal(captured[8],undefined);
+ assert.equal(captured[9].semanticRoutingEnabled,true);
+});
+
+test('Android understanding selects JSON task and cloud forwards its purpose',async()=>{
+ const h=harness();h.c.AnkangUnderstandingSystem='JSON understanding policy';
+ const pending=h.models.conversationModel().reply({purpose:'understanding',messages:[{role:'user',content:'TEST input'}]});
+ const request=h.calls[0];assert.equal(request.body.purpose,'understanding');
+ assert.equal(request.body.messages[0].content,'JSON understanding policy');assert.equal(request.body.response_format.type,'json_object');
+ h.models.reply(request.id,true,response('{"version":1}'));assert.equal(await pending,'{"version":1}');
+ await assert.rejects(h.models.conversationModel().reply({purpose:'execute',messages:[{role:'user',content:'TEST'}]}));
+ let args;h.c.PhoneLocal={store:{}};h.c.PhoneAccount={scope:()=>({}),askAI:async(...a)=>{args=a;return {state:'SUCCEEDED',answer:'{"version":1}'};}};
+ await h.models.conversationModel().reply({purpose:'understanding',messages:[{role:'user',content:'TEST'}]});
+ assert.equal(args[2],'understanding');assert.equal(h.calls.length,1);
+});
 test('Android configuration absent is explicit and cannot call native transport',async()=>{
  const h=harness(false);assert.equal(h.models.conversationModel(),undefined);assert.equal(h.models.agentModel(),undefined);
  await assert.rejects(h.models.request({}),/尚未配置/);assert.equal(h.calls.length,0);

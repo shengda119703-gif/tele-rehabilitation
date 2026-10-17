@@ -1,0 +1,73 @@
+{
+  "code_commit": "6c1a7771e020526b82dacf2d0185d16577a0cd02",
+  "model": "MOCK provider transport; no external model request",
+  "backend": "Actual Python AgentBridge -> Node AgentRuntime -> Python RehabReadTools -> isolated SQLite SYNTHETIC / TEST fixtures",
+  "test": "test_unified_bridge_reads_actual_sqlite_without_sending_personal_results",
+  "status": "PASS",
+  "assertions": [
+    "Each requested tool executes exactly once",
+    "Only understanding calls reach mock model",
+    "No personal tool results sent to model",
+    "SQLite SHA256 unchanged",
+    "No health events appended"
+  ],
+  "traces": [
+    {
+      "parser_status": "llm_valid",
+      "stages": [
+        {
+          "stage": "understanding",
+          "status": "passed"
+        },
+        {
+          "stage": "tool",
+          "status": "passed",
+          "tool": "rehab.get_training_plan"
+        },
+        {
+          "stage": "reply",
+          "status": "local",
+          "reason": "personal_records_remain_local"
+        }
+      ]
+    },
+    {
+      "parser_status": "llm_valid",
+      "stages": [
+        {
+          "stage": "understanding",
+          "status": "passed"
+        },
+        {
+          "stage": "tool",
+          "status": "passed",
+          "tool": "rehab.get_recent_assessments"
+        },
+        {
+          "stage": "reply",
+          "status": "local",
+          "reason": "personal_records_remain_local"
+        }
+      ]
+    },
+    {
+      "parser_status": "llm_valid",
+      "stages": [
+        {
+          "stage": "understanding",
+          "status": "passed"
+        },
+        {
+          "stage": "tool",
+          "status": "passed",
+          "tool": "rehab.get_training_history"
+        },
+        {
+          "stage": "reply",
+          "status": "local",
+          "reason": "personal_records_remain_local"
+        }
+      ]
+    }
+  ]
+}
