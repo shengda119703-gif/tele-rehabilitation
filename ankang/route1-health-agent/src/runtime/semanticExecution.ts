@@ -7,7 +7,7 @@ import type { ConversationModel } from './conversation';
 import { canUseModuleTools } from './operationalIntent';
 import { readRehabReceipt, describeLocalRehabReceipt, type RehabToolPort, type RehabCall } from './rehabTools';
 import type { SemanticTurn, SemanticContextMessage } from './semanticRouter';
-import { runRehabWorkflow, renderRehabDraft } from '../rehab/workflow';
+import { runRehabWorkflow, renderRehabDraft, rehabAnswerTask, runRehabReadOnlyAnswer } from '../rehab/workflow';
 import { previewRehabProgramOperation, commitRehabProgramOperation, isConfirmation, isCancellation, isRehabProgramIntent, renderOperationPreview, renderOperationResult, type PendingRehabOperation, type RehabOperationPort } from '../rehab/programOperations';
 import { resolveScopeFallback } from './scopeFallback';
 
@@ -161,6 +161,13 @@ export async function executeSemanticTurn(input: {
   // Rehab is a separate analysis workflow: LLM tool planning -> host tools/algorithm -> LLM candidate -> program validation.
   // It deliberately stops before any plan persistence or module operation.
   if (semantic.route === 'rehab') {
+    if (rehabAnswerTask(semantic) !== 'plan_generation') {
+      const explained = await runRehabReadOnlyAnswer({
+        semantic, userText:text, reads:input.reads, participantId:input.participantId, check,
+      });
+      trace.stages.push({stage:'tool',status:explained.status === 'found'?'passed':'empty',reason:'rehab_read_only_answer'});
+      return local(explained.text,'rehab_read_only_answer');
+    }
     const result = await runRehabWorkflow({
       model,
       semantic,
