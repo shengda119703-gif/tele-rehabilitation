@@ -1,0 +1,21 @@
+{
+  "method": "Authenticated GitHub connector after Git CLI lacked noninteractive credentials",
+  "force_push": false,
+  "main_changed": false,
+  "source_trees_byte_identical": true,
+  "commits": [
+    {
+      "local": "aa8cf7b9835253ca2596067808d409326df47d0d",
+      "remote": "86677662e1c55b81fbb62ac979808a767ec60175",
+      "tree": "01e4313544df96848613d9777711ec89cfce50bc"
+    },
+    {
+      "local": "e4539938788f6c8217fa9011bba8f6d82e5d6dd5",
+      "remote": "59c5226c82f482eccacd71424060540b45663254",
+      "tree": "3ece460e7726e8b2cdc209e039d00cf93734724c"
+    }
+  ],
+  "live_trace_local_source_commit": "e4539938788f6c8217fa9011bba8f6d82e5d6dd5",
+  "live_trace_published_source_commit": "59c5226c82f482eccacd71424060540b45663254",
+  "final_report_commit": "The GitHub commit containing this file; reported in final delivery."
+}

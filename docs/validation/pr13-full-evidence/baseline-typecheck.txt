@@ -1,0 +1,31 @@
+
+> route1-health-agent@0.1.0 typecheck
+> tsc -b
+
+src/rehab/programOperations.ts(6,22): error TS1215: Invalid use of 'arguments'. Modules are automatically in strict mode.
+src/rehab/programOperations.ts(79,11): error TS18046: 'args.expected_revision' is of type 'unknown'.
+src/rehab/programOperations.ts(100,79): error TS18046: 'args.plan_revision' is of type 'unknown'.
+src/rehab/programOperations.ts(202,96): error TS2554: Expected 1 arguments, but got 2.
+src/rehab/workflow.ts(117,71): error TS18047: 'args.level' is possibly 'null'.
+src/rehab/workflow.ts(117,71): error TS2365: Operator '<' cannot be applied to types '{}' and 'number'.
+src/rehab/workflow.ts(117,89): error TS18047: 'args.level' is possibly 'null'.
+src/rehab/workflow.ts(117,89): error TS2365: Operator '>' cannot be applied to types '{}' and 'number'.
+src/rehab/workflow.ts(203,23): error TS2345: Argument of type 'string' is not assignable to parameter of type '"E-GEN-001" | "E-GEN-002" | "E-GEN-003" | "E-GEN-004" | "E-LOW-017" | "E-LOW-001" | "E-LOW-002" | "E-LOW-003" | "E-LOW-004" | "E-LOW-005" | "E-LOW-027" | "E-LOW-006" | "E-LOW-007" | ... 171 more ... | "T-LOW-057"'.
+src/rehab/workflow.ts(231,57): error TS18048: 'a.level' is possibly 'undefined'.
+src/rehab/workflow.ts(231,57): error TS2365: Operator '<' cannot be applied to types '{}' and 'number'.
+src/rehab/workflow.ts(231,68): error TS18048: 'a.level' is possibly 'undefined'.
+src/rehab/workflow.ts(231,68): error TS2365: Operator '>' cannot be applied to types '{}' and 'number'.
+src/rehab/workflow.ts(241,5): error TS2322: Type 'unknown' is not assignable to type 'number | null'.
+src/runtime/semanticExecution.ts(196,7): error TS2367: This comparison appears to be unintentional because the types '"chat" | "records" | "health" | "module" | "other"' and '"rehab"' have no overlap.
+src/runtime/semanticExecution.ts(207,13): error TS2367: This comparison appears to be unintentional because the types '"chat" | "records" | "health" | "module" | "other"' and '"rehab"' have no overlap.
+src/runtime/semanticExecution.ts(249,7): error TS2367: This comparison appears to be unintentional because the types '"chat" | "health" | "other"' and '"rehab"' have no overlap.
+src/runtime/semanticRouter.ts(167,11): error TS18046: 'item.from_event' is of type 'unknown'.
+src/runtime/semanticRouter.ts(167,34): error TS18046: 'item.from_event' is of type 'unknown'.
+src/runtime/semanticRouter.ts(167,70): error TS18046: 'item.to_event' is of type 'unknown'.
+src/runtime/semanticRouter.ts(167,91): error TS18046: 'item.to_event' is of type 'unknown'.
+src/runtime/session.ts(21,9): error TS6133: 'previewRehabProgramOperation' is declared but its value is never read.
+src/runtime/session.ts(21,38): error TS6133: 'commitRehabProgramOperation' is declared but its value is never read.
+src/runtime/session.ts(21,66): error TS6133: 'isConfirmation' is declared but its value is never read.
+src/runtime/session.ts(21,81): error TS6133: 'isCancellation' is declared but its value is never read.
+src/runtime/session.ts(21,96): error TS6133: 'renderOperationPreview' is declared but its value is never read.
+src/runtime/session.ts(21,119): error TS6133: 'renderOperationResult' is declared but its value is never read.

@@ -1,0 +1,260 @@
+{
+  "mode": "REAL_DEEPSEEK_REAL_SYNTHETIC_SQLITE_HOST",
+  "model": "deepseek-flash",
+  "scope": {
+    "participant_id": "demo-automatic-rehab",
+    "source_kind": "SYNTHETIC",
+    "usage_context": "TEST"
+  },
+  "generated_at": "2026-10-17T07:07:38.290Z",
+  "source_head": "aa8cf7b9835253ca2596067808d409326df47d0d",
+  "source_hashes": {
+    "runtime/semanticRouter.js": "91909f10e503e8acde24328fd5ec7637c9297635a4c77a6d4e9591a14a859a96",
+    "runtime/semanticExecution.js": "551f243b54cebc9ac732a775a8d35646f650a203013424c783caff6e0d4c5b24",
+    "rehab/workflow.js": "4a1f458fa6fabadf110f13028d2d66867e3ee4e13af1b46f213e1cefeb8b6f4b"
+  },
+  "database_before": "daf5929bb2b7f1a5211e0e7fae89c871bef319f061569d5d445eb2ebef5be2bf",
+  "cases": [
+    {
+      "id": "chat",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "chat"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "health_public",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "health"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "lumbar_plan",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "rehab"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "knee_mixed",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "rehab"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "negation",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "health",
+        "rehab"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "navigation",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "module",
+        "records"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "correction",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "health",
+        "rehab"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "action_guidance",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "rehab"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "record_analysis",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "records",
+        "rehab"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "rest_guidance",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "rehab",
+        "health"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "plan_read",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "records"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "assessment_read",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "records"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "history_read",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "records"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "schedule_operation",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "module",
+        "records",
+        "rehab"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "mixed_discomfort",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "rehab"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "urgent",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "health",
+        "rehab"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "other",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "other",
+        "chat"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "unknown_action",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "rehab",
+        "other"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "external",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "other",
+        "module"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "clinical",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "health",
+        "rehab",
+        "other"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "multiturn",
+      "status": "FAIL",
+      "expectedRoutes": [
+        "rehab"
+      ],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    },
+    {
+      "id": "private",
+      "status": "FAIL",
+      "expectedRoutes": [],
+      "trace": [],
+      "turns": [],
+      "error": "CASE_FAILED"
+    }
+  ],
+  "ui": "UNVERIFIED",
+  "limitations": "No actual device/UI, no candidate adoption; patient data are SYNTHETIC/TEST. Model semantics require human review.",
+  "database_after": "daf5929bb2b7f1a5211e0e7fae89c871bef319f061569d5d445eb2ebef5be2bf",
+  "totals": {
+    "cases": 22,
+    "pass": 0,
+    "fail": 22,
+    "model_calls": 0,
+    "host_reads": 0
+  }
+}
