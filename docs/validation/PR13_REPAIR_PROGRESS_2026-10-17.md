@@ -4,9 +4,10 @@
 
 - PR：#13，保持 Draft；未合并 main，未部署。
 - 分支：`codex/unified-llm-entry-20261015`
-- 本轮核对 HEAD：`bab6395f7e8e416315d478d476be39005d3fe196`
-- GitHub Actions `agent`：PASS（TypeScript typecheck/build、568 tests、35 product tests、security check）
+- 当前核对 HEAD：`44a802df23b864c8229b37929710b5d270774adb`（后续修复已包含在此提交）
+- GitHub Actions `agent`：PASS（TypeScript typecheck/build、570 tests、35 product tests、security check）
 - GitHub Actions `cloud`：PASS（cloud_service tests 与相关 Node tests）
+- GitHub Actions `cloud`：PASS（本轮提交对应的 cloud checks）。
 - 这些结果不代表真实 DeepSeek 语义测试、真机/GUI 或康复计划到患者端闭环通过。
 
 ## 本轮修复
