@@ -356,8 +356,23 @@ export async function runRehabWorkflow(input: {
   check?: () => void;
 }): Promise<{candidate: RehabCandidatePlan | null; validation: RehabPlanValidation | null; toolResults:{name:string;data:unknown}[]; selection:RehabToolSelection|null}> {
   const check=input.check??(()=>{});
-  const selection=await selectRehabTools(input.model,input.semantic,input.userText,check);
+  let selection=await selectRehabTools(input.model,input.semantic,input.userText,check);
   if(!selection) return {candidate:null,validation:null,toolResults:[],selection:null};
+
+  // Plan generation always checks the user's existing plan/history/assessments when
+  // the authenticated local read port exists. These receipts remain local and are
+  // explicitly excluded from the cloud candidate-generation payload below.
+  const planGeneration = (input.semantic.intents ?? []).some(intent => intent.type === 'plan_generation');
+  if (planGeneration && input.reads) {
+    const requiredReads: RehabToolCall[] = [
+      {name:'rehab.get_training_plan',arguments:{},reason:'核对本人当前计划'},
+      {name:'rehab.get_training_history',arguments:{},reason:'核对本人训练历史'},
+      {name:'rehab.get_recent_assessments',arguments:{},reason:'核对本人近期评估'},
+    ];
+    const calls = [...requiredReads, ...selection.calls.filter(call =>
+      !requiredReads.some(requiredCall => requiredCall.name === call.name))].slice(0, MAX_TOOL_CALLS);
+    selection = {...selection,calls};
+  }
   const toolResults:{name:string;data:unknown}[]=[];
   const unique=new Set<string>();
   for(const call of selection.calls){
