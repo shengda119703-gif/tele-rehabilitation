@@ -34,8 +34,8 @@ const product = productRoot ? new ProductService(new ProductLocalStore(productRo
     voice: nativeVoice,
   }, undefined, undefined,
     owner => ({read:call=>readFromPython(owner,call)}),
-    owner => ({call:(name,args)=>readFromPython(owner,{name,arguments:args})}),
     owner => cloudModel(owner) ?? (semanticRoutingEnabled && process.env.ANKANG_PRODUCT_DISABLE_MODEL!=='1' ? createConversationModel() : undefined),
+    owner => ({call:(name,args)=>readFromPython(owner,{name,arguments:args})}),
     {semanticRoutingEnabled}) : null;
 const pending = new Map();
 let sequence = 0;
