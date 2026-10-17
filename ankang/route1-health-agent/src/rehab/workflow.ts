@@ -383,6 +383,18 @@ export async function runRehabWorkflow(input: {
     try { toolResults.push(await executeCall(call,input.reads,input.participantId,check)); }
     catch { toolResults.push({name:call.name,data:{status:'failed',reason:'tool_execution_failed'}}); }
   }
+  const planGeneration = (input.semantic.intents ?? []).some(intent => intent.type === 'plan_generation');
+  if (planGeneration) {
+    const knowledge = toolResults.find(result => result.name === 'rehab.search_knowledge');
+    const algorithm = toolResults.find(result => result.name === 'rehab.run_plan_algorithm');
+    const algorithmItems = record(algorithm?.data) && Array.isArray(algorithm.data.items) ? algorithm.data.items : [];
+    // Do not ask a model to invent a plan when no real action card or algorithm
+    // candidate exists. An empty search is a valid result, not a prompt to guess.
+    if (!knowledge || !Array.isArray(knowledge.data) || (knowledge.data.length === 0 && algorithmItems.length === 0)) {
+      return {candidate:null,validation:null,toolResults,selection};
+    }
+  }
+
   const candidate=await generateRehabCandidate(input.model,input.semantic,input.userText,toolResults,check);
   if(!candidate) return {candidate:null,validation:null,toolResults,selection};
 
