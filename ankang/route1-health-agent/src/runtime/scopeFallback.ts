@@ -32,6 +32,16 @@ export function resolveScopeFallback(semantic: SemanticTurn, userText: string): 
     };
   }
 
+  const planGeneration = (semantic.intents ?? []).some(intent => intent.type === 'plan_generation');
+  const context = [semantic.goal, userText, ...(semantic.mentions ?? []).map(mention => mention.text)].join(' ');
+  const diseaseSpecificCondition = /腰椎间盘突出|腰突|椎间盘突出|术后|骨折|中风|脑卒中|关节置换|脊髓损伤|半月板撕裂|韧带撕裂|心衰|心力衰竭|心肌梗死|严重骨质疏松/.test(context);
+  if (planGeneration && diseaseSpecificCondition && semantic.route === 'rehab') {
+    return {
+      kind: 'clinical_handoff',
+      reply: '现有自动计划功能只支持基于已完成评估的一般活动建议，不能据此生成腰椎间盘突出、术后或其他特定疾病的个人康复处方。此类计划需要康复医生或治疗师结合诊断、神经症状、禁忌和活动限制核实。当前没有生成或修改任何计划；我可以帮你整理现有评估和需要向专业人员确认的问题。',
+    };
+  }
+
   if (semantic.route !== 'other') return null;
 
   const unsupportedOperation = clauses.some(clause => {
