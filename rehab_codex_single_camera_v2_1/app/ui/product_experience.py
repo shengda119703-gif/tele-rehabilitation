@@ -497,10 +497,17 @@ class ProductExperience:
 
     def _automatic_plan(self):
         if self.pending or self._rehab_locked():
-            return
+            self._message('当前训练或采集任务尚未结束，未打开候选计划。请先结束并保存当前任务。')
+            return False
         self.navigate('rehab', refresh=False)
         if self.legacy.automatic_dialog:
-            self.legacy.automatic_dialog.show(); return
+            dialog=self.legacy.automatic_dialog
+            dialog.show()
+            if not dialog.pending:
+                dialog.generate_new=True
+                dialog._request('automatic_proposal')
+                dialog.title.setText('康复管家正在重新读取你的评估与活动条件')
+            return True
         self.legacy._open_automatic_plan()
         self._embed_plan_dialog(self.legacy.automatic_dialog)
         dialog=self.legacy.automatic_dialog
@@ -508,6 +515,7 @@ class ProductExperience:
             dialog.generate_new=True
             dialog.archive_requested.connect(lambda old:self.legacy._send('archive_training_plan',scope=dialog.scope,id=old['id'],expected_revision=old['revision'],archived=True))
             dialog.title.setText('康复管家正在读取你的评估与活动条件')
+        return bool(dialog)
 
     def _plan_versions(self):
         scope=self.legacy._body_scope_key()
