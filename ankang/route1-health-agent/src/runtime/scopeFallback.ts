@@ -23,7 +23,7 @@ export function resolveScopeFallback(semantic: SemanticTurn, userText: string): 
     .join(' ');
   const context = [semantic.goal, intentEvidence, userText].join(' ').slice(0, 10000);
 
-  if (/(?:诊断|确诊|开药|处方|调整用药|停药|换药|手术方案|治疗方案|检查结果.{0,12}(?:怎么办|怎么处理|严重吗)|医生.{0,12}(?:判断|诊断|开药)|咨询医生|看医生|挂号|预约.{0,8}(?:医生|门诊|医院)|转诊)/.test(context)) {
+  if (/(?:诊断|确诊|开药|处方|调整用药|停药|换药|手术方案|治疗方案|检查结果.{0,12}(?:怎么办|怎么处理|严重吗)|医生.{0,12}(?:判断|诊断|开药)|咨询医生|看医生|转诊)/.test(context)) {
     return {
       kind: 'clinical_handoff',
       reply: '这件事需要医生结合病史、查体和必要检查作出判断。我可以帮你整理症状、既往情况和想问医生的问题，但不能替医生诊断、开药或决定治疗。如果症状正在明显加重，或你觉得情况紧急，请及时联系当地医疗服务；我没有替你联系医生或完成预约。',
