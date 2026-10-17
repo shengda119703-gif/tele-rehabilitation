@@ -10,7 +10,8 @@ const now = new Date(2026, 9, 15, 12);
 const profile = { ...demoProfile, name: 'SYNTHETIC TEST', medications: [], familySharing: 'denied' as const };
 const owner = 'SEMANTIC_TEST_A';
 const base = (route = 'chat', extra: Record<string, unknown> = {}) => ({
-  version: 1, route, goal: '回答当前问题', mentions: [], uncertain: [], suggested_tool: null, ...extra,
+  version: 1, route, goal: '回答当前问题', mentions: [], events: [], relations: [], uncertain: [],
+  suggested_tool: null, intents: [], tool_requests: [], ...extra,
 });
 type ModelInput = Parameters<ConversationModel['reply']>[0];
 function recordingModel(semantic: unknown = base(), answer = '可以呀，今天想聊点什么？') {
