@@ -470,9 +470,7 @@ class ProductWindow(ProductExperience, ProductCompletion, ProductInterfaces, QMa
     def _dispatch_agent_navigation(self, destination):
         # Structured assistant navigation may open a registered workflow, not just a page.
         if destination == 'automatic_plan':
-            opened = self._automatic_plan()
-            if opened is False:
-                self._message('当前无法打开候选计划；请先结束正在进行的训练或采集任务。')
+            self._automatic_plan()
         elif destination:
             self.navigate(destination, refresh=False)
 
