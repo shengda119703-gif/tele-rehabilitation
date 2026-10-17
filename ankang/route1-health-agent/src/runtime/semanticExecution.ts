@@ -183,35 +183,20 @@ export async function executeSemanticTurn(input: {
       return local(explained.text,'rehab_read_only_answer');
   }
   if (semantic.route === 'rehab' && rehabAnswerTask(semantic) === 'plan_generation') {
-    const result = await runRehabWorkflow({
-      model,
-      semantic,
-      userText: text,
-      reads: input.reads,
-      participantId: input.participantId,
-      check,
-    });
-    if (!result.candidate || !result.validation) {
-      const knowledge = result.toolResults.find(item => item.name === 'rehab.search_knowledge');
-      const algorithm = result.toolResults.find(item => item.name === 'rehab.run_plan_algorithm');
-      const algorithmData = algorithm?.data;
-      const algorithmItems = typeof algorithmData === 'object' && algorithmData !== null &&
-        'items' in algorithmData && Array.isArray((algorithmData as {items?:unknown[]}).items)
-        ? (algorithmData as {items:unknown[]}).items : [];
-      if (Array.isArray(knowledge?.data) && knowledge.data.length === 0 && algorithmItems.length === 0) {
-        trace.stages.push({ stage: 'tool', status: 'empty', reason: 'no_matching_registered_rehab_actions' });
-        return local('现有动作知识库没有找到与这次目标匹配、且可供程序验证的训练动作，因此我不会编造动作或生成一份看似完整的计划。可以补充医生/康复治疗师给出的具体训练动作，或先核实适用的训练范围。当前计划没有被修改。', 'rehab_no_matching_actions');
-      }
-      trace.stages.push({ stage: 'tool', status: 'failed', reason: 'rehab_workflow_unavailable_or_invalid' });
-      return local('康复分析暂时没有形成可验证的候选方案。请补充具体目标、部位或当前训练情况。', 'rehab_workflow_failed');
+    // The product already has an assessment-driven, local plan workflow with
+    // eligibility rules, explicit screening checkboxes, confirmation and real save.
+    // Route generic activity-plan requests there instead of treating an LLM JSON
+    // candidate as a patient-ready plan.
+    const reply = '我会打开本地候选计划流程。它会读取已保存的有效评估，按本地规则筛选动作，并要求你确认当前不适、支撑和陪同条件后才允许保存。没有有效评估或存在疾病/术后限制时，不会自动生成可执行计划。';
+    trace.stages.push({stage:'tool',status:'passed',reason:'route_to_existing_assessment_driven_plan_ui'});
+    if (input.productTools) {
+      return {
+        plan:withReply(plan,reply),
+        conversation:{provider:'local',status:'unavailable',reason:'not_configured'},
+        agent:{reply,steps:[],navigation:'automatic_plan'},
+      };
     }
-    trace.stages.push({ stage: 'tool', status: 'passed', reason: 'rehab_tools_and_algorithm_completed' });
-    trace.stages.push({
-      stage: 'reply',
-      status: result.validation.status === 'passed' ? 'passed' : 'blocked',
-      reason: result.validation.status === 'passed' ? 'rehab_plan_validated' : result.validation.reasons.join(';'),
-    });
-    return { plan: withReply(plan, renderRehabDraft(result.validation)), conversation: { provider: 'deepseek', status: 'replied' } };
+    return local(reply+' 请在康复模块打开“本地候选计划”。','automatic_plan_ui_unavailable');
   }
 
   const requests: SemanticToolRequest[] = semantic.tool_requests?.length ? [...semantic.tool_requests] : semantic.suggested_tool
