@@ -22,6 +22,11 @@
 | `guidance.py` | 原生首帧I2V加同图末帧引导，AV采样后裁掉附加guide再解码；记录新工作流和派生关系 | 实验引导不保证单臂、回位或人体正确，不循环、倒放、拼接母片冒充动作 |
 | `control.py` | 实际参考帧冻结预测→单臂刚性链OpenPose18控制视频；分组/seed决定时序；完整RGB/PTS/来源与轨迹SHA核验；当前仅收显式pilot/train来源 | 控制角度、时刻、目标类别不是成片标签；共享算法版本不作为共同来源 |
 | `pose_guidance.py` | 固定19B姿态IC-LoRA、原生全帧guide、8步euler与采样后CropGuides；可选同图末帧参考用独立v2，默认v1不变；纯图与执行证据分开 | 本机一次运行不能证明任意分辨率/显存都支持，身体控制也不保证手指细节、动作精确或渐暗必消失 |
+| `motion.py` | A/D/E兼容原轨迹，B较慢、C约两秒保持、F增加刚性前臂弯曲；来源组与seed决定指令 | 指令时刻和角度不是生成视频的阶段、次数或临床ROM |
+| `formal_plan.py` | 12条已保存真实人审、正式10组6/2/2与60个请求槽位；不可覆盖冻结、来源注册图、跨字段别名/实际资产SHA/父链泄漏预检 | 冻结不等于质量通过、实际六类覆盖或训练就绪；排除片仍保留未知 |
+| `formal_control.py` | 读取真实冻结授权，参考原片/PNG/冻结YOLO帧0绑定，A–F控制逐帧实际RGB/PTS重算，seed来自冻结槽位 | 支持正式来源校验不代表已生成正式人物视频；旧pilot控制入口仍保持原限制 |
+| `formal_generation.py` | 单作业正式参考/动作入口、模板与实际执行图分别hash、仅声明位置晚绑定、生成前来源注册、模型和实现字节检查、持久任务恢复 | 当前实际人审为0，尚未在本机冻结或运行正式60条；不自动接受、标注或训练 |
+| `endpoint.py` | 同组pilot/train D原片实际帧→不同末图条件；独立新版本并继承父片/控制来源，原片保留 | 帧中姿态是AI条件，不是人工GT；不同末图是否消除黑尾须实际试验 |
 
 正式产品姿态权重、动作状态机、计次、剂量、患者历史、APK、云端与Qt UI不因上述离线工具而替换或启用候选权重。GPU模型服务仍运行于独立生成环境；姿态控制校验客户端使用已有产品Python的CPU OpenCV/PyAV，未给产品环境安装生成模型或更换依赖。生成与模型训练分时执行。
 
@@ -83,6 +88,33 @@
 
 HTTP400正文和任务句柄会保存。ACK丢失、超时或失败都不能自动重发同一个生成任务；先查看已有句柄和错误。完成后再次核验控制输入，生成清单去重来源token并保留每个不同实际来源。
 
+## 正式来源入口与保持动作的独立末图试验
+
+`generation.py`和`control.py`保持pilot/train限定。正式任务另走`formal_generation.py`与`formal_control.py`，不能把旧片的stage改为formal。正式计划的12个调试片ID必须来自4组各A/D/E；每条需已有真实操作者完整观看、保存最终接受/排除决定并绑定原片SHA和实际PTS。接受片还需可用的单侧阶段或次数参考；排除片允许标签未知，须保留理由。所有排除不被解释为生成方法合格；冻结报告始终保留`workflow_readiness='unproven'`和`training_ready=False`，正式训练仍有其独立60条阶段监督门。
+
+草稿的请求JSON含`cohort12`、10组`profiles`、`group_splits`和`generation_recipe`，结构以`formal_plan.draft_formal_plan`为准。`formal_generation.build_generation_recipe`创建固定模板；其config另绑定参考模板、姿态LoRA回执及实际实现文件SHA。组、参考、identity/lineage、实际PNG/原片/pose/控制轨迹SHA以及父链共同建立来源图；全局算法和模型版本不作为来源边。所有旧pilot attempt和未选参考也纳入调试来源污染检查。模板SHA与实际替换文件名、seed后的执行图SHA分开记录。模型、配置、实现、已冻结人审或来源变化均需停止核对，不能静默重建冻结记录。
+
+```powershell
+# 只创建草稿，不生成、不标注；request须显式指定来源和配方。
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -m tools.rehab_ml.synthetic.formal_generation draft --root 'E:/ai-video-lab/datasets/rehab_synthetic_v1' --request '<计划请求JSON>'
+
+# 真实12条人审不足时拒绝；不绕过此门去调用GPU。
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -m tools.rehab_ml.synthetic.formal_generation freeze --root 'E:/ai-video-lab/datasets/rehab_synthetic_v1' --plan 'manifests/formal-plan-draft.json'
+
+# 只有已有冻结、真实正式参考帧0预测时才渲染控制；不启动GPU。
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -m tools.rehab_ml.synthetic.formal_control --root '<数据根目录>' --pose '<参考pose.json>' --reference-record '<正式参考记录>' --output-dir '<全新控制目录>' --scenarios A B C D E F
+
+# 查看单作业参考/动作/结构筛查参数；无自动60条提交。
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -m tools.rehab_ml.synthetic.formal_generation motion --help
+
+# D末图是保持姿势的实际RGB帧，不能换成双臂垂下的初始图。
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -m tools.rehab_ml.synthetic.endpoint validate --endpoint-receipt '<同组D保持帧的不可覆盖收据>' --pose-control '<同一个D控制收据>'
+```
+
+正式参考另存在`references/formal/`，结构筛查保存独立收据而不改原参考记录。正式控制按各槽位seed渲染，补片attempt使用`rehab_formal_attempt_seed/v1`确定性派生并保持来源组/划分；失败与旧attempt不删除。A/B/C/E/F目前请求全帧pose加同图末帧，D请求pose-only，这只是冻结配方能力，未证明各类成片可靠。D不同保持末图仍是独立pilot试验；本机新人物已出现D黑尾，因此不能以旧人物D成功直接扩量。
+
+本机已保存只读可核对草稿`manifests/formal-plan-draft-v1/{request.json,generation-config.json,plan.json}`，plan SHA `d1f8df27a860cdc776178fac1020c3f9e60f7f70837b3fcfcf0f457d549c93ea`；10个新的虚拟人物描述尚未渲染，6/2/2和60槽位仅为请求。`readiness-at-014-raw.json`记录当时尚缺5条所选调试片；后续可追加新时点快照，不覆盖旧草稿、不创建真实freeze。来源独立性须在实际素材/注册图出现后检查，不能从描述不同直接断言。
+
 ## 原片与人工参考合同
 
 母片清单为 `manifests/dataset.json`。样本包含sample/source/reference组、lineage、固定split、pilot/formal、动作/实际侧别/视角、原片SHA/尺寸/帧数、timeline路径及SHA、生成模型/工作流/提示词hash与seed。实际侧别未知时保持unknown，不能把生成器请求的左侧直接填为人工确认。
@@ -129,11 +161,16 @@ CLI按上述顺序执行；下列Python API可用于进一步审计绑定关系�
 
 下一道真实验收门槛是可用参考构图、12条调试片的完整筛片及真实工程阶段/次数标注。满足后才能更新正式来源分组、生成60条候选并按实际合格/排除记录补齐；人审未完成时可以完善工具，不能伪造人工身份或模型改进结果。
 
-正式自动生成入口尚未完成：当前 `generation.py` 只有4组pilot人物，输出固定pilot/train，`control.py`也只允许pilot/train。来源冻结与正式60条训练资格合同已经实现，不能因此把正式10组6/2/2生成能力写成可用。后续须先通过真实pilot人审门，再实现读取冻结正式组/参考/划分的生成入口及正式控制来源验证，保留补片与失败来源关联；不能直接改stage字段充当正式数据。
+独立正式生成入口已补代码与隔离工程验证，但实际人审为0，未创建真实正式冻结，也没有开始正式60条。现有pilot入口仍仅4组和train；新正式入口须逐次核验冻结来源、真实模型/配置/实现字节与已保存人审，再提交单作业。不能把接口、请求槽位或工程测试成功写成正式样本完成。
 
 还须在扩量前冻结“实际覆盖”的事实标准：`scenario`仅为生成目标；完整/慢速/保持/部分/无关/可观察变化可能重叠，不能把目标A–F的槽位当作六类实际标签。当前训练报告明确标记 `requested_generation_targets_only` 和 `observed_scenario_coverage='not_established_by_this_command'`；命令完成仅指该流水线执行。F类两项可观察变化的独立可评价性/时段入口已补，实际人工记录仍为0，不宣称覆盖已完成。双侧事实允许归档，但未拆成明确单侧参考前不能进入此单侧TCN。
 
 ## 已取得的本机真实运行证据
+
+- 新5模块及独立测试加入后，全部264项专项测试在本机产品Python（未强制UTF-8模式）完整通过，181.748秒，日志`E:/ai-video-lab/synthetic-tests-20261019-formal-endpoint-all-v2.log`。前一轮263过、1项TEST临时目录长短名转换错误，旧失败日志保留；修正测试中的规范化路径后完整重跑。覆盖真实媒体RGB/PTS、未知/人审门、来源闭包、实际首图/缓存采样中变化拒绝发布、注册历史回滚、任务缺失/失败不重投，以及默认旧图不变。
+- 本轮扩到pilot01 A/D/E、pilot03 A/E，实际15条原片仍只有3个来源组件，全部pending；CLI完整SHA/PTS核验为`reports/pilot-validate-expansion-endphoto-v1.json`，合格人工参考和正式样本均0。pilot01 A/E原墙patch首末降约0.688%/0.747%，pilot03 A/E约0.231%/0.0818%；AI全241帧未见明显黑尾，双后端各121/121、0失败。同一D纯姿态方法在pilot01首199.39→末55.85（降71.99%），故暂停原自动队列；提示/骨架/旧人物成功不能替代新人物实测。
+- 不同末图D实际另取旧pilot01 D frame150，真实PTS76800×1/15360=5.000秒，原始RGB未编辑，PNG SHA `a2c8b23d63b4d5e6320e43c73190d7f3438ee4f8fb96ae51487cf18ef68b4e73`。只增加LoadImage37并接node36，仍63→31→241；原片和条件父链全部保留，新原片属于同pilot01/train。新执行Comfy280.724秒、观察285.349秒；56个GPU观测最高5063MiB/90°C，92个内存观测最高17.17GiB服务RSS、最低3.00GiB物理和13.17GiB提交空间，非连续峰值。整进程还含前后完整权重SHA核验，这段不包含在Comfy执行窗；成本快照`reports/costs-20261019-expansion-endphoto-v1.json`保留当时另一个未完成任务，未把其部分窗口算资源。新D已发布并通过完整原片验证，AI初筛仍保持部分抬臂、末帧明亮，实际完整诊断单独保留，不据此改GT或宣称通用黑尾修复。
+- 新D完整诊断已完成，双后端各121/121、0失败、单轨迹、实际输入PTS/RGB/JPEG一致。模型命名左臂YOLO11.19→39.32峰→38.57°末、MP10.23→37.06→36.64°末；B0均预测0，骨段相邻变化超过25%为0。AI全241与原尺寸0/90/240确认保持、镜头稳、头鞋完整、未见黑闪；手指偏软仍保留。同旧D ROI的新原RGB首199.10→末199.89（+0.396%），全程198.25075–200.77037，最暗frame4/0.133秒，没有该区域先黑后亮的证据。报告`reports/assistant-visual-screen/pilot01-D-distinct-endphoto-v1/AI-diagnostic-summary.json`与`old-vs-distinct-endphoto-fixed-wall-comparison-v1.json`，不转成人工标签或准确率。
 
 - 五个生成模型文件已按原锁完整重算SHA，回执在本机 `manifests/model-verification.json`。四条97帧参考片均完整生成；助手首帧构图筛查拒绝了裁脚的pilot01和手臂已抬起的pilot03。这个筛查不是人工完整观看。
 - 四条参考片Comfy实际执行82.193–88.169秒，均值84.43秒；执行窗内采样到最高5707MiB显存、17.09GiB服务RSS，最低可用物理内存3.22GiB。采样/VAE阶段耗时未知，温度和完整样本数留在 `reports/costs-20261019-first-references.json`，不把这些观测值称为连续峰值。
