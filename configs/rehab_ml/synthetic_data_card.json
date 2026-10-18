@@ -1,0 +1,46 @@
+{
+  "schema_version": "rehab_synthetic_data_card/v1",
+  "dataset_id": "rehab_synthetic_v1",
+  "stage": "pilot_candidates_pending_human_review",
+  "purpose": "Offline shoulder-abduction phase and completion research with frozen pose backends",
+  "storage_root": "E:/ai-video-lab/datasets/rehab_synthetic_v1",
+  "source": "Locally generated fictional adults; no private patient images or user photographs used as reference",
+  "generator": {
+    "repository": "https://github.com/Lightricks/LTX-2",
+    "weights": "LTX-2-19B distilled Q4_K_M",
+    "weight_license": "LTX-2 Community License Agreement, January 5 2026; retain local downloaded license and model receipt",
+    "text_encoder": "Gemma 3 12B IT quantized; separate upstream model terms apply",
+    "pipeline": "ComfyUI with pinned ComfyUI-GGUF and local split-connector nodes",
+    "redistribution_authorized_by_this_card": false
+  },
+  "content": {
+    "default_native_size": [640, 384],
+    "default_fps": 30,
+    "default_frames": 241,
+    "original_videos_immutable": true,
+    "presentation_timestamps": "full source decode and packet cross-check; no fps reconstruction",
+    "prompted_action_is_not_ground_truth": true,
+    "all_synthetic_source_groups_excluded_from_real_test": true
+  },
+  "annotations": {
+    "default": "unknown, independent masks false",
+    "engineering_labels": "actual observed anatomical side, phase intervals, completion and observable repetition count",
+    "eligible_source": "full-video human_operator review linked to video SHA256 and actual frame count",
+    "ai_generated_labels_are_drafts_only": true,
+    "clinical_quality_labels": "masked unless independently qualified review and adjudication are recorded"
+  },
+  "known_risks": [
+    "Generated anatomy, object contact, limb consistency or requested motion can fail",
+    "Fictional appearance, clothing and backgrounds may create shortcuts",
+    "Synthetic phase performance does not establish real-person or clinical accuracy",
+    "Side views can obscure shoulder abduction; preserve view and observability labels",
+    "A manifest declaration cannot independently prove reviewer identity or clinical qualifications",
+    "Existing sports demonstration clips are not human-labeled rehabilitation training ground truth"
+  ],
+  "release": {
+    "raw_video_publication": "not performed",
+    "trained_candidate": "not yet trained from human-reviewed data",
+    "formal_60_clips": "not yet accepted",
+    "product_deployment": "disabled"
+  }
+}

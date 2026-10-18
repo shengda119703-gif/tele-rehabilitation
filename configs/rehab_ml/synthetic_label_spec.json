@@ -1,0 +1,69 @@
+{
+  "schema_version": "rehab_synthetic_label_spec/v1",
+  "source_schema": "rehab_synthetic/v1",
+  "exercise_id": "shoulder_abduction",
+  "annotator": "Actual human operator, watching the original source in full; generated prompts and pose predictions hidden",
+  "side": {
+    "values": ["left", "right"],
+    "definition": "Actual anatomical side visible in the source; never infer from image side or requested prompt",
+    "unknown": null,
+    "mask_default": false
+  },
+  "time_basis": "stream_relative_media_pts",
+  "boundary_rule": "Select an actual decoded frame PTS; do not reconstruct or round to a nominal frame-rate grid",
+  "phases": [
+    {"id": "ready", "meaning": "Visible starting posture before the arm begins moving away from the body"},
+    {"id": "outbound", "meaning": "Visible upper-arm movement away from the starting posture"},
+    {"id": "endpoint_or_hold", "meaning": "Observed upper-arm turning point or maintained endpoint; no prescribed healthy range assumed"},
+    {"id": "return", "meaning": "Visible movement back toward the starting posture"},
+    {"id": "rest_or_other", "meaning": "Rest, returned starting posture or another visible activity; unknown spans remain masked"}
+  ],
+  "phase_interval": {
+    "required": ["phase", "start_s", "end_s", "label_mask"],
+    "end_inclusion": "half-open training interval; original endpoint PTS retained",
+    "overlap": "forbidden",
+    "unobserved_spans": "no supervision; never fill from prompts or model outputs"
+  },
+  "repetition": {
+    "required": ["rep_id", "boundaries", "boundary_masks", "observable_completion", "observable_completion_mask"],
+    "boundaries": ["ready", "outbound", "endpoint_or_hold", "return", "rest_or_other"],
+    "default_boundary_values": null,
+    "default_boundary_masks": false,
+    "completion_default": null,
+    "completion_mask_default": false,
+    "completed": "An observable full raising and lowering process that returns to its visible starting posture; all five ordered boundaries independently confirmed",
+    "partial": "An observable incomplete process; amplitude alone is not completeness",
+    "unobservable": "Unknown completion and false mask; no invented zero or negative"
+  },
+  "observable_count": {
+    "default": null,
+    "mask_default": false,
+    "known_zero": "Only after full-video viewing confirms no complete target repetition",
+    "known_positive": "Must equal the number of explicitly completed observable repetitions in the full inventory",
+    "empty_repetition_list_is_zero": false
+  },
+  "observable_changes": {
+    "examples": ["Visible elbow bending", "Visible torso lateral leaning"],
+    "default_state": "unknown",
+    "default_label_mask": false,
+    "not_a_clinical_error_label": true
+  },
+  "clinical_quality": {
+    "default": "unknown, mask false",
+    "requires": "Two independent qualified human reviewers and a third adjudicator, with source SHA and review evidence",
+    "pain_rom_strength_or_diagnosis_from_generated_images": false
+  },
+  "source_acceptance": {
+    "role": "human_operator",
+    "full_video_watched": true,
+    "source_sha256_and_frame_count_required": true,
+    "identity_claim_is_not_identity_verification": true,
+    "ai_draft_eligible_for_training": false
+  },
+  "evaluation_event_semantics": {
+    "human": "Physically visible phase boundary in source media",
+    "B0": "Unchanged ProtocolEngine confirmation event, including original observation and hysteresis delays",
+    "B2": "Causal model phase transition decoded from arrived source frames",
+    "limitation": "Boundary timing differences include estimator confirmation delay; they are not clinical ROM or diagnostic accuracy"
+  }
+}
