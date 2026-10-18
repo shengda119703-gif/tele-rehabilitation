@@ -115,6 +115,8 @@ HTTP400正文和任务句柄会保存。ACK丢失、超时或失败都不能自�
 
 本机已保存只读可核对草稿`manifests/formal-plan-draft-v1/{request.json,generation-config.json,plan.json}`，plan SHA `d1f8df27a860cdc776178fac1020c3f9e60f7f70837b3fcfcf0f457d549c93ea`；10个新的虚拟人物描述尚未渲染，6/2/2和60槽位仅为请求。`readiness-at-014-raw.json`记录当时尚缺5条所选调试片；后续可追加新时点快照，不覆盖旧草稿、不创建真实freeze。来源独立性须在实际素材/注册图出现后检查，不能从描述不同直接断言。
 
+最新候选选择另存`manifests/formal-plan-draft-v2/{request.json,plan.json,selection-replacement.json}`，plan SHA `068a51176a202819e60f04da291ccc151d92b8570c2c37db49ba4acd3ad3119c`。仅把旧pilot04 D换成其不同保持末图的新版本，v1和全部旧片保留；配方/人物/拆分请求不改，正式D仍是未证明可靠的pose-only。采用新末图方法须另版本配方和冻结，不能直接套用pilot收据。12条候选已实际生成，`formal_generation freeze`在v1/19片和v2/20片时点均实际返回2、`all_twelve_require_saved_human_full_video_review`，未创建冻结文件。收据为`reports/formal-freeze-readiness-at-019-raw-v1.json`、`formal-freeze-readiness-at-020-raw-v2.json`，不是模拟拒绝或实际正式生成成功。
+
 ## 原片与人工参考合同
 
 母片清单为 `manifests/dataset.json`。样本包含sample/source/reference组、lineage、固定split、pilot/formal、动作/实际侧别/视角、原片SHA/尺寸/帧数、timeline路径及SHA、生成模型/工作流/提示词hash与seed。实际侧别未知时保持unknown，不能把生成器请求的左侧直接填为人工确认。
@@ -125,7 +127,7 @@ HTTP400正文和任务句柄会保存。ACK丢失、超时或失败都不能自�
 
 实际工程标签由真实操作者完整观看后填写：
 
-1. 浏览器打开命令输出的`http://127.0.0.1:8190/`，选择随机opaque编号的原片。页面不显示生成目标类别、提示词、骨骼或次数预测。
+1. 浏览器打开本轮审核服务`http://127.0.0.1:8191/`，选择匿名队列中的原片；端口变化以新队列回执为准。旧8190仅保留原页面。页面不显示生成目标类别、提示词、骨骼或次数预测。
 2. 完整观看，必要时用上一帧/下一帧/滑条按实际PTS定位。填写本人标识，主动选择人工来源与实际解剖侧。次数开始为空，确认0次也必须实际清点。
 3. 标可确认阶段区间；逐次边界使用`ready / outbound / endpoint_or_hold / return / rest_or_other`。未知保持null和false mask，不能用休息类填满未知。
 4. 大于0的可确认次数须有对应逐次完成记录；肩外展完整往返要求明确五个边界。幅度小和过程未完成分开，不自动用健康人幅度阈值定错。
@@ -135,6 +137,8 @@ HTTP400正文和任务句柄会保存。ACK丢失、超时或失败都不能自�
 审核记录保存到`annotations/review-versions/<sample_id的SHA256>/<时间及唯一版本>.json`。版本绑定原片/PTS索引SHA、人工annotation SHA、`source_patch`及工程资格结果。`review.load_reviewed(root)`在内存把最新明确决定应用到完整队列，返回manifest、timelines、annotations与eligible_annotations；不会覆盖生成器正在追加的清单。后续训练应调用该接口及`contracts.validate_annotation`，不能只按文件名收集所有JSON作为标签。
 
 当前运行的新审核入口为 `http://127.0.0.1:8191/`；旧8190服务与用户页面未关闭。标签合同v2和数据卡v2的独立外部快照在 `manifests/protocol-configs-v2/`，旧 `protocol-configs/` v1副本未改。旧quality空列表仍表示所有这些观察未知，不能迁移成“未出现”。每份新审核版本绑定合同SHA，服务中途合同变化会拒绝继续写混合版本。
+
+本轮选定12条的匿名队列另存`reports/pilot12-review-queue-v2/`：片段6、8、9、10、12、13、14、15、16、17、18、20。导出器对8191当前GET媒体实际字节计算SHA，再匹配原片，不向审片者输出目标类别、提示词或预测；没有填入身份、观看声明、次数或发送审核POST。v1片段19为旧pilot04 D，仍保留；v2用新片段20替换。token仅绑定当前服务，重启须另导新队列，不能覆盖旧队列或用户未保存内容。实际操作者可接受或排除，排除可保留未知，不要求12条全通过；这些记录仍不是临床专业资格证明。
 
 专业临床质量需另取得两名独立标注者与第三人专业复核及真实资格依据；本地网页没有创造这些人员或授权。独立真人测试参考也不能照着本模型的阶段、次数或骨骼填写。原MobiPhysio导入器保持其原来源资格，不将合成视频改名伪装为公开数据集。
 
@@ -153,7 +157,13 @@ CLI按上述顺序执行；下列Python API可用于进一步审计绑定关系�
 
 ## 当前验证与未完成事项
 
-合成专项197项工程测试已使用本机产品解释器通过，耗时8.555秒；不能当作数据条数或临床标签数量。新增官方工作流测试第一次因Windows默认GBK读取UTF-8文档而真实失败，显式UTF-8读取后整套通过。审核测试用临时真实9帧小视频与显式TEST记录，不写入真实数据根目录。实际9条原片另以CLI完整验证PTS/SHA，报告eligible_annotations=0、accepted_formal_count=0、training_performed=false；它们仍为同一pilot02来源组，不能当9个独立人物。
+最新实际验证为20条人物原片、4个pilot来源组件，全部SHA及真实PTS通过，全部pending；`eligible_annotations=0`、`accepted_formal_count=0`、`training_performed=false`。4组各A/D/E的所选12条人物调试片均已生成并完成全241帧AI及双CPU121/121、0失败检查；实际输入PTS/RGB/JPEG一致。它们均为原生640×384、241帧、30fps；AI/模型诊断不是人工GT或临床准确率。实际CLI报告`reports/pilot-validate-cohort12-repaired-v2.json`，当前选片与历史attempt分开保留，不把20片当20个独立来源。
+
+最终12片证据索引为`reports/pilot12-evidence-index-v2.json`，文件SHA `cc610310488bbfac91e59498391efd7305655c33e0394e7b23c612a1dfc9596b`。它严格读取v2选片，逐片绑定原片SHA、实际run/result、AI报告SHA、双CPU pose/model及共享PTS/RGB/JPEG，另保留历史bad variant和validate/cost/freeze拒绝/匿名队列原件SHA。完整重解码后实读人工版本0、latest human_operator 0、eligible 0；这份AI证据索引不创建或替代人工参考。
+
+完整35个Comfy任务均有成功执行事件：20动作、6参考、9文本条件。动作实际执行129.156–306.182秒，均值255.633秒；观察窗口均值263.791秒；参考实际执行均值84.689秒。成本快照`reports/costs-20261019-cohort12-repaired-v2.json`保留逐任务窗口与采样数；完整模型SHA核验的额外CPU时间不在Comfy执行窗内，采样/VAE各阶段时间未知，观测极值不作连续峰值。
+
+以下保留较早时点的验证记录。197项工程测试曾使用本机产品解释器通过，耗时8.555秒；不能当作数据条数或临床标签数量。新增官方工作流测试第一次因Windows默认GBK读取UTF-8文档而真实失败，显式UTF-8读取后整套通过。审核测试用临时真实9帧小视频与显式TEST记录，不写入真实数据根目录。9片时点的实际CLI报告eligible_annotations=0、accepted_formal_count=0、training_performed=false；它们仍为同一pilot02来源组，不能当9个独立人物。
 
 审核页另以本机已安装Chrome headless、全新临时profile运行工程浏览器QA：桌面1440×1120、窄屏412×1000，实际片单/原片加载与真实视频播放均核对。明亮5:3测试片在Chrome报告videoWidth=160、videoHeight=96，requestVideoFrameCallback确认帧已呈现，timeupdate各2次、currentTime从0增长到约0.56秒，media error=null、seeking=false；画布读取到实际绿色帧像素。CSS object-fit=contain且aspect-ratio=160/96。空白次数/身份/来源选择、未勾选人工观看、未保存参考均保留；JavaScript控制台异常0，两尺寸无横向溢出。截图与原始结果仅留本机忽略目录`.runtime/rehab_ml/review-ui-qa/`，不属于真实人工全片审核或动作验收。
 
@@ -168,9 +178,12 @@ CLI按上述顺序执行；下列Python API可用于进一步审计绑定关系�
 ## 已取得的本机真实运行证据
 
 - 新5模块及独立测试加入后，全部264项专项测试在本机产品Python（未强制UTF-8模式）完整通过，181.748秒，日志`E:/ai-video-lab/synthetic-tests-20261019-formal-endpoint-all-v2.log`。前一轮263过、1项TEST临时目录长短名转换错误，旧失败日志保留；修正测试中的规范化路径后完整重跑。覆盖真实媒体RGB/PTS、未知/人审门、来源闭包、实际首图/缓存采样中变化拒绝发布、注册历史回滚、任务缺失/失败不重投，以及默认旧图不变。
-- 本轮扩到pilot01 A/D/E、pilot03 A/E，实际15条原片仍只有3个来源组件，全部pending；CLI完整SHA/PTS核验为`reports/pilot-validate-expansion-endphoto-v1.json`，合格人工参考和正式样本均0。pilot01 A/E原墙patch首末降约0.688%/0.747%，pilot03 A/E约0.231%/0.0818%；AI全241帧未见明显黑尾，双后端各121/121、0失败。同一D纯姿态方法在pilot01首199.39→末55.85（降71.99%），故暂停原自动队列；提示/骨架/旧人物成功不能替代新人物实测。
+- 扩到pilot01 A/D/E、pilot03 A/E的15片时点仍只有3个来源组件，全部pending；CLI完整SHA/PTS核验为`reports/pilot-validate-expansion-endphoto-v1.json`，合格人工参考和正式样本均0。pilot01 A/E原墙patch首末降约0.688%/0.747%，pilot03 A/E约0.231%/0.0818%；AI全241帧未见明显黑尾，双后端各121/121、0失败。同一D纯姿态方法在pilot01首199.39→末55.85（降71.99%），故暂停原自动队列；提示/骨架/旧人物成功不能替代新人物实测。
 - 不同末图D实际另取旧pilot01 D frame150，真实PTS76800×1/15360=5.000秒，原始RGB未编辑，PNG SHA `a2c8b23d63b4d5e6320e43c73190d7f3438ee4f8fb96ae51487cf18ef68b4e73`。只增加LoadImage37并接node36，仍63→31→241；原片和条件父链全部保留，新原片属于同pilot01/train。新执行Comfy280.724秒、观察285.349秒；56个GPU观测最高5063MiB/90°C，92个内存观测最高17.17GiB服务RSS、最低3.00GiB物理和13.17GiB提交空间，非连续峰值。整进程还含前后完整权重SHA核验，这段不包含在Comfy执行窗；成本快照`reports/costs-20261019-expansion-endphoto-v1.json`保留当时另一个未完成任务，未把其部分窗口算资源。新D已发布并通过完整原片验证，AI初筛仍保持部分抬臂、末帧明亮，实际完整诊断单独保留，不据此改GT或宣称通用黑尾修复。
 - 新D完整诊断已完成，双后端各121/121、0失败、单轨迹、实际输入PTS/RGB/JPEG一致。模型命名左臂YOLO11.19→39.32峰→38.57°末、MP10.23→37.06→36.64°末；B0均预测0，骨段相邻变化超过25%为0。AI全241与原尺寸0/90/240确认保持、镜头稳、头鞋完整、未见黑闪；手指偏软仍保留。同旧D ROI的新原RGB首199.10→末199.89（+0.396%），全程198.25075–200.77037，最暗frame4/0.133秒，没有该区域先黑后亮的证据。报告`reports/assistant-visual-screen/pilot01-D-distinct-endphoto-v1/AI-diagnostic-summary.json`与`old-vs-distinct-endphoto-fixed-wall-comparison-v1.json`，不转成人工标签或准确率。
+- 后续pilot03 D、pilot04 A/E也实际生成并全241帧AI检查；双CPU各121/121、0失败、输入PTS/RGB/JPEG一致、单轨迹、相邻骨段变化超过25%为0。pilot03 D保持且墙首末降约0.134%，04 A/E约0.699%/0.457%；B0对D/E均预测0、对A预测1，不作实际计次。报告在`reports/assistant-visual-screen/remaining-pose-pilot-v2/pilot03-D-v1/`及`pilot04-{A,E}-v1/`；03D实际run是`audit-pilot03-D-cpu-v1`，以`actual-run-binding.json`为准，不用早先未启动的计划ID。
+- pilot04 D纯姿态候选实际全片保持，但固定墙首72.126→末41.592（降42.3345%）；旧raw SHA `8ba38f56432d93392b2edb6a5945bb8d84cb120b2ff5eedcd16398dbbe17b308`保留。另取同片frame120、真实PTS61440×1/15360=4.000秒的未编辑RGB为末图，PNG SHA `4d3d5c2370ae75d41266c4814ef284f84c31a468debd1514f278ac4acd354359`，收据`conditioning-endpoints/pilot04-D-hold-frame120-v1/endpoint.json`。新raw SHA `b798422cfa8e75d0756fd4ca57dd2f6ef508dba9dcd8eccfe44aaa8203943df1`，仍同pilot04/train；实际Comfy267.122秒、观察270.400秒，53个GPU样本最高5064MiB/91°C，87个内存样本最高17.17GiB服务RSS、最低3.12GiB物理/13.97GiB提交空间，非连续峰值。
+- pilot04新D实际run `audit-pilot04-D-endphoto-cpu-v1`，双CPU各121/121、0失败、单轨迹、实际PTS/RGB/JPEG/inferenceRGB一致。AI全241帧及原尺寸0/90/240仍见部分抬臂保持至末，无回程，未见原明显黑尾或明显肢体增失；手指偏软/张开及脚靠近底边仍保留。相同墙ROI首72.181→末68.412（降5.2222%），全片最小67.9955在frame130/4.333秒，最大72.6224在frame17/0.5667秒，因此是改善，不能称恒亮。YOLO命名左上臂9.369→35.274峰→33.848°末，MP11.739→35.719→34.954°末，B0均预测0；不作GT或临床ROM。完整报告`reports/assistant-visual-screen/remaining-pose-pilot-v2/pilot04-D-endphoto-v1/AI-diagnostic-summary.json`，SHA `392748ece6c1c643d7e2502d83151dcdf4dc1d3b156abadb81ffc5d476f7f234`。
 
 - 五个生成模型文件已按原锁完整重算SHA，回执在本机 `manifests/model-verification.json`。四条97帧参考片均完整生成；助手首帧构图筛查拒绝了裁脚的pilot01和手臂已抬起的pilot03。这个筛查不是人工完整观看。
 - 四条参考片Comfy实际执行82.193–88.169秒，均值84.43秒；执行窗内采样到最高5707MiB显存、17.09GiB服务RSS，最低可用物理内存3.22GiB。采样/VAE阶段耗时未知，温度和完整样本数留在 `reports/costs-20261019-first-references.json`，不把这些观测值称为连续峰值。
