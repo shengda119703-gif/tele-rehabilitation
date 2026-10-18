@@ -6,7 +6,7 @@ never claimed to be playable videos or independently human-reviewed actions.
 import json
 import copy
 import io
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from fractions import Fraction
 from pathlib import Path
 import sys
@@ -235,6 +235,33 @@ class GenerationWorkflowTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'separate experiments'):
             g.workflow('TEST','TEST',7,241,'TEST-reference.png',end_guide=True,pose_file='TEST-control.mp4')
 
+    def test_pose_endpoint_builder_rejects_missing_control_image_or_old_endpoint(self):
+        for image,kwargs,message in (
+            ('TEST-reference.png',dict(pose_endpoint=True),'requires verified pose control'),
+            (None,dict(pose_file='TEST-control.mp4',pose_endpoint=True),'screened initial reference'),
+            ('TEST-reference.png',dict(pose_file='TEST-control.mp4',pose_endpoint=True,end_guide=True),'separate experiments')):
+            with self.subTest(image=image,kwargs=kwargs),self.assertRaisesRegex(ValueError,message):
+                g.workflow('TEST','TEST',7,241,image,**kwargs)
+
+    def test_pose_endpoint_adds_only_same_reference_final_guide_to_existing_pose_graph(self):
+        original=g.workflow('TEST-text','TEST-pose',17,241,'TEST-reference.png',pose_file='TEST-control.mp4')
+        explicit=g.workflow('TEST-text','TEST-pose',17,241,'TEST-reference.png',pose_file='TEST-control.mp4',pose_endpoint=False)
+        guided=g.workflow('TEST-text','TEST-pose',17,241,'TEST-reference.png',pose_file='TEST-control.mp4',pose_endpoint=True)
+        self.assertEqual(original,explicit)
+        self.assertEqual(set(guided)-set(original),{'36'})
+        self.assertEqual(guided['36'],dict(class_type='LTXVAddGuide',inputs=dict(
+            positive=['34',0],negative=['34',1],vae=['16',0],latent=['34',2],
+            image=['21',0],frame_idx=240,strength=1.)))
+        self.assertEqual(guided['9']['inputs']['video_latent'],['36',2])
+        self.assertEqual(guided['10']['inputs']['positive'],['36',0])
+        self.assertEqual(guided['10']['inputs']['negative'],['36',1])
+        self.assertEqual(guided['35']['inputs'],dict(positive=['36',0],negative=['36',1],latent=['15',0]))
+        self.assertEqual(guided['19']['inputs']['samples'],['35',2])
+        for node in original:
+            if node not in ('9','10','35'):self.assertEqual(original[node],guided[node],node)
+        self.assertEqual(guided['6']['inputs']['length'],241)
+        self.assertEqual(guided['8']['inputs']['frames_number'],241)
+
     def test_reference_preview_is_distinct_unlabelled_initial_condition(self):
         graph=g.workflow('TEST-profile-text','TEST-reference',7,97)
         self.assertNotIn('21',graph);self.assertNotIn('22',graph)
@@ -323,6 +350,105 @@ class GenerationProvenanceTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError,'separate|motion reference'):
                     g.generate(self.lab,self.root,'TEST://comfy','pilot01',scenario,end_guide=end_guide,pose_control=path)
             api.assert_not_called();execute.assert_not_called();prepare.assert_not_called()
+
+    def test_pose_endpoint_requires_controller_A_or_E_and_no_old_endpoint_before_IO(self):
+        for scenario,kwargs,message in (
+            ('A',dict(pose_endpoint=True),'requires verified pose control'),
+            (None,dict(pose_endpoint=True,pose_control=Path('TEST-control.json')),'scenario A or E'),
+            ('D',dict(pose_endpoint=True,pose_control=Path('TEST-control.json')),'scenario A or E'),
+            ('B',dict(pose_endpoint=True,pose_control=Path('TEST-control.json')),'scenario A or E'),
+            ('A',dict(pose_endpoint=True,pose_control=Path('TEST-control.json'),end_guide=True),'separate experiments')):
+            # A nonexistent dataset proves the gates run before reading model
+            # receipts, touching a controller, caching text, or submitting.
+            with self.subTest(scenario=scenario,kwargs=kwargs),patch.object(g,'api') as api,\
+                    patch.object(g,'execute') as execute,patch.object(g,'prepare_pose_control') as prepare:
+                with self.assertRaisesRegex(ValueError,message):
+                    g.generate(self.lab,self.root/'TEST-missing','TEST://comfy','pilot01',scenario,**kwargs)
+            api.assert_not_called();execute.assert_not_called();prepare.assert_not_called()
+
+    def test_pose_endpoint_still_requires_independently_screened_reference(self):
+        path,_=self.controller()
+        reference=self.root/'references/pilot01.json'
+        record=json.loads(reference.read_text());record['structural_review']['status']='pending'
+        reference.write_text(json.dumps(record),encoding='utf-8')
+        with patch.object(g,'api') as api,patch.object(g,'execute') as execute,\
+                patch.object(g,'prepare_pose_control') as prepare:
+            with self.assertRaisesRegex(ValueError,'structural screen'):
+                g.generate(self.lab,self.root,'TEST://comfy','pilot01','E',pose_control=path,pose_endpoint=True)
+        api.assert_not_called();execute.assert_not_called();prepare.assert_not_called()
+
+    def test_pose_endpoint_A_and_E_have_distinct_names_same_seed_text_control_and_no_GT(self):
+        from tools.rehab_ml.synthetic import contracts
+        path,verified=self.controller()
+        reference=json.loads((self.root/'references/pilot01.json').read_text())
+        # Existing shared provenance must remain unique for both variants.
+        verified[0]['lineage_ids'] += ['reference:'+reference['image_sha256'],
+            'reference_video:'+reference['video']['sha256']]
+        first,second,third=self.contexts()
+        with first,second,third,patch.object(g,'prepare_pose_control',return_value=copy.deepcopy(verified)) as prepare:
+            for scenario in ('A','E'):
+                original=g.generate(self.lab,self.root,'TEST://comfy','pilot01',scenario,pose_control=path)
+                endpoint=g.generate(self.lab,self.root,'TEST://comfy','pilot01',scenario,pose_control=path,pose_endpoint=True)
+                self.assertEqual(endpoint['sample_id'],original['sample_id'].replace('_ref','_endref_ref',1))
+                self.assertIn('_pose'+verified[0]['video_sha256'][:12]+'_endref_ref'+reference['image_sha256'][:12],endpoint['sample_id'])
+                self.assertEqual(original['generation']['seed'],endpoint['generation']['seed'])
+                self.assertEqual(original['generation']['prompt'],endpoint['generation']['prompt'])
+                self.assertEqual(original['generation']['conditioning_key'],endpoint['generation']['conditioning_key'])
+                self.assertEqual(original['generation']['pose_control'],endpoint['generation']['pose_control'])
+                self.assertEqual(original['lineage_ids'],endpoint['lineage_ids'])
+                self.assertEqual(len(endpoint['lineage_ids']),len(set(endpoint['lineage_ids'])))
+                self.assertNotEqual(original['generation']['workflow_sha256'],endpoint['generation']['workflow_sha256'])
+                old=original['generation']['guidance'];new=endpoint['generation']['guidance']
+                self.assertEqual(old['version'],'rehab_ltx19_pose_video_guidance/v1')
+                self.assertNotIn('endpoint_reference',old)
+                self.assertEqual(new['version'],'rehab_ltx19_pose_video_guidance/v2')
+                self.assertTrue(new['endpoint_reference']);self.assertTrue(new['same_reference_for_first_and_last'])
+                self.assertEqual(new['endpoint_guide_frame_index'],240)
+                self.assertEqual(new['appended_guide_latent_frames'],32)
+                self.assertEqual(new['sampled_video_latent_frames'],63)
+                self.assertEqual(new['cropped_video_latent_frames'],31)
+                self.assertEqual(new['expected_decoded_frames'],241)
+                for field in ('endpoint_fade_fix_guaranteed','local_endpoint_reference_inference_verified',
+                              'creates_labels','independent_motion_ground_truth','output_action_completion_guaranteed'):
+                    self.assertFalse(new[field],field)
+                self.assertEqual(endpoint['status'],'pending');self.assertEqual(endpoint['side'],'unknown')
+                for field in ('observable_count','phase_intervals','repetitions','quality','acceptance'):
+                    self.assertNotIn(field,endpoint)
+        self.assertEqual(prepare.call_count,8)
+        self.assertFalse(list((self.root/'annotations').iterdir()))
+        manifest=json.loads((self.root/'manifests/dataset.json').read_text())
+        self.assertEqual(contracts.validate_manifest(manifest)['sample_count'],4)
+
+    def test_pose_endpoint_completed_candidate_recovers_same_hash_without_resubmission(self):
+        path,verified=self.controller();first,second,third=self.contexts()
+        with first,second,third,patch.object(g,'prepare_pose_control',return_value=copy.deepcopy(verified)):
+            previous=g.generate(self.lab,self.root,'TEST://comfy','pilot01','E',pose_control=path,pose_endpoint=True)
+        timeline=Path(previous['video']['timeline_path']);before=timeline.read_bytes()
+        with patch.object(g,'prepare_pose_control',return_value=copy.deepcopy(verified)) as prepare,\
+                patch.object(g,'api') as api,patch.object(g,'execute') as execute,\
+                patch('tools.rehab_ml.synthetic.video.probe_video',side_effect=self.probe) as probe:
+            recovered=g.generate(self.lab,self.root,'TEST://comfy','pilot01','E',pose_control=path,pose_endpoint=True)
+        self.assertEqual(previous,recovered)
+        self.assertEqual(timeline.read_bytes(),before)
+        prepare.assert_called_once();api.assert_not_called();execute.assert_not_called()
+        probe.assert_called_once_with(previous['video']['path'])
+        graph=next(graph for name,graph in self.jobs if name==previous['sample_id'])
+        self.assertEqual(previous['generation']['workflow_sha256'],g.canonical(graph))
+        self.assertIn('36',graph)
+        changed=copy.deepcopy(verified);changed[2]['trajectory_sha256']='f'*64
+        with patch.object(g,'prepare_pose_control',return_value=changed),patch.object(g,'api') as api,patch.object(g,'execute') as execute:
+            with self.assertRaisesRegex(ValueError,'pose-conditioned candidate provenance changed'):
+                g.generate(self.lab,self.root,'TEST://comfy','pilot01','E',pose_control=path,pose_endpoint=True)
+        api.assert_not_called();execute.assert_not_called()
+
+    def test_pose_endpoint_control_change_during_sampling_cannot_publish(self):
+        path,verified=self.controller();changed=copy.deepcopy(verified);changed[2]['controller_seed']=18
+        first,second,third=self.contexts()
+        with first,second,third,patch.object(g,'prepare_pose_control',side_effect=[verified,changed]):
+            with self.assertRaisesRegex(ValueError,'changed during generation'):
+                g.generate(self.lab,self.root,'TEST://comfy','pilot01','E',pose_control=path,pose_endpoint=True)
+        self.assertEqual(json.loads((self.root/'manifests/dataset.json').read_text())['samples'],[])
+        self.assertFalse(list((self.root/'raw').glob('*.mp4')))
 
     def test_controller_group_scenario_and_reference_mismatch_reject_before_submission(self):
         from tools.rehab_ml.synthetic.control import VERSION as CONTROL_VERSION
@@ -631,6 +757,44 @@ class GenerationProvenanceTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'structural'):
                 g.generate(self.lab,self.root,'TEST://comfy','pilot01','A')
         self.assertEqual(self.jobs,[])
+
+
+class GenerationCliTests(unittest.TestCase):
+    def test_pose_endpoint_invalid_requests_reject_before_initialization_lock_or_queue(self):
+        cases=(
+            ['pilot','--pose-end-reference'],
+            ['references','--groups','pilot01','--scenarios','A','--pose-control','TEST.json','--pose-end-reference'],
+            ['pilot','--groups','pilot01','--scenarios','D','--pose-control','TEST.json','--pose-end-reference'],
+            ['pilot','--groups','pilot01','--scenarios','A','--pose-control','TEST.json','--pose-end-reference','--end-guide'],
+            ['pilot','--groups','pilot01','pilot02','--scenarios','E','--pose-control','TEST.json','--pose-end-reference'],
+            ['pilot','--groups','pilot01','--scenarios','A','E','--pose-control','TEST.json','--pose-end-reference'],
+        )
+        for arguments in cases:
+            with self.subTest(arguments=arguments),patch.object(sys,'argv',['TEST-generation',*arguments]),\
+                    patch.object(sys,'stderr',io.StringIO()),patch.object(g,'initialize') as initialize,\
+                    patch.object(g,'generation_lock') as lock,patch.object(g,'reconnect_queue') as reconnect,\
+                    patch.object(g,'generate') as generate,patch.object(g,'api') as api:
+                with self.assertRaises(SystemExit) as rejected:g.main()
+            self.assertEqual(rejected.exception.code,2)
+            initialize.assert_not_called();lock.assert_not_called();reconnect.assert_not_called()
+            generate.assert_not_called();api.assert_not_called()
+
+    def test_pose_endpoint_cli_dispatches_one_pilot_A_or_E_without_altering_other_options(self):
+        for scenario in ('A','E'):
+            arguments=['TEST-generation','pilot','--groups','pilot01','--scenarios',scenario,
+                '--pose-control','TEST-control.json','--pose-end-reference',
+                '--root','TEST-root','--lab','TEST-lab','--base','TEST://comfy']
+            with self.subTest(scenario=scenario),patch.object(sys,'argv',arguments),\
+                    patch.object(g,'initialize') as initialize,patch.object(g,'generation_lock',return_value=nullcontext()) as lock,\
+                    patch.object(g,'reconnect_queue') as reconnect,patch.object(g,'generate') as generate,\
+                    patch.object(g,'api') as api:
+                g.main()
+            initialize.assert_called_once_with(Path('TEST-root'))
+            lock.assert_called_once_with(Path('TEST-root'))
+            reconnect.assert_called_once_with('TEST://comfy',Path('TEST-root'))
+            generate.assert_called_once_with(Path('TEST-lab'),Path('TEST-root'),'TEST://comfy','pilot01',scenario,
+                attempt=1,reference_attempt=1,end_guide=False,pose_control=Path('TEST-control.json'),pose_endpoint=True)
+            api.assert_called_once_with('TEST://comfy','/free',{'unload_models':True,'free_memory':True})
 
 
 if __name__=='__main__':unittest.main()

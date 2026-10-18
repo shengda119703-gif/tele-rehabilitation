@@ -14,6 +14,7 @@ import re
 from .guidance import with_first_last_reference,validate_decoded_result
 
 VERSION='rehab_ltx19_pose_video_guidance/v1'
+ENDPOINT_VERSION='rehab_ltx19_pose_video_guidance/v2'
 POSE_LORA_NAME='ltx-2-19b-ic-lora-pose-control.safetensors'
 DISTILLED_SIGMAS=(1.,.99375,.9875,.98125,.975,.909375,.725,.421875,0.)
 OFFICIAL_EVIDENCE=dict(
@@ -38,7 +39,9 @@ def _control_file(value):
 
 
 def pose_guidance_contract(frames=241,*,control_file=None,control_sha256=None,lora_name=POSE_LORA_NAME,
-                           lora_strength=1.,guide_strength=1.):
+                           lora_strength=1.,guide_strength=1.,endpoint_reference=False):
+    if type(endpoint_reference) is not bool:
+        raise ValueError('explicit_boolean_endpoint_reference_required')
     if type(frames) is not int or not 9<=frames<=1000 or (frames-1)%8:
         raise ValueError('native_LTX_8n_plus_1_motion_frame_count_required')
     if lora_name!=POSE_LORA_NAME:raise ValueError('pinned_LTX2_19B_pose_IC_LoRA_only_no_2_5_substitution')
@@ -49,7 +52,7 @@ def pose_guidance_contract(frames=241,*,control_file=None,control_sha256=None,lo
     if control_sha256 is not None and (not isinstance(control_sha256,str) or re.fullmatch(r'[0-9a-f]{64}',control_sha256) is None):
         raise ValueError('control_source_sha256_required_when_supplied')
     latent=(frames-1)//8+1
-    return dict(version=VERSION,experimental=True,requested_frames=frames,control_file=control_file,
+    result=dict(version=VERSION,experimental=True,requested_frames=frames,control_file=control_file,
         control_sha256=control_sha256,lora_name=lora_name,lora_strength=float(lora_strength),
         guide_strength=float(guide_strength),guide_frame_index=0,reference_downscale_factor=1,
         original_video_latent_frames=latent,appended_guide_latent_frames=latent,
@@ -67,18 +70,30 @@ def pose_guidance_contract(frames=241,*,control_file=None,control_sha256=None,lo
         decoded_frames_must_be_independently_verified=True,control_is_requested_not_observed=True,
         output_action_completion_guaranteed=False,creates_labels=False,independent_motion_ground_truth=False,
         loop_reverse_splice_or_interpolation=False)
+    if endpoint_reference:
+        result.update(version=ENDPOINT_VERSION,endpoint_reference=True,
+            same_reference_for_first_and_last=True,
+            endpoint_reference_image='same_LoadImage_21_used_for_first_frame',
+            endpoint_guide_frame_index=frames-1,endpoint_guide_strength=1.,
+            pose_guide_latent_frames=latent,endpoint_guide_latent_frames=1,
+            appended_guide_latent_frames=latent+1,sampled_video_latent_frames=2*latent+1,
+            endpoint_fade_fix_guaranteed=False,local_endpoint_reference_inference_verified=False,
+            ordering='pose_guide_then_same_reference_endpoint_then_AV_merge_then_sample_then_video_separate_then_crop_then_cache_decode')
+    return result
 
 
-def with_pose_video(graph,control_file,frames=241,lora_name=POSE_LORA_NAME,lora_strength=1.,guide_strength=1.):
+def with_pose_video(graph,control_file,frames=241,lora_name=POSE_LORA_NAME,lora_strength=1.,guide_strength=1.,
+                    *,endpoint_reference=False):
     """Guide every original video frame and crop only appended latent context.
 
     The caller must verify the control video's SHA/geometry/RGB/real PTS before
     submitting this graph. The graph itself is only a pure, non-executing plan.
-    It is mutually exclusive with the endpoint-guide transform.
+    The optional endpoint uses the same first-frame photo after the pose guide.
+    Already transformed input graphs are refused, including endpoint-only ones.
     """
     _control_file(control_file)
     pose_guidance_contract(frames,control_file=control_file,lora_name=lora_name,
-        lora_strength=lora_strength,guide_strength=guide_strength)
+        lora_strength=lora_strength,guide_strength=guide_strength,endpoint_reference=endpoint_reference)
     # Reuse the strict original I2V/AV/cache topology validation. The endpoint
     # graph returned by this helper is deliberately NOT used or submitted.
     with_first_last_reference(graph,frames=frames,strength=guide_strength)
@@ -87,6 +102,8 @@ def with_pose_video(graph,control_file,frames=241,lora_name=POSE_LORA_NAME,lora_
         raise ValueError('pinned_single_stage_pose_control_profile_requires_640x384')
     if any(str(n) in result for n in range(31,36)):
         raise ValueError('pose_guidance_node_ids_31_through_35_already_in_use')
+    if '36' in result:
+        raise ValueError('pose_endpoint_node_id_36_already_in_use')
     model=result['1']
     if (model.get('class_type')!='LabLTXGGUFLoader'
             or model.get('inputs',{}).get('unet_name')!='ltx-2-19b-distilled_Q4_K_M.gguf'
@@ -105,6 +122,12 @@ def with_pose_video(graph,control_file,frames=241,lora_name=POSE_LORA_NAME,lora_
     result['13']['inputs']['sigmas']=', '.join(str(value) for value in DISTILLED_SIGMAS)
     result['35']=dict(class_type='LTXVCropGuides',inputs=dict(positive=['34',0],negative=['34',1],latent=['15',0]))
     result['19']['inputs']['samples']=['35',2]
+    if endpoint_reference:
+        result['36']=dict(class_type='LTXVAddGuide',inputs=dict(positive=['34',0],negative=['34',1],
+            vae=['16',0],latent=['34',2],image=['21',0],frame_idx=frames-1,strength=1.))
+        result['9']['inputs']['video_latent']=['36',2]
+        result['10']['inputs'].update(positive=['36',0],negative=['36',1])
+        result['35']['inputs'].update(positive=['36',0],negative=['36',1])
     return result
 
 

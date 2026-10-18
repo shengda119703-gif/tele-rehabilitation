@@ -146,9 +146,13 @@ def api(base, route, payload=None):
         return json.loads(raw) if raw else {}
 
 
-def workflow(key, name, seed, frames, image=None, *, end_guide=False, pose_file=None):
-    if end_guide and pose_file:
+def workflow(key, name, seed, frames, image=None, *, end_guide=False, pose_file=None, pose_endpoint=False):
+    if end_guide and (pose_file or pose_endpoint):
         raise ValueError('Endpoint and full-pose guidance are separate experiments')
+    if pose_endpoint and not pose_file:
+        raise ValueError('Pose endpoint reference requires verified pose control')
+    if pose_endpoint and not image:
+        raise ValueError('Pose endpoint reference requires the same screened initial reference image')
     # Same pinned split-connector GGUF loader and AV sampler as the verified lab.
     nodes = {}
     def add(number, kind, **inputs):
@@ -180,6 +184,8 @@ def workflow(key, name, seed, frames, image=None, *, end_guide=False, pose_file=
         return with_first_last_reference(nodes,frames=frames)
     if pose_file:
         from .pose_guidance import with_pose_video
+        if pose_endpoint:
+            return with_pose_video(nodes,pose_file,frames=frames,endpoint_reference=True)
         return with_pose_video(nodes,pose_file,frames=frames)
     return nodes
 
@@ -311,18 +317,25 @@ def prepare_pose_control(lab, root, path, group, scenario, reference_record):
     return control,filename,metadata
 
 
-def generate(lab, root, base, group, scenario=None, *, attempt=1, reference_attempt=1, end_guide=False, pose_control=None):
+def generate(lab, root, base, group, scenario=None, *, attempt=1, reference_attempt=1, end_guide=False, pose_control=None, pose_endpoint=False):
+    is_reference=scenario is None
+    if pose_endpoint:
+        if not pose_control:
+            raise ValueError('Pose endpoint reference requires verified pose control')
+        if is_reference or scenario not in ('A','E'):
+            raise ValueError('Pose endpoint reference requires motion scenario A or E with the same initial and final reference')
+        if end_guide:
+            raise ValueError('Pose endpoint reference and old endpoint guidance are separate experiments')
+    if is_reference and end_guide:
+        raise ValueError('End guidance requires an independently screened reference image')
+    if pose_control and (is_reference or end_guide):
+        raise ValueError('Pose control requires a motion reference and is separate from endpoint guidance')
     import av
     receipt=json.loads((root/'manifests/model-verification.json').read_text(encoding='utf-8'))
     for item in receipt['models']:
         stat=Path(item['path']).stat()
         if (stat.st_size,stat.st_mtime_ns)!=(item['size'],item['mtime_ns']):
             raise ValueError('Pinned model changed since verification')
-    is_reference=scenario is None
-    if is_reference and end_guide:
-        raise ValueError('End guidance requires an independently screened reference image')
-    if pose_control and (is_reference or end_guide):
-        raise ValueError('Pose control requires a motion reference and is separate from endpoint guidance')
     prompt_version=VERSION
     suffix=revision(attempt)
     text=prompt('shoulder_abduction',scenario or 'A',PROFILES[group] if is_reference else None)
@@ -360,12 +373,15 @@ def generate(lab, root, base, group, scenario=None, *, attempt=1, reference_atte
         name+='_endguide'
     if control_record:
         name+='_pose'+control_record['video_sha256'][:12]
+    if pose_endpoint:
+        name+='_endref'
     if reference_record:
         name+='_ref'+reference_record['image_sha256'][:12]
     result_path=root/'manifests'/(name+'.json')
     key='rehab_'+hashlib.sha256((prompt_version+text).encode()).hexdigest()[:24]
     seed=2026101900+list(PROFILES).index(group)*100+({'A':1,'B':2,'C':3,'D':4,'E':5,'F':6}.get(scenario,0))+(attempt-1)*10000
-    graph=workflow(key,name,seed,97 if is_reference else 241,reference,end_guide=end_guide,pose_file=control_file)
+    graph=workflow(key,name,seed,97 if is_reference else 241,reference,end_guide=end_guide,pose_file=control_file,
+        **({'pose_endpoint':True} if pose_endpoint else {}))
     if result_path.exists():
         record=json.loads(result_path.read_text(encoding='utf-8'))
         provenance=record['generation']
@@ -428,7 +444,7 @@ def generate(lab, root, base, group, scenario=None, *, attempt=1, reference_atte
         from .pose_guidance import pose_guidance_contract
         record['generation']['pose_control']=control_metadata
         record['generation']['guidance']=pose_guidance_contract(241,control_file=control_file,
-            control_sha256=control_record['video_sha256'])
+            control_sha256=control_record['video_sha256'],**({'endpoint_reference':True} if pose_endpoint else {}))
         record['lineage_ids']=list(dict.fromkeys(record['lineage_ids']+control_record['lineage_ids']))
     if is_reference:
         from .video import probe_video
@@ -491,11 +507,14 @@ def main():
     parser.add_argument('--reference-attempt',type=int,default=1)
     parser.add_argument('--end-guide',action='store_true',help='Experimental same-reference last-frame guidance; no motion correctness guarantee')
     parser.add_argument('--pose-control',type=Path,help='Verified non-GT controller receipt for a single group/scenario')
+    parser.add_argument('--pose-end-reference',action='store_true',help='Experimental same-reference final guide after full pose control; only A/E, no fade or motion guarantee')
     parser.add_argument('--scenarios',nargs='+',choices=list('ABCDEF'),default=['A','D','E'])
     parser.add_argument('--port',type=int,default=8190)
     args=parser.parse_args()
     if args.pose_control and (args.command!='pilot' or len(args.groups)!=1 or len(args.scenarios)!=1):
         parser.error('--pose-control requires pilot, exactly one --groups entry and one --scenarios entry')
+    if args.pose_end_reference and (not args.pose_control or args.end_guide or args.scenarios[0] not in ('A','E')):
+        parser.error('--pose-end-reference requires --pose-control, scenario A or E, and cannot be mixed with --end-guide')
     initialize(args.root)
     if args.command=='verify-models':
         verify_models(args.lab,args.root)
@@ -507,7 +526,8 @@ def main():
             reconnect_queue(args.base,args.root)
             for group in args.groups:
                 for scenario in ([None] if args.command=='references' else args.scenarios):
-                    generate(args.lab,args.root,args.base,group,scenario,attempt=args.attempt,reference_attempt=args.reference_attempt,end_guide=args.end_guide,pose_control=args.pose_control)
+                    generate(args.lab,args.root,args.base,group,scenario,attempt=args.attempt,reference_attempt=args.reference_attempt,end_guide=args.end_guide,pose_control=args.pose_control,
+                        **({'pose_endpoint':True} if args.pose_end_reference else {}))
             api(args.base,'/free',{'unload_models':True,'free_memory':True})
 
 

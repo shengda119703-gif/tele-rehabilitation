@@ -21,7 +21,7 @@
 | `costs.py` | 同一任务句柄的真实Comfy事件计时，按执行窗对齐GPU/内存观测样本 | 观测极值不是连续峰值，不能凭总时长虚构采样/VAE各阶段时间 |
 | `guidance.py` | 原生首帧I2V加同图末帧引导，AV采样后裁掉附加guide再解码；记录新工作流和派生关系 | 实验引导不保证单臂、回位或人体正确，不循环、倒放、拼接母片冒充动作 |
 | `control.py` | 实际参考帧冻结预测→单臂刚性链OpenPose18控制视频；分组/seed决定时序；完整RGB/PTS/来源与轨迹SHA核验；当前仅收显式pilot/train来源 | 控制角度、时刻、目标类别不是成片标签；共享算法版本不作为共同来源 |
-| `pose_guidance.py` | 固定19B姿态IC-LoRA、原生全帧guide、8步euler与采样后CropGuides；纯图构建及本机执行证据分开 | 本机一次运行不能证明任意分辨率/显存都支持，身体控制也不保证手指细节或动作精确 |
+| `pose_guidance.py` | 固定19B姿态IC-LoRA、原生全帧guide、8步euler与采样后CropGuides；可选同图末帧参考用独立v2，默认v1不变；纯图与执行证据分开 | 本机一次运行不能证明任意分辨率/显存都支持，身体控制也不保证手指细节、动作精确或渐暗必消失 |
 
 正式产品姿态权重、动作状态机、计次、剂量、患者历史、APK、云端与Qt UI不因上述离线工具而替换或启用候选权重。GPU模型服务仍运行于独立生成环境；姿态控制校验客户端使用已有产品Python的CPU OpenCV/PyAV，未给产品环境安装生成模型或更换依赖。生成与模型训练分时执行。
 
@@ -75,6 +75,10 @@
 
 # GPU服务仍是8188独立环境；以下只是使用已有CPU依赖的校验/API客户端。
 & '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -m tools.rehab_ml.synthetic.generation pilot --groups pilot02 --scenarios A --pose-control 'E:/ai-video-lab/datasets/rehab_synthetic_v1/controllers/pilot02-body18-control-v1-A/A/receipt.json'
+
+# 同一控制/seed/文本的新试验：追加同参考图到末帧，独立_endref名称。
+# 仅允许A/E，D保持抬臂时不能用垂臂原图作为末帧条件。
+& '.\rehab_codex_single_camera_v2_1\.venv\Scripts\python.exe' -X utf8 -m tools.rehab_ml.synthetic.generation pilot --groups pilot02 --scenarios E --pose-control 'E:/ai-video-lab/datasets/rehab_synthetic_v1/controllers/pilot02-body18-control-v1-DE/E/receipt.json' --pose-end-reference
 ```
 
 HTTP400正文和任务句柄会保存。ACK丢失、超时或失败都不能自动重发同一个生成任务；先查看已有句柄和错误。完成后再次核验控制输入，生成清单去重来源token并保留每个不同实际来源。
@@ -117,13 +121,15 @@ CLI按上述顺序执行；下列Python API可用于进一步审计绑定关系�
 
 ## 当前验证与未完成事项
 
-合成专项183项工程测试已使用本机产品解释器通过，耗时11.364秒；不能当作数据条数或临床标签数量。新增官方工作流测试第一次因Windows默认GBK读取UTF-8文档而真实失败，显式UTF-8读取后整套通过。审核测试用临时真实9帧小视频与显式TEST记录，不写入真实数据根目录。实际5条原片另以CLI完整验证PTS/SHA，报告eligible_annotations=0、accepted_formal_count=0、training_performed=false。
+合成专项197项工程测试已使用本机产品解释器通过，耗时8.555秒；不能当作数据条数或临床标签数量。新增官方工作流测试第一次因Windows默认GBK读取UTF-8文档而真实失败，显式UTF-8读取后整套通过。审核测试用临时真实9帧小视频与显式TEST记录，不写入真实数据根目录。实际9条原片另以CLI完整验证PTS/SHA，报告eligible_annotations=0、accepted_formal_count=0、training_performed=false；它们仍为同一pilot02来源组，不能当9个独立人物。
 
 审核页另以本机已安装Chrome headless、全新临时profile运行工程浏览器QA：桌面1440×1120、窄屏412×1000，实际片单/原片加载与真实视频播放均核对。明亮5:3测试片在Chrome报告videoWidth=160、videoHeight=96，requestVideoFrameCallback确认帧已呈现，timeupdate各2次、currentTime从0增长到约0.56秒，media error=null、seeking=false；画布读取到实际绿色帧像素。CSS object-fit=contain且aspect-ratio=160/96。空白次数/身份/来源选择、未勾选人工观看、未保存参考均保留；JavaScript控制台异常0，两尺寸无横向溢出。截图与原始结果仅留本机忽略目录`.runtime/rehab_ml/review-ui-qa/`，不属于真实人工全片审核或动作验收。
 
 截至本文记录：**没有真实人工审核记录、正式60条肩外展合格集、目标域B0/B2训练与独立真人效果比较的完成证据**。原有正面/侧面六条深蹲、步行、硬拉成片是此前工程演示，未取得本方案人工GT，不能计入肩外展训练集。各参考图、pilot候选与GPU任务状态应查本机当前任务句柄、原片与清单；本文不将“已排队”或“有视频文件”写成“已合格”。
 
 下一道真实验收门槛是可用参考构图、12条调试片的完整筛片及真实工程阶段/次数标注。满足后才能更新正式来源分组、生成60条候选并按实际合格/排除记录补齐；人审未完成时可以完善工具，不能伪造人工身份或模型改进结果。
+
+正式自动生成入口尚未完成：当前 `generation.py` 只有4组pilot人物，输出固定pilot/train，`control.py`也只允许pilot/train。来源冻结与正式60条训练资格合同已经实现，不能因此把正式10组6/2/2生成能力写成可用。后续须先通过真实pilot人审门，再实现读取冻结正式组/参考/划分的生成入口及正式控制来源验证，保留补片与失败来源关联；不能直接改stage字段充当正式数据。
 
 还须在扩量前冻结“实际覆盖”的事实标准：`scenario`仅为生成目标；完整/慢速/保持/部分/无关/可观察变化可能重叠，不能把目标A–F的槽位当作六类实际标签。当前训练报告明确标记 `requested_generation_targets_only` 和 `observed_scenario_coverage='not_established_by_this_command'`；命令完成仅指该流水线执行。F类两项可观察变化的独立可评价性/时段入口已补，实际人工记录仍为0，不宣称覆盖已完成。双侧事实允许归档，但未拆成明确单侧参考前不能进入此单侧TCN。
 
@@ -141,4 +147,10 @@ CLI按上述顺序执行；下列Python API可用于进一步审计绑定关系�
 - 实际双后端入口首次拒绝新A片的重复 `reference_video` 来源token；保留失败run、元数据修复前后完整快照及变更回执 `manifests/metadata-corrections/pose-A-lineage-dedup-v1/`，仅去除完全相同token，来源集合/原片/PTS/标签未变。修复后CLI实际验证5条原片通过；新生成器和回归测试防止重复再现。
 - pilot01/pilot03已另生成wide-v2参考attempt2，原失败参考未覆盖。助手首帧看见全身和双臂垂下；pilot03新图鞋底仍只有约2–3px边距，保留风险，不算最终人审通过。连同pilot02/pilot04，4组实际参考CPU YOLO均49/49检出，12条程序控制视频已独立逐帧验证PTS/RGB与刚性轨迹，4组未共享来源token。这里的12条是骨架指令，不是12条合格人物视频；来源审查侧车的前后快照与CPU报告均保留。
 - 新8191实际v2审核页另以独立临时Chrome只读验证：5条匿名片单，姿态控制A片媒体SHA与原片一致，640×384、8.033秒实际呈现，逐帧PTS定位误差小于1微秒。两观察项全部unknown/mask=false，身份/角色/次数空且未勾观看，POST与控制台异常均0。证据在本机`.runtime/rehab_ml/review-ui-qa/qa-actual-pose-v2.json`及`actual-pose-v2-desktop.png`；未产生人审记录。
+- 姿态控制D/E也已实际完成，Comfy分别283.181/288.373秒；全部原生640×384/241帧/30fps。双CPU后端各121/121检出、0失败、实际帧像素一致。D模型左上臂YOLO约16.98→34.69峰→34.51°末，实际保持而无回程，背景亮度下降约2.4%；E双臂基本静止，腕点最大偏移约3.33px，但7–8秒明显渐暗，墙面固定区域均值约122.08→24.37（约80%下降）。两条B0均预测0次，不是人工真值。E存在明显场景捷径风险，未按这条路径直接扩批。原报告及D联系表初版画布裁切错误的修正回执全部保留，见 `reports/assistant-visual-screen/pilot02-pose-{D,E}-v1/`。
+- A/D/E三条骨架试片完成后，CLI验证7条原片及真实PTS/SHA全部通过，人工/正式合格数仍0；它们均来自同1个pilot02来源组，不能当7个独立来源。报告 `reports/pilot-validate-pose-ADE-v1.json` 与 `reports/costs-20261019-pose-ADE-v1.json` 记录这一时点。下一试验仅增加原生末帧参考约束检验渐暗，未预先宣称有效。
+- 为检验E黑尾，独立v2在全帧姿态guide后追加同参考PNG到frame240；原31视频latent＋31姿态guide＋1末图＝63，使用最新条件在Separate VIDEO后裁去32份guide，回到31→241帧。纯图v1 golden SHA未变；本机原生源码的独立CPU张量复核（VAE形状stub，无模型）与实际提交图核验在 `reports/pose-preflight/native-pose-endref-chain-v1/`。如果Crop误接旧34条件会残留1份guide，回归测试明确拒绝这一连线。
+- 新E末图试验实际成功，原生241帧、640×384/30fps，观察总时长270.512秒。同一人物、seed、文本和骨架指令，仅增末图条件。全241帧AI筛查未见黑尾、切镜或新增肢体，双后端121/121检出、0失败、B0均预测0；腕点最大偏移约2.78px。固定同一墙patch的原RGB首尾均值122.97→121.90（下降约0.87%），旧E为122.08→24.37（下降约80.04%）；没有做亮度归一化。该结果是单次AI诊断，不能当人工GT、通用因果保证或人物结构合格证明。脚靠近下缘、手指细节软仍保留。报告在 `reports/assistant-visual-screen/pilot02-pose-E-endref-v1/`；现有人物原片8条，仍同1个来源组，人体A抬放的末图变体另做实际试验，不能用静止成功证明动态也成功。
+- 新E该固定patch全部241帧均值范围121.90–124.20（最暗frame240/8.000秒，最亮frame70/2.333秒），没有这个区域先变暗再回亮的证据；不据此排除其他局部闪烁。Comfy实际执行263.718秒；执行窗53个GPU样本观察最高5095MiB，86个内存样本最低3.37GiB可用物理、13.16GiB可用提交空间，非连续峰值。此v2在本机一次实际完成的证据另存成本报告和提交图，不把纯图合同的默认未验证字段改成普遍支持声明。
+- 动态A的末图变体也实际完成，Comfy272.985秒、观察总时长285.454秒，原生241帧。双后端121/121检出、0失败、实际像素一致；模型命名左臂YOLO约16.79→66.48峰→17.28°末、MediaPipe约12.26→69.02峰→12.82°末，两条B0均预测1次。AI全241帧仍看见单臂抬放、对侧基本静止，无明显推近、切镜、新增肢体或黑闪；手指偏软、脚贴底风险保留。相同固定wall patch全部241帧范围121.83–124.06，首122.82→末121.83（降约0.81%），旧A首末降约34.72%。这里只比较实际观察，不把同seed等同于不同latent形状下的逐元素相同噪声，也不宣称通用因果效应。报告 `reports/assistant-visual-screen/pilot02-pose-A-endref-v1/`；整批9条SHA/PTS验证为 `reports/pilot-validate-pose-endrefs-v1.json`，成本为 `reports/costs-20261019-pose-endrefs-v1.json`。其余3组9个目标槽位使用A/E末图v2、D纯姿态v1条件继续pilot，不据此跳过实际筛查/人审或开始正式60条。
 - 实际8190审核页以全新Chrome临时profile只读核验：片单4条，前三条均真实呈现640×384、241帧、8.033秒，真实PTS定位误差小于1微秒，无媒体/控制台错误；未填身份或次数，未勾观看，未发审核POST。证据留在本机`.runtime/rehab_ml/review-ui-qa/qa-actual-pilot.json`及`actual-pilot-desktop.png`。新增片后的旧token保留；该浏览器验证不是人审或动作验收。
