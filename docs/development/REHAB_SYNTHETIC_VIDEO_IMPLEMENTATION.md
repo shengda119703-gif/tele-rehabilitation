@@ -99,7 +99,7 @@ CLI按上述顺序执行；下列Python API可用于进一步审计绑定关系�
 
 ## 当前验证与未完成事项
 
-合成专项145项工程测试已使用本机产品解释器通过，耗时6.343秒；不能当作数据条数或临床标签数量。审核测试用临时真实9帧小视频与显式TEST记录，不写入真实数据根目录。真实数据根另以CLI完整验证3条原片/PTS/SHA，报告eligible_annotations=0、accepted_formal_count=0、training_performed=false。
+合成专项145项工程测试已使用本机产品解释器通过，耗时6.343秒；不能当作数据条数或临床标签数量。审核测试用临时真实9帧小视频与显式TEST记录，不写入真实数据根目录。首批3条原片曾另以CLI完整验证PTS/SHA，报告eligible_annotations=0、accepted_formal_count=0、training_performed=false；随后又取得1条末帧引导试片。
 
 审核页另以本机已安装Chrome headless、全新临时profile运行工程浏览器QA：桌面1440×1120、窄屏412×1000，实际片单/原片加载与真实视频播放均核对。明亮5:3测试片在Chrome报告videoWidth=160、videoHeight=96，requestVideoFrameCallback确认帧已呈现，timeupdate各2次、currentTime从0增长到约0.56秒，media error=null、seeking=false；画布读取到实际绿色帧像素。CSS object-fit=contain且aspect-ratio=160/96。空白次数/身份/来源选择、未勾选人工观看、未保存参考均保留；JavaScript控制台异常0，两尺寸无横向溢出。截图与原始结果仅留本机忽略目录`.runtime/rehab_ml/review-ui-qa/`，不属于真实人工全片审核或动作验收。
 
@@ -117,3 +117,5 @@ CLI按上述顺序执行；下列Python API可用于进一步审计绑定关系�
 - 动作预检v1曾因生成环境PyAV19.0.1与产品16.0.1版本字段导致整个timeline文档hash不同而真实拒绝。frames/v2保留原文档hash，另加全部PTS/像素/几何/流原点的语义指纹；全媒体证据严格相同时才允许跨解码器版本。旧失败run和v1共享文件保留，实际成功回执为 `reports/pose-preflight/pilot02-action-preflight-v2-audit.json`。
 - 第一条请求A完整抬放的候选在助手抽帧中实际双臂抬高并保持，未见要求的回程，部分手部靠近上边界。请求D的候选在抽帧中为画面左侧手臂抬起后保持。它们仍为pending，不按提示词补次数、左右或完整标签。抽帧不是完整人审；提示词遵从失败与实际可用阶段数据分开记录。
 - 此前体育正/侧面六条成片本轮只读重验：均305帧、1280×720、30fps、真实PTS严格1/30秒，SHA与原交付回执一致。它们有已记录的轻微模糊、局部补背景纹理等瑕疵；不是本训练集或同步双机位。
+- 同seed、同文本、同参考图的末帧引导A试验已实际完成，原生241帧、30fps，无循环/倒放/插帧，Comfy执行129.156秒。助手抽帧看见双臂抬起再放回；中段推近镜头且下肢出框，因此不能宣称达到单臂、固定机位或合格源片要求。E候选末段明显变暗，也留待实际人审。当前共4条候选，阶段/次数人审为0，不沿用这条失败路径直接扩正式60条。
+- 实际8190审核页以全新Chrome临时profile只读核验：片单4条，前三条均真实呈现640×384、241帧、8.033秒，真实PTS定位误差小于1微秒，无媒体/控制台错误；未填身份或次数，未勾观看，未发审核POST。证据留在本机`.runtime/rehab_ml/review-ui-qa/qa-actual-pilot.json`及`actual-pilot-desktop.png`。新增片后的旧token保留；该浏览器验证不是人审或动作验收。
