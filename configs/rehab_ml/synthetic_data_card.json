@@ -1,5 +1,5 @@
 {
-  "schema_version": "rehab_synthetic_data_card/v1",
+  "schema_version": "rehab_synthetic_data_card/v2",
   "dataset_id": "rehab_synthetic_v1",
   "stage": "pilot_candidates_pending_human_review",
   "purpose": "Offline shoulder-abduction phase and completion research with frozen pose backends",
@@ -11,7 +11,17 @@
     "weight_license": "LTX-2 Community License Agreement, January 5 2026; retain local downloaded license and model receipt",
     "text_encoder": "Gemma 3 12B IT quantized; separate upstream model terms apply",
     "pipeline": "ComfyUI with pinned ComfyUI-GGUF and local split-connector nodes",
-    "redistribution_authorized_by_this_card": false
+    "redistribution_authorized_by_this_card": false,
+    "pose_control": {
+      "repository": "https://huggingface.co/Lightricks/LTX-2-19b-IC-LoRA-Pose-Control",
+      "revision": "ecdabfb03acd2e807c90ea260ccc136140e7ac80",
+      "sha256": "61816bf0985d4470c456160deec65df69188ae45d553e5aa8f1252fc543bc8aa",
+      "bytes": 654465256,
+      "license": "LTX-2 Community License; not an unrestricted OSI license. Retain the embedded January 5 2026 terms and review the intended use against them.",
+      "current_use": "Offline noncommercial, nonclinical engineering research; no product deployment or medical interpretation",
+      "commercial_training_or_redistribution_permission_established": false,
+      "implementation": "Single-stage native Comfy pose guide plus GGUF model; differs from the official two-stage BF16 pipeline"
+    }
   },
   "content": {
     "default_native_size": [640, 384],
@@ -20,7 +30,11 @@
     "original_videos_immutable": true,
     "presentation_timestamps": "full source decode and packet cross-check; no fps reconstruction",
     "prompted_action_is_not_ground_truth": true,
-    "all_synthetic_source_groups_excluded_from_real_test": true
+    "all_synthetic_source_groups_excluded_from_real_test": true,
+    "programmatic_pose_controls": "Body-only OpenPose18 RGB guides from frozen actual reference predictions; only the commanded arm moves. The output person must be reviewed independently.",
+    "controller_times_angles_or_scenario_are_output_labels": false,
+    "controller_seed_group_trajectory_and_video_hashes_retained": true,
+    "shared_controller_algorithm_version_is_not_source_lineage": true
   },
   "annotations": {
     "default": "unknown, independent masks false",
@@ -37,6 +51,7 @@
     "A manifest declaration cannot independently prove reviewer identity or clinical qualifications",
     "Existing sports demonstration clips are not human-labeled rehabilitation training ground truth"
   ],
+  "migration": "Preserve immutable external v1 snapshots; publish this card and label spec v2 under a new versioned path.",
   "release": {
     "raw_video_publication": "not performed",
     "trained_candidate": "not yet trained from human-reviewed data",

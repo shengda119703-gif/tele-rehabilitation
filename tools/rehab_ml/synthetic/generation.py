@@ -146,7 +146,9 @@ def api(base, route, payload=None):
         return json.loads(raw) if raw else {}
 
 
-def workflow(key, name, seed, frames, image=None, *, end_guide=False):
+def workflow(key, name, seed, frames, image=None, *, end_guide=False, pose_file=None):
+    if end_guide and pose_file:
+        raise ValueError('Endpoint and full-pose guidance are separate experiments')
     # Same pinned split-connector GGUF loader and AV sampler as the verified lab.
     nodes = {}
     def add(number, kind, **inputs):
@@ -176,6 +178,9 @@ def workflow(key, name, seed, frames, image=None, *, end_guide=False):
     if end_guide:
         from .guidance import with_first_last_reference
         return with_first_last_reference(nodes,frames=frames)
+    if pose_file:
+        from .pose_guidance import with_pose_video
+        return with_pose_video(nodes,pose_file,frames=frames)
     return nodes
 
 
@@ -194,7 +199,15 @@ def execute(base, root, name, graph):
     else:
         state={'name':name,'workflow_sha256':canonical(graph),'workflow':graph,'created_unix':time.time(),'status':'submission_pending'}
         write_new(path,state)
-        result=api(base,'/prompt',{'prompt':graph,'client_id':'rehab-synthetic-v1'})
+        try:
+            result=api(base,'/prompt',{'prompt':graph,'client_id':'rehab-synthetic-v1'})
+        except urllib.error.HTTPError as error:
+            body=error.read(1024*1024).decode('utf-8',errors='replace')
+            state.update(status='submission_http_error',http_status=error.code,submission_response=body)
+            replace_json(path,state)
+            raise RuntimeError('Comfy submission HTTP error; retained response, no automatic resubmission: '+str(path)) from error
+        state['submission_reply']=result
+        replace_json(path,state)
         state.update(prompt_id=result['prompt_id'],status='submitted')
         replace_json(path,state)
     while True:
@@ -260,7 +273,45 @@ def verify_models(lab, root):
     return receipt
 
 
-def generate(lab, root, base, group, scenario=None, *, attempt=1, reference_attempt=1, end_guide=False):
+def prepare_pose_control(lab, root, path, group, scenario, reference_record):
+    """Verify a separate non-GT controller and pinned additive model before GPU."""
+    from .control import load_control
+    from .pose_guidance import POSE_LORA_NAME, OFFICIAL_EVIDENCE, validate_control_probe
+    from .video import probe_video
+    path=Path(path).resolve()
+    if not path.is_relative_to(root.resolve()):
+        raise ValueError('Pose control receipt must be inside the declared dataset root')
+    control=load_control(path,verify=True,expected_source_group_id=group,expected_scenario=scenario,
+        expected_reference_image_sha256=reference_record['image_sha256'])
+    validate_control_probe(probe_video(control['video']),frames=241)
+    model_receipt_path=root/'manifests/control-model-verification-v1.json'
+    receipt=json.loads(model_receipt_path.read_text(encoding='utf-8'))
+    model=receipt['model'];source=Path(model['path']).resolve()
+    expected=(lab/'ComfyUI/models/loras'/POSE_LORA_NAME).resolve()
+    if (source!=expected or model['sha256']!=OFFICIAL_EVIDENCE['model_sha256']
+            or source.stat().st_size!=OFFICIAL_EVIDENCE['model_bytes'] or digest(source)!=model['sha256']):
+        raise ValueError('Pinned pose control LoRA differs from the official verified receipt')
+    if digest(Path(receipt['lock_path']))!=receipt['lock_sha256']:
+        raise ValueError('Separate pose control model lock changed')
+    filename='rehab_control_'+control['video_sha256'][:20]+'.mp4'
+    target=lab/'ComfyUI/input'/filename
+    if not target.exists():
+        shutil.copy2(control['video'],target)
+    if digest(target)!=control['video_sha256']:
+        raise ValueError('Immutable Comfy control input copy changed')
+    metadata={
+        'receipt_path':str(path),'receipt_sha256':digest(path),
+        'controller_version':control['controller_version'],'controller_seed':control['seed'],
+        'control_video_path':control['video'],'control_video_sha256':control['video_sha256'],
+        'trajectory_sha256':control['controller_trajectory_sha256'],
+        'pose_source_sha256':control['source']['source_pose_sha256'],
+        'model_sha256':model['sha256'],'model_receipt_path':str(model_receipt_path),
+        'model_receipt_sha256':digest(model_receipt_path),
+        'controller_is_ground_truth_for_output':False,'creates_human_annotations':False}
+    return control,filename,metadata
+
+
+def generate(lab, root, base, group, scenario=None, *, attempt=1, reference_attempt=1, end_guide=False, pose_control=None):
     import av
     receipt=json.loads((root/'manifests/model-verification.json').read_text(encoding='utf-8'))
     for item in receipt['models']:
@@ -270,6 +321,8 @@ def generate(lab, root, base, group, scenario=None, *, attempt=1, reference_atte
     is_reference=scenario is None
     if is_reference and end_guide:
         raise ValueError('End guidance requires an independently screened reference image')
+    if pose_control and (is_reference or end_guide):
+        raise ValueError('Pose control requires a motion reference and is separate from endpoint guidance')
     prompt_version=VERSION
     suffix=revision(attempt)
     text=prompt('shoulder_abduction',scenario or 'A',PROFILES[group] if is_reference else None)
@@ -299,15 +352,20 @@ def generate(lab, root, base, group, scenario=None, *, attempt=1, reference_atte
         if digest(target)!=reference_record['image_sha256']:
             raise ValueError('Reference changed')
         reference=target.name
+    control_record=control_file=control_metadata=None
+    if pose_control:
+        control_record,control_file,control_metadata=prepare_pose_control(lab,root,pose_control,group,scenario,reference_record)
     name=f'rehab_{group}_{scenario or "reference"}_v1'+suffix
     if end_guide:
         name+='_endguide'
+    if control_record:
+        name+='_pose'+control_record['video_sha256'][:12]
     if reference_record:
         name+='_ref'+reference_record['image_sha256'][:12]
     result_path=root/'manifests'/(name+'.json')
     key='rehab_'+hashlib.sha256((prompt_version+text).encode()).hexdigest()[:24]
     seed=2026101900+list(PROFILES).index(group)*100+({'A':1,'B':2,'C':3,'D':4,'E':5,'F':6}.get(scenario,0))+(attempt-1)*10000
-    graph=workflow(key,name,seed,97 if is_reference else 241,reference,end_guide=end_guide)
+    graph=workflow(key,name,seed,97 if is_reference else 241,reference,end_guide=end_guide,pose_file=control_file)
     if result_path.exists():
         record=json.loads(result_path.read_text(encoding='utf-8'))
         provenance=record['generation']
@@ -315,6 +373,8 @@ def generate(lab, root, base, group, scenario=None, *, attempt=1, reference_atte
                 or provenance['workflow_sha256']!=canonical(graph) or provenance['model_sha256']!=receipt['models'][0]['sha256']
                 or digest(Path(record['video']['path']))!=record['video']['sha256']):
             raise ValueError('Completed candidate changed; inspect or use a new revision')
+        if control_metadata and provenance.get('pose_control')!=control_metadata:
+            raise ValueError('Completed pose-conditioned candidate provenance changed')
         if not is_reference:
             from .video import probe_video
             actual=probe_video(record['video']['path'])
@@ -334,6 +394,10 @@ def generate(lab, root, base, group, scenario=None, *, attempt=1, reference_atte
         execute(base,root,key,text_graph)
         api(base,'/free',{'unload_models':True,'free_memory':True})
     job=execute(base,root,name,graph)
+    if control_metadata:
+        _,_,checked=prepare_pose_control(lab,root,pose_control,group,scenario,reference_record)
+        if checked!=control_metadata:
+            raise ValueError('Pose control or additive model changed during generation')
     source=lab/'ComfyUI/output/sports'/(name+'.mp4')
     destination=root/('references' if is_reference else 'raw')/(name+'.mp4')
     if not destination.exists():
@@ -360,6 +424,12 @@ def generate(lab, root, base, group, scenario=None, *, attempt=1, reference_atte
     if end_guide:
         from .guidance import guidance_contract
         record['generation']['guidance']=guidance_contract(241)
+    if control_metadata:
+        from .pose_guidance import pose_guidance_contract
+        record['generation']['pose_control']=control_metadata
+        record['generation']['guidance']=pose_guidance_contract(241,control_file=control_file,
+            control_sha256=control_record['video_sha256'])
+        record['lineage_ids']=list(dict.fromkeys(record['lineage_ids']+control_record['lineage_ids']))
     if is_reference:
         from .video import probe_video
         actual=probe_video(destination)
@@ -389,12 +459,13 @@ def generate(lab, root, base, group, scenario=None, *, attempt=1, reference_atte
             raise ValueError('Actual dimensions or frame count differ from requested native candidate')
         if any(abs((b-a)-1/30)>1e-6 for a,b in zip(probe['presentation_s'],probe['presentation_s'][1:])):
             raise ValueError('Actual PTS cadence differs from 30fps')
-        if end_guide:
+        if end_guide or control_metadata:
             from .guidance import validate_decoded_result
             validate_decoded_result(probe,frames=241)
         record['video'].update(width=probe['width'],height=probe['height'],frame_count=probe['frame_count'])
         record['video'].update(timeline_path=str(timeline),timeline_sha256=digest(timeline))
         record['lineage_ids'].extend(['reference:'+reference_record['image_sha256'],'reference_video:'+reference_record['video']['sha256']])
+        record['lineage_ids']=list(dict.fromkeys(record['lineage_ids']))
         manifest_path=root/'manifests/dataset.json'
         manifest=json.loads(manifest_path.read_text(encoding='utf-8'))
         record.update(side='unknown',view='front')
@@ -419,9 +490,12 @@ def main():
     parser.add_argument('--attempt',type=int,default=1)
     parser.add_argument('--reference-attempt',type=int,default=1)
     parser.add_argument('--end-guide',action='store_true',help='Experimental same-reference last-frame guidance; no motion correctness guarantee')
+    parser.add_argument('--pose-control',type=Path,help='Verified non-GT controller receipt for a single group/scenario')
     parser.add_argument('--scenarios',nargs='+',choices=list('ABCDEF'),default=['A','D','E'])
     parser.add_argument('--port',type=int,default=8190)
     args=parser.parse_args()
+    if args.pose_control and (args.command!='pilot' or len(args.groups)!=1 or len(args.scenarios)!=1):
+        parser.error('--pose-control requires pilot, exactly one --groups entry and one --scenarios entry')
     initialize(args.root)
     if args.command=='verify-models':
         verify_models(args.lab,args.root)
@@ -433,7 +507,7 @@ def main():
             reconnect_queue(args.base,args.root)
             for group in args.groups:
                 for scenario in ([None] if args.command=='references' else args.scenarios):
-                    generate(args.lab,args.root,args.base,group,scenario,attempt=args.attempt,reference_attempt=args.reference_attempt,end_guide=args.end_guide)
+                    generate(args.lab,args.root,args.base,group,scenario,attempt=args.attempt,reference_attempt=args.reference_attempt,end_guide=args.end_guide,pose_control=args.pose_control)
             api(args.base,'/free',{'unload_models':True,'free_memory':True})
 
 

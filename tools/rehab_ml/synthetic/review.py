@@ -23,6 +23,9 @@ import uuid
 from . import contracts as c
 
 VERSION = 'rehab_synthetic_review/v1'
+LABEL_SPEC_VERSION = 'rehab_synthetic_label_spec/v2'
+LABEL_SPEC_PATH = Path(__file__).resolve().parents[3]/'configs/rehab_ml/synthetic_label_spec.json'
+OBSERVABLE_IDS = ('elbow_bend', 'torso_lateral_lean')
 MAX_REQUEST = 1024 * 1024
 
 
@@ -58,6 +61,12 @@ def _json(path):
     return c._read_json(path)
 
 
+def _label_spec_hash():
+    if _json(LABEL_SPEC_PATH).get('schema_version') != LABEL_SPEC_VERSION:
+        raise ValueError('review_label_spec_version_mismatch')
+    return _hash(LABEL_SPEC_PATH)
+
+
 def _dataset(root):
     root = Path(root).resolve()
     if not root.is_dir():
@@ -88,10 +97,27 @@ def _dataset(root):
     return root, manifest, timelines
 
 
+def observable_template(problem_id):
+    """Unreviewed engineering observation; never a clinical quality label."""
+    if problem_id not in OBSERVABLE_IDS:
+        raise ValueError('unsupported_observable_change')
+    return dict(problem_id=problem_id, kind='observable_change', assessable=None,
+                assessability_mask=False, state='unknown', label_mask=False,
+                start_s=None, end_s=None, professional_review=None)
+
+
+def _review_form(sample, timeline):
+    form = c.prepare_review(sample, timeline)
+    form['quality'] = [observable_template(key) for key in OBSERVABLE_IDS]
+    form['label_spec_version'] = LABEL_SPEC_VERSION
+    form['label_spec_sha256'] = _label_spec_hash()
+    return form
+
+
 def prepare(root):
     """Return empty, unreviewed forms. This does not create human references."""
     _, manifest, timelines = _dataset(root)
-    return [c.prepare_review(row, timelines[row['sample_id']]) for row in manifest['samples']]
+    return [_review_form(row, timelines[row['sample_id']]) for row in manifest['samples']]
 
 
 def _version_directory(root, sample_id):
@@ -149,6 +175,7 @@ class ReviewStore:
         self.by_id = {row['sample_id']: row for row in self.manifest['samples']}
         self.tokens = {secrets.token_urlsafe(24): key for key in self.by_id}
         self.csrf = secrets.token_urlsafe(32)
+        self.label_spec_sha256 = _label_spec_hash()
         self.lock = Lock()
 
     def _refresh_unlocked(self):
@@ -180,12 +207,14 @@ class ReviewStore:
 
     def catalog(self):
         with self.lock:
+            if _label_spec_hash() != self.label_spec_sha256:
+                raise ValueError('review_label_spec_changed_restart_required')
             self._refresh_unlocked()
             latest = _latest(self.root, self.manifest)
             result = []
             for index, (token, key) in enumerate(self.tokens.items(), 1):
                 source = self.by_id[key]
-                form = c.prepare_review(source, self.timelines[key])
+                form = _review_form(source, self.timelines[key])
                 # Only a fresh blank form is shown. Prior labels are not prediction
                 # answers for a different reviewer and are never silently prefilled.
                 form['sample_id'] = token
@@ -224,6 +253,24 @@ class ReviewStore:
         if not isinstance(annotation, dict) or annotation.get('sample_id') != token:
             raise ValueError('annotation_token_must_match_current_sample')
         annotation['sample_id'] = key
+        # The local engineering page cannot collect professional qualification
+        # or clinical labels, even if a custom client constructs such a payload.
+        quality = annotation.get('quality')
+        if not isinstance(quality, list) or len(quality) > len(OBSERVABLE_IDS):
+            raise ValueError('supported_observable_changes_list_required')
+        problems = []
+        for label in quality:
+            if (not isinstance(label, dict) or label.get('kind') != 'observable_change'
+                    or label.get('problem_id') not in OBSERVABLE_IDS
+                    or label.get('professional_review') is not None):
+                raise ValueError('clinical_quality_not_collected_by_this_page')
+            problems.append(label['problem_id'])
+        if len(set(problems)) != len(problems):
+            raise ValueError('duplicate_observable_change')
+        annotation['label_spec_version'] = LABEL_SPEC_VERSION
+        if _label_spec_hash() != self.label_spec_sha256:
+            raise ValueError('review_label_spec_changed_restart_required')
+        annotation['label_spec_sha256'] = self.label_spec_sha256
         decision = payload.get('decision')
         if decision not in ('pending', 'accepted', 'excluded'):
             raise ValueError('explicit_review_decision_required')
@@ -261,7 +308,9 @@ class ReviewStore:
                     or not 0 <= interval[0] <= interval[1] <= last+.001):
                 raise ValueError('playback_coverage_outside_original_pts')
         version = now.replace(':', '').replace('+', '_')+'-'+uuid.uuid4().hex
-        record = dict(schema_version=VERSION, version=version, saved_at=now, sample_id=key,
+        record = dict(schema_version=VERSION, label_spec_version=LABEL_SPEC_VERSION,
+            label_spec_sha256=self.label_spec_sha256,
+            version=version, saved_at=now, sample_id=key,
             source_video_sha256=source['video']['sha256'],
             source_timeline_sha256=source['video']['timeline_sha256'], source_patch=patch,
             annotation=annotation, annotation_sha256=c.canonical_hash(annotation),
@@ -277,19 +326,21 @@ class ReviewStore:
 
 HTML = r'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>康复原片审核</title><style nonce="__NONCE__">
-:root{color-scheme:light;--ink:#182c43;--blue:#23638d;--paper:#eef3f7;--line:#c8d5df;--warn:#8b5b00}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 'Microsoft YaHei UI','Microsoft YaHei',sans-serif}header{padding:20px 30px;border-bottom:1px solid var(--line);background:#fff;display:flex;align-items:baseline;gap:24px}h1{font-size:24px;margin:0;font-weight:650}header p{margin:0;color:#516a80}main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(360px,1fr);gap:24px;padding:24px 30px;max-width:1640px;margin:auto}section{min-width:0}video{width:100%;max-height:62vh;object-fit:contain;aspect-ratio:5 / 3;background:#111;display:block;border-radius:8px}label{display:block;margin:12px 0 5px}button,input,select,textarea{font:inherit}button{border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--ink);padding:8px 13px;cursor:pointer}button:hover{border-color:var(--blue)}button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}:focus-visible{outline:3px solid #e5a92d;outline-offset:2px}input,select,textarea{padding:8px;border:1px solid #aabcc9;border-radius:4px;background:#fff;color:var(--ink);max-width:100%}input[type=number]{width:100px}input[type=checkbox]{margin-right:8px;width:18px;height:18px;vertical-align:middle}textarea{width:100%;min-height:72px}h2{font-size:18px;margin:0 0 14px}h3{font-size:16px;margin:22px 0 8px}.work{padding:22px;background:#fff;border-radius:10px}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:12px 0}.help{color:#526c80;font-size:13px;max-width:74ch}.warning{color:var(--warn)}table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}th,td{text-align:left;padding:7px 4px;border-bottom:1px solid var(--line)}td button{font-size:12px;padding:4px 7px}td input{width:100%;min-width:70px;padding:4px}output{font-variant-numeric:tabular-nums}#message{white-space:pre-wrap;min-height:3em;padding:12px 0}.check{display:flex;align-items:flex-start;gap:6px}.check input{flex:none}details{margin:16px 0}summary{cursor:pointer}#repList{font-size:13px}.quiet{color:#526c80}footer{border-top:1px solid var(--line);margin-top:18px;padding-top:14px}.rail{margin-bottom:14px}.ptslider{width:100%}@media(max-width:950px){main{grid-template-columns:1fr;padding:16px}header{padding:16px;display:block}video{max-height:55vh}.work{padding:16px}}
-</style><header><h1>康复原片审核</h1><p>先完整观看，再记录画面中能确认的事实。</p></header><main><section><div class="row rail"><label for="sample">待审核原片</label><select id="sample"></select><button id="reload">刷新片单</button></div><video id="video" controls preload="metadata"></video><div class="row"><button id="prev">上一帧</button><button id="next">下一帧</button><output id="position">尚未选择原片</output></div><input class="ptslider" id="frame" aria-label="按原片实际PTS定位帧" type="range" min="0" max="0" value="0"><p class="help">单帧定位使用原片实际呈现时间。播放记录只用于辅助审阅，不能证明操作者身份或代替完整观看。</p><h3>可确认的阶段区间</h3><div class="row"><select id="phase"><option value="ready">准备</option><option value="outbound">出程</option><option value="endpoint_or_hold">端点／保持</option><option value="return">回程</option><option value="rest_or_other">休息／无关活动</option></select><button id="markStart">记下起点</button><output id="start">起点未记</output><button id="markEnd">以当前帧为终点添加</button></div><table><thead><tr><th>阶段</th><th>起点（秒）</th><th>终点（秒）</th><th></th></tr></thead><tbody id="intervals"></tbody></table><p class="help">不确定的时间留空，不用“休息”填补未知区间。区间不得重叠。</p><details><summary>记录一次动作的五个边界</summary><div class="row"><button id="addRep">添加一次动作记录</button></div><div id="repList"></div><p class="help">每个边界独立确认。肩外展完整一次需要明确出程、端点、回程与回位证据；未知完成状态不计为0次。</p></details></section><section class="work"><h2>这条原片的人工记录</h2><p class="help">本页不显示生成要求、模型骨骼或预测答案。只标可观察事件，专业质量保持未标注。</p><label for="reviewer">操作者标识</label><input id="reviewer" autocomplete="off" placeholder="由实际操作者填写"><label for="role">记录来源</label><select id="role"><option value="">请选择</option><option value="human_operator">本人观看后填写（人工）</option><option value="ai_draft">AI草稿（不得训练）</option></select><label for="side">画面中实际测试侧</label><select id="side"><option value="">未知／未确认</option><option value="left">解剖左侧</option><option value="right">解剖右侧</option><option value="bilateral">双侧</option></select><label for="count">可确认的完整动作次数</label><input id="count" type="number" min="0" step="1" placeholder="留空"><label class="check"><input id="countKnown" type="checkbox"><span>我已清点全部动作，以上次数可确认</span></label><p class="help">空白不是0次。填写大于0的次数时，请展开左侧“一次动作”记录相应边界与完成状态。</p><label class="check"><input id="watched" type="checkbox"><span>我是实际操作者，已完整观看本条原片；此声明仅记录本人陈述。</span></label><label for="decision">原片筛查结果</label><select id="decision"><option value="pending">仍待审核／保存草稿</option><option value="accepted">原片通过人工筛查</option><option value="excluded">排除原片</option></select><label for="reason">排除原因或复核备注</label><textarea id="reason" placeholder="排除时必须说明原因"></textarea><footer><button class="primary" id="save">保存新的审核版本</button><p class="help">每次保存另建版本，保留原片、旧记录与未知标签。通过筛查不等于临床有效。</p><div id="message" role="status" aria-live="polite"></div></footer></section></main><script nonce="__NONCE__">
+:root{color-scheme:light;--ink:#182c43;--blue:#23638d;--paper:#eef3f7;--line:#c8d5df;--warn:#8b5b00}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 'Microsoft YaHei UI','Microsoft YaHei',sans-serif}header{padding:20px 30px;border-bottom:1px solid var(--line);background:#fff;display:flex;align-items:baseline;gap:24px}h1{font-size:24px;margin:0;font-weight:650}header p{margin:0;color:#516a80}main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(360px,1fr);gap:24px;padding:24px 30px;max-width:1640px;margin:auto}section{min-width:0}video{width:100%;max-height:62vh;object-fit:contain;aspect-ratio:5 / 3;background:#111;display:block;border-radius:8px}label{display:block;margin:12px 0 5px}button,input,select,textarea{font:inherit}button{border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--ink);padding:8px 13px;cursor:pointer}button:hover{border-color:var(--blue)}button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}:focus-visible{outline:3px solid #e5a92d;outline-offset:2px}input,select,textarea{padding:8px;border:1px solid #aabcc9;border-radius:4px;background:#fff;color:var(--ink);max-width:100%}input[type=number]{width:100px}input[type=checkbox]{margin-right:8px;width:18px;height:18px;vertical-align:middle}textarea{width:100%;min-height:72px}h2{font-size:18px;margin:0 0 14px}h3{font-size:16px;margin:22px 0 8px}.work{padding:22px;background:#fff;border-radius:10px}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:12px 0}.help{color:#526c80;font-size:13px;max-width:74ch}.warning{color:var(--warn)}table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}th,td{text-align:left;padding:7px 4px;border-bottom:1px solid var(--line)}td button{font-size:12px;padding:4px 7px}td input{width:100%;min-width:70px;padding:4px}output{font-variant-numeric:tabular-nums}#message{white-space:pre-wrap;min-height:3em;padding:12px 0}.check{display:flex;align-items:flex-start;gap:6px}.check input{flex:none}details{margin:16px 0}summary{cursor:pointer}#repList{font-size:13px}#changes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.change-field{min-width:0;border:1px solid var(--line);border-radius:6px;margin:16px 0;padding:14px}.change-field legend{padding:0 6px;font-weight:600}.change-field select{width:100%}.change-field .row output{font-size:13px}.change-field button:disabled{opacity:.5;cursor:default}.quiet{color:#526c80}footer{border-top:1px solid var(--line);margin-top:18px;padding-top:14px}.rail{margin-bottom:14px}.ptslider{width:100%}@media(max-width:950px){main{grid-template-columns:1fr;padding:16px}#changes{grid-template-columns:minmax(0,1fr)}header{padding:16px;display:block}video{max-height:55vh}.work{padding:16px}}
+</style><header><h1>康复原片审核</h1><p>先完整观看，再记录画面中能确认的事实。</p></header><main><section><div class="row rail"><label for="sample">待审核原片</label><select id="sample"></select><button id="reload">刷新片单</button></div><video id="video" controls preload="metadata"></video><div class="row"><button id="prev">上一帧</button><button id="next">下一帧</button><output id="position">尚未选择原片</output></div><input class="ptslider" id="frame" aria-label="按原片实际PTS定位帧" type="range" min="0" max="0" value="0"><p class="help">单帧定位使用原片实际呈现时间。播放记录只用于辅助审阅，不能证明操作者身份或代替完整观看。</p><h3>可确认的阶段区间</h3><div class="row"><select id="phase"><option value="ready">准备</option><option value="outbound">出程</option><option value="endpoint_or_hold">端点／保持</option><option value="return">回程</option><option value="rest_or_other">休息／无关活动</option></select><button id="markStart">记下起点</button><output id="start">起点未记</output><button id="markEnd">以当前帧为终点添加</button></div><table><thead><tr><th>阶段</th><th>起点（秒）</th><th>终点（秒）</th><th></th></tr></thead><tbody id="intervals"></tbody></table><p class="help">不确定的时间留空，不用“休息”填补未知区间。区间不得重叠。</p><details><summary>记录一次动作的五个边界</summary><div class="row"><button id="addRep">添加一次动作记录</button></div><div id="repList"></div><p class="help">每个边界独立确认。肩外展完整一次需要明确出程、端点、回程与回位证据；未知完成状态不计为0次。</p></details><details id="changeDetails"><summary>可观察变化（屈肘／躯干侧倾）</summary><p class="help">只记录画面现象。先确认是否看得清，再判断指定时段；未知保持空白。</p><div id="changes"></div><p class="help">“未出现”只适用于实际复查过且可评价的时段，不代表临床动作正确。此页不填写专业质量结论。</p></details></section><section class="work"><h2>这条原片的人工记录</h2><p class="help">本页不显示生成要求、模型骨骼或预测答案。只标可观察事件，专业质量保持未标注，可观察变化可在左侧单独记录。</p><label for="reviewer">操作者标识</label><input id="reviewer" autocomplete="off" placeholder="由实际操作者填写"><label for="role">记录来源</label><select id="role"><option value="">请选择</option><option value="human_operator">本人观看后填写（人工）</option><option value="ai_draft">AI草稿（不得训练）</option></select><label for="side">画面中实际测试侧</label><select id="side"><option value="">未知／未确认</option><option value="left">解剖左侧</option><option value="right">解剖右侧</option><option value="bilateral">双侧</option></select><label for="count">可确认的完整动作次数</label><input id="count" type="number" min="0" step="1" placeholder="留空"><label class="check"><input id="countKnown" type="checkbox"><span>我已清点全部动作，以上次数可确认</span></label><p class="help">空白不是0次。填写大于0的次数时，请展开左侧“一次动作”记录相应边界与完成状态。</p><label class="check"><input id="watched" type="checkbox"><span>我是实际操作者，已完整观看本条原片；此声明仅记录本人陈述。</span></label><label for="decision">原片筛查结果</label><select id="decision"><option value="pending">仍待审核／保存草稿</option><option value="accepted">原片通过人工筛查</option><option value="excluded">排除原片</option></select><label for="reason">排除原因或复核备注</label><textarea id="reason" placeholder="排除时必须说明原因"></textarea><footer><button class="primary" id="save">保存新的审核版本</button><p class="help">每次保存另建版本，保留原片、旧记录与未知标签。通过筛查不等于临床有效。</p><div id="message" role="status" aria-live="polite"></div></footer></section></main><script nonce="__NONCE__">
 const csrf='__CSRF__', $=id=>document.getElementById(id), phaseNames={ready:'准备',outbound:'出程',endpoint_or_hold:'端点／保持',return:'回程',rest_or_other:'休息／无关'};
 let entries=[],item=null,form=null,start=null,coverage=[],lastTime=null;
+const changeNames={elbow_bend:'可见屈肘',torso_lateral_lean:'可见躯干侧倾'};
 const phases=Object.keys(phaseNames), vid=$('video');
-const errors={count_must_match_explicit_observable_completions:'次数需要与每次动作记录中明确完成的数量一致。',unknown_completion_inventory_cannot_set_count:'仍有动作的完成状态未知，暂时不能确认总次数。',complete_shoulder_roundtrip_requires_all_boundaries:'完整肩外展需要确认五个动作边界；不确定时保留完成状态未知。',phase_intervals_must_be_ordered_nonoverlapping:'阶段区间重叠或顺序有误，请核对原片。',observable_count_known_value_required:'请填写可确认的非负整数次数，或取消次数已确认。',acceptance_requires_explicit_human_full_video_review:'通过筛查需要实际人工填写，并声明已完整观看。',clinical_quality_requires_independent_qualified_review:'专业质量尚无独立资格审核，请保留未标注。',exclusion_reason_required:'请填写排除原片的原因。'};
+const errors={count_must_match_explicit_observable_completions:'次数需要与每次动作记录中明确完成的数量一致。',unknown_completion_inventory_cannot_set_count:'仍有动作的完成状态未知，暂时不能确认总次数。',complete_shoulder_roundtrip_requires_all_boundaries:'完整肩外展需要确认五个动作边界；不确定时保留完成状态未知。',phase_intervals_must_be_ordered_nonoverlapping:'阶段区间重叠或顺序有误，请核对原片。',observable_count_known_value_required:'请填写可确认的非负整数次数，或取消次数已确认。',acceptance_requires_explicit_human_full_video_review:'通过筛查需要实际人工填写，并声明已完整观看。',clinical_quality_requires_independent_qualified_review:'专业质量尚无独立资格审核，请保留未标注。',exclusion_reason_required:'请填写排除原片的原因。',quality_interval_requires_actual_pts:'可观察变化需要有效的原片起止时刻，且终点不能早于起点。',known_quality_requires_assessable_state:'请先确认该变化可评价，再填写是否出现。',clinical_quality_not_collected_by_this_page:'此页只保存可见屈肘与躯干侧倾，不接收临床质量标签。'};
 async function api(url,body){const r=await fetch(url,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json','X-CSRF-Token':csrf}:{},body:body?JSON.stringify(body):undefined});const data=await r.json();if(!r.ok)throw Error(errors[data.error]||'记录尚未保存，请核对所填侧别、次数、阶段边界与观看声明。');return data}
 function msg(s){$('message').textContent=s}
 function nearest(t){let best=0;for(let i=1;i<item.presentation_s.length;i++)if(Math.abs(item.presentation_s[i]-t)<Math.abs(item.presentation_s[best]-t))best=i;return best}
 function stamp(){return item.presentation_s[nearest(vid.currentTime)]}
 function locate(i){i=Math.min(item.presentation_s.length-1,Math.max(0,i));vid.pause();lastTime=null;vid.currentTime=item.presentation_s[i];$('frame').value=i;$('position').textContent=`第 ${i+1} / ${item.frame_count} 帧，PTS ${item.presentation_s[i].toFixed(6)} 秒`}
 function draw(){const tbody=$('intervals');tbody.replaceChildren();form.phase_intervals.forEach((r,i)=>{let tr=document.createElement('tr');for(const text of [phaseNames[r.phase],r.start_s.toFixed(6),r.end_s.toFixed(6)]){let td=document.createElement('td');td.textContent=text;tr.append(td)}let td=document.createElement('td'),b=document.createElement('button');b.textContent='删除';b.onclick=()=>{form.phase_intervals.splice(i,1);draw()};td.append(b);tr.append(td);tbody.append(tr)});const list=$('repList');list.replaceChildren();form.repetitions.forEach((rep,i)=>{let box=document.createElement('div'),h=document.createElement('h3');h.textContent=`动作记录 ${i+1}`;box.append(h);phases.forEach(p=>{let row=document.createElement('div');row.className='row';let label=document.createElement('label');label.textContent=phaseNames[p];let output=document.createElement('output');output.textContent=rep.boundary_masks[p]?rep.boundaries[p].toFixed(6)+' 秒':'未知';let mark=document.createElement('button');mark.textContent='记当前帧';mark.onclick=()=>{rep.boundaries[p]=stamp();rep.boundary_masks[p]=true;draw()};let clear=document.createElement('button');clear.textContent='清空';clear.onclick=()=>{rep.boundaries[p]=null;rep.boundary_masks[p]=false;draw()};row.append(label,output,mark,clear);box.append(row)});let sel=document.createElement('select');for(const [value,text] of [['','完成状态未知'],['yes','可确认完整完成'],['no','可确认部分动作']]){let o=document.createElement('option');o.value=value;o.textContent=text;sel.append(o)}sel.value=rep.observable_completion_mask?(rep.observable_completion?'yes':'no'):'';sel.onchange=()=>{rep.observable_completion_mask=!!sel.value;rep.observable_completion=sel.value?sel.value==='yes':null};let del=document.createElement('button');del.textContent='删除动作记录';del.onclick=()=>{form.repetitions.splice(i,1);draw()};box.append(sel,del);list.append(box)})}
-function choose(){item=entries[Number($('sample').value)];if(!item)return;form=structuredClone(item.form);start=null;coverage=[];lastTime=null;vid.src='/media/'+item.token;vid.style.aspectRatio=item.width+' / '+item.height;$('frame').max=item.frame_count-1;$('frame').value=0;for(const id of ['reviewer','side','count','reason','role'])$(id).value='';for(const id of ['countKnown','watched'])$(id).checked=false;$('decision').value='pending';$('start').textContent='起点未记';msg(item.saved_versions?'这条原片已有保存版本。本次仍从空白独立记录开始。':'尚未保存人工参考。');draw();locate(0)}
+function drawChanges(){const host=$('changes');host.replaceChildren();for(const q of form.quality){let box=document.createElement('fieldset');box.className='change-field';let title=document.createElement('legend');title.textContent=changeNames[q.problem_id];box.append(title);let label=document.createElement('label');label.htmlFor='assess-'+q.problem_id;label.textContent='能否评价';let assess=document.createElement('select');assess.id='assess-'+q.problem_id;for(const [v,t] of [['','未知／未审查'],['yes','可评价'],['no','不可评价']]){let o=document.createElement('option');o.value=v;o.textContent=t;assess.append(o)}assess.value=q.assessability_mask?(q.assessable?'yes':'no'):'';assess.onchange=()=>{q.assessability_mask=assess.value!=='';q.assessable=assess.value?assess.value==='yes':null;if(q.assessable!==true){q.state='unknown';q.label_mask=false;q.start_s=null;q.end_s=null}drawChanges()};let stateLabel=document.createElement('label');stateLabel.htmlFor='state-'+q.problem_id;stateLabel.textContent='该时段是否出现';let state=document.createElement('select');state.id='state-'+q.problem_id;for(const [v,t] of [['unknown','未知／未判断'],['present','已观察到'],['absent','已复查，未出现']]){let o=document.createElement('option');o.value=v;o.textContent=t;state.append(o)}state.value=q.state;state.disabled=q.assessable!==true;state.onchange=()=>{q.state=state.value;q.label_mask=state.value!=='unknown';if(!q.label_mask){q.start_s=null;q.end_s=null}drawChanges()};box.append(label,assess,stateLabel,state);let row=document.createElement('div');row.className='row';let from=document.createElement('output'),to=document.createElement('output');from.id='change-start-'+q.problem_id;to.id='change-end-'+q.problem_id;from.textContent=q.start_s===null?'起点未知':q.start_s.toFixed(6)+' 秒';to.textContent=q.end_s===null?'终点未知':q.end_s.toFixed(6)+' 秒';let markFrom=document.createElement('button'),markTo=document.createElement('button');markFrom.id='mark-change-start-'+q.problem_id;markTo.id='mark-change-end-'+q.problem_id;markFrom.textContent='记当前起点';markTo.textContent='记当前终点';markFrom.disabled=markTo.disabled=!q.label_mask;markFrom.onclick=()=>{q.start_s=stamp();drawChanges()};markTo.onclick=()=>{q.end_s=stamp();drawChanges()};row.append(markFrom,from,markTo,to);let clear=document.createElement('button');clear.textContent='重置为未知';clear.onclick=()=>{Object.assign(q,{assessable:null,assessability_mask:false,state:'unknown',label_mask:false,start_s:null,end_s:null});drawChanges()};box.append(row,clear);host.append(box)}}
+function choose(){item=entries[Number($('sample').value)];if(!item)return;form=structuredClone(item.form);start=null;coverage=[];lastTime=null;vid.src='/media/'+item.token;vid.style.aspectRatio=item.width+' / '+item.height;$('frame').max=item.frame_count-1;$('frame').value=0;for(const id of ['reviewer','side','count','reason','role'])$(id).value='';for(const id of ['countKnown','watched'])$(id).checked=false;$('decision').value='pending';$('start').textContent='起点未记';msg(item.saved_versions?'这条原片已有保存版本。本次仍从空白独立记录开始。':'尚未保存人工参考。');draw();drawChanges();locate(0)}
 async function reload(){try{const data=await api('/api/samples');entries=data.samples;$('sample').replaceChildren();entries.forEach((x,i)=>{let o=document.createElement('option');o.value=i;o.textContent=x.label;$('sample').append(o)});if(entries.length)choose();else msg('尚无可审核原片。生成完成并建立实际PTS索引后刷新片单。')}catch(e){msg(e.message)}}
 $('sample').onchange=choose;$('reload').onclick=()=>location.reload();$('prev').onclick=()=>item&&locate(nearest(vid.currentTime)-1);$('next').onclick=()=>item&&locate(nearest(vid.currentTime)+1);$('frame').oninput=()=>item&&locate(Number($('frame').value));
 vid.ontimeupdate=()=>{if(!item)return;let t=Math.min(item.presentation_s.at(-1),vid.currentTime);$('frame').value=nearest(t);$('position').textContent=`第 ${nearest(t)+1} / ${item.frame_count} 帧，PTS ${stamp().toFixed(6)} 秒`;if(!vid.paused&&lastTime!==null&&t>lastTime&&t-lastTime<1.5){let prev=coverage.at(-1);if(prev&&Math.abs(prev[1]-lastTime)<.03)prev[1]=t;else coverage.push([lastTime,t])}lastTime=t};vid.onseeking=()=>lastTime=null;vid.onpause=()=>lastTime=null;

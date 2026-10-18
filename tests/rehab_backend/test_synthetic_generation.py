@@ -4,6 +4,8 @@ The media probe is mocked where testing provenance, so fake fixture bytes are
 never claimed to be playable videos or independently human-reviewed actions.
 """
 import json
+import copy
+import io
 from contextlib import contextmanager
 from fractions import Fraction
 from pathlib import Path
@@ -88,6 +90,23 @@ class GenerationJobTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,'unknown|inspect'):
                 g.execute('TEST://comfy',self.root,'TEST-job',self.graph)
         self.assertEqual(api.call_count,1)
+
+    def test_HTTP400_diagnostic_body_is_retained_and_same_job_cannot_auto_resubmit(self):
+        body=json.dumps(dict(error=dict(type='prompt_outputs_failed_validation',message='TEST schema rejected'),
+                             node_errors={'32':{'TEST':'bad control filename'}}))
+        error=urllib.error.HTTPError('TEST://comfy/prompt',400,'Bad Request',{},io.BytesIO(body.encode()))
+        with patch.object(g,'api',side_effect=error) as api:
+            with self.assertRaisesRegex(RuntimeError,'HTTP error|retained response'):
+                g.execute('TEST://comfy',self.root,'TEST-job',self.graph)
+            with self.assertRaisesRegex(RuntimeError,'unknown|inspect'):
+                g.execute('TEST://comfy',self.root,'TEST-job',self.graph)
+        api.assert_called_once()
+        saved=json.loads((self.root/'manifests/jobs/TEST-job.json').read_text())
+        self.assertEqual(saved['status'],'submission_http_error')
+        self.assertEqual(saved['http_status'],400)
+        self.assertEqual(json.loads(saved['submission_response']),json.loads(body))
+        self.assertFalse(saved.get('prompt_id'))
+        self.assertEqual(saved['workflow_sha256'],g.canonical(self.graph))
 
     def test_queue_observation_timeout_does_not_destroy_live_handle(self):
         self.state(); histories=0;calls=[]
@@ -212,6 +231,10 @@ class GenerationWorkflowTests(unittest.TestCase):
         kinds=[r['class_type'].lower() for r in graph.values()]
         self.assertFalse(any(any(token in kind for token in ('interpolat','repeat','upscale','resize')) for kind in kinds))
 
+    def test_builder_rejects_endpoint_and_pose_control_together(self):
+        with self.assertRaisesRegex(ValueError,'separate experiments'):
+            g.workflow('TEST','TEST',7,241,'TEST-reference.png',end_guide=True,pose_file='TEST-control.mp4')
+
     def test_reference_preview_is_distinct_unlabelled_initial_condition(self):
         graph=g.workflow('TEST-profile-text','TEST-reference',7,97)
         self.assertNotIn('21',graph);self.assertNotIn('22',graph)
@@ -265,7 +288,9 @@ class GenerationProvenanceTests(unittest.TestCase):
         video=Path(video)
         count=97 if '_reference_' in video.name else 241
         value=dict(schema_version='rehab_synthetic/v1',video_sha256=g.digest(video),width=640,height=384,
-            frame_count=count,presentation_s=[k/30 for k in range(count)],time_basis='stream_relative_media_pts')
+            frame_count=count,presentation_s=[k/30 for k in range(count)],time_basis='stream_relative_media_pts',
+            frames=[dict(frame_index=i,timestamp_s=i/30,decoded_rgb_sha256='a'*64) for i in range(count)],
+            provenance=dict(full_decode_verified=True,pixel_format='rgb24'))
         if timeline_path is not None:g.write_new(timeline_path,value)
         return value
 
@@ -273,6 +298,143 @@ class GenerationProvenanceTests(unittest.TestCase):
         return (patch.object(g,'execute',side_effect=self.execute),
                 patch.object(g,'api',return_value={}),
                 patch('tools.rehab_ml.synthetic.video.probe_video',side_effect=self.probe))
+
+    def controller(self):
+        """A mocked verified-controller boundary; not a real skeleton/video."""
+        from tools.rehab_ml.synthetic.pose_guidance import OFFICIAL_EVIDENCE
+        path=self.root/'features/TEST-controller/receipt.json'
+        movie=self.root/'features/TEST-controller/control.mp4'
+        movie.parent.mkdir(parents=True,exist_ok=True);movie.write_bytes(b'TEST fake controller movie')
+        record=dict(video=str(movie),video_sha256=g.digest(movie),controller_version='TEST-controller-v1',seed=17,
+            controller_trajectory_sha256='b'*64,source=dict(source_pose_sha256='c'*64),
+            lineage_ids=['TEST-shared-controller-source','TEST-controller-trajectory'])
+        g.write_new(path,dict(TEST='mocked verified-controller boundary, never output labels'))
+        metadata=dict(receipt_path=str(path),receipt_sha256=g.digest(path),controller_version=record['controller_version'],
+            controller_seed=17,control_video_path=str(movie),control_video_sha256=record['video_sha256'],
+            trajectory_sha256=record['controller_trajectory_sha256'],pose_source_sha256='c'*64,
+            model_sha256=OFFICIAL_EVIDENCE['model_sha256'],model_receipt_path=str(self.root/'manifests/TEST-control-model.json'),
+            model_receipt_sha256='d'*64,controller_is_ground_truth_for_output=False,creates_human_annotations=False)
+        return path,(record,'rehab_control_'+record['video_sha256'][:20]+'.mp4',metadata)
+
+    def test_pose_control_cannot_be_combined_with_reference_generation_or_endpoint_guide(self):
+        path,_=self.controller()
+        for scenario,end_guide in ((None,False),('A',True)):
+            with patch.object(g,'api') as api,patch.object(g,'execute') as execute,patch.object(g,'prepare_pose_control') as prepare:
+                with self.assertRaisesRegex(ValueError,'separate|motion reference'):
+                    g.generate(self.lab,self.root,'TEST://comfy','pilot01',scenario,end_guide=end_guide,pose_control=path)
+            api.assert_not_called();execute.assert_not_called();prepare.assert_not_called()
+
+    def test_controller_group_scenario_and_reference_mismatch_reject_before_submission(self):
+        from tools.rehab_ml.synthetic.control import VERSION as CONTROL_VERSION
+        image_hash=g.digest(self.root/'references/pilot01.png')
+        for field,value in (('source_group_id','pilot02'),('scenario','D'),('reference_image_sha256','f'*64)):
+            control=dict(schema_version=CONTROL_VERSION,controller_version=CONTROL_VERSION,scenario='A',
+                is_GT=False,training_reference_eligible=False,controller_timestamps_are_generated_video_labels=False,
+                width=640,height=384,frames=241,fps=30,seed=17,
+                source=dict(source_group_id='pilot01',reference_image_sha256=image_hash,stage='pilot',split='train'))
+            if field=='scenario':control[field]=value
+            else:control['source'][field]=value
+            path=self.root/'features'/('TEST-mismatch-'+field+'.json');g.write_new(path,control)
+            with patch.object(g,'api') as api,patch.object(g,'execute') as execute:
+                with self.assertRaisesRegex(ValueError,'group_scenario_or_reference_image_mismatch'):
+                    g.generate(self.lab,self.root,'TEST://comfy','pilot01','A',pose_control=path)
+            api.assert_not_called();execute.assert_not_called()
+
+    def test_pose_controller_has_own_name_graph_receipt_and_lineage_without_GT(self):
+        path,verified=self.controller();first,second,third=self.contexts()
+        with first,second,third,patch.object(g,'prepare_pose_control',return_value=copy.deepcopy(verified)) as prepare:
+            result=g.generate(self.lab,self.root,'TEST://comfy','pilot01','A',pose_control=path)
+        self.assertEqual(prepare.call_count,2)  # Before and after sampling.
+        self.assertIn('_pose'+verified[0]['video_sha256'][:12]+'_ref',result['sample_id'])
+        self.assertEqual(result['generation']['pose_control'],verified[2])
+        self.assertEqual(result['generation']['guidance']['control_sha256'],verified[0]['video_sha256'])
+        self.assertEqual(result['generation']['pose_control']['model_receipt_sha256'],'d'*64)
+        self.assertTrue(set(verified[0]['lineage_ids'])<=set(result['lineage_ids']))
+        graph=next(graph for _,graph in self.jobs if '31' in graph)
+        self.assertEqual(graph['31']['class_type'],'LoraLoaderModelOnly')
+        self.assertEqual(graph['32']['inputs']['file'],verified[1])
+        self.assertEqual(graph['19']['inputs']['samples'],['35',2])
+        self.assertFalse(result['generation']['guidance']['creates_labels'])
+        self.assertFalse(result['generation']['pose_control']['controller_is_ground_truth_for_output'])
+        self.assertFalse(result['generation']['pose_control']['creates_human_annotations'])
+        self.assertEqual(result['status'],'pending')
+        self.assertEqual(result['side'],'unknown')
+        self.assertNotIn('observable_count',result);self.assertNotIn('phase_intervals',result)
+        self.assertFalse(list((self.root/'annotations').iterdir()))
+
+    def test_pose_controller_reference_lineage_is_unique_in_persisted_contract(self):
+        from tools.rehab_ml.synthetic import contracts
+        path,verified=self.controller()
+        reference=json.loads((self.root/'references/pilot01.json').read_text(encoding='utf-8'))
+        shared=['reference:'+reference['image_sha256'],
+                'reference_video:'+reference['video']['sha256']]
+        # A verified controller already records its source reference; generation
+        # adds the same provenance again after decoding the new candidate.
+        verified[0]['lineage_ids'].extend(shared)
+        original_controller_lineage=list(verified[0]['lineage_ids'])
+        first,second,third=self.contexts()
+        with first,second,third,patch.object(g,'prepare_pose_control',return_value=verified):
+            result=g.generate(self.lab,self.root,'TEST://comfy','pilot01','A',pose_control=path)
+        expected=['identity:pilot01',*original_controller_lineage]
+        self.assertEqual(result['lineage_ids'],expected)
+        self.assertEqual(len(result['lineage_ids']),len(set(result['lineage_ids'])))
+        for lineage in shared:self.assertEqual(result['lineage_ids'].count(lineage),1)
+        self.assertEqual(verified[0]['lineage_ids'],original_controller_lineage)
+        manifest=json.loads((self.root/'manifests/dataset.json').read_text(encoding='utf-8'))
+        self.assertEqual(manifest['samples'],[result])
+        # Structural validation only: fake fixture media is still not decoded
+        # evidence, accepted footage, or a human-reviewed training reference.
+        audit=contracts.validate_manifest(manifest)
+        self.assertEqual(audit['sample_count'],1)
+        self.assertEqual(audit['accepted_formal_count'],0)
+        self.assertEqual(audit['pending_sample_ids'],[result['sample_id']])
+        broken=copy.deepcopy(manifest)
+        broken['samples'][0]['lineage_ids'].append(shared[0])
+        with self.assertRaisesRegex(contracts.SyntheticContractError,'nonempty_unique_lineage_ids'):
+            contracts.validate_manifest(broken)
+
+    def test_unverified_pose_lora_receipt_rejects_before_text_or_video_submission(self):
+        from tools.rehab_ml.synthetic.pose_guidance import POSE_LORA_NAME,OFFICIAL_EVIDENCE
+        path,verified=self.controller()
+        model=self.lab/'ComfyUI/models/loras'/POSE_LORA_NAME
+        model.parent.mkdir(parents=True);model.write_bytes(b'TEST tiny wrong-size file, not real model weights')
+        lock=self.lab/'TEST-control-lock.json';g.write_new(lock,dict(TEST='wrong model fixture'))
+        g.write_new(self.root/'manifests/control-model-verification-v1.json',dict(
+            model=dict(path=str(model),sha256=OFFICIAL_EVIDENCE['model_sha256']),
+            lock_path=str(lock),lock_sha256=g.digest(lock)))
+        with patch('tools.rehab_ml.synthetic.control.load_control',return_value=verified[0]) as loader,\
+                patch('tools.rehab_ml.synthetic.video.probe_video',side_effect=self.probe),\
+                patch.object(g,'api') as api,patch.object(g,'execute') as execute:
+            with self.assertRaisesRegex(ValueError,'LoRA differs'):
+                g.generate(self.lab,self.root,'TEST://comfy','pilot01','A',pose_control=path)
+        self.assertTrue(loader.call_args.kwargs['verify'])
+        self.assertEqual(loader.call_args.kwargs['expected_source_group_id'],'pilot01')
+        self.assertEqual(loader.call_args.kwargs['expected_scenario'],'A')
+        self.assertEqual(loader.call_args.kwargs['expected_reference_image_sha256'],g.digest(self.root/'references/pilot01.png'))
+        api.assert_not_called();execute.assert_not_called()
+
+    def test_completed_pose_candidate_cannot_reuse_changed_controller_metadata(self):
+        path,verified=self.controller();first,second,third=self.contexts()
+        with first,second,third,patch.object(g,'prepare_pose_control',return_value=copy.deepcopy(verified)):
+            result=g.generate(self.lab,self.root,'TEST://comfy','pilot01','A',pose_control=path)
+        original=Path(result['video']['path']).read_bytes()
+        for field,value in (('controller_seed',18),('model_receipt_sha256','e'*64),('trajectory_sha256','f'*64)):
+            changed=copy.deepcopy(verified);changed[2][field]=value
+            with patch.object(g,'prepare_pose_control',return_value=changed),patch.object(g,'api') as api,patch.object(g,'execute') as execute:
+                with self.assertRaisesRegex(ValueError,'pose-conditioned candidate provenance changed'):
+                    g.generate(self.lab,self.root,'TEST://comfy','pilot01','A',pose_control=path)
+            api.assert_not_called();execute.assert_not_called()
+        self.assertEqual(Path(result['video']['path']).read_bytes(),original)
+
+    def test_controller_change_during_sampling_does_not_publish_candidate_as_valid(self):
+        path,verified=self.controller();changed=copy.deepcopy(verified);changed[2]['controller_seed']=18
+        first,second,third=self.contexts()
+        with first,second,third,patch.object(g,'prepare_pose_control',side_effect=[verified,changed]):
+            with self.assertRaisesRegex(ValueError,'changed during generation'):
+                g.generate(self.lab,self.root,'TEST://comfy','pilot01','A',pose_control=path)
+        manifest=json.loads((self.root/'manifests/dataset.json').read_text(encoding='utf-8'))
+        self.assertEqual(manifest['samples'],[])
+        self.assertFalse(list((self.root/'raw').glob('*.mp4')))
 
     def test_text_cache_changes_with_motion_and_same_motion_across_refs_uses_same_text(self):
         first,second,third=self.contexts()

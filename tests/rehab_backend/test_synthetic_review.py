@@ -74,6 +74,15 @@ class SyntheticReviewTests(unittest.TestCase):
         self.assertIsNone(forms[0]['reviewer_id'])
         self.assertIsNone(forms[0]['observable_count'])
         self.assertFalse(forms[0]['review']['full_video_watched'])
+        self.assertEqual(forms[0]['label_spec_version'], 'rehab_synthetic_label_spec/v2')
+        self.assertEqual([q['problem_id'] for q in forms[0]['quality']], list(r.OBSERVABLE_IDS))
+        for quality in forms[0]['quality']:
+            self.assertIsNone(quality['assessable'])
+            self.assertFalse(quality['assessability_mask'])
+            self.assertEqual(quality['state'], 'unknown')
+            self.assertFalse(quality['label_mask'])
+            self.assertIsNone(quality['start_s'])
+            self.assertIsNone(quality['end_s'])
         self.assertFalse((self.root/'annotations').exists())
 
     def test_catalog_blinds_names_scenarios_prompt_predictions_and_paths(self):
@@ -277,6 +286,114 @@ class SyntheticReviewTests(unittest.TestCase):
         payload['reason'] = 'TEST: partial visibility noted without clinical judgment'
         store.submit(payload)
         self.assertEqual(r.load_reviewed(self.root)['annotations'][0]['operator_note'], payload['reason'])
+
+    def test_observable_present_and_absent_save_independent_masks_and_real_pts(self):
+        store, token = self.store()
+        payload = self.payload(store, token)
+        bend, lean = payload['annotation']['quality']
+        bend.update(assessable=True, assessability_mask=True, state='present', label_mask=True,
+                    start_s=.125, end_s=.75)
+        lean.update(assessable=True, assessability_mask=True, state='absent', label_mask=True,
+                    start_s=0., end_s=1.)
+        self.assertTrue(store.submit(payload)['eligible_for_training'])
+        loaded = r.load_reviewed(self.root)['annotations'][0]
+        self.assertEqual(loaded['quality'], [bend, lean])
+        self.assertEqual(loaded['label_spec_version'], r.LABEL_SPEC_VERSION)
+        self.assertEqual(loaded['label_spec_sha256'], r._hash(r.LABEL_SPEC_PATH))
+
+    def test_unassessable_is_recorded_independently_and_is_never_absent(self):
+        store, token = self.store()
+        payload = self.payload(store, token)
+        label = payload['annotation']['quality'][0]
+        label.update(assessable=False, assessability_mask=True)
+        store.submit(payload)
+        saved = r.load_reviewed(self.root)['annotations'][0]['quality'][0]
+        self.assertFalse(saved['assessable'])
+        self.assertTrue(saved['assessability_mask'])
+        self.assertEqual(saved['state'], 'unknown')
+        self.assertFalse(saved['label_mask'])
+        self.assertIsNone(saved['start_s'])
+
+    def test_assessable_does_not_implicitly_confirm_state(self):
+        store, token = self.store()
+        payload = self.payload(store, token)
+        payload['annotation']['quality'][1].update(assessable=True, assessability_mask=True)
+        store.submit(payload)
+        saved = r.load_reviewed(self.root)['annotations'][0]['quality'][1]
+        self.assertTrue(saved['assessable'])
+        self.assertEqual(saved['state'], 'unknown')
+        self.assertFalse(saved['label_mask'])
+
+    def test_observable_known_state_requires_assessability_and_actual_pts(self):
+        store, token = self.store()
+        payload = self.payload(store, token)
+        label = payload['annotation']['quality'][0]
+        label.update(state='present', label_mask=True, start_s=.125, end_s=.75)
+        with self.assertRaisesRegex(c.SyntheticContractError, 'requires_assessable'):
+            store.submit(payload)
+        label.update(assessable=True, assessability_mask=True, start_s=.1)
+        with self.assertRaisesRegex(c.SyntheticContractError, 'actual_pts'):
+            store.submit(payload)
+        label['start_s'] = .875
+        with self.assertRaisesRegex(c.SyntheticContractError, 'actual_pts'):
+            store.submit(payload)
+
+    def test_observable_unknown_keeps_times_null(self):
+        store, token = self.store()
+        payload = self.payload(store, token)
+        payload['annotation']['quality'][0].update(start_s=0., end_s=.5)
+        with self.assertRaisesRegex(c.SyntheticContractError, 'unknown_quality_interval'):
+            store.submit(payload)
+
+    def test_review_page_rejects_clinical_quality_even_if_mask_false(self):
+        store, token = self.store()
+        payload = self.payload(store, token)
+        payload['annotation']['quality'][0]['kind'] = 'clinical_quality'
+        with self.assertRaisesRegex(ValueError, 'clinical_quality_not_collected'):
+            store.submit(payload)
+        self.assertFalse((self.root/'annotations').exists())
+
+    def test_review_page_rejects_other_problems_duplicates_and_professional_claims(self):
+        store, token = self.store()
+        for change in ('other_problem', 'duplicate', 'professional_claim'):
+            payload = self.payload(store, token)
+            if change == 'other_problem':
+                payload['annotation']['quality'][0]['problem_id'] = 'pain_diagnosis'
+            elif change == 'duplicate':
+                payload['annotation']['quality'][1] = copy.deepcopy(payload['annotation']['quality'][0])
+            else:
+                payload['annotation']['quality'][0]['professional_review'] = {'approved': True}
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                store.submit(payload)
+
+    def test_legacy_empty_quality_annotations_are_still_valid_and_unknown(self):
+        store, token = self.store()
+        payload = self.payload(store, token)
+        payload['annotation']['quality'] = []
+        self.assertTrue(store.submit(payload)['eligible_for_training'])
+        self.assertEqual(r.load_reviewed(self.root)['annotations'][0]['quality'], [])
+
+    def test_bilateral_observation_is_saved_without_single_side_training_eligibility(self):
+        store, token = self.store()
+        payload = self.payload(store, token)
+        payload['annotation']['side'] = 'bilateral'
+        payload['annotation']['quality'][0].update(assessable=True, assessability_mask=True,
+            state='present', label_mask=True, start_s=0., end_s=1.)
+        result = store.submit(payload)
+        self.assertFalse(result['eligible_for_training'])
+        self.assertIn('require_side_specific_temporal_reference', result['reasons'])
+        loaded = r.load_reviewed(self.root)
+        self.assertEqual(loaded['annotations'][0]['side'], 'bilateral')
+        self.assertEqual(loaded['eligible_annotations'], [])
+
+    def test_label_spec_v2_reports_targets_and_nonexclusive_facts_separately(self):
+        path = Path(__file__).resolve().parents[2]/'configs/rehab_ml/synthetic_label_spec.json'
+        spec = json.loads(path.read_text(encoding='utf-8'))
+        self.assertEqual(spec['schema_version'], r.LABEL_SPEC_VERSION)
+        self.assertEqual(spec['previous_schema_version'], 'rehab_synthetic_label_spec/v1')
+        self.assertEqual({x['problem_id'] for x in spec['observable_changes']['items']}, set(r.OBSERVABLE_IDS))
+        self.assertFalse(spec['observable_changes']['clinical_quality_from_this_page'])
+        self.assertIn('overlapping', spec['factual_coverage_reporting']['overlap'])
 
     def server(self):
         server = r.make_server(self.root, 0)

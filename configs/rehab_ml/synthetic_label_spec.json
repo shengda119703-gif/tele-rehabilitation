@@ -1,32 +1,69 @@
 {
-  "schema_version": "rehab_synthetic_label_spec/v1",
+  "schema_version": "rehab_synthetic_label_spec/v2",
   "source_schema": "rehab_synthetic/v1",
   "exercise_id": "shoulder_abduction",
   "annotator": "Actual human operator, watching the original source in full; generated prompts and pose predictions hidden",
   "side": {
-    "values": ["left", "right"],
+    "values": [
+      "left",
+      "right",
+      "bilateral"
+    ],
     "definition": "Actual anatomical side visible in the source; never infer from image side or requested prompt",
     "unknown": null,
-    "mask_default": false
+    "mask_default": false,
+    "bilateral": "Valid observed fact; not eligible for the first single-side temporal model."
   },
   "time_basis": "stream_relative_media_pts",
   "boundary_rule": "Select an actual decoded frame PTS; do not reconstruct or round to a nominal frame-rate grid",
   "phases": [
-    {"id": "ready", "meaning": "Visible starting posture before the arm begins moving away from the body"},
-    {"id": "outbound", "meaning": "Visible upper-arm movement away from the starting posture"},
-    {"id": "endpoint_or_hold", "meaning": "Observed upper-arm turning point or maintained endpoint; no prescribed healthy range assumed"},
-    {"id": "return", "meaning": "Visible movement back toward the starting posture"},
-    {"id": "rest_or_other", "meaning": "Rest, returned starting posture or another visible activity; unknown spans remain masked"}
+    {
+      "id": "ready",
+      "meaning": "Visible starting posture before the arm begins moving away from the body"
+    },
+    {
+      "id": "outbound",
+      "meaning": "Visible upper-arm movement away from the starting posture"
+    },
+    {
+      "id": "endpoint_or_hold",
+      "meaning": "Observed upper-arm turning point or maintained endpoint; no prescribed healthy range assumed"
+    },
+    {
+      "id": "return",
+      "meaning": "Visible movement back toward the starting posture"
+    },
+    {
+      "id": "rest_or_other",
+      "meaning": "Rest, returned starting posture or another visible activity; unknown spans remain masked"
+    }
   ],
   "phase_interval": {
-    "required": ["phase", "start_s", "end_s", "label_mask"],
+    "required": [
+      "phase",
+      "start_s",
+      "end_s",
+      "label_mask"
+    ],
     "end_inclusion": "half-open training interval; original endpoint PTS retained",
     "overlap": "forbidden",
     "unobserved_spans": "no supervision; never fill from prompts or model outputs"
   },
   "repetition": {
-    "required": ["rep_id", "boundaries", "boundary_masks", "observable_completion", "observable_completion_mask"],
-    "boundaries": ["ready", "outbound", "endpoint_or_hold", "return", "rest_or_other"],
+    "required": [
+      "rep_id",
+      "boundaries",
+      "boundary_masks",
+      "observable_completion",
+      "observable_completion_mask"
+    ],
+    "boundaries": [
+      "ready",
+      "outbound",
+      "endpoint_or_hold",
+      "return",
+      "rest_or_other"
+    ],
     "default_boundary_values": null,
     "default_boundary_masks": false,
     "completion_default": null,
@@ -43,10 +80,48 @@
     "empty_repetition_list_is_zero": false
   },
   "observable_changes": {
-    "examples": ["Visible elbow bending", "Visible torso lateral leaning"],
+    "kind": "observable_change",
+    "items": [
+      {
+        "problem_id": "elbow_bend",
+        "meaning": "Visible elbow bending during the reviewed interval on the observed test side; this is an image event, not a diagnosis, contraindication or clinical error."
+      },
+      {
+        "problem_id": "torso_lateral_lean",
+        "meaning": "Clearly visible lateral torso leaning relative to the observed starting posture; not a spinal segment measurement or a clinical ROM conclusion."
+      }
+    ],
+    "required_fields": [
+      "problem_id",
+      "kind",
+      "assessable",
+      "assessability_mask",
+      "state",
+      "label_mask",
+      "start_s",
+      "end_s"
+    ],
+    "assessable_values": [
+      true,
+      false,
+      null
+    ],
+    "assessability_mask_default": false,
+    "state_values": [
+      "present",
+      "absent",
+      "unknown"
+    ],
     "default_state": "unknown",
     "default_label_mask": false,
-    "not_a_clinical_error_label": true
+    "default_times": null,
+    "mask_independence": "Assessed-but-unjudgeable: assessable=false with assessability_mask=true, while state=unknown and label_mask=false. Assessable=true does not by itself set a state label.",
+    "known_state_requires": "assessable=true, assessability_mask=true, state present/absent and label_mask=true; actual original media PTS start_s/end_s required.",
+    "absence_scope": "Absent only in the explicitly reviewed and assessable interval. Never infer absence from missing joints, unknown state, requested scenario or absence of clinical review.",
+    "unknown_times": "Unknown state keeps start_s/end_s null. This schema does not represent timed intervals of unassessability; retain that limitation rather than inventing times.",
+    "clinical_quality_from_this_page": false,
+    "not_a_clinical_error_label": true,
+    "legacy_empty_quality": "Valid and entirely unknown for both observations."
   },
   "clinical_quality": {
     "default": "unknown, mask false",
@@ -65,5 +140,17 @@
     "B0": "Unchanged ProtocolEngine confirmation event, including original observation and hysteresis delays",
     "B2": "Causal model phase transition decoded from arrived source frames",
     "limitation": "Boundary timing differences include estimator confirmation delay; they are not clinical ROM or diagnostic accuracy"
+  },
+  "previous_schema_version": "rehab_synthetic_label_spec/v1",
+  "migration": "Repository specification only. Preserve the external immutable v1 copy; publish v2 under a distinct versioned path. Legacy quality=[] remains unknown, never absent.",
+  "factual_coverage_reporting": {
+    "requested_scenarios": "A-F are generation targets only, not observed category labels.",
+    "overlap": "Report observed facts as independent overlapping properties. A clip may contain a complete roundtrip, a hold, slower motion and visible elbow bending at the same time.",
+    "complete_and_partial": "Use independently masked human observable_completion and full repetition inventory; amplitude alone does not determine completeness.",
+    "speed": "Report actual PTS durations with known-boundary counts. Do not assign a slow category without a predeclared operational definition.",
+    "hold": "Report explicitly reviewed endpoint/hold intervals and durations; do not copy requested seconds.",
+    "other_activity": "No complete repetition is not proof of unrelated activity; require explicit human activity/phase evidence and report unknown coverage.",
+    "observable_changes": "For each problem separately report cohort N, human-reviewed source N, assessability true/false/unknown N, present/absent/unknown N, known interval coverage and missing masks. Do not merge unassessable into absent.",
+    "six_class_completion": "Target slot counts, source acceptance counts and actual factual coverage are separate results. Current observation fields do not by themselves prove a mutually exclusive six-class dataset or clinical quality."
   }
 }
