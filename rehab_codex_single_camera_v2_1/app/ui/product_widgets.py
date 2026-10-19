@@ -221,6 +221,8 @@ def conversation_source(metadata):
     if not isinstance(metadata,dict):return ''
     if metadata.get('provider')=='deepseek' and metadata.get('status')=='replied':
         return 'DeepSeek 回复'
+    if metadata.get('provider')=='local' and metadata.get('status')=='replied':
+        return '本地编排回复'
     if metadata.get('provider')=='local' and metadata.get('status')=='unavailable' and metadata.get('reason')=='not_configured':
         return '未配置 DeepSeek · 本地回复'
     if metadata.get('provider')=='local' and metadata.get('status')=='failed':

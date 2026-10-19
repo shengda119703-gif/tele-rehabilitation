@@ -49,6 +49,20 @@ export function searchCards(text:string) {
     .filter(v=>v.score>0).sort((a,b)=>b.score-a.score||a.card.id.localeCompare(b.card.id)).slice(0,3).map(v=>v.card);
 }
 
+/** Region retrieval supplies public candidates only, never applicability or dose.
+ * The semantic planner supplies a catalogue region rather than an action ID.
+ * Exact IDs/names retain precedence; unsupported clinical goals stay unmatched.
+ */
+export function searchTaskCards(query:string,region?:string) {
+  const exact=searchCards(query);
+  if(exact.length || !region?.trim()) return exact;
+  const regions=region.split(/[、,，/]/).map(v=>v.trim()).filter(v=>v.length>0);
+  if(!regions.length || regions.some(v=>v.length>12))return [];
+  return catalogue.filter(c=>c.complete && c.kind==='training' &&
+    regions.some(r=>c.region.split(/[、,，/]/).some(part=>part===r || part===r+'关节')))
+    .slice(0,3);
+}
+
 export function searchGuidance(query:string) {
   const keywords: Record<string,string[]> = {
     '1. 四个维度分别管理':['等级','分级','L0','L1','L2','L3','肌力','当前能力'],

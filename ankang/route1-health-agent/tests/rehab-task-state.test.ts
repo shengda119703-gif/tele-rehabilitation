@@ -17,6 +17,56 @@ test('equipment constraints use explicit own clauses and later corrections witho
 const now = new Date(2026,9,19,12);
 const owner = 'SYNTHETIC_TEST_GUIDANCE';
 const profile = {...demoProfile,name:owner,medications:[],familySharing:'denied' as const};
+test('acceptance dialogue preserves task through health goal and exercise challenge (protocol fixture)',async()=>{
+  const turns=['帮我制定一套锻炼方案','徒手，治阳痿','练腿不行吗','先按一般体能讨论'];
+  const prompts:string[]=[];
+  let index=0,legacy=0,writes=0;
+  const model:ConversationModel={async reply(input){
+    prompts.push(input.messages[0].content);
+    if(input.purpose==='understanding') {
+      const i=index++;
+      return JSON.stringify(semantic(turns[i],i===0||i===2?'rehab':'health',i===0));
+    }
+    return '我理解你在补充之前的训练目标。这次先讨论目标，尚未形成个人训练处方。';
+  }};
+  const runtime=new AgentRuntime();
+  await runtime.openSession({sessionId:owner,profile,now,semanticRoutingEnabled:true,conversationModel:model,
+    rehabAssistant:async()=>{legacy++;return {text:'LEGACY',conversation:undefined};},
+    rehabOperations:{async call(){writes++;throw Error('must not write');}}});
+  for(let i=0;i<turns.length;i++){
+    const result=await runtime.processTurn(owner,{text:turns[i],now});
+    assert.deepEqual(result.snapshot.rehabTask?.messages,turns.slice(0,i+1));
+    assert.equal(result.snapshot.rehabTask?.revision,i+1);
+    assert.doesNotMatch(result.reply.text,/动作名称或编号|请补充具体目标/);
+    assert.notEqual(result.reply.conversation?.reason,'not_configured');
+    assert.deepEqual(result.snapshot.events,[]);
+  }
+  const replies=prompts.filter(p=>p.includes('active_task_user_statements'));
+  assert.equal(replies.length,3);
+  assert.ok(replies[1].includes('徒手，治阳痿'));
+  assert.ok(replies[1].includes('练腿不行吗'));
+  assert.equal(legacy,0);assert.equal(writes,0);
+  await runtime.closeSession(owner);
+});
+
+test('parser outage preserves task and blocks legacy fallback; missing model is explicit',async()=>{
+  for(const configured of [true,false]){
+    const persistence=new InMemoryPersistence();
+    const original=updateRehabTask(null,'帮我制定居家训练计划','local',now.getTime());
+    await persistence.save(owner,{revision:1,health:{events:[],familyEvents:[],chat:[]},rehabTask:original});
+    let legacy=0;
+    const runtime=new AgentRuntime();
+    await runtime.openSession({sessionId:owner,profile,now,persistence,semanticRoutingEnabled:true,
+      conversationModel:configured?{async reply(){throw Error('TEST outage');}}:undefined,
+      rehabAssistant:async()=>{legacy++;return {text:'LEGACY',conversation:undefined};}});
+    const result=await runtime.processTurn(owner,{text:'练腿不行吗',now});
+    assert.deepEqual(result.snapshot.rehabTask?.messages,original.messages);
+    assert.match(result.reply.text,configured?/没有完成对话理解/:/没有接通 DeepSeek/);
+    assert.equal(result.reply.conversation?.status,configured?'failed':'unavailable');
+    assert.equal(legacy,0);
+    await runtime.closeSession(owner);
+  }
+});
 function semantic(text:string,route='chat',plan=false) {
   return {version:1,route,goal:text,mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null,
     intents:plan?[{type:'plan_generation',route:'rehab',goal:text,evidence:text}]:[]};
@@ -56,7 +106,7 @@ test('proactive question persists across reopen; equipment correction reuses ori
   await runtime.closeSession(owner);
 });
 
-test('topic change, cancellation and private turns clear the pending rehab task',async()=>{
+test('unrelated chat suspends a task; cancellation and privacy clear it',async()=>{
   for(const next of ['今天天气怎么样','取消','这段不要记录']){
     let calls=0;
     const model:ConversationModel={async reply(){calls++;return JSON.stringify(semantic(
@@ -65,7 +115,8 @@ test('topic change, cancellation and private turns clear the pending rehab task'
     await runtime.openSession({sessionId:owner,profile,now,semanticRoutingEnabled:true,conversationModel:model});
     await runtime.processTurn(owner,{text:'帮我制定居家训练计划',now});
     const result = await runtime.processTurn(owner,{text:next,now});
-    assert.equal(result.snapshot.rehabTask,null,next);
+    if(next==='今天天气怎么样') assert.deepEqual(result.snapshot.rehabTask?.messages,['帮我制定居家训练计划']);
+    else assert.equal(result.snapshot.rehabTask,null,next);
     await runtime.closeSession(owner);
   }
 });
@@ -93,4 +144,19 @@ test('restored task cancellation works with no configured model',async()=>{
   assert.equal(turn.snapshot.rehabTask,null);
   assert.match(turn.reply.text,/取消/);
   await runtime.closeSession(owner);
+});
+
+test('task retrieval uses structured catalogue region without treating a clinical goal as an exercise',async()=>{
+  const {searchTaskCards}=await import('../src/rehab/assistant');
+  const candidates=searchTaskCards('训练选择讨论','膝');
+  assert.ok(candidates.length>0);
+  assert.ok(candidates.every(c=>c.kind==='training' && c.region.includes('膝')));
+  assert.deepEqual(searchTaskCards('治阳痿'),[]);
+  assert.deepEqual(searchTaskCards('治阳痿','勃起功能'),[]);
+});
+
+test('task recovery rejects exercise examples and doses instead of bypassing candidate validation',async()=>{
+ const {isTaskRecoveryReply}=await import('../src/runtime/semanticExecution');
+ for(const text of ['比如快走和深蹲','以徒手训练为主','从少量开始','每天三组','每次20分钟'])assert.equal(isTaskRecoveryReply(text),false);
+ assert.equal(isTaskRecoveryReply('你在补充之前的训练目标；尚未形成个人训练处方。'),true);
 });

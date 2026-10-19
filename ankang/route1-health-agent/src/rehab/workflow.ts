@@ -1,6 +1,6 @@
 import { catalogue } from './catalogue';
 import { localPlan, type PlanInput } from './assistant';
-import { searchCards, searchGuidance } from './assistant';
+import { searchCards, searchTaskCards, searchGuidance } from './assistant';
 import { readRehabReceipt, describeLocalRehabReceipt, type RehabToolPort, type RehabCall, rehabToolNames } from '../runtime/rehabTools';
 import { mapKnowledgeActionToApp, type ExecutableActionMapping } from './exerciseMapping';
 import type { ConversationModel } from '../runtime/conversation';
@@ -149,7 +149,7 @@ const TOOL_SYSTEM = `你是安康康复分析阶段的工具规划器。你已�
 - rehab.get_training_plan：读取本人当前康复计划，arguments为{}
 - rehab.get_training_history：读取本人训练历史，arguments可为{}，只按明确来源提供exercise_id或joint
 - rehab.get_recent_assessments：读取本人近期评估，arguments可为{}，只按明确来源提供exercise_id或joint
-- rehab.search_knowledge：查询动作知识库；只能查询已存在动作/动作条件/停止条件，arguments必须为{"query":"非空搜索词"}，query最长400字
+- rehab.search_knowledge：查询动作知识库；只能查询已存在动作/动作条件/停止条件，arguments包含{"query":"非空搜索词"}，query最长400字；任务级检索可附加region（动作库部位，如膝、髋、踝、肩），依据用户目标与部位选取，不能把疾病名称推断为某关节。没有明确部位时先保留不确定性。查询结果只是公共候选，不表示适合个人。
 - rehab.search_guidance：查询康复指导资料；用于训练原则、剂量/进阶、单人执行等，arguments必须为{"query":"非空搜索词"}，query最长400字
 - rehab.run_plan_algorithm：运行确定性本地计划筛选算法；只有在目标、部位、器材、限制、等级和 screening_confirmed 都有明确来源时才能调用
 规则：
@@ -287,7 +287,7 @@ async function executeCall(
   check: () => void,
 ): Promise<{name:string; data:unknown}> {
   if (call.name === 'rehab.search_knowledge') {
-    const cards = searchCards(call.arguments.query ?? '');
+    const cards = searchTaskCards(call.arguments.query ?? '',call.arguments.region);
     return { name: call.name, data: cards.map(c => ({
       id:c.id,name:c.name,kind:c.kind,region:c.region,level:c.level,equipment:c.equipment,
       startConditions:c.startConditions,stopConditions:c.stopConditions,sourceDose:c.sourceDose,

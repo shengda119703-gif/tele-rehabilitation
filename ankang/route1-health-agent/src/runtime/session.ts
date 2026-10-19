@@ -187,7 +187,7 @@ class Session {
         ? await understandSemanticTurn(this.options.conversationModel, captured.text, {context:semanticContext}) : null;
       this.check(generation);
       if (!semantic) this.pendingRehabOperation = null;
-      if (!semantic || privacyBeforeRouting !== 'none') draft.rehabTask = null;
+      if (privacyBeforeRouting !== 'none') draft.rehabTask = null;
       const semanticExecution: SemanticExecutionTrace | undefined = this.options.semanticRoutingEnabled ? {
         parser_status: localCancellation?'local_fallback':semantic ? 'llm_valid' : this.options.conversationModel ? 'local_fallback' : 'unavailable',
         stages: [{stage:'understanding',status:localCancellation?'local':semantic?'passed':privacyBeforeRouting!=='none'?'blocked':'failed',
@@ -235,6 +235,17 @@ class Session {
           check:()=>this.check(generation),trace:semanticExecution});
         this.check(generation);
         plan=result.plan;conversation=result.conversation;agent=result.agent??null;
+      } else if (this.options.semanticRoutingEnabled && privacyIntent === 'none' && !plan.safetyAction) {
+        // A missing/invalid model response must not silently activate the old
+        // single-turn assistant or erase a pending task.
+        plan = readOnlyPlan(plan);
+        const text = this.options.conversationModel
+          ? '这次没有完成对话理解，前面的任务条件仍保留着，尚未生成或保存计划。请稍后重试。'
+          : '当前没有接通 DeepSeek，暂时无法进行连续对话分析或生成训练方案。请先在连接设置中配置模型；已有计划可到康复页面查看。';
+        plan = {...plan,replyText:text,replyBlocks:[{kind:'main',text}],toast:''};
+        conversation = this.options.conversationModel
+          ? {provider:'local',status:'failed',reason:'network'}
+          : {provider:'local',status:'unavailable',reason:'not_configured'};
       } else {
       if (!this.options.rehabAssistant && this.options.careTools && privacyIntent === 'none' && !plan.safetyAction && !plan.correction &&
         !plan.medicationMissed && !plan.eventsToAppend.length && !plan.familyEventsToAppend.length &&
@@ -315,7 +326,7 @@ class Session {
         }
       }
       if (semanticExecution && !semantic) semanticExecution.stages.push({ stage: 'reply',
-        status: conversation?.provider === 'deepseek' ? 'passed' : 'local', reason: 'legacy_fallback' });
+        status: conversation?.provider === 'deepseek' ? 'passed' : 'local', reason: privacyIntent !== 'none' ? 'privacy_local_reply' : 'understanding_unavailable' });
       let shareFindingIds: string[] = [];
       let shareFamilyEventIds: string[] = [];
       applyTurnPlan(plan, {

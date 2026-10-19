@@ -29,7 +29,7 @@ export function restoreRehabTask(value: unknown, context: string | undefined, no
 }
 
 export function isEquipmentUpdate(text: string): boolean {
-  return /(?:没有|只有|有|不用|不能用|改用|可用).{0,12}(?:弹力带|哑铃|椅子|稳固椅|器材|器械|硬床|垫子)/.test(text) &&
+  return (/^(?:就|只用|希望)?徒手(?:练习|训练)?[。！!\s]*$/.test(text) || /(?:没有|只有|有|不用|不能用|改用|可用).{0,12}(?:弹力带|哑铃|椅子|稳固椅|器材|器械|硬床|垫子)/.test(text)) &&
     !/(?:天气|旅行|聊天|打开|提醒|记录|取消|删除)/.test(text);
 }
 

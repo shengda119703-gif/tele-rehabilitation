@@ -212,7 +212,7 @@ export interface ChatMessage {
   text: string;
   time: string;
   persisted?: boolean;
-  conversation?: {provider:'deepseek'|'local';status:'replied'|'unavailable'|'failed';reason?:'network'|'not_configured'};
+  conversation?: {provider:'deepseek'|'local';status:'replied'|'unavailable'|'failed';reason?:'network'|'not_configured'|'invalid_reply'};
   /** Trusted host context, never inferred by the language model. */
   conversationContext?: string;
   /**
