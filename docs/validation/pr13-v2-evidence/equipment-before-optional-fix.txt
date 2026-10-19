@@ -1,0 +1,799 @@
+
+> route1-health-agent@0.1.0 ci
+> npm run build && npm test && npm run test:product && npm run security:check
+
+
+> route1-health-agent@0.1.0 build
+> npm run typecheck && npm run build:bridge
+
+
+> route1-health-agent@0.1.0 typecheck
+> tsc -b
+
+
+> route1-health-agent@0.1.0 build:bridge
+> node scripts/build-agent-bridge.cjs
+
+
+> route1-health-agent@0.1.0 test
+> tsc -p tsconfig.test.json && node -e "const fs=require('node:fs');fs.mkdirSync('.test-build/tests/corpus',{recursive:true});fs.writeFileSync('.test-build/package.json',JSON.stringify({type:'commonjs'}));fs.copyFileSync('tests/corpus/utterances.json','.test-build/tests/corpus/utterances.json')" && node --test .test-build/tests/*.test.js
+
+✔ absolute health date: 我2026年9月2日胸闷 (19.2666ms)
+✔ absolute health date: 我2026/9/10胸闷 (5.1075ms)
+✔ absolute health date: 我2026-09-11胸闷 (0.7419ms)
+✔ absolute health date: 我2026年2月30日胸闷 (1.7253ms)
+✔ explicit calendar date overrides the previous clause date (1.1924ms)
+PASS: external agent context keeps public person twin while filtering private data
+✔ .test-build\tests\agent-external-context.test.js (153.7521ms)
+PASS: adversarial blood pressure extraction, semantic routing, detection, repeat readings, clause splitting, and chat safety
+✔ .test-build\tests\blood-pressure-adversarial-blackbox.test.js (183.3967ms)
+✔ care read queries do not map unknown people, negation or hypotheses to self (20.0772ms)
+✔ compound care proposal performs no write; exact confirmation executes both and returns receipts (6.508ms)
+✔ request replay returns the same proposal; changed request under the same ID is rejected (2.9526ms)
+✔ changed medicine, occurrence, plan or arrangement requires a new proposal (19.1922ms)
+✔ partial execution is retained and retry only applies unfinished steps (2.7707ms)
+✔ host receipt makes recovery idempotent even if coordinator dies after the business write (19.3894ms)
+✔ direct text API rejects negation, hypotheses, examples, quotes and other people (27.4362ms)
+✔ reschedule parses the original occurrence separately from its new date and time (14.417ms)
+✔ expired partial approval can recover a receipt but cannot create another business write (2.8222ms)
+✔ expired, cancelled and another owner/source confirmations never write (4.0161ms)
+✔ unknown operations, extra fields, future doses and duplicate targets cannot become actions (1.3363ms)
+✔ ambiguous text asks for details; explicit text creates a confirmation, never silently writes (3.564ms)
+✔ overview keeps unrecorded distinct from missed and next-step uses existing business gates (0.6949ms)
+✔ concurrent confirmations serialize; invalid receipt never claims success (3.2404ms)
+✔ unknown subjects, conflicting periods and abnormal quantities never become self writes (5.4427ms)
+✔ self pending controls survive restart, expire and never expose another source (1.93ms)
+PASS: care tasks are session-only and legacy persistence is purged
+✔ .test-build\tests\care-tasks-session-only.test.js (136.4793ms)
+PASS: injected clock service rolls the day over at midnight
+✔ .test-build\tests\clock.test.js (130.3023ms)
+✔ inherits the unique family subject from the immediately previous health turn (25.8634ms)
+✔ does not carry an older subject through a newer unrelated health turn (3.0488ms)
+✔ does not carry a health subject through a newer non-health topic (1.4163ms)
+✔ refuses to inherit when the previous turn established multiple family subjects (1.2098ms)
+✔ a self-only previous turn cannot become a family pronoun anchor (1.6201ms)
+✔ preserves subject continuity inside a previous single-family turn (1.4665ms)
+✔ conversation runtime: the exact screenshot prompts reach DeepSeek without adding health facts or tools (43.3342ms)
+✔ conversation runtime: ordinary followups include only successful ordinary pairs, excluding private, no-record, legacy and tool replies (11.7095ms)
+✔ conversation runtime: successful model pairs survive reopen, while unavailable/failed pairs never become external context (9.8288ms)
+✔ conversation runtime: privacy, clinical, family-health, recall, correction and sharing keep their original routes (55.7746ms)
+✔ conversation runtime: unknown-owner, negated, hypothetical and unsupported operations never become model execution claims (13.7956ms)
+✔ conversation runtime: registered care and module results take priority and are excluded from ordinary context (2.9541ms)
+✔ conversation runtime: owner and trusted source/context partitions cannot exchange conversation pairs (6.3701ms)
+✔ conversation runtime: external context is bounded to recent ordinary pairs, with caller text preserved (1.8164ms)
+✔ conversation runtime: common ordinary negation and non-health family dialogue are not blanket-rejected (5.1609ms)
+✔ conversation runtime: empty, overlong and rejected model replies fail safely with no raw diagnostics (5.0322ms)
+✔ conversation runtime: closing during model generation discards late text and allows a clean reopen (2.5565ms)
+✔ conversation runtime: reset invalidates an in-flight model reply before any chat or health commit (14.6743ms)
+PASS: coordinated father-and-mother symptom creates two family claims
+PASS: coordinated family claims preserve an explicit event date
+PASS: ambiguous follow-up after coordinated family statement does not become self fact
+✔ .test-build\tests\coordinated-family-attribution-regression.test.js (193.8846ms)
+✔ ambiguous coordinated blood-pressure readings fail closed (24.3655ms)
+✔ single shared coordinated blood-pressure reading keeps existing behavior (8.1518ms)
+✔ correction points to the immediately previous elder turn and keeps the replacement fact occurred (34.9393ms)
+✔ an explicit historical correction keeps the replacement event on the stated historical date (6.3366ms)
+✔ an explicit current correction does not inherit a historical date (1.6017ms)
+✔ urgent 通知 → danger，永远压制 unknown (2.7019ms)
+✔ 仅 alert 通知 → warn (0.3833ms)
+✔ 没有任何通知、也没有任何派发台账，今日有信号 → ok，可以安心 (0.3332ms)
+✔ 无通知但有未确认的系统通知失败 → unknown，绝不显示总体正常 (0.4964ms)
+✔ 无通知但有未确认的系统通知未开启 → unknown (0.3755ms)
+✔ 无通知、派发台账里全部已确认，今日有信号 → ok (0.2987ms)
+✔ 无通知、in_app 失败但 push 已送达 → 不算 unknown (0.324ms)
+✔ 混合：1 条失败 + 1 条未开启 → detail 里分项计数 (0.3524ms)
+✔ 【断点 3 修复】无通知、无派发失败、今日零信号 → unknown，绝不显示总体正常 (0.4211ms)
+✔ 【断点 3 修复】零信号即使配 all-sent 的派发台账，仍标 unknown（沉默优先于派发成功） (0.4932ms)
+✔ 【断点 3 修复】今日只有 1 条信号也允许 ok，但 detail 必须如实说明数量 (0.7615ms)
+✔ 【断点 3 修复】今日大量信号 + 无通知 → ok 且 detail 提示数量 (0.3816ms)
+✔ 【评审现场时序】有信号但被隐私门控挡住 → unknown，绝不显示总体正常 (0.2894ms)
+✔ 多条被挡住的信号在标题中复数呈现 (0.2776ms)
+✔ gated 优先于派发失败：被挡住的信号比送达状态更需要家属知道 (0.5045ms)
+✔ 可见 alert 通知存在时仍走 warn，gated 数量不改变其分级 (0.3402ms)
+✔ gated=0 保持既有行为：有信号、无通知、无失败 → ok (0.16ms)
+✔ collectGatedFindings：未授权时返回今日 alert/urgent，授权后为空 (2.0836ms)
+✔ currentFamilyNotifications：denied/ask 时台账历史不充当当前状态，granted 时原样透传 (0.7812ms)
+✔ 撤销授权闭环：台账历史 urgent 在 current 过滤后，headline 回到"被隐私设置挡住" (0.3579ms)
+✔ collectTodayMinorFindings：只收今日 info/watch，urgent/alert 归 gated 分支管 (0.3508ms)
+✔ info 级发现存在 → unknown"有轻微变化被记录"，绝不绿色"总体正常" (0.2019ms)
+✔ gated urgent 仍优先于轻微变化分支；无发现的日子保持 ok (0.2995ms)
+PASS: demo event stream produces multisignal alert
+PASS: identical event stream produces stable findings
+PASS: sparse recent data does not create a trend
+PASS: single weak metric stays at watch
+PASS: severe blood pressure without red flags stays alert
+PASS: severe blood pressure plus chest pain upgrades to urgent
+PASS: fall directly routes to urgent
+PASS: private observation prevents family escalation without hiding it from the elder
+PASS: private red-flag symptom remains urgent but is not copied to family
+PASS: privacy intent is explicit and conservative
+PASS: justified follow-up question is driven by context
+PASS: private and no-record prompts stay on the local safety adapter path
+PASS: numeric extraction covers expanded conversational values
+PASS: weekly report includes task closure
+PASS: issue ⑨: negated chest pain does not upgrade severe BP to urgent
+PASS: issue ⑨: hypothetical fall does not trigger fall rule
+PASS: issue ⑨: near miss fall does not trigger fall rule
+PASS: issue ⑨: uncertain chest pain does not trigger red flag
+PASS: issue ⑨: occurred chest pain still triggers urgent
+PASS: issue ⑨: legacy observation without status still fires (backward compat)
+PASS: issue ⑨: HR=125 (alert) + negated chest pain stays alert, not urgent
+✔ .test-build\tests\detection.test.js (285.0908ms)
+▶ elder chat turn ordering
+  ✔ commits N+2 while rejecting a delayed N+1 response (63.1015ms)
+  ✔ keeps an already latest turn committable (0.6206ms)
+✔ elder chat turn ordering (66.0627ms)
+PASS: ambiguous family clarification protects the elder record
+PASS: pure reassurance is not written as a new symptom
+PASS: repeating the same chat health fact does not duplicate the health timeline
+PASS: a meaningful update is not swallowed by chat dedupe
+✔ .test-build\tests\elder-next-layer-blackbox.test.js (268.0677ms)
+PASS: overloaded speech keeps self facts separate from family facts and context
+PASS: overloaded safety reply preserves more than one immediately useful action
+PASS: actionable tasks stay bounded when many findings compete
+✔ .test-build\tests\elder-overload-blackbox.test.js (201.2479ms)
+PASS: conflicting share and refusal fails closed
+PASS: pronoun-based refusal is not lost when the family member was named earlier
+PASS: no-record remains stronger than conflicting sharing language
+PASS: a clean one-time request remains shareable
+PASS: mixed privacy claims produce no persistence candidates
+PASS: clean explicit one-time share still yields a persistence candidate
+PASS: revocation removes persistent family visibility
+PASS: revocation removes one-time visibility and re-grant does not resurrect it
+PASS: privacy revocation wording is a future stop, not a false historical deletion
+PASS: historical sharing audit survives permission changes
+PASS: historical audit remains independent from current family visibility
+PASS: audit keeps a bounded history
+✔ .test-build\tests\elder-privacy-adversarial.test.js (201.4351ms)
+PASS: recipient is inferred conservatively from explicit kinship words
+PASS: historical records survive current revocation state
+PASS: historical answer names what was actually shared and never claims revocation
+PASS: missing history fails closed instead of guessing
+PASS: audit append keeps bounded history and preserves order
+✔ .test-build\tests\elder-sharing-audit-blackbox.test.js (200.1318ms)
+PASS: planElderTurn produces chunked replies and record/no-record plans
+✔ .test-build\tests\elder-turn-plan.test.js (248.9663ms)
+PASS: dashboard disclosure stays fail-closed when familyEligible is omitted
+PASS: notification dispatch defaults to eligible when familyEligible is omitted
+PASS: notification dispatch is still blocked by explicit familyEligible=false
+PASS: watch-level findings remain elder-only
+PASS: only explicitly shareable alert and urgent findings are disclosed
+PASS: non-shareable urgent findings never create family contact tasks
+PASS: family task disclosure excludes unlinked and private tasks
+PASS: revoked family sharing hides every family task, including generic safety tasks
+PASS: revocation cannot be bypassed by a stale visible finding list
+PASS: one-time share consumption removes only consumed ids
+PASS: family minimum-necessary disclosure boundary
+✔ .test-build\tests\family-disclosure.test.js (200.4058ms)
+PASS: family fact is persisted independently from elder health events
+PASS: family visibility respects persistent sharing and one-time sharing
+PASS: numeric family health values are retained even without symptom tags
+PASS: comparative symptom stays in elder stream while comparison date does not replace current date
+PASS: mixed father/self medication report produces two independent claims
+PASS: correction can target the latest family fact without touching elder detection data
+✔ .test-build\tests\family-ledger-regression.test.js (194.8345ms)
+✔ L2：同浏览器跨 tab——老人端应答 accepted 即绑定成功 (16.3488ms)
+✔ L2：老人端明确 rejected 时不得再回落 L3，必须如实报"码不对" (0.6483ms)
+✔ L2 超时后回落 L3：跨设备拨号成功并拿到 accepted (86.15ms)
+✔ L3：信令不可达（拨号抛错）→ unreachable，原因如实透传 (46.1787ms)
+✔ L3：拨通了但对方不应答 → peer_reply_timeout (137.6142ms)
+✔ requestId 不匹配的应答一律忽略，直到窗口超时 (99.159ms)
+✔ link 载荷不合法时不得当作绑定成功 (88.1567ms)
+✔ matchLinkReply：非 family.link / 缺 requestId / 未知 kind 返回 null (7.6558ms)
+✔ 多次握手每次都带新的 requestId（去重签名不会吞掉第二次请求） (54.814ms)
+✔ L2 超时本身不返回失败（等 L3 定论） (48.6048ms)
+✔ 邀请码格式：年段 + 10 位无歧义大写字符 (1.5318ms)
+✔ 邀请码不含易混字符（I/L/O/0/1，仅检查随机后缀） (1.0315ms)
+✔ 邀请码具有随机性（连续生成不重复） (2.0734ms)
+✔ invite consumption, replacement, session expiry and unbind preserve distinct binding state (14.8449ms)
+✔ grant/revoke and selected one-time permission are not long-term consent or delivery (1.6242ms)
+✔ private/no_record denied; self and family facts projected to separate ledgers (3.9599ms)
+✔ owner-scoped relationship, grants and session audit do not cross users (6.6661ms)
+✔ injected handshake carries consent, rejects mismatches and ignores unbind-stale reply (2.8443ms)
+✔ browser persists by owner; unowned legacy state not inherited; failures remain explicit (1.3978ms)
+▶ family session isolation
+  ✔ consumes only the explicitly claimed one-time grants (2.4133ms)
+  ✔ starts a new session without previously persisted grants (0.3324ms)
+✔ family session isolation (4.7976ms)
+PASS: final Route 1 audit smoke
+✔ .test-build\tests\final-audit-smoke.test.js (187.586ms)
+PASS: greeting, small-talk, and copy regression suite
+✔ .test-build\tests\greeting-and-copy.test.js (211.193ms)
+✔ untrusted ownership cannot add self facts: 张三今天血糖9.5 (26.7499ms)
+✔ untrusted ownership cannot add self facts: 刚才说错了，这个血压180/110不是我的 (0.9876ms)
+✔ untrusted ownership cannot add self facts: 我血糖9.5，不是我的 (0.7698ms)
+✔ untrusted ownership cannot add self facts: 我血压180/110，不是我 (0.9168ms)
+✔ untrusted ownership cannot add self facts: 今天张三血糖9.5 (1.5783ms)
+✔ untrusted ownership cannot add self facts: 我看到张三血糖9.5 (1.9445ms)
+✔ untrusted ownership cannot add self facts: 李四今天血压180/110 (6.8153ms)
+✔ untrusted ownership cannot add self facts: 我朋友今天血糖9.5 (1.2097ms)
+✔ untrusted ownership cannot add self facts: 王小明的血氧88% (1.464ms)
+✔ untrusted ownership cannot add self facts: 资料里写着血压180/110，不是我的记录 (1.3033ms)
+✔ untrusted ownership cannot add self facts: 报告示例中血糖9.5，这不是我的结果 (0.5145ms)
+✔ untrusted ownership cannot add self facts: 例如我血糖9.5 (0.3457ms)
+✔ untrusted ownership cannot add self facts: “我今天血压180/110” (0.374ms)
+✔ untrusted ownership cannot add self facts: 我今天血糖9.5，这不是我的数据 (0.4613ms)
+✔ genuine self report remains accepted: 我今天血糖5.5 (0.991ms)
+✔ genuine self report remains accepted: 我今天静息心率68 (0.745ms)
+✔ genuine self report remains accepted: 今天血压120/80 (1.0111ms)
+✔ genuine self report remains accepted: 血糖5.5 (1.3861ms)
+✔ genuine self report remains accepted: 告诉女儿我今天血糖5.5 (0.8744ms)
+✔ genuine self report remains accepted: 我昨天血压120/80 (3.1135ms)
+✔ explicit retraction without a new quoted result still corrects the previous turn (1.1229ms)
+▶ health record session isolation
+  ✔ keeps saved health data available only through the in-memory store (1.6954ms)
+  ✔ clears all session health data explicitly (1.4867ms)
+  ✔ does not depend on browser persistence APIs (0.5643ms)
+✔ health record session isolation (6.0485ms)
+✔ valid payload preserves provenance and sends optional token (57.5008ms)
+✔ diagnostics polling uses its lightweight endpoint and preserves revision (1.4575ms)
+✔ auto-sync gate refreshes only for a changed fresh revision marker (0.4759ms)
+✔ rejects source (1.8925ms)
+✔ rejects unknown metric (1.0853ms)
+✔ rejects wrong unit (0.9288ms)
+✔ rejects missing measurements and malformed JSON (1.7793ms)
+✔ maps unavailable, stale, user mismatch and unauthorized responses (4.9643ms)
+✔ maps network failure and rejects an empty filtered sample set without fallback (1.5016ms)
+✔ repeated synchronization keeps one HealthEvent per HealthKit ID (1.4956ms)
+PASS: llm endpoint guard, timeout, and fallback regression suite
+✔ .test-build\tests\llm-endpoint-guard.test.js (403.9114ms)
+✔ 本地 LLM 代理：透传注入 key、agent 契约与 CORS 预检 (327.9897ms)
+✔ 配置解析：缺 baseUrl / key / 非法协议返回 null（纯规则模式） (2.5522ms)
+✔ parseJudgmentJson：稳健抽取 JSON，丢弃非法条目 (1.9116ms)
+✔ parseJudgmentJson：解析症状标签 t，非法标签剔除、空数组视同未提供 (2.0462ms)
+✔ mergeClauseTags：LLM 只增不删，规则标签是下限 (0.4463ms)
+✔ mergeClauseStatusWithAddedTags：LLM 补标签时肯否采 LLM，强词汇信号优先 (0.4083ms)
+✔ judgeClauseStatuses：HTTP 错误 / 空回复返回 null，由调用方回落规则 (1.1955ms)
+✔ judgeClauseStatuses：网络异常吞掉并返回 null（fail-closed 回落规则） (0.4976ms)
+✔ judgeClauseStatuses：超时中止请求并返回 null (1021.953ms)
+✔ 隐私门控：private / no_record 永远不发送给外部模型 (0.5827ms)
+✔ 合并策略：强词汇信号不被 LLM 覆盖，肯否轴双向仲裁 (0.3859ms)
+✔ 端到端：规则误判 occurred 时 LLM 仲裁翻转为 negated（比较级好转句） (23.9345ms)
+✔ 端到端：规则误判 negated 时 LLM 仲裁恢复为 occurred（双重否定） (6.5541ms)
+✔ 端到端：LLM 失败时回落到与规则模式完全一致的结果 (2.1011ms)
+✔ 端到端：超长输入/子句过多时直接走规则，不发起 LLM 请求 (7.3615ms)
+✔ 端到端：规则盲区的否定症状（没有眩晕）由 LLM 补识别，不再整句消失 (2.6038ms)
+✔ 端到端：混合句的否定半句不被整句丢弃（不晕，但是有点累） (1.6777ms)
+✔ 端到端：让步句式（摔是没摔，就是腿软了一下）两个事实都不丢 (1.5796ms)
+✔ 端到端：LLM 补识别的症状按 occurred 进入事实流（有点眩晕） (1.5007ms)
+✔ 端到端：规则看不见的假设句由 LLM 肯否仲裁，不被误记录 (0.8699ms)
+✔ 端到端：LLM 补标签时规则的强词汇信号仍然优先（差点眩晕摔倒） (0.6995ms)
+✔ 端到端：LLM 不得删除规则已识别的标签 (0.7983ms)
+✔ 端到端：LLM 失败时标签漏识别的句子保持纯规则结果 (0.9472ms)
+PASS: local date formatting is timezone-safe
+✔ .test-build\tests\local-date.test.js (296.8764ms)
+PASS: parseMedication splits name, dose and frequency from a regular string
+PASS: parseMedication falls back to the raw string when parts cannot be split
+PASS: medication status labels map all four TaskStatus values
+PASS: todayMedicationTasks keeps only today medication_check tasks
+PASS: granted family sees medications and doctor entry
+PASS: unauthorized family sees no medication data at all
+PASS: no medication task today renders the honest empty state
+PASS: unconfirmed statuses raise family attention, completed does not
+PASS: medication-related notifications raise family attention
+PASS: doctor entry hides when communityDoctorPhone is missing
+✔ .test-build\tests\medication-care.test.js (146.4376ms)
+✔ add/edit/stop/resume preserve full fields and stable medication ID (10.1254ms)
+✔ legacy strings migrate without guessing dose; profile form preserves IDs and stopped details (2.5736ms)
+✔ owners and demo/personal are separate; display-name changes do not change ownership (0.8414ms)
+✔ browser migration is durable; save failure keeps persisted data and returns failure (2.2807ms)
+✔ 规则层必须识别"胸口有点闷"为 dyspnea (3.9851ms)
+✔ 混合意图的理解结果：症状归老人本人、状态为 occurred (19.6989ms)
+✔ 【P2】混合意图整回合：症状以 private 入库，隐私请求得到显式回应 (7.6959ms)
+✔ 【P2】症状没被识别时，隐私请求也要得到独立成行的回应 (1.807ms)
+✔ splits unpunctuated multi-person speech before assigning claims (27.8913ms)
+✔ keeps separate family facts instead of inheriting the first family subject (2.1228ms)
+✔ clarifies a pronoun when multiple family subjects are active (4.794ms)
+✔ explicit 都 assigns the shared event to both named people, never just one (1.9104ms)
+✔ multiple names without an explicit shared predicate still require clarification (2.2669ms)
+✔ keeps a self claim separate from a nearby family claim (1.9194ms)
+✔ 否定标记 × 症状表达：全部判为 negated 且不进入健康档案 (88.9416ms)
+✔ 含否定字但语义为阳性的固定说法必须仍然记录（防矫枉过正） (7.7057ms)
+✔ 痊愈/消失后缀等价于否定（"头晕没了"不得误触去世守卫） (4.255ms)
+✔ 去世守卫不受痊愈判定影响（"老伴没了"仍是 death guard） (1.1546ms)
+✔ 混合辖域：没喘但头疼 → 不记假警报也不静默丢弃，转入追问确认 (1.4531ms)
+✔ 带转折的否定辖域不越过转折词 (1.0936ms)
+✔ statusFromText 的不确定性/假设/擦边信号不被结构化否定覆盖 (0.379ms)
+✔ 端到端：否定语义不得触发紧急安全规则（今天不太喘了 + 血压 185） (25.8456ms)
+✔ 数值对照：老人没提数值时 extractHealthValues 不受否定影响而误取数字 (1.6118ms)
+✔ explicit negation is not accepted as a self health fact (28.1489ms)
+✔ negation with natural elder wording stays negated (2.7689ms)
+✔ rhetorical denial cannot become an actual fall (3.4208ms)
+✔ postposed denial cancels the immediately preceding self event (2.8957ms)
+✔ discourse-marked standalone denial cancels the preceding self event (2.7053ms)
+✔ explicit repeated denial cancels the immediately preceding self event (2.0533ms)
+✔ resolution wording is not mistaken for postposed denial (1.4534ms)
+✔ question followed by denial is not accepted as a fall (1.2736ms)
+✔ real occurrence remains occurred (1.1042ms)
+✔ hypothetical health question is never treated as an occurrence (0.8771ms)
+✔ possible symptom wording remains uncertain rather than occurred (0.8681ms)
+✔ near miss is not recorded as an actual accident (0.712ms)
+✔ family near miss is also excluded from the self fact stream (2.4528ms)
+✔ explicit hedge overrides near miss (0.6735ms)
+✔ possible-without-fall stays uncertain instead of near miss (0.5782ms)
+✔ possible negation stays uncertain instead of occurred or negated (1.4919ms)
+✔ maybe no chest pain stays uncertain instead of negated (0.6296ms)
+✔ not sure beats explicit occurrence in medication (0.5319ms)
+✔ negated family event never becomes self event (0.7021ms)
+✔ 空存储读出 [] (3.0315ms)
+✔ 保存后再读能拿到同一份记录（跨刷新闭环） (0.6308ms)
+✔ 多项记录能完整往返 (0.4399ms)
+✔ 脏 JSON 不会污染当前会话 (0.502ms)
+✔ 数组里混了非法形状的记录会被全部丢弃 (0.4249ms)
+✔ clear 后能重新开始 (0.8246ms)
+✔ localStorage 不可用时不抛错，内存仍能跑 (0.4033ms)
+✔ 配额满时不抛错，记录丢失但不破坏内存 (0.3039ms)
+✔ 未授权共享或未绑定家属时，绝不派发任何通知 (5.0816ms)
+✔ 派发时按紧急优先排序，并逐渠道记录投递结果 (0.8945ms)
+✔ 同一条发现只派发一次，重复运行不再打扰家属 (0.6652ms)
+✔ 私密发现（familyEligible=false 或无 familyMessage）不进入家属通知 (0.4225ms)
+✔ 渠道抛错时台账如实记为 failed，不假装送达 (0.9096ms)
+✔ 家属确认形成闭环，重复确认保留最早时间 (0.564ms)
+✔ 送达描述不把已发送误称为已送达 (0.439ms)
+PASS: Arabic and Chinese numeral extraction regression suite
+✔ .test-build\tests\numeric-extraction.test.js (171.7503ms)
+[health-store] 本地持久化写入失败，当前会话仍可继续使用： Error: quota exceeded
+    at Object.set (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\ankang\route1-health-agent\.test-build\tests\persistent-health-store.test.js:79:19)
+    at PersistentHealthRecordStore.save (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\ankang\route1-health-agent\.test-build\src\store\PersistentHealthRecordStore.js:41:22)
+    at C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\ankang\route1-health-agent\.test-build\tests\persistent-health-store.test.js:84:47
+    at getActual (node:assert:611:5)
+    at strict.doesNotThrow (node:assert:779:32)
+    at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\ankang\route1-health-agent\.test-build\tests\persistent-health-store.test.js:84:22)
+    at Test.runInAsyncScope (node:async_hooks:227:14)
+    at Test.run (node:internal/test_runner/test:1397:25)
+    at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+    at Test.postRun (node:internal/test_runner/test:1537:19)
+✔ save 后 hydrate 能把快照读回来（刷新页面不丢数据） (4.4977ms)
+✔ 无历史数据时 hydrate 返回 false，load 为空快照 (1.5273ms)
+✔ 没有底层 KV（IDB 不可用）时退化为纯会话内存，不抛错 (2.5739ms)
+✔ 坏数据/版本不符时按无历史处理，绝不把应用搞挂 (0.5398ms)
+✔ 底层写入失败只降级为会话内存，save 不抛错 (2.5317ms)
+✔ clear 同时清空内存缓存与底层存储 (0.7216ms)
+✔ hydrate 是幂等的：重复调用不重复读取也不会覆盖已有缓存 (0.4645ms)
+✔ 并发 hydrate（React StrictMode 双触发）必须共享同一次读取，不得误判无历史 (40.7889ms)
+PASS: demo TODAY is generated at runtime (2026-10-19)
+PASS: Phase 1 hardening regression suite
+✔ .test-build\tests\phase1-hardening.test.js (333.5677ms)
+✔ 语料非空且分类合法 (2.3479ms)
+✔ 性质一：无静默丢弃——每句话都有主气泡回应 (58.7278ms)
+✔ 性质二：不得凭空捏造——事件只能来自已接受的 claim (18.75ms)
+✔ 性质二（续）：否定/痊愈表达一条事件都不许捏造 (2.4866ms)
+✔ 性质三：家属消息永不写进本人档案 (8.8477ms)
+✔ 性质四：no_record 一个字节的事件都不落 (1.4282ms)
+✔ 性质五：真实症状必须入库（防漏记方向） (5.1704ms)
+✔ 性质六：寒暄/报平安不得生成事件 (0.9176ms)
+✔ 性质七：混合句式——该记的记、该否的否 (1.7144ms)
+✔ 性质八：渐进/慢性句式——症状照常留痕，但绝不触发急救级神经标签与急救话术 (2.3771ms)
+✔ 性质八（对照）：急性肢体无力必须保持卒中级响应，收紧不得误杀真阳性 (1.2133ms)
+✔ private and no-record prompts stay on the local safety adapter path (9.3276ms)
+PASS: private observation privacy is scoped to its own finding evidence
+✔ .test-build\tests\privacy-time-window-regression.test.js (156.2ms)
+✔ 未授权共享时摔倒报告生成 private urgent 发现（无 familyMessage） (5.2553ms)
+✔ 【P0-1】private 的 urgent 发现计入"被挡住"，不再从真相视图蒸发 (0.9339ms)
+✔ 【P0-1】家属首页状态：有信号 + private urgent → unknown"被隐私挡住"，绝不是"总体正常" (2.4862ms)
+✔ 【P0-1】类型 B 不该误伤：无门控内容的 watch/info 发现不算被挡住 (0.5067ms)
+✔ 【P0-1】非今日的 private 紧急发现不重复计入 (0.5332ms)
+✔ original self rehab questions retain the whole-clause owner boundary (6.6706ms)
+✔ documented local queries and navigation remain available with the complete grammar (3.845ms)
+✔ module tools never intercept privacy, symptoms, corrections or sharing (95.0924ms)
+✔ legacy rehab model fallback has the same operational input boundary (6.6834ms)
+✔ module tool result persists in ordinary chat without inventing a health event (1.6303ms)
+✔ compound module read runs real adapters once and retains per-step results (7.2335ms)
+✔ combined health and daily query reads both requested modules (15.9659ms)
+✔ the whole model plan is validated before any host call (2.0678ms)
+✔ navigation is an explicit UI result, never a training or camera command (1.0764ms)
+✔ a failed read retains successful steps and never claims full completion (0.9962ms)
+✔ stale generation stops the plan before further reads (0.689ms)
+✔ model outage leaves local queries usable and gives an honest fallback (0.8302ms)
+✔ negated, hypothetical, quoted and other-person queries never read or call a model (1.2406ms)
+✔ model cannot turn a query into an unsolicited navigation (0.6966ms)
+✔ common status and rehabilitation aliases invoke the existing read adapters (3.2358ms)
+✔ demoStoredProfile 是可直接使用的演示档案 (10.6711ms)
+✔ emptyProfile：建档起点除了默认授权偏好外全部留白 (1.4724ms)
+✔ isValidStoredProfile：坏数据/旧版本一律视为没有档案 (0.3976ms)
+✔ loadStoredProfile：无 window 环境（SSR/测试）安全返回 null，坏 JSON 也不抛错 (0.5725ms)
+✔ loadStoredProfile：合法档案按 dataMode 读取 (0.5299ms)
+✔ model screening flags and known card IDs cannot substitute for individual/professional review (3.3201ms)
+✔ empty, duplicate and assessment candidates are rejected rather than approved (0.7906ms)
+✔ unknown cards and invented dose never pass (0.6789ms)
+✔ actual local personal reads remain outside every candidate model request (6.7121ms)
+✔ a valid card not returned by executed tools never reaches candidate generation (2.21ms)
+✔ algorithm cannot borrow a model screening flag as trusted individual eligibility (2.885ms)
+✔ source search supports oral action query, exact ID and common training guidance without inventing missing actions (1.4481ms)
+✔ lumbar starter and four/five action generation are not claimed by the three-item local filter (1.2636ms)
+✔ all failed personal reads are reported missing and successful records use local labels (1.7581ms)
+✔ operation planning performs proper local reads but blocks external record disclosure and writes (4.6217ms)
+✔ local rename previews without model disclosure, commits once and checks persisted revision (12.5096ms)
+✔ rename rejects foreign and ambiguous plans before preview; false readback never reports verified success (7.889ms)
+✔ expired and future confirmation timestamps are rejected before host writes (1.0449ms)
+✔ program operation proposal requires explicit confirmation and one operation (1.0578ms)
+✔ confirmation phrases are narrow and do not match new instructions (1.0364ms)
+✔ rehab program intent is derived from semantic intent, not raw user keyword routing (0.4636ms)
+✔ rehab tool turn keeps facts outside HealthEvents, empty receipts cannot be invented (36.7563ms)
+✔ private/no_record, safety and new health facts retain their original Agent path (45.0254ms)
+✔ equipment constraints use explicit own clauses and later corrections without guessing (6.6018ms)
+✖ proactive question persists across reopen; equipment correction reuses original request and increments version (52.9806ms)
+✔ topic change, cancellation and private turns clear the pending rehab task (14.957ms)
+✔ expired, cross-context or corrupt tasks never restore approval or candidate authority (0.5743ms)
+✔ restored task cancellation works with no configured model (2.222ms)
+✔ new explicit equipment absence blocks a conflicting model draft and later correction is respected (9.693ms)
+✔ rehab tool selection accepts only registered tools (0.5041ms)
+✔ search planning without a sourced fallback requires a nonempty bounded query (0.8264ms)
+✔ rehab candidate rejects an action that is not a real training card (0.4073ms)
+✔ rehab candidate remains reviewable before screening confirmation (0.548ms)
+✔ exercise guidance returns registered references without generating a plan (1.8804ms)
+✔ plan generation is distinct from ordinary rehab questions (0.4425ms)
+✔ real-model tool selection may omit a search query; host fills it from the user request (0.396ms)
+✔ missing search query without any grounded fallback is rejected (0.3421ms)
+✔ tool planner integration fills an omitted query before host execution (0.8999ms)
+✔ only explicitly reviewed knowledge cards map to executable app movements (0.3145ms)
+✔ plan generation rejects knowledge actions that have no executable app mapping (1.5789ms)
+✔ plan generation does not ask the model to invent actions after an empty knowledge search (1.1233ms)
+PASS: first-connect retry exhausts attempts and surfaces the last real error
+✔ .test-build\tests\retry.test.js (172.6608ms)
+✔ [Dev] 同一 finding 不会被重复添加 (安全规则 dedupe) (24.7442ms)
+✔ [Dev] 多个诊断同时出现, 每个都详发 (1.31ms)
+✔ [Dev] 历史低血氧不触发今日安全规则 (0.611ms)
+✔ [Dev] 未来日期的读数不应详发 (0.4277ms)
+✔ [Test] 跨轮主体不乱跳: 上一轮父亲, 这轮“他”应指为 father 但有混淆 (18.1634ms)
+✔ [Test] 跨轮主体不乱跳: 上一轮有多人, 这轮“他”仍不确定 (2.3412ms)
+✔ [Test] 跨轮主体继承: 上一轮“他”, 这轮“他”应继承 (0.8493ms)
+✔ [Test] 同一轮多主体能被拆出 (0.8296ms)
+✔ [User] “血氧五十几” 口语不能误读为 50 (1.2354ms)
+✔ [User] 中英文混用: “spo2 92%, 血氧也低了” (6.871ms)
+✔ [User] 一句话同时报 3 个指标 能详发 3 个 finding (0.6994ms)
+✔ [User] “今天我心跳不舒服” 应详出仪表 (不应与上下文主体冲突) (1.0748ms)
+✔ [User] “我调了设备, 血压165/95, 不太上火” 能拆出 BP (2.409ms)
+✔ [User] 同一轮中“他”与“我”交替: “他跳了, 也不是我爸是我老伴” (0.9642ms)
+✔ [User] isSafeAgentReply 拒绝“可能是心脏问题”这种模棒两可的表述 (0.5831ms)
+✔ [User] 应能够处理语不明的上下文: “那个2025年付过” (1.0973ms)
+✔ [User] “我去学习胸痛怎么办” 不应详发胸痛安全规则 (0.3238ms)
+✔ [User] 一句话里包含中文与阿拉伯数字混合: “血氧 92 spo2, 也还行” (0.97ms)
+✔ [User] 深夜低血糖场景: “我环上血糖下降不行, 走不动了” (0.8026ms)
+✔ [Attacker] 假装 "我爸的隐私不让您看" 但告诉具体读数, 不能诱导出家属可见 (27.4891ms)
+✔ [Attacker] 同一个数字假装是两个人说的, 不能让数字被重复计入老人 (39.8693ms)
+✔ [Attacker] 历史高压背昨天 不能让今天安全规则跳出 (0.6299ms)
+✔ [Attacker] 起始说“我爸跳倒了”, 后修改为“是我跳”, 修改后不能仍留父亲事实 (5.88ms)
+✔ [Attacker] urgent + private 不能让家属看到, 但本地仍然详发 (1.0495ms)
+✔ [Attacker] 拒绝 LLM 补出临床诊断, 也拒绝“倍量服药”表述 (2.2188ms)
+✔ [Attacker] 插入一段安全引擎里没有的“诊断词”, 不能使 LLM 补上 (1.4537ms)
+✔ [Elder] "血氧五十几" 不应被读为 50 (是 5X) (1.154ms)
+✔ [Elder] "心率快一百三了" 应该触发 hrHigh tag 且安全提示 (1.2067ms)
+✔ [Elder] "今天晚上我要去学习胸痛怎么办" 不应进入本人事实流 (1.0853ms)
+✔ [Elder] "我爸昨天不舒服, 今天他好了" 能记上两个状态 (6.6516ms)
+✔ [Elder] "老伴上周跳了一次" 能拆为 spouse fall, 不会误入老人本人 (0.7447ms)
+✔ [Elder] 多事实输入: "我晚上不舒服, 血压 165/95, 我也踩了一下" (2.8488ms)
+✔ [Family] 老人说 "不要告诉孩子" 后, 胸痛仍不应出现在家属通知 (0.7471ms)
+✔ [Family] 家属不授权时, urgent finding 也不应推送 (0.5119ms)
+✔ [Family] 仅看到今日事实, 历史不应混进来 (0.4525ms)
+✔ [Family] familyDisclosure 子发现件与任务严格对齐 (0.6754ms)
+✔ [Developer] 安全规则 dedupe: 同一个规则在今日只产生一个 finding (0.5723ms)
+✔ [Developer] self 主体的 today BP 安全规则会发, family 主体的不会 (2.653ms)
+✔ [Developer] removeCorrectedChatHealthEvents 只删除上一轮的, 不动其他轮 (0.4167ms)
+✔ [Developer] removeCorrectedFamilyEvents 也只删被指定的 sourceMessageId (0.3126ms)
+✔ [Developer] 同一个事实只会生成一个 familyEvent (以 sourceMessageId + text 为唯一识别) (0.3789ms)
+✔ corpus: 我爸今天喘，后来我也喘了 (27.732ms)
+✔ corpus: 我妈昨天胸闷，今天好多了 (4.2217ms)
+✔ corpus: 我爸刚才摔了，我当时也吓了一跳 (2.0393ms)
+✔ corpus: 我觉得他好像不太舒服 (2.2601ms)
+✔ corpus: 他昨天摔过，现在没事 (10.6804ms)
+✔ corpus: 我今天头晕，老伴也说他头晕 (1.8797ms)
+✔ corpus: 昨晚睡不好，今天好多了 (1.03ms)
+✔ corpus: 前几天我喘，今天没什么了 (2.8836ms)
+✔ corpus: 我以前摔过，不是这次 (1.9076ms)
+✔ corpus: 刚才说错了，不是我，是我爸 (1.5776ms)
+✔ corpus: 不是胸痛，我只是有点喘 (1.4103ms)
+✔ corpus: 我没胸痛，不过刚才差点摔倒 (0.85ms)
+✔ corpus: 血压150/90，我爸的是180/110 (2.0535ms)
+✔ issue ⑦: 独立分句提到爸 -> 代词"他"应继承 father (0.9184ms)
+✔ issue ⑦: 独立分句提到妈 -> 代词"她"应继承 mother (1.3439ms)
+✔ issue ⑦: "我和老伴都喘" 后"他也喘" 不应被强继承为 spouse (1.9139ms)
+✔ issue ⑦: "我和妈都胸闷" 后"她不舒服" 不应被强继承为 mother (0.9089ms)
+✔ e2e: “血氧 85” 全链路一致：解析出 spo2Low、接受、详发 finding、提示含真实读数 (43.3296ms)
+✔ e2e: “心率快一百三了” 全链路一致：解析出 hrHigh、接受、详发 finding、仪表含真实读数 (6.5681ms)
+✔ e2e: “血糖 3.0” 全链路一致：解析出 glucoseLow、详发 urgent finding (1.7436ms)
+✔ e2e: 三个指标同时出现时，详发三个独立 finding (21.9991ms)
+✔ e2e: 私密 血氧 不走家属通知，本地仍告知 (0.8868ms)
+✔ e2e: parseElderInput 能从“血氧九十二”中识别 spo2Low (0.3112ms)
+✔ e2e: parseElderInput 能从“心跳一百二”中识别 hrHigh (0.2973ms)
+✔ e2e: parseElderInput 能从“血糖七点多”中识别 glucoseHigh (0.3136ms)
+✔ spo2: 9X 口语形式都能拾到 (11.4963ms)
+✔ spo2: 不合理值应被拒绝 (0.6426ms)
+✔ hr: 心跳/心率 不同口语都能拾到 (0.7374ms)
+✔ glucose: 中英文/口语数字/范围 全覆盖 (1.0576ms)
+✔ glucose: 不合理值应被拒绝 (0.4493ms)
+✔ spo2 < 88 走 urgent, < 92 走 alert, 不到阈值不触发 (4.7511ms)
+✔ hr 过快/过慢都能触发安全规则 (1.0998ms)
+✔ glucose 低/高 均能触发安全规则 (0.9152ms)
+✔ 同日多次血糖：正常读数不得掩盖低血糖（P0-2 回归） (30.1479ms)
+✔ 同日多次血糖：低高两个方向同时越阈合并为波动异常 finding (1.5001ms)
+✔ 同日多次心率：正常读数不得掩盖心动过缓（P0-2 回归） (0.8844ms)
+✔ 同日心率快慢双向越阈：合并为快慢波动 finding (0.6743ms)
+✔ 同日多次安全区间读数不应触发 (0.4662ms)
+✔ 历史 finding 不能进入当前安全规则 (0.6342ms)
+✔ 私密 finding 绝不进入家属通知 (0.5587ms)
+✔ 家属组中的家庭成员事实 不进入老人本人查看 (10.5776ms)
+✔ 历史 finding 不进入家属通知 (0.3703ms)
+✔ 仅 urgent/alert 才可以进入家属通知 (0.2696ms)
+✔ familyEligible=false 则不进入家属通知 (0.2986ms)
+✔ familyOk + urgent + 长期授权 才能进入家属通知 (0.3246ms)
+✔ ruleBasedAdapter 对 spo2 低血氧产出安全提示 (4.2977ms)
+✔ ruleBasedAdapter 对高血糖 产出复测提示 (1.361ms)
+✔ isSafeAgentReply 拒绝明显的诊断与停药表述 (0.2648ms)
+✔ 不会因为历史低血氧 触发当前人工应答 (0.3349ms)
+✔ 一句话里同时出现 BP 和血糖 两个指标都被提取 (1.028ms)
+✔ 历史 + 今日 混在一起，只有今日进入安全规则 (0.4846ms)
+✔ 某个指标重复传入 (多次复测) 只生成一个 finding (0.3871ms)
+✔ 条件诊断: “您可能心脏病” 被拒绝 (3.2497ms)
+✔ 条件诊断: “可能得了高血压” 被拒绝 (0.4858ms)
+✔ 条件诊断: “看起来像心衰” 被拒绝 (0.3624ms)
+✔ 条件诊断: “估计是肺炎” 被拒绝 (0.3853ms)
+✔ 条件诊断: “高度怀疑中风” 被拒绝 (0.4003ms)
+✔ 条件诊断: “不排除心衰” 被拒绝 (0.4414ms)
+✔ 绝对诊断: “就是心脏病” 被拒绝 (1.1678ms)
+✔ 绝对诊断: “一定是癌” 被拒绝 (0.5292ms)
+✔ 推断: “推断是肺部感染” 被拒绝 (1.7831ms)
+✔ 推断: “应该是脑卒中” 被拒绝 (0.4967ms)
+✔ 诊断词: “您得了高血压” 被拒绝 (0.2886ms)
+✔ 自主调药: “请自己加量” 被拒绝 (0.5064ms)
+✔ 自主调药: “最好停药” 被拒绝 (0.3564ms)
+✔ 自主调药: “换一种药” 被拒绝 (0.2085ms)
+✔ 推荐药物: “请服用降压药” 被拒绝 (0.3854ms)
+✔ 推荐药物: “建议吃安眠药” 被拒绝 (0.331ms)
+✔ 推荐检查: “需要做心电图” 被拒绝 (0.5753ms)
+✔ 推荐检查: “建议您检查一下血糖” 被拒绝 (0.3917ms)
+✔ 能放过的: 常规温柔提示 (0.1734ms)
+✔ 能放过的: “诊断报告” 允许（不是诊断本身） (0.1278ms)
+✔ 能放过的: 被加量的心心细节 不会被误杀 (0.1965ms)
+✔ 空文还是不安全 (0.132ms)
+✔ 超长还是不安全 (0.151ms)
+✔ issue ⑪: “建议做一下冠脉造影” 被拒绝（被量词绕过的场景） (0.1299ms)
+✔ issue ⑪: “去做一下/个” 被拒绝 (0.1151ms)
+✔ issue ⑪: “查一下/检查一下” 被拒绝 (0.1382ms)
+✔ issue ⑪: “最好去做个/跑一趟” 被拒绝 (0.1104ms)
+✔ issue ⑪: “您应该做一下” 被拒绝（您前缀作为语义起点） (0.1084ms)
+✔ issue ⑪: “肺部CT / 头部CT / 24小时心电图” 空格变异同样拒绝 (0.166ms)
+✔ issue ⑪: 中性表达不被误拒 (0.125ms)
+✔ issue ⑪: 原有拒绝还在拒（regression） (0.095ms)
+Runtime source closure: 52 TypeScript modules; no external imports
+✔ runtime transitive source closure has no React, TSX, platform UI, PeerJS or Home Twin dependencies (378.4446ms)
+✔ runtime: sequential turns retain sources, append facts, detect, recompute twins and tasks (73.4741ms)
+✔ runtime parity: legacy React business path matches complete runtime across 12 turns (59.7056ms)
+✔ runtime: private/no_record never use LLM or delivery; no_record is absent from persistence (6.6512ms)
+✔ runtime: sessions isolate tasks, chat, events and audit from each other and legacy globals (4.8092ms)
+✔ runtime: persistence errors are real receipts; accepted facts stay in memory (3.2234ms)
+✔ runtime: load failure rejects opening and never writes over unread history (1.0182ms)
+✔ runtime: concurrent turns are serialized, latest chat is used for recall (5.6896ms)
+✔ runtime: reset invalidates slow/queued turns without appending late results (3.2846ms)
+✔ runtime: close invalidates slow results, drains and permits fresh reopen (2.2924ms)
+✔ runtime: revision conflicts do not break the queue (17.5064ms)
+✔ runtime: midnight updates event dates, context, twins and medication deduplication (3.7205ms)
+✔ runtime: failed understanding/reply LLM falls back to original rules (3.2352ms)
+✔ runtime: delivery is distinct from planned sharing and persistence (1.9111ms)
+✔ runtime: close/reopen restores only persisted health, never session-only tasks/audit (2.2255ms)
+✔ runtime: reopening with identical clock does not reuse source/event IDs (4.3972ms)
+✔ runtime: reset waits for in-flight storage before clearing; stale results cannot overwrite reset (4.044ms)
+✔ runtime: correction changes exact source facts; original correction-only gate remains (5.6186ms)
+✔ explicit diagnosis and treatment decisions request clinician review across health routes (2.9601ms)
+✔ out-of-scope appointment requests do not pretend to execute (0.7257ms)
+✔ unrelated requests receive a bounded scope explanation, not a false doctor referral (0.5541ms)
+✔ in-scope routes and ordinary symptoms remain with their existing handlers (0.3056ms)
+✔ negated clinical and external-operation mentions do not trigger handoff or operation refusal (2.3286ms)
+✔ disease-specific plan generation is not routed to generic activity-plan adoption (0.6824ms)
+✔ correction targets the immediately previous elder turn (34.4836ms)
+✔ correction removes only facts owned by the corrected message, not same-tag facts (1.8033ms)
+✔ correction removes all derived facts from the corrected turn together (0.3934ms)
+✔ family correction uses exact source message provenance instead of subject + tag matching (0.4375ms)
+✔ missing provenance fails closed and deletes nothing (0.3381ms)
+✔ issue ⑤: correction with targetTags removes only the negated symptom, keeps other co-occurring facts (0.5259ms)
+✔ issue ⑤: correction with targetTags=["bpHigh"] removes only blood pressure measurements (0.3102ms)
+✔ issue ⑤: correction with empty targetTags preserves old behavior (delete the whole message) (0.2965ms)
+✔ issue ⑤: understandElderInput surfaces correctionTargetTags in the correction branch (6.7476ms)
+✔ issue ⑤: correctionTargetTags is empty when the correction text has no specific tags (9.7054ms)
+✔ semantic legacy: validated improvement polarity no longer becomes an occurred event (41.7862ms)
+✔ semantic legacy: full evidence restores the original double-negation merge (6.0615ms)
+✔ semantic legacy: separate symptoms preserve negation, hypothesis and uncertainty (3.3695ms)
+✔ semantic legacy: strong rule signals cannot be promoted to occurred by a model (2.2988ms)
+✔ semantic legacy: family ownership and the original date remain local-rule decisions (2.2322ms)
+✔ semantic legacy: model ownership conflict cannot write to either person (1.4316ms)
+✔ semantic legacy: mixed or incomplete clause evidence is clarified without factual writes (4.7467ms)
+✔ semantic legacy: uncertain or hypothetical disagreement outside old merge is not persisted as occurred (2.9217ms)
+✔ semantic legacy: urgent rule evidence survives a model negation including future detection (23.2814ms)
+✔ semantic legacy: ambiguous nonurgent safety wording is retained without a false save receipt (1.8288ms)
+✔ semantic legacy: old v1 without status and cross-turn mentions do not alter current clinical understanding (1.142ms)
+✔ semantic legacy: flag-off path is unchanged and semantic path never invokes a second LLM (2.1012ms)
+✔ semantic legacy: read-only family wording does not promise discarded sharing or recording (1.4889ms)
+✔ semantic legacy: read-only correction wording does not promise an unapplied revocation (1.4242ms)
+✔ semantic legacy: record fallback renders actual local fields without raw JSON or a model call (1.5933ms)
+✔ ordinary chat has no tools (2.8452ms)
+✔ record query selects only a whitelisted read tool (0.4951ms)
+✔ invented tool and malformed data are rejected (0.4001ms)
+✔ model failure returns null for legacy fallback (6.4081ms)
+✔ schedule time must be an exact original substring and optional time cannot be null (1.0032ms)
+✔ ambiguous symptoms preserve uncertainty instead of inventing a diagnosis (1.4233ms)
+✔ legacy v1 stays compatible, including a complete JSON fence (0.7232ms)
+✔ schema rejects unknown fields at every level, unknown versions and routes (0.7251ms)
+✔ invalid JSON, missing required fields, arrays and excessive output fail closed (0.9791ms)
+✔ multiple symptoms retain separate subjects, polarity and original time (2.0399ms)
+✔ fabricated mention, evidence, time, subject and polarity are rejected (0.7063ms)
+✔ one utterance can preserve health, knowledge and record-query intents (0.4464ms)
+✔ read-tool parameters are bounded and cannot select a participant or operation (0.8002ms)
+✔ all three read tools and evidence-backed knowledge search are valid candidates (0.3792ms)
+✔ unknown tools, writes, invented query text and incomplete requests are rejected (0.4795ms)
+✔ context references resolve only to explicit approved source messages (1.3977ms)
+✔ a correction identifies its prior evidence without claiming a record change (1.4925ms)
+✔ current correction evidence cannot be attached to a different historical message (0.574ms)
+✔ privacy gate prevents model calls even if understandSemanticTurn is called directly (0.2928ms)
+✔ understanding uses one dedicated JSON call and excludes private or excess context (0.8122ms)
+✔ a model cannot reference filtered private history or fabricate current evidence (0.6692ms)
+✔ timeout returns fallback once and ignores a later valid response (15.9331ms)
+✔ invalid model output fails closed without retrying or forwarding internal JSON (0.9773ms)
+✔ self-referential correction edges are dropped without rejecting current-turn evidence (0.8233ms)
+✔ semantic runtime: opt-in understands before replying and ordinary chat never calls a tool (44.5271ms)
+✔ semantic runtime: disabled feature preserves the existing special assistant path (6.2137ms)
+✔ semantic runtime: private and no-record turns never leave the device or invoke host reads (6.7634ms)
+✔ semantic runtime: all three record tools execute once with host identity and never externalize records (9.3781ms)
+✔ record intents execute host-selected reads when the first layer correctly proposes no tools (6.3961ms)
+✔ host-selected record reads retain ownership, negation and hypothesis gates (5.3681ms)
+✔ old pending modifications expire on topic, privacy, parser failure, safety, source change and reset (51.5246ms)
+✔ mixed rehabilitation requests cannot bypass analysis by using a module or health primary route (5.8307ms)
+✔ semantic runtime: model record suggestions cannot authorize another person, negation or hypothesis (4.9299ms)
+✔ semantic runtime: failed, empty and wrong-owner record reads cannot turn into model success (6.2965ms)
+✔ semantic runtime: public knowledge is retrieved before a single grounded final reply (3.2943ms)
+✔ semantic runtime: shared guidance questions retrieve the existing source chapters (7.8589ms)
+✔ semantic runtime: a knowledge tool conflicting with a chat route does not retrieve data (2.6291ms)
+✔ semantic runtime: invented tool is rejected before any host call (1.7435ms)
+✔ semantic runtime: repeated proposals execute each distinct read at most once (1.7087ms)
+✔ semantic runtime: correction and followup references resolve only to the same-context user statements (7.1049ms)
+✔ semantic runtime: local personal results and private turns never become later parser or reply context (3.2564ms)
+✔ semantic runtime: unsupported saved-state claims from final generation fail closed (25.9156ms)
+✔ semantic runtime: invalid understanding followed by internal JSON cannot leak through legacy fallback (3.0084ms)
+✔ semantic runtime: invalid JSON and rejected understanding safely fall back without a second understanding service (4.2729ms)
+✔ semantic runtime: a chat classification cannot suppress existing urgent safety handling (14.6981ms)
+✔ semantic runtime: special assistant health turns remain read-only even after LLM understanding (1.9795ms)
+✔ semantic runtime: read-only urgent replies retain safety without invented recording or sharing receipts (22.5639ms)
+✔ semantic runtime: read-only plan removes pure recording main blocks without removing safety text (1.7539ms)
+✔ semantic runtime: cross-owner and source-context conversations never become shared parser context (3.2442ms)
+✔ semantic runtime: raw internal JSON from final generation is not displayed as the answer (1.4939ms)
+✔ semantic runtime: reset during understanding discards late JSON and does not execute tools (3.0242ms)
+✔ semantic runtime: explicit other route uses scope fallback instead of generic model claims (5.2339ms)
+✔ semantic runtime: other route never claims a real clinician handoff (1.4089ms)
+✔ explicit treatment decisions do not reach program operations even with a program intent (1.5192ms)
+✔ natural-language planning executes real retrieval and candidate validation without adopting or navigating (7.4983ms)
+PASS: share recipient routing and privacy intent regression suite
+✔ .test-build\tests\share-recipient-routing.test.js (244.3994ms)
+▶ sharing audit session-only privacy
+  ✔ records history inside the current session without browser persistence (3.1211ms)
+  ✔ does not restore an old persisted audit record (1.9582ms)
+  ✔ keeps historical sharing answers available during the same session (0.535ms)
+✔ sharing audit session-only privacy (7.9243ms)
+✔ parseSignalingUrl：标准自建信令地址 (3.0712ms)
+✔ parseSignalingUrl：非法输入一律返回 null（回退官方公共信令） (0.5192ms)
+✔ parseIceServers：JSON 数组生效，非法输入返回 null (0.4794ms)
+✔ 默认 ICE 列表同时包含 Google 与国内可达的腾讯 STUN (0.4155ms)
+✔ archive add/edit/read/clear preserve ID and isolate owner, mode, bytes (11.4698ms)
+✔ family archives require binding and long consent; private attachments remain private (6.638ms)
+✔ scoped health snapshot storage never hydrates another owner or demo history (1.0528ms)
+✔ notification permission, one-time, private finding and duplicate gates use existing family rules (23.8199ms)
+✔ notification reservation precedes delivery; failed, delivered and acknowledged stay distinct (2.3497ms)
+✔ notification owners, mode, recipient and reload dedup stay isolated (2.6169ms)
+✔ notification storage failure does not claim delivery or invoke channels (3.1487ms)
+✔ only restored failed browser pushes retry once, never webhook and never after revoke (2.5216ms)
+✔ Person Twin read model matches runtime/context and family projection excludes private evidence (11.229ms)
+✔ 兜底规则："头一点都不晕了"留下否定痕迹而不误记录 (22.4443ms)
+✔ 兜底规则："不晕，但是有点累"的否定半句不再凭空消失 (6.978ms)
+✔ 兜底规则："摔是没摔，就是腿软了一下"两个事实都识别 (1.4992ms)
+✔ 兜底规则防误报：晕车类说法不得被记成头晕发生 (11.5679ms)
+✔ 兜底规则防误报：既有正例不受窗口放宽影响 (1.8778ms)
+PASS: contact_family task regression coverage
+✔ .test-build\tests\task-regression.test.js (166.1426ms)
+PASS: three linked clauses keep the same explicit day
+PASS: an irrelevant self interjection does not overwrite the active family time context
+✔ .test-build\tests\temporal-attribution-chain-regression.test.js (256.2228ms)
+PASS: same-subject continuation inherits the explicit date instead of defaulting to today
+PASS: same-subject follow-up inherits historical date without inventing a current date
+PASS: explicit later self date overrides inherited family date
+PASS: cross-subject continuation keeps the sequence date when the elder explicitly appears later
+✔ .test-build\tests\temporal-attribution-regression.test.js (213.2771ms)
+✔ relative past date is exact and never reassigned to today: 我前天胸闷 (24.6312ms)
+✔ relative past date is exact and never reassigned to today: 我大前天胸闷 (5.6878ms)
+✔ relative past date is exact and never reassigned to today: 我三天前胸闷 (1.0367ms)
+✔ relative past date is exact and never reassigned to today: 我3天前胸闷 (2.032ms)
+✔ vague multi-day wording does not invent an exact event date (0.8346ms)
+✔ current comparison with a health fact still stays on today (0.7237ms)
+✔ yesterday remains yesterday-scoped (0.7271ms)
+✔ last night keeps its dedicated scope and exact date (1.1346ms)
+✔ historical and current health facts keep distinct dates in one utterance (1.4549ms)
+✔ current negation does not erase a separate historical occurrence (1.3762ms)
+✔ historical improvement comparison does not become today (1.1392ms)
+PASS: elder turn queue serializes processing and survives failures
+✔ .test-build\tests\turn-queue.test.js (251.2609ms)
+PASS: spouse fall does not become elder fact
+PASS: negated self fall is not accepted
+PASS: hypothetical fall is not recorded
+PASS: historical fall is not rewritten as today
+PASS: mixed self and spouse sentence is split by person
+PASS: death report is not treated as ordinary fall
+PASS: prior pronoun stays ambiguous when multiple family members exist
+PASS: negated discomfort is not accepted
+PASS: actual discomfort remains occurred
+PASS: coordinated self and spouse facts are split instead of becoming unknown
+PASS: coordinated denial is copied to both explicit subjects
+PASS: coordinated occurred symptom is split without leaking spouse into self
+PASS: omitted parallel family action inherits the prior fact safely
+PASS: mixed subjects keep their own state across explicit clauses
+PASS: mixed subjects preserve father measurement without contaminating self
+PASS: pure numeric measurement remains recordable
+PASS: comma-separated blood pressure survives clause splitting
+PASS: implicit current facts use the current date
+PASS: circle count is not converted to steps
+PASS: last night is assigned to the prior calendar date
+PASS: fatigue reply does not invent activity decline
+PASS: voice-facing parser still exposes raw wording
+✔ .test-build\tests\user-diagnostic.test.js (201.4747ms)
+PASS: 口语化“我觉得他……”不会归到本人
+PASS: 口语化“我看他……”不会丢掉跌倒事实
+PASS: 二手转述中的家属血压也不能进入本人健康事件流
+PASS: 非健康家属语境不会继承上一条健康标签
+PASS: 直接的“女儿也没在家”不能继承前一条健康标签
+PASS: “今天没有像昨天那样喘得厉害了”保留为今天的持续症状
+PASS: “我爸……，我也……”拆成两条独立事实
+PASS: 撤销共享后历史一次性 finding 不再触发家属通知
+✔ .test-build\tests\user-input-regression.test.js (206.0366ms)
+PASS: family-only response names the person and echoes the fact
+PASS: mixed family and self input still acknowledges the family fact
+PASS: one-time share is explicitly different from long-term sharing
+PASS: persistent sharing is described as currently authorized
+PASS: self one-time sharing receipt names the exact shared facts
+PASS: self persistent sharing receipt names the exact shared facts
+PASS: private self-sharing receipt stays empty
+PASS: ambiguous family pronoun asks rather than silently guessing
+PASS: current improvement does not sound like a denial of the symptom
+PASS: user can state two people in one breath
+PASS: user can correct the person without losing the distinction
+PASS: natural-language privacy refusal is understood
+PASS: no-record request stays stronger than family sharing
+PASS: persistent consent can be revoked without preserving future visibility
+PASS: one-time sharing works even after persistent consent is revoked
+PASS: one-time sharing does not mutate the persistent decision
+PASS: revoking persistent sharing hides previously persistent events from the family view
+PASS: clearing one-time share ids stops future access and re-grant does not resurrect them
+PASS: negated symptoms get an explicit acknowledgment instead of a subject interrogation
+PASS: concessive denial (摔是没摔) acknowledges the fall without triggering fall safety flow
+PASS: near miss gets reassurance without recording
+PASS: open-ended claims keep the clarification prompt
+✔ .test-build\tests\user-ux-blackbox.test.js (189.2681ms)
+✔ resolveWebhookUrl：按服务商解析，非法配置返回 null (2.8425ms)
+✔ sendWebhookPush：Server酱 code=0 → sent，form-encoded 携带 title/desp (31.8405ms)
+✔ sendWebhookPush：Server酱业务错误 → failed 且带原因，绝不假装送达 (0.5868ms)
+✔ sendWebhookPush：PushPlus code=200 → sent (0.4956ms)
+✔ sendWebhookPush：网络异常/超时 → failed；配置缺失 → unavailable (0.3754ms)
+✔ describeDeliveries：台账包含微信推送渠道标签 (0.3138ms)
+✔ describeDeliveries：只有真实回执才显示送达，受理和待发送分别展示 (0.2356ms)
+ℹ tests 582
+ℹ suites 4
+ℹ pass 581
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2425.1587
+
+✖ failing tests:
+
+test at .test-build\tests\rehab-task-state.test.js:26:25
+✖ proactive question persists across reopen; equipment correction reuses original request and increments version (52.9806ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'blocked' !== 'draft'
+  
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\ankang\route1-health-agent\.test-build\tests\rehab-task-state.test.js:59:22)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'blocked',
+    expected: 'draft',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

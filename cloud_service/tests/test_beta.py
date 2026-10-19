@@ -224,9 +224,57 @@ def test_workflow_reuses_preferences_and_requires_saved_evidence_and_review(setu
     assert alice.get(path(aid, "/plans/current")).json()["plan"] is None
     review = path(aid, "/rehab-candidates/" + candidate["id"] + "/review")
     assert alice.post(review, json={"decision": "REVIEWED"}).status_code == 403
-    assert doctor.post(review, json={"decision": "REVIEWED"}).is_success
+    reviewed = doctor.post(review, json={"decision": "REVIEWED"})
+    assert reviewed.is_success
+    receipt = reviewed.json()["review_receipt"]
+    assert receipt["candidate_id"] == candidate["id"] and receipt["patient_id"] == aid
+    assert receipt["profile_version"] == 1 and receipt["reviewer_id"]
+    assert len(receipt["candidate_digest"]) == 64 and not receipt["execution_approved"]
+    assert doctor.post(review, json={"decision": "REVIEWED"}).json() == reviewed.json()
+    persisted = alice.get(path(aid, "/rehab-candidates")).json()["items"][0]
+    assert persisted["document"]["review_receipt"] == receipt
     assert doctor.post(review, json={"decision": "REJECTED"}).status_code == 409
     assert alice.get(path(aid, "/plans/current")).json()["plan"] is None
+    # Revoking and re-granting access cannot resurrect a previous review receipt.
+    assert alice.put(path(aid, "/doctor-access"), json={"enabled": False, "expected_version": 1}).is_success
+    assert doctor.post(review, json={"decision": "REVIEWED"}).status_code == 404
+    assert alice.put(path(aid, "/doctor-access"), json={"enabled": True, "expected_version": 2}).is_success
+    assert doctor.post(review, json={"decision": "REVIEWED"}).status_code == 409
+    assert alice.get(path(aid, "/rehab-candidates")).json()["items"][0]["state"] == "SUPERSEDED"
+    assert alice.post(path(aid, "/rehab-candidates"), json=operation).json()["state"] == "SUPERSEDED"
+    # A genuine profile revision revokes the old review, preserving its evidence.
+    assert alice.put(path(aid, "/rehab-workflow/profile"), json={
+        **profile, "expected_version": 1, "equipment": []}).is_success
+    stale = alice.get(path(aid, "/rehab-candidates")).json()["items"][0]
+    assert stale["state"] == "SUPERSEDED"
+    assert stale["document"]["review_receipt"] == receipt
+    assert doctor.post(review, json={"decision": "REVIEWED"}).status_code == 409
+    assert alice.get(path(aid, "/plans/current")).json()["plan"] is None
+
+
+def test_pending_candidate_cannot_be_reviewed_after_profile_revision(setup):
+    from cloud_service.rehab_workflow import candidates
+    aid, _, alice, bob, doctor = people(setup)
+    profile = {"expected_version": 0, "goal": "TEST stale review boundary", "region": "膝", "level": 0,
+               "equipment": ["稳固椅"], "restrictions": [], "screening_confirmed": True}
+    assert alice.put(path(aid, "/rehab-workflow/profile"), json=profile).is_success
+    # Seed a TEST candidate at the database boundary; this is not a model/e2e test.
+    ident = str(uuid4())
+    with setup[1].transaction() as connection:
+        connection.execute(candidates.insert().values(id=ident, patient_id=aid,
+            operation_id=str(uuid4()), fingerprint="TEST", document={"profile_version": 1},
+            state="PENDING_REVIEW", created_at=1))
+    endpoint = path(aid, "/rehab-candidates/" + ident + "/review")
+    assert bob.post(endpoint, json={"decision": "REVIEWED"}).status_code == 404
+    assert alice.post(endpoint, json={"decision": "REVIEWED"}).status_code == 403
+    assert alice.put(path(aid, "/rehab-workflow/profile"), json={
+        **profile, "expected_version": 1, "restrictions": ["TEST new restriction"]}).is_success
+    response = doctor.post(endpoint, json={"decision": "REVIEWED"})
+    assert response.status_code == 409
+    with setup[1].engine.connect() as connection:
+        row = connection.execute(select(candidates).where(candidates.c.id == ident)).mappings().one()
+        assert row["state"] == "SUPERSEDED" and row["reviewed_at"] is None
+        assert "review_receipt" not in row["document"]
 
 
 def test_empty_workbench_is_empty_and_no_fictional_users_seeded(setup):

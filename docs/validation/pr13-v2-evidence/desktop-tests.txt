@@ -1,0 +1,31 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.7.0 -- C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\.venv-agent-v2\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13
+plugins: anyio-4.15.1
+collecting ... collected 6 items
+
+rehab_codex_single_camera_v2_1/tests/test_product_assistant.py::test_portal_cards_are_clickable_and_tools_are_not_piled_into_first_screen PASSED [ 16%]
+rehab_codex_single_camera_v2_1/tests/test_product_assistant.py::test_conversation_draft_and_history_survive_module_back_and_global_assistant PASSED [ 33%]
+rehab_codex_single_camera_v2_1/tests/test_product_assistant.py::test_visible_voice_entry_opens_honest_status_without_starting_unavailable_asr PASSED [ 50%]
+rehab_codex_single_camera_v2_1/tests/test_product_assistant.py::test_owner_switch_resets_modules_and_drafts_and_materials_links_to_real_archive PASSED [ 66%]
+rehab_codex_single_camera_v2_1/tests/test_product_assistant.py::test_medication_shortcut_edits_draft_only_and_explicit_send_keeps_privacy FAILED [ 83%]
+
+================================== FAILURES ===================================
+__ test_medication_shortcut_edits_draft_only_and_explicit_send_keeps_privacy __
+
+desktop = (<app.ui.product_window.ProductWindow(0x17ec7bfb000, name="productWindow") at 0x0000017EC254CEC0>, <PySide6.QtWidgets.QApplication(0x17ec11b7490) at 0x0000017EC246F3C0>)
+
+    def test_medication_shortcut_edits_draft_only_and_explicit_send_keeps_privacy(desktop):
+        from copy import deepcopy
+        w,app=desktop;w.navigate('assistant');wait(app,lambda:not w.pending)
+>       shortcut=next(b for b in w.product_action_buttons() if b.property('actionId')=='product-201')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+rehab_codex_single_camera_v2_1\tests\test_product_assistant.py:90: StopIteration
+- generated xml file: C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\.runtime\v2-desktop-first.xml -
+=========================== short test summary info ===========================
+FAILED rehab_codex_single_camera_v2_1/tests/test_product_assistant.py::test_medication_shortcut_edits_draft_only_and_explicit_send_keeps_privacy - StopIteration
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+======================== 1 failed, 4 passed in 15.20s =========================

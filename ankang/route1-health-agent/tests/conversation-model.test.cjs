@@ -4,6 +4,19 @@ const { createConversationModel } = require('../scripts/chat-model.cjs');
 const context = { messages: [{ role: 'user', content: 'SYNTHETIC/TEST 你好' }] };
 const response = content => ({ ok: true, json: async () => ({ choices: [{ finish_reason: 'stop', message: { role: 'assistant', content } }] }) });
 
+test('understanding has a host-owned JSON task and rejects unknown purpose before dispatch', async () => {
+  let payload, calls=0;
+  const model=createConversationModel({apiKey:'TEST_ONLY',fetchImpl:async(_,options)=>{
+    calls++;payload=JSON.parse(options.body);return response('{"version":1}');
+  }});
+  await model.reply({...context,purpose:'understanding',system:'FORGED_SYSTEM'});
+  assert.equal(payload.response_format.type,'json_object');assert.equal(payload.temperature,0);
+  assert.equal(payload.max_tokens,1600);assert.match(payload.messages[0].content,/语言理解解析器/);
+  assert.doesNotMatch(JSON.stringify(payload),/FORGED_SYSTEM|健康问题提醒/);
+  await assert.rejects(model.reply({...context,purpose:'execute'}),/任务无效/);
+  assert.equal(calls,1);
+});
+
 test('ordinary DeepSeek conversation uses bounded official protocol, given context and no tools or module payload', async () => {
   let payload;
   const model = createConversationModel({ apiKey: 'TEST_SECRET', fetchImpl: async (url, options) => {

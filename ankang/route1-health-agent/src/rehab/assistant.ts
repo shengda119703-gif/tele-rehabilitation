@@ -3,7 +3,7 @@ import {guidance} from './guidance';
 import {starterRules} from './planRules';
 import {references} from './references';
 import type {ConversationModel} from '../runtime/conversation';
-import type {RehabToolPort, RehabToolName} from '../runtime/rehabTools';
+import {describeLocalRehabReceipt, type RehabToolPort, type RehabToolName} from '../runtime/rehabTools';
 
 export interface PlanCard {
   id:string; name:string; kind:string; complete:boolean;
@@ -16,7 +16,7 @@ export function localPlan(input:PlanInput,cards:readonly PlanCard[]=catalogue) {
     !Array.isArray(input.equipment)||!Array.isArray(input.restrictions)||
     [...input.equipment,...input.restrictions].some(v=>typeof v!=='string')||
     !Number.isInteger(input.level)||input.level<0||input.level>3||input.screeningConfirmed!==true)
-    throw Error('请填写目标、部位、器材、限制及当前等级，并确认已完成适用性核对。');
+    throw Error('请填写目标、部位、器材、限制及当前等级，并提供适用性核对状态。');
   // Free-text medical restrictions cannot be proven compatible by substring matching.
   // A generic checkbox is not evidence of individual clinical clearance or trial results.
   const rules=input.restrictions.some(v=>v.trim())?[]:starterRules.filter(r=>
@@ -49,6 +49,43 @@ export function searchCards(text:string) {
     .filter(v=>v.score>0).sort((a,b)=>b.score-a.score||a.card.id.localeCompare(b.card.id)).slice(0,3).map(v=>v.card);
 }
 
+/** Region retrieval supplies public candidates only, never applicability or dose.
+ * The semantic planner supplies a catalogue region rather than an action ID.
+ * Exact IDs/names retain precedence; unsupported clinical goals stay unmatched.
+ */
+export function searchTaskCards(query:string,region?:string) {
+  const exact=searchCards(query);
+  if(exact.length || !region?.trim()) return exact;
+  const regions=region.split(/[、,，/]/).map(v=>v.trim()).filter(v=>v.length>0);
+  if(!regions.length || regions.some(v=>v.length>12))return [];
+  return catalogue.filter(c=>c.complete && c.kind==='training' &&
+    regions.some(r=>c.region.split(/[、,，/]/).some(part=>part===r || part===r+'关节')))
+    .slice(0,3);
+}
+
+export function searchGuidance(query:string) {
+  const keywords: Record<string,string[]> = {
+    '1. 四个维度分别管理':['等级','分级','L0','L1','L2','L3','肌力','当前能力'],
+    '2. 选择动作时先看需求，再看器材':['选择动作','动作选择','怎么选','目标','需求','匹配'],
+    '3. 家庭器械与支撑规则':['器材','器械','扶手','椅子','支撑','站稳','辅助'],
+    '4. 剂量和进阶：卡片给候选，规则系统给当次计划':['剂量','组数','次数','进阶','退阶','疲劳','休息','恢复','酸痛','疼痛','疼','痛','RPE','RIR','强度'],
+    '5. 评估与训练复用动作，但不混用协议':['评估','复测','训练结果','历史比较','基线'],
+    '6. 纯视觉实现与流畅体验规则':['摄像头','视频','机位','识别','姿态','视觉'],
+    '7. 力学估计的使用边界':['力学','负荷估计','受力','关节力','测量误差'],
+    '12. 单人摄像头评估与训练成果协议':['单人','一个人','独自','操作流程','训练反馈'],
+    '附录 F：单人执行与专业协助的适用边界':['术后','陪同','协助','专业','不适','禁忌','停止','危险'],
+  };
+  const q=query.toLowerCase().trim();
+  if (!q || q.length>400) return null;
+  const scored = Object.entries(keywords).map(([title,words])=>({
+    title,
+    score:words.reduce((n,word)=>n+(q.includes(word.toLowerCase()) ? Math.max(2,word.length):0),0),
+  })).sort((a,b)=>b.score-a.score);
+  const best=scored[0];
+  return best && best.score>0 && guidance[best.title as keyof typeof guidance]
+    ? {title:best.title,content:guidance[best.title as keyof typeof guidance]} : null;
+}
+
 export async function rehabAnswer(text:string,privateTurn:boolean,owner:string,model?:ConversationModel,host?:Pick<RehabToolPort,'read'>) {
   const local=(text:string)=>({text,conversation:{provider:'local' as const,status:'unavailable' as const,reason:'not_configured' as const}});
   if(/修改|改到|改期|删除|授权|分享|绑定|打开|录入|保存|确认执行|记录.*(?:血压|服药|健康)/.test(text))
@@ -71,15 +108,12 @@ export async function rehabAnswer(text:string,privateTurn:boolean,owner:string,m
       if(data.read_only!==true||data.tool!==name||data.scope?.participant_id!==owner||!['found','empty'].includes(data.status)||!['source_kind','usage_context'].every(k=>typeof (data.scope as any)[k]==='string'&&(data.scope as any)[k].trim())||!Array.isArray(data.records))throw Error('Invalid read receipt');
       if(!data.records.length)return local('没有找到当前本人和来源下的相关记录，不补造评估结果。');
       // Personal records stay local; current model consent does not authorize transmitting them.
-      return local('本人已有康复记录（来源：'+data.scope.source_kind+'；情境：'+data.scope.usage_context+'）：\n'+JSON.stringify(data.records.slice(0,5),null,2)+'\n这些是已有记录，不能仅凭次数或二维角度推断肌力或诊断。');
+      return local(describeLocalRehabReceipt(data));
     }catch{return local('本人康复记录读取失败，请在康复页面核对。');}
   }
   if(!facts&&!/[ET]-[A-Z]+-\d+/i.test(text)){
-    const title=/等级|分级|L[0-3]|肌力/i.test(text)?'1. 四个维度分别管理':
-      /剂量|组数|次数|进阶|试做|RPE|RIR/i.test(text)?'4. 剂量和进阶：卡片给候选，规则系统给当次计划':
-      /器材|器械|支撑/.test(text)?'3. 家庭器械与支撑规则':
-      /单人|独自|陪同|术后|儿童/.test(text)?'附录 F：单人执行与专业协助的适用边界':null;
-    if(title)facts=title+'\n'+guidance[title];
+    const section=searchGuidance(text);
+    if(section)facts=section.title+'\n'+section.content;
   }
   if(!facts)return local('我可以依据动作库解释动作、分级、器材和候选剂量，也可以查看本人已有康复记录。请说出具体名称或编号，例如“肩外旋怎么做”或“T-LOW-046怎么做”；没有对应资料时不会编造步骤或剂量。');
   const fallback='依据动作库：\n'+facts.replace(/\*\*/g,'').replace(/<a[^>]*><\/a>/g,'');

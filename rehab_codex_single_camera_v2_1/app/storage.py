@@ -236,6 +236,9 @@ class Storage:
                 raise ValueError('医生方案尚未确认，不能从普通编辑入口激活')
             if previous and scope_key(previous) != scope_key(item):
                 raise ValueError('计划不属于当前用户与来源，不能改变所属范围')
+            if previous.get('doctor_publication') and (previous['items'] != item['items']
+                    or previous['doctor_publication'] != item.get('doctor_publication')):
+                raise ValueError('医生方案的动作与剂量须由医生重新审核发布，不能从普通编辑入口修改')
             if previous.get('status') == 'ARCHIVED':
                 raise ValueError('请先恢复已归档计划，再进行编辑')
             at = utc_now()

@@ -7,6 +7,7 @@ from app.ui.product_record_review import record_review
 
 @pytest.mark.parametrize('metadata,label',[
     ({'provider':'deepseek','status':'replied'},'DeepSeek 回复'),
+    ({'provider':'local','status':'replied'},'本地编排回复'),
     ({'provider':'local','status':'unavailable','reason':'not_configured'},'未配置 DeepSeek · 本地回复'),
     ({'provider':'local','status':'failed','reason':'network'},'DeepSeek 本轮未完成 · 本地回复'),
 ])
@@ -24,7 +25,6 @@ def test_native_reply_source_only_reports_trusted_outcome(metadata,label):
 
 def test_native_source_does_not_claim_connection_or_expose_unknown_errors():
     for value in (None,{},'TEST secret',{'provider':'deepseek','status':'failed'},
-                  {'provider':'local','status':'replied'},
                   {'provider':'<TEST secret>','status':'replied'},
                   {'provider':'local','status':'unavailable','reason':'<TEST secret>'}):
         assert conversation_source(value)==''

@@ -75,6 +75,19 @@ def workflow(connection, ident):
             "assessment_note": "仅描述已有二维测量；不推断肌力、疾病或专业临床等级。当前方案优先，不由问答覆盖。"}
 
 
+def candidate_view(connection, row):
+    """Historical receipts remain visible, but never present stale review as current."""
+    result = dict(row)
+    if row["state"] in {"PENDING_REVIEW", "REVIEWED"}:
+        version = connection.scalar(select(preferences.c.version).where(preferences.c.patient_id == row["patient_id"]))
+        grant = connection.execute(select(grants).where(grants.c.patient_id == row["patient_id"])).mappings().first()
+        if row["document"].get("profile_version") != version or not grant or not grant["enabled"] or \
+                row["document"].get("doctor_access_version") != grant["version"]:
+            result["historical_state"] = row["state"]
+            result["state"] = "SUPERSEDED"
+    return result
+
+
 def install_workflow(app, db, caller, patient_scope, base):
     def authorize(connection, request, ident, write=False, owner=False):
         actor, _ = caller(request, connection, write=write)
@@ -106,6 +119,12 @@ def install_workflow(app, db, caller, patient_scope, base):
                 connection.execute(update(preferences).where(preferences.c.patient_id == ident).values(**changes))
             else:
                 connection.execute(preferences.insert().values(patient_id=ident, **changes))
+            # A changed patient context invalidates every outstanding review.
+            # Keep the immutable candidate and any old receipt for audit only.
+            connection.execute(update(candidates).where(
+                candidates.c.patient_id == ident,
+                candidates.c.state.in_(["PENDING_REVIEW", "REVIEWED"]),
+            ).values(state="SUPERSEDED"))
             audited(connection, actor["id"], "rehab.preferences", ident)
             return workflow(connection, ident)
 
@@ -118,7 +137,7 @@ def install_workflow(app, db, caller, patient_scope, base):
             if old:
                 if old["fingerprint"] != fingerprint:
                     raise DomainError(409, "IDEMPOTENCY_CONFLICT", "原候选请求已有不同内容")
-                return dict(old)
+                return candidate_view(connection, old)
             state = workflow(connection, ident)
             p = state["profile"]
             if not p or not p["screening_confirmed"]:
@@ -127,7 +146,8 @@ def install_workflow(app, db, caller, patient_scope, base):
                 raise DomainError(409, "PROFESSIONAL_REVIEW_REQUIRED", "已填写限制，程序不能判断兼容性，请先联系医生")
             if not state["assessment_records"]:
                 raise DomainError(409, "ASSESSMENT_REQUIRED", "请先在原康复页面完成并同步本人评估，不补造结果")
-            if not connection.scalar(select(grants.c.enabled).where(grants.c.patient_id == ident)):
+            grant = connection.execute(select(grants).where(grants.c.patient_id == ident)).mappings().first()
+            if not grant or not grant["enabled"]:
                 raise DomainError(403, "DOCTOR_ACCESS_REQUIRED", "请先授权医生查看，再提交候选核对")
             if value.kind == "PROGRESSION" and not state["current_plan"]:
                 raise DomainError(409, "CURRENT_PLAN_REQUIRED", "进阶需先有本人采用的医生方案")
@@ -137,6 +157,7 @@ def install_workflow(app, db, caller, patient_scope, base):
             if not cards:
                 raise DomainError(409, "NO_RULE_MATCH", "当前没有已映射的起始版本或器材，请联系医生安排")
             document = {"kind": value.kind, "engine": "shared-resource-rules-2", "profile_version": state["profile_version"],
+                        "doctor_access_version": grant["version"],
                         "profile": p, "cards": cards[:3], "variants": matching, "assessment_record_ids": [r["id"] for r in state["assessment_records"]],
                         "parent_plan_id": state["current_plan"]["id"] if state["current_plan"] else None,
                         "automatic_execution": False, "model_calls": 0,
@@ -153,7 +174,7 @@ def install_workflow(app, db, caller, patient_scope, base):
             raise DomainError(422, "VALIDATION_ERROR", "查询范围无效")
         with db.transaction() as connection:
             authorize(connection, request, ident)
-            return {"items": [dict(r) for r in connection.execute(select(candidates).where(candidates.c.patient_id == ident).order_by(candidates.c.created_at.desc(), candidates.c.id).offset(offset).limit(30)).mappings()]}
+            return {"items": [candidate_view(connection, r) for r in connection.execute(select(candidates).where(candidates.c.patient_id == ident).order_by(candidates.c.created_at.desc(), candidates.c.id).offset(offset).limit(30)).mappings()]}
 
     @app.post(base + "/patients/{ident}/rehab-candidates/{candidate_id}/review")
     def review(ident: str, candidate_id: str, value: Review, request: Request):
@@ -164,10 +185,27 @@ def install_workflow(app, db, caller, patient_scope, base):
             row = connection.execute(select(candidates).where(candidates.c.patient_id == ident, candidates.c.id == candidate_id)).mappings().first()
             if not row:
                 raise DomainError(404, "RESOURCE_NOT_FOUND", "找不到候选")
+            profile_version = connection.scalar(select(preferences.c.version).where(preferences.c.patient_id == ident))
+            if row["state"] == "SUPERSEDED" or row["document"].get("profile_version") != profile_version:
+                raise DomainError(409, "CANDIDATE_STALE", "个人条件已更新，请重新生成候选并提交核对")
+            grant = connection.execute(select(grants).where(grants.c.patient_id == ident)).mappings().first()
+            if not grant or not grant["enabled"] or row["document"].get("doctor_access_version") != grant["version"]:
+                raise DomainError(409, "CANDIDATE_STALE", "医生授权已发生变化，请重新提交候选核对")
             if row["state"] != "PENDING_REVIEW":
                 if row["state"] == value.decision:
-                    return {"status": "COMMITTED", "state": row["state"]}
+                    return {"status": "COMMITTED", "state": row["state"],
+                            "review_receipt": row["document"].get("review_receipt"), "automatic_execution": False}
                 raise DomainError(409, "REVIEW_IMMUTABLE", "核对结论已保存，请提交新的候选")
-            connection.execute(update(candidates).where(candidates.c.id == candidate_id).values(state=value.decision, reviewed_at=int(time.time())))
+            reviewed_at = int(time.time())
+            receipt = {"id": str(uuid4()), "candidate_id": candidate_id,
+                       "patient_id": ident, "profile_version": profile_version,
+                       "doctor_access_version": grant["version"],
+                       "candidate_digest": digest(json.dumps(row["document"], sort_keys=True, ensure_ascii=False)),
+                       "reviewer_id": actor["id"], "decision": value.decision, "reviewed_at": reviewed_at,
+                       "scope": "RESOURCE_CANDIDATE_REVIEW", "execution_approved": False}
+            document = {**row["document"], "review_receipt": receipt}
+            connection.execute(update(candidates).where(candidates.c.id == candidate_id).values(
+                state=value.decision, reviewed_at=reviewed_at, document=document))
             audited(connection, actor["id"], "rehab.candidate." + value.decision.lower(), candidate_id)
-            return {"status": "COMMITTED", "state": value.decision, "automatic_execution": False}
+            return {"status": "COMMITTED", "state": value.decision,
+                    "review_receipt": receipt, "automatic_execution": False}

@@ -1,0 +1,216 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { catalogue } from '../src/rehab/catalogue';
+import { mapKnowledgeActionToApp } from '../src/rehab/exerciseMapping';
+import { parseRehabToolSelection, selectRehabTools, runRehabWorkflow, validateRehabPlan, rehabAnswerTask, runRehabReadOnlyAnswer, renderRehabDraft, type RehabCandidatePlan } from '../src/rehab/workflow';
+
+test('new explicit equipment absence blocks a conflicting model draft and later correction is respected',async()=>{
+  for(const recovered of [false,true]){
+    let calls=0;
+    const semantic={version:1 as const,route:'rehab' as const,goal:'制定居家训练计划',
+      mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null,
+      intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'制定居家训练计划',evidence:'制定居家训练计划'}]};
+    const model={async reply(){return JSON.stringify(++calls===1?{version:1,calls:[
+      {name:'rehab.search_knowledge',arguments:{query:'T-LOW-017'},reason:'查找动作卡'}],uncertainties:[]}:{
+      version:1,goal:'居家训练',summary:'候选',algorithm_input:{goal:'居家训练',region:'膝',
+        equipment:['椅子'],restrictions:[],level:null,screening_confirmed:false},
+      candidate_actions:[{exercise_id:'T-LOW-017',reason:'动作库返回'}],
+      doctor_review_required:false,doctor_review_reasons:[],uncertainties:[]});}};
+    const userStatements=['制定居家训练计划，我有椅子','现在没有椅子',...(recovered?['现在有椅子']:[])];
+    const result=await runRehabWorkflow({model,semantic,userText:userStatements.join('；'),userStatements,participantId:'SYNTHETIC'});
+    assert.equal(result.validation?.status,recovered?'needs_review':'rejected');
+    assert.equal(result.validation?.reasons.includes('explicit_equipment_conflict'),!recovered);
+    if(!recovered)assert.match(renderRehabDraft(result.validation),/明确不能使用的器材/);
+  }
+});
+
+test('rehab tool selection accepts only registered tools', () => {
+  const ok = parseRehabToolSelection(JSON.stringify({
+    version: 1,
+    calls: [
+      { name: 'rehab.get_training_plan', arguments: {}, reason: '需要当前计划' },
+      { name: 'rehab.search_knowledge', arguments: { query: '膝关节训练' }, reason: '需要动作库' },
+      { name: 'rehab.search_guidance', arguments: { query: '剂量和进阶' }, reason: '需要训练原则' }
+    ],
+    uncertainties: []
+  }));
+  assert.equal(ok?.calls.length, 3);
+
+  const bad = parseRehabToolSelection(JSON.stringify({
+    version: 1,
+    calls: [{ name: 'rehab.delete_plan', arguments: {}, reason: '不允许' }],
+    uncertainties: []
+  }));
+  assert.equal(bad, null);
+});
+
+test('search planning without a sourced fallback requires a nonempty bounded query',()=>{
+  for(const name of ['rehab.search_knowledge','rehab.search_guidance']){
+    const selection=(args:Record<string,unknown>)=>parseRehabToolSelection(JSON.stringify({version:1,
+      calls:[{name,arguments:args,reason:'查询公共资料'}],uncertainties:[]}));
+    assert.equal(selection({}),null);
+    assert.equal(selection({query:''}),null);
+    assert.equal(selection({query:'a'.repeat(401)}),null);
+    assert.ok(selection({query:'居家训练原则与休息'}));
+  }
+  assert.ok(parseRehabToolSelection(JSON.stringify({version:1,calls:[{
+    name:'rehab.get_training_plan',arguments:{},reason:'读取本人当前计划'}],uncertainties:[]})));
+});
+
+test('rehab candidate rejects an action that is not a real training card', () => {
+  const candidate: RehabCandidatePlan = {
+    version: 1,
+    goal: '膝部训练',
+    summary: '候选方案',
+    algorithm_input: {
+      goal: '膝部训练',
+      region: '膝',
+      equipment: ['无轮稳固椅'],
+      restrictions: [],
+      level: 0,
+      screening_confirmed: false,
+    },
+    candidate_actions: [{ exercise_id: 'T-NOT-999', reason: '模型自造动作' }],
+    doctor_review_required: false,
+    doctor_review_reasons: [],
+    uncertainties: [],
+  };
+  const result = validateRehabPlan(candidate, catalogue);
+  assert.equal(result.status, 'rejected');
+});
+
+test('rehab candidate remains reviewable before screening confirmation', () => {
+  const card = catalogue.find(c => c.kind === 'training' && c.complete);
+  assert.ok(card);
+  const candidate: RehabCandidatePlan = {
+    version: 1,
+    goal: '康复训练',
+    summary: '候选方案',
+    algorithm_input: {
+      goal: '康复训练',
+      region: card.region,
+      equipment: [card.equipment],
+      restrictions: [],
+      level: 0,
+      screening_confirmed: false,
+    },
+    candidate_actions: [{ exercise_id: card.id, reason: '动作库中存在' }],
+    doctor_review_required: false,
+    doctor_review_reasons: [],
+    uncertainties: [],
+  };
+  const result = validateRehabPlan(candidate, catalogue);
+  assert.equal(result.status, 'needs_review');
+  assert.ok(result.reasons.includes('screening_not_confirmed'));
+});
+
+test('exercise guidance returns registered references without generating a plan', async () => {
+  const semantic = {version:1 as const,route:'rehab' as const,goal:'肩外旋怎么做',
+    mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null,
+    intents:[{type:'exercise_guidance' as const,route:'rehab' as const,goal:'肩外旋怎么做',evidence:'肩外旋怎么做'}]};
+  assert.equal(rehabAnswerTask(semantic),'exercise_guidance');
+  const answer = await runRehabReadOnlyAnswer({semantic,userText:'肩外旋怎么做',participantId:'TEST'});
+  assert.equal(answer.status,'found');
+  assert.ok(answer.source_ids.length>0);
+  assert.match(answer.text,/开始条件|停止条件/);
+});
+
+test('plan generation is distinct from ordinary rehab questions', () => {
+  const semantic = {version:1 as const,route:'rehab' as const,goal:'生成计划',
+    mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null,
+    intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'生成计划',evidence:'生成计划'}]};
+  assert.equal(rehabAnswerTask(semantic),'plan_generation');
+});
+
+test('real-model tool selection may omit a search query; host fills it from the user request', () => {
+  const parsed = parseRehabToolSelection(JSON.stringify({
+    version: 1,
+    calls: [
+      {name:'rehab.search_guidance',arguments:{},reason:'需要相关训练原则'},
+      {name:'rehab.search_knowledge',arguments:{query:''},reason:'查找动作卡'},
+    ],
+    uncertainties: [],
+  }), '腰椎间盘突出 居家训练计划');
+  assert.equal(parsed?.calls.length,2);
+  assert.equal(parsed?.calls[0].arguments.query,'腰椎间盘突出 居家训练计划');
+  assert.equal(parsed?.calls[1].arguments.query,'腰椎间盘突出 居家训练计划');
+});
+
+test('missing search query without any grounded fallback is rejected', () => {
+  const parsed = parseRehabToolSelection(JSON.stringify({
+    version:1,
+    calls:[{name:'rehab.search_guidance',arguments:{},reason:'查资料'}],
+    uncertainties:[],
+  }));
+  assert.equal(parsed,null);
+});
+
+test('tool planner integration fills an omitted query before host execution', async () => {
+  const semantic = {
+    version:1 as const, route:'rehab' as const, goal:'制定腰椎居家训练计划',
+    mentions:[{kind:'body_region' as const,text:'腰椎',evidence:'腰椎'}],
+    events:[], relations:[], uncertain:[], suggested_tool:null,
+    intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'制定居家训练计划',evidence:'制定一套在家的训练计划'}],
+  };
+  const model = {reply:async()=>JSON.stringify({
+    version:1,
+    calls:[{name:'rehab.search_guidance',arguments:{},reason:'需要训练原则'}],
+    uncertainties:['缺少个人筛查信息'],
+  })};
+  const selected = await selectRehabTools(model,semantic,'我有腰椎间盘突出，帮我制定一套在家的训练计划。');
+  assert.equal(selected?.calls[0].name,'rehab.search_guidance');
+  assert.match(selected?.calls[0].arguments.query ?? '',/腰椎|训练计划/);
+  assert.ok(selected?.calls.some(call=>call.name==='rehab.search_knowledge'));
+});
+
+test('only explicitly reviewed knowledge cards map to executable app movements', () => {
+  assert.equal(mapKnowledgeActionToApp('T-LOW-003')?.app_exercise_id,'knee_extension');
+  assert.equal(mapKnowledgeActionToApp('T-LOW-017')?.app_exercise_id,'sit_to_stand');
+  assert.equal(mapKnowledgeActionToApp('T-LOW-002'),null);
+  assert.equal(mapKnowledgeActionToApp('T-AXU-022'),null);
+  assert.equal(mapKnowledgeActionToApp('T-LOW-046'),null);
+});
+
+test('plan generation rejects knowledge actions that have no executable app mapping', async () => {
+  const semantic = {
+    version:1 as const, route:'rehab' as const, goal:'生成居家康复计划',
+    mentions:[], events:[], relations:[], uncertain:[], suggested_tool:null,
+    intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'生成居家康复计划',evidence:'制定一套居家训练计划'}],
+  };
+  let call = 0;
+  const model = {reply:async()=>{
+    call++;
+    if(call===1) return JSON.stringify({version:1,calls:[
+      {name:'rehab.search_knowledge',arguments:{query:'滑跟屈膝'},reason:'查找动作卡'},
+    ],uncertainties:[]});
+    return JSON.stringify({
+      version:1,goal:'居家康复计划',summary:'候选',
+      algorithm_input:{goal:'居家康复计划',region:'膝',equipment:['硬床','滑布'],restrictions:[],level:0,screening_confirmed:false},
+      candidate_actions:[{exercise_id:'T-LOW-002',reason:'动作库返回'}],
+      doctor_review_required:false,doctor_review_reasons:[],uncertainties:[],
+    });
+  }};
+  const result = await runRehabWorkflow({model,semantic,userText:'制定一套居家训练计划',participantId:'SYNTHETIC'});
+  assert.equal(result.validation?.status,'rejected');
+  assert.ok(result.validation?.reasons.includes('candidate_action_not_mapped_to_executable_app_movement'));
+});
+
+test('plan generation does not ask the model to invent actions after an empty knowledge search', async () => {
+  const semantic = {
+    version:1 as const, route:'rehab' as const, goal:'制定罕见目标的居家训练计划',
+    mentions:[], events:[], relations:[], uncertain:[], suggested_tool:null,
+    intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'制定训练计划',evidence:'制定居家训练计划'}],
+  };
+  let calls = 0;
+  const model = {reply:async()=>{
+    calls++;
+    return JSON.stringify({version:1,calls:[
+      {name:'rehab.search_knowledge',arguments:{query:'SYNTHETIC_NO_MATCH_937421'},reason:'查询动作库'},
+      {name:'rehab.search_guidance',arguments:{query:'SYNTHETIC_NO_MATCH_937421'},reason:'查询指导资料'},
+    ],uncertainties:[]});
+  }};
+  const result = await runRehabWorkflow({model,semantic,userText:'制定罕见目标的居家训练计划',participantId:'SYNTHETIC'});
+  assert.equal(result.candidate,null);
+  assert.equal(result.validation,null);
+  assert.equal(calls,1,'candidate-generation LLM must not run with zero registered actions');
+});

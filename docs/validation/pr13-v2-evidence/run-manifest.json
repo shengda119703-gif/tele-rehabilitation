@@ -1,0 +1,168 @@
+{
+  "schema": "pr13-v2-run-manifest-1",
+  "generated_at": "2026-10-19T11:21:37.321384+08:00",
+  "source_head": "3bb417a01649a0ad017d878a2f324f1d58fb5f94",
+  "branch": "codex/unified-llm-entry-20261015",
+  "baseline_head": "06a8650b196991564cce431ec88d4b48c66df8a1",
+  "complete": false,
+  "merge_recommended": false,
+  "live_model_tested": false,
+  "checksum_policy": "SHA256; CRLF normalized to LF for text, original bytes for images",
+  "model_configuration_check": {
+    "configured": false,
+    "method": "Boolean(localKey() || ANKANG_REHAB_LLM_API_KEY), no values printed"
+  },
+  "environment": {
+    "python": "3.12.10",
+    "node": "v24.20.0",
+    "packages": {
+      "pytest": "9.1.1",
+      "PySide6-Essentials": "6.11.2",
+      "numpy": "2.2.6",
+      "opencv-python": "4.12.0.88",
+      "SQLAlchemy": "2.0.54",
+      "fastapi": "0.142.2"
+    }
+  },
+  "runs": [
+    {
+      "id": "agent",
+      "cwd": "ankang/route1-health-agent",
+      "command": "npm run ci",
+      "result": "582 TypeScript tests + 36 product tests passed; build/security passed",
+      "exit_code": 0,
+      "evidence": "agent-ci.txt",
+      "model": "protocol fixtures"
+    },
+    {
+      "id": "host",
+      "command": "python -m pytest rehab_codex_single_camera_v2_1/tests/test_rehab_read_tools.py rehab_codex_single_camera_v2_1/tests/test_rehab_operation_tools.py -q --junitxml=.runtime/v2-host.xml",
+      "environment": "PYTHONPATH=rehab_codex_single_camera_v2_1",
+      "result": "23 passed",
+      "exit_code": 0,
+      "evidence": "host-tests.txt",
+      "database": "real temporary SYNTHETIC TEST SQLite",
+      "model": "protocol fixtures"
+    },
+    {
+      "id": "cloud",
+      "command": "python -m pytest cloud_service/tests -q --junitxml=.runtime/v2-cloud.xml",
+      "result": "76 passed, 4 PostgreSQL tests skipped, 1 deprecation warning",
+      "exit_code": 0,
+      "evidence": "cloud-tests.txt",
+      "database": "local test database, not production"
+    },
+    {
+      "id": "web",
+      "command": "node --test mobile_rehab/tests/*.cjs",
+      "result": "124 passed",
+      "exit_code": 0,
+      "evidence": "web-tests.txt"
+    },
+    {
+      "id": "android",
+      "command": "python android_offline/tools/prepare_assets.py; node android_offline/tools/bundle_product.cjs; node --test android_offline/tests/*.test.cjs",
+      "result": "assets/bundle succeeded; 85 JS tests passed",
+      "exit_code": 0,
+      "evidence": "android-tests.txt",
+      "limitation": "repository root cwd; no APK/device verification"
+    },
+    {
+      "id": "qt",
+      "command": "python tools/qa/pr13-ui.py --data-dir .runtime/SYNTHETIC_TEST_PR13_V2_UI --output .runtime/v2-ui",
+      "result": "6 Qt pages and offline chat passed",
+      "exit_code": 0,
+      "evidence": "desktop-results.json",
+      "limitation": "offscreen PassiveRuntime, no camera or AI adoption"
+    },
+    {
+      "id": "qt-main",
+      "cwd": "rehab_codex_single_camera_v2_1",
+      "command": "python -m app.main --data-dir ../.runtime/SYNTHETIC_TEST_PR13_V2_LAUNCH --screenshot ../.runtime/v2-ui/desktop-real-launch.png",
+      "environment": "QT_QPA_PLATFORM=offscreen, ANKANG_PRODUCT_DISABLE_MODEL=1, ANKANG_VOICE_DISABLED=1",
+      "result": "actual main screenshot startup completed",
+      "exit_code": 0,
+      "evidence": "desktop-real-launch.png",
+      "limitation": "no camera/model test"
+    },
+    {
+      "id": "browser",
+      "command": "manual actual browser via cua against pr13-ui.py test server",
+      "result": "pairing/navigation/offline reply/reload persistence passed",
+      "evidence": "browser-review.md",
+      "limitation": "not online model or candidate adoption"
+    },
+    {
+      "id": "desktop-bulk",
+      "command": "python -m pytest <all tests/test_product*.py> -q",
+      "result": "incomplete: 10 failure markers by 48%, then no progress; interrupted",
+      "exit_code": 1,
+      "evidence": "desktop-bulk-interrupted.txt",
+      "limitation": "no final count or complete JUnit"
+    },
+    {
+      "id": "desktop-first",
+      "command": "python -m pytest rehab_codex_single_camera_v2_1/tests/test_product_assistant.py -x -vv --junitxml=.runtime/v2-desktop-first.xml",
+      "result": "4 passed, 1 failed (StopIteration: missing product-201 shortcut)",
+      "exit_code": 1,
+      "evidence": "desktop-tests.txt"
+    }
+  ],
+  "source_files": {
+    "ankang/route1-health-agent/src/rehab/programOperations.ts": "024d9b4f00a64ac8157dfc55951d589fb98b998c2a816720324a6b9ba5438c22",
+    "ankang/route1-health-agent/src/rehab/taskState.ts": "c2394c9219938b589dff5261dd741ca4d17718969cdf47571bee66320bcd636e",
+    "ankang/route1-health-agent/src/rehab/workflow.ts": "057e8822a5654779b91a9fc5f7b12dda2b0f80c00ef6c6710cbab78ef3c26530",
+    "ankang/route1-health-agent/src/runtime/operationalIntent.ts": "ece6bce8f0b1da46a769e50ef586b048cd52dda6a1a0e2d99745b016911995af",
+    "ankang/route1-health-agent/src/runtime/ports.ts": "47ac73de26a422c495d454552bfa63325442eab335407567ff23f8125cdfb18c",
+    "ankang/route1-health-agent/src/runtime/semanticExecution.ts": "18332455e74072e131125f8b7fb4ea9c7cf779715b3af22031ac5dc2c8e2e450",
+    "ankang/route1-health-agent/src/runtime/session.ts": "0356edca9339222b342effd1f1e31085dfd81a73889fe9702f24922c008f697d",
+    "ankang/route1-health-agent/tests/product-agent-boundary.test.ts": "ca62ee36ceccf16811f08bdbe846fa8a17620064a3ddd8e1828d9f507cf096e5",
+    "ankang/route1-health-agent/tests/rehab-acceptance-boundary.test.ts": "480a4ec86e34aa087521f00334902086bafd695d15f5b6e9da9c0e0f6cbad885",
+    "ankang/route1-health-agent/tests/rehab-program-operations.test.ts": "9fc882b03560df5148b96a7d845149717abfdfdaf058a20d308779bdf35cd7a4",
+    "ankang/route1-health-agent/tests/rehab-task-state.test.ts": "f1499f0eca4fda7c84b772d4acee00105da4ad153e52632c841bea620c3b6a1b",
+    "ankang/route1-health-agent/tests/rehab-workflow.test.ts": "9b22c35320c963fa3e5b9d87f71ce54767a84c1870bb3d2707dc3099af5d70e0",
+    "ankang/route1-health-agent/tests/semantic-host-wiring.test.cjs": "9653db864f09609b0c2cab7763be7d5ba7fabe30031e453bdb1e7a86a05f72b9",
+    "ankang/route1-health-agent/tests/semantic-runtime.test.ts": "0fb2e3a2d3b75edc4884435317db28ca0f9008c0047125552159efe5af1c2f85",
+    "cloud_service/rehab_workflow.py": "40935e1157ab3205f170890ab379395870501f7ff79742e3c039e327f8358bd1",
+    "cloud_service/tests/test_beta.py": "ad4a28af795ef14e8bd101184b1eb7b694058ac2aabbc39dd4e26c73fd3b6a76",
+    "rehab_codex_single_camera_v2_1/tests/test_rehab_read_tools.py": "22af0bc02f6eae83ad6121ac855191e53b1f3d1d2130a7f274d743aa81cb3dd2",
+    "tools/qa/pr13-v2-manifest.py": "0124bd4d0a0de706e2b1530f2b0829ca81866bd656dff8e54dea84b623bad8a2",
+    "tools/qa/pr13-v2-status.py": "c810c5d239a046484fa4d9517c2cb71f2686528b10c88d1ed487eac5d88cd6e2"
+  },
+  "evidence_files": {
+    "agent-before-local-cancellation-fix.txt": "8b74f85633476077053bfa34f7a4606b3b16af1de6e4fc57219371951bc77849",
+    "agent-ci.txt": "cd4cb068d16ace375f33dbedc9c4d03e48e647e74af11f94e22093a63f48f2ec",
+    "agent-intermediate-round.txt": "d8e75d137ddee6f022b2aa9f58b767f820fb7ee3224a58fa6e593fdec1d5b326",
+    "android-assets.txt": "cc5b56668dbeac3d009f7498b33ab8b1bd129839d46b9ca4e27e9341800a2008",
+    "android-initial-wrong-cwd.txt": "0e992361381d8398c236c99e7bd3e824292dcbbfa76121571cd58da432e242cc",
+    "android-tests.txt": "f2a37401f726b6a54062d55dbcc126707d1e4b3dd92a1e3ca721d29590280473",
+    "browser-review.md": "91181724f49201073a6ae5b21d202b7f76bfc682ba4109f8bb62ada670e611f5",
+    "cloud-junit.xml": "24d074f1ac0b6bac3618a5be56d18de559ae630acab682512b4715e8af4861d0",
+    "cloud-tests.txt": "bc1aedd64f568b89d4d21ebceac4b66765289176372167bffb0aa0111b3f545d",
+    "desktop-assistant.png": "1735388e812e99e666d550d08a8784b9ac8144efebafcb61b8717a2a24cd6a0a",
+    "desktop-bulk-interrupted.txt": "79eeb3d16f75f017be689254dcafb369d710aa04515c11c66ceee939fd422761",
+    "desktop-home.png": "bedd0925af0fc4b7d72ad3592d53165624564203e4df36f40e231301b56d6687",
+    "desktop-junit.xml": "ba33b77c6af6f75d98364704443c5e2e0fef095630871592938d01e85dd14961",
+    "desktop-offline-chat.png": "d5bb637b2b66c06eebe9d8275158fbd48b54d4618df6e53263b444014c0fb5c0",
+    "desktop-real-launch.png": "81282fb9fd899f59222fe0c51ca95f91661174222f4f690f0ca318ff5c0581a5",
+    "desktop-rehab.png": "4c6e7ff1de7f23cb21f3826e725daef88fe4fc1b01dc77aec82b6775305036ac",
+    "desktop-results.json": "7e36daf5fcd1f5f3367ddb2d168f820234bcc7e73ce3d5b8d1c4a87d633acbed",
+    "desktop-tests.txt": "296cca76d19b817c76b10b81dadf8d6ca4a0870dcd17d7cd56ecf61a76e853ae",
+    "equipment-before-optional-fix.txt": "dc3a4002668bf7fc35d1542858efde8b21f20a9db42bd1ac9d35f0d456b55ad0",
+    "host-before-three-question-fix.txt": "01cf0d0664db4556a34d824950532b77a66cf6b1773f08ee231dd9b997049f30",
+    "host-initial-missing-dependency.txt": "88eb81d3b5e3a3797c2e0f5d32d74fb1f8efc497ba915e09ac68bdb27572817a",
+    "host-junit.xml": "f29f6f3bdbf1eaca043621b3f55aba32a1af48aaef805fbb26028f96ba4fb152",
+    "host-tests.txt": "bffc937525b96ab94786f10e926401cc32e645a388216874c4edcfe0ef32c360",
+    "launch-tests.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "review-tests.txt": "6c904f29369100be44b4fcf0814d6ccb5075625fdb8a76c402081b3adbbd5390",
+    "status.json": "3e1529cf6978977f8d92353a8e895e64c2adb5e5ea42fd80e85657ddf42517fc",
+    "STATUS.md": "124507e46a30630bcce67c3116b20899d99322be9a22053a34de6851d998e1a8",
+    "ui-tests.txt": "ad2780b6ae1b2ed71b53ecb19fc221cf5c593d1e81d3ad13e802b4fd60691e38",
+    "web-tests.txt": "e2e8ded22917b946e624882bf2c02b45bddf00a2f67ab5c4b3a97382a980420e"
+  },
+  "acceptance": {
+    "original_nodes": 77,
+    "additional_ux": 12,
+    "full_results": "status.json"
+  }
+}

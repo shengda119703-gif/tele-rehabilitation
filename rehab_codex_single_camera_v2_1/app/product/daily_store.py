@@ -8,6 +8,7 @@ import sqlite3
 from pathlib import Path
 
 CATEGORIES = ('health', 'rehab', 'medication')
+_UNSET = object()
 
 
 class DailyStore:
@@ -61,11 +62,18 @@ class DailyStore:
     def schedule_key(scope):
         return 'schedule:' + str(scope.get('source_kind')) + ':' + str(scope.get('usage_context'))
 
-    def apply(self, owner, operation, payload, scope, *, idempotency_key=None, expected=None, care_validate=None):
+    def apply(self, owner, operation, payload, scope, *, idempotency_key=None, expected=None, care_validate=None, expected_existing=_UNSET):
         if not owner:
             raise ValueError('请先建立本机档案。')
         with self.connect() as db:
             db.execute('BEGIN IMMEDIATE')
+            if expected_existing is not _UNSET:
+                if operation not in ('daily.schedule', 'daily.unschedule'):
+                    raise ValueError('安排并发核对只能用于训练安排操作。')
+                entries = self.get(db, owner, self.schedule_key(scope), [])
+                existing = next((e for e in entries if e.get('id') == payload.get('id')), None)
+                if existing != expected_existing:
+                    raise ValueError('训练安排已变化，请重新读取后操作')
             receipt_scope = self.schedule_key(scope)
             signature = None
             if idempotency_key is not None:
@@ -190,7 +198,7 @@ class DailyStore:
                 db.execute('INSERT INTO care_receipts VALUES(?,?,?,?,?)',
                            (owner, receipt_scope, idempotency_key, signature, json.dumps(receipt, ensure_ascii=False)))
                 return receipt
-        return {'dailyReceipt': True}
+        return {'dailyReceipt': True, **({'schedule': value} if operation == 'daily.schedule' else {})}
 
     def allowed_members(self, owner):
         with self.connect() as db:

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="5" time="15.067" timestamp="2026-10-19T11:18:41.385385+08:00" hostname="DESKTOP-7PBOHG6"><testcase classname="rehab_codex_single_camera_v2_1.tests.test_product_assistant" name="test_portal_cards_are_clickable_and_tools_are_not_piled_into_first_screen" time="2.416" /><testcase classname="rehab_codex_single_camera_v2_1.tests.test_product_assistant" name="test_conversation_draft_and_history_survive_module_back_and_global_assistant" time="2.835" /><testcase classname="rehab_codex_single_camera_v2_1.tests.test_product_assistant" name="test_visible_voice_entry_opens_honest_status_without_starting_unavailable_asr" time="2.116" /><testcase classname="rehab_codex_single_camera_v2_1.tests.test_product_assistant" name="test_owner_switch_resets_modules_and_drafts_and_materials_links_to_real_archive" time="4.941" /><testcase classname="rehab_codex_single_camera_v2_1.tests.test_product_assistant" name="test_medication_shortcut_edits_draft_only_and_explicit_send_keeps_privacy" time="2.082"><failure message="StopIteration">desktop = (&lt;app.ui.product_window.ProductWindow(0x17ec7bfb000, name="productWindow") at 0x0000017EC254CEC0&gt;, &lt;PySide6.QtWidgets.QApplication(0x17ec11b7490) at 0x0000017EC246F3C0&gt;)
+
+    def test_medication_shortcut_edits_draft_only_and_explicit_send_keeps_privacy(desktop):
+        from copy import deepcopy
+        w,app=desktop;w.navigate('assistant');wait(app,lambda:not w.pending)
+&gt;       shortcut=next(b for b in w.product_action_buttons() if b.property('actionId')=='product-201')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+rehab_codex_single_camera_v2_1\tests\test_product_assistant.py:90: StopIteration</failure></testcase></testsuite></testsuites>

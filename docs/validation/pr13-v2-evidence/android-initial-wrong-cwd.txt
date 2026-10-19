@@ -1,0 +1,508 @@
+
+> tele-rehabilitation-offline@0.5.2 test
+> node --test tests/*.test.cjs
+
+✔ current backup preserves owner and strips stale grants without changing source (12.1855ms)
+✔ malformed current backup and foreign measurement contract are rejected (3.332ms)
+✔ current backup preserves measured assessment and its bound plan; missing assessment fails (1.0284ms)
+✔ constant upward velocity produces mechanical speed/force/power, not canned demo values (14.3141ms)
+✔ mass absent means force and power absent, not inferred (1.978ms)
+✔ missing and disconnected segments cannot create velocity across the gap (0.3721ms)
+✔ uniform image patch is rejected rather than inventing a track (24.645ms)
+✔ textured translating marker produces actual tracked displacement (148.7396ms)
+✔ phone care facts bind owner/source/context and return independent copies (18.1399ms)
+✔ phone care atomically records one dose and survives concurrent replay and reopen (3.5819ms)
+✔ changed medicine, medication schedule or dose rejects a stale proposal without a receipt (6.2526ms)
+✔ care rescheduling preserves schedule identity and cannot bypass a changed plan revision (3.6415ms)
+✔ failed storage commit rolls back business write and receipt, then the same request can retry (2.0733ms)
+✔ expired approval prevents a new write but still recovers an already committed receipt (2.2404ms)
+✔ execution rejects extra fields, unknown tools and malformed keys before mutation (2.1042ms)
+✔ backup export and restore exclude pending workflows, tokens and execution receipts (3.6197ms)
+✔ retired Agent routes cannot mutate daily facts; manual pages still persist and reopen (1877.7681ms)
+✔ retired care routing rejects unsafe methods and foreign origins without owner writes (12.4864ms)
+✔ rehabilitation chat stays read-only for daily operations and preserves manual training feedback gates (31.0216ms)
+✔ original lifecycle clear removes retained legacy approvals while retaining manual daily facts (13.5336ms)
+✖ phone local API passes semantic options to the runtime options argument (4.5071ms)
+✖ Android understanding selects JSON task and cloud forwards its purpose (1.8189ms)
+✖ Android configuration absent is explicit and cannot call native transport (2.9879ms)
+✖ Android ordinary model uses shared policy and only submitted ordinary context; no credentials (1.7819ms)
+✖ Android malformed context never leaves the host and invalid responses do not become success (1.6552ms)
+✖ Android tools carry schemas only and return a plan for shared ProductAgent validation (1.6441ms)
+✖ Android native failure and changed configuration reject pending replies without exposing error payloads (1.5435ms)
+✔ Android backup restore cannot forge model provenance for later outbound context (13.1684ms)
+✔ all 53 existing rehab and 8 fitness contracts included, not hand-maintained (2.1556ms)
+✔ angle lengths, finite geometry and circular delta (0.4798ms)
+✔ shoulder can be measured without a hip (1.5451ms)
+✔ neck flexion only needs same-side eye and ear, no shoulder/hip prerequisite (0.6711ms)
+✔ missing joints remain null, never zero-filled (0.3636ms)
+✔ baseline, full excursion and return produce one genuine cycle (2.0357ms)
+✔ next-action hint switches to return then next outbound (2.174ms)
+✔ shoulder adduction begins raised, counts lowering and return to raised baseline (0.4673ms)
+✔ missing interval cannot connect two half-repetitions (0.5515ms)
+✔ negative, duplicate and non-monotonic media time rejected (0.8229ms)
+✔ fitness full squat cycle, no fabricated count on cropped points (0.5113ms)
+✔ all eight fitness actions have an excursion/return path (synthetic geometry, not a human test) (11.3601ms)
+✔ automatic plan is tied to valid recent assessment and observed dose (2.8455ms)
+✔ latest failed assessment cannot fall back to old successful one (1.0221ms)
+✔ discomfort and profile restrictions prevent automatic continuation (1.0361ms)
+✔ privileged WebView cannot navigate remotely, bypass TLS or access raw files (10.8177ms)
+✔ initial dose leaves capacity in reserve without fabricating completed repetitions (0.3428ms)
+✔ every rehabilitation contract has a concrete mobile metric adapter (6.6495ms)
+✔ every rehab action has a functioning excursion/return state path (synthetic metric test, not human accuracy) (4.4138ms)
+✔ online calibration accepts a stable suffix, not an unnecessary moving prefix (0.3578ms)
+✔ offline replay uses a later observed rest reference and preserves original times (0.9652ms)
+✔ replay does not manufacture rest reference or connect missing data (0.6812ms)
+✖ portable TEST asset contains only generated owner-scoped records and preserves original reports (49.1589ms)
+✖ fresh install selects Lin; legacy/existing personal account and explicit selection keep their namespace (1.5328ms)
+✖ first import is idempotent, preserves user edits and leaves personal state/attachments untouched (1.8724ms)
+✖ conflicting namespace or attachment never overwrites another account (1.9128ms)
+✖ first-open dates shift consistently to supplied time and do not pre-fill future doses (1.6383ms)
+✖ backup accepts only the named fixture family, refuses foreign owners/contracts and leaves real grants cleared (1.9037ms)
+✖ original ProductService loads all major areas; native plan is linked to two completed training records (2.0763ms)
+✖ attachment writes use imported owner rather than the pre-import placeholder (1.7532ms)
+✖ Lin family permissions and backup are local only; existing personal cloud credentials are not used/disconnected (2.1913ms)
+✖ profile switching persists only the selection, rejects active analysis and does not reseed either store (2.257ms)
+✔ local writes survive reopen; write failure does not pretend to persist (18.0436ms)
+✔ medication is per-dose, explicit and audited; no future completion (5.1387ms)
+✔ invalid dates do not throw or become silently accepted (0.3603ms)
+✔ backup validation preserves owner/records and cannot import another contract or revive grants (1.8021ms)
+✖ new APK bundles original domain rules and unchanged official UI assets (4.9145ms)
+✖ actual ProductService health/chat/medication persists through a new service (2.1969ms)
+✖ no-record chat never leaks into persistent phone state or durable export (6.7571ms)
+✖ release phone domain rejects named, quoted and disclaimed readings and preserves previous facts on reopen (1.7155ms)
+node:fs:484
+    return binding.readFileUtf8(path, stringToFlags(options.flag));
+                   ^
+
+Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\web\motion.js'
+    at Object.readFileSync (node:fs:484:20)
+    at Object.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\mobile-motion.test.cjs:3:144)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+    at Module._load (node:internal/modules/cjs/loader:1443:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:261:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\web\\motion.js'
+}
+
+Node.js v24.20.0
+✖ tests\mobile-motion.test.cjs (265.7681ms)
+✔ packaged decoder waits for real video data and draws the decoded frame (3.4062ms)
+✔ packaged decoder timeout, cancellation and video error reject without invented frames (2.3468ms)
+✔ packaged worker preloads buffers and native insets remain outside WebView (3.8317ms)
+✔ saved local records have stable revisions, restart retry and no fictitious demo uploads (1751.8374ms)
+✔ durable message survives offline/reopen/lost response and same-input resend once (9.7352ms)
+✔ local disk failure cannot create an executable plan or submit acceptance (8.114ms)
+✔ lost acceptance reply restores frozen operation then activates only after current/fresh checks (15.3816ms)
+✔ expired assessment after lost reply recovers receipt without activating; superseded reply also pauses (19.7767ms)
+✔ deterministic revision rejection retires intent and fresh manual approval gets new operation (10.5955ms)
+✔ actual training POST rechecks latest own assessment, age and recent training feedback before storing video (26.3395ms)
+✔ unsupported actions/settings and unbound account fail before any plan write (23.8987ms)
+✔ actual phone start refuses stopped, changed, rest-day and offline professional plans (29.5712ms)
+✔ two cloud stores cannot erase a newer offline message or adoption intent through stale whole-state writes (10.0641ms)
+✔ native RPC replies bind random page nonce and actor, so delayed old-page data cannot resolve a new page (18.7296ms)
+ℹ tests 83
+ℹ suites 0
+ℹ pass 61
+ℹ fail 22
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2409.8736
+
+✖ failing tests:
+
+test at tests\deepseek.test.cjs:8:1
+✖ phone local API passes semantic options to the runtime options argument (4.5071ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\web\local-api.js'
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:14:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\web\local-api.js'
+        at Object.readFileSync (node:fs:484:20)
+        at C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:14:39
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:14:9)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1397:25)
+        at Test.start (node:internal/test_runner/test:1257:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17),
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests\deepseek.test.cjs:19:1
+✖ Android understanding selects JSON task and cloud forwards its purpose (1.8189ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\web\deepseek.js'
+      at Object.readFileSync (node:fs:484:20)
+      at harness (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:4:41)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:20:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\web\\deepseek.js'
+  }
+
+test at tests\deepseek.test.cjs:30:1
+✖ Android configuration absent is explicit and cannot call native transport (2.9879ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\web\deepseek.js'
+      at Object.readFileSync (node:fs:484:20)
+      at harness (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:4:41)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:31:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\web\\deepseek.js'
+  }
+
+test at tests\deepseek.test.cjs:34:1
+✖ Android ordinary model uses shared policy and only submitted ordinary context; no credentials (1.7819ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\web\deepseek.js'
+      at Object.readFileSync (node:fs:484:20)
+      at harness (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:4:41)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:35:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\web\\deepseek.js'
+  }
+
+test at tests\deepseek.test.cjs:40:1
+✖ Android malformed context never leaves the host and invalid responses do not become success (1.6552ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\web\deepseek.js'
+      at Object.readFileSync (node:fs:484:20)
+      at harness (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:4:41)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:41:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\web\\deepseek.js'
+  }
+
+test at tests\deepseek.test.cjs:44:1
+✖ Android tools carry schemas only and return a plan for shared ProductAgent validation (1.6441ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\web\deepseek.js'
+      at Object.readFileSync (node:fs:484:20)
+      at harness (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:4:41)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:45:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\web\\deepseek.js'
+  }
+
+test at tests\deepseek.test.cjs:50:1
+✖ Android native failure and changed configuration reject pending replies without exposing error payloads (1.5435ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\web\deepseek.js'
+      at Object.readFileSync (node:fs:484:20)
+      at harness (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:4:41)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\deepseek.test.cjs:51:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\web\\deepseek.js'
+  }
+
+test at tests\lin-profile.test.cjs:18:1
+✖ portable TEST asset contains only generated owner-scoped records and preserves original reports (49.1589ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at context (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:11:94)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:19:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\lin-profile.test.cjs:28:1
+✖ fresh install selects Lin; legacy/existing personal account and explicit selection keep their namespace (1.5328ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at context (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:11:94)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:29:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\lin-profile.test.cjs:35:1
+✖ first import is idempotent, preserves user edits and leaves personal state/attachments untouched (1.8724ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at context (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:11:94)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:36:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\lin-profile.test.cjs:45:1
+✖ conflicting namespace or attachment never overwrites another account (1.9128ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at context (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:11:94)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:46:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\lin-profile.test.cjs:52:1
+✖ first-open dates shift consistently to supplied time and do not pre-fill future doses (1.6383ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at context (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:11:94)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:53:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\lin-profile.test.cjs:60:1
+✖ backup accepts only the named fixture family, refuses foreign owners/contracts and leaves real grants cleared (1.9037ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at context (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:11:94)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:61:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\lin-profile.test.cjs:66:1
+✖ original ProductService loads all major areas; native plan is linked to two completed training records (2.0763ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at context (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:11:94)
+      at local (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:16:39)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:67:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\lin-profile.test.cjs:75:1
+✖ attachment writes use imported owner rather than the pre-import placeholder (1.7532ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at context (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:11:94)
+      at local (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:16:39)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:76:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\lin-profile.test.cjs:82:1
+✖ Lin family permissions and backup are local only; existing personal cloud credentials are not used/disconnected (2.1913ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at context (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:11:94)
+      at local (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:16:39)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:83:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\lin-profile.test.cjs:90:1
+✖ profile switching persists only the selection, rejects active analysis and does not reseed either store (2.257ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at context (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:11:94)
+      at local (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:16:39)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\lin-profile.test.cjs:91:26)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\local-product.test.cjs:8:1
+✖ new APK bundles original domain rules and unchanged official UI assets (4.9145ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\local-product.test.cjs:8:228)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\local-product.test.cjs:9:1
+✖ actual ProductService health/chat/medication persists through a new service (2.1969ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\local-product.test.cjs:9:230)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\local-product.test.cjs:11:1
+✖ no-record chat never leaks into persistent phone state or durable export (6.7571ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\local-product.test.cjs:11:227)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\local-product.test.cjs:14:1
+✖ release phone domain rejects named, quoted and disclaimed readings and preserves previous facts on reopen (1.7155ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\android_offline\build\assets\local\product.js'
+      at Object.readFileSync (node:fs:484:20)
+      at TestContext.<anonymous> (C:\Users\Sophie\SynologyDrive\大学\学习\比赛+课题\康复\康复2\tele-rehabilitation-pr13\android_offline\tests\local-product.test.cjs:18:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\Sophie\\SynologyDrive\\大学\\学习\\比赛+课题\\康复\\康复2\\tele-rehabilitation-pr13\\android_offline\\android_offline\\build\\assets\\local\\product.js'
+  }
+
+test at tests\mobile-motion.test.cjs:1:1
+✖ tests\mobile-motion.test.cjs (265.7681ms)
+  'test failed'

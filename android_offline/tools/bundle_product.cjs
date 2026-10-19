@@ -17,6 +17,7 @@ const output='(function(){"use strict";const factories={'+[...modules].map(([id,
 fs.mkdirSync(path.resolve(__dirname,'../build/assets/local'),{recursive:true});
 fs.writeFileSync(path.resolve(__dirname,'../build/assets/local/product.js'),output);
 // Share the desktop conversation policy; do not bundle its Node credential reader.
-const {conversationSystem}=require(path.join(root,'scripts/chat-model.cjs'));
-fs.writeFileSync(path.resolve(__dirname,'../build/assets/local/model-policy.js'),'globalThis.AnkangConversationSystem='+JSON.stringify(conversationSystem)+';');
+const {conversationSystem,understandingSystem}=require(path.join(root,'scripts/chat-model.cjs'));
+// Build-time opt-in only; absent/0 produces the original default-off product.
+fs.writeFileSync(path.resolve(__dirname,'../build/assets/local/model-policy.js'),'globalThis.AnkangConversationSystem='+JSON.stringify(conversationSystem)+';globalThis.AnkangUnderstandingSystem='+JSON.stringify(understandingSystem)+';globalThis.AnkangSemanticRoutingEnabled='+(process.env.ANKANG_SEMANTIC_ROUTING_ENABLED==='1')+';');
 console.log('Bundled '+modules.size+' original domain modules');

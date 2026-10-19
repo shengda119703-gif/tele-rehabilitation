@@ -14,8 +14,12 @@ import { changeTaskStatus, ensureMedicationTask, reconcileCareTasks } from './ca
 import type { DeliveryPort, DeliveryReceipt, PersistencePort, PersistenceReceipt, StoredSession } from './ports';
 import type { CareCoordinator } from '../care/CareCoordinator';
 import {canUseModuleTools} from './operationalIntent';
+import {understandSemanticTurn, type SemanticTurn, type SemanticContextMessage} from './semanticRouter';
+import {executeSemanticTurn, readOnlyPlan, isUserFacingSemanticReply, type SemanticExecutionTrace} from './semanticExecution';
 import type { ProductAgent, AgentResult } from '../product/ProductAgent';
 import {conversationMessages,isOperationalConversation,localConversation,type ConversationModel} from './conversation';
+import {isConfirmation,isCancellation,type PendingRehabOperation, type RehabOperationPort} from '../rehab/programOperations';
+import {restoreRehabTask, type RehabTaskState} from '../rehab/taskState';
 
 const copy = <T>(value: T): T => structuredClone(value);
 const emptyHealth = (): HealthRecordSnapshot => ({ events: [], familyEvents: [], chat: [] });
@@ -43,6 +47,11 @@ export interface OpenSessionOptions {
   careTools?: Pick<CareCoordinator, 'replyToText'>;
   productTools?: Pick<ProductAgent,'replyToText'>;
   conversationModel?: ConversationModel;
+  /** Opt-in first-pass LLM JSON routing; off until integration tests pass. */
+  semanticRoutingEnabled?: boolean;
+  rehabReads?: Pick<RehabToolPort, 'read'>;
+  rehabOperations?: RehabOperationPort;
+  participantId?: string;
   rehabAssistant?:(text:string,privateTurn:boolean)=>Promise<{text:string;conversation:ChatMessage["conversation"]}>;
 }
 export interface TurnInput {
@@ -53,6 +62,7 @@ export interface TurnInput {
   conversationContext?: string;
 }
 export interface SessionSnapshot extends HealthRecordSnapshot, ReturnType<typeof deriveHealthState> {
+  rehabTask?: RehabTaskState | null;
   sessionId: string;
   revision: number;
   generation: number;
@@ -78,6 +88,9 @@ class Session {
   private closed = false;
   private sequence = 0;
   private idSeed = 0;
+  // Original user text already permitted for this model context; never tool results.
+  private semanticHistory: (SemanticContextMessage & {context:string})[] = [];
+  private pendingRehabOperation: (PendingRehabOperation & {context: string}) | null = null;
   constructor(private readonly options: OpenSessionOptions) {}
 
   async initialize() {
@@ -89,6 +102,8 @@ class Session {
       stored?.revision ?? 0,
     );
     if (stored) this.state.persistence = { status: 'loaded', revision: stored.revision };
+    // Validate the actual conversation source again at the first incoming turn.
+    this.state.rehabTask = restoreRehabTask(stored?.rehabTask, undefined, this.options.now.getTime());
     // Continue IDs across reopen (including imported legacy chat), not just within one process.
     this.sequence = this.state.chat.reduce(
       (max, message) => Math.max(max, Number(message.id.match(/:(\d+)$/)?.[1] ?? 0)),
@@ -156,6 +171,30 @@ class Session {
         persisted,
       };
       this.idSeed = Math.max(this.idSeed + 1, captured.now.getTime());
+      const privacyBeforeRouting = parsePrivacyIntent(captured.text);
+      const conversationContext = captured.conversationContext ?? 'local';
+      draft.rehabTask = restoreRehabTask(draft.rehabTask, conversationContext, captured.now.getTime());
+      if (this.pendingRehabOperation && (this.pendingRehabOperation.context !== conversationContext ||
+          (!isConfirmation(captured.text) && !isCancellation(captured.text)))) this.pendingRehabOperation = null;
+      const semanticContext = this.semanticHistory.filter(m => m.context === (captured.conversationContext ?? 'local')).slice(-4)
+        .map(({id,text}) => ({id,text}));
+      const localCancellation = Boolean(this.options.semanticRoutingEnabled && privacyBeforeRouting === 'none' &&
+        (draft.rehabTask || this.pendingRehabOperation) && isCancellation(captured.text));
+      let semanticOutcome = 'model_unavailable';
+      const semantic: SemanticTurn | null = localCancellation
+        ? {version:1,route:'chat',goal:'取消待处理康复任务',mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null,intents:[]}
+        : this.options.semanticRoutingEnabled &&
+        this.options.conversationModel && privacyBeforeRouting === 'none'
+        ? await understandSemanticTurn(this.options.conversationModel, captured.text, {context:semanticContext,
+          report:reason=>{semanticOutcome=reason;}}) : null;
+      this.check(generation);
+      if (!semantic) this.pendingRehabOperation = null;
+      if (privacyBeforeRouting !== 'none') draft.rehabTask = null;
+      const semanticExecution: SemanticExecutionTrace | undefined = this.options.semanticRoutingEnabled ? {
+        parser_status: localCancellation?'local_fallback':semantic ? 'llm_valid' : this.options.conversationModel ? 'local_fallback' : 'unavailable',
+        stages: [{stage:'understanding',status:localCancellation?'local':semantic?'passed':privacyBeforeRouting!=='none'?'blocked':'failed',
+          reason:localCancellation?'explicit_local_cancellation':privacyBeforeRouting!=='none'?'privacy_gate':semanticOutcome}],
+      } : undefined;
       let { understanding, plan } = await prepareTurn(
         {
           text: captured.text,
@@ -165,21 +204,53 @@ class Session {
           agentContext: draft.agentContext,
           familySharing: this.options.profile.familySharing,
           sharingAudit: draft.audit,
-          llmAdapter: this.options.rehabAssistant ? ruleBasedAdapter : this.options.replyAdapter ?? ruleBasedAdapter,
+          llmAdapter: this.options.rehabAssistant || this.options.semanticRoutingEnabled ? ruleBasedAdapter : this.options.replyAdapter ?? ruleBasedAdapter,
           today: clock.today,
           now: clock.label,
           receivedAt: clock.receivedAt,
           sourceMessageId,
           idSeed: this.idSeed,
         },
-        this.options.rehabAssistant ? null : this.options.understandingLlm,
+        this.options.rehabAssistant || this.options.semanticRoutingEnabled ? null : this.options.understandingLlm,
+        semantic,
       );
       this.check(generation);
+      if (plan.safetyAction) this.pendingRehabOperation = null;
+      if (plan.safetyAction) draft.rehabTask = null;
       const privacyIntent = parsePrivacyIntent(captured.text);
       let rehab: Awaited<ReturnType<typeof prepareRehabReply>> = null;
       let care: Awaited<ReturnType<CareCoordinator['replyToText']>> = null;
       let agent:AgentResult|null=null;
       let conversation:ChatMessage['conversation'];
+      let broadcastEvents: typeof draft.events = [];
+      if (semantic && (this.options.conversationModel || localCancellation) && semanticExecution) {
+        const result = await executeSemanticTurn({semantic,text:captured.text,context:semanticContext,plan,
+          readOnly:Boolean(this.options.rehabAssistant),model:this.options.conversationModel ?? {
+            async reply(){throw Error('Model unavailable');}},
+          reads:this.options.rehabReads??this.options.rehabTools,participantId:this.options.participantId??this.options.sessionId,
+          rehabOperations:this.options.rehabOperations,
+          productTools:this.options.productTools,now:captured.now,
+          rehabTask:draft.rehabTask, taskContext:conversationContext,
+          setRehabTask:(task)=>{draft.rehabTask=task;},
+          pendingRehabOperation:this.pendingRehabOperation,
+          setPendingRehabOperation:(pending)=>{this.pendingRehabOperation=pending?{...pending,context:conversationContext}:null;},
+          check:()=>this.check(generation),trace:semanticExecution});
+        this.check(generation);
+        plan=result.plan;conversation=result.conversation;agent=result.agent??null;
+      } else if (this.options.semanticRoutingEnabled && privacyIntent === 'none' && !plan.safetyAction) {
+        // A missing/invalid model response must not silently activate the old
+        // single-turn assistant or erase a pending task.
+        plan = readOnlyPlan(plan);
+        const text = this.options.conversationModel
+          ? (semanticOutcome==='invalid_schema_or_evidence'
+            ? '模型返回的内容未通过原话来源与格式核对，这次没有生成或保存计划。已有任务条件仍保留着，不需要重新提供。'
+            : '这次没有完成对话理解，前面的任务条件仍保留着，尚未生成或保存计划。请稍后重试。')
+          : '当前没有接通 DeepSeek，暂时无法进行连续对话分析或生成训练方案。请先在连接设置中配置模型；已有计划可到康复页面查看。';
+        plan = {...plan,replyText:text,replyBlocks:[{kind:'main',text}],toast:''};
+        conversation = this.options.conversationModel
+          ? {provider:'local',status:'failed',reason:'network'}
+          : {provider:'local',status:'unavailable',reason:'not_configured'};
+      } else {
       if (!this.options.rehabAssistant && this.options.careTools && privacyIntent === 'none' && !plan.safetyAction && !plan.correction &&
         !plan.medicationMissed && !plan.eventsToAppend.length && !plan.familyEventsToAppend.length &&
         !plan.sharingAuditEntries.length && !plan.shareFindingIds.length && !plan.shareFamilyEventIds.length) {
@@ -214,7 +285,6 @@ class Session {
         this.check(generation);
         if (rehab) plan = rehab.plan;
       }
-      let broadcastEvents: typeof draft.events = [];
       if(!this.options.rehabAssistant&&!care&&!agent&&!rehab&&privacyIntent==='none'&&!plan.safetyAction&&!plan.correction&&!plan.medicationMissed&&
         !plan.eventsToAppend.length&&!plan.familyEventsToAppend.length&&!plan.sharingAuditEntries.length&&
         !plan.shareFindingIds.length&&!plan.shareFamilyEventIds.length&&!understanding.recallRequested&&!understanding.correction&&
@@ -229,7 +299,7 @@ class Session {
             try{
               text=await this.options.conversationModel.reply({messages:conversationMessages(draft.chat,captured.text,this.options.sessionId,context)});
               this.check(generation);
-              if(typeof text!=='string'||!text.trim()||text.length>6000)throw new Error('Invalid conversation reply');
+              if(typeof text!=='string'||!text.trim()||text.length>6000 || (this.options.semanticRoutingEnabled && !isUserFacingSemanticReply(text)))throw new Error('Invalid conversation reply');
               conversation={provider:'deepseek',status:'replied'};
             }catch{
               this.check(generation);
@@ -242,12 +312,25 @@ class Session {
         }
       }
       if(this.options.rehabAssistant) {
-        const response=await this.options.rehabAssistant(captured.text,privacyIntent!=='none');
-        this.check(generation);conversation=response.conversation;
+        if (this.options.semanticRoutingEnabled && (plan.safetyAction || (privacyIntent === 'no_record' &&
+            understanding.claims.some(claim => claim.tags.length || claim.hasHealthValue || claim.outcome)))) {
+          plan=readOnlyPlan(plan);
+        } else {
+        let response=await this.options.rehabAssistant(captured.text,privacyIntent!=='none');
+        this.check(generation);
+        if (this.options.semanticRoutingEnabled && response.conversation?.provider==='deepseek' && !isUserFacingSemanticReply(response.text)) {
+          response=await this.options.rehabAssistant(captured.text,true);
+          this.check(generation);
+        }
+        conversation=response.conversation;
         plan={recordIntent:'record',replyText:response.text,replyBlocks:[{kind:'main',text:response.text}],
           safetyAction:false,correction:null,eventsToAppend:[],familyEventsToAppend:[],sharingAuditEntries:[],
           shareFamilyEventIds:[],shareFindingIds:[],medicationMissed:false,toast:''};
       }
+        }
+      }
+      if (semanticExecution && !semantic) semanticExecution.stages.push({ stage: 'reply',
+        status: conversation?.provider === 'deepseek' ? 'passed' : 'local', reason: privacyIntent !== 'none' ? 'privacy_local_reply' : 'understanding_unavailable' });
       let shareFindingIds: string[] = [];
       let shareFamilyEventIds: string[] = [];
       applyTurnPlan(plan, {
@@ -287,6 +370,8 @@ class Session {
         ...(conversation?{conversation,conversationContext:captured.conversationContext??'local'}:{}),
       };
       draft.chat.push(elder, reply);
+      if (semantic && privacyIntent === 'none') this.semanticHistory = [...this.semanticHistory,
+        {id:sourceMessageId,text:captured.text,context:captured.conversationContext??'local'}].slice(-6);
       Object.assign(draft, deriveHealthState(this.options.profile, draft.events, clock.today));
       draft.tasks = reconcileCareTasks(draft.tasks, draft.findings, clock.today);
       if (this.options.profile.medications.length)
@@ -329,6 +414,8 @@ class Session {
         reply,
         replyBlocks: plan.replyBlocks,
         understanding,
+        ...(semantic ? {semantic} : {}),
+        ...(semanticExecution ? {semanticExecution} : {}),
         appliedChanges: plan,
         sourceMessageId,
         snapshot: draft,
@@ -350,6 +437,7 @@ class Session {
     if (!this.options.persistence) return { status: 'not-configured', revision: state.revision };
     const stored: StoredSession = {
       revision: state.revision,
+      rehabTask:state.rehabTask ?? null,
       health: {
         events: state.events,
         familyEvents: state.familyEvents,
@@ -382,9 +470,11 @@ class Session {
     const captured = new Date(now);
     wallClock(captured);
     const generation = ++this.generation; // Immediately invalidate planning and already queued turns.
+    this.pendingRehabOperation = null;
     return this.queue.enqueue(async () => {
       this.check(generation);
       this.state = this.initial(emptyHealth(), captured, this.state.revision + 1);
+      this.semanticHistory = [];
       if (this.options.persistence) {
         try {
           this.state.persistence = {
@@ -402,6 +492,7 @@ class Session {
 
   close() {
     this.closed = true;
+    this.semanticHistory = [];
     ++this.generation;
     // Drain already-started port calls before permitting the same ID to reopen.
     return this.queue.enqueue(async () => {

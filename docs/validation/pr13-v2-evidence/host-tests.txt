@@ -1,0 +1,20 @@
+....
+SYNTHETIC unified bridge -> 查看我的训练计划 
+Trace -> {"parser_status": "llm_valid", "stages": [{"stage": "understanding", "status": "passed"}, {"stage": "tool", "status": "passed", "tool": "rehab.get_training_plan"}, {"stage": "reply", "status": "local", "reason": "personal_records_remain_local"}]}
+
+SYNTHETIC unified bridge -> 查看我的最近评估结果 
+Trace -> {"parser_status": "llm_valid", "stages": [{"stage": "understanding", "status": "passed"}, {"stage": "tool", "status": "passed", "tool": "rehab.get_recent_assessments"}, {"stage": "reply", "status": "local", "reason": "personal_records_remain_local"}]}
+
+SYNTHETIC unified bridge -> 查看我的训练记录 
+Trace -> {"parser_status": "llm_valid", "stages": [{"stage": "understanding", "status": "passed"}, {"stage": "tool", "status": "passed", "tool": "rehab.get_training_history"}, {"stage": "reply", "status": "local", "reason": "personal_records_remain_local"}]}
+.
+Python bridge -> 我今天练什么？ 
+Agent -> 合成测试计划：临时演示 · 评估生成训练计划；下一项：shoulder_flexion:left
+
+Python bridge -> 我最近肩膀怎么样？ 
+Agent -> 合成测试评估：肩前屈、肩外展；未作临床改善判断。
+
+Python bridge -> 我上次训练完成得怎么样？ 
+Agent -> 合成测试训练：肩外展；完成 3 次；反馈：合成反馈
+..................                                                  [100%]
+23 passed in 6.53s

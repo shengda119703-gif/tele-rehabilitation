@@ -1,0 +1,21 @@
+{
+  "offline": true,
+  "scope": {
+    "participant_id": "SYNTHETIC-TEST-pr13-ui",
+    "source_kind": "SYNTHETIC",
+    "usage_context": "TEST"
+  },
+  "results": [
+    "实际 Qt 页面：home",
+    "实际 Qt 页面：rehab",
+    "实际 Qt 页面：health",
+    "实际 Qt 页面：medication",
+    "实际 Qt 页面：family",
+    "实际 Qt 页面：assistant",
+    "离线聊天真实回执，无新增健康事件"
+  ],
+  "plan_id": "dd9826d9f0cd4b40bbbdd91405b06afe",
+  "revision": 1,
+  "candidate_adoption": false,
+  "runtime": "PassiveRuntime: no camera commands executed"
+}

@@ -1,0 +1,11 @@
+{
+  "status": "UNVERIFIED",
+  "offline": true,
+  "scope": {"participant_id": "SYNTHETIC-TEST-pr13-ui", "source_kind": "SYNTHETIC", "usage_context": "TEST"},
+  "backend": "Real ProductBackend + Node bridge + SQLite, served only on 127.0.0.1",
+  "browser_attempt": "cua.createBrowserTab('edge', localhost, sessionName=PR13 Offline UI)",
+  "actual_error": "Browser is not available: edge",
+  "enabled_browser_inventory": [],
+  "candidate_adoption": false,
+  "reason": "No browser surface is enabled in the computer-use tool. No browser screenshot or browser UI PASS is claimed."
+}

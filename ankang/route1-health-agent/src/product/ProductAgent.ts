@@ -17,6 +17,7 @@ export class ProductAgent {
     {name:'open_module',description:'打开已有页面；摄像头、训练、分享与删除仍需在原页面确认',mode:'navigation',available:true}];}
   async replyToText(text:string,now:Date,check:()=>void):Promise<AgentResult|null>{
     if(!canUseModuleTools(text))return null;
+    text=text.trim().replace(/[。！？?!]+$/,'');
     let calls:AgentCall[]=[],modelError=false;
     // Local commands remain usable offline. Writes belong exclusively to CareCoordinator.
     const query=/查看|看看|查询|有哪些|列出|状态|情况|记录|资料|安排|任务|功能|能力|怎么|我的|最近|能做什么|下一步|下一项/.test(text);
@@ -34,11 +35,11 @@ export class ProductAgent {
     select('rehab_history',/(?:训练|康复)(?:记录|历史)/);
     select('daily_overview',/今天.*(?:安排|任务|做什么)|今日安排/);
     select('rehab_next',/(?:康复|训练).*(?:下一步|下一项)|(?:下一步|下一项).*(?:康复|训练)/);
-    const modules:Record<string,string>={'首页':'home','康复':'rehab','健身':'fitness','健康':'health','用药':'medication','家庭':'family','管家':'assistant','记录':'history','设置':'settings','通知':'notifications'};
+    const modules:Record<string,string>={'首页':'home','康复':'rehab','康复计划':'rehab','健身':'fitness','健康':'health','用药':'medication','家庭':'family','管家':'assistant','记录':'history','设置':'settings','通知':'notifications'};
     // Those legacy tools do not have a dedicated product page; explain the real entry.
     if(/^(?:请|帮我)?(?:打开|进入|切到)(体态|居家)(?:页|页面|模块)?$/.test(text))
       return {reply:'体态与居家工具保留在康复模块的原工作台，请进入康复页后选择对应工具。',steps:[]};
-    const open=text.match(/^(?:请|帮我)?(?:打开|进入|切到)(首页|康复|健身|健康|用药|家庭|管家|记录|设置|通知)(?:页|页面|模块)?$/);
+    const open=text.match(/^(?:请|帮我)?(?:打开|进入|切到)(首页|康复(?:计划)?|健身|健康|用药|家庭|管家|记录|设置|通知)(?:页|页面|模块)?$/);
     if(open)calls=[{name:'open_module',arguments:{module:modules[open[1]]}}];
     calls=calls.filter(c=>c.name==='open_module'||this.tools.some(t=>t.name===c.name&&t.available));
     if(!calls.length&&this.model){
