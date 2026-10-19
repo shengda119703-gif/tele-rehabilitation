@@ -47,7 +47,8 @@ function pairPage(){
   app.innerHTML=`<section class="pair"><span class="tag">连接电脑</span><h1>手机康复评估</h1><p>手机和电脑连接同一 Wi-Fi，输入电脑启动窗口中的连接码。</p><form id="pair-form"><label class="caption" for="pair-code">电脑连接码</label><input id="pair-code" name="code" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="输入连接码" required maxlength="32"><button class="primary">连接</button></form><p class="tip">视频保存在这台电脑上。请在可信 Wi-Fi 下使用。</p></section>`;
   $('#pair-form').onsubmit=async e=>{e.preventDefault();const b=e.currentTarget.querySelector('button');b.disabled=true;try{await api('/pair',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:$('#pair-code').value.trim()})});await init();}catch(e){toast(e.message);b.disabled=false;}};
 }
-function clearFile(){if(state.url&&state.uploadRecovery?.url!==state.url)URL.revokeObjectURL(state.url);state.file=null;state.url=null;state.barCalibration=null;state.fileConsent=false;state.uploadUncertain=false;}
+let releaseVideoPreview=null;
+function clearFile(){releaseVideoPreview?.();releaseVideoPreview=null;if(state.url&&state.uploadRecovery?.url!==state.url)URL.revokeObjectURL(state.url);state.file=null;state.url=null;state.barCalibration=null;state.fileConsent=false;state.uploadUncertain=false;}
 function invalidateUploadScope(){if(typeof RehabGuidance!=='undefined')RehabGuidance.app.cancelAll();if(typeof invalidateFormalMeasurement==='function')invalidateFormalMeasurement();if(typeof invalidatePracticeScope==='function')invalidatePracticeScope();state.uploadOwnerGeneration=(state.uploadOwnerGeneration||0)+1;state.formalMeasurement=null;state.upload?.abort();clearFile();}
 function newUploadOperation(){
   if(globalThis.crypto?.randomUUID)return crypto.randomUUID();
@@ -122,6 +123,7 @@ function assessment(){
 }
 function chooseFile(file){if(!file)return;if(file.size>256*1024*1024){toast('视频超过 256 MB，请缩短视频或降低分辨率');return;}clearFile();state.file=file;state.url=URL.createObjectURL(file);fileArea();}
 function fileArea(){
+  releaseVideoPreview?.();releaseVideoPreview=null;
   if(!state.file)return;
   document.querySelectorAll('.steps span').forEach((s,i)=>s.classList.toggle('current',i===1));
   $('#file-area').innerHTML=`<div class="selected-file"><strong>${esc(state.file.name)}</strong><p class="caption">${(state.file.size/1024/1024).toFixed(1)} MB · ${esc(label(state.selected))} · ${sideLabel(state.side)}</p><video controls playsinline preload="metadata" src="${state.url}"></video></div><label class="consent"><input id="consent" type="checkbox"><span>同意将视频上传到电脑分析并保存，可随时删除原视频。</span></label><button id="upload-btn" class="primary">上传并分析</button><p id="upload-status" class="status-text" aria-live="polite"></p><progress id="upload-progress" class="progress" max="100" value="0" hidden></progress><button id="cancel-upload" class="secondary" hidden>取消上传</button>`;
@@ -133,6 +135,8 @@ function fileArea(){
   if(state.training)$('#upload-btn').textContent='上传并分析';
   if(state.tab==='fitness')$('#upload-btn').textContent='上传并分析';
   const video=$('#file-area video'),area=$('#file-area');video.onloadedmetadata=()=>{if($('#file-area')===area&&Number.isFinite(video.duration)&&video.duration>120){toast('这段视频超过 2 分钟，请截取一项动作后再上传');$('#upload-btn').disabled=true;}};
+  const file=state.file,owner=state.uploadOwnerGeneration||0;
+  releaseVideoPreview=globalThis.RehabVideoPresentation?.preview(video,file,{valid:()=>state.file===file&&(state.uploadOwnerGeneration||0)===owner&&$('#file-area')===area});
   if(state.tab==='fitness')mountBarCalibration();
 }
 function currentTransfer(attempt){return state.uploadRecovery===attempt&&attempt.ownerGeneration===(state.uploadOwnerGeneration||0)&&state.file===attempt.file&&state.selected===attempt.exercise&&state.side===attempt.side&&$('#file-area')===attempt.area;}

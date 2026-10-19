@@ -58,6 +58,7 @@ class Sheet{
   this.on(this.find('.mr-play'),'click',()=>{if(video.paused){if(video.ended)video.currentTime=0;video.play().catch(()=>{this.find('.mr-media-note').textContent='点击播放重试';});}else video.pause();});
   this.on(slider,'input',()=>{this.summary=false;video.currentTime=Number(slider.value);this.update(true);});
   for(const [selector,d]of [['.mr-rewind',-5],['.mr-forward',5]])this.on(this.find(selector),'click',()=>{if(!finite(video.duration))return;video.currentTime=Math.max(0,Math.min(video.duration,video.currentTime+d));this.summary=false;this.update(true);});duration();
+  const release=root.RehabVideoPresentation?.autoPlay(video,{valid:()=>this.valid(),onBlocked:()=>{if(this.valid())this.find('.mr-media-note').textContent='点击播放视频';}});if(release)this.listeners.push(release);
  }
  tick(){if(!this.valid()||this.video.paused)return;this.drawOverlay();this.raf=requestAnimationFrame(()=>this.tick());}
  value(d){const full=this.summary||d.group==='全段'||d.group==='动作节奏'||!this.video||!this.data.samples.length,s=D.nearest(this.data.samples,this.video?.currentTime||0);return full?{value:d.value,text:d.cue,kind:d.kind}:{value:s?.values[d.key]??null,...(s?.feedback[d.key]||{text:'当前片段未取到数值',kind:'neutral'})};}

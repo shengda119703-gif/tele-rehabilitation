@@ -28,11 +28,12 @@ class PackagingTest(unittest.TestCase):
         version = ET.parse(root/'android_offline/AndroidManifest.xml').getroot().attrib['{http://schemas.android.com/apk/res/android}versionName']
         static = root/'mobile_rehab/static'
         with zipfile.ZipFile(root/f'android_offline/dist/tele-rehabilitation-mobile-{version}.apk') as archive:
-            for file in ('motion-review-data.js', 'motion-review.js', 'motion-review.css', 'assets/motion-review-icons.svg', 'assets/motion-review-icons-LICENSE.txt'):
+            for file in ('video-presentation.js', 'app.js', 'motion-review-data.js', 'motion-review.js', 'motion-review.css', 'assets/motion-review-icons.svg', 'assets/motion-review-icons-LICENSE.txt'):
                 self.assertEqual(archive.read('assets/static/'+file), (static/file).read_bytes())
             html = archive.read('assets/capture.html').decode('utf-8')
             self.assertLess(html.index('/static/formal-measurement.js'), html.index('/static/motion-review.js'))
             self.assertLess(html.index('/static/motion-review-data.js'), html.index('/static/motion-review.js'))
+            self.assertLess(html.index('/static/video-presentation.js'), html.index('/static/app.js'))
             self.assertFalse(any(name.lower().endswith(('.mp4', '.mov', '.sqlite', '.pem')) for name in archive.namelist()))
 
     def test_assessment_covers_are_packaged_with_the_same_code_and_images(self):
