@@ -214,7 +214,7 @@ export async function executeSemanticTurn(input: {
     if (!hasEquipmentStatement(task.messages.join('\n'))) {
       return local('可以先整理一份待核对的草案。你在家能用哪些器材，还是希望徒手练习？','rehab_missing_equipment');
     }
-    const result = await runRehabWorkflow({model, semantic, userText:taskUserText(task),
+    const result = await runRehabWorkflow({model, semantic, userText:taskUserText(task),userStatements:task.messages,
       reads:input.reads, participantId:input.participantId, check});
     check();
     input.setRehabTask?.({...task,status:result.validation?.status === 'needs_review'?'draft':'blocked',validation:result.validation});

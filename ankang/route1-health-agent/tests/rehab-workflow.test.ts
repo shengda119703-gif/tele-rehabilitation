@@ -2,7 +2,27 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { catalogue } from '../src/rehab/catalogue';
 import { mapKnowledgeActionToApp } from '../src/rehab/exerciseMapping';
-import { parseRehabToolSelection, selectRehabTools, runRehabWorkflow, validateRehabPlan, rehabAnswerTask, runRehabReadOnlyAnswer, type RehabCandidatePlan } from '../src/rehab/workflow';
+import { parseRehabToolSelection, selectRehabTools, runRehabWorkflow, validateRehabPlan, rehabAnswerTask, runRehabReadOnlyAnswer, renderRehabDraft, type RehabCandidatePlan } from '../src/rehab/workflow';
+
+test('new explicit equipment absence blocks a conflicting model draft and later correction is respected',async()=>{
+  for(const recovered of [false,true]){
+    let calls=0;
+    const semantic={version:1 as const,route:'rehab' as const,goal:'制定居家训练计划',
+      mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null,
+      intents:[{type:'plan_generation' as const,route:'rehab' as const,goal:'制定居家训练计划',evidence:'制定居家训练计划'}]};
+    const model={async reply(){return JSON.stringify(++calls===1?{version:1,calls:[
+      {name:'rehab.search_knowledge',arguments:{query:'T-LOW-017'},reason:'查找动作卡'}],uncertainties:[]}:{
+      version:1,goal:'居家训练',summary:'候选',algorithm_input:{goal:'居家训练',region:'膝',
+        equipment:['椅子'],restrictions:[],level:null,screening_confirmed:false},
+      candidate_actions:[{exercise_id:'T-LOW-017',reason:'动作库返回'}],
+      doctor_review_required:false,doctor_review_reasons:[],uncertainties:[]});}};
+    const userStatements=['制定居家训练计划，我有椅子','现在没有椅子',...(recovered?['现在有椅子']:[])];
+    const result=await runRehabWorkflow({model,semantic,userText:userStatements.join('；'),userStatements,participantId:'SYNTHETIC'});
+    assert.equal(result.validation?.status,recovered?'needs_review':'rejected');
+    assert.equal(result.validation?.reasons.includes('explicit_equipment_conflict'),!recovered);
+    if(!recovered)assert.match(renderRehabDraft(result.validation),/明确不能使用的器材/);
+  }
+});
 
 test('rehab tool selection accepts only registered tools', () => {
   const ok = parseRehabToolSelection(JSON.stringify({

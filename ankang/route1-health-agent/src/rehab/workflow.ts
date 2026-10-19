@@ -5,6 +5,7 @@ import { readRehabReceipt, describeLocalRehabReceipt, type RehabToolPort, type R
 import { mapKnowledgeActionToApp, type ExecutableActionMapping } from './exerciseMapping';
 import type { ConversationModel } from '../runtime/conversation';
 import type { SemanticTurn } from '../runtime/semanticRouter';
+import {unavailableEquipment} from './taskState';
 
 export type RehabWorkflowTool =
   | 'rehab.get_training_plan'
@@ -354,6 +355,7 @@ export async function runRehabWorkflow(input: {
   model: ConversationModel;
   semantic: SemanticTurn;
   userText: string;
+  userStatements?: readonly string[];
   reads?: Pick<RehabToolPort,'read'>;
   participantId: string;
   check?: () => void;
@@ -404,6 +406,16 @@ export async function runRehabWorkflow(input: {
   // The model may propose inputs, but the host owns execution and the returned result.
   const algorithmResult = toolResults.find(r => r.name === 'rehab.run_plan_algorithm')?.data as ReturnType<typeof localPlan> | undefined;
   let validation=validateRehabPlan(candidate);
+  const unavailable=unavailableEquipment(input.userStatements??[input.userText]);
+  if(unavailable.some(equipment=>candidate.algorithm_input.equipment.some(value=>value.includes(equipment)) ||
+    candidate.candidate_actions.some(action=>{
+      // A card may explicitly offer a no-load version and optional resistance.
+      // Optional equipment is not required unless the candidate itself selects it.
+      const required=catalogue.find(card=>card.id===action.exercise_id)?.equipment.split('可选')[0]??'';
+      return equipment==='椅子'?required.includes('椅'):required.includes(equipment);
+    }))){
+    validation={...validation,status:'rejected',reasons:[...validation.reasons,'explicit_equipment_conflict']};
+  }
   const retrievedIds = new Set(toolResults.flatMap(result =>
     result.name === 'rehab.search_knowledge' && Array.isArray(result.data)
       ? result.data.map(card => card.id as string)
@@ -504,6 +516,9 @@ export async function runRehabReadOnlyAnswer(input: {
 export function renderRehabDraft(result: RehabPlanValidation | null): string {
   if(!result) return '康复分析暂时没有形成可验证的候选方案。请补充具体目标、部位或当前训练情况。';
   if(result.status==='rejected') {
+    if(result.reasons.includes('explicit_equipment_conflict')){
+      return '这份候选仍包含你明确不能使用的器材，已拦下，没有修改计划。可以补充可用器材后重新整理草案。';
+    }
     if (result.reasons.includes('candidate_action_not_mapped_to_executable_app_movement')) {
       return '动作库中存在当前康复 App 尚不能执行的动作，因此不能把这份候选直接生成到你的计划里。需要先补齐动作映射；本次没有修改任何计划。';
     }

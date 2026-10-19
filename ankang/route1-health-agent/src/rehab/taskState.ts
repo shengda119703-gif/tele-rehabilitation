@@ -37,6 +37,27 @@ export function hasEquipmentStatement(text: string): boolean {
   return /(?:弹力带|哑铃|椅子|稳固椅|无器材|没有器材|徒手|器材不限|硬床|垫子)/.test(text);
 }
 
+/** Narrow local constraints, not a medical profile or a model-derived fact.
+ * Later explicit corrections replace earlier statements for the same equipment.
+ * Ambiguous, third-person and hypothetical clauses never grant availability.
+ */
+export function unavailableEquipment(messages: readonly string[]): string[] {
+  const state=new Map<string,boolean>();
+  const names=['弹力带','哑铃','椅子','硬床','垫子'];
+  for(const message of messages){
+    for(const clause of message.split(/[，,。；;！!\n]/)){
+      if(/他|她|朋友|家人|别人|如果|假如|假设|例如|比如|可能|也许|是否|是不是|不确定|不知道|听说|希望|需要|想要|[？?]/.test(clause))continue;
+      for(const name of names){
+        const negative=new RegExp('(?:没有|没带|不能用|不用|不可用|不再有|无)(?:任何)?'+name);
+        const positive=new RegExp('^(?:我)?(?:家里)?(?:现在|目前)?(?:有|可用|可使用)'+name+'(?:$|可用|可以用)');
+        if(negative.test(clause))state.set(name,false);
+        else if(positive.test(clause))state.set(name,true);
+      }
+    }
+  }
+  return [...state].filter(([,available])=>!available).map(([name])=>name);
+}
+
 export function updateRehabTask(previous: RehabTaskState | null, text: string, context: string, now: number): RehabTaskState {
   const messages = [...(previous?.messages ?? []),text];
   return {version:1,revision:(previous?.revision ?? 0)+1,context,updatedAt:now,

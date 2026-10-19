@@ -3,7 +3,16 @@ import assert from 'node:assert/strict';
 import {AgentRuntime,InMemoryPersistence} from '../src/runtime';
 import {profile as demoProfile} from '../src/data/demo';
 import type {ConversationModel} from '../src/runtime/conversation';
-import {updateRehabTask,restoreRehabTask,REHAB_TASK_TTL_MS} from '../src/rehab/taskState';
+import {updateRehabTask,restoreRehabTask,REHAB_TASK_TTL_MS,unavailableEquipment} from '../src/rehab/taskState';
+
+test('equipment constraints use explicit own clauses and later corrections without guessing',()=>{
+  assert.deepEqual(unavailableEquipment(['我没有弹力带，只有椅子']),['弹力带']);
+  assert.deepEqual(unavailableEquipment(['我没有弹力带','现在有弹力带']),[]);
+  assert.deepEqual(unavailableEquipment(['我有弹力带','现在不再有弹力带']),['弹力带']);
+  for(const text of ['朋友没有弹力带','如果没有弹力带怎么办？','我不确定有弹力带','我需要弹力带'])
+    assert.deepEqual(unavailableEquipment([text]),[]);
+  assert.deepEqual(unavailableEquipment(['没有哑铃','如果我有哑铃','朋友有哑铃','我不知道有哑铃']),['哑铃']);
+});
 
 const now = new Date(2026,9,19,12);
 const owner = 'SYNTHETIC_TEST_GUIDANCE';
