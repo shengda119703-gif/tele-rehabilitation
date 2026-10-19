@@ -17,7 +17,12 @@ def git(*args):
 
 
 def checksum(path):
-    return sha256(path.read_bytes()).hexdigest()
+    content = path.read_bytes()
+    if path.suffix not in {'.png', '.jpg', '.jpeg', '.webp'}:
+        # Git may normalize text line endings on Windows. Hash logical UTF-8
+        # content so a fresh checkout and GitHub raw files verify identically.
+        content = content.replace(b'\r\n', b'\n')
+    return sha256(content).hexdigest()
 
 
 def generate():
@@ -51,6 +56,7 @@ def generate():
     result = dict(schema='pr13-v2-run-manifest-1', generated_at=datetime.now().astimezone().isoformat(),
         source_head=git('rev-parse', 'HEAD'), branch=git('branch', '--show-current'), baseline_head=BASE,
         complete=False, merge_recommended=False, live_model_tested=False,
+        checksum_policy='SHA256; CRLF normalized to LF for text, original bytes for images',
         model_configuration_check=dict(configured=False, method='Boolean(localKey() || ANKANG_REHAB_LLM_API_KEY), no values printed'),
         environment=dict(python=platform.python_version(), node=subprocess.check_output(['node','--version'],text=True).strip(),
             packages={name:version(name) for name in ['pytest','PySide6-Essentials','numpy','opencv-python','SQLAlchemy','fastapi']}),
