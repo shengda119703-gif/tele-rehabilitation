@@ -1,5 +1,6 @@
 import type { ConversationModel } from '../runtime/conversation';
 import type { RehabToolPort } from '../runtime/rehabTools';
+import {readRehabReceipt} from '../runtime/rehabTools';
 import type { SemanticTurn } from '../runtime/semanticRouter';
 
 export interface RehabOperationPort {
@@ -152,12 +153,43 @@ export async function previewRehabProgramOperation(input: {
   semantic: SemanticTurn;
   userText: string;
   reads?: Pick<RehabToolPort,'read'>;
+  participantId?: string;
   operations?: RehabOperationPort;
   rehabContext?: unknown;
   check?: () => void;
 }): Promise<{plan:RehabProgramPlan|null;previews:unknown[];toolResults:{name:string;data:unknown}[]}> {
   const check=input.check??(()=>{});
   if (!input.operations) return {plan:null,previews:[],toolResults:[]};
+  // Resolve this narrow, non-clinical operation locally. Stored names, IDs and
+  // revisions never enter an external-model prompt. Ambiguous targets fail closed.
+  const rename = /^(?:请)?(?:帮我)?(?:把)?(?:我的|当前的|当前)?(?:康复|训练)计划(?:改名为|重命名为|改名叫)([\p{L}\p{N} _-]{1,80})[。！!]?$/u.exec(input.userText.trim());
+  if (rename && input.reads && input.participantId) {
+    const toolResults:{name:string;data:unknown}[]=[];
+    try {
+      const receipt=await readRehabReceipt(input.reads,{name:'rehab.get_training_plan',arguments:{}},input.participantId,check);
+      toolResults.push({name:'rehab.get_training_plan',data:receipt});
+      const active=receipt.records.filter(row=>record(row)&&row.status==='ACTIVE');
+      if(active.length!==1) return {plan:{version:1,operations:[],requires_confirmation:true,
+        summary:'尚未修改计划名称。',uncertainties:['当前没有唯一的有效训练计划，请在康复页选择具体计划。']},previews:[],toolResults};
+      const current=active[0];
+      if(!record(current)||typeof current.id!=='string'||!/^[0-9a-f]{32}$/.test(current.id)||
+        !Number.isInteger(current.revision)||Number(current.revision)<1) throw Error('Invalid local plan revision');
+      const operation:RehabProgramOperation={name:'rehab.plan.change',arguments:{plan_id:current.id,
+        expected_revision:current.revision,patch:{name:rename[1].trim()}},evidence:input.userText};
+      const preview=await input.operations.call(operation.name,{...operation.arguments,commit:false});
+      check();
+      if(!record(preview)||preview.status!=='preview'||preview.plan_id!==current.id||
+        preview.expected_revision!==current.revision||!record(preview.after)||preview.after.name!==rename[1].trim())
+        throw Error('Invalid local rename preview');
+      return {plan:{version:1,operations:[operation],requires_confirmation:true,
+        summary:'将当前训练计划名称改为“'+rename[1].trim()+'”。',uncertainties:[]},
+        previews:[{name:operation.name,result:preview}],toolResults};
+    } catch {
+      check();
+      return {plan:{version:1,operations:[],requires_confirmation:true,summary:'尚未修改计划名称。',
+        uncertainties:['未能核对本人计划或修改预览，请刷新康复页面后重试。']},previews:[],toolResults};
+    }
+  }
   const selection=await selectReads(input.model,input.semantic,input.userText,check);
   if (!selection) return {plan:null,previews:[],toolResults:[]};
   const toolResults:{name:string;data:unknown}[]=[];
@@ -219,6 +251,8 @@ export async function commitRehabProgramOperation(input: {
   operations: RehabOperationPort;
   check?: () => void;
   now?: number;
+  reads?: Pick<RehabToolPort,'read'>;
+  participantId?: string;
 }): Promise<unknown[]> {
   const check=input.check??(()=>{});
   const now=input.now??Date.now();
@@ -227,13 +261,26 @@ export async function commitRehabProgramOperation(input: {
   const results: unknown[]=[];
   for (const operation of input.pending.proposal.operations) {
     check();
-    results.push(await input.operations.call(operation.name,{...operation.arguments,commit:true}));
+    const result=await input.operations.call(operation.name,{...operation.arguments,commit:true});
     check();
+    if(operation.name==='rehab.plan.change' && record(result) && result.status==='applied') {
+      try {
+        if(!input.reads||!input.participantId)throw Error('Readback unavailable');
+        const receipt=await readRehabReceipt(input.reads,{name:'rehab.get_training_plan',arguments:{}},input.participantId,check);
+        const saved=receipt.records.find(row=>record(row)&&row.id===operation.arguments.plan_id);
+        const patch=operation.arguments.patch;
+        if(!record(saved)||result.plan_id!==saved.id||result.revision!==saved.revision||
+          saved.revision!==Number(operation.arguments.expected_revision)+1||
+          (record(patch)&&typeof patch.name==='string'&&saved.name!==patch.name))throw Error('Readback mismatch');
+        results.push(result);
+      } catch {check();results.push({status:'committed_unverified'});}
+    } else results.push(result);
   }
   return results;
 }
 
 export function renderOperationResult(result: unknown): string {
+  if(record(result)&&result.status==='committed_unverified')return '修改已提交，但暂时无法核对保存结果，请在康复页确认后再操作。';
   if (record(result) && result.status === 'applied') return '已经按你确认的内容更新了康复计划/训练安排。';
   return '这次修改没有执行成功，当前计划可能已经发生变化，请重新查看后再操作。';
 }

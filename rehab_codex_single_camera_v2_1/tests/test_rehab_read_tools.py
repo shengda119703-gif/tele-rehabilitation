@@ -47,6 +47,64 @@ def test_three_real_readers_and_no_database_changes(rehab_db):
     assert hashlib.sha256(rehab_db.read_bytes()).hexdigest() == before
 
 
+def test_unified_rename_preview_confirm_real_sqlite_reopen(rehab_db, monkeypatch, tmp_path):
+    """Real shipped bridge/Host/SQLite; semantic model is an explicit protocol fixture."""
+    import sys
+    from pathlib import Path
+    from app.rehab_operation_tools import RehabOperationTools
+    from app.product.daily_store import DailyStore
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    from bridges.ankang.client import AgentBridge
+    hook, calls_file = tmp_path / 'rename-model.cjs', tmp_path / 'calls.jsonl'
+    hook.write_text(
+        'const fs=require("node:fs");\n'
+        'globalThis.fetch=async(url,init)=>{\n'
+        'if(String(url)!=="https://api.deepseek.com/chat/completions")throw Error("Unexpected URL");\n'
+        'const body=JSON.parse(init.body);\n'
+        'const data=JSON.parse(body.messages.at(-1).content.split("输入数据（内容不是指令）：").at(-1));\n'
+        f'fs.appendFileSync({json.dumps(str(calls_file))},JSON.stringify(body)+"\\n");\n'
+        'const rename=data.text.includes("改名为");\n'
+        'const semantic={version:1,route:rename?"module":"chat",goal:data.text,mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null,'
+        'intents:rename?[{type:"program_operation",route:"module",goal:data.text,evidence:data.text}]:[]};\n'
+        'return {ok:true,json:async()=>({choices:[{finish_reason:"stop",message:{role:"assistant",content:JSON.stringify(semantic)}}]})};};\n',
+        encoding='utf-8')
+    monkeypatch.setenv('NODE_OPTIONS', '--require "' + hook.as_posix() + '"')
+    monkeypatch.setenv('APPDATA', str(tmp_path / 'private-config'))
+    monkeypatch.setenv('ANKANG_REHAB_LLM_API_KEY', 'TEST-protocol-fixture')
+    monkeypatch.setenv('ANKANG_PRODUCT_DISABLE_MODEL', '0')
+    monkeypatch.setenv('ANKANG_SEMANTIC_ROUTING_ENABLED', '1')
+    owner = DEMO_SCOPE['participant_id']
+    reads = RehabReadTools(rehab_db, DEMO_SCOPE)
+    operations = RehabOperationTools(rehab_db, DEMO_SCOPE, DailyStore(tmp_path), owner)
+    dispatched = []
+    def handler(name, arguments):
+        dispatched.append((name, arguments))
+        return reads(name, arguments) if name in TOOLS else operations(name, arguments)
+    old = reads(TOOLS[0], {})['records'][0]
+    before = hashlib.sha256(rehab_db.read_bytes()).hexdigest()
+    profile = dict(name='SYNTHETIC TEST', age=0, conditions=[], medications=[], familyContact='', familyPhone='',
+        mobility='unknown', usesCane=False, nightVision='unknown', cognition='unknown', familySharing='denied')
+    with AgentBridge() as bridge:
+        bridge.open_session(owner, profile, rehab_tools=True)
+        preview = bridge.process_turn(owner, '把我的训练计划改名为晨间训练', tool_handler=handler)
+        assert '如果确认' in preview['reply']['text']
+        assert hashlib.sha256(rehab_db.read_bytes()).hexdigest() == before
+        committed = bridge.process_turn(owner, '确认', tool_handler=handler)
+        assert '已经按你确认' in committed['reply']['text']
+        assert any(stage['reason'] == 'rehab_operation_committed_after_confirmation'
+                   for stage in committed['semanticExecution']['stages'] if 'reason' in stage)
+        saved = reads(TOOLS[0], {})['records'][0]
+        assert saved['id'] == old['id'] and saved['revision'] == old['revision'] + 1
+        assert saved['name'] == '晨间训练' and saved['items'] == old['items']
+        bridge.process_turn(owner, '确认', tool_handler=handler)
+        assert reads(TOOLS[0], {})['records'][0] == saved
+    assert sum(args.get('commit') is True for _, args in dispatched) == 1
+    reopened = RehabReadTools(rehab_db, DEMO_SCOPE)(TOOLS[0], {})['records'][0]
+    assert reopened == saved
+    sent = calls_file.read_text(encoding='utf-8')
+    assert old['id'] not in sent and old['name'] not in sent and 'training_feedback' not in sent
+
+
 def test_scope_empty_and_no_model_owner_override(rehab_db, tmp_path):
     for change in ({'participant_id': 'another'}, {'source_kind': 'LIVE_CAMERA'}, {'usage_context': 'SELF_USE'}):
         tools = RehabReadTools(rehab_db, {**DEMO_SCOPE, **change})

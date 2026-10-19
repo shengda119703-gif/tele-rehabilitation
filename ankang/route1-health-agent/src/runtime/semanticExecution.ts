@@ -107,9 +107,12 @@ export async function executeSemanticTurn(input: {
     if (isConfirmation(input.text)) {
       try {
         const results = await commitRehabProgramOperation({pending:input.pendingRehabOperation,operations:input.rehabOperations,check,
-          now:(input.now??new Date()).getTime()});
+          now:(input.now??new Date()).getTime(),reads:input.reads,participantId:input.participantId});
         input.setPendingRehabOperation?.(null);
-        trace.stages.push({stage:'tool',status:'passed',reason:'rehab_operation_committed_after_confirmation'});
+        const verified=results.length>0 && results.every(result=>result && typeof result==='object' &&
+          'status' in result && result.status==='applied');
+        trace.stages.push({stage:'tool',status:verified?'passed':'failed',
+          reason:verified?'rehab_operation_committed_after_confirmation':'rehab_operation_result_unverified_or_rejected'});
         return {plan:withReply(plan, renderOperationResult(results[0])),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
       } catch {
         input.setPendingRehabOperation?.(null);
@@ -170,6 +173,7 @@ export async function executeSemanticTurn(input: {
       userText: text,
       reads: input.reads,
       operations: input.rehabOperations,
+      participantId:input.participantId,
       rehabContext,
       check,
     });
