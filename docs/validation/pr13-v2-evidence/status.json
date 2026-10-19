@@ -1,0 +1,1179 @@
+{
+  "schema": "pr13-v2-acceptance-1",
+  "baseline": "docs/validation/PR13_FULL_ACCEPTANCE_2026-10-17.md",
+  "source_head": "02c0eb638163fa0edaeeced300514b49273ef41d",
+  "source_scope": "source_head 为本轮源码提交；源码与证据 SHA256 见 run-manifest.json。报告提交不会改变已测源码。",
+  "complete": false,
+  "merge_recommended": false,
+  "nodes": [
+    {
+      "id": "1.1",
+      "title": "真实 DeepSeek 第一层",
+      "source": "R/scripts/chat-model.cjs",
+      "entry": "Session→understandSemanticTurn→reply(understanding)",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "L/live-review",
+      "baseline_limit": "不以 Mock 代替真实兼容性",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "1.2",
+      "title": "六类语义字段与 schema",
+      "source": "R/src/runtime/semanticRouter.ts",
+      "entry": "parseSemanticTurn",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/语义83",
+      "baseline_limit": "校验版本、白名单、证据、原文与索引；兼容旧 optional 字段",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "1.3",
+      "title": "五路语义分类",
+      "source": "R/src/runtime/semanticRouter.ts",
+      "entry": "第一层 route/intents",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "L/live-review",
+      "baseline_limit": "schema 合法不能证明分流正确",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "1.4",
+      "title": "第一层只理解",
+      "source": "R/src/runtime/semanticRouter.ts",
+      "entry": "无业务调用／无写入",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T",
+      "baseline_limit": "第一层输出空工具列表，由业务层决定读取",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "1.5",
+      "title": "JSON异常／故障回退",
+      "source": "R/src/runtime/session.ts",
+      "entry": "null→原本地处理",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T",
+      "baseline_limit": "无内部 JSON 或伪造成功回执泄漏",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "1.6",
+      "title": "多意图保留／分流",
+      "source": "R/src/runtime/semanticExecution.ts",
+      "entry": "intents→康复优先门禁",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "T/L/live-review",
+      "baseline_limit": "完整混合修改仍被阻断",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "1.7",
+      "title": "主体／时间／否定／假设／纠正",
+      "source": "R/src/runtime/semanticLegacyAdapter.ts",
+      "entry": "prepareTurn→原临床规则",
+      "baseline_status": "FAIL",
+      "baseline_evidence": "T/L/live-review",
+      "baseline_limit": "确定性边界通过；L更正/取消自引用relation被拒；详见R04",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "2.1",
+      "title": "普通聊天真实回复",
+      "source": "R/src/runtime/semanticExecution.ts",
+      "entry": "chat→reply",
+      "baseline_status": "PASS",
+      "baseline_evidence": "L/live-review",
+      "baseline_limit": "无工具及数据库变更预期",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "2.2",
+      "title": "连续聊天上下文",
+      "source": "R/src/runtime/session.ts, conversation.ts",
+      "entry": "同来源用户上下文",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "T/L/live-review",
+      "baseline_limit": "语义历史为会话内用户原文，无完整候选状态",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "2.3",
+      "title": "聊天不调用康复工具",
+      "source": "R/src/runtime/semanticExecution.ts",
+      "entry": "chat分支",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T",
+      "baseline_limit": "模型 route 误判另计",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "2.4",
+      "title": "模型故障本地回退",
+      "source": "R/src/runtime/session.ts",
+      "entry": "reply拒绝／超时",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T",
+      "baseline_limit": "不声称已执行模块操作",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "3.1",
+      "title": "公共健康知识问答",
+      "source": "R/src/runtime/semanticExecution.ts",
+      "entry": "health→公共reply",
+      "baseline_status": "PASS",
+      "baseline_evidence": "L/live-review",
+      "baseline_limit": "回答质量与是否机械就医须核对",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "3.2",
+      "title": "个人健康数据辅助咨询",
+      "source": "R/src/runtime/semanticExecution.ts",
+      "entry": "health无个人指标工具",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "源码/实际注册表",
+      "baseline_limit": "不与公共健康问答合并判定",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "3.3",
+      "title": "既有健康指标／导入接口",
+      "source": "R/src/product/ProductService.ts",
+      "entry": "health.record/healthkit.import",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "T/P",
+      "baseline_limit": "存储／产品接口存在，尚未连接健康咨询",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "3.4",
+      "title": "Watch/HealthKit咨询工具",
+      "source": "R/src/adapters/HealthKitDeviceAdapter.ts",
+      "entry": "可选桥接，非health工具",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "注册表",
+      "baseline_limit": "不以模拟样本当真实设备数据",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "3.5",
+      "title": "HealthKit硬件读取",
+      "source": "R/native-ios及adapter",
+      "entry": "iOS授权→外部bridge",
+      "baseline_status": "UNVERIFIED",
+      "baseline_evidence": "无设备",
+      "baseline_limit": "适配器测试不代表真机授权／采样",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "3.6",
+      "title": "已存个人资料外发隔离",
+      "source": "R/src/rehab/workflow.ts, programOperations.ts",
+      "entry": "公共allowlist／本地读取",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/边界18/L",
+      "baseline_limit": "G02安全修复；NLP修改能力未完成",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "3.7",
+      "title": "临床安全优先",
+      "source": "R/src/runtime/turn.ts",
+      "entry": "原planner先于业务操作",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T",
+      "baseline_limit": "保留急症、否定、未知归属防线",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "4A.1",
+      "title": "当前计划真实读取",
+      "source": "D/app/rehab_read_tools.py",
+      "entry": "Host→Storage→scope回执",
+      "baseline_status": "PASS",
+      "baseline_evidence": "H",
+      "baseline_limit": "实际SQLite本人／来源范围",
+      "status": "PASS",
+      "evidence": [
+        "host-tests.txt",
+        "host-junit.xml"
+      ],
+      "unresolved": "本轮真实隔离 SQLite 与 Node/Python 桥接回归通过；模型为明确的本地协议 fixture，不是 DeepSeek 质量验收。"
+    },
+    {
+      "id": "4A.2",
+      "title": "历史／近期评估读取",
+      "source": "D/app/rehab_read_tools.py",
+      "entry": "get_training_history/get_recent_assessments",
+      "baseline_status": "PASS",
+      "baseline_evidence": "Y/L/live-review",
+      "baseline_limit": "最终真实模型接通历史/评估；旧口语三问协议仍有失败",
+      "status": "PASS",
+      "evidence": [
+        "host-tests.txt",
+        "host-junit.xml"
+      ],
+      "unresolved": "本轮真实隔离 SQLite 与 Node/Python 桥接回归通过；模型为明确的本地协议 fixture，不是 DeepSeek 质量验收。"
+    },
+    {
+      "id": "4A.3",
+      "title": "个人限制可信来源",
+      "source": "R/src/rehab/workflow.ts",
+      "entry": "缺profile/restrictions reader",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "源码",
+      "baseline_limit": "LLM自填不能作为评估／许可",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "4B.1",
+      "title": "真实动作卡内容／条件／剂量",
+      "source": "R/src/rehab/catalogue.ts, assistant.ts",
+      "entry": "searchCards",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/P",
+      "baseline_limit": "185卡：63评估、122训练；不是185项可执行App动作",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "4B.2",
+      "title": "中文口语／同义词／来源完整回传",
+      "source": "R/src/rehab/assistant.ts, workflow.ts",
+      "entry": "名称／ID搜索与projection",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "T/L/live-review",
+      "baseline_limit": "有限别名；工作流sourceRefs回传不完整",
+      "status": "PARTIAL",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "动作检索结果已完整回传 sourceRefs；尚无本轮真实模型口语覆盖。"
+    },
+    {
+      "id": "4B.3",
+      "title": "无匹配动作",
+      "source": "R/src/rehab/assistant.ts",
+      "entry": "搜索空集→明确补充信息",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T",
+      "baseline_limit": "不编造动作，不自动等同必须就医",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "4C.1",
+      "title": "指导资料按任务检索",
+      "source": "R/src/rehab/guidance.ts, assistant.ts",
+      "entry": "searchGuidance",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/边界18",
+      "baseline_limit": "固定关键词检索一个真实章节",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "4C.2",
+      "title": "疼痛／疲劳／休息／进退阶／器材／协助",
+      "source": "R/src/rehab/assistant.ts",
+      "entry": "指导关键词与专业边界",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/边界18",
+      "baseline_limit": "本轮补直接疼痛匹配；不提供个体医疗许可",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "4D.1",
+      "title": "真localPlan调用",
+      "source": "R/src/rehab/assistant.ts, workflow.ts",
+      "entry": "rehab.run_plan_algorithm",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/P",
+      "baseline_limit": "缺可信screening返回needs_review，不冒充生成成功",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "4D.2",
+      "title": "算法参数个体来源解析",
+      "source": "R/src/rehab/workflow.ts",
+      "entry": "未接可信评估resolver",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "源码/边界18",
+      "baseline_limit": "不让模型伪造等级／筛查／限制",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "4D.3",
+      "title": "腰椎起始算法模板",
+      "source": "R/src/rehab/planRules.ts",
+      "entry": "5个既有起始映射",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "真localPlan反例",
+      "baseline_limit": "腰突请求无匹配模板",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "5.1",
+      "title": "动作指导不强制计划",
+      "source": "R/src/runtime/semanticExecution.ts",
+      "entry": "rehabAnswerTask→公共搜索→reply",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/L/live-review",
+      "baseline_limit": "公共模型链路存在；L动作解释有效且保留开始/停止条件",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "5.2",
+      "title": "本人康复记录分析",
+      "source": "R/src/rehab/workflow.ts",
+      "entry": "三只读工具→本地格式化",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "T/H/L",
+      "baseline_limit": "可呈现记录，未完成可信纵向效果分析",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "5.3",
+      "title": "康复问题咨询",
+      "source": "R/src/runtime/semanticExecution.ts",
+      "entry": "公共guidance→grounded reply",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/L/live-review",
+      "baseline_limit": "不应把所有问题转成计划",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "5.4",
+      "title": "结构化候选计划",
+      "source": "R/src/rehab/workflow.ts",
+      "entry": "LLM规划→工具→LLM候选→校验",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "T/边界18/L",
+      "baseline_limit": "候选不是个人处方，未写库",
+      "status": "PARTIAL",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "AI 自然语言入口恢复真实检索、模型候选与校验；未完成持久化审核采用。"
+    },
+    {
+      "id": "6.1",
+      "title": "ID／完整训练卡／空集／重复／评估卡校验",
+      "source": "R/src/rehab/workflow.ts",
+      "entry": "validateRehabPlan",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/边界18",
+      "baseline_limit": "不存在、未检索、重复、空候选拒绝",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "6.2",
+      "title": "passed/needs_review/rejected边界",
+      "source": "R/src/rehab/workflow.ts",
+      "entry": "程序校验状态",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/边界18",
+      "baseline_limit": "当前普通LLM候选不能自证passed",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "6.3",
+      "title": "剂量来源与算法一致性",
+      "source": "R/src/rehab/workflow.ts",
+      "entry": "卡片原文／候选与算法比对",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "T/边界18",
+      "baseline_limit": "个体参数／适用性尚无可信来源",
+      "status": "PARTIAL",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "模型编造剂量现被拒绝；个体适用性与剂量专业审批尚未连接。"
+    },
+    {
+      "id": "6.4",
+      "title": "专业审核回执连接",
+      "source": "cloud_service/rehab_workflow.py",
+      "entry": "POST rehab-candidates/{id}/review（现有规则候选，非AI草案）",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "源码",
+      "baseline_limit": "既有云医生手工流程不能代替本链路",
+      "status": "PARTIAL",
+      "evidence": [
+        "cloud-tests.txt",
+        "review-tests.txt"
+      ],
+      "unresolved": "既有规则候选审核已绑定内容摘要、资料及授权版本，持久化审核人回执；尚未连接 AI 草案。"
+    },
+    {
+      "id": "6.5",
+      "title": "用户确认不能代替审核",
+      "source": "R/src/runtime/semanticExecution.ts",
+      "entry": "review门禁",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/H",
+      "baseline_limit": "needs_review不写；医生发布处方不能被患者改剂量",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "7.1",
+      "title": "页面导航",
+      "source": "R/src/product/ProductAgent.ts, ProductService.ts",
+      "entry": "open_module→turn.agent.navigation",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "P/U",
+      "baseline_limit": "句末。已覆盖，ProductService导航回执通过；网页交互仍UNVERIFIED",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "7.2",
+      "title": "自然语言查看本人计划",
+      "source": "R/src/runtime/semanticExecution.ts",
+      "entry": "records→Host选读→本地回执",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/H/L",
+      "baseline_limit": "保留全句本人授权gate；L路由质量另计",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "7.3",
+      "title": "真Host改名／参数／增删动作",
+      "source": "D/app/rehab_operation_tools.py, storage.py",
+      "entry": "plan.change直接API",
+      "baseline_status": "PASS",
+      "baseline_evidence": "H",
+      "baseline_limit": "仅既有计划；不代表NLP可写",
+      "status": "PASS",
+      "evidence": [
+        "host-tests.txt",
+        "host-junit.xml"
+      ],
+      "unresolved": "本轮真实隔离 SQLite 与 Node/Python 桥接回归通过；模型为明确的本地协议 fixture，不是 DeepSeek 质量验收。"
+    },
+    {
+      "id": "7.4",
+      "title": "真Host日期时间／新增取消安排",
+      "source": "D/app/rehab_operation_tools.py, product/daily_store.py",
+      "entry": "schedule.upsert/remove直接API",
+      "baseline_status": "PASS",
+      "baseline_evidence": "H",
+      "baseline_limit": "真保存ID、重读、重开、删除回执",
+      "status": "PASS",
+      "evidence": [
+        "host-tests.txt",
+        "host-junit.xml"
+      ],
+      "unresolved": "本轮真实隔离 SQLite 与 Node/Python 桥接回归通过；模型为明确的本地协议 fixture，不是 DeepSeek 质量验收。"
+    },
+    {
+      "id": "7.5",
+      "title": "NLP预览→确认→写入→重读",
+      "source": "R/src/rehab/programOperations.ts",
+      "entry": "个人资料处理授权缺口→阻断",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "T/边界18",
+      "baseline_limit": "当前明确请用户在康复页手动修改",
+      "status": "PARTIAL",
+      "evidence": [
+        "host-tests.txt",
+        "host-junit.xml",
+        "agent-ci.txt"
+      ],
+      "unresolved": "本人唯一有效计划的明确改名已接本地解析→真实预览→确认→SQLite写入→权威重读，重复确认不再写；改动作、剂量和时间的自然语言链路仍未接通。模型仅为协议fixture。"
+    },
+    {
+      "id": "7.6",
+      "title": "自然语言设置提醒",
+      "source": "无已注册执行工具",
+      "entry": "无调用链",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "注册表",
+      "baseline_limit": "日程记录不是通知调度",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "7.7",
+      "title": "取消／离题／隐私／故障／重置失效",
+      "source": "R/src/runtime/session.ts",
+      "entry": "pending生命周期",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/语义83",
+      "baseline_limit": "旧pending内部注入回归；不是新NLP写入证据",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "7.8",
+      "title": "revision及审计",
+      "source": "D/app/storage.py, rehab_operation_tools.py",
+      "entry": "事务内revision/audit",
+      "baseline_status": "PASS",
+      "baseline_evidence": "H",
+      "baseline_limit": "预览不写；commit恰增一次；失败不改",
+      "status": "PASS",
+      "evidence": [
+        "host-tests.txt",
+        "host-junit.xml"
+      ],
+      "unresolved": "本轮真实隔离 SQLite 与 Node/Python 桥接回归通过；模型为明确的本地协议 fixture，不是 DeepSeek 质量验收。"
+    },
+    {
+      "id": "7.9",
+      "title": "并发冲突",
+      "source": "D/app/product/daily_store.py",
+      "entry": "同事务expected_existing",
+      "baseline_status": "PASS",
+      "baseline_evidence": "H",
+      "baseline_limit": "竞态注入及双确认一胜一冲突",
+      "status": "PASS",
+      "evidence": [
+        "host-tests.txt",
+        "host-junit.xml"
+      ],
+      "unresolved": "本轮真实隔离 SQLite 与 Node/Python 桥接回归通过；模型为明确的本地协议 fixture，不是 DeepSeek 质量验收。"
+    },
+    {
+      "id": "7.10",
+      "title": "跨用户／来源拒绝",
+      "source": "D/app/rehab_operation_tools.py, R/src/runtime/rehabTools.ts",
+      "entry": "scope/receipt双边界",
+      "baseline_status": "PASS",
+      "baseline_evidence": "H/T",
+      "baseline_limit": "其他owner/source/context不能读写",
+      "status": "PASS",
+      "evidence": [
+        "host-tests.txt",
+        "host-junit.xml"
+      ],
+      "unresolved": "本轮真实隔离 SQLite 与 Node/Python 桥接回归通过；模型为明确的本地协议 fixture，不是 DeepSeek 质量验收。"
+    },
+    {
+      "id": "8.1",
+      "title": "混合问题识别并先分析",
+      "source": "R/src/runtime/semanticExecution.ts",
+      "entry": "rehab/health/module+intents",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "T/L/live-review",
+      "baseline_limit": "不能因主route=module绕过分析；L混合请求仍因审核/规划缺口停止",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "8.2",
+      "title": "缺信息不默认删空／暂停",
+      "source": "R/src/rehab/workflow.ts, programOperations.ts",
+      "entry": "uncertainties/review阻断",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/边界18",
+      "baseline_limit": "不自动重排既有动作",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "8.3",
+      "title": "急症先于修改",
+      "source": "R/src/runtime/turn.ts, session.ts",
+      "entry": "safetyAction先行并清pending",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/L/live-review",
+      "baseline_limit": "L急症实际停止活动/寻求急救，无写入",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "8.4",
+      "title": "分析→建议→专业核验→确认→App变化",
+      "source": "新跨分支链路缺失",
+      "entry": "在review／授权处停止",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "源码/T",
+      "baseline_limit": "无临床适用性＋NLP写入闭环",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "9.1",
+      "title": "候选采用并创建新计划",
+      "source": "无create/adopt工具",
+      "entry": "候选回复止于文本",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "注册表/UI源码",
+      "baseline_limit": "没有新计划ID／revision",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "9.2",
+      "title": "知识卡到可执行动作映射",
+      "source": "R/src/rehab/exerciseMapping.ts",
+      "entry": "runRehabWorkflow → mapKnowledgeActionToApp",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "源码",
+      "baseline_limit": "不允许无证明的ID转换",
+      "status": "PARTIAL",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "已有两个显式技术动作映射；完整动作覆盖与采用链路未完成。"
+    },
+    {
+      "id": "9.3",
+      "title": "专业批准后采用",
+      "source": "候选与医生流程未连接",
+      "entry": "无review receipt→adopt",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "源码",
+      "baseline_limit": "普通“确认”不补批准",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "9.4",
+      "title": "新候选保存／患者显示／重开／待办",
+      "source": "D/UI与M/unified仅旧计划读取",
+      "entry": "候选详情仅文本／关闭",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "UI源码/U",
+      "baseline_limit": "旧计划UI存在不能算新闭环",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "9.5",
+      "title": "既有计划重开／顺序／剂量存储",
+      "source": "D/app/storage.py",
+      "entry": "真实SQLite重开与reader",
+      "baseline_status": "PASS",
+      "baseline_evidence": "H",
+      "baseline_limit": "限直接Host已有计划，不扩大为新候选",
+      "status": "PASS",
+      "evidence": [
+        "host-tests.txt",
+        "host-junit.xml"
+      ],
+      "unresolved": "本轮真实隔离 SQLite 与 Node/Python 桥接回归通过；模型为明确的本地协议 fixture，不是 DeepSeek 质量验收。"
+    },
+    {
+      "id": "9.6",
+      "title": "自动生成4–5个可执行动作",
+      "source": "R/src/rehab/assistant.ts",
+      "entry": "localPlan最多3个匹配项",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "T/P",
+      "baseline_limit": "A–E仅图示；腰椎匹配0，不承诺4–5",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "10.1",
+      "title": "超范围问题分因",
+      "source": "R/src/runtime/scopeFallback.ts",
+      "entry": "out_of_scope",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/L/live-review",
+      "baseline_limit": "本地解释能力范围",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "10.2",
+      "title": "知识缺失区别临床升级",
+      "source": "R/src/rehab/assistant.ts",
+      "entry": "无匹配补名称／编号",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T",
+      "baseline_limit": "不自动要求就医",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "10.3",
+      "title": "未接外部操作不伪造回执",
+      "source": "R/src/runtime/scopeFallback.ts",
+      "entry": "unsupported_operation",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/L/live-review",
+      "baseline_limit": "未联系／预约明确说明",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "10.4",
+      "title": "诊断／处方／治疗决定升级建议",
+      "source": "R/src/runtime/scopeFallback.ts",
+      "entry": "clinical_handoff",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/H",
+      "baseline_limit": "保留原安全处理；只是建议",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "10.5",
+      "title": "真实联系医生／预约",
+      "source": "无注册自然语言工具",
+      "entry": "手动入口或本地建议",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "注册表",
+      "baseline_limit": "不得声称执行成功",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "10.6",
+      "title": "一般健康问题不机械升级",
+      "source": "R/src/runtime/semanticExecution.ts",
+      "entry": "health提示与回复guard",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "T/L人工复核",
+      "baseline_limit": "咖啡睡眠样例没有机械就医建议；不能泛化所有问法",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "11.1",
+      "title": "多轮原文指代／纠正",
+      "source": "R/src/runtime/semanticRouter.ts, session.ts",
+      "entry": "获准同来源history",
+      "baseline_status": "FAIL",
+      "baseline_evidence": "T/L/live-review",
+      "baseline_limit": "只保留有限用户原文；不代表条件状态完成",
+      "status": "PARTIAL",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "本轮验证任务重开和原话器材更正；原真实模型的复杂指代失败尚未以真实模型复验。"
+    },
+    {
+      "id": "11.2",
+      "title": "器材／限制可编辑候选状态",
+      "source": "R/src/rehab/taskState.ts, R/src/runtime/session.ts, ports.ts",
+      "entry": "Session → executeSemanticTurn → taskUserText → runRehabWorkflow",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "源码/L/live-review",
+      "baseline_limit": "“没有弹力带只有椅子”需程序状态闭环",
+      "status": "PARTIAL",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "新增本地持久任务、原话证据、修订版与器材追问；尚未完成可信限制解析和专业审核版本连接。"
+    },
+    {
+      "id": "11.3",
+      "title": "“按这个计划”不能盲目采用",
+      "source": "R/src/rehab/workflow.ts",
+      "entry": "needs_review／无adopt",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T",
+      "baseline_limit": "只证明拒绝越权，不证明采用能力",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "11.4",
+      "title": "换话题后的“好的”失效",
+      "source": "R/src/runtime/session.ts",
+      "entry": "统一清pending",
+      "baseline_status": "PASS",
+      "baseline_evidence": "T/语义83",
+      "baseline_limit": "包含来源切换／privacy／invalid JSON／安全／reset",
+      "status": "PASS",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "限定本地确定性规则/Mock 模型边界；本轮完整 agent CI 已复跑，不扩大为真实模型或界面验收。"
+    },
+    {
+      "id": "UI.1",
+      "title": "桌面实际入口",
+      "source": "D/app/product/backend.py, UI",
+      "entry": "ProductBackend→AgentBridge",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "U",
+      "baseline_limit": "默认feature flag关闭；隔离测试需显式启用",
+      "status": "PARTIAL",
+      "evidence": [
+        "ui-tests.txt",
+        "desktop-results.json",
+        "desktop-real-launch.png"
+      ],
+      "unresolved": "隔离 TEST 目录实际 Qt 六页、离线聊天及真实主启动截图通过；未验证 AI 审核采用页面。语义 flag 默认关闭。"
+    },
+    {
+      "id": "UI.2",
+      "title": "配对网页实际入口",
+      "source": "M/unified.py, static/unified.js",
+      "entry": "SharedProduct→同桌面owner",
+      "baseline_status": "UNVERIFIED",
+      "baseline_evidence": "U",
+      "baseline_limit": "不能以网页单元测试代替交互",
+      "status": "PARTIAL",
+      "evidence": [
+        "browser-review.md"
+      ],
+      "unresolved": "实际浏览器完成 TEST 配对、页面导航、离线消息与重载保留；康复拍摄来源下无新AI计划，审核采用仍未验证。"
+    },
+    {
+      "id": "UI.3",
+      "title": "独立Android JS入口",
+      "source": "A/web/local-api.js",
+      "entry": "ProductService第10参数",
+      "baseline_status": "PARTIAL",
+      "baseline_evidence": "A85",
+      "baseline_limit": "构造漂移修复；无真实operation port／新计划采用",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "UI.4",
+      "title": "独立Python手机Host",
+      "source": "M/product_host.cjs",
+      "entry": "new ProductService(store)",
+      "baseline_status": "NOT IMPLEMENTED",
+      "baseline_evidence": "注册入口",
+      "baseline_limit": "未接模型／语义flag／康复读写ports",
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "当前源码仍未接通本节点要求的业务链路；详见检查点及原清单限定，不以安全拒绝记为功能通过。"
+    },
+    {
+      "id": "UI.5",
+      "title": "APK/iOS/Watch真机",
+      "source": "原生入口",
+      "entry": "实际安装／硬件",
+      "baseline_status": "UNVERIFIED",
+      "baseline_evidence": "无设备",
+      "baseline_limit": "资源构建／JS PASS不等于真机PASS",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "UI.6",
+      "title": "公网实际运行",
+      "source": "独立云服务",
+      "entry": "既有部署环境",
+      "baseline_status": "UNVERIFIED",
+      "baseline_evidence": "未部署",
+      "baseline_limit": "本轮不授权更新公网",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "REG.2",
+      "title": "扩展桌面产品回归",
+      "source": "D/tests/test_product_*.py",
+      "entry": "Qt/真实bridge回归",
+      "baseline_status": "FAIL",
+      "baseline_evidence": "Q",
+      "baseline_limit": "129通过、18失败、2skip；含退役控制调用及界面/回执断言冲突，完整归因尚待复核",
+      "status": "FAIL",
+      "evidence": [
+        "desktop-tests.txt",
+        "desktop-junit.xml"
+      ],
+      "unresolved": "本轮完整桌面产品回归存在实际失败；保留失败和堆栈，未修改旧测试预期或恢复已退役操作。详见日志与检查点。"
+    },
+    {
+      "id": "REG.3",
+      "title": "手机视觉模型回归",
+      "source": "M/tests",
+      "entry": "真实本地模型/IPC/空白视频",
+      "baseline_status": "UNVERIFIED",
+      "baseline_evidence": "M",
+      "baseline_limit": "121通过、4失败、2skip；当前缺真实视觉模型/环境，未伪造检测成功",
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "尚未完成当前版本逐项复验；历史结果不继承为本轮 PASS。"
+    },
+    {
+      "id": "REG.1",
+      "title": "旧三问桥接协议兼容",
+      "source": "D/tests/test_rehab_read_tools.py",
+      "entry": "real_bridge_three_questions_and_scope_isolation",
+      "baseline_status": "FAIL",
+      "baseline_evidence": "Y",
+      "baseline_limit": "旧模型fixture按JSON读取当前自然语言prompt，当前整项仍失败",
+      "status": "PASS",
+      "evidence": [
+        "host-tests.txt",
+        "host-junit.xml"
+      ],
+      "unresolved": "本轮真实隔离 SQLite 与 Node/Python 桥接回归通过；模型为明确的本地协议 fixture，不是 DeepSeek 质量验收。"
+    },
+    {
+      "id": "UX01",
+      "title": "首次进入时提供可忽略的快捷问题；不限制自由提问。",
+      "source": "docs/architecture/REHAB_AGENT_V2_IMPLEMENTATION_2026-10-19.md",
+      "entry": "尚待实际客户端集成验收",
+      "baseline_status": null,
+      "baseline_evidence": null,
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "尚未实现本轮 V2 首次欢迎与可忽略的快捷提问。"
+    },
+    {
+      "id": "UX02",
+      "title": "任务缺必要信息时仅问优先级最高的 1–2 个问题；用户回答后推进状态。",
+      "source": "docs/architecture/REHAB_AGENT_V2_IMPLEMENTATION_2026-10-19.md",
+      "entry": "尚待实际客户端集成验收",
+      "baseline_status": null,
+      "baseline_evidence": null,
+      "status": "PARTIAL",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "缺器材时仅追问一个问题，补充后推进同一任务；更广的信息缺口尚待实现。"
+    },
+    {
+      "id": "UX03",
+      "title": "能使用已授权的既有可靠记录免重复追问；无权限不读取，不推断缺失字段。",
+      "source": "docs/architecture/REHAB_AGENT_V2_IMPLEMENTATION_2026-10-19.md",
+      "entry": "尚待实际客户端集成验收",
+      "baseline_status": null,
+      "baseline_evidence": null,
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "未接可信个人资料 reader，不能宣称已有可靠记录免重复追问。"
+    },
+    {
+      "id": "UX04",
+      "title": "新条件（如无弹力带）会修改草案条件，标记版本并在必要时撤销旧审核。",
+      "source": "docs/architecture/REHAB_AGENT_V2_IMPLEMENTATION_2026-10-19.md",
+      "entry": "尚待实际客户端集成验收",
+      "baseline_status": null,
+      "baseline_evidence": null,
+      "status": "PARTIAL",
+      "evidence": [
+        "agent-ci.txt",
+        "review-tests.txt"
+      ],
+      "unresolved": "器材补充推进同一任务修订；本地拦下与明确不可用器材冲突的候选，可选器材不作必需。云端资料修改使旧核对失效；尚未贯通 AI 审核采用。"
+    },
+    {
+      "id": "UX05",
+      "title": "用户取消、换话题、超时、权限变更或安全升级，旧待确认操作失效。",
+      "source": "docs/architecture/REHAB_AGENT_V2_IMPLEMENTATION_2026-10-19.md",
+      "entry": "尚待实际客户端集成验收",
+      "baseline_status": null,
+      "baseline_evidence": null,
+      "status": "PARTIAL",
+      "evidence": [
+        "agent-ci.txt"
+      ],
+      "unresolved": "任务取消、换话题、隐私、来源切换及30分钟过期清理；权限变化尚未贯通全部客户端。"
+    },
+    {
+      "id": "UX06",
+      "title": "普通闲聊、健康知识、康复指导和计划制定各有适当交互，不强制走计划生成。",
+      "source": "docs/architecture/REHAB_AGENT_V2_IMPLEMENTATION_2026-10-19.md",
+      "entry": "尚待实际客户端集成验收",
+      "baseline_status": null,
+      "baseline_evidence": null,
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "当前没有本轮全链路验收证据。"
+    },
+    {
+      "id": "UX07",
+      "title": "聊天不得逐条暴露内部工具调用、JSON、推理或重复进度；工具失败仅给用户可理解的说明及下一步。",
+      "source": "docs/architecture/REHAB_AGENT_V2_IMPLEMENTATION_2026-10-19.md",
+      "entry": "尚待实际客户端集成验收",
+      "baseline_status": null,
+      "baseline_evidence": null,
+      "status": "PARTIAL",
+      "evidence": [
+        "agent-ci.txt",
+        "browser-review.md"
+      ],
+      "unresolved": "候选入口不逐条输出工具事件，规则状态改为自然语言；实际浏览器仅验离线聊天，尚未验证在线候选及失败呈现。"
+    },
+    {
+      "id": "UX08",
+      "title": "生成待审核草案仅提供“调整草案/提交审核”，不得出现“立即执行”。",
+      "source": "docs/architecture/REHAB_AGENT_V2_IMPLEMENTATION_2026-10-19.md",
+      "entry": "尚待实际客户端集成验收",
+      "baseline_status": null,
+      "baseline_evidence": null,
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "当前没有本轮全链路验收证据。"
+    },
+    {
+      "id": "UX09",
+      "title": "已获批准的特定版本经用户确认才可执行；必须重新读取后证明持久化和动作可执行。",
+      "source": "docs/architecture/REHAB_AGENT_V2_IMPLEMENTATION_2026-10-19.md",
+      "entry": "尚待实际客户端集成验收",
+      "baseline_status": null,
+      "baseline_evidence": null,
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "AI 草案没有经专业批准、患者确认、实际采用及重读链路。"
+    },
+    {
+      "id": "UX10",
+      "title": "审核退回、候选无匹配、资料缺失时主动询问或说明阻断，不虚构审批或保存成功。",
+      "source": "docs/architecture/REHAB_AGENT_V2_IMPLEMENTATION_2026-10-19.md",
+      "entry": "尚待实际客户端集成验收",
+      "baseline_status": null,
+      "baseline_evidence": null,
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "当前没有本轮全链路验收证据。"
+    },
+    {
+      "id": "UX11",
+      "title": "紧急危险信号优先处理，阻断后续训练/修改，并保留来源、必要风险信息。",
+      "source": "docs/architecture/REHAB_AGENT_V2_IMPLEMENTATION_2026-10-19.md",
+      "entry": "尚待实际客户端集成验收",
+      "baseline_status": null,
+      "baseline_evidence": null,
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "unresolved": "当前没有本轮全链路验收证据。"
+    },
+    {
+      "id": "UX12",
+      "title": "对同一个合成患者完成“用户自然语言→主动追问→实际检索→结构化草案→程序验证→专业审核→用户确认→持久化→患者端重开”全流程，并留审计证据。",
+      "source": "docs/architecture/REHAB_AGENT_V2_IMPLEMENTATION_2026-10-19.md",
+      "entry": "尚待实际客户端集成验收",
+      "baseline_status": null,
+      "baseline_evidence": null,
+      "status": "NOT IMPLEMENTED",
+      "evidence": [],
+      "unresolved": "核心 AI 草案→审核→采用→患者重开仍缺连接；不将单元测试称为端到端通过。"
+    }
+  ]
+}

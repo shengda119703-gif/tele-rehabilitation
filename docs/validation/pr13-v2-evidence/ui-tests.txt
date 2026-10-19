@@ -1,0 +1,1 @@
+{"offline": true, "results": ["实际 Qt 页面：home", "实际 Qt 页面：rehab", "实际 Qt 页面：health", "实际 Qt 页面：medication", "实际 Qt 页面：family", "实际 Qt 页面：assistant", "离线聊天真实回执，无新增健康事件"]}
