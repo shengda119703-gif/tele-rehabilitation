@@ -1,4 +1,12 @@
-# 评估与训练 APK 上滑面板 QA
+# 统一动作库 APK 0.5.13 QA（2026-10-19）
+
+本轮沿用现有动作库，功能范围为目录/别名/分析导航，不做新的视觉体系。原浅色底、微软雅黑/系统CJK、青柠选中态、44px触控分类和双列动作卡保持。新增“健身”第四分类；8张可分析卡前置，不让用户翻完185张图文卡才找到。
+
+已实际查看`.runtime/unified-action-library-20261019/phone-fitness-library.png`、`phone-squat-upload.png`、`small-phone-library.png`、`desktop-library.png`及`emulator-fitness-library.png`。430×932、360×740、1440×1000；Android412×789 CSS/DPR1.75。深蹲/硬拉对应现有照片，四张无对应照片的卡采用项目原哑铃符号；首次文字占位显得空且重复，已替换并重打包重验。不用地板卧推或支撑单臂划船照片冒充杠铃动作。
+
+分类选中、搜索、8项说明/拍摄/选片入口、两个明确图文直达入口、返回保留条件、资源失败降级已通过。本人原深蹲录像在隔离环境实际CPU分析并进入原上滑回看。原生覆盖升级不清数据，升级前后临床存储指纹相同。无横向溢出、页面异常0、外部请求0；未改变原计划/反馈/计次或已有上滑面板。最终截图未见阻断操作的呈现问题；真机摄像头与全部系统字号另行验证。
+
+# 评估与训练 APK 上滑面板 QA（上次记录保留）
 
 - Source visual truth: `E:/ai-video-lab/results/模型分析_20261018/v6_上滑交互版/audit/phone-collapsed.png`、`phone-expanded.png`，用户已确认的本地14929交互稿。
 - Implementation: `.runtime/apk-motion-review-20261019-final/assessment-collapsed.png`、`assessment-expanded.png`、`training-collapsed.png`、`training-feedback.png`；原生Android截图 `.runtime/apk-motion-review-20261019/emulator-live-ready.png`。

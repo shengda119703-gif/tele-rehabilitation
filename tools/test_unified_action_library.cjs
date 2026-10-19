@@ -1,0 +1,70 @@
+/* Isolated APK-assets UI QA; never contacts the cloud or writes a real account. */
+'use strict';
+const assert=require('node:assert/strict'),http=require('node:http'),fs=require('node:fs/promises'),path=require('node:path');
+const {chromium}=require('../ankang/route1-health-agent/node_modules/playwright');
+const repo=path.resolve(__dirname,'..'),assets=path.join(repo,'android_offline/build/assets');
+const out=path.resolve(process.argv[2]||'.runtime/unified-action-library-20261019');
+const input=process.argv[3]||'E:/game/test video/深蹲.mp4';
+const mime={'.html':'text/html; charset=utf-8','.js':'application/javascript','.css':'text/css','.json':'application/json','.webp':'image/webp','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml','.wasm':'application/wasm'};
+(async()=>{
+ await fs.mkdir(out,{recursive:true});let failLibrary=false;
+ const server=http.createServer(async(req,res)=>{try{
+  const url=new URL(req.url,'http://127.0.0.1');if(failLibrary&&url.pathname.endsWith('/catalogue.json'))throw Error();
+  const name=url.pathname==='/'?'index.html':url.pathname==='/capture'?'capture.html':url.pathname.slice(1),file=path.resolve(assets,name);
+  if(!file.startsWith(assets+path.sep))throw Error();const data=await fs.readFile(file);
+  res.writeHead(200,{'Content-Type':mime[path.extname(file)]||'application/octet-stream'});res.end(data);
+ }catch(e){res.writeHead(404);res.end();}});
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
+ const browser=await chromium.launch({channel:'msedge',headless:true}),errors=[],external=[],checks=[];
+ try{
+  const context=await browser.newContext({viewport:{width:430,height:932},isMobile:true,hasTouch:true,deviceScaleFactor:1});
+  await context.addInitScript(()=>{localStorage.setItem('ankang-phone-active-1','ankang-phone-product-2');window.OfflineAndroid={accountIdentity:()=>JSON.stringify({origin:'https://139.224.216.18',role:'PATIENT',patient_id:'00000000-0000-4000-8000-000000000001',account_id:'00000000-0000-4000-8000-000000000002',username:'isolated-library-qa'}),cloudConfigured:()=>false};});
+  await context.route('**/*',route=>{const url=route.request().url();if(url.startsWith(origin)||url.startsWith('blob:'))return route.continue();external.push(url);return route.abort();});
+  const page=await context.newPage();page.setDefaultTimeout(20000);page.on('pageerror',e=>errors.push(e.message));
+  const clinical=()=>page.evaluate(()=>{const v=PhoneLocal.store.value;return JSON.stringify({owner:v.owner,kv:v.kv,jobs:v.jobs,plans:v.plans,daily:v.daily});});
+  await page.goto(origin+'/capture?tab=assess&entry=library');await page.locator('#rl-search').waitFor();
+  const before=await clinical();assert.equal(await page.locator('.rl-kinds button').count(),4);assert.equal(await page.locator('#rl-list [data-rl-card]').count(),30);
+  assert.equal(await page.locator('#rl-count').innerText(),'193 个动作');assert((await page.locator('#rl-list [data-rl-card]').first().getAttribute('data-rl-card')).startsWith('fitness_'));
+  await page.locator('[data-rl-kind="fitness"]').click();assert.equal(await page.locator('#rl-list [data-rl-card]').count(),8);
+  await page.waitForFunction(()=>[...document.querySelectorAll('#rl-list img')].every(i=>i.complete&&i.naturalWidth>0));
+  await page.screenshot({path:path.join(out,'phone-fitness-library.png')});
+  const ids=await page.locator('#rl-list [data-rl-card]').evaluateAll(nodes=>nodes.map(n=>n.dataset.rlCard));
+  for(const id of ids){
+   await page.locator('[data-rl-card="'+id+'"]').click();assert.equal(await page.evaluate(()=>state.selected),id);
+   assert.equal(await page.locator('#fit-camera-input').getAttribute('capture'),'environment');assert.equal(await page.locator('#fit-gallery-input').getAttribute('accept'),'video/*');
+   assert(await page.locator('#fit-camera').isVisible());assert(await page.locator('#fit-gallery').isVisible());assert((await page.locator('.instruction').count())>0);
+   assert.equal(await page.evaluate(()=>state.file),null);await page.locator('#fitness-library-back').click();await page.locator('#rl-search').waitFor();assert.equal(await page.locator('[data-rl-kind="fitness"]').getAttribute('aria-pressed'),'true');
+  }checks.push('eight_original_analysis_contracts_camera_gallery_steps_back');
+  await page.locator('[data-rl-kind="all"]').click();await page.locator('#rl-search').fill('杠铃深蹲');
+  assert(await page.locator('[data-rl-card="fitness_squat"]').isVisible());assert(await page.locator('[data-rl-card="T-LOW-020"]').isVisible());
+  await page.locator('[data-rl-card="fitness_squat"]').click();await page.locator('#fit-gallery-input').setInputFiles(input);assert(await page.locator('#upload-btn').isVisible());
+  await page.screenshot({path:path.join(out,'phone-squat-upload.png')});await page.locator('#fitness-library-back').click();await page.locator('#rl-search').waitFor();
+  assert.equal(await page.locator('#rl-search').inputValue(),'杠铃深蹲');assert.equal(await page.evaluate(()=>state.file),null);
+  await page.locator('[data-rl-card="T-LOW-020"]').click();assert(await page.locator('#rl-analyse').isVisible());await page.locator('#rl-analyse').click();assert.equal(await page.evaluate(()=>state.selected),'fitness_squat');
+  await page.locator('#fitness-library-back').click();await page.locator('#rl-search').fill('T-LOW-015');await page.locator('[data-rl-card="T-LOW-015"]').click();assert.equal(await page.locator('#rl-analyse').count(),0);
+  await page.locator('#rl-back').click();await page.locator('#rl-search').fill('T-LOW-060');await page.locator('[data-rl-card="T-LOW-060"]').click();await page.locator('#rl-analyse').click();assert.equal(await page.evaluate(()=>state.selected),'fitness_deadlift');
+  await page.locator('#fitness-library-back').click();await page.locator('#rl-search').fill('');await page.locator('[data-rl-kind="fitness"]').click();await page.locator('[data-rl-category="hip"]').click();
+  assert.equal(await page.locator('#rl-list [data-rl-card]').count(),1);assert(await page.locator('[data-rl-card="fitness_deadlift"]').isVisible());
+  await page.locator('[data-rl-category="all"]').click();await page.setViewportSize({width:360,height:740});await page.screenshot({path:path.join(out,'small-phone-library.png')});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await page.setViewportSize({width:1440,height:1000});await page.screenshot({path:path.join(out,'desktop-library.png')});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  assert.equal(await clinical(),before);checks.push('aliases_public_exact_links_no_variant_guessing_filters_and_read_only_browsing');
+  await page.goto(origin+'/capture?tab=assess&tool=extras');await page.locator('#rv-fitness').click();await page.locator('#rl-search').waitFor();assert.equal(await page.locator('[data-rl-kind="fitness"]').getAttribute('aria-pressed'),'true');
+  await page.goto(origin+'/capture?tab=assess&entry=assessment');await page.locator('[data-action="shoulder_abduction"]').click();assert(await page.locator('#rv-detail-start').isVisible());checks.push('legacy_fitness_entry_unified_and_assessment_entry_unchanged');
+  await page.goto(origin+'/capture?tab=assess&entry=library');await page.locator('#rl-search').waitFor();
+  await page.evaluate(()=>{state.fitnessCatalog=[];actionLibrary('assessment');});await page.locator('#rl-search').waitFor();assert.equal(await page.locator('[data-rl-kind="fitness"]').count(),0);assert.equal(await page.locator('#rl-count').innerText(),'185 个动作');
+  failLibrary=true;await page.reload();await page.getByRole('button',{name:'前往健身分析',exact:true}).click();assert.equal(await page.locator('[data-action^="fitness_"]').count(),8);
+  failLibrary=false;checks.push('missing_fitness_and_unavailable_artwork_degrade_without_blocking_analysis');
+  await page.goto(origin+'/capture?tab=assess&entry=library');await page.locator('[data-rl-card="fitness_squat"]').click();
+  await page.evaluate(()=>PhoneLocal.store.change(v=>v.cloudIdentity=JSON.parse(OfflineAndroid.accountIdentity())));
+  await page.setViewportSize({width:430,height:932});await page.locator('#fit-gallery-input').setInputFiles(input);await page.locator('#consent').check();await page.locator('#upload-btn').click();
+  await page.waitForFunction(()=>['done','failed'].includes(PhoneLocal.store.value.jobs.at(-1)?.state),null,{timeout:180000});
+  const job=await page.evaluate(()=>structuredClone(PhoneLocal.store.value.jobs.at(-1)));assert.equal(job.state,'done',job.message);assert.equal(job.mode,'fitness');assert.equal(job.exercise,'fitness_squat');
+  await page.waitForSelector('#motion-review');await page.waitForFunction(()=>RehabMotionReview.current?.data?.hasTrace);await page.waitForFunction(()=>document.querySelector('.mr-media video')?.readyState>=2);
+  await page.locator('.mr-handle').click();await page.screenshot({path:path.join(out,'squat-actual-analysis.png')});
+  assert(!/完成次数|完整动作/.test(await page.locator('.mr-view').innerText()));checks.push('original_user_squat_video_actual_cpu_inference_and_swipe_review');
+  assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
+  const sha256=require('node:crypto').createHash('sha256').update(await fs.readFile(input)).digest('hex');
+  await fs.writeFile(path.join(out,'browser-checks.json'),JSON.stringify({checks,errors,externalRequests:external,input,inputSha256:sha256,job,scope:'isolated QA storage, actual APK assets, no cloud or paid model calls'},null,2));
+  console.log(JSON.stringify({checks,errors,externalRequests:external,analysisState:job.state}));
+ }finally{await browser.close();await new Promise(r=>server.close(r));}
+})().catch(e=>{console.error(e);process.exitCode=1;});

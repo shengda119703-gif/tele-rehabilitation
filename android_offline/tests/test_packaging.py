@@ -12,6 +12,17 @@ from pathlib import Path
 SCRIPT = Path(__file__).resolve().parents[1] / 'tools' / 'normalize_apk.py'
 
 class PackagingTest(unittest.TestCase):
+    def test_unified_library_is_packaged_and_keeps_original_fitness_contracts(self):
+        root = SCRIPT.parents[2]
+        version = ET.parse(root/'android_offline/AndroidManifest.xml').getroot().attrib['{http://schemas.android.com/apk/res/android}versionName']
+        with zipfile.ZipFile(root/f'android_offline/dist/tele-rehabilitation-mobile-{version}.apk') as archive:
+            for name in ('rehab-library.js', 'rehab-library.css'):
+                self.assertEqual(archive.read('assets/static/'+name), (root/'mobile_rehab/static'/name).read_bytes())
+            catalog = json.loads(archive.read('assets/catalog.json'))
+            from mobile_rehab.fitness import catalog as fitness_catalog
+            self.assertEqual(catalog['fitness'], fitness_catalog())
+            self.assertEqual(len(catalog['fitness']), 8)
+
     def test_assessment_and_training_share_packaged_motion_review_without_sample_media(self):
         root = SCRIPT.parents[2]
         version = ET.parse(root/'android_offline/AndroidManifest.xml').getroot().attrib['{http://schemas.android.com/apk/res/android}versionName']
