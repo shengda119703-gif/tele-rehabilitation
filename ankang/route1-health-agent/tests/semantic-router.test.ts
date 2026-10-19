@@ -252,3 +252,22 @@ test('self-referential correction edges are dropped without rejecting current-tu
   assert.equal(parsed?.relations.length,0);
   assert.ok(parsed?.uncertain.includes('无法可靠解析更正前后的事件关系'));
 });
+
+test('exact historical intent quote repairs omitted source ID without relaxing strict validation',async()=>{
+ const {parseSemanticResponse}=await import('../src/runtime/semanticRouter');
+ const source={text:'给我锻炼方案',context:[{id:'TEST1',text:'我阳痿了，额'},{id:'TEST2',text:'嗯，锻炼能不能治疗，我猜是不是循环不好'}]};
+ const value={...base,route:'rehab',intents:[
+  {type:'plan_generation',route:'rehab',goal:'创建方案',evidence:source.text},
+  {type:'rehab_question',route:'rehab',goal:'理解健康目标',evidence:'锻炼能不能治疗，我猜是不是循环不好'}]};
+ const raw=JSON.stringify(value);
+ assert.equal(parseSemanticTurn(raw,source),null);
+ assert.equal(parseSemanticResponse(raw,source)?.intents?.[1].source_message_id,'TEST2');
+ assert.equal(parseSemanticResponse(raw,{...source,context:[...source.context,{id:'duplicate',text:source.context[1].text}]}),null);
+ assert.equal(parseSemanticResponse(raw,{...source,context:[]}),null);
+ assert.equal(parseSemanticResponse(JSON.stringify({...value,intents:[{...value.intents[1],source_message_id:'TEST1'}]}),source),null);
+ const invalid={...value,mentions:[{kind:'symptom',text:'胸痛',evidence:source.text,subject:'self',status:'occurred'}]};
+ assert.equal(parseSemanticResponse(JSON.stringify(invalid),source),null);
+ const reports:string[]=[];
+ assert.ok(await understandSemanticTurn({reply:async()=>raw},source.text,{context:source.context,report:r=>reports.push(r)}));
+ assert.deepEqual(reports,['source_repaired']);
+});

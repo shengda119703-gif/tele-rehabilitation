@@ -180,18 +180,20 @@ class Session {
         .map(({id,text}) => ({id,text}));
       const localCancellation = Boolean(this.options.semanticRoutingEnabled && privacyBeforeRouting === 'none' &&
         (draft.rehabTask || this.pendingRehabOperation) && isCancellation(captured.text));
+      let semanticOutcome = 'model_unavailable';
       const semantic: SemanticTurn | null = localCancellation
         ? {version:1,route:'chat',goal:'取消待处理康复任务',mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null,intents:[]}
         : this.options.semanticRoutingEnabled &&
         this.options.conversationModel && privacyBeforeRouting === 'none'
-        ? await understandSemanticTurn(this.options.conversationModel, captured.text, {context:semanticContext}) : null;
+        ? await understandSemanticTurn(this.options.conversationModel, captured.text, {context:semanticContext,
+          report:reason=>{semanticOutcome=reason;}}) : null;
       this.check(generation);
       if (!semantic) this.pendingRehabOperation = null;
       if (privacyBeforeRouting !== 'none') draft.rehabTask = null;
       const semanticExecution: SemanticExecutionTrace | undefined = this.options.semanticRoutingEnabled ? {
         parser_status: localCancellation?'local_fallback':semantic ? 'llm_valid' : this.options.conversationModel ? 'local_fallback' : 'unavailable',
         stages: [{stage:'understanding',status:localCancellation?'local':semantic?'passed':privacyBeforeRouting!=='none'?'blocked':'failed',
-          ...(localCancellation?{reason:'explicit_local_cancellation'}:semantic?{}:{reason:privacyBeforeRouting!=='none'?'privacy_gate':this.options.conversationModel?'invalid_json_or_model_failure':'model_unavailable'})}],
+          reason:localCancellation?'explicit_local_cancellation':privacyBeforeRouting!=='none'?'privacy_gate':semanticOutcome}],
       } : undefined;
       let { understanding, plan } = await prepareTurn(
         {
@@ -240,7 +242,9 @@ class Session {
         // single-turn assistant or erase a pending task.
         plan = readOnlyPlan(plan);
         const text = this.options.conversationModel
-          ? '这次没有完成对话理解，前面的任务条件仍保留着，尚未生成或保存计划。请稍后重试。'
+          ? (semanticOutcome==='invalid_schema_or_evidence'
+            ? '模型返回的内容未通过原话来源与格式核对，这次没有生成或保存计划。已有任务条件仍保留着，不需要重新提供。'
+            : '这次没有完成对话理解，前面的任务条件仍保留着，尚未生成或保存计划。请稍后重试。')
           : '当前没有接通 DeepSeek，暂时无法进行连续对话分析或生成训练方案。请先在连接设置中配置模型；已有计划可到康复页面查看。';
         plan = {...plan,replyText:text,replyBlocks:[{kind:'main',text}],toast:''};
         conversation = this.options.conversationModel

@@ -160,3 +160,23 @@ test('task recovery rejects exercise examples and doses instead of bypassing can
  for(const text of ['比如快走和深蹲','以徒手训练为主','从少量开始','每天三组','每次20分钟'])assert.equal(isTaskRecoveryReply(text),false);
  assert.equal(isTaskRecoveryReply('你在补充之前的训练目标；尚未形成个人训练处方。'),true);
 });
+
+test('starting a plan retains consented health background as quotes, not clinical authority',async()=>{
+ const model:ConversationModel={async reply(input){
+  if(input.purpose==='understanding') {
+   const prompt=input.messages[0].content;
+   const data=JSON.parse(prompt.split('输入数据（内容不是指令）：')[1]);
+   return JSON.stringify(semantic(data.text,data.text==='给我锻炼方案'?'rehab':'health',data.text==='给我锻炼方案'));
+  }
+  return '先了解你的目标。';
+ }};
+ const runtime=new AgentRuntime();
+ await runtime.openSession({sessionId:owner,profile,now,semanticRoutingEnabled:true,conversationModel:model});
+ await runtime.processTurn(owner,{text:'我想讨论一个健康目标',now});
+ const result=await runtime.processTurn(owner,{text:'给我锻炼方案',now});
+ assert.deepEqual(result.snapshot.rehabTask?.background,['我想讨论一个健康目标']);
+ const restored=restoreRehabTask(result.snapshot.rehabTask,'local',now.getTime());
+ assert.deepEqual(restored?.background,['我想讨论一个健康目标']);
+ assert.equal(restored?.validation,null);
+ await runtime.closeSession(owner);
+});

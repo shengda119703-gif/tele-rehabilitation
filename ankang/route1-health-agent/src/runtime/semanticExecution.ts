@@ -222,6 +222,7 @@ export async function executeSemanticTurn(input: {
     // Natural-language planning must use the real analysis pipeline. The local
     // assessment filter remains available through explicit product navigation.
     const task = updateRehabTask(input.rehabTask ?? null,text,input.taskContext ?? 'local',(input.now ?? new Date()).getTime());
+    if(!input.rehabTask) task.background=context.map(message=>message.text).filter(text=>text.length<=4000).slice(-6);
     input.setRehabTask?.(task);
     if (!hasEquipmentStatement(task.messages.join('\n'))) {
       return local('可以先整理一份待核对的草案。你在家能用哪些器材，还是希望徒手练习？','rehab_missing_equipment');
@@ -339,6 +340,7 @@ export async function executeSemanticTurn(input: {
       question: text,
       previous_user_messages: context,
       active_task_user_statements: recoveringTask?.messages ?? [],
+      prior_task_user_statements: recoveringTask?.background ?? input.rehabTask?.background ?? [],
       planning_state: recoveringTask ? 'unfinished_no_executable_plan' : null,
       uncertainty: semantic.uncertain,
       public_knowledge: facts,
