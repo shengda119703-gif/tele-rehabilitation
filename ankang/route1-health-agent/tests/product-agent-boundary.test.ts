@@ -2,6 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {AgentRuntime} from '../src/runtime/session';
 import {canUseModuleTools} from '../src/runtime/operationalIntent';
+
+test('original self rehab questions retain the whole-clause owner boundary',()=>{
+  for(const text of ['我今天练什么？','我最近肩膀怎么样？','我上次训练完成得怎么样？'])
+    assert.equal(canUseModuleTools(text),true,text);
+  for(const text of ['张三最近肩膀怎么样？','我妈妈上次训练完成得怎么样？','如果我上次训练完成得怎么样？',
+    '我不想查看上次训练','我最近肩膀张三怎么样？'])
+    assert.equal(canUseModuleTools(text),false,text);
+});
 const now=new Date('2026-10-11T09:00:00+08:00');
 const profile={name:'TEST',age:65,conditions:[],medications:[],familyContact:'',familyPhone:'',mobility:'unknown',usesCane:false,nightVision:'unknown',cognition:'unknown',familySharing:'denied'} as const;
 test('documented local queries and navigation remain available with the complete grammar',()=>{

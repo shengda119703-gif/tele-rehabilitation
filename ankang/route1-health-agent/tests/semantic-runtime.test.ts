@@ -577,17 +577,38 @@ test('explicit treatment decisions do not reach program operations even with a p
   await runtime.closeSession(owner);
 });
 
-test('generic plan-generation intent opens the existing assessment-screened app plan flow', async () => {
-  const text = '帮我制定一套在家的训练计划';
-  const {model,calls} = recordingModel(base('rehab',{
+test('natural-language planning executes real retrieval and candidate validation without adopting or navigating', async () => {
+  const text = '帮我制定一套在家的训练计划，家里只有稳固椅';
+  const semantic = base('rehab',{
     goal:'生成居家训练计划',
     intents:[{type:'plan_generation',route:'rehab',goal:'生成居家训练计划',evidence:text}],
-  }));
-  const runtime = await open({conversationModel:model,productTools:{async replyToText(){return null;}}});
+  });
+  const calls: ModelInput[] = [];
+  const reads: string[] = [];
+  let writes = 0;
+  const model: ConversationModel = {async reply(input) {
+    calls.push(input);
+    if (calls.length === 1) return JSON.stringify(semantic);
+    if (calls.length === 2) return JSON.stringify({version:1,calls:[
+      {name:'rehab.search_knowledge',arguments:{query:'T-LOW-003'},reason:'查询真实动作卡'}],uncertainties:[]});
+    return JSON.stringify({version:1,goal:'居家活动',summary:'TEST 候选',
+      algorithm_input:{goal:'居家活动',region:'膝',equipment:['稳固椅'],restrictions:[],level:null,screening_confirmed:false},
+      candidate_actions:[{exercise_id:'T-LOW-003',reason:'动作库返回'}],
+      doctor_review_required:true,doctor_review_reasons:['需要核对'],uncertainties:[]});
+  }};
+  const runtime = await open({conversationModel:model,
+    rehabReads:{async read(call){reads.push(call.name);return receipt(call.name);}},
+    rehabOperations:{async call(){writes++;throw Error('must not write');}},
+    productTools:{async replyToText(){throw Error('must not replace candidate generation with navigation');}}});
   const turn = await runtime.processTurn(owner,{text,now});
-  assert.equal(turn.agent?.navigation,'automatic_plan');
-  assert.match(turn.reply.text,/本地候选计划流程|有效评估/);
-  assert.equal(calls.filter(call=>call.purpose==='reply').length,0);
+  assert.equal(turn.agent?.navigation,undefined);
+  assert.match(turn.reply.text,/候选|专业审核/);
+  assert.match(turn.reply.text,/T-LOW-003/);
+  assert.equal(calls.length,3);
+  assert.deepEqual(reads,['rehab.get_training_plan','rehab.get_training_history','rehab.get_recent_assessments']);
+  assert.equal(writes,0);
+  assert.equal(JSON.stringify(calls).includes('PERSONAL_RECORD_MUST_STAY_LOCAL'),false);
+  assert.doesNotMatch(turn.reply.text,/rehab\.|algorithm_input|needs_review|正在检索/);
   assert.deepEqual(turn.snapshot.events,[]);
   await runtime.closeSession(owner);
 });

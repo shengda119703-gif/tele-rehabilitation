@@ -14,6 +14,9 @@ export function canUseModuleTools(input:string):boolean {
   // middle ("今天张三安排有哪些") must not silently resolve to the current owner.
   const words=['请','帮我','帮忙','我','本人','自己','你','今天','今日','最近','下一步','下一项','有','哪些','什么','怎么','能','做','练','功能','能力','想','要','知道','了解','告诉','查看','看看','查','查询','一下','列出','打开','进入','切到','的','和','与','及','还有','以及','已保存','保存','健康','记录','数据','概况','血压','血糖','身体','档案','药物','药品','药单','药清单','用药','药','清单','安排','任务','训练','康复','计划','评估','结果','历史','资料','附件','报告','文件','文档','家庭','家属','绑定','共享','权限','状态','情况','通知','提醒','设备','语音','同步','HealthKit','首页','健身','体态','居家','管家','设置','页面','页','模块','本地','连接','有没有','变化','哪些','所有','目前','现在'];
   words.push('是','可以','最新','然后','汇总');
+  // Self rehabilitation queries used by the original three-question bridge.
+  // These are finite anatomy/result tokens, never arbitrary person-name text.
+  words.push('上次','完成','得','怎么样','肩膀','肩','肘','腕','髋','膝','踝','颈','躯干','手指');
   words.sort((a,b)=>b.length-a.length);
   const clauses=text.split(/[，,、。；;！？?]/).map(s=>s.replace(/\s/g,''));
   // Greedy token scanning is bounded by input length. An alternation with +

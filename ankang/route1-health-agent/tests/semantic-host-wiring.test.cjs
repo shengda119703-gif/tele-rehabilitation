@@ -9,6 +9,33 @@ const profile={name:'SYNTHETIC TEST',age:40,conditions:[],medications:[],mobilit
 const parsed={version:1,route:'chat',goal:'普通聊天',mentions:[],events:[],relations:[],uncertain:[],suggested_tool:null};
 function port(){const values=new Map();return {read:k=>structuredClone(values.get(k)??null),write:(k,v)=>values.set(k,structuredClone(v)),remove:k=>values.delete(k),profiles:()=>[],attachments:{list:async()=>[],clear:async()=>{}}};}
 
+test('real disk ProductService restart restores only the same-source TEST rehab task',async()=>{
+ const {ProductLocalStore}=require('../scripts/product-local-store.cjs');
+ const scratch=path.resolve(__dirname,'../.runtime');fs.mkdirSync(scratch,{recursive:true});
+ const root=fs.mkdtempSync(path.join(scratch,'v2-task-disk-'));
+ // Retain this isolated TEST directory for reproducible disk evidence; no user files.
+ const now=new Date('2026-10-19T12:00:00+08:00');
+ const input='帮我制定居家训练计划';
+ const model={reply:async()=>JSON.stringify({...parsed,route:'rehab',goal:input,
+   intents:[{type:'plan_generation',route:'rehab',goal:input,evidence:input}]})};
+ const make=()=>new ProductService(new ProductLocalStore(root),undefined,undefined,{},undefined,
+   undefined,undefined,()=>model,undefined,{semanticRoutingEnabled:true});
+ const first=make();await first.request('profile.save','TEST_DISK',{profile},now);
+ const reply=await first.request('chat','TEST_DISK',{text:input,_conversationScope:'SYNTHETIC:TEST'},now);
+ assert.match(reply.turn.reply.text,/哪些器材|徒手/);
+ assert.equal(reply.turn.snapshot.rehabTask.revision,1);
+ const reopened=make();
+ const state=await reopened.request('snapshot','TEST_DISK',{},now);
+ assert.equal(state.state.rehabTask.revision,1);
+ assert.deepEqual(state.state.rehabTask.messages,[input]);
+ const cancelled=await reopened.request('chat','TEST_DISK',{text:'取消',_conversationScope:'SYNTHETIC:TEST'},now);
+ assert.equal(cancelled.turn.snapshot.rehabTask,null);
+ assert.match(cancelled.turn.reply.text,/取消/);
+ const third=make();const after=await third.request('snapshot','TEST_DISK',{},now);
+ assert.equal(after.state.rehabTask,null);
+ assert.equal(cancelled.turn.semanticExecution.parser_status,'local_fallback');
+});
+
 test('ProductService opt-in reaches understanding then reply, preserves owner and private boundary',async()=>{
  const calls=[];let configured=true;
  const service=new ProductService(port(),undefined,undefined,{},undefined,undefined,undefined,

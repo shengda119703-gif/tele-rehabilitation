@@ -50,7 +50,7 @@ test('empty, duplicate and assessment candidates are rejected rather than approv
 test('unknown cards and invented dose never pass', () => {
   assert.equal(validateRehabPlan({...candidate(),candidate_actions:[{exercise_id:'T-TEST-999',reason:'不存在'}]}).status,'rejected');
   const validation = validateRehabPlan({...candidate(),candidate_actions:[{exercise_id:card.id,reason:'候选',dose:'SYNTHETIC INVENTED DOSE'}]});
-  assert.equal(validation.status,'needs_review');
+  assert.equal(validation.status,'rejected');
   assert.ok(validation.reasons.some(r=>r.startsWith('dose_not_verbatim')));
 });
 
@@ -67,6 +67,9 @@ test('actual local personal reads remain outside every candidate model request',
   assert.equal(result.validation?.status,'needs_review');
   assert.doesNotMatch(JSON.stringify(calls),/SYNTHETIC_STORED_MARKER|SYNTHETIC_PRIVATE_NOTES|SYNTHETIC_TEST/);
   assert.match(calls[1].messages[0].content,/T-LOW-003/);
+  const retrieved = result.toolResults.find(item => item.name === 'rehab.search_knowledge')!.data as {sourceRefs:string[]}[];
+  assert.deepEqual(retrieved[0].sourceRefs,card.sourceRefs);
+  assert.ok(card.sourceRefs.length > 0);
 });
 
 test('a valid card not returned by executed tools never reaches candidate generation', async () => {

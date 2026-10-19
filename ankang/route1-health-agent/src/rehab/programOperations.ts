@@ -218,8 +218,12 @@ export async function commitRehabProgramOperation(input: {
   pending: PendingRehabOperation;
   operations: RehabOperationPort;
   check?: () => void;
+  now?: number;
 }): Promise<unknown[]> {
   const check=input.check??(()=>{});
+  const now=input.now??Date.now();
+  if (!Number.isFinite(input.pending.createdAt) || input.pending.createdAt > now ||
+      now-input.pending.createdAt > 5*60*1000) throw Error('Rehab operation confirmation expired');
   const results: unknown[]=[];
   for (const operation of input.pending.proposal.operations) {
     check();

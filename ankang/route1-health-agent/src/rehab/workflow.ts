@@ -243,7 +243,7 @@ export function validateRehabPlan(candidate: RehabCandidatePlan, cards = catalog
       return { status: 'rejected', reasons: ['action_card_missing_required_conditions'], plan: candidate };
     }
     if (item.dose !== undefined && !card.sourceDose.includes(item.dose)) {
-      reasons.push('dose_not_verbatim_from_action_card:' + item.exercise_id);
+      return {status:'rejected',reasons:['dose_not_verbatim_from_action_card:' + item.exercise_id],plan:candidate};
     }
   }
   if (candidate.algorithm_input.restrictions.some(v => v.trim())) reasons.push('individual_restrictions_require_review');
@@ -289,7 +289,8 @@ async function executeCall(
     const cards = searchCards(call.arguments.query ?? '');
     return { name: call.name, data: cards.map(c => ({
       id:c.id,name:c.name,kind:c.kind,region:c.region,level:c.level,equipment:c.equipment,
-      startConditions:c.startConditions,stopConditions:c.stopConditions,sourceDose:c.sourceDose,content:c.content
+      startConditions:c.startConditions,stopConditions:c.stopConditions,sourceDose:c.sourceDose,
+      sourceRefs:c.sourceRefs,content:c.content
     })) };
   }
   if (call.name === 'rehab.search_guidance') {
@@ -511,7 +512,8 @@ export function renderRehabDraft(result: RehabPlanValidation | null): string {
   const p=result.plan;
   const lines=['以下仅为动作库候选，尚未成为个人训练处方。'];
   if(p.candidate_actions.length) lines.push('候选动作：'+p.candidate_actions.map(a=>a.exercise_id).join('、'));
-  if(result.algorithm_result?.status) lines.push('规则筛选：'+result.algorithm_result.status);
+  if(result.algorithm_result?.status === 'no_match') lines.push('当前条件没有匹配的规则方案。');
+  else if(result.algorithm_result?.status === 'needs_review') lines.push('现有资料还不足以核对个人适用条件。');
   if(result.status==='needs_review') lines.push('当前方案仍需核对本人评估、动作开始条件、当次试做及必要的专业审核；普通确认不能替代审核。');
   else lines.push('这是一份候选方案，尚未写入你的训练计划。');
   return lines.join('\n');

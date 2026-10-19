@@ -5,7 +5,20 @@ import {
   isConfirmation,
   isCancellation,
   isRehabProgramIntent,
+  commitRehabProgramOperation,
 } from '../src/rehab/programOperations';
+
+test('expired and future confirmation timestamps are rejected before host writes',async()=>{
+  for(const createdAt of [0,1_000_001,Number.NaN]){
+    let writes=0;
+    await assert.rejects(commitRehabProgramOperation({now:1_000_000,
+      pending:{createdAt,previews:[],proposal:{version:1,operations:[{name:'rehab.plan.change',
+        arguments:{plan_id:'TEST',expected_revision:1,patch:{name:'TEST'}},evidence:'TEST'}],
+        requires_confirmation:true,summary:'TEST',uncertainties:[]}},
+      operations:{async call(){writes++;return {status:'applied'};}}}));
+    assert.equal(writes,0);
+  }
+});
 
 test('program operation proposal requires explicit confirmation and one operation', () => {
   const valid = parseRehabProgramPlan(JSON.stringify({

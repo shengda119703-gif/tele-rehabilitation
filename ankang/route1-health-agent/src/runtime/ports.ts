@@ -5,6 +5,7 @@ import type { HealthEvent } from '../pipeline/events';
 export interface StoredSession {
   revision: number;
   health: HealthRecordSnapshot;
+  rehabTask?: import('../rehab/taskState').RehabTaskState | null;
 }
 export type PersistenceReceipt =
   | { status: 'saved' | 'memory-only' | 'not-configured' | 'not-saved' | 'loaded' | 'pending'; revision: number }

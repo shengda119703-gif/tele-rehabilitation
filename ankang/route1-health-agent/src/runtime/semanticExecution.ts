@@ -11,6 +11,7 @@ import type { ProductAgent, AgentResult } from '../product/ProductAgent';
 import { runRehabWorkflow, renderRehabDraft, rehabAnswerTask, runRehabReadOnlyAnswer } from '../rehab/workflow';
 import { previewRehabProgramOperation, commitRehabProgramOperation, isConfirmation, isCancellation, isRehabProgramIntent, renderOperationPreview, renderOperationResult, type PendingRehabOperation, type RehabOperationPort } from '../rehab/programOperations';
 import { resolveScopeFallback } from './scopeFallback';
+import {hasEquipmentStatement,isEquipmentUpdate,updateRehabTask,taskUserText,type RehabTaskState} from '../rehab/taskState';
 
 export interface SemanticStage {
   stage: 'understanding' | 'tool' | 'reply';
@@ -63,10 +64,14 @@ export async function executeSemanticTurn(input: {
   reads?: Pick<RehabToolPort, 'read'>; participantId: string; rehabOperations?: RehabOperationPort;
   productTools?: Pick<ProductAgent, 'replyToText'>; now?: Date;
   pendingRehabOperation?: PendingRehabOperation | null;
+  rehabTask?: RehabTaskState | null;
+  taskContext?: string;
+  setRehabTask?: (task: RehabTaskState | null) => void;
   setPendingRehabOperation?: (pending: PendingRehabOperation | null) => void;
   check: () => void; trace: SemanticExecutionTrace;
 }): Promise<{ plan: ElderTurnPlan; conversation: ChatMessage['conversation']; agent?: AgentResult }> {
-  const { semantic, text, context, model, check, trace } = input;
+  const { text, context, model, check, trace } = input;
+  let semantic = input.semantic;
   let plan = input.readOnly ? readOnlyPlan(input.plan) : input.plan;
   const local = (reply: string, reason: string) => {
     trace.stages.push({ stage: 'reply', status: 'local', reason });
@@ -77,7 +82,21 @@ export async function executeSemanticTurn(input: {
       input.plan.familyEventsToAppend.length || input.plan.sharingAuditEntries.length || input.plan.medicationMissed ||
       input.plan.shareFindingIds.length || input.plan.shareFamilyEventIds.length))) {
     input.setPendingRehabOperation?.(null);
+    input.setRehabTask?.(null);
     return local(plan.replyText, 'existing_safety_or_health_workflow');
+  }
+
+  if ((input.rehabTask || input.pendingRehabOperation) && isCancellation(text)) {
+    input.setRehabTask?.(null);
+    input.setPendingRehabOperation?.(null);
+    return local('好的，这份候选方案先取消，不会采用或修改训练计划。','rehab_task_cancelled');
+  }
+  const equipmentUpdate = Boolean(input.rehabTask && isEquipmentUpdate(text));
+  if (equipmentUpdate && (semantic.route === 'chat' || semantic.route === 'rehab')) {
+    semantic = {...semantic,route:'rehab',intents:[{type:'plan_generation',route:'rehab',
+      goal:'根据用户补充条件修订当前康复候选',evidence:text}]};
+  } else if (input.rehabTask && !(semantic.route === 'rehab' && rehabAnswerTask(semantic) === 'plan_generation')) {
+    input.setRehabTask?.(null);
   }
 
   if (input.pendingRehabOperation && input.rehabOperations) {
@@ -87,7 +106,8 @@ export async function executeSemanticTurn(input: {
     }
     if (isConfirmation(input.text)) {
       try {
-        const results = await commitRehabProgramOperation({pending:input.pendingRehabOperation,operations:input.rehabOperations,check});
+        const results = await commitRehabProgramOperation({pending:input.pendingRehabOperation,operations:input.rehabOperations,check,
+          now:(input.now??new Date()).getTime()});
         input.setPendingRehabOperation?.(null);
         trace.stages.push({stage:'tool',status:'passed',reason:'rehab_operation_committed_after_confirmation'});
         return {plan:withReply(plan, renderOperationResult(results[0])),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
@@ -167,7 +187,7 @@ export async function executeSemanticTurn(input: {
       trace.stages.push({stage:'tool',status:'blocked',reason:'rehab_operation_uncertainty'});
       return {plan:withReply(plan,rehabReply ? rehabReply+'\\n\\n'+operationReply : operationReply),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
     }
-    input.setPendingRehabOperation?.({proposal:operation.plan,previews:operation.previews,createdAt:Date.now()});
+    input.setPendingRehabOperation?.({proposal:operation.plan,previews:operation.previews,createdAt:(input.now??new Date()).getTime()});
     trace.stages.push({stage:'tool',status:'passed',reason:'rehab_operation_preview_ready_for_confirmation'});
     const combinedReply = rehabReply ? rehabReply+'\\n\\n另外，我准备这样调整：\\n'+operationReply.replace(/^我准备这样修改：\\n?/, '') : operationReply;
     return {plan:withReply(plan,combinedReply),conversation:{provider:'local',status:'unavailable',reason:'not_configured'}};
@@ -183,20 +203,25 @@ export async function executeSemanticTurn(input: {
       return local(explained.text,'rehab_read_only_answer');
   }
   if (semantic.route === 'rehab' && rehabAnswerTask(semantic) === 'plan_generation') {
-    // The product already has an assessment-driven, local plan workflow with
-    // eligibility rules, explicit screening checkboxes, confirmation and real save.
-    // Route generic activity-plan requests there instead of treating an LLM JSON
-    // candidate as a patient-ready plan.
-    const reply = '我会打开本地候选计划流程。它会读取已保存的有效评估，按本地规则筛选动作，并要求你确认当前不适、支撑和陪同条件后才允许保存。没有有效评估或存在疾病/术后限制时，不会自动生成可执行计划。';
-    trace.stages.push({stage:'tool',status:'passed',reason:'route_to_existing_assessment_driven_plan_ui'});
-    if (input.productTools) {
-      return {
-        plan:withReply(plan,reply),
-        conversation:{provider:'local',status:'unavailable',reason:'not_configured'},
-        agent:{reply,steps:[],navigation:'automatic_plan'},
-      };
+    // Natural-language planning must use the real analysis pipeline. The local
+    // assessment filter remains available through explicit product navigation.
+    const task = updateRehabTask(input.rehabTask ?? null,text,input.taskContext ?? 'local',(input.now ?? new Date()).getTime());
+    input.setRehabTask?.(task);
+    if (!hasEquipmentStatement(task.messages.join('\n'))) {
+      return local('可以先整理一份待核对的草案。你在家能用哪些器材，还是希望徒手练习？','rehab_missing_equipment');
     }
-    return local(reply+' 请在康复模块打开“本地候选计划”。','automatic_plan_ui_unavailable');
+    const result = await runRehabWorkflow({model, semantic, userText:taskUserText(task),
+      reads:input.reads, participantId:input.participantId, check});
+    check();
+    input.setRehabTask?.({...task,status:result.validation?.status === 'needs_review'?'draft':'blocked',validation:result.validation});
+    for (const tool of result.toolResults) {
+      const failed = typeof tool.data === 'object' && tool.data !== null &&
+        'status' in tool.data && tool.data.status === 'failed';
+      trace.stages.push({stage:'tool',status:failed?'failed':'passed',tool:tool.name});
+    }
+    trace.stages.push({stage:'reply',status:result.validation?'blocked':'empty',
+      reason:result.validation?'candidate_requires_professional_review':'candidate_unavailable'});
+    return local(renderRehabDraft(result.validation), 'rehab_candidate_draft');
   }
 
   const requests: SemanticToolRequest[] = semantic.tool_requests?.length ? [...semantic.tool_requests] : semantic.suggested_tool
