@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#292630">
+  <title>安康 · 动作回看</title>
+  <link rel="stylesheet" href="review.css">
+</head>
+<body>
+  <aside class="desktop-rail" aria-label="视频列表">
+    <div class="brand"><span class="brand-mark">安</span>安康<span>动作回看</span></div>
+    <h1>看看哪里做得好。</h1>
+    <p class="rail-intro">动作、轨迹、输出，跟着画面看。</p>
+    <nav id="desktop-clips" class="clip-list"></nav>
+    <div class="rail-bottom"><span class="status-dot"></span> 本地视频分析 <span>上滑展开数据</span></div>
+  </aside>
+  <main class="app" id="app" aria-label="视频动作分析">
+    <header class="topbar">
+      <button class="icon-button" id="choose" aria-label="选择视频"><svg class="icon"><use href="icons.svg#back"/></svg></button>
+      <div class="clip-heading"><span id="clip-title">动作回看</span><span id="clip-view"></span></div>
+      <button class="icon-button" id="annotations" aria-label="隐藏动作标注" aria-pressed="true"><svg class="icon"><use href="icons.svg#body"/></svg></button>
+    </header>
+    <section class="visual" id="visual" aria-label="动作视频">
+      <div class="video-frame" id="video-frame">
+        <video id="video" playsinline muted preload="metadata" aria-label="动作分析原片"></video>
+        <canvas id="overlay" aria-label="关节点、膝部对齐与杠铃轨迹标注"></canvas>
+      </div>
+      <div class="source-badge" id="source-badge">AI生成样片</div>
+      <div class="view-pair"><button id="other-view">查看侧面 <span>↗</span></button></div>
+      <div class="video-error" id="video-error" role="alert" hidden></div>
+    </section>
+    <section class="sheet" id="sheet" aria-label="动作数据面板">
+      <button id="sheet-handle" class="sheet-handle" aria-label="展开或收起数据" aria-expanded="false" aria-controls="sheet-scroll"><span class="grip"></span><span class="handle-text">上滑查看数据</span><svg class="icon"><use href="icons.svg#up"/></svg></button>
+      <div class="sheet-scroll" id="sheet-scroll">
+        <section class="snapshot" aria-label="当前关键数据">
+          <div class="featured" id="featured"><div class="featured-number" id="featured-value">—</div><div><div id="featured-label">读取动作数据</div><p id="featured-cue">打开视频后开始</p></div></div>
+          <div class="quick-metrics" id="quick-metrics"></div>
+        </section>
+        <div class="expanded-content" id="expanded-content" inert>
+          <div class="section-heading"><h2>动作数据</h2><div class="tabs" role="tablist" aria-label="数据范围"><button id="live-tab" role="tab" aria-selected="true">当前</button><button id="summary-tab" role="tab" aria-selected="false">全段</button></div></div>
+          <div class="metric-grid" id="primary-metrics"></div>
+          <section class="metric-section"><h2>轨迹与控制</h2><div class="metric-grid" id="control-metrics"></div></section>
+          <section id="tempo-section" class="metric-section"><h2>动作节奏 <span>全段</span></h2><div class="metric-grid" id="tempo-metrics"></div></section>
+          <section id="trajectory-section" class="metric-section" hidden><h2>杠铃轨迹</h2><div class="trajectory" id="trajectory"></div></section>
+          <section class="metric-section"><h2>重点回看</h2><div class="highlights" id="highlights"></div></section>
+          <section class="details-section"><details id="data-details"><summary>数据明细与计算方式</summary><div id="methods" class="methods"></div><a id="csv-download" download>下载逐帧数据 CSV</a><a id="summary-download" download>下载全段数据 CSV</a><div class="table-scroll"><table><caption>全段数据</caption><thead><tr><th>指标</th><th>数值</th><th>评价</th></tr></thead><tbody id="data-table"></tbody></table></div></details></section>
+          <footer class="parameters" id="parameters"></footer>
+        </div>
+      </div>
+      <div class="transport">
+        <div class="seek-row"><span id="elapsed">00:00</span><input id="seek" type="range" min="0" max="10.1667" step="0.01" value="0" aria-label="视频进度"><span id="duration">00:10</span></div>
+        <div class="play-row"><button class="icon-button skip" id="previous" aria-label="上一段视频"><svg class="icon"><use href="icons.svg#previous"/></svg></button><button id="play" class="play-button" aria-label="播放视频"><svg class="icon"><use href="icons.svg#play"/></svg></button><button class="icon-button skip" id="next" aria-label="下一段视频"><svg class="icon"><use href="icons.svg#next"/></svg></button></div>
+      </div>
+    </section>
+  </main>
+  <dialog id="chooser"><div class="dialog-heading"><h2>选择视频</h2><button class="icon-button" id="close-chooser" aria-label="关闭选择">×</button></div><div id="mobile-clips" class="clip-list"></div></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script src="review.js"></script>
+</body>
+</html>
