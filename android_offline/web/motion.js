@@ -57,7 +57,8 @@ function result(s,r,size,goal=null,bar=null,calibration=null){
 function update(store,id,values){store.change(v=>{const j=v.jobs.find(j=>j.id===id);if(!j)throw Error('任务已变化');Object.assign(j,values);});}
 async function analyze(store,job,file,calibration=null){
  if(active)throw Error('已有本地分析正在进行');
- const token={cancelled:false},model=new Model();active={token,model,job:job.id};let video,url;
+ const token={cancelled:false},model=new Model(),trace=root.RehabMotionData?new root.RehabMotionData.TraceCollector():null;
+ const reviewOwner=store.value.owner;active={token,model,job:job.id};let video,url,reviewSaved=false,committed=false;
  try{
   const s=await spec(job.exercise),goal=job.entry_key?store.value.plans.find(p=>p.id===job.plan_id)?.items.find(i=>i.key===job.entry_key):null;
   video=document.createElement('video');video.muted=true;video.playsInline=true;video.preload='auto';url=URL.createObjectURL(file);
@@ -72,6 +73,7 @@ async function analyze(store,job,file,calibration=null){
    const t=video.currentTime;if(engine.last!==null&&t<=engine.last)continue;
    const began=performance.now(),b=await bitmap(video,width,token),inferred=await model.call('frame',{image:b.image,timestamp:t*1000},[b.image]),raw=E.measure(s,job.side,inferred.result,b.w,b.h);
    size=[b.w,b.h];samples.push([t,raw]);engine.consume(t,raw);
+   trace?.add(t,{...E.points(inferred.result,b.w,b.h),...root.RehabMotionData.handPoints(inferred.result,b.w,b.h,job.side)},b.w,b.h);
    if(s.id.startsWith('fitness_')){const p=E.points(inferred.result,b.w,b.h);fitnessFrames.push({t,metrics:Object.fromEntries(observable[s.id].map(metric=>[metric,E.measure({id:s.id,metric},job.side,inferred.result,b.w,b.h)])),points:Object.fromEntries(['shoulder','elbow','wrist','hip','knee','ankle'].filter(n=>p[job.side+'_'+n]).map(n=>[n,p[job.side+'_'+n].map((v,i)=>v/(i?b.h:b.w))]))});}
    // Media time remains original even when CPU throughput/resolution is reduced.
    const elapsed=performance.now()-began;if(elapsed>220){slow++;if(slow>=5){if(!calibration)width=480;step=.18;}if(slow>=15){if(!calibration)width=384;step=.24;}}
@@ -82,9 +84,17 @@ async function analyze(store,job,file,calibration=null){
   const final=s.id.startsWith('fitness_')?fitnessResult(s,job.side,fitnessFrames,size):result(s,report,size,goal);
   if(barbell)final.barbell=barbell.automatic?barbell:barReport(barbell,calibration);
   if(automatic)final.equipment_analysis={mode:'automatic',error:trajectory?.automatic_error||null};
+  // Local annotation data is separate from health JSON/cloud payloads. Failure
+  // to cache this optional view must not invalidate an actual measurement.
+  if(trace?.rows.length&&F.put){
+   try{const saved=trace.export();if(root.RehabMotionData.validateTrace(saved)){await F.put('review:'+job.id,{kind:'motion-review',ownerId:reviewOwner,jobId:job.id,trace:saved});reviewSaved=true;final.review_trace={version:saved.version,local_only:true};}}
+   catch{/* The original result is still saved below. */}
+  }
+  if(token.cancelled||store.value.owner!==reviewOwner)throw Error('本次分析已结束，原录像保留');
   update(store,job.id,{state:'done',message:'分析完成',result:final,model_info:models.models,measurement_version:E.VERSION,finished_at:new Date().toISOString()});
+  committed=true;
  }catch(e){try{update(store,job.id,{state:'failed',message:e.message,finished_at:new Date().toISOString()});}catch(storageError){errors.set(job.id,'手机存储不足，本次结果未保存。请导出已有记录后清理空间。');}}
- finally{model.close();video?.pause();if(video){video.removeAttribute('src');video.load();}if(url)URL.revokeObjectURL(url);active=null;}
+ finally{if(reviewSaved&&!committed)try{await F.remove('review:'+job.id);}catch{}model.close();video?.pause();if(video){video.removeAttribute('src');video.load();}if(url)URL.revokeObjectURL(url);active=null;}
 }
 let live=null;
 async function startLive(s,side){if(active||live)throw Error('请先结束当前分析');const model=new Model(),id=crypto.randomUUID();live={id,model,s,side,engine:new E.Engine(s,side),start:null,previous:-1};try{await model.init(s);return{id};}catch(e){stopLive();throw e;}}

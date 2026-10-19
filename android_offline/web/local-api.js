@@ -187,6 +187,13 @@ async function request(path,opts={}){
   }
   if(route.startsWith('/jobs/')){
    const parts=route.split('/'),j=findJob(parts[2]);
+   if(parts[3]==='review'){
+    if(method!=='GET')failure('回看数据只读',405);
+    if(j.state!=='done'||!j.result?.review_trace)failure('本次没有本地标注数据',404);
+    const file=await PS.files.get('review:'+j.id);
+    if(!file||file.kind!=='motion-review'||file.ownerId!==owner||file.jobId!==j.id||!root.RehabMotionData?.validateTrace(file.trace))failure('本次没有本地标注数据',404);
+    return copy(file.trace);
+   }
    if(parts[3]==='video'){
     if(method==='DELETE'){await PS.files.remove('video:'+j.id);store.change(v=>{v.jobs.find(x=>x.id===j.id).video_available=false;});return{ok:true};}
     const file=await PS.files.get('video:'+j.id);if(!file)failure('原始录像已删除',404);return new Response(file.blob,{headers:{'Content-Type':file.blob.type||'video/mp4'}});
