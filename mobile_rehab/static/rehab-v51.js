@@ -4,13 +4,15 @@
   const escape=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const artwork=Object.freeze({shoulder_flexion:'flexion',shoulder_abduction:'abduction',shoulder_extension:'extension'});
   function picture(id,large=false,candidatePreview=false){
+    const cover=root.RehabAssessmentArtwork?.get(id);
+    if(cover)return `<figure class="rv-photo rv-assessment-photo ${large?'rv-photo-large':''}"><img src="${escape(cover.url)}" alt="${escape(cover.alt)}" loading="lazy" decoding="async"><figcaption>动作示意</figcaption></figure>`;
     const preview=candidatePreview&&root.RehabCandidateImages?.picture(id,large);if(preview)return preview;
     return artwork[id]?`<figure class="rv-photo ${large?'rv-photo-large':''}"><img src="/static/assets/rehab-v51/${artwork[id]}.jpg" alt="待审核视觉封面" loading="lazy"><figcaption>视觉示例 · 未核验，不作为示教</figcaption></figure>`:`<div class="rv-photo rv-no-photo ${large?'rv-photo-large':''}">动作图片待核验</div>`;
   }
-  function thumb(id,candidatePreview=false){const preview=candidatePreview&&root.RehabCandidateImages?.thumb(id);if(preview)return preview;return artwork[id]?`<img class="rv-thumb" src="/static/assets/rehab-v51/${artwork[id]}.jpg" alt="未核验视觉封面" loading="lazy">`:'<span class="rv-thumb rv-placeholder" aria-hidden="true">—</span>';}
+  function thumb(id,candidatePreview=false){const cover=root.RehabAssessmentArtwork?.get(id);if(cover)return `<img class="rv-thumb rv-assessment-thumb" src="${escape(cover.url)}" alt="${escape(cover.alt)}" loading="lazy" decoding="async">`;const preview=candidatePreview&&root.RehabCandidateImages?.thumb(id);if(preview)return preview;return Object.hasOwn(artwork,id)?`<img class="rv-thumb" src="/static/assets/rehab-v51/${artwork[id]}.jpg" alt="未核验视觉封面" loading="lazy">`:'<span class="rv-thumb rv-placeholder" aria-hidden="true">—</span>';}
   function order(items){
     const ids=Object.keys(artwork),rank=id=>ids.includes(id)?ids.indexOf(id):ids.length;
-    const pictured=new Set(items.filter(x=>artwork[x.id]||root.RehabCandidateImages?.thumb(x.id)).map(x=>x.id));
+    const pictured=new Set(items.filter(x=>root.RehabAssessmentArtwork?.get(x.id)||artwork[x.id]||root.RehabCandidateImages?.thumb(x.id)).map(x=>x.id));
     return items.slice().sort((a,b)=>Number(pictured.has(b.id))-Number(pictured.has(a.id))||rank(a.id)-rank(b.id));
   }
   function context(source,day){return ['LIVE_CAMERA','REPLAY_FILE'].includes(source)&&/^\d{4}-\d{2}-\d{2}$/.test(day||'')?`rehabSource=${source}&rehabDay=${day}`:'';}

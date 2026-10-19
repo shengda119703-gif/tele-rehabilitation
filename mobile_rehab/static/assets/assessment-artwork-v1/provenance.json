@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "file": "elbow-seated.webp",
+      "sha256": "01c9257fa4d923e5393dded36ce686f4bb4e9067a65718febb442acae3bf3ada",
+      "source_sha256": "f5045b3505c89da6655b7c8fbf495657f6c8ee6575702c7bc7dcc581dd977ca0",
+      "width": 960,
+      "height": 1200,
+      "bytes": 36786,
+      "generator": "built-in image_gen",
+      "date": "2026-10-19",
+      "scope": "catalogue_cover",
+      "pose_validation": "visual_overview_only"
+    },
+    {
+      "file": "trunk-extension-seated.webp",
+      "sha256": "35973426d2ce7be403f4e925920fd70f8a4395a225376be3ecd0deecde5d3986",
+      "source_sha256": "6e4a5ffa611ffc5d725683308ef9a5e8ff6b7d1be3629efad23e8345690db3d5",
+      "width": 960,
+      "height": 1200,
+      "bytes": 44008,
+      "generator": "built-in image_gen",
+      "date": "2026-10-19",
+      "scope": "catalogue_cover",
+      "pose_validation": "visual_overview_only"
+    },
+    {
+      "file": "wrist-overhead.webp",
+      "sha256": "d51b637c58d768b800edac9f89bbe84fe5fa3130d738fed20c2a651ea3893942",
+      "source_sha256": "237cb08f55639e3395a3a588d0803512d9553195a09dc479dff903a90298371b",
+      "width": 960,
+      "height": 1200,
+      "bytes": 31352,
+      "generator": "built-in image_gen",
+      "date": "2026-10-19",
+      "scope": "catalogue_cover",
+      "pose_validation": "visual_overview_only"
+    },
+    {
+      "file": "hand-extension.webp",
+      "sha256": "d51b637c58d768b800edac9f89bbe84fe5fa3130d738fed20c2a651ea3893942",
+      "source_sha256": "237cb08f55639e3395a3a588d0803512d9553195a09dc479dff903a90298371b",
+      "width": 960,
+      "height": 1200,
+      "bytes": 31352,
+      "generator": "built-in image_gen",
+      "date": "2026-10-19",
+      "scope": "catalogue_cover",
+      "pose_validation": "visual_overview_only"
+    },
+    {
+      "file": "thumb-flexion.webp",
+      "sha256": "7f796d204651774df337b46b18b4492dd019dd92253c96655e9e154eb9b2bac0",
+      "source_sha256": "e195715c3f4cfeaa110e1fd58afbcffc30fcf15e6f5e70ab3013b3e70d700fd6",
+      "width": 960,
+      "height": 1200,
+      "bytes": 36766,
+      "generator": "built-in image_gen",
+      "date": "2026-10-19",
+      "scope": "catalogue_cover",
+      "pose_validation": "visual_overview_only"
+    },
+    {
+      "file": "index-flexion.webp",
+      "sha256": "348ebc3887ab38f14bc415fbfa49233f97135c931fe5562509215a8a91557789",
+      "source_sha256": "c8c7516176bde08cddc191fb95aeb1eead0a67387cfa94414b5af98b9fcc09b5",
+      "width": 960,
+      "height": 1200,
+      "bytes": 35022,
+      "generator": "built-in image_gen",
+      "date": "2026-10-19",
+      "scope": "catalogue_cover",
+      "pose_validation": "visual_overview_only"
+    },
+    {
+      "file": "middle-flexion.webp",
+      "sha256": "d802b3ab7556c34f2708f58ed91dc6ed318b50b8811c6777421930dc31900ec6",
+      "source_sha256": "011ef9e85cf2a7c8738422ce75af6b3ef77e9d31ab1cdc2f96ced4b7aa16d6f1",
+      "width": 960,
+      "height": 1200,
+      "bytes": 30956,
+      "generator": "built-in image_gen",
+      "date": "2026-10-19",
+      "scope": "catalogue_cover",
+      "pose_validation": "visual_overview_only"
+    },
+    {
+      "file": "ring-flexion.webp",
+      "sha256": "52b1d713ab2fb47de053fa666b9a2abadf60f920e4ce78f05bd4528f4437a1c5",
+      "source_sha256": "181101d28233e93e50fcfb1dc4e8ad0c3ff2dff5c3e93cd07adcf7bedb83fc61",
+      "width": 960,
+      "height": 1200,
+      "bytes": 31666,
+      "generator": "built-in image_gen",
+      "date": "2026-10-19",
+      "scope": "catalogue_cover",
+      "pose_validation": "visual_overview_only"
+    },
+    {
+      "file": "pinky-flexion.webp",
+      "sha256": "926f6973dc5f3faa8a14e7250be42dcfc774a88ea36c66fc440ef7a6aea15854",
+      "source_sha256": "b2cc90fd8725f4e553f99a8bd6df9b1b1ef4fc02629954d91eb8ee47a31498c3",
+      "width": 960,
+      "height": 1200,
+      "bytes": 32650,
+      "generator": "built-in image_gen",
+      "date": "2026-10-19",
+      "scope": "catalogue_cover",
+      "pose_validation": "visual_overview_only"
+    }
+  ],
+  "note": "8 generated photographs; the extended-hand view reuses the overhead hand photograph. No clinical, side or phase bindings."
+}

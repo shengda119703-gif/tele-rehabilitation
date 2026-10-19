@@ -1,0 +1,10 @@
+/* Image presentation only; preserve the existing card, control and page layout. */
+.rv-photo.rv-assessment-photo{background:#b8c3d2;display:flex;align-items:center;justify-content:center}
+.rv-photo.rv-assessment-photo img{width:100%;height:100%;object-fit:contain;object-position:center}
+.rv-photo.rv-assessment-photo figcaption{position:absolute;left:auto;right:8px;bottom:8px;border-radius:6px;padding:3px 6px;background:#ffffffd9;color:#58615e;font-size:10px}
+.rv-photo-large.rv-assessment-photo{height:auto;aspect-ratio:4/3;max-height:420px}
+body[data-rehab-view="prepare"] .rv-photo-large.rv-assessment-photo{height:auto;aspect-ratio:16/9;max-height:280px}
+body[data-rehab-view="library"] .action-row .rv-assessment-thumb{display:block;width:100%;height:174px;background:#b8c3d2;object-fit:contain;object-position:center;padding:0}
+.rv-thumb.rv-assessment-thumb{background:#b8c3d2;object-fit:contain;object-position:center}
+@media(max-width:355px){body[data-rehab-view="library"] .action-row .rv-assessment-thumb{height:148px}}
+@media(min-width:760px){.rv-photo-large.rv-assessment-photo{max-height:480px}}

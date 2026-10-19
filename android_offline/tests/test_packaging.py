@@ -12,6 +12,22 @@ from pathlib import Path
 SCRIPT = Path(__file__).resolve().parents[1] / 'tools' / 'normalize_apk.py'
 
 class PackagingTest(unittest.TestCase):
+    def test_assessment_covers_are_packaged_with_the_same_code_and_images(self):
+        root = SCRIPT.parents[2]
+        version = ET.parse(root/'android_offline/AndroidManifest.xml').getroot().attrib['{http://schemas.android.com/apk/res/android}versionName']
+        static = root/'mobile_rehab/static'
+        metadata = json.loads((static/'assets/assessment-artwork-v1/provenance.json').read_text(encoding='utf-8'))
+        with zipfile.ZipFile(root/f'android_offline/dist/tele-rehabilitation-mobile-{version}.apk') as archive:
+            for file in ('assessment-artwork.js', 'assessment-artwork.css', 'rehab-v51.js'):
+                self.assertEqual(archive.read('assets/static/'+file), (static/file).read_bytes())
+            for file in ('index.html', 'capture.html'):
+                html = archive.read('assets/'+file).decode('utf-8')
+                self.assertLess(html.index('/static/assessment-artwork.js'), html.index('/static/rehab-v51.js'))
+            self.assertEqual(len(metadata['assets']), 9)
+            for asset in metadata['assets']:
+                file = 'assets/static/assets/assessment-artwork-v1/'+asset['file']
+                self.assertEqual(hashlib.sha256(archive.read(file)).hexdigest(), asset['sha256'])
+
     def test_public_action_library_is_packaged_without_internal_proposals(self):
         root = SCRIPT.parents[2]
         version = ET.parse(root/'android_offline/AndroidManifest.xml').getroot().attrib['{http://schemas.android.com/apk/res/android}versionName']

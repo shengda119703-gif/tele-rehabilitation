@@ -64,6 +64,6 @@
       root.document.body.append(dialog);dialog.querySelector('button').onclick=()=>dialog.close();
       dialog.onclose=()=>{dialog.remove();trigger.focus();};dialog.showModal();
     });
-    load();
+    if(!root.RehabAssessmentArtwork||enabled())load();
   }
 })(typeof window==='undefined'?globalThis:window);
