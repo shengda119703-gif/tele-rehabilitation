@@ -102,5 +102,5 @@ function initRehabV51Tools(){
 
 // Resource loading may refresh browsing only; never training, capture or results.
 if(window.RehabCandidateImages)document.addEventListener('rehab-candidate-images-ready',()=>{
-  if(state.shared&&state.tab==='assess'&&!state.training&&!state.preparing&&!state.job&&!state.upload&&state.catalog.length)assessment();
+  if(state.shared&&state.tab==='assess'&&!state.libraryPractice&&!state.training&&!state.preparing&&!state.job&&!state.upload&&state.catalog.length)assessment();
 });

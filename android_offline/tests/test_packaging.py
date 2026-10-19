@@ -16,7 +16,7 @@ class PackagingTest(unittest.TestCase):
         root = SCRIPT.parents[2]
         version = ET.parse(root/'android_offline/AndroidManifest.xml').getroot().attrib['{http://schemas.android.com/apk/res/android}versionName']
         with zipfile.ZipFile(root/f'android_offline/dist/tele-rehabilitation-mobile-{version}.apk') as archive:
-            for name in ('rehab-library.js', 'rehab-library.css'):
+            for name in ('rehab-library.js', 'rehab-library.css', 'library-practice.js', 'library-practice.css'):
                 self.assertEqual(archive.read('assets/static/'+name), (root/'mobile_rehab/static'/name).read_bytes())
             catalog = json.loads(archive.read('assets/catalog.json'))
             from mobile_rehab.fitness import catalog as fitness_catalog

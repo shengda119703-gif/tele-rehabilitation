@@ -78,6 +78,10 @@
     document.getElementById('rl-back').onclick=showLibrary;
     document.getElementById('rl-assess').onclick=()=>{++visit;state.rehabEntry='assessment';state.detail=false;state.preparing=false;state.search='';state.joint='all';state.viewFilter='all';originalLibrary('assessment');frameRehabV51('library');window.scrollTo(0,0);};
     document.getElementById('rl-plan').onclick=()=>{++visit;navigate('plan');};
+    if(card.kind==='training'){
+      const start=document.getElementById('rl-assess');start.id='rl-train';start.textContent='开始训练';
+      start.onclick=()=>{if(!root.RehabLibraryPractice?.start){toast('训练页面暂未加载，请刷新重试');return;}++visit;void root.RehabLibraryPractice.start(card,data,()=>showCard(id));};
+    }
     const target=fitnessTarget(id,state.fitnessCatalog);
     if(target){const button=document.createElement('button');button.type='button';button.id='rl-analyse';button.className='primary rl-analyse';button.textContent='拍摄 / 上传分析';button.onclick=()=>openFitness(target);app.querySelector('.rv-detail-foot').before(button);}
     app.querySelectorAll('[data-rl-image]').forEach(b=>b.onclick=()=>{
