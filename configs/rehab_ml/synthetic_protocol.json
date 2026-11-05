@@ -1,0 +1,86 @@
+{
+  "schema_version": "rehab_synthetic_protocol/v1",
+  "protocol_id": "shoulder-p0-20261019",
+  "exercise_id": "shoulder_abduction",
+  "primary_view": "front",
+  "anatomical_side_is_a_human_label": true,
+  "pilot": {
+    "source_groups": ["pilot01", "pilot02", "pilot03", "pilot04"],
+    "requested_scenarios": ["A", "D", "E"],
+    "candidate_target": 12,
+    "split": "train",
+    "formal_generation_gate": "all twelve original source clips fully watched, source decisions recorded and engineering labels independently human authored; inspect pose failures before freezing formal design"
+  },
+  "formal": {
+    "independent_source_groups": 10,
+    "source_groups_per_split": {"train": 6, "val": 2, "test": 2},
+    "qualified_source_clips": 60,
+    "scenarios_per_group": ["A", "B", "C", "D", "E", "F"],
+    "freeze_splits_before_generation": true,
+    "shared_identity_reference_motion_source_and_derivatives_same_split": true,
+    "minimum_accepted_and_human_labeled_per_scenario_per_group": 1
+  },
+  "raw_generation": {
+    "generator": "LTX-2-19B distilled GGUF Q4_K_M",
+    "native_width": 640,
+    "native_height": 384,
+    "fps": 30,
+    "reference_frames": 97,
+    "default_action_frames": 241,
+    "sampler": "euler_ancestral",
+    "cfg": 1,
+    "sigmas": [1, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0],
+    "audio_latent_joint_sampling": true,
+    "crop_height": 0,
+    "interpolation": false,
+    "looping": false,
+    "prompt_targets_are_labels": false,
+    "model_receipt": "manifests/model-verification.json",
+    "conditioning_version": "rehab-ltx2-v1"
+  },
+  "pose": {
+    "independent_backends": ["yolo17", "mediapipe33"],
+    "sampling_hz": 15,
+    "frame_selection": "latest original presentation frame at or before each grid tick",
+    "same_original_pts_and_actual_inference_rgb": true,
+    "inference_input": "JPEG quality 90, original size, no geometric transform",
+    "freeze_weights": true,
+    "yolo_sha256": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0",
+    "mediapipe_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+    "missing_output_is_unknown": true
+  },
+  "temporal": {
+    "phase_order": ["ready", "outbound", "endpoint_or_hold", "return", "rest_or_other"],
+    "training_config": "synthetic_tcn.json",
+    "features_keep_absolute_arm_angle_and_missing_masks": true,
+    "standardization_fit_split": "train",
+    "early_stopping_split": "val",
+    "test_used_for_selection": false,
+    "padding_and_unknown_labels_masked_independently": true,
+    "separate_backend_models": true
+  },
+  "reference_policy": {
+    "allowed_engineering_role": "human_operator",
+    "ai_drafts_can_train": false,
+    "full_video_watch_and_source_sha_attestation_required": true,
+    "unknown_count_default": null,
+    "unknown_count_mask_default": false,
+    "clinical_quality_default": "masked",
+    "clinical_quality_requires": "two independent qualified human reviewers and a third adjudicator with source-bound evidence",
+    "identity_attestation_is_not_independent_identity_verification": true
+  },
+  "real_holdout": {
+    "dataset": "MobiPhysio 3.0",
+    "doi": "10.7910/DVN/XSI0QN",
+    "license": "CC0",
+    "selection": "E01 / front / fully-light / RGB",
+    "train_people": ["P03", "P04", "P05", "P06", "P07", "P08", "P10", "P13", "P14", "P15", "P17", "P18", "P20", "P21"],
+    "val_people": ["P01", "P02", "P19", "P22", "P23"],
+    "test_people": ["P09", "P11", "P12", "P16", "P24"],
+    "split_authority": "existing downloaded plan.json; verify rather than silently replacing it",
+    "real_video_training": false,
+    "freeze_candidate_before_real_test": true,
+    "absent_independent_reference_means_accuracy_unknown": true
+  },
+  "product_candidate_enabled": false
+}

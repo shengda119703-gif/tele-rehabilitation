@@ -2,6 +2,12 @@
 
 本文件记录实际使用资源，不表示取得了额外商业授权。源代码同步到 GitHub；模型二进制、虚拟环境、个人数据和原始整包不随仓库上传。下方带日期的说明保留当时的来源与验证范围。
 
+## 2026-10-19 离线姿态控制渲染
+
+`tools/rehab_ml/synthetic/control.py` 的身体骨架配色、连线和栅格化改编自 Fannovel16/comfyui_controlnet_aux 的 [dwpose/util.py](https://github.com/Fannovel16/comfyui_controlnet_aux/blob/a587a4c1594524c1d2de5cd1a86cd868ff448e1c/src/custom_controlnet_aux/dwpose/util.py)，固定commit `a587a4c1594524c1d2de5cd1a86cd868ff448e1c`。上游仓库[Apache-2.0许可](https://github.com/Fannovel16/comfyui_controlnet_aux/blob/a587a4c1594524c1d2de5cd1a86cd868ff448e1c/LICENSE.txt)原文副本在 [licenses/comfyui_controlnet_aux-Apache-2.0.txt](licenses/comfyui_controlnet_aux-Apache-2.0.txt)。改动包括命名关节/原像素坐标、单臂刚性命令轨迹、CPU RGB绘制及来源/真实PTS/全帧指纹校验；没有导入或分发该上游姿态检测权重。
+
+新增LTX-2姿态控制权重仅在本机单独下载，使用其Community License，不能用上述渲染代码的Apache-2.0替代模型许可。模型revision/SHA、研究用途和分发边界见[合成数据卡](../../configs/rehab_ml/synthetic_data_card.json)及[实施记录](../development/REHAB_SYNTHETIC_VIDEO_IMPLEMENTATION.md)；本轮不把模型、视频或人工参考上传Git。
+
 2026-09-10 整理时，在当前电脑重新准备了可选独立环境：19 个 wheel 通过官方 PyPI SHA256 核对，记录见 [扩展依赖校验](LANDMARK_DEPENDENCY_MANIFEST.json)。两个 `.task` 模型从清单中的 Google 官方端点取得并核对 SHA256；原有 YOLO 权重和主环境保留。详细执行范围见 [本次验收](../validation/INTEGRATION_2026-09-10.md)。
 
 ## 2026-09-08 可选关键点组件增补
